@@ -54,7 +54,7 @@ class mrp_consume(osv.TransientModel):
             string=_('Manufacturing Order'),
             help=_('Manufacturing Order')),
         'wo_lot_id': fields.many2one(
-            'mrp.workoder.lot',
+            'mrp.workorder.lot',
             required=True,
             string=_('Work Orders Lots'),
             help=_('Work Orders Lots.')),
@@ -78,7 +78,7 @@ class mrp_consume(osv.TransientModel):
         values = []
         production = self.pool.get('mrp.production').browse(
             cr, uid, production_id, context=context)
-        wo_lot_obj = self.pool.get('mrp.workoder.lot')
+        wo_lot_obj = self.pool.get('mrp.workorder.lot')
 
         if wo_lot_id:
             wo_lot = wo_lot_obj.browse(cr, uid, wo_lot_id, context=context)
@@ -110,7 +110,7 @@ class mrp_consume(osv.TransientModel):
         Overwrite the action_consume method to change the work order lot state.
         """
         context = context or {}
-        wol_obj = self.pool.get('mrp.workoder.lot')
+        wol_obj = self.pool.get('mrp.workorder.lot')
         res = super(mrp_consume, self).action_consume(
             cr, uid, ids, context=context)
         consume = self.browse(cr, uid, ids, context=context)[0]

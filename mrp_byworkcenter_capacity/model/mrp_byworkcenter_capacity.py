@@ -132,7 +132,7 @@ class mrp_production(osv.Model):
     _inherit = 'mrp.production'
     _columns = {
         'wo_lot_ids': fields.one2many(
-            'mrp.workoder.lot', 'production_id',
+            'mrp.workorder.lot', 'production_id',
             string=_('Work Orders Lots'),
             help=_('Work Orders Lots.')),
     }
@@ -463,7 +463,7 @@ class mrp_production(osv.Model):
         """
         context = context or {}
         res = []
-        wo_lot_obj = self.pool.get('mrp.workoder.lot')
+        wo_lot_obj = self.pool.get('mrp.workorder.lot')
         ids = isinstance(ids, (int, long)) and [ids] or ids
         for production in self.browse(cr, uid, ids, context=context):
             for item in range(mult):
@@ -551,7 +551,7 @@ class mrp_production_workcenter_line(osv.Model):
         """
         context = context or {}
         res = {}.fromkeys(ids)
-        wol_obj = self.pool.get('mrp.workoder.lot')
+        wol_obj = self.pool.get('mrp.workorder.lot')
         open_wol_ids = wol_obj.search(
             cr, uid, [('state', 'in', ['open','pending'])], context=context)
         for wo_brw in self.browse(cr, uid, ids, context=context):
@@ -572,7 +572,7 @@ class mrp_production_workcenter_line(osv.Model):
         return wo_ids
 
     _columns = {
-        'wo_lot_id': fields.many2one('mrp.workoder.lot',
+        'wo_lot_id': fields.many2one('mrp.workorder.lot',
                                      _('Work Order Lot')),
         'stage_id': fields.many2one('mrp.workorder.stage',
             string=_('Stage'),
@@ -585,7 +585,7 @@ class mrp_production_workcenter_line(osv.Model):
             _update_active_lot,
             type='boolean',
             store={
-                'mrp.workoder.lot': (_get_wo_ids_to_update, ['state'], 10),
+                'mrp.workorder.lot': (_get_wo_ids_to_update, ['state'], 10),
             },
             string=_('Status by Lot'),
             help=_('If a Work Order Lot is active, then the Work Order is take'
@@ -616,9 +616,9 @@ class mrp_production_workcenter_line(osv.Model):
     }
 
 
-class mrp_workoder_lot(osv.Model):
+class mrp_workorder_lot(osv.Model):
 
-    _name = 'mrp.workoder.lot'
+    _name = 'mrp.workorder.lot'
     _description = "Work Order Lot"
 
     """

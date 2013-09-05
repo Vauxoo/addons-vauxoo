@@ -215,12 +215,12 @@ mrp.production.workcenter.line
             sequence="3"/>
 
 <!--
-mrp.workoder.lot
+mrp.workorder.lot
 -->
 
-        <record id="mrp_workoder_lot_tree" model="ir.ui.view">
-            <field name="name">mrp.workoder.lot.tree</field>
-            <field name="model">mrp.workoder.lot</field>
+        <record id="mrp_workorder_lot_tree" model="ir.ui.view">
+            <field name="name">mrp.workorder.lot.tree</field>
+            <field name="model">mrp.workorder.lot</field>
             <field name="arch" type="xml">
                 <tree string="Work Order Lots" version="7.0">
                     <field name="number"/>
@@ -232,9 +232,9 @@ mrp.workoder.lot
             </field>
         </record>
 
-        <record id="mrp_workoder_lot_form" model="ir.ui.view">
-            <field name="name">mrp.workoder.lot.form</field>
-            <field name="model">mrp.workoder.lot</field>
+        <record id="mrp_workorder_lot_form" model="ir.ui.view">
+            <field name="name">mrp.workorder.lot.form</field>
+            <field name="model">mrp.workorder.lot</field>
             <field name="arch" type="xml">
                 <form string="Work Order Lot" version="7.0">
                     <header>
@@ -270,9 +270,9 @@ mrp.workoder.lot
             </field>
         </record>
 
-        <record id="mrp_workoder_lot_kanban_view" model="ir.ui.view">
+        <record id="mrp_workorder_lot_kanban_view" model="ir.ui.view">
             <field name="name">Work Order Lot</field>
-            <field name="model">mrp.workoder.lot</field>
+            <field name="model">mrp.workorder.lot</field>
             <field name="arch" type="xml">
                 <kanban version="7.0" class="oe_background_grey">
                     <templates>
@@ -294,16 +294,16 @@ mrp.workoder.lot
             </field>
          </record>
 
-        <record id="mrp_workoder_lot_kanban_action" model="ir.actions.act_window">
+        <record id="mrp_workorder_lot_kanban_action" model="ir.actions.act_window">
              <field name="name">Work Orders by Active Lot</field>
-             <field name="res_model">mrp.workoder.lot</field>
+             <field name="res_model">mrp.workorder.lot</field>
              <field name="view_mode">kanban</field>
              <field name="domain">[('state', '=', 'open')]</field>
-             <field name="view_id" ref="mrp_workoder_lot_kanban_view"/>
+             <field name="view_id" ref="mrp_workorder_lot_kanban_view"/>
          </record>
 
         <menuitem
-            action="mrp_workoder_lot_kanban_action"
+            action="mrp_workorder_lot_kanban_action"
             id="menu_mrp_workorder_active_lot"
             parent="mrp.menu_mrp_planning"
             sequence="4"/>
