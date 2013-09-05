@@ -34,6 +34,7 @@ from openerp.osv import osv
 from openerp import netsvc
 import openerp
 from report_webkit import webkit_report
+import datetime
 
 class invoice_facturae_html(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
@@ -238,7 +239,7 @@ class invoice_facturae_html(report_sxw.rml_parse):
             })
         return res
         
-    def _get_text_promissory(self, company, partner, invoice):
+    def _get_text_promissory(self, company, partner, address_emitter, invoice):
         text = ''
         context = {}
         lang = self.pool.get('res.partner').browse(self.cr, self.uid,\
