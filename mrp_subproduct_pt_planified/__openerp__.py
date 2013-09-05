@@ -34,13 +34,13 @@
         This module required apply the merge of the branch: lp:~vauxoo/openobject-addons/6.1-bug-1051367-moylop260_vauxoo 
         to the addons of original openobject.
     """,
-    'depends': ['mrp_subproduct','mrp_pt_planified'],
+    'depends': ['mrp_byproduct','mrp_pt_planified'],
     'init_xml': [],
     'update_xml': [
         ],
     'demo_xml': [],
     'test': [],
-    'installable': False,
-    'active': False,
+    'installable': True,
+    'active': True,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
