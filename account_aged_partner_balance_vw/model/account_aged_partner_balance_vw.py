@@ -31,6 +31,7 @@ from openerp.tools.translate import _
 import openerp.netsvc as netsvc
 import time
 import os
+import mx.DateTime
 
 
 class account_aged_partner_balance_vw(osv.TransientModel):
@@ -51,18 +52,34 @@ class account_aged_partner_balance_vw(osv.TransientModel):
         'currency_company_id': fields.many2one('res.currency', u'Company Currency'),
         'aatb_id':fields.many2one('account.aged.trial.balance', ('Aged Trial '
             'Balance'), help='Aged Trail Balance Document'), 
-        
+    }
+
+class account_aged_partner_document(osv.TransientModel):
+    _name = 'account.aged.partner.document'
+    _inherit = 'account.aged.partner.balance.vw'
+    _rec_name = 'partner_id'
+    _order = 'partner_id, due_days' 
+
+    _columns = {
+        'due_days': fields.integer(u'Due Days'),
+        'residual': fields.float(u'Residual'),
+        'aatb_id':fields.many2one('account.aged.trial.balance', ('Aged Trial '
+            'Balance'), help='Aged Trail Balance Document'), 
     }
 
 class account_aged_trial_balance(osv.TransientModel):
     _inherit = 'account.aged.trial.balance'
 
     _columns = {
+        'partner_doc_ids':fields.one2many('account.aged.partner.document',
+            'aatb_id', 'Partner Aged Trail Balance', 
+            help='Partner Aged Trail Balance'), 
         'partner_line_ids':fields.one2many('account.aged.partner.balance.vw',
-        'aatb_id', 'Partner Aged Trail Balance', 
-        help='Partner Aged Trail Balance'), 
-        'type':fields.selection([('variation','Variation in Periods'),
+            'aatb_id', 'Partner Aged Trail Balance', 
+            help='Partner Aged Trail Balance'), 
+        'type':fields.selection([('variation','Balance Variation in Periods'),
                             ('distributed','Distributed Payments over Debts'),
+                            ('by_document','Documents spread in Periods'),
                             ], 'Type of Report',help='Reporte Type'), 
         'state':fields.selection([('draft','New'),('open','Open'),('done','Done'),
                                     ], 'Status',help='Document State'), 

@@ -55,7 +55,14 @@
                     <field name='target_move' required='1'/>
                 </xpath>
                 <xpath expr='//field[@name="journal_ids"]' position='after'>
-                    <field name='partner_line_ids' nolabel='1'/>
+                    <field 
+                        name='partner_line_ids' 
+                        nolabel='1' 
+                        attrs="{'invisible':[('type','=','by_document')]}"/>
+                    <field 
+                        name='partner_doc_ids' 
+                        nolabel='1' 
+                        attrs="{'invisible':[('type','!=','by_document')]}"/>
                 </xpath>
             </field>
         </record>
@@ -66,6 +73,30 @@
             <field name="arch" type="xml">
                 <tree string="Aged Partner Balance View">
                     <field name="partner_id"/>
+                    <field name="not_due" sum="Not due"/>
+                    <field name="days_due_01to30" sum="01/30"/>
+                    <field name="days_due_31to60" sum="31/60"/>
+                    <field name="days_due_61to90" sum="61/90"/>
+                    <field name="days_due_91to120" sum="91/120"/>
+                    <field name="days_due_121togr" sum="+121"/>
+                    <field name="total" sum="Total"/>
+<!--
+                    <field name="company_id"/>
+                    <field name="currency_company_id"/>
+                    <field name="currency_src_id"/>
+-->
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_account_aged_partner_document">
+            <field name="name">view.account.aged.partner.document.tree</field>
+            <field name="model">account.aged.partner.document</field>
+            <field name="arch" type="xml">
+                <tree string="Aged Partner Document">
+                    <field name="partner_id"/>
+                    <field name="due_days"/>
+                    <field name="residual" sum='Residual'/>
                     <field name="not_due" sum="Not due"/>
                     <field name="days_due_01to30" sum="01/30"/>
                     <field name="days_due_31to60" sum="31/60"/>
