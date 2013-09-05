@@ -625,6 +625,57 @@ class mrp_workorder_lot(osv.Model):
     This model manage the Work Order Lot.
     """
 
+    def _get_lot_state(self, cr, uid, ids, field_name, arg, context=None):
+        """
+        This method update the work order lot state taking into account the
+        state of the work orders associated. This is the logic:
+          - work orders 'done' -> work order lot change to 'done' (finished).
+          - one work order in 'pause' -> work order lot change to 'pending'.
+          - one work order in 'cancel' -> work order lot change to 'pending'
+        When the lot work orders are in 'draft' and 'startworking' the state
+        of the lot is not affected
+        """
+        context = context or {}
+        res = {}.fromkeys(ids)
+        for wol_brw in self.browse(cr, uid, ids, context=context):
+            wol_state = wol_brw.state
+            wo_states = list(set([wo_brw.state for wo_brw in wol_brw.wo_ids]))
+
+            if wol_state in ['draft', 'done']:
+                res[wol_brw.id] = wol_state
+            elif wol_state in ['open', 'pending']:
+                if wo_states.count('cancel') or wo_states.count('pause'):
+                    res[wol_brw.id] = 'pending'
+                elif (not wo_states.count('cancel') and
+                      not wo_states.count('pause')):
+                    res[wol_brw.id] = 'open'
+                elif wo_states.count('done') == len(wo_states):
+                    res[wol_brw.id] = 'done'
+        return res
+
+    def _get_wol_id_to_update(self, cr, uid, ids, context=None):
+        """
+        @param ids: work order ids list.
+        @return: a list of Work Order Lots who Work Workorders state have been
+        change.
+        """
+        context = context or {}
+        wo_obj = self.pool.get('mrp.production.workcenter.line')
+        res = [wo_brw.wo_lot_id.id
+               for wo_brw in wo_obj.browse(cr, uid, ids, context=context)]
+        res = list(set(res))
+        return res
+
+    def _set_lot_state(self, cr, uid, id, field, value, arg, context=None):
+        """
+        Write the field state in Work Order Lot.
+        """
+        context = context or {}
+        if value:
+            cr.execute(
+                "UPDATE mrp_workorder_lot set state='%s' WHERE id=%d" % (
+                    value, id))
+
     _columns = {
         'name': fields.char(
             _('Ref'),
@@ -646,13 +697,19 @@ class mrp_workorder_lot(osv.Model):
         'percentage': fields.float(
             _('Percentage'),
             help=_('Percentage of the Raw Material to processs in the Lot.')),
-        'state': fields.selection(
-            [('draft', 'New'),
-             ('open', 'In progress'),
-             ('done', 'Done'),
-             ('pending', 'Pending')],
-             string=_('State'),
-             help=_('Indicate the state of the Lot.')),
+        'state': fields.function(
+            _get_lot_state,
+            fnct_inv=_set_lot_state,
+            type='selection',
+            selection=[('draft', 'New'),
+                       ('open', 'In progress'),
+                       ('done', 'Done'),
+                       ('pending', 'Pending')],
+            required=True,
+            store={'mrp.production.workcenter.line': (
+               _get_wol_id_to_update, ['state'], 10)},
+            string=_('State'),
+            help=_('Indicate the state of the Lot.')),
     }
 
     _defaults = {
