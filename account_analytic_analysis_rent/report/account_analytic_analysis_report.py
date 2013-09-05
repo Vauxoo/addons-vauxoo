@@ -45,9 +45,10 @@ class account_analytic_account_report(report_sxw.rml_parse):
             return 'Por copia procesada'
         return 'Mensual'
 
-    def _locale_date(self):
-        locale.setlocale( locale.LC_TIME, 'es_MX.UTF-8' )
-        return time.strftime('%B %Y')
+    def _locale_date(self, month_num):
+        dict_month = {'01' : 'Enero', '02' : 'Febrero', '03' : 'Marzo', '04' : 'Abril', '05' : 'Mayo', '06' : 'Junio',
+            '07' : 'Julio', '08' : 'Agosto', '09' : 'Septiembre', '10' : 'Octubre', '11' : 'Noviembre', '12' : 'Diciembre'}
+        return dict_month[month_num] + ' ' + time.strftime('%Y')
 
 report_sxw.report_sxw('report.account.analytic.account.report','account.analytic.account','addons/account_analytic_analysis_rent/report/account_analytic_analysis_report.rml',
     parser=account_analytic_account_report, header=False)
