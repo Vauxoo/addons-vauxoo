@@ -10,7 +10,8 @@
                     <page string="Input/Output Products">                                                         
                         <group>                                                                         
                             <group string="Input Products">                                               
-                                <field name="mrp_workorder_variation_line_ids" nolabel="1">
+                                <field name="mrp_workorder_variation_line_ids" nolabel="1"
+                                    attrs="{'readonly': [('state','!=','draft')]}">
                                     <tree string="Input Product" editable="bottom">
                                         <field name="product_id"  
                                             on_change="on_change_product_uom(product_id)"/>
@@ -27,7 +28,8 @@
                         </group>                                                                        
                         <group>                                                                         
                             <group string="Output Products">                                               
-                                <field name="mrp_workorder_variation_output_line_ids" nolabel="1">
+                                <field name="mrp_workorder_variation_output_line_ids" nolabel="1"
+                                     attrs="{'readonly': [('state','!=','startworking')]}">
                                     <tree string="Output Product" editable="bottom">
                                         <field name="product_id" 
                                             on_change="on_change_product_uom(product_id)"/>
