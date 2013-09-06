@@ -6,11 +6,42 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-06 00:16+0000\n"
-"PO-Revision-Date: 2013-04-06 00:16+0000\n"
+"POT-Creation-Date: 2011-10-29 17:44+0000\n"
+"PO-Revision-Date: 2013-09-05 16:30+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-09-06 06:09+0000\n"
+"X-Generator: Launchpad (build 16760)\n"
+
+#. module: l10n_mx_partner_address
+#: field:res.partner.address,city2:0
+msgid "City2"
+msgstr ""
+
+#. module: l10n_mx_partner_address
+#: field:res.partner.address,street3:0
+msgid "Street3"
+msgstr ""
+
+#. module: l10n_mx_partner_address
+#: field:res.partner.address,street4:0
+msgid "Street4"
+msgstr ""
+
+#. module: base
+#: field:res.partner.address,street:0
+msgid "Street"
+msgstr ""
+
+#. module: base
+#: field:res.partner.address,street2:0
+msgid "Street2"
+msgstr ""
+
+#. module: base
+#: field:res.partner.address,state_id:0
+msgid "Fed. State"
+msgstr ""
