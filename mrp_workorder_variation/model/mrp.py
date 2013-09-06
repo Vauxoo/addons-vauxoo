@@ -35,6 +35,9 @@ class mrp_production_workcenter_line(osv.Model):
     _columns = {
         'mrp_workorder_variation_line_ids': fields.one2many('mrp.workorder.variation.line',
         'mrp_production_workcenter_line_id', 'Real Products Quantity'),
+        
+        'mrp_workorder_variation_output_line_ids': fields.one2many('mrp.workorder.output.variation.line',
+        'mrp_production_workcenter_output_line_id', 'Real Output Products Quantity'),
     }
 
 
@@ -45,6 +48,26 @@ class mrp_workorder_variation_line(osv.Model):
     _columns = {
         'name': fields.char('Real Product Quantity Line', size=64, required=True),
         'mrp_production_workcenter_line_id': fields.many2one('mrp.production.workcenter.line',
+        'Production Workcenter Line ID', required=True),
+        'product_id': fields.many2one('product.product',_('Product'), required=True,
+         help=_('Product')),
+        'product_qty': fields.float( _('Capacity'), required=True, help=_('Real Quantity')),
+        'product_uom': fields.many2one( 'product.uom', _('Unit of Measure'), required=True,
+         help=_('Unit of Measure')),  
+    }
+
+    def on_change_product_uom(self, cr, uid, ids, product_id):
+        product_product = self.pool.get('product.product')
+        product = product_product.browse(cr, uid, product_id)
+        return {'value': {'product_uom': product.uom_id and product.uom_id.id}}
+
+class mrp_workorder_output_variation_line(osv.Model):
+
+    _name = 'mrp.workorder.output.variation.line'
+
+    _columns = {
+        'name': fields.char('Real Product Quantity Line', size=64, required=True),
+        'mrp_production_workcenter_output_line_id': fields.many2one('mrp.production.workcenter.line',
         'Production Workcenter Line ID', required=True),
         'product_id': fields.many2one('product.product',_('Product'), required=True,
          help=_('Product')),

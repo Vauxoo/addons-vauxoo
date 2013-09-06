@@ -12,7 +12,8 @@
                             <group string="Input Products">                                               
                                 <field name="mrp_workorder_variation_line_ids" nolabel="1">
                                     <tree string="Input Product" editable="bottom">
-                                        <field name="product_id" on_change="on_change_product_uom(product_id)"/>
+                                        <field name="product_id"  
+                                            on_change="on_change_product_uom(product_id)"/>
                                         <field name="product_uom" readonly="1"/>
                                         <field name="product_qty"/>                                        
                                     </tree>
@@ -24,6 +25,24 @@
                                 </field>
                             </group>                                                                    
                         </group>                                                                        
+                        <group>                                                                         
+                            <group string="Output Products">                                               
+                                <field name="mrp_workorder_variation_output_line_ids" nolabel="1">
+                                    <tree string="Output Product" editable="bottom">
+                                        <field name="product_id" 
+                                            on_change="on_change_product_uom(product_id)"/>
+                                        <field name="product_uom" readonly="1"/>
+                                        <field name="product_qty"/>                                        
+                                    </tree>
+                                    <form string="Output Product" version="7.0">
+                                        <field name="product_id" />                                        
+                                        <field name="product_uom"/>                                        
+                                        <field name="product_qty"/>                                        
+                                    </form>
+                                </field>
+                            </group>                                                                    
+                        </group>                                                                        
+
                     </page>  
                 </xpath>
                 
