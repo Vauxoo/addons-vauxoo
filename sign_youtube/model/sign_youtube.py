@@ -197,7 +197,7 @@ class sign_youtube_conf_line(osv.Model):
     _defaults = {
         'update': 0,
     }
-
+    _order = 'views desc'
     def load_url(self, cr, uid, ids, context=None):
         '''
         Launch a new window where you can the watch the video
