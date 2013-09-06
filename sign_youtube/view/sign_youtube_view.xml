@@ -1,11 +1,11 @@
 <openerp>
     <data>
 
-    <record model="ir.ui.view" id="sing_youtube_tree_view">
-        <field name="name">Sing YouTube</field>                                    
-        <field name="model">sing.youtube.conf</field>                                   
+    <record model="ir.ui.view" id="sign_youtube_tree_view">
+        <field name="name">Sign YouTube</field>                                    
+        <field name="model">sign.youtube.conf</field>                                   
         <field name="arch" type="xml">                                          
-            <tree string="Sing YouTube" version="7.0">
+            <tree string="Sign YouTube" version="7.0">
                 <field name="name"/>
                 <field name="passwd"/>
                 <field name="client_id"/>
@@ -15,12 +15,13 @@
     </record>
 
 
-    <record model="ir.ui.view" id="sing_youtube_form_view">
-        <field name="name">Sing YouTube</field>                                    
-        <field name="model">sing.youtube.conf</field>                                   
+    <record model="ir.ui.view" id="sign_youtube_form_view">
+        <field name="name">Sign YouTube</field>                                    
+        <field name="model">sign.youtube.conf</field>                                   
         <field name="arch" type="xml">                                          
-            <form string="Sing YouTube" version="7.0">
+            <form string="Sign YouTube" version="7.0">
                 <footer>
+                    <button type="object" name="test_connection" string="Test Connection"/>
                     <button type="object" name="load_videos" string="Load Videos"/>
                 </footer>
                 <group>
@@ -58,13 +59,18 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="sing_youtube_form2_view">
-        <field name="name">Sing YouTube</field>                                    
-        <field name="model">sing.youtube.conf.line</field>                                   
+    <record model="ir.ui.view" id="sign_youtube_form2_view">
+        <field name="name">Sign YouTube</field>                                    
+        <field name="model">sign.youtube.conf.line</field>                                   
         <field name="arch" type="xml">                                          
-            <form string="Sing YouTube" version="7.0">
-                <group>
-                    <field name="message" widget="html"/>
+            <form string="Sign YouTube" version="7.0">
+                <group col="1">
+                    <p>
+                        Write off the message to show in inbox with the video.
+                        You can add attachments in this message
+                </p>
+                    <field name="message" nolabel="1" widget="html"/>
+                    <field name="attachment_ids" nolabel="1" widget="many2many_binary"/>
                 </group>
                 <button type="object"
                         name="send_to_inbox"
@@ -74,19 +80,19 @@
         </field>
     </record>
 
-    <record model="ir.actions.act_window" id="sing_youtube_action">
-      <field name="name">Sing YouTube</field>
-      <field name="res_model">sing.youtube.conf</field>
+    <record model="ir.actions.act_window" id="sign_youtube_action">
+      <field name="name">Sign YouTube</field>
+      <field name="res_model">sign.youtube.conf</field>
       <field name="view_type">form</field>
       <field name="vies_mode">tree,form</field>
     </record>
 
 
     <menuitem
-    id="sing_youtube_menu"
-    name="Sing YouTube Conf"
+    id="sign_youtube_menu"
+    name="Sign YouTube Conf"
     parent="base.menu_custom"
-    action="sing_youtube_action"/>        
+    action="sign_youtube_action"/>        
 
     </data>
 </openerp>

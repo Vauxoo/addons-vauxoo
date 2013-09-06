@@ -26,15 +26,17 @@
 ##############################################################################
 from openerp.osv import osv, fields
 from gdata.youtube import service
-
+from openerp.tools.translate import _
+import logging
+_logger = logging.getLogger("SignYouTube")
 
 class sign_youtube_conf(osv.Model):
-    _name = 'sing.youtube.conf'
+    _name = 'sign.youtube.conf'
 
     _columns = {
         'name':fields.char('YouTube User', 25, help='User name for youtube account used to login in '
                                             'youtube'), 
-        'line':fields.one2many('sing.youtube.conf.line', 'config_id', 'Videos Uploaded'), 
+        'line':fields.one2many('sign.youtube.conf.line', 'config_id', 'Videos Uploaded'), 
         'passwd':fields.char('YouTube Password', 25, help='Password used for your youtube account'), 
         'max_v':fields.integer('Max Number Video to load',
                              help='Number max of video to load'), 
@@ -77,34 +79,55 @@ class sign_youtube_conf(osv.Model):
         }                                                                                               
         return entry_data   
 
+    def test_connection(self, cr, uid, ids, context=None):
+        context = context or {}
+        for wzr in self.browse(cr, uid, ids, context=context):
+            yt_service = False
+            try:
+                yt_service = service.YouTubeService(email=wzr.name,                                              
+                                            password=wzr.passwd,                                           
+                                            client_id=wzr.client_id,           
+                                            developer_key=wzr.developer_key)
+            except:
+                raise osv.except_osv(_('Error!'),
+                                     _("""The config parameters are wrong please verify it and try
+                                           again"""))
+            if yt_service:
+                raise osv.except_osv(_('Perfect!'),
+                                     _("""Connection Completed"""))
+        return True
+
     def load_videos(self, cr, uid, ids, filters_name=None, context=None):
         '''
         Load the videos for your account and added in the config lines
         '''
         if context is None:
             context = {}
-        line = self.pool.get('sing.youtube.conf.line')
+        line = self.pool.get('sign.youtube.conf.line')
         for wzr in self.browse(cr, uid, ids, context=context):
-            yt_service = service.YouTubeService(email=wzr.name,                                              
-                                        password=wzr.passwd,                                           
-                                        client_id=wzr.client_id,           
-                                        developer_key=wzr.developer_key)
-            yt_service.ProgrammaticLogin()                                                                  
-            username=wzr.name[:wzr.name.index('@')]                                                           
-            max_results=wzr.max_v                                                                                  
-            index=1                                                                                         
             userfeed_entry = []                                                                             
-                                                                                                            
-            while True:                                                                                     
-                uri = "http://gdata.youtube.com/feeds/api/users/%s/uploads?max-results=%d"\
-                   "&start-index=%d" % (username, max_results, index)                                       
-                userfeed = yt_service.GetYouTubeUserFeed(uri)                                               
-                if not len(userfeed.entry):                                                                 
-                    break                                                                                   
-                userfeed_entry.extend(userfeed.entry)                                                       
-                index += max_results                                                                        
-                                                                                                            
-            entry_datas = []                                                                                
+            try:
+                yt_service = service.YouTubeService(email=wzr.name,                                              
+                                            password=wzr.passwd,                                           
+                                            client_id=wzr.client_id,           
+                                            developer_key=wzr.developer_key)
+                yt_service.ProgrammaticLogin()                                                                  
+                username=wzr.name[:wzr.name.index('@')]                                                           
+                max_results=wzr.max_v                                                                                  
+                index=1                                                                                         
+                                                                                                                
+                while True:                                                                                     
+                    uri = "http://gdata.youtube.com/feeds/api/users/%s/uploads?max-results=%d"\
+                       "&start-index=%d" % (username, max_results, index)                                       
+                    userfeed = yt_service.GetYouTubeUserFeed(uri)                                               
+                    if not len(userfeed.entry):                                                                 
+                        break                                                                                   
+                    userfeed_entry.extend(userfeed.entry)                                                       
+                    index += max_results                                                                        
+                                                                                                                
+                entry_datas = []                                                                                
+            except:
+                _logger.error("Connection error, please veriry the parameters and try again")
             for entry in userfeed_entry:                                                                    
                 item = self.get_items(entry)                                                                     
                 line_ids = line.search(cr, uid, [('url_swf', '=', item.get('url_swf',False)),
@@ -133,11 +156,11 @@ class sign_youtube_conf(osv.Model):
                     line.create(cr, uid, item, context=context)
                     
                 entry_datas.append(item)                                                                
-    
+
         return entry_datas
     
 class sign_youtube_conf_line(osv.Model):
-    _name = 'sing.youtube.conf.line'
+    _name = 'sign.youtube.conf.line'
 
     _columns = {
         'views':fields.integer('Number of views',
@@ -149,8 +172,10 @@ class sign_youtube_conf_line(osv.Model):
         'private':fields.char('Private', 200, help='Private info about the video'),
         'info':fields.boolean('Add in messages', help='Select if you want add this video in the '
                                                       'company messages'), 
-        'config_id':fields.many2one('sing.youtube.conf', 'Config'), 
+        'config_id':fields.many2one('sign.youtube.conf', 'Config'), 
         'published':fields.char('Published ', 200, help=''),
+        'attachment_ids': fields.many2many('ir.attachment', 'youtube_attachment_rel', 
+                                            'youtube_id', 'attachment_id', 'Attachments'),
         'tags':fields.char('Tags ', 200, help=''),
         'update':fields.selection([(0, 'Normal'), (1, 'Update')], 'Update', help='Used to know if '
                                                                                  'the video was '
@@ -188,20 +213,21 @@ class sign_youtube_conf_line(osv.Model):
             obj_model = self.pool.get('ir.model.data')
             model_data_ids = obj_model.search(
                 cr, uid, [('model', '=', 'ir.ui.view'),
-                          ('name', '=', 'sing_youtube_form2_view')])
+                          ('name', '=', 'sign_youtube_form2_view')])
             resource_id = obj_model.read(cr, uid, model_data_ids,
                                          fields=['res_id'])[0]['res_id']
             message = 2*'<br>' + wzr.name + 2*'<br>' + _('You need watch this video ') + \
-                                                            '<a href="%s">%s</a>' % (wzr.url_swf,
+                                                            '<a href="%s">%s</a>' % \
+                                                            (wzr.url_swf[:wzr.url_swf.find('?')],
                                                                     wzr.name)
             return {
                 'view_type': 'form',
                 'view_mode': 'form',
-                'res_model': 'sing.youtube.conf.line',
+                'res_model': 'sign.youtube.conf.line',
                 'views': [(resource_id, 'form')],
                 'type': 'ir.actions.act_window',
                 'target': 'new',
-                'context':{'default_message': message},
+                'context':{'default_message': message,'default_name': wzr.name},
                 }
     def send_to_inbox(self, cr, uid, ids, context=None):
         '''
@@ -213,13 +239,15 @@ class sign_youtube_conf_line(osv.Model):
         data_obj = self.pool.get('ir.model.data')
         
         for wzr in self.browse(cr, uid, ids, context=context):
+            attachment_ids = [i.id for i in wzr.attachment_ids]
             try:
                 (model, mail_group_id) = data_obj.get_object_reference(cr, uid, 'portal_gallery',
                                                                        'company_gallery_feed')
             except:
                 (model, mail_group_id) = data_obj.get_object_reference(cr, uid, 'mail',
                                                                        'group_all_employees')
-
-            message_obj.message_post(cr, uid, [mail_group_id],                      
-                                     body= wzr.message, subtype='mail.mt_comment', context=context)
+            message_id = message_obj.message_post(cr, uid, [mail_group_id], 
+                                     body=wzr.message, subject=wzr.name,
+                                     attachment_ids=attachment_ids,
+                                     subtype='mail.mt_comment', context=context)
         return {'type': 'ir.actions.act_window_close'} 
