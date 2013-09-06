@@ -32,8 +32,7 @@ What do you need
 You need have a YouTube account and have your client ID and developer key if you don't have one you
 can get here_
 
-.. _here: http://code.google.com/apis/youtube/dashboard/gwt/index.html#product/AI39si7M7K5jj5AHA-\
-                  VUGJW0XSgEWIS_qjFkfXwygeIF13AQR85UC2Ylo-8pu2G6gs-Q4MSNKzUG11_c45zO1CFaTbmA62rjLw
+.. _here: http://code.google.com/apis/youtube/dashboard/gwt/index.html
 How to Use
 ----------
 In the configuration menu you have a new menu with the name: Sign YouTube Config.

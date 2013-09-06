@@ -47,16 +47,12 @@ class sign_youtube_conf(osv.Model):
         'client_id': fields.char('ID Client', 200,
                                  help='Client ID for your youtube account if you do not have a '
                                  'client ID you can a developer key in the YouTube API '
-                                 'https://code.google.com/apis/youtube/dashboard/gwt/index.'
-                                 'html#product/AI39si7M7K' '5jj5AHA-VUGJW0XSgEWIS_qjFkfXwygeIF'
-                                 '13AQR85UC2Ylo-8pu2G6gs-Q4MSNKzUG11_c45zO1CFaTbmA62rjLw'),
+                                 'https://code.google.com/apis/youtube/dashboard/gwt/index.html'),
         'developer_key': fields.char('Developer Key', 150,
                                      help='Developer key used by de API if you do not have one you '
                                      'can get one in the YouTube API '
-                                     'https://code.google.com/apis/youtube/dashboard/gwt/index'
-                                     '.html#product/AI39si7M7K5jj5AHA-VUGJW0XSgEWIS_qjFkfXwyge'
-                                     'IF13AQR85UC2Ylo-8pu2G6gs-Q4MSNKzUG11_c45zO1CFaTbmA62rj'
-                                     'Lw'),
+                                     'https://code.google.com/apis/youtube/dashboard/gwt/index.'
+                                     'html'),
     }
 
     _defaults = {
