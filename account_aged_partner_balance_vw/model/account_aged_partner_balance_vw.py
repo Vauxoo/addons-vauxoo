@@ -61,6 +61,7 @@ class account_aged_partner_document(osv.TransientModel):
     _order = 'partner_id, due_days' 
 
     _columns = {
+        'date_due':fields.date('Due Date', help='Due Date'), 
         'due_days': fields.integer(u'Due Days'),
         'residual': fields.float(u'Residual'),
         'aatb_id':fields.many2one('account.aged.trial.balance', ('Aged Trial '
@@ -404,7 +405,28 @@ class account_aged_trial_balance(osv.TransientModel):
         if not partner_ids:
             return []
         res = self._get_invoice_by_partner(cr, uid, ids, partner_ids)
+        res = self._screening_invoices(cr, uid, ids, form, res)
         return res
+
+    def _screening_invoices(self, cr, uid, ids, form, res, context=None):
+        context = context or {}
+        res2=[]
+        if not res: return []
+        for r in res:
+            if r['date_due'] < form['0']['stop']:
+                r['days_due_121togr']=r['residual']
+            elif form['1']['start'] >= r['date_due'] and form['1']['stop'] <= r['date_due']:
+                r['days_due_91to120']=r['residual']
+            elif form['2']['start'] >= r['date_due'] and form['2']['stop'] <= r['date_due']:
+                r['days_due_61to90']=r['residual']
+            elif form['3']['start'] >= r['date_due'] and form['3']['stop'] <= r['date_due']:
+                r['days_due_31to60']=r['residual']
+            elif form['4']['start'] >= r['date_due'] and form['4']['stop'] <= r['date_due']:
+                r['days_due_01to30']=r['residual']
+            else:
+                r['not_due']=r['residual']
+            res2.append(r)
+        return res2
 
     def _get_invoice_by_partner(self, cr, uid, ids, rp_ids, context=None):
         res = [] 
@@ -444,7 +466,8 @@ class account_aged_trial_balance(osv.TransientModel):
                     'partner_id': rp_brw.id,
                     'inv_id': inv_brw.id,
                     'residual': residual,
-                    'due_days': due_days
+                    'due_days': due_days,
+                    'date_due': date_due,
                 })
         return res
 
