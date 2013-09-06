@@ -1,0 +1,22 @@
+<openerp>
+    <data>
+       <record id="mrp_production_workcenter_form_view_inherit_2" model="ir.ui.view">
+            <field name="name">MRP Production Workcenter Line</field>
+            <field name="model">mrp.production.workcenter.line</field>
+            <field name="inherit_id" ref="mrp_operations.mrp_production_workcenter_form_view_inherit"/>
+            <field name="arch" type="xml">
+                
+                <xpath expr="//page[@string='Information']" position="after">
+                    <page string="Input/Output Products">                                                         
+                        <group>                                                                         
+                            <group string="Input Products">                                               
+                                <field name="mrp_workorder_variation_line_ids" nolabel="1"/>
+                            </group>                                                                    
+                        </group>                                                                        
+                    </page>  
+                </xpath>
+                
+            </field>
+        </record>
+    </data>
+</openerp>

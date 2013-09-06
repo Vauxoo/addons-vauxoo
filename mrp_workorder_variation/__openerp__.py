@@ -44,8 +44,10 @@ Compare the amount of operation scheduled products to the real products in a wor
     'author': 'Vauxoo C.A',                                                                         
     'website': 'http://vauxoo.com',                                                                 
     'license' : 'AGPL-3',
-    'depends': ['mrp'],
-    'data': [],
+    'depends': ['mrp', 'mrp_operations'],
+    'data': [
+        'view/mrp_production_workcenter_line_view.xml',
+    ],
     'demo': [],
     'installable': True,                                                                            
     'auto_install' : False,
