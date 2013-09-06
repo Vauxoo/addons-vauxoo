@@ -615,6 +615,52 @@ class mrp_production_workcenter_line(osv.Model):
         'stage_id': _group_by_full_state,
     }
 
+    def write(self, cr, uid, ids, values, context=None):
+        """
+        Overwrite the write method to ensure that a work order can change
+        state if is not in an active work order lot.
+        """
+        context = context or {}
+        wo_ids = list()
+        troble_wo = dict()
+        if isinstance(values, dict):
+            if values.get('state', False):
+                for wo_brw in self.browse(cr, uid, ids, context=context):
+                    if wo_brw.wo_lot_id.state in ['open', 'pending']:
+                        wo_ids += wo_brw.id
+                    else:
+                        troble_wo.update({wo_brw.id: {
+                            'name': wo_brw.name,
+                            'state': wo_brw.state,
+                            'lot_name': wo_brw.wo_lot_id.name,
+                            'lot_state': wo_brw.wo_lot_id.state,
+                        }})
+        else:
+            raise osv.except_osv(
+                _('Error!'),
+                _('This type of write is not implemented in the'
+                  ' mrp_byworkcenter_capacity module yet.'))
+
+        if troble_wo:
+            error_by_wo = \
+                _('- %s Work Order can be update to %s state because its'
+                  ' %s Work Order Lot is in %s state.\n\n')
+            raise osv.except_osv(
+                _('Error!'),
+                _('This operation is no valid. You can\'t change the work'
+                  ' order state because it associated lot is no active.\n\n'
+                  ' %s' % (
+                    [error_by_wo % (
+                        troble_wo[trb]['name'],
+                        troble_wo[trb]['state'],
+                        troble_wo[trb]['lot_name'],
+                        troble_wo[trb]['lot_state'])
+                     for trb in troble_wo])
+                ))
+
+        res = super(mrp_production_workcenter_line, self).write(
+            cr, ui, wo_ids, values, context=context)
+        return res
 
 class mrp_workorder_lot(osv.Model):
 
