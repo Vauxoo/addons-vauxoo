@@ -25,10 +25,13 @@
 #
 #
 from openerp.osv import osv, fields
-from gdata.youtube import service
 from openerp.tools.translate import _
 import logging
 _logger = logging.getLogger("SignYouTube")
+try:
+    from gdata.youtube import service
+except:
+    _logger.error("You need the gdata library ---> sudo pip install gdata")
 
 
 class sign_youtube_conf(osv.Model):
