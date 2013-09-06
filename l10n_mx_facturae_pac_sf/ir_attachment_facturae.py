@@ -151,9 +151,8 @@ class ir_attachment_facturae_mx(osv.Model):
                 else:
                     raise orm.except_orm(_('Warning'), _('Cancel Code: %s.-Status code %s.-Status UUID: %s.-Folio Cancel: %s.-Cancel Message: %s.-Answer Message: %s.') % (
                         codigo_cancel, status_cancel, status_uuid, folio_cancel, mensaje_cancel, msg_nvo))
-        else:
-            msg = _(
-                'Not found information of webservices of PAC, verify that the configuration of PAC is correct')
+            else:
+                msg = _('Not found information of webservices of PAC, verify that the configuration of PAC is correct')
         return {'message': msg, 'status_uuid': status_uuid, 'status': status}
     
     def _upload_ws_file(self, cr, uid, ids, fdata=None, context={}):
