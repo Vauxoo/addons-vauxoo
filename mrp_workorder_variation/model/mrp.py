@@ -46,4 +46,14 @@ class mrp_workorder_variation_line(osv.Model):
         'name': fields.char('Real Product Quantity Line', size=64, required=True),
         'mrp_production_workcenter_line_id': fields.many2one('mrp.production.workcenter.line',
         'Production Workcenter Line ID', required=True),
+        'product_id': fields.many2one('product.product',_('Product'), required=True,
+         help=_('Product')),
+        'product_qty': fields.float( _('Capacity'), required=True, help=_('Real Quantity')),
+        'product_uom': fields.many2one( 'product.uom', _('Unit of Measure'), required=True,
+         help=_('Unit of Measure')),  
     }
+
+    def on_change_product_uom(self, cr, uid, ids, product_id):
+        product_product = self.pool.get('product.product')
+        product = product_product.browse(cr, uid, product_id)
+        return {'value': {'product_uom': product.uom_id and product.uom_id.id}}
