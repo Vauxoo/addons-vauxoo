@@ -29,6 +29,9 @@ from openerp.tools.translate import _
 from openerp import netsvc
 
 class mrp_production_workcenter_line(osv.Model):
+    """ This class inherits Work Order to add two fields that are handling products
+    entering and products leaving in the work order
+    """
     _inherit = 'mrp.production.workcenter.line'
     _description = 'Work Order'
 
@@ -42,6 +45,8 @@ class mrp_production_workcenter_line(osv.Model):
 
 
 class mrp_workorder_variation_line(osv.Model):
+    """ This class are product lines that are received in a work order 
+    """
     
     _name = 'mrp.workorder.variation.line'
     _rec_name = "product_id"
@@ -60,11 +65,15 @@ class mrp_workorder_variation_line(osv.Model):
     }
 
     def on_change_product_uom(self, cr, uid, ids, product_id):
+        """ Change the unit of measure depending on the product
+        """
         product_product = self.pool.get('product.product')
         product = product_product.browse(cr, uid, product_id)
         return {'value': {'product_uom': product.uom_id and product.uom_id.id}}
 
 class mrp_workorder_output_variation_line(osv.Model):
+    """ This class are product lines that are produced in a work order 
+    """
 
     _name = 'mrp.workorder.output.variation.line'
     _rec_name = "product_id"
@@ -83,6 +92,8 @@ class mrp_workorder_output_variation_line(osv.Model):
     }
 
     def on_change_product_uom(self, cr, uid, ids, product_id):
+        """ Change the unit of measure depending on the product
+        """
         product_product = self.pool.get('product.product')
         product = product_product.browse(cr, uid, product_id)
         return {'value': {'product_uom': product.uom_id and product.uom_id.id}}
