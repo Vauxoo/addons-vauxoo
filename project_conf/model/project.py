@@ -22,61 +22,70 @@
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
-
 class project_task(osv.osv):
 
     _inherit = 'project.task'
 
-    def send_mail_task(self, cr, uid, ids, context=None):
+    def _message_get_auto_subscribe_fields(self, cr, uid, updated_fields, auto_follow_fields=['user_id'], context=None):
+
+        res = super(project_task, self)._message_get_auto_subscribe_fields(cr, uid, updated_fields, auto_follow_fields=auto_follow_fields, context=context)
+        res.append('project_leader_id')
+        return res
+
+    def send_mail_task_new_test(self, cr, uid, ids, context=None):
         '''
-        Send mail automatically to change task of column Undefinied to Backlog.
+        Send mail automatically to change task to Backlog and to Testing Leader.
         '''
         context = context or {}
 
         if ids.get('stage_id'):
             if ids['stage_id'][1] == 'Backlog':
+                self.send_mail_task(cr,uid,ids,'template_send_email_task_new',context)
+            elif ids['stage_id'][1] == 'Testing Leader':
+                self.send_mail_task(cr,uid,ids,'template_send_email_task_end',context)
+            
+    def send_mail_task(self,cr,uid,ids,template,context=None):
+        imd_obj = self.pool.get('ir.model.data')
+        id_template = imd_obj.search(
+            cr, uid, [('model', '=', 'email.template'), ('name', '=', template)])
+        
+        res_id = imd_obj.read(
+            cr, uid, id_template, ['res_id'])[0]['res_id']
 
-                imd_obj = self.pool.get('ir.model.data')
-                id_template = imd_obj.search(
-                    cr, uid, [('model', '=', 'email.template'), ('name', '=', 'template_send_email_task_new')])
+        followers = self.read(cr, uid, ids.get('id'), [
+                              'message_follower_ids'])['message_follower_ids']
 
-                res_id = imd_obj.read(
-                    cr, uid, id_template, ['res_id'])[0]['res_id']
+        ids = [ids.get('id')]
+        body_html = self.pool.get('email.template').read(
+            cr, uid, res_id, ['body_html']).get('body_html')
+        context.update({'default_template_id': res_id,
+                        'default_body': body_html,
+                        'default_use_template': True,
+                        'default_composition_mode': 'comment',
+                        'active_model': 'project.task',
+                        'default_partner_ids': followers,
+                        'mail_post_autofollow_partner_ids': followers,
+                        'active_id': ids and type(ids) is list and
+                        ids[0] or ids,
+                        'active_ids': ids and type(ids) is list and
+                        ids or [ids],
+                        })
 
-                followers = self.read(cr, uid, ids.get('id'), [
-                                      'message_follower_ids'])['message_follower_ids']
-
-                ids = [ids.get('id')]
-                body_html = self.pool.get('email.template').read(
-                    cr, uid, res_id, ['body_html']).get('body_html')
-                context.update({'default_template_id': res_id,
-                                'default_body': body_html,
-                                'default_use_template': True,
-                                'default_composition_mode': 'comment',
-                                'active_model': 'project.task',
-                                'default_partner_ids': followers,
-                                'mail_post_autofollow_partner_ids': followers,
-                                'active_id': ids and type(ids) is list and
-                                ids[0] or ids,
-                                'active_ids': ids and type(ids) is list and
-                                ids or [ids],
-                                })
-
-                mail_obj = self.pool.get('mail.compose.message')
-                fields = mail_obj.fields_get(cr, uid)
-                mail_ids = mail_obj.default_get(
-                    cr, uid, fields.keys(), context=context)
-                mail_ids.update(
-                    {'model': 'project.task', 'body': body_html, 'composition_mode': 'mass_mail', 'partner_ids': [(6, 0, followers)]})
-                mail_ids = mail_obj.create(cr, uid, mail_ids, context=context)
-                mail_obj.send_mail(cr, uid, [mail_ids], context=context)
+        mail_obj = self.pool.get('mail.compose.message')
+        fields = mail_obj.fields_get(cr, uid)
+        mail_ids = mail_obj.default_get(
+            cr, uid, fields.keys(), context=context)
+        mail_ids.update(
+            {'model': 'project.task', 'body': body_html, 'composition_mode': 'mass_mail', 'partner_ids': [(6, 0, followers)]})
+        mail_ids = mail_obj.create(cr, uid, mail_ids, context=context)
+        mail_obj.send_mail(cr, uid, [mail_ids], context=context)
 
         return False
 
-    _track = {'stage_id': {'project.mt_task_stage': send_mail_task, }}
+    _track = {'stage_id': {'project.mt_task_stage': send_mail_task_new_test, }}
 
     _columns = {
-        'project_leader_id': fields.many2one('res.users','Project Leader',readonly=True, help="""Person responsible of task create and task management."""),
+            'project_leader_id': fields.many2one('res.users','Project Leader',help="""Person responsible of task review, when is in Testing Leader state. The person should review: Work Summary, Branch and Make Functional Tests. When everything works this person should change task to done."""),
     }
     _defaults = {
          'project_leader_id': lambda obj,cr,uid,context: uid,
