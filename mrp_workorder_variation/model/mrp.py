@@ -42,13 +42,16 @@ class mrp_production_workcenter_line(osv.Model):
 
 
 class mrp_workorder_variation_line(osv.Model):
-
+    
     _name = 'mrp.workorder.variation.line'
+    _rec_name = "product_id"
 
     _columns = {
-        'name': fields.char('Real Product Quantity Line', size=64, required=True),
+        'mrp_production':fields.related('mrp_production_workcenter_line_id', 'production_id',
+            string='Production Order',relation='mrp.production', type='many2one', store=True, 
+            help='Id Manufacturing Order'), 
         'mrp_production_workcenter_line_id': fields.many2one('mrp.production.workcenter.line',
-        'Production Workcenter Line ID', required=True),
+        'Production Workcenter Line ID', required=True, help='Id Work Order'),
         'product_id': fields.many2one('product.product',_('Product'), required=True,
          help=_('Product')),
         'product_qty': fields.float( _('Capacity'), required=True, help=_('Real Quantity')),
@@ -64,11 +67,14 @@ class mrp_workorder_variation_line(osv.Model):
 class mrp_workorder_output_variation_line(osv.Model):
 
     _name = 'mrp.workorder.output.variation.line'
+    _rec_name = "product_id"
 
     _columns = {
-        'name': fields.char('Real Product Quantity Line', size=64, required=True),
+        'mrp_production':fields.related('mrp_production_workcenter_line_id', 'production_id',
+            string='Production Order',relation='mrp.production', type='many2one', store=True, 
+            help='Id Manufacturing Order'), 
         'mrp_production_workcenter_output_line_id': fields.many2one('mrp.production.workcenter.line',
-        'Production Workcenter Line ID', required=True),
+        'Production Workcenter Line ID', required=True, help='Id Work Order'),
         'product_id': fields.many2one('product.product',_('Product'), required=True,
          help=_('Product')),
         'product_qty': fields.float( _('Capacity'), required=True, help=_('Real Quantity')),
