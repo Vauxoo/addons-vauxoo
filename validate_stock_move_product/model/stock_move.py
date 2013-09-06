@@ -45,8 +45,8 @@ class stock_move(osv.Model):
         product_available = product_obj.get_product_available(
             cr, uid, [prod_id], context=context)
         if product_qty > product_available[prod_id]:
-            warning = {'title': 'Caution Products In Location!',
-                       'message': "Not enough products in %s according to the quantity ordered. " %
+            warning = {'title': _('Caution Products In Location!'),
+                       'message': _("Not enough products in %s according to the quantity ordered. ") %
                        (self.pool.get('stock.location').browse(
                         cr, uid, [loc_id])[0].complete_name)
                        }
