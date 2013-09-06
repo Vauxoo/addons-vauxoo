@@ -627,7 +627,7 @@ class mrp_production_workcenter_line(osv.Model):
             if values.get('state', False):
                 for wo_brw in self.browse(cr, uid, ids, context=context):
                     if wo_brw.wo_lot_id.state in ['open', 'pending']:
-                        wo_ids += wo_brw.id
+                        wo_ids += [wo_brw.id]
                     else:
                         troble_wo.update({wo_brw.id: {
                             'name': wo_brw.name,
@@ -659,7 +659,7 @@ class mrp_production_workcenter_line(osv.Model):
                 ))
 
         res = super(mrp_production_workcenter_line, self).write(
-            cr, ui, wo_ids, values, context=context)
+            cr, uid, wo_ids, values, context=context)
         return res
 
 class mrp_workorder_lot(osv.Model):
