@@ -12,24 +12,12 @@
             multi="True"
             />
 
-        <!-- THIS RECORD NEEDS FIXING 
         <record id="property_aged_partner_report_webkit" model="ir.property">
             <field name="name">webkit_header</field>
-            <field 
-                name="fields_id"
-                ref="report_webkit.field_ir_act_report_xml_webkit_header"
-                />
-            <field 
-                name="value"
-                model="ir.header_webkit" 
-                eval="'ir.header_webkit,'+str(ref('account_aged_partner_balance_vw.ir_header_webkit_account_aged_partner_balance_report'))"
-                />
-            <field
-                name="res_id"
-                model="ir.actions.report.xml" 
-                eval="'ir.actions.report.xml,'+str(ref('account_aged_partner_balance_vw.account_aged_partner_balance_report'))"
-                />
+            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
+            <field eval="'ir.header_webkit,'+str(ref('account_aged_partner_balance_vw.ir_header_webkit_account_aged_partner_balance_report'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.actions.report.xml,'+str(ref('account_aged_partner_balance_vw.account_aged_partner_balance_report'))" model="ir.actions.report.xml" name="res_id"/>
         </record>
-        -->
+
     </data>
 </openerp>

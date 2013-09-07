@@ -43,6 +43,7 @@
         "view/wizard.xml",
         "view/view.xml",
         'view/action_menues.xml',
+        "data/data.xml",
         'report/report.xml',
     ],
     "installable" : True,
