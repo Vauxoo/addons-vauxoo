@@ -66,6 +66,12 @@ class account_aged_partner_document(osv.TransientModel):
         'residual': fields.float(u'Residual'),
         'aatb_id':fields.many2one('account.aged.trial.balance', ('Aged Trial '
             'Balance'), help='Aged Trail Balance Document'), 
+        'document_id': fields.reference('Document', 
+            [('account.invoice','Invoice'),
+             ('account.voucher','Voucher'),
+             ('account.move.line', 'Journal Entry Line')],
+            size=128,
+            required=False),
     }
 
 class account_aged_trial_balance(osv.TransientModel):
@@ -464,7 +470,7 @@ class account_aged_trial_balance(osv.TransientModel):
 
                 res.append({
                     'partner_id': rp_brw.id,
-                    'inv_id': inv_brw.id,
+                    'document_id': '%s,%s'%(inv_brw._name,inv_brw.id),
                     'residual': residual,
                     'due_days': due_days,
                     'date_due': date_due,

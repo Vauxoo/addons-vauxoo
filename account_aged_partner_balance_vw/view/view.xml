@@ -95,6 +95,7 @@
             <field name="arch" type="xml">
                 <tree string="Aged Partner Document">
                     <field name="partner_id"/>
+                    <field name="document_id"/>
                     <field name="date_due"/>
                     <field name="due_days"/>
                     <field name="residual" sum='Residual'/>
