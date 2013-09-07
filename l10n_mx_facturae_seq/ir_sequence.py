@@ -131,7 +131,7 @@ class ir_sequence(osv.Model):
                 ('sequence_id', '=', sequence.id),
                 ('number_start', '<=', number_work),
                 ('number_end', '>=', number_work),
-                ('company_id', '=', company_id)],
+                ('company_id', '=', sequence.company_id.id)],
                 limit=1)
             approval_id = approval_ids and approval_ids[0] or False
             res[sequence.id] = approval_id
