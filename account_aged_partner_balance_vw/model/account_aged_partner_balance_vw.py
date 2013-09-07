@@ -413,15 +413,15 @@ class account_aged_trial_balance(osv.TransientModel):
         res2=[]
         if not res: return []
         for r in res:
-            if r['date_due'] < form['0']['stop']:
+            if form['0']['stop'] >= r['date_due']:
                 r['days_due_121togr']=r['residual']
-            elif form['1']['start'] >= r['date_due'] and form['1']['stop'] <= r['date_due']:
+            elif form['1']['start'] <= r['date_due'] and form['1']['stop'] >= r['date_due']:
                 r['days_due_91to120']=r['residual']
-            elif form['2']['start'] >= r['date_due'] and form['2']['stop'] <= r['date_due']:
+            elif form['2']['start'] <= r['date_due'] and form['2']['stop'] >= r['date_due']:
                 r['days_due_61to90']=r['residual']
-            elif form['3']['start'] >= r['date_due'] and form['3']['stop'] <= r['date_due']:
+            elif form['3']['start'] <= r['date_due'] and form['3']['stop'] >= r['date_due']:
                 r['days_due_31to60']=r['residual']
-            elif form['4']['start'] >= r['date_due'] and form['4']['stop'] <= r['date_due']:
+            elif form['4']['start'] <= r['date_due'] and form['4']['stop'] >= r['date_due']:
                 r['days_due_01to30']=r['residual']
             else:
                 r['not_due']=r['residual']
