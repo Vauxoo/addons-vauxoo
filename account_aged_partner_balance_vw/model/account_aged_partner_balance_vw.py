@@ -107,10 +107,15 @@ class account_aged_trial_balance(osv.TransientModel):
     def aged_report(self, cr, uid, ids, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
+        datas = {'ids': ids}
         wzd_brw = self.browse(cr,uid,ids[0],context=context)
+        res = self.check_report(cr, uid, ids, context=context)
+        data = res['datas']
+        datas['form'] = data['form']
         return {
             'type': 'ir.actions.report.xml',
             'report_name': 'account_aged_partner_balance_report',
+            'datas': datas,
         }
 
     def compute_lines(self, cr, uid, ids, context=None):
