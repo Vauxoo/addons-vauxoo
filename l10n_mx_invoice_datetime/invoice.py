@@ -133,7 +133,7 @@ class account_invoice(osv.Model):
                     date_ts, '%Y-%m-%d %H:%M:%S').date().strftime('%Y/%m/%d')
                 res['date_invoice'] = date_invoice
         return res
-
+    """
     def action_move_create(self, cr, uid, ids, *args):
         for inv in self.browse(cr, uid, ids):
             if inv.move_id:
@@ -144,7 +144,7 @@ class account_invoice(osv.Model):
                 self.write(cr, uid, [inv.id], {
                            'date_invoice': t1, 'invoice_datetime': t2})
         return super(account_invoice, self).action_move_create(cr, uid, ids, *args)
-
+    """
 # class account_invoice_refund(osv.TransientModel):
  #   _inherit = 'account.invoice.refund'
   #  _columns = {
