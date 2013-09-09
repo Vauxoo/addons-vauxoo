@@ -30,6 +30,15 @@ mrp.production inherit
                     <field name="wo_lot_id"/>
                 </xpath>
 
+                <xpath expr="//field[@name='move_lines']/tree/button[@string='Consume Products']" position="replace">
+                </xpath>
+
+                <xpath expr="//field[@name='move_lines']/tree/button[@string='Split in Serial Numbers']" position="replace">
+                </xpath>
+
+                <xpath expr="//field[@name='move_lines']/tree/button[@string='Scrap Products']" position="replace">
+                </xpath>
+
             </field>
         </record>
 
