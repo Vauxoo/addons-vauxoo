@@ -119,7 +119,6 @@ class ir_sequence(osv.Model):
         context={}):
         if not context:
             context = {}
-        company_id = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.id
         res = {}
         for id in ids:
             res[id] = False
