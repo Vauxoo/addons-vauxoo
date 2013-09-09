@@ -101,6 +101,17 @@
                             </td>
                         </tr>
                     %endfor
+                        
+<!--
+                        Aquí va la celda de los totales la vemos si la ponemos con un ciclo por lo pronto te dejo 
+                        El esqueleto de esos campos
+-->
+                    <tr>
+                        %for i in range(1,9):
+                            <td class="celdaTotalTotales" >${_('$')}
+                            </td>
+                        %endfor
+                    </tr>
                 </tbody>
             </table>
         %endfor
