@@ -18,6 +18,10 @@ mrp.consume
                     </group>
                 </xpath>
 
+                <xpath expr="//field[@name='consume_line_ids']" position="attributes">
+                    <attribute name="readonly">context.get('active_model',False) == 'mrp.production'</attribute>
+                </xpath>
+
                 <xpath expr="//button[@string='Consume']" position="attributes">
                     <attribute name="invisible">context.get('active_model',False) == 'mrp.production'</attribute>
                 </xpath>
