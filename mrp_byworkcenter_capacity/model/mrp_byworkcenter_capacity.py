@@ -721,6 +721,7 @@ class mrp_workorder_lot(osv.Model):
             cr.execute(
                 "UPDATE mrp_workorder_lot set state='%s' WHERE id=%d" % (
                     value, id))
+        return True
 
     _columns = {
         'name': fields.char(
