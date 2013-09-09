@@ -21,7 +21,24 @@
     <body style="border:0; margin: 0;" onload="subst()">
         <table style="border-top: 1px solid black; width: 100%">
             <tr >
-                <td style="text-align:right;font-size:12;" width="95%">Page <span class="page"/></td><td style="text-align:left;font-size:12;">  of <span class="topage"/></td>
+                <td style="float:right;" width="30%">
+                   <script type="text/javascript">
+                        var date = new Date();
+                        var d  = date.getDate();
+                        var day = (d < 10) ? '0' + d : d;
+                        var m = date.getMonth() + 1;
+                        var month = (m < 10) ? '0' + m : m;
+                        var yy = date.getYear();
+                        var year = (yy < 1000) ? yy + 1900 : yy;
+                        var h = date.getHours();
+                        var hours = (h < 10) ? '0' + h : h;
+                        var mm = date.getMinutes();
+                        var minutes = (mm < 10) ? '0' + mm : mm;
+                        document.write(day + "/" + month + "/" + year + 
+                                      "\t\t" + hours+":" + minutes );
+                        </script>
+                </td>
+                <td style="text-align:right;font-size:12;" width="65%">Page <span class="page"/></td><td style="text-align:left;font-size:12;">  of <span class="topage"/></td>
             </tr>
         </table>
     </body>
@@ -88,6 +105,14 @@ background-color:#F5F5F5;
 } 
 
 .celdaTotal{ 
+font-size:7pt; 
+font-family: monospace; 
+text-align:right; 
+font-weight:bold; 
+background-color:#F5F5F5; 
+} 
+
+.celdaTotalTotales{ 
 font-size:10pt; 
 font-family: monospace; 
 text-align:right; 
@@ -104,7 +129,7 @@ background-color:#F5F5F5;
 } 
 
 .celdaLineData{ 
-font-size:8pt; 
+font-size:7pt; 
 font-family: monospace; 
 text-align:right; 
 background-color:#F5F5F5; 

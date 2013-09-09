@@ -68,6 +68,7 @@
                         %for i in range (4,-1,-1):
                             <th class="celdaTituloTabla" style="text-align:center;">${form.get('%i'%i).get('name')}</th>
                         %endfor
+                        <th class="celdaTituloTabla" style="text-align:center;">${_('Total')}</th>
                     </tr>
                 </thead>
                  
@@ -95,8 +96,22 @@
                             <td class="celdaLineData" width="10%">
                                 ${line.days_due_121togr}
                             </td>
+                            <td class="celdaTotal" width="10%">
+                                ${line.total}
+                            </td>
                         </tr>
                     %endfor
+                        
+<!--
+                        Aquí va la celda de los totales la vemos si la ponemos con un ciclo por lo pronto te dejo 
+                        El esqueleto de esos campos
+-->
+                    <tr>
+                        %for i in range(1,9):
+                            <td class="celdaTotalTotales" >${_('$')}
+                            </td>
+                        %endfor
+                    </tr>
                 </tbody>
             </table>
         %endfor
