@@ -104,16 +104,3 @@ class mrp_consume(osv.TransientModel):
                 }]
 
         return {'value': {'consume_line_ids': values}}
-
-    def action_consume(self, cr, uid, ids, context=None):
-        """
-        Overwrite the action_consume method to change the work order lot state.
-        """
-        context = context or {}
-        wol_obj = self.pool.get('mrp.workorder.lot')
-        res = super(mrp_consume, self).action_consume(
-            cr, uid, ids, context=context)
-        consume = self.browse(cr, uid, ids, context=context)[0]
-        wol_obj.write(cr, uid, consume.wo_lot_id.id,
-                      {'state': 'open'}, context=context)
-        return res
