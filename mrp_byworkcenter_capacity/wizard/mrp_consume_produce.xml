@@ -14,16 +14,16 @@ mrp.consume
                 <xpath expr="//field[@name='consume_line_ids']" position="before">
                     <group>
                         <field name="production_id" readonly="1"/>
-                        <field name="wo_lot_id" domain="[('production_id', '=', production_id),('state','=','draft')]" on_change="onchange_wo_lot_ids(production_id,wo_lot_id,consume_line_ids)"/>
+                        <field name="wo_lot_id" domain="[('production_id', '=', production_id),('state','=','draft')]" on_change="onchange_wo_lot_ids(production_id,wo_lot_id,consume_line_ids)" readonly="context.get('active_model',False) == 'mrp.workorder.lot'"/>
                     </group>
                 </xpath>
 
                 <xpath expr="//button[@string='Consume']" position="attributes">
-                    <attribute name="invisible">True</attribute>
+                    <attribute name="invisible">context.get('active_model',False) == 'mrp.production'</attribute>
                 </xpath>
 
                 <xpath expr="//button[@string='Consume']" position="after">
-                    <button string="Active Lot" icon="gtk-ok" name="action_active_lot" type="object"/>
+                    <button string="Active Lot" icon="gtk-ok" name="action_active_lot" type="object" invisible="context.get('active_model',False) == 'mrp.workorder.lot'"/>
                 </xpath>
 
             </field>

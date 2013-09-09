@@ -39,14 +39,49 @@ class mrp_consume(osv.TransientModel):
         context = context or {}
         res = False
         production_obj = self.pool.get('mrp.production')
-        if context.get('active_id', False):
-            production_id = context.get('active_id')
-            wol_brws = production_obj.browse(
-                cr, uid, production_id, context=context).wo_lot_ids
-            res = [wol_brw.id
-                   for wol_brw in wol_brws
-                   if wol_brw.state == 'draft']
+        active_id = context.get('active_id', False)
+        active_model = context.get('active_model', False)
+        if active_id:
+            if active_model == 'mrp.production':
+                production_id = active_id
+                wol_brws = production_obj.browse(
+                    cr, uid, production_id, context=context).wo_lot_ids
+                res = [wol_brw.id
+                       for wol_brw in wol_brws
+                       if wol_brw.state == 'draft']
+            elif active_model == 'mrp.workorder.lot':
+                res = [active_id]
+            else:
+                raise osv.except_osv (
+                    _('Error!!'),
+                    _('This wizard only can be call from the manufacturing'
+                      ' order form or the Work Orders by Active Lot menu.'))
+
+        #~ raise osv.except_osv ('stop', 'here')
+
         return res[0]
+
+    def _get_default_mo_id(self, cr, uid, context=None):
+        """
+        Return the production id.
+        """
+        context = context or {}
+        wol_obj = self.pool.get('mrp.workorder.lot')
+        res = False
+        active_id = context.get('active_id', False)
+        active_model = context.get('active_model', False)
+        if active_id:
+            if active_model == 'mrp.production':
+                res = active_id
+            elif active_model == 'mrp.workorder.lot':
+                res = wol_obj.browse(
+                    cr, uid, active_id, context=context).production_id.id
+            else:
+                raise osv.except_osv (
+                    _('Error!!'),
+                    _('This wizard only can be call from the manufacturing'
+                      ' order form or the Work Orders by Active Lot menu.'))
+        return res
 
     _columns = {
         'production_id': fields.many2one(
@@ -61,7 +96,7 @@ class mrp_consume(osv.TransientModel):
     }
 
     _defaults = {
-        'production_id': lambda s, c, u, ctx: ctx.get('active_id', False),
+        'production_id': _get_default_mo_id,
         'wo_lot_id': _get_default_wo_lot,
     }
 

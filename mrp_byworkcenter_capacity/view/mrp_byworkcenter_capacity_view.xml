@@ -284,7 +284,7 @@ mrp.workorder.lot
                                     <a name="%(mrp_workoder_by_lot_kanban_action)d" type="action" style="margin-right: 10px">
                                     Work Orders
                                     </a>
-
+                                    <button name="%(mrp_consume_produce.create_consume_action)d" string="Consume" icon="gtk-ok" type="action" groups="stock.group_stock_user"/>
                                 </div>
                             </div>
                         </div>
