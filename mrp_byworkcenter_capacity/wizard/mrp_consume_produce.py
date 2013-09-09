@@ -59,7 +59,7 @@ class mrp_consume(osv.TransientModel):
 
         #~ raise osv.except_osv ('stop', 'here')
 
-        return res[0]
+        return res and res[0] or False
 
     def _get_default_mo_id(self, cr, uid, context=None):
         """
