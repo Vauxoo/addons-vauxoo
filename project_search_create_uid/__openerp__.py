@@ -33,7 +33,7 @@
 Search by write_date, write_uid, create_date, create_uid in model Project_task
 ==============================================================================
 To work properly, apply the patch from the "patch" folder
--------------------------------------------------------
+---------------------------------------------------------
     """,
     'depends': ['project'],
     'data': [
