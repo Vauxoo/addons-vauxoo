@@ -41,7 +41,7 @@ mrp.produce
                 <xpath expr="//field[@name='produce_line_ids']" position="before">
                     <group>
                         <field name="production_id" readonly="1"/>
-                        <field name="wo_lot_id" domain="[('production_id', '=', production_id)]"/>
+                        <field name="wo_lot_id" domain="[('production_id', '=', production_id),('state','=','ready')]"/>
                     </group>
                 </xpath>
 
