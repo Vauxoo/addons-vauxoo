@@ -183,6 +183,33 @@ class mrp_produce(osv.TransientModel):
                       ' order form or the Work Orders by Active Lot menu.'))
         return res
 
+    def _get_default_wo_lot(self, cr, uid, context=None):
+        """
+        @return: The first Work Order Lot ready to Produce (cardinal order).
+        """
+        context = context or {}
+        res = False
+        production_obj = self.pool.get('mrp.production')
+        active_id = context.get('active_id', False)
+        active_model = context.get('active_model', False)
+        if active_id:
+            if active_model == 'mrp.production':
+                production_id = active_id
+                wol_brws = production_obj.browse(
+                    cr, uid, production_id, context=context).wo_lot_ids
+                res = [wol_brw.id
+                       for wol_brw in wol_brws
+                       if wol_brw.state == 'ready']
+            elif active_model == 'mrp.workorder.lot':
+                res = [active_id]
+            else:
+                raise osv.except_osv (
+                    _('Error!!'),
+                    _('This wizard only can be call from the manufacturing'
+                      ' order form or the Work Orders by Active Lot menu.'))
+
+        return res and res[0] or False
+
     _columns = {
         'production_id': fields.many2one(
             'mrp.production',
@@ -197,4 +224,5 @@ class mrp_produce(osv.TransientModel):
 
     _defaults = {
         'production_id': _get_default_mo_id,
+        'wo_lot_id': _get_default_wo_lot,
     }
