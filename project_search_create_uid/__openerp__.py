@@ -6,7 +6,7 @@
 #    All Rights Reserved.
 #    info@vauxoo.com
 ############################################################################
-#    Coded by: luis ernesto garcía (ernesto_gm@vauxoo.com)
+#    Coded by: Luis Ernesto García Medina(ernesto_gm@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,19 +25,20 @@
 ##############################################################################
 
 {
-    "name": "Search by Last Modification User, Date Modified, Date Created, Creator",
+    "name": "Search by Last Modification User, Date Modified, Date Created",
     "version": "1.1",
     "author" : "Vauxoo",
     "website" : "http://www.vauxoo.com/",
-    "description": """ search by write_date, write_uid, create_date, create_uid in model Project_task
+    "description": """ 
+Search by write_date, write_uid, create_date, create_uid in model Project_task
+==============================================================================
+To work properly, apply the patch from the "patch" folder
+-------------------------------------------------------
     """,
     'depends': ['project'],
-    'init_xml': [],
-    'update_xml': [
+    'data': [
         'project_view.xml',
                 ],
-    'demo_xml': [],
-    'test': [],
     'installable': True,
     'active': False,
 }
