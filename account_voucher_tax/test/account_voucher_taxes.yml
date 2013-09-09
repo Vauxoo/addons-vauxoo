@@ -1,25 +1,15 @@
 -
-  In order to check account voucher tax module in OpenERP I create a tax
+  Test for check partial voucher with a same invoice
 -
-  !record {model: account.tax, id: account_tax_iva}:
-    description: iva 16
-    type_tax_use: purchase
-    tax_voucher_ok: True
-    name: Iva 16%
-    type: percent
-    amount: 0.1600
-    account_collected_id: account.iva
-    account_paid_id: account.iva
-    account_collected_voucher_id: account.ova
-    account_paid_voucher_id: account.ova
-
+  I set the context as would do the action in supplier invoice menuitem
+-
+  !context
+    'default_type': 'in_invoice'
 -
   I create a supplier invoice
 -
-  !record {model: account.invoice, id: account_invoice_supplier_tax0}:
+  !record {model: account.invoice, id: account_invoice_supplier_tax0, view: account.invoice_supplier_form}:
     account_id: account.a_pay
-    address_contact_id: base.res_partner_address_3000
-    address_invoice_id: base.res_partner_address_3000
     check_total: 6182.80
     company_id: base.main_company
     currency_id: base.EUR
@@ -27,16 +17,13 @@
       - account_id: account.a_expense
         name: '[PC1] Basic PC'
         price_unit: 5330.0
-        product_id: product.product_product_pc1
+        product_id: product.product_product_5
         quantity: 1.0
-        uos_id: product.product_uom_unit
         invoice_line_tax_id:
-                  - account_tax_iva
+            - account_voucher_tax_purchase_iva16
     journal_id: account.expenses_journal
-    partner_id: base.res_partner_c2c
+    partner_id: base.res_partner_23
     reference_type: none
-    type: in_invoice
-
 -
   I change the state of invoice to open by clicking Validate button
 -
@@ -46,40 +33,45 @@
 -
   !assert {model: account.invoice, id: account_invoice_supplier_tax0}:
     - state == 'open'
-
 -
   I create the first voucher of payment with values 6182.80
 -
-  !record {model: account.voucher, id: account_voucher_tax1, view: False}:
+  !record {model: account.voucher, id: account_voucher_tax1, view: account_voucher.view_vendor_payment_form}:
     account_id: account.cash
     company_id: base.main_company
     amount: 6182.80
     journal_id: account.bank_journal
     name: 'First payment: with tax'
-    partner_id: base.res_partner_c2c
-    period_id: account.period_7
+    partner_id: base.res_partner_23
     date: !eval time.strftime("%Y-%m-%d")
     type: 'payment'
-
 -
-  Line of voucher
--
-  !python {model: account.voucher}: |
-    voucher_id = self.search(cr, uid, [('id', '=', ref('account_voucher_tax1'))])
-    voucher = self.browse(cr, uid, voucher_id[0])
-    res=self.onchange_journal(cr, uid, [voucher.id], journal_id=ref('account.bank_journal'), line_ids=[], tax_id=False, partner_id=voucher.partner_id.id, date=voucher.date, amount=6182.80, ttype='payment', company_id=voucher.company_id.id, context=None)
-    onchange_journal_value=res.get('value', {}) or {}
-    lines=onchange_journal_value.pop('line_dr_ids')[0]
-    lines_format=[0,0]
-    lines_format.append(lines)
-    onchange_journal_value['line_dr_ids']=[tuple(lines_format)]
-    self.write(cr,uid, [voucher.id], onchange_journal_value)
-    assert (voucher.amount==6182.80) , "check amount"
+  I click to validate button on voucher
 -
   !workflow {model: account.voucher, action: proforma_voucher, ref: account_voucher_tax1}
 -
-
-
-
-
-
+  I check that the voucher state is now "Posted"
+-
+  !assert {model: account.voucher, id: account_voucher_tax1}:
+    - state == 'posted'
+-
+  I check that the invoice state is now "Paid"
+-
+  !assert {model: account.invoice, id: account_invoice_supplier_tax0}:
+    - state == 'paid'
+-
+  I check that the Journal Items is generated with tax section from voucher
+-
+  !python {model: account.voucher}: |
+    voucher_id = self.browse(cr, uid, ref('account_voucher_tax1'))
+    for move_line in voucher_id.move_id.line_id:
+        if move_line.credit == 852.80:
+            assert move_line.account_id.id == ref('account.iva'), "Wrong account IVA in Journal Item"
+        elif move_line.debit == 852.80:
+            assert move_line.account_id.id == ref('account_iva_voucher'), "Wrong account IVA Voucher in Journal Item"
+        elif move_line.credit == 6182.80:
+            assert move_line.account_id.id == voucher_id.account_id.id, "Wrong bank account in Journal Item"
+        elif move_line.debit == 6182.80:
+            assert move_line.account_id.id == voucher_id.partner_id.property_account_payable.id, "Wrong payable account in Journal Item"
+        else:
+            assert False, "Wrong entry. Unrecognized account move line for voucher tax."

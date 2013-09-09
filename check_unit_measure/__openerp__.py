@@ -21,7 +21,7 @@
 {
     'name' : 'Unit Measure Check',
     'version' : '1',
-    'author' : 'Vauxoo C.A.',
+    'author' : 'Vauxoo',
     'category' : 'Sale, Purchase and Warehousee',
     'description' : """
 

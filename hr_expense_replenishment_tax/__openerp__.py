@@ -29,6 +29,7 @@
     "depends": [
         "account_invoice_tax",
         "hr_expense_replenishment",
+        "account_voucher_tax"
         ],
     "author": "Vauxoo",
     "description": """

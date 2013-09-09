@@ -27,6 +27,7 @@ from openerp import netsvc
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 import openerp.addons.decimal_precision as dp
+from openerp import tools
 
 
 class purchase_requisition_line(osv.Model):
@@ -39,7 +40,14 @@ class purchase_requisition_line(osv.Model):
                 help='This field is used to assign the selected'\
                 ' analytic account to the line of the purchase order'),
     }
-
+    
+    def init(self, cr ):
+        cr.execute("""UPDATE purchase_requisition_line prl 
+                      SET name = (SELECT CONCAT('[',default_code,']',' ', name_template )
+                                  FROM product_product pp 
+                                  WHERE pp.id = prl.product_id)
+                                  WHERE prl.name is NULL""") 
+    
     def onchange_product_id(self, cr, uid, ids, product_id,
                             product_uom_id, context=None):
         product_obj = self.pool.get('product.product')

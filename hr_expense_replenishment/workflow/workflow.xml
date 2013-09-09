@@ -4,5 +4,11 @@
         <record id="hr_expense.t8" model="workflow.transition">
             <field name="condition">check_invoice()</field>
         </record>
+        <record id="t61" model="workflow.transition">
+            <field name="act_from" ref="hr_expense.act_done"/>
+            <field name="act_to" ref="hr_expense.act_refused"/>
+            <field name="signal">cancel</field>
+            <field name="group_id" ref="base.group_hr_user"/>
+        </record>
     </data>
 </openerp>

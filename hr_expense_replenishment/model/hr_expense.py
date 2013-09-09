@@ -30,7 +30,22 @@ from openerp.tools.translate import _
 
 class hr_expense_expense(osv.Model):
     _inherit = "hr.expense.expense"
-
+    
+    def expense_canceled(self, cr, uid, ids, context=None):
+        obj_move_line = self.pool.get('account.move.line')
+        obj_move = self.pool.get('account.move')
+        res = super(hr_expense_expense,
+                        self).expense_canceled(cr, uid, ids, context=context)
+        for expense in self.browse(cr, uid, ids, context=context):
+            if expense.account_move_id:
+                obj_move_line._remove_move_reconcile(cr, uid,
+                    [move_line.id
+                        for move_line in expense.account_move_id.line_id],
+                    context=context)
+                obj_move.unlink(cr, uid, [expense.account_move_id.id],
+                                context=context)
+        return res
+    
     def _amount(self, cr, uid, ids, field_name, arg, context=None):
         """ Overwrite method to add the sum of the invoices total amount
         (Sub total + tax amount ). """
@@ -405,7 +420,7 @@ class hr_expense_expense(osv.Model):
              
             period_id=per_obj.find(cr, uid,dt=date_post)
             period_id=period_id and period_id[0]
-            exp.write({'date_post':date_post,'period_id':period_id})
+            exp.write({'date_post':date_post})
             x_aml_ids=[aml_brw.id for aml_brw in exp.account_move_id.line_id]
 
             vals={'date':date_post,'period_id':period_id}

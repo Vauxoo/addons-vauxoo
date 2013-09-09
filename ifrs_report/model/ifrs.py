@@ -364,7 +364,6 @@ class ifrs_ifrs(osv.osv):
 class ifrs_lines(osv.osv):
 
     _name = 'ifrs.lines'
-    _parent_store = True
     _order = 'ifrs_id, sequence'
    
     def _get_sum_operator(self, cr, uid, brw, number_month=None, is_compute=None, context=None):
@@ -557,17 +556,6 @@ class ifrs_lines(osv.osv):
         elif brw.constant_type == 'number_customer':
             res = self._get_number_customer_portfolio(cr, uid, id, cx[
                                        'fiscalyear'], cx['period_to'], cx)
-        return res
-
-    def _get_level(self, cr, uid, ids, field_name, arg, context=None):
-        res = {}
-        for ifrs_line in self.browse(cr, uid, ids, context=context):
-            level = 0
-            parent = ifrs_line.parent_id
-            while parent:
-                level += 1
-                parent = parent.parent_id
-            res[ifrs_line.id] = level
         return res
 
     def _get_children_and_total(self, cr, uid, ids, context=None):
@@ -784,12 +772,6 @@ class ifrs_lines(osv.osv):
         'analytic_ids': fields.many2many('account.analytic.account', 'ifrs_analytic_rel', 'ifrs_lines_id', 'analytic_id', string='Consolidated Analytic Accounts'),
         'parent_id': fields.many2one('ifrs.lines', 'Parent', select=True, ondelete='set null', domain="[('ifrs_id','=',parent.id), ('type','=','total'),('id','!=',id)]"),
         'parent_abstract_id': fields.many2one('ifrs.lines', 'Parent Abstract', select=True, ondelete='set null', domain="[('ifrs_id','=',parent.id),('type','=','abstract'),('id','!=',id)]"),
-        'parent_right': fields.integer('Parent Right', select=1),
-        'parent_left': fields.integer('Parent Left', select=1),
-        'level': fields.function(_get_level, string='Level', method=True, type='integer',
-                                 store={
-                                 'ifrs.lines': (_get_children_and_total, ['parent_id'], 10),
-                                 }),
         'operand_ids': fields.many2many('ifrs.lines', 'ifrs_operand_rel',
             'ifrs_parent_id', 'ifrs_child_id', string='Second Operand'),
         'operator': fields.selection([

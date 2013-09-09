@@ -1,0 +1,341 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(220.0mm,280.0mm)" title="Test" author="Martin Simon" allowSplitting="20" showBoundary="0">
+    <pageTemplate id="first">
+        <pageGraphics>
+            <setFont name="Helvetica-Oblique" size="8.0"/>
+            <!--LOGO DE LA COMPANIA-->
+            <image x="5mm" y="247mm" width="55.0mm" >[[o.user_id.company_id.logo and o.user_id.company_id.logo or removeParentNode('image')]]</image>
+            <place x="5mm"     y="233.0mm"    width="270.0mm"  height="25.0mm">
+            <!--TABLA DE TITULOS-->
+                <blockTable colWidths="80mm,35mm,60mm,35mm" style="TITLE">
+                    <tr>
+                        <td>
+                            <para style="COMPANYNAME">[[o.user_id.company_id.logo and removeParentNode('para') or o.user_id.company_id.name]] </para>
+                        </td>
+                        <td>
+                            <para style="TITLE"><b>FECHA</b></para>
+                            <spacer length="1mm"/>
+                        <para style="TERMS">[[formatLang(o.date_order,date=True) ]]</para>
+                        </td>
+                        <td>
+                            <para style="TITLE"><b>PRESUPUESTO</b></para>
+                            <spacer length="1mm"/>
+                            <para style="TERMS"><b>N°.: [[ o.name ]]</b></para>
+                        </td>
+                        <td>
+                            <para style="TITLE"><b>MONEDA</b></para>
+                            <spacer length="1mm"/>
+                            <para style="TERMS"><b>[[ '%s(%s)'%(o.pricelist_id.currency_id.name,o.pricelist_id.currency_id.symbol) ]]</b></para>
+                        </td>
+                    </tr>
+                </blockTable>
+            </place>
+            <place x="105.0mm"     y="238.0mm"    width="105.0mm"  height="35.0mm">
+            <!--TABLA DE DATOS COMPANY -->
+                <blockTable colWidths="105mm" rowHeights="35.0mm" style="BOTTOM">
+                    <tr>
+                        <td>
+                            <para style="COMPANYNAME">[[ o.user_id.company_id.partner_id.name or removeParentNode('para') ]],  [[ get_rif(o.user_id.company_id.partner_id) or '' ]]</para>
+                            <para style="COMPANYNAME">[[get_addr(o.user_id.company_id.partner_id,'company').upper() or '']]</para>
+                        </td>
+                    </tr>
+                </blockTable>
+            </place>
+
+            <place x="5mm"     y="5mm"    width="205.0mm"  height="4.0mm">
+                <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="lightgrey"/>
+            <para style="ITEMSCENTER">Este documento fue impreso con OpenERP/ReportLab</para>
+            </place>
+
+            <!--TABLA DE DATOS VARIOS-->
+            <place x="5mm"     y="5mm"    width="205.0mm"  height="8.0mm">
+                <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="lightgrey"/>
+            <para style="ITEMSCENTER">Twitter: @vauxoo - Contactos: [[ o.user_id.company_id.partner_id.email or  '' ]] - [[ o.user_id.company_id.partner_id.phone or  '' ]] - [[ o.user_id.company_id.partner_id.fax or  '' ]] - [[ o.user_id.company_id.partner_id.mobile or  '' ]]</para>
+            </place>
+            <!--NUMERO DE PAGINA Y HOJAS-->
+            <drawRightString x="198mm" y="242mm">PAGINA: <pageNumber/></drawRightString>
+        </pageGraphics>
+      <frame id="first" x1="0.0mm" y1="10mm" width="220mm" height="233.0mm"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+
+        <blockTableStyle id="TITLE">
+            <blockBackground colorName="#4d80b2" start="1,0" stop="-1,-1"/>
+            <blockValign value="TOP"/>
+            </blockTableStyle>
+
+        <blockTableStyle id="ITEMSNOTES">
+            <blockBackground colorName="#4d80b2" start="0,0" stop="-1,0"/>
+            <blockBackground colorName="#4d80b2" start="0,2" stop="-0,2"/>
+            <blockSpan start="-1,1" stop="-1,-1"/>
+            <blockValign value="TOP"/>
+            <lineStyle kind="GRID" colorName="white" start="0,0" stop="-1,0" thickness="0.5"/>
+            <lineStyle kind="GRID" colorName="#4d80b2" start="0,1" stop="-1,-1" thickness="0.5"/>
+            <lineStyle kind="OUTLINE" colorName="#4d80b2" thickness="0.5"/>
+        </blockTableStyle>
+
+        <blockTableStyle id="CONDICIONES">
+            <blockBackground colorName="#4d80b2" start="0,0" stop="-1,0"/>
+            <blockValign value="TOP"/>
+            <lineStyle kind="OUTLINE" colorName="#4d80b2" thickness="0.5"/>
+        </blockTableStyle>
+        
+        <blockTableStyle id="ASESOR">
+            <blockBackground colorName="#4d80b2" start="1,0" stop="-1,0"/>
+            <blockValign value="TOP"/>
+            <lineStyle kind="OUTLINE" colorName="#4d80b2" thickness="0.5" start="1,0" stop="-1,-1"/>
+        </blockTableStyle>
+
+        <blockTableStyle id="BOTTOM">
+            <blockValign value="TOP"/>
+        </blockTableStyle>
+
+        <blockTableStyle id="TERMS-INV">
+            <blockBackground colorName="#4d80b2" start="0,-1" stop="-1,-1"/>
+            <blockValign value="TOP"/>
+            <lineStyle kind="GRID" colorName="white" start="0,0" stop="-1,0" thickness="0.5"/>
+            <lineStyle kind="GRID" colorName="#4d80b2" start="0,1" stop="-1,-1" thickness="0.5"/>
+            <lineStyle kind="OUTLINE" colorName="#4d80b2" thickness="0.5"/>
+        </blockTableStyle>
+
+        <blockTableStyle id="TERMS">
+            <blockBackground colorName="#4d80b2" start="0,0" stop="-1,0"/>
+            <blockValign value="TOP"/>
+            <lineStyle kind="GRID" colorName="white" start="0,0" stop="-1,0" thickness="0.5"/>
+            <lineStyle kind="GRID" colorName="#4d80b2" start="0,1" stop="-1,-1" thickness="0.5"/>
+            <lineStyle kind="OUTLINE" colorName="#4d80b2" thickness="0.5"/>
+        </blockTableStyle>
+
+        <blockTableStyle id="ITEMSTITLE">
+            <blockBackground colorName="#4d80b2" start="0,0" stop="5,0"/>
+            <blockValign value="TOP"/>
+            <lineStyle kind="GRID" colorName="white" start="0,0" stop="5,0" thickness="0.5"/>
+            <lineStyle kind="OUTLINE" colorName="#4d80b2" thickness="0.5"/>
+        </blockTableStyle>
+
+        <blockTableStyle id="ITEMS">
+            <blockValign value="TOP"/>
+            <lineStyle kind="GRID" colorName="#4d80b2" start="0,0" stop="5,-1" thickness="0.5" />
+            <lineStyle kind="OUTLINE" colorName="#4d80b2" thickness="0.5"/>
+        </blockTableStyle>
+
+        <blockTableStyle id="TOTAL">
+            <blockValign value="TOP"/>
+            <lineStyle kind="GRID" colorName="#4d80b2" start="1,0" stop="-1,-1" thickness="0.5" />
+        </blockTableStyle>
+
+    <initialize>
+      <paraStyle name="all" alignment="JUSTIFY" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="2.0" textColor="blue"/>
+    </initialize>
+
+    <paraStyle name="COMPANYNAME" alignment="RIGHT" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="TITLE" alignment="CENTER" fontName="Helvetica" fontSize="12.0" leading="8" spaceBefore="2.0" textColor="white"/>
+    <paraStyle name="SUPPLIERNAME" alignment="LEFT" fontName="Helvetica" fontSize="8.0" leading="12" spaceBefore="2.0" textColor="green"/>
+    <paraStyle name="NOTEANDNUMBER" alignment="JUSTIFY" fontName="Helvetica" fontSize="8.0" leading="12" spaceBefore="2.0" textColor="darkblue"/>
+    <paraStyle name="BILLTO" alignment="LEFT" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="2.0" textColor="white"/>
+    <paraStyle name="TERMS" alignment="CENTER" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="2.0" textColor="white"/>
+    <paraStyle name="TERMS-INV" alignment="CENTER" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="2.0" textColor="white"/>
+    <paraStyle name="ITEMSTITLE" alignment="CENTER" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="2.0" textColor="white"/>
+    <paraStyle name="ITEMSLEFT" alignment="LEFT" fontName="Helvetica" fontSize="6.0" leading="7.0" spaceBefore="0.5" textColor="black"/>
+    <paraStyle name="ITEMSLEFTITALIC" alignment="LEFT" fontName="Helvetica-Oblique" fontSize="6.0" leading="8" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="ITEMSLEFTITALICPEQ" alignment="LEFT" fontName="Helvetica-Oblique" fontSize="2mm" leading="2.1mm" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="ITEMSCENTER" alignment="CENTER" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="0.5" textColor="black"/>
+    <paraStyle name="ITEMSCENTER-INV" alignment="CENTER" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="0.5" textColor="black"/>
+    <paraStyle name="ITEMSRIGHT" alignment="RIGHT" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="ITEMSSMALL" alignment="LEFT" fontName="Helvetica" fontSize="6.0" leading="7" spaceBefore="0.5" textColor="black"/>
+    <paraStyle name="ITEMFOOTER" alignment="RIGHT" fontName="Helvetica-Oblique" fontSize="3mm" leading="4mm" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="ITEMSSTRONG" alignment="LEFT" fontName="Helvetica-bold" fontSize="7.0" leading="7.0" spaceBefore="0.5" textColor="black"/>
+
+
+  </stylesheet>
+  <images/>
+  <story>
+    <para>[[repeatIn(objects,'o')]]</para>
+    <para>[[ setLang(o.partner_id.lang) ]]</para>
+<!--TABLA DE PROVEEDOR-->
+        <blockTable colWidths="80mm,80mm,50mm" style="ITEMSNOTES">
+            <tr>
+                <td>
+                    <para style="BILLTO">CLIENTE</para>
+                </td>
+                <td>
+                    <para style="BILLTO">CONTACTO</para>
+                </td>
+                <td>
+                    <para style="BILLTO">ORIGEN/REFERENCIA/REF. CLIENTE</para>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <para style="ITEMSSTRONG">[[ o.partner_invoice_id and o.partner_invoice_id.name.upper() or '']]</para>
+                </td>
+                <td>
+                    <para style="ITEMSLEFT"> [[o.partner_id.name and ('%s %s'%('Sr(a).:',o.partner_id.name.upper())) or ' ']] [[o.partner_id.phone and ('%s %s'%('TELF.:',o.partner_id.phone)) or '']] [[ o.partner_id.fax and ('%s %s'%('FAX.:',o.partner_id.fax)) or '']] [[ o.partner_id.mobile and ('%s %s'%('CEL.:',o.partner_id.mobile)) or '']] [[ o.partner_id.email and ('\n%s %s'%('EMAIL:',o.partner_id.email.upper())) or '' ]]</para>
+                </td>
+                <td>
+                    <para style="ITEMSCENTER">[[o.origin and o.origin.upper() or '']] / [[ o.name and o.name.upper() or '' ]] / [[o.client_order_ref and o.client_order_ref.upper() or '']]</para>
+                </td>
+            </tr>
+        </blockTable>
+
+  <spacer length="1mm"/>
+
+<!--TABLA DE COMPRADOR PARTE 1-->
+        <blockTable colWidths="70mm,70mm,30mm,40mm" style="ITEMSTITLE">
+            <tr>
+                <td>
+                    <para style="BILLTO">FACTURAR A</para>
+                </td>
+                <td>
+                    <para style="BILLTO">ENTREGAR EN</para>
+                </td>
+                 <td>
+                    <para style="TERMS">TÉRMINOS DE PAGO <super>(1)</super></para>
+                </td>
+                <td>
+                    <para style="TERMS">TÉRMINOS DE ENTREGA <super>(2)</super></para>
+                </td>
+            </tr>
+        </blockTable>
+
+<!--TABLA DE COMPRADOR PARTE 2-->
+        <blockTable colWidths="70mm,70mm,30mm,40mm" style="ITEMS">
+            <tr>
+                <td>
+                    <para style="ITEMSLEFT">[[o.partner_invoice_id.name and o.partner_invoice_id.name or '']] [[ o.partner_invoice_id.vat and ('\n%s '%(get_rif(o.partner_invoice_id,True))) or " " ]]</para>
+                    <para style="ITEMSLEFT">DIRECCION: [[get_addr(o.partner_invoice_id.id,'invoice') or '']]</para>
+                </td>
+                <td>
+                    <para style="ITEMSLEFT">[[get_addr(o.partner_shipping_id.id,'delivery') or '']]</para>
+                </td>
+                <td>
+                    <para style="ITEMSLEFT">[[ o.payment_term.name and o.payment_term.name or '']]</para>
+                </td>
+                <td>
+                    <para style="ITEMSCENTER">[[ o.incoterm and ('%s [%s]'%(o.incoterm.name.upper(),o.incoterm.code.upper())) or '']]</para>
+                </td>
+            </tr>
+        </blockTable>
+  <spacer length="1mm"/>
+<!--TABLA DE ITEMS-->
+    <section>
+<!--
+        <blockTable colWidths="15mm,25mm,90mm,17mm,13mm,20mm" repeatRows="1" style="TERMS"> -->
+        <blockTable colWidths="20mm,150mm,20mm,20mm" repeatRows="1" style="TERMS">
+            <tr noRowsplits="1">
+                <td>
+                <para style="ITEMSTITLE">CANTIDAD</para>
+                <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="white"/>
+                <para style="ITEMSTITLE">[ LÍNEA ]</para>
+                </td>
+                <td>
+                <para style="ITEMSTITLE">[CÓDIGO] PRODUCTO</para>
+                <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="white"/>
+                <para style="ITEMSTITLE">DESCRIPCIÓN</para>
+                <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="white"/>
+                <para style="ITEMSTITLE">PLAZO DE ENTREGA</para>
+                </td>
+                <td><para style="ITEMSTITLE">UNIDAD</para>
+                <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="white"/>
+                <para style="ITEMSTITLE">PRECIO <super>(4)</super></para></td>
+                <td><para style="ITEMSTITLE">SUBTOTAL</para></td>
+            </tr>
+            <tr>
+                [[repeatIn(o.order_line,'line')]]
+                <td>
+                    <para style="ITEMSCENTER">[[ formatLang(line.product_uos and line.product_uos_qty or line.product_uom_qty) ]]</para>
+                    <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="lightgrey"/>
+                    <para style="ITEMSCENTER">[ [[ line.sequence ]] ]</para>
+                </td>
+                <td>
+                <para style="ITEMSLEFT">[[ line.name  ]]</para>
+                <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="lightgrey"/>
+                <para style="ITEMSLEFTITALIC">[[ line.product_id.description  or removeParentNode('para') ]]</para>
+                <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="lightgrey"/>
+                <para style="ITEMSLEFTITALIC">PLAZO DE ENTREGA: [[ formatLang(line.delay, digits=0, date=False, date_time=False, grouping=True, monetary=False) or removeParentNode('para') ]][[ line.delay==0.00 and removeParentNode('para')  ]] DÍAS</para>
+                <para style="ITEMSLEFTITALICPEQ">[[ line.delay==0.00 and 'A CONVENIR' or removeParentNode('para')  ]]</para>
+                </td>
+                <td><para style="ITEMSCENTER">[ [[ line.product_uom.name  ]] ]</para>
+                <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="white"/>
+                <para style="ITEMSCENTER">[[ formatLang(line.price_unit ) ]]</para></td>
+                <td><para style="ITEMSRIGHT">[[ formatLang(line.price_subtotal ) ]]</para></td>
+            </tr>
+        </blockTable>
+    </section>
+<!--TABLA DE TOTALES-->
+
+        <blockTable colWidths="170mm,20mm,20mm"  style="TOTAL">
+                <tr>
+                    <td><para></para></td>
+                    <td><para style="ITEMSRIGHT">SUBTOTAL</para></td>
+                    <td><para style="ITEMSRIGHT">[[ formatLang(o.amount_untaxed ) ]]</para></td>
+                </tr>
+        </blockTable>
+        <blockTable colWidths="170mm,20mm,20mm"  style="TOTAL">
+                [[get_imp(o) or removeParentNode('blockTable')]]
+                <tr>
+                    [[repeatIn(get_imp(o),'list')]]
+                    <td><para></para></td>
+                    <td><para style="ITEMSCENTER">[[ list[0] ]]</para></td>
+                    <td><para style="ITEMSRIGHT">[[ list[1] ]]</para></td>
+                </tr>
+        </blockTable>
+        <blockTable colWidths="170mm,20mm,20mm"  style="TOTAL">
+                <tr>
+                    <td><para></para></td>
+                    <td><para style="ITEMSRIGHT">TOTAL</para></td>
+                    <td><para style="ITEMSRIGHT">[[ formatLang(o.amount_total, digits=2, date=False, date_time=False, grouping=True, monetary=True) ]]</para></td>
+                </tr>
+        </blockTable>
+  <spacer length="1mm"/>
+
+<!--TABLA DE NOTAS INTERNAS-->
+<!--TABLA DE CONDICIONES-->
+
+        <blockTable colWidths="210mm" repeatRows="1" style="CONDICIONES">
+            <tr>
+                <td><para style="TERMS">CONDICIONES</para></td>
+            </tr>
+            <tr>
+                <td>
+                    <para style="ITEMSSMALL">[[o.note and ('%s'%('NOTAS')) or removeParentNode('tr')]]</para>
+                    <para style="ITEMSSMALL">[[o.note ]]</para>
+                </td>
+            </tr>
+            <tr noRowsplits="1">
+                <td>
+                    <para style="ITEMSSMALL">[[ o.payment_term.name and ('%s'%('(1) TÉRMINOS DE PAGO')) or removeParentNode('tr')]] </para>
+                    <para style="ITEMSSMALL">[[ o.payment_term.name and (('%s'%(o.payment_term.name)))]] [[ o.payment_term.note and (('%s %s'%(':',o.payment_term.note ))) or '']] </para>
+                </td>
+            </tr>
+            <tr noRowsplits="1">  
+                <td>
+                    <para style="ITEMSSMALL">[[ o.incoterm.description and ('%s'%('(2) TÉRMINOS DE ENTREGA')) or removeParentNode('tr')]]</para>
+                    <para style="ITEMSSMALL">[[ o.incoterm.description]]</para>
+                </td>
+            </tr>
+            <tr noRowsplits="1">
+                <td>
+                    <para style="ITEMSSMALL">[[ get_delay(o) and ('%s'%('Para más información')) or removeParentNode('tr')]]</para>
+                    <para style="ITEMSSMALL">[[ o.user_id.company_id.rml_footer or removeParentNode('para')]]</para>
+                </td>
+            </tr>
+        </blockTable>
+        <spacer length="24"/>
+        <blockTable colWidths="160mm,50mm" repeatRows="1" style="ASESOR">
+            <tr>
+                <td><para></para></td>
+                <td><para style="ITEMSCENTER">ASESOR DE VENTAS</para></td>
+            </tr>
+            <tr>
+                <td><para></para></td>
+                <td>
+                    <para style="ITEMSCENTER">[[o.user_id and o.user_id.name or '']]</para>
+                </td>
+
+            </tr>
+        </blockTable>
+  </story>
+</document>

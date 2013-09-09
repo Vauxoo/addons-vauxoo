@@ -1,0 +1,69 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* account_reconcile_advance
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-08-20 17:00+0000\n"
+"PO-Revision-Date: 2013-08-20 17:00+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_reconcile_advance
+#: view:account.reconcile.advance:0
+msgid "Name"
+msgstr ""
+
+#. module: account_reconcile_advance
+#: view:account.reconcile.advance:0
+msgid "Invoices"
+msgstr ""
+
+#. module: account_reconcile_advance
+#: view:account.reconcile.advance:0
+msgid "Advances"
+msgstr ""
+
+#. module: account_reconcile_advance
+#: model:ir.model,name:account_reconcile_advance.model_account_voucher
+msgid "Accounting Voucher"
+msgstr ""
+
+#. module: account_reconcile_advance
+#: model:ir.actions.act_window,help:account_reconcile_advance.account_reconcile_advance_supplier_action
+msgid "<p class=\"oe_view_nocontent_create\">Create Your First Supplier Advance Reconciliation</p>\n"
+"            "
+msgstr ""
+
+#. module: account_reconcile_advance
+#: view:account.reconcile.advance:0
+msgid "Other Info"
+msgstr ""
+
+#. module: account_reconcile_advance
+#: model:ir.model,name:account_reconcile_advance.model_account_reconcile_advance
+msgid "account.reconcile.advance"
+msgstr ""
+
+#. module: account_reconcile_advance
+#: model:ir.actions.act_window,name:account_reconcile_advance.account_reconcile_advance_supplier_action
+#: model:ir.ui.menu,name:account_reconcile_advance.account_reconcile_advance_supplier_menu
+msgid "Supplier Advance Reconciliation"
+msgstr ""
+
+#. module: account_reconcile_advance
+#: view:account.reconcile.advance:0
+msgid "Account Reconcile Advance"
+msgstr ""
+
+#. module: account_reconcile_advance
+#: view:account.reconcile.advance:0
+msgid "Reconcile"
+msgstr ""
+

@@ -34,8 +34,10 @@ You will need to install recaptcha and recaptcha client::
     $ sudo pip install recaptcha
     $ sudo pip install recaptcha-client
     """,
-    'author': 'OpenERP SA',
-    'depends': ['crm',
+    'author': 'Vauxoo',
+    'website': 'http://www.vauxoo.com',
+    'depends': [
+                'crm',
                 'portal',
                 'web_captcha',
                 ],
