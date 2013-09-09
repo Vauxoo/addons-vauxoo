@@ -48,7 +48,7 @@ class res_partner(osv.Model):
     }
 
     def _address_fields(self, cr, uid, context=None):
-        _("Returns the list of the address fields that synchronizes from the parent when the flag is set use_parent_address.")
+        "Returns the list of the address fields that synchronizes from the parent when the flag is set use_parent_address."
         res = super(res_partner, self)._address_fields(cr, uid, context=None)
         res.extend(['l10n_mx_street3', 'l10n_mx_street4', 'l10n_mx_city2'])
         return res
@@ -62,14 +62,14 @@ class res_partner(osv.Model):
         return id
 
     def fields_view_get_address(self, cr, uid, arch, context={}):
-        locality = _("placeholder='Locality...'")
-        street = _("placeholder='Street...'")
-        cp = _("placeholder='ZIP'")
-        state = _("placeholder='State'")
-        external = _("placeholder='No External...'")
-        internal = _("placeholder='No Internal...'")
-        colony = _("placeholder='Colony...'")
-        country = _("placeholder='Country...'")
+        locality = _("'Locality...'")
+        street = _("'Street...'")
+        cp = _("'ZIP'")
+        state = _("'State'")
+        external = _("'No External...'")
+        internal = _("'No Internal...'")
+        colony = _("'Colony...'")
+        country = _("'Country...'")
         res = super(res_partner, self).fields_view_get_address(
             cr, uid, arch, context=context)
         user_obj = self.pool.get('res.users')
@@ -95,17 +95,17 @@ class res_partner(osv.Model):
 
                             <label for="street" string="Address"/>
                             <div>
-                                <field name="street" %s/>
-                                <field name="l10n_mx_street4" %s/>
-                                <field name="l10n_mx_street3" %s/>
-                                <field name="street2" %s/>
+                                <field name="street" placeholder=%s/>
+                                <field name="l10n_mx_street3" placeholder=%s/>
+                                <field name="l10n_mx_street4" placeholder=%s/>
+                                <field name="street2" placeholder=%s/>
                                 <div class="address_format">
                                     %s
-                                    <field name="state_id" class="oe_no_button" %s style="width: 37%%" options='{"no_open": True}' on_change="onchange_state(state_id)"/>
+                                    <field name="state_id" class="oe_no_button" placeholder=%s style="width: 37%%" options='{"no_open": True}' on_change="onchange_state(state_id)"/>
                                     <field name="zip" %s style="width: 20%%"/>
                                 </div>
-                                <field name="l10n_mx_city2" %s/>
-                                <field name="country_id" %s class="oe_no_button" options='{"no_open": True}'/>
+                                <field name="l10n_mx_city2" placeholder=%s/>
+                                <field name="country_id" placeholder=%s class="oe_no_button" options='{"no_open": True}'/>
                             </div>
                             <field name="website" widget="url" placeholder="e.g. www.openerp.com"/>
                         </group>
@@ -120,7 +120,7 @@ class res_partner(osv.Model):
                                 options='{"no_open": True}' attrs="{'invisible': [('is_company','=', True)]}" />
                         </group>
                     </group>
-            """ % (street, internal, external, colony, city, state, cp, locality, country)
+            """ % (street, external, internal, colony, city, state, cp, locality, country)
         }
         for k, v in layouts.items():
             if fmt and (k in fmt):
