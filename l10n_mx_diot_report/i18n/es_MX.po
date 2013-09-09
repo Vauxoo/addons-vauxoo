@@ -627,3 +627,23 @@ msgstr "Account - DIOT Report for Mexico"
 #: selection:res.partner,diot_country:0
 msgid "US - Estados Unidos de América"
 msgstr "US - Estados Unidos de América"
+
+#. module: l10n_mx_diot_report
+#: view:account.diot.report:0
+msgid "Spreadsheet:"
+msgstr "Hoja de Cálculo:"
+
+#. module: l10n_mx_diot_report
+#: help:account.diot.report,file_csv:0
+msgid "It will open in your program office, to validate numbers"
+msgstr "Se abrirá en su programa office, para validar números"
+
+#. module: l10n_mx_diot_report
+#: view:account.diot.report:0
+msgid "TXT to import the SAT:"
+msgstr "TXT para importar al SAT:"
+
+#. module: l10n_mx_diot_report
+#: help:account.diot.report,file:0
+msgid "This file, you can import the SAT"
+msgstr "Este archivo, lo podrá importar directamente al SAT"
