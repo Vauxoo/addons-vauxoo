@@ -18,6 +18,14 @@ mrp.consume
                     </group>
                 </xpath>
 
+                <xpath expr="//button[@string='Consume']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+                <xpath expr="//button[@string='Consume']" position="after">
+                    <button string="Active Lot" icon="gtk-ok" name="action_active_lot" type="object"/>
+                </xpath>
+
             </field>
         </record>
 
