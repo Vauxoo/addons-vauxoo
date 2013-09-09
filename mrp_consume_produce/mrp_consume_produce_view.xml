@@ -14,8 +14,8 @@
                     </xpath>
 
                 <xpath expr="//button[@name='%(mrp.act_mrp_product_produce)d']" position="after" expxml_f="//button[@name='%(mrp.act_mrp_product_produce)d']">
-                    <button name="%(create_consume_action)d" states="in_production" string="Consumed" icon="gtk-ok" type="action" attrs="{'invisible': ['|',('consumed','=',True),('state','!=','in_production')]}" groups="mrp_consume_produce.group_mrp_button_consume_produce"/>
-                    <button name="action_finished_consume" string="Finished Consumed" icon="gtk-convert" type="object" attrs="{'invisible': ['|','|',('consumed','=',True),('state','!=','in_production'),('moves_lines2','=',0)]}" groups="mrp_consume_produce.group_mrp_button_consume_produce"/>
+                    <button name="%(create_consume_action)d" states="in_production" string="Consumed" icon="gtk-ok" type="action" attrs="{'invisible': [('consumed','=',True)]}" groups="mrp_consume_produce.group_mrp_button_consume_produce"/>
+                    <button name="action_finished_consume" string="Finished Consumed" icon="gtk-convert" type="object" attrs="{'invisible': ['|',('consumed','=',True),('moves_lines2','=',0)]}" groups="mrp_consume_produce.group_mrp_button_consume_produce"/>
                 </xpath>
 
                     <xpath expr="//field[@name='origin']" position="after" expxml_f="//field[@name='origin']">
