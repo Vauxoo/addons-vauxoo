@@ -696,7 +696,7 @@ class mrp_workorder_lot(osv.Model):
                       not wo_states.count('pause')):
                     res[wol_brw.id] = 'open'
                 elif wo_states.count('done') == len(wo_states):
-                    res[wol_brw.id] = 'done'
+                    res[wol_brw.id] = 'ready'
         return res
 
     def _get_wol_id_to_update(self, cr, uid, ids, context=None):
@@ -751,6 +751,7 @@ class mrp_workorder_lot(osv.Model):
             selection=[('draft', 'New'),
                        ('open', 'In progress'),
                        ('done', 'Done'),
+                       ('ready', 'Ready to Finish'),
                        ('pending', 'Pending')],
             required=True,
             store={'mrp.production.workcenter.line': (
