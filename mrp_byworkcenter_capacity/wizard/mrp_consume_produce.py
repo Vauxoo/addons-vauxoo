@@ -119,12 +119,19 @@ class mrp_consume(osv.TransientModel):
             wo_lot = wo_lot_obj.browse(cr, uid, wo_lot_id, context=context)
             #~ extract move data for products
             move_d = {}
-            for move in production.move_lines:
-                move_d[move.product_id.id] = {
-                    'move_id': move.id,
-                    'location_id': move.location_id.id,
-                    'location_dest_id': move.location_dest_id.id,
-                    }
+
+            if production.move_lines:
+                for move in production.move_lines:
+                    move_d[move.product_id.id] = {
+                        'move_id': move.id,
+                        'location_id': move.location_id.id,
+                        'location_dest_id': move.location_dest_id.id,
+                        }
+            else:
+                raise osv.except_osv(
+                    _('Error!'),
+                    _('You have not more Product to Consume, please add new'
+                      ' lines by clicking the Product Request/Return Button.'))
             #~ create consume lines
             for product_line in production.product_lines:
                 product_id = product_line.product_id.id
