@@ -88,11 +88,11 @@ background-color:#F5F5F5;
 } 
 
 .celdaTotal{ 
-font-size:10pt; 
+font-size:7pt; 
 font-family: monospace; 
 text-align:right; 
 font-weight:bold; 
-background-color:#dcdcdc; 
+background-color:#F5F5F5; 
 } 
 
 .celdaLineDataTitulo{ 
@@ -104,7 +104,7 @@ background-color:#F5F5F5;
 } 
 
 .celdaLineData{ 
-font-size:8pt; 
+font-size:7pt; 
 font-family: monospace; 
 text-align:right; 
 background-color:#F5F5F5; 

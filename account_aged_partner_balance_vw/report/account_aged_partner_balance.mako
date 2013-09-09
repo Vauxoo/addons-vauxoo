@@ -68,6 +68,7 @@
                         %for i in range (4,-1,-1):
                             <th class="celdaTituloTabla" style="text-align:center;">${form.get('%i'%i).get('name')}</th>
                         %endfor
+                        <th class="celdaTituloTabla" style="text-align:center;">${_('Total')}</th>
                     </tr>
                 </thead>
                  
@@ -94,6 +95,9 @@
                             </td>
                             <td class="celdaLineData" width="10%">
                                 ${line.days_due_121togr}
+                            </td>
+                            <td class="celdaTotal" width="10%">
+                                ${line.total}
                             </td>
                         </tr>
                     %endfor
