@@ -157,3 +157,44 @@ class mrp_consume(osv.TransientModel):
         wol_obj.write(cr, uid, consume.wo_lot_id.id,
                       {'state': 'open'}, context=context)
         return True
+
+class mrp_produce(osv.TransientModel):
+    _inherit = 'mrp.produce'
+
+    def _get_default_mo_id(self, cr, uid, context=None):
+        """
+        Return the production id.
+        """
+        context = context or {}
+        wol_obj = self.pool.get('mrp.workorder.lot')
+        res = False
+        active_id = context.get('active_id', False)
+        active_model = context.get('active_model', False)
+        if active_id:
+            if active_model == 'mrp.production':
+                res = active_id
+            elif active_model == 'mrp.workorder.lot':
+                res = wol_obj.browse(
+                    cr, uid, active_id, context=context).production_id.id
+            else:
+                raise osv.except_osv (
+                    _('Error!!'),
+                    _('This wizard only can be call from the manufacturing'
+                      ' order form or the Work Orders by Active Lot menu.'))
+        return res
+
+    _columns = {
+        'production_id': fields.many2one(
+            'mrp.production',
+            string=_('Manufacturing Order'),
+            help=_('Manufacturing Order')),
+        'wo_lot_id': fields.many2one(
+            'mrp.workorder.lot',
+            required=True,
+            string=_('Work Orders Lots'),
+            help=_('Work Orders Lots.')),
+    }
+
+    _defaults = {
+        'production_id': _get_default_mo_id,
+    }

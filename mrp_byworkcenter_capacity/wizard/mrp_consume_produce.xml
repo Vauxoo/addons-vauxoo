@@ -29,5 +29,24 @@ mrp.consume
             </field>
         </record>
 
+<!--
+mrp.produce
+-->
+        <record id="mrp_consume_produce_produce_inherit_form" model="ir.ui.view">
+            <field name="name">mrp.consume.produce.produce.inherit.form</field>
+            <field name="model">mrp.produce</field>
+            <field name="inherit_id" ref="mrp_consume_produce.mrp_consume_produce2_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='produce_line_ids']" position="before">
+                    <group>
+                        <field name="production_id" readonly="1"/>
+                        <field name="wo_lot_id" domain="[('production_id', '=', production_id)]"/>
+                    </group>
+                </xpath>
+
+            </field>
+        </record>
+
     </data>
 </openerp>
