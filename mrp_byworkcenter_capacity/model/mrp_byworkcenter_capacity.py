@@ -692,11 +692,11 @@ class mrp_workorder_lot(osv.Model):
             elif wol_state in ['open', 'pending']:
                 if wo_states.count('cancel') or wo_states.count('pause'):
                     res[wol_brw.id] = 'pending'
+                elif wo_states.count('done') == len(wo_states):
+                    res[wol_brw.id] = 'ready'
                 elif (not wo_states.count('cancel') and
                       not wo_states.count('pause')):
                     res[wol_brw.id] = 'open'
-                elif wo_states.count('done') == len(wo_states):
-                    res[wol_brw.id] = 'ready'
         return res
 
     def _get_wol_id_to_update(self, cr, uid, ids, context=None):
