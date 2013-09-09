@@ -316,6 +316,7 @@ mrp.workorder.lot
             action="mrp_workorder_lot_kanban_action"
             id="menu_mrp_workorder_active_lot"
             parent="mrp.menu_mrp_planning"
+            groups="stock.group_stock_user"
             sequence="4"/>
 
     </data>
