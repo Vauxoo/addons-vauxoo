@@ -13,19 +13,19 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-08-21 05:50+0000\n"
-"X-Generator: Launchpad (build 16731)\n"
+"X-Launchpad-Export-Date: 2013-08-31 05:31+0000\n"
+"X-Generator: Launchpad (build 16750)\n"
 
 #. module: l10n_mx_facturae_seq
 #: model:ir.actions.act_window,name:l10n_mx_facturae_seq.action_facturae_sequence_tree
 #: model:ir.ui.menu,name:l10n_mx_facturae_seq.menu_facturae_sequence
 msgid "FacturaE MX Sequence Approval"
-msgstr "FacturaE MX Secuencia De Aprovación"
+msgstr "FacturaE MX Secuencia De Aprobación"
 
 #. module: l10n_mx_facturae_seq
 #: field:ir.sequence,approval_id:0
 msgid "Approval Current"
-msgstr "Aprovación Actual"
+msgstr "Aprobación Actual"
 
 #. module: l10n_mx_facturae_seq
 #: field:ir.sequence.approval,number_start:0
@@ -66,12 +66,12 @@ msgstr "Aprobaciones"
 #. module: l10n_mx_facturae_seq
 #: help:ir.sequence,approval_id:0
 msgid "Approval active in this sequence"
-msgstr "Aprovación activa en esta secuencia"
+msgstr "Aprobación activa en esta secuencia"
 
 #. module: l10n_mx_facturae_seq
 #: help:ir.sequence.approval,sequence_id:0
 msgid "Sequence where will add this approval"
-msgstr "Secuencia donde se agregara esta aprovación"
+msgstr "Secuencia donde se agregara esta aprobación"
 
 #. module: l10n_mx_facturae_seq
 #: view:ir.sequence.approval:0
@@ -82,7 +82,7 @@ msgstr "Company"
 #. module: l10n_mx_facturae_seq
 #: help:ir.sequence.approval,approval_year:0
 msgid "Year of approval from the Certificate"
-msgstr "Año de aprovación del Certificado"
+msgstr "Año de aprobación del Certificado"
 
 #. module: l10n_mx_facturae_seq
 #: field:ir.sequence.approval,serie:0
@@ -112,7 +112,7 @@ msgstr "Secuencia utilizada en la factura"
 #. module: l10n_mx_facturae_seq
 #: help:ir.sequence.approval,company_id:0
 msgid "Company where will add this approval"
-msgstr "Compañia donde se agregara esta aprovación"
+msgstr "Compañia donde se agregara esta aprobación"
 
 #. module: l10n_mx_facturae_seq
 #: help:ir.sequence.approval,serie:0
@@ -140,7 +140,7 @@ msgstr "Secuencia de factura"
 #. module: l10n_mx_facturae_seq
 #: field:ir.sequence.approval,approval_year:0
 msgid "Year Approval"
-msgstr "Año de Aprovación"
+msgstr "Año de Aprobación"
 
 #. module: l10n_mx_facturae_seq
 #: sql_constraint:ir.sequence.approval:0
@@ -172,12 +172,12 @@ msgstr "Número Final de Folios Comprados"
 #. module: l10n_mx_facturae_seq
 #: field:ir.sequence.approval,approval_number:0
 msgid "Approval Number"
-msgstr "Número de Aprovación"
+msgstr "Número de Aprobación"
 
 #. module: l10n_mx_facturae_seq
 #: help:ir.sequence,approval_ids:0
 msgid "Approvals in this Sequence"
-msgstr "Aprovación en esta Secuencia"
+msgstr "Aprobación en esta Secuencia"
 
 #. module: l10n_mx_facturae_seq
 #: model:ir.model,name:l10n_mx_facturae_seq.model_account_invoice

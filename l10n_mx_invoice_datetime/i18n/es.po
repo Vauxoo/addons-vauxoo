@@ -7,13 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-04-05 18:08+0000\n"
-"PO-Revision-Date: 2013-04-05 18:08+0000\n"
-"Last-Translator: <>\n"
+"PO-Revision-Date: 2013-09-05 16:27+0000\n"
+"Last-Translator: Rodolfo Lopez - http://www.vauxoo.com <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-09-06 06:09+0000\n"
+"X-Generator: Launchpad (build 16760)\n"
 
 #. module: l10n_mx_invoice_datetime
 #: model:res.groups,name:l10n_mx_invoice_datetime.group_res_date_invoice
@@ -48,10 +49,9 @@ msgstr "Mantener vacio para usar la fecha actual"
 #. module: l10n_mx_invoice_datetime
 #: field:account.invoice,invoice_datetime:0
 msgid "Date Electronic Invoiced "
-msgstr "Fecha Factura Electronica"
+msgstr "Fecha Factura Electronica "
 
 #. module: l10n_mx_invoice_datetime
 #: model:ir.model,name:l10n_mx_invoice_datetime.model_account_invoice
 msgid "Invoice"
 msgstr "Factura"
-

@@ -12,6 +12,7 @@ msgstr ""
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
+<<<<<<< TREE
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
@@ -138,3 +139,38 @@ msgstr "Devuelve la lista de los campos de dirección que se sincroniza con el p
 msgid "No. External"
 msgstr "No. Exterior"
 
+=======
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-08-31 05:31+0000\n"
+"X-Generator: Launchpad (build 16750)\n"
+
+#. module: l10n_mx_partner_address
+#: field:res.partner.address,city2:0
+msgid "City2"
+msgstr ""
+
+#. module: l10n_mx_partner_address
+#: field:res.partner.address,street3:0
+msgid "Street3"
+msgstr ""
+
+#. module: l10n_mx_partner_address
+#: field:res.partner.address,street4:0
+msgid "Street4"
+msgstr ""
+
+#. module: base
+#: field:res.partner.address,street:0
+msgid "Street"
+msgstr ""
+
+#. module: base
+#: field:res.partner.address,street2:0
+msgid "Street2"
+msgstr ""
+
+#. module: base
+#: field:res.partner.address,state_id:0
+msgid "Fed. State"
+msgstr ""
+>>>>>>> MERGE-SOURCE

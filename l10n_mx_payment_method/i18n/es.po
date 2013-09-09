@@ -1,73 +1,20 @@
-# Translation of OpenERP Server.
-# This file contains the translation of the following modules:
-#	* l10n_mx_payment_method
+# Spanish translation for openerp-mexico-localization
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the openerp-mexico-localization package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-08 21:36+0000\n"
-"PO-Revision-Date: 2013-04-08 21:36+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"Project-Id-Version: openerp-mexico-localization\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-08-07 16:09+0000\n"
+"PO-Revision-Date: 2013-09-05 16:30+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-09-06 06:09+0000\n"
+"X-Generator: Launchpad (build 16760)\n"
 
-#. module: l10n_mx_payment_method
-#: help:account.invoice,pay_method_id:0
-#: help:res.partner,pay_method_id:0
-msgid "Indicates the way it was paid or will be paid the invoice, where the options could be: check, bank transfer, reservoir in account bank, credit card, cash etc. If not know as will be paid the invoice, leave empty and the XML show “Unidentified”."
-msgstr "Indica la forma en que se pagó o se pagará la factura, donde las opciones pueden ser: cheque, transferencia bancaria, depósito en cuenta bancaria, tarjeta de crédito, efectivo etc. Si no se sabe como va ser pagada la factura, dejarlo vacío y en el xml aparecerá “No identificado”."
-
-#. module: l10n_mx_payment_method
-#: field:account.invoice,pay_method_id:0
-#: model:ir.actions.act_window,name:l10n_mx_payment_method.action_pay_method
-#: model:ir.ui.menu,name:l10n_mx_payment_method.cfd_22_metodos_pago
-#: view:pay.method:0
-#: field:pay.method,name:0
-#: field:res.partner,pay_method_id:0
-msgid "Payment Method"
-msgstr "Método de Pago"
-
-#. module: l10n_mx_payment_method
-#: field:account.invoice,acc_payment:0
-msgid "Account Number"
-msgstr "Número de Cuenta"
-
-#. module: l10n_mx_payment_method
-#: model:ir.model,name:l10n_mx_payment_method.model_pay_method
-msgid "pay.method"
-msgstr "pay.method"
-
-#. module: l10n_mx_payment_method
-#: model:res.groups,name:l10n_mx_payment_method.group_payment_method_user
-msgid "Payment Method / User"
-msgstr "Método de Pago / Usuario"
-
-#. module: l10n_mx_payment_method
-#: field:pay.method,description:0
-msgid "Description"
-msgstr "Descripción"
-
-#. module: l10n_mx_payment_method
-#: help:account.invoice,acc_payment:0
-msgid "Is the account with which the client pays the invoice, if not know which account will used for pay leave empty and the XML will show \"“Unidentified”\"."
-msgstr "Es la cuenta con la que el cliente pagará la factura, si no se sabe con cual cuenta se va pagar dejarlo vacío y en el xml aparecerá "No identificado"."
-
-#. module: l10n_mx_payment_method
-#: model:res.groups,name:l10n_mx_payment_method.group_payment_method_manager
-msgid "Payment Method / Manager"
-msgstr "Método de Pago / Gerente"
-
-#. module: l10n_mx_payment_method
-#: model:ir.model,name:l10n_mx_payment_method.model_account_invoice
-msgid "Invoice"
-msgstr "Factura"
-
-#. module: l10n_mx_payment_method
-#: model:ir.model,name:l10n_mx_payment_method.model_res_partner
-msgid "Partner"
-msgstr "Empresa"
 

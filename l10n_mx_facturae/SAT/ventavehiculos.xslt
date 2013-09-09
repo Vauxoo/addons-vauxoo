@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ventavehiculos="http://www.sat.gob.mx/ventavehiculos">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ventavehiculos="http://www.sat.gob.mx/ventavehiculos">
 	<xsl:output method="text" version="1.0" encoding="UTF-8" indent="no"/>
 	<!-- Manejador de nodos tipo VentaVehiculos-->
 	<xsl:template match="ventavehiculos:VentaVehiculos">
