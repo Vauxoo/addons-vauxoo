@@ -303,10 +303,8 @@ mrp.workorder.lot
             </field>
          </record>
 
-
-
         <record id="mrp_workorder_lot_kanban_action" model="ir.actions.act_window">
-             <field name="name">Work Orders by Active Lot</field>
+             <field name="name">Active Work Order Lots</field>
              <field name="res_model">mrp.workorder.lot</field>
              <field name="view_mode">kanban</field>
              <field name="domain">[('state', '=', 'open')]</field>
@@ -323,10 +321,8 @@ mrp.workorder.lot
              </field>
          </record>
 
-
-
         <record id="mrp_wol_picking_kanban_action" model="ir.actions.act_window">
-             <field name="name">Work Orders Lots Ready to Picking</field>
+             <field name="name">Ready to Picking</field>
              <field name="res_model">mrp.workorder.lot</field>
              <field name="view_mode">kanban</field>
              <field name="domain">[('state', '=', 'picking')]</field>
