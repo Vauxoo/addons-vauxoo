@@ -30,7 +30,6 @@ class hr_employee(osv.Model):
 
     _columns = {
         'date_start': fields.date('Date Start'),
-        'ssnid': fields.char('Social Security No', size=12),
         'children_ids' : fields.one2many('hr.children', 'employee_id', 'Childrens')
     }
 
