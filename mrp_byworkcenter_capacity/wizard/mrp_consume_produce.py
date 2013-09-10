@@ -158,6 +158,27 @@ class mrp_consume(osv.TransientModel):
                       {'state': 'picking'}, context=context)
         return True
 
+    def action_consume(self, cr, uid, ids, context=None):
+        """
+        Overwrite action_consume() method to change the work order lot state
+        from picking to open state.
+        """
+        context = context or {}
+        wol_obj = self.pool.get('mrp.workorder.lot')
+        res = super(mrp_consume, self).action_consume(
+            cr, uid, ids, context=context)
+        if context.get('active_model', False) == 'mrp.workorder.lot':
+            wol_id = context.get('active_id', False)
+            if wol_id:
+                wol_obj.write(cr, uid, wol_id, {'state': 'open'},
+                              context=context)
+            else:
+                raise osv.except_osv(
+                    _('Error!'),
+                    _('No valid operation. no work order lot active_id.')
+                )
+        return res
+
 class mrp_produce(osv.TransientModel):
     _inherit = 'mrp.produce'
 
