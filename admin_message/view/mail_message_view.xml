@@ -92,9 +92,9 @@
         </record>
         
         <!-- Add menu entry in Settings/Email -->
-        <menuitem name="Admin Messages" id="menu_admin_mail_message" parent="mail.mail_feeds_main"/>
+        <menuitem name="Admin Messages" id="menu_admin_mail_message" parent="mail.mail_feeds_main" groups="group_admin_messages"/>
         
-        <menuitem name="Admin Messages" id="menu_admin_mail_message_sub" parent="menu_admin_mail_message" action="action_view_admin_mail_message"/>
+        <menuitem name="Admin Messages" id="menu_admin_mail_message_sub" parent="menu_admin_mail_message" action="action_view_admin_mail_message" groups="group_admin_messages"/>
 
     </data>
 </openerp>

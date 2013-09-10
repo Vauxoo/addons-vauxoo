@@ -25,18 +25,20 @@
 ##############################################################################
 
 {
-    "name": "Admid Message",
+    "name": "Administration Message",
     "version": "1.0",
     "author": "Vauxoo",
     "category": "Mail Message",
     "description": """
-
+        Module to added view replica of Mail Message.
+        Added attribute class=bs3 in form of view.
     """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     'depends': ['base', 'base_setup','mail'], 
     "data": [
         "view/mail_message_view.xml",
+        "security/security_groups.xml"
     ],
     "installable": True,
     "active": False,
