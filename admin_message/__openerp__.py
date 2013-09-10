@@ -30,7 +30,10 @@
     "author": "Vauxoo",
     "category": "Mail Message",
     "description": """
-        Module to added view replica of Mail Message.
+    
+        Module to added view replica of Mail Message,
+        localizate in: Settings->Technical -> Email ->Messages.
+        
         Added attribute class=bs3 in form of view.
     """,
     "website": "http://www.vauxoo.com/",
