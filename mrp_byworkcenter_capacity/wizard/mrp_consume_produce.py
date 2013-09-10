@@ -227,6 +227,19 @@ class mrp_produce(osv.TransientModel):
         'wo_lot_id': _get_default_wo_lot,
     }
 
+    def action_produce(self, cr, uid, ids, context=None):
+        """
+        Overwrite the action_produce() method to set the Work Order Lot to
+        Done when it is produced. 
+        """
+        context = context or {}
+        wol_obj = self.pool.get('mrp.workorder.lot')
+        res = super(mrp_produce, self).action_produce(
+            cr, uid, ids, context=context)
+        for produce in self.browse(cr, uid, ids, context=context):
+            wol_obj.write(cr, uid, produce.wo_lot_id.id,
+                          {'state': 'done'}, context=context)
+        return res
 
 class mrp_consume_line(osv.TransientModel):
     _inherit = 'mrp.consume.line'
