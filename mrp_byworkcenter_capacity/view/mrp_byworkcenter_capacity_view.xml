@@ -304,12 +304,6 @@ mrp.workorder.lot
          </record>
 
 
-        <menuitem
-            id="menu_mrp_wol"
-            name="Work Order Lots"
-            parent="mrp.menu_mrp_planning"
-            groups="stock.group_stock_user"
-            sequence="4"/>
 
         <record id="mrp_workorder_lot_kanban_action" model="ir.actions.act_window">
              <field name="name">Work Orders by Active Lot</field>
@@ -329,12 +323,6 @@ mrp.workorder.lot
              </field>
          </record>
 
-        <menuitem
-            action="mrp_workorder_lot_kanban_action"
-            id="menu_mrp_workorder_active_lot"
-            parent="menu_mrp_wol"
-            groups="stock.group_stock_user"
-            sequence="4"/>
 
 
         <record id="mrp_wol_picking_kanban_action" model="ir.actions.act_window">
@@ -354,6 +342,21 @@ mrp.workorder.lot
                 </p>
              </field>
          </record>
+
+
+        <menuitem
+            id="menu_mrp_wol"
+            name="Work Order Lots"
+            parent="mrp.menu_mrp_planning"
+            groups="stock.group_stock_user"
+            sequence="4"/>
+
+        <menuitem
+            action="mrp_workorder_lot_kanban_action"
+            id="menu_mrp_workorder_active_lot"
+            parent="menu_mrp_wol"
+            groups="stock.group_stock_user"
+            sequence="4"/>
 
         <menuitem
             action="mrp_wol_picking_kanban_action"
