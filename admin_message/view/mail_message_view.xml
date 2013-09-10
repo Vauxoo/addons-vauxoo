@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-        <!-- admin.mail.message tree: short view !-->
-        <record model="ir.ui.view" id="view_admin_message_tree">
-            <field name="name">admin.mail.message.tree</field>
-            <field name="model">admin.mail.message</field>
+        <!-- mail.message tree: short view !-->
+        <record model="ir.ui.view" id="view_admin_message_tree1">
+            <field name="name">mail.admin.message.tree</field>
+            <field name="model">mail.message</field>
             <field name="priority">20</field>
             <field name="arch" type="xml">
                 <tree string="Messages">
@@ -17,10 +17,10 @@
             </field>
         </record>
 
-        <!-- admin.mail.message form: short view !-->
+        <!-- mail.message form: short view !-->
         <record model="ir.ui.view" id="view_admin_message_form">
-            <field name="name">admin.mail.message.form</field>
-            <field name="model">admin.mail.message</field>
+            <field name="name">mail.admin.message.am.form</field>
+            <field name="model">mail.message</field>
             <field name="priority">20</field>
             <field name="arch" type="xml">
                 <form string="Message" version="7.0">
@@ -48,10 +48,10 @@
             </field>
         </record>
 
-        <!-- admin.mail.message search: wall view !-->
+        <!-- mail.message search: wall view !-->
         <record model="ir.ui.view" id="view_admin_message_search">
-            <field name="name">admin.mail.message.am.search</field>
-            <field name="model">admin.mail.message</field>
+            <field name="name">mail.admin.message.search</field>
+            <field name="model">mail.message</field>
             <field name="priority">25</field>
             <field name="arch" type="xml">
                 <search string="Messages Search">
@@ -85,14 +85,14 @@
 
         <record id="action_view_admin_mail_message" model="ir.actions.act_window">
             <field name="name">Messages</field>
-            <field name="res_model">admin.mail.message</field>
+            <field name="res_model">mail.message</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="search_view_id" ref="view_admin_message_search"/>
         </record>
         
         <!-- Add menu entry in Settings/Email -->
-        <menuitem name="Admin Messages" id="menu_admin_mail_message" parent="base.menu_email" action="action_view_admin_mail_message"/>
+        <menuitem name="Admin Messages" id="menu_admin_mail_message" parent="mail.mail_feeds_main" action="action_view_admin_mail_message"/>
 
     </data>
 </openerp>
