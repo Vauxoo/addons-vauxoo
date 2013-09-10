@@ -742,10 +742,10 @@ class ifrs_lines(osv.osv):
 
     def write(self, cr, uid, ids, vals, context=None):
         res = super(ifrs_lines, self).write(cr, uid, ids, vals)
-        ifrs_line_obj = self.pool.get('ifrs.lines').browse(cr, uid, ids)[0]
-        if ifrs_line_obj.type == 'total' and ifrs_line_obj.operator == 'without':
-            vals['operand_ids'] = [(6,0,[])]
-            super(ifrs_lines, self).write(cr, uid, ids, vals)
+        for ifrs_line in self.pool.get('ifrs.lines').browse(cr, uid, ids):
+            if ifrs_line.type == 'total' and ifrs_line.operator == 'without':
+                vals['operand_ids'] = [(6,0,[])]
+                super(ifrs_lines, self).write(cr, uid, ifrs_line.id, vals)
         return res
 
     _columns = {
