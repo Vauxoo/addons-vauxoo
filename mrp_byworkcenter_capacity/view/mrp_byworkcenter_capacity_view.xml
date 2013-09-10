@@ -303,12 +303,25 @@ mrp.workorder.lot
             </field>
          </record>
 
+        <record id="mrp_wol_search_view" model="ir.ui.view">
+            <field name="name">mrp.wol.search.view</field>
+            <field name="model">mrp.workorder.lot</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="state"/>
+                    <filter name="wol_active" string="Active" domain="[('state','in',['open','pending'])]"/>
+                    <filter name="wol_picking" string="Ready to Picking" domain="[('state','in',['picking'])]"/>
+                </search>
+            </field>
+        </record>
+
         <record id="mrp_workorder_lot_kanban_action" model="ir.actions.act_window">
              <field name="name">Active Work Order Lots</field>
              <field name="res_model">mrp.workorder.lot</field>
              <field name="view_mode">kanban</field>
-             <field name="domain">[('state', '=', 'open')]</field>
              <field name="view_id" ref="mrp_workorder_lot_kanban_view"/>
+             <field name="search_view_id" ref="mrp_wol_search_view"/>
+             <field name="context">{'search_default_wol_active': True}</field>
              <field name="help" type="html">
                 <p>
                     <strong> There's not Work Order Lots Active </strong><br/>
@@ -325,8 +338,9 @@ mrp.workorder.lot
              <field name="name">Ready to Picking</field>
              <field name="res_model">mrp.workorder.lot</field>
              <field name="view_mode">kanban</field>
-             <field name="domain">[('state', '=', 'picking')]</field>
              <field name="view_id" ref="mrp_workorder_lot_kanban_view"/>
+             <field name="search_view_id" ref="mrp_wol_search_view"/>
+             <field name="context">{'search_default_wol_picking': True}</field>
              <field name="help" type="html">
                 <p>
                     <strong> There's not Work Order Lots Active </strong><br/>
