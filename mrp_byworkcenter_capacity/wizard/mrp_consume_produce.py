@@ -226,3 +226,15 @@ class mrp_produce(osv.TransientModel):
         'production_id': _get_default_mo_id,
         'wo_lot_id': _get_default_wo_lot,
     }
+
+
+class mrp_consume_line(osv.TransientModel):
+    _inherit = 'mrp.consume.line'
+
+    _columns = {
+        'prodlot_id': fields.many2one(
+            'stock.production.lot',
+            _('Serial Number'),
+            help=_('Production Serial Number for Production Lot.')
+        ),
+    }

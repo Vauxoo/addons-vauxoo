@@ -49,6 +49,10 @@ mrp.produce
                     </group>
                 </xpath>
 
+                <xpath expr="//field[@name='produce_line_ids']/tree" position="inside">
+                    <field name="prodlot_id" domain="[('product_id','=',product_id)]"/>
+                </xpath>
+
             </field>
         </record>
 
