@@ -47,7 +47,7 @@ Ubuntu Package Depends:
     "demo" : [
         "demo/l10n_mx_facturae_pac_sf_demo.xml",
         "demo/l10n_mx_facturae_seq_demo.xml",
-        "demo/account_invoice_cfdi_pac_sf.yml",
+        "demo/account_invoice_cfdi_pac_sf_demo.yml",
     ],
     "data" : [
         #"security/l10n_mx_facturae_pac_sf_security.xml",
