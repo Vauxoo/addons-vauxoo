@@ -343,7 +343,7 @@ mrp.workorder.lot
              <field name="context">{'search_default_wol_picking': True}</field>
              <field name="help" type="html">
                 <p>
-                    <strong> There's not Work Order Lots Active </strong><br/>
+                    <strong> There's not Ready for Piking Work Orders</strong><br/>
                 </p>
                 <p>
                     Create Work Order Lots by Confirming a Manufacturing Order.
