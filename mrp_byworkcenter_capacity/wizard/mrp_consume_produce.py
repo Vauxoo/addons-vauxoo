@@ -155,7 +155,7 @@ class mrp_consume(osv.TransientModel):
         wol_obj = self.pool.get('mrp.workorder.lot')
         consume = self.browse(cr, uid, ids, context=context)[0]
         wol_obj.write(cr, uid, consume.wo_lot_id.id,
-                      {'state': 'open'}, context=context)
+                      {'state': 'picking'}, context=context)
         return True
 
 class mrp_produce(osv.TransientModel):
