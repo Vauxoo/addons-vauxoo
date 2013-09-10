@@ -328,5 +328,31 @@ mrp.workorder.lot
             groups="stock.group_stock_user"
             sequence="4"/>
 
+
+        <record id="mrp_wol_picking_kanban_action" model="ir.actions.act_window">
+             <field name="name">Work Orders Lots Ready to Picking</field>
+             <field name="res_model">mrp.workorder.lot</field>
+             <field name="view_mode">kanban</field>
+             <field name="domain">[('state', '=', 'picking')]</field>
+             <field name="view_id" ref="mrp_workorder_lot_kanban_view"/>
+             <field name="help" type="html">
+                <p>
+                    <strong> There's not Work Order Lots Active </strong><br/>
+                </p>
+                <p>
+                    Create Work Order Lots by Confirming a Manufacturing Order.
+                    To Active a Work Order Lot make consumes in the
+                    Manufacturing Order.
+                </p>
+             </field>
+         </record>
+
+        <menuitem
+            action="mrp_wol_picking_kanban_action"
+            id="menu_mrp_wol_picking"
+            parent="mrp.menu_mrp_planning"
+            groups="stock.group_stock_user"
+            sequence="4"/>
+
     </data>
 </openerp>
