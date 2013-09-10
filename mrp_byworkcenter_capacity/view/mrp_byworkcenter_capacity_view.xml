@@ -247,7 +247,7 @@ mrp.workorder.lot
             <field name="arch" type="xml">
                 <form string="Work Order Lot" version="7.0">
                     <header>
-                        <field name="state" widget="statusbar"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,picking,open,ready,done"/>
                     </header>
                     <sheet>
                         <div class="oe_title">
