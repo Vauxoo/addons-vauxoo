@@ -25,6 +25,8 @@
 ##############################################################################
 
 from openerp.osv import osv, fields
+from openerp.tools.translate import _
+from openerp import tools
 
 class res_company(osv.Model):
     _inherit = 'res.company'
