@@ -50,7 +50,8 @@ http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/comp
             "l10n_mx_facturae_report",
             "l10n_mx_company_multi_address",
         ],
-    "demo" : ["demo/l10n_mx_facturae_seq_demo.xml",],
+    "demo" : ["demo/l10n_mx_facturae_seq_demo.xml",
+              "demo/account_invoice_cbb.yml"],
     "data" : [
         #'security/l10n_mx_facturae_cbb_security.xml',
         'ir_sequence_view_v6.xml',

@@ -1,0 +1,19 @@
+-
+  To test the Mexican Electronic Invoice CFDI PAC SF
+-
+  I create a cfdi_pac_sf customer invoice
+-
+  !record {model: account.invoice, id: account_invoice_cfdi_pac_sf0, view: account.invoice_form}:
+    payment_term: account.account_payment_term_advance
+    journal_id: l10n_mx_cfdi_pac_sf_journal_0
+    partner_id: l10n_mx_partner_address.res_partner_address_vauxoo_1
+    reference_type: none
+    name: 'Test cfdi_pac_sf Customer Invoice'
+    invoice_line:
+      - product_id: product.product_product_5
+        quantity: 32.0
+-
+  I rewrite the journal field (BUG I need overwrite two times this field for done! only in test yaml)
+-
+  !record {model: account.invoice, id: account_invoice_cfdi_pac_sf0, view: account.invoice_form}:
+    journal_id: l10n_mx_cfdi_pac_sf_journal_0
