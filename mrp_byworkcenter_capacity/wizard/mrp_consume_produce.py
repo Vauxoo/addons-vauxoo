@@ -230,15 +230,29 @@ class mrp_produce(osv.TransientModel):
     def action_produce(self, cr, uid, ids, context=None):
         """
         Overwrite the action_produce() method to set the Work Order Lot to
-        Done when it is produced. 
+        Done state when the lot is produced and also add the serial number to
+        produced products moves created.
         """
         context = context or {}
         wol_obj = self.pool.get('mrp.workorder.lot')
-        res = super(mrp_produce, self).action_produce(
-            cr, uid, ids, context=context)
+        sm_obj = self.pool.get('stock.move')
+        #~ create convencianal moves
         for produce in self.browse(cr, uid, ids, context=context):
-            wol_obj.write(cr, uid, produce.wo_lot_id.id,
-                          {'state': 'done'}, context=context)
+            res = super(mrp_produce, self).action_produce(
+                cr, uid, ids, context=context)
+        #~ add the serial number to the moves
+        for produce in self.browse(cr, uid, ids, context=context):
+            prodlot_id = dict(
+                [(produce_line.product_id.id, produce_line.prodlot_id.id)
+                 for produce_line in produce.produce_line_ids])
+            for move in produce.production_id.move_created_ids2:
+                sm_obj.write(
+                    cr, uid, move.id,
+                    {'prodlot_id': prodlot_id[move.product_id.id]},
+                    context=context)
+        #~ set work order lot to done
+        wol_obj.write(cr, uid, produce.wo_lot_id.id, {'state': 'done'},
+                      context=context)
         return res
 
 class mrp_consume_line(osv.TransientModel):
