@@ -687,7 +687,7 @@ class mrp_workorder_lot(osv.Model):
             wol_state = wol_brw.state
             wo_states = list(set([wo_brw.state for wo_brw in wol_brw.wo_ids]))
 
-            if wol_state in ['draft', 'done']:
+            if wol_state in ['draft', 'picking', 'ready', 'done', 'cancel']:
                 res[wol_brw.id] = wol_state
             elif wol_state in ['open', 'pending']:
                 if wo_states.count('cancel') or wo_states.count('pause'):
