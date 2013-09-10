@@ -36,8 +36,8 @@ class project_task(osv.Model):
         'write_uid':  fields.many2one('res.users', 'Last Modification User', readonly=True),
         'create_date': fields.datetime('Date Created', readonly=True),
         'create_uid':  fields.many2one('res.users', 'Creator', readonly=True),
-        'date_from_create':fields.dummy( string="Create Date From",type='datetime'),
-        'date_to_create':fields.dummy( string="Create Date To",type='datetime'),
-        'date_from_write':fields.dummy( string="Write Date From",type='datetime'),
-        'date_to_write':fields.dummy( string="Write Date To",type='datetime'),
+        'date_from_create':fields.dummy( string="Create Date From",type='date'),
+        'date_to_create':fields.dummy( string="Create Date To",type='date'),
+        'date_from_write':fields.dummy( string="Write Date From",type='date'),
+        'date_to_write':fields.dummy( string="Write Date To",type='date'),
     } 
