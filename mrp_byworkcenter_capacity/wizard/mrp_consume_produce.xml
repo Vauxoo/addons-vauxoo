@@ -50,7 +50,7 @@ mrp.produce
                 </xpath>
 
                 <xpath expr="//field[@name='produce_line_ids']/tree" position="inside">
-                    <field name="prodlot_id" domain="[('product_id','=',product_id)]"/>
+                    <field name="prodlot_id" domain="[('product_id','=',product_id)]" required="1"/>
                 </xpath>
 
             </field>
