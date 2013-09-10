@@ -290,7 +290,7 @@ mrp.workorder.lot
                             <div t-attf-class="oe_kanban_content">
                                 <b>WO LOT:</b> <field name="name"/><br/>
                                 <div>
-                                    <a name="%(mrp_workoder_by_lot_kanban_action)d" type="action" style="margin-right: 10px">
+                                    <a name="%(mrp_workoder_by_lot_kanban_action)d" type="action" style="margin-right: 10px" invisible="context.get('search_default_wol_picking', False) == True">
                                     Work Orders
                                     </a>
                                     <button name="%(mrp_consume_produce.create_consume_action)d" string="Consume" icon="gtk-ok" type="action" groups="stock.group_stock_user" invisible="context.get('search_default_wol_active', False) == True"/>
