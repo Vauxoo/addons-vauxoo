@@ -749,10 +749,12 @@ class mrp_workorder_lot(osv.Model):
             fnct_inv=_set_lot_state,
             type='selection',
             selection=[('draft', 'New'),
+                       ('picking', 'Ready to Picking'),
                        ('open', 'In progress'),
                        ('done', 'Done'),
                        ('ready', 'Ready to Finish'),
-                       ('pending', 'Pending')],
+                       ('pending', 'Pending'),
+                       ('cancel', 'Cancel')],
             required=True,
             store={'mrp.production.workcenter.line': (
                _get_wol_id_to_update, ['state'], 10)},
