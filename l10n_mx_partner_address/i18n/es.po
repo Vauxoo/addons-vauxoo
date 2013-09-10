@@ -99,7 +99,7 @@ msgstr "Localidad configurada para esta empresa"
 #: code:addons/l10n_mx_partner_address/partner_address.py:68
 #, python-format
 msgid "'ZIP'"
-msgstr "'C.P'"
+msgstr "'C.P.'"
 
 #. module: l10n_mx_partner_address
 #: model:ir.model,name:l10n_mx_partner_address.model_res_partner
