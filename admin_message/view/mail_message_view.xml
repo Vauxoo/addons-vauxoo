@@ -23,7 +23,7 @@
             <field name="model">mail.message</field>
             <field name="priority">20</field>
             <field name="arch" type="xml">
-                <form string="Message" version="7.0">
+                <form string="Message" version="7.0" class="bs3">
                     <sheet>
                         <group>
                             <group>
@@ -92,7 +92,9 @@
         </record>
         
         <!-- Add menu entry in Settings/Email -->
-        <menuitem name="Admin Messages" id="menu_admin_mail_message" parent="mail.mail_feeds_main" action="action_view_admin_mail_message"/>
+        <menuitem name="Admin Messages" id="menu_admin_mail_message" parent="mail.mail_feeds_main"/>
+        
+        <menuitem name="Admin Messages" id="menu_admin_mail_message_sub" parent="menu_admin_mail_message" action="action_view_admin_mail_message"/>
 
     </data>
 </openerp>
