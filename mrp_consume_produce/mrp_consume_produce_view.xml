@@ -11,9 +11,11 @@
 
                     <group name="consume_produce" states="in_production">
                         <group name="consume">
-                            <button name="%(create_consume_action)d" string="Consume" icon="gtk-ok" type="action" attrs="{'invisible': [('consumed','=',True)]}" groups="mrp_consume_produce.group_mrp_button_consume_produce" class="oe_inline"/>
-                            <button name="action_finished_consume" string="Finished Consume" icon="gtk-convert" type="object" attrs="{'invisible': ['|',('consumed','=',True),('moves_lines2','=',0)]}" groups="mrp_consume_produce.group_mrp_button_consume_produce" class="oe_inline"/>
-                            <button name="%(create_produce_action)d" string="Produce" icon="gtk-yes" type="action" attrs="{'invisible': ['|',('len_move','=',0),('state','=','done')]}" groups="mrp_consume_produce.group_mrp_button_consume_produce" class="oe_inline"/>
+                            <button string="Consume" name="%(create_consume_action)d" icon="gtk-ok" type="action" attrs="{'invisible': [('consumed','=',True)]}" groups="mrp_consume_produce.group_mrp_button_consume_produce" class="oe_inline"/>
+                            <button string="Finished Consume" name="action_finished_consume" icon="gtk-convert" type="object" attrs="{'invisible': ['|',('consumed','=',True),('moves_lines2','=',0)]}" groups="mrp_consume_produce.group_mrp_button_consume_produce" class="oe_inline"/>
+                        </group>
+                        <group name="produce">
+                            <button string="Produce" name="%(create_produce_action)d" icon="gtk-yes" type="action" attrs="{'invisible': ['|',('len_move','=',0),('state','=','done')]}" groups="mrp_consume_produce.group_mrp_button_consume_produce" class="oe_inline"/>
                         </group>
                     </group>
 
