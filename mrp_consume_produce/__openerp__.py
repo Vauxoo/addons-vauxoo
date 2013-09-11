@@ -51,7 +51,7 @@ You have to options: Go to check some options at the user:
 Or go to the ``Settings > Configuration > Manufacturing > Manufacturing Order``
 and active the ``Real Consume and Produce`` option plus selecting a user type.
     """,
-    'depends': ['mrp'],
+    'depends': ['mrp', 'mrp_button_box'],
     'init_xml': [],
     'update_xml': [
         'wizard/wizard_view.xml',
