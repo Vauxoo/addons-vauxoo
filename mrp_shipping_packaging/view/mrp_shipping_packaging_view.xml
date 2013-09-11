@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_tracking_form_inherit_2">
+            <field name="name">stock.tracking.form</field>                                 
+            <field name="model">stock.tracking</field>                                              
+            <field name="inherit_id" ref="stock.view_tracking_form"/>                           
+            <field name="arch" type="xml">
+                <xpath expr="//group" position="before">
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="new,packing,confirm" statusbar_colors='{"shipping_except":"red","invoice_except":"red","waiting_date":"blue"}'/>
+                    </header>
+                </xpath>
+                
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="partner_id" required="1"/>
+                    <field name="ean"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+    </data>
+</openerp>
