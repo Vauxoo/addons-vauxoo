@@ -4,20 +4,19 @@
         <record model="ir.ui.view" id="view_mrp_production_inherit2">
             <field name="name">view.mrp.production.inherit2</field>
             <field name="model">mrp.production</field>
-            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="inherit_id" ref="mrp_button_box.mrp_buttonbox_production_form"/>
             <field name="arch" type="xml">
 
-                <xpath expr="//sheet/group" position="before">
-                    <div class="oe_right oe_button_box" name="button_box">
-                        <group name="consume_produce" states="in_production">
+                <xpath expr="//div[@name='button_box']" position="inside">
 
-                            <group name="consume">
-                                <button name="%(create_consume_action)d" string="Consume" icon="gtk-ok" type="action" attrs="{'invisible': [('consumed','=',True)]}" groups="mrp_consume_produce.group_mrp_button_consume_produce" class="oe_inline"/>
-                                <button name="action_finished_consume" string="Finished Consume" icon="gtk-convert" type="object" attrs="{'invisible': ['|',('consumed','=',True),('moves_lines2','=',0)]}" groups="mrp_consume_produce.group_mrp_button_consume_produce" class="oe_inline"/>
-                                <button name="%(create_produce_action)d" string="Produce" icon="gtk-yes" type="action" attrs="{'invisible': ['|',('len_move','=',0),('state','=','done')]}" groups="mrp_consume_produce.group_mrp_button_consume_produce" class="oe_inline"/>
-                            </group>
+                    <group name="consume_produce" states="in_production">
+                        <group name="consume">
+                            <button name="%(create_consume_action)d" string="Consume" icon="gtk-ok" type="action" attrs="{'invisible': [('consumed','=',True)]}" groups="mrp_consume_produce.group_mrp_button_consume_produce" class="oe_inline"/>
+                            <button name="action_finished_consume" string="Finished Consume" icon="gtk-convert" type="object" attrs="{'invisible': ['|',('consumed','=',True),('moves_lines2','=',0)]}" groups="mrp_consume_produce.group_mrp_button_consume_produce" class="oe_inline"/>
+                            <button name="%(create_produce_action)d" string="Produce" icon="gtk-yes" type="action" attrs="{'invisible': ['|',('len_move','=',0),('state','=','done')]}" groups="mrp_consume_produce.group_mrp_button_consume_produce" class="oe_inline"/>
                         </group>
-                    </div>
+                    </group>
+
                 </xpath>
 
                    <xpath expr="//button[@name='%(mrp.act_mrp_product_produce)d']" position="attributes" expxml_f="//button[@name='%(mrp.act_mrp_product_produce)d']">
