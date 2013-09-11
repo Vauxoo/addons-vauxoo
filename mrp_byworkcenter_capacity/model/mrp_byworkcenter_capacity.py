@@ -624,17 +624,21 @@ class mrp_production_workcenter_line(osv.Model):
         wo_ids = list()
         troble_wo = dict()
         if isinstance(values, dict):
-            if values.get('state', False):
-                for wo_brw in self.browse(cr, uid, ids, context=context):
-                    if wo_brw.wo_lot_id.state in ['open', 'pending']:
-                        wo_ids += [wo_brw.id]
-                    else:
-                        troble_wo.update({wo_brw.id: {
-                            'name': wo_brw.name,
-                            'state': wo_brw.state,
-                            'lot_name': wo_brw.wo_lot_id.name,
-                            'lot_state': wo_brw.wo_lot_id.state,
-                        }})
+            state = values.get('state', False)
+            if state:
+                if state == 'draft':
+                    wo_ids = ids
+                else:
+                    for wo_brw in self.browse(cr, uid, ids, context=context):
+                        if wo_brw.wo_lot_id.state in ['open', 'pending']:
+                            wo_ids += [wo_brw.id]
+                        else:
+                            troble_wo.update({wo_brw.id: {
+                                'name': wo_brw.name,
+                                'state': wo_brw.state,
+                                'lot_name': wo_brw.wo_lot_id.name,
+                                'lot_state': wo_brw.wo_lot_id.state,
+                            }})
         else:
             raise osv.except_osv(
                 _('Error!'),
