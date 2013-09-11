@@ -615,35 +615,36 @@ class mrp_production_workcenter_line(osv.Model):
         'stage_id': _group_by_full_state,
     }
 
-    def write(self, cr, uid, ids, values, context=None):
+    def write(self, cr, uid, ids, values, context=None, update=True):
         """
         Overwrite the write method to ensure that a work order can change
         state if is not in an active work order lot.
         """
         context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         wo_ids = list()
         troble_wo = dict()
-        if isinstance(values, dict):
-            state = values.get('state', False)
-            if state:
-                if state == 'draft':
-                    wo_ids = ids
+        for wo_brw in self.browse(cr, uid, ids, context=context):
+            # Check if Work Orders are new (Without a wol or with a draft wol)
+            if ((wo_brw.wo_lot_id and wo_brw.wo_lot_id.state == 'draft')
+                or not wo_brw.wo_lot_id):
+                wo_ids += [wo_brw.id]
+            else:
+                if isinstance(values, dict):
+                    if wo_brw.wo_lot_id.state in ['open', 'pending']:
+                        wo_ids += [wo_brw.id]
+                    else:
+                        troble_wo.update({wo_brw.id: {
+                            'name': wo_brw.name,
+                            'state': wo_brw.state,
+                            'lot_name': wo_brw.wo_lot_id.name,
+                            'lot_state': wo_brw.wo_lot_id.state,
+                        }})
                 else:
-                    for wo_brw in self.browse(cr, uid, ids, context=context):
-                        if wo_brw.wo_lot_id.state in ['open', 'pending']:
-                            wo_ids += [wo_brw.id]
-                        else:
-                            troble_wo.update({wo_brw.id: {
-                                'name': wo_brw.name,
-                                'state': wo_brw.state,
-                                'lot_name': wo_brw.wo_lot_id.name,
-                                'lot_state': wo_brw.wo_lot_id.state,
-                            }})
-        else:
-            raise osv.except_osv(
-                _('Error!'),
-                _('This type of write is not implemented in the'
-                  ' mrp_byworkcenter_capacity module yet.'))
+                    raise osv.except_osv(
+                        _('Error!'),
+                        _('This type of write is not implemented in the'
+                          ' mrp_byworkcenter_capacity module yet.'))
 
         if troble_wo:
             error_by_wo = \
@@ -663,8 +664,10 @@ class mrp_production_workcenter_line(osv.Model):
                 ))
 
         res = super(mrp_production_workcenter_line, self).write(
-            cr, uid, wo_ids, values, context=context)
+            cr, uid, wo_ids, values, context=context, update=update)
+
         return res
+
 
 class mrp_workorder_lot(osv.Model):
 
