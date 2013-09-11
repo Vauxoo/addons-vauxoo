@@ -66,6 +66,7 @@ Requires the following programs:
         ],
     "demo" : [
         "demo/l10n_mx_facturae_seq_demo.xml",
+        "demo/account_invoice_cfd_demo.xml",
     ],
     "data" : [
         #'security/l10n_mx_facturae_security.xml',
