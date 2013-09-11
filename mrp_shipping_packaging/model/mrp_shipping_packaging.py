@@ -61,6 +61,17 @@ def check_ean(eancode):
         return False                                                                                
     return ean_checksum(eancode) == int(eancode[-1])
 
+class stock_picking_out(osv.Model):
+
+    _inherit = 'stock.picking.out'
+    _description = _('Need to set the model name')
+    '''
+    Need to set the model description
+    '''
+
+    _columns = {
+        'stock_tracking_id': fields.many2one('stock.tracking', 'Pack'),
+    }
 
 class stock_tracking(osv.Model):
 

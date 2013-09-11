@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <record model="ir.ui.view" id="view_tracking_form_inherit_2">
+        <record model="ir.ui.view" id="view_tracking_form_inherit">
             <field name="name">stock.tracking.form</field>                                 
             <field name="model">stock.tracking</field>                                              
             <field name="inherit_id" ref="stock.view_tracking_form"/>                           
@@ -16,6 +16,19 @@
                     <field name="partner_id" string="Customer" domain="[('customer','=',True)]" 
                         modifiers="{'readonly': [['state', 'in', ['packing', 'done']]]}" required="1"/>
                     <field name="ean"/>
+                </xpath>
+
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_picking_out_form_inherit">
+            <field name="name">stock.picking.out.form</field>                                 
+            <field name="model">stock.picking.out</field>                                              
+            <field name="inherit_id" ref="stock.view_picking_out_form"/>                           
+            <field name="arch" type="xml">
+                
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="stock_tracking_id" domain="[('partner_id', '=', partner_id)]"/>
                 </xpath>
 
             </field>
