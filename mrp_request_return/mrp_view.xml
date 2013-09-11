@@ -12,7 +12,7 @@
             </page>
                     </xpath>
                     <xpath expr="//field[@name='location_dest_id']" position="after" expxml_f="//field[@name='location_dest_id']">
-                        <button type="action" name="%(mrp_request_return.create_request_return_action)d" string="Product Request/Return" states="in_production" colspan="2"/>
+                        <button string="Product Request/Return" type="action" name="%(mrp_request_return.create_request_return_action)d" states="in_production" colspan="2"/>
                     </xpath>
         </field>
         </record>
