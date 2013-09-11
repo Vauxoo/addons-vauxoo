@@ -13,7 +13,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-09-10 05:25+0000\n"
+"X-Launchpad-Export-Date: 2013-09-11 05:26+0000\n"
 "X-Generator: Launchpad (build 16761)\n"
 
 #. module: l10n_mx_diot_report
@@ -625,15 +625,3 @@ msgstr "Report del DIOT para Mexico"
 #: selection:res.partner,diot_country:0
 msgid "US - Estados Unidos de América"
 msgstr "US - Estados Unidos de América"
-
-#~ msgid "Spreadsheet:"
-#~ msgstr "Hoja de Cálculo:"
-
-#~ msgid "It will open in your program office, to validate numbers"
-#~ msgstr "Se abrirá en su programa office, para validar números"
-
-#~ msgid "TXT to import the SAT:"
-#~ msgstr "TXT para importar al SAT:"
-
-#~ msgid "This file, you can import the SAT"
-#~ msgstr "Este archivo, lo podrá importar directamente al SAT"
