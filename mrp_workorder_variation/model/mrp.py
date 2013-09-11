@@ -81,7 +81,7 @@ class mrp_workorder_output_variation_line(osv.Model):
     _rec_name = "product_id"
 
     _columns = {
-        'mrp_production': fields.related('mrp_production_workcenter_line_id', 'production_id',
+        'mrp_production': fields.related('mrp_production_workcenter_output_line_id', 'production_id',
                                          string='Production Order', relation='mrp.production', type='many2one', store=True,
                                          help='Id Manufacturing Order'),
         'mrp_production_workcenter_output_line_id': fields.many2one('mrp.production.workcenter.line',
