@@ -40,8 +40,8 @@
     "license": "AGPL-3",
     'depends': ['base', 'base_setup','mail'], 
     "data": [
+        "security/security_groups.xml",
         "view/mail_message_view.xml",
-        "security/security_groups.xml"
     ],
     "installable": True,
     "active": False,
