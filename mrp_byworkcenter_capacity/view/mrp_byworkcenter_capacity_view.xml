@@ -14,6 +14,7 @@ mrp.production inherit
 
                 <xpath expr="//field[@name='workcenter_lines']" position="before">
                     <separator string="Work Orders Lots"/>
+                    <button name="create_wol" states="in_production" string="Create More" type="object"/>
                     <field name="wo_lot_ids">
                         <tree>
                             <field name="number"/>
