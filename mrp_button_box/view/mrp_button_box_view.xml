@@ -6,8 +6,8 @@
 mrp.production inherit
 -->
 
-        <record id="mrp_byworcenter_production_form" model="ir.ui.view">
-            <field name="name">mrp.byworcenter.production.form</field>
+        <record id="mrp_buttonbox_production_form" model="ir.ui.view">
+            <field name="name">mrp.buttonbox.production.form</field>
             <field name="model">mrp.production</field>
             <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
             <field name="arch" type="xml">
