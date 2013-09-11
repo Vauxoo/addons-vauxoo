@@ -21,14 +21,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 {
-    "name": "Stock Production Gruop Serial Number",
+    "name": "Stock Production Group Serial Number",
     "version": "1.0",
     "depends": ["stock",
 
                 ],
     "author": "Vauxoo",
     "description" : """
-Stock Production Gruop Serial Number
+Stock Production Group Serial Number
 ====================================
 
 This module added in the search view a "group by" 
@@ -40,7 +40,7 @@ that your name is "Serial Number"
     "demo": [],
     "test": [],
     "data": [
-            'view/stock_production_gruop.xml',
+            'view/production_lot_group.xml',
     ],
     'application': True,
     "active": False,
