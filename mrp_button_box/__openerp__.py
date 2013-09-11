@@ -37,7 +37,9 @@ Dummy module to add a button box at the manufacturing order right uper corner.
 This module can be find at lp:addons-vauxoo/7.0/mrp_button_box
 ''',
     'depends': ['base', 'mail', 'mrp'],
-    'data': [],
+    'data': [
+        'view/mrp_button_box_view.xml',
+        ],
     'demo': [],
     'test': [],
     'active': False,
