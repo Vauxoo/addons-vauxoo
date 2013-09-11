@@ -26,6 +26,40 @@
 from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 from openerp import tools
+import math
+
+def ean_checksum(eancode):
+    """returns the checksum of an ean string of length 13, returns -1 if the string has the wrong length"""
+    if len(eancode) <> 13:                                                                          
+        return -1                                                                                   
+    oddsum=0                                                                                        
+    evensum=0                                                                                       
+    total=0                                                                                         
+    eanvalue=eancode                                                                                
+    reversevalue = eanvalue[::-1]                                                                   
+    finalean=reversevalue[1:]                                                                       
+                                                                                                    
+    for i in range(len(finalean)):                                                                  
+        if i % 2 == 0:                                                                              
+            oddsum += int(finalean[i])                                                              
+        else:                                                                                       
+            evensum += int(finalean[i])                                                             
+    total=(oddsum * 3) + evensum                                                                    
+                                                                                                    
+    check = int(10 - math.ceil(total % 10.0)) %10                                                   
+    return check
+
+def check_ean(eancode):
+    """returns True if eancode is a valid ean13 string, or null"""                                  
+    if not eancode:                                                                                 
+        return True                                                                                 
+    if len(eancode) <> 13:                                                                          
+        return False                                                                                
+    try:                                                                                            
+        int(eancode)                                                                                
+    except:                                                                                         
+        return False                                                                                
+    return ean_checksum(eancode) == int(eancode[-1])
 
 
 class stock_tracking(osv.Model):
@@ -55,37 +89,5 @@ class stock_tracking(osv.Model):
 
     _constraints = [(_check_ean_key, 'Error: Invalid ean code', ['ean'])]
 
-    def check_ean(eancode):
-        """returns True if eancode is a valid ean13 string, or null"""                                  
-        if not eancode:                                                                                 
-            return True                                                                                 
-        if len(eancode) <> 13:                                                                          
-            return False                                                                                
-        try:                                                                                            
-            int(eancode)                                                                                
-        except:                                                                                         
-            return False                                                                                
-        return ean_checksum(eancode) == int(eancode[-1])
-
-    def ean_checksum(eancode):
-        """returns the checksum of an ean string of length 13, returns -1 if the string has the wrong length"""
-        if len(eancode) <> 13:                                                                          
-            return -1                                                                                   
-        oddsum=0                                                                                        
-        evensum=0                                                                                       
-        total=0                                                                                         
-        eanvalue=eancode                                                                                
-        reversevalue = eanvalue[::-1]                                                                   
-        finalean=reversevalue[1:]                                                                       
-                                                                                                        
-        for i in range(len(finalean)):                                                                  
-            if i % 2 == 0:                                                                              
-                oddsum += int(finalean[i])                                                              
-            else:                                                                                       
-                evensum += int(finalean[i])                                                             
-        total=(oddsum * 3) + evensum                                                                    
-                                                                                                        
-        check = int(10 - math.ceil(total % 10.0)) %10                                                   
-        return check
 
 
