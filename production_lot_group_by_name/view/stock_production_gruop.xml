@@ -5,7 +5,6 @@
         <field name="name">view.stock.production.lot.search.inherit</field>
         <field name="model">stock.production.lot</field>
         <field name="inherit_id" ref="stock.search_product_lot_filter"/>
-        <field name="type">search</field>
         <field name="arch" type="xml">
             <xpath expr="/search/group/filter[@string='Product']" position="after">
                 <filter string="Serial Number" domain="[]" context="{'group_by':'name'}"/>
