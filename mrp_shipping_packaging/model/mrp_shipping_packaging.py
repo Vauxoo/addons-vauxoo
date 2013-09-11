@@ -44,6 +44,10 @@ class stock_tracking(osv.Model):
 
     }
      
+    _defaults = {
+        'state': 'new',
+    }
+    
     def _check_ean_key(self, cr, uid, ids, context=None):
          for pack in self.browse(cr, uid, ids, context=context):
              res = check_ean(pack.ean)
@@ -84,6 +88,4 @@ class stock_tracking(osv.Model):
         check = int(10 - math.ceil(total % 10.0)) %10                                                   
         return check
 
-    _defaults = {
-    }
 
