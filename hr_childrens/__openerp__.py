@@ -29,14 +29,13 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "hr",
-    "description" : """This module add Date Start, SSN and children of employees""",
+    "description" : """
+This module add Date Start, SSN and children of employees
+---------------------------------------------------------""",
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : ["hr"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : ["hr_children_view.xml"],
-    "test": [],
+    "data" : ["hr_children_view.xml"],
     "installable" : True,
     "active" : False,
 }
