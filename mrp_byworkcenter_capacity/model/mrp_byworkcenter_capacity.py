@@ -753,9 +753,9 @@ class mrp_workorder_lot(osv.Model):
             selection=[('draft', 'New'),
                        ('picking', 'Ready to Picking'),
                        ('open', 'In progress'),
-                       ('done', 'Done'),
-                       ('ready', 'Ready to Finish'),
                        ('pending', 'Pending'),
+                       ('ready', 'Ready to Finish'),
+                       ('done', 'Done'),
                        ('cancel', 'Cancel')],
             required=True,
             store={'mrp.production.workcenter.line': (
