@@ -4,9 +4,11 @@
 
     <record id="group_admin_messages" model="res.groups">
         <field name="name">Admin Messages</field>
-        <field name="implied_ids"
-            eval="[(6,0,[ref('base.group_no_one')])]"/>
     </record>
 
+    <record id="base.group_no_one" model="res.groups">
+        <field name="implied_ids"
+            eval="[(6,0,[ref('group_admin_messages')])]"/>
+    </record>
 </data>
 </openerp>
