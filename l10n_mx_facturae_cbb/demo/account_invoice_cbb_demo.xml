@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <!-- Invoices -->
+        <record id="account_invoice_cbb0" model="account.invoice">
+            <field name="payment_term" ref="account.account_payment_term"/>
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="account_id" ref="account.a_recv"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="partner_id" ref="l10n_mx_partner_address.res_partner_address_vauxoo_1"/>
+            <field name="journal_id" ref="l10n_mx_facturae_cbb.l10n_mx_cbb_journal_0"/>
+            <field name="state">draft</field>
+            <field name="type">out_invoice</field>
+        </record>
+        <record id="account_invoice_cbb0_line" model="account.invoice.line">
+            <field name="name">PC Assemble + Custom RAM (PC on Demand)</field>
+            <field name="product_id" ref="product.product_product_5"/>
+            <field name="price_unit" eval="900.0" />
+            <field name="uos_id" ref="product.product_uom_unit"/>
+            <field name="invoice_id" ref="account_invoice_cbb0"/>
+            <field name="quantity">10</field>
+        </record>
+    </data>
+</openerp>
