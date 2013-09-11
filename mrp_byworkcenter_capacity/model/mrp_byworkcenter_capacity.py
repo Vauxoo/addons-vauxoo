@@ -477,7 +477,7 @@ class mrp_production(osv.Model):
                 res += [wo_lot_obj.create(cr, uid, values, context=context)]
         return res
 
-    def create_wol(self, cr, uid, ids, context=None):
+    def button_create_wol(self, cr, uid, ids, context=None):
         """
         Create new Work Order Lot to conitue consuming products.
         """
