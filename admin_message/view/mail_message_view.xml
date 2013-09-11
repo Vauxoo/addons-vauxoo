@@ -90,8 +90,19 @@
             <field name="view_mode">tree,form</field>
             <field name="search_view_id" ref="view_admin_message_search"/>
         </record>
+        <record model="ir.actions.act_window.view" id="view_wired_tree">
+            <field name="act_window_id" ref='action_view_admin_mail_message'/>
+            <field name="sequence">10</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_admin_message_tree1"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="view_wired_form">
+            <field name="act_window_id" ref='action_view_admin_mail_message'/>
+            <field name="sequence">20</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref='view_admin_message_form'/>
+        </record>
         
-        <!-- Add menu entry in Settings/Email -->
         <menuitem name="Admin Messages" id="menu_admin_mail_message" parent="mail.mail_feeds_main" groups="group_admin_messages"/>
         
         <menuitem name="Admin Messages" id="menu_admin_mail_message_sub" parent="menu_admin_mail_message" action="action_view_admin_mail_message" groups="group_admin_messages"/>
