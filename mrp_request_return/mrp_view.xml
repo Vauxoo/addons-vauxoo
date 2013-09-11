@@ -4,7 +4,7 @@
         <record model="ir.ui.view" id="view_mrp_production_pick_inherit2">
             <field name="name">view.mrp.production.pick.inherit2</field>
             <field name="model">mrp.production</field>
-            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="inherit_id" ref="mrp_consume_produce.view_mrp_production_inherit2"/>
             <field name="arch" type="xml">
 
                 <xpath expr="//page[@string='Extra Information']" position="after" expxml_f="//page[@string='Extra Information']">
@@ -13,7 +13,7 @@
                     </page>
                 </xpath>
 
-                <xpath expr="//field[@name='location_dest_id']" position="after" expxml_f="//field[@name='location_dest_id']">
+                <xpath expr="//div[@name='button_box']//button[@string='Consume']" position="inside">
                     <button string="Product Request/Return" type="action" name="%(mrp_request_return.create_request_return_action)d" states="in_production" colspan="2"/>
                 </xpath>
 
