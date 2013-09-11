@@ -8,7 +8,10 @@
             <field name="priority">20</field>
             <field name="arch" type="xml">
                 <tree string="Messages">
+                    <field name="id"/>
                     <field name="date"/>
+                    <field name="type"/>
+                    <field name="subtype_id"/>
                     <field name="subject"/>
                     <field name="author_id"/>
                     <field name="model"/>
@@ -24,26 +27,36 @@
             <field name="priority">20</field>
             <field name="arch" type="xml">
                 <form string="Message" version="7.0" class="bs3">
-                    <sheet>
-                        <group>
-                            <group>
-                                <field name="subject"/>
-                                <field name="author_id"/>
-                                <field name="email_from"/>
-                                <field name="date"/>
-                                <field name="type"/>
-                                <field name="subtype_id"/>
-                            </group>
-                            <group>
-                                <field name="model"/>
-                                <field name="res_id"/>
-                                <field name="parent_id"/>
-                                <field name="partner_ids" widget="many2many_tags"/>
-                                <field name="notified_partner_ids" widget="many2many_tags"/>
-                            </group>
-                        </group>
+                    <section class="container">
+                    <h1 class="text-center">
+                        <field name="subject" class="oe_inline"/>
+                    </h1>
+                    </section>
+                    <section class="container" attrs="{'invisible':[('parent_id', '=', False)]}">
+                        <span>
+                             Parent Post: <field name="parent_id"/>
+                        </span>
+                    </section>
+                    <hr></hr>
+                    <small class="text-right">
+                        <span>Published by: <field class="oe_inline" name="author_id"/>
+                            at <field name="date" class="oe_inline" readonly="True"/>Id: <field name="id" class="oe_inline"/></span>
+                    </small>
+                    <section class="container">
                         <field name="body"/>
-                    </sheet>
+                    </section>
+                    <section class="oe_edit_only" groups="base.group_no_one">
+                    <separator string="Technical Information"/>
+                        <div>
+                            <field name="email_from"/>
+                            <field name="type"/>
+                            <field name="subtype_id"/>
+                            <field name="res_id"/>
+                            <field name="model" readonly="True"/>
+                            <field name="partner_ids" readonly="True" widget="many2many_tags"/>
+                            <field name="notified_partner_ids" readonly="True" widget="many2many_tags"/>
+                        </div>
+                    </section>
                 </form>
             </field>
         </record>
@@ -56,12 +69,16 @@
             <field name="arch" type="xml">
                 <search string="Messages Search">
                     <field name="subject" string="Content" filter_domain="['|', ('subject', 'ilike', self), ('body', 'ilike', self)]" />
+                    <field name="id"/>
                     <field name="type"/>
                     <field name="author_id"/>
                     <field name="partner_ids"/>
                     <filter string="To Read"
                             name="message_unread" help="Show messages to read"
                             domain="[('to_read', '=', True)]"/>
+                    <filter string="Public Availables"
+                            name="message_anonymous" help="Show Published Messages"
+                            domain="[('author_id', 'ilike', 'Anonymous')]"/>
                     <filter string="Read"
                             name="message_read" help="Show already read messages"
                             domain="[('to_read', '=', False)]"/>
