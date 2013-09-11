@@ -39,6 +39,9 @@ mrp.production inherit
                 <xpath expr="//field[@name='move_lines']/tree/button[@string='Scrap Products']" position="replace">
                 </xpath>
 
+                <xpath expr="//button[@string='Compute Data']" position="replace">
+                </xpath>
+
             </field>
         </record>
 
