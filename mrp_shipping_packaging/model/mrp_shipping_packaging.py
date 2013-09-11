@@ -28,23 +28,62 @@ from openerp.tools.translate import _
 from openerp import tools
 
 
-class mrp_shipping_packaging(osv.Model):
+class stock_tracking(osv.Model):
 
-    _name = 'mrp.shipping.packaging'
+    _inherit = 'stock.tracking'
     _description = _('Need to set the model name')
-    _inherit = ['mail.thread']
-
     '''
     Need to set the model description
     '''
 
     _columns = {
-        'name': fields.char(
-            _('Name'),
-            required=True,
-            size=64,
-            help=_('Name')),
+        'partner_id': fields.many2one('res.partner', 'Partner'),
+        'state': fields.selection((('new', 'New'), ('packing', 'Packing'),
+            ('confirm', 'Confirmed')), 'Status', readonly=True, select=True),
+        'ean': fields.char('EAN', size=14, help="The EAN code of the package unit."),
+
     }
+     
+    _constraints = [(_check_ean_key, 'Error: Invalid ean code', ['ean'])]
+
+    def _check_ean_key(self, cr, uid, ids, context=None):
+         for pack in self.browse(cr, uid, ids, context=context):
+             res = check_ean(pack.ean)
+         return res
+
+
+    def check_ean(eancode):
+        """returns True if eancode is a valid ean13 string, or null"""                                  
+        if not eancode:                                                                                 
+            return True                                                                                 
+        if len(eancode) <> 13:                                                                          
+            return False                                                                                
+        try:                                                                                            
+            int(eancode)                                                                                
+        except:                                                                                         
+            return False                                                                                
+        return ean_checksum(eancode) == int(eancode[-1])
+
+    def ean_checksum(eancode):
+        """returns the checksum of an ean string of length 13, returns -1 if the string has the wrong length"""
+        if len(eancode) <> 13:                                                                          
+            return -1                                                                                   
+        oddsum=0                                                                                        
+        evensum=0                                                                                       
+        total=0                                                                                         
+        eanvalue=eancode                                                                                
+        reversevalue = eanvalue[::-1]                                                                   
+        finalean=reversevalue[1:]                                                                       
+                                                                                                        
+        for i in range(len(finalean)):                                                                  
+            if i % 2 == 0:                                                                              
+                oddsum += int(finalean[i])                                                              
+            else:                                                                                       
+                evensum += int(finalean[i])                                                             
+        total=(oddsum * 3) + evensum                                                                    
+                                                                                                        
+        check = int(10 - math.ceil(total % 10.0)) %10                                                   
+        return check
 
     _defaults = {
     }
