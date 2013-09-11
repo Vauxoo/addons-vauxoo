@@ -32,8 +32,10 @@
     'summary': 'Packaging stock moves for a delivery order',
     'description': """
     """,
-    'depends': ['base', 'mail'],
-    'data': [],
+    'depends': ['base', 'mail', 'stock'],
+    'data': [
+        'view/mrp_shipping_packaging_view.xml',
+        ],
     'demo': [],
     'test': [],
     'active': False,

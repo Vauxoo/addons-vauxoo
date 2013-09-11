@@ -44,13 +44,12 @@ class stock_tracking(osv.Model):
 
     }
      
-    _constraints = [(_check_ean_key, 'Error: Invalid ean code', ['ean'])]
-
     def _check_ean_key(self, cr, uid, ids, context=None):
          for pack in self.browse(cr, uid, ids, context=context):
              res = check_ean(pack.ean)
          return res
 
+    _constraints = [(_check_ean_key, 'Error: Invalid ean code', ['ean'])]
 
     def check_ean(eancode):
         """returns True if eancode is a valid ean13 string, or null"""                                  
