@@ -13,7 +13,8 @@
                 </xpath>
                 
                 <xpath expr="//field[@name='name']" position="after">
-                    <field name="partner_id" required="1"/>
+                    <field name="partner_id" string="Customer" domain="[('customer','=',True)]" 
+                        modifiers="{'readonly': [['state', 'in', ['packing', 'done']]]}" required="1"/>
                     <field name="ean"/>
                 </xpath>
 
