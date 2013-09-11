@@ -61,6 +61,7 @@ class account_aged_partner_document(osv.TransientModel):
     _order = 'partner_id, due_days' 
 
     _columns = {
+        'user_id':fields.many2one('res.users', 'User', help="User's Document"), 
         'date_due':fields.date('Due Date', help='Due Date'), 
         'due_days': fields.integer(u'Due Days'),
         'residual': fields.float(u'Residual'),
@@ -475,6 +476,7 @@ class account_aged_trial_balance(osv.TransientModel):
 
                 res.append({
                     'partner_id': rp_brw.id,
+                    'user_id' : inv_brw.user_id and inv_brw.user_id or False,
                     'document_id': '%s,%s'%(inv_brw._name,inv_brw.id),
                     'residual': residual,
                     'due_days': due_days,
