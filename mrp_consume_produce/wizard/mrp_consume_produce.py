@@ -64,13 +64,14 @@ class mrp_consume(osv.TransientModel):
         if 'consume_line_ids' in fields:
             production_brw = production_obj.browse(cr, uid, production_id,
                                                    context=context)
-            moves = [self._partial_move_for(cr, uid, move_brw)
+            moves = [self._partial_move_for(cr, uid, move_brw, context=context)
                      for move_brw in production_brw.move_lines
                      if move_brw.state not in ('done', 'cancel')]
             res.update(consume_line_ids=moves)
         return res
 
-    def _partial_move_for(self, cr, uid, move):
+    def _partial_move_for(self, cr, uid, move, context=None):
+        context = context or {}
         partial_move = {
             'product_id': move.product_id.id,
             'quantity': move.product_qty,
@@ -103,7 +104,7 @@ class mrp_produce(osv.TransientModel):
         if 'produce_line_ids' in fields:
             mrp = self.pool.get('mrp.production').browse(
                 cr, uid, mrp_id, context=context)
-            moves = [self.pool.get('mrp.consume')._partial_move_for(cr, uid, m) \
+            moves = [self.pool.get('mrp.consume')._partial_move_for(cr, uid, m, context=context) \
                     for m in mrp.move_created_ids if m.state\
                     not in ('done', 'cancel')]
             res.update(produce_line_ids=moves)
