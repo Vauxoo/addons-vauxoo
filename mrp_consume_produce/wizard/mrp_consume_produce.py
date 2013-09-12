@@ -73,7 +73,8 @@ class mrp_consume(osv.TransientModel):
 
     def _partial_move_for(self, cr, uid, move_id, context=None):
         """
-        @param move_id: stock move id. 
+        @param move_id: stock move id.
+        @return: a dictionary of values for a consume/produce line.
         """
         context = context or {}
         move_obj = self.pool.get('stock.move')
