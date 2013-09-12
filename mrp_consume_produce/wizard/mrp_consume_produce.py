@@ -53,6 +53,7 @@ class mrp_consume(osv.TransientModel):
     def default_get(self, cr, uid, fields, context=None):
         context = context or {}
         production_obj = self.pool.get('mrp.production')
+        move_obj = self.pool.get('stock.move')
         res = super(mrp_consume, self).default_get(
             cr, uid, fields, context=context)
         production_ids = context.get('active_ids', [])
@@ -64,6 +65,25 @@ class mrp_consume(osv.TransientModel):
         if 'consume_line_ids' in fields:
             production_brw = production_obj.browse(cr, uid, production_id,
                                                    context=context)
+            moves_brw = production_brw.move_lines
+            moves_ld = map(lambda x: {x.product_id.id: x.id}, moves_brw)
+            moves_of = dict()
+            for move_data in moves_ld:
+                for (product_id, move_id) in move_data.iteritems():
+                    if moves_of.has_key(product_id):
+                        moves_of[product_id] += [move_id] 
+                    else:
+                        moves_of[product_id] = [move_id] 
+
+            raise osv.except_osv(
+                _('Alert'),
+                _('This functionality is still in development.'))
+
+            #~ for (product_id, move_ids) in moves_of:
+                #~ move_obj.browse(cr, uid, move_ids, context=context)
+                #~ for move_brw in move_brws:
+                    #~ if move_brw.state not in ('done', 'cancel')]
+
             moves = \
                 [self._partial_move_for(cr, uid, move_brw.id, context=context)
                  for move_brw in production_brw.move_lines
