@@ -78,7 +78,7 @@
                                groups="stock.group_production_lot"
                                type="action" icon="gtk-justify-fill"
                                states="draft,waiting,confirmed,assigned"/>
-                             <field groups="stock.group_tracking_lot" name="tracking_id" domain="[('partner_id', '=', parent.partner_id)]"/>
+                           <field groups="stock.group_tracking_lot" name="tracking_id" />
                              <button name="stock.setlast_tracking" string="Put in current pack" type="object"
                                 attrs="{'invisible': [('tracking_id','&lt;&gt;',False)]}"
                                 icon="terp-accessories-archiver"
@@ -144,7 +144,7 @@
                                         <label for="tracking_id" groups="stock.group_tracking_lot"/>
                                         <div groups="stock.group_tracking_lot">
                                             <field name="tracking_id" class="oe_inline" domain="[('partner_id', '=', parent.partner_id),
-                                                ('state','=', 'new')]"/>
+                                                ('state','=', 'packing')]"/>
                                             <button name="%(stock.split_into)d" string="New Pack" type="action"
                                                   groups="product.group_stock_packaging"
                                                   icon="terp-accessories-archiver+"
