@@ -152,7 +152,7 @@ class account_invoice(osv.Model):
                     raise osv.except_osv(_('Warning!'),
                             _('Invoice dates should be equal'))
         return res
-
+    """
     def action_move_create(self, cr, uid, ids, *args):
         for inv in self.browse(cr, uid, ids):
             values = {'date_invoice': inv.date_invoice,
@@ -169,7 +169,7 @@ class account_invoice(osv.Model):
                        'date_invoice': date_value.get('date_invoice', t1),
                        'invoice_datetime': date_value.get('invoice_datetime', t2)})
         return super(account_invoice, self).action_move_create(cr, uid, ids, *args)
-
+    """
 # class account_invoice_refund(osv.TransientModel):
  #   _inherit = 'account.invoice.refund'
   #  _columns = {

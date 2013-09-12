@@ -11,7 +11,7 @@
             attachment_use="1"
             attachment="(object.state in ('open','paid')) and (object.cfdi_folio_fiscal) and (object.fname_invoice and (object.fname_invoice + ''))"
             groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"
-        />
+            menu="False"/>
         
     </data>
 </openerp>

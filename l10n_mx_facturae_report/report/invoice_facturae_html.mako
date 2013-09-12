@@ -1,3 +1,4 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <html>
 <head>
     <style type="text/css">
@@ -51,7 +52,7 @@
                                             ${address_emitter.l10n_mx_street4 or ''|entity}
                                             ${address_emitter.street2 or ''|entity}
                                             ${address_emitter.zip or ''|entity}
-                                            <br />${_("Localidad:")} ${address_emitter.l10n_mx_city2 or ''|entity}
+                                            <br/>${_("Localidad:")} ${address_emitter.l10n_mx_city2 or ''|entity}
                                             <br/>${address_emitter.city or ''|entity}
                                             , ${address_emitter.state_id and address_emitter.state_id.name or ''|entity}
                                             , ${address_emitter.country_id and address_emitter.country_id.name or ''|entity}
@@ -59,7 +60,7 @@
                                             %if o.company_emitter_id.partner_id.regimen_fiscal_id:
                                                 <br/>${ o.company_emitter_id.partner_id.regimen_fiscal_id.name or ''|entity }
                                             %endif
-                                            <br/>${address_emitter.phone and _("Teléfono(s):") or address_emitter.fax and _("Teléfono(s):") or address_emitter.mobile and _("Teléfono(s):") or ''|entity}
+                                            <br/>${_("Tel&eacute;fono(s):")}
                                             ${address_emitter.phone or ''|entity}
                                             ${address_emitter.fax  and ',' or ''|entity} ${address_emitter.fax or ''|entity}
                                             ${address_emitter.mobile and ',' or ''|entity} ${address_emitter.mobile or ''|entity}
@@ -165,8 +166,8 @@
                     <br/>${_("a")} ${o.date_invoice_tz or ''|entity}
                     %if o.invoice_sequence_id.approval_id.type != 'cbb':
                         ${_("Serie:")} ${get_approval() and get_approval().serie or _("Sin serie")|entity}
-                        <br/>${_("Aprobación:")} ${get_approval() and get_approval().approval_number or _("Sin aprobación")|entity}
-                        <br/>${_("Año Aprobación:")} ${get_approval() and get_approval().approval_year or _("No válido")|entity}
+                        <br/>${_("Aprobaci&oacute;n:")} ${get_approval() and get_approval().approval_number or _("Sin aprobaci&oacute;n")|entity}
+                        <br/>${_("A&ntilde;o Aprobaci&oacute;n:")} ${get_approval() and get_approval().approval_year or _("No v&aacute;lido")|entity}
                     %endif
                 </td>
             </tr>
@@ -176,7 +177,7 @@
             <tr class="firstrow">
                 <th width="10%">${_("Cant.")}</th>
                 <th width="10%">${_("Unidad")}</th>
-                <th>${_("Descripción")}</th>
+                <th>${_("Descripci&oacute;n")}</th>
                 <th width="9%" >${_("P.Unitario")}</th>
                 %if has_disc(o.invoice_line):
                     <th width="8%" >${_("Dto. %") or ''}</th>
@@ -240,7 +241,7 @@
             </tr>
             <tr>
                 <td class="center_td">
-                    ${_('PAGO EN UNA SOLA EXHIBICIÓN - EFECTOS FISCALES AL PAGO')}
+                    ${_('PAGO EN UNA SOLA EXHIBICI&Oacute;N - EFECTOS FISCALES AL PAGO')}
                 </td>
             </tr>
             
@@ -249,10 +250,10 @@
         <br clear="all"/>
         <!--code for cfd-->
         %if 'cfdi' in o.invoice_sequence_id.approval_id.type:
-            <font class="font">“Este documento es una representacion impresa de un CFDI”
+            <font class="font">“Este documento es una representación impresa de un CFDI”
             <br/>CFDI, Comprobante Fiscal Digital por Internet</font>
         %elif 'cfd' in o.invoice_sequence_id.approval_id.type:
-            ${_('“Este documento es una representacion impresa de un CFD”')}<br/>
+            ${_('&quot;Este documento es una representaci&oacute;n impresa de un CFD&quot;')}<br/>
             ${_('CFD, Comprobante Fiscal Digital')}
         %endif
         <!-- bank info-->
@@ -267,7 +268,7 @@
             <table class="basic_table" rules="all">
                 <tr>
                     <td class="data_bank_label">${_('Banco / Moneda')}</td>
-                    <td class="data_bank_label">${_('Número de cuenta')}</td>
+                    <td class="data_bank_label">${_('N&uacute;mero de cuenta')}</td>
                     <td class="data_bank_label" width="30%">${_('Clave Interbancaria Estandarizada (CLABE)')}</td>
                     <td class="data_bank_label">${_('Referencia')}</td>
                 </tr>
@@ -304,8 +305,8 @@
             <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
                 <tr>
                     <th width="33%">${_('Certificado del emisor')}</th>
-                    <th width="34%">${_('Método de Pago')}</th>
-                    <th width="33%">${_('Últimos 4 dígitos de la cuenta bancaria')}</th>
+                    <th width="34%">${_('M&eacute;todo de Pago')}</th>
+                    <th width="33%">${_('&Uacute;ltimos 4 d&iacute;gitos de la cuenta bancaria')}</th>
                 </tr>
                 <tr>
                     <td class="center_td">${ o.no_certificado or 'No identificado'|entity }</td>
@@ -344,7 +345,7 @@
                     </tr>
                 </table>
             %else:
-                <p> ${_('La aprobación CBB no pudo ser obtenida, por favor contacte a su administrador')}
+                <p> ${_('La aprobaci&oacute;n CBB no pudo ser obtenida, por favor contacte a su administrador')}
             %endif
         %endif
         <!--code for cfd22-->
@@ -409,7 +410,7 @@
         %endif
         %if not o.invoice_sequence_id.approval_id.type:
             <hr>
-            ${_('No se encontró la aprobación')}
+            ${_('No se encontr&oacute; la aprobaci&oacute;n')}
             <hr>
         %endif
                                  
