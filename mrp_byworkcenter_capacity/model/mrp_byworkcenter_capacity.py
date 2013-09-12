@@ -872,6 +872,14 @@ class mrp_workorder_lot(osv.Model):
         Write the field state in Work Order Lot.
         """
         context = context or {}
+        wol_brw = self.browse(cr, uid, id, context=context)
+        if ((wol_brw.production_id and wol_brw.production_id.state not in
+             ['in_production']) or not wol_brw.production_id):
+            raise osv.except_osv(
+                _('Error'),
+                _('Trying to set the state of a Work Order Lot (WOL) that have'
+                  ' not associated producction order or wich production order'
+                  ' is not in \'Production Started\' state.'))
         if value:
             cr.execute(
                 "UPDATE mrp_workorder_lot set state='%s' WHERE id=%d" % (
