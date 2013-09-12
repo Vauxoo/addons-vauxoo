@@ -64,22 +64,28 @@ class mrp_consume(osv.TransientModel):
         if 'consume_line_ids' in fields:
             production_brw = production_obj.browse(cr, uid, production_id,
                                                    context=context)
-            moves = [self._partial_move_for(cr, uid, move_brw, context=context)
-                     for move_brw in production_brw.move_lines
-                     if move_brw.state not in ('done', 'cancel')]
+            moves = \
+                [self._partial_move_for(cr, uid, move_brw.id, context=context)
+                 for move_brw in production_brw.move_lines
+                 if move_brw.state not in ('done', 'cancel')]
             res.update(consume_line_ids=moves)
         return res
 
-    def _partial_move_for(self, cr, uid, move, context=None):
+    def _partial_move_for(self, cr, uid, move_id, context=None):
+        """
+        @param move_id: stock move id. 
+        """
         context = context or {}
+        move_obj = self.pool.get('stock.move')
+        move_brw = move_obj.browse(cr, uid, move_id, context=context)
         partial_move = {
-            'product_id': move.product_id.id,
-            'quantity': move.product_qty,
-            'product_uom': move.product_uom.id,
-            'prodlot_id': move.prodlot_id.id,
-            'move_id': move.id,
-            'location_id': move.location_id.id,
-            'location_dest_id': move.location_dest_id.id,
+            'product_id': move_brw.product_id.id,
+            'quantity': move_brw.product_qty,
+            'product_uom': move_brw.product_uom.id,
+            'prodlot_id': move_brw.prodlot_id.id,
+            'move_id': move_brw.id,
+            'location_id': move_brw.location_id.id,
+            'location_dest_id': move_brw.location_dest_id.id,
         }
         return partial_move
 
