@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: addons-vauxoo\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-07-17 00:48+0000\n"
-"PO-Revision-Date: 2013-07-18 05:24+0000\n"
+"PO-Revision-Date: 2013-09-12 04:42+0000\n"
 "Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
 "<humbertoarocha@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-09-06 06:08+0000\n"
-"X-Generator: Launchpad (build 16760)\n"
+"X-Launchpad-Export-Date: 2013-09-12 07:26+0000\n"
+"X-Generator: Launchpad (build 16761)\n"
 
 #. module: ifrs_report
 #: field:ifrs.ifrs,title:0
@@ -2138,17 +2138,11 @@ msgstr ""
 "campo de control cantidad de 11vo período, funciona para prevenir cálculos "
 "repetidos"
 
-#. module: ifrs_report
-#: field:ifrs.report.wizard,report_format:0
-msgid "Report Format"
-msgstr "Formato del Reporte"
+#~ msgid "Report Format"
+#~ msgstr "Formato del Reporte"
 
-#. module: ifrs_report
-#: selection:ifrs.report.wizard,report_format:0
-msgid "PDF"
-msgstr "PDF"
+#~ msgid "PDF"
+#~ msgstr "PDF"
 
-#. module: ifrs_report
-#: selection:ifrs.report.wizard,report_format:0
-msgid "Spreadsheet"
-msgstr "Hoja de Cálculo"
+#~ msgid "Spreadsheet"
+#~ msgstr "Hoja de Cálculo"
