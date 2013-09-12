@@ -46,11 +46,11 @@ class project_task(osv.osv):
             
     def send_mail_task(self,cr,uid,ids,template,context=None):
         imd_obj = self.pool.get('ir.model.data')
-        id_template = imd_obj.search(
+        template_ids = imd_obj.search(
             cr, uid, [('model', '=', 'email.template'), ('name', '=', template)])
-        if id_template:
+        if template_ids:
             res_id = imd_obj.read(
-                cr, uid, id_template, ['res_id'])[0]['res_id']
+                cr, uid, template_ids, ['res_id'])[0]['res_id']
 
             followers = self.read(cr, uid, ids.get('id'), [
                                   'message_follower_ids'])['message_follower_ids']
