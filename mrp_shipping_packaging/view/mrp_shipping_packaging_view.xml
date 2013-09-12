@@ -116,7 +116,8 @@
                                         groups="stock.group_tracking_lot">
                                         <label for="tracking_id" groups="stock.group_tracking_lot"/>
                                         <div groups="stock.group_tracking_lot">
-                                            <field name="tracking_id" class="oe_inline" />
+                                            <field name="tracking_id" class="oe_inline" domain="[('partner_id', '=', parent.partner_id),
+                                                ('state','=', 'new')]"/>
                                             <button name="%(stock.split_into)d" string="New Pack" type="action"
                                                   groups="product.group_stock_packaging"
                                                   icon="terp-accessories-archiver+"
