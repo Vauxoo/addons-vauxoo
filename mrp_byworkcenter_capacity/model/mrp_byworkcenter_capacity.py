@@ -477,11 +477,151 @@ class mrp_production(osv.Model):
                 res += [wo_lot_obj.create(cr, uid, values, context=context)]
         return res
 
-    def button_create_wol(self, cr, uid, ids, context=None):
+    def check_first_wol_validity(self, cr, uid, wol_id, context=None):
         """
-        Create new Work Order Lot to conitue consuming products.
+        Check work order lot validity
+        @param wol_id: the id of work order lot to check.
         """
         context = context or {}
+        if wol_id:
+            if len(wol_id) > 1:
+                raise osv.except_osv(
+                    _('Error'),
+                    _('There are two work order lots for the same'
+                      ' production order with the same number.'))
+        else:
+            raise osv.except_osv(
+                _('Error'),
+                _('The Create More Work Order Lots function can be apply.'
+                  ' You are trying to create a new work order lot but you'
+                  ' dont have create the first one yet.'))
+        return True
+
+    def get_first_work_order(self, cr, uid, ids, context=None):
+        """
+        This method return the id of the first work order lot for the
+        specific production order. The first work order lot is the one
+        that have de 00001 number.
+        """
+        context = context or {}
+        wol_obj = self.pool.get('mrp.workorder.lot')
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        res = {}.fromkeys(ids)
+        for production in self.browse(cr, uid, ids, context=context):
+            wol_id = wol_obj.search(
+                cr, uid, [('production_id', '=', production.id),
+                ('number', '=', '00001')], context=context)
+            self.check_first_wol_validity(cr, uid, wol_id, context=context)
+            wol_id = wol_id[0]
+            res.update({production.id: wol_id})
+        return len(res.keys()) > 1 and res or res.values()[0]
+
+    def create_orphan_wol(self, cr, uid, ids, fwol_id, wo_values, context=None):
+        """
+        This method create a new work order lot that is a duplicate one
+        from the first work order lot. This method is used to create
+        more work order lots when there is needed to process 'Products
+        to Consume' that are left.
+
+        Note: This method only can recieve one id. for a list of production ids
+        please do a map() function.
+
+        @param fwol_id: the id of the first work order lot for the
+                        specified production order
+        @param wo_values: list of dictionary values to duplicate the first work
+                          order lot work orders.
+        @return: the id of the new work order created.
+        """
+        context = context or {}
+        wol_obj = self.pool.get('mrp.workorder.lot')
+        res = list()
+        if not isinstance(ids, (int, long)):
+            raise osv.except_osv(
+                _('Programming Error'),
+                _('You are trying to use the create_orphan_wol() method for'
+                  ' more than one production order. This fuction only can'
+                  ' process one production order at time so do a map() if you'
+                  ' needed for a list of production orders. Thank you.'))
+        production = self.browse(cr, uid, ids, context=context)
+        fwol_brw = wol_obj.browse(cr, uid, fwol_id, context=context)
+        lot_nbr = len(production.wo_lot_ids)
+        values = {
+            'name': '%s/WOLOT/%05i' % (production.name, lot_nbr + 1),
+            'number': '%05i' % (lot_nbr + 1,),
+            'production_id': production.id,
+            'percentage': fwol_brw.percentage,
+            'wo_ids': map(lambda x: (0, 0, x), wo_values),
+        }
+        new_wol_id = wol_obj.create(cr, uid, values, context=context)
+        return new_wol_id
+
+    def get_dict_duplicate_wo(self, cr, uid, ids, fwo_ids, context=None):
+        """
+        This method create a list of dictonaries that hold the values to create
+        in new work orders that are a duplicate copy of the work orders that
+        belongs to the first work order lot for the production order.            
+
+        Note: This method only can recieve one id. for a list of production ids
+        please do a map() function.
+
+        @param fwo_ids: work order ids of the first work lot.
+        @return: list of dictionary (values) to duplicate the work
+                 orders.
+        """
+        context = context or {}
+        if not isinstance(ids, (int, long)):
+            raise osv.except_osv(
+                _('Programming Error'),
+                _('You are trying to use the get_dict_duplicate_wo() method for'
+                  ' more than one production order. This fuction only can'
+                  ' process one production order at time so do a map() if you'
+                  ' needed for a list of production orders. Thank you.'))
+        wo_fields_to_cp = ['cycle', 'hour', 'product', 'production_id',
+                           'qty', 'uom', 'wo_lot_id', 'workcenter_id']
+        wo_obj = self.pool.get('mrp.production.workcenter.line')
+        res = list()
+        sequence = 15
+
+        production = self.browse(cr, uid, ids, context=context)
+        lot_nbr = len(production.wo_lot_ids)
+
+        for wo_brw in wo_obj.browse(cr, uid, fwo_ids, context=context):
+            values = {}
+            for wo_field in wo_fields_to_cp:
+                value = getattr(wo_brw, wo_field)
+                values.update({wo_field: getattr(value, 'id', value)})
+            values.update({
+                'name': getattr(wo_brw, 'name').replace(
+                    '(1/%s)' % (lot_nbr), '(%s/%s)' % (
+                        lot_nbr + 1, lot_nbr)),
+                'sequence': sequence,
+            })
+            res += [values]
+            sequence += 15
+        return res
+
+    def button_create_wol(self, cr, uid, ids, context=None):
+        """
+        Create new Work Order Lot to conitue consuming products. It take into
+        account the firts work order lot for the production order.
+        @return: True
+        """
+        context = context or {}
+        wol_obj = self.pool.get('mrp.workorder.lot')
+        wo_obj = self.pool.get('mrp.production.workcenter.line')
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        for production in self.browse(cr, uid, ids, context=context):
+            #~ get first work order lot id and its belongs work orders ids.
+            fwol_id = self.get_first_work_order(
+                cr, uid, production.id, context=context)
+            fwo_ids = [wo_brw.id
+                       for wo_brw in wol_obj.browse(
+                            cr, uid, fwol_id, context=context).wo_ids]
+            #~ create new work order lot
+            wo_values = self.get_dict_duplicate_wo(
+                cr, uid, production.id, fwo_ids, context=context)
+            new_wol_id = self.create_orphan_wol(
+                cr, uid, production.id, fwol_id, wo_values, context=context)
         return True
 
 class mrp_workorder_stage(osv.Model):
