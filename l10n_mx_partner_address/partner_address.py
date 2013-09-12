@@ -62,25 +62,23 @@ class res_partner(osv.Model):
         return id
 
     def fields_view_get_address(self, cr, uid, arch, context={}):
-        locality = _("'Locality...'")
-        street = _("'Street...'")
-        street2 = _("'Colony...'")
-        cp = _("'ZIP'")
-        state = _("'State'")
-        external = _("'No External...'")
-        internal = _("'No Internal...'")
-        country = _("'Country...'")
-        city2 = _("'City...'")
-        res = super(res_partner, self).fields_view_get_address(
-            cr, uid, arch, context=context)
+        locality = _('Locality...')
+        street = _('Street...')
+        street2 = _('Colony...')
+        cp = _('ZIP')
+        state = _('State')
+        external = _('No External...')
+        internal = _('No Internal...')
+        country = _('Country...')
+        city2 = _('City...')
+        res = super(res_partner, self).fields_view_get_address(cr, uid, arch, context=context)
         user_obj = self.pool.get('res.users')
-        fmt = user_obj.browse(
-            cr, SUPERUSER_ID, uid, context).company_id.country_id
+        fmt = user_obj.browse(cr, SUPERUSER_ID, uid, context).company_id.country_id
         fmt = fmt and fmt.address_format
-        city = '<field name="city" placeholder=%s style="width: 40%%"/>' % (city2)
+        city = '<field name="city" placeholder="%s" style="width: 40%%"/>' % (city2)
         for name, field in self._columns.items():
             if name == 'city_id':
-                city = '<field name="city" modifiers="{&quot;invisible&quot;: true}" placeholder= %s style="width: 50%%"/><field name="city_id" on_change="onchange_city(city_id)" placeholder=%s style="width: 40%%"/>' % (city2, city2)
+                city = '<field name="city" modifiers="{&quot;invisible&quot;: true}" placeholder="%s" style="width: 50%%"/><field name="city_id" on_change="onchange_city(city_id)" placeholder="%s" style="width: 40%%"/>' % (city2, city2)
         layouts = {
             '%(l10n_mx_street3)s\n%(l10n_mx_street4)s\n%(l10n_mx_city2)s': """
                     <group>
@@ -96,17 +94,17 @@ class res_partner(osv.Model):
 
                             <label for="street" string="Address"/>
                             <div>
-                                <field name="street" placeholder=%s/>
-                                <field name="l10n_mx_street3" placeholder=%s/>
-                                <field name="l10n_mx_street4" placeholder=%s/>
-                                <field name="street2" placeholder=%s/>
+                                <field name="street" placeholder="%s"/>
+                                <field name="l10n_mx_street3" placeholder="%s"/>
+                                <field name="l10n_mx_street4" placeholder="%s"/>
+                                <field name="street2" placeholder="%s"/>
                                 <div class="address_format">
                                     %s
-                                    <field name="state_id" class="oe_no_button" placeholder=%s style="width: 37%%" options='{"no_open": True}' on_change="onchange_state(state_id)"/>
-                                    <field name="zip" placeholder=%s style="width: 20%%"/>
+                                    <field name="state_id" class="oe_no_button" placeholder="%s" style="width: 37%%" options='{"no_open": True}' on_change="onchange_state(state_id)"/>
+                                    <field name="zip" placeholder="%s" style="width: 20%%"/>
                                 </div>
-                                <field name="l10n_mx_city2" placeholder=%s/>
-                                <field name="country_id" placeholder=%s class="oe_no_button" options='{"no_open": True}'/>
+                                <field name="l10n_mx_city2" placeholder="%s"/>
+                                <field name="country_id" placeholder="%s" class="oe_no_button" options='{"no_open": True}'/>
                             </div>
                             <field name="website" widget="url" placeholder="e.g. www.openerp.com"/>
                         </group>

@@ -18,8 +18,8 @@ msgstr ""
 #. module: l10n_mx_partner_address
 #: code:addons/l10n_mx_partner_address/partner_address.py:66
 #, python-format
-msgid "'Street...'"
-msgstr "'Calle...'"
+msgid "Street..."
+msgstr "Calle..."
 
 #. module: l10n_mx_partner_address
 #: help:res.company,l10n_mx_street4:0
@@ -30,20 +30,20 @@ msgstr "Número interior de la dirección de la empresa"
 #. module: l10n_mx_partner_address
 #: code:addons/l10n_mx_partner_address/partner_address.py:69
 #, python-format
-msgid "'State'"
-msgstr "'Estado'"
+msgid "State"
+msgstr "Estado"
 
 #. module: l10n_mx_partner_address
 #: code:addons/l10n_mx_partner_address/partner_address.py:70
 #, python-format
-msgid "'No External...'"
-msgstr "'No Exterior...'"
+msgid "No External..."
+msgstr "No Exterior..."
 
 #. module: l10n_mx_partner_address
 #: code:addons/l10n_mx_partner_address/partner_address.py:67
 #, python-format
-msgid "'Colony...'"
-msgstr "'Colonia...'"
+msgid "Colony..."
+msgstr "Colonia..."
 
 #. module: l10n_mx_partner_address
 #: view:res.company:0
@@ -69,14 +69,14 @@ msgstr "Compañías"
 #. module: l10n_mx_partner_address
 #: code:addons/l10n_mx_partner_address/partner_address.py:73
 #, python-format
-msgid "'City...'"
-msgstr "'Ciudad...'"
+msgid "City..."
+msgstr "Ciudad..."
 
 #. module: l10n_mx_partner_address
 #: code:addons/l10n_mx_partner_address/partner_address.py:65
 #, python-format
-msgid "'Locality...'"
-msgstr "'Localidad...'"
+msgid "Locality..."
+msgstr "Localidad..."
 
 #. module: l10n_mx_partner_address
 #: view:res.company:0
@@ -98,8 +98,8 @@ msgstr "Localidad configurada para esta empresa"
 #. module: l10n_mx_partner_address
 #: code:addons/l10n_mx_partner_address/partner_address.py:68
 #, python-format
-msgid "'ZIP'"
-msgstr "'C.P.'"
+msgid "ZIP"
+msgstr "C.P."
 
 #. module: l10n_mx_partner_address
 #: model:ir.model,name:l10n_mx_partner_address.model_res_partner
@@ -109,8 +109,8 @@ msgstr "Empresa"
 #. module: l10n_mx_partner_address
 #: code:addons/l10n_mx_partner_address/partner_address.py:71
 #, python-format
-msgid "'No Internal...'"
-msgstr "'No Interior...'"
+msgid "No Internal..."
+msgstr "No Interior..."
 
 #. module: l10n_mx_partner_address
 #: field:res.company,l10n_mx_street4:0
@@ -127,6 +127,6 @@ msgstr "Número exterior de la dirección de la empresa"
 #. module: l10n_mx_partner_address
 #: code:addons/l10n_mx_partner_address/partner_address.py:72
 #, python-format
-msgid "'Country...'"
-msgstr "'País...'"
+msgid "Country..."
+msgstr "País..."
 
