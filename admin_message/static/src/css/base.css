@@ -20,3 +20,12 @@ show the content of them is the view form mode
 .openerp .oe_form .bs3.admin_message .oe_form_embedded_html p.big {
     line-height:200%;
 }
+
+.openerp .oe_form .bs3  section.general_information {
+    background-color: #f0eeee;
+    padding: 5px 0px 5px 0px;
+}
+
+.openerp .bs3.oe_form_nosheet {
+    margin: 0px;
+}

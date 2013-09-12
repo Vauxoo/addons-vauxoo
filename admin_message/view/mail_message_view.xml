@@ -27,7 +27,7 @@
             <field name="priority">20</field>
             <field name="arch" type="xml">
                 <form string="Message" version="7.0" class="bs3 admin_message">
-                    <section class="container">
+                    <section class="container page-header">
                     <h1 class="text-center">
                         <field name="subject" class="oe_inline"/>
                     </h1>
@@ -36,8 +36,11 @@
                         <span>
                         </span>
                     </section>
-                    <hr></hr>
                     <section class="container">
+                        <field name="body"/>
+                    </section>
+                    <section class="general_information">
+                    <div class="container">
                     <small>
                         <span class="text-right">
                             <label for="subtype_id" class="oe_inline" string="It is a "/>
@@ -55,20 +58,23 @@
                             <field name="id" class="oe_inline"/>
                         </span>
                     </small>
+                    </div>
                     </section>
-                    <hr></hr>
-                    <section class="container">
-                        <field name="body"/>
-                    </section>
-                    <section class="oe_edit_only" groups="base.group_no_one">
+                    <section class="oe_edit_only page-footer" groups="base.group_no_one">
                     <separator string="Technical Information"/>
                         <div>
-                            <field name="email_from" readonly="True"/>
-                            <field name="type" readonly="True"/>
-                            <field name="res_id" readonly="True"/>
-                            <field name="model" readonly="True"/>
-                            <field name="partner_ids" readonly="True" widget="many2many_tags"/>
-                            <field name="notified_partner_ids" readonly="True" widget="many2many_tags"/>
+                            <label for="email_from" class="oe_inline"/>
+                            <field name="email_from" class="oe_inline" readonly="True"/>
+                            <label for="type" class="oe_inline"/>
+                            <field name="type" class="oe_inline"  readonly="True"/>
+                            <label for="res_id" class="oe_inline"/>
+                            <field name="res_id" readonly="True" class="oe_inline" />
+                            <label for="model" class="oe_inline"/>
+                            <field name="model" readonly="True" class="oe_inline" />
+                            <label for="partner_ids" class="oe_inline"/>
+                            <field name="partner_ids" readonly="True" widget="many2many_tags" class="oe_inline" />
+                            <label for="notified_partner_ids" class="oe_inline"/>
+                            <field name="notified_partner_ids" readonly="True" widget="many2many_tags" class="oe_inline" />
                         </div>
                     </section>
                 </form>
