@@ -149,7 +149,8 @@ class account_invoice(osv.Model):
                     values['invoice_datetime'],
                     '%Y-%m-%d %H:%M:%S').date().strftime('%Y-%m-%d')
                 if date_invoice != values['date_invoice']:
-                    raise osv.except_osv(_('Warning!'), _('Date in invoice diferent'))
+                    raise osv.except_osv(_('Warning!'),
+                            _('Invoice dates should be equal'))
         return res
 
     def action_move_create(self, cr, uid, ids, *args):
