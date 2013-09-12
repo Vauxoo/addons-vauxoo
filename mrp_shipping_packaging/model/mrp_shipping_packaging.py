@@ -68,13 +68,11 @@ def check_ean(eancode):
 #    }
 #
 
-
 class stock_tracking(osv.Model):
+    """ this class adds three fields for can have packing control on delivery orders lines
+    """
     _inherit = 'stock.tracking'
     _description = _('Need to set the model name')
-    '''
-    Need to set the model description
-    '''
     _columns = {
         'partner_id': fields.many2one('res.partner', 'Partner'),
         'state': fields.selection((('new', 'New'), ('packing', 'Packing'),
@@ -87,18 +85,24 @@ class stock_tracking(osv.Model):
     }
 
     def move_packing(self, cr, uid, ids, context=None):
+        """ Allows to pass to packing state
+        """
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         self.write(cr, uid, ids, {'state': 'packing'})
         return True
     
     def pass_confirm(self, cr, uid, ids, context=None):
+        """ Allows to pass to confim state
+        """
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         self.write(cr, uid, ids, {'state': 'confirm'})
         return True
     
     def _check_ean_key(self, cr, uid, ids, context=None):
+        """ Validate ean code
+        """
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         for pack in self.browse(cr, uid, ids, context=context):

@@ -31,7 +31,15 @@
     'category': 'MRP',
     'summary': 'Packaging stock moves for a delivery order',
     'description': """
-    """,
+======================
+MRP Shipping Packaging
+======================
+
+This module allows to have best control on packaging of stock moves that belong to 
+a delivery order.
+
+
+""",
     'depends': ['base', 'mail', 'stock'],
     'data': [
         'view/mrp_shipping_packaging_view.xml',
