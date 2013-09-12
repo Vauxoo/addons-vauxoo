@@ -129,7 +129,8 @@ class account_invoice(osv.Model):
                     dt_invoice, '%Y/%m/%d %H:%M:%S').date().strftime('%Y/%m/%d')
                 res['date_invoice'] = date_invoice
                 return res
-        elif 'invoice_datetime' in values:
+            
+        if 'invoice_datetime' in values:
             if values['invoice_datetime'] and not\
                 values.get('date_invoice', False):
                 date_ts = tools.server_to_local_timestamp(values[
@@ -141,6 +142,14 @@ class account_invoice(osv.Model):
                 res['date_invoice'] = date_invoice
                 res['invoice_datetime'] = date_ts
                 return res
+            
+        if 'invoice_datetime' in values  and 'date_invoice' in values:
+            if values['invoice_datetime'] and values['date_invoice']:
+                date_invoice = datetime.datetime.strptime(
+                        values['invoice_datetime'],
+                        '%Y-%m-%d %H:%M:%S').date().strftime('%Y-%m-%d')
+                if date_invoice != values['date_invoice']:
+                    raise osv.except_osv(_('Warning!'), _('Date in invoice diferent'))
         return res
 
     def action_move_create(self, cr, uid, ids, *args):
@@ -150,9 +159,9 @@ class account_invoice(osv.Model):
             date_value = self.assigned_datetime(cr, uid, values)
             if inv.move_id:
                 continue
-            if inv.date_due and inv.invoice_datetime:
+            if inv.date_invoice and inv.invoice_datetime:
                 return super(account_invoice, self).action_move_create(cr,
-                                uid, ids, *args)
+                                    uid, ids, *args)
             t1 = time.strftime('%Y-%m-%d')
             t2 = time.strftime('%Y-%m-%d %H:%M:%S')
             self.write(cr, uid, [inv.id], {
