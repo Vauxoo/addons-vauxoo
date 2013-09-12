@@ -43,9 +43,11 @@ class mrp_consume(osv.TransientModel):
                     'product_uom': raw_product.product_uom.id,
                     'product_uom_move': raw_product.move_id.product_uom.id,
                     'quantity': raw_product.quantity})
-                raw_product.move_id.action_consume(
-                    raw_product.quantity, raw_product.location_id.id,
-                    context=context)
+                for move_line in raw_product.consume_line_move_ids:
+                    move_line.move_id.action_consume(
+                        raw_product.quantity, move_line.location_id.id,
+                        context=context)
+
         return {}
 
     def default_get(self, cr, uid, fields, context=None):
