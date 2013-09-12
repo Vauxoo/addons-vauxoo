@@ -96,6 +96,12 @@ class stock_tracking(osv.Model):
         self.write(cr, uid, ids, {'state': 'packing'})
         return True
     
+    def pass_confirm(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        self.write(cr, uid, ids, {'state': 'confirm'})
+        return True
+    
     def _check_ean_key(self, cr, uid, ids, context=None):
          for pack in self.browse(cr, uid, ids, context=context):
              res = check_ean(pack.ean)

@@ -10,8 +10,12 @@
                     <header>
                     <button name="move_packing"
                         string="Packing" type="object"
-                        icon="terp-accessories-archiver" 
+                        class="oe_highlight" icon="terp-accessories-archiver" 
                         states="new"/>
+                    <button name="pass_confirm"
+                        string="Confirm" type="object"
+                        class="oe_highlight" icon="gtk-ok" 
+                        states="packing"/>
                         <field name="state" widget="statusbar" statusbar_visible="new,packing,confirm" statusbar_colors='{"shipping_except":"red","invoice_except":"red","waiting_date":"blue"}'/>
                     </header>
                 </xpath>
