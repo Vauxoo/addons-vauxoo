@@ -67,11 +67,7 @@ def check_ean(eancode):
 #        'stock_tracking_id': fields.many2one('stock.tracking', 'Pack'),
 #    }
 #
-#class stock_picking_out(osv.Model):
-#    _inherit = 'stock.picking.out'
-#    _columns = {
-#        'stock_tracking_id': fields.many2one('stock.tracking', 'Pack'),
-#    }
+
 
 class stock_tracking(osv.Model):
     _inherit = 'stock.tracking'
@@ -89,7 +85,7 @@ class stock_tracking(osv.Model):
     _defaults = {
         'state': 'new',
     }
-    
+
     def move_packing(self, cr, uid, ids, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -103,9 +99,11 @@ class stock_tracking(osv.Model):
         return True
     
     def _check_ean_key(self, cr, uid, ids, context=None):
-         for pack in self.browse(cr, uid, ids, context=context):
-             res = check_ean(pack.ean)
-         return res
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        for pack in self.browse(cr, uid, ids, context=context):
+            res = check_ean(pack.ean)
+        return res
 
     _constraints = [(_check_ean_key, 'Error: Invalid ean code', ['ean'])]
 
