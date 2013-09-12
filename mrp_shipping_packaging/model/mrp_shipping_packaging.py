@@ -61,32 +61,29 @@ def check_ean(eancode):
         return False                                                                                
     return ean_checksum(eancode) == int(eancode[-1])
 
-class stock_picking_out(osv.Model):
-
-    _inherit = 'stock.picking.out'
-    _description = _('Need to set the model name')
-    '''
-    Need to set the model description
-    '''
-
-    _columns = {
-        'stock_tracking_id': fields.many2one('stock.tracking', 'Pack'),
-    }
+#class stock_picking(osv.Model):
+#    _inherit = 'stock.picking'
+#    _columns = {
+#        'stock_tracking_id': fields.many2one('stock.tracking', 'Pack'),
+#    }
+#
+#class stock_picking_out(osv.Model):
+#    _inherit = 'stock.picking.out'
+#    _columns = {
+#        'stock_tracking_id': fields.many2one('stock.tracking', 'Pack'),
+#    }
 
 class stock_tracking(osv.Model):
-
     _inherit = 'stock.tracking'
     _description = _('Need to set the model name')
     '''
     Need to set the model description
     '''
-
     _columns = {
         'partner_id': fields.many2one('res.partner', 'Partner'),
         'state': fields.selection((('new', 'New'), ('packing', 'Packing'),
             ('confirm', 'Confirmed')), 'Status', readonly=True, select=True),
         'ean': fields.char('EAN', size=14, help="The EAN code of the package unit."),
-
     }
      
     _defaults = {
