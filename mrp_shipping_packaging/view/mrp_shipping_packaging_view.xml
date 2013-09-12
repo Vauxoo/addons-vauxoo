@@ -8,6 +8,10 @@
             <field name="arch" type="xml">
                 <xpath expr="//group" position="before">
                     <header>
+                    <button name="move_packing"
+                        string="Packing" type="object"
+                        icon="terp-accessories-archiver" 
+                        states="new"/>
                         <field name="state" widget="statusbar" statusbar_visible="new,packing,confirm" statusbar_colors='{"shipping_except":"red","invoice_except":"red","waiting_date":"blue"}'/>
                     </header>
                 </xpath>
