@@ -47,7 +47,46 @@ class stock_picking(osv.Model):
             message = _("Picking '%s' has been set in draft state.") % name
             self.log(cr, uid, id, message)
         return True
+        
+class stock_picking_in(osv.Model):
+    _inherit = 'stock.picking.in'
 
+    def action_cancel_draft(self, cr, uid, ids, *args):
+        if not len(ids):
+            return False
+        move_obj = self.pool.get('stock.move')
+        self.write(cr, uid, ids, {'state': 'draft'})
+        wf_service = netsvc.LocalService("workflow")
+        for p_id in ids:
+            moves = move_obj.search(cr, uid, [('picking_id', '=', p_id)])
+            move_obj.write(cr, uid, moves, {'state': 'draft'})
+            # Deleting the existing instance of workflow for PO
+            wf_service.trg_delete(uid, 'stock.picking', p_id, cr)
+            wf_service.trg_create(uid, 'stock.picking', p_id, cr)
+        for (id, name) in self.name_get(cr, uid, ids):
+            message = _("Picking '%s' has been set in draft state.") % name
+            self.log(cr, uid, id, message)
+        return True
+        
+class stock_picking_out(osv.Model):
+    _inherit = 'stock.picking.out'
+
+    def action_cancel_draft(self, cr, uid, ids, *args):
+        if not len(ids):
+            return False
+        move_obj = self.pool.get('stock.move')
+        self.write(cr, uid, ids, {'state': 'draft'})
+        wf_service = netsvc.LocalService("workflow")
+        for p_id in ids:
+            moves = move_obj.search(cr, uid, [('picking_id', '=', p_id)])
+            move_obj.write(cr, uid, moves, {'state': 'draft'})
+            # Deleting the existing instance of workflow for PO
+            wf_service.trg_delete(uid, 'stock.picking', p_id, cr)
+            wf_service.trg_create(uid, 'stock.picking', p_id, cr)
+        for (id, name) in self.name_get(cr, uid, ids):
+            message = _("Picking '%s' has been set in draft state.") % name
+            self.log(cr, uid, id, message)
+        return True
 
 class stock_move(osv.Model):
     _inherit = 'stock.move'

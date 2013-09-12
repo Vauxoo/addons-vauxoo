@@ -16,7 +16,7 @@
         </record>
         <record model="ir.ui.view" id="view_picking_inherit_picking_in_cancel_form">
             <field name="name">view.picking.inherit.picking.in.cancel.form</field>
-            <field name="model">stock.picking</field>
+            <field name="model">stock.picking.in</field>
             <field name="inherit_id" ref="stock.view_picking_in_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='button_cancel']" position="replace">
@@ -29,7 +29,7 @@
         </record>
         <record model="ir.ui.view" id="view_picking_inherit_picking_out_cancel_form">
             <field name="name">view.picking.inherit.picking.out.cancel.form</field>
-            <field name="model">stock.picking</field>
+            <field name="model">stock.picking.out</field>
             <field name="inherit_id" ref="stock.view_picking_out_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='button_cancel']" position="replace">
