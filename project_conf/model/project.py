@@ -48,37 +48,37 @@ class project_task(osv.osv):
         imd_obj = self.pool.get('ir.model.data')
         id_template = imd_obj.search(
             cr, uid, [('model', '=', 'email.template'), ('name', '=', template)])
-        
-        res_id = imd_obj.read(
-            cr, uid, id_template, ['res_id'])[0]['res_id']
+        if id_template:
+            res_id = imd_obj.read(
+                cr, uid, id_template, ['res_id'])[0]['res_id']
 
-        followers = self.read(cr, uid, ids.get('id'), [
-                              'message_follower_ids'])['message_follower_ids']
+            followers = self.read(cr, uid, ids.get('id'), [
+                                  'message_follower_ids'])['message_follower_ids']
 
-        ids = [ids.get('id')]
-        body_html = self.pool.get('email.template').read(
-            cr, uid, res_id, ['body_html']).get('body_html')
-        context.update({'default_template_id': res_id,
-                        'default_body': body_html,
-                        'default_use_template': True,
-                        'default_composition_mode': 'comment',
-                        'active_model': 'project.task',
-                        'default_partner_ids': followers,
-                        'mail_post_autofollow_partner_ids': followers,
-                        'active_id': ids and type(ids) is list and
-                        ids[0] or ids,
-                        'active_ids': ids and type(ids) is list and
-                        ids or [ids],
-                        })
+            ids = [ids.get('id')]
+            body_html = self.pool.get('email.template').read(
+                cr, uid, res_id, ['body_html']).get('body_html')
+            context.update({'default_template_id': res_id,
+                            'default_body': body_html,
+                            'default_use_template': True,
+                            'default_composition_mode': 'comment',
+                            'active_model': 'project.task',
+                            'default_partner_ids': followers,
+                            'mail_post_autofollow_partner_ids': followers,
+                            'active_id': ids and type(ids) is list and
+                            ids[0] or ids,
+                            'active_ids': ids and type(ids) is list and
+                            ids or [ids],
+                            })
 
-        mail_obj = self.pool.get('mail.compose.message')
-        fields = mail_obj.fields_get(cr, uid)
-        mail_ids = mail_obj.default_get(
-            cr, uid, fields.keys(), context=context)
-        mail_ids.update(
-            {'model': 'project.task', 'body': body_html, 'composition_mode': 'mass_mail', 'partner_ids': [(6, 0, followers)]})
-        mail_ids = mail_obj.create(cr, uid, mail_ids, context=context)
-        mail_obj.send_mail(cr, uid, [mail_ids], context=context)
+            mail_obj = self.pool.get('mail.compose.message')
+            fields = mail_obj.fields_get(cr, uid)
+            mail_ids = mail_obj.default_get(
+                cr, uid, fields.keys(), context=context)
+            mail_ids.update(
+                {'model': 'project.task', 'body': body_html, 'composition_mode': 'mass_mail', 'partner_ids': [(6, 0, followers)]})
+            mail_ids = mail_obj.create(cr, uid, mail_ids, context=context)
+            mail_obj.send_mail(cr, uid, [mail_ids], context=context)
 
         return False
 
