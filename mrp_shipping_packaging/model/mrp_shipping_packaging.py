@@ -28,45 +28,48 @@ from openerp.tools.translate import _
 from openerp import tools
 import math
 
+
 def ean_checksum(eancode):
     """returns the checksum of an ean string of length 13, returns -1 if the string has the wrong length"""
-    if len(eancode) <> 13:                                                                          
-        return -1                                                                                   
-    oddsum=0                                                                                        
-    evensum=0                                                                                       
-    total=0                                                                                         
-    eanvalue=eancode                                                                                
-    reversevalue = eanvalue[::-1]                                                                   
-    finalean=reversevalue[1:]                                                                       
-                                                                                                    
-    for i in range(len(finalean)):                                                                  
-        if i % 2 == 0:                                                                              
-            oddsum += int(finalean[i])                                                              
-        else:                                                                                       
-            evensum += int(finalean[i])                                                             
-    total=(oddsum * 3) + evensum                                                                    
-                                                                                                    
-    check = int(10 - math.ceil(total % 10.0)) %10                                                   
+    if len(eancode) != 13:
+        return -1
+    oddsum = 0
+    evensum = 0
+    total = 0
+    eanvalue = eancode
+    reversevalue = eanvalue[::-1]
+    finalean = reversevalue[1:]
+
+    for i in range(len(finalean)):
+        if i % 2 == 0:
+            oddsum += int(finalean[i])
+        else:
+            evensum += int(finalean[i])
+    total = (oddsum * 3) + evensum
+
+    check = int(10 - math.ceil(total % 10.0)) % 10
     return check
 
+
 def check_ean(eancode):
-    """returns True if eancode is a valid ean13 string, or null"""                                  
-    if not eancode:                                                                                 
-        return True                                                                                 
-    if len(eancode) <> 13:                                                                          
-        return False                                                                                
-    try:                                                                                            
-        int(eancode)                                                                                
-    except:                                                                                         
-        return False                                                                                
+    """returns True if eancode is a valid ean13 string, or null"""
+    if not eancode:
+        return True
+    if len(eancode) != 13:
+        return False
+    try:
+        int(eancode)
+    except:
+        return False
     return ean_checksum(eancode) == int(eancode[-1])
 
-#class stock_picking(osv.Model):
+# class stock_picking(osv.Model):
 #    _inherit = 'stock.picking'
 #    _columns = {
 #        'stock_tracking_id': fields.many2one('stock.tracking', 'Pack'),
 #    }
 #
+
 
 class stock_tracking(osv.Model):
     """ this class adds three fields for can have packing control on delivery orders lines
@@ -76,10 +79,10 @@ class stock_tracking(osv.Model):
     _columns = {
         'partner_id': fields.many2one('res.partner', 'Partner'),
         'state': fields.selection((('new', 'New'), ('packing', 'Packing'),
-            ('confirm', 'Confirmed')), 'Status', readonly=True, select=True),
+                                   ('confirm', 'Confirmed')), 'Status', readonly=True, select=True),
         'ean': fields.char('EAN', size=14, help="The EAN code of the package unit."),
     }
-     
+
     _defaults = {
         'state': 'new',
     }
@@ -91,7 +94,7 @@ class stock_tracking(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         self.write(cr, uid, ids, {'state': 'packing'})
         return True
-    
+
     def pass_confirm(self, cr, uid, ids, context=None):
         """ Allows to pass to confim state
         """
@@ -99,7 +102,7 @@ class stock_tracking(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         self.write(cr, uid, ids, {'state': 'confirm'})
         return True
-    
+
     def _check_ean_key(self, cr, uid, ids, context=None):
         """ Validate ean code
         """
@@ -110,6 +113,3 @@ class stock_tracking(osv.Model):
         return res
 
     _constraints = [(_check_ean_key, 'Error: Invalid ean code', ['ean'])]
-
-
-
