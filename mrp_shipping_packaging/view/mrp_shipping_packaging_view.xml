@@ -16,7 +16,10 @@
                         string="Confirm" type="object"
                         class="oe_highlight" icon="gtk-ok" 
                         states="packing"/>
-                        <field name="state" widget="statusbar" statusbar_visible="new,packing,confirm" statusbar_colors='{"shipping_except":"red","invoice_except":"red","waiting_date":"blue"}'/>
+                    <field name="state" widget="statusbar" 
+                        statusbar_visible="new,packing,confirm" 
+                        statusbar_colors='{"shipping_except":"red","invoice_except":"red","waiting_date":"blue"}'
+                        class="oe_highlight"/>
                     </header>
                 </xpath>
                  
@@ -24,6 +27,22 @@
                     <field name="partner_id" string="Customer" domain="[('customer','=',True)]" 
                         attrs="{'readonly': [('state', 'in', ('packing', 'confirm'))]}" required="1"/>
                     <field name="ean"/>
+                </xpath>
+                
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', 'in', ('packing', 'confirm'))]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='ean']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', 'in', ('confirm'))]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='serial']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', 'in', ('packing', 'confirm'))]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', 'in', ('packing', 'confirm'))]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='active']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', 'in', ('packing', 'confirm'))]}</attribute>
                 </xpath>
 
             </field>
