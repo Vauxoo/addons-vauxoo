@@ -94,15 +94,12 @@ class stock_move(osv.Model):
     def action_cancel(self, cr, uid, ids, context=None):
         account_move_line = self.pool.get('account.move.line')
         account_move = self.pool.get('account.move')
-        res = super(stock_move, self).action_cancel(
-            cr, uid, ids, context=context)
         result = {}
         for move in self.browse(cr, uid, ids, context=context):
             account_move_line_id = account_move_line.search(
                 cr, uid, [('stock_move_id', '=', move.id)])
-            for move_line in account_move_line.browse(cr, uid,
-                                                      account_move_line_id,
-                                                      context=context):
+            for move_line in account_move_line.browse(cr, uid, account_move_line_id,
+                                                    context=context):
                 result.setdefault(move_line.move_id.id, move.id)
                 account_move_line.unlink(cr, uid, [move_line.id])
         for lin in result.items():
@@ -110,9 +107,8 @@ class stock_move(osv.Model):
                 cr, uid, lin[0], context=context)
             if len(account_production.line_id) == 0:
                 try:
-                    account_move.button_cancel(
-                        cr, uid, [lin[0]], context=context)
+                    account_move.button_cancel(cr, uid, [lin[0]], context=context)
                 except:
                     pass
                 account_move.unlink(cr, uid, [lin[0]])
-        return True
+        return super(stock_move, self).action_cancel(cr, uid, ids, context=context)
