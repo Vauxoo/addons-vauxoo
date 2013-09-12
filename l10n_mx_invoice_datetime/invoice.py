@@ -123,10 +123,10 @@ class account_invoice(osv.Model):
                 date_invoice = datetime.datetime.strptime(
                     date_ts, '%Y-%m-%d').date()
                 dt_invoice = datetime.datetime.combine(
-                    date_invoice, time_invoice).strftime('%Y/%m/%d %H:%M:%S')
+                    date_invoice, time_invoice).strftime('%Y-%m-%d %H:%M:%S')
                 res['invoice_datetime'] = dt_invoice
                 date_invoice = datetime.datetime.strptime(
-                    dt_invoice, '%Y/%m/%d %H:%M:%S').date().strftime('%Y/%m/%d')
+                    dt_invoice, '%Y-%m-%d %H:%M:%S').date().strftime('%Y-%m-%d')
                 res['date_invoice'] = date_invoice
                 return res
             
@@ -138,16 +138,16 @@ class account_invoice(osv.Model):
                     tools.DEFAULT_SERVER_DATETIME_FORMAT, context.get(
                     'tz_invoice_mx', 'America/Mexico_City'))
                 date_invoice = datetime.datetime.strptime(
-                    date_ts, '%Y-%m-%d %H:%M:%S').date().strftime('%Y/%m/%d')
+                    date_ts, '%Y-%m-%d %H:%M:%S').date().strftime('%Y-%m-%d')
                 res['date_invoice'] = date_invoice
                 res['invoice_datetime'] = date_ts
                 return res
-            
+        
         if 'invoice_datetime' in values  and 'date_invoice' in values:
             if values['invoice_datetime'] and values['date_invoice']:
                 date_invoice = datetime.datetime.strptime(
-                        values['invoice_datetime'],
-                        '%Y-%m-%d %H:%M:%S').date().strftime('%Y-%m-%d')
+                    values['invoice_datetime'],
+                    '%Y-%m-%d %H:%M:%S').date().strftime('%Y-%m-%d')
                 if date_invoice != values['date_invoice']:
                     raise osv.except_osv(_('Warning!'), _('Date in invoice diferent'))
         return res
