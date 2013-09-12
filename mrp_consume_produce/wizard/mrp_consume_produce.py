@@ -129,11 +129,39 @@ class mrp_consume_line(osv.TransientModel):
             digits_compute=dp.get_precision('Product UoM'), required=True),
         'product_uom': fields.many2one('product.uom', 'Unit of Measure',
             required=True,),
-        'location_id': fields.many2one('stock.location', 'Location',
-            required=True),
-        'location_dest_id': fields.many2one('stock.location',
-            'Dest. Location', required=True),
-        'move_id': fields.many2one('stock.move', "Move"),
+        'consume_line_move_ids': fields.one2many(
+            'mrp.consume.line.move',
+            'consume_line_id',
+            _('Moves'),
+            required=True,
+            help=_('Moves corresponding to the product in the consume line')),
         'wizard_id': fields.many2one('mrp.consume', string="Wizard"),
         'wizard2_id': fields.many2one('mrp.produce', string="Wizard"),
+    }
+
+
+class mrp_consume_line_move(osv.TransientModel):
+
+    """
+    This model refered to stock moves dummy data that is used in the
+    mrp_consume_line model.
+    """
+
+    _name = 'mrp.consume.line.move'
+    _description = _('MRP Consume Line Move')
+    _columns = {
+        'consume_line_id': fields.many2one(
+            'mrp.consume.line',
+            _('Consume Line')),
+        'move_id': fields.many2one(
+            'stock.move',
+            _('Move')),
+        'location_id': fields.many2one(
+            'stock.location',
+            _('Location'),
+            required=True),
+        'location_dest_id': fields.many2one(
+            'stock.location',
+            _('Dest. Location'),
+            required=True),
     }
