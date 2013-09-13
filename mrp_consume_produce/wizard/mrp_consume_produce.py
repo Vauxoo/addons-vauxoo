@@ -81,13 +81,14 @@ class mrp_consume(osv.TransientModel):
                      for move_brw in (move_obj.browse(
                         cr, uid, move_ids, context=context))
                      if move_brw.state not in ('done', 'cancel')]
-                moves = self._partial_move_for(cr, uid, active_move_ids,
-                                               context=context)
+                moves = self._partial_move_for(
+                    cr, uid, production_id, active_move_ids, context=context)
             res.update({'consume_line_ids': moves})
 
         return res
 
-    def _partial_move_for(self, cr, uid, move_ids, context=None):
+    def _partial_move_for(self, cr, uid, production_id, move_ids,
+                          context=None):
         """
         @param move_ids: list of stock move id.
         @return: a dictionary of values for a consume/produce line.
@@ -97,6 +98,8 @@ class mrp_consume(osv.TransientModel):
 
         product_id = self._get_consume_line_product_id(
             cr, uid, move_ids, context=context)
+        product_uom = self._get_consume_line_uom_id(
+            cr, uid, production_id, product_id, move_ids, context=context) 
 
         raise osv.except_osv(
             _('Alert'),
@@ -132,6 +135,24 @@ class mrp_consume(osv.TransientModel):
                   ' different products.'),
             )
         return product_ids[0]
+
+    def _get_consume_line_uom_id(self, cr, uid, production_id, product_id,
+                              move_ids, context=None):
+        """
+        Return the manufacturing order scheduled product uom defined for the
+        given product.
+        @param production_id: manufacturing order id.
+        @param product_id: raw material product id.
+        @param move_ids: move ids that belongs to production_id and wich
+                         product is the product_id.
+        """
+        context = context or {}
+        production_brw = self.pool.get('mrp.production').browse(
+            cr, uid, production_id, context=context)
+        uom_id = [product_line.product_uom.id
+                  for product_line in production_brw.product_lines
+                  if product_line.product_id.id == product_id][0]            
+        return uom_id
 
 
 class mrp_produce(osv.TransientModel):
