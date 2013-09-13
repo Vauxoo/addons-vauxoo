@@ -100,6 +100,8 @@ class mrp_consume(osv.TransientModel):
             cr, uid, move_ids, context=context)
         product_uom = self._get_consume_line_uom_id(
             cr, uid, production_id, product_id, context=context) 
+        product_qty = self._get_consume_line_product_qty(
+            cr, uid, move_ids, product_uom, context=context)
 
         raise osv.except_osv(
             _('Alert'),
@@ -152,6 +154,22 @@ class mrp_consume(osv.TransientModel):
                   if product_line.product_id.id == product_id][0]            
         return uom_id
 
+    def _get_consume_line_product_qty(self, cr, uid, move_ids, product_uom_id,
+                                      context=None):
+        """
+        Return the summatory of every move given in move_ids.
+        @param move_ids: stock move ids list to check.
+        """
+        context = context or {}
+        move_obj = self.pool.get('stock.move')
+        uom_obj = self.pool.get('product.uom')
+        move_brws = move_obj.browse(cr, uid, move_ids, context=context)
+        qty = \
+            sum([uom_obj._compute_qty(
+                    cr, uid, move_brw.product_uom.id, move_brw.product_qty,
+                    product_uom_id)
+                 for move_brw in move_brws])
+        return qty
 
 class mrp_produce(osv.TransientModel):
     _name = 'mrp.produce'
