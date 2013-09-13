@@ -99,7 +99,7 @@ class mrp_consume(osv.TransientModel):
         product_id = self._get_consume_line_product_id(
             cr, uid, move_ids, context=context)
         product_uom = self._get_consume_line_uom_id(
-            cr, uid, production_id, product_id, move_ids, context=context) 
+            cr, uid, production_id, product_id, context=context) 
 
         raise osv.except_osv(
             _('Alert'),
@@ -137,14 +137,12 @@ class mrp_consume(osv.TransientModel):
         return product_ids[0]
 
     def _get_consume_line_uom_id(self, cr, uid, production_id, product_id,
-                              move_ids, context=None):
+                                 context=None):
         """
         Return the manufacturing order scheduled product uom defined for the
         given product.
         @param production_id: manufacturing order id.
         @param product_id: raw material product id.
-        @param move_ids: move ids that belongs to production_id and wich
-                         product is the product_id.
         """
         context = context or {}
         production_brw = self.pool.get('mrp.production').browse(
