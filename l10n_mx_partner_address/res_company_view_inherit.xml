@@ -4,18 +4,14 @@
         <record model="ir.ui.view" id="res_company_inherit_form_view">
                 <field name="name">res.company.inherit.form.view</field>
                 <field name="model">res.company</field>
-                <field name="inherit_id" ref="base.view_company_form" />
+                <field name="inherit_id" ref="base.view_company_form"/>
                 <field name="arch" type="xml">
-
-                    <xpath expr="//field[@name='street2']" position="after" >
-                        <field name="l10n_mx_street4" placeholder="No. Exterior..."/>
-                        <field name="l10n_mx_street3" placeholder="No. Interior..."/>
-                        <field name="l10n_mx_city2" placeholder="Localidad"/>
+                    <xpath expr="//field[@name='street2']" position="after">
+                        <field name="l10n_mx_street3" placeholder="No. External..."/>
+                        <field name="l10n_mx_street4" placeholder="No. Internal..."/>
+                        <field name="l10n_mx_city2" placeholder="Locality"/>
                     </xpath>
-
                 </field>
             </record>
-            
-
         </data>
 </openerp>

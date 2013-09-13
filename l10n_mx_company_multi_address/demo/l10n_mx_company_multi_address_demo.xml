@@ -28,6 +28,9 @@
         
         <record id="base.main_company" model="res.company">
             <field name="address_invoice_parent_company_id" ref="main_mx_address_company"/>
+            <field name="city">tu ciudad</field>
+            <field name="state_id" ref="l10n_mx_states.res_country_state_mx_gto" model="res.country.state"/>
+            <field name="country_id" ref="base.mx"/>
         </record>
 
     </data>
