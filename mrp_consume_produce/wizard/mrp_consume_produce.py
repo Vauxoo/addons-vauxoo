@@ -75,10 +75,6 @@ class mrp_consume(osv.TransientModel):
                     else:
                         moves_of[product_id] = [move_id] 
 
-            raise osv.except_osv(
-                _('Alert'),
-                _('This functionality is still in development.'))
-
             for move_ids in moves_of.values():
                 active_move_ids = \
                     [move_brw.id
@@ -91,14 +87,21 @@ class mrp_consume(osv.TransientModel):
 
         return res
 
-    def _partial_move_for(self, cr, uid, move_id, context=None):
+    def _partial_move_for(self, cr, uid, move_ids, context=None):
         """
-        @param move_id: stock move id.
+        @param move_ids: list of stock move id.
         @return: a dictionary of values for a consume/produce line.
         """
         context = context or {}
         move_obj = self.pool.get('stock.move')
-        move_brw = move_obj.browse(cr, uid, move_id, context=context)
+
+        product_id = self._get_consume_line_product_id(
+            cr, uid, move_ids, context=context)
+
+        raise osv.except_osv(
+            _('Alert'),
+            _('This functionality is still in development.'))
+
         partial_move = {
             'product_id': move_brw.product_id.id,
             'quantity': move_brw.product_qty,
@@ -109,6 +112,26 @@ class mrp_consume(osv.TransientModel):
             'location_dest_id': move_brw.location_dest_id.id,
         }
         return partial_move
+
+    def _get_consume_line_product_id(self, cr, uid, move_ids, context=None):
+        """
+        It gets a list of move ids and check that have the same product_id. If
+        this condition is True return the product_id, else it raise an
+        exception indicating that the moves correspond to different products
+        and can be use to create one mrp.comsume.line.
+        @param move_ids: stock move ids list to check.
+        """
+        context = context or {}
+        move_obj = self.pool.get('stock.move')
+        move_brws = move_obj.browse(cr, uid, move_ids, context=context)
+        product_ids = [move_brw.product_id.id for move_brw in move_brws]
+        if len(set(product_ids)) != 1:
+            raise osv.except_osv(
+                _('Error!'),
+                _('You are trying to create a cosume line for two or more'
+                  ' different products.'),
+            )
+        return product_ids[0]
 
 
 class mrp_produce(osv.TransientModel):
