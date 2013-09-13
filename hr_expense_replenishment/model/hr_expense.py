@@ -358,12 +358,17 @@ class hr_expense_expense(osv.Model):
             advance_aml_brws = [aml_brw
                                 for aml_brw in exp.advance_ids
                                     if aml_brw.account_id.type == 'payable']
-
+                    
             inv_aml_brws = [aml_brw
                                 for inv in exp.invoice_ids
                                     for aml_brw in inv.move_id.line_id
                                         if aml_brw.account_id.type == 'payable']
 
+            for av_brw in exp.payment_ids:
+                advance_aml_brws += [l for l in av_brw.move_ids if l.account_id.type \
+                        == "payable" \
+                        and not l.reconcile_id and not l.reconcile_partial_id]
+                        
             aml = {
                 'exp':
                 exp_aml_brws and [aml_brw.id for aml_brw in exp_aml_brws]

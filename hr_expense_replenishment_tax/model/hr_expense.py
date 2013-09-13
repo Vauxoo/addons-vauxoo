@@ -54,6 +54,7 @@ class hr_expense_expense(osv.Model):
         return res
 
     def create_her_tax(self, cr, uid, ids, aml={}, context=None):
+        print ids,'imprimo ids'
         aml_obj = self.pool.get('account.move.line')
         acc_voucher_obj = self.pool.get('account.voucher')
         context = context or {}
@@ -66,16 +67,25 @@ class hr_expense_expense(osv.Model):
         current_currency = self._get_current_currency(cr, uid,
                             exp.id, context)
 
-        if exp.fully_applied_vat:
-            return True
-        self.unlink_move_tax(cr, uid, exp, context=context)
+#        if exp.fully_applied_vat:
+ #           return True
+        #self.unlink_move_tax(cr, uid, exp, context=context)
+        expense_amount = exp.amount
+        if context.get('payment_amount'):
+            advance_amount = context.get('payment_amount', 0.0)
+            move_date = context.get('date_voucher', False)
+        else:
+            advance_amount = sum([adv.debit for adv in exp.advance_ids])
+            move_date = exp.account_move_id.date
+        percent_pay = advance_amount/expense_amount
         for invoice in exp.invoice_ids:
             for tax in invoice.tax_line:
                 if tax.tax_id.tax_voucher_ok:
+                    print tax.amount*percent_pay,'tax.amount*percent_paytax.amount*percent_paytax.amount*percent_paytax.amount*percent_paytax.amount*percent_pay'
                     account_tax_voucher = tax.tax_id.account_paid_voucher_id.id
                     account_tax_collected = tax.tax_id.account_collected_id.id
                     factor = acc_voucher_obj.get_percent_pay_vs_invoice(cr, uid,
-                        tax.amount, tax.amount, context=context)
+                        tax.amount*percent_pay, tax.amount*percent_pay, context=context)
                     move_lines_tax = acc_voucher_obj.\
                                             _preparate_move_line_tax(cr, uid,
                         account_tax_voucher,
@@ -83,8 +93,8 @@ class hr_expense_expense(osv.Model):
                         'payment', invoice.partner_id.id,
                         exp.account_move_id.period_id.id,
                         exp.account_move_id.journal_id.id,
-                        exp.account_move_id.date, company_currency,
-                        tax.amount, tax.amount,
+                        move_date, company_currency,
+                        tax.amount*percent_pay, tax.amount*percent_pay,
                         current_currency,
                         False, tax.name, tax.account_analytic_id and\
                             tax.account_analytic_id.id or False,
@@ -93,7 +103,7 @@ class hr_expense_expense(osv.Model):
                     for move_line_tax in move_lines_tax:
                         move_create = aml_obj.create(cr ,uid, move_line_tax,
                                                 context=context)
-        exp.write({'fully_applied_vat':True})
+#        exp.write({'fully_applied_vat':True})
         return True
 
     def _get_company_currency(self, cr, uid, exp_id, context=None):
@@ -123,4 +133,25 @@ class hr_expense_expense(osv.Model):
         ])
         aml_obj.unlink(cr, uid, move_ids)
         return True
+
+
+class account_voucher(osv.Model):
+    _inherit='account.voucher'
+    
+    def proforma_voucher(self, cr, uid, ids, context=None):
+        context = context or {}
+        hr_expense_obj = self.pool.get('hr.expense.expense')
+        account_voucher_obj = self.pool.get('account.voucher')
+        cr.execute("select * from expense_pay_rel where av_id = %s",(ids[0], ))
+        dat = cr.dictfetchall()
+        if dat:
+            voucher_brw = account_voucher_obj.browse(cr, uid, dat[0]['av_id'],
+                                            context=context)
+            context.update({'payment_amount': voucher_brw.amount,
+                            'date_voucher': voucher_brw.date})
+            hr_expense_obj.create_her_tax(cr, uid, dat[0]['expense_id'], aml={},
+                                        context=context)
+        return super(account_voucher,
+                        self).proforma_voucher(cr, uid, ids, context=context)
+
     
