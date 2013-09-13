@@ -5,7 +5,6 @@
                 
         <record id="account_move_validate_multi_wizard_unbalance" model="ir.ui.view">
             <field name="name">menu.account.move.validate.multi.wizard.unbalance</field>
-            <field eval="1000" name="sequence"/>
             <field name="model">account.move.multi.wizard</field>
             <field name="arch" type="xml">
                 <form string="Journal Entries Unbalance" version="7.0">
@@ -20,7 +19,6 @@
         
         <record id="account_move_validate_multi_wizard" model="ir.ui.view">
             <field name="name">menu.account.move.validate.multi.wizard</field>
-            <field eval="10" name="sequence"/>
             <field name="model">account.move.multi.wizard</field>
             <field name="arch" type="xml">
                 <form string="Validate Multi Journal Entries" version="7.0">
@@ -39,7 +37,25 @@
                 </form>
             </field>
         </record>
-
+        
+        <record model="ir.actions.act_window" id="account_move_validate_multi_wizard_act">
+            <field name="name">Validate Multi Journal Entries</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.move.multi.wizard</field>
+            <field name="search_view_id" ref="account_move_validate_multi_wizard"/>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <record id="action_account_move_validate_multi_wizard" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field eval="104" name="sequence"/>
+            <field name="view_id" ref="account_move_validate_multi_wizard"/>
+            <field name="act_window_id" ref="account_move_validate_multi_wizard_act"/>
+        </record>
+        
+        
         <act_window 
             name="Validate Multi Journal Entries"
             res_model="account.move.multi.wizard" 
@@ -48,7 +64,7 @@
             target="new"
             view_id="account_move_validate_multi_wizard.account_move_validate_multi_wizard"
             key2="client_action_multi"
-            id="action_account_move_validate_multi_wizard" />
+            id="account_move_validate_multi_wizard_act" />
             
     </data>
 </openerp>

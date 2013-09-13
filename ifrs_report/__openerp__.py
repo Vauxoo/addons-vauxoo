@@ -29,7 +29,10 @@
     "author" : "Vauxoo",
     "category" : "Generic Modules",
     "website": "http://www.vauxoo.com",
-    "description": ''' International Financial Reporting Standards Module''',
+    "description": ''' International Financial Reporting Standards Module 
+Instructions:
+=============
+How to print the report in PDF or spreadsheet in the following video: http://www.youtube.com/watch?v=zcxS9zO04FQ''',
     "depends" : ['base','account_periods_initial','account','report_webkit'],
     "data" : [
         'security/security.xml',

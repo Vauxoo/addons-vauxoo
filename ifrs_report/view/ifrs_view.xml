@@ -181,7 +181,7 @@
                                   <field 
                                       name="operator" 
                                       colspan='2' 
-                                      attrs="{'invisible':[('type','!=','total')], 'required':[('type','=','total')]}"/>
+                                      attrs="{'invisible':[('type','!=','total')], 'required':[('type','=','total')]}" on_change = 'onchange_type_without(type, operator)'/>
                                   <field 
                                       name="comparison" 
                                       colspan='2' 

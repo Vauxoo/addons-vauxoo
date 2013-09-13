@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
         <record id="view_mrp_config_inherit" model="ir.ui.view">
@@ -7,7 +6,7 @@
             <field name="inherit_id" ref="mrp.view_mrp_config"/>
             <field name="arch" type="xml">
 
-                <xpath expr="//group/div/div[3]" position="after">
+                <xpath expr="//group/div/div[3]" position="after" expxml_f="//group/div/div[3]">
 
                     <div>
                         <field name="group_mrp_consume_produce" class="oe_inline"/>

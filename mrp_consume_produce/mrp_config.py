@@ -27,7 +27,7 @@ from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 from openerp import tools
 
-class mrp_config_settings(osv.osv_memory):
+class mrp_config_settings(osv.TransientModel):
     _inherit = 'mrp.config.settings'
 
     _columns = {

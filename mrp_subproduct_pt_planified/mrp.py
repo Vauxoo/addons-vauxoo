@@ -26,8 +26,6 @@
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
-
-
 class mrp_production(osv.Model):
     _inherit = 'mrp.production'
 
@@ -41,17 +39,20 @@ class mrp_production(osv.Model):
         for production in self.browse(cr, uid, ids):
             bom_id = production.bom_id
             if not bom_id:
-                continue
+                result_subproducts = [] 
+            else:
+                result_subproducts = bom_id.sub_products
+
             factor = uom_obj._compute_qty(
                 cr, uid, production.product_uom.id, production.product_qty, bom_id.product_uom.id)
-            result_subproducts = []
             res = bom_obj._bom_explode(
                 cr, uid, bom_id, factor / bom_id.product_qty, properties=False, routing_id=False)
+            
             for sub_product in result_subproducts:
                 data = {
-                    'product_id': sub_product['product_id'],
-                    'quantity': sub_product['product_qty'],
-                    'product_uom': sub_product['product_uom'],
+                    'product_id': sub_product.product_id.id,
+                    'quantity': sub_product.product_qty,
+                    'product_uom': sub_product.product_uom.id,
                     'production_id': production.id
                 }
                 mrp_pt.create(cr, uid, data)

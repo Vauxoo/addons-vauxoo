@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <openerp>
-	<data>
-		<report id="purchase.report_purchase_order" name="purchase.discount.order" string="Purchase Order" model="purchase.order" rml="purchase_discount/report/order.rml" auto="False"/>
-	</data>
+    <data>
+        <report id="purchase.report_purchase_order" name="purchase.discount.order" string="Purchase Order" model="purchase.order" rml="purchase_discount/report/order.rml" auto="False"/>
+    </data>
 </openerp>

@@ -21,7 +21,7 @@
 {
     'name' : 'Overwrite field standard_price',
     'version' : '1.0',
-    'author' : 'Vauxoo C.A.',
+    'author' : 'Vauxoo',
     'category' : 'Security',
     'description' : """
 Fixed groups on field standard_price

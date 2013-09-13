@@ -26,7 +26,7 @@
 {
     "name": "MRP Workcenter Responsible",
     "version": "1.0",
-    "author": "Vauxoo C.A.",
+    "author": "Vauxoo",
     "website": "http://www.openerp.com.ve",
     "category": "MRP",
     "description": """

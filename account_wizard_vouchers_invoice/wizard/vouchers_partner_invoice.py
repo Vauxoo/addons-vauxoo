@@ -1,13 +1,13 @@
 # -*- encoding: utf-8 -*-
-###########################################################################
+#
 #    Module Writen to OpenERP, Open Source Management Solution
 #
 #    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
-############################################################################
+#
 #    Coded by: Luis Torres (luis_t@vauxoo.com)
-############################################################################
+#
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,34 +22,35 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+#
 from openerp.osv import fields, osv
+
 
 class account_vouchers_invoice_wizard(osv.osv_memory):
     _name = 'account.vouchers.invoice.wizard'
-    
+
     def default_get(self, cr, uid, fields_list=None, context=None):
         res = {}
         if context.get('active_model') == 'account.invoice':
             partner_id = self.pool.get('account.invoice').browse(cr, uid,
-                context.get('active_id'), context=context).partner_id.id
+                                                                 context.get('active_id'), context=context).partner_id.id
             res['partner_id'] = partner_id
         return res
-        
+
     _columns = {
-        'partner_id' : fields.many2one('res.partner', 'Partner', readonly=True),
-        'voucher_ids' : fields.many2many('account.voucher', 
-            'voucher_partner_invoice', 'voucher_id', 'id_wizard',
-            'Vouchers Partner', help='Vouchers of this partner in state '\
-            'confirm and without invoice associated',),
+        'partner_id': fields.many2one('res.partner', 'Partner', readonly=True),
+        'voucher_ids': fields.many2many('account.voucher',
+                                        'voucher_partner_invoice', 'voucher_id', 'id_wizard',
+                                        'Vouchers Partner', help='Vouchers of this partner in state '
+                                        'confirm and without invoice associated',),
     }
-    
+
     def apply(self, cr, uid, ids, context=None):
         data = self.browse(cr, uid, ids[0])
         move_line = self.pool.get('account.move.line')
         if context.get('active_model') == 'account.invoice':
             invoice = self.pool.get('account.invoice').browse(cr, uid,
-                context.get('active_id'), context=context)
+                                                              context.get('active_id'), context=context)
             account_partner_id = invoice.partner_id.\
                 property_account_receivable and invoice.partner_id.\
                 property_account_receivable.id
@@ -62,5 +63,5 @@ class account_vouchers_invoice_wizard(osv.osv_memory):
                     for line in voucher.move_ids:
                         if line.account_id.id == account_partner_id:
                             move_line.reconcile_partial(cr, uid, [line.id,
-                                move_acc_inv], 'auto', context)
+                                                                  move_acc_inv], 'auto', context)
         return True

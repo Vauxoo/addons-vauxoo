@@ -21,8 +21,8 @@
 {                                                                                  
     'name' : 'Account Reconcile Search',
     'version' : '0.1',                                                             
-    'author': 'OpenERP SA',
-    'website': 'http://www.openerp.com',
+    'author': 'Vauxoo',
+    'website': 'http://www.vauxoo.com',
     'category' : 'Account',
     'description' : """     
 Account Reconcile Search
