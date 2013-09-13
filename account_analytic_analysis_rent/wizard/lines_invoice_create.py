@@ -97,12 +97,12 @@ class account_analytic_line(osv.osv):
             invoices.append(last_invoice)
             context2 = context.copy()
             context2['lang'] = partner.lang
-            cr.execute("SELECT product_id, to_invoice, unit_amount, product_uom_id, w_start, w_end, name, amount, feature_id " \
+            cr.execute("SELECT product_id, to_invoice, unit_amount, product_uom_id, w_start, w_end, name, amount, feature_id, prodlot_id " \
                     "FROM account_analytic_line as line " \
                     "WHERE account_id = %s " \
                         "AND id IN %s AND to_invoice IS NOT NULL " , (account.id, tuple(ids),))
 
-            for product_id, factor_id, qty, uom, w_start, w_end, name, amount, feature_id in cr.fetchall():
+            for product_id, factor_id, qty, uom, w_start, w_end, name, amount, feature_id, prodlot_id in cr.fetchall():
                 product = product_obj.browse(cr, uid, product_id, context2)
                 if not product:
                     raise osv.except_osv(_('Error'), _('At least one line has no product !'))
@@ -136,6 +136,7 @@ class account_analytic_line(osv.osv):
                     'account_analytic_id': account.id,
                     'w_start': int(w_start or 0),
                     'w_end': int(w_end or 0),
+                    'prodlot_id': prodlot_id,
                 }
                 feature_line_obj.write(cr, uid, feature_id, {'counter': int(w_end or 0)}, context=context)
                 #

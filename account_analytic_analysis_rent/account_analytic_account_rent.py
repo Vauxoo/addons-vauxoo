@@ -96,7 +96,8 @@ class account_analytic_line(osv.osv):
     _columns={
         'w_start': fields.integer('Inicial'),
         'w_end': fields.integer('Final'),
-        'feature_id': fields.many2one('product.feature.line','Feature')
+        'feature_id': fields.many2one('product.feature.line','Feature'),
+        'prodlot_id': fields.many2one('stock.production.lot', 'Production Lot', help="Production lot is used to put a serial number on the production", select=True),
     }
 
 
@@ -106,6 +107,7 @@ class account_invoice_line(osv.osv):
     _columns={
         'w_start': fields.integer('Inicial'),
         'w_end': fields.integer('Final'),
+        'prodlot_id': fields.many2one('stock.production.lot', 'Production Lot', help="Production lot is used to put a serial number on the production", select=True),
     }
 account_invoice_line()
     
@@ -215,7 +217,7 @@ class account_analytic_account(osv.osv):
                         a = prod.product_id.categ_id.property_account_income_categ.id
                     for feature in contract.feature_ids:
                         if feature.product_line_id.id==prod.product_id.id:
-                            line_obj.create(cr, uid, {'date':date_invoice,'name':feature.name.name,'product_id':prod.product_id.id,'product_uom_id':prod.product_id.uom_id.id,'general_account_id':a,'to_invoice':1,'account_id':contract.id,'journal_id':contract.journal_id.analytic_journal_id.id,'amount':feature.cost, 'feature_id':feature.id},context=context)
+                            line_obj.create(cr, uid, {'date':date_invoice,'name':feature.name.name,'product_id':prod.product_id.id,'product_uom_id':prod.product_id.uom_id.id,'general_account_id':a,'to_invoice':1,'account_id':contract.id,'journal_id':contract.journal_id.analytic_journal_id.id,'amount':feature.cost, 'feature_id':feature.id, 'prodlot_id':prod.prodlot_id.id},context=context)
                     product_obj.write(cr, uid, prod.product_id.id, {'rent':True,'contract_id':contract.id}, context=context)
                 date_invoice=(datetime.strptime(date_invoice, "%Y-%m-%d") + relativedelta(months=1)).strftime("%Y-%m-%d")
         return super(account_analytic_account, self).set_open(cr, uid, ids, context=context)

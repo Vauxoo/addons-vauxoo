@@ -22,6 +22,7 @@
                                         <field name="journal_id" />
                                         <field name="amount" sum="Total" />
                                         <field name="product_id" on_change="on_change_unit_amount(product_id, unit_amount, company_id, product_uom_id, journal_id)" />
+                                        <field name="prodlot_id"/>
                                         <field name="w_start" on_change="onchange_copys(w_start,w_end)"/>
                                         <field name="w_end" on_change="onchange_copys(w_start,w_end)" />
                                         <field name="unit_amount" on_change="on_change_unit_amount(product_id, unit_amount, company_id, product_uom_id)" sum="Total Quantity" />

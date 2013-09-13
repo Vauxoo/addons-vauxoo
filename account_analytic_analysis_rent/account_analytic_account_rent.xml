@@ -169,6 +169,7 @@
             <field name="arch" type="xml">
                 <field name="name" position="after">
                     <field name="product_id" />
+                    <field name="prodlot_id" />
                     <field name="w_start" />
                     <field name="w_end" />
                 </field>
