@@ -79,16 +79,16 @@ class mrp_consume(osv.TransientModel):
                 _('Alert'),
                 _('This functionality is still in development.'))
 
-            #~ for (product_id, move_ids) in moves_of:
-                #~ move_obj.browse(cr, uid, move_ids, context=context)
-                #~ for move_brw in move_brws:
-                    #~ if move_brw.state not in ('done', 'cancel')]
+            for move_ids in moves_of.values():
+                active_move_ids = \
+                    [move_brw.id
+                     for move_brw in (move_obj.browse(
+                        cr, uid, move_ids, context=context))
+                     if move_brw.state not in ('done', 'cancel')]
+                moves = self._partial_move_for(cr, uid, active_move_ids,
+                                               context=context)
+            res.update({'consume_line_ids': moves})
 
-            moves = \
-                [self._partial_move_for(cr, uid, move_brw.id, context=context)
-                 for move_brw in production_brw.move_lines
-                 if move_brw.state not in ('done', 'cancel')]
-            res.update(consume_line_ids=moves)
         return res
 
     def _partial_move_for(self, cr, uid, move_id, context=None):
