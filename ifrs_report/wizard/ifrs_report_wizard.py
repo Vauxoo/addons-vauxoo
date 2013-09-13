@@ -78,7 +78,7 @@ class ifrs_report_wizard(osv.osv_memory):
 
     _defaults = {
         'report_type': 'all',
-        'target_move': 'all',
+        'target_move': 'posted',
         'company_id': lambda self, cr, uid, c: self.pool.get('ifrs.ifrs').browse(cr, uid, c.get('active_id')).company_id.id,
         'fiscalyear_id': lambda self, cr, uid, c: self.pool.get('ifrs.ifrs').browse(cr, uid, c.get('active_id')).fiscalyear_id.id,
         'exchange_date': fields.date.today,
