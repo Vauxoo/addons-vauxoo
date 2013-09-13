@@ -151,6 +151,11 @@ class mrp_produce(osv.TransientModel):
                 or len(mrp_ids) != 1:
             return res
         mrp_id, = mrp_ids
+
+        raise osv.except_osv(
+            _('Alert'),
+            _('This functionality is still in development.'))
+
         if 'produce_line_ids' in fields:
             mrp = self.pool.get('mrp.production').browse(
                 cr, uid, mrp_id, context=context)
