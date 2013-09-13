@@ -35,7 +35,8 @@ This module add Date Start, SSN and children of employees
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : ["hr"],
-    "data" : ["hr_children_view.xml"],
+    "data" : ["hr_children_view.xml",
+        'security/ir.model.access.csv',],
     "installable" : True,
     "active" : False,
 }
