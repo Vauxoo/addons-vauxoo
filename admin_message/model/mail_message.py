@@ -34,19 +34,21 @@ class admin_message(osv.osv):
         obj_user = self.pool.get('res.users')
 
         for obj in self.browse(cr,uid,ids,context=None):
-            params = self.pool.get('ir.actions.client').read(cr, uid, [obj.mail_group_id.id], ['params'], context=context)
-            print 'PARAMS', params
-            for i in params[0]['params']['domain']:
-                if i[0] =='model':
-                    dict_mail.update({'model':i[2]})
-                elif i[0]=='res_id':
-                    dict_mail.update({'res_id':i[2]})
-                elif i[0]=='author_id':
-                    user_ids = obj_user.search(cr,uid,[('name','=',i[2])],context=context)
-                    dict_mail.update({'author_id':obj_user.browse(cr,uid,user_ids,context=context)[0].partner_id.id})
-                    
-            print 'DICT-MAIL', dict_mail
-        self.write(cr,uid,ids,dict_mail,context=context)
+            
+            if obj.model == "mail.group":
+                params = self.pool.get('ir.actions.client').read(cr, uid, [obj.mail_group_id.id], ['params'], context=context)
+                for i in params[0]['params']['domain']:
+                    if i[0] =='model':
+                        dict_mail.update({'model':i[2]})
+                    elif i[0]=='res_id':
+                        dict_mail.update({'res_id':i[2]})
+                    elif i[0]=='author_id':
+                        user_ids = obj_user.search(cr,uid,[('name','=',i[2])],context=context)
+                        dict_mail.update({'author_id':obj_user.browse(cr,uid,user_ids,context=context)[0].partner_id.id})
+            else:
+                print 'SOY UN MENSAJE QUE NO SE DEBE PUBLICAR', obj.model
+
+        dict_mail and self.write(cr,uid,ids,dict_mail,context=context) 
         return True
 
     _columns = {
