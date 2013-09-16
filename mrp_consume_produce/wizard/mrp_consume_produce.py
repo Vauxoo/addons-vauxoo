@@ -192,7 +192,7 @@ class mrp_consume(osv.TransientModel):
         # Note: First my intention was to use the move_brw.prodlot_id to get
         # the prodlot_id but this field is not set, I imagine that is set
         # before the move is consumed.
-        return prodlot_ids[0]
+        return prodlot_ids and prodlot_ids[0] or False
 
     def _get_consume_line_move_ids(self, cr, uid, move_ids, context=None):
         """
