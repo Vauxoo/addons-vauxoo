@@ -107,18 +107,13 @@ class mrp_consume(osv.TransientModel):
         consume_line_move_ids = self._get_consume_line_move_ids(
             cr, uid, move_ids, context=context)
 
-        raise osv.except_osv(
-            _('Alert'),
-            _('This functionality is still in development.'))
-
         partial_move = {
-            'product_id': move_brw.product_id.id,
-            'quantity': move_brw.product_qty,
-            'product_uom': move_brw.product_uom.id,
-            'prodlot_id': move_brw.prodlot_id.id,
-            'move_id': move_brw.id,
-            'location_id': move_brw.location_id.id,
-            'location_dest_id': move_brw.location_dest_id.id,
+            'product_id': product_id,
+            'quantity': product_qty,
+            'product_uom': product_uom,
+            'prodlot_id': prodlot_id,
+            'consume_line_move_ids':
+            map(lambda move_line: (0, 0, move_line), consume_line_move_ids),
         }
         return partial_move
 
