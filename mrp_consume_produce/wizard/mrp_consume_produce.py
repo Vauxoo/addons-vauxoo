@@ -245,8 +245,7 @@ class mrp_produce(osv.TransientModel):
     }
 
     def default_get(self, cr, uid, fields, context=None):
-        if context is None:
-            context = {}
+        context = context or {}
         res = super(mrp_produce, self).default_get(
             cr, uid, fields, context=context)
         mrp_ids = context.get('active_ids', [])
