@@ -54,6 +54,7 @@ class mrp_consume(osv.TransientModel):
         context = context or {}
         production_obj = self.pool.get('mrp.production')
         move_obj = self.pool.get('stock.move')
+        consume_line_ids = list()
         res = super(mrp_consume, self).default_get(
             cr, uid, fields, context=context)
         production_ids = context.get('active_ids', [])
@@ -81,9 +82,9 @@ class mrp_consume(osv.TransientModel):
                      for move_brw in (move_obj.browse(
                         cr, uid, move_ids, context=context))
                      if move_brw.state not in ('done', 'cancel')]
-                moves = self._partial_move_for(
-                    cr, uid, production_id, active_move_ids, context=context)
-            res.update({'consume_line_ids': moves})
+                consume_line_ids += [self._partial_move_for(
+                    cr, uid, production_id, active_move_ids, context=context)]
+            res.update({'consume_line_ids': consume_line_ids})
 
         return res
 
