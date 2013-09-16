@@ -55,7 +55,7 @@ class mrp_consume(osv.TransientModel):
                             'quantity': line_qty_left})
                         # TODO: this 'quantity': line_qty_left could be change
                         # becuase wath happend when products to consume moves
-                        # are in different uom
+                        # are in different uom (test with mrp_request_return)
 
                         print 'move.action_consume(%s)' % (
                             context['quantity'],)
