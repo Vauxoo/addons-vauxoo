@@ -36,13 +36,15 @@ class mrp_consume(osv.TransientModel):
             'wizard_id', 'Consume')
     }
 
-    def action_consume(self, cr, uid, ids, context={}):
+    def action_consume(self, cr, uid, ids, context=None):
+        context = context or {}
         for production in self.browse(cr, uid, ids, context=context):
             for consume_line in production.consume_line_ids:
                 context.update({
                     'product_uom': consume_line.product_uom.id,
                     'product_uom_move': consume_line.move_id.product_uom.id,
                     'quantity': consume_line.quantity})
+
                 for move_line in consume_line.consume_line_move_ids:
                     move_line.move_id.action_consume(
                         consume_line.quantity, move_line.location_id.id,
