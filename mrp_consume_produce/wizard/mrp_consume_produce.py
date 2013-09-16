@@ -104,6 +104,8 @@ class mrp_consume(osv.TransientModel):
             cr, uid, move_ids, product_uom, context=context)
         prodlot_id = self._get_consume_line_prodlot_id(
             cr, uid, product_id, move_ids, context=context)
+        consume_line_move_ids = self._get_consume_line_move_ids(
+            cr, uid, move_ids, context=context)
 
         raise osv.except_osv(
             _('Alert'),
@@ -192,6 +194,23 @@ class mrp_consume(osv.TransientModel):
         # before the move is consumed.
         return prodlot_ids[0]
 
+    def _get_consume_line_move_ids(self, cr, uid, move_ids, context=None):
+        """
+        Return a list of dictonary with consume line move to create for the
+        moves given.
+        @param move_ids: move ids list that will be convert into consume line
+                         moes.
+        """
+        context = context or {}
+        move_obj = self.pool.get('stock.move')
+        values = list()
+        for move_brw in move_obj.browse(cr, uid, move_ids, context=context):
+            values.append({
+                'move_id': move_brw.id,
+                'location_id': move_brw.location_id.id,
+                'location_dest_id': move_brw.location_dest_id.id,
+            })
+        return values
 
 class mrp_produce(osv.TransientModel):
     _name = 'mrp.produce'
