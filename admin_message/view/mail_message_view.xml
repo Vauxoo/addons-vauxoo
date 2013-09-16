@@ -56,6 +56,8 @@
                             <field name="date" class="oe_inline" readonly="True"/>
                             <label for="id" class="oe_inline" string=" With the Id "/> 
                             <field name="id" class="oe_inline"/>
+                            <button string="Publish on" type="object" name="button_publish"/>
+                            <field name="mail_group_id" class="oe_inline"/>
                         </span>
                     </small>
                     </div>
