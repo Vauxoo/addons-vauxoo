@@ -102,6 +102,8 @@ class mrp_consume(osv.TransientModel):
             cr, uid, production_id, product_id, context=context) 
         product_qty = self._get_consume_line_product_qty(
             cr, uid, move_ids, product_uom, context=context)
+        prodlot_id = self._get_consume_line_prodlot_id(
+            cr, uid, product_id, move_ids, context=context)
 
         raise osv.except_osv(
             _('Alert'),
@@ -170,6 +172,26 @@ class mrp_consume(osv.TransientModel):
                     product_uom_id)
                  for move_brw in move_brws])
         return qty
+
+    def _get_consume_line_prodlot_id(self, cr, uid, product_id, move_ids,
+                                     context=None):
+        """
+        Return the first production lot id found for the given product.
+        @param product_id: product id.
+        """
+        context = context or {}
+        move_obj = self.pool.get('stock.move')
+        prodlot_obj = self.pool.get('stock.production.lot')
+        move_brws = move_obj.browse(cr, uid, move_ids, context=context)
+        prodlot_ids = \
+            prodlot_obj.search(
+                cr, uid, [('product_id', '=', product_id)], context=context) \
+                or False
+        # Note: First my intention was to use the move_brw.prodlot_id to get
+        # the prodlot_id but this field is not set, I imagine that is set
+        # before the move is consumed.
+        return prodlot_ids[0]
+
 
 class mrp_produce(osv.TransientModel):
     _name = 'mrp.produce'
