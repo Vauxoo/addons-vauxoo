@@ -24,16 +24,16 @@
 ###############################################################################
 
 {
-    'name': 'MRP Shipping Packaging',
+    'name': 'Stock Shipping Packaging',
     'version': '1.0',
     'author': 'Vauxoo C.A.',
     'website': 'http://vauxoo.com',
-    'category': 'MRP',
+    'category': 'Warehouse',
     'summary': 'Packaging stock moves for a delivery order',
     'description': """
-======================
-MRP Shipping Packaging
-======================
+========================
+Stock Shipping Packaging
+========================
 
 This module allows to have best control on packaging of stock moves that belong to 
 a delivery order.
@@ -42,7 +42,7 @@ a delivery order.
 """,
     'depends': ['base', 'mail', 'stock'],
     'data': [
-        'view/mrp_shipping_packaging_view.xml',
+        'view/stock_shipping_packaging_view.xml',
         ],
     'demo': [],
     'test': [],
