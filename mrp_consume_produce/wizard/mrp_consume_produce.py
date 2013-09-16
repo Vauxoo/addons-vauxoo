@@ -244,10 +244,28 @@ class mrp_produce(osv.TransientModel):
             'wizard2_id', 'Consume')
     }
 
+    def _get_produce_line_values(self, cr, uid, move_id, context=None):
+        """
+        return the dictionary that fill the produce lines with the move values.
+        @param move_id: move id.
+        """
+        context = context or {}
+        move_obj = self.pool.get('stock.move')
+        move_brw = move_obj.browse(cr, uid, move_id, context=context)
+        values = {
+            'product_id': move_brw.product_id.id,
+            'quantity': move_brw.product_qty,
+            'product_uom': move_brw.product_uom.id,
+            'prodlot_id': move_brw.prodlot_id.id,
+            'move_id': move_brw.id,
+            'location_id': move_brw.location_id.id,
+            'location_dest_id': move_brw.location_dest_id.id,
+        }
+        return values
+
     def default_get(self, cr, uid, fields, context=None):
         context = context or {}
         production_obj = self.pool.get('mrp.production')
-        consume_obj = self.pool.get('mrp.consume')
         res = super(mrp_produce, self).default_get(
             cr, uid, fields, context=context)
         production_ids = context.get('active_ids', [])
@@ -256,21 +274,23 @@ class mrp_produce(osv.TransientModel):
             return res
         production_id = production_ids[0]
 
-        raise osv.except_osv(
-            _('Alert'),
-            _('This functionality is still in development.'))
-
         if 'produce_line_ids' in fields:
             production_brw = production_obj.browse(
                 cr, uid, production_id, context=context)
             moves = \
-                [consume_obj._partial_move_for(cr, uid, move, context=context)
-                 for move in production_brw.move_created_ids
-                 if move.state not in ('done', 'cancel')]
+                [self._get_produce_line_values(
+                    cr, uid, move_brw.id, context=context)
+                 for move_brw in production_brw.move_created_ids
+                 if move_brw.state not in ('done', 'cancel')]
             res.update(produce_line_ids=moves)
         return res
 
     def action_produce(self, cr, uid, ids, context={}):
+
+        raise osv.except_osv(
+            _('Alert'),
+            _('This functionality is still in development.'))
+
         for production in self.browse(cr, uid, ids, context=context):
             for raw_product in production.produce_line_ids:
                 context.update({
