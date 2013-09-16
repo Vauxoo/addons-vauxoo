@@ -252,7 +252,7 @@ class mrp_produce(osv.TransientModel):
         if not production_ids or (not context.get('active_model') == 'mrp.production') \
                 or len(production_ids) != 1:
             return res
-        mrp_id, = production_ids
+        production_id, = production_ids
 
         raise osv.except_osv(
             _('Alert'),
@@ -260,7 +260,7 @@ class mrp_produce(osv.TransientModel):
 
         if 'produce_line_ids' in fields:
             mrp = self.pool.get('mrp.production').browse(
-                cr, uid, mrp_id, context=context)
+                cr, uid, production_id, context=context)
             moves = [self.pool.get('mrp.consume')._partial_move_for(cr, uid, m, context=context) \
                     for m in mrp.move_created_ids if m.state\
                     not in ('done', 'cancel')]
