@@ -246,24 +246,27 @@ class mrp_produce(osv.TransientModel):
 
     def default_get(self, cr, uid, fields, context=None):
         context = context or {}
+        production_obj = self.pool.get('mrp.production')
+        consume_obj = self.pool.get('mrp.consume')
         res = super(mrp_produce, self).default_get(
             cr, uid, fields, context=context)
         production_ids = context.get('active_ids', [])
         if not production_ids or (not context.get('active_model') == 'mrp.production') \
                 or len(production_ids) != 1:
             return res
-        production_id, = production_ids
+        production_id = production_ids[0]
 
         raise osv.except_osv(
             _('Alert'),
             _('This functionality is still in development.'))
 
         if 'produce_line_ids' in fields:
-            mrp = self.pool.get('mrp.production').browse(
+            production_brw = production_obj.browse(
                 cr, uid, production_id, context=context)
-            moves = [self.pool.get('mrp.consume')._partial_move_for(cr, uid, m, context=context) \
-                    for m in mrp.move_created_ids if m.state\
-                    not in ('done', 'cancel')]
+            moves = \
+                [consume_obj._partial_move_for(cr, uid, move, context=context)
+                 for move in production_brw.move_created_ids
+                 if move.state not in ('done', 'cancel')]
             res.update(produce_line_ids=moves)
         return res
 
