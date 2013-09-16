@@ -38,17 +38,45 @@ class mrp_consume(osv.TransientModel):
 
     def action_consume(self, cr, uid, ids, context=None):
         context = context or {}
+        uom_obj = self.pool.get('product.uom')
         for production in self.browse(cr, uid, ids, context=context):
             for consume_line in production.consume_line_ids:
-                context.update({
-                    'product_uom': consume_line.product_uom.id,
-                    'product_uom_move': consume_line.move_id.product_uom.id,
-                    'quantity': consume_line.quantity})
+                line_qty_left = consume_line.quantity
+
+                print '\n'*3, 'consume_line', (
+                    consume_line.product_id.name_template, line_qty_left)
 
                 for move_line in consume_line.consume_line_move_ids:
-                    move_line.move_id.action_consume(
-                        consume_line.quantity, move_line.location_id.id,
-                        context=context)
+                    if line_qty_left >= 0.0:
+                        context.update({
+                            'product_uom': consume_line.product_uom.id,
+                            'product_uom_move':
+                            move_line.move_id.product_uom.id,
+                            'quantity': line_qty_left})
+                        # TODO: this 'quantity': line_qty_left could be change
+                        # becuase wath happend when products to consume moves
+                        # are in different uom
+
+                        print 'move.action_consume(%s)' % (
+                            context['quantity'],)
+
+                        move_line.move_id.action_consume(
+                            line_qty_left, move_line.location_id.id,
+                            context=context)
+
+                        move_apportionment_qty = uom_obj._compute_qty(
+                            cr, uid, move_line.move_id.product_uom.id,
+                            move_line.move_id.product_qty,
+                            consume_line.product_uom.id)
+                        line_qty_left -= move_apportionment_qty
+
+                        print (
+                            'move', move_line.move_id.id,
+                            'real qty', move_line.move_id.product_qty,
+                            move_line.move_id.product_uom.name,
+                            'to_line_oum qty', move_apportionment_qty,
+                            consume_line.product_uom.name,
+                            'line_qty_left', line_qty_left)
         return {}
 
     def default_get(self, cr, uid, fields, context=None):
