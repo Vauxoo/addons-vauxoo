@@ -13,13 +13,11 @@
                     <field name="product_id" readonly="1"/>
                     <field name="quantity"/>
                     <field name="product_uom" readonly="1"/>
-                    <field name="consume_line_move_ids"/>
                 </tree>
                 <form string="Consume" version="7.0" create="false">
                     <field name="product_id" readonly="1"/>
                     <field name="quantity"/>
                     <field name="product_uom" readonly="1"/>
-                    <field name="consume_line_move_ids"/>
                 </form>
             </field>
             <group colspan="4">
