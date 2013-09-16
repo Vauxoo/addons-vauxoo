@@ -741,6 +741,7 @@ class ifrs_lines(osv.osv):
         return res
 
     def write(self, cr, uid, ids, vals, context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         res = super(ifrs_lines, self).write(cr, uid, ids, vals)
         for ifrs_line in self.pool.get('ifrs.lines').browse(cr, uid, ids):
             if ifrs_line.type == 'total' and ifrs_line.operator == 'without':
