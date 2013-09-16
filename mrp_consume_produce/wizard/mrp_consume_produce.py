@@ -248,11 +248,11 @@ class mrp_produce(osv.TransientModel):
         context = context or {}
         res = super(mrp_produce, self).default_get(
             cr, uid, fields, context=context)
-        mrp_ids = context.get('active_ids', [])
-        if not mrp_ids or (not context.get('active_model') == 'mrp.production') \
-                or len(mrp_ids) != 1:
+        production_ids = context.get('active_ids', [])
+        if not production_ids or (not context.get('active_model') == 'mrp.production') \
+                or len(production_ids) != 1:
             return res
-        mrp_id, = mrp_ids
+        mrp_id, = production_ids
 
         raise osv.except_osv(
             _('Alert'),
