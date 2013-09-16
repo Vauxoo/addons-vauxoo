@@ -240,8 +240,8 @@ class mrp_consume(osv.TransientModel):
 class mrp_produce(osv.TransientModel):
     _name = 'mrp.produce'
     _columns = {
-        'produce_line_ids': fields.one2many('mrp.consume.line',
-            'wizard2_id', 'Consume')
+        'produce_line_ids': fields.one2many('mrp.produce.line',
+            'produce_id', 'Consume')
     }
 
     def _get_produce_line_values(self, cr, uid, move_id, context=None):
@@ -286,11 +286,6 @@ class mrp_produce(osv.TransientModel):
         return res
 
     def action_produce(self, cr, uid, ids, context={}):
-
-        raise osv.except_osv(
-            _('Alert'),
-            _('This functionality is still in development.'))
-
         for production in self.browse(cr, uid, ids, context=context):
             for raw_product in production.produce_line_ids:
                 context.update({
@@ -321,6 +316,42 @@ class mrp_consume_line(osv.TransientModel):
             help=_('Moves corresponding to the product in the consume line')),
         'wizard_id': fields.many2one('mrp.consume', string="Wizard"),
         'wizard2_id': fields.many2one('mrp.produce', string="Wizard"),
+    }
+
+
+class mrp_produce_line(osv.TransientModel):
+
+    _name = 'mrp.produce.line'
+    _rec_name = 'product_id'
+    _columns = {
+        'product_id': fields.many2one(
+            'product.product',
+            _('Product'),
+            required=True,
+            help=_('Product to be Produce')),
+        'quantity': fields.float(
+            _('Quantity'),
+            digits_compute=dp.get_precision('Product UoM'),
+            required=True,
+            help=_('Quantity that will be produced'),
+            ),
+        'product_uom': fields.many2one(
+            'product.uom',
+            _('Unit of Measure'),
+            required=True,
+            help=_('Units of measure corresponding to the quantity')),
+        'move_id': fields.many2one('stock.move', "Move"),
+        'location_id': fields.many2one(
+            'stock.location',
+            _('Location'),
+            required=True),
+        'location_dest_id': fields.many2one(
+            'stock.location',
+            _('Dest. Location'),
+            required=True),
+        'produce_id': fields.many2one(
+            'mrp.produce',
+            _('Produce Wizard')),
     }
 
 
