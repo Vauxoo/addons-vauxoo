@@ -38,16 +38,15 @@ class mrp_consume(osv.TransientModel):
 
     def action_consume(self, cr, uid, ids, context={}):
         for production in self.browse(cr, uid, ids, context=context):
-            for raw_product in production.consume_line_ids:
+            for consume_line in production.consume_line_ids:
                 context.update({
-                    'product_uom': raw_product.product_uom.id,
-                    'product_uom_move': raw_product.move_id.product_uom.id,
-                    'quantity': raw_product.quantity})
-                for move_line in raw_product.consume_line_move_ids:
+                    'product_uom': consume_line.product_uom.id,
+                    'product_uom_move': consume_line.move_id.product_uom.id,
+                    'quantity': consume_line.quantity})
+                for move_line in consume_line.consume_line_move_ids:
                     move_line.move_id.action_consume(
-                        raw_product.quantity, move_line.location_id.id,
+                        consume_line.quantity, move_line.location_id.id,
                         context=context)
-
         return {}
 
     def default_get(self, cr, uid, fields, context=None):
