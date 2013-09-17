@@ -283,9 +283,9 @@
             </table>
         %endif
         <section>
-        <table class="basic_table">
-            <tr><td class="address"><pre>${ get_text_promissory(o.company_id, o.partner_id, address_emitter, o) or ''|entity }</pre></td></tr>
-        </table>
+            <table class="basic_table">
+                <tr><td class="address"><pre style='pre'>${ get_text_promissory(o.company_id, o.partner_id, address_emitter, o) or ''|entity }</pre></td></tr>
+            </table>
         </section>
         <!--code for cfd 3.2-->
         %if 'cfdi' in o.invoice_sequence_id.approval_id.type:
