@@ -215,7 +215,7 @@ mrp.production.workcenter.line
         <record id="mrp_workoder_by_lot_kanban_action" model="ir.actions.act_window">
             <field name="name">Work Orders</field>
             <field name="res_model">mrp.production.workcenter.line</field>
-            <field name="view_mode">kanban</field>
+            <field name="view_mode">kanban,form</field>
             <field name="view_id" ref="mrp_workoder_by_lot_kanban_view"/>
             <field name="context">{'search_default_wo_lot_id': [context.get('active_id', False)], 'default_wo_lot_id': context.get('active_id', False), 'active_test': False}</field>
             <field name="search_view_id" ref="wo_lot_search_view"/>
