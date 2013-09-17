@@ -30,19 +30,40 @@
     "author": "Vauxoo",
     "category": "Mail Message",
     "description": """
-    
-        Module to added view replica of Mail Message,
-        localizate in: Settings->Technical -> Email ->Messages.
-        
-        Added attribute class=bs3 in form of view.
+Administration for Messages
+===========================
+
+Module to added view replica of Mail Message,
+localizate in: Settings->Technical -> Email ->Messages.
+
+We create a new group "Admin Messages", this group will be able to edit and fix messages to have a
+more clean content.
+
+In this new view the technical information is hiden to avoid human mistakes.
+
+This replica is to manage the look and feel correctly to administer, edit and improve messages
+correctly.
+
+With the correct namespace in form view, we avoid change the original behavior of the html widget
+giving us more versatility to show the content.
+
+If we install the module web_bootstrap3 on lp:~vauxoo/web-addons/7.0-web_hideleftmenu all styles
+inside the html can be taken from bootstrap3[1]
+
+[1] http://getbootstrap.com/
     """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
-    'depends': ['base', 'base_setup','mail'], 
+    'depends': ['base',
+                'base_setup',
+                'mail'], 
     "data": [
         "security/security_groups.xml",
         "view/mail_message_view.xml",
     ],
+    "css": [
+        "static/src/css/base.css",
+        ],
     "installable": True,
     "active": False,
 }

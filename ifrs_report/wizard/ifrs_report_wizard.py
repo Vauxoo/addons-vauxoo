@@ -71,15 +71,19 @@ class ifrs_report_wizard(osv.osv_memory):
         'target_move': fields.selection([('posted', 'All Posted Entries'),
                                         ('all', 'All Entries'),
                                          ], 'Target Moves', help='Print All Accounting Entries or just Posted Accounting Entries'),
+        'report_format' : fields.selection([
+            ('pdf', 'PDF'),
+            ('spreadsheet', 'Spreadsheet')], 'Report Format')
     }
 
     _defaults = {
         'report_type': 'all',
-        'target_move': 'all',
+        'target_move': 'posted',
         'company_id': lambda self, cr, uid, c: self.pool.get('ifrs.ifrs').browse(cr, uid, c.get('active_id')).company_id.id,
         'fiscalyear_id': lambda self, cr, uid, c: self.pool.get('ifrs.ifrs').browse(cr, uid, c.get('active_id')).fiscalyear_id.id,
         'exchange_date': fields.date.today,
-        'columns': 'ifrs'
+        'columns': 'ifrs',
+        'report_format' : 'pdf'
     }
 
     def default_get(self, cr, uid, fields, context=None):
@@ -138,7 +142,10 @@ class ifrs_report_wizard(osv.osv_memory):
                 cr, uid, context=context)
             datas['fiscalyear'] = self._get_fiscalyear(
                 cr, uid, context=context, period_id=datas['period'])
-
+        if str(wizard_ifrs.columns) == 'webkitaccount.ifrs_12' and wizard_ifrs.report_format == 'spreadsheet':
+            datas['columns'] = 'webkitaccount.ifrs_12_html'
+        if str(wizard_ifrs.columns) == 'ifrs' and wizard_ifrs.report_format == 'spreadsheet':
+            datas['columns'] = 'ifrs_report_html'
         return {
             'type': 'ir.actions.report.xml',
             'report_name': datas['columns'],

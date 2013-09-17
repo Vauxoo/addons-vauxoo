@@ -8,7 +8,10 @@
             <field name="priority">20</field>
             <field name="arch" type="xml">
                 <tree string="Messages">
+                    <field name="id"/>
                     <field name="date"/>
+                    <field name="type"/>
+                    <field name="subtype_id"/>
                     <field name="subject"/>
                     <field name="author_id"/>
                     <field name="model"/>
@@ -23,27 +26,57 @@
             <field name="model">mail.message</field>
             <field name="priority">20</field>
             <field name="arch" type="xml">
-                <form string="Message" version="7.0" class="bs3">
-                    <sheet>
-                        <group>
-                            <group>
-                                <field name="subject"/>
-                                <field name="author_id"/>
-                                <field name="email_from"/>
-                                <field name="date"/>
-                                <field name="type"/>
-                                <field name="subtype_id"/>
-                            </group>
-                            <group>
-                                <field name="model"/>
-                                <field name="res_id"/>
-                                <field name="parent_id"/>
-                                <field name="partner_ids" widget="many2many_tags"/>
-                                <field name="notified_partner_ids" widget="many2many_tags"/>
-                            </group>
-                        </group>
+                <form string="Message" version="7.0" class="bs3 admin_message">
+                    <section class="container page-header">
+                    <h1 class="text-center">
+                        <field name="subject" class="oe_inline"/>
+                    </h1>
+                    </section>
+                    <section class="container" attrs="{'invisible':[('parent_id', '=', False)]}">
+                        <span>
+                        </span>
+                    </section>
+                    <section class="container">
                         <field name="body"/>
-                    </sheet>
+                    </section>
+                    <section class="general_information">
+                    <div class="container">
+                    <small>
+                        <span class="text-right">
+                            <label for="subtype_id" class="oe_inline" string="It is a "/>
+                            <field class="oe_inline" name="subtype_id"/>
+                            <label for="parent_id" class="oe_inline"
+                                string=" in response to this comment: " 
+                                attrs="{'invisible':[('parent_id', '=', False)]}"/>
+                            <field class="oe_inline" name="parent_id"
+                                attrs="{'invisible':[('parent_id', '=', False)]}"/>
+                            <label for="subtype_id" class="oe_inline" string=" Published by "/> 
+                            <field class="oe_inline" name="author_id"/>
+                            <label for="date" class="oe_inline" string=" at "/> 
+                            <field name="date" class="oe_inline" readonly="True"/>
+                            <label for="id" class="oe_inline" string=" With the Id "/> 
+                            <field name="id" class="oe_inline"/>
+                        </span>
+                    </small>
+                    </div>
+                    </section>
+                    <section class="oe_edit_only page-footer" groups="base.group_no_one">
+                    <separator string="Technical Information"/>
+                        <div>
+                            <label for="email_from" class="oe_inline"/>
+                            <field name="email_from" class="oe_inline" readonly="True"/>
+                            <label for="type" class="oe_inline"/>
+                            <field name="type" class="oe_inline"  readonly="True"/>
+                            <label for="res_id" class="oe_inline"/>
+                            <field name="res_id" readonly="True" class="oe_inline" />
+                            <label for="model" class="oe_inline"/>
+                            <field name="model" readonly="True" class="oe_inline" />
+                            <label for="partner_ids" class="oe_inline"/>
+                            <field name="partner_ids" readonly="True" widget="many2many_tags" class="oe_inline" />
+                            <label for="notified_partner_ids" class="oe_inline"/>
+                            <field name="notified_partner_ids" readonly="True" widget="many2many_tags" class="oe_inline" />
+                        </div>
+                    </section>
                 </form>
             </field>
         </record>
@@ -56,26 +89,19 @@
             <field name="arch" type="xml">
                 <search string="Messages Search">
                     <field name="subject" string="Content" filter_domain="['|', ('subject', 'ilike', self), ('body', 'ilike', self)]" />
+                    <field name="id"/>
                     <field name="type"/>
                     <field name="author_id"/>
                     <field name="partner_ids"/>
                     <filter string="To Read"
                             name="message_unread" help="Show messages to read"
                             domain="[('to_read', '=', True)]"/>
+                    <filter string="Public Availables"
+                            name="message_anonymous" help="Show Published Messages"
+                            domain="[('author_id', 'ilike', 'Anonymous')]"/>
                     <filter string="Read"
                             name="message_read" help="Show already read messages"
                             domain="[('to_read', '=', False)]"/>
-                    <separator/>
-                    <filter string="Comments"
-                            name="comments" help="Comments"
-                            domain="[('type', '=', 'comment')]"/>
-                    <filter string="Notifications"
-                            name="notifications" help="Notifications"
-                            domain="[('type', '=', 'notification')]"/>
-                    <filter string="Emails"
-                            name="emails" help="Emails"
-                            domain="[('type', '=', 'email')]"/>
-                    <separator/>
                     <filter string="Has attachments"
                             name="attachments"
                             domain="[('attachment_ids', '!=', False)]"/>
@@ -88,6 +114,11 @@
             <field name="res_model">mail.message</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
+            <!-- 
+             Explicitally this view is NOT to modify emails and notification, this 2 types of
+             content must be edited/modified by Chuck Norris Only
+             -->
+            <field name="domain" eval="[('type', '=', 'comment')]"/>
             <field name="search_view_id" ref="view_admin_message_search"/>
         </record>
         <record model="ir.actions.act_window.view" id="view_wired_tree">

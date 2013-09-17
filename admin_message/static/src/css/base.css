@@ -1,0 +1,31 @@
+/*
+I need this admin_message be correctly name spaced tu use the html widget to
+show the content of them is the view form mode
+*/                                                                            
+.openerp .oe_form .bs3.admin_message .oe_form_embedded_html {                                                              
+  position: relative;                                                                                   
+  width: auto;                                                                                         
+  margin-left: auto;                                                                                   
+  margin-top: auto;                                                                                     
+  margin-bottom: auto;                                                                                  
+  text-align: auto;                                                                                  
+  font-size: 1.2em;
+} 
+.openerp .oe_form .bs3.admin_message .oe_form_embedded_html p {
+    line-height:140%;
+}
+.openerp .oe_form .bs3.admin_message .oe_form_embedded_html p.small {
+    line-height:90%
+}
+.openerp .oe_form .bs3.admin_message .oe_form_embedded_html p.big {
+    line-height:200%;
+}
+
+.openerp .oe_form .bs3  section.general_information {
+    background-color: #f0eeee;
+    padding: 5px 0px 5px 0px;
+}
+
+.openerp .bs3.oe_form_nosheet {
+    margin: 0px;
+}
