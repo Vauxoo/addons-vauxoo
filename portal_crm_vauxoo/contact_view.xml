@@ -6,9 +6,51 @@
             <field name="name">Contact form</field>
             <field name="model">portal_crm.crm_contact_us</field>
             <field name="arch" type="xml">
-                <form string="Contact form" version="7.0" class="oe_portal_crm_contact">
+                <form string="Contact form" version="7.0" class="bs3">
+                    <div class="form-horizontal mt32">
+                   <div class="container"> 
                     <h1>Contact Us</h1>
-                    <div style="width: 300px; float:right;">
+                   <div class="row"> 
+                    <div class ="col-md-8">
+                            <div class="form-group">
+                                <label for="partner_name" class="col-md-3 col-sm-4 control-label"/>
+                                <div class="col-md-7 col-sm-8">
+                                    <field name="partner_name" widget="FieldCharBS3" string="Name" placeholder="Your name..." required="True" class="form-control" nolabel="1"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email_from" class="col-md-3 col-sm-4 control-label"/>
+                                <div class="col-md-7 col-sm-8">
+                                    <field name="email_from" widget="FieldEmailBS3" placeholder="Your email..." required="True" class="form-control" nolabel="1"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="col-md-3 col-sm-4 control-label"/>
+                                <div class="col-md-7 col-sm-8">
+                                    <field name="phone" widget="FieldCharBS3" placeholder="Your phone number..." class="form-control" nolabel="1"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name" class="col-md-3 col-sm-4 control-label"/>
+                                <div class="col-md-7 col-sm-8">
+                                    <field name="name" widget="FieldCharBS3" placeholder="Subject..." class="form-control" nolabel="1"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="description" class="col-md-3 col-sm-4 control-label"/>
+                                <div class="col-md-7 col-sm-8">
+                                    <field name="description" widget="FieldTextBS3" placeholder="Content..." class="form-control" nolabel="1"/>
+                                </div>
+                            </div>
+                            <group>
+                                <field name= "captcha"
+                                    widget="captcha"
+                                    nolabel="1"/>
+                            </group>
+                        <button string="Submit" name="submit" type="object" 
+                            class="oe_highlight"/>
+                    </div>
+                    <div class="col-md-4">
                         <field name="company_ids" nolabel="1" widget="many2many_kanban" class="oe_portal_crm_office" colspan="2">
                             <kanban>
                                 <field name="name"/>
@@ -42,32 +84,9 @@
                                 </templates>
                             </kanban>
                         </field>
-                        <div class="oe_portal_crm_team">
-
-                        </div>
                     </div>
-                    <div  style="margin-right: 320px; max-width: 900px;">
-                            <group>
-                                <field name="partner_name" string="Name" placeholder="Your name..." required="True"/>
-                                <field name="email_from" placeholder="Your email..." required="True"/>
-                                <field name="phone" placeholder="Your phone number..."/>
-                                <field name="name" placeholder="Subject..."/>
-                            </group>
-                            <newline/>
-                            <group>
-                                <field name="description" String="Content"
-                                    placeholder="Content..." nolabel="1"/>
-                            </group>
-                            <newline/>
-                            <group>
-                                <field name= "captcha"
-                                    widget="captcha"
-                                    nolabel="1"/>
-                            </group>
                     </div>
-                    <div>
-                        <button string="Submit" name="submit" type="object" 
-                            class="oe_highlight"/>
+                    </div>
                     </div>
                 </form>
             </field>
@@ -105,7 +124,14 @@
 
         <!-- attach it to the portal menu -->
         <menuitem name="Contact Us" id="portal_company_contact"
-            parent="portal.portal_company" action="action_contact_us" sequence="40"/>
+                  action="action_contact_us" 
+                  groups="portal.group_anonymous"
+                  sequence="100000"/>
+
+        <menuitem name="Contact" id="portal_crm.portal_company_contact"
+            parent="portal.portal_company" action="action_contact_us" 
+            groups="base.group_system"
+            sequence="40"/>
 
     </data>
 </openerp>
