@@ -105,7 +105,14 @@
 
         <!-- attach it to the portal menu -->
         <menuitem name="Contact Us" id="portal_company_contact"
-            parent="portal.portal_company" action="action_contact_us" sequence="40"/>
+                  action="action_contact_us" 
+                  groups="portal.group_anonymous"
+                  sequence="100000"/>
+
+        <menuitem name="Contact" id="portal_crm.portal_company_contact"
+            parent="portal.portal_company" action="action_contact_us" 
+            groups="base.group_system"
+            sequence="40"/>
 
     </data>
 </openerp>
