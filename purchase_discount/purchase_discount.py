@@ -1,238 +1,155 @@
-# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    Revision: --- nhomar.hernandez@netquatro.com
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
-
-from openerp.osv import fields, osv
-from openerp.tools.translate import _
-
-import time
-import openerp.netsvc as netsvc
-
-from mx import DateTime
-import pooler
+from openerp.osv import fields, orm
+import decimal_precision as dp
 
 
-class purchase_order_line(osv.Model):
-    _name = "purchase.order.line"
+class purchase_order_line(orm.Model):
     _inherit = "purchase.order.line"
 
     def _amount_line(self, cr, uid, ids, prop, unknow_none, unknow_dict):
         res = {}
         cur_obj = self.pool.get('res.currency')
+        tax_obj = self.pool.get('account.tax')
         for line in self.browse(cr, uid, ids):
-            cur = line.order_id.pricelist_id.currency_id
-            res[line.id] = cur_obj.round(
-                cr, uid, cur, line.price_unit * line.product_qty)
+            discount = line.discount or 0.0
+            new_price_unit = line.price_unit * (1 - discount / 100.0)
+            taxes = tax_obj.compute_all(cr, uid, line.taxes_id, new_price_unit,
+                                        line.product_qty, line.product_id, 
+                                        line.order_id.partner_id)
+            currency = line.order_id.pricelist_id.currency_id
+            res[line.id] = cur_obj.round(cr, uid, currency, taxes['total'])
         return res
 
     _columns = {
-        'discount': fields.float('Discount (%)', digits=(16, 2), help="""If you
-                                 chose apply a discount for this way you will
-                                 overide the option of calculate based on
-                                 Price Lists, you will need to change again
-                                 the product to update based on pricelists,
-                                 this value must be between 0-100"""),
-        'price_unit': fields.float('Real Unit Price', required=True,
-                                   digits=(16, 4), help="""Price that will be
-                                   used in the rest of
-                                   accounting cycle"""),
-        'price_base': fields.float('Base Unit Price', required=True,
-                                   digits=(16, 4), help="""Price base taken to
-                                   calc the discount,
-                                   is an informative
-                                   price to use it in
-                                   the rest of the
-                                   purchase cycle like
-                                   reference for users"""),
+        'discount': fields.float('Discount (%)', digits=(16, 2)),
+        'price_subtotal': fields.function(_amount_line, string='Subtotal', 
+                                digits_compute=dp.get_precision('Account')),
     }
+
     _defaults = {
-        'discount': lambda *a: 0.0,
+        'discount': 0.0,
     }
 
-    def discount_change(self, cr, uid, ids, product, discount, price_unit,
-                        product_qty, partner_id, price_base):
-        if not product:
-            return {'value': {'price_unit': 0.0, }}
-        prod = self.pool.get('product.product').browse(cr, uid, product)
-        lang = False
-        res = []
-        # TODO Improve pending to offer discounts based in price lists selected
-        # on order.
-        if res == []:
-            res = {'value': {'price_unit': price_base*(
-                1-discount/100), 'price_base': price_base}}
-            return res
-
-    def rpu_change(self, cr, uid, ids, rpu, discount):
-        res = {'value': {'price_base': rpu*(1+discount/100)}}
-        return res
-
-    def product_id_change(self, cr, uid, ids, pricelist, product, qty, uom,
-                          partner_id, date_order=False, fiscal_position=False,
-                          date_planned=False, name=False, price_unit=False,
-                          notes=False):
-        """Copied from purchase/purchase.py and modified to take discount"""
-        if not pricelist:
-            raise osv.except_osv(_('No Pricelist !'), _(
-                                                        '''You have to select a
-                                                        pricelist in the
-                                                        purchase form !\n
-                                                        Please set one before
-                                                        choosing a product.''')
-                                                        )
-        if not partner_id:
-            raise osv.except_osv(_('No Partner!'), _('''You have to select a
-                                                      partner in the purchase
-                                                      form !\nPlease set one
-                                                      partner before choosing
-                                                      a product.'''))
-        if not product:
-            return {'value': {'price_unit': 0.0,
-                              'name': '',
-                              'notes': '',
-                              'product_uom': False},
-                    'domain': {'product_uom': []}}
-        prod = self.pool.get('product.product').browse(cr, uid, product)
-        lang = False
-        if partner_id:
-            lang = self.pool.get('res.partner').read(
-                cr, uid, partner_id)['lang']
-        context = {'lang': lang}
-        context['partner_id'] = partner_id
-
-        prod = self.pool.get('product.product').browse(
-            cr, uid, product, context=context)
-        prod_uom_po = prod.uom_po_id.id
-        if not uom:
-            uom = prod_uom_po
-        if not date_order:
-            date_order = time.strftime('%Y-%m-%d')
-
-        qty = qty or 1.0
-        seller_delay = 0
-        for s in prod.seller_ids:
-            if s.name.id == partner_id:
-                seller_delay = s.delay
-                temp_qty = s.qty  # supplier _qty assigned to temp
-                if qty < temp_qty:
-                    qty = temp_qty
-
-        price = self.pool.get(
-            'product.pricelist').price_get(cr, uid, [pricelist],
-                                           product, qty or 1.0, partner_id, {
-                                           'uom': uom,
-                                           'date': date_order,
-                                           })[pricelist]
-        dt = (DateTime.now() + DateTime.RelativeDateTime(days=int(
-            seller_delay) or 0.0)).strftime('%Y-%m-%d %H:%M:%S')
-        prod_name = prod.partner_ref
-
-        res = {
-            'value': {'price_unit': price,
-                      'price_base': price,
-                      'name': prod_name,
-                      'taxes_id': map(lambda x: x.id, prod.supplier_taxes_id),
-                      'date_planned': dt,
-                      'notes': prod.description_purchase,
-                      'product_qty': qty,
-                      'product_uom': uom}}
-        domain = {}
-
-        partner = self.pool.get('res.partner').browse(cr, uid, partner_id)
-        taxes = self.pool.get('account.tax').browse(
-            cr, uid, map(lambda x: x.id, prod.supplier_taxes_id))
-        fpos = fiscal_position and self.pool.get(
-            'account.fiscal.position').browse(cr, uid, fiscal_position) or \
-                    False
-        res['value']['taxes_id'] = self.pool.get(
-            'account.fiscal.position').map_tax(cr, uid, fpos, taxes)
-
-        res2 = self.pool.get('product.uom').read(
-            cr, uid, [uom], ['category_id'])
-        res3 = prod.uom_id.category_id.id
-        domain = {'product_uom': [(
-            'category_id', '=', res2[0]['category_id'][0])]}
-        if res2[0]['category_id'][0] != res3:
-            raise osv.except_osv(_('Wrong Product UOM !'), _('''You have to
-                                                             select a product
-                                                             UOM in the same
-                                                             category than the
-                                                             purchase UOM of
-                                                             the product'''))
-
-        res['domain'] = domain
-        return res
+    _sql_constraints = [
+        ('discount_limit', 'CHECK (discount <= 100.0)', 
+         'Discount must be lower than 100%.'),
+    ]
 
 
-class purchase_order(osv.Model):
-    _name = "purchase.order"
+class purchase_order(orm.Model):
     _inherit = "purchase.order"
 
-    def _get_order(self, cr, uid, ids, context={}):
-        """Copied from purchase/purchase.py"""
+    def _amount_all(self, cr, uid, ids, field_name, arg, context=None):
+        res = {}
+        cur_obj = self.pool.get('res.currency')
+        tax_obj = self.pool.get('account.tax')
+        for order in self.browse(cr, uid, ids, context=context):
+            val = {}
+            amount_taxed = amount_untaxed = 0.0
+            currency = order.pricelist_id.currency_id
+            for line in order.order_line:
+                amount_untaxed += line.price_subtotal
+                discount = line.discount or 0.0
+                new_price_unit = line.price_unit * (1 - discount / 100.0)
+                for c in tax_obj.compute_all(cr, uid, line.taxes_id,
+                                             new_price_unit,
+                                             line.product_qty,
+                                             line.product_id.id,
+                                             order.partner_id)['taxes']:
+                    amount_taxed += c.get('amount', 0.0)
+            val['amount_tax'] = cur_obj.round(cr, uid, currency, amount_taxed)
+            val['amount_untaxed'] = cur_obj.round(cr, uid, currency,
+                                                  amount_untaxed)
+            val['amount_total'] = (val['amount_untaxed'] + val['amount_tax'])
+            res[order.id] = val
+        return res
+
+    def _prepare_inv_line(self, cr, uid, account_id, order_line,
+                            context=None):
+        result = super(purchase_order, self)._prepare_inv_line(cr, uid,
+                                                               account_id,
+                                                               order_line,
+                                                               context)
+        result['discount'] = order_line.discount or 0.0
+        return result
+
+    def _get_order(self, cr, uid, ids, context=None):
         result = {}
-        for line in self.pool.get('purchase.order.line').browse(cr, uid,
-                                                                ids, context):
+        for line in self.pool.get('purchase.order.line').browse(cr, uid, ids,
+                                                                context):
             result[line.order_id.id] = True
         return result.keys()
 
-    def inv_line_create(self, cr, uid, a, ol):
-        res = super(purchase_order, self).inv_line_create(cr, uid, a, ol)
-        res[2].update({'discount': ol.discount,
-                      'price_unit': ol.price_base or 0.0, })
-        return res
+    _columns = {
+        'amount_untaxed': fields.function(_amount_all, method=True,
+            digits_compute=dp.get_precision('Account'),
+            string='Untaxed Amount',
+            store={
+                'purchase.order.line': (_get_order, None, 10),
+            }, multi="sums", help="The amount without tax"),
+        'amount_tax': fields.function(_amount_all, method=True,
+            digits_compute=dp.get_precision('Account'), string='Taxes',
+            store={
+                'purchase.order.line': (_get_order, None, 10),
+            }, multi="sums", help="The tax amount"),
+        'amount_total': fields.function(_amount_all, method=True,
+                digits_compute=dp.get_precision('Account'), string='Total',
+            store={
+                'purchase.order.line': (_get_order, None, 10),
+            }, multi="sums", help="The total amount"),
+        'amount_untaxed': fields.function(_amount_all, 
+            digits_compute= dp.get_precision('Account'), 
+            string='Untaxed Amount',
+            store={
+                'purchase.order.line': (_get_order, None, 10),
+            }, multi="sums", help="The amount without tax", 
+            track_visibility='always'),
+        'amount_tax': fields.function(_amount_all, 
+            digits_compute= dp.get_precision('Account'), string='Taxes',
+            store={
+                'purchase.order.line': (_get_order, None, 10),
+            }, multi="sums", help="The tax amount"),
+        'amount_total': fields.function(_amount_all, 
+            digits_compute= dp.get_precision('Account'), string='Total',
+            store={
+                'purchase.order.line': (_get_order, None, 10),
+            }, multi="sums",help="The total amount"),
+
+    }
 
 
-class stock_picking(osv.Model):
+class stock_picking(orm.Model):
     _inherit = 'stock.picking'
 
-    def _get_discount_invoice(self, cursor, user, move_line):
-        '''Return the discount for the move line'''
-        discount = 0.00
-        if move_line and move_line.purchase_line_id:
-            discount = move_line.purchase_line_id.discount
-        return discount
+    def _invoice_line_hook(self, cr, uid, move_line, invoice_line_id):
+        if move_line.purchase_line_id:
+            line = {'discount': move_line.purchase_line_id.discount}
+            self.pool.get('account.invoice.line').write(cr,
+                                                        uid,
+                                                        [invoice_line_id],
+                                                        line)
+        return super(stock_picking, self)._invoice_line_hook(cr,
+                                                             uid,
+                                                             move_line,
+                                                             invoice_line_id)
 
-
-class account_invoice_line(osv.Model):
-    _inherit = 'account.invoice.line'
-
-    def _get_price_wd(self, cr, uid, ids, prop, unknow_none, unknow_dict):
-        res = {}
-        cur_obj = self.pool.get('res.currency')
-        for line in self.browse(cr, uid, ids):
-            if line.invoice_id:
-                res[line.id] = line.price_unit * (
-                    1-(line.discount or 0.0)/100.0)
-                cur = line.invoice_id.currency_id
-                res[line.id] = cur_obj.round(cr, uid, cur, res[line.id])
-            else:
-                res[line.id] = line.price_unit * (
-                    1-(line.discount or 0.0)/100.0)
-        return res
-
-    _columns = {
-        'price_wd': fields.function(_get_price_wd, method=True,
-                                    string='Price With Discount',
-                                    store=True, type="float", digits=(16, 4)),
-    }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

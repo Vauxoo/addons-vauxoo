@@ -4,100 +4,45 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.6\n"
-"Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-10-02 14:05:40+0000\n"
-"PO-Revision-Date: 2009-10-02 14:05:40+0000\n"
-"Last-Translator: <>\n"
+"Project-Id-Version: OpenERP Server 6.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-09-13 11:15+0000\n"
+"PO-Revision-Date: 2013-09-13 13:16+0100\n"
+"Last-Translator: Pedro Manuel Baeza <pedro.baeza@serviciosbaeza.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 
 #. module: purchase_discount
-#: rml:purchase.discount.order:0
-msgid "Tél. :"
+#: sql_constraint:purchase.order:0
+msgid "Order Reference must be unique per Company!"
 msgstr ""
 
 #. module: purchase_discount
-#: rml:purchase.discount.order:0
-msgid "Disc. (%)"
+#: model:ir.model,name:purchase_discount.model_purchase_order_line
+msgid "Purchase Order Line"
 msgstr ""
 
 #. module: purchase_discount
-#: rml:purchase.discount.order:0
-msgid "Our Order Reference"
+#: sql_constraint:purchase.order.line:0
+msgid "Discount must be lower than 100%."
 msgstr ""
 
 #. module: purchase_discount
-#: rml:purchase.discount.order:0
-msgid "Date Req."
-msgstr ""
-
-#. module: purchase_discount
-#: rml:purchase.discount.order:0
-msgid "Validated By"
-msgstr ""
-
-#. module: purchase_discount
-#: rml:purchase.discount.order:0
-msgid "Shipping address :"
-msgstr ""
-
-#. module: purchase_discount
-#: model:ir.module.module,shortdesc:purchase_discount.module_meta_information
-msgid "Purchase Order Lines With Discounts"
-msgstr ""
-
-#. module: purchase_discount
-#: rml:purchase.discount.order:0
-msgid "Description"
-msgstr ""
-
-#. module: purchase_discount
-#: rml:purchase.discount.order:0
-msgid "Total :"
-msgstr ""
-
-#. module: purchase_discount
-#: rml:purchase.discount.order:0
-msgid "Fax :"
-msgstr ""
-
-#. module: purchase_discount
-#: constraint:ir.ui.view:0
-msgid "Invalid XML for View Architecture!"
-msgstr ""
-
-#. module: purchase_discount
-#: rml:purchase.discount.order:0
-msgid "Your Order Reference"
-msgstr ""
-
-#. module: purchase_discount
-#: rml:purchase.discount.order:0
-msgid "Purchase Order Confirmation N°"
-msgstr ""
-
-#. module: purchase_discount
-#: rml:purchase.discount.order:0
-msgid "Date Ordered"
-msgstr ""
-
-#. module: purchase_discount
-#: rml:purchase.discount.order:0
-msgid "Taxes"
-msgstr ""
-
-#. module: purchase_discount
-#: model:ir.actions.report.xml,name:purchase_discount.report_purchase_order
+#: model:ir.model,name:purchase_discount.model_purchase_order
 msgid "Purchase Order"
 msgstr ""
 
 #. module: purchase_discount
-#: rml:purchase.discount.order:0
-msgid "Net Total :"
+#: sql_constraint:stock.picking:0
+msgid "Reference must be unique per Company!"
+msgstr ""
+
+#. module: purchase_discount
+#: model:ir.model,name:purchase_discount.model_stock_picking
+msgid "Picking List"
 msgstr ""
 
 #. module: purchase_discount
@@ -105,33 +50,8 @@ msgstr ""
 msgid "Discount (%)"
 msgstr ""
 
-#. module: purchase_discount
-#: rml:purchase.discount.order:0
-msgid "TVA :"
-msgstr ""
-
-#. module: purchase_discount
-#: rml:purchase.discount.order:0
-msgid "Qty"
-msgstr ""
-
-#. module: purchase_discount
-#: rml:purchase.discount.order:0
-msgid "Unit Price"
-msgstr ""
-
-#. module: purchase_discount
-#: rml:purchase.discount.order:0
-msgid "Request for Quotation N°"
-msgstr ""
-
-#. module: purchase_discount
-#: rml:purchase.discount.order:0
-msgid "Net Price"
-msgstr ""
-
-#. module: purchase_discount
-#: rml:purchase.discount.order:0
-msgid "Taxes :"
+#. module: purchase
+#: report:purchase.order:0
+msgid "% Discount"
 msgstr ""
 

@@ -1,45 +1,44 @@
-# -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 {
-    "name" : "Purchase Order Lines With Discounts",
-    "author" : "Openerp & Vauxoo",
-    "version" : "2.0",
-    "category" : "Generic Modules/Sales & Purchases",
-    "depends" : [
+    "name": "Purchase order lines with discounts",
+    "author": "Tiny, Acysos S.L.",
+    "description": """
+    It allows to define a discount per line in the purchase orders. This
+    discount can be also negative, interpreting it as an increment.
+    """,
+    "version": "1.0",
+    "contributors": [
+        'Pedro M. Baeza',
+    ],
+    "category": "Generic Modules/Sales & Purchases",
+    "depends": [
         "stock",
         "purchase",
-        "account",
-        ],
-    "demo" : [],
-    "data" : [
+    ],
+    "demo_xml": [],
+    "update_xml": [
         "purchase_discount_view.xml",
-        "purchase_discount_report.xml",
-        ],
-    'js': [],
-    'qweb' : [],
-    'css':[],
-    'test': [],
+        "report/purchase_discount_report.xml",
+    ],
     "active": False,
     "installable": True
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
