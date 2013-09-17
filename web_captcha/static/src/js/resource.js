@@ -1,6 +1,6 @@
 var script = document.createElement("script");
 script.type = "text/javascript";
-script.src = "http://www.google.com/recaptcha/api/js/recaptcha_ajax.js";
+script.src = "https://www.google.com/recaptcha/api/js/recaptcha_ajax.js";
 $("head").append(script);
 openerp.web_captcha = function (openerp){
     openerp.web.form.widgets.add('captcha', 'openerp.web.form.CaptchaWidget');
