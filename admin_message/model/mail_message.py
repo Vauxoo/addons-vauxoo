@@ -25,14 +25,14 @@ from ast import literal_eval
 
 _TASK_STATE = [('new','New'),('publish', 'Publish'),('unpublish', 'Cancel Publish')]
 
-class admin_message(osv.osv):
+class mail_message(osv.osv):
 
     _inherit = 'mail.message'
 
     def button_publish(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        dict_mail,list_history={},[]
+        dict_mail={}
         obj_user = self.pool.get('res.users')
 
         for obj in self.browse(cr,uid,ids,context=None):
@@ -57,35 +57,25 @@ class admin_message(osv.osv):
                 raise osv.except_osv(_('Error'), _(
                 """You can not post a comment associated with the model 
                 %s"""%(obj.model)))
-            
-            list_history=[('model',obj.model),
-                          ('res_id',obj.res_id),
-                          ('author_id',obj.author_id.id)]
-            list_history and dict_mail.update({'list_history':list_history,
-                              'state':'publish'})
+            dict_mail.update({'state':'publish'})
         dict_mail and self.write(cr,uid,ids,dict_mail,context=context) 
         return True
 
     def button_unpublish(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        dict_mail={}
+        dist_history={}
 
         for obj in self.browse(cr,uid,ids,context=context):
-            for i in literal_eval(obj.dict_history):
-                if i[0] =='model':
-                    dict_mail.update({'model':i[1]})
-                elif i[0]=='res_id':
-                    dict_mail.update({'res_id':i[1]})
-                elif i[0]=='author_id':
-                    dict_mail.update({'author_id':i[1]})
-            dict_mail.update({'state':'unpublish'})
-        dict_mail and self.write(cr,uid,ids,dict_mail,context=context)
+            if obj.dict_history:
+                dist_history = literal_eval(obj.dict_history)
+                dist_history.update({'state':'unpublish'})
+        dist_history and self.write(cr,uid,ids,dist_history,context=context)
         return True
 
     _columns = {
         'mail_group_id': fields.many2one('ir.actions.client', 'Grupo',domain=[('res_model','=','mail.group'),('tag','ilike','mail.wall')]),
-        'list_history': fields.char('History',help="When status change to publish, this field is seted to storage previos values."),
+        'dict_history': fields.char('History',help="When status change to publish, this field is seted to storage previos values."),
         'state': fields.selection(_TASK_STATE, 'Related Status', required=True,
         help="The status of your document is automatically changed regarding the selected stage. " \
         "For example, if a stage is related to the status 'unPublish', when your document reaches this stage, it is automatically unPublish."),
@@ -93,5 +83,18 @@ class admin_message(osv.osv):
     _defaults = {
         'state': 'new',
     }
+
+    def create(self, cr, uid, values, context=None):
+        if context is None:
+            context = {}
+        newid = super(mail_message,self).create(cr,uid,values,context=context)
+        for obj in self.browse(cr,uid,[newid],context=None):
+            dict_history={'model':obj.model,
+                          'res_id':obj.res_id,
+                          'author_id':obj.author_id.id}
+
+            dict_history and self.write(cr,uid,[newid],
+            {'dict_history':dict_history},context=context)
+        return newid
 
 
