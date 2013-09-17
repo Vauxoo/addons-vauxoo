@@ -1,3 +1,4 @@
+-# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -17,10 +18,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 from openerp.osv import fields, orm
-import decimal_precision as dp
-
+import openerp.addons.decimal_precision as dp
 
 class purchase_order_line(orm.Model):
     _inherit = "purchase.order.line"

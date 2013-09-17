@@ -1,3 +1,4 @@
+-# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -33,8 +34,8 @@
         "stock",
         "purchase",
     ],
-    "demo_xml": [],
-    "update_xml": [
+    "demo": [],
+    "data": [
         "purchase_discount_view.xml",
         "report/purchase_discount_report.xml",
     ],
