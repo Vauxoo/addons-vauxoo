@@ -38,3 +38,30 @@
 .openerp .oe_portal_crm_contact .oe_portal_crm_office ul:last-child li:last-child {
     margin-bottom: 0;
 }
+
+/* Bootstrap */
+
+.openerp .oe_form .bs3 input[type="text"], .openerp .oe_form .bs3 input[type="password"], .openerp .oe_form .bs3 input[type="file"], .openerp .oe_form .bs3 select {
+    height: auto;                                                                                         
+    padding-top: auto;                                                                                     
+} 
+
+.openerp .oe_form .bs3 input[type="text"].bs3-required {
+    background-color: #BFDDFF;
+}
+
+.openerp .oe_form .bs3 textarea {
+  min-height: 96px;                                                                                 
+}
+
+.openerp .oe_form .bs3 textarea:-moz-placeholder {
+  padding-left: 10px;                                                                    
+}
+
+.openerp .oe_form .bs3 textarea::-webkit-input-placeholder {
+  padding-left: 10px;                                                                    
+}
+
+.openerp .oe_form .bs3 textarea:-ms-input-placeholder {
+  padding-left: 10px;                                                                    
+}

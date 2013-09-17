@@ -9,8 +9,7 @@
                 t-att-autofocus="widget.node.attrs.autofocus"                                       
                 t-att-placeholder="widget.node.attrs.placeholder"                                   
                 t-att-maxlength="widget.field.size" 
-                t-att-class="'oe_form_field '+widget.widget_class" 
-                t-att-style="widget.node.attrs.style"                                               
+                t-att-class="widget.get('required') ? 'bs3-required '+ widget.widget_class : widget.widget_class"
             /><img class="oe_field_translate oe_input_icon" t-if="widget.field.translate" 
                     t-att-src='_s + "/web/static/src/img/icons/terp-translate.png"' 
                     width="16" height="16" border="0"/>
@@ -23,8 +22,7 @@
                     t-att-autofocus="widget.node.attrs.autofocus"                                   
                     t-att-placeholder="widget.node.attrs.placeholder"                               
                     t-att-maxlength="widget.field.size" 
-                    t-att-class="'oe_form_field '+widget.widget_class" 
-                    t-att-style="widget.node.attrs.style"                                                
+                    t-att-class="widget.get('required') ? 'bs3-required '+ widget.widget_class : widget.widget_class"
                 />                                                                                  
 </t>
 
@@ -32,7 +30,6 @@
             <textarea rows="6"                                                                      
                 t-att-name="widget.name"                                                            
                 t-att-class="'field_text oe_form_field oe_form_field_text '+widget.widget_class" 
-                t-att-style="widget.node.attrs.style"                                                                 
                 t-att-tabindex="widget.node.attrs.tabindex"                                         
                 t-att-autofocus="widget.node.attrs.autofocus"                                       
                 t-att-placeholder="! widget.get('effective_readonly') ? widget.node.attrs.placeholder : ''"
