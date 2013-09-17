@@ -874,7 +874,7 @@ class mrp_workorder_lot(osv.Model):
         context = context or {}
         wol_brw = self.browse(cr, uid, id, context=context)
         if ((wol_brw.production_id and wol_brw.production_id.state not in
-             ['in_production']) or not wol_brw.production_id):
+             ['in_production','draft']) or not wol_brw.production_id):
             raise osv.except_osv(
                 _('Error'),
                 _('Trying to set the state of a Work Order Lot (WOL) that have'
