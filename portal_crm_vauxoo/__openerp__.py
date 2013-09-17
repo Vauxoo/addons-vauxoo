@@ -52,5 +52,7 @@ You will need to install recaptcha and recaptcha client::
     'css': [
         'static/src/css/portal_crm.css'
     ],
+    'js': [ 'static/src/js/portal_crm.js' ],
+    'qweb': [ 'static/src/xml/portal_crm.xml' ],
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
