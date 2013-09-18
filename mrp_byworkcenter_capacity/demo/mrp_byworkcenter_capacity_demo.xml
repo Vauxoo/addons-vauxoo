@@ -71,6 +71,16 @@
         </record>
 
 <!--
+ROUTINGS
+-->
+
+    <record id="mrp_routing_papasfritas0" model="mrp.routing">
+        <field name="name">Papas Fritas</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field eval="1" name="active"/>
+    </record>
+
+<!--
 BOM
 -->
 
@@ -167,16 +177,6 @@ WORKCENTERS AND CAPACITIES
 			<field model="product.product" name="product_id" search="[('name', '=', u'papas')]"/>
 			<field eval="30.0" name="qty"/>
 		</record>
-
-<!--
-ROUTINGS
--->
-
-    <record id="mrp_routing_papasfritas0" model="mrp.routing">
-        <field name="name">Papas Fritas</field>
-        <field name="company_id" ref="base.main_company"/>
-        <field eval="1" name="active"/>
-    </record>
 
 <!--
 OPERATIONS AND PRODUCT QUANTITIES
