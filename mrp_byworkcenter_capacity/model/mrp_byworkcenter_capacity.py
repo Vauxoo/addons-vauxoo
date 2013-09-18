@@ -767,6 +767,7 @@ class mrp_production_workcenter_line(osv.Model):
         state if is not in an active work order lot.
         """
         context = context or {}
+        wos_obj = self.pool.get('mrp.workorder.stage')
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wo_ids = list()
         troble_wo = dict()
@@ -808,6 +809,11 @@ class mrp_production_workcenter_line(osv.Model):
                         troble_wo[trb]['lot_state'])
                      for trb in troble_wo])
                 ))
+
+        if values.get('stage_id', False):
+            wos_brw = wos_obj.browse(cr, uid, values.get('stage_id'), context=context)
+            
+            values.update({'state': wos_brw.state})
 
         res = super(mrp_production_workcenter_line, self).write(
             cr, uid, wo_ids, values, context=context, update=update)
