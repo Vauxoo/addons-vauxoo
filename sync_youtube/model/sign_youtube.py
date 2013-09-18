@@ -103,6 +103,7 @@ class sign_youtube_conf(osv.Model):
         if context is None:
             context = {}
         line = self.pool.get('sign.youtube.conf.line')
+        entry_datas = []
         for wzr in self.browse(cr, uid, ids, context=context):
             userfeed_entry = []
             try:
@@ -125,9 +126,10 @@ class sign_youtube_conf(osv.Model):
                     index += max_results
 
                 entry_datas = []
-            except:
+            except Exception, e:
                 _logger.error(
-                    "Connection error, please veriry the parameters and try again")
+                    """Connection error, login to Youtube we got this error %s please veriry the
+                    parameters and try again""" % e)
             for entry in userfeed_entry:
                 item = self.get_items(entry)
                 line_ids = line.search(

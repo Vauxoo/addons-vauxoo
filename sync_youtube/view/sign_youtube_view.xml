@@ -7,7 +7,7 @@
         <field name="arch" type="xml">                                          
             <tree string="Sign YouTube" version="7.0">
                 <field name="name"/>
-                <field name="passwd"/>
+                <field name="passwd" password="1"/>
                 <field name="client_id"/>
                 <field name="developer_key"/>
             </tree>
@@ -25,14 +25,26 @@
                     <button type="object" name="load_videos" string="Load Videos"/>
                 </footer>
                 <group>
-                <field name="name" required="1"/>
+                <field name="name" required="1" widget="email" placeholder="i.e.: yourgmailaccount@gmail.com"/>
                 <field name="passwd" required="1" password="1"/>
-                <field name="client_id" required="1"/>
-                <field name="developer_key" required="1"/>
+                <field name="client_id" required="1"
+                    placeholder="i.e.: 123456789.apps.googleusercontent.com"/>
+                <field name="developer_key" required="1"
+                    placeholder="i.e: bigNumberWithoutAnySenceGivenInYoutube"/>
                 <field name="max_v" required="1"/>
                 </group>
                 <field name="line" >
                     <tree string="Videos Uploaded" colors="blue:update==1" editable="button" >
+                        <button type="object"
+                                name="load_url"
+                                help="Play the video"
+                                icon="STOCK_MEDIA_PLAY"
+                                string="Launch Video"/>
+                        <button type="object"
+                                name="show_on_inbox"
+                                help="Show on Inbox"
+                                icon="terp-idea"
+                                string="Publish Video"/>
                         <field name="update" invisible="1"/>
                         <field name="name" readonly="1"/>
                         <field name="category" readonly="1"/>
@@ -43,16 +55,6 @@
                         <field name="favorites" readonly="1"/>
                         <field name="duration_seconds" readonly="1" width="float_time"/>
                         <field name="url_swf" widget="url" readonly="1"/>
-                        <button type="object"
-                                name="load_url"
-                                help="Play the video"
-                                icon="STOCK_MEDIA_PLAY"
-                                string="Launch Video"/>
-                        <button type="object"
-                                name="show_on_inbox"
-                                help="Show on Inbox"
-                                icon="terp-idea"
-                                string="Launch Video"/>
                     </tree>
                 </field>
             </form>
