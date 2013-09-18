@@ -42,9 +42,19 @@
 /* Bootstrap */
 
 .openerp .oe_form .bs3 input[type="text"], .openerp .oe_form .bs3 input[type="password"], .openerp .oe_form .bs3 input[type="file"], .openerp .oe_form .bs3 select {
-    height: auto;                                                                                         
+    height: 38px;                                                                                         
+    width: 425px;
     padding-top: auto;                                                                                     
+    padding-left: auto;
+    padding-right: auto;
 } 
+
+.openerp .oe_form .bs3 textarea {
+    width: 425px;
+    padding-top: auto;                                                                                     
+    padding-left: auto;
+    padding-right: auto;
+}
 
 .openerp .oe_form .bs3 input[type="text"].bs3-required {
     background-color: #BFDDFF;
@@ -76,6 +86,7 @@
   background-right: 5%;                                                                                
   background-position: 90% center;                                                                     
   margin-bottom: 0px;                                                                                  
+  height: auto;
 }
 
 .openerp .bs3 .oe_kanban_view {                                                                          
