@@ -244,4 +244,6 @@ OPERATIONS AND PRODUCT QUANTITIES
         <field eval="1.0" name="qty"/>
     </record>
 
+    </data>
+
 </openerp>
