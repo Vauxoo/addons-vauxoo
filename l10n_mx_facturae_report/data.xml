@@ -245,7 +245,10 @@ width:10em;
 p.cadena_with_cbb_cfd{
 width:55em;
 }
-pre { white-space: pre-wrap;
+pre {
+font-size: 6pt;
+font-family:helvetica;
+white-space: pre-wrap;
 white-space: -moz-pre-wrap !important;
 white-space: -pre-wrap;
 white-space: -o-pre-wrap;

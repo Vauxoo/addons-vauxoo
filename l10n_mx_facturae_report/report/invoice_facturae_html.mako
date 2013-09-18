@@ -282,11 +282,6 @@
                 %endfor
             </table>
         %endif
-        <section>
-            <table class="basic_table">
-                <tr><td class="address"><pre style='pre'>${ get_text_promissory(o.company_id, o.partner_id, address_emitter, o) or ''|entity }</pre></td></tr>
-            </table>
-        </section>
         <!--code for cfd 3.2-->
         %if 'cfdi' in o.invoice_sequence_id.approval_id.type:
             <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
@@ -407,15 +402,20 @@
                         %endif
                     </tr>
                 </table>
-                <!--</span> si se activan, forzan un brinco de linea
-            </div>-->
+                <!--</span> si se activan, forzan un brinco de linea-->
+            </div>
         %endif
         %if not o.invoice_sequence_id.approval_id.type:
             <hr>
             ${_('No se encontr&oacute; la aprobaci&oacute;n')}
             <hr>
         %endif
-                                 
+        <br></br>
+        <section>
+            <table class="basic_table" style="border:1.5px solid grey;">
+                <tr><td class="address"><pre style='pre'>${ get_text_promissory(o.company_id, o.partner_id, address_emitter, o) or ''|entity }</pre></td></tr>
+            </table>
+        </section>
     <p style="page-break-after:always"></p>
     %endfor
 
