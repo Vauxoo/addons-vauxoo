@@ -91,7 +91,9 @@ Another pre-configure options:
         'wizard/mrp_consume_produce.xml',
         'data/mrp_byworkcenter_capacity_data.xml',
     ],
-    "demo": [],
+    "demo": [
+        'demo/mrp_byworkcenter_capacity_demo.xml',
+    ],
     "test": [],
     "active": False,
     "installable": True,
