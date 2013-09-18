@@ -1104,7 +1104,7 @@ class account_invoice(osv.Model):
                 invoice.partner_id.id, context=context)
             invoice_data['Receptor'] = {}
             invoice_data['Receptor'].update({
-                'rfc': rfc,
+                'rfc': rfc.upper(),
                 'nombre': (parent_obj.name or ''),
                 'Domicilio': {
                     'calle': address_invoice.street and address_invoice.\
