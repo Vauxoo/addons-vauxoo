@@ -192,7 +192,7 @@ OPERATIONS AND PRODUCT QUANTITIES
     </record>
     <record id="mrp_workcenter_operation_product_quantity_3" model="mrp.workcenter.operation.product.quantity">
         <field name="uom_id" ref="product.product_uom_kgm"/>
-        <field model="mrp.routing.workcenter" name="operation_id" search="[('name', '=', u'Duchar papas')]"/>
+        <field model="mrp.routing.workcenter" name="operation_id" search="[('name', '=', u'Limpiar papas')]"/>
         <field model="product.product" name="product_id" search="[('name', '=', u'papas')]"/>
         <field eval="1.0" name="qty"/>
     </record>
@@ -203,7 +203,7 @@ OPERATIONS AND PRODUCT QUANTITIES
         <field eval="1" name="sequence"/>
         <field name="company_id" ref="base.main_company"/>
         <field model="mrp.routing" name="routing_id" search="[('name', '=', u'Papas Fritas')]"/>
-        <field model="mrp.workcenter" name="workcenter_id" search="[('name', '=', u'Bol de pelar')]"/>
+        <field model="mrp.workcenter" name="workcenter_id" search="[('name', '=', u'Maquina de Pelar')]"/>
         <field eval="0.416666666667" name="hour_nbr"/>
     </record>
     <record id="mrp_workcenter_operation_product_quantity_4" model="mrp.workcenter.operation.product.quantity">
