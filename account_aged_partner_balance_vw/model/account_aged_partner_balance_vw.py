@@ -476,11 +476,10 @@ class account_aged_trial_balance(osv.TransientModel):
 
                 res.append({
                     'partner_id': rp_brw.id,
-                    'user_id' : inv_brw.user_id and inv_brw.user_id or False,
+                    'user_id' : inv_brw.user_id and inv_brw.user_id.id or False,
                     'document_id': '%s,%s'%(inv_brw._name,inv_brw.id),
                     'residual': residual,
                     'due_days': due_days,
-                    'date_due': date_due,
+                    'date_due': inv_brw.date_due or inv_brw.date_invoice,
                 })
         return res
-
