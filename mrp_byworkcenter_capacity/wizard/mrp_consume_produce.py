@@ -177,7 +177,37 @@ class mrp_consume(osv.TransientModel):
                     _('Error!'),
                     _('No valid operation. no work order lot active_id.')
                 )
-        return res
+
+        #~ refresh kaban view
+        ir_obj = self.pool.get('ir.model.data')
+        dummy, view_id = ir_obj.get_object_reference(
+            cr, uid, 'mrp_byworkcenter_capacity',
+            'mrp_workorder_lot_kanban_view')
+
+        dummy, search_view_id = ir_obj.get_object_reference(
+            cr, uid, 'mrp_byworkcenter_capacity',
+            'mrp_wol_search_view')
+
+        dummy, action_window_id = ir_obj.get_object_reference(
+            cr, uid, 'mrp_byworkcenter_capacity',
+            'mrp_wol_picking_kanban_action')
+        act_obj = self.pool.get('ir.actions.act_window')
+
+        return {
+            'view_id': view_id,
+            'view_type': 'form',
+            'view_mode': 'kanban',
+            'views': [(view_id, 'kanban')],
+            'search_view_id': search_view_id,
+            'res_model': 'mrp.workorder.lot',
+            'type': 'ir.actions.act_window',
+            'target': 'inlineview',
+            'context': {'search_default_wol_picking': True},
+            'help': act_obj.browse(cr, uid, action_window_id,
+                                   context=context).help
+        }
+
+
 
 class mrp_produce(osv.TransientModel):
     _inherit = 'mrp.produce'
