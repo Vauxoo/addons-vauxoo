@@ -475,15 +475,15 @@ class ir_attachment_facturae_mx(osv.Model):
                     else:
                         msj += _("Unknow cfdi driver for %s" %
                                  (ir_attach_facturae_mx_id.type))
-            else:
-                wf_service.trg_validate(
-                    uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
-                if invoice.state != 'cancel':
-                    inv_cancel_status = invoice_obj.action_cancel(
-                        cr, uid, [invoice.id], context=context)
                 else:
-                    inv_cancel_status = True
-                msj = 'cancelled'
+                    wf_service.trg_validate(
+                        uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
+                    if invoice.state != 'cancel':
+                        inv_cancel_status = invoice_obj.action_cancel(
+                            cr, uid, [invoice.id], context=context)
+                    else:
+                        inv_cancel_status = True
+                    msj = 'cancelled'
 
             self.write(cr, uid, ids, {
                        'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),

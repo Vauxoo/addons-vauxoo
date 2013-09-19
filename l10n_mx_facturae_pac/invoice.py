@@ -38,6 +38,7 @@ except:
     print "Package SOAPpy missed"
     pass
 import time
+from openerp import tools
 
 
 class account_invoice(osv.Model):
@@ -118,13 +119,14 @@ class account_invoice(osv.Model):
             emisor = 'cfdi:Emisor'
             receptor = 'cfdi:Receptor'
             concepto = 'cfdi:Conceptos'
+            facturae_version = '3.2'
         else:
             comprobante = 'Comprobante'
             emisor = 'Emisor'
             regimenFiscal = 'RegimenFiscal'
             receptor = 'Receptor'
             concepto = 'Conceptos'
-
+            facturae_version = '2.2'
         data_dict = self._get_facturae_invoice_dict_data(
             cr, uid, ids, context=context)[0]
         doc_xml = self.dict2xml({comprobante: data_dict.get(comprobante)})
@@ -137,11 +139,9 @@ class account_invoice(osv.Model):
             f, indent='    ', addindent='    ', newl='\r\n', encoding='UTF-8')
         f.close()
         os.close(fileno_xml)
-
         (fileno_sign, fname_sign) = tempfile.mkstemp('.txt', 'openerp_' + (
             invoice_number or '') + '__facturae_txt_md5__')
         os.close(fileno_sign)
-        
         context.update({
             'fname_xml': fname_xml,
             'fname_txt': fname_txt,
@@ -208,4 +208,28 @@ class account_invoice(osv.Model):
             data_dict[comprobante].get('folio', '') or '') + '.xml'
         data_xml = data_xml.replace(
             '<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
+        date_invoice = data_dict.get('Comprobante',{}) and datetime.strptime( data_dict.get('Comprobante',{}).get('fecha',{}), '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d') or False
+        if os.name <> "nt":
+            if date_invoice  and date_invoice < '2012-07-01':
+                facturae_version = '2.0'
+            self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], facturae_version)
+            data_dict.get('Comprobante',{})
         return fname_xml, data_xml
+
+    def validate_scheme_facturae_xml(self, cr, uid, ids, datas_xmls=[], facturae_version = None, facturae_type="cfdv", scheme_type='xsd'):
+    #TODO: bzr add to file fname_schema
+        if not datas_xmls:
+            datas_xmls = []
+        certificate_lib = self.pool.get('facturae.certificate.library')
+        for data_xml in datas_xmls:
+            (fileno_data_xml, fname_data_xml) = tempfile.mkstemp('.xml', 'openerp_' + (False or '') + '__facturae__' )
+            f = open(fname_data_xml, 'wb')
+            f.write( data_xml )
+            f.close()
+            os.close(fileno_data_xml)
+            fname_scheme = os.path.join(tools.config["addons_path"], u'l10n_mx_facturae', u'SAT', facturae_type + facturae_version +  '.' + scheme_type )
+            fname_out = certificate_lib.b64str_to_tempfile( base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__schema_validation_result__' )
+            result = certificate_lib.check_xml_scheme(fname_data_xml, fname_scheme, fname_out)
+            if result: #Valida el xml medianta el archivo xsd
+                raise osv.except_osv('Error al validar la estructura del xml!', 'Validación de XML versión %s:\n%s'%(facturae_version, result))
+        return True

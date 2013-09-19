@@ -34,13 +34,10 @@ import time
 import tempfile
 import base64
 
-depends_app_path = os.path.join(tools.config["addons_path"],
-    u'l10n_mx_facturae', u'depends_app')
-openssl_path = os.path.abspath(tools.ustr(
-    os.path.join(depends_app_path,  u'openssl_win')))
-xsltproc_path = os.path.abspath(tools.ustr(
-    os.path.join(depends_app_path,  u'xsltproc_win')))
-
+depends_app_path = os.path.join(tools.config["addons_path"], u'l10n_mx_facturae', u'depends_app')
+openssl_path = os.path.abspath(tools.ustr(os.path.join(depends_app_path,  u'openssl_win')))
+xsltproc_path = os.path.abspath(tools.ustr(os.path.join(depends_app_path,  u'xsltproc_win')))
+xmlstarlet_path = os.path.abspath(tools.ustr(os.path.join( depends_app_path,  u'xmlstarlet_win')))
 
 def exec_command_pipe(*args):
     # Agregue esta funcion, ya que con la nueva funcion original, de tools no funciona
@@ -55,9 +52,11 @@ def exec_command_pipe(*args):
 if os.name == "nt":
     app_xsltproc = 'xsltproc.exe'
     app_openssl = 'openssl.exe'
+    app_xmlstarlet = 'xmlstarlet'
 else:
     app_xsltproc = 'xsltproc'
     app_openssl = 'openssl'
+    app_xmlstarlet = 'xmlstarlet'
 
 app_openssl_fullpath = os.path.join(openssl_path, app_openssl)
 if not os.path.isfile(app_openssl_fullpath):
@@ -66,6 +65,10 @@ if not os.path.isfile(app_openssl_fullpath):
 app_xsltproc_fullpath = os.path.join(xsltproc_path, app_xsltproc)
 if not os.path.isfile(app_xsltproc_fullpath):
     app_xsltproc_fullpath = tools.find_in_path(app_xsltproc)
+
+app_xmlstarlet_fullpath = os.path.join( xmlstarlet_path, app_xmlstarlet )
+if not os.path.isfile( app_xmlstarlet_fullpath ):
+    app_xmlstarlet_fullpath = tools.find_in_path( app_xmlstarlet )
 
 
 # TODO: Validar que esta instalado openssl & xsltproc
@@ -243,6 +246,19 @@ class facturae_certificate_library(osv.Model):
         if cmd:
             input, output = exec_command_pipe(cmd)
             result = self._read_file_attempts(open(fname_out, "r"))
+            input.close()
+            output.close()
+        return result
+
+    def check_xml_scheme(self, fname_xml, fname_scheme, fname_out, type_scheme="xsd"):
+        #xmlstarlet val -e --xsd cfdv2.xsd cfd_example.xml
+        cmd = ''
+        if type_scheme == 'xsd':
+            cmd = '"%s" val -e --%s "%s" "%s" 1>"%s" 2>"%s"'%(app_xmlstarlet_fullpath, type_scheme, fname_scheme, fname_xml, fname_out+"1", fname_out)
+        if cmd:
+            args = tuple( cmd.split(' ') )
+            input, output = exec_command_pipe(*args)
+            result = self._read_file_attempts( open(fname_out, "r") )
             input.close()
             output.close()
         return result
