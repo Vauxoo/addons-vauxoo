@@ -6,7 +6,7 @@
             <field name="name">Contact form</field>
             <field name="model">portal_crm.crm_contact_us</field>
             <field name="arch" type="xml">
-                <form string="Contact form" version="7.0" class="bs3">
+                <form string="Contact form" version="7.0" class="bs3 bs3-footer">
                     <section class="bgvauxoo">
                     <div class="form-horizontal mt32">
                    <div class="container"> 
