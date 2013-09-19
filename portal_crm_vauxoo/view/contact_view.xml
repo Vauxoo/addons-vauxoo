@@ -138,5 +138,9 @@
             groups="base.group_system"
             sequence="40"/>
 
+        <menuitem sequence="1000"  name="Our Team" id="our_team_menu_11" 
+        action="portal_hr_employees.action_team"/>
+
+
     </data>
 </openerp>

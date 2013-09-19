@@ -41,9 +41,10 @@ You will need to install recaptcha and recaptcha client::
                 'portal',
                 'portal_news',
                 'web_captcha',
+                'portal_hr_employees',
                 ],
     'data': [
-        'contact_view.xml',
+        'view/contact_view.xml',
     ],
     'test': [
         'test/contact_form.yml',
