@@ -33,6 +33,10 @@ You will need to install recaptcha and recaptcha client::
 
     $ sudo pip install recaptcha
     $ sudo pip install recaptcha-client
+
+Added Menu 'Our Team ' as principal Menu, this menu show
+the human recourses that is public.
+
     """,
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com',
