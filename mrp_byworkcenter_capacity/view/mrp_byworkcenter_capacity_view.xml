@@ -225,6 +225,7 @@ mrp.production.workcenter.line
             action="mrp_workoder_active_kanban_action"
             id="menu_mrp_workorder_active"
             parent="mrp.menu_mrp_planning"
+            groups="mrp.group_mrp_user"
             sequence="3"/>
 
 <!--
@@ -370,7 +371,7 @@ mrp.workorder.lot
             action="mrp_workorder_lot_kanban_action"
             id="menu_mrp_workorder_active_lot"
             parent="menu_mrp_wol"
-            groups="stock.group_stock_user"
+            groups="mrp.group_mrp_manager"
             sequence="4"/>
 
         <menuitem
