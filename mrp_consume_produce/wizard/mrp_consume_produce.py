@@ -82,6 +82,7 @@ class mrp_consume(osv.TransientModel):
     def default_get(self, cr, uid, fields, context=None):
         context = context or {}
         production_obj = self.pool.get('mrp.production')
+        wol_obj = self.pool.get('mrp.workorder.lot')
         move_obj = self.pool.get('stock.move')
         consume_line_ids = list()
         res = super(mrp_consume, self).default_get(
@@ -91,7 +92,18 @@ class mrp_consume(osv.TransientModel):
             or not context.get('active_model', False) in
             ['mrp.production', 'mrp.workorder.lot']):
             return res
-        production_id = production_ids[0]
+
+        if context.get('active_model') == 'mrp.production':
+            production_id = production_ids[0]
+        elif context.get('active_model') == 'mrp.workorder.lot':
+            production_id = wol_obj.browse(
+                cr, uid, context.get('active_ids'),
+                context=context)[0].production_id.id
+        else:
+            raise osv.except_osv(
+                _('Error!!'),
+                _('Invalid procedure'))
+
         if 'consume_line_ids' in fields:
             production_brw = production_obj.browse(cr, uid, production_id,
                                                    context=context)
