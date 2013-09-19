@@ -39,6 +39,7 @@ You will need to install recaptcha and recaptcha client::
     'depends': [
                 'crm',
                 'portal',
+                'portal_news',
                 'web_captcha',
                 ],
     'data': [
