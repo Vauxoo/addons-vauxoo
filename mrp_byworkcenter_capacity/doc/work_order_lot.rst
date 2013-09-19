@@ -15,6 +15,14 @@ neck in a routing.
 - When a Work Order Lot is in 'draft', 'picking', 'ready', 'done' or 'cancel'
   state can its associated work orders can change of state.
 
+Menu
+----
+
+- The ``Ready to Picking`` menu is visible for the warehouse/stock user.
+- The ``Active Work Order Lots`` menu is visible for the
+production/manufacturing manager.
+- The ``Active Work Orders`` menu is visible for
+
 States
 ------
 
