@@ -4,12 +4,14 @@ var _t = instance.web._t,
 var QWeb = instance.web.qweb; 
 
 instance.web.FormView.include({
-    start: function(){                                                                          
-        this._super.apply(this, arguments); 
-        if (this.$('.bs3-footer')) {
-            var Footer = new instance.portal_news.FooterWeb();                                         
-            Footer.appendTo(this.$el);
-       } 
+    start: function(){
+        self = this        
+        this._super.apply(this, arguments).done(function () {
+            if (typeof self.$(".bs3-footer")[0] != "undefined") {
+                var Footer = new instance.portal_news.FooterWeb();
+                Footer.appendTo(self.$el);
+            } 
+        }); 
     }
 });
 
