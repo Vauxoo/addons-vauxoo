@@ -90,6 +90,7 @@ Another pre-configure options:
         'view/res_company_view.xml',
         'wizard/mrp_consume_produce.xml',
         'data/mrp_byworkcenter_capacity_data.xml',
+        'security/ir.model.access.csv',
     ],
     "demo": [
         'demo/mrp_byworkcenter_capacity_demo.xml',
