@@ -315,7 +315,6 @@ class mrp_consume_line(osv.TransientModel):
             required=True,
             help=_('Moves corresponding to the product in the consume line')),
         'wizard_id': fields.many2one('mrp.consume', string="Wizard"),
-        'wizard2_id': fields.many2one('mrp.produce', string="Wizard"),
     }
 
 
