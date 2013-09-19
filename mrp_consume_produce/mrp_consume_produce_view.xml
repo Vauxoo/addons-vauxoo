@@ -43,6 +43,18 @@
                 <field name="len_move_prod" invisible="1"/>
                 <field name="moves_lines2" invisible="1"/>
             </xpath>
+
+                <xpath expr="//field[@name='move_created_ids']" position="replace">
+                    <field name="move_created_ids" nolabel="1">
+                        <tree string="Products to Finish">
+                            <field name="product_id"/>
+                            <field name="product_qty"/>
+                            <field name="product_uom"  string="Unit of Measure" groups="product.group_uom"/>
+                            <field name="state" invisible="1"/>
+                        </tree>
+                    </field>
+                </xpath>
+
         </field>
         </record>
 
