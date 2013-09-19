@@ -412,9 +412,11 @@
         %endif
         <br></br>
         <section>
-            <table class="basic_table" style="border:1.5px solid grey;">
-                <tr><td class="address"><pre style='pre'>${ get_text_promissory(o.company_id, o.partner_id, address_emitter, o) or ''|entity }</pre></td></tr>
-            </table>
+            %if o.company_id.dinamic_text:
+                <table class="basic_table" style="border:1.5px solid grey;">
+                    <tr><td class="address"><pre style='pre'>${ get_text_promissory(o.company_id, o.partner_id, address_emitter, o) or ''|entity }</pre></td></tr>
+                </table>
+            %endif
         </section>
     <p style="page-break-after:always"></p>
     %endfor
