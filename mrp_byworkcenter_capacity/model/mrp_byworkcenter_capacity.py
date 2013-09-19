@@ -810,10 +810,14 @@ class mrp_production_workcenter_line(osv.Model):
                      for trb in troble_wo])
                 ))
 
+        #~ manage changes in the kanban view
         if values.get('stage_id', False):
             wos_brw = wos_obj.browse(cr, uid, values.get('stage_id'), context=context)
-            
             values.update({'state': wos_brw.state})
+        if values.get('state', False):
+            values.update({'stage_id': wos_obj.search(
+                cr, uid, [('state', '=', values.get('state'))],
+                context=context)[0]})
 
         res = super(mrp_production_workcenter_line, self).write(
             cr, uid, wo_ids, values, context=context, update=update)
