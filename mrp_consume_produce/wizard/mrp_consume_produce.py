@@ -87,9 +87,9 @@ class mrp_consume(osv.TransientModel):
         res = super(mrp_consume, self).default_get(
             cr, uid, fields, context=context)
         production_ids = context.get('active_ids', [])
-        if (not production_ids
-            or (not context.get('active_model') == 'mrp.production')
-            or len(production_ids) != 1):
+        if (not production_ids or len(production_ids) != 1
+            or not context.get('active_model', False) in
+            ['mrp.production', 'mrp.workorder.lot']):
             return res
         production_id = production_ids[0]
         if 'consume_line_ids' in fields:
