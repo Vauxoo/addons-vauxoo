@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Luis Ernesto García (ernesto_gm@vauxoo.com)
+#    Coded by: Luis Ernesto García Medina(ernesto_gm@vauxoo.com)
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -22,15 +22,15 @@
 ################################################################################
 
 {
-    "name" : "Journal Entries Reviewed by Fiscal",
+    "name" : "Field Active In Analytic Accounts",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Accouting",
     "description" : """
-Field of Reviewed by fiscal for Journal Entries
-================================================
+Field Active In Analytic Accounts
+=================================
 
-Add field of Reviewed by fiscal in journal entries 
+Add field active to analytic accounts 
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
