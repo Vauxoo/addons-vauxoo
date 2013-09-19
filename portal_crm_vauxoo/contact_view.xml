@@ -7,6 +7,7 @@
             <field name="model">portal_crm.crm_contact_us</field>
             <field name="arch" type="xml">
                 <form string="Contact form" version="7.0" class="bs3">
+                    <section class="bgvauxoo">
                     <div class="form-horizontal mt32">
                    <div class="container"> 
                     <h1>Contact Us</h1>
@@ -42,11 +43,14 @@
                                     <field name="description" widget="FieldTextBS3" placeholder="Content..." class="form-control" nolabel="1"/>
                                 </div>
                             </div>
-                            <group>
+                            <div class="form-group">
+                                <label for="captcha" class="col-md-3 col-sm-4 control-label" string=" "/>
+                                <div class="col-md-7 col-sm-8">
                                 <field name= "captcha"
                                     widget="captcha"
                                     nolabel="1"/>
-                            </group>
+                                </div>
+                            </div>
                         <button string="Submit" name="submit" type="object" 
                             class="oe_highlight"/>
                     </div>
@@ -88,6 +92,7 @@
                     </div>
                     </div>
                     </div>
+                    </section>
                 </form>
             </field>
         </record>
