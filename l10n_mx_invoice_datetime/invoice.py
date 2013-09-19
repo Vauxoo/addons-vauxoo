@@ -105,6 +105,12 @@ class account_invoice(osv.Model):
         if res:
             vals.update(res)
         return super(account_invoice, self).write(cr, uid, ids, vals, context=context)
+        
+    def copy(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default.update({'invoice_datetime': False, 'date_invoice' : False})
+        return super(account_invoice, self).copy(cr, uid, id, default, context)
 
     def assigned_datetime(self, cr, uid, values, context=None):
         if context is None:
