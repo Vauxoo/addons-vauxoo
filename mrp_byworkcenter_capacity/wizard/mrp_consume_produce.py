@@ -259,11 +259,11 @@ class mrp_produce(osv.TransientModel):
                     _('This wizard only can be call from the manufacturing'
                       ' order form or the Work Orders by Active Lot menu.'))
 
-        if not res:
-            raise osv.except_osv (
-                _('Warning!!'),
-                _('You can Produce because you have not Ready to Finish Work'
-                  ' Order Lots.'))
+            if not res:
+                raise osv.except_osv (
+                    _('Warning!!'),
+                    _('You can Produce because you have not Ready to Finish'
+                      ' Work Order Lots.'))
 
         return res and res[0] or False
 
