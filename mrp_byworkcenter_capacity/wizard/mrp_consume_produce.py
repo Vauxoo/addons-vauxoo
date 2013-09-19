@@ -239,7 +239,6 @@ class mrp_produce(osv.TransientModel):
         @return: The first Work Order Lot ready to Produce (cardinal order).
         """
         context = context or {}
-        res = False
         production_obj = self.pool.get('mrp.production')
         active_id = context.get('active_id', False)
         active_model = context.get('active_model', False)
@@ -258,6 +257,12 @@ class mrp_produce(osv.TransientModel):
                     _('Error!!'),
                     _('This wizard only can be call from the manufacturing'
                       ' order form or the Work Orders by Active Lot menu.'))
+
+        if not res:
+            raise osv.except_osv (
+                _('Warning!!'),
+                _('You can Produce because you have not Ready to Finish Work'
+                  ' Order Lots.'))
 
         return res and res[0] or False
 
