@@ -323,7 +323,8 @@ mrp.workorder.lot
         <record id="mrp_workorder_lot_kanban_action" model="ir.actions.act_window">
              <field name="name">Active Work Order Lots</field>
              <field name="res_model">mrp.workorder.lot</field>
-             <field name="view_mode">kanban</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">kanban,form</field>
              <field name="view_id" ref="mrp_workorder_lot_kanban_view"/>
              <field name="search_view_id" ref="mrp_wol_search_view"/>
              <field name="context">{'search_default_wol_active': True}</field>
