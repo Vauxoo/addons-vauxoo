@@ -50,9 +50,21 @@ class hr_expense_expense(osv.Model):
         context = context or {}
         res = super(hr_expense_expense, self).payment_reconcile(cr, uid, ids,
                                                             context=context)
-        self.create_her_tax(cr, uid, ids, res, context=context)
+        self.create_her_tax_pay_adv(cr, uid, ids, context=context)
         return res
-
+    
+    def create_her_tax_pay_adv(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids= isinstance(ids,(int,long)) and [ids] or ids
+        for exp in self.browse(cr, uid, ids, context=context):
+            self.unlink_move_tax(cr, uid, exp, context=context)
+            self.create_her_tax(cr, uid, exp.id, aml={}, context=context)
+            for voucher_brw in exp.payment_ids:
+                context.update({'payment_amount': voucher_brw.amount,
+                                'date_voucher': voucher_brw.date})
+                self.create_her_tax(cr, uid, exp.id, aml={}, context=context)
+        return True
+    
     def create_her_tax(self, cr, uid, ids, aml={}, context=None):
         print ids,'imprimo ids'
         aml_obj = self.pool.get('account.move.line')
@@ -69,7 +81,7 @@ class hr_expense_expense(osv.Model):
 
 #        if exp.fully_applied_vat:
  #           return True
-        #self.unlink_move_tax(cr, uid, exp, context=context)
+   #     self.unlink_move_tax(cr, uid, exp, context=context)
         expense_amount = exp.amount
         if context.get('payment_amount'):
             advance_amount = context.get('payment_amount', 0.0)
