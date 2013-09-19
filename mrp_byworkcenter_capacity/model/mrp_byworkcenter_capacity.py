@@ -425,9 +425,6 @@ class mrp_production(osv.Model):
                             context=context),
                     })
 
-                # NOTE: the field wc_brw.time_efficiency it does
-                # not exist in the model. why this???
-
                 #~ print 'result'
                 #~ pprint.pprint(result)
 
