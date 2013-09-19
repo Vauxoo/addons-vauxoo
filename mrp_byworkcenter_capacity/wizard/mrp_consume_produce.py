@@ -311,8 +311,8 @@ class mrp_produce(osv.TransientModel):
                       context=context)
         return res
 
-class mrp_consume_line(osv.TransientModel):
-    _inherit = 'mrp.consume.line'
+class mrp_produce_line(osv.TransientModel):
+    _inherit = 'mrp.produce.line'
 
     _columns = {
         'prodlot_id': fields.many2one(
