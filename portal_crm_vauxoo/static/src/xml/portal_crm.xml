@@ -2,7 +2,7 @@
 <!-- vim:fdl=1:                                                                                     
 -->                                                                                                 
 <templates id="template" xml:space="preserve"> 
-<t t-name="FieldCharBS3">
+<div t-name="FieldCharBS3">
             <input t-att-type="widget.password ? 'password' : 'text'"                               
                 t-att-id="widget.id_for_label"                                                      
                 t-att-tabindex="widget.node.attrs.tabindex"                                         
@@ -13,9 +13,9 @@
             /><img class="oe_field_translate oe_input_icon" t-if="widget.field.translate" 
                     t-att-src='_s + "/web/static/src/img/icons/terp-translate.png"' 
                     width="16" height="16" border="0"/>
-</t>
+</div>
 
-<t t-name="FieldEmailBS3">                                                                             
+<div t-name="FieldEmailBS3">                                                                             
                 <input type="text"                                                                  
                     t-att-id="widget.id_for_label"                                                  
                     t-att-tabindex="widget.node.attrs.tabindex"                                     
@@ -24,9 +24,9 @@
                     t-att-maxlength="widget.field.size" 
                     t-att-class="widget.get('required') ? 'bs3-required '+ widget.widget_class : widget.widget_class"
                 />                                                                                  
-</t>
+</div>
 
-<t t-name="FieldTextBS3">                                                                              
+<div t-name="FieldTextBS3">                                                                              
             <textarea rows="6"                                                                      
                 t-att-name="widget.name"                                                            
                 t-att-class="'field_text oe_form_field oe_form_field_text '+widget.widget_class" 
@@ -38,6 +38,6 @@
                             t-if="widget.field.translate and !widget.get('effective_readonly')"     
                             t-att-src='_s + "/web/static/src/img/icons/terp-translate.png"' width="16" height="16" border="0"
             />                                                                                      
-</t>  
+</div>  
 
 </templates> 
