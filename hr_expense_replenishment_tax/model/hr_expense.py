@@ -254,6 +254,8 @@ class account_move_line(osv.osv):
                 if expense.state == "paid":
                     expense_obj.apply_round_tax(cr, uid, expense.id,
                                                             context=context)
+                    expense_obj.write(cr, uid, expense.id,
+                                                    {'fully_applied_vat': True})
                 return res
         return super(account_move_line, self).reconcile(cr, uid, ids,
                                     type=type,
@@ -261,11 +263,3 @@ class account_move_line(osv.osv):
                                     writeoff_period_id=writeoff_period_id,
                                     writeoff_journal_id=writeoff_journal_id,
                                     context=context)
-
-class account_invoice(osv.Model):
-    _inherit = 'account.invoice'
-    
-    _columns = {
-        'amount_tax_pay': fields.float('Amount Tax Pay',
-                                digits_compute=dp.get_precision('Account'))
-    }
