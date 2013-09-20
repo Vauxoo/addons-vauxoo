@@ -135,6 +135,16 @@ class mrp_production(osv.Model):
             'mrp.workorder.lot', 'production_id',
             string=_('Work Orders Lots'),
             help=_('Work Orders Lots.')),
+        'prodlot_id': fields.many2one(
+            'stock.production.lot',
+            _('Serial Number'),
+            help=_('Production Serial Number (Lot)\n This is the Serial Number'
+                   ' that will receives the stock move from Virtual Production'
+                   ' Location to the Destination Physical Stock Location.'
+                   ' This is a formalism to use the Track Manufacturing Lots'
+                   ' funcionality that requires that every stock move for your'
+                   ' manufacturing product need to have a Serial Number'
+                   ' associated')),
     }
 
     def action_compute(self, cr, uid, ids, properties=None, context=None):
