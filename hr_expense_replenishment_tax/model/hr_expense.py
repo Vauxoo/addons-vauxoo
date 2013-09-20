@@ -120,7 +120,8 @@ class hr_expense_expense(osv.Model):
                     account_tax_voucher = tax.tax_id.account_paid_voucher_id.id
                     account_tax_collected = tax.tax_id.account_collected_id.id
                     factor = acc_voucher_obj.get_percent_pay_vs_invoice(cr, uid,
-                        tax.amount*percent_pay, tax.amount*percent_pay, context=context)
+                        tax.amount*percent_pay, tax.amount*percent_pay,
+                        context=context)
                     move_lines_tax = acc_voucher_obj.\
                                             _preparate_move_line_tax(cr, uid,
                         account_tax_voucher,
@@ -139,7 +140,8 @@ class hr_expense_expense(osv.Model):
                         move_create = aml_obj.create(cr ,uid, move_line_tax,
                                                 context=context)
                                                     
-        self.write(cr, uid, ids, {'amount_exp_pay': exp.amount_exp_pay + advance_amount})
+        self.write(cr, uid, ids,
+                        {'amount_exp_pay': exp.amount_exp_pay + advance_amount})
 #        exp.write({'fully_applied_vat':True})
         return True
 
@@ -194,11 +196,17 @@ class hr_expense_expense(osv.Model):
             move_diff = round(move_diff, 2)
             if move_diff <> 0.00:
                 move_ids.sort()
-                for move_line in aml_obj.browse(cr, uid, move_ids[-2:], context=context):
+                for move_line in aml_obj.browse(cr, uid, move_ids[-2:],
+                                                            context=context):
                     if move_line.credit == 0 and move_line.debit:
-                        cr.execute('UPDATE account_move_line SET debit=%s WHERE id=%s',(move_line.debit+move_diff, move_line.id))
+                        cr.execute('UPDATE account_move_line ' \
+                                    'SET debit=%s WHERE id=%s ',
+                        (move_line.debit+move_diff, move_line.id))
+                        
                     if move_line.debit == 0 and move_line.credit:
-                        cr.execute('UPDATE account_move_line SET credit=%s WHERE id=%s',(move_line.credit+move_diff, move_line.id))
+                        cr.execute('UPDATE account_move_line '\
+                                    'SET credit=%s WHERE id=%s ',
+                        (move_line.credit+move_diff, move_line.id))
         return True
 
 
@@ -244,7 +252,8 @@ class account_move_line(osv.osv):
                                     writeoff_journal_id=writeoff_journal_id,
                                     context=context)
                 if expense.state == "paid":
-                    expense_obj.apply_round_tax(cr, uid, expense.id, context=context)
+                    expense_obj.apply_round_tax(cr, uid, expense.id,
+                                                            context=context)
                 return res
         return super(account_move_line, self).reconcile(cr, uid, ids,
                                     type=type,
