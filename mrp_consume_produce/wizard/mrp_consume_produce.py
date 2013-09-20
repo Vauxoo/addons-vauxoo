@@ -80,11 +80,8 @@ class mrp_consume(osv.TransientModel):
                 cr, uid, production_ids,
                 context=context)[0].production_id.id
         # getting active move ids grouped by product
-        move_brws = production_obj.browse(
-            cr, uid, production_id, context=context).move_lines
-        active_move_ids = [move_brw.id
-                           for move_brw in move_brws
-                           if move_brw.state not in ('done', 'cancel')]
+        active_move_ids = \
+            self._get_active_move_ids(cr, uid, production_id, context=context)
         moves_of = \
             self._get_moves_grouped_by_product(
                 cr, uid, active_move_ids, context=context)
@@ -197,6 +194,22 @@ class mrp_consume(osv.TransientModel):
             map(lambda move_line: (0, 0, move_line), consume_line_move_ids),
         }
         return partial_move
+
+    def _get_active_move_ids(self, cr, uid, production_id, context=None):
+        """
+        Get the valid moves to be consume for a manufacturing order. That
+        are those stock move that are not in Done or Cancel state.
+        @param production_id: manufactuirng order id. 
+        @return: list of stock move ids that can ve consumed 
+        """
+        context = context or {}
+        production_obj = self.pool.get('mrp.production')
+        move_brws = production_obj.browse(
+            cr, uid, production_id, context=context).move_lines
+        active_move_ids = [move_brw.id
+                           for move_brw in move_brws
+                           if move_brw.state not in ('done', 'cancel')]
+        return active_move_ids
 
     def _get_consume_line_dict(self, cr, uid, production_id, move_ids,
                                context=None):
