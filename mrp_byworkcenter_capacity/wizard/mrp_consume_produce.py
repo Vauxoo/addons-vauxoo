@@ -108,44 +108,46 @@ class mrp_consume(osv.TransientModel):
         @param wo_lot_id: selected work order lot.
         @param consume_line_ids: current cosumne product lines.
         """
-
         context = context or {}
-        values = []
-        production = self.pool.get('mrp.production').browse(
+        production_obj = self.pool.get('mrp.production')
+        production_brw = production_obj.browse(
             cr, uid, production_id, context=context)
-        wo_lot_obj = self.pool.get('mrp.workorder.lot')
 
         if wo_lot_id:
-            wo_lot = wo_lot_obj.browse(cr, uid, wo_lot_id, context=context)
-            #~ extract move data for products
-            move_d = {}
-
-            if production.move_lines:
-                for move in production.move_lines:
-                    move_d[move.product_id.id] = {
-                        'move_id': move.id,
-                        'location_id': move.location_id.id,
-                        'location_dest_id': move.location_dest_id.id,
-                        }
-            else:
+            if not production_brw.move_lines:
                 raise osv.except_osv(
                     _('Error!'),
                     _('You have not more Product to Consume, please add new'
                       ' lines by clicking the Product Request/Return Button.'))
-            #~ create consume lines
-            for product_line in production.product_lines:
-                product_id = product_line.product_id.id
-                values += [{
-                    'product_id': product_id,
-                    'quantity':
-                    product_line.product_qty * wo_lot.percentage/100.0,
-                    'product_uom': product_line.product_uom.id,
-                    'move_id': move_d[product_id]['move_id'],
-                    'location_id': move_d[product_id]['location_id'],
-                    'location_dest_id': move_d[product_id]['location_dest_id']
-                }]
+            consume_line_list = self._get_consume_line_list_with_wol_percent(
+                cr, uid, production_id, wo_lot_id, context=context)
+        return {'value': {'consume_line_ids': consume_line_list}}
 
-        return {'value': {'consume_line_ids': values}}
+    def _get_consume_line_list_with_wol_percent(self, cr, uid, production_id,
+                                                wo_lot_id, context=None):
+        """
+        Get a list of consume lines to create with a modification of the product qty with work order lot related percentage.
+        @param production_id: manufacturing order id.
+        @param wo_lot_id: work order lot id.
+        @return: a list of consume lines to create.
+        """
+        context = context or {}
+        production_obj = self.pool.get('mrp.production')
+        wol_obj = self.pool.get('mrp.workorder.lot')
+        production_brw = production_obj.browse(
+            cr, uid, production_id, context=context)
+        wol_brw = wol_obj.browse(cr, uid, wo_lot_id, context=context)
+        consume_line_list = self._get_consume_lines_list(
+            cr, uid, production_id, context=context)
+        sheduled_qty = dict(set(
+            [(product_line.product_id.id, product_line.product_qty)
+             for product_line in production_brw.product_lines]
+        ))
+        for consume_line in consume_line_list:
+            consume_line.update({'quantity':
+                sheduled_qty[consume_line['product_id']]
+                * wol_brw.percentage/100.0})
+        return consume_line_list
 
     def action_active_lot(self, cr, uid, ids, context=None):
         """
