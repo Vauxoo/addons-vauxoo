@@ -54,6 +54,24 @@ class mrp_consume(osv.TransientModel):
                     moves_grouped[product_id] = [move_id]
         return moves_grouped
 
+    def _get_consume_lines_list(self, cr, uid, production_id, context=None):
+        """
+        Get the consume lines to create.
+        @param production_id: manufacturing order id.
+        @return: a list of dictionaries with the values for the consume
+        lines to create
+        """
+        context = context or {}
+        consume_line_ids = list()
+        active_move_ids = self._get_active_move_ids(
+            cr, uid, production_id, context=context)
+        moves_dict = self._get_moves_grouped_by_product(
+            cr, uid, active_move_ids, context=context)
+        for move_ids in moves_dict.values():
+            consume_line_ids += [self._get_consume_line_dict(
+                cr, uid, production_id, move_ids, context=context)]
+        return consume_line_ids
+
     def _get_default_consume_line_ids(self, cr, uid, context=None):
         """
         Return the consume lines ids by default for the current work order lot
@@ -79,16 +97,8 @@ class mrp_consume(osv.TransientModel):
             and production_ids[0] or wol_obj.browse(
                 cr, uid, production_ids,
                 context=context)[0].production_id.id
-        # getting active move ids grouped by product
-        active_move_ids = \
-            self._get_active_move_ids(cr, uid, production_id, context=context)
-        moves_of = \
-            self._get_moves_grouped_by_product(
-                cr, uid, active_move_ids, context=context)
-        #~ update consume lines data
-        for move_ids in moves_of.values():
-            consume_line_ids += [self._get_consume_line_dict(
-                cr, uid, production_id, move_ids, context=context)]
+        consume_line_ids = self._get_consume_lines_list(
+            cr, uid, production_id, context=context)
         return consume_line_ids
 
     _columns = {
