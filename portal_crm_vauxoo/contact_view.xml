@@ -23,14 +23,10 @@
                                     <field name="name" widget="FieldCharBS3" placeholder="Subject..." nolabel="1"/>
                                     <label for="description" class="col-md-3 col-sm-4 control-label"/>
                                     <field name="description" widget="FieldTextBS3" placeholder="Content..." nolabel="1"/>
-                                    <div class="form-group">
-                                        <label for="captcha" class="col-md-3 col-sm-4 control-label" string=" "/>
-                                        <div class="col-md-7 col-sm-8">
-                                            <field name= "captcha"
-                                                   widget="captcha"
-                                                   nolabel="1"/>
-                                        </div>
-                                    </div>
+                                    <label for="captcha" class="col-md-3 col-sm-4 control-label" string=" "/>
+                                    <field name= "captcha"
+                                           widget="captcha"
+                                           nolabel="1"/>
                                     <button string="Submit" name="submit" type="object" 
                                             class="oe_highlight"/>
                                 </div>
