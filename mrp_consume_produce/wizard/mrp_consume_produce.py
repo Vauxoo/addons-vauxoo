@@ -397,6 +397,22 @@ class mrp_produce(osv.TransientModel):
                     context=context)
         return {}
 
+    def _get_active_move_ids(self, cr, uid, production_id, context=None):
+        """
+        Get the valid moves to be produce for a manufacturing order. That
+        are those stock move that are not in Done or Cancel state.
+        @param production_id: manufactuirng order id.
+        @return: list of stock move ids that can be produced
+        """
+        context = context or {}
+        production_obj = self.pool.get('mrp.production')
+        move_brws = production_obj.browse(
+            cr, uid, production_id, context=context).move_created_ids
+        active_move_ids = [move_brw.id
+                           for move_brw in move_brws
+                           if move_brw.state not in ('done', 'cancel')]
+        return active_move_ids
+
 
 class mrp_consume_line(osv.TransientModel):
     _name = 'mrp.consume.line'
