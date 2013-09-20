@@ -21,6 +21,14 @@
                                     <field name="phone" widget="FieldCharBS3" placeholder="Your phone number..." nolabel="1"/>
                                     <label for="name" class="col-md-3 col-sm-4 control-label"/>
                                     <field name="name" widget="FieldCharBS3" placeholder="Subject..." nolabel="1"/>
+                                    <label for="country_id" class="col-md-3 col-sm-4 control-label"/>
+                                    <div class="form-group">
+                                    <div class="col-md-7 col-sm-8">
+                                        <field name="country_id" placeholder="Your country..." nolabel="1" required="True"/>
+                                    </div>
+                                    </div>
+                                    <label for="city" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="city" widget="FieldCharBS3" placeholder="Your city..." nolabel="1" required="True"/>
                                     <label for="description" class="col-md-3 col-sm-4 control-label"/>
                                     <field name="description" widget="FieldTextBS3" placeholder="Content..." nolabel="1"/>
                                     <label for="captcha" class="col-md-3 col-sm-4 control-label" string=" "/>
