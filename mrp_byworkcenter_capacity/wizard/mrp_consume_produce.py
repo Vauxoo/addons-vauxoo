@@ -182,18 +182,9 @@ class mrp_consume(osv.TransientModel):
                 )
 
         #~ refresh kaban view
-        ir_obj = self.pool.get('ir.model.data')
-        dummy, view_id = ir_obj.get_object_reference(
-            cr, uid, 'mrp_byworkcenter_capacity',
-            'mrp_workorder_lot_kanban_view')
+        view_id, search_view_id, action_help = \
+            self._get_kanban_view_data(cr, uid, context=context)
 
-        dummy, search_view_id = ir_obj.get_object_reference(
-            cr, uid, 'mrp_byworkcenter_capacity',
-            'mrp_wol_search_view')
-
-        dummy, action_window_id = ir_obj.get_object_reference(
-            cr, uid, 'mrp_byworkcenter_capacity',
-            'mrp_wol_picking_kanban_action')
         act_obj = self.pool.get('ir.actions.act_window')
 
         return {
@@ -206,9 +197,29 @@ class mrp_consume(osv.TransientModel):
             'type': 'ir.actions.act_window',
             'target': 'inlineview',
             'context': {'search_default_wol_picking': True},
-            'help': act_obj.browse(cr, uid, action_window_id,
-                                   context=context).help
+            'help': action_help
         }
+
+    def _get_kanban_view_data(self, cr, uid, context=None):
+        """
+        @return: a tuple (view_id, search_view_id, action_help)
+        related to the kaban view for ready to picking work order lots.
+        """
+        context = context or {}
+        ir_obj = self.pool.get('ir.model.data')
+        act_obj = self.pool.get('ir.actions.act_window')
+        module_name = 'mrp_byworkcenter_capacity'
+        dummy, view_id = ir_obj.get_object_reference(
+            cr, uid, module_name, 'mrp_workorder_lot_kanban_view')
+        dummy, search_view_id = ir_obj.get_object_reference(
+            cr, uid, module_name, 'mrp_wol_search_view')
+        dummy, action_window_id = ir_obj.get_object_reference(
+            cr, uid, module_name, 'mrp_wol_picking_kanban_action')
+
+        action_help = act_obj.browse(
+            cr, uid, action_window_id, context=context).help
+                               
+        return (view_id, search_view_id, action_help)
 
 
 
