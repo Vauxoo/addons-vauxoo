@@ -107,6 +107,7 @@ class mrp_consume(osv.TransientModel):
         @param consume_line_ids: current cosumne product lines.
         """
         context = context or {}
+        consume_line_list = list()
         production_obj = self.pool.get('mrp.production')
         production_brw = production_obj.browse(
             cr, uid, production_id, context=context)
