@@ -167,6 +167,7 @@ class mrp_consume(osv.TransientModel):
 
         return res
 
+    #~ TODO: check this method, not used here but used in module mrp_request_return
     def _partial_move_for(self, cr, uid, production_id, move_ids,
                           context=None):
         """
