@@ -190,8 +190,6 @@ class mrp_consume(osv.TransientModel):
             cr, uid, production_id, product_id, context=context) 
         product_qty = self._get_consume_line_product_qty(
             cr, uid, move_ids, product_uom, context=context)
-        prodlot_id = self._get_consume_line_prodlot_id(
-            cr, uid, product_id, move_ids, context=context)
         consume_line_move_ids = self._get_consume_line_move_ids(
             cr, uid, move_ids, context=context)
 
@@ -199,7 +197,6 @@ class mrp_consume(osv.TransientModel):
             'product_id': product_id,
             'quantity': product_qty,
             'product_uom': product_uom,
-            'prodlot_id': prodlot_id,
             'consume_line_move_ids':
             map(lambda move_line: (0, 0, move_line), consume_line_move_ids),
         }
@@ -300,25 +297,6 @@ class mrp_consume(osv.TransientModel):
                  for move_brw in move_brws])
         return qty
 
-    def _get_consume_line_prodlot_id(self, cr, uid, product_id, move_ids,
-                                     context=None):
-        """
-        Return the first production lot id found for the given product.
-        @param product_id: product id.
-        """
-        context = context or {}
-        move_obj = self.pool.get('stock.move')
-        prodlot_obj = self.pool.get('stock.production.lot')
-        move_brws = move_obj.browse(cr, uid, move_ids, context=context)
-        prodlot_ids = \
-            prodlot_obj.search(
-                cr, uid, [('product_id', '=', product_id)], context=context) \
-                or False
-        # Note: First my intention was to use the move_brw.prodlot_id to get
-        # the prodlot_id but this field is not set, I imagine that is set
-        # before the move is consumed.
-        return prodlot_ids and prodlot_ids[0] or False
-
     def _get_consume_line_move_ids(self, cr, uid, move_ids, context=None):
         """
         Return a list of dictonary with consume line move to create for the
@@ -405,7 +383,6 @@ class mrp_produce(osv.TransientModel):
             'product_id': move_brw.product_id.id,
             'quantity': move_brw.product_qty,
             'product_uom': move_brw.product_uom.id,
-            'prodlot_id': move_brw.prodlot_id.id,
             'move_id': move_brw.id,
             'location_id': move_brw.location_id.id,
             'location_dest_id': move_brw.location_dest_id.id,
