@@ -203,7 +203,7 @@ class mrp_consume(osv.TransientModel):
         """
         @param production_id: the production id where the wizard was called.
         @param move_ids: list of stock move id.
-        @return: a dictionary of values for a consume/produce line.
+        @return: a dictionary of values for a consume lines.
         """
         context = context or {}
         product_id = self._get_consume_line_product_id(
