@@ -172,18 +172,7 @@ class hr_expense_expense(osv.Model):
     
     def unlink_move_tax(self, cr, uid, exp, context={}):
         aml_obj = self.pool.get('account.move.line')
-        acc_tax_v = []
-        acc_tax_c = []
-        for invoice in exp.invoice_ids:
-            for tax in invoice.tax_line:
-                if tax.tax_id.tax_voucher_ok:
-                    acc_tax_v.append(tax.tax_id.account_paid_voucher_id.id)
-                    acc_tax_c.append(tax.tax_id.account_collected_id.id)
-        acc_inv_tax = list( set( acc_tax_v + acc_tax_c ) )
-        move_ids = aml_obj.search(cr, uid, [
-                ('move_id', '=', exp.account_move_id.id),
-                ('account_id', 'in', ( acc_inv_tax ))
-        ])
+        move_ids = self.move_tax_expense(cr, uid, exp, context=context)
         aml_obj.unlink(cr, uid, move_ids)
         return True
     
@@ -194,16 +183,7 @@ class hr_expense_expense(osv.Model):
         acc_tax_v = []
         acc_tax_c = []
         for exp in self.browse(cr, uid, ids, context=context):
-            for invoice in exp.invoice_ids:
-                for tax in invoice.tax_line:
-                    if tax.tax_id.tax_voucher_ok:
-                        acc_tax_v.append(tax.tax_id.account_paid_voucher_id.id)
-                        acc_tax_c.append(tax.tax_id.account_collected_id.id)
-            acc_inv_tax = list( set( acc_tax_v + acc_tax_c ) )
-            move_ids = aml_obj.search(cr, uid, [
-                    ('move_id', '=', exp.account_move_id.id),
-                    ('account_id', 'in', ( acc_inv_tax ))
-            ])
+            move_ids=self.move_tax_expense(cr, uid, exp, context=context)
             move_round = 0
             move_without_round = 0
             for move in aml_obj.browse(cr, uid, move_ids, context=context):
