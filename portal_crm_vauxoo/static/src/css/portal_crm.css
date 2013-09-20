@@ -113,3 +113,11 @@
   padding-left: 10px;
   padding-right: 10px;
 }
+
+.openerp .bs3 .jumbotron.bgvauxoo i.icon-home {
+  padding-right: 10px;
+}
+
+.openerp .bs3 .jumbotron.bgvauxoo a.btn.btn-danger {
+  color: white;
+} 
