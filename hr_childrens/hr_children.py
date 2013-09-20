@@ -1,12 +1,12 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info Vauxoo (info@vauxoo.com)
+#    info@vauxoo.com
 ############################################################################
-#    Coded by: Luis Torres (luis_t@vauxoo.com)
+#    Coded by: Luis Ernesto García Medina (ernesto_gm@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,24 +23,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "Stock Picking Cancel",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Stock",
-    "description" : """This module add a button to cancel after to done""",
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
-        "stock",
-        "account_relation_move"
-        ],
-    "demo" : [],
-    "data" : [
-        "security/picking_security.xml",
-        "stock_workflow.xml",
-        "stock_view.xml",
-        ],
-    "installable" : True,
-    "active" : False,
-}
+from openerp.osv import osv, fields
+
+class hr_employee(osv.Model):
+    _inherit = "hr.employee"
+
+    _columns = {
+        'date_start': fields.date('Date Start'),
+        'children_ids' : fields.one2many('hr.children', 'employee_id', 'Childrens')
+    }
+
+class hr_children(osv.Model):
+    _name = "hr.children"
+    
+    _order = 'name'
+    
+    _columns = {
+        'name' : fields.char('Name', size=64),
+        'date_of_birth' : fields.date('Date of birth'),
+        'schooling' : fields.selection([('elementary', 'Elementary'),
+            ('high_school', 'High School'), ('preparatory', 'Preparatory'),
+            ('university', 'University')], 'Schooling'),
+        'employee_id' : fields.many2one('hr.employee', 'Employee')
+    }

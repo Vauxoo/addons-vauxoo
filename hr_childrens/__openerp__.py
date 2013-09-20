@@ -2,11 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: Luis Torres (luis_t@vauxoo.com)
+#    Coded by: Luis Ernesto Garcia Medina (ernesto_gm@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,24 +23,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 {
-    "name" : "Stock Picking Cancel",
+    "name" : "Childrens of Employees",
     "version" : "1.0",
     "author" : "Vauxoo",
-    "category" : "Stock",
-    "description" : """This module add a button to cancel after to done""",
+    "category" : "hr",
+    "description" : """
+This module add Date Start, SSN and children of employees
+---------------------------------------------------------""",
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : [
-        "stock",
-        "account_relation_move"
-        ],
-    "demo" : [],
-    "data" : [
-        "security/picking_security.xml",
-        "stock_workflow.xml",
-        "stock_view.xml",
-        ],
+    "depends" : ["hr"],
+    "data" : ["hr_children_view.xml",
+        'security/ir.model.access.csv',],
     "installable" : True,
     "active" : False,
 }

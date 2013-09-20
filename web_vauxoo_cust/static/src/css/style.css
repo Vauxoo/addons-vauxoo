@@ -14,3 +14,12 @@
 .openerp .oe_application a {
     color: #AB0000;
 }
+
+.openerp a.zocial.google {
+    border: 1px solid #222222;                                                                         
+    color: white;                                                                                      
+    margin: 0;                                                                                         
+    background-color: #b92020;                                                                         
+    text-shadow: none;                                                                                 
+    font-weight: normal;                                                                               
+} 
