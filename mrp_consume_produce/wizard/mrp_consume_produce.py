@@ -340,6 +340,21 @@ class mrp_consume(osv.TransientModel):
 class mrp_produce(osv.TransientModel):
     _name = 'mrp.produce'
 
+    def _get_produce_line_list(self, cr, uid, production_id, context=None):
+        """
+        @param production_id: manufacturing order id.
+        @return: a list of dictionaries values with the produce lines to
+        create.
+        """
+        context = context or {}
+        produce_line_list = list()
+        active_move_ids = self._get_active_move_ids(
+            cr, uid, production_id, context=context)
+        for move_id in active_move_ids:
+            produce_line_list += [self._get_produce_line_values(
+                cr, uid, move_id, context=context)]
+        return produce_line_list
+
     def _get_default_produce_line_ids(self, cr, uid, context=None):
         """
         Search the active stock moves from products to produce and then
@@ -365,13 +380,8 @@ class mrp_produce(osv.TransientModel):
         production_brw = production_obj.browse(
             cr, uid, production_id, context=context)
 
-        active_move_ids = self._get_active_move_ids(
+        produce_line_list = self._get_produce_line_list(
             cr, uid, production_id, context=context)
-
-        for move_id in active_move_ids:
-            produce_line_list += [self._get_produce_line_values(
-                cr, uid, move_id, context=context)]
-
         return produce_line_list
 
     _columns = {
