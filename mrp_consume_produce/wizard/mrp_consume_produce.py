@@ -364,25 +364,27 @@ class mrp_produce(osv.TransientModel):
         return values
 
     def default_get(self, cr, uid, fields, context=None):
+        #~ TODO: delete this method. only to print the information of the default. for control in the debuging fase.
         context = context or {}
         production_obj = self.pool.get('mrp.production')
         res = super(mrp_produce, self).default_get(
             cr, uid, fields, context=context)
-        production_ids = context.get('active_ids', [])
-        if not production_ids or (not context.get('active_model') == 'mrp.production') \
-                or len(production_ids) != 1:
-            return res
-        production_id = production_ids[0]
 
-        if 'produce_line_ids' in fields:
-            production_brw = production_obj.browse(
-                cr, uid, production_id, context=context)
-            moves = \
-                [self._get_produce_line_values(
-                    cr, uid, move_brw.id, context=context)
-                 for move_brw in production_brw.move_created_ids
-                 if move_brw.state not in ('done', 'cancel')]
-            res.update(produce_line_ids=moves)
+
+        import pprint
+        print '\n'*3
+        print '----'*20
+        print 'mrp_consume_produce > mrp_produce.default_get()'
+        print 'fields', fields
+        print 'context',
+        pprint.pprint(context)
+        print 'res',
+        pprint.pprint(res)
+        print '----'*20
+        print '\n'*3
+        #~ raise osv.except_osv('stop', 'here defautl')
+
+
         return res
 
     def action_produce(self, cr, uid, ids, context={}):
