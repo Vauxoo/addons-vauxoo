@@ -149,7 +149,9 @@ class mrp_consume(osv.TransientModel):
 
     def action_active_lot(self, cr, uid, ids, context=None):
         """
-        Active Work Order Lot
+        Get the work order lot in the consume wizard and update its state
+        to picking state.
+        @return: True
         """
         context = context or {}
         wol_obj = self.pool.get('mrp.workorder.lot')
