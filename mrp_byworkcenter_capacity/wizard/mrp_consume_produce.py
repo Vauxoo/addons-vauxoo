@@ -315,7 +315,7 @@ class mrp_produce(osv.TransientModel):
                       context=context)
         return res
 
-    def _get_consume_line_prodlot_id(self, cr, uid, product_id, context=None):
+    def _get_produce_line_prodlot_id(self, cr, uid, product_id, context=None):
         """
         Return the first production lot id found for the given product.
         @param product_id: product id.
@@ -339,7 +339,7 @@ class mrp_produce(osv.TransientModel):
         context = context or {}
         res = super(mrp_produce, self)._get_produce_line_values(
             cr, uid, move_id, context=context)
-        res.update({'prodlot_id': self._get_consume_line_prodlot_id(
+        res.update({'prodlot_id': self._get_produce_line_prodlot_id(
             cr, uid, res['product_id'], context=context)})
         return res
 
