@@ -57,8 +57,6 @@ class mrp_consume(osv.TransientModel):
                     _('This wizard only can be call from the manufacturing'
                       ' order form or the Work Orders by Active Lot menu.'))
 
-        #~ raise osv.except_osv ('stop', 'here')
-
         return res and res[0] or False
 
     def _get_default_mo_id(self, cr, uid, context=None):
