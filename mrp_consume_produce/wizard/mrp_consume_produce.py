@@ -68,7 +68,7 @@ class mrp_consume(osv.TransientModel):
         moves_dict = self._get_moves_grouped_by_product(
             cr, uid, active_move_ids, context=context)
         for move_ids in moves_dict.values():
-            consume_line_ids += [self._get_consume_line_dict(
+            consume_line_ids += [self._get_consume_line_values(
                 cr, uid, production_id, move_ids, context=context)]
         return consume_line_ids
 
@@ -221,12 +221,12 @@ class mrp_consume(osv.TransientModel):
                            if move_brw.state not in ('done', 'cancel')]
         return active_move_ids
 
-    def _get_consume_line_dict(self, cr, uid, production_id, move_ids,
-                               context=None):
+    def _get_consume_line_values(self, cr, uid, production_id, move_ids,
+                                 context=None):
         """
         @param production_id: the production id where the wizard was called.
         @param move_ids: list of stock move id.
-        @return: a dictionary of values for a consume lines.
+        @return: a dictionary of values to create a consume line.
         """
         context = context or {}
         product_id = self._get_consume_line_product_id(
