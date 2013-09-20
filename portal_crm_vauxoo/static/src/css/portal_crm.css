@@ -98,3 +98,18 @@
   padding: 0px;                                                                                     
   background: transparent;
 }
+
+.openerp .oe_form .bs3 .container {
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.openerp .oe_form .bs3 .container h1 {
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.openerp .oe_form .bs3 .container h1 span {
+  padding-left: 10px;
+  padding-right: 10px;
+}
