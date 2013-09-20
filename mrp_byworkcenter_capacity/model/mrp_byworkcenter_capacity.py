@@ -35,6 +35,34 @@ def rounding(f, r):
     return math.ceil(f / r) * r
 
 
+class stock_move(osv.Model):
+    _inherit = 'stock.move'
+
+    def write(self, cr, uid, ids, values, context=None):
+        """
+        Overwrite the write() method to update the values dictionary with the
+        prodlot_id when creating stock move through the confirmation of the
+        manufacturing order. 
+        """
+        #~ TODO: check the def _make_production_produce_line(self, cr, uid,
+        #~ production, context=None) in addons/mrp/mrp.py
+        context = context or {}
+        production_obj = self.pool.get('mrp.production')
+        #~ When confirming a manufacturing order a set of internal move to
+        #~ productd to produce are made. this moves need to have a prodlot id
+        #~ too. that corresponding to the one given in the production order.
+        #~ When move.write() have into the values 'production_id' it means that
+        #~ this movement its have been associated to an manufacturing order so
+        #~ there is how we go to add that value to the move line.
+        if values.get('production_id', False):
+            prodlot_id = production_obj.browse(
+                cr, uid, values['production_id'],
+                context=context).prodlot_id.id
+            values.update({'prodlot_id': prodlot_id})
+        return super(stock_move, self).write(
+            cr, uid, ids, values, context=context)
+
+
 class mrp_workcenter(osv.Model):
 
     _inherit = 'mrp.workcenter'
