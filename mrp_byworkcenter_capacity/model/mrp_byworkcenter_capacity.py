@@ -147,6 +147,52 @@ class mrp_production(osv.Model):
                    ' associated')),
     }
 
+    def write(self, cr, uid, ids, values, context=None, update=False):
+        """
+        Overwrite the write() method to check first if the serial number is
+        or is not a required field taking into account the manufacturing
+        order product configuration (Lots and Tracks Options).
+        """
+        context = context or {}
+        product_obj = self.pool.get('product.product')
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        fields_to_review = ['product_id', 'prodlot_id']
+        error_msg = str()
+
+        if isinstance(values, (dict,)):
+            for production_brw in self.browse(cr, uid, ids, context=context):
+                field_data = {}.fromkeys(fields_to_review)
+                for field in fields_to_review:
+                    field_data.update({field:
+                        values.get(field, 'undefined') == 'undefined' 
+                        and getattr(production_brw, field).id
+                        or values.get(field)})
+                product_brw = field_data['product_id'] and product_obj.browse(
+                    cr, uid, field_data['product_id'], context=context)
+                if (product_brw.track_production
+                    and not field_data['prodlot_id']):
+                    error_msg += _('You have Activated the Track Manufacturing'
+                                   ' Lots in the product of your manufacturing'
+                                   ' order so its required that you set a'
+                                   ' Serial number to manage internal moves'
+                                   ' for this product in the production'
+                                   ' process. Or, you can uncheck the Track'
+                                   ' Manufacturing Lost option at the'
+                                   ' Inventory tab in the Product Form.\n')
+                #~ TODO: guess what do the product_obj track_incoming and
+                #~ track_outgoing fields to add the exceptions necesarry to be
+                #~ manage here.
+        else:
+            error_msg += _('Programing Error. Cants process the write from'
+                           ' of manufacturing order from another model.')
+
+        if error_msg:
+            raise osv.except_osv(_('Invalid Procedure'), error_msg)
+
+        res = super(mrp_production, self).write(
+            cr, uid, ids, values, context=context)
+        return res
+                
     def action_compute(self, cr, uid, ids, properties=None, context=None):
         """
         Overwrite action_compute() method to delete regular work orders

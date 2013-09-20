@@ -44,7 +44,7 @@ mrp.production inherit
                 </xpath>
 
                 <xpath expr="//field[@name='product_id']" position="after">
-                    <field name="prodlot_id" required="1" domain="[('product_id', '=', product_id)]"/>
+                    <field name="prodlot_id" domain="[('product_id', '=', product_id)]"/>
                 </xpath>
 
             </field>
