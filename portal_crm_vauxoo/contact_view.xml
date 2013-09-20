@@ -35,8 +35,12 @@
                                     <field name= "captcha"
                                            widget="captcha"
                                            nolabel="1"/>
-                                    <button string="Submit" name="submit" type="object" 
-                                            class="oe_highlight"/>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-8 col-sm-offset-8 col-sm-8 col-md-7">
+                                            <button string="Submit" name="submit" type="object" 
+                                                    class="btn btn-danger btn-lg"/>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-4">
                                     <field name="company_ids" nolabel="1" widget="many2many_kanban" class="oe_portal_crm_office" colspan="2">
