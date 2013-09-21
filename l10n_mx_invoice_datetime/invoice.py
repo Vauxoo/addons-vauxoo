@@ -53,7 +53,7 @@ class account_payment_term(osv.Model):
 
 class account_invoice(osv.Model):
     _inherit = 'account.invoice'
-    _order = 'invoice_datetime asc'
+    #_order = 'invoice_datetime asc'
 
     def _get_date_invoice_tz(self, cr, uid, ids, field_names=None, arg=False,
         context={}):
