@@ -250,7 +250,10 @@ class invoice_facturae_html(report_sxw.rml_parse):
             company.id, context=context)
         if company.dinamic_text:
             try:
-                text = company.dinamic_text % eval("{" + company.dict_var + "}")
+                if company.dict_var:
+                    text = company.dinamic_text % eval("{" + company.dict_var + "}")
+                else:
+                    text = company.dinamic_text
             except:
                 return text
         return text

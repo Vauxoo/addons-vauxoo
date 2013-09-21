@@ -508,8 +508,9 @@ class ir_attachment(osv.Model):
     _inherit = 'ir.attachment'
 
     def unlink(self, cr, uid, ids, context=None):
-        attachments = self.pool.get('ir.attachment.facturae.mx').search(cr, uid, ['|', '|', (
-            'file_input', 'in', ids), ('file_xml_sign', 'in', ids), ('file_pdf', 'in', ids)])
+        attachments = self.pool.get('ir.attachment.facturae.mx').search(cr, SUPERUSER_ID, ['|',
+            '|', ( 'file_input', 'in', ids), ('file_xml_sign', 'in', ids), ('file_pdf', 'in',
+                ids)])
         if attachments:
             raise osv.except_osv(_('Warning!'), _(
                 'You can not remove an attachment of an invoice'))
