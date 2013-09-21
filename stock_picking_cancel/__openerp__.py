@@ -31,14 +31,16 @@
     "description" : """This module add a button to cancel after to done""",
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["stock","account_relation_move"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
+    "depends" : [
+        "stock",
+        "account_relation_move"
+        ],
+    "demo" : [],
+    "data" : [
         "security/picking_security.xml",
         "stock_workflow.xml",
         "stock_view.xml",
-    ],
+        ],
     "installable" : True,
     "active" : False,
 }
