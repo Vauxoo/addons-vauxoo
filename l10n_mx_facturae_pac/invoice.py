@@ -186,10 +186,9 @@ class account_invoice(osv.Model):
         cert_str = cert_str.replace(' ', '').replace('\n', '')
         nodeComprobante.setAttribute("certificado", cert_str)
         data_dict[comprobante]['certificado'] = cert_str
-
-        nodeComprobante.removeAttribute('anoAprobacion')
-        nodeComprobante.removeAttribute('noAprobacion')
-
+        if 'cfdi' in type_inv:
+            nodeComprobante.removeAttribute('anoAprobacion')
+            nodeComprobante.removeAttribute('noAprobacion')
         x = doc_xml.documentElement
         nodeReceptor = doc_xml.getElementsByTagName(receptor)[0]
         nodeConcepto = doc_xml.getElementsByTagName(concepto)[0]
