@@ -151,6 +151,17 @@ class account_invoice(osv.Model):
                 if date_invoice != values['date_invoice']:
                     raise osv.except_osv(_('Warning!'),
                             _('Invoice dates should be equal'))
+
+        if 'invoice_datetime' not in values  and 'date_invoice' not in values:
+            date_ts = tools.server_to_local_timestamp(fields.datetime.now(),
+                tools.DEFAULT_SERVER_DATETIME_FORMAT,
+                tools.DEFAULT_SERVER_DATETIME_FORMAT, context.get(
+                'tz_invoice_mx', 'America/Mexico_City'))
+            date_invoice = datetime.datetime.strptime(
+                date_ts, '%Y-%m-%d %H:%M:%S').date().strftime('%Y-%m-%d')
+            res['date_invoice'] = date_invoice
+            res['invoice_datetime'] = date_ts
+            return res
         return res
 
     def action_move_create(self, cr, uid, ids, *args):
