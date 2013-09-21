@@ -38,3 +38,86 @@
 .openerp .oe_portal_crm_contact .oe_portal_crm_office ul:last-child li:last-child {
     margin-bottom: 0;
 }
+
+/* Bootstrap */
+
+.openerp .oe_form .bs3.bs3-form-bg input[type="text"], .openerp .oe_form .bs3.bs3-form-bg input[type="password"], .openerp .oe_form .bs3.bs3-form-bg input[type="file"], .openerp .oe_form .bs3.bs3-form-bg select {
+    height: 38px;                                                                                         
+    width: 425px;
+    padding-top: auto;                                                                                     
+    padding-left: auto;
+    padding-right: auto;
+} 
+
+.openerp .oe_form .bs3.bs3-form-bg textarea {
+    width: 425px;
+    padding-top: auto;                                                                                     
+    padding-left: auto;
+    padding-right: auto;
+}
+
+.openerp .oe_form .bs3.bs3-form-bg input[type="text"].bs3-required {
+    background-color: #BFDDFF;
+}
+
+.openerp .oe_form .bs3.bs3-form-bg textarea {
+  min-height: 96px;                                                                                 
+}
+
+.openerp .oe_form .bs3.bs3-form-bg textarea:-moz-placeholder {
+  padding-left: 10px;                                                                    
+}
+
+.openerp .oe_form .bs3.bs3-form-bg textarea::-webkit-input-placeholder {
+  padding-left: 10px;                                                                    
+}
+
+.openerp .oe_form .bs3.bs3-form-bg textarea:-ms-input-placeholder {
+  padding-left: 10px;                                                                    
+}
+
+.bs3.bs3-form-bg .bgvauxoo {                                                                      
+  background: url(/portal_home/static/src/img/VAUXOOBigIcon.png), -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 2160, color-stop(0%, #ffffff), color-stop(100%, #cfcfcf));
+  background: url(/portal_home/static/src/img/VAUXOOBigIcon.png), -webkit-radial-gradient(#ffffff, #cfcfcf 2160px);
+  background: url(/portal_home/static/src/img/VAUXOOBigIcon.png), -moz-radial-gradient(#ffffff, #cfcfcf 2160px);
+  background: url(/portal_home/static/src/img/VAUXOOBigIcon.png), -o-radial-gradient(#ffffff, #cfcfcf 2160px);
+  background: url(/portal_home/static/src/img/VAUXOOBigIcon.png), radial-gradient(#ffffff, #cfcfcf 2160px);
+  background-repeat: no-repeat;                                                                        
+  background-right: 5%;                                                                                
+  background-position: 90% center;                                                                     
+  margin-bottom: 0px;                                                                                  
+  height: auto;
+}
+
+.openerp .bs3.bs3-form-bg .oe_kanban_view {                                                                          
+  background: transparent;                                                                                                                                                           
+  height: inherit;                                                                                  
+} 
+
+.openerp .oe_form .bs3.bs3-form-bg .oe_kanban_view .oe_kanban_column {
+  padding: 0px;                                                                                     
+  background: transparent;
+}
+
+.openerp .oe_form .bs3 .container {
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.openerp .oe_form .bs3 .container h1 {
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.openerp .oe_form .bs3 .container h1 span {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.openerp .bs3 .jumbotron.bgvauxoo i.icon-home {
+  padding-right: 10px;
+}
+
+.openerp .bs3 .jumbotron.bgvauxoo a.btn.btn-danger {
+  color: white;
+} 
