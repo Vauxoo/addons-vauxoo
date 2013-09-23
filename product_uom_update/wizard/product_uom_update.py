@@ -82,7 +82,7 @@ class product_uom_update(osv.TransientModel):
 
             if len(product_ids_validate) > 0:
                 string_aux1 = '\n'.join(product_ids_validate_name)
-                string_result += '''Products Changed:\n\n %s ''' % (
+                string_result += '''Products changed:\n\n %s ''' % (
                     string_aux1)
             if len(product_ids_unvalidate) > 0:
                 string_aux2 = '\n'.join(product_ids_unvalidate)
@@ -118,10 +118,10 @@ class product_uom_update(osv.TransientModel):
         'uom_id_from': fields.many2many('product.product',\
                 'product_produtc_uom_rel',
                 'product_id', 'uom_id',\
-                'Unit of Measure From',
-                help="Default Unit of Measure used for all stock operation."),
+                'products with unit of measure from',
+                help="Default unit of measure used for all stock operation."),
         'uom_id_to': fields.many2one('product.uom', 'Unit of Measure To',
-                help="Default Unit of Measure used for all stock operation."),
+                help="Default unit of measure used for all stock operation."),
         'result': fields.text('Result'),
 
     }

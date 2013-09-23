@@ -6,7 +6,7 @@
             <field name="name">base.product.uom.merge.wizard.result</field>
             <field name="model">base.product.merge.uom.wizard</field>
             <field name="arch" type="xml">
-                <form string="Product Uom Not Update " version="7.0">
+                <form string="Product uom not update " version="7.0">
                     <h4><center><field name="result" nolabel="1" readonly = "1"/></center></h4>
                     <newline/>
                     <footer>
@@ -24,7 +24,7 @@
             <field name="model">base.product.merge.uom.wizard</field>
             <field name="arch" type="xml">
                 <form string="Product uom update" version="7.0">
-                        <group string="Select the unit of measure to change">
+                        <group string="Select products to change the unit of measure">
                             <field name="uom_id_from" colspan="4" mode="tree">
                                <tree string="Products">
                                     <field name="name"/>
