@@ -208,7 +208,7 @@ class mrp_consume(osv.TransientModel):
         context = context or {}
         ir_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
-        module_name = 'mrp_byworkcenter_capacity'
+        module_name = 'mrp_workorder_lot'
         dummy, view_id = ir_obj.get_object_reference(
             cr, uid, module_name, 'mrp_workorder_lot_kanban_view')
         dummy, search_view_id = ir_obj.get_object_reference(

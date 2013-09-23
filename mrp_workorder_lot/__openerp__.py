@@ -24,14 +24,14 @@
 ###############################################################################
 
 {
-    "name": "MRP Work Center Capacity",
+    "name": "MRP Workorder Lot",
     "version": "1.0",
     "author": "Vauxoo C.A.",
     "website": "http://www.openerp.com.ve",
     "category": "MRP",
     "description": """
-MRP Work Center Capacity
-========================
+MRP Workorder Lot
+=================
 
 This module adds two features to the mrp module. First, create a new model
 named ``Scheduled Work Orders`` that represent the estimated work orders to be
@@ -85,15 +85,15 @@ Another pre-configure options:
 """,
     "depends": ["mrp", "mrp_operations", "mrp_consume_produce"],
     "data": [
-        'view/mrp_byworkcenter_capacity_view.xml',
+        'view/mrp_workorder_lot_view.xml',
         'view/res_config_view.xml',
         'view/res_company_view.xml',
         'wizard/mrp_consume_produce.xml',
-        'data/mrp_byworkcenter_capacity_data.xml',
+        'data/mrp_workorder_lot_data.xml',
         'security/ir.model.access.csv',
     ],
     "demo": [
-        'demo/mrp_byworkcenter_capacity_demo.xml',
+        'demo/mrp_workorder_lot_demo.xml',
     ],
     "test": [],
     "active": False,
