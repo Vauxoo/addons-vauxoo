@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="contact_form_view" model="ir.ui.view">
+            <field name="name">Contact form</field>
+            <field name="model">portal_crm.crm_contact_us</field>
+            <field name="arch" type="xml">
+                <form string="Contact form" version="7.0" class="bs3 bs3-form-bg bs3-footer">
+                <section class="bgvauxoo">
+                <div class="form-horizontal mt32">
+                    <div class="container"> 
+                        <h1><i class="icon-info-sign"></i><span>Contact Us</span></h1>
+                            <div class="row"> 
+                                <div class ="col-md-2">
+                                </div>
+                                <div class ="col-md-8">
+                                    <label for="partner_name" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="partner_name" widget="FieldCharBS3" string="Name" placeholder="Your name..." required="True" nolabel="1"/>
+                                    <label for="email_from" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="email_from" widget="FieldEmailBS3" placeholder="Your email..." required="True" nolabel="1"/>
+                                    <label for="phone" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="phone" widget="FieldCharBS3" placeholder="Your phone number..." nolabel="1"/>
+                                    <label for="name" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="name" widget="FieldCharBS3" placeholder="Subject..." nolabel="1"/>
+                                    <label for="country_id" class="col-md-3 col-sm-4 control-label"/>
+                                    <div class="form-group">
+                                    <div class="col-md-7 col-sm-8">
+                                        <field name="country_id" placeholder="Your country..." nolabel="1" required="True"/>
+                                    </div>
+                                    </div>
+                                    <label for="city" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="city" widget="FieldCharBS3" placeholder="Your city..." nolabel="1" required="True"/>
+                                    <label for="description" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="description" widget="FieldTextBS3" placeholder="Content..." nolabel="1"/>
+                                    <label for="captcha" class="col-md-3 col-sm-4 control-label" string=" "/>
+                                    <field name= "captcha"
+                                           widget="captcha"
+                                           nolabel="1"/>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-8 col-sm-offset-8 col-sm-8 col-md-7">
+                                            <button string="Submit" name="submit" type="object" 
+                                                    class="btn btn-danger btn-lg"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class ="col-md-2">
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                </section>
+                </form>
+            </field>
+        </record>
+
+        <!-- wizard thanks message (shows after submitting the form) -->
+        <record id="wizard_contact_form_inherit_thanks" model="ir.ui.view">
+            <field name="name">Wizard thanks message</field>
+            <field name="model">portal_crm.crm_contact_us</field>
+            <!-- give it a low priority to ensure this won't be the default view -->
+            <field name="priority">99</field>
+            <field name="arch" type="xml">
+                <form string="Thank you" version="7.0" class="bs3 bs3-form-bg bs3-footer">
+                <section class="jumbotron bgvauxoo">
+                <div class="form-horizontal mt32">
+                    <div class="container"> 
+                        <div class="row"> 
+                                <div class ="col-md-2">
+                                </div>
+                                <div class ="col-md-8">
+                    <!--
+                        make sure there is at least one field in the view,
+                        otherwise the orm will try to select all the model's
+                        records and this will result in a permission denied error
+                    -->
+                                    <field name="partner_name" invisible="1"/>
+                                    <label string="Thank you for your interest, we'll respond to your request shortly."/>
+                                    <footer>
+                                        <a href="/" class="btn btn-danger btn-lg"><i class="icon-home"></i><span>Go to Home</span></a>
+                                    </footer>
+                                </div>
+                                <div class ="col-md-2">
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                </section>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_contact_us" model="ir.actions.act_window">
+            <field name="name">Contact Us</field>
+            <field name="res_model">portal_crm.crm_contact_us</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="contact_form_view"/>
+            <field name="target">inline</field>
+        </record>
+
+        <!-- attach it to the portal menu -->
+        <menuitem name="Contact Us" id="portal_company_contact"
+                  action="action_contact_us" 
+                  groups="portal.group_anonymous"
+                  sequence="100000"/>
+
+        <menuitem name="Contact" id="portal_crm.portal_company_contact"
+            parent="portal.portal_company" action="action_contact_us" 
+            groups="base.group_system"
+            sequence="40"/>
+
+        <menuitem sequence="1000"  name="Our Team" id="our_team_menu_11" 
+        action="portal_hr_employees.action_team"/>
+
+
+    </data>
+</openerp>

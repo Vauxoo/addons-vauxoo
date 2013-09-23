@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <!-- mail.message tree: short view !-->
+        <record model="ir.ui.view" id="view_admin_message_tree1">
+            <field name="name">mail.admin.message.tree</field>
+            <field name="model">mail.message</field>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <tree string="Messages">
+                    <field name="id"/>
+                    <field name="date"/>
+                    <field name="type"/>
+                    <field name="subtype_id"/>
+                    <field name="subject"/>
+                    <field name="author_id"/>
+                    <field name="model"/>
+                    <field name="res_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- mail.message form: short view !-->
+        <record model="ir.ui.view" id="view_admin_message_form">
+            <field name="name">mail.admin.message.am.form</field>
+            <field name="model">mail.message</field>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <form string="Message" version="7.0" class="bs3 admin_message">
+                <section class="container page-header">
+                    <h1 class="text-center">
+                        <field name="subject" class="oe_inline"/>
+                    </h1>
+                    </section>
+                    <section class="container" attrs="{'invisible':[('parent_id', '=', False)]}">
+                        <span>
+                        </span>
+                    </section>
+                    <section class="container">
+                        <field name="body"/>
+                    </section>
+                    <section class="general_information">
+                    <div class="container">
+                    <small>
+                        <span class="text-right">
+                            <label for="subtype_id" class="oe_inline" string="It is a "/>
+                            <field class="oe_inline" name="subtype_id"/>
+                            <label for="parent_id" class="oe_inline"
+                                string=" in response to this comment: " 
+                                attrs="{'invisible':[('parent_id', '=', False)]}"/>
+                            <field class="oe_inline" name="parent_id"
+                                attrs="{'invisible':[('parent_id', '=', False)]}"/>
+                            <label for="subtype_id" class="oe_inline" string=" Published by "/> 
+                            <field class="oe_inline" name="author_id"/>
+                            <label for="date" class="oe_inline" string=" at "/> 
+                            <field name="date" class="oe_inline" readonly="True"/>
+                            <label for="id" class="oe_inline" string=" With the Id "/> 
+                            <field name="id" class="oe_inline"/>
+                        </span>
+                    </small>
+                    </div>
+                    </section>
+                    <section class="general_information">
+                    <div>
+                        <span class="text-right">
+                            <button string="Publish on" type="object" name="button_publish" states="new,unpublish" class="oe_highlight"/>
+                            <field name="mail_group_id" states="new,unpublish" class="oe_inline"/>
+                            <button string="unPublish" type="object" name="button_unpublish" states="publish"/>
+                        </span>
+                        <span class="text-left">
+                        <field name="state" widget="statusbar" statusbar_visible="new,publish,unpublish" statusbar_colors='{"new":"blue"}' readonly="1"/>
+                        </span>
+                    </div>
+                    </section>
+                    <section class="oe_edit_only page-footer" groups="base.group_no_one">
+                    <separator string="Technical Information"/>
+                        <div>
+                            <label for="email_from" class="oe_inline"/>
+                            <field name="email_from" class="oe_inline" readonly="True"/>
+                            <label for="type" class="oe_inline"/>
+                            <field name="type" class="oe_inline"  readonly="True"/>
+                            <label for="res_id" class="oe_inline"/>
+                            <field name="res_id" readonly="True" class="oe_inline" />
+                            <label for="model" class="oe_inline"/>
+                            <field name="model" readonly="True" class="oe_inline" />
+                            <label for="partner_ids" class="oe_inline"/>
+                            <field name="partner_ids" readonly="True" widget="many2many_tags" class="oe_inline" />
+                            <label for="notified_partner_ids" class="oe_inline"/>
+                            <field name="notified_partner_ids" readonly="True" widget="many2many_tags" class="oe_inline" />
+                        </div>
+                    </section>
+                </form>
+            </field>
+        </record>
+
+        <!-- mail.message search: wall view !-->
+        <record model="ir.ui.view" id="view_admin_message_search">
+            <field name="name">mail.admin.message.search</field>
+            <field name="model">mail.message</field>
+            <field name="priority">25</field>
+            <field name="arch" type="xml">
+                <search string="Messages Search">
+                    <field name="subject" string="Content" filter_domain="['|', ('subject', 'ilike', self), ('body', 'ilike', self)]" />
+                    <field name="id"/>
+                    <field name="type"/>
+                    <field name="author_id"/>
+                    <field name="partner_ids"/>
+                    <filter string="To Read"
+                            name="message_unread" help="Show messages to read"
+                            domain="[('to_read', '=', True)]"/>
+                    <filter string="Public Availables"
+                            name="message_anonymous" help="Show Published Messages"
+                            domain="[('author_id', 'ilike', 'Anonymous')]"/>
+                    <filter string="Read"
+                            name="message_read" help="Show already read messages"
+                            domain="[('to_read', '=', False)]"/>
+                    <filter string="Has attachments"
+                            name="attachments"
+                            domain="[('attachment_ids', '!=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_view_admin_mail_message" model="ir.actions.act_window">
+            <field name="name">Messages</field>
+            <field name="res_model">mail.message</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <!-- 
+             Explicitally this view is NOT to modify emails and notification, this 2 types of
+             content must be edited/modified by Chuck Norris Only
+             -->
+            <field name="domain" eval="[('type', '=', 'comment')]"/>
+            <field name="search_view_id" ref="view_admin_message_search"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="view_wired_tree">
+            <field name="act_window_id" ref='action_view_admin_mail_message'/>
+            <field name="sequence">10</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_admin_message_tree1"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="view_wired_form">
+            <field name="act_window_id" ref='action_view_admin_mail_message'/>
+            <field name="sequence">20</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref='view_admin_message_form'/>
+        </record>
+        
+        <menuitem name="Admin Messages" id="menu_admin_mail_message" parent="mail.mail_feeds_main" groups="group_admin_messages"/>
+        
+        <menuitem name="Admin Messages" id="menu_admin_mail_message_sub" parent="menu_admin_mail_message" action="action_view_admin_mail_message" groups="group_admin_messages"/>
+
+    </data>
+</openerp>

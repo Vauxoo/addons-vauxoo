@@ -25,7 +25,7 @@
 {
     "name" : "Wizard Project Issue Report",
     "version" : "1.0",
-    "author" : "Vauxoo C.A.",
+    "author" : "Vauxoo",
     "website" : "http://www.vauxoo.com",
     "category" : "Generic Modules",
     "depends" : ["base","project_issue"],

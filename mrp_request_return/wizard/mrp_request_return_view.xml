@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
 <!--
@@ -10,13 +9,14 @@
             <field name="arch" type="xml">
                 <form string="Products" version="7.0">
             <newline/>
-            <field name="re_line_ids" mode="tree" nolabel="1" colspan="4" width="640" height="240" context="{'ctx':context}">
-                <tree string="Products" editable="bottom">
+            <field name="re_line_ids" mode="tree" nolabel="1" colspan="4" width="640" height="240"
+                context="{'act_ids':context.get('active_ids', [])}">
+                <tree string="Products" editable="bottom" create="false">
                     <field name="product_id" on_change="on_change_product_uom(product_id)"/>
                     <field name="product_qty"/>
                     <field name="product_uom"/>
                 </tree>
-                <form string="Products" version="7.0">
+                <form string="Products" version="7.0" create="false">
                     <field name="product_id"/>
                     <field name="product_qty"/>
                     <field name="product_uom"/>

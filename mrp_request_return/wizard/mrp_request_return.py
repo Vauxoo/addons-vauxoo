@@ -133,7 +133,7 @@ class mrp_request_return_line(osv.TransientModel):
             context = {}
         res = super(mrp_request_return_line, self).default_get(
             cr, uid, fields, context=context)
-        mrp_ids = context.get('ctx', {}).get('active_ids', [])
+        mrp_ids = context.get('act_ids', [])
         if not mrp_ids or len(mrp_ids) != 1:
             return res
         mrp_id, = mrp_ids

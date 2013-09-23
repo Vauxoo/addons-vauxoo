@@ -733,7 +733,22 @@ class ifrs_lines(osv.osv):
                 res = max([line['sequence'] for line in self.read(cr,
                     uid, ifrs_lines_ids, ['sequence'])])
         return res + 10
-    
+
+    def onchange_type_without(self, cr, uid, ids, type, operator, context=None):
+        res = {}
+        if type == 'total' and operator == 'without':
+            res = {'value' : {'operand_ids' : []}}
+        return res
+
+    def write(self, cr, uid, ids, vals, context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        res = super(ifrs_lines, self).write(cr, uid, ids, vals)
+        for ifrs_line in self.pool.get('ifrs.lines').browse(cr, uid, ids):
+            if ifrs_line.type == 'total' and ifrs_line.operator == 'without':
+                vals['operand_ids'] = [(6,0,[])]
+                super(ifrs_lines, self).write(cr, uid, ifrs_line.id, vals)
+        return res
+
     _columns = {
         'help': fields.related('ifrs_id','help', string='Show Help',type='boolean',help='Allows you to show the help in the form'),
         # Really!!! A repeated field with same functionality! This was done due
