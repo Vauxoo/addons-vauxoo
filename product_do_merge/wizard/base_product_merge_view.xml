@@ -24,7 +24,7 @@
             <field name='arch' type='xml'>
                 <form string='Automatic Merge Wizard' version='7.0'>
                     <header>
-                        <button name='next_cb' string='Skip these contacts'
+                        <button name='next_cb' string='Skip these products'
                             type='object'  class='oe_link'
                             attrs="{'invisible': [('state', '!=', 'selection')]}" />
                         <button name='start_process_cb'
@@ -34,9 +34,9 @@
                         <button name='merge_cb'
                             string='Merge Automatically'
                             type='object' class='oe_highlight'
-                            confirm="Are you sure to execute the automatic merge of your contacts ?"
+                            confirm="Are you sure to execute the automatic merge of your products?"
                             attrs="{'invisible': ['|',('state', '!=', 'option'),('product_to','=',False)]}" />
-                        <span class="or_cancel" attrs="{'invisible': [('state', '=', 'finished')]} ">or
+                        <span class="or_cancel" attrs="{'invisible': [('state', '=', 'finished')]}" >
                             <button name="close_cb" special="nosave" string="Cancel" type="object" class="oe_link oe_inline"/>
                         </span>
                         <span class="or_cancel" attrs="{'invisible': [('state', '!=', 'finished')]} ">
@@ -77,10 +77,10 @@
                                 attrs="{'invisible': [('state', 'in', ('option', 'finished'))]}"/>
                             <group attrs="{'invisible': [('state', 'in', ('option', 'finished'))]}" col="1">
                                 <p class="oe_grey">
-                                The selected contacts will be merged together. All
-                                documents linking to one of these contacts will be
-                                redirected to the aggregated contact. You can remove
-                                contacts from this list to avoid merging them.
+                                The selected products will be merged together. All
+                                documents linking to one of these products will be
+                                redirected to the aggregated product. You can remove
+                                products from this list to avoid merging them.
                                 </p>
                                 <field name="product_to" domain="[('id', 'in', product_ids and product_ids[0] and product_ids[0][2] or False)]" attrs="{'required': [('state', '=', 'selection')]}"/>
                                 <field name="product_ids" nolabel="1">
@@ -110,12 +110,12 @@
             <field name='arch' type='xml'>
                 <form string='Automatic Merge Wizard' version='7.0'>
                     <header>
-                        <button name='next_cb' string='Skip these contacts'
+                        <button name='next_cb' string='Skip these products'
                             type='object'  class='oe_link' />
                         <button name='merge_cb'
                             string='Merge Automatically'
                             type='object' class='oe_highlight'
-                            confirm="Are you sure to execute the automatic merge of your contacts ?" />
+                            confirm="Are you sure to execute the automatic merge of your products?" />
                         <span class="or_cancel" attrs="{'invisible': [('state', '=', 'finished')]} ">or
                             <button name="close_cb" special="nosave" string="Cancel" type="object" class="oe_link oe_inline"/>
                         </span>
@@ -157,10 +157,10 @@
                                 attrs="{'invisible': [('state', 'in', ('option', 'finished'))]}"/>
                             <group attrs="{'invisible': [('state', 'in', ('option', 'finished'))]}" col="1">
                                 <p class="oe_grey">
-                                The selected contacts will be merged together. All
-                                documents linking to one of these contacts will be
-                                redirected to the aggregated contact. You can remove
-                                contacts from this list to avoid merging them.
+                                The selected products will be merged together. All
+                                documents linking to one of these products will be
+                                redirected to the aggregated product. You can remove
+                                products from this list to avoid merging them.
                                 </p>
                                 <field name="product_to" domain="[('id', 'in', product_ids and product_ids[0] and product_ids[0][2] or False)]" attrs="{'required': [('state', '=', 'selection')]}"/>
                                 <field name="product_ids" nolabel="1">
