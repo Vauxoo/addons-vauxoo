@@ -7,7 +7,7 @@
 		  <field name="name">project.image</field>
 		  <field name="arch" type="xml">
 			<xpath expr='//field[@name="name"]' position="before">
-				<field name="logo" widget="image"/>
+				<field name="logo" widget="image" class="oe_left oe_avatar"/>
             </xpath>
             	
 		</field>
