@@ -32,7 +32,9 @@
     'description': '''
     ''',
     'depends': ['base', 'portal_project'],
-    'data': [],
+    'data': [
+        'view/project_view.xml',
+        ],
     'demo': [],
     'test': [],
     'active': False,
