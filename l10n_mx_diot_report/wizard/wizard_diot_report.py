@@ -139,19 +139,26 @@ class wizard_account_diot_mx(osv.osv_memory):
                 continue
             if line.date >= period.date_start and line.date <= period.date_stop:
                 amount_0 = amount_16 = amount_exe = amount_11 = amount_ret = 0
-                if line.tax_id_secondary.tax_category_id.name == 'IVA' and\
-                    line.tax_id_secondary.amount == 0.16:
+                category = line.tax_id_secondary.tax_category_id.name or False
+                amount_base = line.tax_id_secondary.amount or 0
+                line_diot = False
+                if (category == 'IVA' and amount_base in [0.16, 0.11, 0]) or\
+                    (category == 'IVA-EXENTO' and amount_base == 0) or category == 'IVA-RET':
+                    line_diot = True
+                if category == 'IVA' and amount_base == 0.16 or\
+                    line.tax_id_secondary.tax_diot == 'tax_16' and line_diot == False:
                     amount_16 = line.amount_base or 0
-                if line.tax_id_secondary.tax_category_id.name == 'IVA' and\
-                    line.tax_id_secondary.amount == 0.11:
+                if category == 'IVA' and amount_base == 0.11 or\
+                    line.tax_id_secondary.tax_diot == 'tax_11' and line_diot == False:
                     amount_11 = line.amount_base or 0
-                if line.tax_id_secondary.tax_category_id.name == 'IVA' and\
-                    line.tax_id_secondary.amount == 0:
+                if category == 'IVA' and amount_base == 0 or\
+                    line.tax_id_secondary.tax_diot == 'tax_0' and line_diot == False:
                     amount_0 = line.amount_base or 0
-                if line.tax_id_secondary.tax_category_id.name == 'IVA-EXENTO'\
-                    and line.tax_id_secondary.amount == 0:
+                if category == 'IVA-EXENTO' and amount_base == 0 or\
+                    line.tax_id_secondary.tax_diot == 'tax_exe' and line_diot == False:
                     amount_exe = line.amount_base or 0
-                if line.tax_id_secondary.tax_category_id.name == 'IVA-RET':
+                if category == 'IVA-RET' or line.tax_id_secondary.tax_diot == 'tax_ret' and\
+                    line_diot == False:
                     amount_ret = line.credit or 0
                 if amount_0 + amount_16 + amount_exe + amount_11 + amount_ret == 0:
                     moves_amount_0.append(line.id)
