@@ -52,7 +52,7 @@ class mrp_consume(osv.TransientModel):
             elif active_model == 'mrp.workorder.lot':
                 res = [active_id]
             else:
-                raise osv.except_osv (
+                raise osv.except_osv(
                     _('Error!!'),
                     _('This wizard only can be call from the manufacturing'
                       ' order form or the Work Orders by Active Lot menu.'))
@@ -75,7 +75,7 @@ class mrp_consume(osv.TransientModel):
                 res = wol_obj.browse(
                     cr, uid, active_id, context=context).production_id.id
             else:
-                raise osv.except_osv (
+                raise osv.except_osv(
                     _('Error!!'),
                     _('This wizard only can be call from the manufacturing'
                       ' order form or the Work Orders by Active Lot menu.'))
@@ -125,7 +125,8 @@ class mrp_consume(osv.TransientModel):
     def _get_consume_line_list_with_wol_percent(self, cr, uid, production_id,
                                                 wo_lot_id, context=None):
         """
-        Get a list of consume lines to create with a modification of the product qty with work order lot related percentage.
+        Get a list of consume lines to create with a modification of the
+        product qty with work order lot related percentage.
         @param production_id: manufacturing order id.
         @param wo_lot_id: work order lot id.
         @return: a list of consume lines to create.
@@ -143,8 +144,8 @@ class mrp_consume(osv.TransientModel):
              for product_line in production_brw.product_lines]
         ))
         for consume_line in consume_line_list:
-            consume_line.update({'quantity':
-                sheduled_qty[consume_line['product_id']]
+            consume_line.update({
+                'quantity': sheduled_qty[consume_line['product_id']]
                 * wol_brw.percentage/100.0})
         return consume_line_list
 
@@ -218,9 +219,8 @@ class mrp_consume(osv.TransientModel):
 
         action_help = act_obj.browse(
             cr, uid, action_window_id, context=context).help
-                               
-        return (view_id, search_view_id, action_help)
 
+        return (view_id, search_view_id, action_help)
 
 
 class mrp_produce(osv.TransientModel):
@@ -242,7 +242,7 @@ class mrp_produce(osv.TransientModel):
                 res = wol_obj.browse(
                     cr, uid, active_id, context=context).production_id.id
             else:
-                raise osv.except_osv (
+                raise osv.except_osv(
                     _('Error!!'),
                     _('This wizard only can be call from the manufacturing'
                       ' order form or the Work Orders by Active Lot menu.'))
@@ -268,13 +268,13 @@ class mrp_produce(osv.TransientModel):
             elif active_model == 'mrp.workorder.lot':
                 res = [active_id]
             else:
-                raise osv.except_osv (
+                raise osv.except_osv(
                     _('Error!!'),
                     _('This wizard only can be call from the manufacturing'
                       ' order form or the Work Orders by Active Lot menu.'))
 
             if not res:
-                raise osv.except_osv (
+                raise osv.except_osv(
                     _('Warning!!'),
                     _('You can Produce because you have not Ready to Finish'
                       ' Work Order Lots.'))
@@ -339,7 +339,7 @@ class mrp_produce(osv.TransientModel):
         prodlot_ids = \
             prodlot_obj.search(
                 cr, uid, [('product_id', '=', product_id)], context=context) \
-                or False
+            or False
         return prodlot_ids and prodlot_ids[0] or False
 
     def _get_produce_line_values(self, cr, uid, move_id, context=None):
@@ -353,7 +353,6 @@ class mrp_produce(osv.TransientModel):
         res.update({'prodlot_id': self._get_produce_line_prodlot_id(
             cr, uid, res['product_id'], context=context)})
         return res
-
 
 
 class mrp_produce_line(osv.TransientModel):

@@ -42,7 +42,7 @@ class stock_move(osv.Model):
         """
         Overwrite the write() method to update the values dictionary with the
         prodlot_id when creating stock move through the confirmation of the
-        manufacturing order. 
+        manufacturing order.
         """
         #~ TODO: check the def _make_production_produce_line(self, cr, uid,
         #~ production, context=None) in addons/mrp/mrp.py
@@ -191,14 +191,15 @@ class mrp_production(osv.Model):
             for production_brw in self.browse(cr, uid, ids, context=context):
                 field_data = {}.fromkeys(fields_to_review)
                 for field in fields_to_review:
-                    field_data.update({field:
-                        values.get(field, 'undefined') == 'undefined' 
+                    field_data.update({
+                        field:
+                        values.get(field, 'undefined') == 'undefined'
                         and getattr(production_brw, field).id
                         or values.get(field)})
                 product_brw = field_data['product_id'] and product_obj.browse(
                     cr, uid, field_data['product_id'], context=context)
                 if (product_brw.track_production
-                    and not field_data['prodlot_id']):
+                        and not field_data['prodlot_id']):
                     error_msg += _('You have Activated the Track Manufacturing'
                                    ' Lots in the product of your manufacturing'
                                    ' order so its required that you set a'
@@ -220,7 +221,7 @@ class mrp_production(osv.Model):
         res = super(mrp_production, self).write(
             cr, uid, ids, values, context=context)
         return res
-                
+
     def action_compute(self, cr, uid, ids, properties=None, context=None):
         """
         Overwrite action_compute() method to delete regular work orders
@@ -373,7 +374,7 @@ class mrp_production(osv.Model):
         for wc_id in wc_dict:
             for op_id in wc_dict[wc_id]['operations']:
                 for (product_id, product_qty) in \
-                wc_ope_product_qty[op_id].iteritems():
+                        wc_ope_product_qty[op_id].iteritems():
                     #~ print (wc_id, op_id, product_id,
                            #~ wc_dict[wc_id]['capacity'][product_id],
                            #~ product_qty)
@@ -517,8 +518,8 @@ class mrp_production(osv.Model):
     #~ TODO: This calculation needs to be check. I think that is retorning a
     #~ incorrect value
     def get_wo_hour(self, cr, uid, op_hours, op_cycle, wc_capacity,
-                     wc_time_start=0.0, wc_time_stop=0.0, wc_time_cycle=0.0,
-                     wc_time_efficiency=1.0, context=None):
+                    wc_time_start=0.0, wc_time_stop=0.0, wc_time_cycle=0.0,
+                    wc_time_efficiency=1.0, context=None):
         """
         @param op_hours: Operation number of hours
         @param op_cycle: Operation number of cycle repetition
@@ -590,14 +591,16 @@ class mrp_production(osv.Model):
         res = {}.fromkeys(ids)
         for production in self.browse(cr, uid, ids, context=context):
             wol_id = wol_obj.search(
-                cr, uid, [('production_id', '=', production.id),
-                ('number', '=', '00001')], context=context)
+                cr, uid,
+                [('production_id', '=', production.id),
+                 ('number', '=', '00001')], context=context)
             self.check_first_wol_validity(cr, uid, wol_id, context=context)
             wol_id = wol_id[0]
             res.update({production.id: wol_id})
         return len(res.keys()) > 1 and res or res.values()[0]
 
-    def create_orphan_wol(self, cr, uid, ids, fwol_id, wo_values, context=None):
+    def create_orphan_wol(self, cr, uid, ids, fwol_id, wo_values,
+                          context=None):
         """
         This method create a new work order lot that is a duplicate one
         from the first work order lot. This method is used to create
@@ -640,7 +643,7 @@ class mrp_production(osv.Model):
         """
         This method create a list of dictonaries that hold the values to create
         in new work orders that are a duplicate copy of the work orders that
-        belongs to the first work order lot for the production order.            
+        belongs to the first work order lot for the production order.
 
         Note: This method only can recieve one id. for a list of production ids
         please do a map() function.
@@ -653,8 +656,8 @@ class mrp_production(osv.Model):
         if not isinstance(ids, (int, long)):
             raise osv.except_osv(
                 _('Programming Error'),
-                _('You are trying to use the get_dict_duplicate_wo() method for'
-                  ' more than one production order. This fuction only can'
+                _('You are trying to use the get_dict_duplicate_wo() method'
+                  ' for more than one production order. This fuction only can'
                   ' process one production order at time so do a map() if you'
                   ' needed for a list of production orders. Thank you.'))
         wo_fields_to_cp = ['cycle', 'hour', 'product', 'production_id',
@@ -695,15 +698,16 @@ class mrp_production(osv.Model):
             #~ get first work order lot id and its belongs work orders ids.
             fwol_id = self.get_first_work_order(
                 cr, uid, production.id, context=context)
-            fwo_ids = [wo_brw.id
-                       for wo_brw in wol_obj.browse(
-                            cr, uid, fwol_id, context=context).wo_ids]
+            fwo_ids = \
+                [wo_brw.id for wo_brw in wol_obj.browse(
+                    cr, uid, fwol_id, context=context).wo_ids]
             #~ create new work order lot
             wo_values = self.get_dict_duplicate_wo(
                 cr, uid, production.id, fwo_ids, context=context)
             new_wol_id = self.create_orphan_wol(
                 cr, uid, production.id, fwol_id, wo_values, context=context)
         return True
+
 
 class mrp_workorder_stage(osv.Model):
 
@@ -713,7 +717,7 @@ class mrp_workorder_stage(osv.Model):
     _order = 'sequence'
 
     """
-    Manage the change of states of the work orders in kaban views. 
+    Manage the change of states of the work orders in kaban views.
     """
 
     def _get_wo_state(self, cr, uid, context=None):
@@ -780,7 +784,7 @@ class mrp_production_workcenter_line(osv.Model):
         res = {}.fromkeys(ids)
         wol_obj = self.pool.get('mrp.workorder.lot')
         open_wol_ids = wol_obj.search(
-            cr, uid, [('state', 'in', ['open','pending'])], context=context)
+            cr, uid, [('state', 'in', ['open', 'pending'])], context=context)
         for wo_brw in self.browse(cr, uid, ids, context=context):
             res[wo_brw.id] = \
                 (wo_brw.wo_lot_id.id in open_wol_ids) and True or False
@@ -801,7 +805,8 @@ class mrp_production_workcenter_line(osv.Model):
     _columns = {
         'wo_lot_id': fields.many2one('mrp.workorder.lot',
                                      _('Work Order Lot')),
-        'stage_id': fields.many2one('mrp.workorder.stage',
+        'stage_id': fields.many2one(
+            'mrp.workorder.stage',
             string=_('Stage'),
             required=True,
             track_visibility='onchange',
@@ -816,7 +821,7 @@ class mrp_production_workcenter_line(osv.Model):
             },
             string=_('Status by Lot'),
             help=_('If a Work Order Lot is active, then the Work Order is take'
-                  ' like active to')),
+                   ' like active to')),
     }
 
     _defaults = {
@@ -826,7 +831,7 @@ class mrp_production_workcenter_line(osv.Model):
     def _group_by_full_state(self, cr, uid, ids, domain, read_group_order=None,
                              access_rights_uid=None, context=None):
         """
-        Return a tuple of 
+        Return a tuple of
         """
         context = context or {}
         wos_obj = self.pool.get('mrp.workorder.stage')
@@ -855,7 +860,7 @@ class mrp_production_workcenter_line(osv.Model):
         for wo_brw in self.browse(cr, uid, ids, context=context):
             # Check if Work Orders are new (Without a wol or with a draft wol)
             if ((wo_brw.wo_lot_id and wo_brw.wo_lot_id.state == 'draft')
-                or not wo_brw.wo_lot_id):
+                    or not wo_brw.wo_lot_id):
                 wo_ids += [wo_brw.id]
             else:
                 if isinstance(values, dict):
@@ -888,12 +893,13 @@ class mrp_production_workcenter_line(osv.Model):
                         troble_wo[trb]['state'],
                         troble_wo[trb]['lot_name'],
                         troble_wo[trb]['lot_state'])
-                     for trb in troble_wo])
-                ))
+                     for trb in troble_wo
+                ])))
 
         #~ manage changes in the kanban view
         if values.get('stage_id', False):
-            wos_brw = wos_obj.browse(cr, uid, values.get('stage_id'), context=context)
+            wos_brw = wos_obj.browse(cr, uid, values.get('stage_id'),
+                                     context=context)
             values.update({'state': wos_brw.state})
         if values.get('state', False):
             values.update({'stage_id': wos_obj.search(
@@ -965,7 +971,7 @@ class mrp_workorder_lot(osv.Model):
         context = context or {}
         wol_brw = self.browse(cr, uid, id, context=context)
         if ((wol_brw.production_id and wol_brw.production_id.state not in
-             ['in_production','draft']) or not wol_brw.production_id):
+             ['in_production', 'draft']) or not wol_brw.production_id):
             raise osv.except_osv(
                 _('Error'),
                 _('Trying to set the state of a Work Order Lot (WOL) that have'
@@ -1010,8 +1016,8 @@ class mrp_workorder_lot(osv.Model):
                        ('done', 'Done'),
                        ('cancel', 'Cancel')],
             required=True,
-            store={'mrp.production.workcenter.line': (
-               _get_wol_id_to_update, ['state'], 10)},
+            store={'mrp.production.workcenter.line':
+                   (_get_wol_id_to_update, ['state'], 10)},
             string=_('State'),
             help=_('Indicate the state of the Lot.')),
     }

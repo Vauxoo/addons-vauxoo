@@ -48,9 +48,9 @@ the manufacturing order routing (the basic process) it create so many
 work orders needed to the production capacity in the workcenters. There is two
 criterias for the workcenters capacitys:
 
-- **Avoid Production Bottleneck:** Will create the batch work orders taking 
+- **Avoid Production Bottleneck:** Will create the batch work orders taking
   into account the minium workcenter capacity.
-- **Maximize Production Cost:** For every workcenter will create a batch of 
+- **Maximize Production Cost:** For every workcenter will create a batch of
   works orders that always explotes the product capacity of the workcenter.
 
 This criteria needs to be set, by default it use the
@@ -71,7 +71,7 @@ of a big capacity manufacturing order is process at once.
 
 Also it's needed active some technical settings. Go to
 ``Settings > Users > Users > (Select User) > Access Rights (Tab) >
-Technical Settings`` and select the ``Manage Routings`` and 
+Technical Settings`` and select the ``Manage Routings`` and
 ``Manage Multiple Units of Measure`` checkboxs.
 
 Another pre-configure options:

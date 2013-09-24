@@ -28,6 +28,7 @@ from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 from openerp import tools
 
+
 class mrp_config_settings(osv.osv_memory):
     _inherit = 'mrp.config.settings'
 
@@ -42,13 +43,13 @@ class mrp_config_settings(osv.osv_memory):
 
     def _get_current_value_batch_type(self, cr, uid, context=None):
         """
-        @return the batch_type field value for the current company. 
+        @return the batch_type field value for the current company.
         """
         context = context or {}
         ru_obj = self.pool.get('res.users')
         return ru_obj.browse(
             cr, uid, uid, context=context).company_id.batch_type
-        
+
     _columns = {
         'batch_type': fields.selection(
             _get_batch_modes,
@@ -69,7 +70,7 @@ class mrp_config_settings(osv.osv_memory):
     def set_batch_type(self, cr, uid, ids, context=None):
         """
         Set the production batch process type for the current company.
-        @return True 
+        @return True
         """
         context = context or {}
         rc_obj = self.pool.get('res.company')
