@@ -61,6 +61,8 @@
                     </div>
                     </section>
                     <section class="general_information">
+                        <!-- Comment this view part until the algorithm is mature enought. -->
+                        <!--    
                     <div>
                         <span class="text-right">
                             <button string="Publish on" type="object" name="button_publish" states="new,unpublish" class="oe_highlight"/>
@@ -71,6 +73,7 @@
                         <field name="state" widget="statusbar" statusbar_visible="new,publish,unpublish" statusbar_colors='{"new":"blue"}' readonly="1"/>
                         </span>
                     </div>
+                        -->
                     </section>
                     <section class="oe_edit_only page-footer" groups="base.group_no_one">
                     <separator string="Technical Information"/>
