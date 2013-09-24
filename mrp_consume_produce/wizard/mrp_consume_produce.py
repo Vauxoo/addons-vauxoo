@@ -31,9 +31,83 @@ from openerp.tools.translate import _
 
 class mrp_consume(osv.TransientModel):
     _name = 'mrp.consume'
+
+    def _get_moves_grouped_by_product(self, cr, uid, move_ids,
+                                      context=None):
+        """
+        Return a dictionary with a list of the moves corresponding by
+        product {product: [move_ids]}.
+        @param move_ids: list of move ids.
+        """
+        context = context or {}
+        moves_grouped = dict()
+        move_obj = self.pool.get('stock.move')
+        move_data_list = map(
+            lambda move_brw: {move_brw.product_id.id: move_brw.id},
+            move_obj.browse(cr, uid, move_ids, context=context))
+
+        for move_data in move_data_list:
+            for (product_id, move_id) in move_data.iteritems():
+                if moves_grouped.has_key(product_id):
+                    moves_grouped[product_id] += [move_id]
+                else:
+                    moves_grouped[product_id] = [move_id]
+        return moves_grouped
+
+    def _get_consume_lines_list(self, cr, uid, production_id, context=None):
+        """
+        Get the consume lines to create.
+        @param production_id: manufacturing order id.
+        @return: a list of dictionaries with the values for the consume
+        lines to create
+        """
+        context = context or {}
+        consume_line_ids = list()
+        active_move_ids = self._get_active_move_ids(
+            cr, uid, production_id, context=context)
+        moves_dict = self._get_moves_grouped_by_product(
+            cr, uid, active_move_ids, context=context)
+        for move_ids in moves_dict.values():
+            consume_line_ids += [self._get_consume_line_values(
+                cr, uid, production_id, move_ids, context=context)]
+        return consume_line_ids
+
+    def _get_default_consume_line_ids(self, cr, uid, context=None):
+        """
+        Return the consume lines ids by default for the current work order lot
+        """
+        context = context or {}
+        consume_line_ids = list()
+        production_obj = self.pool.get('mrp.production')
+        wol_obj = self.pool.get('mrp.workorder.lot')
+        # getting the production_id
+        production_ids = context.get('active_ids', [])
+        active_model = context.get('active_model', False)
+        if not production_ids or len(production_ids) != 1:
+            raise osv.except_osv(
+                _('Error!!'),
+                _('You need to call method using the wizard, one by one per'
+                  ' manufacturing order or by an active work order lot.'))
+        if active_model not in ['mrp.production', 'mrp.workorder.lot']:
+            raise osv.except_osv(
+                _('Error!!'),
+                _('You this wizard can be only called by the manufacturing'
+                  ' order or by an active work order lot.'))
+        production_id = active_model == 'mrp.production' \
+            and production_ids[0] or wol_obj.browse(
+                cr, uid, production_ids,
+                context=context)[0].production_id.id
+        consume_line_ids = self._get_consume_lines_list(
+            cr, uid, production_id, context=context)
+        return consume_line_ids
+
     _columns = {
         'consume_line_ids': fields.one2many('mrp.consume.line',
             'wizard_id', 'Consume')
+    }
+
+    _defaults = {
+        'consume_line_ids': _get_default_consume_line_ids,
     }
 
     def action_consume(self, cr, uid, ids, context=None):
@@ -80,43 +154,27 @@ class mrp_consume(osv.TransientModel):
         return {}
 
     def default_get(self, cr, uid, fields, context=None):
+        #~ TODO: delete this method. only to print the information of the default. for control in the debuging fase.
+
         context = context or {}
-        production_obj = self.pool.get('mrp.production')
-        move_obj = self.pool.get('stock.move')
-        consume_line_ids = list()
         res = super(mrp_consume, self).default_get(
             cr, uid, fields, context=context)
-        production_ids = context.get('active_ids', [])
-        if (not production_ids
-            or (not context.get('active_model') == 'mrp.production')
-            or len(production_ids) != 1):
-            return res
-        production_id = production_ids[0]
-        if 'consume_line_ids' in fields:
-            production_brw = production_obj.browse(cr, uid, production_id,
-                                                   context=context)
-            moves_brw = production_brw.move_lines
-            moves_ld = map(lambda x: {x.product_id.id: x.id}, moves_brw)
-            moves_of = dict()
-            for move_data in moves_ld:
-                for (product_id, move_id) in move_data.iteritems():
-                    if moves_of.has_key(product_id):
-                        moves_of[product_id] += [move_id] 
-                    else:
-                        moves_of[product_id] = [move_id] 
 
-            for move_ids in moves_of.values():
-                active_move_ids = \
-                    [move_brw.id
-                     for move_brw in (move_obj.browse(
-                        cr, uid, move_ids, context=context))
-                     if move_brw.state not in ('done', 'cancel')]
-                consume_line_ids += [self._partial_move_for(
-                    cr, uid, production_id, active_move_ids, context=context)]
-            res.update({'consume_line_ids': consume_line_ids})
+        import pprint
+        print '\n'*3
+        print '----'*20
+        print 'mrp_consume_produce > mrp_consume.default_get()'
+        print 'fields', fields
+        print 'context',
+        pprint.pprint(context)
+        print 'res',
+        pprint.pprint(res)
+        print '----'*20
+        print '\n'*3
 
         return res
 
+    #~ TODO: check this method, not used here but used in module mrp_request_return
     def _partial_move_for(self, cr, uid, production_id, move_ids,
                           context=None):
         """
@@ -132,8 +190,6 @@ class mrp_consume(osv.TransientModel):
             cr, uid, production_id, product_id, context=context) 
         product_qty = self._get_consume_line_product_qty(
             cr, uid, move_ids, product_uom, context=context)
-        prodlot_id = self._get_consume_line_prodlot_id(
-            cr, uid, product_id, move_ids, context=context)
         consume_line_move_ids = self._get_consume_line_move_ids(
             cr, uid, move_ids, context=context)
 
@@ -141,11 +197,52 @@ class mrp_consume(osv.TransientModel):
             'product_id': product_id,
             'quantity': product_qty,
             'product_uom': product_uom,
-            'prodlot_id': prodlot_id,
             'consume_line_move_ids':
             map(lambda move_line: (0, 0, move_line), consume_line_move_ids),
         }
         return partial_move
+
+    def _get_active_move_ids(self, cr, uid, production_id, context=None):
+        """
+        Get the valid moves to be consume for a manufacturing order. That
+        are those stock move that are not in Done or Cancel state.
+        @param production_id: manufactuirng order id. 
+        @return: list of stock move ids that can ve consumed 
+        """
+        context = context or {}
+        production_obj = self.pool.get('mrp.production')
+        move_brws = production_obj.browse(
+            cr, uid, production_id, context=context).move_lines
+        active_move_ids = [move_brw.id
+                           for move_brw in move_brws
+                           if move_brw.state not in ('done', 'cancel')]
+        return active_move_ids
+
+    def _get_consume_line_values(self, cr, uid, production_id, move_ids,
+                                 context=None):
+        """
+        @param production_id: the production id where the wizard was called.
+        @param move_ids: list of stock move id.
+        @return: a dictionary of values to create a consume line.
+        """
+        context = context or {}
+        product_id = self._get_consume_line_product_id(
+            cr, uid, move_ids, context=context)
+        product_uom = self._get_consume_line_uom_id(
+            cr, uid, production_id, product_id, context=context) 
+        product_qty = self._get_consume_line_product_qty(
+            cr, uid, move_ids, product_uom, context=context)
+        consume_line_move_ids = self._get_consume_line_move_ids(
+            cr, uid, move_ids, context=context)
+
+        consume_line_dict = {
+            'product_id': product_id,
+            'product_uom': product_uom,
+            'quantity': product_qty,
+            'consume_line_move_ids':
+            map(lambda move_line: (0, 0, move_line), consume_line_move_ids),
+        }
+        return consume_line_dict
 
     def _get_consume_line_product_id(self, cr, uid, move_ids, context=None):
         """
@@ -200,25 +297,6 @@ class mrp_consume(osv.TransientModel):
                  for move_brw in move_brws])
         return qty
 
-    def _get_consume_line_prodlot_id(self, cr, uid, product_id, move_ids,
-                                     context=None):
-        """
-        Return the first production lot id found for the given product.
-        @param product_id: product id.
-        """
-        context = context or {}
-        move_obj = self.pool.get('stock.move')
-        prodlot_obj = self.pool.get('stock.production.lot')
-        move_brws = move_obj.browse(cr, uid, move_ids, context=context)
-        prodlot_ids = \
-            prodlot_obj.search(
-                cr, uid, [('product_id', '=', product_id)], context=context) \
-                or False
-        # Note: First my intention was to use the move_brw.prodlot_id to get
-        # the prodlot_id but this field is not set, I imagine that is set
-        # before the move is consumed.
-        return prodlot_ids and prodlot_ids[0] or False
-
     def _get_consume_line_move_ids(self, cr, uid, move_ids, context=None):
         """
         Return a list of dictonary with consume line move to create for the
@@ -239,9 +317,58 @@ class mrp_consume(osv.TransientModel):
 
 class mrp_produce(osv.TransientModel):
     _name = 'mrp.produce'
+
+    def _get_produce_line_list(self, cr, uid, production_id, context=None):
+        """
+        @param production_id: manufacturing order id.
+        @return: a list of dictionaries values with the produce lines to
+        create.
+        """
+        context = context or {}
+        produce_line_list = list()
+        active_move_ids = self._get_active_move_ids(
+            cr, uid, production_id, context=context)
+        for move_id in active_move_ids:
+            produce_line_list += [self._get_produce_line_values(
+                cr, uid, move_id, context=context)]
+        return produce_line_list
+
+    def _get_default_produce_line_ids(self, cr, uid, context=None):
+        """
+        Search the active stock moves from products to produce and then
+        generate the list of dictionary values to create the produce line ids
+        """
+        context = context or {}
+        production_obj = self.pool.get('mrp.production')
+        produce_line_list = list()
+
+        production_ids = context.get('active_ids', [])
+        active_model = context.get('active_model', False)
+        if not production_ids or len(production_ids) != 1:
+            raise osv.except_osv(
+                _('Error!!'),
+                _('You need to call method using the wizard from the'
+                  ' manufacturing order one by one.'))
+        if active_model not in ['mrp.production']:
+            raise osv.except_osv(
+                _('Error!!'),
+                _('You this wizard can be only called by the manufacturing'
+                  ' order.'))
+        production_id = production_ids[0]
+        production_brw = production_obj.browse(
+            cr, uid, production_id, context=context)
+
+        produce_line_list = self._get_produce_line_list(
+            cr, uid, production_id, context=context)
+        return produce_line_list
+
     _columns = {
         'produce_line_ids': fields.one2many('mrp.produce.line',
             'produce_id', 'Consume')
+    }
+
+    _defaults = {
+        'produce_line_ids': _get_default_produce_line_ids,
     }
 
     def _get_produce_line_values(self, cr, uid, move_id, context=None):
@@ -256,7 +383,6 @@ class mrp_produce(osv.TransientModel):
             'product_id': move_brw.product_id.id,
             'quantity': move_brw.product_qty,
             'product_uom': move_brw.product_uom.id,
-            'prodlot_id': move_brw.prodlot_id.id,
             'move_id': move_brw.id,
             'location_id': move_brw.location_id.id,
             'location_dest_id': move_brw.location_dest_id.id,
@@ -264,25 +390,27 @@ class mrp_produce(osv.TransientModel):
         return values
 
     def default_get(self, cr, uid, fields, context=None):
+        #~ TODO: delete this method. only to print the information of the default. for control in the debuging fase.
         context = context or {}
         production_obj = self.pool.get('mrp.production')
         res = super(mrp_produce, self).default_get(
             cr, uid, fields, context=context)
-        production_ids = context.get('active_ids', [])
-        if not production_ids or (not context.get('active_model') == 'mrp.production') \
-                or len(production_ids) != 1:
-            return res
-        production_id = production_ids[0]
 
-        if 'produce_line_ids' in fields:
-            production_brw = production_obj.browse(
-                cr, uid, production_id, context=context)
-            moves = \
-                [self._get_produce_line_values(
-                    cr, uid, move_brw.id, context=context)
-                 for move_brw in production_brw.move_created_ids
-                 if move_brw.state not in ('done', 'cancel')]
-            res.update(produce_line_ids=moves)
+
+        import pprint
+        print '\n'*3
+        print '----'*20
+        print 'mrp_consume_produce > mrp_produce.default_get()'
+        print 'fields', fields
+        print 'context',
+        pprint.pprint(context)
+        print 'res',
+        pprint.pprint(res)
+        print '----'*20
+        print '\n'*3
+        #~ raise osv.except_osv('stop', 'here defautl')
+
+
         return res
 
     def action_produce(self, cr, uid, ids, context={}):
@@ -296,6 +424,22 @@ class mrp_produce(osv.TransientModel):
                     raw_product.quantity, raw_product.location_id.id,
                     context=context)
         return {}
+
+    def _get_active_move_ids(self, cr, uid, production_id, context=None):
+        """
+        Get the valid moves to be produce for a manufacturing order. That
+        are those stock move that are not in Done or Cancel state.
+        @param production_id: manufactuirng order id.
+        @return: list of stock move ids that can be produced
+        """
+        context = context or {}
+        production_obj = self.pool.get('mrp.production')
+        move_brws = production_obj.browse(
+            cr, uid, production_id, context=context).move_created_ids
+        active_move_ids = [move_brw.id
+                           for move_brw in move_brws
+                           if move_brw.state not in ('done', 'cancel')]
+        return active_move_ids
 
 
 class mrp_consume_line(osv.TransientModel):
