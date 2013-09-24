@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
+#    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
 #    Coded by: Yanina Aular <yanina.aular@vauxoo.com>
@@ -26,8 +26,8 @@
 {
     'name': 'Portal Project Kanban Fields',
     'version': '1.0',
-    'author': 'Vauxoo C.A.',
-    'website': 'http://www.openerp.com.ve',
+    'author': 'Vauxoo',
+    'website': 'http://www.vauxoo.com',
     'category': '',
     'description': '''
 Add three fields to the project.
