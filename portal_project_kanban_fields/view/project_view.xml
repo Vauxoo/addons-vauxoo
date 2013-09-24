@@ -18,5 +18,22 @@
                 
             </field>
         </record>
+        
+        <record model="ir.ui.view" id="view_project_kanban_inherit">
+            <field name="name">project.project.kanban</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project_kanban"/>
+            <field name="arch" type="xml">
+                
+                <xpath expr="//div[@class='oe_kanban_content']//field[@name='name']" position="replace">
+                  <a type="open">
+                    <img t-att-src="kanban_image('project.project', 'image_small', record.id.value)" class="oe_kanban_image"/>
+                    <field name="name"/>
+                  </a>
+                </xpath>
+            
+            </field>
+        </record>
+    
     </data>
 </openerp>
