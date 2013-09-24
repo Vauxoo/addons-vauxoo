@@ -23,7 +23,9 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 from ast import literal_eval
 
-_TASK_STATE = [('new','New'),('publish', 'Publish'),('unpublish', 'Cancel Publish')]
+_TASK_STATE = [('new', 'New'), (
+    'publish', 'Publish'), ('unpublish', 'Cancel Publish')]
+
 
 class mail_message(osv.osv):
 
@@ -32,52 +34,53 @@ class mail_message(osv.osv):
     def button_publish(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        dict_mail={}
+        dict_mail = {}
         obj_user = self.pool.get('res.users')
 
-        for obj in self.browse(cr,uid,ids,context=None):
+        for obj in self.browse(cr, uid, ids, context=None):
             if obj.model == "mail.group":
                 if obj.mail_group_id.id:
                     params = self.pool.get('ir.actions.client').read(cr,
-                    uid, [obj.mail_group_id.id], ['params'],context=context)
+                                                                     uid, [obj.mail_group_id.id], ['params'], context=context)
                     for i in params[0]['params']['domain']:
-                        if i[0] =='model':
-                            dict_mail.update({'model':i[2]})
-                        elif i[0]=='res_id':
-                            dict_mail.update({'res_id':i[2]})
-                        elif i[0]=='author_id':
-                            user_ids = obj_user.search(cr,uid,
-                            [('name','=',i[2])],context=context)
-                            dict_mail.update({'author_id':obj_user.browse(cr,
-                            uid,user_ids,context=context)[0].partner_id.id})
+                        if i[0] == 'model':
+                            dict_mail.update({'model': i[2]})
+                        elif i[0] == 'res_id':
+                            dict_mail.update({'res_id': i[2]})
+                        elif i[0] == 'author_id':
+                            user_ids = obj_user.search(cr, uid,
+                                                       [('name', '=', i[2])], context=context)
+                            dict_mail.update({'author_id': obj_user.browse(cr,
+                                                                           uid, user_ids, context=context)[0].partner_id.id})
                 else:
                     raise osv.except_osv(_('Error'), _("""You may set
                     group where you want publish this comment"""))
             else:
                 raise osv.except_osv(_('Error'), _(
-                """You can not post a comment associated with the model 
-                %s"""%(obj.model)))
-            dict_mail.update({'state':'publish'})
-        dict_mail and self.write(cr,uid,ids,dict_mail,context=context) 
+                                     """You can not post a comment associated with the model
+                %s""" % (obj.model)))
+            dict_mail.update({'state': 'publish'})
+        dict_mail and self.write(cr, uid, ids, dict_mail, context=context)
         return True
 
     def button_unpublish(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        dist_history={}
+        dist_history = {}
 
-        for obj in self.browse(cr,uid,ids,context=context):
+        for obj in self.browse(cr, uid, ids, context=context):
             if obj.dict_history:
                 dist_history = literal_eval(obj.dict_history)
-                dist_history.update({'state':'unpublish'})
-        dist_history and self.write(cr,uid,ids,dist_history,context=context)
+                dist_history.update({'state': 'unpublish'})
+        dist_history and self.write(
+            cr, uid, ids, dist_history, context=context)
         return True
 
     _columns = {
-        'mail_group_id': fields.many2one('ir.actions.client', 'Grupo',domain=[('res_model','=','mail.group'),('tag','ilike','mail.wall')]),
-        'dict_history': fields.char('History',help="When status change to publish, this field is seted to storage previos values."),
+        'mail_group_id': fields.many2one('ir.actions.client', 'Grupo', domain=[('res_model', '=', 'mail.group'), ('tag', 'ilike', 'mail.wall')]),
+        'dict_history': fields.char('History', help="When status change to publish, this field is seted to storage previos values."),
         'state': fields.selection(_TASK_STATE, 'Related Status', required=True,
-        help="The status of your document is automatically changed regarding the selected stage. " \
+        help="The status of your document is automatically changed regarding the selected stage. "
         "For example, if a stage is related to the status 'unPublish', when your document reaches this stage, it is automatically unPublish."),
     }
     _defaults = {
@@ -87,14 +90,13 @@ class mail_message(osv.osv):
     def create(self, cr, uid, values, context=None):
         if context is None:
             context = {}
-        newid = super(mail_message,self).create(cr,uid,values,context=context)
-        for obj in self.browse(cr,uid,[newid],context=None):
-            dict_history={'model':obj.model,
-                          'res_id':obj.res_id,
-                          'author_id':obj.author_id.id}
+        newid = super(mail_message, self).create(
+            cr, uid, values, context=context)
+        for obj in self.browse(cr, uid, [newid], context=None):
+            dict_history = {'model': obj.model,
+                            'res_id': obj.res_id,
+                            'author_id': obj.author_id.id}
 
-            dict_history and self.write(cr,uid,[newid],
-            {'dict_history':dict_history},context=context)
+            dict_history and self.write(cr, uid, [newid],
+                                        {'dict_history': dict_history}, context=context)
         return newid
-
-
