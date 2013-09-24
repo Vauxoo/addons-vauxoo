@@ -5,13 +5,14 @@
             <field name="model">project.project</field>
             <field name="inherit_id" ref="project.edit_project"/>
             <field name="arch" type="xml">
-                
+                <xpath expr="//div[@class='oe_title']" position="before">
+                    <field name="image" widget='image' class="oe_left oe_avatar" nolabel="1" 
+                        options='{"preview_image": "image_medium", "size": [90, 90]}'/>
+                </xpath>
                 <xpath expr="//group[@name='misc']" position="after">
                     <group string="Public Information" name="pubinf">
                         <field name="project_url" widget="url"/>
                         <field name="documentation_url" widget="url"/>
-                        <field name="image" widget='image' class="oe_left oe_avatar" nolabel="1" 
-                            options='{"preview_image": "image_medium", "size": [90, 90]}'/>
                     </group>
                 </xpath>
                 
