@@ -1,13 +1,13 @@
 # -*- encoding: utf-8 -*-
-###########################################################################
+#
 #    Module Writen to OpenERP, Open Source Management Solution
 #
 #    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
 #    info@vauxoo.com
-############################################################################
+#
 #    Coded by: julio (julio@vauxoo.com)
-############################################################################
+#
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,7 +22,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+#
 import time
 from openerp.osv import osv, fields
 import decimal_precision as dp
@@ -48,7 +48,7 @@ class mrp_consume(osv.TransientModel):
 
         for move_data in move_data_list:
             for (product_id, move_id) in move_data.iteritems():
-                if moves_grouped.has_key(product_id):
+                if product_id in moves_grouped:
                     moves_grouped[product_id] += [move_id]
                 else:
                     moves_grouped[product_id] = [move_id]
@@ -103,7 +103,7 @@ class mrp_consume(osv.TransientModel):
 
     _columns = {
         'consume_line_ids': fields.one2many('mrp.consume.line',
-            'wizard_id', 'Consume')
+                                            'wizard_id', 'Consume')
     }
 
     _defaults = {
@@ -139,7 +139,8 @@ class mrp_consume(osv.TransientModel):
 
         return {}
 
-    #~ TODO: check this method, not used here but used in module mrp_request_return
+    #~ TODO: check this method, not used here but used in module
+    #~ mrp_request_return
     def _partial_move_for(self, cr, uid, production_id, move_ids,
                           context=None):
         """
@@ -152,7 +153,7 @@ class mrp_consume(osv.TransientModel):
         product_id = self._get_consume_line_product_id(
             cr, uid, move_ids, context=context)
         product_uom = self._get_consume_line_uom_id(
-            cr, uid, production_id, product_id, context=context) 
+            cr, uid, production_id, product_id, context=context)
         product_qty = self._get_consume_line_product_qty(
             cr, uid, move_ids, product_uom, context=context)
         consume_line_move_ids = self._get_consume_line_move_ids(
@@ -171,8 +172,8 @@ class mrp_consume(osv.TransientModel):
         """
         Get the valid moves to be consume for a manufacturing order. That
         are those stock move that are not in Done or Cancel state.
-        @param production_id: manufactuirng order id. 
-        @return: list of stock move ids that can ve consumed 
+        @param production_id: manufactuirng order id.
+        @return: list of stock move ids that can ve consumed
         """
         context = context or {}
         production_obj = self.pool.get('mrp.production')
@@ -194,7 +195,7 @@ class mrp_consume(osv.TransientModel):
         product_id = self._get_consume_line_product_id(
             cr, uid, move_ids, context=context)
         product_uom = self._get_consume_line_uom_id(
-            cr, uid, production_id, product_id, context=context) 
+            cr, uid, production_id, product_id, context=context)
         product_qty = self._get_consume_line_product_qty(
             cr, uid, move_ids, product_uom, context=context)
         consume_line_move_ids = self._get_consume_line_move_ids(
@@ -242,7 +243,7 @@ class mrp_consume(osv.TransientModel):
             cr, uid, production_id, context=context)
         uom_id = [product_line.product_uom.id
                   for product_line in production_brw.product_lines
-                  if product_line.product_id.id == product_id][0]            
+                  if product_line.product_id.id == product_id][0]
         return uom_id
 
     def _get_consume_line_product_qty(self, cr, uid, move_ids, product_uom_id,
@@ -257,8 +258,8 @@ class mrp_consume(osv.TransientModel):
         move_brws = move_obj.browse(cr, uid, move_ids, context=context)
         qty = \
             sum([uom_obj._compute_qty(
-                    cr, uid, move_brw.product_uom.id, move_brw.product_qty,
-                    product_uom_id)
+                 cr, uid, move_brw.product_uom.id, move_brw.product_qty,
+                 product_uom_id)
                  for move_brw in move_brws])
         return qty
 
@@ -279,6 +280,7 @@ class mrp_consume(osv.TransientModel):
                 'location_dest_id': move_brw.location_dest_id.id,
             })
         return values
+
 
 class mrp_produce(osv.TransientModel):
     _name = 'mrp.produce'
@@ -329,7 +331,7 @@ class mrp_produce(osv.TransientModel):
 
     _columns = {
         'produce_line_ids': fields.one2many('mrp.produce.line',
-            'produce_id', 'Consume')
+                                            'produce_id', 'Consume')
     }
 
     _defaults = {
@@ -388,11 +390,12 @@ class mrp_consume_line(osv.TransientModel):
     _rec_name = 'product_id'
     _columns = {
         'product_id': fields.many2one('product.product', string="Product",
-            required=True),
+                                      required=True),
         'quantity': fields.float("Quantity",
-            digits_compute=dp.get_precision('Product UoM'), required=True),
+                                 digits_compute=dp.get_precision(
+                                     'Product UoM'), required=True),
         'product_uom': fields.many2one('product.uom', 'Unit of Measure',
-            required=True,),
+                                       required=True,),
         'consume_line_move_ids': fields.one2many(
             'mrp.consume.line.move',
             'consume_line_id',
@@ -418,7 +421,7 @@ class mrp_produce_line(osv.TransientModel):
             digits_compute=dp.get_precision('Product UoM'),
             required=True,
             help=_('Quantity that will be produced'),
-            ),
+        ),
         'product_uom': fields.many2one(
             'product.uom',
             _('Unit of Measure'),
