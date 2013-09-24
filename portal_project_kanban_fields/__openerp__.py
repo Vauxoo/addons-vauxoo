@@ -31,7 +31,7 @@
     'category': '',
     'description': '''
     ''',
-    'depends': ['base', 'portal_project'],
+    'depends': ['base', 'project', 'portal_project'],
     'data': [
         'view/project_view.xml',
         ],
@@ -39,4 +39,7 @@
     'test': [],
     'active': False,
     'installable': True,
+    'css':[
+        'static/src/css/project.css',
+        ],
 }
