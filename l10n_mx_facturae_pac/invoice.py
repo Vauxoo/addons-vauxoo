@@ -226,9 +226,14 @@ class account_invoice(osv.Model):
             f.write( data_xml )
             f.close()
             os.close(fileno_data_xml)
-            fname_scheme = os.path.join(tools.config["addons_path"], u'l10n_mx_facturae', u'SAT', facturae_type + facturae_version +  '.' + scheme_type )
-            fname_out = certificate_lib.b64str_to_tempfile( base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__schema_validation_result__' )
-            result = certificate_lib.check_xml_scheme(fname_data_xml, fname_scheme, fname_out)
-            if result: #Valida el xml medianta el archivo xsd
-                raise osv.except_osv('Error al validar la estructura del xml!', 'Validación de XML versión %s:\n%s'%(facturae_version, result))
+            all_paths = tools.config["addons_path"].split(",")
+            for my_path in all_paths:
+                if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae', 'SAT')):
+                    # If dir is in path, save it on real_path
+                    fname_scheme = my_path and os.path.join(my_path, 'l10n_mx_facturae', 'SAT', facturae_type + facturae_version +  '.' + scheme_type) or ''
+                    #fname_scheme = os.path.join(tools.config["addons_path"], u'l10n_mx_facturae', u'SAT', facturae_type + facturae_version +  '.' + scheme_type )
+                    fname_out = certificate_lib.b64str_to_tempfile( base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__schema_validation_result__' )
+                    result = certificate_lib.check_xml_scheme(fname_data_xml, fname_scheme, fname_out)
+                    if result: #Valida el xml mediante el archivo xsd
+                        raise osv.except_osv('Error al validar la estructura del xml!', 'Validación de XML versión %s:\n%s'%(facturae_version, result))
         return True
