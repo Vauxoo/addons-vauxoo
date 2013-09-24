@@ -30,7 +30,8 @@ from openerp import netsvc
 
 
 class portal_project(osv.Model):
-    """
+    """ Add five fields to the project, project_url and documentation_url is in Othe Info and
+    image in header.
     """
     _inherit = 'project.project'
     _description = 'Portal Project'
