@@ -30,7 +30,7 @@ _TASK_STATE = [('new', 'New'), (
 class mail_message(osv.osv):
 
     _inherit = 'mail.message'
-
+    '''
     def button_publish(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
@@ -81,7 +81,7 @@ class mail_message(osv.osv):
         dist_history and self.write(
             cr, uid, ids, dist_history, context=context)
         return True
-
+    '''
     _columns = {
         'mail_group_id': fields.many2one('ir.actions.client', 'Grupo',
             domain=[('res_model', '=', 'mail.group'), ('tag', 'ilike', 'mail.wall')]),
@@ -95,7 +95,7 @@ class mail_message(osv.osv):
     _defaults = {
         'state': 'new',
     }
-
+    '''
     def create(self, cr, uid, values, context=None):
         if context is None:
             context = {}
@@ -109,3 +109,4 @@ class mail_message(osv.osv):
             dict_history and self.write(cr, uid, [newid],
                                         {'dict_history': dict_history}, context=context)
         return newid
+    '''
