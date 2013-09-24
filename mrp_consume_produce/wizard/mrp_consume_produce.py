@@ -345,7 +345,12 @@ class mrp_produce(osv.TransientModel):
         """
         context = context or {}
         move_obj = self.pool.get('stock.move')
-        move_brw = move_obj.browse(cr, uid, move_id, context=context)
+        move_brw = move_obj.browse(cr, uid, move_id, context=context) or False
+        if not move_id or not move_brw:
+            raise osv.except_osv(
+                _('Programming Error!'),
+                _('You are not given a valid stock move id so this feature can'
+                  ' be accomplished.'))
         values = {
             'product_id': move_brw.product_id.id,
             'quantity': move_brw.product_qty,
