@@ -41,7 +41,10 @@ class mail_message(osv.osv):
             if obj.model == "mail.group":
                 if obj.mail_group_id.id:
                     params = self.pool.get('ir.actions.client').read(cr,
-                                                                     uid, [obj.mail_group_id.id], ['params'], context=context)
+                                                                     uid,
+                                                                     [obj.mail_group_id.id],
+                                                                     ['params'],
+                                                                     context=context)
                     for i in params[0]['params']['domain']:
                         if i[0] == 'model':
                             dict_mail.update({'model': i[2]})
@@ -51,7 +54,10 @@ class mail_message(osv.osv):
                             user_ids = obj_user.search(cr, uid,
                                                        [('name', '=', i[2])], context=context)
                             dict_mail.update({'author_id': obj_user.browse(cr,
-                                                                           uid, user_ids, context=context)[0].partner_id.id})
+                                                                           uid,
+                                                                           user_ids,
+                                                                           context=context
+                                                                           )[0].partner_id.id})
                 else:
                     raise osv.except_osv(_('Error'), _("""You may set
                     group where you want publish this comment"""))
@@ -77,11 +83,14 @@ class mail_message(osv.osv):
         return True
 
     _columns = {
-        'mail_group_id': fields.many2one('ir.actions.client', 'Grupo', domain=[('res_model', '=', 'mail.group'), ('tag', 'ilike', 'mail.wall')]),
-        'dict_history': fields.char('History', help="When status change to publish, this field is seted to storage previos values."),
+        'mail_group_id': fields.many2one('ir.actions.client', 'Grupo',
+            domain=[('res_model', '=', 'mail.group'), ('tag', 'ilike', 'mail.wall')]),
+        'dict_history': fields.char('History', help="When status change to publish, this field is"
+            "setted to storage previos values."),
         'state': fields.selection(_TASK_STATE, 'Related Status', required=True,
         help="The status of your document is automatically changed regarding the selected stage. "
-        "For example, if a stage is related to the status 'unPublish', when your document reaches this stage, it is automatically unPublish."),
+        "For example, if a stage is related to the status 'unPublish', when your document reaches"
+        "this stage, it is automatically unPublish."),
     }
     _defaults = {
         'state': 'new',
