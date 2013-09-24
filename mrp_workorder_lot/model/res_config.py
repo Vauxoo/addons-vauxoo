@@ -54,7 +54,7 @@ class mrp_config_settings(osv.osv_memory):
         'batch_type': fields.selection(
             _get_batch_modes,
             'Production Batch Process Type',
-            help=_('Two options when management the batch work orders:\n\n'
+            help=('Two options when management the batch work orders:\n\n'
                    ' - Maximize Production Cost: For every workcenter will'
                    ' create a batch of works orders that always explotes the'
                    ' product capacity of the workcenter.\n'

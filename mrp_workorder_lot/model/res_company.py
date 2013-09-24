@@ -35,7 +35,7 @@ class res_company(osv.osv):
             [('bottleneck', 'Avoid Production Bottleneck'),
              ('max_cost', 'Maximize Production Cost')],
             'Production Batch Process Type',
-            help=_('Two options when management the batch work orders:\n\n'
+            help=('Two options when management the batch work orders:\n\n'
                    ' - Avoid Production Bottleneck: Will create the batch'
                    ' work orders taking into a count the minium workcenter'
                    ' capacity.'

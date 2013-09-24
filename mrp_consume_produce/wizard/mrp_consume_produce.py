@@ -399,9 +399,9 @@ class mrp_consume_line(osv.TransientModel):
         'consume_line_move_ids': fields.one2many(
             'mrp.consume.line.move',
             'consume_line_id',
-            _('Moves'),
+            'Moves',
             required=True,
-            help=_('Moves corresponding to the product in the consume line')),
+            help='Moves corresponding to the product in the consume line'),
         'wizard_id': fields.many2one('mrp.consume', string="Wizard"),
     }
 
@@ -413,32 +413,37 @@ class mrp_produce_line(osv.TransientModel):
     _columns = {
         'product_id': fields.many2one(
             'product.product',
-            _('Product'),
+            'Product',
             required=True,
-            help=_('Product to be Produce')),
+            help='Product to be Produce'
+        ),
         'quantity': fields.float(
-            _('Quantity'),
+            'Quantity',
             digits_compute=dp.get_precision('Product UoM'),
             required=True,
-            help=_('Quantity that will be produced'),
+            help='Quantity that will be produced'
         ),
         'product_uom': fields.many2one(
             'product.uom',
-            _('Unit of Measure'),
+            'Unit of Measure',
             required=True,
-            help=_('Units of measure corresponding to the quantity')),
+            help='Units of measure corresponding to the quantity'
+        ),
         'move_id': fields.many2one('stock.move', "Move"),
         'location_id': fields.many2one(
             'stock.location',
-            _('Location'),
-            required=True),
+            'Location',
+            required=True
+        ),
         'location_dest_id': fields.many2one(
             'stock.location',
-            _('Dest. Location'),
-            required=True),
+            'Dest. Location',
+            required=True
+        ),
         'produce_id': fields.many2one(
             'mrp.produce',
-            _('Produce Wizard')),
+            'Produce Wizard'
+        ),
     }
 
 
@@ -454,16 +459,16 @@ class mrp_consume_line_move(osv.TransientModel):
     _columns = {
         'consume_line_id': fields.many2one(
             'mrp.consume.line',
-            _('Consume Line')),
+            'Consume Line'),
         'move_id': fields.many2one(
             'stock.move',
-            _('Move')),
+            'Move'),
         'location_id': fields.many2one(
             'stock.location',
-            _('Location'),
+            'Location',
             required=True),
         'location_dest_id': fields.many2one(
             'stock.location',
-            _('Dest. Location'),
+            'Dest. Location',
             required=True),
     }

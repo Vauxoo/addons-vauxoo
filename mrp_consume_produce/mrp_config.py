@@ -33,7 +33,7 @@ class mrp_config_settings(osv.TransientModel):
 
     _columns = {
         'group_mrp_consume_produce': fields.boolean(
-            _('Real Consume and Produce'),
+            'Real Consume and Produce',
             implied_group=
             'mrp_consume_produce.group_mrp_button_consume_produce'),
     }

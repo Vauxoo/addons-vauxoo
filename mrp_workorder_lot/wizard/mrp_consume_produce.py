@@ -84,13 +84,13 @@ class mrp_consume(osv.TransientModel):
     _columns = {
         'production_id': fields.many2one(
             'mrp.production',
-            string=_('Manufacturing Order'),
-            help=_('Manufacturing Order')),
+            string='Manufacturing Order',
+            help='Manufacturing Order'),
         'wo_lot_id': fields.many2one(
             'mrp.workorder.lot',
             required=True,
-            string=_('Work Orders Lots'),
-            help=_('Work Orders Lots.')),
+            string='Work Orders Lots',
+            help='Work Orders Lots.'),
     }
 
     _defaults = {
@@ -284,13 +284,13 @@ class mrp_produce(osv.TransientModel):
     _columns = {
         'production_id': fields.many2one(
             'mrp.production',
-            string=_('Manufacturing Order'),
-            help=_('Manufacturing Order')),
+            string='Manufacturing Order',
+            help='Manufacturing Order'),
         'wo_lot_id': fields.many2one(
             'mrp.workorder.lot',
             required=True,
-            string=_('Work Orders Lots'),
-            help=_('Work Orders Lots.')),
+            string='Work Orders Lots',
+            help='Work Orders Lots.'),
     }
 
     _defaults = {
@@ -361,7 +361,6 @@ class mrp_produce_line(osv.TransientModel):
     _columns = {
         'prodlot_id': fields.many2one(
             'stock.production.lot',
-            _('Serial Number'),
-            help=_('Production Serial Number for Production Lot.')
-        ),
+            'Serial Number',
+            help='Production Serial Number for Production Lot.'),
     }

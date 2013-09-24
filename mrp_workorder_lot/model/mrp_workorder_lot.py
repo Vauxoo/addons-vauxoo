@@ -70,8 +70,9 @@ class mrp_workcenter(osv.Model):
         'product_capacity_ids': fields.one2many(
             'mrp.workcenter.product.capacity',
             'workcenter_id',
-            _('Products Maxime Capacity'),
-            help=_('Workcenter capacities by product')),
+            'Products Maxime Capacity',
+            help='Workcenter capacities by product'
+        ),
     }
 
 
@@ -83,23 +84,23 @@ class mrp_workcenter_product_capacity(osv.Model):
     _columns = {
         'workcenter_id': fields.many2one(
             'mrp.workcenter',
-            _('WorkCenter'),
+            'WorkCenter',
             required=True,
-            help=_('Work Center')),
+            help='Work Center'),
         'product_id': fields.many2one(
             'product.product',
-            _('Product'),
+            'Product',
             required=True,
-            help=_('Product')),
+            help='Product'),
         'qty': fields.float(
-            _('Capacity'),
+            'Capacity',
             required=True,
-            help=_('Quantity')),
+            help='Quantity'),
         'uom_id': fields.many2one(
             'product.uom',
-            _('Unit of Measure'),
+            'Unit of Measure',
             required=True,
-            help=_('Unit of Measure')),
+            help='Unit of Measure'),
     }
 
     _sql_constraints = [
@@ -117,23 +118,23 @@ class mrp_workcenter_operation_product_quantity(osv.Model):
     _columns = {
         'operation_id': fields.many2one(
             'mrp.routing.workcenter',
-            _('Operation'),
+            'Operation',
             required=True,
-            help=_('Operation')),
+            help='Operation'),
         'product_id': fields.many2one(
             'product.product',
-            _('Product'),
+            'Product',
             required=True,
-            help=_('Product')),
+            help='Product'),
         'qty': fields.float(
-            _('Capacity'),
+            'Capacity',
             required=True,
-            help=_('Quantity')),
+            help='Quantity'),
         'uom_id': fields.many2one(
             'product.uom',
-            _('Unit of Measure'),
+            'Unit of Measure',
             required=True,
-            help=_('Unit of Measure')),
+            help='Unit of Measure'),
     }
 
     _sql_constraints = [
@@ -150,8 +151,8 @@ class mrp_routing_workcenter(osv.Model):
         'product_ids': fields.one2many(
             'mrp.workcenter.operation.product.quantity',
             'operation_id',
-            _('Products Needed'),
-            help=_('Products needed to the operation')),
+            'Products Needed',
+            help='Products needed to the operation'),
     }
 
 
@@ -161,12 +162,12 @@ class mrp_production(osv.Model):
     _columns = {
         'wo_lot_ids': fields.one2many(
             'mrp.workorder.lot', 'production_id',
-            string=_('Work Orders Lots'),
-            help=_('Work Orders Lots.')),
+            string='Work Orders Lots',
+            help='Work Orders Lots.'),
         'prodlot_id': fields.many2one(
             'stock.production.lot',
-            _('Serial Number'),
-            help=_('Production Serial Number (Lot)\n This is the Serial Number'
+            'Serial Number',
+            help=('Production Serial Number (Lot)\n This is the Serial Number'
                    ' that will receives the stock move from Virtual Production'
                    ' Location to the Destination Physical Stock Location.'
                    ' This is a formalism to use the Track Manufacturing Lots'
@@ -730,24 +731,24 @@ class mrp_workorder_stage(osv.Model):
         return states
 
     _columns = {
-        'sequence': fields.integer(_('Sequence')),
+        'sequence': fields.integer('Sequence'),
         'name': fields.char(
-            _('Stage Name'),
+            'Stage Name',
             required=True,
             size=64,
             translate=True),
-        'description': fields.text(_('Description')),
+        'description': fields.text('Description'),
         'state': fields.selection(
             _get_wo_state,
-            _('Related Status'),
+            'Related Status',
             required=True,
-            help=_('The status of your document is automatically changed'
+            help=('The status of your document is automatically changed'
                    ' regarding the selected stage. For example, if a stage is'
                    ' related to the status \'Close\', when your document'
                    ' reaches this stage, it is automatically closed.')),
         'fold': fields.boolean(
-            _('Folded by Default'),
-            help=_('This stage is not visible, for example in status bar or'
+            'Folded by Default',
+            help=('This stage is not visible, for example in status bar or'
                    ' kanban view, when there are no records in that stage to'
                    ' display.')),
     }
@@ -804,13 +805,13 @@ class mrp_production_workcenter_line(osv.Model):
 
     _columns = {
         'wo_lot_id': fields.many2one('mrp.workorder.lot',
-                                     _('Work Order Lot')),
+                                     'Work Order Lot'),
         'stage_id': fields.many2one(
             'mrp.workorder.stage',
-            string=_('Stage'),
+            string='Stage',
             required=True,
             track_visibility='onchange',
-            help=_('The stage permits to manage the state of the work orders'
+            help=('The stage permits to manage the state of the work orders'
                    ' in the kanban views tools for visualization of the charge'
                    ' and for planning the manufacturing process.')),
         'active_lot': fields.function(
@@ -819,8 +820,8 @@ class mrp_production_workcenter_line(osv.Model):
             store={
                 'mrp.workorder.lot': (_get_wo_ids_to_update, ['state'], 10),
             },
-            string=_('Status by Lot'),
-            help=_('If a Work Order Lot is active, then the Work Order is take'
+            string='Status by Lot',
+            help=('If a Work Order Lot is active, then the Work Order is take'
                    ' like active to')),
     }
 
@@ -985,25 +986,24 @@ class mrp_workorder_lot(osv.Model):
 
     _columns = {
         'name': fields.char(
-            _('Ref'),
+            'Ref',
             size=192,
-            help=_('Lot Reference Name.')),
+            help='Lot Reference Name.'),
         'number': fields.char(
-            _('Number'),
+            'Number',
             size=192,
-            help=_('Lot Serial Number')),
+            help='Lot Serial Number'),
         'wo_ids': fields.one2many(
             'mrp.production.workcenter.line', 'wo_lot_id',
-            string=_('Work Orders'),
-            help=_('Work Orders that belogns to this Lot.')),
+            string='Work Orders',
+            help='Work Orders that belogns to this Lot.'),
         'production_id': fields.many2one(
             'mrp.production',
-            string=_('Manufacturing Order'),
-            help=_('The Manufacturing Order were this Work Order Lot'
-                   ' belongs.')),
+            string='Manufacturing Order',
+            help='The Manufacturing Order were this Work Order Lot belongs.'),
         'percentage': fields.float(
-            _('Percentage'),
-            help=_('Percentage of the Raw Material to processs in the Lot.')),
+            'Percentage',
+            help='Percentage of the Raw Material to processs in the Lot.'),
         'state': fields.function(
             _get_lot_state,
             fnct_inv=_set_lot_state,
@@ -1018,8 +1018,8 @@ class mrp_workorder_lot(osv.Model):
             required=True,
             store={'mrp.production.workcenter.line':
                    (_get_wol_id_to_update, ['state'], 10)},
-            string=_('State'),
-            help=_('Indicate the state of the Lot.')),
+            string='State',
+            help='Indicate the state of the Lot.'),
     }
 
     _defaults = {
