@@ -684,10 +684,14 @@ class account_move_line(osv.Model):
         type='auto', writeoff_acc_id=writeoff_acc_id, writeoff_period_id=writeoff_period_id, 
         writeoff_journal_id=writeoff_journal_id, context=context)
 #        if not writeoff_acc_id:
-        dat = self._get_query_round(cr, uid, ids, context=context)
+        if context.get('apply_round', False):
+            dat = []
+        else:
+            dat = self._get_query_round(cr, uid, ids, context=context)
         res_round = {}
         res_without_round = {}
         res_ids = {}
+        
         for val_round in dat:
             res_round.setdefault(val_round['account_id'], 0)
             res_without_round.setdefault(val_round['account_id'], 0)
