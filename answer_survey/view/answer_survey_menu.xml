@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+
+        <menuitem id="answer_survey_only_menu"
+                  groups='answer_survey.only_answer_menu'
+                  name='Answer Your Survies'
+                  action="survey.action_view_survey_name"/>
+    </data>
+</openerp>
