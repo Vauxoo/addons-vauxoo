@@ -872,7 +872,7 @@ class mrp_production_workcenter_line(osv.Model):
                     raise osv.except_osv(
                         _('Error!'),
                         _('This type of write is not implemented in the'
-                          ' mrp_byworkcenter_capacity module yet.'))
+                          ' mrp_workorder_lot module yet.'))
 
         if troble_wo:
             error_by_wo = \

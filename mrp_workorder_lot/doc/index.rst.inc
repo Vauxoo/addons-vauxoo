@@ -1,5 +1,5 @@
-MRP By Workcenter Capacity Module documentation topics
-''''''''''''''''''''''''''''''''''''''''''''''''''''''
+MRP Workorder Lot Module documentation topics
+'''''''''''''''''''''''''''''''''''''''''''''
 
 .. toctree::
    :maxdepth: 1
