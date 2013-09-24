@@ -116,10 +116,6 @@ class mrp_consume(osv.TransientModel):
         for production in self.browse(cr, uid, ids, context=context):
             for consume_line in production.consume_line_ids:
                 line_qty_left = consume_line.quantity
-
-                print '\n'*3, 'consume_line', (
-                    consume_line.product_id.name_template, line_qty_left)
-
                 for move_line in consume_line.consume_line_move_ids:
                     if line_qty_left >= 0.0:
                         context.update({
@@ -131,9 +127,6 @@ class mrp_consume(osv.TransientModel):
                         # becuase wath happend when products to consume moves
                         # are in different uom (test with mrp_request_return)
 
-                        print 'move.action_consume(%s)' % (
-                            context['quantity'],)
-
                         move_line.move_id.action_consume(
                             line_qty_left, move_line.location_id.id,
                             context=context)
@@ -144,35 +137,7 @@ class mrp_consume(osv.TransientModel):
                             consume_line.product_uom.id)
                         line_qty_left -= move_apportionment_qty
 
-                        print (
-                            'move', move_line.move_id.id,
-                            'real qty', move_line.move_id.product_qty,
-                            move_line.move_id.product_uom.name,
-                            'to_line_oum qty', move_apportionment_qty,
-                            consume_line.product_uom.name,
-                            'line_qty_left', line_qty_left)
         return {}
-
-    def default_get(self, cr, uid, fields, context=None):
-        #~ TODO: delete this method. only to print the information of the default. for control in the debuging fase.
-
-        context = context or {}
-        res = super(mrp_consume, self).default_get(
-            cr, uid, fields, context=context)
-
-        import pprint
-        print '\n'*3
-        print '----'*20
-        print 'mrp_consume_produce > mrp_consume.default_get()'
-        print 'fields', fields
-        print 'context',
-        pprint.pprint(context)
-        print 'res',
-        pprint.pprint(res)
-        print '----'*20
-        print '\n'*3
-
-        return res
 
     #~ TODO: check this method, not used here but used in module mrp_request_return
     def _partial_move_for(self, cr, uid, production_id, move_ids,
@@ -388,30 +353,6 @@ class mrp_produce(osv.TransientModel):
             'location_dest_id': move_brw.location_dest_id.id,
         }
         return values
-
-    def default_get(self, cr, uid, fields, context=None):
-        #~ TODO: delete this method. only to print the information of the default. for control in the debuging fase.
-        context = context or {}
-        production_obj = self.pool.get('mrp.production')
-        res = super(mrp_produce, self).default_get(
-            cr, uid, fields, context=context)
-
-
-        import pprint
-        print '\n'*3
-        print '----'*20
-        print 'mrp_consume_produce > mrp_produce.default_get()'
-        print 'fields', fields
-        print 'context',
-        pprint.pprint(context)
-        print 'res',
-        pprint.pprint(res)
-        print '----'*20
-        print '\n'*3
-        #~ raise osv.except_osv('stop', 'here defautl')
-
-
-        return res
 
     def action_produce(self, cr, uid, ids, context={}):
         for production in self.browse(cr, uid, ids, context=context):
