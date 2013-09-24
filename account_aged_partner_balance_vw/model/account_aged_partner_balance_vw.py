@@ -470,7 +470,7 @@ class account_aged_trial_balance(osv.TransientModel):
                 residual = inv_brw.residual
                 date_due = mx.DateTime.strptime(
                     inv_brw.date_due or inv_brw.date_invoice, '%Y-%m-%d')
-                today = mx.DateTime.now()
+                today = mx.DateTime.strptime(wzd_brw.date_from, '%Y-%m-%d')
                 due_days = (today - date_due).day
 
                 if not residual:
@@ -528,7 +528,7 @@ class account_aged_trial_balance(osv.TransientModel):
         else:
             return []
         move_lines_ret = acc_move_line.search(cr, uid, args, context=context)
-        today = mx.DateTime.now()
+        today = mx.DateTime.strptime(wzd_brw.date_from, '%Y-%m-%d')
         for line in acc_move_line.browse(cr, uid, move_lines_ret, context=context):
             date_due = mx.DateTime.strptime(line.date, '%Y-%m-%d')
             due_days = (today - date_due).day
