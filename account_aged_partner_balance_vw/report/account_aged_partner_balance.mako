@@ -59,61 +59,148 @@
                     </tr>
                 </thead>
             </table>
-            <table class="list_table"  width="100%" border="0">
-                <thead>
-                    <tr>
-                        <th class="celdaTituloTabla" style="text-align:center;" width="30%">${_('Partners')}</th>
-                        <th class="celdaTituloTabla" style="text-align:center;" width="10%">${_('Not due')}</th>
-                        <% form = data['form']%>
-                        %for i in range (4,-1,-1):
-                            <th class="celdaTituloTabla" style="text-align:center;">${form.get('%i'%i).get('name')}</th>
-                        %endfor
-                        <th class="celdaTituloTabla" style="text-align:center;">${_('Total')}</th>
-                    </tr>
-                </thead>
-                 
-                <tbody>
-                    %for line in obj.partner_line_ids:
-                        <tr class="prueba" >
-                            <td class="celdaLineDataTitulo" width="30%">
-                                ${line.partner_id.name.upper()}
-                            </td>
-                            <td class="celdaLineData" width="10%">
-                                ${line.not_due}
-                            </td>
-                            <td class="celdaLineData" width="10%">
-                                ${line.days_due_01to30}
-                            </td>
-                            <td class="celdaLineData" width="10%">
-                                ${line.days_due_31to60}
-                            </td>
-                            <td class="celdaLineData" width="10%">
-                                ${line.days_due_61to90}
-                            </td>
-                            <td class="celdaLineData" width="10%">
-                                ${line.days_due_91to120}
-                            </td>
-                            <td class="celdaLineData" width="10%">
-                                ${line.days_due_121togr}
-                            </td>
-                            <td class="celdaTotal" width="10%">
-                                ${line.total}
-                            </td>
+            %if obj.type != "by_document":
+                <table class="list_table"  width="100%" border="0">
+                    <thead>
+                        <tr>
+                            <th class="celdaTituloTabla" style="text-align:center;" width="100%">${_('Partners')}</th>
                         </tr>
-                    %endfor
-                        
-<!--
-                        Aquí va la celda de los totales la vemos si la ponemos con un ciclo por lo pronto te dejo 
-                        El esqueleto de esos campos
--->
-                    <tr>
-                        %for i in range(1,9):
-                            <td class="celdaTotalTotales" >${_('$')}
-                            </td>
+                        <tr>
+                            <th class="celdaTituloTabla" style="text-align:center;" width="30%">${_('Partners')}</th>
+                            <th class="celdaTituloTabla" style="text-align:center;" width="10%">${_('Not due')}</th>
+                            <% form = data['form']%>
+                            %for i in range (4,-1,-1):
+                                <th class="celdaTituloTabla" style="text-align:center;">${form.get('%i'%i).get('name')}</th>
+                            %endfor
+                            <th class="celdaTituloTabla" style="text-align:center;">${_('Total')}</th>
+                        </tr>
+                    </thead>
+                     
+                    <tbody>
+                        %for line in obj.partner_line_ids:
+                            <tr class="prueba" >
+                                <td class="celdaLineDataTitulo" width="30%">
+                                    ${line.partner_id.name.upper()}
+                                </td>
+                                <td class="celdaLineData" width="10%">
+                                    ${line.not_due}
+                                </td>
+                                <td class="celdaLineData" width="10%">
+                                    ${line.days_due_01to30}
+                                </td>
+                                <td class="celdaLineData" width="10%">
+                                    ${line.days_due_31to60}
+                                </td>
+                                <td class="celdaLineData" width="10%">
+                                    ${line.days_due_61to90}
+                                </td>
+                                <td class="celdaLineData" width="10%">
+                                    ${line.days_due_91to120}
+                                </td>
+                                <td class="celdaLineData" width="10%">
+                                    ${line.days_due_121togr}
+                                </td>
+                                <td class="celdaTotal" width="10%">
+                                    ${line.total}
+                                </td>
+                            </tr>
                         %endfor
-                    </tr>
-                </tbody>
-            </table>
+                            
+    <!--
+                            Aquí va la celda de los totales la vemos si la ponemos con un ciclo por lo pronto te dejo 
+                            El esqueleto de esos campos
+    -->
+                        <tr>
+                            %for i in range(1,9):
+                                <td class="celdaTotalTotales" >${_('$')}
+                                </td>
+                            %endfor
+                        </tr>
+                    </tbody>
+                </table>
+            %endif
+            <%
+            def get_dict_lines_by_partner(lines):
+                dic_partner_lines = {}
+                for line in lines:
+                    if line.partner_id.id:
+                        if line.partner_id.name in dic_partner_lines:
+                            dic_partner_lines.get(line.partner_id.name).append(line)
+                        else:   
+                            dic_partner_lines.update({line.partner_id.name : [line]})
+                return dic_partner_lines
+            %>
+            %if obj.type == "by_document":
+                %for partner in get_dict_lines_by_partner(obj.partner_doc_ids):
+                    <table class="list_table"  width="100%" border="0">
+                        <thead>
+                            <tr>
+                                <th class="celdaTituloTabla" style="text-align:center;" width="10%">${partner}</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <table class="list_table"  width="100%" border="0">
+                        <thead>
+                            <tr>
+                                <th class="celdaTituloTabla" style="text-align:center;" width="10%">${_('Document')}</th>
+                                <th class="celdaTituloTabla" style="text-align:center;" width="10%">${_('Type')}</th>
+                                <th class="celdaTituloTabla" style="text-align:center;" width="10%">${_('Due Days')}</th>
+                                <th class="celdaTituloTabla" style="text-align:center;" width="10%">${_('Residual')}</th>
+                                <% form = data['form']%>
+                                %for i in range (4,-1,-1):
+                                    <th class="celdaTituloTabla" style="text-align:center;">${form.get('%i'%i).get('name')}</th>
+                                %endfor
+                                <th class="celdaTituloTabla" style="text-align:center;">${_('Total')}</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <%lines_partner = get_dict_lines_by_partner(obj.partner_doc_ids).get(partner, False)%>
+                            %for line in lines_partner:
+                                <tr class="prueba" >
+                                    <td class="celdaLineDataTitulo" width="10%">
+                                        ${line.document_id.number}
+                                    </td>
+                                    <td class="celdaLineData" width="10%">
+                                        ${line.document_id.type}
+                                    </td>
+                                    <td class="celdaLineData" width="10%">
+                                        ${line.due_days}
+                                    </td>
+                                    <td class="celdaLineData" width="10%">
+                                        ${line.residual}
+                                    </td>
+                                    <td class="celdaLineData" width="10%">
+                                        ${line.days_due_01to30}
+                                    </td>
+                                    <td class="celdaLineData" width="10%">
+                                        ${line.days_due_31to60}
+                                    </td>
+                                    <td class="celdaLineData" width="10%">
+                                        ${line.days_due_61to90}
+                                    </td>
+                                    <td class="celdaLineData" width="10%">
+                                        ${line.days_due_91to120}
+                                    </td>
+                                    <td class="celdaLineData" width="10%">
+                                        ${line.days_due_121togr}
+                                    </td>
+                                    <td class="celdaTotal" width="10%">
+                                        ${line.total}
+                                    </td>
+                                </tr>
+                            %endfor
+                            <tr>
+                                %for i in range(1,11):
+                                    
+                                    <td class="celdaTotalTotales" >${_('$')}
+                                    </td>
+                                %endfor
+                            </tr>
+                        </tbody>
+                    </table>
+                %endfor
+            %endif
         %endfor
     </body>
 </html>
