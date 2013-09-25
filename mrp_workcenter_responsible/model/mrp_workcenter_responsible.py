@@ -26,6 +26,7 @@
 from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 
+
 class mrp_workcenter(osv.Model):
 
     _inherit = 'mrp.workcenter'
@@ -35,6 +36,7 @@ class mrp_workcenter(osv.Model):
             string='Responsible',
             help='Responsible person to perform the work center activities.'),
     }
+
 
 class mrp_production_workcenter_line(osv.Model):
 
