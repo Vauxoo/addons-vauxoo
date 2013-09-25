@@ -70,11 +70,13 @@
                 </tree>
             </field>
         </record>
-        <record id="action_menu_ir_attachment_facturae_mx" model="ir.actions.act_window">
-            <field name="name">Wizard.ir.attachment.facturae.mx</field>
+        <record id="action_ir_attachment_facturae_mx" model="ir.actions.act_window">
+            <field name="name">action.ir.attachment.facturae.mx</field>
+            <field name="name">action.ir.attachment.facturae.mx</field>
             <field name="res_model">ir.attachment.facturae.mx</field>
             <field name="view_type">form</field>
-            <field name="view_mode">form</field>
+            <field name="view_mode">tree,form</field>
+            <field eval="False" name="view_id"/>
         </record>
         <!--
         <menuitem id="menu_ir_attachment_facturae_mx"
