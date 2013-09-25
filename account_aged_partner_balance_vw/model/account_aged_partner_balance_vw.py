@@ -417,6 +417,8 @@ class account_aged_trial_balance(osv.TransientModel):
         if not partner_ids:
             return []
         res = self._get_invoice_by_partner(cr, uid, ids, partner_ids)
+        res2 = self._get_lines_by_partner_without_invoice(cr, uid, ids, partner_ids)
+        res += res2
         res = self._screening_invoices(cr, uid, ids, form, res)
         return res
 
@@ -468,7 +470,7 @@ class account_aged_trial_balance(osv.TransientModel):
                 residual = inv_brw.residual
                 date_due = mx.DateTime.strptime(
                     inv_brw.date_due or inv_brw.date_invoice, '%Y-%m-%d')
-                today = mx.DateTime.now()
+                today = mx.DateTime.strptime(wzd_brw.date_from, '%Y-%m-%d')
                 due_days = (today - date_due).day
 
                 if not residual:
@@ -481,5 +483,62 @@ class account_aged_trial_balance(osv.TransientModel):
                     'residual': residual,
                     'due_days': due_days,
                     'date_due': inv_brw.date_due or inv_brw.date_invoice,
+                })
+        return res
+
+    def _get_lines_by_partner_without_invoice(self, cr, uid, ids, rp_ids, context=None):
+        res = [] 
+        context = context or {}
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        acc_move_line = self.pool.get('account.move.line')
+        inv_obj = self.pool.get('account.invoice')
+        acc_journal_obj = self.pool.get('account.journal')
+        company_id = self.pool.get('res.company')._company_default_get(cr, uid,
+            'account.diot.report', context=context)
+        moves_invoice_ids = []
+        inv_company = inv_obj.search(cr, uid, [('company_id', '=', company_id)], context=context)
+        for invoice in inv_obj.browse(cr, uid, inv_company, context=context):
+            if invoice.move_id:
+                moves_invoice_ids.append(invoice.move_id.id)
+        journal_comp = acc_journal_obj.search(cr, uid, [('company_id', '=', company_id),
+            ('type', 'in', ['bank', 'cash'])], context=context)
+        accounts_journal = []
+        for journal in acc_journal_obj.browse(cr, uid, journal_comp, context=context):
+            if journal.default_debit_account_id:
+                accounts_journal.append(journal.default_debit_account_id.id)
+            if journal.default_credit_account_id:
+                accounts_journal.append(journal.default_credit_account_id.id)
+        accounts_journal = list(set(accounts_journal))
+        args = [
+            ('reconcile_partial_id', '=', False), 
+            ('reconcile_id', '=', False),
+            ('move_id', 'not in', moves_invoice_ids),
+            ('company_id', '=', company_id),
+            ('account_id', 'in', accounts_journal),
+            ('partner_id', '!=', False)
+            ]
+        if wzd_brw.direction_selection == 'past':
+            args += [('date', '<=', wzd_brw.date_from)]
+        elif wzd_brw.direction_selection == 'future':
+            args += [('date', '>=', wzd_brw.date_from)]
+        if wzd_brw.result_selection == 'customer':
+            args += [('credit', '!=', 0)]
+        elif wzd_brw.result_selection == 'supplier':
+            args += [('debit', '!=', 0)]
+        else:
+            return []
+        move_lines_ret = acc_move_line.search(cr, uid, args, context=context)
+        today = mx.DateTime.strptime(wzd_brw.date_from, '%Y-%m-%d')
+        for line in acc_move_line.browse(cr, uid, move_lines_ret, context=context):
+            date_due = mx.DateTime.strptime(line.date, '%Y-%m-%d')
+            due_days = (today - date_due).day
+            residual = line.credit or line.debit or False
+            res.append({
+                'partner_id': line.partner_id and line.partner_id.id or False,
+                'user_id' : False,
+                'document_id': '%s,%s'%(line._name,line.id),
+                'residual': residual,
+                'due_days': due_days,
+                'date_due': line.date,
                 })
         return res
