@@ -30,6 +30,7 @@
     'images' : [],                                                                 
     'depends' : [
         'survey',
+        'web_bootstrap3',
     ],                                                                
     'data': [                                                                      
             'security/groups_survey.xml',
