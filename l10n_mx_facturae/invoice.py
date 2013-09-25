@@ -807,9 +807,38 @@ class account_invoice(osv.Model):
         fname_xml = (data_dict['Comprobante']['Emisor']['rfc'] or '') + '_' + (
             data_dict['Comprobante'].get('serie', '') or '') + '_' + (
             data_dict['Comprobante'].get('folio', '') or '') + '.xml'
-        data_xml = data_xml.replace(
-            '<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
+        data_xml = data_xml.replace('<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
+        date_invoice = data_dict.get('Comprobante',{}) and datetime.strptime( data_dict.get('Comprobante',{}).get('fecha',{}), '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d') or False
+        if os.name <> "nt":
+            facturae_version = '2.2'
+            if date_invoice  and date_invoice < '2012-07-01':
+                facturae_version = '2.0'
+            self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], facturae_version)
+            data_dict.get('Comprobante',{})
         return fname_xml, data_xml
+
+    def validate_scheme_facturae_xml(self, cr, uid, ids, datas_xmls=[], facturae_version = None, facturae_type="cfdv", scheme_type='xsd'):
+    #TODO: bzr add to file fname_schema
+        if not datas_xmls:
+            datas_xmls = []
+        certificate_lib = self.pool.get('facturae.certificate.library')
+        for data_xml in datas_xmls:
+            (fileno_data_xml, fname_data_xml) = tempfile.mkstemp('.xml', 'openerp_' + (False or '') + '__facturae__' )
+            f = open(fname_data_xml, 'wb')
+            f.write( data_xml )
+            f.close()
+            os.close(fileno_data_xml)
+            all_paths = tools.config["addons_path"].split(",")
+            for my_path in all_paths:
+                if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae', 'SAT')):
+                    # If dir is in path, save it on real_path
+                    fname_scheme = my_path and os.path.join(my_path, 'l10n_mx_facturae', 'SAT', facturae_type + facturae_version +  '.' + scheme_type) or ''
+                    #fname_scheme = os.path.join(tools.config["addons_path"], u'l10n_mx_facturae', u'SAT', facturae_type + facturae_version +  '.' + scheme_type )
+                    fname_out = certificate_lib.b64str_to_tempfile( base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__schema_validation_result__' )
+                    result = certificate_lib.check_xml_scheme(fname_data_xml, fname_scheme, fname_out)
+                    if result: #Valida el xml mediante el archivo xsd
+                        raise osv.except_osv('Error al validar la estructura del xml!', 'Validación de XML versión %s:\n%s'%(facturae_version, result))
+        return True
 
     def write_cfd_data(self, cr, uid, ids, cfd_datas, context={}):
         """
