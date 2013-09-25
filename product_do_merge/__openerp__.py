@@ -49,6 +49,7 @@ also is created an action menu in the product view.
     'depends' : [
         'base',
         'stock',
+        'group_product_do'
     ],                                                                
     'data': [                                                                      
         'wizard/base_product_merge_view.xml',
