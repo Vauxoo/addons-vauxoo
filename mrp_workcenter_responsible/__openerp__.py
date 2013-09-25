@@ -36,7 +36,7 @@ MRP Workcenter Responsible
 Add the feature of having a responsible for a work center and it's work
 orders associated.
 """,
-    "depends": ["mrp_operations"],
+    "depends": ["mrp_operations", "hr"],
     "data": [
         "view/mrp_workcenter_responsible_view.xml",
     ],

@@ -31,7 +31,7 @@ class mrp_workcenter(osv.Model):
     _inherit = 'mrp.workcenter'
     _columns = {
         'responsible_id': fields.many2one(
-            'res.users',
+            'hr.employee',
             string=_('Responsible'),
             help=_('Responsible person to perform the work center'
                    ' activities.')),
@@ -44,7 +44,7 @@ class mrp_production_workcenter_line(osv.Model):
         'responsible_id': fields.related(
             'workcenter_id', 'responsible_id',
             type='many2one',
-            relation='res.users',
+            relation='hr.employee',
             readonly=True,
             string=_('Responsible'),
             help=_('Responsible person to carry out the work order. The'
