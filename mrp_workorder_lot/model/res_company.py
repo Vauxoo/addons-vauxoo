@@ -28,12 +28,23 @@ from openerp.tools.translate import _
 from openerp import tools
 
 
-class mrp_config_settings(osv.TransientModel):
-    _inherit = 'mrp.config.settings'
-
+class res_company(osv.osv):
+    _inherit = 'res.company'
     _columns = {
-        'group_mrp_consume_produce': fields.boolean(
-            'Real Consume and Produce',
-            implied_group=
-            'mrp_consume_produce.group_mrp_button_consume_produce'),
+        'batch_type': fields.selection(
+            [('bottleneck', 'Avoid Production Bottleneck'),
+             ('max_cost', 'Maximize Production Cost')],
+            'Production Batch Process Type',
+            help=('Two options when management the batch work orders:\n\n'
+                   ' - Avoid Production Bottleneck: Will create the batch'
+                   ' work orders taking into a count the minium workcenter'
+                   ' capacity.'
+                   ' - Maximize Production Cost: For every workcenter will'
+                   ' create a batch of works orders that always explotes the'
+                   ' product capacity of the workcenter.\n')
+            ),
+    }
+
+    _defaults = {
+        'batch_type': 'bottleneck',
     }

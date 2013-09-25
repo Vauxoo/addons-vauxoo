@@ -45,6 +45,7 @@ with the expense
     "demo_xml": [],
     "update_xml": [
         'view/hr_expense_view.xml', 
+        'workflow/hr_expense_workflow.xml'
     ],
     "active": False,
     "installable": True,
