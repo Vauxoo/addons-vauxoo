@@ -32,7 +32,10 @@
     'description': '''
 ''',
     'depends': ['base', 'mail'],
-    'data': [],
+    'data': [
+        'security/ir.model.access.csv',
+        'view/mrp_product_capacity_view.xml',
+    ],
     'demo': [],
     'test': [],
     'active': False,
