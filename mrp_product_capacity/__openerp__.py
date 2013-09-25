@@ -31,7 +31,7 @@
     'category': '',
     'description': '''
 ''',
-    'depends': ['base', 'mail'],
+    'depends': ['base', 'mail', 'mrp'],
     'data': [
         'security/ir.model.access.csv',
         'view/mrp_product_capacity_view.xml',
