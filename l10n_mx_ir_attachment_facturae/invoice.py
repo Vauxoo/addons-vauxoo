@@ -79,9 +79,6 @@ class account_invoice(osv.Model):
             result['res_id'] = attach_ids and attach_ids[0] or False
             res = mod_obj.get_object_reference(cr, uid, 'l10n_mx_ir_attachment_facturae', 
                                                             'view_ir_attachment_facturae_mx_form')
-            #~res2 = mod_obj.get_object_reference(cr, uid, 'l10n_mx_ir_attachment_facturae', 
-                                                            #~'view_ir_attachment_facturae_mx_tree')
-            #~result['views'] = [(res and res[1] or False, 'form'),(res2 and res2[1] or False, 'tree')]
             result['views'] = [(res and res[1] or False, 'form')]
             return result
         return True
