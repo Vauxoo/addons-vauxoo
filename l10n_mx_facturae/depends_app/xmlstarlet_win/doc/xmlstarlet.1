@@ -1,0 +1,136 @@
+'\" t
+.\"     Title: xmlstarlet
+.\"    Author: Mikhail Grushinskiy
+.\" Generator: DocBook XSL-NS Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\"      Date: 08/26/2012
+.\"    Manual: XMLStarlet Manual
+.\"    Source: Version 1.4.0
+.\"  Language: English
+.\"
+.TH "XMLSTARLET" "1" "08/26/2012" "Version 1.4.0" "XMLStarlet Manual"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+xmlstarlet \- command line XML/XSLT toolkit
+.SH "SYNOPSIS"
+.HP \w'\fBxml\fR\ 'u
+\fBxml\fR [\fIoptions\fR...] {\fIcommand\fR} [\fIcmd\-options\fR...]
+.SH "INTRODUCTION"
+.PP
+XMLStarlet is a set of command line utilities (tools) which can be used to transform, query, validate, and edit XML documents and files using simple set of shell commands in similar way it is done for plain text files using UNIX grep, sed, awk, diff, patch, join, etc commands\&. This set of command line utilities can be used by those who deal with many XML documents on UNIX shell command prompt as well as for automated XML processing with shell scripts\&.
+.SH "OPTIONS"
+.PP
+\fB\-\-version\fR
+.RS 4
+Display the version of
+xmlstarlet\&.
+.RE
+.PP
+\fB\-\-help\fR
+.RS 4
+Display help\&.
+.RE
+.SH "COMMANDS"
+.PP
+\fBxml\fR
+\fIcommand\fR
+\fB\-\-help\fR
+for command specific help
+.PP
+Available commands include:
+.PP
+\fBed (or edit)\fR
+.RS 4
+Edit/update XML document(s)\&.
+.RE
+.PP
+\fBsel (or select)\fR
+.RS 4
+Select data or query XML document(s) (XPATH, etc)\&.
+.RE
+.PP
+\fBtr (or transform)\fR
+.RS 4
+Transform XML documents(s) using XSLT\&.
+.RE
+.PP
+\fBval (or validate)\fR
+.RS 4
+Validate XML document(s) (well\-formed/DTD/XSD/RelaxNG)\&.
+.RE
+.PP
+\fBfo (or format)\fR
+.RS 4
+Format XML document(s)\&.
+.RE
+.PP
+\fBel (or elements)\fR
+.RS 4
+Display element structure of XML document\&.
+.RE
+.PP
+\fBc14n (or canonic)\fR
+.RS 4
+XML canonicalization\&.
+.RE
+.PP
+\fBls (or list)\fR
+.RS 4
+List directory as XML\&.
+.RE
+.PP
+\fBesc (or escape)\fR
+.RS 4
+Escape special XML characters\&.
+.RE
+.PP
+\fBunesc (or unescape)\fR
+.RS 4
+Unescape special XML characters\&.
+.RE
+.PP
+\fBpyx (or xmln)\fR
+.RS 4
+Convert XML into PYX format (based on ESIS \- ISO 8879)\&.
+.RE
+.PP
+\fBp2x (or depyx)\fR
+.RS 4
+Convert PYX into XML\&.
+.RE
+.SH "REFERENCES"
+.PP
+XMLStarlet is a command line toolkit to query/edit/check/transform XML documents (for more information see http://xmlstar\&.sourceforge\&.net/)\&.
+.SH "BUGS"
+.PP
+Report bugs to the mailing list,
+xmlstar\-devel@lists\&.sourceforge\&.net
+or the bug tracker:
+\m[blue]\fB\%http://sourceforge.net/tracker/?group_id=66612&atid=515106\fR\m[]\&.
+.SH "AUTHOR"
+.PP
+\fBMikhail Grushinskiy\fR
+.RS 4
+XMLStarlet creator\&.
+.RE
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2012
+.br

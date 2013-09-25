@@ -1,0 +1,4 @@
+1. xml ed option is highly incomplete
+2. How about XUpdate? (see http://www.xmldb.org/)
+3. just do grep TODO src/*.c and you'll figure it out
+4. generate xsd/DTD (best guess) from given XML document

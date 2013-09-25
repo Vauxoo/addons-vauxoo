@@ -52,11 +52,11 @@ def exec_command_pipe(*args):
 if os.name == "nt":
     app_xsltproc = 'xsltproc.exe'
     app_openssl = 'openssl.exe'
-    app_xmlstarlet = 'xmlstarlet'
+    app_xmlstarlet = 'xml.exe'
 else:
     app_xsltproc = 'xsltproc'
     app_openssl = 'openssl'
-    app_xmlstarlet = 'xmlstarlet'
+    app_xmlstarlet = 'xml'
 
 app_openssl_fullpath = os.path.join(openssl_path, app_openssl)
 if not os.path.isfile(app_openssl_fullpath):
