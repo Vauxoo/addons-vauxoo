@@ -157,12 +157,25 @@
                         <tbody>
                             <%lines_partner = get_dict_lines_by_partner(obj.partner_doc_ids).get(partner, False)%>
                             %for line in lines_partner:
+                                <%
+                                type = ''
+                                document = ''
+                                if line.document_id._name == 'account.invoice':
+                                    document = line.document_id.number
+                                    type = 'Invoice'
+                                elif line.document_id._name == 'account.voucher':
+                                    type = 'Voucher'
+                                    document = line.document_id.number
+                                elif line.document_id._name == 'account.move.line':
+                                    type = 'Journal Entry Line'
+                                    document = line.document_id.name
+                                %>
                                 <tr class="prueba" >
                                     <td class="celdaLineDataTitulo" width="10%">
-                                        ${line.document_id.number}
+                                        ${document}
                                     </td>
                                     <td class="celdaLineData" width="10%">
-                                        ${line.document_id.type}
+                                        ${type}
                                     </td>
                                     <td class="celdaLineData" width="10%">
                                         ${line.due_days}
