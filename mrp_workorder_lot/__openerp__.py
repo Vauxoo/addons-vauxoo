@@ -83,7 +83,7 @@ Another pre-configure options:
 .. note:: The module ``mrp_consume_produce`` can be find in
           ``lp:addons-vauxoo/7.0``.
 """,
-    "depends": ["mrp", "mrp_operations", "mrp_consume_produce"],
+    "depends": ["mrp", "mrp_operations", "mrp_consume_produce", "mrp_product_capacity"],
     "data": [
         'view/mrp_workorder_lot_view.xml',
         'view/res_config_view.xml',
