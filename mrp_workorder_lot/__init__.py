@@ -22,18 +22,5 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
-from openerp.osv import fields, osv, orm
-from openerp.tools.translate import _
-from openerp import tools
-
-
-class mrp_config_settings(osv.TransientModel):
-    _inherit = 'mrp.config.settings'
-
-    _columns = {
-        'group_mrp_consume_produce': fields.boolean(
-            'Real Consume and Produce',
-            implied_group=
-            'mrp_consume_produce.group_mrp_button_consume_produce'),
-    }
+import model
+import wizard
