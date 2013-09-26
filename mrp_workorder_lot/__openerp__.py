@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
+#    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
 #    Coded by: Katherine Zaoral          <kathy@vauxoo.com>
@@ -26,62 +26,116 @@
 {
     "name": "MRP Workorder Lot",
     "version": "1.0",
-    "author": "Vauxoo C.A.",
-    "website": "http://www.openerp.com.ve",
+    "author": "Vauxoo",
+    "website": "http://www.vauxoo.com",
     "category": "MRP",
     "description": """
 MRP Workorder Lot
 =================
 
-This module adds two features to the mrp module. First, create a new model
-named ``Scheduled Work Orders`` that represent the estimated work orders to be
-done. When a manufacturing order is confirmed then the 'estimated' work orders
-are created. Later, using the mrp_consume_produce module you can consume and
-produce real work orders (in development).
+This module adds two features to the mrp module.
 
-This module also adds the feature of taking into account the workcenters
-maximum capacity by product for the process of automatic generating the work
-orders of a manufacturing order to make batch orders.
+Work Order Lot
+--------------
 
-Instead of generate one workorder by every activity loaded in
-the manufacturing order routing (the basic process) it create so many
-work orders needed to the production capacity in the workcenters. There is two
-criterias for the workcenters capacitys:
+**First**, create a new model named ``Work Orders Lots`` (WOL) that represents a
+block of Work Orders to be accomplished. The usual behavior in OpenERP when a
+Manufacturing Order is confirmed is generating automatically the Work Orders,
+one for every operation provided by the Routing set in the Manufacturing Order
+form. This module changes this behavior by creating not Work Orders per se but
+creating Work Order Lots. Every Work Order Lot holds a set of Work Orders
+needed to achieve every routing operation.
+
+The regular process to create the Work Orders has been modified too, instead
+of creating one Work Order by every routing operation, it also takes into
+account the product capacity in every relevant workcenters (workcenters
+related to the current routing operations) and the product quantities
+predisposed in every routing operation. This way a work order for a routing
+operation will be split in N pieces to fulfill the workcenter capacity
+condition like creating a batch procedure. For example::
+
+    Manufacturing Order:
+        Product: French Fries
+        Qty to produce: 70 Units
+        Raw Material: 1 kg Potatoes to produce 1 unit of French Fries
+                      In total 70 kgs of potatoes to process.
+
+    Routing Operations for French Fries:
+        1. Clean potatoes   at Dishwasher workcenter
+        2. Peel potatoes    at Table workcenter
+        3. Nibble potatoes  at Grinder Machine workcenter
+        4. Fry potatoes     at Stove workcenter
+
+    Workcenter Capacities:
+        Dishwasher:         40 kgs of Potatoes
+        Grinder Machine:    20 kgs of Potatoes
+        Stove:              30 kgs of Potatoes
+        Table:              300 kgs of Potatoes
+
+    For this case the bootle neck for workcenter capacity is in the Grinder
+    Machine workcenter for a maximum of 20 kgs of Potatoes. Knowing that we
+    need to process 70 kg of potatoes then it is necessary to create four work
+    order lots: three of 20 kg and one for 10 kg of potatoes.
+
+This new way to automatically create work order lots will also create as many
+work orders as needed to respect the workcenter capacity. However this capacity
+can be measured in two different criteria:
 
 - **Avoid Production Bottleneck:** Will create the batch work orders taking
-  into account the minium workcenter capacity.
-- **Maximize Production Cost:** For every workcenter will create a batch of
-  works orders that always explotes the product capacity of the workcenter.
+  into account the minimum capacity of all workcenter maximun capacities
+  (Like the example above).
+- **Maximize Workcenter Productivity / Minimizing Production Cost:** For every
+  workcenter will create a batch of works orders that always explotes the
+  product capacity of the workcenter::
 
-This criteria needs to be set, by default it use the
-*Avoid Production Bottleneck* option. For change this option have this
-alternatives:
+    In this case will create:
+    - Two work order Lots for operation 1
+      (one Lot of 40 kg and one of 30 kg)
+    - Four work order Lots for operation 2
+      (three Lots of 20 kg and one of 10 kg)
+    - Tree work order Lots for operation 3
+      (two Lots of 30 kg and one of 10 Kg)
+    - A work order lot of 70 Kg for operation 4 (300 Kg > 70 Kg)
 
-- Go to ``Settings > Companies > (Select Companie) > Configuration (Tab) >
-  Logistics > Production Batch Process Type``.
-- Go to ``Settings > Configuration > Manufacturing > Manufacturing Order >
-  Planning > Production Batch Process Type``.
+**Note**: The second criterion **Maximize Workcenter Productivity /
+          Minimizing Production Cost** basis is not yet fully implemented but
+          is a work in process.
 
-For example. If I want to produce 100 pounds of meat but my related workcenters
-process only 20 pounds at time, this feature will create 5 work orders each to
-process 20 pounds of the production order 100 pounds.
+This criterion needs to be set by the user. The default is
+*Avoid Production Bottleneck* option. To change this criterion set the
+``Production Batch Process Type`` field either go to
+``Settings Menu > Companies Sidebar Section > Companies Menu > (Select a
+Company from the list) > In Configuration Tab > At Logistics Section`` or go to
+``Settings Menu > Configuration Sidebar Section > Manufacturing Menu >
+Manufacturing Order Section > Planning Section``.
 
-This is helpfull because in real life does not happen that all the process
-of a big capacity manufacturing order is process at once.
+Consume and Produce Processes
+-----------------------------
 
-Also it's needed active some technical settings. Go to
-``Settings > Users > Users > (Select User) > Access Rights (Tab) >
-Technical Settings`` and select the ``Manage Routings`` and
-``Manage Multiple Units of Measure`` checkboxs.
+**Second**, With the new concept of Work Order Lots we are attaching the paradigm of
+consuming raw material in lots instead of consuming it in a swept. In order to
+achieve this feature we have integrated the MRP Consume Produce module to
+manage in a more real way the production processes. These consume and produce
+processes have been adapted to manage the Work Order Lots instead of raw
+material per se. This functionality renders to be helpful because in real life
+the processes did not happen all at once.
 
-Another pre-configure options:
+**Note**: The MRP Consume Produce module (``mrp_consume_produce``) can be
+          found in lp:~vauxoo/addons-vauxoo/7.0
 
-- Active the checkbox ``Track serial number on products`` in
-  ``Settings > Configuration > Warehouse > Traceability`` to show the product
-  serial numbers.
+If you install this module you need to active some settings:
 
-.. note:: The module ``mrp_consume_produce`` can be find in
-          ``lp:addons-vauxoo/7.0``.
+- Active ``Manage Routings`` and ``Manage Multiple Units of Measure``
+  checkboxs at the ``Settings Menu > Users Sidebar Section > Users Menu >
+  (Select a User) > User Form Access Rights Tab  > Technical Settings
+  Section`` to show Workcenter and Routing menu.
+- Active the ``Track serial number on products`` checkbox in
+  ``Settings Menu > Configuration Sidebar Section > Warehouse Menu >
+  Traceability Section`` to show the product serial numbers.
+- Active the ``MRP / Button Consume-Produce`` checkbox in
+  ``Settings Menu > Users Sidebar Section > Users Menu > (Select a User) >
+  User Form Access Rights Tab > Other Section`` to active the groups permission
+  to invidually consume and produce.
 """,
     "depends": ["mrp", "mrp_operations", "mrp_consume_produce", "mrp_product_capacity"],
     "data": [
