@@ -81,8 +81,9 @@ can be measured in two different criteria:
 - **Avoid Production Bottleneck:** Will create the batch work orders taking
   into account the minimum capacity of all workcenter maximun capacities
   (Like the example above).
-- **Minimize Production Cost:** For every workcenter will create a batch of
-  works orders that always explotes the product capacity of the workcenter::
+- **Maximize Workcenter Productivity / Minimizing Production Cost:** For every
+  workcenter will create a batch of works orders that always explotes the
+  product capacity of the workcenter::
 
     In this case will create:
     - Two work order Lots for operation 1
@@ -93,8 +94,9 @@ can be measured in two different criteria:
       (two Lots of 30 kg and one of 10 Kg)
     - A work order lot of 70 Kg for operation 4 (300 Kg > 70 Kg)
 
-**Note**: The second criterion **Maximize Production Cost** basis is
-          not yet fully implemented but is a work in process.
+**Note**: The second criterion **Maximize Workcenter Productivity /
+          Minimizing Production Cost** basis is not yet fully implemented but
+          is a work in process.
 
 This criterion needs to be set by the user. The default is
 *Avoid Production Bottleneck* option. To change this criterion set the

@@ -33,13 +33,14 @@ class res_company(osv.osv):
     _columns = {
         'batch_type': fields.selection(
             [('bottleneck', 'Avoid Production Bottleneck'),
-             ('max_cost', 'Maximize Production Cost')],
+             ('max_cost', 'Maxime Workcenter Productivity / Minimizing Production Cost')],
             'Production Batch Process Type',
             help=('Two options when management the batch work orders:\n\n'
                    ' - Avoid Production Bottleneck: Will create the batch'
                    ' work orders taking into a count the minium workcenter'
                    ' capacity.'
-                   ' - Maximize Production Cost: For every workcenter will'
+                   ' - Maxime Workcenter Productivity / Minimizing Production'
+                   ' Cost: For every workcenter will'
                    ' create a batch of works orders that always explotes the'
                    ' product capacity of the workcenter.\n')
             ),
