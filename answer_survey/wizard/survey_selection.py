@@ -20,7 +20,9 @@
 ##############################################################################
 
 from lxml import etree
-
+from openerp import addons, netsvc, tools
+from openerp.tools import to_xml
+from openerp.tools.safe_eval import safe_eval
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
@@ -42,10 +44,11 @@ class survey_question_wiz(osv.TransientModel):
         """
         Fields View Get method :- generate the new view and display the survey pages of selected survey.
         """
+
         if context is None:
             context = {}
         result = super(survey_question_wiz, self).fields_view_get(cr, uid, view_id, \
-                                        view_type, context, toolbar,submenu)
+                                        view_type, {}, toolbar,submenu)
 
         surv_name_wiz = self.pool.get('survey.name.wiz')
         survey_obj = self.pool.get('survey')
@@ -155,7 +158,9 @@ class survey_question_wiz(osv.TransientModel):
                         question_ids = pag_rec.question_ids
                     else:
                         title = sur_rec.title
-                    xml_form = etree.Element('form', {'string': tools.ustr(title)})
+                    form = etree.Element('form', {'class':'bs3 bs3-form-bg bs3-footer','string': tools.ustr(title)})
+                    section = etree.SubElement(form, 'section', {'class': 'bgvauxoo'})
+                    xml_form = etree.SubElement(section, 'div', {'class': 'container'})
                     if context.has_key('active') and context.get('active',False) and context.has_key('edit'):
                         context.update({'page_id' : tools.ustr(p_id),'page_number' : sur_name_rec.page_no , 'transfer' : sur_name_read.transfer})
                         xml_group3 = etree.SubElement(xml_form, 'group', {'col': '4', 'colspan': '4'})
@@ -181,7 +186,7 @@ class survey_question_wiz(osv.TransientModel):
 
                     if wiz_id:
                         fields["wizardid_" + str(wiz_id)] = {'type':'char', 'size' : 255, 'string':"", 'views':{}}
-                        etree.SubElement(xml_form, 'field', {'invisible':'1','name': "wizardid_" + str(wiz_id),'default':str(lambda *a: 0),'modifiers':'{"invisible":true}'})
+                        etree.SubElement(xml_form, 'field', {'widget':'FieldCharBS3','invisible':'1','name': "wizardid_" + str(wiz_id),'default':str(lambda *a: 0),'modifiers':'{"invisible":true}'})
 
                     if note:
                         xml_group_note = etree.SubElement(xml_form, 'group', {'col': '1','colspan': '4'})
@@ -220,7 +225,7 @@ class survey_question_wiz(osv.TransientModel):
                             for ans in ans_ids:
                                 selection.append((tools.ustr(ans.id), ans.answer))
                             xml_group = etree.SubElement(xml_group, 'group', {'col': '2', 'colspan': '2'})
-                            etree.SubElement(xml_group, 'field', {'readonly':str(readonly), 'name': tools.ustr(que.id) + "_selection"})
+                            etree.SubElement(xml_group, 'field', {'nolabel':'True','class':'dropdown-menus','readonly':str(readonly), 'name': tools.ustr(que.id) + "_selection"})
                             fields[tools.ustr(que.id) + "_selection"] = {'type':'selection', 'selection' :selection, 'string':"Answer"}
 
                         elif que_rec.type == 'multiple_choice_multiple_ans':
@@ -239,14 +244,14 @@ class survey_question_wiz(osv.TransientModel):
                             xml_group = etree.SubElement(xml_group, 'group', {'col': tools.ustr(col), 'colspan': tools.ustr(colspan)})
                             for row in ans_ids:
                                 etree.SubElement(xml_group, 'newline')
-                                etree.SubElement(xml_group, 'field', {'readonly': str(readonly), 'name': tools.ustr(que.id) + "_selection_" + tools.ustr(row.id),'string':to_xml(tools.ustr(row.answer))})
+                                etree.SubElement(xml_group, 'field', {'nolabel':'True','readonly': str(readonly), 'class':'dropdown-menus','name': tools.ustr(que.id) + "_selection_" + tools.ustr(row.id),'string':to_xml(tools.ustr(row.answer))})
                                 selection = [('','')]
                                 for col in que_rec.column_heading_ids:
                                     selection.append((str(col.id), col.title))
                                 fields[tools.ustr(que.id) + "_selection_" + tools.ustr(row.id)] = {'type':'selection', 'selection' : selection, 'string': "Answer"}
                                 if que_rec.comment_column:
                                    fields[tools.ustr(que.id) + "_commentcolumn_"+tools.ustr(row.id) + "_field"] = {'type':'char', 'size' : 255, 'string':tools.ustr(que_rec.column_name), 'views':{}}
-                                   etree.SubElement(xml_group, 'field', {'readonly' :str(readonly), 'name': tools.ustr(que.id) + "_commentcolumn_"+tools.ustr(row.id)+ "_field"})
+                                   etree.SubElement(xml_group, 'field', {'widget':'FieldCharBS3','readonly' :str(readonly), 'name': tools.ustr(que.id) + "_commentcolumn_"+tools.ustr(row.id)+ "_field"})
 
                         elif que_rec.type == 'matrix_of_choices_only_multi_ans':
                             xml_group = etree.SubElement(xml_group, 'group', {'col': str(len(que_rec.column_heading_ids) + 1), 'colspan': '4'})
@@ -271,7 +276,7 @@ class survey_question_wiz(osv.TransientModel):
                                     if col.menu_choice:
                                         for item in col.menu_choice.split('\n'):
                                             if item and not item.strip() == '': selection.append((item ,item))
-                                    etree.SubElement(xml_group, 'field', {'readonly' :str(readonly), 'name': tools.ustr(que.id) + "_" + tools.ustr(row.id) + "_" + tools.ustr(col.id),'nolabel':'1'})
+                                    etree.SubElement(xml_group, 'field', {'nolabel':'True','class':'dropdown-menus','readonly' :str(readonly), 'name': tools.ustr(que.id) + "_" + tools.ustr(row.id) + "_" + tools.ustr(col.id),'nolabel':'1'})
                                     fields[tools.ustr(que.id) + "_" + tools.ustr(row.id)  + "_" + tools.ustr(col.id)] = {'type':'selection', 'string': col.title, 'selection':selection}
 
                         elif que_rec.type == 'multiple_textboxes':
@@ -315,7 +320,7 @@ class survey_question_wiz(osv.TransientModel):
                                     etree.SubElement(xml_group, 'label', {'string': to_xml(tools.ustr(que_test)), 'align':"0.0"})
 
                         elif que_rec.type == 'single_textbox':
-                            etree.SubElement(xml_group, 'field', {'readonly' :str(readonly), 'name': tools.ustr(que.id) + "_single", 'nolabel':"1" ,'colspan':"4"})
+                            etree.SubElement(xml_group, 'field', {'widget':'FieldCharBS3','readonly' :str(readonly), 'name': tools.ustr(que.id) + "_single", 'nolabel':"1" ,'colspan':"4"})
                             fields[tools.ustr(que.id) + "_single"] = {'type':'char', 'size': 255, 'string':"single_textbox", 'views':{}}
 
                         elif que_rec.type == 'comment':
@@ -328,7 +333,7 @@ class survey_question_wiz(osv.TransientModel):
                                 etree.SubElement(xml_group, 'separator', {'string': tools.ustr(col.title),'colspan': '1'})
                             for row in range(0,que_rec.no_of_rows):
                                 for col in que_rec.column_heading_ids:
-                                    etree.SubElement(xml_group, 'field', {'readonly' :str(readonly), 'name': tools.ustr(que.id) + "_table_" + tools.ustr(col.id) +"_"+ tools.ustr(row), 'nolabel':"1"})
+                                    etree.SubElement(xml_group, 'field', {'widget':'FieldCharBS3','readonly' :str(readonly), 'name': tools.ustr(que.id) + "_table_" + tools.ustr(col.id) +"_"+ tools.ustr(row), 'nolabel':"1"})
                                     fields[tools.ustr(que.id) + "_table_" + tools.ustr(col.id) +"_"+ tools.ustr(row)] = {'type':'char','size':255,'views':{}}
 
                         elif que_rec.type == 'multiple_textboxes_diff_type':
@@ -336,7 +341,7 @@ class survey_question_wiz(osv.TransientModel):
                             for ans in ans_ids:
                                 if ans.type == "email" :
                                     fields[tools.ustr(que.id) + "_" + tools.ustr(ans.id) + "_multi"] = {'type':'char', 'size':255, 'string':ans.answer}
-                                    etree.SubElement(xml_group, 'field', {'readonly': str(readonly), 'widget':'email','width':"300",'colspan': '1','name': tools.ustr(que.id) + "_" + tools.ustr(ans.id) + "_multi"})
+                                    etree.SubElement(xml_group, 'field', {'widget':'FieldCharBS3','readonly': str(readonly), 'widget':'email','width':"300",'colspan': '1','name': tools.ustr(que.id) + "_" + tools.ustr(ans.id) + "_multi"})
                                 else:
                                     etree.SubElement(xml_group, 'field', {'readonly': str(readonly), 'width':"300",'colspan': '1','name': tools.ustr(que.id) + "_" + tools.ustr(ans.id) + "_multi"})
                                     if ans.type == "char" :
@@ -352,10 +357,10 @@ class survey_question_wiz(osv.TransientModel):
 
                         if que_rec.type in ['multiple_choice_only_one_ans', 'multiple_choice_multiple_ans', 'matrix_of_choices_only_one_ans', 'matrix_of_choices_only_multi_ans', 'matrix_of_drop_down_menus', 'rating_scale'] and que_rec.is_comment_require:
                             if que_rec.type in ['multiple_choice_only_one_ans', 'multiple_choice_multiple_ans'] and que_rec.comment_field_type in ['char','text'] and que_rec.make_comment_field:
-                                etree.SubElement(xml_group, 'field', {'readonly' :str(readonly), 'name': tools.ustr(que.id) + "_otherfield", 'colspan':"4"})
+                                etree.SubElement(xml_group, 'field', {'widget':'FieldCharBS3','readonly' :str(readonly), 'name': tools.ustr(que.id) + "_otherfield", 'colspan':"4"})
                                 fields[tools.ustr(que.id) + "_otherfield"] = {'type':'boolean', 'string':que_rec.comment_label, 'views':{}}
                                 if que_rec.comment_field_type == 'char':
-                                    etree.SubElement(xml_group, 'field', {'readonly' :str(readonly), 'name': tools.ustr(que.id) + "_other", 'nolabel':"1" ,'colspan':"4"})
+                                    etree.SubElement(xml_group, 'field', {'widget':'FieldCharBS3','readonly' :str(readonly), 'name': tools.ustr(que.id) + "_other", 'nolabel':"1" ,'colspan':"4"})
                                     fields[tools.ustr(que.id) + "_other"] = {'type': 'char', 'string': '', 'size':255, 'views':{}}
                                 elif que_rec.comment_field_type == 'text':
                                     etree.SubElement(xml_group, 'field', {'readonly' :str(readonly), 'name': tools.ustr(que.id) + "_other", 'nolabel':"1" ,'colspan':"4"})
@@ -363,7 +368,7 @@ class survey_question_wiz(osv.TransientModel):
                             else:
                                 if que_rec.comment_field_type == 'char':
                                     etree.SubElement(xml_group, 'label', {'string': to_xml(tools.ustr(que_rec.comment_label)),'colspan':"4"})
-                                    etree.SubElement(xml_group, 'field', {'readonly' :str(readonly), 'name': tools.ustr(que.id) + "_other", 'nolabel':"1" ,'colspan':"4"})
+                                    etree.SubElement(xml_group, 'field', {'widget':'FieldCharBS3','readonly' :str(readonly), 'name': tools.ustr(que.id) + "_other", 'nolabel':"1" ,'colspan':"4"})
                                     fields[tools.ustr(que.id) + "_other"] = {'type': 'char', 'string': '', 'size':255, 'views':{}}
                                 elif que_rec.comment_field_type == 'text':
                                     etree.SubElement(xml_group, 'label', {'string': to_xml(tools.ustr(que_rec.comment_label)),'colspan':"4"})
@@ -374,7 +379,8 @@ class survey_question_wiz(osv.TransientModel):
 
                     if pre_button:
                         etree.SubElement(xml_footer, 'label', {'string': ""})
-                        etree.SubElement(xml_footer, 'button', {'name':"action_previous",'string':"Previous",'type':"object"})
+                        etree.SubElement(xml_footer, 'button',
+                                {'name':"action_previous",'string':"Previous",'type':"object",'class':"answer_exit btn btn-primary btn-large glyphicon glyphicon-heart"})
                     but_string = "Next"
                     if int(page_number) + 1 == total_pages:
                         but_string = "Done"
@@ -386,18 +392,17 @@ class survey_question_wiz(osv.TransientModel):
                         etree.SubElement(xml_footer, 'button', {'name':"action_forward_next",'string': tools.ustr("Next Answer") ,'type':"object",'context' : tools.ustr(context), 'class':"oe_highlight"})
                     elif context.has_key('active') and context.get('active',False) and int(page_number) + 1 == total_pages:
                         etree.SubElement(xml_footer, 'label', {'string': ""})
-                        etree.SubElement(xml_footer, 'button', {'special': "cancel", 'string' : 'Done', 'context' : tools.ustr(context), 'class':"oe_highlight"})
+                        etree.SubElement(xml_footer, 'button', {'special': "cancel", 'string' : 'Done', 'context' : tools.ustr(context), 'class':"answer_exit btn btn-primary btn-large"})
                     else:
                         etree.SubElement(xml_footer, 'label', {'string': ""})
-                        etree.SubElement(xml_footer, 'button', {'name':"action_next",'string': tools.ustr(but_string) ,'type':"object",'context' : tools.ustr(context), 'class':"oe_highlight"})
-                    etree.SubElement(xml_footer, 'label', {'string': "or"})
-                    etree.SubElement(xml_footer, 'button', {'special': "cancel",'string':"Exit",'class':"oe_link"})
+                        etree.SubElement(xml_footer, 'button', {'class': "btn btn-primary btn-large oe_e",'name':"action_next",'string': 'Next' in tools.ustr(but_string) and '/' or '','type':"object",'context' : tools.ustr(context)})
+                    etree.SubElement(xml_footer, 'button', {'special': "cancel",'string':"x",'class':"answer_exit btn btn-primary btn-large oe_e"})
                     etree.SubElement(xml_footer, 'label', {'string': tools.ustr(page_number+ 1) + "/" + tools.ustr(total_pages), 'class':"oe_survey_title_page oe_right"})
 
-                    root = xml_form.getroottree()
+                    root = form.getroottree()
                     result['arch'] = etree.tostring(root)
                     result['fields'] = fields
-                    print 'root',etree.tostring(root)
+                    print 'rooooooooot',etree.tostring(root)
                     print 'fields', fields
                     result['context'] = context
                 else:
@@ -453,7 +458,6 @@ class survey_question_wiz(osv.TransientModel):
                     etree.SubElement(xml_form, 'label', {'string': 'Thanks for your Answer'})
                     etree.SubElement(xml_form, 'newline')
                     etree.SubElement(xml_footer, 'button', {'special':"cancel",'string':"OK",'colspan':"2",'class':'oe_highlight'})
-                    print xml_form.getroottree()
                     root = xml_form.getroottree()
                     result['arch'] = etree.tostring(root)
                     result['fields'] = {}
