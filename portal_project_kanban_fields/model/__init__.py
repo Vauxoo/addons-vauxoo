@@ -2,12 +2,12 @@
 # -*- encoding: utf-8 -*-
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
+#    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Katherine Zaoral          <kathy@vauxoo.com>
-#    Planified by: Katherine Zaoral      <kathy@vauxoo.com>
-#    Audited by: Humberto Arocha         <hbto@vauxoo.com>
+#    Coded by: Yanina Aular <yanina.aular@vauxoo.com>
+#    Planified by: Humberto Arocha <hbto@vauxoo.com>
+#    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -23,17 +23,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import fields, osv, orm
-from openerp.tools.translate import _
-from openerp import tools
+import project
 
 
-class mrp_config_settings(osv.TransientModel):
-    _inherit = 'mrp.config.settings'
-
-    _columns = {
-        'group_mrp_consume_produce': fields.boolean(
-            'Real Consume and Produce',
-            implied_group=
-            'mrp_consume_produce.group_mrp_button_consume_produce'),
-    }

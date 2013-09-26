@@ -31,6 +31,8 @@
     'depends' : [
         'survey',
         'web_bootstrap3',
+        'portal_crm_vauxoo',
+        'web_fontawesome',
     ],                                                                
     'data': [                                                                      
             'security/groups_survey.xml',
@@ -42,6 +44,7 @@
     'qweb' : [                                                                     
     ],                                                                                 
     'css':[                                                                        
+        'static/src/css/survey.css',
     ],                                                                                 
     'demo': [                                                                      
     ],                                                                                 
