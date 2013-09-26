@@ -35,7 +35,7 @@ MRP Workorder Lot
 
 This module adds two features to the mrp module.
 
-First, create a new model named ``Work Orders Lots`` (WOL) that represents a
+**First**, create a new model named ``Work Orders Lots`` (WOL) that represents a
 block of Work Orders to be accomplished. The usual behavior in OpenERP when a
 Manufacturing Order is confirmed is generating automatically the Work Orders,
 one for every operation provided by the Routing set in the Manufacturing Order
@@ -106,8 +106,7 @@ Company from the list) > In Configuration Tab > At Logistics Section`` or go to
 ``Settings Menu > Configuration Sidebar Section > Manufacturing Menu >
 Manufacturing Order Section > Planning Section``.
 
-
-With the new concept of Work Order Lots we are attaching the paradigm of
+**Second**, With the new concept of Work Order Lots we are attaching the paradigm of
 consuming raw material in lots instead of consuming it in a swept. In order to
 achieve this feature we have integrated the MRP Consume Produce module to
 manage in a more real way the production processes. These consume and produce
