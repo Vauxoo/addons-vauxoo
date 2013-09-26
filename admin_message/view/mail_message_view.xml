@@ -38,6 +38,17 @@
                     </section>
                     <section class="container">
                         <field name="body"/>
+                        <div class="row">
+                            <div class="col-md-4">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="attachmet_ids" class="oe_right" string="Attachments availables in this
+                                    message"/>
+                            </div>
+                            <div class="col-md-4">
+                            <field name="attachment_ids" context="{'default_res_model': 'mail.group', 'default_res_id': res_id}" widget="many2many_tags_attachments" domain="[('res_model', '=', 'mail.group'), ('res_id', '=', res_id)]" nolabel="1"/>
+                            </div>
+                        </div>
                     </section>
                     <section class="general_information">
                     <div class="container">

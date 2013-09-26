@@ -50,12 +50,17 @@ giving us more versatility to show the content.
 If we install the module web_bootstrap3 on lp:~vauxoo/web-addons/7.0-web_hideleftmenu all styles
 inside the html can be taken from bootstrap3[1]
 
+The web_many2many_attachment dependency can be found here:
+
+lp:~vauxoo/web-addons/7.0-web_hideleftmenu
+
 [1] http://getbootstrap.com/
     """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     'depends': ['base',
                 'base_setup',
+                'web_many2many_attachments',
                 'mail'], 
     "data": [
         "security/security_groups.xml",
