@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
+#    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
 #    Coded by: Katherine Zaoral          <kathy@vauxoo.com>
@@ -27,7 +27,7 @@
     "name": "MRP Workorder Lot",
     "version": "1.0",
     "author": "Vauxoo",
-    "website": "http://www.openerp.com.ve",
+    "website": "http://www.vauxoo.com",
     "category": "MRP",
     "description": """
 MRP Workorder Lot
