@@ -64,7 +64,7 @@
         
         <menuitem id='base_product_uom_merge_wizard_menu'
             action='base_product_uom_merge_wizard_act'
-            groups='base.group_system,group_product_do.res_group_product_do_merge_uom_update'
+            groups='base.group_system,product_do_merge.res_group_product_do_merge_uom_update'
             parent='product_do_merge.root_menu_product' />
 
         <act_window 
@@ -75,7 +75,7 @@
             view_mode="form"
             target="new"
             key2="client_action_multi"
-            id="base_product_uom_merge_wizard_act" groups='group_product_do.res_group_product_do_merge_uom_update'/>
+            id="base_product_uom_merge_wizard_act" groups='product_do_merge.res_group_product_do_merge_uom_update'/>
         
     </data>
 </openerp>

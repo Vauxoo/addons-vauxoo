@@ -2,7 +2,7 @@
 <openerp>
     <data>
 
-        <menuitem id='root_menu_product' name='Tools' parent='stock.menu_stock_root' sequence="14" groups='group_product_do.res_group_product_do_merge_uom_update'/>
+        <menuitem id='root_menu_product' name='Tools' parent='stock.menu_stock_root' sequence="14" groups='res_group_product_do_merge_uom_update'/>
 
         <record model="ir.actions.act_window" id="base_product_merge_automatic_act">
             <field name="name">Duplicate products</field>
@@ -178,7 +178,7 @@
         </record>
 
         <act_window id="action_product_merge" res_model="base.product.merge.automatic.wizard" src_model="product.product"
-            target="new" multi="True" key2="client_action_multi" view_mode="form" name="Automatic Merge" groups='group_product_do.res_group_product_do_merge_uom_update'/>
+            target="new" multi="True" key2="client_action_multi" view_mode="form" name="Automatic Merge" groups='res_group_product_do_merge_uom_update'/>
 
     </data>
 </openerp>
