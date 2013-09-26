@@ -40,6 +40,10 @@ Requires the following programs:
   openssl
       Ubuntu insall with:
         sudo apt-get install openssl
+
+  xmlstarlet
+      Ubuntu insall with:
+        sudo apt-get install xmlstarlet
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
