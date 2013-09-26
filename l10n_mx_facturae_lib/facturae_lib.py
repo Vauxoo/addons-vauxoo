@@ -27,12 +27,15 @@
 from openerp.tools.translate import _
 from openerp.osv import fields, osv
 from openerp import tools
+from openerp.tools.translate import _
 
 import os
 import sys
 import time
 import tempfile
 import base64
+import logging
+_logger = logging.getLogger(__name__)
 
 depends_app_path = os.path.join(tools.config["addons_path"], u'l10n_mx_facturae', u'depends_app')
 openssl_path = os.path.abspath(tools.ustr(os.path.join(depends_app_path,  u'openssl_win')))
@@ -61,17 +64,25 @@ else:
 app_openssl_fullpath = os.path.join(openssl_path, app_openssl)
 if not os.path.isfile(app_openssl_fullpath):
     app_openssl_fullpath = tools.find_in_path(app_openssl)
+    if not os.path.isfile(app_openssl_fullpath):
+        app_openssl_fullpath = False
+        _logger.warning("Failed to find in path 'openssl' app")
 
 app_xsltproc_fullpath = os.path.join(xsltproc_path, app_xsltproc)
 if not os.path.isfile(app_xsltproc_fullpath):
     app_xsltproc_fullpath = tools.find_in_path(app_xsltproc)
+    if not os.path.isfile(app_xsltproc_fullpath):
+        app_xsltproc_fullpath = False
+        _logger.warning("Failed to find in path 'xsltproc' app")
 
 app_xmlstarlet_fullpath = os.path.join( xmlstarlet_path, app_xmlstarlet )
 if not os.path.isfile( app_xmlstarlet_fullpath ):
     app_xmlstarlet_fullpath = tools.find_in_path( app_xmlstarlet )
+    if not app_xmlstarlet_fullpath:
+        app_xmlstarlet_fullpath = False
+        _logger.warning("Failed to find in path 'xmlstarlet' app")
+        
 
-
-# TODO: Validar que esta instalado openssl & xsltproc
 class facturae_certificate_library(osv.Model):
     _name = 'facturae.certificate.library'
     _auto = False
@@ -120,6 +131,9 @@ class facturae_certificate_library(osv.Model):
             in this Certificate
         @param type_der : cer or key
         """
+        if not app_openssl_fullpath:
+            raise osv.except_osv(_("Error!"), _(
+                "Failed to find in path '%s' app. This app is required for sign Mexican Electronic Invoice"%(app_openssl) ))
         cmd = ''
         result = ''
         if type_der == 'cer':
@@ -155,6 +169,9 @@ class facturae_certificate_library(osv.Model):
         @param fname_xslt : Path where is located the file 'Cadena Original'.xslt
         @param fname_out : Path and name of the file.xml that is send to sign
         """
+        if not app_xsltproc_fullpath:
+            raise osv.except_osv(_("Error!"), _(
+                "Failed to find in path '%s' app. This app is required for sign Mexican Electronic Invoice"%(app_xsltproc) ))
         cmd = '"%s" "%s" "%s" >"%s"' % (
             app_xsltproc_fullpath, fname_xslt, fname_xml, fname_out)
         args = tuple(cmd.split(' '))
@@ -212,6 +229,9 @@ class facturae_certificate_library(osv.Model):
         @params: list [noout serial startdate enddate subject issuer dates]
         @type: str DER or PEM
         """
+        if not app_openssl_fullpath:
+            raise osv.except_osv(_("Error!"), _(
+                "Failed to find in path '%s' app. This app is required for sign Mexican Electronic Invoice"%(app_openssl) ))
         cmd_params = ' -'.join(params)
         cmd_params = cmd_params and '-' + cmd_params or ''
         cmd = '"%s" x509 -inform "%s" -in "%s" -noout "%s" -out "%s"' % (
@@ -237,6 +257,9 @@ class facturae_certificate_library(osv.Model):
         result = ""
         cmd = ''
         if type_key == 'PEM':
+            if not app_xsltproc_fullpath:
+                raise osv.except_osv(_("Error!"), _(
+                    "Failed to find in path '%s' app. This app is required for sign Mexican Electronic Invoice"%(app_xsltproc) ))
             cmd = '"%s" "%s" "%s" | "%s" dgst -%s -sign "%s" | "%s" enc -base64 -A -out "%s"' % (
                 app_xsltproc_fullpath, fname_xslt, fname, app_openssl_fullpath,
                     encrypt, fname_key, app_openssl_fullpath, fname_out)
@@ -252,15 +275,19 @@ class facturae_certificate_library(osv.Model):
 
     def check_xml_scheme(self, fname_xml, fname_scheme, fname_out, type_scheme="xsd"):
         #xmlstarlet val -e --xsd cfdv2.xsd cfd_example.xml
-        cmd = ''
-        if type_scheme == 'xsd':
-            cmd = '"%s" val -e --%s "%s" "%s" 1>"%s" 2>"%s"'%(app_xmlstarlet_fullpath, type_scheme, fname_scheme, fname_xml, fname_out+"1", fname_out)
-        if cmd:
-            args = tuple( cmd.split(' ') )
-            input, output = exec_command_pipe(*args)
-            result = self._read_file_attempts( open(fname_out, "r") )
-            input.close()
-            output.close()
+        if app_xmlstarlet_fullpath:
+            cmd = ''
+            if type_scheme == 'xsd':
+                cmd = '"%s" val -e --%s "%s" "%s" 1>"%s" 2>"%s"'%(app_xmlstarlet_fullpath, type_scheme, fname_scheme, fname_xml, fname_out+"1", fname_out)
+            if cmd:
+                args = tuple( cmd.split(' ') )
+                input, output = exec_command_pipe(*args)
+                result = self._read_file_attempts( open(fname_out, "r") )
+                input.close()
+                output.close()
+        else:
+            _logger.warning("Failed to find in path 'xmlstarlet' app. Can't validate xml structure. You should make a manual check to xml file.")
+            result = ""
         return result
 
     # Funciones en desuso
