@@ -52,7 +52,8 @@ class account_invoice(osv.Model):
     def create_ir_attachment_facturae(self, cr, uid, ids, context=None):
         attach = ''
         ir_attach_obj = self.pool.get('ir.attachment.facturae.mx')
-        ir_model_data_obj = self.pool.get('ir.model.data')
+        mod_obj = self.pool.get('ir.model.data')
+        act_obj = self.pool.get('ir.actions.act_window')
         attach_ids = []
         inv_type_facturae = {
             'out_invoice': True,
@@ -69,24 +70,15 @@ class account_invoice(osv.Model):
                       context=None)#Context, because use a variable type of our code but we dont need it.
                     )
         if attach_ids:
-            form_res = ir_model_data_obj.get_object_reference(
-                cr, uid, 'l10n_mx_ir_attachment_facturae',
-                'view_ir_attachment_facturae_mx_form')
-            form_id = form_res and form_res[1] or False
-
-            tree_res = ir_model_data_obj.get_object_reference(
-                cr, uid, 'l10n_mx_ir_attachment_facturae',
-                'view_ir_attachment_facturae_mx_tree')
-            tree_id = tree_res and tree_res[1] or False
-
-            return {
-                'name': _('Attachment Factura E MX'),
-                'view_type': 'form',
-                'view_mode': 'form,tree',
-                'res_model': 'ir.attachment.facturae.mx',
-                'res_id': attach_ids[0],
-                'view_id': False,
-                'views': [(form_id, 'form'), (tree_id, 'tree')],
-                'type': 'ir.actions.act_window',
-            }
-        return {}
+            result = mod_obj.get_object_reference(cr, uid, 'l10n_mx_ir_attachment_facturae',
+                                                            'action_ir_attachment_facturae_mx')
+            id = result and result[1] or False
+            result = act_obj.read(cr, uid, [id], context=context)[0]
+            #choose the view_mode accordingly
+            result['domain'] = "[('id','in',["+','.join(map(str, attach_ids))+"])]"
+            result['res_id'] = attach_ids and attach_ids[0] or False
+            res = mod_obj.get_object_reference(cr, uid, 'l10n_mx_ir_attachment_facturae', 
+                                                            'view_ir_attachment_facturae_mx_form')
+            result['views'] = [(res and res[1] or False, 'form')]
+            return result
+        return True
