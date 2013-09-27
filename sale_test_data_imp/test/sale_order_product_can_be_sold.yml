@@ -7,6 +7,7 @@
     import tools
     import netsvc
     
+    res_partner_obj = self.pool.get('res.partner')
     product_obj = self.pool.get('product.product')
     sale_order_line_obj = self.pool.get('sale.order.line')
     account_invoice_obj = self.pool.get('account.invoice')
@@ -14,22 +15,31 @@
     stock_picking_out_object = self.pool.get('stock.picking.out')
     product_ids = product_obj.search(cr, uid, [('sale_ok','=','True'), ('active','=','True')])
     invoice_id = None
+    partner_id = None
     products_tax_not_fund = []
+    partner_ids = res_partner_obj.search(cr, uid, [('customer','=','True')])
+    if partner_ids:
+        for partner in partner_ids:
+            data = res_partner_obj.browse(cr, uid , [partner])[0]
+            if data.property_account_payable.type :
+                partner_id = data.id
+                break
+                
     if product_ids:
         for product_id in product_ids:
             product_data = product_obj.browse(cr, uid , [product_id])
             #~ Data of sale order
-            sale_order_data = {'partner_id' : ref('res_partner_sale_test'),
+            sale_order_data = {'partner_id' : partner_id,
                                'payment_term' : ref('account_payment_term_sale_test_data_imp'),
                                'picking_policy': 'direct',
                                'order_policy': 'manual',
                                'pricelist_id': ref('list_test_sale_order_imp'),
-                               'partner_invoice_id': ref('res_partner_sale_test'),
-                               'partner_shipping_id': ref('res_partner_sale_test'),}
+                               'partner_invoice_id': partner_id,
+                               'partner_shipping_id': partner_id,}
 
             #~ Data of sale order line
             sale_order_line_data = sale_order_line_obj.product_id_change(cr, uid, [], ref('list_test_sale_order_imp'), product_id, qty=1,
-                uom=False, qty_uos=0, uos=False, name='', partner_id=ref('res_partner_sale_test'),
+                uom=False, qty_uos=0, uos=False, name='', partner_id=partner_id,
                 lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False, context=context)['value']
 
             #~ Added taxes of product
@@ -76,8 +86,11 @@
                 
             #~ check that the invoice state is now "Open" 
             if invoice_id:
-                state = account_invoice_obj.browse(cr, uid, [invoice_id.get('res_id')])[0].state
-                assert state == 'open' , 'Wrong. Invoice not changed state to Open'
+                state = account_invoice_obj.browse(cr, uid, [invoice_id.get('res_id')])
+                try:
+                    assert state[0].state == 'open' , 'Wrong. Invoice not changed state to Open'
+                except Exception, e:
+                    tools.ustr(e)
 
             #~ I check that the invoice lines tax_id not null
             if invoice_id:

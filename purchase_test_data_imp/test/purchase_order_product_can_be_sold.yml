@@ -1,72 +1,83 @@
 -
-  Test purchase order of products can be sold
+  Test purchase order of products can be purchased
 -
     Create purchase order, picking in and invoice by product
 -
-  !python {model: purchase.order.line}: |
+  !python {model: purchase.order}: |
     import tools
     import netsvc
     
+    res_partner_obj = self.pool.get('res.partner')
     product_obj = self.pool.get('product.product')
-    sale_obj = self.pool.get('sale.order')
+    purchase_order_line_obj = self.pool.get('purchase.order.line')
     account_invoice_obj = self.pool.get('account.invoice')
     account_invoice_line_obj = self.pool.get('account.invoice.line')
-    stock_picking_out_object = self.pool.get('stock.picking.out')
-    product_ids = product_obj.search(cr, uid, [('sale_ok','=','True'), ('active','=','True')])
+    stock_picking_in_object = self.pool.get('stock.picking.in')
+    product_ids = product_obj.search(cr, uid, [('purchase_ok','=','True'), ('active','=','True')])
     invoice_id = None
+    partner_id = None
     products_tax_not_fund = []
+    partner_ids = res_partner_obj.search(cr, uid, [('supplier','=','True')])
+    if partner_ids:
+        for partner in partner_ids:
+            data = res_partner_obj.browse(cr, uid , [partner])[0]
+            if data.property_account_payable.type :
+                partner_id = data.id
+                break
     if product_ids:
         for product_id in product_ids:
+            print '....'
             product_data = product_obj.browse(cr, uid , [product_id])
-            #~ Data of sale order
-            sale_order_data = {'partner_id' : ref('res_partner_sale_test'),
-                               'payment_term' : ref('account_payment_term_sale_test_data_imp'),
-                               'picking_policy': 'direct',
-                               'order_policy': 'manual',
-                               'pricelist_id': ref('list_test_sale_order_imp'),
-                               'partner_invoice_id': ref('res_partner_sale_test'),
-                               'partner_shipping_id': ref('res_partner_sale_test'),}
+            #~ Data of purchase order
+            purchase_order_data = {'partner_id' : partner_id,
+                                   'invoice_method': 'manual',
+                                   'pricelist_id': ref('list_test_purchase_order_imp'),
+                                   'location_id': ref('stock_location_stock_purchase_test_data'),
+                                   }
 
-            #~ Data of sale order line
-            sale_order_line_data = self.product_id_change(cr, uid, [], ref('list_test_sale_order_imp'), product_id, qty=1,
-                uom=False, qty_uos=0, uos=False, name='', partner_id=ref('res_partner_sale_test'),
-                lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False, context=context)['value']
+            #~ Data of purchase order line
+            purchase_order_line_data = purchase_order_line_obj.onchange_product_id(cr, uid, [], ref('list_test_purchase_order_imp'), product_id, qty=1, uom_id=1,
+                                                                partner_id=partner_id, date_order=False, 
+                                                                fiscal_position_id=False, date_planned=False,
+                                                                name=False, price_unit=1, context=context)['value']
 
             #~ Added taxes of product
-            taxes_ids = product_data[0].taxes_id
-            sale_order_line_data.update({'product_id': product_id, 'tax_id': [(4, tax.id) for tax in taxes_ids]})
+            taxes_ids = product_data[0].supplier_taxes_id
+            purchase_order_line_data.update({'product_id': product_id, 'taxes_id': [(4, tax.id) for tax in taxes_ids]})
             
-            #~ Added data of sale_order_line_data in sale_order_data
-            sale_order_data.update({'order_line': [(0, 0, sale_order_line_data )]})
+            #~ Added data of purchase_order_line_data in purchase_order_data
+            purchase_order_data.update({'order_line': [(0, 0, purchase_order_line_data )]})
             
-            #~ Create sale order with this product
-            sale_order_id = sale_obj.create(cr, uid, sale_order_data )
+            #~ Create purchase order with this product
+            purchase_order_id = self.create(cr, uid, purchase_order_data )
 
             #~ Click button Confirm
-            sale_obj.action_button_confirm(cr, uid, [sale_order_id],context=context)
-            
-            #~  Chech picking out by sale order
-            if not product_data[0].type == 'service' :
+            if purchase_order_id:
                 try:
-                    stock_picking_out_ids = stock_picking_out_object.search(cr, uid, [('sale_id','=',sale_order_id)])
-                    assert len(stock_picking_out_ids) > 0 ,  'Wrong. Stock picking out not fund'
+                    wf_service = netsvc.LocalService("workflow")
+                    wf_service.trg_validate(uid, 'purchase.order', purchase_order_id , 'purchase_confirm', cr)
                 except Exception, e:
                     tools.ustr(e)
             
-            #~ Create invoice for this sale order
+            #~  Chech picking out by purchase order
+            if not product_data[0].type == 'service' :
+                try:
+                    stock_picking_in_ids = stock_picking_in_object.search(cr, uid, [('purchase_id','=',purchase_order_id)])
+                    assert len(stock_picking_in_ids) > 0 ,  'Wrong. Stock picking in not fund'
+                except Exception, e:
+                    tools.ustr(e)
+
+            #~ Create invoice for this purchase order
             try:
-                #~ cr.execute("SAVEPOINT sale_order_savepoint")
-                obj_sapi = self.pool.get('sale.advance.payment.inv')
-                ctx = context.copy()
-                ctx.update({"active_model": 'sale.order', "active_ids": [sale_order_id], "active_id": sale_order_id , 'open_invoices': True})
-                pay_id = obj_sapi.create(cr, uid, {'advance_payment_method': 'all'})
-                invoice_id = obj_sapi.create_invoices(cr, uid, [pay_id], context=ctx)
-                #~ cr.execute("RELEASE SAVEPOINT sale_order_savepoint")
+                #~ cr.execute("SAVEPOINT purchase_order_savepoint
+                context.update({'default_type': 'in_invoice', 'type': 'in_invoice', 'journal_type': 'purchase'})
+                invoice_id = self.view_invoice(cr, uid, [purchase_order_id], context=context)
+                #~ cr.execute("RELEASE SAVEPOINT purchase_order_savepoint")
             except Exception, e:
-                #~ cr.execute("ROLLBACK TO SAVEPOINT sale_order_savepoint")
+                #~ cr.execute("ROLLBACK TO SAVEPOINT purchase_order_savepoint")
                 tools.ustr(e)
                 
-            #~ Validate invoice for this sale order 
+            #~ Validate invoice for this purchase order 
             if invoice_id:
                 try:
                     wf_service = netsvc.LocalService("workflow")
@@ -76,18 +87,20 @@
                 
             #~ check that the invoice state is now "Open" 
             if invoice_id:
-                state = account_invoice_obj.browse(cr, uid, [invoice_id.get('res_id')])[0].state
-                assert state == 'open' , 'Wrong. Invoice not changed state to Open'
+                state = account_invoice_obj.browse(cr, uid, [invoice_id.get('res_id')])
+                try:
+                    assert state[0].state == 'open' , 'Wrong. Invoice not changed state to Open'
+                except Exception, e:
+                    tools.ustr(e)
 
             #~ I check that the invoice lines tax_id not null
             if invoice_id:
-                name_sale = sale_obj.browse(cr, uid, [sale_order_id])[0].name
-                invoice_ids = account_invoice_obj.search(cr, uid, [('origin','like',name_sale)])
+                name_purchase = self.browse(cr, uid, [purchase_order_id])[0].name
+                invoice_ids = account_invoice_obj.search(cr, uid, [('origin','like',name_purchase)])
                 invoice_lines_ids = account_invoice_line_obj.search(cr, uid ,  [('invoice_id','=',invoice_ids[0])])
                 if invoice_lines_ids:
                     for line_id in invoice_lines_ids:
                         line_data = account_invoice_line_obj.browse(cr, uid , [line_id])[0]
-                        print line_data
                         tax_not_found = False
                         taxes_ids = line_data.invoice_line_tax_id
                         if len(taxes_ids) == 0:
