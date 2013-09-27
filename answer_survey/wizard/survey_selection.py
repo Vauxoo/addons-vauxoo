@@ -20,6 +20,7 @@
 ##############################################################################
 
 from lxml import etree
+import os
 from openerp import addons, netsvc, tools
 from openerp.tools import to_xml
 from openerp.tools.safe_eval import safe_eval
@@ -395,7 +396,7 @@ class survey_question_wiz(osv.TransientModel):
                         etree.SubElement(xml_footer, 'button', {'special': "cancel", 'string' : 'Done', 'context' : tools.ustr(context), 'class':"answer_exit btn btn-primary btn-large"})
                     else:
                         etree.SubElement(xml_footer, 'label', {'string': ""})
-                        etree.SubElement(xml_footer, 'button', {'class': "btn btn-primary btn-large oe_e",'name':"action_next",'string': 'Next' in tools.ustr(but_string) and '/' or '','type':"object",'context' : tools.ustr(context)})
+                        etree.SubElement(xml_footer, 'button', {'class': "btn btn-primary btn-large oe_e",'name':"action_next",'string': '/','type':"object",'context' : tools.ustr(context)})
                     etree.SubElement(xml_footer, 'button', {'special': "cancel",'string':"x",'class':"answer_exit btn btn-primary btn-large oe_e"})
                     etree.SubElement(xml_footer, 'label', {'string': tools.ustr(page_number+ 1) + "/" + tools.ustr(total_pages), 'class':"oe_survey_title_page oe_right"})
 
