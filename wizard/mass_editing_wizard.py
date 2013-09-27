@@ -25,14 +25,14 @@ from osv import fields
 from lxml import etree
 import tools
 
-class mass_fuse_wizard(osv.osv_memory):
-    _name = 'mass.fuse.wizard'
+class merge_fuse_wizard(osv.osv_memory):
+    _name = 'merge.fuse.wizard'
     
     def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
-        result = super(mass_fuse_wizard, self).fields_view_get(cr, uid, view_id, view_type, context, toolbar,submenu)
-        if context.get('mass_fuse_object'):
-            mass_object = self.pool.get('mass.object') 
-            fuse_data = mass_object.browse(cr, uid, context.get('mass_fuse_object'), context)
+        result = super(merge_fuse_wizard, self).fields_view_get(cr, uid, view_id, view_type, context, toolbar,submenu)
+        if context.get('merge_fuse_object'):
+            merge_object = self.pool.get('merge.object') 
+            fuse_data = merge_object.browse(cr, uid, context.get('merge_fuse_object'), context)
             all_fields = {}
             xml_form = etree.Element('form', {'string': tools.ustr(fuse_data.name)})
             xml_group = etree.SubElement(xml_form, 'group', {'colspan': '4'})
@@ -67,16 +67,16 @@ class mass_fuse_wizard(osv.osv_memory):
                 cr.commit()
             to_unlink = list(set(active_ids) - set([base_id])) 
             model_obj.unlink(cr,uid,to_unlink)
-        result = super(mass_fuse_wizard, self).create(cr, uid, {}, context)
+        result = super(merge_fuse_wizard, self).create(cr, uid, {}, context)
         return result
 
     def action_apply(self, cr, uid, ids, context=None):
         return  {'type': 'ir.actions.act_window_close'}
 
-mass_fuse_wizard()
+merge_fuse_wizard()
 
-class mass_editing_wizard(osv.osv_memory):
-    _name = 'mass.editing.wizard'
+class merge_editing_wizard(osv.osv_memory):
+    _name = 'merge.editing.wizard'
 
     _columns = {
         'serpent_image': fields.binary('Image'),
@@ -87,10 +87,10 @@ class mass_editing_wizard(osv.osv_memory):
     }
 
     def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
-        result = super(mass_editing_wizard, self).fields_view_get(cr, uid, view_id, view_type, context, toolbar,submenu)
-        if context.get('mass_editing_object'):
-            mass_object = self.pool.get('mass.object') 
-            editing_data = mass_object.browse(cr, uid, context.get('mass_editing_object'), context)
+        result = super(merge_editing_wizard, self).fields_view_get(cr, uid, view_id, view_type, context, toolbar,submenu)
+        if context.get('merge_editing_object'):
+            merge_object = self.pool.get('merge.object') 
+            editing_data = merge_object.browse(cr, uid, context.get('merge_editing_object'), context)
             all_fields = {}
             xml_form = etree.Element('form', {'string': tools.ustr(editing_data.name)})
             xml_group = etree.SubElement(xml_form, 'group', {'colspan': '4'})
@@ -174,12 +174,12 @@ class mass_editing_wizard(osv.osv_memory):
                         dict.update({split_key: m2m_list})
             if dict:
                 model_obj.write(cr, uid, context.get('active_ids'), dict, context)
-        result = super(mass_editing_wizard, self).create(cr, uid, {}, context)
+        result = super(merge_editing_wizard, self).create(cr, uid, {}, context)
         return result
 
     def action_apply(self, cr, uid, ids, context=None):
         return  {'type': 'ir.actions.act_window_close'}
 
-mass_editing_wizard()
+merge_editing_wizard()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

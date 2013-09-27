@@ -24,13 +24,13 @@
 from osv import fields, osv
 from tools.translate import _
 
-class mass_object(osv.osv):
-    _name = "mass.object"
+class merge_object(osv.osv):
+    _name = "merge.object"
 
     _columns = {
         'name' : fields.char("Name", size=64, required=True, select=1),
         'model_id' : fields.many2one('ir.model', 'Model', required=True, select=1),
-        'field_ids' : fields.many2many('ir.model.fields', 'mass_field_rel', 'mass_id', 'field_id', 'Fields'),
+        'field_ids' : fields.many2many('ir.model.fields', 'merge_field_rel', 'merge_id', 'field_id', 'Fields'),
         'ref_ir_act_window':fields.many2one('ir.actions.act_window', 'Sidebar action', readonly=True,
                                             help="Sidebar action to make this template available on records "
                                                  "of the related document model"),
@@ -70,10 +70,10 @@ class mass_object(osv.osv):
             vals['ref_ir_act_window_fuse'] = action_obj.create(cr, uid, {
                  'name': button_name,
                  'type': 'ir.actions.act_window',
-                 'res_model': 'mass.fuse.wizard',
+                 'res_model': 'merge.fuse.wizard',
                  'src_model': src_obj,
                  'view_type': 'form',
-                 'context': "{'mass_fuse_object' : %d}" % (data.id),
+                 'context': "{'merge_fuse_object' : %d}" % (data.id),
                  'view_mode':'form,tree',
                  'target': 'new',
                  'auto_refresh':1
@@ -101,10 +101,10 @@ class mass_object(osv.osv):
             vals['ref_ir_act_window'] = action_obj.create(cr, uid, {
                  'name': button_name,
                  'type': 'ir.actions.act_window',
-                 'res_model': 'mass.editing.wizard',
+                 'res_model': 'merge.editing.wizard',
                  'src_model': src_obj,
                  'view_type': 'form',
-                 'context': "{'mass_editing_object' : %d}" % (data.id),
+                 'context': "{'merge_editing_object' : %d}" % (data.id),
                  'view_mode':'form,tree',
                  'target': 'new',
                  'auto_refresh':1
@@ -134,6 +134,6 @@ class mass_object(osv.osv):
                 raise osv.except_osv(_("Warning"), _("Deletion of the action record failed."))
         return True
 
-mass_object()
+merge_object()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
