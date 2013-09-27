@@ -1,0 +1,111 @@
+-
+  Test purchase order of products can be sold
+-
+  I change context account invoice.
+-
+  !python {model: account.invoice}: |
+    context.update({'search_default_supplier': 1,'default_customer': 0,'default_supplier': 1})
+-
+    Create partner
+-
+  !record {model: res.partner, id: res_partner_23Vauxoo_purchase }:
+    name: Vauxoo_Purchase
+    supplier: 1
+    customer: 0
+    is_company: 1
+    type: default
+-
+    Create purchase order
+-
+  !record {model: purchase.order, id: purchase_order_can_be_sold1}:
+    partner_id: res_partner_23Vauxoo_purchase
+    invoice_method: 'manual'
+-
+    Added products can be sold in purchase order
+-
+  !python {model: purchase.order.line}: |
+    product_obj = self.pool.get('product.product')
+    sale_obj = self.pool.get('purchase.order')
+    product_ids = product_obj.search(cr, uid, [('purchase_ok','=','True'), ('active','=','True'), ('type','in',('product','consu') )])
+    for product_id in product_ids:
+        purchase_order_line_data = self.onchange_product_id(cr, uid, [], ref('list_test_purchase_order'), product_id, qty=1, uom_id=1,
+            partner_id=ref('res_partner_23Vauxoo_purchase'), date_order=False, fiscal_position_id=False, date_planned=False,
+            name=False, price_unit=False, context=context)['value']
+        taxes_ids = product_obj.browse(cr, uid , [product_id])[0].supplier_taxes_id
+        purchase_order_line_data.update({'product_id': product_id, 'taxes_id': [(4, tax.id) for tax in taxes_ids]})
+        purchase_order_id = sale_obj.write(cr, uid, [ref('purchase_order_can_be_sold1')], {'order_line': [(0, 0, purchase_order_line_data )]})
+-
+   Click button Confirm
+-
+  !workflow {model: purchase.order, action: purchase_confirm, ref: purchase_order_can_be_sold1}
+-
+   Check purchase order state 'Approved'
+-
+ !assert {model: purchase.order, id: purchase_order_can_be_sold1}:
+    - state == 'approved'
+-
+   Check created picking in for this purchase order
+-
+  !python {model: stock.picking.in}: |
+    purchase_obj = self.pool.get('purchase.order')
+    name_sale = purchase_obj.browse(cr, uid, [ref('purchase_order_can_be_sold1')])[0].name
+    stock_picking_in_ids = self.search(cr, uid, [('origin','like',name_sale)])
+    assert len(stock_picking_in_ids) > 0 ,  'Wrong. Stock picking out not fund'
+-
+   Create invoice for this purchase order
+-
+  !python {model: purchase.order}: |
+    import netsvc, tools, os
+    data = self.validate_for_test( cr , uid , [ref("purchase_order_can_be_sold1")], context=context)
+    if data:
+        if tools.config['test_report_directory']:
+            open(os.path.join(tools.config['test_report_directory'], 'product_purchase_order_wrong.csv'), 'wb+').write('\n'.join(data))
+-
+   Check created invoice for this purchase order
+-
+  !python {model: account.invoice}: |
+    sale_obj = self.pool.get('purchase.order')
+    name_sale = sale_obj.browse(cr, uid, [ref('purchase_order_can_be_sold1')])[0].name
+    invoice_ids = self.search(cr, uid, [('origin','like',name_sale)])
+    assert len(invoice_ids) > 0 ,  'Wrong. Invoice not fund'
+-
+  I change the state of invoice to open by clicking Validate button
+-
+  !python {model: account.invoice}: |
+    import netsvc
+    sale_obj = self.pool.get('purchase.order')
+    name_sale = sale_obj.browse(cr, uid, [ref('purchase_order_can_be_sold1')])[0].name
+    invoice_ids = self.search(cr, uid, [('origin','like',name_sale)])
+    wf_service = netsvc.LocalService("workflow")
+    for invoice in invoice_ids:
+        wf_service.trg_validate(uid, 'account.invoice', invoice , 'invoice_open', cr)
+-
+  I check that the invoice state is now "Open"
+-
+  !python {model: account.invoice}: |
+    sale_obj = self.pool.get('purchase.order')
+    name_sale = sale_obj.browse(cr, uid, [ref('purchase_order_can_be_sold1')])[0].name
+    invoice_ids = self.search(cr, uid, [('origin','like',name_sale)])
+    state = self.browse(cr, uid, invoice_ids )[0].state
+    assert state == 'open' , 'Wrong. Invoice not changed state to Open'
+-
+  I check that the invoice lines tax_id not null
+-
+  !python {model: account.invoice.line}: |
+    sale_obj = self.pool.get('purchase.order')
+    invoice_obj = self.pool.get('account.invoice')
+    products_tax_not_fund = []
+    name_sale = sale_obj.browse(cr, uid, [ref('purchase_order_can_be_sold1')])[0].name
+    invoice_ids = invoice_obj.search(cr, uid, [('origin','like',name_sale)])
+    invoice_lines_ids = self.search(cr, uid ,  [('invoice_id','=',invoice_ids[0])])
+    if invoice_lines_ids:
+        for line_id in invoice_lines_ids:
+            line_data = self.browse(cr, uid , [line_id])[0]
+            tax_not_found = False
+            taxes_ids = line_data.invoice_line_tax_id
+            if len(taxes_ids) == 0:
+                tax_not_found = True
+            if tax_not_found == True:
+                products_tax_not_fund.append(line_data.product_id.id)
+    assert len(products_tax_not_fund) == 0 , 'Wrong. Some products not have tax : %s' % (products_tax_not_fund)
+    
