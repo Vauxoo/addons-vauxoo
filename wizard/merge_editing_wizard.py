@@ -20,12 +20,11 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
+from openerp.osv import osv, fields
 from lxml import etree
 import tools
 
-class merge_fuse_wizard(osv.osv_memory):
+class merge_fuse_wizard(osv.TransientModel):
     _name = 'merge.fuse.wizard'
     
     def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
@@ -77,9 +76,8 @@ class merge_fuse_wizard(osv.osv_memory):
     def action_apply(self, cr, uid, ids, context=None):
         return  {'type': 'ir.actions.act_window_close'}
 
-merge_fuse_wizard()
 
-class merge_editing_wizard(osv.osv_memory):
+class merge_editing_wizard(osv.TransientModel):
     _name = 'merge.editing.wizard'
 
     _columns = {
@@ -184,6 +182,5 @@ class merge_editing_wizard(osv.osv_memory):
     def action_apply(self, cr, uid, ids, context=None):
         return  {'type': 'ir.actions.act_window_close'}
 
-merge_editing_wizard()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

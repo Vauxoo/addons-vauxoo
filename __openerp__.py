@@ -34,8 +34,9 @@
         For more details/customization/feedback contact us on contact@serpentcs.com. 
     """,
     'depends': ['base'],
-    'init_xml': [],
-    'update_xml': [
+    'data': [
+        'security/merge_security.xml',
+        'security/ir.model.access.csv',
         'merge_editing_view.xml',
     ],
     'installable': True,
