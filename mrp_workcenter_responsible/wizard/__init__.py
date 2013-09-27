@@ -5,9 +5,9 @@
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Katherine Zaoral          <katherine.zaoral@vauxoo.com>
-#    Planified by: Katherine Zaoral      <katherine.zaoral@vauxoo.com>
-#    Audited by: Humberto Arocha         <hbto@vauxoo.com>
+#    Coded by: Katherine Zaoral <kathy@vauxoo.com>
+#    Planified by: Katherine Zaoral <kathy@vauxoo.com>
+#    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -23,33 +23,3 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import fields, osv, orm
-from openerp.tools.translate import _
-
-
-class mrp_workcenter(osv.Model):
-
-    _inherit = 'mrp.workcenter'
-    _columns = {
-        'responsible_id': fields.many2one(
-            'hr.employee',
-            string='Responsible',
-            help='Responsible person to perform the work center activities.'),
-    }
-
-
-class mrp_production_workcenter_line(osv.Model):
-
-    _inherit = 'mrp.production.workcenter.line'
-    _columns = {
-        'responsible_id': fields.related(
-            'workcenter_id', 'responsible_id',
-            type='many2one',
-            relation='hr.employee',
-            readonly=True,
-            string='Responsible',
-            help=('Responsible person to carry out the work order. The'
-                  ' responsible is the one for the work center associated.'
-                  ' To change the responsible you need to change the work'
-                  ' center responsible.')),
-    }
