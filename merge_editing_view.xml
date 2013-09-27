@@ -2,9 +2,9 @@
 <openerp>
     <data>
 
-        <record model="ir.ui.view" id="view_mass_object_form">
-            <field name="name">mass.object.form</field>
-            <field name="model">mass.object</field>
+        <record model="ir.ui.view" id="view_merge_object_form">
+            <field name="name">merge.object.form</field>
+            <field name="model">merge.object</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Object">
@@ -39,9 +39,9 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="view_mass_object_tree">
-            <field name="name">mass.object.tree</field>
-            <field name="model">mass.object</field>
+        <record model="ir.ui.view" id="view_merge_object_tree">
+            <field name="name">merge.object.tree</field>
+            <field name="model">merge.object</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <tree string="Object">
@@ -51,30 +51,30 @@
             </field>
         </record>
 
-        <record model="ir.actions.act_window" id="action_mass_object_form">
-            <field name="name">Mass Editing</field>
-            <field name="res_model">mass.object</field>
+        <record model="ir.actions.act_window" id="action_merge_object_form">
+            <field name="name">merge Editing</field>
+            <field name="res_model">merge.object</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="view_mass_object_tree" />
+            <field name="view_id" ref="view_merge_object_tree" />
         </record>
 
-        <record id="action_mass_object_form_view1" model="ir.actions.act_window.view">
+        <record id="action_merge_object_form_view1" model="ir.actions.act_window.view">
             <field eval="10" name="sequence"/>
             <field name="view_mode">tree</field>
-            <field name="view_id" ref="view_mass_object_tree"/>
-            <field name="act_window_id" ref="action_mass_object_form"/>
+            <field name="view_id" ref="view_merge_object_tree"/>
+            <field name="act_window_id" ref="action_merge_object_form"/>
         </record>
-        <record id="action_mass_object_form_view2" model="ir.actions.act_window.view">
+        <record id="action_merge_object_form_view2" model="ir.actions.act_window.view">
             <field eval="20" name="sequence"/>
             <field name="view_mode">form</field>
-            <field name="view_id" ref="view_mass_object_form"/>
-            <field name="act_window_id" ref="action_mass_object_form"/>
+            <field name="view_id" ref="view_merge_object_form"/>
+            <field name="act_window_id" ref="action_merge_object_form"/>
         </record>
 
-        <menuitem id="menu_mass_editing" name="Mass Editing" parent="base.menu_config" sequence="6"/>
+        <menuitem id="menu_merge_editing" name="merge Editing" parent="base.menu_config" sequence="6"/>
 
-        <menuitem id="menu_mass_object_view" action="action_mass_object_form" parent="menu_mass_editing"/>
+        <menuitem id="menu_merge_object_view" action="action_merge_object_form" parent="menu_merge_editing"/>
 
     </data>
 </openerp>
