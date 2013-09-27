@@ -380,8 +380,7 @@ class survey_question_wiz(osv.TransientModel):
 
                     if pre_button:
                         etree.SubElement(xml_footer, 'label', {'string': ""})
-                        etree.SubElement(xml_footer, 'button',
-                                {'name':"action_previous",'string':"Previous",'type':"object",'class':"answer_exit btn btn-primary btn-large glyphicon glyphicon-heart"})
+                        etree.SubElement(xml_footer, 'button', {'name':"action_previous",'string':"e",'type':"object",'class':"answer_exit btn btn-primary btn-large oe_e"})
                     but_string = "Next"
                     if int(page_number) + 1 == total_pages:
                         but_string = "Done"
@@ -396,8 +395,8 @@ class survey_question_wiz(osv.TransientModel):
                         etree.SubElement(xml_footer, 'button', {'special': "cancel", 'string' : 'Done', 'context' : tools.ustr(context), 'class':"answer_exit btn btn-primary btn-large"})
                     else:
                         etree.SubElement(xml_footer, 'label', {'string': ""})
-                        etree.SubElement(xml_footer, 'button', {'class': "btn btn-primary btn-large oe_e",'name':"action_next",'string': '/','type':"object",'context' : tools.ustr(context)})
-                    etree.SubElement(xml_footer, 'button', {'special': "cancel",'string':"x",'class':"answer_exit btn btn-primary btn-large oe_e"})
+                        etree.SubElement(xml_footer, 'button', {'class': "btn btn-primary btn-large oe_e",'name':"action_next",'string':but_string == 'Next'and  '/' or '8','type':"object",'context' : tools.ustr(context)})
+                    etree.SubElement(xml_footer, 'button', {'special': "cancel",'string':"c",'class':"answer_exit btn btn-primary btn-large oe_e"})
                     etree.SubElement(xml_footer, 'label', {'string': tools.ustr(page_number+ 1) + "/" + tools.ustr(total_pages), 'class':"oe_survey_title_page oe_right"})
 
                     root = form.getroottree()

@@ -48,9 +48,11 @@ class survey_send_invitation(osv.TransientModel):
         model_data_obj = self.pool.get('ir.model.data')
         group_ids = []
         group_id = model_data_obj._get_id(cr, uid, 'base', 'group_survey_user')
-        group_ids.append(model_data_obj.browse(cr, uid, group_id, context=context).res_id)
+        group_id and group_ids.append(model_data_obj.browse(cr, uid, group_id, context).res_id)
         group_id = model_data_obj._get_id(cr, uid, 'answer_survey', 'only_answer_menu')
-        group_ids.append(model_data_obj.browse(cr, uid, group_id, context=context).res_id)
+        group_id and group_ids.append(model_data_obj.browse(cr, uid, group_id, context).res_id)
+        group_id = model_data_obj._get_id(cr, uid, 'portal', 'group_portal')
+        group_id and group_ids.append(model_data_obj.browse(cr, uid, group_id, context).res_id)
 
         act_id = self.pool.get('ir.actions.act_window')
         act_id = act_id.search(cr, uid, [('res_model', '=' , 'survey.name.wiz'), \
