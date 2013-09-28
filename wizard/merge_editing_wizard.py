@@ -52,24 +52,57 @@ class merge_fuse_wizard(osv.TransientModel):
             base_id = active_ids[0]
             model_obj = self.pool.get(context.get('active_model'))
             models_obj = self.pool.get('ir.model.fields')
+            property_obj = self.pool.get('ir.property')
             related_ids = models_obj.search(cr,uid,[('ttype', 'in', ('many2one', 'one2many',
                 'many2many')),
                                                     ('relation','=',str(context.get('active_model')))]) #get the models related to the one to fuse        
+            can = True
             for related in models_obj.browse(cr,uid,related_ids):
-                to_unlink = []
-                print 'related.model',related.model
-                print 'related.name',related.name
-                target_model = self.pool.get(related.model)
-                target_ids = target_model and related.name and \
-                        target_model.search(cr,uid,[(related.name,'in',active_ids)])
-                if target_ids:
-                    try:
-                        target_model.write(cr,uid,target_ids,{str(related.name):base_id})
-                    except:
-                        pass #Lame way to validate field deletion on tables that still on the ir.model.fields model
                 cr.commit()
-            to_unlink = list(set(active_ids) - set([base_id])) 
-            model_obj.unlink(cr,uid,to_unlink)
+                to_unlink = []
+                target_ids = []
+                target_model = self.pool.get(related.model)
+                field_obj = target_model._columns.get(related.name)
+                if isinstance(field_obj, fields.property):
+                    property_ids = []
+                    for field_id in active_ids:
+                        v_reference = '%s,%s' % (context.get('active_model'),field_id )
+                        property_ids+=property_obj.search(cr, uid,
+                                                          [('fields_id', '=', related.id),
+                                                           ('value_reference', '=', v_reference)],
+                                                          context=context)
+                        
+
+                    if property_ids:
+                        v_ref = '%s,%s' % (context.get('active_model'), base_id) 
+                        property_obj.write(cr, uid, property_ids,
+                                           {
+                                            'value_reference': v_ref
+                                             },
+                                           context=context)
+                        continue
+                    
+                elif isinstance(field_obj, fields.function):
+                    if field_obj.store or field_obj._fnct_search:
+                        target_ids = target_model.search(cr,uid,[(related.name,'in',active_ids)])
+                    else:
+                        continue
+
+                else:
+                    target_ids = target_model.search(cr,uid,[(related.name,'in',active_ids)])
+                    if target_ids:
+                        try:
+                            target_model.write(cr,uid,target_ids,{str(related.name):base_id})
+                        except Exception,e:
+                            if 'cannot update view' in e.message:
+                                continue
+                            else:
+                                can = False
+                cr.commit()
+            if can:
+                to_unlink = list(set(active_ids) - set([base_id])) 
+                model_obj.unlink(cr,uid,to_unlink)
+                cr.commit()
         result = super(merge_fuse_wizard, self).create(cr, uid, {}, context)
         return result
 
