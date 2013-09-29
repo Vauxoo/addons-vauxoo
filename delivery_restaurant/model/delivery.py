@@ -2,10 +2,10 @@
 # -*- encoding: utf-8 -*-
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
+#    Copyright (C) OpenERP Venezuela (http://www.vauxoo.com).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Yanina Aular <yani@vauxoo.com>
+#    Coded by: Yanina Aular <yanina.aular@vauxoo.com
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -23,4 +23,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import delivery
+from openerp.osv import fields, osv, orm
+from openerp.tools.translate import _
+from openerp import tools
+
+class pos_config(osv.Model):
+    """ 
+    """
+    _inherit = 'pos.config'
+    _description = ('')
+#    _columns = {
+#    }
+#
+#    _defaults = {
+#    }
+
+class product_product(osv.Model):
+    """ 
+    """
+    _inherit = 'product.product'
+    _description = ('')
+#    _columns = {
+#    }
+#
+#    _defaults = {
+#    }
