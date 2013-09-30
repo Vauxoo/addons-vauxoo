@@ -142,7 +142,7 @@
                     <table class="list_table"  width="100%" border="0">
                         <thead>
                             <tr>
-                                <th class="celdaTituloTabla" style="text-align:center;" width="10%">${_('Document')}</th>
+                                <th class="celdaTituloTabla" style="text-align:center;" width="20%">${_('Document')}</th>
                                 <th class="celdaTituloTabla" style="text-align:center;" width="10%">${_('Type')}</th>
                                 <th class="celdaTituloTabla" style="text-align:center;" width="10%">${_('Due Days')}</th>
                                 <th class="celdaTituloTabla" style="text-align:center;" width="10%">${_('Residual')}</th>
@@ -150,12 +150,18 @@
                                 %for i in range (4,-1,-1):
                                     <th class="celdaTituloTabla" style="text-align:center;">${form.get('%i'%i).get('name')}</th>
                                 %endfor
-                                <th class="celdaTituloTabla" style="text-align:center;">${_('Total')}</th>
                             </tr>
                         </thead>
                         
                         <tbody>
                             <%lines_partner = get_dict_lines_by_partner(obj.partner_doc_ids).get(partner, False)%>
+                            <%
+                            to0130 = 0
+                            to3160 = 0
+                            to6190 = 0
+                            to91120 = 0
+                            to121 = 0
+                            residual = 0%>
                             %for line in lines_partner:
                                 <%
                                 type = ''
@@ -169,9 +175,15 @@
                                 elif line.document_id._name == 'account.move.line':
                                     type = 'Journal Entry Line'
                                     document = line.document_id.name
+                                to0130 += line.days_due_01to30
+                                to3160 += line.days_due_31to60
+                                to6190 += line.days_due_61to90
+                                to91120 += line.days_due_91to120
+                                to121 += line.days_due_121togr
+                                residual += line.residual
                                 %>
                                 <tr class="prueba" >
-                                    <td class="celdaLineDataTitulo" width="10%">
+                                    <td class="celdaLineDataTitulo" width="20%">
                                         ${document}
                                     </td>
                                     <td class="celdaLineData" width="10%">
@@ -198,17 +210,34 @@
                                     <td class="celdaLineData" width="10%">
                                         ${line.days_due_121togr}
                                     </td>
-                                    <td class="celdaTotal" width="10%">
-                                        ${line.total}
-                                    </td>
                                 </tr>
                             %endfor
                             <tr>
-                                %for i in range(1,11):
-                                    
-                                    <td class="celdaTotalTotales" >${_('$')}
-                                    </td>
-                                %endfor
+                                <td class="celdaTotalTotales" width="20%">
+                                    ${_('Total')}
+                                </td>
+                                <td class="celdaTotalTotales" width="10%">
+                                    ${_('$')}
+                                </td>
+                                <td class="celdaTotalTotales" width="10%"></td>
+                                <td class="celdaTotalTotales" width="10%">
+                                    ${residual}
+                                </td>
+                                <td class="celdaTotalTotales" width="10%">
+                                    ${to0130}
+                                </td>
+                                <td class="celdaTotalTotales" width="10%">
+                                    ${to3160}
+                                </td>
+                                <td class="celdaTotalTotales" width="10%">
+                                    ${to6190}
+                                </td>
+                                <td class="celdaTotalTotales" width="10%">
+                                    ${to91120}
+                                </td>
+                                <td class="celdaTotalTotales" width="10%">
+                                    ${to121}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
