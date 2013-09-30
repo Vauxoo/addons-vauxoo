@@ -30,6 +30,7 @@
         "purchase",
         "account",
         "product",
+        "stock",
     ],
     "author": "Vauxoo",
     "description": """
@@ -44,9 +45,11 @@ Creating a purchase order, picking in and supplier invoice by product.
     "category": "Addons Vauxoo",
     "demo": [],
     "test": [
-             'test/purchase_order_test_data.xml',
-             'test/purchase_order_product_can_be_sold.yml', ],
-    "data": [],
+                 'test/purchase_order_test_data.xml',
+                 'test/purchase_order_product_can_be_purchased.yml', ],
+    "data": [
+                'wizard/wizard.xml',
+            ],
     "active": False,
     "installable": True,
 }

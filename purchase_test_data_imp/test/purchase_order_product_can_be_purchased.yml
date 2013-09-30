@@ -25,9 +25,10 @@
     if partner_ids:
         for partner in partner_ids:
             data = res_partner_obj.browse(cr, uid , [partner])[0]
-            if data.property_account_payable.type :
+            if data.property_account_receivable.type :
                 partner_id = data.id
                 break
+    print partner_id,100*'.'
     if product_ids:
         for product_id in product_ids:
             product_data = product_obj.browse(cr, uid , [product_id])
@@ -113,7 +114,7 @@
         set(stringProductLog)
         set(stringLog)
         if tools.config['test_report_directory']:
-            open(os.path.join(tools.config['test_report_directory'], 'purchase_order_product_log.csv'), 'wb+').write('\n'.join(stringProductLog))
-            open(os.path.join(tools.config['test_report_directory'], 'purchase_order_general_log.csv'), 'wb+').write('\n'.join(stringLog))
+            open(os.path.join(tools.config['test_report_directory'],'purchase_order_product_log.csv'), 'wb+').write('\n'.join(stringProductLog))
+            open(os.path.join(tools.config['test_report_directory'],'purchase_order_general_log.csv'), 'wb+').write('\n'.join(stringLog))
         assert len(products_tax_not_fund) == 0 , 'Wrong. Some products not have tax : %s' % (products_tax_not_fund)
         
