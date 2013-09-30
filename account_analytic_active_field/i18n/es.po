@@ -16,7 +16,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_analytic_active_field
-#: field:account.analytic.account,active_2:0
+#: field:account.analytic.account,active:0
 msgid "Active"
 msgstr "Activo"
 

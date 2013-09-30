@@ -31,5 +31,5 @@ class account_analytic_account(osv.Model):
     _inherit = "account.analytic.account"
     
     _columns = {
-        'active_2' : fields.boolean('Active')
+        'active' : fields.boolean('Active')
     }

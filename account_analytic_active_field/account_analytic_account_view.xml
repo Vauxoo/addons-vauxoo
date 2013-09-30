@@ -9,7 +9,7 @@
             <field name="arch" type="xml">
                     <xpath expr="//div[@name=&quot;project&quot;]" position="before">
                         <group>
-                            <field name="active_2"/>
+                            <field name="active"/>
                         </group>
                     </xpath>
             </field>
