@@ -48,8 +48,8 @@ class product_product(osv.Model):
     _inherit = 'product.product'
     _description = ('')
     _columns = {
-        'restaurant':fields.boolean('Restaurant', help='Is a restaurant?'), 
-        'delivery':fields.boolean('Delivery', help='Is a delivery?'), 
+        'restaurant':fields.boolean('POS Restaurant', help='To be sold in restaurant'), 
+        'delivery':fields.boolean('POS Delivery', help='To be sold in delivery'), 
     }
 
     _defaults = {
