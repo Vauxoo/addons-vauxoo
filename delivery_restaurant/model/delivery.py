@@ -32,19 +32,26 @@ class pos_config(osv.Model):
     """
     _inherit = 'pos.config'
     _description = ('')
-#    _columns = {
-#    }
-#
-#    _defaults = {
-#    }
+    _columns = {
+        'deli_rest':fields.selection([('delivery','Delivery'),('restaurant','Restaurant')],
+            'Delivery or Restaurant?', required=True, help='Is a delivery?'), 
+        
+    }
+
+    _defaults = {
+        'deli_rest': 'restaurant',
+    }
 
 class product_product(osv.Model):
     """ 
     """
     _inherit = 'product.product'
     _description = ('')
-#    _columns = {
-#    }
-#
-#    _defaults = {
-#    }
+    _columns = {
+        'restaurant':fields.boolean('Restaurant', help='Is a restaurant?'), 
+        'delivery':fields.boolean('Delivery', help='Is a delivery?'), 
+    }
+
+    _defaults = {
+            'restaurant':True,
+            }
