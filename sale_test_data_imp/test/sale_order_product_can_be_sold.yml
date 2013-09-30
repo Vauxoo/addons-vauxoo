@@ -6,6 +6,10 @@
   !python {model: sale.order}: |
     import tools
     import netsvc
+    import os
+    
+    stringProductLog =['id, name, name_category, error']
+    stringLog =['error']
     
     res_partner_obj = self.pool.get('res.partner')
     product_obj = self.pool.get('product.product')
@@ -61,7 +65,8 @@
                     stock_picking_out_ids = stock_picking_out_object.search(cr, uid, [('sale_id','=',sale_order_id)])
                     assert len(stock_picking_out_ids) > 0 ,  'Wrong. Stock picking out not fund'
                 except Exception, e:
-                    tools.ustr(e)
+                    stringLogAux = ', '.join([tools.ustr(e).replace('\n', '')])
+                    stringLog.append(stringLogAux)
             
             #~ Create invoice for this sale order
             try:
@@ -74,7 +79,11 @@
                 #~ cr.execute("RELEASE SAVEPOINT sale_order_savepoint")
             except Exception, e:
                 #~ cr.execute("ROLLBACK TO SAVEPOINT sale_order_savepoint")
-                tools.ustr(e)
+                stringProductLogAux = ', '.join([repr(product_data[0].id),
+                                              product_data[0].name.encode('utf8').replace(',','.'), 
+                                              product_data[0].categ_id.name.encode('utf8').replace(',','.'),
+                                              tools.ustr(e).replace('\n', '')])
+                stringProductLog.append(stringProductLogAux)
                 
             #~ Validate invoice for this sale order 
             if invoice_id:
@@ -82,30 +91,28 @@
                     wf_service = netsvc.LocalService("workflow")
                     wf_service.trg_validate(uid, 'account.invoice', invoice_id.get('res_id') , 'invoice_open', cr)
                 except Exception, e:
-                    tools.ustr(e)
+                    stringLogAux = ', '.join([tools.ustr(e).replace('\n', '')])
+                    stringLog.append(stringLogAux)
                 
-            #~ check that the invoice state is now "Open" 
-            if invoice_id:
-                state = account_invoice_obj.browse(cr, uid, [invoice_id.get('res_id')])
-                try:
-                    assert state[0].state == 'open' , 'Wrong. Invoice not changed state to Open'
-                except Exception, e:
-                    tools.ustr(e)
-
             #~ I check that the invoice lines tax_id not null
-            if invoice_id:
-                name_sale = self.browse(cr, uid, [sale_order_id])[0].name
-                invoice_ids = account_invoice_obj.search(cr, uid, [('origin','like',name_sale)])
-                invoice_lines_ids = account_invoice_line_obj.search(cr, uid ,  [('invoice_id','=',invoice_ids[0])])
-                if invoice_lines_ids:
-                    for line_id in invoice_lines_ids:
-                        line_data = account_invoice_line_obj.browse(cr, uid , [line_id])[0]
-                        tax_not_found = False
-                        taxes_ids = line_data.invoice_line_tax_id
-                        if len(taxes_ids) == 0:
-                            tax_not_found = True
-                        if tax_not_found == True:
-                            products_tax_not_fund.append(line_data.product_id.id)
+            #~ if invoice_id:
+                #~ name_sale = self.browse(cr, uid, [sale_order_id])[0].name
+                #~ invoice_ids = account_invoice_obj.search(cr, uid, [('origin','like',name_sale)])
+                #~ invoice_lines_ids = account_invoice_line_obj.search(cr, uid ,  [('invoice_id','=',invoice_ids[0])])
+                #~ if invoice_lines_ids:
+                    #~ for line_id in invoice_lines_ids:
+                        #~ line_data = account_invoice_line_obj.browse(cr, uid , [line_id])[0]
+                        #~ tax_not_found = False
+                        #~ taxes_ids = line_data.invoice_line_tax_id
+                        #~ if len(taxes_ids) == 0:
+                            #~ tax_not_found = True
+                        #~ if tax_not_found == True:
+                            #~ products_tax_not_fund.append(line_data.product_id.id)
                             
+        set(stringProductLog)
+        set(stringLog)
+        if tools.config['test_report_directory']:
+            open(os.path.join(tools.config['test_report_directory'], 'sale_order_product_log.csv'), 'wb+').write('\n'.join(stringProductLog))
+            open(os.path.join(tools.config['test_report_directory'], 'sale_order_general_log.csv'), 'wb+').write('\n'.join(stringLog))
         assert len(products_tax_not_fund) == 0 , 'Wrong. Some products not have tax : %s' % (products_tax_not_fund)
     

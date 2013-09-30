@@ -94,15 +94,6 @@
                 except Exception, e:
                     stringLogAux = ', '.join([tools.ustr(e).replace('\n', '')])
                     stringLog.append(stringLogAux)
-                
-            #~ check that the invoice state is now "Open" 
-            #~ if invoice_id:
-                #~ state = account_invoice_obj.browse(cr, uid, [invoice_id.get('res_id')])
-                #~ try:
-                    #~ assert state[0].state == 'open' , 'Wrong. Invoice not changed state to Open'
-                #~ except Exception, e:
-                    #~ stringLogAux = ', '.join([tools.ustr(e).replace('\n', '')])
-                    #~ stringLog.append(stringLogAux)
 
             #~ I check that the invoice lines tax_id not null
             #~ if invoice_id:
