@@ -33,7 +33,9 @@
     
     ''',
     'depends': ['base', 'point_of_sale', 'sale'],
-    'data': [],
+    'data': [
+            'view/delivery_view.xml', 
+        ],
     'demo': [],
     'test': [],
     'active': False,
