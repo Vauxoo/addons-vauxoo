@@ -31,7 +31,9 @@ from openerp import pooler, tools
 from openerp import netsvc
 from openerp import release
 import datetime
+from pytz import timezone
 import pytz
+from dateutil.relativedelta import relativedelta
 
 import time
 import os
@@ -101,56 +103,110 @@ class account_invoice(osv.Model):
     def write(self, cr, uid, ids, vals, context=None):
         if context is None:
             context = {}
-        res = self.assigned_datetime(cr, uid, vals, context=context)
+        res = {}
+        if vals.get('date_invoice', False):
+            vals.update({'invoice_datetime': False})
+            res = self.assigned_datetime(cr, uid, vals, context=context)
+        if vals.get('invoice_datetime', False):
+            vals.update({'date_invoice' : False})
+            res = self.assigned_datetime(cr, uid, vals, context=context)
         if res:
             vals.update(res)
-        return super(account_invoice, self).write(cr, uid, ids, vals, context=context)
+        return super(account_invoice, self).write(cr, uid, ids, vals,
+                                                            context=context)
         
     def copy(self, cr, uid, id, default=None, context=None):
         if default is None:
             default = {}
         default.update({'invoice_datetime': False, 'date_invoice' : False})
         return super(account_invoice, self).copy(cr, uid, id, default, context)
-
+    
+    def _get_time_zone(self, cr, uid, invoice_id, context=None):
+        res_users_obj = self.pool.get('res.users')
+        userstz = res_users_obj.browse(cr, uid, [uid])[0].partner_id.tz
+        a = 0
+        if userstz:
+            hours = timezone(userstz)
+            fmt = '%Y-%m-%d %H:%M:%S %Z%z'
+            now = datetime.datetime.now()
+            loc_dt = hours.localize(datetime.datetime(now.year, now.month, now.day,
+                                             now.hour, now.minute, now.second))
+            timezone_loc = (loc_dt.strftime(fmt))
+            diff_timezone_original = timezone_loc[-5:-2]
+            timezone_original = int(diff_timezone_original)
+            s = str(datetime.datetime.now(pytz.timezone(userstz)))
+            s = s[-6:-3]
+            timezone_present = int(s)*-1
+            a = timezone_original + ((
+                timezone_present + timezone_original)*-1)
+        return a
+    
     def assigned_datetime(self, cr, uid, values, context=None):
         if context is None:
             context = {}
         res = {}
-        if 'date_invoice' in values:
-            if values['date_invoice']:
-                date_ts = tools.server_to_local_timestamp(values[
-                    'date_invoice'], tools.DEFAULT_SERVER_DATETIME_FORMAT,
-                    tools.DEFAULT_SERVER_DATETIME_FORMAT, context.get(
-                    'tz_invoice_mx', 'America/Mexico_City'))
-                now = datetime.datetime.now()
-                time_invoice = datetime.time(now.hour, now.minute, now.second)
+        if values.get('date_invoice', False) and\
+                                    not values.get('invoice_datetime', False):
+                                    
+            user_hour = self._get_time_zone(cr, uid, [], context=context)
+            time_invoice = datetime.time(abs(user_hour), 0, 0)
+
+            date_invoice = datetime.datetime.strptime(
+                values['date_invoice'], '%Y-%m-%d').date()
+                
+            dt_invoice = datetime.datetime.combine(
+                date_invoice, time_invoice).strftime('%Y-%m-%d %H:%M:%S')
+
+            res['invoice_datetime'] = dt_invoice
+            res['date_invoice'] = values['date_invoice']
+            return res
+            
+        if values.get('invoice_datetime', False) and not\
+            values.get('date_invoice', False):
+            date_invoice = fields.datetime.context_timestamp(cr, uid,
+                datetime.datetime.strptime(values['invoice_datetime'],
+                tools.DEFAULT_SERVER_DATETIME_FORMAT), context=context)
+            res['date_invoice'] = date_invoice
+            res['invoice_datetime'] = values['invoice_datetime']
+            return res
+        
+        if 'invoice_datetime' in values  and 'date_invoice' in values:
+            if values['invoice_datetime'] and values['date_invoice']:
                 date_invoice = datetime.datetime.strptime(
-                    date_ts, '%Y-%m-%d').date()
-                dt_invoice = datetime.datetime.combine(
-                    date_invoice, time_invoice).strftime('%Y/%m/%d %H:%M:%S')
-                res['invoice_datetime'] = dt_invoice
-        if 'invoice_datetime' in values:
-            if values['invoice_datetime']:
-                date_ts = tools.server_to_local_timestamp(values[
-                    'invoice_datetime'], tools.DEFAULT_SERVER_DATETIME_FORMAT,
-                    tools.DEFAULT_SERVER_DATETIME_FORMAT, context.get(
-                    'tz_invoice_mx', 'America/Mexico_City'))
-                date_invoice = datetime.datetime.strptime(
-                    date_ts, '%Y-%m-%d %H:%M:%S').date().strftime('%Y/%m/%d')
-                res['date_invoice'] = date_invoice
+                    values['invoice_datetime'],
+                    '%Y-%m-%d %H:%M:%S').date().strftime('%Y-%m-%d')
+                if date_invoice != values['date_invoice']:
+                    raise osv.except_osv(_('Warning!'),
+                            _('Invoice dates should be equal'))
+
+        if  not values.get('invoice_datetime', False) and\
+                                        not values.get('date_invoice', False):
+                
+            date_ts = fields.datetime.context_timestamp(cr, uid,
+                datetime.datetime.strptime(fields.datetime.now(),
+                tools.DEFAULT_SERVER_DATETIME_FORMAT), context=context)
+            res['date_invoice'] = date_ts
+            res['invoice_datetime'] = fields.datetime.now()
+            return res
         return res
-    """
-    def action_move_create(self, cr, uid, ids, *args):
-        for inv in self.browse(cr, uid, ids):
-            if inv.move_id:
-                continue
-            if not inv.invoice_datetime:
-                t1 = time.strftime('%Y-%m-%d')
-                t2 = time.strftime('%Y-%m-%d %H:%M:%S')
-                self.write(cr, uid, [inv.id], {
-                           'date_invoice': t1, 'invoice_datetime': t2})
-        return super(account_invoice, self).action_move_create(cr, uid, ids, *args)
-    """
+
+#    def action_move_create(self, cr, uid, ids, *args):
+ #       for inv in self.browse(cr, uid, ids):
+  #          values = {'date_invoice': inv.date_invoice,
+   #                     'invoice_datetime': inv.invoice_datetime}
+    #        date_value = self.assigned_datetime(cr, uid, values)
+     #       if inv.move_id:
+      #          continue
+       #     if inv.date_invoice and inv.invoice_datetime:
+        #        return super(account_invoice, self).action_move_create(cr,
+         #                           uid, ids, *args)
+          #  t1 = time.strftime('%Y-%m-%d')
+           # t2 = time.strftime('%Y-%m-%d %H:%M:%S')
+           # self.write(cr, uid, [inv.id], {
+            #           'date_invoice': date_value.get('date_invoice', t1),
+             #          'invoice_datetime': date_value.get('invoice_datetime', t2)})
+        #return super(account_invoice, self).action_move_create(cr, uid, ids, *args)
+
 # class account_invoice_refund(osv.TransientModel):
  #   _inherit = 'account.invoice.refund'
   #  _columns = {
