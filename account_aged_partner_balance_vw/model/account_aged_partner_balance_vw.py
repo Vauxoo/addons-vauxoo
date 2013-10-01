@@ -569,7 +569,7 @@ class account_aged_trial_balance(osv.TransientModel):
                 'partner_id': line.partner_id and line.partner_id.id or False,
                 'user_id': False,
                 'document_id': '%s,%s' % (line._name, line.id),
-                'residual': residual,
+                'residual': residual * -1,
                 'due_days': due_days,
                 'date_due': line.date,
             })

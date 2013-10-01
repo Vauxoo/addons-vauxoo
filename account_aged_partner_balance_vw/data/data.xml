@@ -113,7 +113,7 @@ background-color:#F5F5F5;
 } 
 
 .celdaTotalTotales{ 
-font-size:10pt; 
+font-size:7pt; 
 font-family: monospace; 
 text-align:right; 
 font-weight:bold; 
