@@ -67,12 +67,12 @@ class test_yaml_data_sale(osv.osv_memory):
             file_sale_order_wrong = base64.encodestring(open(os.path.join(tmp_path,'sale_order_product_log.csv'), 'rb+').read())
             file_sale_order_log = base64.encodestring(open(os.path.join(tmp_path,'sale_order_general_log.csv'), 'rb+').read())
             
-            self.write(cr, uid, ids, {
-                            'yaml_file': file_sale_order_wrong,
-                            'yaml_file_log' : file_sale_order_log,
-                            'filename_product': 'sale_order_product_log.csv',
-                            'filename_log_general' : 'sale_order_general_log.csv',
-                            }, context=context)
+        self.write(cr, uid, ids, {
+                        'yaml_file': file_sale_order_wrong,
+                        'yaml_file_log' : file_sale_order_log,
+                        'filename_product': 'sale_order_product_log.csv',
+                        'filename_log_general' : 'sale_order_general_log.csv',
+                        }, context=context)
                                 
         __, xml_id = self.pool.get('ir.model.data').get_object_reference(
                 cr, uid, 'sale_test_data_imp', 'view_wizard_sale_test_data_result')
