@@ -27,6 +27,7 @@
     "name": "Purchase Test Data IMP",
     "version": "1.0",
     "depends": [
+        "base",
         "purchase",
         "account",
         "product",

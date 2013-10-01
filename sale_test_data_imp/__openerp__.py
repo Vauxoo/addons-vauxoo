@@ -27,6 +27,7 @@
     "name": "Sale Test Data IMP",
     "version": "1.0",
     "depends": [
+        "base",
         "sale",
         "account",
         "product",
@@ -43,7 +44,7 @@ Creating a sale order, picking out and customer invoice by prodcut.
     "website": "http://vauxoo.com",
     "category": "Addons Vauxoo",
     "data": [
-            #~ 'wizard/wizard.xml',
+            'wizard/wizard.xml',
             ],
     "test": [
              'test/sale_order_test_data.xml',
