@@ -11,7 +11,7 @@
                         <label for="test_commit" invisible="1"/>
                         <field name="test_commit" invisible="1"/>
                     <footer>
-                        <button name="test_sale" type="object" string="Apply" class="oe_highlight" context="{'test_commit':'test_commit'}"/>
+                        <button name="test_sale" type="object" string="Apply" class="oe_highlight"/>
                     </footer>
                 </form>
             </field>
@@ -22,8 +22,8 @@
             <field name="model">test.yaml.data.sale</field>
             <field name="arch" type="xml">
                 <form string="Result Test" version="7.0">
-                    <p> Files test user: <field name="yaml_file" readonly="1" filename="filename"/></p>
-                    <p> FIle log : <field name="yaml_file_log" readonly="1" filename="filename_log" /></p>
+                    <p> Files test user: <field name="yaml_file" readonly="1" filename="filename_product"/></p>
+                    <p> FIle log : <field name="yaml_file_log" readonly="1" filename="filename_log_general" /></p>
                     <newline/>
                     <footer>
                         <button string="Cancel" class="oe_link" special="cancel" />

@@ -33,7 +33,7 @@ class test_yaml_data_purchase(osv.osv_memory):
         'yaml_file': fields.binary('File purchase order worng'),
         'yaml_file_log': fields.binary('File Log'),
         'filename_product': fields.char('File name', size=128, readonly=True),
-        'filename_log_genral': fields.char('File name log', size=128, readonly=True),
+        'filename_log_general': fields.char('File name log', size=128, readonly=True),
         'test_commit': fields.boolean('Commit')
     }
     
@@ -42,7 +42,6 @@ class test_yaml_data_purchase(osv.osv_memory):
     }
     
     def test_purchase (self, cr, uid, ids, context=None):
-
         assertion_obj = assertion_report.assertion_report()
         this = self.browse(cr, uid, ids)[0]
         fp_data = tools.file_open(os.path.join('purchase_test_data_imp', 'test/purchase_order_test_data.xml'))
@@ -52,7 +51,7 @@ class test_yaml_data_purchase(osv.osv_memory):
             tools.convert_xml_import(cr, 'purchase_test_data_imp', fp_data , {}, 'init', False, assertion_obj)
             tools.convert_yaml_import(cr, 'purchase_test_data_imp', fp_test ,'test', {}, 'init', False, assertion_obj)
         finally:
-            if context.get('test_commit'):
+            if this.test_commit:
                 cr.execute("RELEASE SAVEPOINT test_yaml_purchase_savepoint")
             else:
                 cr.execute("ROLLBACK TO test_yaml_purchase_savepoint")
@@ -67,7 +66,7 @@ class test_yaml_data_purchase(osv.osv_memory):
                             'yaml_file': file_purchase_order_wrong,
                             'yaml_file_log' : file_purchase_order_log,
                             'filename_product': 'purchase_order_product_log.csv',
-                            'filename_log_genral' : 'purchase_order_general_log.csv',
+                            'filename_log_general' : 'purchase_order_general_log.csv',
                             }, context=context)
                                 
         __, xml_id = self.pool.get('ir.model.data').get_object_reference(

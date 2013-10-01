@@ -28,6 +28,7 @@
             if data.property_account_receivable.type :
                 partner_id = data.id
                 break
+    assert partner_id , 'Wrong, You can not generate a purchase without a partner'
     if product_ids:
         for product_id in product_ids:
             product_data = product_obj.browse(cr, uid , [product_id])

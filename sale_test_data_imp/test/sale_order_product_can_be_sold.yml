@@ -28,7 +28,8 @@
             if data.property_account_payable.type :
                 partner_id = data.id
                 break
-                
+    assert  partner_id , 'Wrong, You can not generate a sale without a partner'
+    
     if product_ids:
         for product_id in product_ids:
             product_data = product_obj.browse(cr, uid , [product_id])
