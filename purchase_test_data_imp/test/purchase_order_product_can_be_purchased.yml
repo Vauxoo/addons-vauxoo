@@ -28,7 +28,6 @@
             if data.property_account_receivable.type :
                 partner_id = data.id
                 break
-    print partner_id,100*'.'
     if product_ids:
         for product_id in product_ids:
             product_data = product_obj.browse(cr, uid , [product_id])
