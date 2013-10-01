@@ -26,7 +26,7 @@
     if partner_ids:
         for partner in partner_ids:
             data = res_partner_obj.browse(cr, uid , [partner])[0]
-            if data.property_account_payable.type :
+            if data.property_account_receivable.type == 'receivable' :
                 partner_id = data.id
                 break
     assert  partner_id , 'Wrong, You can not generate a sale without a partner'
@@ -35,13 +35,10 @@
         for product_id in product_ids:
             product_data = product_obj.browse(cr, uid , [product_id])
             #~ Data of sale order
-            sale_order_data = {'partner_id' : partner_id,
-                               'payment_term' : ref('account_payment_term_sale_test_data_imp'),
-                               'picking_policy': 'direct',
-                               'order_policy': 'manual',
-                               'pricelist_id': ref('list_test_sale_order_imp'),
-                               'partner_invoice_id': partner_id,
-                               'partner_shipping_id': partner_id,}
+            sale_order_data = self.onchange_partner_id(cr, uid, [], partner_id, context=context)['value']
+            sale_order_data.update({'picking_policy': 'direct','partner_id': partner_id,
+                               'order_policy': 'manual',})  
+            #~ 'pricelist_id': ref('list_test_sale_order_imp'),
 
             #~ Data of sale order line
             sale_order_line_data = sale_order_line_obj.product_id_change(cr, uid, [], ref('list_test_sale_order_imp'), product_id, qty=1,
