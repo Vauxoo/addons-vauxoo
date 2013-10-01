@@ -24,6 +24,7 @@ from openerp.tools import assertion_report
 import sys
 import base64
 from openerp.osv import osv, fields
+import tempfile
 
 class test_yaml_data_purchase(osv.osv_memory):
     
@@ -61,6 +62,10 @@ class test_yaml_data_purchase(osv.osv_memory):
         if tools.config['test_report_directory']:
             file_purchase_order_wrong = base64.encodestring(open(os.path.join(tools.config['test_report_directory'],'purchase_order_product_log.csv'), 'rb+').read())
             file_purchase_order_log = base64.encodestring(open(os.path.join(tools.config['test_report_directory'],'purchase_order_general_log.csv'), 'rb+').read())
+        else:
+            tmp_path = tempfile.gettempdir()
+            file_purchase_order_wrong = base64.encodestring(open(os.path.join(tmp_path,'purchase_order_product_log.csv'), 'rb+').read())
+            file_purchase_order_log = base64.encodestring(open(os.path.join(tmp_path,'purchase_order_general_log.csv'), 'rb+').read())
             
             self.write(cr, uid, ids, {
                             'yaml_file': file_purchase_order_wrong,
