@@ -186,7 +186,7 @@ class account_invoice(osv.Model):
                 datetime.datetime.strptime(fields.datetime.now(),
                 tools.DEFAULT_SERVER_DATETIME_FORMAT), context=context)
             res['date_invoice'] = date_ts
-            res['invoice_datetime'] = date_ts
+            res['invoice_datetime'] = fields.datetime.now()
             return res
         return res
 
