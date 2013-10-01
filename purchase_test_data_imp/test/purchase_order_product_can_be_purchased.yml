@@ -118,7 +118,7 @@
             open(os.path.join(tools.config['test_report_directory'],'purchase_order_general_log.csv'), 'wb+').write('\n'.join(stringLog))
         else:
             tmp_path = tempfile.gettempdir()
-            open(os.path.join(tmp_path, 'sale_order_product_log.csv'), 'wb+').write('\n'.join(stringProductLog))
-            open(os.path.join(tmp_path, 'sale_order_general_log.csv'), 'wb+').write('\n'.join(stringLog))
+            open(os.path.join(tmp_path, 'purchase_order_product_log.csv'), 'wb+').write('\n'.join(stringProductLog))
+            open(os.path.join(tmp_path, 'purchase_order_general_log.csv'), 'wb+').write('\n'.join(stringLog))
         assert len(products_tax_not_fund) == 0 , 'Wrong. Some products not have tax : %s' % (products_tax_not_fund)
         
