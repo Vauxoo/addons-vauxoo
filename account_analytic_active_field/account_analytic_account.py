@@ -29,7 +29,10 @@ from openerp.tools.translate import _
 class account_analytic_account(osv.Model):
     _name = "account.analytic.account"
     _inherit = "account.analytic.account"
-    
     _columns = {
         'active' : fields.boolean('Active')
+    }
+
+    _defaults = {
+        'active': 1
     }
