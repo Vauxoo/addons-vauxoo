@@ -120,35 +120,54 @@ class account_invoice(osv.Model):
             default = {}
         default.update({'invoice_datetime': False, 'date_invoice' : False})
         return super(account_invoice, self).copy(cr, uid, id, default, context)
-
+    
+    def _get_time_zone(self, cr, uid, invoice_id, context=None):
+        res_users_obj = self.pool.get('res.users')
+        userstz = res_users_obj.browse(cr, uid, [uid])[0].partner_id.tz
+        a = 0
+        if userstz:
+            hours = timezone(userstz)
+            fmt = '%Y-%m-%d %H:%M:%S %Z%z'
+            now = datetime.datetime.now()
+            loc_dt = hours.localize(datetime.datetime(now.year, now.month, now.day,
+                                             now.hour, now.minute, now.second))
+            timezone_loc = (loc_dt.strftime(fmt))
+            diff_timezone_original = timezone_loc[-5:-2]
+            timezone_original = int(diff_timezone_original)
+            s = str(datetime.datetime.now(pytz.timezone(userstz)))
+            s = s[-6:-3]
+            timezone_present = int(s)*-1
+            a = timezone_original + ((
+                timezone_present + timezone_original)*-1)
+        return a
+    
     def assigned_datetime(self, cr, uid, values, context=None):
         if context is None:
             context = {}
         res = {}
         if values.get('date_invoice', False) and\
                                     not values.get('invoice_datetime', False):
-            res_users_obj = self.pool.get('res.users')
-            date_ts = tools.server_to_local_timestamp(values[
-                    'date_invoice'], tools.DEFAULT_SERVER_DATETIME_FORMAT,
-                    tools.DEFAULT_SERVER_DATETIME_FORMAT, context.get(
-                    'tz_invoice_mx', 'UTC'))
-            now = datetime.datetime.now()
-            time_invoice = datetime.time(now.hour, now.minute, now.second)
+                                    
+            user_hour = self._get_time_zone(cr, uid, [], context=context)
+            time_invoice = datetime.time(abs(user_hour), 0, 0)
+
             date_invoice = datetime.datetime.strptime(
-                date_ts, '%Y-%m-%d').date()
+                values['date_invoice'], '%Y-%m-%d').date()
+                
             dt_invoice = datetime.datetime.combine(
                 date_invoice, time_invoice).strftime('%Y-%m-%d %H:%M:%S')
+
             res['invoice_datetime'] = dt_invoice
             res['date_invoice'] = values['date_invoice']
             return res
             
         if values.get('invoice_datetime', False) and not\
             values.get('date_invoice', False):
-            date_invoice = datetime.datetime.strptime(
-                                values['invoice_datetime'],
-                                '%Y-%m-%d %H:%M:%S') + relativedelta(hours=-7)
+            date_invoice = fields.datetime.context_timestamp(cr, uid,
+                datetime.datetime.strptime(values['invoice_datetime'],
+                tools.DEFAULT_SERVER_DATETIME_FORMAT), context=context)
             res['date_invoice'] = date_invoice
-            res['invoice_datetime'] = values.get('invoice_datetime', False)
+            res['invoice_datetime'] = values['invoice_datetime']
             return res
         
         if 'invoice_datetime' in values  and 'date_invoice' in values:
@@ -161,14 +180,12 @@ class account_invoice(osv.Model):
                             _('Invoice dates should be equal'))
 
         if  not values.get('invoice_datetime', False) and\
-            not values.get('date_invoice', False):
-            date_ts = tools.server_to_local_timestamp(fields.datetime.now(),
-                tools.DEFAULT_SERVER_DATETIME_FORMAT,
-                tools.DEFAULT_SERVER_DATETIME_FORMAT, context.get(
-                'tz_invoice_mx', 'UTC'))
-            date_invoice = datetime.datetime.strptime(
-                date_ts, '%Y-%m-%d %H:%M:%S').date().strftime('%Y-%m-%d')
-            res['date_invoice'] = date_invoice
+                                        not values.get('date_invoice', False):
+                
+            date_ts = fields.datetime.context_timestamp(cr, uid,
+                datetime.datetime.strptime(fields.datetime.now(),
+                tools.DEFAULT_SERVER_DATETIME_FORMAT), context=context)
+            res['date_invoice'] = date_ts
             res['invoice_datetime'] = date_ts
             return res
         return res
