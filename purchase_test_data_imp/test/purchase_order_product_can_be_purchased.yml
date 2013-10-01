@@ -38,9 +38,9 @@
             purchase_order_data.update({'invoice_method': 'manual', 
                                         'partner_id': partner_id,
                                         'location_id': ref('stock_location_stock_purchase_test_data')})
-
+                                        
             #~ Data of purchase order line
-            purchase_order_line_data = purchase_order_line_obj.onchange_product_id(cr, uid, [], ref('list_test_purchase_order_imp'), product_id, qty=1, uom_id=1,
+            purchase_order_line_data = purchase_order_line_obj.onchange_product_id(cr, uid, [], purchase_order_data.get('pricelist_id'), product_id, qty=1, uom_id=1,
                                                                 partner_id=partner_id, date_order=False, 
                                                                 fiscal_position_id=False, date_planned=False,
                                                                 name=False, price_unit=1, context=context)['value']

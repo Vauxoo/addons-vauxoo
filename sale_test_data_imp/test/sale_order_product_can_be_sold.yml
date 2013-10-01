@@ -36,12 +36,10 @@
             product_data = product_obj.browse(cr, uid , [product_id])
             #~ Data of sale order
             sale_order_data = self.onchange_partner_id(cr, uid, [], partner_id, context=context)['value']
-            sale_order_data.update({'picking_policy': 'direct','partner_id': partner_id,
-                               'order_policy': 'manual',})  
-            #~ 'pricelist_id': ref('list_test_sale_order_imp'),
-
+            sale_order_data.update({'picking_policy': 'direct','partner_id': partner_id,'order_policy': 'manual',})  
+            
             #~ Data of sale order line
-            sale_order_line_data = sale_order_line_obj.product_id_change(cr, uid, [], ref('list_test_sale_order_imp'), product_id, qty=1,
+            sale_order_line_data = sale_order_line_obj.product_id_change(cr, uid, [], sale_order_data.get('pricelist_id'), product_id, qty=1,
                 uom=False, qty_uos=0, uos=False, name='', partner_id=partner_id,
                 lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False, context=context)['value']
 
