@@ -50,6 +50,13 @@ class account_move_line(osv.Model):
             return {'value' : {}}
             
     def write(self, cr, uid, ids, vals, context=None, check=True, update_check=True):
+        if context is None:
+            context = {}
+        if not ids:
+            return True
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+        
         res = super(account_move_line, self).write(cr, uid, ids, vals,
             context=context, check=check, update_check=update_check)
         acc_tax_obj = self.pool.get('account.tax')
