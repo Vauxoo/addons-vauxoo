@@ -176,12 +176,9 @@ class ir_attachment_facturae_mx(osv.Model):
                 uid, self._name, ids[0], 'action_confirm', cr)
             return True
         except Exception, e:
-            error = tools.ustr(e)
-            _logger.error( error )
+            error = tools.ustr( traceback.format_exc() )
             self.write(cr, uid, ids, {'msj': error}, context=context)
-            #traceback.print_stack()
-            traceback_str = repr(traceback.extract_stack())
-            _logger.error( traceback_str )
+            _logger.error( error )
             return False
 
     def action_confirm(self, cr, uid, ids, context=None):
@@ -241,12 +238,9 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service.trg_validate(uid, self._name, ids[0], 'action_sign', cr)
             return True
         except Exception, e:
-            error = tools.ustr(e)
-            _logger.error( error )
+            error = tools.ustr( traceback.format_exc() )
             self.write(cr, uid, ids, {'msj': error}, context=context)
-            #traceback.print_stack()
-            traceback_str = repr(traceback.extract_stack())
-            _logger.error( traceback_str )
+            _logger.error( error )
             return False
 
     def action_sign(self, cr, uid, ids, context=None):
@@ -293,12 +287,9 @@ class ir_attachment_facturae_mx(osv.Model):
                 uid, self._name, ids[0], 'action_printable', cr)
             return True
         except Exception, e:
-            error = tools.ustr(e)
-            _logger.error( error )
+            error = tools.ustr( traceback.format_exc() )
             self.write(cr, uid, ids, {'msj': error}, context=context)
-            #traceback.print_stack()
-            traceback_str = repr(traceback.extract_stack())
-            _logger.error( traceback_str )
+            _logger.error( error )
             return False
 
     def action_printable(self, cr, uid, ids, context=None):
@@ -415,12 +406,9 @@ class ir_attachment_facturae_mx(osv.Model):
                     uid, self._name, ids[0], 'action_send_customer', cr)
             return True
         except Exception, e:
-            error = tools.ustr(e)
-            _logger.error( error )
+            error = tools.ustr( traceback.format_exc() )
             self.write(cr, uid, ids, {'msj': error}, context=context)
-            #traceback.print_stack()
-            traceback_str = repr(traceback.extract_stack())
-            _logger.error( traceback_str )
+            _logger.error( error )
             return False
 
     def action_send_customer(self, cr, uid, ids, context=None):
@@ -440,14 +428,11 @@ class ir_attachment_facturae_mx(osv.Model):
                 uid, self._name, ids[0], 'action_send_backup', cr)
             return True
         except Exception, e:
-            error = tools.ustr(e)
-            _logger.error( error )
+            error = tools.ustr( traceback.format_exc() )
             self.write(cr, uid, ids, {'msj': error}, context=context)
-            #traceback.print_stack()
-            traceback_str = repr(traceback.extract_stack())
-            _logger.error( traceback_str )
+            _logger.error( error )
             return False
-
+    
     def action_send_backup(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'sent_backup'}, context=context)
 
@@ -464,12 +449,9 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service.trg_validate(uid, self._name, ids[0], 'action_done', cr)
             return True
         except Exception, e:
-            error = tools.ustr(e)
-            _logger.error( error )
+            error = tools.ustr( traceback.format_exc() )
             self.write(cr, uid, ids, {'msj': error}, context=context)
-            #traceback.print_stack()
-            traceback_str = repr(traceback.extract_stack())
-            _logger.error( traceback_str )
+            _logger.error( error )
             return False
 
     def action_done(self, cr, uid, ids, context=None):
