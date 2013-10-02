@@ -124,7 +124,7 @@
                         if line.partner_id.name in dic_partner_lines:
                             dic_partner_lines.get(line.partner_id.name).append(line)
                         else:   
-                            dic_partner_lines.update({line.partner_id.name : [line]})
+                            dic_partner_lines.update({line.partner_id.vat_split and line.partner_id.vat_split + ' - ' + line.partner_id.name or line.partner_id.name : [line]})
                 return dic_partner_lines
             %>
             %if obj.type == "by_document":
