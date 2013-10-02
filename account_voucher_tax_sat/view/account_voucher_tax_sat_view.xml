@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_account_voucher_tax_sat_form" model="ir.ui.view">
+            <field name="name">account.voucher.tax.sat.form</field>
+            <field name="model">account.voucher.tax.sat</field>
+            <field name="arch" type="xml">
+                <form string="Account Voucher Tax SAT" version="7.0">
+                <header>
+                    <button string="Liquidar Cuentas"
+                            name="action_close_tax"
+                            type="object"
+                            class="oe_highlight"/>
+                </header>
+                    <group col="4">
+                        <group col='4'>
+                            <field name='name'
+                                   required='1'
+                                   />
+                            <field name='period_id'
+                                   required='1'
+                                   />
+                            <field name='journal_id'
+                                    required='1'
+                                   />
+                            <field name='move_id'
+                                    readonly='1'
+                                   />
+                        </group>
+                        <group col='1' colspan='4'>
+                            <field name='aml_ids'
+                                   required='1'
+                                   />
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_account_voucher_tax_sat_tree" model="ir.ui.view">
+            <field name="name">account.voucher.tax.sat.tree</field>
+            <field name="model">account.voucher.tax.sat</field>
+            <field name="arch" type="xml">
+                <tree string="Account Voucher Tax SAT">
+                        <field name="name"/>
+                        <field name="period_id"/>
+                        <field name="aml_ids"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="account_voucher_tax_sat_action">
+            <field name="name">Account Voucher Tax SAT</field>
+            <field name="res_model">account.voucher.tax.sat</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem 
+            id="account_voucher_tax_sat_menu" 
+            parent='account.menu_finance_receivables'
+            action='account_voucher_tax_sat_action'
+            sequence='20'
+            />
+
+    </data>
+</openerp>
