@@ -38,6 +38,11 @@
         ],
     'demo': [],
     'test': [],
+    'js': [
+        'static/src/js/backbone-super-min.js',
+        'static/src/js/main.js',
+        'static/src/js/models.js',
+        ],
     'active': False,
     'installable': True,
 }
