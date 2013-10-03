@@ -360,6 +360,8 @@ class account_voucher(osv.Model):
                     'tax_id': tax_id,
                     'analytic_account_id': acc_a,
                     'date' : date,
+                    'tax_id_secondary' : tax_secondary,
+                    'not_move_diot': True
         }
 
         if type in ('payment','purchase'): 

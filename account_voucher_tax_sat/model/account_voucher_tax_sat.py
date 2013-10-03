@@ -48,7 +48,6 @@ class account_voucher_tax_sat(osv.Model):
         for voucher_tax_sat in self.browse(cr, uid, ids, context=context):
             
                 move_id = self.create_move_sat(cr, uid, ids, context=context)
-                print move_id,'move_idmove_idmove_idmove_idmove_idmove_idmove_idmove_idmove_idmove_idmove_idmove_idmove_idmove_idmove_idmove_idmove_id'
                 self.write(cr, uid, ids, {'move_id': move_id})
                 
                 amount_tax_sat = sum([move_line_tax_sat.credit
@@ -103,3 +102,31 @@ class account_tax(osv.Model):
         'tax_sat_ok': fields.boolean('Create entries IVA to SAT'),
         'tax_sat_id': fields.many2one('account.tax', 'Tax of statement SAT')
     }
+
+
+class account_voucher(osv.Model):
+    
+    _inherit = 'account.voucher'
+    
+
+    def _preparate_move_line_tax(self, cr, uid, src_account_id, dest_account_id,
+                            move_id, type, partner, period, journal, date,
+                            company_currency, reference_amount,
+                            amount_tax_unround, reference_currency_id,
+                            tax_id, tax_name, acc_a, amount_base_tax,#informacion de lineas de impuestos
+                            factor=0, context=None):
+                            
+        res = super(account_voucher,
+                        self)._preparate_move_line_tax(cr, uid,
+                            src_account_id, dest_account_id,
+                            move_id, type, partner, period, journal, date,
+                            company_currency, reference_amount,
+                            amount_tax_unround, reference_currency_id,
+                            tax_id, tax_name, acc_a, amount_base_tax,
+                            factor=factor, context=context)
+        res and res[1].update({
+            'tax_id_secondary': res and res[0].get('tax_id_secondary', False),
+            'not_move_diot': True,
+        })
+        print res,'res'
+        return res

@@ -34,7 +34,10 @@ Polizas de SAT:
 2.- Crea provicion de pago al SAT
 3.- Crea apuntes contables para las retenciones de IVA
     """,
-    'depends': ['account'],
+    'depends': [
+        'account',
+        'account_voucher_tax'
+        ],
     'data': [
         'view/account_voucher_tax_sat_view.xml',
       
