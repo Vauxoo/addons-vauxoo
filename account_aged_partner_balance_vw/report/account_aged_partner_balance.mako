@@ -55,16 +55,13 @@
             <table class="list_table"  width="100%" border="0">
                 <thead>
                     <tr>
-                        <th class="celdaTituloTabla" width="100%">${obj.company_id.name or ''|entity} (Expressed in ${obj.company_id.currency_id.name |entity} )</th>
+                        <th class="celdaTituloTablaCompany" width="100%">${obj.company_id.name or ''|entity} (Expressed in ${obj.company_id.currency_id.name |entity} )</th>
                     </tr>
                 </thead>
             </table>
             %if obj.type != "by_document":
                 <table class="list_table"  width="100%" border="0">
                     <thead>
-                        <tr>
-                            <th class="celdaTituloTabla" style="text-align:center;" width="100%">${_('Partners')}</th>
-                        </tr>
                         <tr>
                             <th class="celdaTituloTabla" style="text-align:center;" width="30%">${_('Partners')}</th>
                             <th class="celdaTituloTabla" style="text-align:center;" width="10%">${_('Not due')}</th>
@@ -127,7 +124,7 @@
                         if line.partner_id.name in dic_partner_lines:
                             dic_partner_lines.get(line.partner_id.name).append(line)
                         else:   
-                            dic_partner_lines.update({line.partner_id.name : [line]})
+                            dic_partner_lines.update({line.partner_id.vat_split and line.partner_id.vat_split + ' - ' + line.partner_id.name or line.partner_id.name : [line]})
                 return dic_partner_lines
             %>
             %if obj.type == "by_document":
@@ -135,17 +132,17 @@
                     <table class="list_table"  width="100%" border="0">
                         <thead>
                             <tr>
-                                <th class="celdaTituloTabla" style="text-align:center;" width="10%">${partner}</th>
+                                <th class="celdaTituloPartner" style="text-align:left;" width="10%">${partner}</th>
                             </tr>
                         </thead>
                     </table>
                     <table class="list_table"  width="100%" border="0">
                         <thead>
                             <tr>
-                                <th class="celdaTituloTabla" style="text-align:center;" width="20%">${_('Document')}</th>
-                                <th class="celdaTituloTabla" style="text-align:center;" width="10%">${_('Type')}</th>
-                                <th class="celdaTituloTabla" style="text-align:center;" width="10%">${_('Due Days')}</th>
-                                <th class="celdaTituloTabla" style="text-align:center;" width="10%">${_('Residual')}</th>
+                                <th class="celdaTituloTabla" style="text-align:left;" width="20%">${_('Document')}</th>
+                                <th class="celdaTituloTabla" style="text-align:left;" width="10%">${_('Type')}</th>
+                                <th class="celdaTituloTabla" style="text-align:left;" width="10%">${_('Due Days')}</th>
+                                <th class="celdaTituloTabla" style="text-align:left;" width="10%">${_('Residual')}</th>
                                 <% form = data['form']%>
                                 %for i in range (4,-1,-1):
                                     <th class="celdaTituloTabla" style="text-align:center;">${form.get('%i'%i).get('name')}</th>
@@ -189,7 +186,7 @@
                                     <td class="celdaLineData" width="10%">
                                         ${type}
                                     </td>
-                                    <td class="celdaLineData" width="10%">
+                                    <td class="celdaLineData" style="text-align:center;" width="10%">
                                         ${line.due_days}
                                     </td>
                                     <td class="celdaLineData" width="10%">
@@ -217,26 +214,25 @@
                                     ${_('Total')}
                                 </td>
                                 <td class="celdaTotalTotales" width="10%">
-                                    ${_('$')}
                                 </td>
                                 <td class="celdaTotalTotales" width="10%"></td>
                                 <td class="celdaTotalTotales" width="10%">
-                                    ${residual}
+                                    ${formatLang(residual, digits=2, grouping=True)}
                                 </td>
                                 <td class="celdaTotalTotales" width="10%">
-                                    ${to0130}
+                                    ${formatLang(to0130, digits=2, grouping=True)}
                                 </td>
                                 <td class="celdaTotalTotales" width="10%">
-                                    ${to3160}
+                                    ${formatLang(to3160, digits=2, grouping=True)}
                                 </td>
                                 <td class="celdaTotalTotales" width="10%">
-                                    ${to6190}
+                                    ${formatLang(to6190, digits=2, grouping=True)}
                                 </td>
                                 <td class="celdaTotalTotales" width="10%">
-                                    ${to91120}
+                                    ${formatLang(to91120, digits=2, grouping=True)}
                                 </td>
                                 <td class="celdaTotalTotales" width="10%">
-                                    ${to121}
+                                    ${formatLang(to121, digits=2, grouping=True)}
                                 </td>
                             </tr>
                         </tbody>
