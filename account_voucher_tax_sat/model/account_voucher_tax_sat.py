@@ -93,3 +93,13 @@ class account_voucher_tax_sat(osv.Model):
                     move_tax_sat.journal_id.id,
                     ref='Entry SAT', context=context)
         return account_move_obj.create(cr, uid, vals_move_tax, context=context)
+
+
+class account_tax(osv.Model):
+    
+    _inherit = 'account.tax'
+    
+    _columns = {
+        'tax_sat_ok': fields.boolean('Create entries IVA to SAT'),
+        'tax_sat_id': fields.many2one('account.tax', 'Tax of statement SAT')
+    }

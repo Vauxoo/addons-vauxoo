@@ -64,5 +64,19 @@
             sequence='20'
             />
 
+
+        <record id="view_account_voucher_tax_sat" model="ir.ui.view">
+                <field name="name">view.account.voucher.tax.sat</field>
+                <field name="model">account.tax</field>
+                <field name="inherit_id" ref="account.view_tax_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='active']" position="after">
+                        <field name="tax_sat_ok"/>
+                        <field name="tax_sat_id" attrs="{'required':[('tax_sat_ok','=',True)]}"/>
+                    </xpath>
+                </field>
+        </record>
+        
+
     </data>
 </openerp>
