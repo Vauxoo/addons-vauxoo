@@ -40,8 +40,10 @@
     'test': [],
     'js': [
         'static/src/js/backbone-super-min.js',
-        'static/src/js/main.js',
+        'static/src/js/db.js',
         'static/src/js/models.js',
+        'static/src/js/widgets.js',
+        'static/src/js/main.js',
         ],
     'active': False,
     'installable': True,
