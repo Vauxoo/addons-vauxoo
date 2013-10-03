@@ -36,5 +36,11 @@ class account_asset_asset(osv.Model):
     _inherit = 'account.asset.asset'
     
     _columns={
-        'date_acquisition': fields.date('Date Acquisition')
+        'purchase_date': fields.date('Purchase Date', required=True, readonly=True, states={'draft':[('readonly',False)]}, help="Depreciation Start Date"),
+        'date_acquisition': fields.date('Date Acquisition', help="Date Acquisition")
     }
+    
+    def create(self, cr, uid, vals, context={}):
+        vals['date_acquisition'] = vals['purchase_date'] 
+        super(account_asset_asset, self).create(cr, uid, vals, context)
+        return True
