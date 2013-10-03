@@ -96,6 +96,7 @@
             <field name="view_mode">form</field>
             <field name="view_id" ref="contact_form_view"/>
             <field name="target">inline</field>
+            <field name="context">{'default_type': 'lead'}</field>
         </record>
 
         <!-- attach it to the portal menu -->
@@ -108,10 +109,11 @@
             parent="portal.portal_company" action="action_contact_us" 
             groups="base.group_system"
             sequence="40"/>
-
+        <!-- This menu is already overwritten-->
+        <!--
         <menuitem sequence="1000"  name="Our Team" id="our_team_menu_11" 
         action="portal_hr_employees.action_team"/>
-
+        -->
 
     </data>
 </openerp>

@@ -250,7 +250,7 @@ class account_closure_preparation(osv.TransientModel):
                           {'user_type':wzd_brw.bs_ut_id.id},context=context)
             is_ids = acc_obj.search(cr,uid,[
                 ('parent_id','=',wzd_brw.root_id.id),
-                ('id','not in',[i.id for i in wzd_brw.bs_ids])
+                ('id','not in',[i.id for i in wzd_brw.bs_ids]),
                 ('active','=',True),
                 ],context=context)
             wzd_brw.write({

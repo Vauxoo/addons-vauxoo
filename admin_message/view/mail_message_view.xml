@@ -38,6 +38,16 @@
                     </section>
                     <section class="container">
                         <field name="body"/>
+                        <div class="row">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="attachmet_ids" class="oe_right" string="Attachments"/>
+                            </div>
+                            <div class="col-md-6">
+                            <field name="attachment_ids" context="{'default_res_model': 'mail.group', 'default_res_id': res_id}" widget="many2many_tags_attachments" domain="[('res_model', '=', 'mail.group'), ('res_id', '=', res_id)]" nolabel="1"/>
+                            </div>
+                        </div>
                     </section>
                     <section class="general_information">
                     <div class="container">
@@ -61,6 +71,8 @@
                     </div>
                     </section>
                     <section class="general_information">
+                        <!-- Comment this view part until the algorithm is mature enought. -->
+                        <!--    
                     <div>
                         <span class="text-right">
                             <button string="Publish on" type="object" name="button_publish" states="new,unpublish" class="oe_highlight"/>
@@ -71,6 +83,7 @@
                         <field name="state" widget="statusbar" statusbar_visible="new,publish,unpublish" statusbar_colors='{"new":"blue"}' readonly="1"/>
                         </span>
                     </div>
+                        -->
                     </section>
                     <section class="oe_edit_only page-footer" groups="base.group_no_one">
                     <separator string="Technical Information"/>

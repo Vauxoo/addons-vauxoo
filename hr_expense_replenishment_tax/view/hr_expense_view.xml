@@ -21,7 +21,7 @@
                             attrs="{'invisible':[('fully_applied_vat','=',True)]}">
                             <button 
                                 string="Apply Taxes over Payment" 
-                                name="create_her_tax" 
+                                name="create_her_tax_pay_adv" 
                                 type="object" 
                                 states="process,deduction,paid" 
                                 class="oe_highlight"/>

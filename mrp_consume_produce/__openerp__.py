@@ -27,9 +27,9 @@
 {
     "name": "MRP Consume Produce",
     "version": "1.1",
-    "author" : "Vauxoo",
+    "author": "Vauxoo",
     "category": "Generic Modules/Production",
-    "website" : "http://www.vauxoo.com/",
+    "website": "http://www.vauxoo.com/",
     "description": """
 MRP Consume Produce
 ===================
@@ -66,4 +66,3 @@ and active the ``Real Consume and Produce`` option plus selecting a user type.
     'active': False,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
- 

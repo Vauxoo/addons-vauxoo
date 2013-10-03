@@ -27,11 +27,13 @@ from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 from openerp import tools
 
+
 class mrp_config_settings(osv.TransientModel):
     _inherit = 'mrp.config.settings'
 
     _columns = {
         'group_mrp_consume_produce': fields.boolean(
-            _('Real Consume and Produce'),
-            implied_group='mrp_consume_produce.group_mrp_button_consume_produce'),
+            'Real Consume and Produce',
+            implied_group=
+            'mrp_consume_produce.group_mrp_button_consume_produce'),
     }
