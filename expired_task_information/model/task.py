@@ -68,8 +68,7 @@ class task_expired_config(osv.Model):
 
     def send_expiration_message(self, cr, uid, context=None):
         context = context or {}
-        msg_expired=''
-        msg_expiredp=''
+        
         mail_mail = self.pool.get('mail.mail')
         message = self.pool.get('mail.message')
         task_obj = self.pool.get('project.task')
@@ -87,32 +86,33 @@ class task_expired_config(osv.Model):
                                        [('state', 'not in',
                                         ('done', 'cancelled'))],
                                        context=context)
-            msg_expiredp = 'ACTIVIDAD VENCIDA'
             for task in task_ids and task_obj.browse(cr, uid, task_ids):
-                if task.date_deadline and task.date_deadline <= today:
-                    msg_expired = ('<p>Esta tarea ha expirado el dia %s \
-                                   </p>', task.date_deadline)
-                    
+                msg_expired = ''
+                msg_expiredp = ''
+                last_message_ids = message.search(cr, uid,
+                                   [('res_id', '=', task.id),
+                                   ('model', '=', 'project.task')],
+                                   context, order='date desc')
+                last_fecha = last_message_ids and message.browse(cr, uid, last_message_ids[0]).date
+                #~ Para cuando la tarea se vencio a la fecha de hoy.
+                #~ if task.date_deadline and task.date_deadline <= today:
+                    #~ msg_expired = ('<p>Esta tarea ha expirado el dia %s \
+                                   #~ </p>', task.date_deadline)
+                    #~ msg_expiredp = 'ACTIVIDAD VENCIDA'
                 if work_obj.search(cr, uid,
                                    [('date', '<=', last_change),
                                     ('task_id', '=', task.id)],
                                    context) or \
-                    message.search(cr, uid,
-                                  [('date', '<=', last_change),
-                                   ('res_id', '=', task.id)],
-                                  context):
+                    last_fecha and last_fecha <= last_change :
                     msg_expiredp = 'ACTIVIDAD SIN CAMBIOS'
-                    if config_brw.without_change >1:
-                        msg_expired = ('<p>La Tarea tiene mas de %s dias sin \
-                                                          cambios</p>'
-                             % config_brw.without_change)
-                    elif config_brw.without_change==1:
-                        msg_expired = ('<p>La Tarea tiene mas de %s dia \
-                                        sin cambios</p> '
-                                        % config_brw.without_change)
-                if task.date_deadline and task.date_deadline == before_expiry:
-                    msg_expired = ('<p>La Tarea expirara en %s \
-                                    dias</p>' % config_brw.before_expiry)
+                    msg_expired = ('<p>La Tarea tiene mas de %s dia(s) sin \
+                                                      cambios</p>'
+                                   % config_brw.without_change)
+                #~ Para cuando la tarea tiene x cantidad de dias vencida.
+                #~ if task.date_deadline and task.date_deadline == before_expiry:
+                    #~ msg_expired = ('<p>La Tarea expirara en %s \
+                                    #~ dias</p>' % config_brw.before_expiry)
+                    #~ msg_expiredp = 'ACTIVIDAD VENCIDA'
                 if msg_expired:
                     html = """<html>
     <head>
@@ -123,15 +123,15 @@ class task_expired_config(osv.Model):
             #outlook a{padding:0;} /* Force Outlook to provide a "view in browser" button. */
             body{width:100% !important;} .ReadMsgBody{width:100%;} .ExternalClass{width:100%;} /* Force Hotmail to display emails at full width */
             body{-webkit-text-size-adjust:none;} /* Prevent Webkit platforms from changing default text sizes. */
-            
+
             /* Reset Styles */
             body{margin:0; padding:0;}
             img{border:0; height:auto; line-height:100%; outline:none; text-decoration:none;}
             table td{border-collapse:collapse;}
             #backgroundTable{height:100% !important; margin:0; padding:0; width:100% !important;}
-            
+
             /* Template Styles */
-            
+
             /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: COMMON PAGE ELEMENTS /\/\/\/\/\/\/\/\/\/\ */
 
             /**
@@ -143,7 +143,7 @@ class task_expired_config(osv.Model):
             body, #backgroundTable{
                 /*@editable*/ background-color:#FAFAFA;
             }
-            
+
             /**
             * @tab Page
             * @section email border
@@ -152,7 +152,7 @@ class task_expired_config(osv.Model):
             #templateContainer{
                 /*@editable*/ border:0;
             }
-            
+
             /**
             * @tab Page
             * @section heading 1
@@ -232,9 +232,9 @@ class task_expired_config(osv.Model):
                 margin-left:0;
                 /*@editable*/ text-align:left;
             }
-            
+
             /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: PREHEADER /\/\/\/\/\/\/\/\/\/\ */
-            
+
             /**
             * @tab Header
             * @section preheader style
@@ -244,7 +244,7 @@ class task_expired_config(osv.Model):
             #templatePreheader{
                 /*@editable*/ background-color:#FAFAFA;
             }
-            
+
             /**
             * @tab Header
             * @section preheader text
@@ -257,7 +257,7 @@ class task_expired_config(osv.Model):
                 /*@editable*/ line-height:100%;
                 /*@editable*/ text-align:left;
             }
-            
+
             /**
             * @tab Header
             * @section preheader link
@@ -268,7 +268,7 @@ class task_expired_config(osv.Model):
                 /*@editable*/ font-weight:normal;
                 /*@editable*/ text-decoration:underline;
             }
-            
+
             /**
             * @tab Header
             * @section social bar style
@@ -277,9 +277,9 @@ class task_expired_config(osv.Model):
             #social div{
                 /*@editable*/ text-align:right;
             }
-            
+
             /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: HEADER /\/\/\/\/\/\/\/\/\/\ */
-            
+
             /**
             * @tab Header
             * @section header style
@@ -290,7 +290,7 @@ class task_expired_config(osv.Model):
                 /*@editable*/ background-color:#FFFFFF;
                 /*@editable*/ border-bottom:5px solid #505050;
             }
-            
+
             /**
             * @tab Header
             * @section header text
@@ -306,7 +306,7 @@ class task_expired_config(osv.Model):
                 /*@editable*/ text-align:right;
                 /*@editable*/ vertical-align:middle;
             }
-            
+
             /**
             * @tab Header
             * @section header link
@@ -317,14 +317,14 @@ class task_expired_config(osv.Model):
                 /*@editable*/ font-weight:normal;
                 /*@editable*/ text-decoration:underline;
             }
-            
+
             #headerImage{
                 height:auto;
                 max-width:600px !important;
             }
-            
+
             /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: MAIN BODY /\/\/\/\/\/\/\/\/\/\ */
-            
+
             /**
             * @tab Body
             * @section body style
@@ -333,7 +333,7 @@ class task_expired_config(osv.Model):
             #templateContainer, .bodyContent{
                 /*@editable*/ background-color:#FDFDFD;
             }
-            
+
             /**
             * @tab Body
             * @section body text
@@ -347,7 +347,7 @@ class task_expired_config(osv.Model):
                 /*@editable*/ line-height:150%;
                 /*@editable*/ text-align:justify;
             }
-            
+
             /**
             * @tab Body
             * @section body link
@@ -358,14 +358,14 @@ class task_expired_config(osv.Model):
                 /*@editable*/ font-weight:normal;
                 /*@editable*/ text-decoration:underline;
             }
-            
+
             .bodyContent img{
                 display:inline;
                 height:auto;
             }
-            
+
             /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: SIDEBAR /\/\/\/\/\/\/\/\/\/\ */
-            
+
             /**
             * @tab Sidebar
             * @section sidebar style
@@ -374,7 +374,7 @@ class task_expired_config(osv.Model):
             #templateSidebar{
                 /*@editable*/ background-color:#FDFDFD;
             }
-            
+
             /**
             * @tab Sidebar
             * @section sidebar style
@@ -383,7 +383,7 @@ class task_expired_config(osv.Model):
             .sidebarContent{
                 /*@editable*/ border-right:1px solid #DDDDDD;
             }
-            
+
             /**
             * @tab Sidebar
             * @section sidebar text
@@ -396,7 +396,7 @@ class task_expired_config(osv.Model):
                 /*@editable*/ line-height:150%;
                 /*@editable*/ text-align:left;
             }
-            
+
             /**
             * @tab Sidebar
             * @section sidebar link
@@ -407,14 +407,14 @@ class task_expired_config(osv.Model):
                 /*@editable*/ font-weight:normal;
                 /*@editable*/ text-decoration:underline;
             }
-            
+
             .sidebarContent img{
                 display:inline;
                 height:auto;
             }
-            
+
             /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: FOOTER /\/\/\/\/\/\/\/\/\/\ */
-            
+
             /**
             * @tab Footer
             * @section footer style
@@ -425,7 +425,7 @@ class task_expired_config(osv.Model):
                 /*@editable*/ background-color:#FAFAFA;
                 /*@editable*/ border-top:3px solid #909090;
             }
-            
+
             /**
             * @tab Footer
             * @section footer text
@@ -439,7 +439,7 @@ class task_expired_config(osv.Model):
                 /*@editable*/ line-height:125%;
                 /*@editable*/ text-align:left;
             }
-            
+
             /**
             * @tab Footer
             * @section footer link
@@ -450,11 +450,11 @@ class task_expired_config(osv.Model):
                 /*@editable*/ font-weight:normal;
                 /*@editable*/ text-decoration:underline;
             }
-            
+
             .footerContent img{
                 display:inline;
             }
-            
+
             /**
             * @tab Footer
             * @section social bar style
@@ -465,7 +465,7 @@ class task_expired_config(osv.Model):
                 /*@editable*/ background-color:#FFFFFF;
                 /*@editable*/ border:0;
             }
-            
+
             /**
             * @tab Footer
             * @section social bar style
@@ -474,7 +474,7 @@ class task_expired_config(osv.Model):
             #social div{
                 /*@editable*/ text-align:left;
             }
-            
+
             /**
             * @tab Footer
             * @section utility bar style
@@ -494,7 +494,7 @@ class task_expired_config(osv.Model):
             #utility div{
                 /*@editable*/ text-align:left;
             }
-            
+
             #monkeyRewards img{
                 max-width:170px !important;
             }
@@ -519,7 +519,7 @@ class task_expired_config(osv.Model):
                                                 <div mc:edit="Header_content">
                                                     <h2>"""
                     html += task.name
-                    html +="""</h2>
+                    html += """</h2>
                                                 </div>
                                             </td>
                                         </tr>
@@ -531,7 +531,7 @@ class task_expired_config(osv.Model):
                             <td align="center" style="margin: 0px; padding: 0px; width: 600px; background-color: #E8C808">
                                 <div style="font-size:1.3em; font-family:Arial"><b>"""
                     html += msg_expiredp
-                    html +="""</b></div>
+                    html += """</b></div>
                             </td>
                             </tr>
                             <tr>
@@ -550,21 +550,21 @@ class task_expired_config(osv.Model):
                                             </td>
                                             <!-- // End Sidebar \\ -->
                                             <td valign="top" class="bodyContent">
-                                            
+
                                                 <!-- // Begin Module: Standard Content \\ -->
                                                 <table border="0" cellpadding="10" cellspacing="0" width="600">
                                                     <tr>
                                                         <td valign="top" style="padding-left:0;">
                                                             <div mc:edit="std_content00">
                                                                 <h2 class="h2">Hola @"""
-                    html +=task.user_id.name
-                    html +="""</h2>
+                    html += task.user_id.name
+                    html += """</h2>
                     <h3 class="h3">"""
                     html += msg_expired
                     html += """</h3>
 <pre style="font-size:1.1em; font-family:Arial">Podrias ser tan amable de comentarnos el estatus de la misma por este medio.
 
-Si es por alguna de las 3 siguientes razones, o alguna ajena a estos puntos justificalo por favor: 
+Si es por alguna de las 3 siguientes razones, o alguna ajena a estos puntos justificalo por favor:
 
 <b>1.- Aun no cargas tus labores en la instancia. </b>
 (Recuerda que gran parte del trabajo que realizas esta en cargar las horas, asi demuestras en que te ocupas realmente).
@@ -580,7 +580,7 @@ Si es por alguna de las 3 siguientes razones, o alguna ajena a estos puntos just
                                                     </tr>
                                                 </table>
                                                 <!-- // End Module: Standard Content \\ -->
-                                            
+
                                             </td>
                                         </tr>
                                     </table>
@@ -593,12 +593,12 @@ Si es por alguna de las 3 siguientes razones, o alguna ajena a estos puntos just
             </table>
         </center>
     </body>
-</html>"""          
+</html>"""
                     mail_id = mail_mail.create(cr, uid,
                                                {
                                                    'model': 'project.task',
                                                    'res_id': task.id,
-                                                   'subject': ('#' + str(task.id) +' - ' + task.name),
+                                                   'subject':('#'+str(task.id)+' - '+task.name),
                                                    'body_html': html,
                                                    'auto_delete': True,
                                                }, context=context)
