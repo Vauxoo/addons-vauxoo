@@ -24,7 +24,7 @@
 ###############################################################################
 
 {
-    'name': 'Delivery Restaurant',
+    'name': 'POS Delivery Restaurant',
     'version': '1.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
