@@ -1,7 +1,8 @@
-openerp.delivery_restaurant = function(instance){
+openerp.pos_delivery_restaurant = function(instance){
     var module = instance.point_of_sale;
+    console.log("hola estoy en main.jss");
     delivery_restaurant_db(instance,module); 
     delivery_restaurant_models(instance,module);
     delivery_restaurant_widgets(instance,module); 
-    instance.delivery_restaurant = module;
+    instance.pos_delivery_restaurant = module;
 }

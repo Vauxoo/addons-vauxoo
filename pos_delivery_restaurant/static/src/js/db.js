@@ -3,7 +3,6 @@ function delivery_restaurant_db(instance, module){
     
         init: function(options){
             this._super(options);           
-            this.product_by_id = {};
         },
 
         add_products: function(products){

@@ -1,8 +1,8 @@
 function delivery_restaurant_widgets(instance, module){
     module.ProductCategoriesWidget.include({
         search_and_categories: function(category){
-            self = this;
             this._super();
+            self = this;
 /*           
             var products = this.pos.db.get_product_by_category(this.category.id);
             
