@@ -261,9 +261,32 @@ class ir_attachment_facturae_mx(osv.Model):
             (fileno, fname) = tempfile.mkstemp(
                 '.pdf', 'openerp_' + (invoice.fname_invoice or '') + '__facturae__')
             os.close(fileno)
-            report = invoice_obj.create_report(cr, uid, [invoice.id],
-                                               "account.invoice.facturae.webkit",
-                                               fname)
+            #~ report = invoice_obj.create_report(cr, uid, [invoice.id],
+                                               #~ "account.invoice.facturae.webkit",
+                                               #~ fname)
+                                               
+            actions_obj = self.pool.get('ir.actions.report.xml')
+            report_ids = actions_obj.search(cr, uid, [('model','=','account.invoice'),('report_type','=','webkit')])
+            report_data = actions_obj.browse(cr, uid, report_ids)
+            report_id = None
+            report_name = ''
+            
+            for reporte in report_data:
+                  if reporte.webkit_header and reporte.webkit_header.company_id and reporte.webkit_header.company_id.id == invoice.company_id.id:
+                    report_id = reporte.id
+                    break
+
+            if report_id:
+                report_name = actions_obj.read(cr, SUPERUSER_ID, [report_id], ['report_name'])[0].get('report_name') or False
+                if report_name:
+                    report = invoice_obj.create_report(cr, SUPERUSER_ID, [invoice.id],
+                                                   report_name,
+                                                   invoice.fname_invoice)
+            else:
+                report = invoice_obj.create_report(cr, SUPERUSER_ID, [invoice.id],
+                                                   "account.invoice.facturae.webkit",
+                                                   invoice.fname_invoice)
+                                               
             attachment_ids = attachment_obj.search(cr, uid, [
                 ('res_model', '=', 'account.invoice'),
                 ('res_id', '=', invoice.id),
@@ -346,13 +369,38 @@ class ir_attachment_facturae_mx(osv.Model):
                     mail_compose_message_pool = self.pool.get(
                         'mail.compose.message')
                     email_pool = self.pool.get('email.template')
-                    tmp_id = email_pool.search(
-                        cr, uid, [('model_id.model', '=', 'account.invoice'),
-                                  ('company_id', '=', company_id),
-                                  ('mail_server_id', '=', smtp_server.id),
-                                  ('report_template.report_name', '=',
-                                   'account.invoice.facturae.webkit')
-                                  ], limit=1, context=context)
+                    
+                    actions_obj = self.pool.get('ir.actions.report.xml')
+                    report_ids = actions_obj.search(cr, uid, [('model','=','account.invoice'),('report_type','=','webkit')])
+                    report_data = actions_obj.browse(cr, uid, report_ids)
+                    report_id = None
+                    report_name = ''
+                    
+                    for reporte in report_data:
+                          if reporte.webkit_header and reporte.webkit_header.company_id and reporte.webkit_header.company_id.id == invoice.company_id.id:
+                            report_id = reporte.id
+                            break
+
+                    if report_id:
+                        report_name = actions_obj.read(cr, SUPERUSER_ID, [report_id], ['report_name'])[0].get('report_name') or False
+                        
+                        if report_name:
+                            tmp_id = email_pool.search(
+                                                cr, uid, [('model_id.model', '=', 'account.invoice'),
+                                                          ('company_id', '=', company_id),
+                                                          ('mail_server_id', '=', smtp_server.id),
+                                                          ('report_template.report_name', '=',
+                                                           report_name)
+                                                          ], limit=1, context=context)
+                    else:
+                        tmp_id = email_pool.search(
+                            cr, uid, [('model_id.model', '=', 'account.invoice'),
+                                      ('company_id', '=', company_id),
+                                      ('mail_server_id', '=', smtp_server.id),
+                                      ('report_template.report_name', '=',
+                                       'account.invoice.facturae.webkit')
+                                      ], limit=1, context=context)
+
                     if tmp_id:
                         message = mail_compose_message_pool.onchange_template_id(
                             cr, uid, [], template_id=tmp_id[
