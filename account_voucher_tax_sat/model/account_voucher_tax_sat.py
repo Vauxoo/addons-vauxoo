@@ -55,6 +55,9 @@ class account_voucher_tax_sat(osv.Model):
                             
                 self.create_move_line_sat(cr, uid, voucher_tax_sat,
                                             amount_tax_sat, context=context)
+                                            
+                self.create_entries_tax_iva_sat(cr, uid, voucher_tax_sat,
+                                                            context=context)
                                         
                 move_line_copy = [ aml_obj.copy(cr, uid, move_line_tax.id,
                     {
@@ -66,6 +69,37 @@ class account_voucher_tax_sat(osv.Model):
                     }) for move_line_tax in voucher_tax_sat.aml_ids ]
                     
         return True
+    def create_entries_tax_iva_sat(self, cr, uid, voucher_tax_sat,
+                                                            context=None):
+        aml_obj = self.pool.get('account.move.line')
+        for move_line in voucher_tax_sat.aml_ids:
+            if move_line.tax_id_secondary and\
+                                        move_line.tax_id_secondary.tax_sat_ok:
+                move_line_dt = {
+                    'move_id': voucher_tax_sat.move_id.id,
+                    'journal_id': voucher_tax_sat.journal_id.id,
+                    'date': fields.datetime.now(),
+                    'period_id': voucher_tax_sat.period_id.id,
+                    'debit': 0.0,
+                    'name': _('Payment with Advance'),
+                    #'partner_id' : voucher_tax_sat.name.id,
+                    'account_id': move_line.tax_id_secondary.account_id_creditable.id,
+                    'credit': move_line.credit,
+                }
+                move_line_cr = {
+                    'move_id': voucher_tax_sat.move_id.id,
+                    'journal_id': voucher_tax_sat.journal_id.id,
+                    'date': fields.datetime.now(),
+                    'period_id': voucher_tax_sat.period_id.id,
+                    'debit': move_line.credit,
+                    'name': _('Payment with Advance'),
+                    #'partner_id' : voucher_tax_sat.name.id,
+                    'account_id': move_line.tax_id_secondary.account_id_by_creditable.id,
+                    'credit': 0.0,
+                }
+                #for line_dt_cr in [move_line_dt, move_line_cr]:
+                #    aml_obj.create(cr, uid, line_dt_cr, context=context)
+        return True
     
     def create_move_line_sat(self, cr, uid, voucher_tax_sat, amount, context=None):
         print voucher_tax_sat,'voucher_tax_sat'
@@ -73,13 +107,13 @@ class account_voucher_tax_sat(osv.Model):
         vals = {
             'move_id': voucher_tax_sat.move_id.id,
             'journal_id': voucher_tax_sat.journal_id.id,
-            'date' : fields.datetime.now(),
-            'period_id' : voucher_tax_sat.period_id.id,
-            'debit' : 0.0,
-            'name' : _('Payment with Advance'),
-            'partner_id' : voucher_tax_sat.name.id,
-            'account_id' : voucher_tax_sat.name.property_account_payable.id,
-            'credit' : amount,
+            'date': fields.datetime.now(),
+            'period_id': voucher_tax_sat.period_id.id,
+            'debit': 0,
+            'name': _('Payment with Advance'),
+            'partner_id': voucher_tax_sat.name.id,
+            'account_id': voucher_tax_sat.name.property_account_payable.id,
+            'credit': amount,
         }
         return aml_obj.create(cr, uid, vals, context=context)
     
@@ -94,18 +128,52 @@ class account_voucher_tax_sat(osv.Model):
         return account_move_obj.create(cr, uid, vals_move_tax, context=context)
 
 
+    def sat_pay(self, cr, uid, ids, context=None):
+        """
+        """
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        if not ids: return []
+        dummy, view_id = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'account_voucher', 'view_vendor_payment_form')
+        exp_brw = self.browse(cr, uid, ids[0], context=context)
+        return {
+            'name':_("Pay SAT"),
+            'view_mode': 'form',
+            'view_id': view_id,
+            'view_type': 'form',
+            'res_model': 'account.voucher',
+            'type': 'ir.actions.act_window',
+            'nodestroy': True,
+            'target': 'current',
+            'domain': '[]',
+            'context': {
+                'default_partner_id': exp_brw.name.id,
+                'default_amount': 0.0,
+                'default_name': 'prueba',
+                'default_reference': '',
+                'close_after_process': True,
+                'default_type': 'payment',
+                'type': 'payment',
+            }
+        }
+
+
 class account_tax(osv.Model):
     
     _inherit = 'account.tax'
     
     _columns = {
         'tax_sat_ok': fields.boolean('Create entries IVA to SAT'),
-        'tax_sat_id': fields.many2one('account.tax', 'Tax of statement SAT')
+        'account_id_creditable': fields.many2one('account.account',
+                                        'Account of entries SAT Acreditable'),
+                                                    
+        'account_id_by_creditable': fields.many2one('account.account',
+                                        'Account of entries SAT x Acreditable')
     }
-
+    
 
 class account_voucher(osv.Model):
-    
+
     _inherit = 'account.voucher'
     
 

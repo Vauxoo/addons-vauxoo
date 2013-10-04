@@ -12,6 +12,11 @@
                             name="action_close_tax"
                             type="object"
                             class="oe_highlight"/>
+                            
+                    <button string="Pay SAT"
+                            name="sat_pay"
+                            type="object"
+                            class="oe_highlight"/>
                 </header>
                     <group col="4">
                         <group col='4'>
@@ -72,7 +77,11 @@
                 <field name="arch" type="xml">
                     <xpath expr="//field[@name='active']" position="after">
                         <field name="tax_sat_ok"/>
-                        <field name="tax_sat_id" attrs="{'required':[('tax_sat_ok','=',True)]}"/>
+                        <newline/>
+                        <group attrs="{'invisible':[('tax_sat_ok','=',False)]}" colspan="4">
+                            <field name="account_id_creditable" attrs="{'required':[('tax_sat_ok','=',True)]}"/>
+                            <field name="account_id_by_creditable" attrs="{'required':[('tax_sat_ok','=',True)]}"/>
+                        </group>
                     </xpath>
                 </field>
         </record>
