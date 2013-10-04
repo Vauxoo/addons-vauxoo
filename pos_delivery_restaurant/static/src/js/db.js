@@ -11,10 +11,12 @@ function delivery_restaurant_db(instance, module){
 
           for(var i = 0, len = products.length; i < len; i++){
             var prod = products[i];
-            console.log('product_by:');
-            console.log(this.product_by_id[prod.id]); 
+            //Aqui se tienen los productos filtrados desde db.js
+
+            //console.log('product_by:');
+            //console.log(this.product_by_id[prod.id]); 
                 
-            }     
+          }     
        },  
     
     })
