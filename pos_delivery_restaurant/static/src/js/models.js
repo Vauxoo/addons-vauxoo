@@ -3,6 +3,7 @@ function delivery_restaurant_models(instance, module){
     module.PosModel = module.PosModel.extend({
         initialize : function(session, attributes) {
             this._super(session, attributes);
+            console.log('hola estoy en ini');
             //this.db.clear('products');
             //this.set({'products':new module.ProductCollection()});
         },
@@ -11,7 +12,6 @@ function delivery_restaurant_models(instance, module){
             self = this;
             loaded = this._super()
                 .then(function(){
-                    //debugger;
                     return self.fetch(
                     'pos.config',
                     ['deli_rest'],
@@ -27,8 +27,9 @@ function delivery_restaurant_models(instance, module){
                         
                         );
                 }).then(function(products){
-            //this.db.clear('products');
-            //this.set({'products':new module.ProductCollection()});
+                    //this.db.clear('products');
+                    //this.set({'products':new module.ProductCollection()});
+                    console.log("Hola");
                     self.db.add_products(products);
                 });
             return loaded;
