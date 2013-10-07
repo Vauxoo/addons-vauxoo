@@ -68,6 +68,10 @@ class account_voucher_tax_sat(osv.Model):
                         'debit': move_line_tax.credit,
                     }) for move_line_tax in voucher_tax_sat.aml_ids ]
                     
+                cr.execute('UPDATE account_move_line '\
+                            'SET amount_tax_unround = null '\
+                            'WHERE id in %s ',(tuple(move_line_copy), ))
+                            
         return True
     def create_entries_tax_iva_sat(self, cr, uid, voucher_tax_sat,
                                                             context=None):
@@ -97,8 +101,8 @@ class account_voucher_tax_sat(osv.Model):
                     'account_id': move_line.tax_id_secondary.account_id_by_creditable.id,
                     'credit': 0.0,
                 }
-                #for line_dt_cr in [move_line_dt, move_line_cr]:
-                #    aml_obj.create(cr, uid, line_dt_cr, context=context)
+                for line_dt_cr in [move_line_dt, move_line_cr]:
+                    aml_obj.create(cr, uid, line_dt_cr, context=context)
         return True
     
     def create_move_line_sat(self, cr, uid, voucher_tax_sat, amount, context=None):
@@ -134,7 +138,9 @@ class account_voucher_tax_sat(osv.Model):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         if not ids: return []
-        dummy, view_id = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'account_voucher', 'view_vendor_payment_form')
+        dummy, view_id = self.pool.get('ir.model.data').\
+                                get_object_reference(cr, uid,
+                                'account_voucher', 'view_vendor_payment_form')
         exp_brw = self.browse(cr, uid, ids[0], context=context)
         return {
             'name':_("Pay SAT"),

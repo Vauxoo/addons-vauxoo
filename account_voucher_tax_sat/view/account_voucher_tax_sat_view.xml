@@ -17,6 +17,11 @@
                             name="sat_pay"
                             type="object"
                             class="oe_highlight"/>
+                            
+                    <button name="%(action_view_account_voucher_tax_assigned)d"
+                            type='action'
+                            string='Assigned Account'
+                            class="oe_highlight"/>
                 </header>
                     <group col="4">
                         <group col='4'>
@@ -35,7 +40,6 @@
                         </group>
                         <group col='1' colspan='4'>
                             <field name='aml_ids'
-                                   required='1'
                                    />
                         </group>
                     </group>
