@@ -40,7 +40,7 @@ delivery.
     ''',
     'depends': ['base', 'point_of_sale', 'sale', 'pos_delivery_restaurant'],
     'data': [
-            'view/delivery_view.xml', 
+            'view/product_view.xml', 
         ],
     'demo': [],
     'test': [],
