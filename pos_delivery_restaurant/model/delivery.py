@@ -41,19 +41,3 @@ class pos_config(osv.Model):
     _defaults = {
         'deli_rest': 'restaurant',
     }
-
-class product_product(osv.Model):
-    """ 
-    To add two fields which determine if a product is show in restaurant and/or delivery
-    point of sale
-    """
-    _inherit = 'product.product'
-    _description = ('')
-    _columns = {
-        'restaurant':fields.boolean('POS Restaurant', help='To be sold in restaurant'), 
-        'delivery':fields.boolean('POS Delivery', help='To be sold in delivery'), 
-    }
-
-    _defaults = {
-            'restaurant':True,
-            }
