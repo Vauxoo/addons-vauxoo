@@ -539,3 +539,18 @@ class ir_attachment(osv.Model):
             raise osv.except_osv(_('Warning!'), _(
                 'You can not remove an attachment of an invoice'))
         return super(ir_attachment, self).unlink(cr, uid, ids, context=context)
+
+class ir_mail_server(osv.Model):
+    _inherit = 'ir.mail_server'
+    def send_email(self, cr, uid, message, mail_server_id=None, smtp_server=None, smtp_port=None,
+                   smtp_user=None, smtp_password=None, smtp_encryption=None, smtp_debug=False,
+                   context=None):
+        obj_ir_mail_server = self.pool.get('ir.mail_server')
+        company_id = self.pool.get('res.users').browse(
+                cr, uid, uid, context=context).company_id.id
+        mail_server_id = obj_ir_mail_server.search(cr, uid,
+                                                           ['|', ('company_id', '=', company_id), ('company_id', '=', False)], limit=1, order='sequence', context=None)
+        super(ir_mail_server, self).send_email(cr, uid, message, mail_server_id=mail_server_id, smtp_server=None, smtp_port=None,
+                   smtp_user=None, smtp_password=None, smtp_encryption=None, smtp_debug=False,
+                   context=None)
+        return True
