@@ -1,0 +1,13 @@
+=== modified file 'openerp/addons/base/ir/ir_mail_server.py'
+--- openerp/addons/base/ir/ir_mail_server.py	2013-09-18 14:38:07 +0000
++++ openerp/addons/base/ir/ir_mail_server.py	2013-10-07 17:42:27 +0000
+@@ -420,7 +420,7 @@
+         # Get SMTP Server Details from Mail Server
+         mail_server = None
+         if mail_server_id:
+-            mail_server = self.browse(cr, SUPERUSER_ID, mail_server_id)
++            mail_server = self.browse(cr, SUPERUSER_ID, mail_server_id)[0]
+         elif not smtp_server:
+             mail_server_ids = self.search(cr, SUPERUSER_ID, [], order='sequence', limit=1)
+             if mail_server_ids:
+

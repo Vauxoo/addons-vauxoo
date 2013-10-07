@@ -27,6 +27,7 @@
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
     "description" : """This module creates attachment for Invoice(CFD,CFDI,CBB)
+*ir_mail_server.diff patched on the server addons
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
