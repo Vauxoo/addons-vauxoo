@@ -38,7 +38,7 @@ restaurant or delivery.
     ''',
     'depends': ['base', 'point_of_sale', 'sale'],
     'data': [
-            'view/delivery_view.xml', 
+            'view/point_of_sale_view.xml', 
         ],
     'demo': [],
     'test': [],
