@@ -21,7 +21,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 {
-    "name": "Settings Facturae",
+    "name": "Electronic Invoicing Settings",
     "version": "1.0",
     "depends": [
         'base',
@@ -30,9 +30,12 @@
     ],
     "author": "Vauxoo",
     "description" : """
-Settings Facturae
-=================
+Electronic Invoicing Settings
+=============================
 
+This module helps to configure the electronic invoicing CFD, CBB and CFDI,
+with this module you can configure the email template and report template
+for electronic invoicing, also your outgoing mail server by company.
 
     """,
     "website": "http://vauxoo.com",
