@@ -32,13 +32,18 @@ class account_voucher_tax_sat(osv.Model):
     _name = 'account.voucher.tax.sat'
     
     _columns = {
-        'name': fields.many2one('res.partner', 'Partner'),
-        'period_id': fields.many2one('account.period', 'Period'),
+        'name': fields.char('Name', size=128, help='Name of This Document'),
+        'partner_id': fields.many2one('res.partner', 'Partner',
+                                        help='Partner of SAT'),
+        'period_id': fields.many2one('account.period', 'Period',
+                                        help='Period of Entries to find'),
         'aml_ids': fields.many2many('account.move.line', 'voucher_tax_sat_rel',
                                         'voucher_tax_sat_id', 'move_line_id',
-                                        'Move Lines'),
-        'journal_id':fields.many2one('account.journal', 'Journal'), 
-        'move_id': fields.many2one('account.move', 'Journal Entry')
+                                        'Move Lines', help='Entries to close'),
+        'journal_id':fields.many2one('account.journal', 'Journal',
+                                        help='Accounting Journal where Entries will be posted'), 
+        'move_id': fields.many2one('account.move', 'Journal Entry',
+                                        help='Accounting Entry')
     }
     
     def action_close_tax(self, cr, uid, ids, context=None):
@@ -115,8 +120,8 @@ class account_voucher_tax_sat(osv.Model):
             'period_id': voucher_tax_sat.period_id.id,
             'debit': 0,
             'name': _('Payment to SAT'),
-            'partner_id': voucher_tax_sat.name.id,
-            'account_id': voucher_tax_sat.name.property_account_payable.id,
+            'partner_id': voucher_tax_sat.partner_id.id,
+            'account_id': voucher_tax_sat.partner_id.property_account_payable.id,
             'credit': amount,
         }
         return aml_obj.create(cr, uid, vals, context=context)
@@ -153,7 +158,7 @@ class account_voucher_tax_sat(osv.Model):
             'target': 'current',
             'domain': '[]',
             'context': {
-                'default_partner_id': exp_brw.name.id,
+                'default_partner_id': exp_brw.partner_id.id,
                 'default_amount': 0.0,
                 'close_after_process': True,
                 'default_type': 'payment',
