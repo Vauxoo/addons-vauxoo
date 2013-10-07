@@ -30,8 +30,11 @@
     'website': 'http://www.vauxoo.com/',
     'category': 'Point Of Sale',
     'description': '''
-        With this module deli_rest field is added in the point of sale, which can be a 
-        restaurant or delivery.
+POS Delivery Restaurant
+=======================
+
+With this module deli_rest field is added in the point of sale, which can be a 
+restaurant or delivery.
     ''',
     'depends': ['base', 'point_of_sale', 'sale'],
     'data': [
