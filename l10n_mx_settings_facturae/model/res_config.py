@@ -38,12 +38,12 @@ class facturae_config_settings(osv.osv_memory):
 
     _columns = {
         'company_id': fields.many2one('res.company', 'Company',),
-        'module_l10n_mx_facturae': fields.boolean('Electronic Invoice CFD', help="""Install module for electronic invoice CFD"""),
-        'module_l10n_mx_facturae_cbb': fields.boolean('Electronic Invoice CBB', help="""Install module for electronic invoice CBB"""),
-        'module_l10n_mx_facturae_pac_sf': fields.boolean('Electronic Invoice CFDI', help="""Install module for electronic invoice CFDI"""),
-        'email_tmp_id': fields.many2one('email.template', 'Email Template'),
-        'temp_report_id': fields.many2one('ir.actions.report.xml', 'Report Template',),
-        'mail_server_id': fields.many2one('ir.mail_server', 'Outgoing Mail Server',),
+        'module_l10n_mx_facturae': fields.boolean('Electronic Invoicing CFD', help="""This installs the module electronic invoicing CFD"""),
+        'module_l10n_mx_facturae_cbb': fields.boolean('Electronic Invoicing CBB', help="""This installs the module electronic invoicing CBB"""),
+        'module_l10n_mx_facturae_pac_sf': fields.boolean('Electronic Invoicing CFDI', help="""This installs the module electronic invoicing CFDI"""),
+        'email_tmp_id': fields.many2one('email.template', 'Email Template', help="""This email template will be assigned for electronic invoicing in your company"""),
+        'temp_report_id': fields.many2one('ir.actions.report.xml', 'Report Template', help="""This report template will be assigned for electronic invoicing in your company"""),
+        'mail_server_id': fields.many2one('ir.mail_server', 'Outgoing Mail Server', help="""This outgoing mail server will be assigned by your company"""),
     }
 
     def open_parameters_pac(self, cr, uid, ids, context=None):
@@ -85,21 +85,24 @@ class facturae_config_settings(osv.osv_memory):
 
     def create(self, cr, uid, values, context=None):
         confg_id = super(facturae_config_settings, self).create(
-            cr, uid, values, context)
-        email_obj = self.pool.get('email.template')
-        actions_obj = self.pool.get('ir.actions.report.xml')
-        webkit_header_obj = self.pool.get('ir.header_webkit')
-        report_data = actions_obj.browse(
-            cr, SUPERUSER_ID, [values.get('temp_report_id')])
-        confg_data = self.browse(cr, uid, confg_id, context=context)
-        if report_data:
-            webkit_header_obj.write(cr, SUPERUSER_ID, [report_data[0].webkit_header.id], {
-                                    'company_id': confg_data.company_id.id}, context=context)
-        email_obj.write(cr, uid, [confg_data.email_tmp_id.id], {
-                        'company_id': confg_data.company_id.id,
-                        'mail_server_id': confg_data.mail_server_id.id,
-                        'report_template': values['temp_report_id']},
-                        context=context)
+                cr, uid, values, context)
+        if values['mail_server_id'] and values['company_id'] and values['email_tmp_id'] and values['temp_report_id']:
+            email_obj = self.pool.get('email.template')
+            actions_obj = self.pool.get('ir.actions.report.xml')
+            webkit_header_obj = self.pool.get('ir.header_webkit')
+            report_data = actions_obj.browse(
+                cr, SUPERUSER_ID, [values.get('temp_report_id')])
+            confg_data = self.browse(cr, uid, confg_id, context=context)
+            if report_data:
+                webkit_header_obj.write(cr, SUPERUSER_ID, [report_data[0].webkit_header.id], {
+                                        'company_id': confg_data.company_id.id}, context=context)
+            email_obj.write(cr, uid, [confg_data.email_tmp_id.id], {
+                            'company_id': confg_data.company_id.id,
+                            'mail_server_id': confg_data.mail_server_id.id,
+                            'report_template': values['temp_report_id']},
+                            context=context)
+            
+        
         return confg_id
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,0 +1,124 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* l10n_mx_settings_facturae
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-10-07 15:01+0000\n"
+"PO-Revision-Date: 2013-10-07 15:01+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_settings_facturae
+#: view:facturae.config.settings:0
+#: model:ir.actions.act_window,name:l10n_mx_settings_facturae.action_facturae_config
+#: model:ir.ui.menu,name:l10n_mx_settings_facturae.menu_facturae_config
+msgid "Electronic Invoicing Settings"
+msgstr "Configuraciones de Facturación Electrónica"
+
+#. module: l10n_mx_settings_facturae
+#: field:facturae.config.settings,module_l10n_mx_facturae_pac_sf:0
+msgid "Electronic Invoicing CFDI"
+msgstr "Facturación Electrónica CFDI"
+
+#. module: l10n_mx_settings_facturae
+#: model:ir.model,name:l10n_mx_settings_facturae.model_facturae_config_settings
+msgid "facturae.config.settings"
+msgstr "facturae.config.settings"
+
+#. module: l10n_mx_settings_facturae
+#: field:facturae.config.settings,module_l10n_mx_facturae:0
+msgid "Electronic Invoicing CFD"
+msgstr "Facturación Electrónica CFD"
+
+#. module: l10n_mx_settings_facturae
+#: field:facturae.config.settings,email_tmp_id:0
+msgid "Email Template"
+msgstr "Plantilla email"
+
+#. module: l10n_mx_settings_facturae
+#: field:facturae.config.settings,module_l10n_mx_facturae_cbb:0
+msgid "Electronic Invoicing CBB"
+msgstr "Facturación Electrónica CBB"
+
+#. module: l10n_mx_settings_facturae
+#: field:facturae.config.settings,company_id:0
+msgid "Company"
+msgstr "Compañía"
+
+#. module: l10n_mx_settings_facturae
+#: field:facturae.config.settings,mail_server_id:0
+msgid "Outgoing Mail Server"
+msgstr "Servidores de correo saliente"
+
+#. module: l10n_mx_settings_facturae
+#: help:facturae.config.settings,mail_server_id:0
+msgid "This outgoing mail server will be assigned by your company"
+msgstr "Este servidor de correo saliente será asigando por su compañia"
+
+#. module: l10n_mx_settings_facturae
+#: help:facturae.config.settings,temp_report_id:0
+msgid "This report template will be assigned for electronic invoicing in your company"
+msgstr "Esta plantilla de reporte será asignada para la facturación electrónica en su empresa"
+
+#. module: l10n_mx_settings_facturae
+#: view:facturae.config.settings:0
+msgid "Parameters PAC"
+msgstr "Parametros PAC"
+
+#. module: l10n_mx_settings_facturae
+#: help:facturae.config.settings,email_tmp_id:0
+msgid "This email template will be assigned for electronic invoicing in your company"
+msgstr "Esta plantilla de email será asignada para la facturación electrónica en su empresa"
+
+#. module: l10n_mx_settings_facturae
+#: help:facturae.config.settings,module_l10n_mx_facturae_cbb:0
+msgid "This installs the module electronic invoicing CBB"
+msgstr "Se instalará el módulo de Facturación Electrónica CBB"
+
+#. module: l10n_mx_settings_facturae
+#: help:facturae.config.settings,module_l10n_mx_facturae:0
+msgid "This installs the module electronic invoicing CFD"
+msgstr "Se instalará el módulo de Facturación Electrónica CFD"
+
+#. module: l10n_mx_settings_facturae
+#: view:facturae.config.settings:0
+msgid "Electronic Invoicing"
+msgstr "Facturación Electrónica"
+
+#. module: l10n_mx_settings_facturae
+#: view:facturae.config.settings:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: l10n_mx_settings_facturae
+#: view:facturae.config.settings:0
+msgid "Apply"
+msgstr "Aplicar"
+
+#. module: l10n_mx_settings_facturae
+#: help:facturae.config.settings,module_l10n_mx_facturae_pac_sf:0
+msgid "This installs the module electronic invoicing CFDI"
+msgstr "Se instalará el módulo de Facturación Electrónica CFDI"
+
+#. module: l10n_mx_settings_facturae
+#: view:facturae.config.settings:0
+msgid "or"
+msgstr "ó"
+
+#. module: l10n_mx_settings_facturae
+#: view:facturae.config.settings:0
+msgid "Configure your Parameters PAC"
+msgstr "Configurar sus Parametros de PAC"
+
+#. module: l10n_mx_settings_facturae
+#: field:facturae.config.settings,temp_report_id:0
+msgid "Report Template"
+msgstr "Plantilla de reporte"
+
