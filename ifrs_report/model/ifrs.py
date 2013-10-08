@@ -110,13 +110,9 @@ class ifrs_ifrs(osv.osv):
             self._get_level(cr, uid, j, level+1, tree, context=context)
         return True
 
-    def _get_ordered_lines(self, cr, uid, ids, context=None):
+    def get_ordered_lines(self, cr, uid, ids, context=None):
         """ Return list of browse ifrs_lines per level in order ASC, for can
-        calculate in order of depending.
-
-        Retorna la lista de ifrs.lines del ifrs_id organizados desde el nivel
-        mas bajo hasta el mas alto. Lo niveles mas bajos se deben calcular
-        primero, por eso se posicionan en primer lugar de la lista.
+        calculate in order of priorities.
         """
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -132,11 +128,23 @@ class ifrs_ifrs(osv.osv):
         ids_x = []  # List of ids per level in order ASC
         for i in levels:
             ids_x += tree[i].keys()
+        return ids_x
+
+    def _get_ordered_lines(self, cr, uid, ids, context=None):
+        """ Return list of browse ifrs_lines per level in order ASC, for can
+        calculate in order of depending.
+
+        Retorna la lista de ifrs.lines del ifrs_id organizados desde el nivel
+        mas bajo hasta el mas alto. Lo niveles mas bajos se deben calcular
+        primero, por eso se posicionan en primer lugar de la lista.
+        """
+        ids_x = self.get_ordered_lines(cr, uid, ids, context=context)
+        if not ids_x: return []
+
         ifrs_lines = self.pool.get('ifrs.lines')
-        res = []
-        res = ifrs_lines.browse(
-            cr, uid, ids_x, context=context)  # List of browse per level in order ASC
-        return res
+        # List of browse per level in order ASC
+        return ifrs_lines.browse( cr, uid, ids_x, context=context)  
+         
 
     def compute(self, cr, uid, ids, context=None):
         """ Se encarga de calcular los montos para visualizarlos desde

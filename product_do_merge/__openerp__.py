@@ -51,6 +51,7 @@ also is created an action menu in the product view.
         'stock',
     ],                                                                
     'data': [                                                                      
+        "security/res_groups.xml",
         'wizard/base_product_merge_view.xml',
     ],                                                                                 
     'js': [                                                                        
