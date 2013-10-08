@@ -39,6 +39,8 @@ Polizas de SAT:
         'account_voucher_tax'
         ],
     'data': [
+        'security/security.xml',
+        'security/ir.model.access.csv',
         'wizard/account_tax_sat_view.xml',
         'view/account_voucher_tax_sat_view.xml',
       

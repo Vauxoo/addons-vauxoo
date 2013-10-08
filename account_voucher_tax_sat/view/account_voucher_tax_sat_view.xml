@@ -71,7 +71,7 @@
         </record>
 
         <record model="ir.actions.act_window" id="account_voucher_tax_sat_action">
-            <field name="name">Account Voucher Tax SAT</field>
+            <field name="name">Voucher Tax SAT</field>
             <field name="res_model">account.voucher.tax.sat</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -79,7 +79,7 @@
 
         <menuitem 
             id="account_voucher_tax_sat_menu" 
-            parent='account.menu_finance_receivables'
+            parent='account.menu_finance_payables'
             action='account_voucher_tax_sat_action'
             sequence='20'
             />
