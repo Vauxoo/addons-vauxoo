@@ -43,6 +43,7 @@
         "view/wizard.xml",
         "view/view.xml",
         'view/action_menues.xml',
+        'view/wizard_print_report_view.xml',
         "data/data.xml",
         'report/report.xml',
     ],
