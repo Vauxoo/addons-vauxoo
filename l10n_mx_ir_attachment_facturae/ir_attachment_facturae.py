@@ -314,7 +314,7 @@ class ir_attachment_facturae_mx(osv.Model):
             fname_invoice = invoice.fname_invoice and invoice.fname_invoice or ''
             adjuntos = self.pool.get('ir.attachment').search(cr, uid, [(
                 'res_model', '=', 'account.invoice'), ('res_id', '=', invoice)])
-            subject = 'Invoice ' + invoice.number or False
+            subject = 'Invoice ' + (invoice.number or '')
             for attach in self.pool.get('ir.attachment').browse(cr, uid, adjuntos):
                 attachments.append(attach.id)
                 attach_name += attach.name + ', '
