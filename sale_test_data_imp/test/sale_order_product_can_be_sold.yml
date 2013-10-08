@@ -8,9 +8,7 @@
     import netsvc
     import os
     import tempfile
-    
-    stringProductLog =['id, name, name_category, error']
-    stringLog =['error']
+    import csv
     
     res_partner_obj = self.pool.get('res.partner')
     product_obj = self.pool.get('product.product')
@@ -22,6 +20,7 @@
     invoice_id = None
     partner_id = None
     products_tax_not_fund = []
+    tmp_path = tempfile.gettempdir()
     partner_ids = res_partner_obj.search(cr, uid, [('customer','=','True')])
     if partner_ids:
         for partner in partner_ids:
@@ -29,6 +28,22 @@
             if data.property_account_receivable.type == 'receivable' :
                 partner_id = data.id
                 break
+    try:
+        f_write_ProductLog_csv = open(os.path.join(tmp_path, 'sale_order_product_log.csv'), 'wb')
+        fcsv_csv_ProductLog = csv.DictWriter(f_write_ProductLog_csv, 
+            ['id', 'name', 'name_category', 'error' ,], delimiter=',')
+        fcsv_csv_ProductLog.writerow({'id':'id', 'name':'name', 'name_category':'name_category', 'error':'error' })
+            
+        f_write_Log_csv = open(os.path.join(tmp_path, 'sale_order_general_log.csv'), 'wb')
+        fcsv_csv_Log = csv.DictWriter(f_write_Log_csv, ['error' ,], delimiter=',')
+        fcsv_csv_Log.writerow({'error': 'error'})
+        
+    except Exception, e:
+        fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', '')})
+    
+    if not partner_id:
+        fcsv_csv_Log.writerow({'error' : 'Wrong, You can not generate a sale without a partner'})
+        
     assert  partner_id , 'Wrong, You can not generate a sale without a partner'
     
     if product_ids:
@@ -50,8 +65,11 @@
             #~ Added data of sale_order_line_data in sale_order_data
             sale_order_data.update({'order_line': [(0, 0, sale_order_line_data )]})
             
-            #~ Create sale order with this product
-            sale_order_id = self.create(cr, uid, sale_order_data )
+            try:
+                #~ Create sale order with this product
+                sale_order_id = self.create(cr, uid, sale_order_data )
+            except Exception, e:
+                    fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', '')})
 
             #~ Click button Confirm
             self.action_button_confirm(cr, uid, [sale_order_id],context=context)
@@ -62,8 +80,7 @@
                     stock_picking_out_ids = stock_picking_out_object.search(cr, uid, [('sale_id','=',sale_order_id)])
                     assert len(stock_picking_out_ids) > 0 ,  'Wrong. Stock picking out not fund'
                 except Exception, e:
-                    stringLogAux = ', '.join([tools.ustr(e).replace('\n', '')])
-                    stringLog.append(stringLogAux)
+                    fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', '')})
             
             #~ Create invoice for this sale order
             try:
@@ -76,44 +93,19 @@
                 #~ cr.execute("RELEASE SAVEPOINT sale_order_savepoint")
             except Exception, e:
                 #~ cr.execute("ROLLBACK TO SAVEPOINT sale_order_savepoint")
-                stringProductLogAux = ', '.join([repr(product_data[0].id),
-                                              product_data[0].name.encode('utf8').replace(',','.'), 
-                                              product_data[0].categ_id.name.encode('utf8').replace(',','.'),
-                                              tools.ustr(e).replace('\n', '')])
-                stringProductLog.append(stringProductLogAux)
-                
+                fcsv_csv_ProductLog.writerow({'id':repr(product_data[0].id), 
+                                                'name': product_data[0].name.encode('utf8').replace(',','.'),
+                                                'name_category': product_data[0].categ_id.name.encode('utf8').replace(',','.'), 
+                                                'error': tools.ustr(e).replace('\n', '')})
             #~ Validate invoice for this sale order 
             if invoice_id:
                 try:
                     wf_service = netsvc.LocalService("workflow")
                     wf_service.trg_validate(uid, 'account.invoice', invoice_id.get('res_id') , 'invoice_open', cr)
                 except Exception, e:
-                    stringLogAux = ', '.join([tools.ustr(e).replace('\n', '')])
-                    stringLog.append(stringLogAux)
-                
-            #~ I check that the invoice lines tax_id not null
-            #~ if invoice_id:
-                #~ name_sale = self.browse(cr, uid, [sale_order_id])[0].name
-                #~ invoice_ids = account_invoice_obj.search(cr, uid, [('origin','like',name_sale)])
-                #~ invoice_lines_ids = account_invoice_line_obj.search(cr, uid ,  [('invoice_id','=',invoice_ids[0])])
-                #~ if invoice_lines_ids:
-                    #~ for line_id in invoice_lines_ids:
-                        #~ line_data = account_invoice_line_obj.browse(cr, uid , [line_id])[0]
-                        #~ tax_not_found = False
-                        #~ taxes_ids = line_data.invoice_line_tax_id
-                        #~ if len(taxes_ids) == 0:
-                            #~ tax_not_found = True
-                        #~ if tax_not_found == True:
-                            #~ products_tax_not_fund.append(line_data.product_id.id)
-                            
-        set(stringProductLog)
-        set(stringLog)
-        if tools.config['test_report_directory']:
-            open(os.path.join(tools.config['test_report_directory'], 'sale_order_product_log.csv'), 'wb+').write('\n'.join(stringProductLog))
-            open(os.path.join(tools.config['test_report_directory'], 'sale_order_general_log.csv'), 'wb+').write('\n'.join(stringLog))
-        else:
-            tmp_path = tempfile.gettempdir()
-            open(os.path.join(tmp_path, 'sale_order_product_log.csv'), 'wb+').write('\n'.join(stringProductLog))
-            open(os.path.join(tmp_path, 'sale_order_general_log.csv'), 'wb+').write('\n'.join(stringLog))
+                    fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', '')})
+
+        f_write_ProductLog_csv.close()
+        f_write_Log_csv.close()
         assert len(products_tax_not_fund) == 0 , 'Wrong. Some products not have tax : %s' % (products_tax_not_fund)
     
