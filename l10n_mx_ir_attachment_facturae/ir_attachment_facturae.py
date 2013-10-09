@@ -388,6 +388,11 @@ class ir_attachment_facturae_mx(osv.Model):
                                     else:
                                         msj = _('Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s') % (
                                             partner_mail, server_name)
+                                        self.write(cr, uid, ids, {
+                                                                'msj': msj, 
+                                                                'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
+                                        wf_service.trg_validate( uid, self._name, ids[0], 'action_send_customer', cr)
+                                        return True
                             else:
                                 raise osv.except_osv(
                                     _('Warning'), _('This user does not have mail'))
@@ -400,11 +405,6 @@ class ir_attachment_facturae_mx(osv.Model):
                 else:
                     raise osv.except_osv(_('Warning'), _('Not Found\
                     outgoing mail server.Configure the outgoing mail server named "FacturaE"'))
-                self.write(
-                    cr, uid, ids, {'msj': msj, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
-                wf_service.trg_validate(
-                    uid, self._name, ids[0], 'action_send_customer', cr)
-            return True
         except Exception, e:
             error = tools.ustr( traceback.format_exc() )
             self.write(cr, uid, ids, {'msj': error}, context=context)
@@ -526,6 +526,24 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service.trg_delete(uid, self._name, row, cr)
             wf_service.trg_create(uid, self._name, row, cr)
         return True
+
+    def forward_email(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        try:
+            self.signal_send_customer(cr, uid, ids, context=context)
+            msj = _('Forward Email')
+            self.write(cr, uid, ids, {'msj': msj,
+                                      'last_date': time.strftime('%Y-%m-%d %H:%M:%S')
+                                      }, context=context)
+            status_forward = True
+        except Exception, e:
+            error = tools.ustr( traceback.format_exc() )
+            self.write(cr, uid, ids, {'msj': error}, context=context)
+            _logger.error( error )
+            status_forward = False
+        return status_forward
 
 
 class ir_attachment(osv.Model):

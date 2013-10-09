@@ -31,6 +31,7 @@
                         <button name="signal_done" states="sent_backup" string="Done" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <button name="signal_cancel" states="draft,confirmed,signed,printable,sent_backup,sent_customer,done" string="Cancel" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <button name="reset_to_draft" states="cancel" string="Reset to Draft" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_manager"/>
+                        <button name="forward_email" states="sent_customer,sent_backup,done" string="Forward Email" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,signed,printable,sent_customer,sent_backup,done,cancel" statusbar_colors='{"invoice_except":"red","waiting_date":"blue"}'/>
                     </header>
                     <sheet string="Attachment Factura-E">
