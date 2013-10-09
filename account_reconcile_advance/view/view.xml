@@ -63,8 +63,15 @@
                             attrs="{'readonly':[('state','!=','draft')]}"/>
                         <field name='ai_aml_ids'
                                nolabel='1'
-                               invisible='1'
-                               attrs="{'readonly':[('state','!=','draft')]}"/>
+                               invisible='0'
+                            domain="[('partner_id','=',partner_id),
+                                ('account_id.type','=', type == 'pay' and 'payable' or 'receivable'),
+                                ('reconcile_id','=',False),
+                                ('reconcile_partial_id','=',False),
+                                ('state','=','valid'),
+                                (type == 'pay' and 'credit' or 'debit','>',0.0),
+                                ]"
+                            attrs="{'readonly':[('state','!=','draft')]}"/>
                     </page>
                     <page string='Advances'>
                         <separator string='Customer Payments' attrs='{"invisible":[("type","!=","rec")]}'/>
