@@ -74,7 +74,7 @@ class account_reconcile_advance(osv.Model):
                         adv.move_id.period_id.id, adv.move_id.journal_id.id,
                         adv.move_id.date, company_currency,
                         tax.amount * factor, tax.amount * factor,
-                        current_currency, False, tax,
+                        current_currency, False, tax.tax_id,
                         tax.account_analytic_id and\
                             tax.account_analytic_id.id or False,
                         tax.base_amount, factor, context=context)
