@@ -323,6 +323,8 @@ class account_voucher(osv.Model):
             src_account_id, dest_account_id = dest_account_id, src_account_id
         if type == 'payment' and reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
+            
+        print reference_amount,'imprimo reference_amount'
         amount_base = amount_base_tax * factor
         debit_line_vals = {
                     'name': line_tax.name,
@@ -338,8 +340,6 @@ class account_voucher(osv.Model):
                     'tax_id': tax_id,
                     'analytic_account_id': acc_a,
                     'date' : date,
-                    'amount_base' : abs(amount_base),
-                    'tax_id_secondary' : line_tax.id,
         }
         credit_line_vals = {
                     'name': line_tax.name,
@@ -358,13 +358,18 @@ class account_voucher(osv.Model):
                     'date' : date,
         }
 
-        if type in ('payment','purchase'): 
+        if type in ('payment','purchase'):
             reference_amount < 0 and\
-                credit_line_vals.pop('analytic_account_id') or\
-                debit_line_vals.pop('analytic_account_id')
+                [credit_line_vals.pop('analytic_account_id'),
+                credit_line_vals.update({'amount_base': abs(amount_base),
+                                        'tax_id_secondary': line_tax.id})] or\
+                [debit_line_vals.pop('analytic_account_id'),
+                debit_line_vals.update({'tax_id_secondary': line_tax.id,
+                                        'amount_base': abs(amount_base)})]
         else:
             reference_amount < 0 and\
-                debit_line_vals.pop('analytic_account_id') or\
+                [debit_line_vals.pop('analytic_account_id'),
+                debit_line_vals.pop('tax_id_secondary')] or\
                 credit_line_vals.pop('analytic_account_id')
         
         if not amount_tax_unround:
