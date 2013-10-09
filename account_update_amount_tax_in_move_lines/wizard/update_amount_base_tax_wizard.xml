@@ -8,6 +8,14 @@
                  <form string="Update Amount Base Tax in Move Lines" version="7.0">
                     <separator string='WARNING!!'/>
                     <field name='warning'/>
+                    <group>
+                        <group>
+                            <field name='update_tax_sec'/>
+                        </group>
+                        <group>
+                            <field name='update_amount_base'/>
+                        </group>
+                    </group>
                     <footer>
                         <button name="apply" type="object" string="Apply" class="oe_highlight"/>
                         or
