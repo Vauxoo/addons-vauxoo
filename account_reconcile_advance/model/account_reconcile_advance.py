@@ -130,7 +130,8 @@ class account_reconcile_advance(osv.Model):
         invoice_ids = [inv.id for inv in ara_brw.invoice_ids]
         invoice_ids = inv_obj.search(cr, uid, [('id','in',invoice_ids)],
                 order='date_due asc', context=context)
-
+        
+        ai_aml_ids = ara_brw.ai_aml_ids and [k.id for k in ara_brw.ai_aml_ids] or []
         av_aml_ids = []
         for av_brw in ara_brw.voucher_ids:
             av_aml_ids += [l.id for l in av_brw.move_ids if l.account_id.type \
