@@ -324,7 +324,6 @@ class account_voucher(osv.Model):
         if type == 'payment' and reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
             
-        print reference_amount,'imprimo reference_amount'
         amount_base = amount_base_tax * factor
         debit_line_vals = {
                     'name': line_tax.name,
