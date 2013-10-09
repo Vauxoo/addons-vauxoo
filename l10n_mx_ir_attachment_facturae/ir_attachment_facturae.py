@@ -258,9 +258,12 @@ class ir_attachment_facturae_mx(osv.Model):
             invoice_obj = self.pool.get('account.invoice')
             type = self.browse(cr, uid, ids)[0].type
             wf_service = netsvc.LocalService("workflow")
+            (fileno, fname) = tempfile.mkstemp(
+                '.pdf', 'openerp_' + (invoice.fname_invoice or '') + '__facturae__')
+            os.close(fileno)
             report = invoice_obj.create_report(cr, SUPERUSER_ID, [invoice.id],
                                                "account.invoice.facturae.webkit",
-                                               invoice.fname_invoice)
+                                               fname)
             attachment_ids = attachment_obj.search(cr, uid, [
                 ('res_model', '=', 'account.invoice'),
                 ('res_id', '=', invoice.id),
