@@ -8,6 +8,7 @@
                  <form string="Update Amount Base Tax in Move Lines" version="7.0">
                     <separator string='WARNING!!'/>
                     <field name='warning'/>
+                    <separator string='If you want replace existing values used this fields, else left empty'/>
                     <group>
                         <group>
                             <field name='update_tax_sec'/>
