@@ -119,13 +119,19 @@ class account_aged_trial_balance(osv.TransientModel):
         data = res['datas']
         datas['form'] = data['form']
         context.update({'data' : data, 'datas' : datas})
+        if wzd_brw.type == 'by_document':
+            return {
+                    'res_model': 'wizard.report.aged.partner.balance',
+                    'view_type': 'form',
+                    'view_mode': 'form',
+                    'context': context,
+                    'type': 'ir.actions.act_window',
+                    'target': 'new',
+            }
         return {
-                'res_model': 'wizard.report.aged.partner.balance',
-                'view_type': 'form',
-                'view_mode': 'form',
-                'context': context,
-                'type': 'ir.actions.act_window',
-                'target': 'new',
+            'type': 'ir.actions.report.xml',
+            'report_name': 'account_aged_partner_balance_report',
+            'datas': datas,
         }
 
     def compute_lines(self, cr, uid, ids, context=None):

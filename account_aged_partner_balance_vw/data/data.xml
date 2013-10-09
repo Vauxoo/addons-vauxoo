@@ -159,6 +159,14 @@ font-family:Arial,Helvetica,sans-serif;
 background-color:#620400; 
 color:#FFFFFF; 
 }
+
+.celdaTituloTablaUser{ 
+font-size:10pt; 
+text-align:left; 
+font-family:Arial,Helvetica,sans-serif; 
+background-color:#0174DF; 
+color:#FFFFFF; 
+}
 ]]>
 </field>
             <field name="name">Report Account Aged Partner Balance VW</field>
