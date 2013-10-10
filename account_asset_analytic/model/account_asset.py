@@ -1,11 +1,5 @@
 # -*- encoding: utf-8 -*-
-import time
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
-
 from openerp.osv import fields, osv
-import openerp.addons.decimal_precision as dp
-from tools.translate import _
 
 class account_asset_asset(osv.osv):
     _inherit = 'account.asset.asset'
