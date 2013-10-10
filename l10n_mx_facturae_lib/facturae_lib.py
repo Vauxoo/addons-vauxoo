@@ -57,7 +57,7 @@ def exec_command_pipe(*args):
 if os.name == "nt":
     app_xsltproc = 'xsltproc.exe'
     app_openssl = 'openssl.exe'
-    app_xmlstarlet = 'xml.exe'
+    app_xmlstarlet = 'xmlstarlet.exe'
 else:
     app_xsltproc = 'xsltproc'
     app_openssl = 'openssl'
