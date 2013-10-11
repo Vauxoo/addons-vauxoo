@@ -250,7 +250,7 @@ class account_voucher(osv.Model):
                         voucher.period_id.id, voucher.journal_id.id,
                         voucher.date, company_currency, reference_amount,
                         amount_tax_unround, current_currency,
-                        line_tax.id, line_tax.tax_id.name,
+                        line_tax.id, line_tax.tax_id,
                         line_tax.analytic_account_id and\
                                     line_tax.analytic_account_id.id or False,
                         line_tax.amount_base,
@@ -278,7 +278,7 @@ class account_voucher(osv.Model):
                                 voucher.date, company_currency,
                                 factor * base_amount, None,
                                 company_currency,
-                                line_tax.id, line_tax.tax_id.name,
+                                line_tax.id, line_tax.tax_id,
                                 line_tax.analytic_account_id and\
                                             line_tax.analytic_account_id.id or False,
                                 line_tax.amount_base,
@@ -316,20 +316,17 @@ class account_voucher(osv.Model):
                             move_id, type, partner, period, journal, date,
                             company_currency, reference_amount,
                             amount_tax_unround, reference_currency_id,
-                            tax_id, tax_name, acc_a, amount_base_tax,#informacion de lineas de impuestos
+                            tax_id, line_tax, acc_a, amount_base_tax,#informacion de lineas de impuestos
                             factor=0, context=None):
         acc_tax_obj = self.pool.get('account.tax')
         if type == 'payment' or reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
         if type == 'payment' and reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
-        tax_secondary_ids = acc_tax_obj.search(cr, uid, [('type_tax_use', '=', 'purchase'), '|', ('account_collected_id', '=', src_account_id), ('account_paid_voucher_id', '=', src_account_id)])
-        tax_secondary = False
-        if tax_secondary_ids:
-            tax_secondary = tax_secondary_ids[0]
+            
         amount_base = amount_base_tax * factor
         debit_line_vals = {
-                    'name': tax_name,
+                    'name': line_tax.name,
                     'quantity': 1,
                     'partner_id': partner,
                     'debit': abs(reference_amount),
@@ -342,11 +339,9 @@ class account_voucher(osv.Model):
                     'tax_id': tax_id,
                     'analytic_account_id': acc_a,
                     'date' : date,
-                    'amount_base' : abs(amount_base),
-                    'tax_id_secondary' : tax_secondary,
         }
         credit_line_vals = {
-                    'name': tax_name,
+                    'name': line_tax.name,
                     'quantity': 1,
                     'partner_id': partner,
                     'debit': 0.0,
@@ -362,13 +357,18 @@ class account_voucher(osv.Model):
                     'date' : date,
         }
 
-        if type in ('payment','purchase'): 
+        if type in ('payment','purchase'):
             reference_amount < 0 and\
-                credit_line_vals.pop('analytic_account_id') or\
-                debit_line_vals.pop('analytic_account_id')
+                [credit_line_vals.pop('analytic_account_id'),
+                credit_line_vals.update({'amount_base': abs(amount_base),
+                                        'tax_id_secondary': line_tax.id})] or\
+                [debit_line_vals.pop('analytic_account_id'),
+                debit_line_vals.update({'tax_id_secondary': line_tax.id,
+                                        'amount_base': abs(amount_base)})]
         else:
             reference_amount < 0 and\
-                debit_line_vals.pop('analytic_account_id') or\
+                [debit_line_vals.pop('analytic_account_id'),
+                debit_line_vals.pop('tax_id_secondary')] or\
                 credit_line_vals.pop('analytic_account_id')
         
         if not amount_tax_unround:

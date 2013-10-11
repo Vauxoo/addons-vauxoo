@@ -132,7 +132,7 @@ class hr_expense_expense(osv.Model):
                         move_date, company_currency,
                         tax.amount*percent_pay, tax.amount*percent_pay,
                         current_currency,
-                        False, tax.name, tax.account_analytic_id and\
+                        False, tax.tax_id, tax.account_analytic_id and\
                             tax.account_analytic_id.id or False,
                         tax.base_amount, factor, context=context)
                         
