@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data>
+        <record id="view_move_line_form" model="ir.ui.view">
+            <field name="name">account.move.line.categ.form</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_move_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr='//group[@string="Analytic"]' position='after'>
+                    <group string="Voucher Category">
+                        <field name="av_cat_id" domain="[('type','=','other')]"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_vendor_payment_form">
+            <field name="name">account.voucher.payment.form</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr='//field[@name="date"]' position='before'>
+                    <field name="av_cat_id" domain="[('type','=','other')]" attrs="{'readonly': [('state','!=','draft')]}"/>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_vendor_receipt_form">
+            <field name="name">account.voucher.receipt.form</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_receipt_form"/>
+            <field name="arch" type="xml">
+                <xpath expr='//field[@name="date"]' position='before'>
+                    <field name="av_cat_id" domain="[('type','=','other')]" attrs="{'readonly': [('state','!=','draft')]}"/>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="account_voucher_categ_form_view">
+            <field name="name">account.voucher.categ.form</field>
+            <field name="model">account.voucher.category</field>
+            <field name="arch" type="xml">
+                <form string="Account Voucher Category Form">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="company_id" widget='selection' groups="base.group_multi_company"/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="account_voucher_categ_tree_view">
+            <field name="name">account.voucher.categ.tree</field>
+            <field name="model">account.voucher.category</field>
+            <field name="arch" type="xml">
+                <tree string="Account Voucher Category Tree">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</openerp>
