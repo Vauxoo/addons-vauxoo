@@ -24,3 +24,29 @@ class account_move(osv.Model):
         'folio_id': fields.many2one('account.move.folio', 'Folio Record'),
     }
 
+    def post(self, cr, uid, ids, context=None):
+        context = context or {}
+        folio_obj = self.pool.get('account.move.folio')
+        super(account_move, self).post(cr, uid, ids, context=context)
+        invoice = context.get('invoice', False)
+        for move in self.browse(cr, uid, ids, context=context):
+            if not move.folio_id:
+                values = {
+                    'name': move.name,
+                    'move_id': move.id,
+                    'journal_id': move.journal_id.id,
+                    'period_id': move.period_id.id,
+                    'date': move.date,
+                }
+                if invoice:
+                    folio_ids = folio_obj.search(cr, uid, [('name','=',move.name)],context=context)
+                    if folio_ids:
+                        folio_id = folio_ids[0]
+                        folio_obj.write(cr, uid, folio_id, values, context=context)
+                    else:
+                        folio_id = folio_obj.create(cr, uid, values,context=context)
+                else:
+                    folio_id = folio_obj.create(cr, uid, values,context=context)
+                move.write({'folio_id':folio_id},context=context)
+        return True
+
