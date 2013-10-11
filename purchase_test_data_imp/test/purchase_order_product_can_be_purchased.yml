@@ -40,8 +40,8 @@
         fcsv_csv_ProductLog.writerow({'id':'id', 'name':'name', 'name_category':'name_category', 'error':'error' })
             
         f_write_Log_csv = open(os.path.join(tmp_path, 'purchase_order_general_log.csv'), 'wb')
-        fcsv_csv_Log = csv.DictWriter(f_write_Log_csv, ['error' ,], delimiter=',')
-        fcsv_csv_Log.writerow({'error': 'error', 'product_id': 'product_id'})
+        fcsv_csv_Log = csv.DictWriter(f_write_Log_csv, ['error' ,'localization' ,'product_id'], delimiter=',')
+        fcsv_csv_Log.writerow({'error': 'error', 'localization':'localization' ,'product_id': 'product_id'})
         
     except Exception, e:
         fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', ''), 'localization':'Error create files'})
