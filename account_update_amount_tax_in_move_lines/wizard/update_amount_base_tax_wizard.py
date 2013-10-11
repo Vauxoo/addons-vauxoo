@@ -57,14 +57,21 @@ class update_amount_base_tax_wizard(osv.osv_memory):
         attrs = [('account_id', 'in', list(set(acc_collected_ids))), ('company_id', '=', company_id)]
         if not data.update_tax_sec:
             attrs.append(('tax_id_secondary', '=', None))
-        line_id = move_line_obj.search(cr, uid, attrs, context=context)
-        for line in move_line_obj.browse(cr, uid, line_id, context=context):
+        line_ids = move_line_obj.search(cr, uid, attrs, context=context)
+        for line in move_line_obj.browse(cr, uid, line_ids, context=context):
             tax_line = acc_tax_obj.search(cr, uid, [('name', '=', line.name),\
                 ('id', 'in', tax_ids)], context=context)
             if tax_line:
                 cr.execute("""UPDATE account_move_line
                     SET tax_id_secondary = %s
                     WHERE id = %s""", (tax_line[0], line.id))
+        lines_incorects_ids = move_line_obj.search(cr, uid, [('company_id', '=', company_id),
+            ('tax_id_secondary', '!=', False),
+            ('account_id', 'not in', list(set(acc_collected_ids)))], context=context)
+        for line in lines_incorects_ids:
+            cr.execute("""UPDATE account_move_line
+                SET tax_id_secondary = Null
+                WHERE id = %s""", (line,))
         return True
     
     def apply(self, cr, uid, ids, context=None):
@@ -113,6 +120,12 @@ class update_amount_base_tax_wizard(osv.osv_memory):
                 cr.execute("""UPDATE account_move_line
                     SET amount_base = %s
                     WHERE id = %s""", (amount_base, move.id))
+        lines_incorects_ids = move_line_obj.search(cr, uid, [('company_id', '=', company_id),
+            ('amount_base', '!=', False), ('tax_id_secondary', '=', False)], context=context)
+        for line in lines_incorects_ids:
+            cr.execute("""UPDATE account_move_line
+                SET amount_base = Null
+                WHERE id = %s""", (line,))
         #~ move_concile_ids = move_line_obj.search(cr, uid, ['|',\
             #~ ('reconcile_id', '!=', False),\
             #~ ('reconcile_partial_id', '!=', False)], context=context)
