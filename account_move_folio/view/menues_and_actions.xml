@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data>
+        <record id="account_move_folio_action" model="ir.actions.act_window">
+            <field name="name">Entry Folios</field>
+            <field name="res_model">account.move.folio</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem 
+            id="move_folio_main_menu" 
+            name="Entry Folios"
+            parent="account.menu_finance_configuration" 
+            sequence="45"
+            groups="account.group_account_manager"/>
+        <menuitem 
+            id="move_folio_menu" 
+            parent="move_folio_main_menu" 
+            action='account_move_folio_action'
+            />
+    </data>
+</openerp>
