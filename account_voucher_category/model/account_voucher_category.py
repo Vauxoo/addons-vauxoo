@@ -11,10 +11,15 @@ class account_voucher_category(osv.Model):
         'name':fields.char('Name', 256, help='Category Name', translate=True), 
         'code':fields.char('Code', 64, help='Category Code'), 
         'type':fields.selection([('view','View'),('other','Regular')], string='Category Type', help='Category Type'), 
+        'company_id': fields.many2one('res.company', 'Company', required=True),
         'parent_id':fields.many2one('account.voucher.category', 'Parent Category', 
             help='Allows to create a Hierachycal Tree of Categories'), 
         'parent_left': fields.integer('Parent Left', select=1),
         'parent_right': fields.integer('Parent Right', select=1),
+    }
+
+    _defaults = {
+        'company_id': lambda self, cr, uid, c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
     }
 
 class account_voucher(osv.Model):

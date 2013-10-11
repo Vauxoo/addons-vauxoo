@@ -41,6 +41,7 @@
                     <field name="code"/>
                     <field name="name"/>
                     <field name="type"/>
+                    <field name="company_id"/>
                 </form>
             </field>
         </record>
@@ -52,6 +53,7 @@
                     <field name="code"/>
                     <field name="name"/>
                     <field name="type"/>
+                    <field name="company_id"/>
                 </tree>
             </field>
         </record>
