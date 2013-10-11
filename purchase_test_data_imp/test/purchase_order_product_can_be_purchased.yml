@@ -41,10 +41,10 @@
             
         f_write_Log_csv = open(os.path.join(tmp_path, 'purchase_order_general_log.csv'), 'wb')
         fcsv_csv_Log = csv.DictWriter(f_write_Log_csv, ['error' ,], delimiter=',')
-        fcsv_csv_Log.writerow({'error': 'error'})
+        fcsv_csv_Log.writerow({'error': 'error', 'product_id': 'product_id'})
         
     except Exception, e:
-        fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', '')})
+        fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', ''), 'localization':'Error create files'})
     
     if not partner_id:
         fcsv_csv_Log.writerow({'error' : 'Wrong, You can not generate a sale without a partner'})
@@ -77,7 +77,7 @@
                 #~ Create purchase order with this product
                 purchase_order_id = self.create(cr, uid, purchase_order_data )
             except Exception, e:
-                    fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', '')})
+                fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', ''), 'localization': 'Create Purchase', 'product_id' : repr(product_id)})
 
             #~ Click button Confirm
             if purchase_order_id:
@@ -85,7 +85,7 @@
                     wf_service = netsvc.LocalService("workflow")
                     wf_service.trg_validate(uid, 'purchase.order', purchase_order_id , 'purchase_confirm', cr)
                 except Exception, e:
-                    fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', '')})
+                    fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', ''), 'localization': 'Confirm purchase', 'product_id' : repr(product_id)})
             
             #~  Chech picking out by purchase order
             if not product_data[0].type == 'service' :
@@ -93,7 +93,7 @@
                     stock_picking_in_ids = stock_picking_in_object.search(cr, uid, [('purchase_id','=',purchase_order_id)])
                     assert len(stock_picking_in_ids) > 0 ,  'Wrong. Stock picking in not fund'
                 except Exception, e:
-                    fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', '')})
+                    fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', ''), 'localization': 'Check picking in', 'product_id' : repr(product_id)})
 
             #~ Create invoice for this purchase order
             try:
@@ -114,7 +114,7 @@
                     wf_service = netsvc.LocalService("workflow")
                     wf_service.trg_validate(uid, 'account.invoice', invoice_id.get('res_id') , 'invoice_open', cr)
                 except Exception, e:
-                    fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', '')})
+                    fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', ''), 'localization': 'Validate Invoice',  'product_id' : repr(product_id)})
 
         assert len(products_tax_not_fund) == 0 , 'Wrong. Some products not have tax : %s' % (products_tax_not_fund)
         
