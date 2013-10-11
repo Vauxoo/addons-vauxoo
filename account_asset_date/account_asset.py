@@ -39,8 +39,3 @@ class account_asset_asset(osv.Model):
         'purchase_date': fields.date('Purchase Date', required=True, readonly=True, states={'draft':[('readonly',False)]}, help = _('Depreciation start date')),
         'date_acquisition': fields.date('Date Acquisition', help = _('Date acquisition'))
     }
-    
-    def create(self, cr, uid, vals, context={}):
-        vals['date_acquisition'] = vals['purchase_date'] 
-        super(account_asset_asset, self).create(cr, uid, vals, context)
-        return True
