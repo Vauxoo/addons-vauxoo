@@ -8,7 +8,7 @@ class account_voucher_category(osv.Model):
     _name = 'account.voucher.category'
 
     _columns = {
-        'name':fields.char('Name', 256, help='Category Name'), 
+        'name':fields.char('Name', 256, help='Category Name', translate=True), 
         'code':fields.char('Code', 64, help='Category Code'), 
         'type':fields.selection([('view','View'),('other','Regular')], string='Category Type', help='Category Type'), 
         'parent_id':fields.many2one('account.voucher.category', 'Parent Category', 
