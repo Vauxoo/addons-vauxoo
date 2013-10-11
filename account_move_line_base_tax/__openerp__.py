@@ -38,7 +38,7 @@
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : [
-            "account_voucher_tax",
+            "account",
             "l10n_mx_account_tax_category",
         ],
     "demo" : [],
