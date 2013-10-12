@@ -10,9 +10,9 @@
         <menuitem 
             id="move_folio_main_menu" 
             name="Entry Folios"
-            parent="account.menu_finance_configuration" 
-            sequence="45"
-            groups="account.group_account_manager"/>
+            parent="account.menu_finance" 
+            sequence="5"
+            />
         <menuitem 
             id="move_folio_menu" 
             parent="move_folio_main_menu" 
