@@ -5,7 +5,7 @@ class account_move_folio(osv.Model):
     _name = 'account.move.folio'
     _description = "Records of Folios in Journal Entries"
     _columns = {
-        'name':fields.char('Name', 256, help='Folio Number', required = True), 
+        'name':fields.char('Folio', 256, help='Folio Number', required = True), 
         'move_id':fields.many2one('account.move', 'Journal Entry', help='Journal Entry'), 
         'journal_id':fields.many2one('account.journal', 'Journal', help='Entry Journal'), 
         'period_id':fields.many2one('account.period', 'Period', help='Entry Period'), 
