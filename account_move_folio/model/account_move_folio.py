@@ -12,10 +12,10 @@ class account_move_folio(osv.Model):
         'date':fields.date('Date', help='Entry Date'), 
         'company_id':fields.many2one('res.company', 'Company', help='Entry Company'), 
         'move_state':fields.related('move_id','state', type='selection',
-            selection=[('draft','Unposted'), ('posted','Posted')], store=False,
+            selection=[('draft','Unposted'), ('posted','Posted')], store=True,
             string='Entry State', help='Entry State'), 
         'period_state':fields.related('period_id','state', type='selection',
-            selection=[('draft','Open'), ('done','Closed')], store=False,
+            selection=[('draft','Open'), ('done','Closed')], store=True,
             string='Period State', help='Period State'), 
     }
 
