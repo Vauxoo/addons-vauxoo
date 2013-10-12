@@ -1,0 +1,113 @@
+# Spanish translation for addons-vauxoo
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the addons-vauxoo package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: addons-vauxoo\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-10-11 04:16+0000\n"
+"PO-Revision-Date: 2013-10-12 02:38+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
+"Language-Team: Spanish <es@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-10-12 05:55+0000\n"
+"X-Generator: Launchpad (build 16799)\n"
+
+#. module: account_voucher_category
+#: field:account.voucher.category,parent_left:0
+msgid "Parent Left"
+msgstr "Padre izquierdo"
+
+#. module: account_voucher_category
+#: help:account.voucher.category,code:0
+msgid "Category Code"
+msgstr "Código de la Categoría"
+
+#. module: account_voucher_category
+#: field:account.voucher.category,code:0
+msgid "Code"
+msgstr "Código"
+
+#. module: account_voucher_category
+#: field:account.voucher.category,name:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: account_voucher_category
+#: field:account.voucher.category,parent_id:0
+msgid "Parent Category"
+msgstr "Categoría Padre"
+
+#. module: account_voucher_category
+#: view:account.voucher.category:0
+msgid "Account Voucher Category Tree"
+msgstr "Lista de Categorías de Comprobantes Contables"
+
+#. module: account_voucher_category
+#: model:ir.model,name:account_voucher_category.model_account_voucher
+msgid "Accounting Voucher"
+msgstr "Comprobantes Contables"
+
+#. module: account_voucher_category
+#: model:ir.actions.act_window,name:account_voucher_category.account_voucher_categ_action
+#: model:ir.ui.menu,name:account_voucher_category.voucher_category_menu
+msgid "Voucher Categories"
+msgstr "Categorías de Comprobantes"
+
+#. module: account_voucher_category
+#: field:account.voucher.category,type:0
+#: help:account.voucher.category,type:0
+msgid "Category Type"
+msgstr "Tipo de Categoría"
+
+#. module: account_voucher_category
+#: field:account.move.line,av_cat_id:0
+#: field:account.voucher,av_cat_id:0
+#: model:ir.ui.menu,name:account_voucher_category.voucher_category_main_menu
+msgid "Voucher Category"
+msgstr "Categoría de Comprobante"
+
+#. module: account_voucher_category
+#: model:ir.model,name:account_voucher_category.model_account_voucher_category
+msgid "account.voucher.category"
+msgstr "account.voucher.category"
+
+#. module: account_voucher_category
+#: view:account.voucher.category:0
+msgid "Account Voucher Category Form"
+msgstr "Formulario de Categorías de Comprobante Contable"
+
+#. module: account_voucher_category
+#: selection:account.voucher.category,type:0
+msgid "Regular"
+msgstr "Regular"
+
+#. module: account_voucher_category
+#: help:account.voucher.category,name:0
+msgid "Category Name"
+msgstr "Nombre de la Categoría"
+
+#. module: account_voucher_category
+#: model:ir.model,name:account_voucher_category.model_account_move_line
+msgid "Journal Items"
+msgstr "Apuntes Contables"
+
+#. module: account_voucher_category
+#: selection:account.voucher.category,type:0
+msgid "View"
+msgstr "Vista"
+
+#. module: account_voucher_category
+#: field:account.voucher.category,parent_right:0
+msgid "Parent Right"
+msgstr "Padre Derecho"
+
+#. module: account_voucher_category
+#: help:account.voucher.category,parent_id:0
+msgid "Allows to create a Hierachycal Tree of Categories"
+msgstr "Permite crear un árbol Jerárquico de Categorías"
