@@ -323,8 +323,12 @@ class account_voucher(osv.Model):
             src_account_id, dest_account_id = dest_account_id, src_account_id
         if type == 'payment' and reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
-            
-        amount_base = amount_base_tax * factor
+        amount_base = 0
+        tax_secondary = False
+        if line_tax and line_tax.tax_category_id and line_tax.tax_category_id.name in (\
+            'IVA', 'IVA-EXENTO', 'IVA-RET'):
+            amount_base = amount_base_tax * factor
+            tax_secondary = line_tax.id
         debit_line_vals = {
                     'name': line_tax.name,
                     'quantity': 1,
@@ -361,9 +365,9 @@ class account_voucher(osv.Model):
             reference_amount < 0 and\
                 [credit_line_vals.pop('analytic_account_id'),
                 credit_line_vals.update({'amount_base': abs(amount_base),
-                                        'tax_id_secondary': line_tax.id})] or\
+                                        'tax_id_secondary': tax_secondary})] or\
                 [debit_line_vals.pop('analytic_account_id'),
-                debit_line_vals.update({'tax_id_secondary': line_tax.id,
+                debit_line_vals.update({'tax_id_secondary': tax_secondary,
                                         'amount_base': abs(amount_base)})]
         else:
             reference_amount < 0 and\
