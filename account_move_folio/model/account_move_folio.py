@@ -30,10 +30,9 @@ class account_move(osv.Model):
         'folio_id': fields.many2one('account.move.folio', 'Folio Record'),
     }
 
-    def post(self, cr, uid, ids, context=None):
+    def foliate(self, cr, uid, ids, context=None):
         context = context or {}
         folio_obj = self.pool.get('account.move.folio')
-        super(account_move, self).post(cr, uid, ids, context=context)
         invoice = context.get('invoice', False)
         for move in self.browse(cr, uid, ids, context=context):
             if not move.folio_id:
@@ -54,5 +53,11 @@ class account_move(osv.Model):
                 else:
                     folio_id = folio_obj.create(cr, uid, values,context=context)
                 move.write({'folio_id':folio_id},context=context)
+        return True
+    
+    def post(self, cr, uid, ids, context=None):
+        context = context or {}
+        super(account_move, self).post(cr, uid, ids, context=context)
+        self.foliate(cr, uid, ids, context=context)
         return True
 
