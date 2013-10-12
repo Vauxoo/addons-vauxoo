@@ -21,6 +21,8 @@
                     <field name="journal_id" readonly='1'/>
                     <field name="period_id" readonly='1'/>
                     <field name="date" readonly='1'/>
+                    <field name="move_state" readonly='1'/>
+                    <field name="period_state" readonly='1'/>
                     <field name="company_id" readonly='1' groups="base.group_multi_company"/>
                 </form>
             </field>
@@ -35,6 +37,8 @@
                     <field name="journal_id" readonly='1'/>
                     <field name="period_id" readonly='1'/>
                     <field name="date" readonly='1'/>
+                    <field name="move_state" readonly='1'/>
+                    <field name="period_state" readonly='1'/>
                     <field name="company_id" readonly='1' groups="base.group_multi_company"/>
                 </tree>
             </field>
