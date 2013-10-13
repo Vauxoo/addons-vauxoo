@@ -44,7 +44,11 @@ class account_move(osv.Model):
                     'date': move.date,
                 }
                 if invoice:
-                    folio_ids = folio_obj.search(cr, uid, [('name','=',move.name)],context=context)
+                    folio_ids = folio_obj.search(cr, uid,
+                            [('name','=',move.name),
+                                ('journal_id','=',move.journal_id.id),
+                                ('company_id','=',move.company_id.id)],
+                            context=context)
                     if folio_ids:
                         folio_id = folio_ids[0]
                         folio_obj.write(cr, uid, folio_id, values, context=context)
