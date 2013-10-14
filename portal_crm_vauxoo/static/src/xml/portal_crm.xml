@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>                                                              
+<!-- vim:fdl=1:                                                                                     
+-->                                                                                                 
+<templates id="template" xml:space="preserve"> 
+<div t-name="FieldCharBS3" class="form-group">
+        <div class="col-md-7 col-sm-8">
+            <input t-att-type="widget.password ? 'password' : 'text'"                               
+                t-att-id="widget.id_for_label"                                                      
+                t-att-tabindex="widget.node.attrs.tabindex"                                         
+                t-att-autofocus="widget.node.attrs.autofocus"                                       
+                t-att-placeholder="widget.node.attrs.placeholder"                                   
+                t-att-maxlength="widget.field.size" 
+                t-att-class="widget.get('required') ? 'form-control bs3-required '+ widget.widget_class : 'form-control '+widget.widget_class"
+            />
+        </div>
+</div>
+
+<div t-name="FieldEmailBS3" class="form-group">                                                                             
+        <div class="col-md-7 col-sm-8">
+                <input type="text"                                                                  
+                    t-att-id="widget.id_for_label"                                                  
+                    t-att-tabindex="widget.node.attrs.tabindex"                                     
+                    t-att-autofocus="widget.node.attrs.autofocus"                                   
+                    t-att-placeholder="widget.node.attrs.placeholder"                               
+                    t-att-maxlength="widget.field.size" 
+                    t-att-class="widget.get('required') ? 'form-control bs3-required '+ widget.widget_class : 'form-control '+widget.widget_class"
+                    />
+       </div>
+</div>
+
+<div t-name="FieldTextBS3" class="form-group">                                                                              
+        <div class="col-md-7 col-sm-8">
+            <textarea rows="6"                                                                      
+                t-att-name="widget.name"                                                            
+                t-att-class="'field_text oe_form_field oe_form_field_text form_control '+widget.widget_class" 
+                t-att-tabindex="widget.node.attrs.tabindex"                                         
+                t-att-autofocus="widget.node.attrs.autofocus"                                       
+                t-att-placeholder="! widget.get('effective_readonly') ? widget.node.attrs.placeholder : ''"
+                t-att-maxlength="widget.field.size"                                                 
+            ></textarea><img class="oe_field_translate oe_input_icon"                               
+                            t-if="widget.field.translate and !widget.get('effective_readonly')"     
+                            t-att-src='_s + "/web/static/src/img/icons/terp-translate.png"' width="16" height="16" border="0"
+                            />
+       </div>
+</div>  
+
+</templates> 

@@ -21,7 +21,8 @@
 {
     'name' : 'Clean Groups',
     'version' : '1.1',
-    'author' : 'OpenERP SA',
+    'author' : 'Vauxoo',
+    'website': 'http://www.vauxoo.com',
     'category' : 'Technical',
     'description' : """
 Clean Users Groups
@@ -35,7 +36,6 @@ How to
 
 You need have Technical group
     """,
-    'website': 'http://www.vauxoo.com',
     'images' : [],
     'depends' : ['base'],
     'data': [

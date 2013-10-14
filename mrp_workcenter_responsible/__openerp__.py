@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
+#    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
 #    Coded by: Katherine Zaoral          <katherine.zaoral@vauxoo.com>
@@ -26,8 +26,8 @@
 {
     "name": "MRP Workcenter Responsible",
     "version": "1.0",
-    "author": "Vauxoo C.A.",
-    "website": "http://www.openerp.com.ve",
+    "author": "Vauxoo",
+    "website": "http://www.vauxoo.com",
     "category": "MRP",
     "description": """
 MRP Workcenter Responsible
@@ -36,7 +36,7 @@ MRP Workcenter Responsible
 Add the feature of having a responsible for a work center and it's work
 orders associated.
 """,
-    "depends": ["mrp_operations"],
+    "depends": ["mrp_operations", "hr"],
     "data": [
         "view/mrp_workcenter_responsible_view.xml",
     ],

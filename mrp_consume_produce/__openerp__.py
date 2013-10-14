@@ -27,9 +27,9 @@
 {
     "name": "MRP Consume Produce",
     "version": "1.1",
-    "author" : "Vauxoo",
+    "author": "Vauxoo",
     "category": "Generic Modules/Production",
-    "website" : "http://www.vauxoo.com/",
+    "website": "http://www.vauxoo.com/",
     "description": """
 MRP Consume Produce
 ===================
@@ -51,7 +51,7 @@ You have to options: Go to check some options at the user:
 Or go to the ``Settings > Configuration > Manufacturing > Manufacturing Order``
 and active the ``Real Consume and Produce`` option plus selecting a user type.
     """,
-    'depends': ['mrp'],
+    'depends': ['mrp', 'mrp_button_box'],
     'init_xml': [],
     'update_xml': [
         'wizard/wizard_view.xml',
@@ -66,4 +66,3 @@ and active the ``Real Consume and Produce`` option plus selecting a user type.
     'active': False,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
- 

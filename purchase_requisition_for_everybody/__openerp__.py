@@ -21,7 +21,7 @@
 {
     'name' : 'Purchase Requisition for Everybody',
     'version' : '1.0',
-    'author' : 'Vauxoo C.A.',
+    'author' : 'Vauxoo',
     'category' : 'Security',
     'description' : """
 Records Rule for Purchase_Requisition Module

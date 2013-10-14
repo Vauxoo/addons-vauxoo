@@ -8,7 +8,7 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="base.view_company_form"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/notebook/page[@string='Configuration']" position="after">
+                <xpath expr="//page[@string='Configuration']" position="after">
                    <page string="Reports">
                    </page> 
                 </xpath>

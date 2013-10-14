@@ -27,7 +27,7 @@
 {
     "name": "MRP Workcenter Management",
     "version": "1.0",
-    "author": "Vauxoo C.A",
+    "author": "Vauxoo",
     "website": "http://vauxoo.com",
     "category": "MRP",
     "description": """

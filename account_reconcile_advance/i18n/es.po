@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: addons-vauxoo\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-08-20 17:00+0000\n"
-"PO-Revision-Date: 2013-08-20 17:23+0000\n"
+"PO-Revision-Date: 2013-09-27 10:09+0000\n"
 "Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
 "<humbertoarocha@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-08-29 05:28+0000\n"
-"X-Generator: Launchpad (build 16738)\n"
+"X-Launchpad-Export-Date: 2013-10-08 06:19+0000\n"
+"X-Generator: Launchpad (build 16799)\n"
 
 #. module: account_reconcile_advance
 #: view:account.reconcile.advance:0
@@ -57,20 +57,20 @@ msgstr "Otra información"
 #. module: account_reconcile_advance
 #: model:ir.model,name:account_reconcile_advance.model_account_reconcile_advance
 msgid "account.reconcile.advance"
-msgstr ""
+msgstr "account.reconcile.advance"
 
 #. module: account_reconcile_advance
 #: model:ir.actions.act_window,name:account_reconcile_advance.account_reconcile_advance_supplier_action
 #: model:ir.ui.menu,name:account_reconcile_advance.account_reconcile_advance_supplier_menu
 msgid "Supplier Advance Reconciliation"
-msgstr ""
+msgstr "Conciliación de Anticipo de Proveedor"
 
 #. module: account_reconcile_advance
 #: view:account.reconcile.advance:0
 msgid "Account Reconcile Advance"
-msgstr ""
+msgstr "Account Reconcile Advance"
 
 #. module: account_reconcile_advance
 #: view:account.reconcile.advance:0
 msgid "Reconcile"
-msgstr ""
+msgstr "Conciliar"

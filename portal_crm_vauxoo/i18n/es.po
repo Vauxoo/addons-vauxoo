@@ -1,21 +1,20 @@
-# Spanish translation for openobject-addons
-# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
-# This file is distributed under the same license as the openobject-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* portal_crm_vauxoo
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: openobject-addons\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-12-21 17:05+0000\n"
-"PO-Revision-Date: 2012-12-21 23:00+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Spanish <es@li.org>\n"
+"PO-Revision-Date: 2013-09-27 12:12+0000\n"
+"Last-Translator: Nhomar - Vauxoo <nhomar@gmail.com>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-01-18 06:58+0000\n"
-"X-Generator: Launchpad (build 16430)\n"
+"X-Launchpad-Export-Date: 2013-10-08 06:19+0000\n"
+"X-Generator: Launchpad (build 16799)\n"
 
 #. module: portal_crm
 #: selection:portal_crm.crm_contact_us,type:0
@@ -70,7 +69,8 @@ msgstr "Días para abrir"
 #. module: portal_crm
 #: view:portal_crm.crm_contact_us:0
 msgid "Thank you for your interest, we'll respond to your request shortly."
-msgstr "Gracias por su interés. Le responderemos en breve."
+msgstr ""
+"Gracias por tu interes, Nosotros reponderemos tu requerimiento muy pronto."
 
 #. module: portal_crm
 #: selection:portal_crm.crm_contact_us,priority:0
@@ -296,7 +296,7 @@ msgstr "Tareas"
 #. module: portal_crm
 #: view:portal_crm.crm_contact_us:0
 msgid "Contact form"
-msgstr "Formulario de contacto"
+msgstr "Formulario de Contacto"
 
 #. module: portal_crm
 #: field:portal_crm.crm_contact_us,company_currency:0
@@ -563,4 +563,4 @@ msgstr "Última acción"
 #. module: portal_crm
 #: model:ir.model,name:portal_crm.model_portal_crm_crm_contact_us
 msgid "Contact form for the portal"
-msgstr "Formulario de contacto para el portal"
+msgstr "Formulario de Contacto para el Portal"

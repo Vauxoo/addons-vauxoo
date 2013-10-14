@@ -33,14 +33,22 @@ You will need to install recaptcha and recaptcha client::
 
     $ sudo pip install recaptcha
     $ sudo pip install recaptcha-client
+
+Added Menu 'Our Team ' as principal Menu, this menu show
+the human recourses that is public.
+
     """,
-    'author': 'OpenERP SA',
-    'depends': ['crm',
+    'author': 'Vauxoo',
+    'website': 'http://www.vauxoo.com',
+    'depends': [
+                'crm',
                 'portal',
+                'portal_news',
                 'web_captcha',
+                'portal_hr_employees',
                 ],
     'data': [
-        'contact_view.xml',
+        'view/contact_view.xml',
     ],
     'test': [
         'test/contact_form.yml',
@@ -50,5 +58,7 @@ You will need to install recaptcha and recaptcha client::
     'css': [
         'static/src/css/portal_crm.css'
     ],
+    'js': [ 'static/src/js/portal_crm.js' ],
+    'qweb': [ 'static/src/xml/portal_crm.xml' ],
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

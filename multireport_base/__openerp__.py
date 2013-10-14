@@ -7,9 +7,9 @@
 ###############Credits######################################################
 #    Coded by: María Gabriela Quilarque  <gabriela@vauxoo.com>
 #              Luis Escobar              <luis@vauxoo.com>
-#    Planified by: Nhomar Hernandez
+#    Planified by: Nhomar Hernandez <nhomar@vauxoo.com>
 #    Finance by: Vauxoo, C.A. http://vauxoo.com 
-#    Audited by: Humberto Arocha humberto@vauxoo.com
+#    Audited by: Humberto Arocha <humberto@vauxoo.com>
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -28,23 +28,17 @@
 {
 	"name" : "Vauxoo Report Multicompany",
 	"version" : "0.7",
-	"author" : "OpenERP",
+	"author" : "Vauxoo",
 	"category" : "Generic Modules/Others",
-	"website": "http://wiki.openerp.org.ve/",
+	"website": "http://vauxoo.com/",
 	"description": '''
 	               Agrega un tab en la Compañia que va a contener los reportes personalizados. 
                     ''',
-	"depends" : ["base",
-                     "account",
-	             ],
-	"init_xml" : ["data/payment_method_data.xml"],
-	"update_xml" : [
+	"depends" : ["base", "account", ],
+	"data" : [  
                 "security/ir.model.access.csv",
-		"report_multicompany_view.xml",
-                "view/payment_method_view.xml",
-                "view/account_invoice_view.xml",
-
+		        "report_multicompany_view.xml",
 	],
 	"active": False,
-	"installable": False
+	"installable": True,
 }

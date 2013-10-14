@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="wizard_print_sale_order_multicompany_form">
+            <field name="name">print.sale.order.report.form</field>
+            <field name="model">print.sale.order.report</field>
+            <field name="arch" type="xml">
+                <form string="Print" version="7.0">
+                    <group col="4" colspan="4">
+                        <field name="company"/>
+                        <newline/>
+                        <field name="report_format"/>
+                        <newline/>
+                        <field name="wa"/>
+                        <newline/>
+                        <footer>
+                            <button name="print_invoice" type="object" string="Print Invoice" class="oe_highlight"/>
+                            or
+                            <button special="cancel" string="Cancel" class="oe_link" />
+                        </footer>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="sale_multicompany_report" key2="client_print_multi" name="Print with Attachment" usage="default" src_model="sale.order" res_model="print.sale.order.report" view_id="wizard_print_sale_order_multicompany_form" view_mode="form" target="new" view_type="form" groups="base.group_user"/>
+
+    </data>
+</openerp>

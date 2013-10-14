@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
+#    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
 #    Coded by: Katherine Zaoral          <katherine.zaoral@vauxoo.com>
@@ -26,16 +26,17 @@
 from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 
+
 class mrp_workcenter(osv.Model):
 
     _inherit = 'mrp.workcenter'
     _columns = {
         'responsible_id': fields.many2one(
-            'res.users',
-            string=_('Responsible'),
-            help=_('Responsible person to perform the work center'
-                   ' activities.')),
+            'hr.employee',
+            string='Responsible',
+            help='Responsible person to perform the work center activities.'),
     }
+
 
 class mrp_production_workcenter_line(osv.Model):
 
@@ -44,11 +45,11 @@ class mrp_production_workcenter_line(osv.Model):
         'responsible_id': fields.related(
             'workcenter_id', 'responsible_id',
             type='many2one',
-            relation='res.users',
+            relation='hr.employee',
             readonly=True,
-            string=_('Responsible'),
-            help=_('Responsible person to carry out the work order. The'
-                   ' responsible is the one for the work center associated.'
-                   ' To change the responsible you need to change the work'
-                   ' center responsible.')),
+            string='Responsible',
+            help=('Responsible person to carry out the work order. The'
+                  ' responsible is the one for the work center associated.'
+                  ' To change the responsible you need to change the work'
+                  ' center responsible.')),
     }

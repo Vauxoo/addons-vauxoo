@@ -36,4 +36,7 @@ class account_tax(osv.Model):
         'account_paid_voucher_id': fields.many2one('account.account', 'Account Paid Voucher'),
         'account_expense_voucher_id': fields.many2one('account.account', 'Account Expense Voucher'),
         'account_income_voucher_id': fields.many2one('account.account', 'Account Income Voucher'),
+        'tax_diot': fields.selection([('tax_16', 'IVA 16'), ('tax_11', 'IVA 11'),
+            ('tax_exe', 'IVA EXENTO'), ('tax0', 'IVA CERO'), ('tax_ret', 'IVA RETENIDO')],
+            'Tax to affect in DIOT'),
     }
