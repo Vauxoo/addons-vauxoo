@@ -43,7 +43,14 @@ class account_voucher_tax_sat(osv.Model):
         'journal_id':fields.many2one('account.journal', 'Journal',
                                         help='Accounting Journal where Entries will be posted'), 
         'move_id': fields.many2one('account.move', 'Journal Entry',
-                                        help='Accounting Entry')
+                                        help='Accounting Entry'),
+        'company_id':fields.many2one('res.company', 'Company', help='Company'), 
+
+    }
+    
+    _defaults = {
+        'company_id': lambda s, c, u, cx: s.pool.get('res.users').browse(c, u,
+            u, cx).company_id.id,    
     }
     
     def action_close_tax(self, cr, uid, ids, context=None):
@@ -81,9 +88,14 @@ class account_voucher_tax_sat(osv.Model):
     def create_entries_tax_iva_sat(self, cr, uid, voucher_tax_sat,
                                                             context=None):
         aml_obj = self.pool.get('account.move.line')
+        av_obj = self.pool.get('account.voucher') 
         for move_line in voucher_tax_sat.aml_ids:
             if move_line.tax_id_secondary and\
                                         move_line.tax_id_secondary.tax_sat_ok:
+                amount_base, tax_secondary = av_obj._get_base_amount_tax_secondary(cr,
+                            uid, move_line.tax_id_secondary,
+                            move_line.amount_base, move_line.credit,
+                            context=context)
                 move_line_dt = {
                     'move_id': voucher_tax_sat.move_id.id,
                     'journal_id': voucher_tax_sat.journal_id.id,
@@ -94,6 +106,8 @@ class account_voucher_tax_sat(osv.Model):
                     #'partner_id' : voucher_tax_sat.name.id,
                     'account_id': move_line.tax_id_secondary.account_id_creditable.id,
                     'credit': move_line.credit,
+                    'amount_base': amount_base,
+                    'tax_id_secondary': tax_secondary
                 }
                 move_line_cr = {
                     'move_id': voucher_tax_sat.move_id.id,
@@ -179,31 +193,3 @@ class account_tax(osv.Model):
         'account_id_by_creditable': fields.many2one('account.account',
                                         'Account of entries SAT x Acreditable')
     }
-    
-
-class account_voucher(osv.Model):
-
-    _inherit = 'account.voucher'
-    
-
-    def _preparate_move_line_tax(self, cr, uid, src_account_id, dest_account_id,
-                            move_id, type, partner, period, journal, date,
-                            company_currency, reference_amount,
-                            amount_tax_unround, reference_currency_id,
-                            tax_id, tax_name, acc_a, amount_base_tax,#informacion de lineas de impuestos
-                            factor=0, context=None):
-                            
-        res = super(account_voucher,
-                        self)._preparate_move_line_tax(cr, uid,
-                            src_account_id, dest_account_id,
-                            move_id, type, partner, period, journal, date,
-                            company_currency, reference_amount,
-                            amount_tax_unround, reference_currency_id,
-                            tax_id, tax_name, acc_a, amount_base_tax,
-                            factor=factor, context=context)
-        res and res[1].update({
-            'tax_id_secondary': res and res[0].get('tax_id_secondary', False),
-            'not_move_diot': True,
-        })
-        print res,'res'
-        return res
