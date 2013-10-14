@@ -323,16 +323,12 @@ class account_voucher(osv.Model):
             src_account_id, dest_account_id = dest_account_id, src_account_id
         if type == 'payment' and reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
-        amount_base = 0
-        tax_secondary = False
-        if line_tax and line_tax.tax_category_id and line_tax.tax_category_id.name in (\
-            'IVA', 'IVA-EXENTO', 'IVA-RET'):
-            amount_base = amount_base_tax * factor
-            amount_base = line_tax.tax_category_id.value_tax and\
-                            (amount_base * abs(reference_amount)) /\
-                            (line_tax.tax_category_id.value_tax * amount_base)\
-                            or amount_base
-            tax_secondary = line_tax.id
+            
+        amount_base, tax_secondary = self._get_base_amount_tax_secondary(cr,
+                                    uid, line_tax,
+                                    amount_base_tax * factor, reference_amount,
+                                    context=context)
+        
         debit_line_vals = {
                     'name': line_tax.name,
                     'quantity': 1,
@@ -402,6 +398,19 @@ class account_voucher(osv.Model):
             if (not dest_acct.currency_id) or dest_acct.currency_id.id == reference_currency_id:
                 debit_line_vals.update(currency_id=reference_currency_id, amount_currency=reference_amount)
         return [debit_line_vals, credit_line_vals]
+    
+    def _get_base_amount_tax_secondary(self, cr, uid, line_tax,
+                            amount_base_tax, reference_amount, context=None):
+        amount_base = 0
+        tax_secondary = False
+        if line_tax and line_tax.tax_category_id and line_tax.tax_category_id.name in (\
+            'IVA', 'IVA-EXENTO', 'IVA-RET'):
+            amount_base = line_tax.tax_category_id.value_tax and\
+                            (amount_base_tax * reference_amount) /\
+                            (line_tax.tax_category_id.value_tax * amount_base_tax)\
+                            or amount_base_tax
+            tax_secondary = line_tax.id
+        return [amount_base, tax_secondary]
     
     def voucher_move_line_create(self, cr, uid, voucher_id, line_total, move_id, company_currency, current_currency, context=None):
         move_obj = self.pool.get('account.move')
