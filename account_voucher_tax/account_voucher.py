@@ -328,6 +328,10 @@ class account_voucher(osv.Model):
         if line_tax and line_tax.tax_category_id and line_tax.tax_category_id.name in (\
             'IVA', 'IVA-EXENTO', 'IVA-RET'):
             amount_base = amount_base_tax * factor
+            amount_base = line_tax.tax_category_id.value_tax and\
+                            (amount_base * abs(reference_amount)) /\
+                            (line_tax.tax_category_id.value_tax * amount_base)\
+                            or amount_base
             tax_secondary = line_tax.id
         debit_line_vals = {
                     'name': line_tax.name,
