@@ -11,11 +11,27 @@
                 </xpath>
             </field>
         </record>
-        <record model="ir.ui.view" id="account_move_folio_form_view">
+        <record model="ir.ui.view" id="account_move_folio_config_form_view">
             <field name="name">account.move.folio.form</field>
             <field name="model">account.move.folio</field>
             <field name="arch" type="xml">
-                <form create='0' edit='0' delete='0' string="Account Move Folio Form">
+                <form create='1' edit='1' delete='1' string="Account Move Folio Form">
+                    <field name="name" readonly='0'/>
+                    <field name="move_id" readonly='0'/>
+                    <field name="journal_id" readonly='0'/>
+                    <field name="period_id" readonly='0'/>
+                    <field name="date" readonly='0'/>
+                    <field name="move_state" readonly='0'/>
+                    <field name="period_state" readonly='0'/>
+                    <field name="company_id" readonly='1' groups="base.group_multi_company"/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="account_move_folio_config_tree_view">
+            <field name="name">account.move.folio.tree</field>
+            <field name="model">account.move.folio</field>
+            <field name="arch" type="xml">
+                <tree create='1' edit='1' delete='1' string="Account Move Folio Tree">
                     <field name="name" readonly='1'/>
                     <field name="move_id" readonly='1'/>
                     <field name="journal_id" readonly='1'/>
@@ -24,7 +40,7 @@
                     <field name="move_state" readonly='1'/>
                     <field name="period_state" readonly='1'/>
                     <field name="company_id" readonly='1' groups="base.group_multi_company"/>
-                </form>
+                </tree>
             </field>
         </record>
         <record model="ir.ui.view" id="account_move_folio_tree_view">
