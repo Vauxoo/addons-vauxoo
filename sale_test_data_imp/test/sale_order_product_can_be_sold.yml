@@ -40,11 +40,11 @@
         fcsv_csv_ProductLog.writerow({'id':'id', 'name':'name', 'name_category':'name_category', 'error':'error' })
             
         f_write_Log_csv = open(os.path.join(tmp_path, 'sale_order_general_log.csv'), 'wb')
-        fcsv_csv_Log = csv.DictWriter(f_write_Log_csv, ['error' ,], delimiter=',')
-        fcsv_csv_Log.writerow({'error': 'error'})
+        fcsv_csv_Log = csv.DictWriter(f_write_Log_csv, ['error' ,'localization' ,'product_id'], delimiter=',')
+        fcsv_csv_Log.writerow({'error': 'error', 'localization':'localization' ,'product_id': 'product_id'})
         
     except Exception, e:
-        fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', '')})
+        fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', ''), 'localization':'Error create files'})
     
     if not partner_id:
         fcsv_csv_Log.writerow({'error' : 'Wrong, You can not generate a sale without a partner'})
@@ -74,18 +74,22 @@
                 #~ Create sale order with this product
                 sale_order_id = self.create(cr, uid, sale_order_data )
             except Exception, e:
-                    fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', '')})
+                fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', ''), 'localization': 'Create sale order', 'product_id' : repr(product_id)})
 
             #~ Click button Confirm
-            self.action_button_confirm(cr, uid, [sale_order_id],context=context)
-            
+            if sale_order_id:
+                try:
+                    self.action_button_confirm(cr, uid, [sale_order_id],context=context)
+                except Exception, e:
+                    fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', ''), 'localization': 'Confirm sale order', 'product_id' : repr(product_id)})
+
             #~  Chech picking out by sale order
             if not product_data[0].type == 'service' :
                 try:
                     stock_picking_out_ids = stock_picking_out_object.search(cr, uid, [('sale_id','=',sale_order_id)])
                     assert len(stock_picking_out_ids) > 0 ,  'Wrong. Stock picking out not fund'
                 except Exception, e:
-                    fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', '')})
+                    fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', ''), 'localization': 'Check picking out', 'product_id' : repr(product_id)})
             
             #~ Create invoice for this sale order
             try:
@@ -108,7 +112,7 @@
                     wf_service = netsvc.LocalService("workflow")
                     wf_service.trg_validate(uid, 'account.invoice', invoice_id.get('res_id') , 'invoice_open', cr)
                 except Exception, e:
-                    fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', '')})
+                    fcsv_csv_Log.writerow({'error' : tools.ustr(e).replace('\n', ''), 'localization': 'Validate Invoice',  'product_id' : repr(product_id)})
 
         f_write_ProductLog_csv.close()
         f_write_Log_csv.close()
