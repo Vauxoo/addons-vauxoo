@@ -110,6 +110,9 @@
             
             #~ Validate invoice for this purchase order 
             if invoice_id:
+                if invoice_id.get('res_id', False):
+                    cost_invoice = account_invoice_obj.browse(cr, uid, invoice_id.get('res_id'), context=context).amount_total or 0
+                    account_invoice_obj.write(cr, uid, [invoice_id.get('res_id')], {'check_total' : cost_invoice}, context=context)
                 try:
                     wf_service = netsvc.LocalService("workflow")
                     wf_service.trg_validate(uid, 'account.invoice', invoice_id.get('res_id') , 'invoice_open', cr)
