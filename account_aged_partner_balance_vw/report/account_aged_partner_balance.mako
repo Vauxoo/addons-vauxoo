@@ -265,18 +265,16 @@
                         %endif
                     %endfor
                 %else:
+                    <%ban = 1%>
                     %for user in get_dict_lines_by_partner(obj.partner_doc_ids):
-                        <%
-                        ban = 1
-                        if ban % 2 == 0:
-                            color = "#DF013A"
-                        else:
-                            color = "#0174DF"
-                        %>
                         <table class="list_table"  width="100%" border="0">
                             <thead>
                                 <tr>
-                                    <th class="celdaTituloTablaUser" bgcolor=color style="text-align:left;" width="10%">${user}</th>
+                                    %if ban % 2 == 0:
+                                        <th class="celdaTituloTablaUser" bgcolor="#DF013A" style="text-align:left;" width="10%">${user}</th>
+                                    %else:
+                                        <th class="celdaTituloTablaUser" bgcolor="#0174DF" style="text-align:left;" width="10%">${user}</th>
+                                    %endif
                                 </tr>
                             </thead>
                         </table>
@@ -288,7 +286,11 @@
                                 <table class="table_user"  width="100%" border="0">
                                     <thead>
                                         <tr>
-                                            <th style="text-align:left;" bgcolor=color width="0.5%"></th>
+                                            %if ban % 2 == 0:
+                                                <th style="text-align:left;" bgcolor="#DF013A" width="0.5%"></th>
+                                            %else:
+                                                <th style="text-align:left;" bgcolor="#0174DF" width="0.5%"></th>
+                                            %endif
                                             <th class="celdaTituloPartner" style="text-align:left;" width="0.5%">${partner}</th>
                                         </tr>
                                     </thead>
@@ -296,7 +298,11 @@
                                 <table class="list_table"  width="100%" border="0">
                                     <thead>
                                         <tr>
-                                            <th bgcolor=color style="text-align:left;" width="0.5%"></th>
+                                            %if ban % 2 == 0:
+                                                <th style="text-align:left;" bgcolor="#DF013A" width="0.5%"></th>
+                                            %else:
+                                                <th style="text-align:left;" bgcolor="#0174DF" width="0.5%"></th>
+                                            %endif
                                             <th class="celdaTituloTabla" style="text-align:left;" width="19.5%">${_('Document')}</th>
                                             <th class="celdaTituloTabla" style="text-align:left;" width="10%">${_('Type')}</th>
                                             <th class="celdaTituloTabla" style="text-align:left;" width="10%">${_('Due Days')}</th>
@@ -336,7 +342,11 @@
                                             residual += line.residual
                                             %>
                                             <tr class="prueba" >
-                                                <td bgcolor=color width="0.5%"></td>
+                                                %if ban % 2 == 0:
+                                                    <th style="text-align:left;" bgcolor="#DF013A" width="0.5%"></th>
+                                                %else:
+                                                    <th style="text-align:left;" bgcolor="#0174DF" width="0.5%"></th>
+                                                %endif
                                                 <td class="celdaLineDataTitulo" width="19.5%">
                                                     ${document}
                                                 </td>
@@ -367,7 +377,11 @@
                                             </tr>
                                         %endfor
                                         <tr>
-                                            <td bgcolor=color width="0.5%"></td>
+                                            %if ban % 2 == 0:
+                                                <th style="text-align:left;" bgcolor="#DF013A" width="0.5%"></th>
+                                            %else:
+                                                <th style="text-align:left;" bgcolor="#0174DF" width="0.5%"></th>
+                                            %endif
                                             <td class="celdaTotalTotales" width="0.5%">
                                                 ${_('Total')}
                                             </td>
@@ -397,6 +411,7 @@
                                 </table>
                             %endif
                         %endfor
+                        <%ban += 1%>
                     %endfor
                 %endif
             %endif
