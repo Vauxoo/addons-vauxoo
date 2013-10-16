@@ -123,7 +123,7 @@
             for wiz in obj.wizard_ids:
                 group_user = wiz.group_user
                 show_aml = wiz.show_aml
-                partner_ids = [x.id for x in wiz.partner_ids]
+                partner_ids = wiz.partner_ids and [x.id for x in wiz.partner_ids] or wiz.partner_ids_default and [x.id for x in wiz.partner_ids_default] or []
                 
             def get_dict_lines_by_partner(lines):
                 dic_partner_lines = {}
@@ -266,10 +266,17 @@
                     %endfor
                 %else:
                     %for user in get_dict_lines_by_partner(obj.partner_doc_ids):
+                        <%
+                        ban = 1
+                        if ban % 2 == 0:
+                            color = "#DF013A"
+                        else:
+                            color = "#0174DF"
+                        %>
                         <table class="list_table"  width="100%" border="0">
                             <thead>
                                 <tr>
-                                    <th class="celdaTituloTablaUser" style="text-align:left;" width="10%">${user}</th>
+                                    <th class="celdaTituloTablaUser" bgcolor=color style="text-align:left;" width="10%">${user}</th>
                                 </tr>
                             </thead>
                         </table>
@@ -281,14 +288,16 @@
                                 <table class="table_user"  width="100%" border="0">
                                     <thead>
                                         <tr>
-                                            <th class="celdaTituloPartner" style="text-align:left;" width="10%">${partner}</th>
+                                            <th style="text-align:left;" bgcolor=color width="0.5%"></th>
+                                            <th class="celdaTituloPartner" style="text-align:left;" width="0.5%">${partner}</th>
                                         </tr>
                                     </thead>
                                 </table>
                                 <table class="list_table"  width="100%" border="0">
                                     <thead>
                                         <tr>
-                                            <th class="celdaTituloTabla" style="text-align:left;" width="20%">${_('Document')}</th>
+                                            <th bgcolor=color style="text-align:left;" width="0.5%"></th>
+                                            <th class="celdaTituloTabla" style="text-align:left;" width="19.5%">${_('Document')}</th>
                                             <th class="celdaTituloTabla" style="text-align:left;" width="10%">${_('Type')}</th>
                                             <th class="celdaTituloTabla" style="text-align:left;" width="10%">${_('Due Days')}</th>
                                             <th class="celdaTituloTabla" style="text-align:left;" width="10%">${_('Residual')}</th>
@@ -327,7 +336,8 @@
                                             residual += line.residual
                                             %>
                                             <tr class="prueba" >
-                                                <td class="celdaLineDataTitulo" width="20%">
+                                                <td bgcolor=color width="0.5%"></td>
+                                                <td class="celdaLineDataTitulo" width="19.5%">
                                                     ${document}
                                                 </td>
                                                 <td class="celdaLineData" width="10%">
@@ -357,7 +367,8 @@
                                             </tr>
                                         %endfor
                                         <tr>
-                                            <td class="celdaTotalTotales" width="20%">
+                                            <td bgcolor=color width="0.5%"></td>
+                                            <td class="celdaTotalTotales" width="0.5%">
                                                 ${_('Total')}
                                             </td>
                                             <td class="celdaTotalTotales" width="10%">
