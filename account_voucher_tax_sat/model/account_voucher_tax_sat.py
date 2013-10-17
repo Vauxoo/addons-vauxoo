@@ -107,7 +107,7 @@ class account_voucher_tax_sat(osv.Model):
                     'account_id': move_line.tax_id_secondary.account_id_creditable.id,
                     'credit': move_line.credit,
                     'amount_base': amount_base,
-                    'tax_id_secondary': tax_secondary
+                    'tax_id_secondary': move_line.tax_id_secondary.tax_reference.id
                 }
                 move_line_cr = {
                     'move_id': voucher_tax_sat.move_id.id,
@@ -189,7 +189,9 @@ class account_tax(osv.Model):
         'tax_sat_ok': fields.boolean('Create entries IVA to SAT'),
         'account_id_creditable': fields.many2one('account.account',
                                         'Account of entries SAT Acreditable'),
-                                                    
         'account_id_by_creditable': fields.many2one('account.account',
-                                        'Account of entries SAT x Acreditable')
+                                        'Account of entries SAT x Acreditable'),
+        'tax_reference': fields.many2one('account.tax',
+            'Tax Reference',
+            help = 'Tax Reference to get data of DIOT/SAT')
     }

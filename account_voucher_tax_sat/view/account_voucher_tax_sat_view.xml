@@ -96,6 +96,7 @@
                         <group attrs="{'invisible':[('tax_sat_ok','=',False)]}" colspan="4">
                             <field name="account_id_creditable" attrs="{'required':[('tax_sat_ok','=',True)]}"/>
                             <field name="account_id_by_creditable" attrs="{'required':[('tax_sat_ok','=',True)]}"/>
+                            <field name="tax_reference" attrs="{'required':[('tax_sat_ok','=',True)]}"/>
                         </group>
                     </xpath>
                 </field>
