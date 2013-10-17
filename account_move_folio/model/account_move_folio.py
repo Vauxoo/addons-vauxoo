@@ -6,18 +6,18 @@ class account_move_folio(osv.Model):
     _order = 'company_id, journal_id, name'
     _description = "Records of Folios in Journal Entries"
     _columns = {
-        'name':fields.char('Folio', 256, help='Folio Number', required = True), 
-        'move_id':fields.many2one('account.move', 'Journal Entry', help='Journal Entry'), 
-        'journal_id':fields.many2one('account.journal', 'Journal', help='Entry Journal'), 
-        'period_id':fields.many2one('account.period', 'Period', help='Entry Period'), 
-        'date':fields.date('Date', help='Entry Date'), 
-        'company_id':fields.many2one('res.company', 'Company', help='Entry Company'), 
+        'name':fields.char('Folio', 256, help='Folio Number', required = True),
+        'move_id':fields.many2one('account.move', 'Journal Entry', help='Journal Entry'),
+        'journal_id':fields.many2one('account.journal', 'Journal', help='Entry Journal'),
+        'period_id':fields.many2one('account.period', 'Period', help='Entry Period'),
+        'date':fields.date('Date', help='Entry Date'),
+        'company_id':fields.many2one('res.company', 'Company', help='Entry Company'),
         'move_state':fields.related('move_id','state', type='selection',
             selection=[('draft','Unposted'), ('posted','Posted')], store=True,
-            string='Entry State', help='Entry State'), 
+            string='Entry State', help='Entry State'),
         'period_state':fields.related('period_id','state', type='selection',
             selection=[('draft','Open'), ('done','Closed')], store=True,
-            string='Period State', help='Period State'), 
+            string='Period State', help='Period State'),
     }
 
     _defaults = {
@@ -59,7 +59,7 @@ class account_move(osv.Model):
                     folio_id = folio_obj.create(cr, uid, values,context=context)
                 move.write({'folio_id':folio_id},context=context)
         return True
-    
+
     def post(self, cr, uid, ids, context=None):
         context = context or {}
         super(account_move, self).post(cr, uid, ids, context=context)
