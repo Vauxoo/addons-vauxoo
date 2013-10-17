@@ -39,7 +39,8 @@ class account_tax_category(osv.Model):
         'sign': fields.integer('Sign'),
         'category_ids': fields.one2many('account.tax', 'tax_category_id',
                         'Category', help='Tax that belong of this category'),
-
+        'value_tax': fields.float('Value Tax',
+                help='Amount of Tax Original'),
     }
 
     _defaults = {
