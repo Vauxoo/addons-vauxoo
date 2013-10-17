@@ -95,6 +95,7 @@ class account_aged_trial_balance(osv.TransientModel):
                                   ], 'Type of Report', help='Reporte Type'),
         'state': fields.selection([('draft', 'New'), ('open', 'Open'), ('done', 'Done'),
                                    ], 'Status', help='Document State'),
+        'wizard_ids' : fields.one2many('wizard.report.aged.partner.balance', 'aged_trial_report_id')
     }
 
     _defaults = {
@@ -117,6 +118,16 @@ class account_aged_trial_balance(osv.TransientModel):
         res = self.check_report(cr, uid, ids, context=context)
         data = res['datas']
         datas['form'] = data['form']
+        context.update({'data' : data, 'datas' : datas})
+        if wzd_brw.type == 'by_document':
+            return {
+                    'res_model': 'wizard.report.aged.partner.balance',
+                    'view_type': 'form',
+                    'view_mode': 'form',
+                    'context': context,
+                    'type': 'ir.actions.act_window',
+                    'target': 'new',
+            }
         return {
             'type': 'ir.actions.report.xml',
             'report_name': 'account_aged_partner_balance_report',

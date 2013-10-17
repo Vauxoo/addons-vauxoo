@@ -25,3 +25,4 @@
 ##############################################################################
 
 #import wizard_open_move_line
+import wizard_print_report
