@@ -27,17 +27,19 @@ from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 from openerp import tools
 
-class pos_config(osv.Model):
+class product_product(osv.Model):
+    """ 
+    To add two fields which determine if a product is show in restaurant and/or delivery
+    point of sale
     """
-    To add a field which determine if the point of sale is a restaurant or delivery
-    """
-    _inherit = 'pos.config'
+    _inherit = 'product.product'
     _description = ('')
     _columns = {
-        'deli_rest':fields.selection([('delivery','Delivery'),('restaurant','Restaurant')],
-            'Delivery or Restaurant?', required=True, help='Is a delivery or restaurant?'), 
+        'restaurant':fields.boolean('POS Restaurant', help='To be sold in restaurant'), 
+        'delivery':fields.boolean('POS Delivery', help='To be sold in delivery'), 
     }
 
     _defaults = {
-        'deli_rest': 'restaurant',
-    }
+            'restaurant':True,
+            }
+
