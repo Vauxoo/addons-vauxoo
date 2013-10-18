@@ -12,6 +12,7 @@
                 <group  states="choose" string="DIOT Report - Statement of transactions with third parties [DIOT]" colspan="4">
                     <field name="company_id" />
                     <field name="period_id" />
+                    <field name="entries_to_print" />
                 </group>
                 <div states="get">
                     <h2>You DIOT report has been successfully created!</h2>
