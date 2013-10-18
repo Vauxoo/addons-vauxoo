@@ -41,7 +41,9 @@ class account_voucher_tax_assigned(osv.TransientModel):
         'account_ids': fields.many2many('account.account', 'assigned_account_rel',
                                 'wiz_id',
                                 'account_id',
-                                'Account to Close')
+                                'Account to Close'),
+        'period_id': fields.many2one('account.period', 'Period',
+                                        help='Period of Entries to find'),
     }
     
     def action_account_assigned(self, cr, uid, ids, context=None):

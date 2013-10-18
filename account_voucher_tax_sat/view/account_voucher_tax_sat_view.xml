@@ -39,7 +39,7 @@
                             <field name='partner_id'
                                    required='1'
                                    />
-                            <field name='period_id'
+                            <field name='date'
                                    required='1'
                                    />
                             <field name='journal_id'
@@ -64,7 +64,7 @@
             <field name="arch" type="xml">
                 <tree string="Account Voucher Tax SAT">
                         <field name="name"/>
-                        <field name="period_id"/>
+                        <field name="date"/>
                         <field name="aml_ids"/>
                 </tree>
             </field>
