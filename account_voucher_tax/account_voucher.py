@@ -48,7 +48,7 @@ class account_voucher(osv.Model):
         res = super(account_voucher, self).onchange_amount(cr, uid, ids,\
             amount, rate, partner_id, journal_id, currency_id, ttype, date,\
             payment_rate_currency_id, company_id, context=context)
-        res_compute = self.onchange_compute_tax(cr, uid, ids, res,\
+        res_compute = self.onchange_compute_tax(cr, uid, ids, res, ttype, date,\
             context=context)
         return res_compute
         
@@ -57,7 +57,7 @@ class account_voucher(osv.Model):
         res = super(account_voucher, self).onchange_partner_id(cr, uid, ids,\
             partner_id, journal_id, amount, currency_id, ttype, date,\
             context=context)
-        res_compute = self.onchange_compute_tax(cr, uid, ids, res,\
+        res_compute = self.onchange_compute_tax(cr, uid, ids, res, ttype, date,\
             context=context)
         return res_compute
         
@@ -66,7 +66,7 @@ class account_voucher(osv.Model):
         res = super(account_voucher, self).onchange_journal(cr, uid, ids,\
             journal_id, line_ids, tax_id, partner_id, date, amount, ttype,\
             company_id, context=context)
-        res_compute = self.onchange_compute_tax(cr, uid, ids, res,\
+        res_compute = self.onchange_compute_tax(cr, uid, ids, res, ttype, date,\
             context=context)
         return res_compute
         
@@ -250,7 +250,7 @@ class account_voucher(osv.Model):
                         voucher.period_id.id, voucher.journal_id.id,
                         voucher.date, company_currency, reference_amount,
                         amount_tax_unround, current_currency,
-                        line_tax.id, line_tax.tax_id.name,
+                        line_tax.id, line_tax.tax_id,
                         line_tax.analytic_account_id and\
                                     line_tax.analytic_account_id.id or False,
                         line_tax.amount_base,
@@ -278,7 +278,7 @@ class account_voucher(osv.Model):
                                 voucher.date, company_currency,
                                 factor * base_amount, None,
                                 company_currency,
-                                line_tax.id, line_tax.tax_id.name,
+                                line_tax.id, line_tax.tax_id,
                                 line_tax.analytic_account_id and\
                                             line_tax.analytic_account_id.id or False,
                                 line_tax.amount_base,
@@ -316,20 +316,21 @@ class account_voucher(osv.Model):
                             move_id, type, partner, period, journal, date,
                             company_currency, reference_amount,
                             amount_tax_unround, reference_currency_id,
-                            tax_id, tax_name, acc_a, amount_base_tax,#informacion de lineas de impuestos
+                            tax_id, line_tax, acc_a, amount_base_tax,#informacion de lineas de impuestos
                             factor=0, context=None):
         acc_tax_obj = self.pool.get('account.tax')
         if type == 'payment' or reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
         if type == 'payment' and reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
-        tax_secondary_ids = acc_tax_obj.search(cr, uid, [('type_tax_use', '=', 'purchase'), '|', ('account_collected_id', '=', src_account_id), ('account_paid_voucher_id', '=', src_account_id)])
-        tax_secondary = False
-        if tax_secondary_ids:
-            tax_secondary = tax_secondary_ids[0]
-        amount_base = amount_base_tax * factor
+            
+        amount_base, tax_secondary = self._get_base_amount_tax_secondary(cr,
+                                    uid, line_tax,
+                                    amount_base_tax * factor, reference_amount,
+                                    context=context)
+        
         debit_line_vals = {
-                    'name': tax_name,
+                    'name': line_tax.name,
                     'quantity': 1,
                     'partner_id': partner,
                     'debit': abs(reference_amount),
@@ -342,11 +343,9 @@ class account_voucher(osv.Model):
                     'tax_id': tax_id,
                     'analytic_account_id': acc_a,
                     'date' : date,
-                    'amount_base' : abs(amount_base),
-                    'tax_id_secondary' : tax_secondary,
         }
         credit_line_vals = {
-                    'name': tax_name,
+                    'name': line_tax.name,
                     'quantity': 1,
                     'partner_id': partner,
                     'debit': 0.0,
@@ -364,13 +363,18 @@ class account_voucher(osv.Model):
                     'not_move_diot': True
         }
 
-        if type in ('payment','purchase'): 
+        if type in ('payment','purchase'):
             reference_amount < 0 and\
-                credit_line_vals.pop('analytic_account_id') or\
-                debit_line_vals.pop('analytic_account_id')
+                [credit_line_vals.pop('analytic_account_id'),
+                credit_line_vals.update({'amount_base': abs(amount_base),
+                                        'tax_id_secondary': tax_secondary})] or\
+                [debit_line_vals.pop('analytic_account_id'),
+                debit_line_vals.update({'tax_id_secondary': tax_secondary,
+                                        'amount_base': abs(amount_base)})]
         else:
             reference_amount < 0 and\
-                debit_line_vals.pop('analytic_account_id') or\
+                [debit_line_vals.pop('analytic_account_id'),
+                debit_line_vals.pop('tax_id_secondary')] or\
                 credit_line_vals.pop('analytic_account_id')
         
         if not amount_tax_unround:
@@ -397,6 +401,18 @@ class account_voucher(osv.Model):
                 debit_line_vals.update(currency_id=reference_currency_id, amount_currency=reference_amount)
         return [debit_line_vals, credit_line_vals]
     
+    def _get_base_amount_tax_secondary(self, cr, uid, line_tax,
+                            amount_base_tax, reference_amount, context=None):
+        amount_base = 0
+        tax_secondary = False
+        if line_tax and line_tax.tax_category_id and line_tax.tax_category_id.name in (\
+            'IVA', 'IVA-EXENTO', 'IVA-RET'):
+            amount_base = line_tax.tax_category_id.value_tax and\
+                            reference_amount/line_tax.tax_category_id.value_tax\
+                            or amount_base_tax
+            tax_secondary = line_tax.id
+        return [amount_base, tax_secondary]
+    
     def voucher_move_line_create(self, cr, uid, voucher_id, line_total, move_id, company_currency, current_currency, context=None):
         move_obj = self.pool.get('account.move')
         move_line_obj = self.pool.get('account.move.line')
@@ -407,7 +423,8 @@ class account_voucher(osv.Model):
         #~ res[1] and res[1][0]+new
         return res
     
-    def onchange_compute_tax(self, cr, uid, ids, lines=None, context=None):
+    def onchange_compute_tax(self, cr, uid, ids, lines=None, ttype=False,
+        date=False, context=None):
         invoice_obj = self.pool.get('account.invoice')
         currency_obj = self.pool.get('res.currency')
         tax_line_obj = self.pool.get('account.voucher.line.tax')
@@ -472,31 +489,31 @@ class account_voucher(osv.Model):
                                         current_currency, float('%.*f' % (2,\
                                         base_amount)), round=False,\
                                         context=context)
-                                    context['date']=invoice.date_invoice
-                                    credit_orig=currency_obj.compute(cr, uid,\
+                                    context['date'] = invoice.date_invoice
+                                    credit_orig = currency_obj.compute(cr, uid,\
                                         current_currency,company_currency,\
                                         float('%.*f' % (2,credit_amount)),\
                                         round=False, context=context)
-                                    context['date']=voucher.date
-                                    credit_diff=currency_obj.compute(cr, uid,\
+                                    context['date'] = date
+                                    credit_diff = currency_obj.compute(cr, uid,\
                                         current_currency,company_currency,\
                                         float('%.*f' % (2,credit_amount)),\
                                         round=False, context=context)
 
-                                    diff_amount_tax=currency_obj.compute(cr,\
+                                    diff_amount_tax = currency_obj.compute(cr,\
                                         uid, company_currency,current_currency,\
                                         float('%.*f' % (2,(\
                                         credit_orig-credit_diff))),\
                                         round=False, context=context)
                                     if credit_orig > credit_diff:
-                                        if voucher.type=='receipt':
+                                        if ttype and ttype == 'receipt':
                                             diff_account_id=tax.tax_id.\
                                             account_expense_voucher_id.id
                                         else:
                                             diff_account_id=tax.tax_id.\
                                             account_income_voucher_id.id
                                     if credit_orig<credit_diff:
-                                        if voucher.type=='receipt':
+                                        if ttype and ttype == 'receipt':
                                             diff_account_id=tax.tax_id.\
                                             account_income_voucher_id.id
                                         else:

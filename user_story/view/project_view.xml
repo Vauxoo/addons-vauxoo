@@ -10,7 +10,7 @@
         
       
         <xpath expr="//field[@name='date_deadline']" position="after">
-          <field name="userstory_id" on_change="onchange_user_story_task(userstory_id)"/>
+          <field name="userstory_id" on_change="onchange_user_story_task(userstory_id)" domain="[('project_id','=',project_id)]"/>
         </xpath>
         
       </field>
