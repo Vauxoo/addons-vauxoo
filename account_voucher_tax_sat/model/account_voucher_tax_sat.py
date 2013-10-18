@@ -80,7 +80,8 @@ class account_voucher_tax_sat(osv.Model):
                         'credit': 0.0,
                         'debit': move_line_tax.credit,
                         'amount_base': None,
-                        'tax_id_secondary': None
+                        'tax_id_secondary': None,
+                        'not_move_diot': True
                     }) for move_line_tax in voucher_tax_sat.aml_ids ]
                     
                 cr.execute('UPDATE account_move_line '\
@@ -129,7 +130,6 @@ class account_voucher_tax_sat(osv.Model):
         return True
     
     def create_move_line_sat(self, cr, uid, voucher_tax_sat, amount, context=None):
-        print voucher_tax_sat,'voucher_tax_sat'
         aml_obj = self.pool.get('account.move.line')
         period_obj = self.pool.get('account.period')
         vals = {

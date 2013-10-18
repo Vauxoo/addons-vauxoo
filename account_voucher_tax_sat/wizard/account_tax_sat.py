@@ -61,7 +61,7 @@ class account_voucher_tax_assigned(osv.TransientModel):
                         ('credit', '>', 0.0),
                         ('period_id', '=', tax_assigned.period_id.id)
                         ])
-            print move_line_to_close,'move_line_to_close'
-            acc_voucher_tax_sat_obj.write(cr, uid, acc_vocuher_tax_sat.id, {'aml_ids': [(4, move_id) for move_id in move_line_to_close]})
+            acc_voucher_tax_sat_obj.write(cr, uid, acc_vocuher_tax_sat.id,
+                {'aml_ids': [(4, move_id) for move_id in move_line_to_close]})
         return True
     
