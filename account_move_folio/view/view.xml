@@ -59,5 +59,29 @@
                 </tree>
             </field>
         </record>
+        <record model="ir.ui.view" id="account_move_folio_search_view">
+            <field name="name">move.folio.search</field>
+            <field name="model">account.move.folio</field>
+            <field name="arch" type="xml">
+                <search string="Folio Search">
+                    <filter string="Entries: Set" name="move_id_set" domain="[('move_id','!=',None)]"/>
+                    <filter string="Entries: Not Set" name="move_id_not_set" domain="[('move_id','=',None)]"/>
+                    <newline/>
+                    <filter string="Entries State: Posted" name="move_state_posted" domain="[('move_state','=','posted')]"/>
+                    <filter string="Entries State: Unposted" name="move_state_drafted" domain="[('move_state','=','draft')]"/>
+                    <filter string="Entries State: Not Set" name="move_state_unset" domain="[('move_state','=',None)]"/>
+                    <newline/>
+                    <filter string="Period: Open" name="period_state_draft" domain="[('period_state','=','draft')]"/>
+                    <filter string="Period: Close" name="period_state_done" domain="[('period_state','=','done')]"/>
+                    <filter string="Period: Not Set" name="period_state_not_set" domain="[('period_state','=',None)]"/>
+                    <group expand="0" string="Group By...">
+                        <filter name="company_id_group" string="Company" context="{'group_by': 'company_id'}"/>
+                        <filter name="journal_id_group" string="Journal" context="{'group_by': 'journal_id'}"/>
+                        <filter name="move_state_group" string="Entries State" context="{'group_by': 'move_state'}"/>
+                        <filter name="period_state_group" string="Period State" context="{'group_by': 'period_state'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
     </data>
 </openerp>
