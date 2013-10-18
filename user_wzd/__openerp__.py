@@ -26,7 +26,7 @@
 ##############################################################################
 
 {
-    "name": "Create employee from users",
+    "name": "user_wzd",
     "version": "1.0",
     "author": "Vauxoo",
     "category": "Generic Modules/Human Resources",
