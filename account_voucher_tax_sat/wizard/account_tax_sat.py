@@ -42,7 +42,7 @@ class account_voucher_tax_assigned(osv.TransientModel):
                                 'wiz_id',
                                 'account_id',
                                 'Account to Close'),
-        'period_id': fields.many2one('account.period', 'Period',
+        'period_id': fields.many2one('account.period', 'Period', required=True,
                                         help='Period of Entries to find'),
     }
     
@@ -59,7 +59,7 @@ class account_voucher_tax_assigned(osv.TransientModel):
             move_line_to_close = aml_obj.search(cr, uid, [
                         ('tax_id_secondary', 'in', taxe_assigned),
                         ('credit', '>', 0.0),
-                        ('period_id', '=', acc_vocuher_tax_sat.period_id.id)
+                        ('period_id', '=', tax_assigned.period_id.id)
                         ])
             print move_line_to_close,'move_line_to_close'
             acc_voucher_tax_sat_obj.write(cr, uid, acc_vocuher_tax_sat.id, {'aml_ids': [(4, move_id) for move_id in move_line_to_close]})
