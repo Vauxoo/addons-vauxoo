@@ -78,6 +78,8 @@ class account_voucher_tax_sat(osv.Model):
                         'journal_id': voucher_tax_sat.journal_id.id,
                         'credit': 0.0,
                         'debit': move_line_tax.credit,
+                        'amount_base': None,
+                        'tax_id_secondary': None
                     }) for move_line_tax in voucher_tax_sat.aml_ids ]
                     
                 cr.execute('UPDATE account_move_line '\
@@ -101,11 +103,11 @@ class account_voucher_tax_sat(osv.Model):
                     'journal_id': voucher_tax_sat.journal_id.id,
                     'date': fields.datetime.now(),
                     'period_id': voucher_tax_sat.period_id.id,
-                    'debit': 0.0,
+                    'debit': move_line.credit,
                     'name': _('Close of IVA Retained'),
-                    #'partner_id' : voucher_tax_sat.name.id,
+                    'partner_id' : move_line.partner_id.id,
                     'account_id': move_line.tax_id_secondary.account_id_creditable.id,
-                    'credit': move_line.credit,
+                    'credit': 0.0,
                     'amount_base': amount_base,
                     'tax_id_secondary': move_line.tax_id_secondary.tax_reference.id
                 }
@@ -114,11 +116,11 @@ class account_voucher_tax_sat(osv.Model):
                     'journal_id': voucher_tax_sat.journal_id.id,
                     'date': fields.datetime.now(),
                     'period_id': voucher_tax_sat.period_id.id,
-                    'debit': move_line.credit,
+                    'debit': 0.0,
                     'name': _('Close of IVA Retained'),
-                    #'partner_id' : voucher_tax_sat.name.id,
+                    'partner_id' : move_line.partner_id.id,
                     'account_id': move_line.tax_id_secondary.account_id_by_creditable.id,
-                    'credit': 0.0,
+                    'credit': move_line.credit,
                 }
                 for line_dt_cr in [move_line_dt, move_line_cr]:
                     aml_obj.create(cr, uid, line_dt_cr, context=context)
