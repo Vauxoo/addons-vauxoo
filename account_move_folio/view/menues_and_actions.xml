@@ -5,7 +5,7 @@
             <field name="name">Entry Folios</field>
             <field name="res_model">account.move.folio</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree</field>
+            <field name="view_mode">tree,form</field>
         </record>
         <record id="account_move_folio_action_view" model="ir.actions.act_window.view">
             <field name="sequence" eval="1"/>
