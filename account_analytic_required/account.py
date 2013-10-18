@@ -44,14 +44,15 @@ class account_invoice_line(osv.Model):
             'be required fill the field "account analytic"'),
     }
     
-    def onchange_account_id(self, cr, uid, ids, account_id, context=None):
+    def onchange_account_id(self, cr, uid, ids, product_id=False, partner_id=False, inv_type=False, fposition_id=False, account_id=False, context=None):
         if not context:
             context = {}
-        analyt_req = False
+        res = super(account_invoice_line, self).onchange_account_id(cr, uid, ids, product_id, partner_id, inv_type, fposition_id, account_id)
         account_obj = self.pool.get('account.account')
         if account_id:
             analyt_req = account_obj.browse(cr, uid, account_id, context=context).analytic_required
-        return{'value' : {'analytic_required': analyt_req}}
+            res['value'].update({'analytic_required': analyt_req})
+        return res
 
 class account_move(osv.Model):
     _inherit = 'account.move'
