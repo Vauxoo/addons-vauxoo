@@ -35,7 +35,14 @@ class account_account(osv.Model):
         'this field is active, the journal items that used this account '\
         'should have an analytic account'),
     }
-
+    
+class account_invoice_line(osv.Model):
+    _inherit = 'account.invoice.line'
+    
+    _columns = {
+        'account_analytic_id':  fields.many2one('account.analytic.account', 'Analytic Accounttttt',\
+            attrs="{'required': [('account_id.analytic_required', '=', True)]}"),
+    }
 
 class account_move(osv.Model):
     _inherit = 'account.move'

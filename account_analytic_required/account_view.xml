@@ -11,5 +11,18 @@
                 </xpath>
             </field>
         </record>
+        
+        <record model="ir.ui.view" id="view_account_invoice_line_inherit_analytic_required_form">
+            <field name="name">view.account.invoice.line.inherit.analytic.required.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_line']/tree[@string='Invoice Lines']/field[@name='account_analytic_id']" position="replace">
+                    <field name="account_analytic_id" groups="analytic.group_analytic_accounting"
+                        domain="[('type','!=','view'), ('company_id', '=', parent.company_id)]"
+                        attrs="{'required': [('account_id.id', '=', True),]}"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
