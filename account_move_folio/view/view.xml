@@ -83,5 +83,22 @@
                </search>
             </field>
         </record>
-    </data>
+        <record model="ir.ui.view" id="account_move_folio_default_form_view">
+            <field name="name">account.move.folio.form</field>
+            <field name="model">account.move.folio</field>
+            <field name="priority" eval="10"/>
+            <field name="arch" type="xml">
+                <form create='0' edit='0' delete='0' string="Account Move Folio Form">
+                    <field name="name" readonly='0'/>
+                    <field name="move_id" readonly='0'/>
+                    <field name="journal_id" readonly='0'/>
+                    <field name="period_id" readonly='0'/>
+                    <field name="date" readonly='0'/>
+                    <field name="move_state" readonly='0'/>
+                    <field name="period_state" readonly='0'/>
+                    <field name="company_id" readonly='1' groups="base.group_multi_company"/>
+                </form>
+            </field>
+        </record>
+   </data>
 </openerp>
