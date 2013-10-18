@@ -40,12 +40,18 @@ class account_invoice_line(osv.Model):
     _inherit = 'account.invoice.line'
     
     _columns = {
-        'account_analytic_id':  fields.many2one('account.analytic.account', 'Analytic Accounttttt',\
-            attrs="{'required': [('account_id.analytic_required', '=', True)]}"),
-        'analytic_required': fields.boolean('Analytic Required', help='If '\
-        'this field is active, the journal items that used this account '\
-        'should have an analytic account'),
+        'analytic_required': fields.boolean('Analytic Required', help='If this field is active, '\
+            'be required fill the field "account analytic"'),
     }
+    
+    def onchange_account_id(self, cr, uid, ids, account_id, context=None):
+        if not context:
+            context = {}
+        analyt_req = False
+        account_obj = self.pool.get('account.account')
+        if account_id:
+            analyt_req = account_obj.browse(cr, uid, account_id, context=context).analytic_required
+        return{'value' : {'analytic_required': analyt_req}}
 
 class account_move(osv.Model):
     _inherit = 'account.move'

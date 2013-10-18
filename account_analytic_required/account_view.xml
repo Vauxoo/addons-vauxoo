@@ -27,6 +27,11 @@
                     position="attributes">
                         <attribute name="on_change">onchange_account_id(account_id)</attribute>
                 </xpath>
+                <xpath 
+                    expr="//field[@name='invoice_line']/tree[@string='Invoice Lines']/field[@name='account_analytic_id']" 
+                    position="after">
+                        <field name="analytic_required" invisible="1"/>
+                </xpath>
             </field>
         </record>
     </data>
