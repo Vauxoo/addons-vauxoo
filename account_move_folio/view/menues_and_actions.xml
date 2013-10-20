@@ -32,11 +32,13 @@
             <field name="view_mode">tree,form</field>
         </record>
         <record id="account_move_folio_config_action_form_view" model="ir.actions.act_window.view">
+            <field name="sequence">16</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="account_move_folio_config_form_view"/>
             <field name="act_window_id" ref="account_move_folio_config_action"/>
         </record>
         <record id="account_move_folio_config_action_tree_view" model="ir.actions.act_window.view">
+            <field name="sequence">14</field>
             <field name="view_mode">tree</field>
             <field name="view_id" ref="account_move_folio_config_tree_view"/>
             <field name="act_window_id" ref="account_move_folio_config_action"/>
