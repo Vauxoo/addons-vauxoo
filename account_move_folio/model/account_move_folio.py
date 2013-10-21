@@ -3,6 +3,7 @@ from openerp.osv import fields, osv
 
 class account_move_folio(osv.Model):
     _name = 'account.move.folio'
+    _order = 'company_id, journal_id, name'
     _description = "Records of Folios in Journal Entries"
     _columns = {
         'name':fields.char('Folio', 256, help='Folio Number', required = True), 

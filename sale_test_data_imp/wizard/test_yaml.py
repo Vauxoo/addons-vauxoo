@@ -43,14 +43,17 @@ class test_yaml_data_sale(osv.osv_memory):
     }
     
     def test_sale (self, cr, uid, ids, context=None):
+        if context == None:
+            context={}
         assertion_obj = assertion_report.assertion_report()
         this = self.browse(cr, uid, ids)[0]
         fp_data = tools.file_open(os.path.join('sale_test_data_imp', 'test/sale_order_test_data.xml'))
         fp_test = tools.file_open(os.path.join('sale_test_data_imp', 'test/sale_order_product_can_be_sold.yml'))
         try:
             cr.execute("SAVEPOINT test_yaml_sale_savepoint")
+            context.update({'uid': uid})
             tools.convert_xml_import(cr, 'sale_test_data_imp', fp_data , {}, 'init', False, assertion_obj)
-            tools.convert_yaml_import(cr, 'sale_test_data_imp', fp_test ,'test', {}, 'init', False, assertion_obj)
+            tools.convert_yaml_import(cr, 'sale_test_data_imp', fp_test ,'test', {}, 'init', False, assertion_obj, context=context)
         finally:
             if this.test_commit:
                 cr.execute("RELEASE SAVEPOINT test_yaml_sale_savepoint")

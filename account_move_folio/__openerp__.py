@@ -20,6 +20,7 @@ stand as a way to audit all the sequences that have been used.
     "demo": [
     ],
     "data": [
+        "security/security.xml",
         'security/ir.model.access.csv',
         'view/view.xml',
         'view/menues_and_actions.xml',
