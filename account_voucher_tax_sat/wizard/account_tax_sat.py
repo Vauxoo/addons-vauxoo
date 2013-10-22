@@ -56,8 +56,10 @@ class account_voucher_tax_assigned(osv.TransientModel):
             acc_vocuher_tax_sat = acc_voucher_tax_sat_obj.browse(cr, uid,
                                             context.get('active_id', False))
             taxe_assigned = [taxes.id for taxes in tax_assigned.tax_ids]
-            move_line_to_close = aml_obj.search(cr, uid, [
+            account_assigned = [acc.id for acc in tax_assigned.account_ids]
+            move_line_to_close = aml_obj.search(cr, uid, ['|',
                         ('tax_id_secondary', 'in', taxe_assigned),
+                        ('account_id', 'in', account_assigned),
                         ('credit', '>', 0.0),
                         ('period_id', '=', tax_assigned.period_id.id)
                         ])
