@@ -78,6 +78,7 @@
                         <filter name="company_id_group" string="Company" context="{'group_by': 'company_id'}"/>
                         <filter name="journal_id_group" string="Journal" context="{'group_by': 'journal_id'}"/>
                         <filter name="move_state_group" string="Entries State" context="{'group_by': 'move_state'}"/>
+                        <filter name="period_id_group" string="Period" context="{'group_by': 'period_id'}"/>
                         <filter name="period_state_group" string="Period State" context="{'group_by': 'period_state'}"/>
                     </group>
                </search>
