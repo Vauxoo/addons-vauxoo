@@ -1,0 +1,44 @@
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_employee_from_user_wizard">
+            <field name="name">employee.from.user.form</field>
+            <field name="model">employee.user.wizard</field>
+            <field name="arch" type="xml">
+                 <form string="Create employee" version="7.0">
+                    <footer>
+                      <button name="create_employee" type="object" string="Apply" class="oe_highlight"/>
+                      or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                    <separator colspan="4"/>
+                    <p class="oe_grey">
+                        Select a user, if you do not choose a user, were created employees for all users.
+                    </p>
+                    <group string="Select Users">
+                        <field name="user_ids" colspan="4" nolabel="1"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_employee_from_user_wizard" model="ir.actions.act_window">
+            <field name="name">Create employee</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">employee.user.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_employee_from_user_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+        <act_window name="Create Employee"
+            res_model="employee.user.wizard"
+            src_model="res.users"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+            id="action_employee_from_user_wizard"
+        />
+
+        </data>
+</openerp>

@@ -78,10 +78,28 @@
                         <filter name="company_id_group" string="Company" context="{'group_by': 'company_id'}"/>
                         <filter name="journal_id_group" string="Journal" context="{'group_by': 'journal_id'}"/>
                         <filter name="move_state_group" string="Entries State" context="{'group_by': 'move_state'}"/>
+                        <filter name="period_id_group" string="Period" context="{'group_by': 'period_id'}"/>
                         <filter name="period_state_group" string="Period State" context="{'group_by': 'period_state'}"/>
                     </group>
                </search>
             </field>
         </record>
-    </data>
+        <record model="ir.ui.view" id="account_move_folio_default_form_view">
+            <field name="name">account.move.folio.form</field>
+            <field name="model">account.move.folio</field>
+            <field name="priority" eval="10"/>
+            <field name="arch" type="xml">
+                <form create='0' edit='0' delete='0' string="Account Move Folio Form">
+                    <field name="name" readonly='0'/>
+                    <field name="move_id" readonly='0'/>
+                    <field name="journal_id" readonly='0'/>
+                    <field name="period_id" readonly='0'/>
+                    <field name="date" readonly='0'/>
+                    <field name="move_state" readonly='0'/>
+                    <field name="period_state" readonly='0'/>
+                    <field name="company_id" readonly='1' groups="base.group_multi_company"/>
+                </form>
+            </field>
+        </record>
+   </data>
 </openerp>
