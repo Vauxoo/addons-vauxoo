@@ -98,7 +98,7 @@ class update_amount_base_tax_wizard(osv.osv_memory):
             attrs.append(('amount_base', '=', False))
         lines_without_amount = move_line_obj.search(cr, uid, attrs, context=context)
         for move in move_line_obj.browse(cr, uid, lines_without_amount, context=context):
-            amount_tax = move.tax_id_secondary.amount
+            amount_tax = move.tax_id_secondary.tax_category_id.value_tax or move.tax_id_secondary.amount
             amount_base = 0
             if move.debit != 0:
                 amount_base = move.debit
