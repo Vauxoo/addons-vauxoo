@@ -61,11 +61,11 @@
                                         'location_id': ref('stock_location_stock_purchase_test_data')})
                                         
             #~ Data of purchase order line
-            purchase_order_line_data = purchase_order_line_obj.onchange_product_id(cr, uid, [], purchase_order_data.get('pricelist_id'), product_id, qty=1, uom_id=1,
+            purchase_order_line_data = purchase_order_line_obj.onchange_product_id(cr, uid, [], purchase_order_data.get('pricelist_id'), product_id, qty=1.0, uom_id=1,
                                                                 partner_id=partner_id, date_order=False, 
                                                                 fiscal_position_id=False, date_planned=False,
-                                                                name=False, price_unit=1, context=context)['value']
-
+                                                                name=False, price_unit=0, context=context)['value']
+            purchase_order_line_data.update({'price_unit':1.0})
             #~ Added taxes of product
             taxes_ids = product_data[0].supplier_taxes_id
             purchase_order_line_data.update({'product_id': product_id, 'taxes_id': [(4, tax.id) for tax in taxes_ids]})
@@ -110,6 +110,9 @@
             
             #~ Validate invoice for this purchase order 
             if invoice_id:
+                if invoice_id.get('res_id', False):
+                    cost_invoice = account_invoice_obj.browse(cr, uid, invoice_id.get('res_id'), context=context).amount_total or 0
+                    account_invoice_obj.write(cr, uid, [invoice_id.get('res_id')], {'check_total' : cost_invoice}, context=context)
                 try:
                     wf_service = netsvc.LocalService("workflow")
                     wf_service.trg_validate(uid, 'account.invoice', invoice_id.get('res_id') , 'invoice_open', cr)
