@@ -6,6 +6,7 @@ class account_voucher_category(osv.Model):
     _parent_order = "code"
     _parent_store = True
     _name = 'account.voucher.category'
+    _rec_name = 'complete_name'
 
     def _get_full_name(self, cr, uid, ids, name=None, args=None, context=None):
         if context == None:
