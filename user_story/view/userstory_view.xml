@@ -174,7 +174,7 @@
     </record>
     
     <record model="ir.actions.act_window" id="action_my_user_story">
-      <field name="name">My User's Story Exc</field>
+      <field name="name">My User Stories Exc</field>
       <field name="res_model">user.story</field>
       <field name="view_type">form</field>
       <field name="view_mode">tree,form</field>
