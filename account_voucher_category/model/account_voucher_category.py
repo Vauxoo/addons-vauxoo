@@ -6,6 +6,24 @@ class account_voucher_category(osv.Model):
     _parent_order = "code"
     _parent_store = True
     _name = 'account.voucher.category'
+    _rec_name = 'complete_name'
+
+    def _get_full_name(self, cr, uid, ids, name=None, args=None, context=None):
+        if context == None:
+            context = {}
+        res = {}
+        for elmt in self.browse(cr, uid, ids, context=context):
+            res[elmt.id] = self._get_one_full_name(elmt)
+        return res
+
+    def _get_one_full_name(self, elmt, level=6):
+        if level<=0:
+            return '...'
+        if elmt.parent_id and not elmt.type == 'template':
+            parent_path = self._get_one_full_name(elmt.parent_id, level-1) + " / "
+        else:
+            parent_path = ''
+        return parent_path + elmt.name
 
     _columns = {
         'name':fields.char('Name', 256, help='Category Name', translate=True), 
@@ -13,9 +31,11 @@ class account_voucher_category(osv.Model):
         'type':fields.selection([('view','View'),('other','Regular')], string='Category Type', help='Category Type'), 
         'company_id': fields.many2one('res.company', 'Company', required=True),
         'parent_id':fields.many2one('account.voucher.category', 'Parent Category', 
+            ondelete = 'restrict',
             help='Allows to create a Hierachycal Tree of Categories'), 
         'parent_left': fields.integer('Parent Left', select=1),
         'parent_right': fields.integer('Parent Right', select=1),
+        'complete_name': fields.function(_get_full_name, type='char', string='Full Name'),
     }
 
     _defaults = {
