@@ -52,7 +52,7 @@
             <field name="arch" type="xml">
                 <tree string="Account Voucher Category Tree">
                     <field name="code"/>
-                    <field name="name"/>
+                    <field name="complete_name"/>
                     <field name="type"/>
                     <field name="company_id"/>
                 </tree>
