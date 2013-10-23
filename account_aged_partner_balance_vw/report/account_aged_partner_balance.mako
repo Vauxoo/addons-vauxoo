@@ -168,8 +168,9 @@
                                     <tr>
                                         <th class="celdaTituloTabla" style="text-align:left;" width="20%">${_('Document')}</th>
                                         <th class="celdaTituloTabla" style="text-align:left;" width="10%">${_('Type')}</th>
-                                        <th class="celdaTituloTabla" style="text-align:left;" width="10%">${_('Due Days')}</th>
-                                        <th class="celdaTituloTabla" style="text-align:left;" width="10%">${_('Residual')}</th>
+                                        <th class="celdaTituloTabla" style="text-align:left;" width="6%">${_('Not Due')}</th>
+                                        <th class="celdaTituloTabla" style="text-align:left;" width="6%">${_('Due Days')}</th>
+                                        <th class="celdaTituloTabla" style="text-align:left;" width="8%">${_('Residual')}</th>
                                         <% form = data['form']%>
                                         %for i in range (4,-1,-1):
                                             <th class="celdaTituloTabla" style="text-align:center;">${form.get('%i'%i).get('name')}</th>
@@ -211,10 +212,13 @@
                                             <td class="celdaLineData" width="10%">
                                                 ${type}
                                             </td>
-                                            <td class="celdaLineData" style="text-align:center;" width="10%">
+                                            <td class="celdaLineData" style="text-align:center;" width="6%">
+                                                ${line.not_due}
+                                            </td>
+                                            <td class="celdaLineData" style="text-align:center;" width="6%">
                                                 ${line.due_days}
                                             </td>
-                                            <td class="celdaLineData" width="10%">
+                                            <td class="celdaLineData" width="8%">
                                                 ${line.residual}
                                             </td>
                                             <td class="celdaLineData" width="10%">
@@ -238,10 +242,10 @@
                                         <td class="celdaTotalTotales" width="20%">
                                             ${_('Total')}
                                         </td>
-                                        <td class="celdaTotalTotales" width="10%">
-                                        </td>
                                         <td class="celdaTotalTotales" width="10%"></td>
-                                        <td class="celdaTotalTotales" width="10%">
+                                        <td class="celdaTotalTotales" width="6%"></td>
+                                        <td class="celdaTotalTotales" width="6%"></td>
+                                        <td class="celdaTotalTotales" width="8%">
                                             ${formatLang(residual, digits=2, grouping=True)}
                                         </td>
                                         <td class="celdaTotalTotales" width="10%">
@@ -305,8 +309,9 @@
                                             %endif
                                             <th class="celdaTituloTabla" style="text-align:left;" width="19.5%">${_('Document')}</th>
                                             <th class="celdaTituloTabla" style="text-align:left;" width="10%">${_('Type')}</th>
-                                            <th class="celdaTituloTabla" style="text-align:left;" width="10%">${_('Due Days')}</th>
-                                            <th class="celdaTituloTabla" style="text-align:left;" width="10%">${_('Residual')}</th>
+                                            <th class="celdaTituloTabla" style="text-align:left;" width="6%">${_('Not Due')}</th>
+                                            <th class="celdaTituloTabla" style="text-align:left;" width="6%">${_('Due Days')}</th>
+                                            <th class="celdaTituloTabla" style="text-align:left;" width="8%">${_('Residual')}</th>
                                             <% form = data['form']%>
                                             %for i in range (4,-1,-1):
                                                 <th class="celdaTituloTabla" style="text-align:center;">${form.get('%i'%i).get('name')}</th>
@@ -353,10 +358,13 @@
                                                 <td class="celdaLineData" width="10%">
                                                     ${type}
                                                 </td>
-                                                <td class="celdaLineData" style="text-align:center;" width="10%">
+                                                <td class="celdaLineData" style="text-align:center;" width="6%">
+                                                    ${line.not_due}
+                                                </td>
+                                                <td class="celdaLineData" style="text-align:center;" width="6%">
                                                     ${line.due_days}
                                                 </td>
-                                                <td class="celdaLineData" width="10%">
+                                                <td class="celdaLineData" width="8%">
                                                     ${line.residual}
                                                 </td>
                                                 <td class="celdaLineData" width="10%">
@@ -382,13 +390,13 @@
                                             %else:
                                                 <th style="text-align:left;" bgcolor="#0174DF" width="0.5%"></th>
                                             %endif
-                                            <td class="celdaTotalTotales" width="0.5%">
+                                            <td class="celdaTotalTotales" width="19.5%">
                                                 ${_('Total')}
                                             </td>
-                                            <td class="celdaTotalTotales" width="10%">
-                                            </td>
                                             <td class="celdaTotalTotales" width="10%"></td>
-                                            <td class="celdaTotalTotales" width="10%">
+                                            <td class="celdaTotalTotales" width="6%"></td>
+                                            <td class="celdaTotalTotales" width="6%"></td>
+                                            <td class="celdaTotalTotales" width="8%">
                                                 ${formatLang(residual, digits=2, grouping=True)}
                                             </td>
                                             <td class="celdaTotalTotales" width="10%">
