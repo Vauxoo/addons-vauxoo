@@ -524,3 +524,29 @@ msgstr "Marca si aplican estos criterios"
 #: view:user.story:0
 msgid "User Story Number: "
 msgstr "Historia de usuario número: "
+
+#. module: user_story
+#: field:user.story,user_id:0
+msgid "Responsible Supervisor"
+msgstr "Supervisor Responsable"
+
+#. module: user_story
+#: field:user.story,user_execute_id:0
+msgid "Responsible Execution"
+msgstr "Responsable de Ejecución"
+
+#. module: user_story
+#: help:user.story,user_execute_id:0
+msgid "Person responsible for user story takes place, either by delegating work to other human capital or running it by itself. For delegate work should monitor the proper implementation of associated activities."
+msgstr "Persona responsable de que la historia de usuario se lleve a cabo, bien sea delegando trabajo a otro capital humano o ejecutandolo por si misma. En el caso de delegar trabajo se debe supervisar la correcta ejecución  de las actividades asociadas."
+
+#. module: user_story
+#: help:user.story,user_id:0
+msgid "Person responsible for interacting with the client to give details of the progress or completion of the User History, in some cases also the supervisor for the correct execution of the user story."
+msgstr "Persona responsable de interactuar con el cliente para dar detalles del avance o finalización de la Historia de Usuario, en algunos casos también es el supervisor de la correcta ejecución de la historia de usuario."
+
+#. module: user_story
+#: model:ir.actions.act_window,name:user_story.action_my_user_story
+#: model:ir.ui.menu,name:user_story.menu_action_my_user_story
+msgid "My User Stories Exc"
+msgstr "Mis H.U. a Ejecutar"
