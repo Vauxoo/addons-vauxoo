@@ -49,6 +49,64 @@ class account_voucher_category(osv.Model):
         'company_id': lambda self, cr, uid, c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
     }
 
+class scrvw_report_account_voucher_category(osv.Model):
+
+    _name = 'scrvw.report.account.voucher.category'
+    _auto = False
+
+    _columns = {
+        # size??
+        'name': fields.char('Account Move Line Name', readonly=True),
+        'debit': fields.float('Debit', readonly=True),
+        'credit': fields.float('Credit', readonly=True),
+        'balance': fields.float('Balance', help='Debit - Credit', readonly=True),
+        'avc_id': fields.many2one(
+            'account.voucher.category',
+            readonly=True,
+            string='Account Voucher Category'),
+        'avc_code': fields.char(
+            'AVC Code',
+            readonly=True
+            help='Account Voucher Category Code')
+        'avc_direct_parent': fields.many2one(
+            'account.voucher.category',
+            readonly=True,
+            string='Account Voucher Category Direct Parent'),
+        'avc_grand_parent': fields.many2one(
+            'account.voucher.category',
+            readonly=True,
+            string='Account Voucher Category Grand Parent'),
+        'aa_id': fields.many2one(
+            'account.analytic.account',
+            readonly=True,
+            string='Analytic Account'),
+        'date': fields.date('Date', readonly=True),
+        'account_id': fields.many2one(
+            'account.account',
+            readonly=True,
+            string='Bank Account'),
+        'month': fields.integer('Month', readonly=True),
+        # Note: month field type could be change.
+    }
+
+    def init(self, cr):
+        query = """
+            CREATE OR REPLACE VIEW %s AS (
+                SELECT aml.id, aml.name, aml.debit, aml.credit,
+                       aml.av_cat_id AS avc_id, avc.code AS avc_code,
+                       avc.parent_id AS avc_direct_parent, 
+                       aml.analytic_account_id AS aa_id,
+                       aml.account_id, aml.date,
+                       (aml.debit-aml.credit) AS balance
+                FROM account_move_line AS aml
+                INNER JOIN account_account AS aa ON aml.account_id=aa.id
+                INNER JOIN account_voucher_category AS avc
+                           ON aml.av_cat_id=avc.id
+                WHERE aa.type = 'liquidity';                
+            )""" % (self._name.replace('.', '_'))
+        cr.execute(query)
+
+
 class account_voucher(osv.Model):
     _inherit = 'account.voucher'
 
