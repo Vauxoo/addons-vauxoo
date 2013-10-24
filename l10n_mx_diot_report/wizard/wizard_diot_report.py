@@ -210,7 +210,7 @@ class wizard_account_diot_mx(osv.osv_memory):
                     dic_move_line.update({
                         partner_vat: matrix_row})
                 matrix_row = []
-                if category and category in ('IVA', 'IVA-EXENTO') and line.tax_id_secondary:
+                if category and category in ('IVA', 'IVA-EXENTO') and line.tax_id_secondary.amount != 0:
                     amount_line = (line.debit or line.credit) /\
                     (line.tax_id_secondary.tax_category_id.value_tax or\
                     line.tax_id_secondary.amount)
