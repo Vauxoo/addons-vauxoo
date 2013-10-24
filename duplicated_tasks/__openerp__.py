@@ -18,47 +18,51 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-
 {
-    'name': 'Portal CRM with Captcha',
+    'name': 'Duplicated Tasks',
     'version': '0.1',
-    'category': 'Tools',
-    'complexity': 'easy',
-    'description': """
-Contact page with Captcha widget.
-=================================
-
-You will need to install recaptcha and recaptcha client::
-
-    $ sudo pip install recaptcha
-    $ sudo pip install recaptcha-client
-
-Added Menu 'Our Team ' as principal Menu, this menu show
-the human recourses that is public.
-
-    """,
     'author': 'Vauxoo',
+    'category': 'Projects',
+    'description': """
+
+Identify when a task could be duplicated
+========================================
+
+In task model we add 2 action to control when a task could have any task
+similar
+
+-First:
+
+When you create the task and adds name you have a button that will search task
+name or description similars to the name set in the new task and you can select
+the task that you think that could be the same task  
+
+-Second:
+
+We add the action menu in task model, where you can search task, with some
+specific words that could match with other task, to avoid create a duplicated
+task 
+    """,
     'website': 'http://www.vauxoo.com',
+    'images': [],
     'depends': [
-                'crm',
-                'portal',
-                'portal_news',
-                'web_captcha',
-                'portal_hr_employees',
-                ],
+        'project',
+    ],
     'data': [
-        'view/contact_view.xml',
+        'wizard/search_duplicated_task_view.xml',
+        'view/task_view.xml',
+    ],
+    'js': [
+    ],
+    'qweb': [
+    ],
+    'css': [
+    ],
+    'demo': [
     ],
     'test': [
-        #'test/contact_form.yml',
     ],
     'installable': True,
     'auto_install': False,
-    'css': [
-        'static/src/css/portal_crm.css'
-    ],
-    'js': [ 'static/src/js/portal_crm.js' ],
-    'qweb': [ 'static/src/xml/portal_crm.xml' ],
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

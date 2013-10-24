@@ -40,6 +40,7 @@
 					<field name="owner" select="1"/>
 					<field name="date" select="1"/>
 					<field name="user_id"/>
+					<field name="user_execute_id"/>
 					<field name="code"/>
 				</group>
 				<group>
@@ -141,8 +142,6 @@
       <field name="arch" type="xml">
         <search string="User Story">
           <group string="Filter">
-            <filter icon="terp-camera_test" string="My User Story's" name="current" domain="[('user_id','=',uid)]"/>
-            <separator orientation="vertical"/>
             <field name="id"/>
             <field name="project_id"/>
             <field name="code"/>
@@ -174,13 +173,20 @@
       </field>
     </record>
     
-
+    <record model="ir.actions.act_window" id="action_my_user_story">
+      <field name="name">My User Stories Exc</field>
+      <field name="res_model">user.story</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('user_id','=',uid),('state','not in',('cancel','done'))]</field>
+      <field name="view_id" ref="view_userstory_tree"/>
+    </record>
+ 
     <record model="ir.actions.act_window" id="action_user_story">
       <field name="name">User Story</field>
       <field name="res_model">user.story</field>
       <field name="view_type">form</field>
       <field name="view_mode">tree,form</field>
-      <field name="context">{"search_default_current": uid}</field>
       <field name="search_view_id" ref="view_userstory_search"/>
       <field name="help" type="html">
       <p class="oe_view_nocontent_create">Behaviour-driven development is an 
@@ -195,6 +201,7 @@
       </field>
     </record>
     <menuitem parent="project.menu_project_management" id="menu_action_user_story" action="action_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user"/>
+    <menuitem parent="project.menu_project_management" id="menu_action_my_user_story" action="action_my_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user"/>
   </data>
 </openerp>
 
