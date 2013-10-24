@@ -66,8 +66,8 @@ class scrvw_report_account_voucher_category(osv.Model):
             string='Account Voucher Category'),
         'avc_code': fields.char(
             'AVC Code',
-            readonly=True
-            help='Account Voucher Category Code')
+            readonly=True,
+            help='Account Voucher Category Code'),
         'avc_direct_parent': fields.many2one(
             'account.voucher.category',
             readonly=True,
@@ -102,7 +102,7 @@ class scrvw_report_account_voucher_category(osv.Model):
                 INNER JOIN account_account AS aa ON aml.account_id=aa.id
                 INNER JOIN account_voucher_category AS avc
                            ON aml.av_cat_id=avc.id
-                WHERE aa.type = 'liquidity';                
+                WHERE aa.type = 'liquidity'
             )""" % (self._name.replace('.', '_'))
         cr.execute(query)
 
