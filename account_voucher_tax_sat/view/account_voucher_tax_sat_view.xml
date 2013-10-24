@@ -45,6 +45,10 @@
                             <field name='journal_id'
                                     required='1'
                                    />
+                            <field name='period_id'
+                                    on_change="onchange_period(period_id)"
+                                    required='1'
+                                   />
                             <field name='move_id'
                                     readonly='1'
                                    />

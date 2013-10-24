@@ -45,7 +45,8 @@ class account_voucher_tax_sat(osv.Model):
         'move_id': fields.many2one('account.move', 'Journal Entry',
                             help='Accounting Entry'),
         'company_id':fields.many2one('res.company', 'Company', help='Company'), 
-
+        'period_id': fields.many2one('account.period', 'Period', required=True,
+                                        help='Period of Entries to find'),
     }
     
     _defaults = {
@@ -53,6 +54,12 @@ class account_voucher_tax_sat(osv.Model):
             u, cx).company_id.id,    
     }
     
+    def onchange_period(self, cr, uid, ids, period, context=None):
+        res = {}
+        if period:
+            res['value'] = {'aml_ids': []}
+        return res
+        
     def action_close_tax(self, cr, uid, ids, context=None):
         aml_obj = self.pool.get('account.move.line')
         period_obj = self.pool.get('account.period')
