@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="account.act_open" model="workflow.activity">
+            <field name="action">
+action_validate_ref_invoice()
+action_date_assign()
+action_move_create()
+action_number()
+invoice_validate()
+</field>
+        </record>
+    </data>
+</openerp>
