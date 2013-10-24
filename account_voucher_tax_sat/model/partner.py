@@ -20,6 +20,17 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
+import time
+from openerp.osv import fields, osv
+from openerp import netsvc
+import openerp.addons.decimal_precision as dp
+from openerp.tools.translate import _
 
-import account_voucher_tax_sat
-import partner
+
+class res_partner(osv.Model):
+    
+    _inherit = 'res.partner'
+    
+    _columns = {
+        'sat': fields.boolean('Is SAT?')
+    }

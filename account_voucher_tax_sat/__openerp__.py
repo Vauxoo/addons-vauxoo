@@ -43,7 +43,7 @@ Polizas de SAT:
         'security/ir.model.access.csv',
         'wizard/account_tax_sat_view.xml',
         'view/account_voucher_tax_sat_view.xml',
-      
+        'view/partner_view.xml',
         ],
     'demo': [],
     'test': [],

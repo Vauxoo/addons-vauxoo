@@ -34,6 +34,7 @@ class account_voucher_tax_sat(osv.Model):
     _columns = {
         'name': fields.char('Name', size=128, help='Name of This Document'),
         'partner_id': fields.many2one('res.partner', 'Partner',
+                            domain = "[('sat', '=', True)]",
                             help='Partner of SAT'),
         'date': fields.date('Accounting Date',
                             help='Accounting date affected'),
