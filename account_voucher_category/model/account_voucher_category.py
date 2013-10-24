@@ -94,9 +94,10 @@ class scrvw_report_account_voucher_category(osv.Model):
             CREATE OR REPLACE VIEW %s AS (
                 SELECT aml.id, aml.name, aml.debit, aml.credit,
                        aml.av_cat_id AS avc_id, avc.code AS avc_code,
-                       avc.parent_id AS avc_direct_parent, 
+                       avc.parent_id AS avc_direct_parent,
+                       avc.parent_id AS avc_grand_parent,
                        aml.analytic_account_id AS aa_id,
-                       aml.account_id, aml.date,
+                       aml.account_id, aml.date, aml.period_id AS month,
                        (aml.debit-aml.credit) AS balance
                 FROM account_move_line AS aml
                 INNER JOIN account_account AS aa ON aml.account_id=aa.id
