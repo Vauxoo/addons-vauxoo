@@ -9,9 +9,6 @@
                 <form string="Account Voucher Tax Assigned" version="7.0">
                     <group col="4">
                         <group col='1' colspan='4'>
-                            <field name='period_id'
-                                   readonly='0'
-                                   />
                             <field name='tax_ids'
                                    readonly='0'
                                    />
