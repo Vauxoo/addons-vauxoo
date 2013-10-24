@@ -166,6 +166,15 @@ text-align:left;
 font-family:Arial,Helvetica,sans-serif; 
 color:#FFFFFF; 
 }
+
+.celdaGrandTotal{ 
+font-size:7pt; 
+font-family: monospace; 
+text-align:right; 
+font-weight:bold;
+color:#FFFFFF;
+background-color:#000000; 
+}
 ]]>
 </field>
             <field name="name">Report Account Aged Partner Balance VW</field>
