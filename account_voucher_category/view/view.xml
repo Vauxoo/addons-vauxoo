@@ -60,5 +60,48 @@
                 </tree>
             </field>
         </record>
+
+        <record model="ir.ui.view" id="scrvw_account_voucher_categ_form_view">
+            <field name="name">scrvw.report.account.voucher.categ.form</field>
+            <field name="model">scrvw.report.account.voucher.category</field>
+            <field name="arch" type="xml">
+                <form string="Report Account Voucher Category" version="7.0">
+                    <field name="name"/>
+                    <field name="debit"/>
+                    <field name="credit"/>
+                    <field name="balance"/>
+                    <field name="avc_id"/>
+                    <field name="avc_code"/>
+                    <field name="avc_direct_parent"/>
+                    <field name="avc_grand_parent"/>
+                    <field name="aa_id"/>
+                    <field name="date"/>
+                    <field name="account_id"/>
+                    <field name="month"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="scrvw_account_voucher_categ_tree_view">
+            <field name="name">scrvw.report.account.voucher.categ.tree</field>
+            <field name="model">scrvw.report.account.voucher.category</field>
+            <field name="arch" type="xml">
+                <tree string="Report Account Voucher Category" version="7.0">
+                    <field name="name"/>
+                    <field name="debit"/>
+                    <field name="credit"/>
+                    <field name="balance"/>
+                    <field name="avc_id"/>
+                    <field name="avc_code"/>
+                    <field name="avc_direct_parent"/>
+                    <field name="avc_grand_parent"/>
+                    <field name="aa_id"/>
+                    <field name="date"/>
+                    <field name="account_id"/>
+                    <field name="month"/>
+                </tree>
+            </field>
+        </record>
+
     </data>
 </openerp>
