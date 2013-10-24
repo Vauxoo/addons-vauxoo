@@ -1,6 +1,12 @@
 # -*- encoding: utf-8 -*-
 from openerp.osv import fields, osv
 
+class account_voucher_category_type(osv.Model):
+    _name = 'account.voucher.category.type'
+    _columns = {
+        'name':fields.char('Name', 256, help='Type Name', translate=True), 
+    }
+
 class account_voucher_category(osv.Model):
     _order = "parent_left"
     _parent_order = "code"
@@ -35,6 +41,7 @@ class account_voucher_category(osv.Model):
         'parent_left': fields.integer('Parent Left', select=1),
         'parent_right': fields.integer('Parent Right', select=1),
         'complete_name': fields.function(_get_full_name, type='char', string='Full Name'),
+        'user_type':fields.many2one('account.voucher.category.type', 'Custom Type', help='Let you define you own Category Type'), 
     }
 
     _defaults = {

@@ -42,6 +42,7 @@
                     <field name="name"/>
                     <field name="type"/>
                     <field name="parent_id"/>
+                    <field name="user_type"/>
                     <field name="company_id" widget='selection' groups="base.group_multi_company"/>
                 </form>
             </field>
@@ -52,6 +53,7 @@
             <field name="arch" type="xml">
                 <tree string="Account Voucher Category Tree">
                     <field name="code"/>
+                    <field name="user_type"/>
                     <field name="complete_name"/>
                     <field name="type"/>
                     <field name="company_id"/>

@@ -18,5 +18,17 @@
             parent="voucher_category_main_menu" 
             action='account_voucher_categ_action'
             />
+
+        <record id="account_voucher_categ_type_action" model="ir.actions.act_window">
+            <field name="name">Voucher Category Types</field>
+            <field name="res_model">account.voucher.category.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem 
+            id="voucher_category_type_menu" 
+            parent="voucher_category_main_menu" 
+            action='account_voucher_categ_type_action'
+            />
     </data>
 </openerp>
