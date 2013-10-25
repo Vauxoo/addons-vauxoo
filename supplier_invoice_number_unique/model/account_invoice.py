@@ -45,3 +45,7 @@ class account_invoice(osv.Model):
             if invoice_duplicate_ids:
                 raise osv.except_osv(_('Invalid Action!'), _('Error can not enter invoices with supplier invoice number duplicate.'))
         return True
+
+    def invoice_validate(self, cr, uid, ids, context=None):
+        self.action_validate_ref_invoice(cr, uid, ids, context = None)
+        return super(account_invoice, self).invoice_validate(cr, uid, ids, context=context)

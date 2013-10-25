@@ -36,7 +36,6 @@ This module prevents a supplier invoice to the same supplier invoice number is v
     ],
     "demo" : [],
     "data" : [
-    'workflow/account_invoice_workflow.xml',
     'view/account_invoice_view.xml',
     ],
     "installable" : True,
