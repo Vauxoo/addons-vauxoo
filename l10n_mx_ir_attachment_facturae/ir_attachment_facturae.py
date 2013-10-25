@@ -286,7 +286,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 report = invoice_obj.create_report(cr, SUPERUSER_ID, [invoice.id],
                                                    "account.invoice.facturae.webkit",
                                                    invoice.fname_invoice)
-                                               
+                                                   
             attachment_ids = attachment_obj.search(cr, uid, [
                 ('res_model', '=', 'account.invoice'),
                 ('res_id', '=', invoice.id),
@@ -340,7 +340,7 @@ class ir_attachment_facturae_mx(osv.Model):
             fname_invoice = invoice.fname_invoice and invoice.fname_invoice or ''
             adjuntos = self.pool.get('ir.attachment').search(cr, uid, [(
                 'res_model', '=', 'account.invoice'), ('res_id', '=', invoice)])
-            subject = 'Invoice ' + invoice.number or False
+            subject = 'Invoice ' + (invoice.number or '')
             for attach in self.pool.get('ir.attachment').browse(cr, uid, adjuntos):
                 attachments.append(attach.id)
                 attach_name += attach.name + ', '
@@ -375,15 +375,12 @@ class ir_attachment_facturae_mx(osv.Model):
                     report_data = actions_obj.browse(cr, uid, report_ids)
                     report_id = None
                     report_name = ''
-                    
                     for reporte in report_data:
                           if reporte.webkit_header and reporte.webkit_header.company_id and reporte.webkit_header.company_id.id == invoice.company_id.id:
                             report_id = reporte.id
                             break
-
                     if report_id:
                         report_name = actions_obj.read(cr, SUPERUSER_ID, [report_id], ['report_name'])[0].get('report_name') or False
-                        
                         if report_name:
                             tmp_id = email_pool.search(
                                                 cr, uid, [('model_id.model', '=', 'account.invoice'),
@@ -436,6 +433,11 @@ class ir_attachment_facturae_mx(osv.Model):
                                     else:
                                         msj = _('Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s') % (
                                             partner_mail, server_name)
+                                        self.write(cr, uid, ids, {
+                                                                'msj': msj, 
+                                                                'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
+                                        wf_service.trg_validate( uid, self._name, ids[0], 'action_send_customer', cr)
+                                        return True
                             else:
                                 raise osv.except_osv(
                                     _('Warning'), _('This user does not have mail'))
@@ -448,11 +450,6 @@ class ir_attachment_facturae_mx(osv.Model):
                 else:
                     raise osv.except_osv(_('Warning'), _('Not Found\
                     outgoing mail server.Configure the outgoing mail server named "FacturaE"'))
-                self.write(
-                    cr, uid, ids, {'msj': msj, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
-                wf_service.trg_validate(
-                    uid, self._name, ids[0], 'action_send_customer', cr)
-            return True
         except Exception, e:
             error = tools.ustr( traceback.format_exc() )
             self.write(cr, uid, ids, {'msj': error}, context=context)
@@ -574,7 +571,24 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service.trg_delete(uid, self._name, row, cr)
             wf_service.trg_create(uid, self._name, row, cr)
         return True
-
+        
+    def forward_email(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        try:
+            self.signal_send_customer(cr, uid, ids, context=context)
+            msj = _('Forward Email')
+            self.write(cr, uid, ids, {'msj': msj,
+                                      'last_date': time.strftime('%Y-%m-%d %H:%M:%S')
+                                      }, context=context)
+            status_forward = True
+        except Exception, e:
+            error = tools.ustr( traceback.format_exc() )
+            self.write(cr, uid, ids, {'msj': error}, context=context)
+            _logger.error( error )
+            status_forward = False
+        return status_forward
 
 class ir_attachment(osv.Model):
     _inherit = 'ir.attachment'
@@ -587,18 +601,3 @@ class ir_attachment(osv.Model):
             raise osv.except_osv(_('Warning!'), _(
                 'You can not remove an attachment of an invoice'))
         return super(ir_attachment, self).unlink(cr, uid, ids, context=context)
-
-class ir_mail_server(osv.Model):
-    _inherit = 'ir.mail_server'
-    def send_email(self, cr, uid, message, mail_server_id=None, smtp_server=None, smtp_port=None,
-                   smtp_user=None, smtp_password=None, smtp_encryption=None, smtp_debug=False,
-                   context=None):
-        obj_ir_mail_server = self.pool.get('ir.mail_server')
-        company_id = self.pool.get('res.users').browse(
-                cr, uid, uid, context=context).company_id.id
-        mail_server_id = obj_ir_mail_server.search(cr, uid,
-                                                           ['|', ('company_id', '=', company_id), ('company_id', '=', False)], limit=1, order='sequence', context=None)
-        super(ir_mail_server, self).send_email(cr, uid, message, mail_server_id=mail_server_id, smtp_server=None, smtp_port=None,
-                   smtp_user=None, smtp_password=None, smtp_encryption=None, smtp_debug=False,
-                   context=None)
-        return True

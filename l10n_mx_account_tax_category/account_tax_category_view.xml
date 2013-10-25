@@ -12,6 +12,7 @@
                     <newline/>
                     <field name="active" colspan="2"/>
                     <field name="sign" colspan="2"/>
+                    <field name="value_tax" colspan="2"/>
                     <newline/>
                     <field name="company_id" widget="selection"/>
                 </form>

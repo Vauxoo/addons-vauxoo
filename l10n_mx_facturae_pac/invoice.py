@@ -208,11 +208,10 @@ class account_invoice(osv.Model):
         data_xml = data_xml.replace(
             '<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
         date_invoice = data_dict.get('Comprobante',{}) and datetime.strptime( data_dict.get('Comprobante',{}).get('fecha',{}), '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d') or False
-        if os.name <> "nt":
-            if date_invoice  and date_invoice < '2012-07-01':
-                facturae_version = '2.0'
-            self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], facturae_version)
-            data_dict.get('Comprobante',{})
+        if date_invoice  and date_invoice < '2012-07-01':
+            facturae_version = '2.0'
+        self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], facturae_version)
+        data_dict.get('Comprobante',{})
         return fname_xml, data_xml
 
     def validate_scheme_facturae_xml(self, cr, uid, ids, datas_xmls=[], facturae_version = None, facturae_type="cfdv", scheme_type='xsd'):

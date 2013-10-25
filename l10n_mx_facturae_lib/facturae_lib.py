@@ -37,10 +37,12 @@ import base64
 import logging
 _logger = logging.getLogger(__name__)
 
-depends_app_path = os.path.join(tools.config["addons_path"], u'l10n_mx_facturae', u'depends_app')
-openssl_path = os.path.abspath(tools.ustr(os.path.join(depends_app_path,  u'openssl_win')))
-xsltproc_path = os.path.abspath(tools.ustr(os.path.join(depends_app_path,  u'xsltproc_win')))
-xmlstarlet_path = os.path.abspath(tools.ustr(os.path.join( depends_app_path,  u'xmlstarlet_win')))
+all_paths = tools.config["addons_path"].split(",")
+for my_path in all_paths:
+    if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae', 'depends_app')):
+        openssl_path = my_path and os.path.join(my_path, 'l10n_mx_facturae', 'depends_app', u'openssl_win') or ''
+        xsltproc_path = my_path and os.path.join(my_path, 'l10n_mx_facturae', 'depends_app', u'xsltproc_win') or ''
+        xmlstarlet_path = my_path and os.path.join(my_path, 'l10n_mx_facturae', 'depends_app', u'xmlstarlet_win') or ''
 
 def exec_command_pipe(*args):
     # Agregue esta funcion, ya que con la nueva funcion original, de tools no funciona
@@ -75,7 +77,7 @@ if not os.path.isfile(app_xsltproc_fullpath):
         app_xsltproc_fullpath = False
         _logger.warning("Failed to find in path 'xsltproc' app")
 
-app_xmlstarlet_fullpath = os.path.join( xmlstarlet_path, app_xmlstarlet )
+app_xmlstarlet_fullpath = os.path.join(xmlstarlet_path, app_xmlstarlet)
 if not os.path.isfile( app_xmlstarlet_fullpath ):
     app_xmlstarlet_fullpath = tools.find_in_path( app_xmlstarlet )
     if not app_xmlstarlet_fullpath:

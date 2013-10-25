@@ -50,10 +50,13 @@ class wizard_account_diot_mx(osv.osv_memory):
         'file_csv': fields.binary('File', readonly=True, help='It will open in your program office, to validate numbers'),
         'state': fields.selection([('choose', 'Choose'), ('get', 'Get'),
             ('not_file', 'Not File')]),
+        'entries_to_print': fields.selection([('all', 'All Entries'),
+            ('posted', 'Posted Entries')], 'Entries to show', required=True)
     }
 
     _defaults = {
         'state': 'choose',
+        'entries_to_print' : 'all'
     }
 
     def default_get(self, cr, uid, fields, context=None):
@@ -98,13 +101,16 @@ class wizard_account_diot_mx(osv.osv_memory):
         account_ids_tax = []
         for tax in acc_tax_obj.browse(cr, uid, tax_purchase_ids, context=context):
             account_ids_tax.append(tax.account_paid_voucher_id.id)
-        move_lines_diot = acc_move_line_obj.search(cr, uid, [
+        attrs = [
             ('period_id', '=', period.id),
             ('partner_id', '!=', partner_company_id),
             ('tax_id_secondary', 'in', tax_purchase_ids),
             ('state', '=', 'valid'),
             ('account_id', 'in', account_ids_tax),
-            ('not_move_diot', '=', False)])
+            ('not_move_diot', '=', False)]
+        if this.entries_to_print == 'posted':
+            attrs.append(('move_id.state', '=', 'posted'))
+        move_lines_diot = acc_move_line_obj.search(cr, uid, attrs, context=context)
         dic_move_line = {}
         partner_ids_to_fix = []
         moves_without_partner = []
@@ -122,6 +128,7 @@ class wizard_account_diot_mx(osv.osv_memory):
                 'type': 'ir.actions.act_window',
                 'domain': [('id', 'in', moves_without_partner), ],
             }
+        lines_difference_in_amount = []
         for line in acc_move_line_obj.browse(cr, uid, move_lines_diot,
             context=context):
             partner_id = line.partner_id
@@ -139,20 +146,30 @@ class wizard_account_diot_mx(osv.osv_memory):
                 continue
             if line.date >= period.date_start and line.date <= period.date_stop:
                 amount_0 = amount_16 = amount_exe = amount_11 = amount_ret = 0
-                if line.tax_id_secondary.tax_category_id.name == 'IVA' and\
-                    line.tax_id_secondary.amount == 0.16:
-                    amount_16 = line.amount_base or 0
-                if line.tax_id_secondary.tax_category_id.name == 'IVA' and\
-                    line.tax_id_secondary.amount == 0.11:
-                    amount_11 = line.amount_base or 0
-                if line.tax_id_secondary.tax_category_id.name == 'IVA' and\
-                    line.tax_id_secondary.amount == 0:
-                    amount_0 = line.amount_base or 0
-                if line.tax_id_secondary.tax_category_id.name == 'IVA-EXENTO'\
-                    and line.tax_id_secondary.amount == 0:
-                    amount_exe = line.amount_base or 0
-                if line.tax_id_secondary.tax_category_id.name == 'IVA-RET':
-                    amount_ret = line.credit or 0
+                amount_base_tax = line.amount_base or 0
+                if line.credit:
+                    amount_base_tax = amount_base_tax * -1
+                category = line.tax_id_secondary.tax_category_id.name or False
+                amount_base = line.tax_id_secondary.amount or 0
+                line_diot = False
+                if (category == 'IVA' and amount_base in [0.16, 0.11, 0]) or\
+                    (category == 'IVA-EXENTO' and amount_base == 0) or category == 'IVA-RET':
+                    line_diot = True
+                if category == 'IVA' and amount_base == 0.16 or\
+                    line.tax_id_secondary.tax_diot == 'tax_16' and line_diot == False:
+                    amount_16 = amount_base_tax or 0
+                if category == 'IVA' and amount_base == 0.11 or\
+                    line.tax_id_secondary.tax_diot == 'tax_11' and line_diot == False:
+                    amount_11 = amount_base_tax or 0
+                if category == 'IVA' and amount_base == 0 or\
+                    line.tax_id_secondary.tax_diot == 'tax_0' and line_diot == False:
+                    amount_0 = amount_base_tax or 0
+                if category == 'IVA-EXENTO' and amount_base == 0 or\
+                    line.tax_id_secondary.tax_diot == 'tax_exe' and line_diot == False:
+                    amount_exe = amount_base_tax or 0
+                if category == 'IVA-RET' or line.tax_id_secondary.tax_diot == 'tax_ret' and\
+                    line_diot == False:
+                    amount_ret = line.credit or line.debit*-1 or 0
                 if amount_0 + amount_16 + amount_exe + amount_11 + amount_ret == 0:
                     moves_amount_0.append(line.id)
                 if partner_vat in dic_move_line:
@@ -193,6 +210,13 @@ class wizard_account_diot_mx(osv.osv_memory):
                     dic_move_line.update({
                         partner_vat: matrix_row})
                 matrix_row = []
+                if category and category in ('IVA', 'IVA-EXENTO') and line.tax_id_secondary.amount != 0:
+                    amount_line = (line.debit or line.credit) /\
+                    (line.tax_id_secondary.tax_category_id.value_tax or\
+                    line.tax_id_secondary.amount)
+                    difference_amount = abs(amount_line) - abs(amount_base_tax)
+                    if abs(difference_amount) > 0.2:
+                        lines_difference_in_amount.append(line.id)
         if partner_ids_to_fix:
             return {
                 'name': 'Suppliers do not have the information necessary'
@@ -205,6 +229,15 @@ class wizard_account_diot_mx(osv.osv_memory):
                     'active', '=', False), ('active', '=', True)],
             }
         (fileno, fname) = tempfile.mkstemp('.txt', 'tmp')
+        if lines_difference_in_amount:
+            return {
+                'name': 'Movements with differences in amount base',
+                'view_type': 'form',
+                'view_mode': 'tree,form',
+                'res_model': 'account.move.line',
+                'type': 'ir.actions.act_window',
+                'domain': [('id', 'in', lines_difference_in_amount)],
+            }
         if moves_amount_0:
             return {
                 'name': 'Movements to corroborate the amounts of taxes',
