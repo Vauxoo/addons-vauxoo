@@ -66,19 +66,23 @@
             <field name="model">scrvw.report.account.voucher.category</field>
             <field name="arch" type="xml">
                 <form string="Report Account Voucher Category" version="7.0">
-                    <field name="name"/>
-                    <field name="debit"/>
-                    <field name="credit"/>
-                    <field name="balance"/>
-                    <field name="avc_id"/>
-                    <field name="avc_code"/>
-                    <field name="avc_direct_parent"/>
-                    <field name="avc_grand_parent"/>
-                    <field name="aa_id"/>
-                    <field name="date"/>
-                    <field name="account_id"/>
-                    <field name="period_id"/>
-                    <field name="month"/>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="debit"/>
+                            <field name="credit"/>
+                            <field name="balance"/>
+                            <field name="avc_id"/>
+                            <field name="avc_code"/>
+                            <field name="avc_direct_parent"/>
+                            <field name="avc_grand_parent"/>
+                            <field name="aa_id"/>
+                            <field name="date"/>
+                            <field name="account_id"/>
+                            <field name="period_id"/>
+                            <field name="month"/>
+                        </group>
+                    </sheet>
                 </form>
             </field>
         </record>
