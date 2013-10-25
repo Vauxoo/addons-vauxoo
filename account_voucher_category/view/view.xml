@@ -82,6 +82,8 @@
                                 <field name="avc_parent_name"/>
                                 <field name="avc_parent_code"/>
                                 <field name="avc_grand_parent_id"/>
+                                <field name="avc_grand_parent_name"/>
+                                <field name="avc_grand_parent_code"/>
                             </group>
                             <group string="Accounts" colspan="4">
                                 <field name="aa_id"/>

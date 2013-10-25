@@ -88,6 +88,14 @@ class scrvw_report_account_voucher_category(osv.Model):
             'account.voucher.category',
             readonly=True,
             string='Account Voucher Category Grand Parent'),
+        'avc_grand_parent_name': fields.char(
+            'Account Voucher Cateogry Grand Parent Name',
+            readonly=True,
+            help='Account Voucher Category Grand Parent Name'),
+        'avc_grand_parent_code': fields.char(
+            'Account Voucher Category Grand Parent Code',
+            readonly=True,
+            help='Account Voucher Category Grand Parent Code'),
         'aa_id': fields.many2one(
             'account.analytic.account',
             readonly=True,
@@ -114,6 +122,8 @@ class scrvw_report_account_voucher_category(osv.Model):
                        avcp.code AS avc_parent_code,
                        avcp.name AS avc_parent_name,
                        avcp.parent_id AS avc_grand_parent_id,
+                       avcgp.code AS avc_grand_parent_code,
+                       avcgp.name AS avc_grand_parent_name,
                        aml.analytic_account_id AS aa_id,
                        aml.account_id, aml.date, aml.period_id AS month,
                        aml.period_id, (aml.debit-aml.credit) AS balance
@@ -123,6 +133,8 @@ class scrvw_report_account_voucher_category(osv.Model):
                       ON aml.av_cat_id=avc.id
                 INNER JOIN account_voucher_category AS avcp
                       ON avcp.id=avc.parent_id
+                LEFT JOIN account_voucher_category AS avcgp
+                      ON avcgp.id=avcp.parent_id
                 WHERE aa.type = 'liquidity'
             )""" % (self._name.replace('.', '_'))
         cr.execute(query)
