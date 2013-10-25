@@ -51,7 +51,7 @@ the human recourses that is public.
         'view/contact_view.xml',
     ],
     'test': [
-        'test/contact_form.yml',
+        #'test/contact_form.yml',
     ],
     'installable': True,
     'auto_install': False,

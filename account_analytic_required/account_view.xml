@@ -11,5 +11,51 @@
                 </xpath>
             </field>
         </record>
+        
+        <record model="ir.ui.view" id="view_account_invoice_inherit_analytic_required_form">
+            <field name="name">view.account.invoice.inherit.analytic.required.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath 
+                    expr="//field[@name='invoice_line']/tree[@string='Invoice Lines']/field[@name='account_analytic_id']" 
+                    position="attributes">
+                        <attribute name="attrs">{'required': [('analytic_required', '=', True),]}</attribute>
+                </xpath>
+                <xpath 
+                    expr="//field[@name='invoice_line']/tree[@string='Invoice Lines']/field[@name='account_id']" 
+                    position="attributes">
+                        <attribute name="on_change">onchange_account_id(product_id, parent.partner_id, parent.type, parent.fiscal_position, account_id)</attribute>
+                </xpath>
+                <xpath 
+                    expr="//field[@name='invoice_line']/tree[@string='Invoice Lines']/field[@name='account_analytic_id']" 
+                    position="after">
+                        <field name="analytic_required" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_account_invoice_supplier_inherit_analytic_required_form">
+            <field name="name">view.account.invoice.supplier.inherit.analytic.required.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath 
+                    expr="//field[@name='invoice_line']/tree[@string='Invoice lines']/field[@name='account_analytic_id']" 
+                    position="attributes">
+                        <attribute name="attrs">{'required': [('analytic_required', '=', True),]}</attribute>
+                </xpath>
+                <xpath 
+                    expr="//field[@name='invoice_line']/tree[@string='Invoice lines']/field[@name='account_id']" 
+                    position="attributes">
+                        <attribute name="on_change">onchange_account_id(product_id, parent.partner_id, parent.type, parent.fiscal_position, account_id)</attribute>
+                </xpath>
+                <xpath 
+                    expr="//field[@name='invoice_line']/tree[@string='Invoice lines']/field[@name='account_analytic_id']" 
+                    position="after">
+                        <field name="analytic_required" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>

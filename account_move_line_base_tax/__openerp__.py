@@ -40,6 +40,7 @@
     "depends" : [
             "account",
             "l10n_mx_account_tax_category",
+            "account_invoice_tax",
         ],
     "demo" : [],
     "data" : [
