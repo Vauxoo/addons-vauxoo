@@ -19,13 +19,16 @@ class account_voucher_category(osv.Model):
             context = {}
         res = {}
         for elmt in self.browse(cr, uid, ids, context=context):
-            res[elmt.id] = self._get_one_full_name(elmt)
+            user_type = ''
+            if elmt.user_type:
+                user_type = '[%s] '%elmt.user_type.name
+            res[elmt.id] = user_type + self._get_one_full_name(elmt)
         return res
 
     def _get_one_full_name(self, elmt, level=6):
         if level<=0:
             return '...'
-        if elmt.parent_id and not elmt.type == 'template':
+        if elmt.parent_id:
             parent_path = self._get_one_full_name(elmt.parent_id, level-1) + " / "
         else:
             parent_path = ''
@@ -48,6 +51,40 @@ class account_voucher_category(osv.Model):
     _defaults = {
         'company_id': lambda self, cr, uid, c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
     }
+
+    def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=100):
+        if not args:
+            args=[]
+        if context is None:
+            context={}
+        ids2=[]
+        if name:
+            ids = self.search(cr, uid, [('code', '=', name)] + args, limit=limit, context=context)
+            ids2 = self.search(cr, uid, [('user_type','ilike',name)] + args, limit=limit, context=context)
+            if not ids:
+                dom = []
+                for name2 in name.split('/'):
+                    name = name2.strip()
+                    ids = self.search(cr, uid, dom + [('name', 'ilike', name)] + args, limit=limit, context=context)
+                    if not ids: break
+                    dom = [('parent_id','in',ids)]
+        else:
+            ids = self.search(cr, uid, args, limit=limit, context=context)
+        return self.name_get(cr, uid, ids2+ids, context=context)
+
+    def name_get(self, cr, uid, ids, context=None):
+        res = []
+        if not ids:
+            return res
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+        for id in ids:
+            elmt = self.browse(cr, uid, id, context=context)
+            user_type = ''
+            if elmt.user_type:
+                user_type = '[%s] '%elmt.user_type.name
+            res.append((id, user_type + self._get_one_full_name(elmt)))
+        return res
 
 class scrvw_report_account_voucher_category(osv.Model):
 
