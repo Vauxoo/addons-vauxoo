@@ -24,8 +24,8 @@
                         <field name="account_collected_voucher_id" attrs="{'required':[('tax_voucher_ok','=',True)]}"/>
                         <newline/>
                         <field name="account_paid_voucher_id" attrs="{'required':[('tax_voucher_ok','=',True)]}"/>
-                        <field name="account_expense_voucher_id" attrs="{'required':[('tax_voucher_ok','=',True)]}"/>
-                        <field name="account_income_voucher_id" attrs="{'required':[('tax_voucher_ok','=',True)]}"/>
+                        <field name="account_expense_voucher_id" invisible="1"/>
+                        <field name="account_income_voucher_id" invisible="1"/>
                     </group>
                 </field>
         </record>
