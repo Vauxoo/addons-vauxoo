@@ -32,13 +32,13 @@
             />
 
         <record id="scrvw_report_account_voucher_categ_action" model="ir.actions.act_window">
-            <field name="name">Account Voucher Category Report</field>
+            <field name="name">Voucher Category Report</field>
             <field name="res_model">scrvw.report.account.voucher.category</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
         <menuitem 
-            id="voucher_category_type_menu" 
+            id="voucher_category_scrvw_menu" 
             parent="voucher_category_main_menu" 
             action='scrvw_report_account_voucher_categ_action'
             />
