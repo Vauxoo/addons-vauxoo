@@ -86,7 +86,10 @@ class scrvw_report_account_voucher_category(osv.Model):
             readonly=True,
             string='Bank Account'),
         'month': fields.integer('Month', readonly=True),
-        # Note: month field type could be change.
+        # Note: month field type could be change. Right now is rerieving the
+        # period_id what is worng.
+        'period_id': fields.many2one(
+            'account.period', string='Fiscal Year Period', readonly=True),
     }
 
     def init(self, cr):
@@ -95,14 +98,16 @@ class scrvw_report_account_voucher_category(osv.Model):
                 SELECT aml.id, aml.name, aml.debit, aml.credit,
                        aml.av_cat_id AS avc_id, avc.code AS avc_code,
                        avc.parent_id AS avc_direct_parent,
-                       avc.parent_id AS avc_grand_parent,
+                       avcp.parent_id AS avc_grand_parent,
                        aml.analytic_account_id AS aa_id,
                        aml.account_id, aml.date, aml.period_id AS month,
-                       (aml.debit-aml.credit) AS balance
+                       aml.period_id, (aml.debit-aml.credit) AS balance
                 FROM account_move_line AS aml
                 INNER JOIN account_account AS aa ON aml.account_id=aa.id
                 INNER JOIN account_voucher_category AS avc
-                           ON aml.av_cat_id=avc.id
+                      ON aml.av_cat_id=avc.id
+                INNER JOIN account_voucher_category AS avcp
+                      ON avcp.id=avc.parent_id
                 WHERE aa.type = 'liquidity'
             )""" % (self._name.replace('.', '_'))
         cr.execute(query)
