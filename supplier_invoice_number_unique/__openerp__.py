@@ -22,7 +22,7 @@
 ################################################################################
 
 {
-    "name" : "Validate as not to duplicate a supplier invoice",
+    "name" : "supplier_invoice_number_unique",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Accouting",
