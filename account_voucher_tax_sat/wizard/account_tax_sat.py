@@ -49,7 +49,6 @@ class account_voucher_tax_assigned(osv.TransientModel):
         acc_voucher_tax_sat_obj = self.pool.get('account.voucher.tax.sat')
         if context is None:
             context = {}
-        
         for tax_assigned in self.browse(cr, uid, ids, context=context):
             acc_vocuher_tax_sat = acc_voucher_tax_sat_obj.browse(cr, uid,
                                             context.get('active_id', False))

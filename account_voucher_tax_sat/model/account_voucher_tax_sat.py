@@ -63,7 +63,8 @@ class account_voucher_tax_sat(osv.Model):
     }
     _defaults = {
         'company_id': lambda s, c, u, cx: s.pool.get('res.users').browse(c, u,
-            u, cx).company_id.id,    
+            u, cx).company_id.id,
+        'state': 'draft'
     }
     
     def onchange_period(self, cr, uid, ids, period, context=None):
@@ -71,14 +72,37 @@ class account_voucher_tax_sat(osv.Model):
         if period:
             res['value'] = {'aml_ids': []}
         return res
-        
+
+    def validate_move_line(self, cr, uid, voucher_tax, context=None):
+        move_line_obj = self.pool.get('account.move.line')
+        cr.execute(""" SELECT DISTINCT move_line_id FROM voucher_tax_sat_rel
+                        WHERE voucher_tax_sat_id <> %s
+                        AND move_line_id IN %s """,(
+                            voucher_tax.id,
+                            tuple([ move_lines.id\
+                                    for move_lines in voucher_tax.aml_ids ]))
+                    )
+        dat = cr.dictfetchall()
+        move_line_tax = list( set([ move_tax['move_line_id'] for move_tax in dat ]) )
+        if dat:
+            raise osv.except_osv(_('Warning'),
+                _("You have this jornal items in other voucher tax sat '%s' ")
+                % ([ move_line.name\
+                        for move_line in move_line_obj.browse(cr, uid,
+                                            move_line_tax, context=context)]))
+
+        return True
+    
     def action_close_tax(self, cr, uid, ids, context=None):
         aml_obj = self.pool.get('account.move.line')
         period_obj = self.pool.get('account.period')
         context = context or {}
         ids= isinstance(ids,(int,long)) and [ids] or ids
         for voucher_tax_sat in self.browse(cr, uid, ids, context=context):
-            
+                                            
+                self.validate_move_line(cr, uid,
+                                        voucher_tax_sat, context=context)
+                                    
                 move_id = self.create_move_sat(cr, uid, ids, context=context)
                 self.write(cr, uid, ids, {'move_id': move_id})
                 
