@@ -84,7 +84,7 @@ class scrvw_report_account_voucher_category(osv.Model):
             'Account Voucher Category Parent Code',
             readonly=True,
             help='Account Voucher Category Parent Code'),
-        'avc_grand_parent': fields.many2one(
+        'avc_grand_parent_id': fields.many2one(
             'account.voucher.category',
             readonly=True,
             string='Account Voucher Category Grand Parent'),
@@ -113,7 +113,7 @@ class scrvw_report_account_voucher_category(osv.Model):
                        avc.parent_id AS avc_parent_id,
                        avcp.code AS avc_parent_code,
                        avcp.name AS avc_parent_name,
-                       avcp.parent_id AS avc_grand_parent,
+                       avcp.parent_id AS avc_grand_parent_id,
                        aml.analytic_account_id AS aa_id,
                        aml.account_id, aml.date, aml.period_id AS month,
                        aml.period_id, (aml.debit-aml.credit) AS balance
