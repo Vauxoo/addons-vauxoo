@@ -69,7 +69,7 @@ class scrvw_report_account_voucher_category(osv.Model):
             readonly=True,
             help='Account Voucher Category Name'),
         'avc_code': fields.char(
-            'AVC Code',
+            'Account Voucher Category Code',
             readonly=True,
             help='Account Voucher Category Code'),
         'avc_direct_parent': fields.many2one(
