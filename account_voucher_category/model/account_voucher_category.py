@@ -64,6 +64,10 @@ class scrvw_report_account_voucher_category(osv.Model):
             'account.voucher.category',
             readonly=True,
             string='Account Voucher Category'),
+        'avc_name': fields.char(
+            'Account Voucher Cateogry Name',
+            readonly=True,
+            help='Account Voucher Category Name'),
         'avc_code': fields.char(
             'AVC Code',
             readonly=True,
@@ -97,6 +101,7 @@ class scrvw_report_account_voucher_category(osv.Model):
             CREATE OR REPLACE VIEW %s AS (
                 SELECT aml.id, aml.name, aml.debit, aml.credit,
                        aml.av_cat_id AS avc_id, avc.code AS avc_code,
+                       avc.name AS avc_name,
                        avc.parent_id AS avc_direct_parent,
                        avcp.parent_id AS avc_grand_parent,
                        aml.analytic_account_id AS aa_id,

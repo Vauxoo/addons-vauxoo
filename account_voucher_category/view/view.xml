@@ -76,6 +76,7 @@
                             </group>
                             <group string="Voucher Category" colspan="4">
                                 <field name="avc_id"/>
+                                <field name="avc_name"/>
                                 <field name="avc_code"/>
                                 <field name="avc_direct_parent"/>
                                 <field name="avc_grand_parent"/>
