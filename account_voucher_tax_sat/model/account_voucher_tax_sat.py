@@ -32,24 +32,35 @@ class account_voucher_tax_sat(osv.Model):
     _name = 'account.voucher.tax.sat'
     
     _columns = {
-        'name': fields.char('Name', size=128, help='Name of This Document'),
+        'name': fields.char('Name', size=128,
+                            help='Name of This Document',
+                            ),
         'partner_id': fields.many2one('res.partner', 'Partner',
                             domain = "[('sat', '=', True)]",
-                            help='Partner of SAT'),
+                            help='Partner of SAT',
+                            ),
         'date': fields.date('Accounting Date',
-                            help='Accounting date affected'),
+                            help='Accounting date affected',
+                            ),
         'aml_ids': fields.many2many('account.move.line', 'voucher_tax_sat_rel',
                             'voucher_tax_sat_id', 'move_line_id',
-                            'Move Lines', help='Entries to close'),
+                            'Move Lines', help='Entries to close',
+                            ),
         'journal_id':fields.many2one('account.journal', 'Journal',
-                            help='Accounting Journal where Entries will be posted'), 
+                            help='Accounting Journal where Entries will be posted',
+                            ), 
         'move_id': fields.many2one('account.move', 'Journal Entry',
                             help='Accounting Entry'),
         'company_id':fields.many2one('res.company', 'Company', help='Company'), 
         'period_id': fields.many2one('account.period', 'Period', required=True,
-                                        help='Period of Entries to find'),
+                            help='Period of Entries to find',
+                            ),
+        'state': fields.selection([
+            ('draft', 'New'),
+            ('cancelled', 'Cancelled'),
+            ('done', 'Done')],
+            'Status', readonly=True, track_visibility='onchange'),
     }
-    
     _defaults = {
         'company_id': lambda s, c, u, cx: s.pool.get('res.users').browse(c, u,
             u, cx).company_id.id,    
@@ -98,7 +109,21 @@ class account_voucher_tax_sat(osv.Model):
                             'SET amount_tax_unround = null '\
                             'WHERE id in %s ',(tuple(move_line_copy), ))
                             
-        return True
+        return self.write(cr, uid, ids, {'state': 'done'}, context=context)
+    
+    def action_cancel(self, cr, uid, ids, context=None):
+        obj_move_line = self.pool.get('account.move.line')
+        obj_move = self.pool.get('account.move')
+        for tax_sat in self.browse(cr, uid, ids, context=context):
+            if tax_sat.move_id:
+                obj_move_line._remove_move_reconcile(cr, uid,
+                    [move_line.id
+                        for move_line in tax_sat.move_id.line_id],
+                    context=context)
+                obj_move.unlink(cr, uid, [tax_sat.move_id.id],
+                                context=context)
+        return self.write(cr, uid, ids, {'state': 'draft'}, context=context)
+    
     def create_entries_tax_iva_sat(self, cr, uid, voucher_tax_sat,
                                                             context=None):
         aml_obj = self.pool.get('account.move.line')
