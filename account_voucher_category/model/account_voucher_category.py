@@ -106,8 +106,6 @@ class scrvw_report_account_voucher_category(osv.Model):
             readonly=True,
             string='Bank Account'),
         'month': fields.integer('Month', readonly=True),
-        # Note: month field type could be change. Right now is rerieving the
-        # period_id what is worng.
         'period_id': fields.many2one(
             'account.period', string='Fiscal Year Period', readonly=True),
     }
@@ -125,7 +123,8 @@ class scrvw_report_account_voucher_category(osv.Model):
                        avcgp.code AS avc_grand_parent_code,
                        avcgp.name AS avc_grand_parent_name,
                        aml.analytic_account_id AS aa_id,
-                       aml.account_id, aml.date, aml.period_id AS month,
+                       aml.account_id, aml.date,
+                       EXTRACT(MONTH FROM date) AS month,
                        aml.period_id, (aml.debit-aml.credit) AS balance
                 FROM account_move_line AS aml
                 INNER JOIN account_account AS aa ON aml.account_id=aa.id
