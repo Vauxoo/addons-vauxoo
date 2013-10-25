@@ -78,7 +78,7 @@
                                 <field name="avc_id"/>
                                 <field name="avc_name"/>
                                 <field name="avc_code"/>
-                                <field name="avc_direct_parent"/>
+                                <field name="avc_parent_id"/>
                                 <field name="avc_grand_parent"/>
                             </group>
                             <group string="Accounts" colspan="4">
@@ -107,7 +107,7 @@
                     <field name="balance"/>
                     <field name="avc_id"/>
                     <field name="avc_code"/>
-                    <field name="avc_direct_parent"/>
+                    <field name="avc_parent_id"/>
                     <field name="avc_grand_parent"/>
                     <field name="aa_id"/>
                     <field name="date"/>
