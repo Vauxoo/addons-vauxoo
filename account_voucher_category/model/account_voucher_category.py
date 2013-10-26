@@ -86,6 +86,39 @@ class account_voucher_category(osv.Model):
             res.append((id, user_type + self._get_one_full_name(elmt)))
         return res
 
+class account_voucher(osv.Model):
+    _inherit = 'account.voucher'
+
+    _columns = {
+        'av_cat_id': fields.many2one('account.voucher.category', 'Voucher Category'),
+    }
+
+    def first_move_line_get(self, cr, uid, voucher_id, move_id, company_currency, current_currency, context=None):
+        '''
+        Return a dict to be use to create the first account move line of given voucher.
+
+        :param voucher_id: Id of voucher what we are creating account_move.
+        :param move_id: Id of account move where this line will be added.
+        :param company_currency: id of currency of the company to which the voucher belong
+        :param current_currency: id of currency of the voucher
+        :return: mapping between fieldname and value of account move line to create
+        :rtype: dict
+        '''
+        context = context or {}
+        move_line = super(account_voucher, self).first_move_line_get(cr, uid,
+                voucher_id, move_id, company_currency, current_currency,
+                context=context)
+        voucher = self.pool.get('account.voucher').browse(cr,uid,voucher_id,context)
+        move_line['av_cat_id'] = voucher.av_cat_id and voucher.av_cat_id.id or False
+        return move_line
+
+
+class account_move_line(osv.Model):
+    _inherit = 'account.move.line'
+
+    _columns = {
+        'av_cat_id': fields.many2one('account.voucher.category', 'Voucher Category'),
+    }
 class scrvw_report_account_voucher_category(osv.Model):
 
     _name = 'scrvw.report.account.voucher.category'
@@ -176,36 +209,3 @@ class scrvw_report_account_voucher_category(osv.Model):
         cr.execute(query)
 
 
-class account_voucher(osv.Model):
-    _inherit = 'account.voucher'
-
-    _columns = {
-        'av_cat_id': fields.many2one('account.voucher.category', 'Voucher Category'),
-    }
-
-    def first_move_line_get(self, cr, uid, voucher_id, move_id, company_currency, current_currency, context=None):
-        '''
-        Return a dict to be use to create the first account move line of given voucher.
-
-        :param voucher_id: Id of voucher what we are creating account_move.
-        :param move_id: Id of account move where this line will be added.
-        :param company_currency: id of currency of the company to which the voucher belong
-        :param current_currency: id of currency of the voucher
-        :return: mapping between fieldname and value of account move line to create
-        :rtype: dict
-        '''
-        context = context or {}
-        move_line = super(account_voucher, self).first_move_line_get(cr, uid,
-                voucher_id, move_id, company_currency, current_currency,
-                context=context)
-        voucher = self.pool.get('account.voucher').browse(cr,uid,voucher_id,context)
-        move_line['av_cat_id'] = voucher.av_cat_id and voucher.av_cat_id.id or False
-        return move_line
-
-
-class account_move_line(osv.Model):
-    _inherit = 'account.move.line'
-
-    _columns = {
-        'av_cat_id': fields.many2one('account.voucher.category', 'Voucher Category'),
-    }
