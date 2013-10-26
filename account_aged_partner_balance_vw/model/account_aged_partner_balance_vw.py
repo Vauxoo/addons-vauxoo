@@ -560,6 +560,8 @@ class account_aged_trial_balance(osv.TransientModel):
             ('account_id', 'in', accounts_journal),
             ('partner_id', '!=', False)
         ]
+        if wzd_brw.target_move == 'posted':
+            args += [('state', '=', 'posted')]
         if wzd_brw.direction_selection == 'past':
             args += [('date', '<=', wzd_brw.date_from)]
         elif wzd_brw.direction_selection == 'future':
