@@ -68,21 +68,28 @@ if not os.path.isfile(app_openssl_fullpath):
     app_openssl_fullpath = tools.find_in_path(app_openssl)
     if not os.path.isfile(app_openssl_fullpath):
         app_openssl_fullpath = False
-        _logger.warning("Failed to find in path 'openssl' app")
+        _logger.error('Install openssl "sudo apt-get install openssl" to use l10n_mx_facturae_lib module.')
+        raise osv.except_osv(_('Warning'),_("Install openssl 'sudo apt-get install openssl' to use l10n_mx_facturae_lib module"))
 
 app_xsltproc_fullpath = os.path.join(xsltproc_path, app_xsltproc)
 if not os.path.isfile(app_xsltproc_fullpath):
     app_xsltproc_fullpath = tools.find_in_path(app_xsltproc)
-    if not os.path.isfile(app_xsltproc_fullpath):
-        app_xsltproc_fullpath = False
-        _logger.warning("Failed to find in path 'xsltproc' app")
+    try:
+        if not os.path.isfile(app_xsltproc_fullpath):
+            app_xsltproc_fullpath = False
+            _logger.error("Install xsltproc 'sudo apt-get install xsltproc' to use l10n_mx_facturae_lib module.")
+            raise osv.except_osv(_('Warning'),_("Install xsltproc 'sudo apt-get install xsltproc' to use l10n_mx_facturae_lib module"))
+    except Exception, e:
+        _logger.error("Install xsltproc 'sudo apt-get install xsltproc' to use l10n_mx_facturae_lib module.")
+        raise osv.except_osv(_('Warning'),_("Install xsltproc 'sudo apt-get install xsltproc' to use l10n_mx_facturae_lib module"))
 
 app_xmlstarlet_fullpath = os.path.join(xmlstarlet_path, app_xmlstarlet)
 if not os.path.isfile( app_xmlstarlet_fullpath ):
     app_xmlstarlet_fullpath = tools.find_in_path( app_xmlstarlet )
     if not app_xmlstarlet_fullpath:
         app_xmlstarlet_fullpath = False
-        _logger.warning("Failed to find in path 'xmlstarlet' app")
+        _logger.error('Install xmlstarlet "sudo apt-get install xmlstarlet" to use l10n_mx_facturae_lib module.')
+        raise osv.except_osv(_('Warning'),_("Install xmlstarlet 'sudo apt-get install xmlstarlet' to use l10n_mx_facturae_lib module"))
         
 
 class facturae_certificate_library(osv.Model):
