@@ -1,0 +1,67 @@
+-
+    Test DIOT
+-
+   I press the update button on the invoice
+-
+  !python {model: account.invoice}: |
+    self.button_reset_taxes(cr, uid, [ref('l10n_mx_diot_report.account_invoice_diot_0')], context=context)
+-
+    I getting the amount total of the invoice and write this amount in Verification Total
+-
+  !python {model: account.invoice}: |
+    amount_total = self.read(cr,uid,[ref('l10n_mx_diot_report.account_invoice_diot_0')], ['amount_total'])[0].get('amount_total')
+    self.write(cr,uid,[ref('l10n_mx_diot_report.account_invoice_diot_0')], {'check_total': amount_total})
+-
+  I change the state of invoice to open by clicking Validate button
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: l10n_mx_diot_report.account_invoice_diot_0}
+-
+  I check that the invoice state is now "Open"
+-
+  !assert {model: account.invoice, id: l10n_mx_diot_report.account_invoice_diot_0}:
+    - state == 'open'
+-
+  I set the context that will be used for the encoding of all the vouchers of this file
+-
+  !context
+    'type': 'payment'
+-
+   I create the voucher of payment with values 316.33  
+-
+  !record {model: account.voucher, id: account_voucher_voucherfordiot0, view:  account_voucher.view_vendor_payment_form }:
+    account_id: account.cash
+    amount: 316.33
+    company_id: base.main_company
+    journal_id: account.expenses_journal
+    name: 'Voucher for Diot'
+    partner_id: l10n_mx_partner_address.res_partner_address_vauxoo_0
+    date: !eval time.strftime('%Y-%m-%d')
+    payment_option: 'with_writeoff'
+    writeoff_acc_id: account.a_expense
+    comment: 'Write Off'
+    payment_rate_currency_id: base.EUR
+-
+  I check that Initially customer voucher is in the "Draft" state
+-
+  !assert {model: account.voucher, id: account_voucher_voucherfordiot0}:
+    - state == 'draft'
+-
+  I compute the voucher to calculate the taxes by clicking Compute button
+-
+  !workflow {model: account.voucher, action: proforma_voucher, ref: account_voucher_voucherfordiot0}
+
+-
+  I create voucher by clicking on Create button
+-
+  !workflow {model: account.voucher, action: proforma_voucher, ref: account_voucher_voucherfordiot0}
+-
+  I clicked on Validate Button
+-
+  !assert {model: account.voucher, id: account_voucher_voucherfordiot0}:
+    - state == 'posted'
+-
+  I check that Moves get created for this voucher
+-
+  !python {model: account.voucher}: |
+    acc_id=self.browse(cr, uid, ref('account_voucher_voucherfordiot0'))
+    assert(acc_id.move_id)

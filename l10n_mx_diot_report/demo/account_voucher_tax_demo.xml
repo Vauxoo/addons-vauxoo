@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <record id="account_voucher_tax.account_voucher_tax_purchase_iva16" model="account.tax">
+            <field name="tax_category_id" eval="2"/>
+        </record>
+        
+        <record id="account_voucher_tax.account_voucher_tax_purchase_iva11" model="account.tax">
+            <field name="tax_category_id" eval="2"/>
+        </record>
+        
+        <record id="account_voucher_tax.account_voucher_tax_purchase_iva533" model="account.tax">
+            <field name="tax_diot">tax_16</field>
+            <field name="tax_category_id" eval="2"/>
+        </record>
+        
+        <record id="account_voucher_tax.account_voucher_tax_purchase_iva1067_xacre_retenido" model="account.tax">
+            <field name="tax_diot">tax_ret</field>
+            <field name="tax_category_id" eval="1"/>
+        </record>
+        
+        <record id="account_voucher_tax.account_voucher_tax_purchase_iva10_rete_isr" model="account.tax">
+            <field name="tax_category_id" eval="4"/>
+        </record>
+        
+        <record id="account_voucher_tax.account_voucher_tax_purchase_iva1067_retencion_iva" model="account.tax">
+            <field name="tax_category_id" eval="1"/>
+        </record>
+    </data>
+</openerp>
