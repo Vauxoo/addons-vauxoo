@@ -32,18 +32,19 @@ class account_invoice(osv.Model):
     
     def action_validate_ref_invoice(self, cr, uid, ids, context = None):
         invoice_obj = self.pool.get('account.invoice')
-        invoice_duplicate_ids = {}
+        invoice_duplicate_ids = []
         for invoice in self.browse(cr, uid, ids):
+            invoice_ids = invoice_obj.search(cr, uid, [('supplier_invoice_number', '<>', None), 
+                        ('company_id' , '=', invoice.company_id.id), ('type', '=', invoice.type)])
             if invoice.supplier_invoice_number:
-                invoice_duplicate_ids = invoice_obj.search(cr, uid, [
-                    ('id', '<>', invoice.id),
-                    ('partner_id', '=', invoice.partner_id.id),
-                    ('company_id', '=', invoice.company_id.id),
-                    ('type', '=', invoice.type),
-                    ('supplier_invoice_number', '=', invoice.supplier_invoice_number),
-                    ('state', '<>', 'cancel'),], context=context)
+                for invoice_r in invoice_obj.browse(cr, uid, invoice_ids):
+                    if invoice.id != invoice_r.id and invoice.partner_id.id == \
+                        invoice_r.partner_id.id and invoice.supplier_invoice_number.upper() == \
+                        invoice_r.supplier_invoice_number.upper() and invoice_r.state != 'cancel':
+                            invoice_duplicate_ids.append(invoice_r.id)
             if invoice_duplicate_ids:
-                raise osv.except_osv(_('Invalid Action!'), _('Error can not enter invoices with supplier invoice number duplicate.'))
+                raise osv.except_osv(_('Invalid Action!'), _('Error can not enter invoices with'\
+                    ' supplier invoice number duplicate.'))
         return True
 
     def invoice_validate(self, cr, uid, ids, context=None):
