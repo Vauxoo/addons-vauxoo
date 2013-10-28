@@ -26,13 +26,13 @@
   !context
     'type': 'payment'
 -
-   I create the voucher of payment with values 316.33  
+   I create the voucher of payment
 -
   !record {model: account.voucher, id: account_voucher_voucherfordiot0, view:  account_voucher.view_vendor_payment_form }:
     account_id: account.cash
-    amount: 316.33
     company_id: base.main_company
     journal_id: account.expenses_journal
+    amount: 516.33
     name: 'Voucher for Diot'
     partner_id: l10n_mx_partner_address.res_partner_address_vauxoo_0
     date: !eval time.strftime('%Y-%m-%d')
@@ -40,6 +40,13 @@
     writeoff_acc_id: account.a_expense
     comment: 'Write Off'
     payment_rate_currency_id: base.EUR
+-
+    I check the amount of invoice for release the payment
+-
+  !python {model: account.invoice}: |
+    account_voucher_obj = self.pool.get('account.voucher')
+    amount_total = self.read(cr,uid,[ref('l10n_mx_diot_report.account_invoice_diot_0')], ['amount_total'])[0].get('amount_total')
+    account_voucher_obj.write(cr,uid,[ref('account_voucher_voucherfordiot0')], {'amount': amount_total})
 -
   I check that Initially customer voucher is in the "Draft" state
 -
@@ -65,3 +72,24 @@
   !python {model: account.voucher}: |
     acc_id=self.browse(cr, uid, ref('account_voucher_voucherfordiot0'))
     assert(acc_id.move_id)
+-
+  I create a record to wizard diot.
+-
+  !record {model: account.diot.report, id: wizard_diot_test_0 , view: l10n_mx_diot_report.view_account_diot_report}:
+    company_id: base.main_company
+    entries_to_print: all
+-
+  I create file of DIOT
+-
+  !python {model: account.diot.report}: |
+    import base64
+    import time
+    account_period_obj = self.pool.get('account.period')
+    period_id = account_period_obj.search(cr, uid,[('name','like','%'+time.strftime('%m/%Y')+'%')])
+    if period_id:
+        self.write(cr, uid, [ref('wizard_diot_test_0')], {'period_id' : period_id[0]}) 
+        create_id = self.create_diot(cr, uid, [ref('wizard_diot_test_0')], context=context)
+        data = self.read(cr, uid,[create_id.get('res_id')],['file_csv'])
+        if data:
+            file_data = base64.decodestring(data[0].get('file_csv'))
+            print file_data

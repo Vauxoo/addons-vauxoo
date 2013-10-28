@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
 <openerp>
     <data noupdate="1">
+        
         <record id="account_voucher_tax.account_voucher_tax_purchase_iva16" model="account.tax">
             <field name="tax_category_id" eval="2"/>
         </record>
@@ -25,6 +26,14 @@
         
         <record id="account_voucher_tax.account_voucher_tax_purchase_iva1067_retencion_iva" model="account.tax">
             <field name="tax_category_id" eval="1"/>
+        </record>
+        
+        <record id="account_voucher_tax.account_voucher_tax_purchase_0iva" model="account.tax">
+            <field name="tax_category_id" eval="2"/>
+        </record>
+        
+        <record id="account_voucher_tax.account_voucher_tax_purchase_iva_excento_iva" model="account.tax">
+            <field name="tax_category_id" eval="3"/>
         </record>
     </data>
 </openerp>
