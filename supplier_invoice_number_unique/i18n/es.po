@@ -28,5 +28,5 @@ msgstr "Factura"
 #. module: account_invoice_validate_supplier_invoice_number
 #: code:addons/account_invoice_validate_supplier_invoice_number/model/account_invoice.py:46
 #, python-format
-msgid "Error can not enter invoices with supplier invoice number duplicate."
-msgstr "Error no puedes ingresar facturas con número de factura de proveedor duplicada"
+msgid "Error you can not validate the invoice with supplier invoice number duplicated."
+msgstr "Error no puedes validar facturas con número de factura de proveedor duplicado"

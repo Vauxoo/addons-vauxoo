@@ -43,8 +43,8 @@ class account_invoice(osv.Model):
                         invoice_r.supplier_invoice_number.upper() and invoice_r.state != 'cancel':
                             invoice_duplicate_ids.append(invoice_r.id)
             if invoice_duplicate_ids:
-                raise osv.except_osv(_('Invalid Action!'), _('Error can not enter invoices with'\
-                    ' supplier invoice number duplicate.'))
+                raise osv.except_osv(_('Invalid Action!'), _('Error you can not validate the'\
+                    ' invoice with supplier invoice number duplicated.'))
         return True
 
     def invoice_validate(self, cr, uid, ids, context=None):
