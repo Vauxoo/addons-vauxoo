@@ -43,6 +43,16 @@
             <field name="view_id" ref="account_move_folio_config_tree_view"/>
             <field name="act_window_id" ref="account_move_folio_config_action"/>
         </record>
+
+        <record id="action_account_move_folio_fill_gap" model="ir.actions.act_window">
+            <field name="name">Fill Folio Gaps</field>
+            <field name="res_model">account.move.folio.fill.gap</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_account_move_folio_fill_gap_form"/>
+            <field name="target">new</field>
+        </record>
+
         <menuitem 
             id="move_folio_main_config_menu" 
             name="Entry Folios"
@@ -53,6 +63,11 @@
             id="move_folio_config_menu" 
             parent="move_folio_main_config_menu" 
             action='account_move_folio_config_action'
+            /> 
+        <menuitem 
+            id="account_move_folio_fill_gap_menu" 
+            parent="move_folio_main_config_menu" 
+            action='action_account_move_folio_fill_gap'
             /> 
     </data>
 </openerp>
