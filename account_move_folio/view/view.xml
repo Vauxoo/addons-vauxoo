@@ -101,5 +101,21 @@
                 </form>
             </field>
         </record>
+        <record id="view_account_move_folio_fill_gap_form" model="ir.ui.view">
+            <field name="name">account.move.folio.fill.gap.form</field>
+            <field name="model">account.move.folio.fill.gap</field>
+            <field name="arch" type="xml">
+                <form string="Fill Folio Gaps" version="7.0">
+                    <group string="Are you sure?">
+                        <field name="sure"/>
+                    </group>
+                    <footer>
+                        <button string="Fill Gaps" name="data_save" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+               </form>
+            </field>
+        </record>
    </data>
 </openerp>
