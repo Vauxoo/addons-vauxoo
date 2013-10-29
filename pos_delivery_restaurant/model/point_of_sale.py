@@ -34,10 +34,10 @@ class pos_config(osv.Model):
     _inherit = 'pos.config'
     _description = ('')
     _columns = {
-        'deli_rest':fields.selection([('delivery','Delivery'),('restaurant','Restaurant')],
-            'Delivery or Restaurant?', required=True, help='Is a delivery or restaurant?'), 
+        'deli_rest':fields.selection([('delivery','Delivery'),('restaurant','Restaurant'),('all','All')],
+            'Product Type', required=True, help='Is a delivery or restaurant?'), 
     }
 
     _defaults = {
-        'deli_rest': 'restaurant',
+        'deli_rest': 'all',
     }

@@ -39,7 +39,3 @@ class product_product(osv.Model):
         'delivery':fields.boolean('POS Delivery', help='To be sold in delivery'), 
     }
 
-    _defaults = {
-            'restaurant':True,
-            }
-

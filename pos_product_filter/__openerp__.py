@@ -6,6 +6,7 @@
 #    All Rights Reserved
 ############# Credits #########################################################
 #    Coded by: Yanina Aular <yani@vauxoo.com>
+#              Eduardo Ochoa <eduardo.ochoa@clusterbrands.com.ve> 
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -46,9 +47,7 @@ delivery.
     'test': [],
     'js': [
         'static/src/js/backbone-super-min.js',
-        'static/src/js/db.js',
         'static/src/js/models.js',
-        'static/src/js/widgets.js',
         'static/src/js/main.js', 
         ],
     'active': False,
