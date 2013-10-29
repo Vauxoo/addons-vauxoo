@@ -98,20 +98,14 @@ class update_amount_base_tax_wizard(osv.osv_memory):
             attrs.append(('amount_base', '=', False))
         lines_without_amount = move_line_obj.search(cr, uid, attrs, context=context)
         for move in move_line_obj.browse(cr, uid, lines_without_amount, context=context):
-            amount_tax = move.tax_id_secondary.amount
+            amount_tax = move.tax_id_secondary.tax_category_id.value_tax or move.tax_id_secondary.amount
             amount_base = 0
             if move.debit != 0:
                 amount_base = move.debit
-            if move.credit != 0:
+            elif move.credit != 0:
                 amount_base = move.credit
             if move.tax_id_secondary.amount == 0:
-                invoice_move_ids = invoice_obj.search(cr, uid, [\
-                    ('move_id','=', move.move_id.id)], context=context)
-                for invo in invoice_obj.browse(cr, uid, invoice_move_ids,\
-                    context=context):
-                    for tax_inv in invo.tax_line:
-                        if tax_inv.amount == 0:
-                            amount_base = tax_inv.base_amount
+                amount_base = move.tax_voucher_id and move.tax_voucher_id.amount_base or 0
             if amount_tax != 0:
                 cr.execute("""UPDATE account_move_line
                     SET amount_base = %s

@@ -328,7 +328,6 @@ class account_voucher(osv.Model):
                                     uid, line_tax,
                                     amount_base_tax * factor, reference_amount,
                                     context=context)
-        
         debit_line_vals = {
                     'name': line_tax.name,
                     'quantity': 1,
@@ -343,6 +342,7 @@ class account_voucher(osv.Model):
                     'tax_id': tax_id,
                     'analytic_account_id': acc_a,
                     'date' : date,
+                    'tax_voucher_id' : tax_id,
         }
         credit_line_vals = {
                     'name': line_tax.name,
@@ -359,6 +359,7 @@ class account_voucher(osv.Model):
                     'tax_id': tax_id,
                     'analytic_account_id': acc_a,
                     'date' : date,
+                    'tax_voucher_id' : tax_id,
         }
 
         if type in ('payment','purchase'):
@@ -732,7 +733,8 @@ class account_move_line(osv.Model):
     
     _columns={
         'amount_tax_unround':fields.float('Amount tax undound', digits=(12, 16)),
-        'tax_id': fields.many2one('account.voucher.line.tax', 'Tax')
+        'tax_id': fields.many2one('account.voucher.line.tax', 'Tax'),
+        'tax_voucher_id': fields.many2one('account.voucher.line.tax', 'Tax Voucher'),
         }
 
 

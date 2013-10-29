@@ -35,7 +35,24 @@ class account_account(osv.Model):
         'this field is active, the journal items that used this account '\
         'should have an analytic account'),
     }
-
+    
+class account_invoice_line(osv.Model):
+    _inherit = 'account.invoice.line'
+    
+    _columns = {
+        'analytic_required': fields.boolean('Analytic Required', help='If this field is active, '\
+            'be required fill the field "account analytic"'),
+    }
+    
+    def onchange_account_id(self, cr, uid, ids, product_id=False, partner_id=False,\
+        inv_type=False, fposition_id=False, account_id=False):
+        res = super(account_invoice_line, self).onchange_account_id(cr, uid, ids, product_id,
+            partner_id, inv_type, fposition_id, account_id)
+        account_obj = self.pool.get('account.account')
+        if account_id:
+            analyt_req = account_obj.browse(cr, uid, account_id).analytic_required
+            res['value'].update({'analytic_required': analyt_req})
+        return res
 
 class account_move(osv.Model):
     _inherit = 'account.move'
