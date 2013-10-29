@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="wizard_report_view_inherit">
+            <field name="name">wizard.report.view.inherit</field>
+            <field name="model">wizard.report</field>
+            <field name="inherit_id" ref="account_financial_report.wizard_report_view"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='journal_ledger']" position="after">
+                        <field name="report_format"/>
+                    </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
