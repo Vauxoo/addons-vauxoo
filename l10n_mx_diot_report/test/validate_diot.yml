@@ -122,8 +122,8 @@
                 data_of_diot.update({title : data_split[i]})
                 i+=1
             
-            assert int(data_of_diot.get('value_of_acts_or_activities_paid_at_the_rate_of_16%')) == 100 , 'Wrong, Valor de los actos o actividades pagados a la tasa del 15% ó 16% de IVA not is 100'
-            assert int(data_of_diot.get('value_of_acts_or_activities_paid_at_the_rate_of_11%_VAT')) == 100 , 'Wrong, Valor de los actos o actividades pagados a la tasa del 10% u 11% de IVA not is 100'
-            assert int(data_of_diot.get('value_of_the_other_acts_or_activities_paid_at_the_rate_of_0%_VAT')) == 100 , 'Wrong, Valor de los demás actos o actividades pagados a la tasa del 0% de IVA not is 100'
-            assert int(data_of_diot.get('value_of_acts_or_activities_paid_by_those_who_do_not_pay_the_VAT_(Exempt)')) == 100 , 'Wrong, Valor de los actos o actividades pagados por los que no se pagará el IVA (Exentos) not is 100'
-            assert int(data_of_diot.get('tax Withheld by the taxpayer')) == 11 , 'Wrong, IVA Retenido por el contribuyente not is 11'
+            assert int(data_of_diot.get('value_of_acts_or_activities_paid_at_the_rate_of_16%')) == 100 , 'Wrong, Valor de los actos o actividades pagados a la tasa del 15% ó 16% de IVA is not 100'
+            assert int(data_of_diot.get('value_of_acts_or_activities_paid_at_the_rate_of_11%_VAT')) == 100 , 'Wrong, Valor de los actos o actividades pagados a la tasa del 10% u 11% de IVA is not 100'
+            assert int(data_of_diot.get('value_of_the_other_acts_or_activities_paid_at_the_rate_of_0%_VAT')) == 100 , 'Wrong, Valor de los demás actos o actividades pagados a la tasa del 0% de IVA is not 100'
+            assert int(data_of_diot.get('value_of_acts_or_activities_paid_by_those_who_do_not_pay_the_VAT_(Exempt)')) == 100 , 'Wrong, Valor de los actos o actividades pagados por los que no se pagará el IVA (Exentos) is not100'
+            assert int(data_of_diot.get('tax Withheld by the taxpayer')) == 11 , 'Wrong, IVA Retenido por el contribuyente is not 11'
