@@ -20,7 +20,7 @@
                 <xpath 
                     expr="//field[@name='invoice_line']/tree[@string='Invoice Lines']/field[@name='account_analytic_id']" 
                     position="attributes">
-                        <attribute name="attrs">{'required': [('analytic_required', '=', True),]}</attribute>
+                        <attribute name="attrs">{'required': [('analytic_required', '=', True)]}</attribute>
                 </xpath>
                 <xpath 
                     expr="//field[@name='invoice_line']/tree[@string='Invoice Lines']/field[@name='account_id']" 
@@ -43,7 +43,7 @@
                 <xpath 
                     expr="//field[@name='invoice_line']/tree[@string='Invoice lines']/field[@name='account_analytic_id']" 
                     position="attributes">
-                        <attribute name="attrs">{'required': [('analytic_required', '=', True),]}</attribute>
+                        <attribute name="attrs">{'required': [('analytic_required', '=', True)]}</attribute>
                 </xpath>
                 <xpath 
                     expr="//field[@name='invoice_line']/tree[@string='Invoice lines']/field[@name='account_id']" 
