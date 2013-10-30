@@ -2,7 +2,7 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
@@ -30,7 +30,7 @@
     "author" : "Vauxoo",
     "category" : "Generic Modules",
     "description" : """
-    This module hide fields tax_code_id & tax_amount in view account_move
+    This module changes to invisible the fields tax_code_id and tax_amount in view account_move
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
