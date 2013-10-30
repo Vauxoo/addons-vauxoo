@@ -78,21 +78,19 @@ class facturae_config_settings(osv.osv_memory):
         data = dat and dat[0] or False
         if data:
             email_tmp_id = email_obj.browse(cr, uid, data)
-        else:
-            try:
-                email_tmp_id = self.pool.get('ir.model.data').get_object(cr,
-                                                                         uid, 'l10n_mx_ir_attachment_facturae',
-                                                                         'email_template_template_facturae_mx')
-            except:
-                pass
         return {'email_tmp_id': email_tmp_id and email_tmp_id.id or False,
-                'mail_server_id': email_tmp_id and email_tmp_id.mail_server_id.id or False,
                 'temp_report_id':  email_tmp_id and email_tmp_id.report_template.id or False, }
+    
+    def get_default_mail_server_id(self, cr, uid, fields, context=None):
+        company_id = self.pool.get('res.users')._get_company(cr, uid, context=context)
+        mail_server_obj = self.pool.get('ir.mail_server')
+        mail_server_id = mail_server_obj.search(cr, uid, [('company_id', '=', company_id), ('active', '=', True)], order = 'sequence', limit = 1)
+        return {'mail_server_id': mail_server_id or False}
 
     def create(self, cr, uid, values, context=None):
         confg_id = super(facturae_config_settings, self).create(
             cr, uid, values, context)
-        if values['mail_server_id'] and values['company_id'] and values['email_tmp_id'] and values['temp_report_id']:
+        if values.get('mail_server_id') and values.get('company_id') and values.get('email_tmp_id') and values.get('temp_report_id'):
             email_obj = self.pool.get('email.template')
             actions_obj = self.pool.get('ir.actions.report.xml')
             webkit_header_obj = self.pool.get('ir.header_webkit')
