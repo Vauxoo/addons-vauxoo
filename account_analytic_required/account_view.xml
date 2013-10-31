@@ -9,7 +9,7 @@
             <field name="inherit_id" ref="account.view_invoice_line_tree"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='name']" position="after">
-                    <field name="analytic_required" invisible="0"/>
+                    <field name="analytic_required" invisible="1"/>
                 </xpath>
             </field>
         </record>
