@@ -55,7 +55,7 @@
                     </group>
                 </group>
                 <notebook>
-                    <page string='Invoices'>
+                    <page string='Invoices &amp; Debts'>
                         <field 
                             name='invoice_ids' 
                             domain="[('type','=', type == 'pay' and 'in_invoice' or 'out_invoice'),('state','=','open'),('partner_id','=',partner_id)]"
