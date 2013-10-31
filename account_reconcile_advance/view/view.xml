@@ -71,7 +71,9 @@
                                 ('state','=','valid'),
                                 (type == 'pay' and 'credit' or 'debit','>',0.0),
                                 ]"
-                            attrs="{'readonly':[('state','!=','draft')]}"/>
+                                attrs="{'readonly':[('state','!=','draft')]}"
+                            context="{'has_invoice_ids':invoice_ids}"
+                                />
                     </page>
                     <page string='Advances'>
                         <separator string='Customer Payments' attrs='{"invisible":[("type","!=","rec")]}'/>

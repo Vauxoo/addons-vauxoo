@@ -2,6 +2,36 @@
 from openerp.osv import osv
 from openerp.osv import fields 
 from openerp.tools.translate import _
+import pprint
+
+class account_move_line(osv.Model):
+    _inherit = 'account.move.line'
+    
+
+    def _search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False,
+            access_rights_uid=None):
+
+        move_obj = self.pool.get('account.move.line')
+
+        lista_invoice = context.get('has_invoice_ids', False)
+        lista_invoice = lista_invoice and lista_invoice[0] or []
+        lista_invoice = lista_invoice and lista_invoice[2] or []
+
+        no_incluir = ['id', 'not in', [] ]
+        l_ids = []
+        
+        if lista_invoice:
+            for inv in lista_invoice:
+                moves_up = move_obj.search(cr, uid,[('invoice','=',inv)] )
+                l_ids = l_ids + moves_up
+        
+        no_incluir[2]+=l_ids
+
+        args.append(no_incluir)
+
+        return super(account_move_line, self)._search(cr, uid, args, offset=offset, limit=limit,
+                order=order, context=context,count=count, access_rights_uid=access_rights_uid)
+    
 
 class account_reconcile_advance(osv.Model):
     
@@ -17,8 +47,8 @@ class account_reconcile_advance(osv.Model):
             res.update({'type':'pay'})
     
         return res
-    
-    
+
+
     _columns = {
         'name':fields.char('Name', size=256, help='Name of This Advance Document'), 
         'date':fields.date('Date', help='Document Date'), 
@@ -279,8 +309,8 @@ class account_reconcile_advance(osv.Model):
 #            aml_sum => debit
             if aml_sum:
 #               if some remaining money get around it will not be reconciled
-                aml_brw = aml_obj.browse(cr, uid, used_aml_ids[-1],
-                        context=context)
+                #aml_brw = aml_obj.browse(cr, uid, used_aml_ids[-1],
+                #        context=context)
 #               This should be sent to a method in order to be captured
                 if ara_brw.type == 'pay':
                     acc_id = ara_brw.partner_id.property_account_payable.id
