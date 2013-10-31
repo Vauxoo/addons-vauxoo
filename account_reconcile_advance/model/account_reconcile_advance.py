@@ -12,10 +12,16 @@ class account_move_line(osv.Model):
             access_rights_uid=None):
 
         move_obj = self.pool.get('account.move.line')
+        voucher_obj = self.pool.get('account.voucher')
 
         lista_invoice = context.get('has_invoice_ids', False)
         lista_invoice = lista_invoice and lista_invoice[0] or []
         lista_invoice = lista_invoice and lista_invoice[2] or []
+
+        lista_voucher = context.get('has_voucher_ids', False)
+        lista_voucher = lista_voucher and lista_voucher[0] or []
+        lista_voucher = lista_voucher and lista_voucher[2] or []
+
 
         no_incluir = ['id', 'not in', [] ]
         l_ids = []
@@ -25,6 +31,13 @@ class account_move_line(osv.Model):
                 moves_up = move_obj.search(cr, uid,[('invoice','=',inv)] )
                 l_ids = l_ids + moves_up
         
+        if lista_voucher:
+            for vou in lista_voucher:
+                vouchers_up = voucher_obj.browse(cr, uid,vou, context=context)
+                mv = vouchers_up.move_id.id
+                moves_up = move_obj.search(cr, uid,[('move_id','=',mv)] )
+                l_ids = l_ids + moves_up
+
         no_incluir[2]+=l_ids
 
         args.append(no_incluir)

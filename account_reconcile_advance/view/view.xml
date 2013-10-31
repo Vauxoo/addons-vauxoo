@@ -101,7 +101,10 @@
                                 ('state','=','valid'),
                                 (type == 'pay' and 'debit' or 'credit','>',0.0),
                                 ]"
-                            attrs="{'readonly':[('state','!=','draft')]}"/>
+                                attrs="{'readonly':[('state','!=','draft')]}"
+                            context="{'has_voucher_ids':voucher_ids}"
+                                
+                                />
                     </page>
                     <page string='Other Info'>
                         <group col='4'>
