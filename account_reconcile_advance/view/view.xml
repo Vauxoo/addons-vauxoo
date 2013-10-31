@@ -56,11 +56,15 @@
                 </group>
                 <notebook>
                     <page string='Invoices &amp; Debts'>
+                        <separator string='Customer Invoices' attrs='{"invisible":[("type","!=","rec")]}'/>
+                        <separator string='Supplier Invoices' attrs='{"invisible":[("type","!=","pay")]}'/>
                         <field 
                             name='invoice_ids' 
                             domain="[('type','=', type == 'pay' and 'in_invoice' or 'out_invoice'),('state','=','open'),('partner_id','=',partner_id)]"
                             nolabel='1'
                             attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <separator string='Customer Debts' attrs='{"invisible":[("type","!=","rec")]}'/>
+                        <separator string='Supplier Debts' attrs='{"invisible":[("type","!=","pay")]}'/>
                         <field name='ai_aml_ids'
                                nolabel='1'
                                invisible='0'
