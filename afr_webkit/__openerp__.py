@@ -24,14 +24,14 @@
 ###############################################################################
 
 {
-    'name': 'Account Financial Report Webkit',
+    'name': 'AFR Webkit',
     'version': '1.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
     'category': 'Accounting',
     'description': '''
-Account Financial Report Webkit
-===================================
+AFR Webkit
+==========
 
 Account Financial Report Reports on Webkit
 
