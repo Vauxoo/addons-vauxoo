@@ -19,7 +19,6 @@
             <field name="inherit_id" ref="project_long_term.view_phase_task_form2"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='phase_id']" position="attributes">
-                    <attribute name="widget">selection</attribute>
                     <attribute name="domain">[('state','&lt;&gt;','cancelled'),('state','&lt;&gt;','done')]</attribute>
                 </xpath>
             </field>
