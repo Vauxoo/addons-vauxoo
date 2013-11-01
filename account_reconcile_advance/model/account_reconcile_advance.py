@@ -22,16 +22,17 @@ class account_move_line(osv.Model):
         lista_voucher = lista_voucher and lista_voucher[0] or []
         lista_voucher = lista_voucher and lista_voucher[2] or []
 
-
         no_incluir = ['id', 'not in', [] ]
         l_ids = []
         
         if lista_invoice:
+            context.pop('has_invoice_ids') 
             for inv in lista_invoice:
                 moves_up = move_obj.search(cr, uid,[('invoice','=',inv)] )
                 l_ids = l_ids + moves_up
         
         if lista_voucher:
+            context.pop('has_voucher_ids') 
             for vou in lista_voucher:
                 vouchers_up = voucher_obj.browse(cr, uid,vou, context=context)
                 mv = vouchers_up.move_id.id
