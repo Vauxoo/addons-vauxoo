@@ -66,7 +66,7 @@ class account_move(osv.Model):
         for move in self.browse(cr, uid, ids, context=context):
             for line in move.line_id:
                 analytic_st = line.account_id.analytic_required
-                if analytic_st:
+                if analytic_st and line.debit + line.credit > 0:
                     analytic_acc_move = line.analytic_account_id
                     if not analytic_acc_move:
                         moves_without_analytic += '\n' + line.name
