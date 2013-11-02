@@ -145,9 +145,13 @@ class account_reconcile_advance(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         ara_brw = self.browse(cr, uid, ids[0], context=context)
         res = []
-        res.append(ara_brw.invoice_ids and True or False)
-        res.append(ara_brw.voucher_ids and True or ara_brw.av_aml_ids and True\
+        res.append( (ara_brw.invoice_ids or ara_brw.ai_aml_ids) and True or False)
+        res.append( (ara_brw.voucher_ids or ara_brw.av_aml_ids) and True or ara_brw.av_aml_ids and True\
                 or False)
+
+        #import pdb
+        #pdb.set_trace()
+
         if all(res):
             return True
         else:
@@ -164,27 +168,40 @@ class account_reconcile_advance(osv.Model):
         am_obj = self.pool.get('account.move')
         res = {} 
 
+        #import pdb
+        #pdb.set_trace()
+
+        #El documento con los datos a conciliar
         ara_brw = self.browse(cr, uid, ids[0], context=context)
 
+        #Se preparan los valores para el account.move que se va a crear
         am_vals = am_obj.account_move_prepare(cr, uid, ara_brw.journal_id.id,
                 date=ara_brw.date_post, ref=ara_brw.name,
                 company_id=ara_brw.company_id.id, context=context)
+        
+        #Se crea el acocunt.move
         am_id = am_obj.create(cr, uid, am_vals, context=context)
 
+        #Se obtienen las facturas incluidas en la conciliacion, las facturas (deudas)
         invoice_ids = [inv.id for inv in ara_brw.invoice_ids]
         invoice_ids = inv_obj.search(cr, uid, [('id','in',invoice_ids)],
                 order='date_due asc', context=context)
         
+        #Se obtienen los asientos contables (deudores)
         ai_aml_ids = ara_brw.ai_aml_ids and [k.id for k in ara_brw.ai_aml_ids] or []
+        
         av_aml_ids = []
+        #Se obtienen los asientos contables de los anticipos (vouchers, credito)
         for av_brw in ara_brw.voucher_ids:
             av_aml_ids += [l.id for l in av_brw.move_ids if l.account_id.type \
                     == (ara_brw.type == 'pay' and 'payable' or 'receivable') \
                     and not l.reconcile_id and not l.reconcile_partial_id]
 
+        #Se unen los asientos contables de los anticipos con los asientos contables escogidos man.
         av_aml_ids += ara_brw.av_aml_ids and [l.id for l in ara_brw.av_aml_ids] or []
         av_aml_ids = list(set(av_aml_ids))
 
+        #Se ordenan en forma ascendente 
         av_aml_ids = aml_obj.search(cr, uid, [('id','in',av_aml_ids)],
                 order='date asc', context=context)
 
