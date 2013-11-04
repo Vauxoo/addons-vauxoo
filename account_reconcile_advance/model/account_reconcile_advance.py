@@ -212,8 +212,6 @@ class account_reconcile_advance(osv.Model):
         first_time = True
         inv_flag = True
         aml2_brw = None; account_id = False
-        import pdb
-        pdb.set_trace()
 
         inv_brw = None
         aml2_brw = None
@@ -307,7 +305,6 @@ class account_reconcile_advance(osv.Model):
                     account_id=aml_brw.account_id.id,
                     am_id=am_id, context=context),aml_brw.id])
         
-        pdb.set_trace()
         
         for line_pair in adv_2_rec+lines_2_rec:
             if not line_pair: continue
