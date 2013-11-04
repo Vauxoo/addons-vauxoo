@@ -149,8 +149,6 @@ class account_reconcile_advance(osv.Model):
         res.append( (ara_brw.voucher_ids or ara_brw.av_aml_ids) and True or ara_brw.av_aml_ids and True\
                 or False)
 
-        #import pdb
-        #pdb.set_trace()
 
         if all(res):
             return True
@@ -167,9 +165,6 @@ class account_reconcile_advance(osv.Model):
         aml_obj = self.pool.get('account.move.line')
         am_obj = self.pool.get('account.move')
         res = {} 
-
-        #import pdb
-        #pdb.set_trace()
 
         #El documento con los datos a conciliar
         ara_brw = self.browse(cr, uid, ids[0], context=context)
@@ -216,162 +211,47 @@ class account_reconcile_advance(osv.Model):
         lines_2_par = []
         first_time = True
         inv_flag = True
+        aml2_brw = None; account_id = False
+        import pdb
+        pdb.set_trace()
+
+        credit_or_debit = ara_brw.type == 'pay' and 'debit' or 'credit'
 
         while (invoice_ids or ai_aml_ids or inv_sum) and (av_aml_ids or aml_sum):
-#           Get money to pay debts. Whenever we are cashless or our debts are
-#           greater than the money we have: Use the ATM. And while there is
-#           money
-            while (aml_sum == 0.0 or inv_sum > aml_sum) and av_aml_ids:
-                aml_brw = aml_obj.browse(cr, uid, av_aml_ids.pop(0), context=context)
-                aml_sum += aml_brw[ara_brw.type == 'pay' and 'debit' or 'credit']
-                aml_grn_sum += aml_brw[ara_brw.type == 'pay' and 'debit' or 'credit']
-#               gruping by account_id should be done here            
-            if invoice_ids:
-    #           Let us pick our first debt
-                if not inv_sum and first_time:
-                    inv_brw = inv_obj.browse(cr, uid, invoice_ids.pop(0), context=context)
-    #               BE AWARE MULTICURRENCY MISSING HERE
-                    inv_sum = inv_brw.residual
-                    first_time = False
-
-    #           While we have plenty of money to pay our debts and there are debts
-    #           to pay. Let us pay them!
-                while inv_sum <= aml_sum and inv_sum:
-    #               Let us spend our money
-                    aml_sum -= inv_sum
-    #               BE AWARE MULTICURRENCY MISSING HERE
-                    res[inv_brw.id] = inv_sum
-                    inv_sum = 0.0 
-
-                    get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
-                            self.invoice_credit_lines
-    #               Creates its own mirror and fully reconciliates them
-                    payid = get_aml(cr, uid, ids,
-                            inv_brw.residual, account_id=inv_brw.account_id.id,
-                            am_id=am_id, context=context)
-
-                    iamls = [line.id for line in inv_brw.move_id.line_id if
-                            line.account_id.type == (ara_brw.type == 'pay' and 'payable' or 'receivable')]
-                    pamls = [line.id for line in inv_brw.payment_ids]
-
-                    lines_2_rec.append(iamls+pamls+[payid])
-
-    #               Pick another debt to pay if apply. Only if there is cash or
-    #               money to pick from the ATM
-                    if (aml_sum or av_aml_ids) and invoice_ids:
-                        inv_brw = inv_obj.browse(cr, uid, invoice_ids.pop(0), context=context)
-    #                   BE AWARE MULTICURRENCY MISSING HERE
-                        inv_sum = inv_brw.residual
-            elif ai_aml_ids:
-                inv_flag = False
-    #           Let us pick our first debt
-                if not inv_sum and first_time:
-                    aml2_brw = aml_obj.browse(cr, uid, ai_aml_ids.pop(0), context=context)
-    #               BE AWARE MULTICURRENCY MISSING HERE
-                    inv_sum = aml2_brw[ara_brw.type == 'pay' and 'credit' or 'debit']
-                    first_time = False
-
-    #           While we have plenty of money to pay our debts and there are debts
-    #           to pay. Let us pay them!
-                while inv_sum <= aml_sum and inv_sum:
-    #               Let us spend our money
-                    aml_sum -= inv_sum
-    #               BE AWARE MULTICURRENCY MISSING HERE
-                    res[inv_brw.id] = inv_sum
-                    inv_sum = 0.0 
-
-                    get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
-                            self.invoice_credit_lines
-    #               Creates its own mirror and fully reconciliates them
-                    payid = get_aml(cr, uid, ids,
-                            aml2_brw[ara_brw.type == 'pay' and 'credit' or 'debit'], account_id=aml2_brw.account_id.id,
-                            am_id=am_id, context=context)
-
-
-                    lines_2_rec.append([payid, aml2_brw.id])
-
-    #               Pick another debt to pay if apply. Only if there is cash or
-    #               money to pick from the ATM
-                    if (aml_sum or av_aml_ids) and ai_aml_ids:
-                        aml2_brw = aml_obj.browse(cr, uid, ai_aml_ids.pop(0), context=context)
-        #               BE AWARE MULTICURRENCY MISSING HERE
-                        inv_sum = aml2_brw[ara_brw.type == 'pay' and 'credit' or 'debit']
-#           ATM has run out of cash however we still have cash though we are
-#           not able to fully pay our debts. Let us use the remaining
-            if not av_aml_ids and aml_sum and inv_sum >= aml_sum:
-#               Payments are over. Last line to invoice is made with the
-#               aml_sum
-                get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
-                        self.invoice_credit_lines
-                if inv_flag:
-                    payid = get_aml(cr, uid, ids, aml_sum,
-                            account_id=inv_brw.account_id.id, am_id=am_id,
-                            context=context)
-                    iamls = [line.id for line in inv_brw.move_id.line_id if
-                            line.account_id.type == (ara_brw.type == 'pay' and 'payable' or 'receivable')]
-                    pamls = [line.id for line in inv_brw.payment_ids]
-
-                    lines_2_par.append(iamls+pamls+[payid])
-    #               BE AWARE MULTICURRENCY MISSING HERE
-                    res[inv_brw.id] = aml_sum
-                    aml_sum = 0.0
-
-                else:
-                    payid = get_aml(cr, uid, ids, aml_sum,
-                            account_id=aml2_brw.account_id.id, am_id=am_id,
-                            context=context)
-
-                    lines_2_par.append([payid, aml2_brw.id])
-    #               BE AWARE MULTICURRENCY MISSING HERE
-                    #res[inv_brw.id] = aml_sum
-                    aml_sum = 0.0
-
-        if av_aml_ids: 
-#           spare aml's. We will do nothing with these lines
-#           these were the advances we did not use
-            pass
-        used_aml_ids = list(set(mem_av_aml_ids) - set(av_aml_ids)) # used lines
-        adv_2_rec = []
-        if used_aml_ids: # used lines
             
-#            when reconciling among used_aml_ids, those ids should be grouped by
-#            account_id, take care of the last used_aml_ids, because is with this
-#            that the aml_sum (debit) should be created.
-#            aml_grn_sum => credit
-#            aml_sum => debit
-            if aml_sum:
-#               if some remaining money get around it will not be reconciled
-                #aml_brw = aml_obj.browse(cr, uid, used_aml_ids[-1],
-                #        context=context)
-#               This should be sent to a method in order to be captured
-                if ara_brw.type == 'pay':
-                    acc_id = ara_brw.partner_id.property_account_payable.id
-                else:
-                    acc_id = ara_brw.partner_id.property_account_receivable.id
-                get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
-                        self.invoice_credit_lines
+            while(aml_sum == 0.0 or inv_sum > aml_sum) and av_aml_ids:
+                aml_brw = aml_obj.browse(cr, uid, av_aml_ids.pop(0), context=context)
+                aml_sum += aml_brw[credit_or_debit]
+            
+            while inv_sum and inv_sum <= aml_sum:
+                aml_sum -= inv_sum
+                inv_sum = 0.0
 
-                get_aml(cr, uid, ids, aml_sum,
-                        account_id=acc_id,
-                        am_id=am_id, context=context)
+            if invoice_ids:
+                if not inv_sum:
+                    inv_brw = inv_obj.browse(cr, uid, invoice_ids.pop(0), context=context)
+                    inv_sum = inv_brw.residual
+                while inv_sum and inv_sum <= aml_sum:
+                    aml_sum -= inv_sum
+                    inv_sum = 0.0
+            
+            elif ai_aml_ids:
+                if not inv_sum:
+                    aml2_brw = aml_obj.browse(cr, uid, ai_aml_ids.pop(0), context=context)
+                    inv_sum = aml2_brw[credit_or_debit]
+                while inv_sum and inv_sum <= aml_sum:
+                    aml_sum -= inv_sum
+                    inv_sum = 0.0
 
-            get_aml = ara_brw.type == 'pay' and self.invoice_credit_lines or \
-                    self.invoice_debit_lines
-            for aml_brw in aml_obj.browse(cr, uid, used_aml_ids, context=context):
-                adv_2_rec.append([get_aml(cr, uid, ids,
-                    aml_brw[ara_brw.type == 'pay' and 'debit' or 'credit'],
-                    account_id=aml_brw.account_id.id,
-                    am_id=am_id, context=context),aml_brw.id])
-        
-        for line_pair in adv_2_rec+lines_2_rec:
-            if not line_pair: continue
-            aml_obj.reconcile(
-                cr, uid, line_pair, 'manual', context=context)
-        for line_pair in lines_2_par:
-            if not line_pair: continue
-            aml_obj.reconcile_partial(
-                cr, uid, line_pair, 'manual', context=context)
-        ara_brw.write({'move_id':am_id, 'state':'done'})
+                    
+
+            #elif ai_aml_ids:
+
+
+
+        print aml_sum 
+        print inv_sum 
+            
         return res
     
 class account_voucher(osv.Model):
