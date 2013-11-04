@@ -2,10 +2,10 @@
 # -*- encoding: utf-8 -*-
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) OpenERP Venezuela (http://www.vauxoo.com).
+#    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Yanina Aular <yanina.aular@vauxoo.com
+#    Coded by: Yanina Aular <yani@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -23,21 +23,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import fields, osv, orm
-from openerp.tools.translate import _
-from openerp import tools
-
-class pos_config(osv.Model):
-    """
-    To add a field which determine if the point of sale is a restaurant or delivery
-    """
-    _inherit = 'pos.config'
-    _description = ('')
-    _columns = {
-        'deli_rest':fields.selection([('delivery','Delivery'),('restaurant','Restaurant'),('all','All')],
-            'Product Type', required=True, help='Is a delivery or restaurant?'), 
-    }
-
-    _defaults = {
-        'deli_rest': 'all',
-    }
+import product
