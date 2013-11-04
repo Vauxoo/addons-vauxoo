@@ -205,6 +205,7 @@ class account_reconcile_advance(osv.Model):
         av_aml_ids = aml_obj.search(cr, uid, [('id','in',av_aml_ids)],
                 order='date asc', context=context)
 
+
         # In the future this should be like this
         # while (invoice_ids or ai_aml_ids) and av_aml_ids:
         inv_sum = 0.0
@@ -297,7 +298,7 @@ class account_reconcile_advance(osv.Model):
                         inv_sum = aml2_brw[ara_brw.type == 'pay' and 'credit' or 'debit']
 #           ATM has run out of cash however we still have cash though we are
 #           not able to fully pay our debts. Let us use the remaining
-            if not av_aml_ids and aml_sum and inv_sum > aml_sum:
+            if not av_aml_ids and aml_sum and inv_sum >= aml_sum:
 #               Payments are over. Last line to invoice is made with the
 #               aml_sum
                 get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
