@@ -219,33 +219,7 @@ class account_reconcile_advance(osv.Model):
         aml2_brw = None
         while (invoice_ids or ai_aml_ids or inv_sum) and (av_aml_ids or aml_sum):
             
-            while(aml_sum == 0.0 or inv_sum > aml_sum) and av_aml_ids:
-                aml_brw = aml_obj.browse(cr, uid, av_aml_ids.pop(0), context=context)
-                aml_sum += aml_brw[ara_brw.type == 'pay' and 'debit' or 'credit']
-            
-            while inv_sum and inv_sum <= aml_sum:
-                if inv_brw:
-                    aml_sum -= inv_sum
-                    get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
-                    self.invoice_credit_lines
-                    payid = get_aml(cr, uid, ids, inv_brw.residual, account_id = inv_brw.account_id.id,
-                            am_id=am_id, context=context)
-                    inv_sum = 0.0
-                    iamls = [line.id for line in inv_brw.move_id.line_id if
-                            line.account_id.type == (ara_brw.type == 'pay' and 'payable' or
-                                'receivable')]
-                    pamls = [line.id for line in inv_brw.payment_ids]
-                    lines_2_rec.append(iamls + pamls + [payid])
-                    
-                elif aml2_brw:
-                    aml_sum -= inv_sum
-                    get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
-                    self.invoice_credit_lines
-                    payid = get_aml(cr, uid, ids, inv_sum, account_id = aml2_brw.account_id.id,
-                            am_id=am_id, context=context)
-                    inv_sum = 0.0
-                    lines_2_rec.append([payid, aml2_brw.id])
-
+            #Tomar factura o aml mas viejo
             if invoice_ids:
                 if not inv_sum:
                     inv_brw = inv_obj.browse(cr, uid, invoice_ids.pop(0), context=context)
@@ -255,10 +229,97 @@ class account_reconcile_advance(osv.Model):
                 if not inv_sum:
                     aml2_brw = aml_obj.browse(cr, uid, ai_aml_ids.pop(0), context=context)
                     inv_sum = aml2_brw[ara_brw.type == 'pay' and 'credit' or 'debit']
+            
+            #Agarrar dinero mas viejo 
+            while(aml_sum == 0.0 or inv_sum > aml_sum) and av_aml_ids:
+                aml_brw = aml_obj.browse(cr, uid, av_aml_ids.pop(0), context=context)
+                aml_sum += aml_brw[ara_brw.type == 'pay' and 'debit' or 'credit']
+                aml_grn_sum += aml_sum
 
+            while inv_sum and inv_sum <= aml_sum:
+
+                if inv_brw:
+                    aml_sum -= inv_sum
+                    get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
+                    self.invoice_credit_lines
+                    payid = get_aml(cr, uid, ids, inv_sum, account_id = inv_brw.account_id.id,
+                            am_id=am_id, context=context)
+                    inv_sum = 0.0
+                    iamls = [line.id for line in inv_brw.move_id.line_id if
+                            line.account_id.type == (ara_brw.type == 'pay' and 'payable' or
+                                'receivable')]
+                    pamls = [line.id for line in inv_brw.payment_ids]
+                    lines_2_rec.append(iamls + pamls + [payid])
+                    inv_brw =None
                     
+                elif aml2_brw:
+                    inv_flag = False
+                    aml_sum -= inv_sum
+                    get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
+                    self.invoice_credit_lines
+                    payid = get_aml(cr, uid, ids, inv_sum, account_id = aml2_brw.account_id.id,
+                            am_id=am_id, context=context)
+                    inv_sum = 0.0
+                    lines_2_rec.append([payid, aml2_brw.id])
+                    aml2_brw =None
 
+            if not av_aml_ids and aml_sum and inv_sum > aml_sum:
+                get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
+                self.invoice_credit_lines
+
+                if inv_brw:
+                    payid = get_aml(cr, uid, ids, aml_sum, account_id = inv_brw.account_id.id,
+                            am_id=am_id, context=context)
+                    iamls = [line.id for line in inv_brw.move_id.line_id if
+                            line.account_id.type == (ara_brw.type == 'pay' and 'payable' or
+                                'receivable')]
+                    pamls = [line.id for line in inv_brw.payment_ids]
+                    lines_2_par.append(iamls + pamls + [payid])
+                else:
+                    payid = get_aml(cr, uid, ids, aml_sum, account_id = aml2_brw.account_id.id,
+                            am_id=am_id, context=context)
+                    lines_2_par.append([payid, aml2_brw.id])
+                    
+                aml_sum = 0.0
+                 
+        if av_aml_ids:
+            pass
+
+        used_aml_ids = list( set(mem_av_aml_ids) - set(av_aml_ids) )
+
+        adv_2_rec = []
+        if used_aml_ids:
+            
+            if aml_sum:
+                if ara_brw.type == 'pay':
+                    acc_id = ara_brw.partner_id.property_account_payable.id
+                else:
+                    acc_id = ara_brw.partner_id.property_account_receivable.id
+                get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
+                    self.invoice_credit_lines
+                get_aml(cr, uid, ids, aml_sum, account_id=acc_id, am_id=am_id, context=context)
+            
+            get_aml = ara_brw.type == 'pay' and self.invoice_credit_lines or \
+                self.invoice_debit_lines
+            for aml_brw in aml_obj.browse(cr, uid, used_aml_ids, context=context):
+                adv_2_rec.append([get_aml(cr, uid, ids,
+                    aml_brw[ara_brw.type == 'pay' and 'debit' or 'credit'],
+                    account_id=aml_brw.account_id.id,
+                    am_id=am_id, context=context),aml_brw.id])
+        
         pdb.set_trace()
+        
+        for line_pair in adv_2_rec+lines_2_rec:
+            if not line_pair: continue
+            aml_obj.reconcile(
+                cr, uid, line_pair, 'manual', context=context)
+        
+        for line_pair in lines_2_par:
+            if not line_pair: continue
+            aml_obj.reconcile_partial(
+                cr, uid, line_pair, 'manual', context=context)
+        ara_brw.write({'move_id':am_id, 'state':'done'})
+
 
 
 
