@@ -215,37 +215,50 @@ class account_reconcile_advance(osv.Model):
         import pdb
         pdb.set_trace()
 
-        credit_or_debit = ara_brw.type == 'pay' and 'debit' or 'credit'
-
+        inv_brw = None
+        aml2_brw = None
         while (invoice_ids or ai_aml_ids or inv_sum) and (av_aml_ids or aml_sum):
             
             while(aml_sum == 0.0 or inv_sum > aml_sum) and av_aml_ids:
                 aml_brw = aml_obj.browse(cr, uid, av_aml_ids.pop(0), context=context)
-                aml_sum += aml_brw[credit_or_debit]
+                aml_sum += aml_brw[ara_brw.type == 'pay' and 'debit' or 'credit']
             
             while inv_sum and inv_sum <= aml_sum:
-                aml_sum -= inv_sum
-                inv_sum = 0.0
+                if inv_brw:
+                    aml_sum -= inv_sum
+                    get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
+                    self.invoice_credit_lines
+                    payid = get_aml(cr, uid, ids, inv_brw.residual, account_id = inv_brw.account_id.id,
+                            am_id=am_id, context=context)
+                    inv_sum = 0.0
+                    iamls = [line.id for line in inv_brw.move_id.line_id if
+                            line.account_id.type == (ara_brw.type == 'pay' and 'payable' or
+                                'receivable')]
+                    pamls = [line.id for line in inv_brw.payment_ids]
+                    lines_2_rec.append(iamls + pamls + [payid])
+                    
+                elif aml2_brw:
+                    aml_sum -= inv_sum
+                    get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
+                    self.invoice_credit_lines
+                    payid = get_aml(cr, uid, ids, inv_sum, account_id = aml2_brw.account_id.id,
+                            am_id=am_id, context=context)
+                    inv_sum = 0.0
+                    lines_2_rec.append([payid, aml2_brw.id])
 
             if invoice_ids:
                 if not inv_sum:
                     inv_brw = inv_obj.browse(cr, uid, invoice_ids.pop(0), context=context)
                     inv_sum = inv_brw.residual
-                while inv_sum and inv_sum <= aml_sum:
-                    aml_sum -= inv_sum
-                    inv_sum = 0.0
             
             elif ai_aml_ids:
                 if not inv_sum:
                     aml2_brw = aml_obj.browse(cr, uid, ai_aml_ids.pop(0), context=context)
-                    inv_sum = aml2_brw[credit_or_debit]
-                while inv_sum and inv_sum <= aml_sum:
-                    aml_sum -= inv_sum
-                    inv_sum = 0.0
+                    inv_sum = aml2_brw[ara_brw.type == 'pay' and 'credit' or 'debit']
 
                     
 
-            #elif ai_aml_ids:
+        pdb.set_trace()
 
 
 
