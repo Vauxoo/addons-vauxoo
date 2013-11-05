@@ -555,6 +555,9 @@ class account_voucher_line(osv.Model):
     
     def onchange_amount(self, cr, uid, ids, amount, voucher_id, move_line_id,\
         amount_original, context=None):
+        if not context:
+            context = {}
+        currency_obj = self.pool.get('res.currency')
         voucher_obj = self.pool.get('account.voucher')
         move_obj = self.pool.get('account.move.line')
         invoice_obj = self.pool.get('account.invoice')
@@ -567,6 +570,7 @@ class account_voucher_line(osv.Model):
         if voucher_id:
             current_currency = voucher_obj._get_current_currency(cr, uid,\
                 voucher_id, context=context)
+            voucher = voucher_obj.browse(cr, uid, voucher_id, context=context)
         else:
             current_currency = company_obj.browse(cr, uid, company_user,\
                 context=context).currency_id.id
@@ -609,7 +613,7 @@ class account_voucher_line(osv.Model):
                                 invoice.currency_id.id, current_currency,\
                                 float('%.*f' % (2, base_amount)), round=False,\
                                 context=context)
-                            context['date']=invoice.date_invoice
+                            context['date'] = invoice.date_invoice
                             credit_orig=currency_obj.compute(cr, uid,\
                                 current_currency,company_currency,\
                                 float('%.*f' % (2,credit_amount)),\
@@ -624,21 +628,23 @@ class account_voucher_line(osv.Model):
                                 company_currency,current_currency, float(\
                                 '%.*f' % (2,(credit_orig-credit_diff))),\
                                 round=False, context=context)
-                            if credit_orig>credit_diff:
-                                if voucher.type=='receipt':
-                                    diff_account_id=tax.tax_id.\
-                                    account_expense_voucher_id.id
+                            acc_expense_voucher_id = tax and tax.tax_id and\
+                                    tax.tax_id.account_expense_voucher_id and\
+                                    tax.tax_id.account_expense_voucher_id.id or False
+                            acc_income_voucher_id = tax and tax.tax_id and\
+                                        tax.tax_id.account_income_voucher_id and\
+                                        tax.tax_id.account_income_voucher_id.id or False
+                            if credit_orig > credit_diff:
+                                if voucher.type == 'receipt':
+                                    diff_account_id = acc_expense_voucher_id
                                 else:
-                                    diff_account_id=tax.tax_id.\
-                                    account_income_voucher_id.id
-                            if credit_orig<credit_diff:
+                                    diff_account_id = acc_income_voucher_id
+                            elif credit_orig < credit_diff:
                                 if voucher.type=='receipt':
-                                    diff_account_id=tax.tax_id.\
-                                    account_income_voucher_id.id
+                                    diff_account_id = acc_income_voucher_id
                                 else:
-                                    diff_account_id=tax.tax_id.\
-                                    account_expense_voucher_id.id
-                        debit_amount=0.0
+                                    diff_account_id = acc_expense_voucher_id
+                        debit_amount = 0.0
                         move_line_id2 = False
                         line_ids = move_obj.browse(cr, uid, move_line_id,\
                             context=context).move_id.line_id

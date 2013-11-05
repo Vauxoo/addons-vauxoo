@@ -74,6 +74,7 @@
                     </thead>
                      
                     <tbody>
+                        <%tot_not_due = tot_01to30 = tot_31to60 = tot_61to90 = tot_91to120 = tot_121togr = tot_total = 0%>
                         %for line in obj.partner_line_ids:
                             <tr class="prueba" >
                                 <td class="celdaLineDataTitulo" width="30%">
@@ -101,18 +102,40 @@
                                     ${line.total}
                                 </td>
                             </tr>
+                            <%
+                            tot_not_due += line.not_due
+                            tot_01to30 += line.days_due_01to30
+                            tot_31to60 += line.days_due_31to60
+                            tot_61to90 += line.days_due_61to90
+                            tot_91to120 += line.days_due_91to120
+                            tot_121togr += line.days_due_121togr
+                            tot_total += line.total
+                            %>
                         %endfor
-                            
-    <!--
-                            Aquí va la celda de los totales la vemos si la ponemos con un ciclo por lo pronto te dejo 
-                            El esqueleto de esos campos
-    -->
-                        <tr>
-                            %for i in range(1,9):
-                                <td class="celdaTotalTotales" >${_('$')}
+                        <tr class="prueba">
+                                <td class="celdaGrandTotal" width="30%">${_('Total')}</td>
+                                <td class="celdaGrandTotal" width="10%">
+                                    ${tot_not_due}
                                 </td>
-                            %endfor
-                        </tr>
+                                <td class="celdaGrandTotal" width="10%">
+                                    ${tot_01to30}
+                                </td>
+                                <td class="celdaGrandTotal" width="10%">
+                                    ${tot_31to60}
+                                </td>
+                                <td class="celdaGrandTotal" width="10%">
+                                    ${tot_61to90}
+                                </td>
+                                <td class="celdaGrandTotal" width="10%">
+                                    ${tot_91to120}
+                                </td>
+                                <td class="celdaGrandTotal" width="10%">
+                                    ${tot_121togr}
+                                </td>
+                                <td class="celdaGrandTotal" width="10%">
+                                    ${tot_total}
+                                </td>
+                            </tr>
                     </tbody>
                 </table>
             %endif
@@ -151,6 +174,7 @@
             %>
             %if obj.type == "by_document":
                 %if not group_user:
+                    <%tot_not_due = tot_01to30 = tot_31to60 = tot_61to90 = tot_91to120 = tot_121togr = tot_residual= 0%>
                     %for partner in get_dict_lines_by_partner(obj.partner_doc_ids):
                         <%
                         lines_partner = get_dict_lines_by_partner(obj.partner_doc_ids).get(partner, False)
@@ -168,8 +192,9 @@
                                     <tr>
                                         <th class="celdaTituloTabla" style="text-align:left;" width="20%">${_('Document')}</th>
                                         <th class="celdaTituloTabla" style="text-align:left;" width="10%">${_('Type')}</th>
-                                        <th class="celdaTituloTabla" style="text-align:left;" width="10%">${_('Due Days')}</th>
-                                        <th class="celdaTituloTabla" style="text-align:left;" width="10%">${_('Residual')}</th>
+                                        <th class="celdaTituloTabla" style="text-align:left;" width="6%">${_('Not Due')}</th>
+                                        <th class="celdaTituloTabla" style="text-align:left;" width="6%">${_('Due Days')}</th>
+                                        <th class="celdaTituloTabla" style="text-align:left;" width="8%">${_('Residual')}</th>
                                         <% form = data['form']%>
                                         %for i in range (4,-1,-1):
                                             <th class="celdaTituloTabla" style="text-align:center;">${form.get('%i'%i).get('name')}</th>
@@ -177,13 +202,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <%
-                                    to0130 = 0
-                                    to3160 = 0
-                                    to6190 = 0
-                                    to91120 = 0
-                                    to121 = 0
-                                    residual = 0%>
+                                    <%to0130 = to3160 = to6190 = to91120 = to121 = residual = to_not_due = 0%>
                                     %for line in lines_partner:
                                         <%
                                         type = ''
@@ -197,6 +216,7 @@
                                         elif line.document_id._name == 'account.move.line':
                                             type = 'Journal Entry Line'
                                             document = line.document_id.name
+                                        to_not_due += line.not_due
                                         to0130 += line.days_due_01to30
                                         to3160 += line.days_due_31to60
                                         to6190 += line.days_due_61to90
@@ -211,10 +231,13 @@
                                             <td class="celdaLineData" width="10%">
                                                 ${type}
                                             </td>
-                                            <td class="celdaLineData" style="text-align:center;" width="10%">
+                                            <td class="celdaLineData" style="text-align:center;" width="6%">
+                                                ${line.not_due}
+                                            </td>
+                                            <td class="celdaLineData" style="text-align:center;" width="6%">
                                                 ${line.due_days}
                                             </td>
-                                            <td class="celdaLineData" width="10%">
+                                            <td class="celdaLineData" width="8%">
                                                 ${line.residual}
                                             </td>
                                             <td class="celdaLineData" width="10%">
@@ -238,10 +261,12 @@
                                         <td class="celdaTotalTotales" width="20%">
                                             ${_('Total')}
                                         </td>
-                                        <td class="celdaTotalTotales" width="10%">
-                                        </td>
                                         <td class="celdaTotalTotales" width="10%"></td>
-                                        <td class="celdaTotalTotales" width="10%">
+                                        <td class="celdaTotalTotales" style="text-align:center;" width="6%">
+                                            ${formatLang(to_not_due, digits=2, grouping=True)}
+                                        </td>
+                                        <td class="celdaTotalTotales" style="text-align:center;" width="6%"></td>
+                                        <td class="celdaTotalTotales" width="8%">
                                             ${formatLang(residual, digits=2, grouping=True)}
                                         </td>
                                         <td class="celdaTotalTotales" width="10%">
@@ -262,10 +287,49 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <%
+                            tot_residual += residual
+                            tot_not_due += to_not_due
+                            tot_01to30 += to0130
+                            tot_31to60 += to3160
+                            tot_61to90 += to6190
+                            tot_91to120 += to91120
+                            tot_121togr += to121%>
                         %endif
                     %endfor
+                    <table width="100%" border="0">
+                        <tr class="prueba" >
+                            <td class="celdaGrandTotal" width="20%">
+                                ${_('Grand Total')}
+                            </td>
+                            <td class="celdaGrandTotal" width="10%"></td>
+                            <td class="celdaGrandTotal" style="text-align:center;" width="6%">
+                                ${formatLang(tot_not_due, digits=2, grouping=True)}
+                            </td>
+                            <td class="celdaGrandTotal" style="text-align:center;" width="6%"></td>
+                            <td class="celdaGrandTotal" width="8%">
+                                ${formatLang(tot_residual, digits=2, grouping=True)}
+                            </td>
+                            <td class="celdaGrandTotal" width="10%">
+                                ${formatLang(tot_01to30, digits=2, grouping=True)}
+                            </td>
+                            <td class="celdaGrandTotal" width="10%">
+                                ${formatLang(tot_31to60, digits=2, grouping=True)}
+                            </td>
+                            <td class="celdaGrandTotal" width="10%">
+                                ${formatLang(tot_61to90, digits=2, grouping=True)}
+                            </td>
+                            <td class="celdaGrandTotal" width="10%">
+                                ${formatLang(tot_91to120, digits=2, grouping=True)}
+                            </td>
+                            <td class="celdaGrandTotal" width="10%">
+                                ${formatLang(tot_121togr, digits=2, grouping=True)}
+                            </td>
+                        </tr>
+                    </table>
                 %else:
                     <%ban = 1%>
+                    <%tot_not_due = tot_01to30 = tot_31to60 = tot_61to90 = tot_91to120 = tot_121togr = tot_residual= 0%>
                     %for user in get_dict_lines_by_partner(obj.partner_doc_ids):
                         <table class="list_table"  width="100%" border="0">
                             <thead>
@@ -305,8 +369,9 @@
                                             %endif
                                             <th class="celdaTituloTabla" style="text-align:left;" width="19.5%">${_('Document')}</th>
                                             <th class="celdaTituloTabla" style="text-align:left;" width="10%">${_('Type')}</th>
-                                            <th class="celdaTituloTabla" style="text-align:left;" width="10%">${_('Due Days')}</th>
-                                            <th class="celdaTituloTabla" style="text-align:left;" width="10%">${_('Residual')}</th>
+                                            <th class="celdaTituloTabla" style="text-align:left;" width="6%">${_('Not Due')}</th>
+                                            <th class="celdaTituloTabla" style="text-align:left;" width="6%">${_('Due Days')}</th>
+                                            <th class="celdaTituloTabla" style="text-align:left;" width="8%">${_('Residual')}</th>
                                             <% form = data['form']%>
                                             %for i in range (4,-1,-1):
                                                 <th class="celdaTituloTabla" style="text-align:center;">${form.get('%i'%i).get('name')}</th>
@@ -315,12 +380,7 @@
                                     </thead>
                                     <tbody>
                                         <%
-                                        to0130 = 0
-                                        to3160 = 0
-                                        to6190 = 0
-                                        to91120 = 0
-                                        to121 = 0
-                                        residual = 0%>
+                                        to0130 = to3160 = to6190 = to91120 = to121 = residual = to_not_due = 0%>
                                         %for line in lines_partner:
                                             <%
                                             type = ''
@@ -340,6 +400,7 @@
                                             to91120 += line.days_due_91to120
                                             to121 += line.days_due_121togr
                                             residual += line.residual
+                                            to_not_due += line.not_due
                                             %>
                                             <tr class="prueba" >
                                                 %if ban % 2 == 0:
@@ -353,10 +414,13 @@
                                                 <td class="celdaLineData" width="10%">
                                                     ${type}
                                                 </td>
-                                                <td class="celdaLineData" style="text-align:center;" width="10%">
+                                                <td class="celdaLineData" style="text-align:center;" width="6%">
+                                                    ${line.not_due}
+                                                </td>
+                                                <td class="celdaLineData" style="text-align:center;" width="6%">
                                                     ${line.due_days}
                                                 </td>
-                                                <td class="celdaLineData" width="10%">
+                                                <td class="celdaLineData" width="8%">
                                                     ${line.residual}
                                                 </td>
                                                 <td class="celdaLineData" width="10%">
@@ -382,13 +446,15 @@
                                             %else:
                                                 <th style="text-align:left;" bgcolor="#0174DF" width="0.5%"></th>
                                             %endif
-                                            <td class="celdaTotalTotales" width="0.5%">
+                                            <td class="celdaTotalTotales" width="19.5%">
                                                 ${_('Total')}
                                             </td>
-                                            <td class="celdaTotalTotales" width="10%">
-                                            </td>
                                             <td class="celdaTotalTotales" width="10%"></td>
-                                            <td class="celdaTotalTotales" width="10%">
+                                            <td class="celdaTotalTotales" width="6%">
+                                                ${formatLang(to_not_due, digits=2, grouping=True)}
+                                            </td>
+                                            <td class="celdaTotalTotales" width="6%"></td>
+                                            <td class="celdaTotalTotales" width="8%">
                                                 ${formatLang(residual, digits=2, grouping=True)}
                                             </td>
                                             <td class="celdaTotalTotales" width="10%">
@@ -409,10 +475,48 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <%
+                                tot_residual += residual
+                                tot_not_due += to_not_due
+                                tot_01to30 += to0130
+                                tot_31to60 += to3160
+                                tot_61to90 += to6190
+                                tot_91to120 += to91120
+                                tot_121togr += to121%>
                             %endif
                         %endfor
                         <%ban += 1%>
                     %endfor
+                    <table width="100%" border="0">
+                        <tr>
+                            <td class="celdaGrandTotal" width="20%">
+                                ${_('Grand Total')}
+                            </td>
+                            <td class="celdaGrandTotal" width="10%"></td>
+                            <td class="celdaGrandTotal" width="6%">
+                                ${formatLang(tot_not_due, digits=2, grouping=True)}
+                            </td>
+                            <td class="celdaGrandTotal" width="6%"></td>
+                            <td class="celdaGrandTotal" width="8%">
+                                ${formatLang(tot_residual, digits=2, grouping=True)}
+                            </td>
+                            <td class="celdaGrandTotal" width="10%">
+                                ${formatLang(tot_01to30, digits=2, grouping=True)}
+                            </td>
+                            <td class="celdaGrandTotal" width="10%">
+                                ${formatLang(tot_31to60, digits=2, grouping=True)}
+                            </td>
+                            <td class="celdaGrandTotal" width="10%">
+                                ${formatLang(tot_61to90, digits=2, grouping=True)}
+                            </td>
+                            <td class="celdaGrandTotal" width="10%">
+                                ${formatLang(tot_91to120, digits=2, grouping=True)}
+                            </td>
+                            <td class="celdaGrandTotal" width="10%">
+                                ${formatLang(tot_121togr, digits=2, grouping=True)}
+                            </td>
+                        </tr>
+                    </table>
                 %endif
             %endif
         %endfor

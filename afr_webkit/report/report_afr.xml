@@ -1,0 +1,316 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report
+            auto = "True"
+            id="afr_report_col5"
+            model="wizard.report"
+            name="afr_report_col5"
+            file="afr_webkit/report/afr_report_webkit_cols5.mako"
+            string="Print AFR"
+            report_type="webkit"
+            multi="True"
+            menu="False"/>
+
+        <record id="property_afr_report_webkit1" model="ir.property">
+            <field name="name">webkit_header</field>
+            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
+            <field eval="'ir.header_webkit,'+str(ref('afr_webkit.ir_header_webkit_afrreport_five_colums'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.actions.report.xml,'+str(ref('afr_webkit.afr_report_col5'))" model="ir.actions.report.xml" name="res_id"/>
+        </record>
+
+        <report
+            auto = "True"
+            id="afr_report_col5_html"
+            model="wizard.report"
+            name="afr_report_col5_html"
+            file="afr_webkit/report/afr_report_webkit_cols5.mako"
+            string="Print AFR"
+            report_type="webkit"
+            multi="True"
+            menu="False"/>
+        <record id="afr_report_col5_html" model="ir.actions.report.xml">
+            <field name="webkit_debug">True</field>
+            <field name="precise_mode">True</field>            
+        </record>
+        <record id="property_afr_report_webkit1_html" model="ir.property">
+            <field name="name">webkit_header</field>
+            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
+            <field eval="'ir.header_webkit,'+str(ref('afr_webkit.ir_header_webkit_afrreport_five_colums'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.actions.report.xml,'+str(ref('afr_webkit.afr_report_col5_html'))" model="ir.actions.report.xml" name="res_id"/>
+        </record>
+
+        <report
+            auto = "True"
+            id="afr_report_col1"
+            model="wizard.report"
+            name="afr_report_col1"
+            file="afr_webkit/report/afr_report_webkit_cols1.mako"
+            string="Print AFR"
+            report_type="webkit"
+            multi="True"
+            menu="False"/>
+
+        <record id="property_afr_report_webkit2" model="ir.property">
+            <field name="name">webkit_header</field>
+            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
+            <field eval="'ir.header_webkit,'+str(ref('afr_webkit.ir_header_webkit_afrreport_one_colums'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.actions.report.xml,'+str(ref('afr_webkit.afr_report_col1'))" model="ir.actions.report.xml" name="res_id"/>
+        </record>
+
+        <report
+            auto = "True"
+            id="afr_report_col1_html"
+            model="wizard.report"
+            name="afr_report_col1_html"
+            file="afr_webkit/report/afr_report_webkit_cols1.mako"
+            string="Print AFR"
+            report_type="webkit"
+            multi="True"
+            menu="False"/>
+        <record id="afr_report_col1_html" model="ir.actions.report.xml">
+            <field name="webkit_debug">True</field>
+            <field name="precise_mode">True</field>            
+        </record>
+        <record id="property_afr_report_webkit2_html" model="ir.property">
+            <field name="name">webkit_header</field>
+            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
+            <field eval="'ir.header_webkit,'+str(ref('afr_webkit.ir_header_webkit_afrreport_one_colums'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.actions.report.xml,'+str(ref('afr_webkit.afr_report_col1_html'))" model="ir.actions.report.xml" name="res_id"/>
+        </record>
+
+        <report
+            auto = "True"
+            id="afr_report_col2"
+            model="wizard.report"
+            name="afr_report_col2"
+            file="afr_webkit/report/afr_report_webkit_cols2.mako"
+            string="Print AFR"
+            report_type="webkit"
+            multi="True"
+            menu="False"/>
+
+        <record id="property_afr_report_webkit3" model="ir.property">
+            <field name="name">webkit_header</field>
+            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
+            <field eval="'ir.header_webkit,'+str(ref('afr_webkit.ir_header_webkit_afrreport_two_colums'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.actions.report.xml,'+str(ref('afr_webkit.afr_report_col2'))" model="ir.actions.report.xml" name="res_id"/>
+        </record>
+
+        <report
+            auto = "True"
+            id="afr_report_col2_html"
+            model="wizard.report"
+            name="afr_report_col2_html"
+            file="afr_webkit/report/afr_report_webkit_cols2.mako"
+            string="Print AFR"
+            report_type="webkit"
+            multi="True"
+            menu="False"/>
+        <record id="afr_report_col2_html" model="ir.actions.report.xml">
+            <field name="webkit_debug">True</field>
+            <field name="precise_mode">True</field>            
+        </record>
+        <record id="property_afr_report_webkit3_html" model="ir.property">
+            <field name="name">webkit_header</field>
+            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
+            <field eval="'ir.header_webkit,'+str(ref('afr_webkit.ir_header_webkit_afrreport_two_colums'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.actions.report.xml,'+str(ref('afr_webkit.afr_report_col2_html'))" model="ir.actions.report.xml" name="res_id"/>
+        </record>
+
+        <report
+            auto = "True"
+            id="afr_report_col4"
+            model="wizard.report"
+            name="afr_report_col4"
+            file="afr_webkit/report/afr_report_webkit_cols4.mako"
+            string="Print AFR"
+            report_type="webkit"
+            multi="True"
+            menu="False"/>
+
+        <record id="property_afr_report_webkit4" model="ir.property">
+            <field name="name">webkit_header</field>
+            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
+            <field eval="'ir.header_webkit,'+str(ref('afr_webkit.ir_header_webkit_afrreport_four_colums'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.actions.report.xml,'+str(ref('afr_webkit.afr_report_col4'))" model="ir.actions.report.xml" name="res_id"/>
+        </record>
+
+        <report
+            auto = "True"
+            id="afr_report_col4_html"
+            model="wizard.report"
+            name="afr_report_col4_html"
+            file="afr_webkit/report/afr_report_webkit_cols4.mako"
+            string="Print AFR"
+            report_type="webkit"
+            multi="True"
+            menu="False"/>
+        <record id="afr_report_col4_html" model="ir.actions.report.xml">
+            <field name="webkit_debug">True</field>
+            <field name="precise_mode">True</field>            
+        </record>
+        <record id="property_afr_report_webkit4_html" model="ir.property">
+            <field name="name">webkit_header</field>
+            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
+            <field eval="'ir.header_webkit,'+str(ref('afr_webkit.ir_header_webkit_afrreport_four_colums'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.actions.report.xml,'+str(ref('afr_webkit.afr_report_col4_html'))" model="ir.actions.report.xml" name="res_id"/>
+        </record>
+
+        <report
+            auto = "True"
+            id="afr_report_journal_ledger"
+            model="wizard.report"
+            name="afr_report_journal_ledger"
+            file="afr_webkit/report/afr_report_webkit_journal_ledger.mako"
+            string="Print AFR"
+            report_type="webkit"
+            multi="True"
+            menu="False"/>
+
+        <record id="property_afr_report_webkit6" model="ir.property">
+            <field name="name">webkit_header</field>
+            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
+            <field eval="'ir.header_webkit,'+str(ref('afr_webkit.ir_header_webkit_afrreport_journal_ledger'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.actions.report.xml,'+str(ref('afr_webkit.afr_report_journal_ledger'))" model="ir.actions.report.xml" name="res_id"/>
+        </record>
+
+        <report
+            auto = "True"
+            id="afr_report_journal_ledger_html"
+            model="wizard.report"
+            name="afr_report_journal_ledger_html"
+            file="afr_webkit/report/afr_report_webkit_journal_ledger.mako"
+            string="Print AFR"
+            report_type="webkit"
+            multi="True"
+            menu="False"/>
+        <record id="afr_report_journal_ledger_html" model="ir.actions.report.xml">
+            <field name="webkit_debug">True</field>
+            <field name="precise_mode">True</field>            
+        </record>
+        <record id="property_afr_report_webkit6_html" model="ir.property">
+            <field name="name">webkit_header</field>
+            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
+            <field eval="'ir.header_webkit,'+str(ref('afr_webkit.ir_header_webkit_afrreport_journal_ledger'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.actions.report.xml,'+str(ref('afr_webkit.afr_report_journal_ledger_html'))" model="ir.actions.report.xml" name="res_id"/>
+        </record>
+
+        <report
+            auto = "True"
+            id="afr_report_qtr"
+            model="wizard.report"
+            name="afr_report_qtr"
+            file="afr_webkit/report/afr_report_webkit_qtr.mako"
+            string="Print AFR"
+            report_type="webkit"
+            multi="True"
+            menu="False"/>
+
+        <record id="property_afr_report_webkit7" model="ir.property">
+            <field name="name">webkit_header</field>
+            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
+            <field eval="'ir.header_webkit,'+str(ref('afr_webkit.ir_header_webkit_afrreport_qtr'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.actions.report.xml,'+str(ref('afr_webkit.afr_report_qtr'))" model="ir.actions.report.xml" name="res_id"/>
+        </record>
+
+        <report
+            auto = "True"
+            id="afr_report_qtr_html"
+            model="wizard.report"
+            name="afr_report_qtr_html"
+            file="afr_webkit/report/afr_report_webkit_qtr.mako"
+            string="Print AFR"
+            report_type="webkit"
+            multi="True"
+            menu="False"/>
+        <record id="afr_report_qtr_html" model="ir.actions.report.xml">
+            <field name="webkit_debug">True</field>
+            <field name="precise_mode">True</field>            
+        </record>
+        <record id="property_afr_report_webkit7_html" model="ir.property">
+            <field name="name">webkit_header</field>
+            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
+            <field eval="'ir.header_webkit,'+str(ref('afr_webkit.ir_header_webkit_afrreport_qtr'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.actions.report.xml,'+str(ref('afr_webkit.afr_report_qtr_html'))" model="ir.actions.report.xml" name="res_id"/>
+        </record>
+
+        <report
+            auto = "True"
+            id="afr_report_col13"
+            model="wizard.report"
+            name="afr_report_col13"
+            file="afr_webkit/report/afr_report_webkit_cols13.mako"
+            string="Print AFR"
+            report_type="webkit"
+            multi="True"
+            menu="False"/>
+
+        <record id="property_afr_report_webkit8" model="ir.property">
+            <field name="name">webkit_header</field>
+            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
+            <field eval="'ir.header_webkit,'+str(ref('afr_webkit.ir_header_webkit_afrreport_col13'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.actions.report.xml,'+str(ref('afr_webkit.afr_report_col13'))" model="ir.actions.report.xml" name="res_id"/>
+        </record>
+
+        <report
+            auto = "True"
+            id="afr_report_col13_html"
+            model="wizard.report"
+            name="afr_report_col13_html"
+            file="afr_webkit/report/afr_report_webkit_cols13.mako"
+            string="Print AFR"
+            report_type="webkit"
+            multi="True"
+            menu="False"/>
+        <record id="afr_report_col13_html" model="ir.actions.report.xml">
+            <field name="webkit_debug">True</field>
+            <field name="precise_mode">True</field>            
+        </record>
+        <record id="property_afr_report_webkit8_html" model="ir.property">
+            <field name="name">webkit_header</field>
+            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
+            <field eval="'ir.header_webkit,'+str(ref('afr_webkit.ir_header_webkit_afrreport_col13'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.actions.report.xml,'+str(ref('afr_webkit.afr_report_col13_html'))" model="ir.actions.report.xml" name="res_id"/>
+        </record>
+
+        <report
+            auto = "True"
+            id="afr_report_analytic_ledger"
+            model="wizard.report"
+            name="afr_report_analytic_ledger"
+            file="afr_webkit/report/afr_report_webkit_analytic_ledger.mako"
+            string="Print AFR"
+            report_type="webkit"
+            multi="True"
+            menu="False"/>
+
+        <record id="property_afr_report_webkit9" model="ir.property">
+            <field name="name">webkit_header</field>
+            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
+            <field eval="'ir.header_webkit,'+str(ref('afr_webkit.ir_header_webkit_afrreport_analytic_ledger'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.actions.report.xml,'+str(ref('afr_webkit.afr_report_analytic_ledger'))" model="ir.actions.report.xml" name="res_id"/>
+        </record>
+
+        <report
+            auto = "True"
+            id="afr_report_analytic_ledger_html"
+            model="wizard.report"
+            name="afr_report_analytic_ledger_html"
+            file="afr_webkit/report/afr_report_webkit_analytic_ledger.mako"
+            string="Print AFR"
+            report_type="webkit"
+            multi="True"
+            menu="False"/>
+        <record id="afr_report_analytic_ledger_html" model="ir.actions.report.xml">
+            <field name="webkit_debug">True</field>
+            <field name="precise_mode">True</field>            
+        </record>
+        <record id="property_afr_report_webkit9_html" model="ir.property">
+            <field name="name">webkit_header</field>
+            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
+            <field eval="'ir.header_webkit,'+str(ref('afr_webkit.ir_header_webkit_afrreport_analytic_ledger'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.actions.report.xml,'+str(ref('afr_webkit.afr_report_analytic_ledger_html'))" model="ir.actions.report.xml" name="res_id"/>
+        </record>
+    </data>
+</openerp>
