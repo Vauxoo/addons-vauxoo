@@ -46,11 +46,15 @@ class account_invoice_line(osv.Model):
     
     def onchange_account_id(self, cr, uid, ids, product_id=False, partner_id=False,\
         inv_type=False, fposition_id=False, account_id=False):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        if not account_id:
+            return {}
         res = super(account_invoice_line, self).onchange_account_id(cr, uid, ids, product_id,
             partner_id, inv_type, fposition_id, account_id)
         account_obj = self.pool.get('account.account')
+        invoice_line_obj = self.pool.get('account.invoice.line')
         if account_id:
-            analyt_req = account_obj.browse(cr, uid, account_id).analytic_required
+            analyt_req = account_obj.browse(cr, uid, account_id).analytic_required or False
             res['value'].update({'analytic_required': analyt_req})
         return res
 
@@ -62,7 +66,7 @@ class account_move(osv.Model):
         for move in self.browse(cr, uid, ids, context=context):
             for line in move.line_id:
                 analytic_st = line.account_id.analytic_required
-                if analytic_st:
+                if analytic_st and line.debit + line.credit > 0:
                     analytic_acc_move = line.analytic_account_id
                     if not analytic_acc_move:
                         moves_without_analytic += '\n' + line.name
