@@ -215,11 +215,16 @@ class account_reconcile_advance(osv.Model):
 
         inv_brw = None
         aml2_brw = None
+
         while (invoice_ids or ai_aml_ids or inv_sum) and (av_aml_ids or aml_sum):
+#           Get money to pay debts. Whenever we are cashless or our debts are
+#           greater than the money we have: Use the ATM. And while there is
+#           money
             
-            #Tomar factura o aml mas viejo
+#           Let us pick our debt
             if invoice_ids:
                 if not inv_sum:
+#               BE AWARE MULTICURRENCY MISSING HERE
                     inv_brw = inv_obj.browse(cr, uid, invoice_ids.pop(0), context=context)
                     inv_sum = inv_brw.residual
             
@@ -232,12 +237,17 @@ class account_reconcile_advance(osv.Model):
             while(aml_sum == 0.0 or inv_sum > aml_sum) and av_aml_ids:
                 aml_brw = aml_obj.browse(cr, uid, av_aml_ids.pop(0), context=context)
                 aml_sum += aml_brw[ara_brw.type == 'pay' and 'debit' or 'credit']
-                aml_grn_sum += aml_sum
+                aml_grn_sum += aml_brw[ara_brw.type == 'pay' and 'debit' or 'credit'] #unused
+#               gruping by account_id should be done here            
 
+#           While we have plenty of money to pay our debts and there are debts
+#           to pay. Let us pay them!
             while inv_sum and inv_sum <= aml_sum:
 
                 if inv_brw:
+#               Let us spend our money
                     aml_sum -= inv_sum
+#               BE AWARE MULTICURRENCY MISSING HERE
                     get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
                     self.invoice_credit_lines
                     payid = get_aml(cr, uid, ids, inv_sum, account_id = inv_brw.account_id.id,
@@ -252,16 +262,23 @@ class account_reconcile_advance(osv.Model):
                     
                 elif aml2_brw:
                     inv_flag = False
+#               Let us spend our money
                     aml_sum -= inv_sum
+#               BE AWARE MULTICURRENCY MISSING HERE
                     get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
                     self.invoice_credit_lines
+#               Creates its own mirror and fully reconciliates them
                     payid = get_aml(cr, uid, ids, inv_sum, account_id = aml2_brw.account_id.id,
                             am_id=am_id, context=context)
                     inv_sum = 0.0
                     lines_2_rec.append([payid, aml2_brw.id])
                     aml2_brw =None
 
+#           ATM has run out of cash however we still have cash though we are
+#           not able to fully pay our debts. Let us use the remaining
             if not av_aml_ids and aml_sum and inv_sum > aml_sum:
+#               Payments are over. Last line to invoice is made with the
+#               aml_sum
                 get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
                 self.invoice_credit_lines
 
@@ -273,14 +290,18 @@ class account_reconcile_advance(osv.Model):
                                 'receivable')]
                     pamls = [line.id for line in inv_brw.payment_ids]
                     lines_2_par.append(iamls + pamls + [payid])
+#               BE AWARE MULTICURRENCY MISSING HERE
                 else:
                     payid = get_aml(cr, uid, ids, aml_sum, account_id = aml2_brw.account_id.id,
                             am_id=am_id, context=context)
                     lines_2_par.append([payid, aml2_brw.id])
+#               BE AWARE MULTICURRENCY MISSING HERE
                     
                 aml_sum = 0.0
                  
         if av_aml_ids:
+#           spare aml's. We will do nothing with these lines
+#           these were the advances we did not use
             pass
 
         used_aml_ids = list( set(mem_av_aml_ids) - set(av_aml_ids) )
@@ -288,7 +309,14 @@ class account_reconcile_advance(osv.Model):
         adv_2_rec = []
         if used_aml_ids:
             
+#            when reconciling among used_aml_ids, those ids should be grouped by
+#            account_id, take care of the last used_aml_ids, because is with this
+#            that the aml_sum (debit) should be created.
+#            aml_grn_sum => credit
+#            aml_sum => debit
             if aml_sum:
+#               if some remaining money get around it will not be reconciled
+#               This should be sent to a method in order to be captured
                 if ara_brw.type == 'pay':
                     acc_id = ara_brw.partner_id.property_account_payable.id
                 else:
@@ -315,13 +343,8 @@ class account_reconcile_advance(osv.Model):
             if not line_pair: continue
             aml_obj.reconcile_partial(
                 cr, uid, line_pair, 'manual', context=context)
+
         ara_brw.write({'move_id':am_id, 'state':'done'})
-
-
-
-
-        print aml_sum 
-        print inv_sum 
             
         return res
     
