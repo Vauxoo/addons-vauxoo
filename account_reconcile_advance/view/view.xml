@@ -71,7 +71,6 @@
                             domain="[('partner_id','=',partner_id),
                                 ('account_id.type','=', type == 'pay' and 'payable' or 'receivable'),
                                 ('reconcile_id','=',False),
-                                ('reconcile_partial_id','=',False),
                                 ('state','=','valid'),
                                 (type == 'pay' and 'credit' or 'debit','>',0.0),
                                 ]"
@@ -97,7 +96,6 @@
                             domain="[('partner_id','=',partner_id),
                                 ('account_id.type','=', type == 'pay' and 'payable' or 'receivable'),
                                 ('reconcile_id','=',False),
-                                ('reconcile_partial_id','=',False),
                                 ('state','=','valid'),
                                 (type == 'pay' and 'debit' or 'credit','>',0.0),
                                 ]"
