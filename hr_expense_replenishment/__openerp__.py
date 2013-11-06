@@ -29,6 +29,7 @@
     "depends": ["hr_expense",
         "account_invoice_line_currency",
         "hr_expense_analytic"
+        "account_move_report"
         ],
     "author": "Vauxoo",
     "description": """

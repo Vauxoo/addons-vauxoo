@@ -53,6 +53,7 @@
                         <button string="Show Invoice" name="%(action_add_invoice_to_expense)d" type="action" states="accepted"/>
                         <button string="Validate Invoices" name="validate_expense_invoices" type="object" states="accepted" class="oe_highlight"/>
                         <button string="Show Entries" name="show_entries" type="object" states="done,process,deduction,paid"/>
+                        <button string="Print Journal Entries" name="print_journal_entries" type="object" states="done,process,deduction,paid"/>
                     </div>
                     <h1>
                         <field name="id" readonly="1" string="Expense ID"/>
