@@ -487,3 +487,13 @@ msgstr "O"
 #, python-format
 msgid "Deductible Tax Lines"
 msgstr "Líneas de Impuestos Deducibles."
+
+#. module: hr_expense_replenishment
+#: view:hr.expense.expense:0
+msgid "Show Entries"
+msgstr "Mostrar Apuntes"
+
+#. module: hr_expense_replenishment
+#: view:hr.expense.expense:0
+msgid "Print Journal Entries"
+msgstr "Imprimir Pólizas"
