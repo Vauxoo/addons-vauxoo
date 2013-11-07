@@ -1,0 +1,104 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* issue_load
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-07 01:10+0000\n"
+"PO-Revision-Date: 2013-11-07 01:10+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: issue_load
+#: model:ir.model,name:issue_load.model_load_issue
+msgid "load.issue"
+msgstr ""
+
+#. module: issue_load
+#: view:load.issue:0
+msgid "Xmind File"
+msgstr ""
+
+#. module: issue_load
+#: help:load.issue,user:0
+msgid "User of data base"
+msgstr ""
+
+#. module: issue_load
+#: field:load.issue,db:0
+msgid "Date Base"
+msgstr ""
+
+#. module: issue_load
+#: model:ir.actions.act_window,name:issue_load.xls_action
+#: view:load.issue:0
+msgid "XLS File"
+msgstr ""
+
+#. module: issue_load
+#: help:load.issue,host:0
+msgid "IP adreess of server"
+msgstr ""
+
+#. module: issue_load
+#: model:ir.ui.menu,name:issue_load.xls_wz
+#: model:ir.ui.menu,name:issue_load.xls_wz2
+msgid "XLS Load"
+msgstr ""
+
+#. module: issue_load
+#: field:load.issue,host:0
+msgid "Host"
+msgstr ""
+
+#. module: issue_load
+#: view:load.issue:0
+msgid "Exit"
+msgstr ""
+
+#. module: issue_load
+#: field:load.issue,user:0
+msgid "User"
+msgstr ""
+
+#. module: issue_load
+#: help:load.issue,issue:0
+msgid "Put a xmind file"
+msgstr ""
+
+#. module: issue_load
+#: help:load.issue,passs:0
+msgid "Password of data base"
+msgstr ""
+
+#. module: issue_load
+#: help:load.issue,db:0
+msgid "Name of data base"
+msgstr ""
+
+#. module: issue_load
+#: field:load.issue,passs:0
+msgid "Password"
+msgstr ""
+
+#. module: issue_load
+#: help:load.issue,port:0
+msgid "XML-RPC Port of server to load data"
+msgstr ""
+
+#. module: issue_load
+#: field:load.issue,issue:0
+msgid "File XLS"
+msgstr ""
+
+#. module: issue_load
+#: field:load.issue,port:0
+msgid "XML-RPC Port"
+msgstr ""
+
