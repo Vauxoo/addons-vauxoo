@@ -1,0 +1,78 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* purchase_requisition_for_everybody
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-07 01:07+0000\n"
+"PO-Revision-Date: 2013-11-07 01:07+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: purchase_requisition_for_everybody
+#: view:purchase.requisition:0
+msgid "Reference"
+msgstr ""
+
+#. module: purchase_requisition_for_everybody
+#: model:ir.ui.menu,name:purchase_requisition_for_everybody.menu_purchase_ev_requisition
+#: model:ir.ui.menu,name:purchase_requisition_for_everybody.parent_menu_purchase_ev_requisition
+msgid "Requisitions"
+msgstr ""
+
+#. module: purchase_requisition_for_everybody
+#: model:res.groups,name:purchase_requisition_for_everybody.purchase_requisition_user_ev_groups
+msgid "Requisition - User"
+msgstr ""
+
+#. module: purchase_requisition_for_everybody
+#: view:purchase.requisition:0
+msgid "Order Date"
+msgstr ""
+
+#. module: purchase_requisition_for_everybody
+#: view:purchase.requisition:0
+msgid "Purchase Order"
+msgstr ""
+
+#. module: purchase_requisition_for_everybody
+#: view:purchase.requisition:0
+msgid "Approved by Supplier"
+msgstr ""
+
+#. module: purchase_requisition_for_everybody
+#: view:purchase.requisition:0
+msgid "Cancel Purchase Order"
+msgstr ""
+
+#. module: purchase_requisition_for_everybody
+#: view:purchase.requisition:0
+msgid "Confirm Purchase Order"
+msgstr ""
+
+#. module: purchase_requisition_for_everybody
+#: model:res.groups,name:purchase_requisition_for_everybody.purchase_requisition_manager_ev_groups
+msgid "Requisition - Manager"
+msgstr ""
+
+#. module: purchase_requisition_for_everybody
+#: view:purchase.requisition:0
+msgid "purchase_requisition_for_everybody.purchase_requisition_manager_ev_groups"
+msgstr ""
+
+#. module: purchase_requisition_for_everybody
+#: view:purchase.requisition:0
+msgid "Quotations"
+msgstr ""
+
+#. module: purchase_requisition_for_everybody
+#: model:ir.ui.menu,name:purchase_requisition_for_everybody.menu_purchase_ev_requisition_act
+msgid "Purchase Requisitions"
+msgstr ""
+
