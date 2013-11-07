@@ -29,7 +29,15 @@ from osv import osv, fields
 import pooler
 import time
 from tools.translate import _
-from account_financial_report.report import parser as Parser
+
+import logging
+_logger = logging.getLogger(__name__)
+
+try:
+    from account_financial_report.report import parser as Parser
+except ImportError:
+    _logger.warning("Please download module account_financial_report")
+
 
 
 class wizard_report(osv.osv_memory):
