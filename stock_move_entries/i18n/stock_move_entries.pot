@@ -1,0 +1,59 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* stock_move_entries
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-07 01:06+0000\n"
+"PO-Revision-Date: 2013-11-07 01:06+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_move_entries
+#: model:ir.model,name:stock_move_entries.model_account_move
+msgid "Account Entry"
+msgstr ""
+
+#. module: stock_move_entries
+#: model:ir.model,name:stock_move_entries.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_move_entries
+#: field:account.move,sm_id:0
+#: field:account.move.line,sm_id:0
+msgid "Stock move ID"
+msgstr ""
+
+#. module: stock_move_entries
+#: field:account.move.line,location_dest_id:0
+#: field:account.move.line,location_id:0
+msgid "Location Move"
+msgstr ""
+
+#. module: stock_move_entries
+#: help:account.move.line,location_id:0
+msgid "Location Move Source"
+msgstr ""
+
+#. module: stock_move_entries
+#: model:ir.model,name:stock_move_entries.model_account_move_line
+msgid "Journal Items"
+msgstr ""
+
+#. module: stock_move_entries
+#: field:stock.move,am_id:0
+msgid "Account move ID"
+msgstr ""
+
+#. module: stock_move_entries
+#: help:account.move.line,location_dest_id:0
+msgid "Location Move Destination"
+msgstr ""
+
