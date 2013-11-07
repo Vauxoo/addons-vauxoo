@@ -227,11 +227,6 @@ msgid "All"
 msgstr "Todos"
 
 #. module: ledger_report_partner
-#: report:report.ledger:0
-msgid "Date"
-msgstr "Fecha"
-
-#. module: ledger_report_partner
 #: selection:ledger.report,display_account:0
 msgid "All"
 msgstr "Todos"

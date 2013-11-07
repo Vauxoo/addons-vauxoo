@@ -300,11 +300,6 @@ msgid "Is a Follower"
 msgstr "Es un Seguidor"
 
 #. module: user_story
-#: view:user.story:0
-msgid "User"
-msgstr "Usuario"
-
-#. module: user_story
 #: field:user.story,date:0
 msgid "Date"
 msgstr "Fecha"

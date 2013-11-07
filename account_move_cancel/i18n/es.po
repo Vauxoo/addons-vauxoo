@@ -16,11 +16,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_move_cancel
-#: model:ir.ui.menu,name:account_move_cancel.account_cancel_wz2
-msgid "Cancel Account"
-msgstr "Cancelar Factura"
-
-#. module: account_move_cancel
 #: help:account.invoice,cancel_true:0
 msgid "Field that indicates whether the invoice was canceled earlier, to generate actions automatically"
 msgstr "Campo que indica si la factura fue cancelada antes, para generar acciones de forma automática"

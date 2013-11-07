@@ -49,36 +49,6 @@ msgstr ""
 msgid "Account Ledger Report"
 msgstr "Reporte de libro mayor"
 
-
-#. module: account_ledger_report
-#: model:ir.module.module,description:account_ledger_report.module_meta_information
-msgid ""
-"\n"
-"    Module that replace original ledger report to optimize the printing space.\n"
-"    The reports changed are:\n"
-"        - account_general_ledger.rml\n"
-"        - account_general_ledger_landscape.rml\n"
-"        - account_partner_ledger.rml\n"
-"        - account_partner_ledger_other.rml\n"
-"    In these reports were eliminated:\n"
-"        - Journal (header) \n"
-"        - Partner field\n"
-"        - Ref field\n"
-" "
-msgstr ""
-"\n"
-"    Módulo que reemplaza el reporte original de del libro mayor para optimizar el espacio de impresión.\n"
-"    Los reporte cambiados son:\n"
-"        - account_general_ledger.rml\n"
-"        - account_general_ledger_landscape.rml\n"
-"        - account_partner_ledger.rml\n"
-"        - account_partner_ledger_other.rml\n"
-"   en estos reportes se eliminaron :\n"
-"        - Journal (header) \n"
-"        - Partner field\n"
-"        - Ref field\n"
-" "
-
 #. module: account_ledger_report
 #: model:ir.module.module,shortdesc:account_ledger_report.module_meta_information
 msgid "Account Ledger Report"
