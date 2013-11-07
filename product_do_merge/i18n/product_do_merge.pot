@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-23 19:06+0000\n"
-"PO-Revision-Date: 2013-09-23 19:06+0000\n"
+"POT-Creation-Date: 2013-11-07 01:08+0000\n"
+"PO-Revision-Date: 2013-11-07 01:08+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgid "Referencia"
 msgstr ""
 
 #. module: product_do_merge
-#: code:addons/product_do_merge/wizard/base_product_merge.py:545
+#: code:addons/product_do_merge/wizard/base_product_merge.py:541
 #, python-format
 msgid "The product from must be selected for \n"
 "                    this option."
@@ -129,7 +129,7 @@ msgid "There is no more products to merge for this request..."
 msgstr ""
 
 #. module: product_do_merge
-#: code:addons/product_do_merge/wizard/base_product_merge.py:568
+#: code:addons/product_do_merge/wizard/base_product_merge.py:567
 #, python-format
 msgid "You have to specify a filter for your\n"
 "                                      selection."
@@ -174,8 +174,8 @@ msgstr ""
 #: code:addons/product_do_merge/wizard/base_product_merge.py:226
 #: code:addons/product_do_merge/wizard/base_product_merge.py:469
 #: code:addons/product_do_merge/wizard/base_product_merge.py:495
-#: code:addons/product_do_merge/wizard/base_product_merge.py:545
-#: code:addons/product_do_merge/wizard/base_product_merge.py:567
+#: code:addons/product_do_merge/wizard/base_product_merge.py:541
+#: code:addons/product_do_merge/wizard/base_product_merge.py:566
 #, python-format
 msgid "Error!"
 msgstr ""
@@ -229,6 +229,11 @@ msgstr ""
 #. module: product_do_merge
 #: selection:base.product.merge.automatic.wizard,state:0
 msgid "Selection"
+msgstr ""
+
+#. module: product_do_merge
+#: model:res.groups,name:product_do_merge.res_group_product_do_merge
+msgid "Show wizard Product Do Merge"
 msgstr ""
 
 #. module: product_do_merge
