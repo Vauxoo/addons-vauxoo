@@ -33,8 +33,7 @@ from openerp import SUPERUSER_ID
 class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
-    def _get_invoice_sequence(self, cr, uid, ids, field_names=None,
-        arg=False, context={}):
+    def _get_invoice_sequence(self, cr, uid, ids, field_names=None, arg=False, context=None):
         if not context:
             context = {}
         res = {}

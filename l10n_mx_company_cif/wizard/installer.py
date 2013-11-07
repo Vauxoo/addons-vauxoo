@@ -37,12 +37,16 @@ class cif_config(osv.TransientModel):
         }, context=context)
 
     def execute(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        if not ids:
+            return True
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         company_id = self.pool.get('res.users').browse(
             cr, uid, [uid], context)[0].company_id.partner_id.id
-        wiz_data = self.read(cr, uid, ids[0])
-        if wiz_data['cif_file']:
-            self._write_company(cr, uid, wiz_data[
-                                "cif_file"], company_id, context)
+        wiz_data = self.read(cr, uid, ids)
+        if wiz_data[0]['cif_file']:
+            self._write_company(cr, uid, wiz_data[0]["cif_file"], company_id, context)
 
     _columns = {
         'cif_file': fields.binary('CIF', help="Fiscal Identification Card"),

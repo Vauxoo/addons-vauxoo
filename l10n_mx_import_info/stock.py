@@ -31,6 +31,9 @@ class stock_tracking(osv.Model):
     }
 
     def name_get(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         if not len(ids):
             return []
         # Avoiding use 000 in show name.
@@ -55,6 +58,8 @@ class stock_move_constraint(osv.Model):
 # product_qty_p=[{'product_id':p.product_id.id,'qty':p.qty,'uom_id':p.uom_id.id}
 # for p in move.tracking_id.import_id.product_info_ids if
 # p.product_id.id==move.product_id.id]
+        if context is None:
+            context = {}
         product_import_info_obj = self.pool.get('product.import.info')
         product_uom_obj = self.pool.get('product.uom')
         for move in self.browse(cr, uid, ids, context=context):
@@ -100,6 +105,8 @@ class stock_move_constraint(osv.Model):
         # print "move.state",move.state
         # print "import_id",import_id
         # print "move.product_id.pack_control",move.product_id.pack_control
+        if context is None:
+            context = {}
         if move.state != 'done':
             # purchase o sale, generate a stock.move with state confirmed or
             # draft, then not validate with these states.
@@ -132,6 +139,8 @@ class stock_move_constraint(osv.Model):
         @param context: context arguments, like lang, time zone
         @return: return a dict that contains new values, and context
         """
+        if context is None:
+            context = {}
         return {
             'value': {},
             'context': {},
@@ -141,6 +150,8 @@ class stock_move_constraint(osv.Model):
         """ Checks track lot with import information is assigned to stock move or not.
         @return: True or False
         """
+        if context is None:
+            context = {}
         for move in self.browse(cr, uid, ids, context=context):
             # Check if i need to verify the track for import info.
             ex = True
@@ -173,6 +184,8 @@ class stock_picking(osv.Model):
     
     def _prepare_invoice_line(self, cr, uid, group, picking, move_line, invoice_id,
         invoice_vals, context=None):
+        if context is None:
+            context = {}
         invoice_line_data = super(stock_picking, self)._prepare_invoice_line(cr, uid, group, picking, move_line, invoice_id,
             invoice_vals, context=context)
         invoice_line_data.update({

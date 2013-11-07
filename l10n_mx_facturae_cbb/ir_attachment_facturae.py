@@ -32,6 +32,8 @@ class ir_attachment_facturae_mx(osv.Model):
     _inherit = 'ir.attachment.facturae.mx'
 
     def _get_type(self, cr, uid, ids=None, context=None):
+        if context is None:
+            context = {}
         types = super(ir_attachment_facturae_mx, self)._get_type(
             cr, uid, ids, context=context)
         types.extend([

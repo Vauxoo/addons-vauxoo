@@ -45,7 +45,9 @@ import decimal_precision as dp
 class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
-    def _get_facturae_invoice_dict_data(self, cr, uid, ids, context={}):
+    def _get_facturae_invoice_dict_data(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
         invoice_data_parents = super(account_invoice, self).\
         _get_facturae_invoice_dict_data(cr, uid, ids, context)
         invoice = self.browse(cr, uid, ids)[0]
@@ -94,6 +96,8 @@ class account_invoice(osv.Model):
                 cr, uid, inv, compute_taxes, ait_obj)
 
     def button_reset_taxes(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
         invoice = self.browse(cr, uid, ids)[0]
         invoice_line_obj = self.pool.get('account.invoice.line')
         sub_tot = 0

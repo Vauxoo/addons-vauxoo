@@ -50,7 +50,9 @@ class ir_attachment(osv.Model):
         os.close(fileno)
         return fname
 
-    def file_ftp(self, cr, uid, ids, context={}):
+    def file_ftp(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
         ftp_id = False
         ftp_obj = pooler.get_pool(cr.dbname).get('ftp.server')
         ftp_id = ftp_obj.search(cr, uid, [('name', '!=', False)], context=None)

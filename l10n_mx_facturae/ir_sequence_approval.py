@@ -33,6 +33,8 @@ class ir_sequence_approval(osv.Model):
     _inherit = 'ir.sequence.approval'
 
     def _get_type(self, cr, uid, ids=None, context=None):
+        if context is None:
+            context = {}
         types = super(ir_sequence_approval, self)._get_type(
             cr, uid, ids, context=context)
         types.extend([

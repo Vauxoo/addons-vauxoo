@@ -29,7 +29,7 @@ class product_import_info(osv.Model):
     _name = 'product.import.info'
     _rec_name = 'import_id'
 
-    def _get_qtymoved(self, cr, uid, ids, field_name, arg, context):
+    def _get_qtymoved(self, cr, uid, ids, field_name, arg, context=None):
     # TODO ISAAC: Metodo para calcular el la cantidad de movimientos ya imputados a esta import info. Analizar desde cero, no contemplar lo que este escrito aqui.
     # Recordar quitar los TODO.
         if not context:
@@ -76,6 +76,8 @@ class product_import_info(osv.Model):
     }
 
     def _check_uom(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
         for import_info in self.browse(cr, uid, ids, context=context):
             if import_info.uom_id and import_info.uom_id.category_id.id != \
                 import_info.product_id.uom_po_id.category_id.id:
@@ -99,6 +101,8 @@ class product_import_info(osv.Model):
 
         @return: return a dict that contains new values, and context
         """
+        if context is None:
+            context = {}
         res = {}
         if product_id:
             res = {'value': {'uom_id': self.pool.get('product.product').browse(
@@ -112,7 +116,9 @@ class product_product(osv.Model):
     """
     _inherit = 'product.product'
 
-    def _has_import(self, cr, uid, ids, field_name, arg, context):
+    def _has_import(self, cr, uid, ids, field_name, arg, context=None):
+        if context is None:
+            context = {}
         result = {}
         for i in ids:
             if len(self.browse(cr, uid, [i], context)[0].import_info_ids) != 0:

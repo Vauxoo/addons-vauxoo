@@ -44,7 +44,10 @@ from openerp import tools
 class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
-    def _get_facturae_invoice_dict_data(self, cr, uid, ids, context={}):
+    def _get_facturae_invoice_dict_data(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         datas = super(account_invoice, self)._get_facturae_invoice_dict_data(
             cr, uid, ids, context=context)
         ir_seq_app_obj = self.pool.get('ir.sequence.approval')
@@ -103,9 +106,10 @@ class account_invoice(osv.Model):
                 data.update(dict({'cfdi:Comprobante': dict_comprobante}))
         return datas
 
-    def _get_facturae_invoice_xml_data(self, cr, uid, ids, context={}):
-        if not context:
+    def _get_facturae_invoice_xml_data(self, cr, uid, ids, context=None):
+        if context is None:
             context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         ir_seq_app_obj = self.pool.get('ir.sequence.approval')
         invoice = self.browse(cr, uid, ids[0], context=context)
         sequence_app_id = ir_seq_app_obj.search(cr, uid, [(

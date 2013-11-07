@@ -56,7 +56,6 @@ nodeopenerp = xml_doc.getElementsByTagName('openerp')[0]
 main_node = add_node('data', {"noupdate": "True"}, nodeopenerp,
                     xml_doc, attrs_types={"noupdate": "attribute"})
 
-print '------------Generando xml'
 for elem in root[1:]:
     for a in elem:
         if a.tag == '{NewDataSet}c_mnpio':
@@ -113,9 +112,6 @@ for elem in root[1:]:
                                     xml_doc, node_states_attrs_types, order)
         node_record.appendChild(node_field_states)
 
-
-print 'xml_doc to xml', xml_doc.toxml('UTF-8')
-print '\n------------xml generado con exito'
 data_full_path = os.path.join(data_path, 'l10n_mx_cities.xml')
 
 f = open(data_full_path, 'wb')

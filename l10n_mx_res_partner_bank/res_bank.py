@@ -33,6 +33,8 @@ class res_partner_bank(osv.Model):
     _inherit = 'res.partner.bank'
 
     def _get_take_digits(self, cr, uid, ids, field, args, context=None):
+        if context is None:
+            context = {}
         result = {}
         res = ''
         n = -1

@@ -36,6 +36,8 @@ class ir_sequence_approval(osv.Model):
     _rec_name = 'approval_number'
 
     def _get_type(self, cr, uid, ids=None, context=None):
+        if context is None:
+            context = {}
         types = []
         return types
 
@@ -76,6 +78,8 @@ class ir_sequence_approval(osv.Model):
     ]
 
     def _check_numbers_range(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
         approval = self.browse(cr, uid, ids[0], context=context)
         query = """SELECT approval_1.id AS id1, approval_2.id AS id2--\
             approval_1.number_start, approval_1.number_end, approval_2.\
@@ -108,15 +112,16 @@ class ir_sequence_approval(osv.Model):
 class ir_sequence(osv.Model):
     _inherit = 'ir.sequence'
 
-    def copy(self, cr, uid, id, default={}, context={}, done_list=[], local=False):
+    def copy(self, cr, uid, id, default={}, context=None, done_list=[], local=False):
+        if context is None:
+            context = {}
         if not default:
             default = {}
         default = default.copy()
         default['approval_ids'] = False
         return super(ir_sequence, self).copy(cr, uid, id, default, context=context)
 
-    def _get_current_approval(self, cr, uid, ids, field_names=None, arg=False,
-        context={}):
+    def _get_current_approval(self, cr, uid, ids, field_names=None, arg=False, context=None):
         if not context:
             context = {}
         res = {}
@@ -146,7 +151,9 @@ class ir_sequence(osv.Model):
         # s'expiring'
     }
 
-    def _check_sequence_number_diff(self, cr, uid, ids, context={}):
+    def _check_sequence_number_diff(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
         # ahorita nadie manda a llamar esta funcion, ya que no existen los
         # warnings, como tal en OpenERP.
         sequence_number_diff_rate = 10

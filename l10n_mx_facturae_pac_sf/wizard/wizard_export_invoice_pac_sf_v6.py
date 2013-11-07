@@ -47,17 +47,21 @@ import time
 class wizard_export_invoice_pac_sf_v6(osv.TransientModel):
     _name = 'wizard.export.invoice.pac.sf.v6'
 
-    def _get_invoice_id(self, cr, uid, data, context={}):
+    def _get_invoice_id(self, cr, uid, data, context=None):
         """
         @params data : Dictionary with information of the user, and active ids
         """
+        if context is None:
+            context = {}
         res = {}
         invoice_obj = self.pool.get('account.invoice')
         res = invoice_obj._get_file(cr, uid, data['active_ids'])
         file_xml = res['file']
         return file_xml
 
-    def upload_to_pac(self, cr, uid, ids, context={}):
+    def upload_to_pac(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
         res = {}
         invoice_obj = self.pool.get('account.invoice')
         res = invoice_obj._upload_ws_file(cr, uid, context['active_ids'])

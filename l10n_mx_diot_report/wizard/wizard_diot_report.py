@@ -64,6 +64,8 @@ class wizard_account_diot_mx(osv.osv_memory):
         This function load in the wizard, the company used by the user, and
         the previous period to the current
         """
+        if context is None:
+            context = {}
         data = super(wizard_account_diot_mx, self).default_get(cr, uid,
             fields, context=context)
         time_now = datetime.date.today()+relativedelta(months=-1)
@@ -85,6 +87,7 @@ class wizard_account_diot_mx(osv.osv_memory):
         """
         if context is None:
             context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         acc_move_line_obj = self.pool.get('account.move.line')
         acc_tax_obj = self.pool.get('account.tax')
         acc_tax_category_obj = self.pool.get('account.tax.category')

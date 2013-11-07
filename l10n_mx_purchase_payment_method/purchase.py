@@ -60,6 +60,8 @@ class purchase_order(osv.Model):
     }
 
     def action_invoice_create(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
         invoice_obj = self.pool.get('account.invoice')
         res = super(purchase_order, self).action_invoice_create(
             cr, uid, ids, context=context)

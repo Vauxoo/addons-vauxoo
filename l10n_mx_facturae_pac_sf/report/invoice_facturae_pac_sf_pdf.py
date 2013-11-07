@@ -39,7 +39,9 @@ from openerp import tools
 
 
 class account_invoice_facturae_pac_sf_pdf(report_sxw.rml_parse):
-    def __init__(self, cr, uid, name, context):
+    def __init__(self, cr, uid, name, context=None):
+        if context is None:
+            context = {}
         super(account_invoice_facturae_pac_sf_pdf, self).__init__(
             cr, uid, name, context=context)
         self.localcontext.update({

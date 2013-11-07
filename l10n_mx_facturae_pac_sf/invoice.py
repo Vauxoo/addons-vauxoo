@@ -69,12 +69,13 @@ class account_invoice(osv.Model):
                                          help='Folio used in the electronic invoice'),
     }
 
-    def cfdi_data_write(self, cr, uid, ids, cfdi_data, context={}):
+    def cfdi_data_write(self, cr, uid, ids, cfdi_data, context=None):
         """
         @params cfdi_data : * TODO
         """
-        if not context:
+        if context is None:
             context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         attachment_obj = self.pool.get('ir.attachment')
         cfdi_xml = cfdi_data.pop('cfdi_xml')
         if cfdi_xml:
@@ -135,10 +136,10 @@ class account_invoice(osv.Model):
     """
 
     def _get_file(self, cr, uid, inv_ids, context={}):
-        if not context:
+        if context is None:
             context = {}
-        id = inv_ids[0]
-        invoice = self.browse(cr, uid, [id], context=context)[0]
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        invoice = self.browse(cr, uid, ids, context=context)[0]
         fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
             '.xml' or ''
         aids = self.pool.get('ir.attachment').search(cr, uid, [(
@@ -190,11 +191,13 @@ class account_invoice(osv.Model):
         parent_node.appendChild(new_node)
         return new_node
 
-    def add_addenta_xml(self, cr, ids, xml_res_str=None, comprobante=None, context={}):
+    def add_addenta_xml(self, cr, ids, xml_res_str=None, comprobante=None, context=None):
         """
          @params xml_res_str : File XML
          @params comprobante : Name to the Node that contain the information the XML
         """
+        if context is None:
+            context = {}
         if xml_res_str:
             node_Addenda = xml_res_str.getElementsByTagName('cfdi:Addenda')
             if len(node_Addenda) == 0:
@@ -230,6 +233,8 @@ class account_invoice(osv.Model):
         return xml_res_str
 
     def _get_type_sequence(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
         ir_seq_app_obj = self.pool.get('ir.sequence.approval')
         invoice = self.browse(cr, uid, ids[0], context=context)
         sequence_app_id = ir_seq_app_obj.search(cr, uid, [(
@@ -245,6 +250,8 @@ class account_invoice(osv.Model):
         return comprobante
 
     def _get_time_zone(self, cr, uid, invoice_id, context=None):
+        if context is None:
+            context = {}
         res_users_obj = self.pool.get('res.users')
         userstz = res_users_obj.browse(cr, uid, [uid])[0].partner_id.tz
         a = 0
@@ -264,7 +271,9 @@ class account_invoice(osv.Model):
                 timezone_present + timezone_original)*-1)
         return a
     
-    def _get_file_cancel(self, cr, uid, inv_ids, context={}):
+    def _get_file_cancel(self, cr, uid, inv_ids, context=None):
+        if context is None:
+            context = {}
         inv_ids = inv_ids[0]
         atta_obj = self.pool.get('ir.attachment')
         atta_id = atta_obj.search(cr, uid, [('res_id', '=', inv_ids), (
@@ -279,16 +288,18 @@ class account_invoice(osv.Model):
                 "This invoice hasn't stamped, so that not possible cancel."))
         return {'file': inv_xml}
 
-    def write_cfd_data(self, cr, uid, ids, cfd_datas, context={}):
+    def write_cfd_data(self, cr, uid, ids, cfd_datas, context=None):
         """
         @param cfd_datas : Dictionary with data that is used in facturae CFDI
         """
+        if context is None:
+            context = {}
         if not cfd_datas:
             cfd_datas = {}
         comprobante = self._get_type_sequence(cr, uid, ids, context=context)
         # obtener cfd_data con varios ids
         # for id in ids:
-        id = ids[0]
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         if True:
             data = {}
             cfd_data = cfd_datas
@@ -303,5 +314,5 @@ class account_invoice(osv.Model):
                 'sello': sello,
                 'cadena_original': cadena_original,
             }
-            self.write(cr, uid, [id], data, context=context)
+            self.write(cr, uid, ids, data, context=context)
         return True

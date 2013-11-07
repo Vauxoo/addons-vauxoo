@@ -85,6 +85,9 @@ class res_company_facturae_certificate(osv.Model):
     }
 
     def get_certificate_info(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         certificate = self.browse(cr, uid, ids, context=context)[0]
         cer_der_b64str = certificate.certificate_file
         key_der_b64str = certificate.certificate_key_file
@@ -103,6 +106,8 @@ class res_company_facturae_certificate(osv.Model):
         @param key_der_b64str : File .key in Base 64
         @param password : Password inserted in the certificate configuration
         """
+        if context is None:
+            context = {}
         certificate_lib = self.pool.get('facturae.certificate.library')
         value = {}
         warning = {}
@@ -221,8 +226,7 @@ class res_company_facturae_certificate(osv.Model):
 class res_company(osv.Model):
     _inherit = 'res.company'
 
-    def ____get_current_certificate(self, cr, uid, ids, field_names=None,
-        arg=False, context={}):
+    def ____get_current_certificate(self, cr, uid, ids, field_names=None, arg=False, context=None):
         if not field_names:
             field_names = []
         res = {}
@@ -250,8 +254,7 @@ class res_company(osv.Model):
                         res[company.id][f] = certificate_id
         return res
 
-    def _get_current_certificate(self, cr, uid, ids, field_names=False,
-        arg=False, context={}):
+    def _get_current_certificate(self, cr, uid, ids, field_names=False, arg=False, context=None):
         if not context:
             context = {}
         res = {}.fromkeys(ids, False)

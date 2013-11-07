@@ -47,6 +47,8 @@ class inherit_picking(osv.Model):
         """ Builds the dict containing the values for the invoice with the new
             payment term fields
         """
+        if context is None:
+            context = {}
         res = super(inherit_picking,self)._prepare_invoice(cr, uid, picking,
                                                            partner, inv_type,
                                                            journal_id,

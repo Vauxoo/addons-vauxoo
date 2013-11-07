@@ -59,6 +59,8 @@ class ir_attachment_facturae_mx(osv.Model):
     _inherit = 'ir.attachment.facturae.mx'
 
     def _get_type(self, cr, uid, ids=None, context=None):
+        if context is None:
+            context = {}
         types = super(ir_attachment_facturae_mx, self)._get_type(
             cr, uid, ids, context=context)
         types.extend([
@@ -86,6 +88,8 @@ class ir_attachment_facturae_mx(osv.Model):
     }
     
     def sf_cancel(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
         msg = ''
         certificate_obj = self.pool.get('res.company.facturae.certificate')
         pac_params_obj = self.pool.get('params.pac')
@@ -155,10 +159,12 @@ class ir_attachment_facturae_mx(osv.Model):
                 msg = _('Not found information of webservices of PAC, verify that the configuration of PAC is correct')
         return {'message': msg, 'status_uuid': status_uuid, 'status': status}
     
-    def _upload_ws_file(self, cr, uid, ids, fdata=None, context={}):
+    def _upload_ws_file(self, cr, uid, ids, fdata=None, context=None):
         """
         @params fdata : File.xml codification in base64
         """
+        if context is None:
+            context = {}
         invoice_obj = self.pool.get('account.invoice')
         pac_params_obj = invoice_obj.pool.get('params.pac')
         for ir_attachment_facturae_mx_id in self.browse(cr, uid, ids, context=context):

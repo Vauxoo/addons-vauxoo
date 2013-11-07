@@ -35,8 +35,7 @@ import time
 class res_company(osv.Model):
     _inherit = 'res.company'
 
-    def get_address_invoice_parent_company_id(self, cr, uid, ids, field, arg,
-        context=None):
+    def get_address_invoice_parent_company_id(self, cr, uid, ids, field, arg, context=None):
         if context is None:
             context = {}
         res = {}

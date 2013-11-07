@@ -35,6 +35,8 @@ class params_pac(osv.Model):
     _name = 'params.pac'
 
     def _get_method_type_selection(self, cr, uid, context=None):
+        if context is None:
+            context = {}
         # From module of PAC inherit this function and add new methods
         types = []
         return types

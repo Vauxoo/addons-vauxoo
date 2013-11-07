@@ -32,6 +32,8 @@ class res_company(osv.Model):
     
     def _get_address_data(self, cr, uid, ids, field_names, arg, context=None):
         """ Read the 'address' functional fields. """
+        if context is None:
+            context = {}
         result = {}
         part_obj = self.pool.get('res.partner')
         for company in self.browse(cr, uid, ids, context=context):
@@ -46,6 +48,8 @@ class res_company(osv.Model):
 
     def _set_address_data(self, cr, uid, company_id, name, value, arg, context=None):
         """ Write the 'address' functional fields. """
+        if context is None:
+            context = {}
         company = self.browse(cr, uid, company_id, context=context)
         if company.partner_id:
             part_obj = self.pool.get('res.partner')

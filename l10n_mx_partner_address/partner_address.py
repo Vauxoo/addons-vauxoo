@@ -61,7 +61,9 @@ class res_partner(osv.Model):
         id = ids and ids[0] or False
         return id
 
-    def fields_view_get_address(self, cr, uid, arch, context={}):
+    def fields_view_get_address(self, cr, uid, arch, context=None):
+        if context is None:
+            context = {}
         locality = _('Locality...')
         street = _('Street...')
         street2 = _('Colony...')

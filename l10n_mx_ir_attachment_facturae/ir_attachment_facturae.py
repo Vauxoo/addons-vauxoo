@@ -41,6 +41,8 @@ class ir_attachment_facturae_mx(osv.Model):
     _inherit = ['mail.thread', 'ir.needaction_mixin']
 
     def _get_type(self, cr, uid, ids=None, context=None):
+        if context is None:
+            context = {}
         types = []
         return types
 
@@ -120,6 +122,7 @@ class ir_attachment_facturae_mx(osv.Model):
         try:
             if context is None:
                 context = {}
+            ids = isinstance(ids, (int, long)) and [ids] or ids
             invoice_obj = self.pool.get('account.invoice')
             attach = ''
             msj = ''
@@ -182,12 +185,16 @@ class ir_attachment_facturae_mx(osv.Model):
             return False
 
     def action_confirm(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         return self.write(cr, uid, ids, {'state': 'confirmed'}, context=context)
 
     def signal_sign(self, cr, uid, ids, context=None):
         try:
             if context is None:
                 context = {}
+            ids = isinstance(ids, (int, long)) and [ids] or ids
             attach = ''
             index_xml = ''
             msj = ''
@@ -244,12 +251,16 @@ class ir_attachment_facturae_mx(osv.Model):
             return False
 
     def action_sign(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         return self.write(cr, uid, ids, {'state': 'signed'}, context=context)
 
     def signal_printable(self, cr, uid, ids, context=None):
         try:
             if context is None:
                 context = {}
+            ids = isinstance(ids, (int, long)) and [ids] or ids
             aids = ''
             msj = ''
             index_pdf = ''
@@ -293,12 +304,16 @@ class ir_attachment_facturae_mx(osv.Model):
             return False
 
     def action_printable(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         return self.write(cr, uid, ids, {'state': 'printable'}, context=context)
 
     def signal_send_customer(self, cr, uid, ids, context=None):
         try:
             if context is None:
                 context = {}
+            ids = isinstance(ids, (int, long)) and [ids] or ids
             attachments = []
             msj = ''
             attach_name = ''
@@ -412,12 +427,16 @@ class ir_attachment_facturae_mx(osv.Model):
             return False
 
     def action_send_customer(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         return self.write(cr, uid, ids, {'state': 'sent_customer'}, context=context)
 
     def signal_send_backup(self, cr, uid, ids, context=None):
         try:
             if context is None:
                 context = {}
+            ids = isinstance(ids, (int, long)) and [ids] or ids
             msj = ''
             wf_service = netsvc.LocalService("workflow")
             msj = _('Send Backup\n')
@@ -434,12 +453,16 @@ class ir_attachment_facturae_mx(osv.Model):
             return False
     
     def action_send_backup(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         return self.write(cr, uid, ids, {'state': 'sent_backup'}, context=context)
 
     def signal_done(self, cr, uid, ids, context=None):
         try:
             if context is None:
                 context = {}
+            ids = isinstance(ids, (int, long)) and [ids] or ids
             msj = ''
             wf_service = netsvc.LocalService("workflow")
             msj = _('Done\n')
@@ -455,9 +478,15 @@ class ir_attachment_facturae_mx(osv.Model):
             return False
 
     def action_done(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         return self.write(cr, uid, ids, {'state': 'done'}, context=context)
 
     def signal_cancel(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         invoice_obj = self.pool.get('account.invoice')
         attach_obj = self.pool.get('ir.attachment')
         wf_service = netsvc.LocalService("workflow")
@@ -516,6 +545,9 @@ class ir_attachment_facturae_mx(osv.Model):
         return inv_cancel_status
 
     def action_cancel(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         return self.write(cr, uid, ids, {'state': 'cancel'}, context=context)
 
     def reset_to_draft(self, cr, uid, ids, *args):
@@ -550,6 +582,9 @@ class ir_attachment(osv.Model):
     _inherit = 'ir.attachment'
 
     def unlink(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         attachments = self.pool.get('ir.attachment.facturae.mx').search(cr, SUPERUSER_ID, ['|',
             '|', ( 'file_input', 'in', ids), ('file_xml_sign', 'in', ids), ('file_pdf', 'in',
                 ids)])
