@@ -81,15 +81,15 @@ if not os.path.isfile(app_xsltproc_fullpath):
             raise osv.except_osv(_('Warning'),_("Install xsltproc 'sudo apt-get install xsltproc' to use l10n_mx_facturae_lib module"))
     except Exception, e:
         _logger.warning("Install xsltproc 'sudo apt-get install xsltproc' to use l10n_mx_facturae_lib module.")
-        raise osv.except_osv(_('Warning'),_("Install xsltproc 'sudo apt-get install xsltproc' to use l10n_mx_facturae_lib module"))
+        #raise osv.except_osv(_('Warning'),_("Install xsltproc 'sudo apt-get install xsltproc' to use l10n_mx_facturae_lib module"))
 
 app_xmlstarlet_fullpath = os.path.join(xmlstarlet_path, app_xmlstarlet)
 if not os.path.isfile( app_xmlstarlet_fullpath ):
     app_xmlstarlet_fullpath = tools.find_in_path( app_xmlstarlet )
     if not app_xmlstarlet_fullpath:
         app_xmlstarlet_fullpath = False
-        _logger.error('Install xmlstarlet "sudo apt-get install xmlstarlet" to use l10n_mx_facturae_lib module.')
-        raise osv.except_osv(_('Warning'),_("Install xmlstarlet 'sudo apt-get install xmlstarlet' to use l10n_mx_facturae_lib module"))
+        _logger.warning('Install xmlstarlet "sudo apt-get install xmlstarlet" to use l10n_mx_facturae_lib module.')
+        #raise osv.except_osv(_('Warning'),_("Install xmlstarlet 'sudo apt-get install xmlstarlet' to use l10n_mx_facturae_lib module"))
         
 
 class facturae_certificate_library(osv.Model):
