@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-21 17:17+0000\n"
-"PO-Revision-Date: 2013-10-21 17:17+0000\n"
+"POT-Creation-Date: 2013-11-07 01:13+0000\n"
+"PO-Revision-Date: 2013-11-07 01:13+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -31,8 +31,8 @@ msgid "Period: Not Set"
 msgstr ""
 
 #. module: account_move_folio
-#: help:account.move.folio,name:0
-msgid "Folio Number"
+#: selection:account.move.folio,period_state:0
+msgid "Closed"
 msgstr ""
 
 #. module: account_move_folio
@@ -92,6 +92,23 @@ msgid "Period: Open"
 msgstr ""
 
 #. module: account_move_folio
+#: view:account.move.folio.fill.gap:0
+msgid "Are you sure?"
+msgstr ""
+
+#. module: account_move_folio
+#: view:account.move.folio.fill.gap:0
+#: model:ir.actions.act_window,name:account_move_folio.action_account_move_folio_fill_gap
+#: model:ir.ui.menu,name:account_move_folio.account_move_folio_fill_gap_menu
+msgid "Fill Folio Gaps"
+msgstr ""
+
+#. module: account_move_folio
+#: view:account.move.folio.fill.gap:0
+msgid "or"
+msgstr ""
+
+#. module: account_move_folio
 #: view:account.move.folio:0
 msgid "Account Move Folio Form"
 msgstr ""
@@ -133,13 +150,13 @@ msgid "Posted"
 msgstr ""
 
 #. module: account_move_folio
-#: selection:account.move.folio,period_state:0
-msgid "Closed"
+#: model:ir.model,name:account_move_folio.model_account_move_folio
+msgid "Records of Folios in Journal Entries"
 msgstr ""
 
 #. module: account_move_folio
-#: model:ir.model,name:account_move_folio.model_account_move_folio
-msgid "Records of Folios in Journal Entries"
+#: model:ir.model,name:account_move_folio.model_account_move_folio_fill_gap
+msgid "Fill Gap in Journal Entry Folios"
 msgstr ""
 
 #. module: account_move_folio
@@ -173,14 +190,35 @@ msgid "Entry Period"
 msgstr ""
 
 #. module: account_move_folio
+#: view:account.move.folio:0
 #: field:account.move.folio,period_id:0
 msgid "Period"
+msgstr ""
+
+#. module: account_move_folio
+#: view:account.move.folio.fill.gap:0
+msgid "Fill Gaps"
 msgstr ""
 
 #. module: account_move_folio
 #: field:account.move.folio,move_state:0
 #: help:account.move.folio,move_state:0
 msgid "Entry State"
+msgstr ""
+
+#. module: account_move_folio
+#: field:account.move.folio.fill.gap,sure:0
+msgid "Check this box"
+msgstr ""
+
+#. module: account_move_folio
+#: help:account.move.folio,name:0
+msgid "Folio Number"
+msgstr ""
+
+#. module: account_move_folio
+#: view:account.move.folio.fill.gap:0
+msgid "Cancel"
 msgstr ""
 
 #. module: account_move_folio
