@@ -1,0 +1,127 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* mrp_production_make_wzd
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-07 01:09+0000\n"
+"PO-Revision-Date: 2013-11-07 01:09+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mrp_production_make_wzd
+#: code:addons/mrp_production_make_wzd/wizard/wizard_production_make.py:63
+#, python-format
+msgid "Not set a location of raw material for the product: "
+msgstr ""
+
+#. module: mrp_production_make_wzd
+#: field:wizard.production.make,date_planned:0
+msgid "Scheduled date"
+msgstr ""
+
+#. module: mrp_production_make_wzd
+#: view:mrp.production:0
+msgid "Total Hours"
+msgstr ""
+
+#. module: mrp_production_make_wzd
+#: view:mrp.production:0
+msgid "Total Qty"
+msgstr ""
+
+#. module: mrp_production_make_wzd
+#: field:wizard.production.make,products_ids:0
+msgid "Products"
+msgstr ""
+
+#. module: mrp_production_make_wzd
+#: model:ir.actions.act_window,name:mrp_production_make_wzd.act_mrp_product_produce_wizard
+#: view:wizard.production.make:0
+msgid "Production Make"
+msgstr ""
+
+#. module: mrp_production_make_wzd
+#: model:ir.ui.menu,name:mrp_production_make_wzd.menu_action_mrp_product_produce_wizard_form
+msgid "Add Many Manufacturing Orders"
+msgstr ""
+
+#. module: mrp_production_make_wzd
+#: field:wizard.production.make,location_src_id:0
+msgid "Raw Materials Location"
+msgstr ""
+
+#. module: mrp_production_make_wzd
+#: view:wizard.production.make:0
+msgid "Destination Location"
+msgstr ""
+
+#. module: mrp_production_make_wzd
+#: view:wizard.production.make:0
+msgid "Source Location"
+msgstr ""
+
+#. module: mrp_production_make_wzd
+#: model:ir.model,name:mrp_production_make_wzd.model_wizard_production_make
+msgid "wizard.production.make"
+msgstr ""
+
+#. module: mrp_production_make_wzd
+#: view:mrp.production:0
+msgid "Total Cycles"
+msgstr ""
+
+#. module: mrp_production_make_wzd
+#: view:mrp.production:0
+msgid "Manufacturing Orders"
+msgstr ""
+
+#. module: mrp_production_make_wzd
+#: code:addons/mrp_production_make_wzd/wizard/wizard_production_make.py:63
+#: code:addons/mrp_production_make_wzd/wizard/wizard_production_make.py:68
+#, python-format
+msgid "Error!"
+msgstr ""
+
+#. module: mrp_production_make_wzd
+#: view:wizard.production.make:0
+msgid "or"
+msgstr ""
+
+#. module: mrp_production_make_wzd
+#: code:addons/mrp_production_make_wzd/wizard/wizard_production_make.py:68
+#, python-format
+msgid "Not set a location of finished products for the                        product: "
+msgstr ""
+
+#. module: mrp_production_make_wzd
+#: view:wizard.production.make:0
+msgid "Add Production"
+msgstr ""
+
+#. module: mrp_production_make_wzd
+#: view:wizard.production.make:0
+msgid "_Cancel"
+msgstr ""
+
+#. module: mrp_production_make_wzd
+#: help:wizard.production.make,location_src_id:0
+msgid "Location where the system will look for components."
+msgstr ""
+
+#. module: mrp_production_make_wzd
+#: field:wizard.production.make,location_dest_id:0
+msgid "Finished Products Location"
+msgstr ""
+
+#. module: mrp_production_make_wzd
+#: help:wizard.production.make,location_dest_id:0
+msgid "Location where the system will stock the                finished products."
+msgstr ""
+
