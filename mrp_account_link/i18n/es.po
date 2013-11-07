@@ -6,14 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-22 23:38+0000\n"
-"PO-Revision-Date: 2012-10-22 18:39-0600\n"
-"Last-Translator: fernando <fernando_ld@vauxoo.com>\n"
+"POT-Creation-Date: 2013-11-07 01:10+0000\n"
+"PO-Revision-Date: 2013-11-07 03:27+0000\n"
+"Last-Translator: Fernando Lopez <fernando_ld@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: mrp_account_link
 #: model:ir.actions.act_window,name:mrp_account_link.act_account_production
@@ -21,12 +22,9 @@ msgid "Journal items"
 msgstr "Apuntes contables"
 
 #. module: mrp_account_link
-#: model:ir.model,name:mrp_account_link.model_mrp_production_product_line
-msgid "Production Scheduled Product"
-msgstr "Produccion de producto planificado"
-
-#. module: mrp_account_link
 #: model:ir.actions.act_window,name:mrp_account_link.act_account_line_production
 msgid "Journal entries"
 msgstr "Asientos contables"
 
+#~ msgid "Production Scheduled Product"
+#~ msgstr "Produccion de producto planificado"

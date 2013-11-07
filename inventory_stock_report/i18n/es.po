@@ -6,14 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.3\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-01-27 13:38+0000\n"
-"PO-Revision-Date: 2012-01-27 13:38+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:10+0000\n"
+"PO-Revision-Date: 2013-11-07 03:27+0000\n"
+"Last-Translator: Moisés López - http://www.vauxoo.com "
+"<moylop260@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: inventory_stock_report
 #: selection:stock.count,tipo:0
@@ -61,6 +63,11 @@ msgstr "Suministro:"
 #: report:hoja.conteo.stock:0
 msgid "HOJA DE CONTEO DE INVENTARIO"
 msgstr "HOJA DE CONTEO DE INVENTARIO"
+
+#. module: inventory_stock_report
+#: field:stock.total,stockmayorcero:0
+msgid "Stock Mayor a Cero"
+msgstr ""
 
 #. module: inventory_stock_report
 #: field:stock.count,alquilable:0
@@ -191,18 +198,6 @@ msgid "Conteo 1"
 msgstr "Conteo 1"
 
 #. module: inventory_stock_report
-#: report:hoja.conteo.stock:0
-#: report:hoja222:0
-msgid "["
-msgstr "["
-
-#. module: inventory_stock_report
-#: report:hoja.conteo.stock:0
-#: report:hoja222:0
-msgid "]"
-msgstr "]"
-
-#. module: inventory_stock_report
 #: view:stock.count:0
 #: view:stock.total:0
 msgid "Tipo de Producto"
@@ -267,3 +262,8 @@ msgstr "Metodo de Suministro"
 msgid "stock.total"
 msgstr "stock.total"
 
+#~ msgid "["
+#~ msgstr "["
+
+#~ msgid "]"
+#~ msgstr "]"

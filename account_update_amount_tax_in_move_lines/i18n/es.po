@@ -6,24 +6,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-09 23:43+0000\n"
-"PO-Revision-Date: 2013-10-09 23:43+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:12+0000\n"
+"PO-Revision-Date: 2013-11-07 04:52+0000\n"
+"Last-Translator: Julio Serna-http://www.vauxoo.com <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: account_update_amount_tax_in_move_lines
 #: model:ir.model,name:account_update_amount_tax_in_move_lines.model_update_amount_tax_wizard
 msgid "update.amount.tax.wizard"
 msgstr "update.amount.tax.wizard"
-
-#. module: account_update_amount_tax_in_move_lines
-#: model:res.groups,name:account_update_amount_tax_in_move_lines.group_update_tax_amount_move_line_manager
-msgid "Wizard Update Amount Base ans Tax Secondary / Manager"
-msgstr "Wizard Actualizar Monto Base e Impuesto Secundario / Manager"
 
 #. module: account_update_amount_tax_in_move_lines
 #: view:update.amount.tax.wizard:0
@@ -42,18 +38,33 @@ msgstr "o"
 
 #. module: account_update_amount_tax_in_move_lines
 #: help:update.amount.tax.wizard,update_tax_sec:0
-msgid "If this field is active, was updated the tax secondary of Journal Items although already have tax secondary"
-msgstr "Si este campo es activo, será actualizado el impuesto secundario de Apuntes Contables aunque ya tengan impuesto secundario"
+msgid ""
+"If this field is active, was updated the tax secondary of Journal Items "
+"although already have tax secondary"
+msgstr ""
+"Si este campo es activo, será actualizado el impuesto secundario de Apuntes "
+"Contables aunque ya tengan impuesto secundario"
 
 #. module: account_update_amount_tax_in_move_lines
 #: help:update.amount.tax.wizard,update_amount_base:0
-msgid "If this field is active, was updated the amount base of Journal Items although already have this amount"
-msgstr "Si este campo es activo, será actualizado el monto base de Apuntes Contables aunque ya tengan impuesto secundario"
+msgid ""
+"If this field is active, was updated the amount base of Journal Items "
+"although already have this amount"
+msgstr ""
+"Si este campo es activo, será actualizado el monto base de Apuntes Contables "
+"aunque ya tengan impuesto secundario"
 
 #. module: account_update_amount_tax_in_move_lines
 #: field:update.amount.tax.wizard,update_tax_sec:0
 msgid "Update Tax Secondary"
 msgstr "Actualizar impuesto secundario"
+
+#. module: account_update_amount_tax_in_move_lines
+#: view:update.amount.tax.wizard:0
+msgid "If you want replace existing values used this fields, else left empty"
+msgstr ""
+"Si se desea reemplazar valores existentes utilizar estos campos, si no dejar "
+"vacios"
 
 #. module: account_update_amount_tax_in_move_lines
 #: view:update.amount.tax.wizard:0
@@ -68,8 +79,14 @@ msgstr "Aplicar"
 #. module: account_update_amount_tax_in_move_lines
 #: code:addons/account_update_amount_tax_in_move_lines/wizard/update_amount_base_tax_wizard.py:42
 #, python-format
-msgid "This wizard only should be used when the company have configured a tax by purchases and other by sales for each amount to tax, and the account of each tax is configured correctly"
-msgstr "Este wizard unicamente se debe utilizar cuando la compañia tenga configurado un impuesto de compra y uno de venta para cada monto de impuesto, y las cuentas configuradas son correctas."
+msgid ""
+"This wizard only should be used when the company have configured a tax by "
+"purchases and other by sales for each amount to tax, and the account of each "
+"tax is configured correctly"
+msgstr ""
+"Este wizard unicamente se debe utilizar cuando la compañia tenga configurado "
+"un impuesto de compra y uno de venta para cada monto de impuesto, y las "
+"cuentas configuradas son correctas."
 
 #. module: account_update_amount_tax_in_move_lines
 #: view:update.amount.tax.wizard:0
@@ -77,9 +94,9 @@ msgid "WARNING!!"
 msgstr "ADVERTENCIA!!"
 
 #. module: account_update_amount_tax_in_move_lines
-#: view:update.amount.tax.wizard:0
-msgid "If you want replace existing values used this fields, else left empty"
-msgstr "Si se desea reemplazar valores existentes utilizar estos campos, si no dejar vacios"
+#: model:res.groups,name:account_update_amount_tax_in_move_lines.group_update_tax_amount_move_line_manager
+msgid "Wizard Update Amount Base and Tax Secondary / Manager"
+msgstr ""
 
 #. module: account_update_amount_tax_in_move_lines
 #: model:ir.actions.act_window,name:account_update_amount_tax_in_move_lines.action_update_amount_base_tax_move_line_wizard
@@ -92,3 +109,5 @@ msgstr "Actualizar Monto Base en Apuntes Contables"
 msgid "WARNING!"
 msgstr "ADVERTENCIA!"
 
+#~ msgid "Wizard Update Amount Base ans Tax Secondary / Manager"
+#~ msgstr "Wizard Actualizar Monto Base e Impuesto Secundario / Manager"

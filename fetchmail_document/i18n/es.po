@@ -6,38 +6,36 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-05-28 15:17+0000\n"
-"PO-Revision-Date: 2012-05-28 10:55-0400\n"
-"Last-Translator: Miguel <miguel.delgado07@gmail.com>\n"
+"POT-Creation-Date: 2013-11-07 01:11+0000\n"
+"PO-Revision-Date: 2013-11-07 03:27+0000\n"
+"Last-Translator: Miguel Delgado (Vauxoo) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-
-#. module: fetchmail_document
-#: model:ir.module.module,description:fetchmail_document.module_meta_information
-msgid ""
-"\n"
-"    This module correct some behaviours on Document and Fetchmail modules combinated.\n"
-"                    "
-msgstr ""
-"\n"
-"    Este módulo corrige algunos comportamientos en los módulos de documentos y Fetchmail Combinados.\n"
-"                    "
+"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: fetchmail_document
 #: constraint:ir.attachment:0
 msgid "File name must be unique!"
-msgstr "El nombre del archivo debe ser único "
+msgstr "El nombre del archivo debe ser único"
 
 #. module: fetchmail_document
 #: model:ir.model,name:fetchmail_document.model_ir_attachment
 msgid "ir.attachment"
 msgstr "ir.adjunto"
 
-#. module: fetchmail_document
-#: model:ir.module.module,shortdesc:fetchmail_document.module_meta_information
-msgid "Fetchmail Corrections"
-msgstr "Correcciones a Fetchmail "
+#~ msgid ""
+#~ "\n"
+#~ "    This module correct some behaviours on Document and Fetchmail modules "
+#~ "combinated.\n"
+#~ "                    "
+#~ msgstr ""
+#~ "\n"
+#~ "    Este módulo corrige algunos comportamientos en los módulos de documentos "
+#~ "y Fetchmail Combinados.\n"
+#~ "                    "
 
+#~ msgid "Fetchmail Corrections"
+#~ msgstr "Correcciones a Fetchmail"

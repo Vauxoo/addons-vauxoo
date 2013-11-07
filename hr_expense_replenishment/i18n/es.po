@@ -7,15 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: addons-vauxoo\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-08-02 06:41+0000\n"
-"PO-Revision-Date: 2013-08-02 11:32+0000\n"
-"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
-"<humbertoarocha@gmail.com>\n"
+"POT-Creation-Date: 2013-11-07 01:11+0000\n"
+"PO-Revision-Date: 2013-11-07 02:46+0000\n"
+"Last-Translator: Julio Serna-http://www.vauxoo.com <Unknown>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-10-30 05:55+0000\n"
+"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: hr_expense_replenishment
@@ -24,65 +23,14 @@ msgid "Expense Invoice"
 msgstr "Factura de Gasto"
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:549
-#, python-format
-msgid "Debts to be reimbursed to Employee"
-msgstr "Deuda a Reembolsar al Empleado"
-
-#. module: hr_expense_replenishment
 #: model:ir.model,name:hr_expense_replenishment.model_hr_expense_line
 msgid "Expense Line"
 msgstr "Línea de Gastos"
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:519
-#, python-format
-msgid "Remaining Employee Advance"
-msgstr "Anticipo Restante al Empleado"
-
-#. module: hr_expense_replenishment
-#: view:account.invoice:0
-msgid "Attach Invoice to Expense"
-msgstr "Adjuntar Factura a Declaración de Gastos"
-
-#. module: hr_expense_replenishment
-#: view:attach.invoice.to.expense.wizard:0
-msgid "Attach invoice to an Expense"
-msgstr "Adjuntar Factura a Declaración de Gastos"
-
-#. module: hr_expense_replenishment
-#: view:hr.expense.expense:0
-msgid "No Deductible Lines"
-msgstr "Líneas de Gastos No Deducibles"
-
-#. module: hr_expense_replenishment
-#: field:hr.employee,account_analytic_id:0
-#: field:hr.expense.expense,account_analytic_id:0
-msgid "Analytic"
-msgstr "Analítico/a"
-
-#. module: hr_expense_replenishment
-#: view:attach.invoice.to.expense.wizard:0
-msgid "Add"
-msgstr "Agregar"
-
-#. module: hr_expense_replenishment
-#: view:hr.expense.expense:0
-msgid "Validate Invoices"
-msgstr "Validar Facturas"
-
-#. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:604
-#, python-format
-msgid ""
-"Integrity Problem. You have advances for this expense but in same time you "
-"active the No advances option. Please uncheck the No advances option or "
-"clean the advances table instead."
+#: view:account.voucher:0
+msgid "Payment Ref"
 msgstr ""
-"Problema de Integridad. Vd. tiene Anticipos para esta Declaración de Gastos "
-"pero al mismo tiempo tiene activo la opción \"Sin Anticipos\". Por favor, "
-"desmarque la opción \"Sin Anticipos\" o en su lugar limpia la lista de "
-"Anticipos."
 
 #. module: hr_expense_replenishment
 #: model:ir.model,name:hr_expense_replenishment.model_hr_department
@@ -90,19 +38,124 @@ msgid "Department"
 msgstr "Departamento"
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:603
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:610
+#: view:account.invoice:0
+msgid ""
+"{'partner_id': partner_id, 'price_type': context.get('price_type') or False, "
+"'type': type, 'analytic_exp': context.get('expense_id', False), "
+"'domain_exp':context.get('domain_exp_parent',[])}"
+msgstr ""
+
+#. module: hr_expense_replenishment
+#: view:account.voucher:0
+msgid "Allocation"
+msgstr ""
+
+#. module: hr_expense_replenishment
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:981
+#, python-format
+msgid "Entries"
+msgstr ""
+
+#. module: hr_expense_replenishment
+#: help:account.invoice,expense_id:0
+#: help:account.invoice.line,expense_id:0
+msgid "Expense Document Name"
+msgstr "Nombre de la Declaración de Gastos"
+
+#. module: hr_expense_replenishment
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:898
+#, python-format
+msgid "Pay Employee Expense"
+msgstr ""
+
+#. module: hr_expense_replenishment
+#: view:account.invoice:0
+msgid "context.get('domain_exp', [])"
+msgstr ""
+
+#. module: hr_expense_replenishment
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:863
+#, python-format
+msgid "Error!"
+msgstr ""
+
+#. module: hr_expense_replenishment
+#: view:account.voucher:0
+msgid "e.g. 003/10"
+msgstr ""
+
+#. module: hr_expense_replenishment
+#: field:hr.expense.expense,skip:0
+msgid "This expense has not advances"
+msgstr "Esta Declaración de Gastos no tiene Anticipos."
+
+#. module: hr_expense_replenishment
+#: model:ir.model,name:hr_expense_replenishment.model_attach_invoice_to_expense_wizard
+msgid "attach.invoice.to.expense.wizard"
+msgstr "attach.invoice.to.expense.wizard"
+
+#. module: hr_expense_replenishment
+#: view:hr.expense.expense:0
+msgid "Reconcile"
+msgstr "Reconciliar"
+
+#. module: hr_expense_replenishment
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:729
+#, python-format
+msgid "(Remaining Advance)"
+msgstr "(Anticipo Remanente)"
+
+#. module: hr_expense_replenishment
+#: view:hr.expense.expense:0
+msgid "Expense ID"
+msgstr "ID de Declaración de Gasto"
+
+#. module: hr_expense_replenishment
+#: view:account.voucher:0
+msgid "Payment Information"
+msgstr ""
+
+#. module: hr_expense_replenishment
+#: view:account.voucher:0
+msgid "Paid Amount"
+msgstr ""
+
+#. module: hr_expense_replenishment
+#: model:ir.actions.act_window,name:hr_expense_replenishment.act_attach_invoice_to_expense_wizard
+msgid "Attach to Expense"
+msgstr "Adjuntar a la Declaración de Gasto"
+
+#. module: hr_expense_replenishment
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:154
+#: field:hr.expense.expense,ait_ids:0
+#, python-format
+msgid "Deductible Tax Lines"
+msgstr "Líneas de Impuestos Deducibles."
+
+#. module: hr_expense_replenishment
+#: view:hr.expense.expense:0
+msgid "Validate Invoices"
+msgstr "Validar Facturas"
+
+#. module: hr_expense_replenishment
+#: view:account.invoice:0
+msgid "Attach Invoice to Expense"
+msgstr "Adjuntar Factura a Declaración de Gastos"
+
+#. module: hr_expense_replenishment
+#: model:ir.model,name:hr_expense_replenishment.model_hr_employee
+msgid "Employee"
+msgstr "Empleado/a"
+
+#. module: hr_expense_replenishment
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:632
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:639
 #, python-format
 msgid "Invalid Procedure!"
 msgstr "Procedimiento Inválido"
 
 #. module: hr_expense_replenishment
-#: view:hr.expense.expense:0
-msgid "Show Invoice"
-msgstr "Mostrar Facturas"
-
-#. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:131
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:155
 #: help:hr.expense.expense,ait_ids:0
 #, python-format
 msgid ""
@@ -120,7 +173,17 @@ msgstr ""
 "Este campo se actualiza automáticamente cuando carga facturas de gasto."
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:225
+#: view:hr.expense.expense:0
+msgid "Advances"
+msgstr "Anticipos."
+
+#. module: hr_expense_replenishment
+#: help:attach.invoice.to.expense.wizard,expense_id:0
+msgid "Expense Document"
+msgstr "Declaración de Gasto"
+
+#. module: hr_expense_replenishment
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:249
 #, python-format
 msgid ""
 "Please, Complete the validation of the remaining Draft Invoices before "
@@ -130,18 +193,14 @@ msgstr ""
 "antes de continuar."
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:224
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:236
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:783
-#: code:addons/hr_expense_replenishment/wizard/attach_invoice_to_expense_wizard.py:45
-#, python-format
-msgid "Invalid Procedure"
-msgstr "Procedimiento Inválido."
+#: view:hr.expense.expense:0
+msgid "Load All Advances"
+msgstr "Cargar Todos los Anticipos"
 
 #. module: hr_expense_replenishment
 #: view:hr.expense.expense:0
-msgid "Deductible Lines"
-msgstr "Líneas de Gastos Deducibles"
+msgid "Print Journal Entries"
+msgstr "Imprimir Pólizas"
 
 #. module: hr_expense_replenishment
 #: field:account.invoice,expense_id:0
@@ -153,24 +212,77 @@ msgid "Expense"
 msgstr "Gastos"
 
 #. module: hr_expense_replenishment
-#: field:hr.expense.expense,skip:0
-msgid "This expense has not advances"
-msgstr "Esta Declaración de Gastos no tiene Anticipos."
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:261
+#, python-format
+msgid ""
+"You have not Deductible or No Deductible lines loaded into the expense"
+msgstr ""
+"No tiene líneas Deducibles o No Deducibles en esta declaración de gastos."
 
 #. module: hr_expense_replenishment
 #: view:hr.expense.expense:0
-msgid "Expense ID"
-msgstr "ID de Declaración de Gasto"
+msgid "Add Invoice"
+msgstr "Agregar Factura"
+
+#. module: hr_expense_replenishment
+#: field:hr.expense.expense,advance_ids:0
+msgid "Employee Advances"
+msgstr "Anticipos al Empleado"
 
 #. module: hr_expense_replenishment
 #: view:hr.expense.expense:0
-msgid "Advances"
-msgstr "Anticipos."
+msgid "Deduct"
+msgstr "Deducir"
 
 #. module: hr_expense_replenishment
-#: help:attach.invoice.to.expense.wizard,expense_id:0
-msgid "Expense Document"
-msgstr "Declaración de Gasto"
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:692
+#, python-format
+msgid "Payment through Expense"
+msgstr "Pago mediante Declaración de Gastos"
+
+#. module: hr_expense_replenishment
+#: view:hr.expense.expense:0
+#: field:hr.expense.expense,invoice_ids:0
+msgid "Invoices"
+msgstr "Facturas"
+
+#. module: hr_expense_replenishment
+#: model:ir.model,name:hr_expense_replenishment.model_account_invoice_line
+msgid "Invoice Line"
+msgstr "Línea de factura"
+
+#. module: hr_expense_replenishment
+#: view:account.voucher:0
+#: view:attach.invoice.to.expense.wizard:0
+msgid "or"
+msgstr "O"
+
+#. module: hr_expense_replenishment
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:578
+#, python-format
+msgid "Debts to be reimbursed to Employee"
+msgstr "Deuda a Reembolsar al Empleado"
+
+#. module: hr_expense_replenishment
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:548
+#, python-format
+msgid "Remaining Employee Advance"
+msgstr "Anticipo Restante al Empleado"
+
+#. module: hr_expense_replenishment
+#: view:hr.expense.expense:0
+msgid "Show Invoice"
+msgstr "Mostrar Facturas"
+
+#. module: hr_expense_replenishment
+#: view:hr.expense.expense:0
+msgid "No Deductible Lines"
+msgstr "Líneas de Gastos No Deducibles"
+
+#. module: hr_expense_replenishment
+#: view:attach.invoice.to.expense.wizard:0
+msgid "Add"
+msgstr "Agregar"
 
 #. module: hr_expense_replenishment
 #: help:hr.expense.expense,partner_id:0
@@ -179,9 +291,18 @@ msgstr ""
 "Este campo se rellena automáticamente cuando se selecciona un/a empleado/a"
 
 #. module: hr_expense_replenishment
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:248
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:260
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:812
+#: code:addons/hr_expense_replenishment/wizard/attach_invoice_to_expense_wizard.py:45
+#, python-format
+msgid "Invalid Procedure"
+msgstr "Procedimiento Inválido."
+
+#. module: hr_expense_replenishment
 #: view:hr.expense.expense:0
-msgid "Pay"
-msgstr "Pagar"
+msgid "Deductible Lines"
+msgstr "Líneas de Gastos Deducibles"
 
 #. module: hr_expense_replenishment
 #: model:ir.model,name:hr_expense_replenishment.model_account_move_line
@@ -189,12 +310,7 @@ msgid "Journal Items"
 msgstr "Apuntes contables"
 
 #. module: hr_expense_replenishment
-#: field:hr.expense.expense,date_post:0
-msgid "Accounting Date"
-msgstr "Fecha Contable"
-
-#. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:611
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:640
 #, python-format
 msgid ""
 "You have leave the expense advances empty (Renconcile the Expense will cause "
@@ -209,6 +325,29 @@ msgstr ""
 "Anticipos de Gastos. De lo contrario, por favor, cree algunos anticipos para "
 "el/la empleado/a y Refresque las lineas de Anticipo en la pestaña de "
 "Anticipos de Gastos en el boton \"Refrescar\"."
+
+#. module: hr_expense_replenishment
+#: view:hr.expense.expense:0
+msgid "Show Entries"
+msgstr "Mostrar Apuntes"
+
+#. module: hr_expense_replenishment
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:173
+#, python-format
+msgid ""
+"When the expense request is created the status is 'Draft'.\n"
+" It is confirmed by the user and request is sent to admin, the status is "
+"'Waiting Confirmation'.\\ \n"
+"If the admin accepts it, the status is 'Accepted'.\n"
+" If the accounting entries are made for the expense request, the status is "
+"'Waiting Payment'."
+msgstr ""
+"La Declaración de gasto se crea en Estado Borrador.\n"
+" El usuario la confirma y la Declaración se envía a un Administrador, en "
+"Estado \"Esperando Confirmación\".\\ \n"
+"Si el Administrador acepta, lo pasa al Estado \"Aceptado\".\n"
+" Si la declaración Genera Asientos contables, entonces el estado es "
+"\"Esperando Pago\"."
 
 #. module: hr_expense_replenishment
 #: view:attach.invoice.to.expense.wizard:0
@@ -227,38 +366,53 @@ msgstr ""
 "Solo funciona cuando los gastos estan en estado Borrador."
 
 #. module: hr_expense_replenishment
-#: model:ir.model,name:hr_expense_replenishment.model_attach_invoice_to_expense_wizard
-msgid "attach.invoice.to.expense.wizard"
-msgstr "attach.invoice.to.expense.wizard"
-
-#. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:149
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:733
 #, python-format
-msgid ""
-"When the expense request is created the status is 'Draft'.\n"
-" It is confirmed by the user and request is sent to admin, the status is "
-"'Waiting Confirmation'.\\ \n"
-"If the admin accepts it, the status is 'Accepted'.\n"
-" If the accounting entries are made for the expense request, the status is "
-"'Waiting Payment'."
+msgid "(Applyed Advance)"
+msgstr "(Aplicar Anticipo)"
+
+#. module: hr_expense_replenishment
+#: help:hr.expense.expense,ail_ids:0
+msgid "Deductible Expense"
+msgstr "Gastos Deducibles"
+
+#. module: hr_expense_replenishment
+#: help:hr.expense.expense,advance_ids:0
+msgid "Advances associated to the expense employee."
+msgstr "Anticipos asociados a la Declaración de Gastos del Empleado"
+
+#. module: hr_expense_replenishment
+#: view:account.voucher:0
+msgid "Invoices and outstanding transactions"
 msgstr ""
-"La Declaración de gasto se crea en Estado Borrador.\n"
-" El usuario la confirma y la Declaración se envía a un Administrador, en "
-"Estado \"Esperando Confirmación\".\\ \n"
-"Si el Administrador acepta, lo pasa al Estado \"Aceptado\".\n"
-" Si la declaración Genera Asientos contables, entonces el estado es "
-"\"Esperando Pago\"."
 
 #. module: hr_expense_replenishment
-#: help:account.invoice,expense_id:0
-#: help:account.invoice.line,expense_id:0
-msgid "Expense Document Name"
-msgstr "Nombre de la Declaración de Gastos"
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:137
+#: field:hr.expense.expense,payment_ids:0
+#, python-format
+msgid "Expense Payments"
+msgstr "Pagos de Gastos"
 
 #. module: hr_expense_replenishment
-#: model:ir.model,name:hr_expense_replenishment.model_hr_employee
-msgid "Employee"
-msgstr "Empleado/a"
+#: field:hr.expense.expense,ail_ids:0
+msgid "Invoices lines"
+msgstr "Líneas de Facturas"
+
+#. module: hr_expense_replenishment
+#: model:ir.model,name:hr_expense_replenishment.model_account_voucher
+msgid "Accounting Voucher"
+msgstr "Comprobante Contable"
+
+#. module: hr_expense_replenishment
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:734
+#, python-format
+msgid "(Debt to employee)"
+msgstr "(Deuda al Empleado)"
+
+#. module: hr_expense_replenishment
+#: model:ir.model,name:hr_expense_replenishment.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
 
 #. module: hr_expense_replenishment
 #: view:hr.expense.expense:0
@@ -270,29 +424,82 @@ msgstr ""
 "account_analytic_id}"
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:727
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:746
-#, python-format
-msgid "Payable to Employee"
-msgstr "Pagadero al Empleado"
+#: view:account.voucher:0
+#: view:attach.invoice.to.expense.wizard:0
+#: view:hr.expense.expense:0
+msgid "Cancel"
+msgstr "Anular"
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:704
-#, python-format
-msgid "(Applyed Advance)"
-msgstr "(Aplicar Anticipo)"
+#: view:account.voucher:0
+msgid "Total Allocation"
+msgstr ""
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:784
+#: view:account.voucher:0
+#: view:hr.expense.expense:0
+msgid "Pay"
+msgstr "Pagar"
+
+#. module: hr_expense_replenishment
+#: view:attach.invoice.to.expense.wizard:0
+msgid "Attach invoice to an Expense"
+msgstr "Adjuntar Factura a Declaración de Gastos"
+
+#. module: hr_expense_replenishment
+#: field:hr.employee,account_analytic_id:0
+#: field:hr.expense.expense,account_analytic_id:0
+msgid "Analytic"
+msgstr "Analítico/a"
+
+#. module: hr_expense_replenishment
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:633
 #, python-format
 msgid ""
-"The expense invoices need to be validated. After manually check invoices you "
-"can validate all invoices in batch by using the Validate Invoices button. \n"
-" Invoices to Validate:\n"
+"Integrity Problem. You have advances for this expense but in same time you "
+"active the No advances option. Please uncheck the No advances option or "
+"clean the advances table instead."
 msgstr ""
-"Las Facturas de Gasto necesitan ser validadas. Despues de revisar "
-"manualmente las facturas puede validar todas las facturas en lotes "
-"presionando el botón\"Validar Facturas\".\n"
+"Problema de Integridad. Vd. tiene Anticipos para esta Declaración de Gastos "
+"pero al mismo tiempo tiene activo la opción \"Sin Anticipos\". Por favor, "
+"desmarque la opción \"Sin Anticipos\" o en su lugar limpia la lista de "
+"Anticipos."
+
+#. module: hr_expense_replenishment
+#: view:account.voucher:0
+msgid "Payment Method"
+msgstr ""
+
+#. module: hr_expense_replenishment
+#: view:account.voucher:0
+msgid "Credits"
+msgstr ""
+
+#. module: hr_expense_replenishment
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:859
+#, python-format
+msgid "The folliwing invoices cannot be used in this Expense:\n"
+msgstr ""
+
+#. module: hr_expense_replenishment
+#: field:hr.expense.expense,date_post:0
+msgid "Accounting Date"
+msgstr "Fecha Contable"
+
+#. module: hr_expense_replenishment
+#: view:account.voucher:0
+msgid "Payment"
+msgstr ""
+
+#. module: hr_expense_replenishment
+#: view:account.voucher:0
+msgid "e.g. Invoice SAJ/0042"
+msgstr ""
+
+#. module: hr_expense_replenishment
+#: view:account.voucher:0
+msgid "Customer"
+msgstr ""
 
 #. module: hr_expense_replenishment
 #: view:hr.expense.expense:0
@@ -301,16 +508,11 @@ msgstr "Impuestos Deducibles"
 
 #. module: hr_expense_replenishment
 #: view:hr.expense.expense:0
-msgid "Deduct"
-msgstr "Deducir"
-
-#. module: hr_expense_replenishment
-#: view:hr.expense.expense:0
 msgid "Payments"
 msgstr "Pagos"
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:120
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:145
 #: help:hr.expense.expense,skip:0
 #, python-format
 msgid ""
@@ -326,7 +528,7 @@ msgstr ""
 "Declaración de Gastos."
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:113
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:138
 #: help:hr.expense.expense,payment_ids:0
 #, python-format
 msgid ""
@@ -342,118 +544,15 @@ msgstr ""
 "Gasto \"Esperando Pago\""
 
 #. module: hr_expense_replenishment
-#: help:hr.expense.expense,advance_ids:0
-msgid "Advances associated to the expense employee."
-msgstr "Anticipos asociados a la Declaración de Gastos del Empleado"
-
-#. module: hr_expense_replenishment
-#: view:hr.expense.expense:0
-msgid "Reconcile"
-msgstr "Reconciliar"
-
-#. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:237
-#, python-format
-msgid ""
-"You have not Deductible or No Deductible lines loaded into the expense"
-msgstr ""
-"No tiene líneas Deducibles o No Deducibles en esta declaración de gastos."
-
-#. module: hr_expense_replenishment
 #: field:hr.expense.expense,partner_id:0
 msgid "Partner linked to Employee"
 msgstr "Empresa vinculada al Empleado"
 
 #. module: hr_expense_replenishment
-#: view:hr.expense.expense:0
-msgid "Add Invoice"
-msgstr "Agregar Factura"
-
-#. module: hr_expense_replenishment
-#: field:hr.expense.expense,advance_ids:0
-msgid "Employee Advances"
-msgstr "Anticipos al Empleado"
-
-#. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:112
-#: field:hr.expense.expense,payment_ids:0
-#, python-format
-msgid "Expense Payments"
-msgstr "Pagos de Gastos"
-
-#. module: hr_expense_replenishment
-#: view:account.invoice:0
-msgid ""
-"{'partner_id': partner_id, 'price_type': context.get('price_type') or False, "
-"'type': type, 'analytic_exp': context.get('expense_id', False)}"
-msgstr ""
-"{'partner_id': partner_id, 'price_type': context.get('price_type') or False, "
-"'type': type, 'analytic_exp': context.get('expense_id', False)}"
-
-#. module: hr_expense_replenishment
-#: help:hr.expense.expense,ail_ids:0
-msgid "Deductible Expense"
-msgstr "Gastos Deducibles"
-
-#. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:726
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:755
 #, python-format
 msgid "Payable to Partner"
 msgstr "Pagadero a la Entidad"
-
-#. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:663
-#, python-format
-msgid "Payment through Expense"
-msgstr "Pago mediante Declaración de Gastos"
-
-#. module: hr_expense_replenishment
-#: field:hr.expense.expense,ail_ids:0
-msgid "Invoices lines"
-msgstr "Líneas de Facturas"
-
-#. module: hr_expense_replenishment
-#: view:hr.expense.expense:0
-#: field:hr.expense.expense,invoice_ids:0
-msgid "Invoices"
-msgstr "Facturas"
-
-#. module: hr_expense_replenishment
-#: model:ir.model,name:hr_expense_replenishment.model_account_voucher
-msgid "Accounting Voucher"
-msgstr "Comprobante Contable"
-
-#. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:700
-#, python-format
-msgid "(Remaining Advance)"
-msgstr "(Anticipo Remanente)"
-
-#. module: hr_expense_replenishment
-#: model:ir.model,name:hr_expense_replenishment.model_account_invoice_line
-msgid "Invoice Line"
-msgstr "Línea de factura"
-
-#. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:705
-#, python-format
-msgid "(Debt to employee)"
-msgstr "(Deuda al Empleado)"
-
-#. module: hr_expense_replenishment
-#: model:ir.model,name:hr_expense_replenishment.model_account_invoice
-msgid "Invoice"
-msgstr "Factura"
-
-#. module: hr_expense_replenishment
-#: view:hr.expense.expense:0
-msgid "Load All Advances"
-msgstr "Cargar Todos los Anticipos"
-
-#. module: hr_expense_replenishment
-#: view:attach.invoice.to.expense.wizard:0
-msgid "Cancel"
-msgstr "Anular"
 
 #. module: hr_expense_replenishment
 #: code:addons/hr_expense_replenishment/wizard/attach_invoice_to_expense_wizard.py:46
@@ -466,34 +565,33 @@ msgstr ""
 "que no está en Estado Borrador."
 
 #. module: hr_expense_replenishment
-#: model:ir.actions.act_window,name:hr_expense_replenishment.act_attach_invoice_to_expense_wizard
-msgid "Attach to Expense"
-msgstr "Adjuntar a la Declaración de Gasto"
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:813
+#, python-format
+msgid ""
+"The expense invoices need to be validated. After manually check invoices you "
+"can validate all invoices in batch by using the Validate Invoices button. \n"
+" Invoices to Validate:\n"
+msgstr ""
+"Las Facturas de Gasto necesitan ser validadas. Despues de revisar "
+"manualmente las facturas puede validar todas las facturas en lotes "
+"presionando el botón\"Validar Facturas\".\n"
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:701
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:756
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:775
+#, python-format
+msgid "Payable to Employee"
+msgstr "Pagadero al Empleado"
+
+#. module: hr_expense_replenishment
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:730
 #, python-format
 msgid "(Reconciliation)"
 msgstr "(Reconciliación)"
 
-#. module: hr_expense_replenishment
-#: view:attach.invoice.to.expense.wizard:0
-msgid "or"
-msgstr "O"
-
-#. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:130
-#: field:hr.expense.expense,ait_ids:0
-#, python-format
-msgid "Deductible Tax Lines"
-msgstr "Líneas de Impuestos Deducibles."
-
-#. module: hr_expense_replenishment
-#: view:hr.expense.expense:0
-msgid "Show Entries"
-msgstr "Mostrar Apuntes"
-
-#. module: hr_expense_replenishment
-#: view:hr.expense.expense:0
-msgid "Print Journal Entries"
-msgstr "Imprimir Pólizas"
+#~ msgid ""
+#~ "{'partner_id': partner_id, 'price_type': context.get('price_type') or False, "
+#~ "'type': type, 'analytic_exp': context.get('expense_id', False)}"
+#~ msgstr ""
+#~ "{'partner_id': partner_id, 'price_type': context.get('price_type') or False, "
+#~ "'type': type, 'analytic_exp': context.get('expense_id', False)}"

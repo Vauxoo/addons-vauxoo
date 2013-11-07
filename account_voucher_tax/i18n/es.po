@@ -6,14 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-23 23:36+0000\n"
-"PO-Revision-Date: 2013-09-23 23:36+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:12+0000\n"
+"PO-Revision-Date: 2013-11-07 04:52+0000\n"
+"Last-Translator: Julio Serna-http://www.vauxoo.com <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: account_voucher_tax
 #: field:account.voucher.line.tax,move_line_id:0
@@ -44,6 +45,11 @@ msgstr "Cuenta"
 #: field:account.tax,account_paid_voucher_id:0
 msgid "Account Paid Voucher"
 msgstr "Cuenta de Pago"
+
+#. module: account_voucher_tax
+#: model:ir.model,name:account_voucher_tax.model_account_voucher_line
+msgid "Voucher Lines"
+msgstr "Líneas de comprobante"
 
 #. module: account_voucher_tax
 #: field:account.voucher.line.tax,balance_tax:0
@@ -187,9 +193,9 @@ msgid "Tax"
 msgstr "Impuesto"
 
 #. module: account_voucher_tax
-#: model:ir.model,name:account_voucher_tax.model_account_voucher_line
-msgid "Voucher Lines"
-msgstr "Líneas de comprobante"
+#: field:account.move.line,tax_voucher_id:0
+msgid "Tax Voucher"
+msgstr ""
 
 #. module: account_voucher_tax
 #: field:account.tax,tax_voucher_ok:0
@@ -210,4 +216,3 @@ msgstr "Impuesto a afectar en DIOT"
 #: view:account.voucher:0
 msgid "Total Allocation"
 msgstr "Asignación total"
-

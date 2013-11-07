@@ -6,93 +6,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-05-25 21:08+0000\n"
-"PO-Revision-Date: 2012-05-28 10:11-0400\n"
-"Last-Translator: Miguel <miguel.delgado07@gmail.com>\n"
+"POT-Creation-Date: 2013-11-07 01:11+0000\n"
+"PO-Revision-Date: 2013-11-07 03:27+0000\n"
+"Last-Translator: Miguel Delgado (Vauxoo) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-
-#. module: deliver_project
-#: model:ir.module.module,description:deliver_project.module_meta_information
-msgid ""
-"\n"
-"    Used to improve documentation module to deliver a report to customer one time\n"
-"    project is delivered.\n"
-"\n"
-"    TODO:\n"
-"    List of modules Installed.\n"
-"    List of menues (Adding help from action)\n"
-"    List of Views (Adding printScreens)\n"
-"    List of Tasks related (From Launchpad, Internal OpenERP, External OpenERP, CRM, Mails etc.)\n"
-"    Funcional Intro\n"
-"    Blueprints Related\n"
-"    Hours\n"
-"    Sales Orders related (From your own OpenERP Instance)\n"
-"    Invoices Related (From your OpenERP Instance)\n"
-"    "
-msgstr ""
-"\n"
-"    Usado para mejorar la documentacion de un modulo para ser enviada al usuario a traves de un reporte una vez.\n"
-"el proyecto sea enviado\n"
-"    POR HACER:\n"
-"    Lista de modulos .\n"
-"    Lista de menus (añadir ayuda a las acciones)\n"
-"    Lista de Vistas (añadir impresion de pantalla )\n"
-"    Lista de tareas relacionadas (Launchpad,internas de OpenERP, externas de OpenERP, CRM, Correos, etc.)\n"
-"    Funcional Intro\n"
-"    Blueprints Relacionados\n"
-"    Horas\n"
-"    Ordenes de Venta Relacionadas (De su propia instancia de OpenERP )\n"
-"    Facturas Relacionadas (De su propia instancia de OpenERP)\n"
-"    "
+"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: deliver_project
 #: report:ir.module.vauxoo:0
 msgid "Web"
 msgstr "Web"
-
-#. module: deliver_project
-#: view:ir.module.module:0
-msgid "You can Instrospect on Code."
-msgstr "Usted puede hacer instrospeccion  en el codigo"
-
-#. module: deliver_project
-#: report:ir.module.vauxoo:0
-msgid "Version"
-msgstr "Version"
-
-#. module: deliver_project
-#: report:ir.module.vauxoo:0
-msgid "View :"
-msgstr "Vista :"
-
-#. module: deliver_project
-#: view:ir.module.module:0
-msgid "Docs"
-msgstr "Documentos"
-
-#. module: deliver_project
-#: report:ir.module.vauxoo:0
-msgid "-"
-msgstr "-"
-
-#. module: deliver_project
-#: report:ir.module.vauxoo:0
-msgid ","
-msgstr ","
-
-#. module: deliver_project
-#: model:ir.actions.report.xml,name:deliver_project.ir_module_reference_print22
-msgid "Technical guide Vauxoo"
-msgstr "Guia Tecnica de Vauxoo"
-
-#. module: deliver_project
-#: model:ir.module.module,shortdesc:deliver_project.module_meta_information
-msgid "Deliver Project Report"
-msgstr "Entrega del Reporte del Proyecto"
 
 #. module: deliver_project
 #: report:ir.module.vauxoo:0
@@ -101,13 +28,28 @@ msgstr "Reportes :"
 
 #. module: deliver_project
 #: report:ir.module.vauxoo:0
+msgid "1cm 28cm 20cm 28cm"
+msgstr "1cm 28cm 20cm 28cm"
+
+#. module: deliver_project
+#: report:ir.module.vauxoo:0
+msgid "Version"
+msgstr "Version"
+
+#. module: deliver_project
+#: report:ir.module.vauxoo:0
 msgid "Name"
 msgstr "Nombre"
 
 #. module: deliver_project
 #: view:ir.module.module:0
+msgid "Docs"
+msgstr "Documentos"
+
+#. module: deliver_project
+#: view:ir.module.module:0
 msgid "Button"
-msgstr "Boton "
+msgstr "Boton"
 
 #. module: deliver_project
 #: view:ir.module.module:0
@@ -116,19 +58,9 @@ msgid "Documentation"
 msgstr "Documentacion"
 
 #. module: deliver_project
-#: report:ir.module.vauxoo:0
-msgid "Dependencies :"
-msgstr "Dependencias :"
-
-#. module: deliver_project
-#: report:ir.module.vauxoo:0
-msgid "Directory"
-msgstr "Directorio"
-
-#. module: deliver_project
-#: report:ir.module.vauxoo:0
-msgid "1cm 28cm 20cm 28cm"
-msgstr "1cm 28cm 20cm 28cm"
+#: view:ir.module.module:0
+msgid "You can Instrospect on Code."
+msgstr "Usted puede hacer instrospeccion  en el codigo"
 
 #. module: deliver_project
 #: model:ir.model,name:deliver_project.model_ir_module_module
@@ -142,9 +74,19 @@ msgid "Introspection report on objects"
 msgstr "introspección sobre el reporte de  los objetos"
 
 #. module: deliver_project
+#: report:ir.module.vauxoo:0
+msgid "Reference Guide"
+msgstr "Guia de Referencia"
+
+#. module: deliver_project
 #: model:ir.actions.report.xml,name:deliver_project.report_ir_model_overview
 msgid "Development Deliver"
 msgstr "Entregar el Desarrollo"
+
+#. module: deliver_project
+#: model:ir.actions.report.xml,name:deliver_project.ir_module_reference_print22
+msgid "Technical guide Vauxoo"
+msgstr "Guia Tecnica de Vauxoo"
 
 #. module: deliver_project
 #: report:ir.module.vauxoo:0
@@ -153,11 +95,65 @@ msgstr "Menu :"
 
 #. module: deliver_project
 #: report:ir.module.vauxoo:0
-msgid "Reference Guide"
-msgstr "Guia de Referencia"
+msgid "Directory"
+msgstr "Directorio"
 
 #. module: deliver_project
 #: report:ir.module.vauxoo:0
 msgid "Object:"
 msgstr "Objeto:"
 
+#. module: deliver_project
+#: report:ir.module.vauxoo:0
+msgid "Dependencies :"
+msgstr "Dependencias :"
+
+#. module: deliver_project
+#: report:ir.module.vauxoo:0
+msgid "View :"
+msgstr "Vista :"
+
+#~ msgid ""
+#~ "\n"
+#~ "    Used to improve documentation module to deliver a report to customer one "
+#~ "time\n"
+#~ "    project is delivered.\n"
+#~ "\n"
+#~ "    TODO:\n"
+#~ "    List of modules Installed.\n"
+#~ "    List of menues (Adding help from action)\n"
+#~ "    List of Views (Adding printScreens)\n"
+#~ "    List of Tasks related (From Launchpad, Internal OpenERP, External "
+#~ "OpenERP, CRM, Mails etc.)\n"
+#~ "    Funcional Intro\n"
+#~ "    Blueprints Related\n"
+#~ "    Hours\n"
+#~ "    Sales Orders related (From your own OpenERP Instance)\n"
+#~ "    Invoices Related (From your OpenERP Instance)\n"
+#~ "    "
+#~ msgstr ""
+#~ "\n"
+#~ "    Usado para mejorar la documentacion de un modulo para ser enviada al "
+#~ "usuario a traves de un reporte una vez.\n"
+#~ "el proyecto sea enviado\n"
+#~ "    POR HACER:\n"
+#~ "    Lista de modulos .\n"
+#~ "    Lista de menus (añadir ayuda a las acciones)\n"
+#~ "    Lista de Vistas (añadir impresion de pantalla )\n"
+#~ "    Lista de tareas relacionadas (Launchpad,internas de OpenERP, externas de "
+#~ "OpenERP, CRM, Correos, etc.)\n"
+#~ "    Funcional Intro\n"
+#~ "    Blueprints Relacionados\n"
+#~ "    Horas\n"
+#~ "    Ordenes de Venta Relacionadas (De su propia instancia de OpenERP )\n"
+#~ "    Facturas Relacionadas (De su propia instancia de OpenERP)\n"
+#~ "    "
+
+#~ msgid "-"
+#~ msgstr "-"
+
+#~ msgid ","
+#~ msgstr ","
+
+#~ msgid "Deliver Project Report"
+#~ msgstr "Entrega del Reporte del Proyecto"

@@ -6,71 +6,53 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-05-25 18:38+0000\n"
-"PO-Revision-Date: 2012-05-25 14:11-0400\n"
-"Last-Translator: Miguel <miguel.delgado07@gmail.com>\n"
+"POT-Creation-Date: 2013-11-07 01:09+0000\n"
+"PO-Revision-Date: 2013-11-07 03:28+0000\n"
+"Last-Translator: Miguel Delgado (Vauxoo) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-
-#. module: multireport_base
-#: field:account.invoice,payment_method_id:0
-#: view:base.new.model:0
-#: model:ir.actions.act_window,name:multireport_base.action_new_model
-#: model:ir.ui.menu,name:multireport_base.menu_payment_method
-#: model:ir.ui.menu,name:multireport_base.menu_payment_method1
-msgid "Payment Method"
-msgstr "Metodo de Pago"
-
-#. module: multireport_base
-#: constraint:account.invoice:0
-msgid "The Document you have been entering for this Partner has already been recorded"
-msgstr "El documento que esta intentando ingresar ya ha sido grabado en el sistema "
-
-#. module: multireport_base
-#: model:payment.method,name:multireport_base.pm_transfer
-msgid "Transfer"
-msgstr "Tranferencia"
-
-#. module: multireport_base
-#: help:account.invoice,payment_method_id:0
-msgid "In this field selects the payment method with which to cancel the invoice"
-msgstr "En este campo seleccione la forma de pago con la cual desea cancelar la factura "
-
-#. module: multireport_base
-#: model:payment.method,name:multireport_base.pm_cash
-msgid "Cash"
-msgstr "Efectivo"
+"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: multireport_base
 #: view:res.company:0
 msgid "Reports"
 msgstr "Reportes"
 
-#. module: multireport_base
-#: field:payment.method,name:0
-msgid "Payment method"
-msgstr "Metodo de Pago"
+#~ msgid "Payment Method"
+#~ msgstr "Metodo de Pago"
 
-#. module: multireport_base
-#: model:payment.method,name:multireport_base.pm_deposit
-msgid "Deposit"
-msgstr "Deposito"
+#~ msgid ""
+#~ "The Document you have been entering for this Partner has already been "
+#~ "recorded"
+#~ msgstr ""
+#~ "El documento que esta intentando ingresar ya ha sido grabado en el sistema"
 
-#. module: multireport_base
-#: model:ir.model,name:multireport_base.model_account_invoice
-msgid "Invoice"
-msgstr "Factura"
+#~ msgid "Transfer"
+#~ msgstr "Tranferencia"
 
-#. module: multireport_base
-#: model:payment.method,name:multireport_base.pm_check
-msgid "Check"
-msgstr "Cheque"
+#~ msgid ""
+#~ "In this field selects the payment method with which to cancel the invoice"
+#~ msgstr ""
+#~ "En este campo seleccione la forma de pago con la cual desea cancelar la "
+#~ "factura"
 
-#. module: multireport_base
-#: model:ir.model,name:multireport_base.model_payment_method
-msgid "payment.method"
-msgstr "payment.method"
+#~ msgid "Cash"
+#~ msgstr "Efectivo"
 
+#~ msgid "Payment method"
+#~ msgstr "Metodo de Pago"
+
+#~ msgid "Deposit"
+#~ msgstr "Deposito"
+
+#~ msgid "Invoice"
+#~ msgstr "Factura"
+
+#~ msgid "Check"
+#~ msgstr "Cheque"
+
+#~ msgid "payment.method"
+#~ msgstr "payment.method"

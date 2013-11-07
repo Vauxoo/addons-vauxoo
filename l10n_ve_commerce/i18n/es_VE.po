@@ -6,11 +6,114 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-05-28 17:47+0000\n"
-"PO-Revision-Date: 2012-05-28 13:24-0400\n"
-"Last-Translator: Miguel <miguel.delgado07@gmail.com>\n"
+"POT-Creation-Date: 2013-11-07 01:10+0000\n"
+"PO-Revision-Date: 2013-11-07 04:31+0000\n"
+"Last-Translator: Miguel Delgado (Vauxoo) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
+
+#. module: l10n_ve_commerce
+#: model:account.account.type,name:l10n_ve_commerce.account_type_receivable
+msgid "Receivable"
+msgstr ""
+
+#. module: l10n_ve_commerce
+#: model:ir.model,name:l10n_ve_commerce.model_wizard_multi_charts_accounts
+msgid "wizard.multi.charts.accounts"
+msgstr "wizard.multi.charts.accounts"
+
+#. module: l10n_ve_commerce
+#: model:account.account.type,name:l10n_ve_commerce.account_type_equity
+msgid "Equity"
+msgstr ""
+
+#. module: l10n_ve_commerce
+#: model:account.account.type,name:l10n_ve_commerce.account_type_tax
+msgid "Tax"
+msgstr ""
+
+#. module: l10n_ve_commerce
+#: model:account.account.type,name:l10n_ve_commerce.account_type_cash
+msgid "Cash"
+msgstr ""
+
+#. module: l10n_ve_commerce
+#: model:account.account.type,name:l10n_ve_commerce.account_type_payable
+msgid "Payable"
+msgstr ""
+
+#. module: l10n_ve_commerce
+#: model:account.account.type,name:l10n_ve_commerce.account_type_asset
+msgid "Asset"
+msgstr ""
+
+#. module: l10n_ve_commerce
+#: model:account.account.type,name:l10n_ve_commerce.account_type_income
+msgid "Income"
+msgstr ""
+
+#. module: l10n_ve_commerce
+#: model:ir.actions.todo,note:l10n_ve_commerce.config_call_account_template_ve_chart
+msgid ""
+"Generate Chart of Accounts from a Chart Template. You will be asked to pass "
+"the name of the company, the chart template to follow, the no. of digits to "
+"generate the code for your accounts and Bank account, currency to create "
+"Journals. Thus,the pure copy of chart Template is generated.\n"
+"This is the same wizard that runs from Financial "
+"Management/Configuration/Financial Accounting/Financial Accounts/Generate "
+"Chart of Accounts from a Chart Template.\n"
+"Genere el Plan de cuentas de una Plantilla de Carta. Le pedirán pasar el "
+"nombre de la compania, la plantilla de carta para seguir, el no. de digitos "
+"para generar el codigo para sus cuentas y cuenta Bancaria, dinero para crear "
+"Diarios. Asi, la copia pura de la carta la Plantilla es generada.\n"
+"Esto es el mismo wizard que corre de la Financial "
+"Management/Configuration/Financial Accounting/Financial Accounts/Generate "
+"Chart of Accounts from a Chart Template.\n"
+"IMPORTANTE:\n"
+"- Selecciona 7 digitos.\n"
+"- Asegurate de seleccionar el catalogo correcto.\n"
+"- deberas crear los diarios de Caja Manualmente para cada Cuenta bancaria, "
+"evita generarlos por esta via.\n"
+"            "
+msgstr ""
+"Genere el Plan de cuentas de una Plantilla de Carta. Le pedirán pasar el "
+"nombre de la compania, la plantilla de carta para seguir, el no. de digitos "
+"para generar el codigo para sus cuentas y cuenta Bancaria, dinero para crear "
+"Diarios. Asi, la copia pura de la carta la Plantilla es generada.\n"
+"Esto es el mismo wizard que corre de la Financial "
+"Management/Configuration/Financial Accounting/Financial Accounts/Generate "
+"Chart of Accounts from a Chart Template.\n"
+"IMPORTANTE:\n"
+"- Selecciona 7 digitos.\n"
+"- Asegurate de seleccionar el catalogo correcto.\n"
+"- deberas crear los diarios de Caja Manualmente para cada Cuenta bancaria, "
+"evita generarlos por esta via.\n"
+"            "
+
+#. module: l10n_ve_commerce
+#: model:account.account.type,name:l10n_ve_commerce.account_type_expense
+msgid "Expense"
+msgstr ""
+
+#. module: l10n_ve_commerce
+#: model:account.account.type,name:l10n_ve_commerce.account_type_view
+msgid "View"
+msgstr ""
+
+#~ msgid ""
+#~ "\n"
+#~ "This Module load a generic format for manage medium and big business.\n"
+#~ "You will need accounting knowledge to understad sone concepts.\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Este modulo carga un formato generico para gestionar un negocio mediano o "
+#~ "grande.\n"
+#~ "Usted necesita conocimientos de contabilidad para entender algunos conceptos "
+#~ ".\n"
+
+#~ msgid "Commercial Chart Account for Venezuela"
+#~ msgstr "Catalogo de Cuentas Comerciales para Venezuela"
