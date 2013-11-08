@@ -781,7 +781,7 @@ class account_invoice(osv.Model):
         nodeComprobante.setAttribute("sello", sign_str)
         data_dict['Comprobante']['sello'] = sign_str
 
-        noCertificado = self._get_noCertificado(context['fname_cer'])
+        noCertificado = self._get_noCertificado(cr, uid, ids, context['fname_cer'])
         if not noCertificado:
             raise osv.except_osv(_('Error in No. Certificate !'), _(
                 "Can't get the Certificate Number of the voucher.\nCkeck your configuration.\n%s") % (msg2))
@@ -833,8 +833,8 @@ class account_invoice(osv.Model):
                     # If dir is in path, save it on real_path
                     fname_scheme = my_path and os.path.join(my_path, 'l10n_mx_facturae', 'SAT', facturae_type + facturae_version +  '.' + scheme_type) or ''
                     #fname_scheme = os.path.join(tools.config["addons_path"], u'l10n_mx_facturae', u'SAT', facturae_type + facturae_version +  '.' + scheme_type )
-                    fname_out = certificate_lib.b64str_to_tempfile( base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__schema_validation_result__' )
-                    result = certificate_lib.check_xml_scheme(fname_data_xml, fname_scheme, fname_out)
+                    fname_out = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__schema_validation_result__' )
+                    result = certificate_lib.check_xml_scheme(cr, uid, ids, fname_data_xml, fname_scheme, fname_out)
                     if result: #Valida el xml mediante el archivo xsd
                         raise osv.except_osv('Error al validar la estructura del xml!', 'Validación de XML versión %s:\n%s'%(facturae_version, result))
         return True
@@ -866,22 +866,26 @@ class account_invoice(osv.Model):
             self.write(cr, uid, [id], data, context=context)
         return True
 
-    def _get_noCertificado(self, fname_cer, pem=True):
+    def _get_noCertificado(self, cr, uid, ids, fname_cer, pem=True, context=None):
         """
         @param fname_cer : Path more name of file created whit information 
                     of certificate with suffix .pem
         @param pem : Boolean that indicate if file is .pem
         """
+        if context is None:
+            context = {}
         certificate_lib = self.pool.get('facturae.certificate.library')
-        fname_serial = certificate_lib.b64str_to_tempfile(base64.encodestring(
+        fname_serial = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(
             ''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + \
             '__serial__')
-        result = certificate_lib._get_param_serial(
+        result = certificate_lib._get_param_serial(cr, uid, ids,
             fname_cer, fname_out=fname_serial, type='PEM')
         return result
 
-    def _get_sello(self, cr=False, uid=False, ids=False, context={}):
+    def _get_sello(self, cr=False, uid=False, ids=False, context=None):
         # TODO: Put encrypt date dynamic
+        if context is None:
+            context = {}
         fecha = context['fecha']
         year = float(time.strftime('%Y', time.strptime(
             fecha, '%Y-%m-%dT%H:%M:%S')))
@@ -890,20 +894,20 @@ class account_invoice(osv.Model):
         if year <= 2010:
             encrypt = "md5"
         certificate_lib = self.pool.get('facturae.certificate.library')
-        fname_sign = certificate_lib.b64str_to_tempfile(base64.encodestring(
+        fname_sign = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(
             ''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + \
             '__sign__')
-        result = certificate_lib._sign(fname=context['fname_xml'],
+        result = certificate_lib._sign(cr, uid, ids, fname=context['fname_xml'],
             fname_xslt=context['fname_xslt'], fname_key=context['fname_key'],
             fname_out=fname_sign, encrypt=encrypt, type_key='PEM')
         return result
 
     def _xml2cad_orig(self, cr=False, uid=False, ids=False, context={}):
         certificate_lib = self.pool.get('facturae.certificate.library')
-        fname_tmp = certificate_lib.b64str_to_tempfile(base64.encodestring(
+        fname_tmp = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(
             ''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + \
             '__cadorig__')
-        cad_orig = certificate_lib._transform_xml(fname_xml=context['fname_xml'],
+        cad_orig = certificate_lib._transform_xml(cr, uid, ids, fname_xml=context['fname_xml'],
             fname_xslt=context['fname_xslt'], fname_out=fname_tmp)
         return fname_tmp, cad_orig
 

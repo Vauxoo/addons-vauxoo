@@ -117,9 +117,13 @@ class ir_attachment_facturae_mx(osv.Model):
         return True
 
     def signal_confirm(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        from l10n_mx_facturae_lib import facturae_lib
+        msj, app_xsltproc_fullpath, app_openssl_fullpath, app_xmlstarlet_fullpath = facturae_lib.library_openssl_xsltproc_xmlstarlet(cr, uid, ids, context)
+        if msj:
+            raise osv.except_osv(_('Warning'),_(msj))
         try:
-            if context is None:
-                context = {}
             invoice_obj = self.pool.get('account.invoice')
             attach = ''
             msj = ''
