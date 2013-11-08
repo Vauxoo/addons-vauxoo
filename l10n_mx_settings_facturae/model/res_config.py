@@ -78,14 +78,22 @@ class facturae_config_settings(osv.osv_memory):
         data = dat and dat[0] or False
         if data:
             email_tmp_id = email_obj.browse(cr, uid, data)
-        return {'email_tmp_id': email_tmp_id and email_tmp_id.id or False,
-                'temp_report_id':  email_tmp_id and email_tmp_id.report_template.id or False, }
+        return {'email_tmp_id': email_tmp_id and email_tmp_id.id or False,}
     
     def get_default_mail_server_id(self, cr, uid, fields, context=None):
         company_id = self.pool.get('res.users')._get_company(cr, uid, context=context)
         mail_server_obj = self.pool.get('ir.mail_server')
-        mail_server_id = mail_server_obj.search(cr, uid, [('company_id', '=', company_id), ('active', '=', True)], order = 'sequence', limit = 1)
+        mail_server_id = mail_server_obj.search(cr, uid, [('company_id', '=', company_id),
+            ('active', '=', True)], order = 'sequence', limit = 1)
         return {'mail_server_id': mail_server_id or False}
+
+    def get_default_temp_report_id(self, cr, uid, fields, context=None):
+        company_id = self.pool.get('res.users')._get_company(cr, uid, context=context)
+        temp_report_obj = self.pool.get('ir.actions.report.xml')
+        temp_report_id = temp_report_obj.search(cr, uid, [('company_id', '=', company_id), 
+            ('active', '=', True), ('report_name', 'ilike', 'account.invoice.facturae.webkit'),
+                ('model', '=', 'account.invoice')], limit = 1)
+        return {'temp_report_id': temp_report_id or False}
 
     def create(self, cr, uid, values, context=None):
         confg_id = super(facturae_config_settings, self).create(
