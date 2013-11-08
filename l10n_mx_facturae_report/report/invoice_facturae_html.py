@@ -232,7 +232,7 @@ class invoice_facturae_html(report_sxw.rml_parse):
         pac_params_ids = pac_params_obj.search(self.cr, self.uid, [
             ('method_type', '=', 'pac_sf_firmar'),
             ('company_id', '=', invoice.company_id.id), 
-            ('active', '=', True)], limit=1, context={})
+            ('active', '=', True)], limit=1)
         pac_params_id = pac_params_ids and pac_params_ids[0] or False
         if pac_params_id:
             data_pac = pac_params_obj.browse(self.cr, self.uid, pac_params_id)

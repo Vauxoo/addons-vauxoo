@@ -203,7 +203,7 @@ class ir_sequence(osv.Model):
                     """
                     else:
                         _validation_sequence_number_diff(self, cr, uid, ids,
-                            context={}):
+                            context=context):
                         sequence_number_diff = sequence.approval_id.number_end \
                             - sequence.next_number
                         if sequence_number_diff <= sequence_number_diff_rate:

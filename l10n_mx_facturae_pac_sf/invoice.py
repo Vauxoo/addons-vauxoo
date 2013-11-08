@@ -135,7 +135,7 @@ class account_invoice(osv.Model):
         return super(account_invoice, self).action_cancel_draft(cr, uid, ids, args)
     """
 
-    def _get_file(self, cr, uid, inv_ids, context={}):
+    def _get_file(self, cr, uid, inv_ids, context=None):
         if context is None:
             context = {}
         ids = isinstance(ids, (int, long)) and [ids] or ids

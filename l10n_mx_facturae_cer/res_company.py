@@ -283,7 +283,7 @@ class res_company(osv.Model):
         return res
 
     """
-    def copy(self, cr, uid, id, default={}, context={}, done_list=[], local=False):
+    def copy(self, cr, uid, id, default={}, context=None, done_list=[], local=False):
         if not default:
             default = {}
         default = default.copy()

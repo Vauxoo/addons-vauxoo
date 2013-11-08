@@ -675,7 +675,7 @@ class account_invoice(osv.Model):
                     'Not found a sequence of configuration. %s !') % (msg2))
         return folio_data
 
-    def _dict_iteritems_sort(self, data_dict):  # cr=False, uid=False, ids=[], context={}):
+    def _dict_iteritems_sort(self, data_dict):  # cr=False, uid=False, ids=[], context=None):
         """
         @param data_dict : Dictionary with data from invoice
         """
