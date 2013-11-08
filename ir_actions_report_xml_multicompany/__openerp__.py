@@ -22,15 +22,15 @@
 ################################################################################
 
 {
-    "name" : "Field Active In Analytic Accounts",
+    "name" : "Fields Active, Company And Sequence For Model Ir_actions_report_xml",
     "version" : "1.0",
     "author" : "Vauxoo",
-    "category" : "Accouting",
+    "category" : "Generic",
     "description" : """
-Field Active In Analytic Accounts
-=================================
+Fields Active, Company And Sequence For Model Ir_actions_report_xml
+===================================================================
 
-Add field active to analytic accounts 
+Add fields Active, Company And Sequence to Model Ir_actions_report_xml
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
