@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-07 01:12+0000\n"
-"PO-Revision-Date: 2013-11-07 03:27+0000\n"
-"Last-Translator: Moisés López - http://www.vauxoo.com "
-"<moylop260@vauxoo.com>\n"
+"PO-Revision-Date: 2013-11-07 07:45+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: add_followers
@@ -27,6 +27,8 @@ msgstr "Grupos y Usuarios"
 msgid ""
 "Used to add a followers group from mail group and not for Users directly"
 msgstr ""
+"Usado para agregar grupo de seguidores desde un grupo de correo y no desde "
+"usuarios directamente"
 
 #. module: add_followers
 #: field:mail.wizard.invite,mail_groups:0
@@ -59,7 +61,7 @@ msgstr "Añadir seguidores"
 #. module: add_followers
 #: model:res.groups,name:add_followers.group_add_followers
 msgid "Add Followers/Managers"
-msgstr ""
+msgstr "Agregar Seguidores/Managers"
 
 #. module: add_followers
 #: help:mail.wizard.invite,p_a_g:0
@@ -102,13 +104,4 @@ msgstr "o"
 #. module: add_followers
 #: help:mail.wizard.invite,partners:0
 msgid "Used to add a followers group by users"
-msgstr ""
-
-#~ msgid ""
-#~ "Used to add a followers group from mail.group and not for Users directly"
-#~ msgstr ""
-#~ "Usado para agregar grupo de seguidores los cuales se encuentran en el "
-#~ "modelos mail.group para no agregar usuarios directamente"
-
-#~ msgid "Used to add a followers by users "
-#~ msgstr "Usado para gregar seguidores por usuario "
+msgstr "Usado para agregar seguidores al grupo por usuario"

@@ -13,7 +13,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:28+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: validate_stock_move_product
@@ -32,6 +32,3 @@ msgstr "Moviemiento de stock"
 #, python-format
 msgid "Not enough products in %s according to the quantity ordered. "
 msgstr "No hay suficientes productos en %s según la cantidad ordenada. "
-
-#~ msgid "Product"
-#~ msgstr "Producto"

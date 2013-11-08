@@ -13,7 +13,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: account_move_line_base_tax
@@ -90,6 +90,3 @@ msgstr "Impuesto Secundario"
 #: help:account.move.line,tax_id_secondary:0
 msgid "Tax used for this move"
 msgstr "Impuesto utilizado para este movimiento"
-
-#~ msgid "Account Entry"
-#~ msgstr "Asiento contable"

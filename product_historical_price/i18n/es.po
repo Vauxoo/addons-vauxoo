@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: product_historical_price
@@ -120,33 +120,3 @@ msgstr "Fecha"
 #: field:product.product,list_price_historical:0
 msgid "Latest Price"
 msgstr "Último Precio"
-
-#~ msgid ""
-#~ "Choose here the Unit of Measure in which the prices and quantities are "
-#~ "expressed below."
-#~ msgstr ""
-#~ "Elija la unidad de medida en la que los precios y las cantidades se expresan "
-#~ "a continuación"
-
-#~ msgid ""
-#~ "\n"
-#~ "    What do this module:\n"
-#~ "    This module gets the historical price of a product\n"
-#~ "                    "
-#~ msgstr ""
-#~ "\n"
-#~ "    Que hace este módulo:\n"
-#~ "    Este módulo obtiene el precio historico de un producto\n"
-#~ "                    "
-
-#~ msgid "Product Historical Price"
-#~ msgstr "Precio histórico de producto"
-
-#~ msgid "Error: Invalid ean code"
-#~ msgstr "Error: Código EAN erróneo"
-
-#~ msgid "Latest Recorded Historical Value"
-#~ msgstr "Último valor histórico registrado"
-
-#~ msgid "Latest Recorded Historical Cost"
-#~ msgstr "Último Costo Histórico Grabado"

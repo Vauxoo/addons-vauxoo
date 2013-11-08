@@ -13,46 +13,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: multireport_base
 #: view:res.company:0
 msgid "Reports"
 msgstr "Reportes"
-
-#~ msgid "Payment Method"
-#~ msgstr "Metodo de Pago"
-
-#~ msgid ""
-#~ "The Document you have been entering for this Partner has already been "
-#~ "recorded"
-#~ msgstr ""
-#~ "El documento que esta intentando ingresar ya ha sido grabado en el sistema"
-
-#~ msgid "Transfer"
-#~ msgstr "Tranferencia"
-
-#~ msgid ""
-#~ "In this field selects the payment method with which to cancel the invoice"
-#~ msgstr ""
-#~ "En este campo seleccione la forma de pago con la cual desea cancelar la "
-#~ "factura"
-
-#~ msgid "Cash"
-#~ msgstr "Efectivo"
-
-#~ msgid "Payment method"
-#~ msgstr "Metodo de Pago"
-
-#~ msgid "Deposit"
-#~ msgstr "Deposito"
-
-#~ msgid "Invoice"
-#~ msgstr "Factura"
-
-#~ msgid "Check"
-#~ msgstr "Cheque"
-
-#~ msgid "payment.method"
-#~ msgstr "payment.method"

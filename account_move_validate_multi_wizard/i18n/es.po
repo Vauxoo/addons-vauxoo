@@ -6,25 +6,37 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-07 14:28+0000\n"
-"PO-Revision-Date: 2013-07-07 14:28+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:13+0000\n"
+"PO-Revision-Date: 2013-11-07 07:52+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: account_move_validate_multi_wizard
-#: model:ir.actions.act_window,name:account_move_validate_multi_wizard.action_account_move_validate_multi_wizard
-#: model:ir.actions.act_window,name:account_move_validate_multi_wizard.menu_account_move_validate_multi_wizard_action
+#: view:account.move.multi.wizard:0
+#: model:ir.actions.act_window,name:account_move_validate_multi_wizard.account_move_validate_multi_wizard_act
 msgid "Validate Multi Journal Entries"
 msgstr "Validar multiples pólizas"
 
 #. module: account_move_validate_multi_wizard
-#: view:account.move.multi.wizard:0
-msgid "Are you sure change state?"
-msgstr "Esta seguro de cambiar estas pólizas de estado?"
+#: field:account.move.multi.wizard,account_move_ids:0
+msgid "unknown"
+msgstr "desconocido"
+
+#. module: account_move_validate_multi_wizard
+#: field:account.move.multi.wizard,result:0
+msgid "Result"
+msgstr "Resultado"
+
+#. module: account_move_validate_multi_wizard
+#: model:ir.model,name:account_move_validate_multi_wizard.model_account_move_multi_wizard
+msgid "account.move.multi.wizard"
+msgstr "account.move.multi.wizard"
 
 #. module: account_move_validate_multi_wizard
 #: view:account.move.multi.wizard:0
@@ -36,3 +48,12 @@ msgstr "Cancelar"
 msgid "Apply"
 msgstr "Aplicar"
 
+#. module: account_move_validate_multi_wizard
+#: view:account.move.multi.wizard:0
+msgid "or"
+msgstr "o"
+
+#. module: account_move_validate_multi_wizard
+#: view:account.move.multi.wizard:0
+msgid "Journal Entries Unbalance"
+msgstr "Asiento contable descuadrado"

@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-07 01:11+0000\n"
-"PO-Revision-Date: 2013-11-07 03:31+0000\n"
-"Last-Translator: Jose Antonio Morales Ponce(vauxoo) - - "
-"http://www.vauxoo.com <Unknown>\n"
+"PO-Revision-Date: 2013-11-07 07:34+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: configure_account_partner
@@ -86,6 +86,8 @@ msgstr ""
 msgid ""
 "Company used to define account by company and set in the partners selected"
 msgstr ""
+"Compañía usada para definir la cuenta por compañía y Establecerla en las "
+"empresas seleccionadas"
 
 #. module: configure_account_partner
 #: field:configure.account.partner,account_receivable:0
@@ -117,9 +119,3 @@ msgstr ""
 #: field:configure.account.partner,webkit_partner:0
 msgid "Configure Property Webkit And Partner"
 msgstr "Configura Webkit propietario and Clientes"
-
-#~ msgid ""
-#~ "Company used to define account for company and set in the partners selected"
-#~ msgstr ""
-#~ "Compañía usada para definir cuentas por compañía y configurarlas en los "
-#~ "clientes seleccionados"

@@ -7,13 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-07 01:09+0000\n"
-"PO-Revision-Date: 2013-11-07 03:27+0000\n"
-"Last-Translator: Fernando Lopez <fernando_ld@vauxoo.com>\n"
+"PO-Revision-Date: 2013-11-07 08:10+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: mrp_request_return
@@ -85,7 +86,7 @@ msgstr "Picking"
 #. module: mrp_request_return
 #: model:ir.model,name:mrp_request_return.model_mrp_consume
 msgid "mrp.consume"
-msgstr ""
+msgstr "mrp.consume"
 
 #. module: mrp_request_return
 #: view:mrp.request.return:0
@@ -113,7 +114,7 @@ msgstr "Productos"
 #: code:addons/mrp_request_return/mrp.py:76
 #, python-format
 msgid "PROD: %s"
-msgstr ""
+msgstr "PROD: %s"
 
 #. module: mrp_request_return
 #: field:mrp.request.return.line,product_uos_qty:0
@@ -144,34 +145,3 @@ msgstr "Cancel"
 #: field:mrp.request.return.line,location_dest_id:0
 msgid "Dest. Location"
 msgstr "Ubicación Dest."
-
-#~ msgid "You must assign a production lot for this product"
-#~ msgstr "Debe asignar un lote de producción para este producto"
-
-#~ msgid "Return"
-#~ msgstr "Return"
-
-#~ msgid "You try to assign a lot which is not from the same product"
-#~ msgstr "Está intentando asignar un lote que no es del mismo producto"
-
-#~ msgid ""
-#~ "You can not consume more product of the ones you have to consume. You need "
-#~ "to request them first"
-#~ msgstr ""
-#~ "No puedes consumir mas producto del que tienes para consumir. Necesitas "
-#~ "solicitarlos primero"
-
-#~ msgid "Error!"
-#~ msgstr "¡Error!"
-
-#~ msgid "Reference must be unique per Company!"
-#~ msgstr "Referencia debe ser única por compañía!"
-
-#~ msgid "Order quantity cannot be negative or zero!"
-#~ msgstr "¡La cantidad de la orden no puede ser negativa o cero!"
-
-#~ msgid "Stock Move"
-#~ msgstr "Moviemiento de stock"
-
-#~ msgid "You can not move products from or to a location of the type view."
-#~ msgstr "No puedes mover productos desde o hacia una ubicación de tipo vista."

@@ -13,7 +13,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: sale_double_validation
@@ -53,27 +53,3 @@ msgstr "Configurar Grupo de Aprobacion para Ordenes de Venta"
 #: model:ir.model,name:sale_double_validation.model_sale_double_validation_installer
 msgid "sale.double.validation.installer"
 msgstr "sale.double.validation.installer"
-
-#~ msgid ""
-#~ "Setting this field to a group will only allow to that group to approve Sale "
-#~ "Orders. \n"
-#~ "        Leave blank to allow any group to approve to"
-#~ msgstr ""
-#~ "Al configurar este campo a un grupo se le permitira solo a ese gropo aprobar "
-#~ "Ordenes de Venta. \n"
-#~ "       Deje en blanco para que cualquier grupo apruebe."
-
-#~ msgid "Configuration Progress"
-#~ msgstr "Progreso de la Configuracion"
-
-#~ msgid "Define the group which will approve the Sale Orders."
-#~ msgstr "Defina el grupo el cual aprobara Ordenes de Venta"
-
-#~ msgid "Image"
-#~ msgstr "Imagen"
-
-#~ msgid "res_config_contents"
-#~ msgstr "res_config_contents"
-
-#~ msgid "Required Group"
-#~ msgstr "Grupo Requerido"

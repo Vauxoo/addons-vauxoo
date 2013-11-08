@@ -8,13 +8,14 @@ msgstr ""
 "Project-Id-Version: addons-vauxoo\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-11-07 01:13+0000\n"
-"PO-Revision-Date: 2013-10-21 19:59+0000\n"
-"Last-Translator: Saul Gonzalez <saul@vauxoo.com>\n"
+"PO-Revision-Date: 2013-11-07 07:58+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: account_move_folio
@@ -96,19 +97,19 @@ msgstr "Período: Abierto"
 #. module: account_move_folio
 #: view:account.move.folio.fill.gap:0
 msgid "Are you sure?"
-msgstr ""
+msgstr "¿Está seguro?"
 
 #. module: account_move_folio
 #: view:account.move.folio.fill.gap:0
 #: model:ir.actions.act_window,name:account_move_folio.action_account_move_folio_fill_gap
 #: model:ir.ui.menu,name:account_move_folio.account_move_folio_fill_gap_menu
 msgid "Fill Folio Gaps"
-msgstr ""
+msgstr "Llenar Brechas en Folios"
 
 #. module: account_move_folio
 #: view:account.move.folio.fill.gap:0
 msgid "or"
-msgstr ""
+msgstr "o"
 
 #. module: account_move_folio
 #: view:account.move.folio:0
@@ -159,7 +160,7 @@ msgstr "Registros de Folios en Comprobantes Diarios"
 #. module: account_move_folio
 #: model:ir.model,name:account_move_folio.model_account_move_folio_fill_gap
 msgid "Fill Gap in Journal Entry Folios"
-msgstr ""
+msgstr "Llenar brecha en Folios de Asientos Contables"
 
 #. module: account_move_folio
 #: view:account.move.folio:0
@@ -200,7 +201,7 @@ msgstr "Período"
 #. module: account_move_folio
 #: view:account.move.folio.fill.gap:0
 msgid "Fill Gaps"
-msgstr ""
+msgstr "Llenar brechas"
 
 #. module: account_move_folio
 #: field:account.move.folio,move_state:0
@@ -211,7 +212,7 @@ msgstr "Estado de Comprobante"
 #. module: account_move_folio
 #: field:account.move.folio.fill.gap,sure:0
 msgid "Check this box"
-msgstr ""
+msgstr "Marque esta opción"
 
 #. module: account_move_folio
 #: help:account.move.folio,name:0
@@ -221,7 +222,7 @@ msgstr "Número de Folio"
 #. module: account_move_folio
 #: view:account.move.folio.fill.gap:0
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: account_move_folio
 #: field:account.move.folio,move_id:0

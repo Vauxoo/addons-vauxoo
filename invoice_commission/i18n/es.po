@@ -7,19 +7,20 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.3\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2013-11-07 01:10+0000\n"
-"PO-Revision-Date: 2013-11-07 03:27+0000\n"
-"Last-Translator: Miguel Delgado (Vauxoo) <Unknown>\n"
+"PO-Revision-Date: 2013-11-07 08:03+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: invoice_commission
 #: model:ir.model,name:invoice_commission.model_account_invoice_line
 msgid "Invoice Line"
-msgstr ""
+msgstr "Línea de factura"
 
 #. module: invoice_commission
 #: view:account.invoice:0
@@ -49,12 +50,3 @@ msgstr "El precio estandar de un producto no puede ser 0.0!"
 #: field:account.invoice.line,gain:0
 msgid "Gain"
 msgstr "Ganancia"
-
-#~ msgid ""
-#~ "The Document you have been entering for this Partner has already been "
-#~ "recorded"
-#~ msgstr ""
-#~ "El documento que esta intentando ingresar ya ha sido grabado en el sistema"
-
-#~ msgid "Invoice line"
-#~ msgstr "Línea de factura"

@@ -13,22 +13,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: mrp_subproduct_pt_planified
 #: model:ir.model,name:mrp_subproduct_pt_planified.model_mrp_production
 msgid "Manufacturing Order"
 msgstr "Orden de Producción"
-
-#~ msgid "Order quantity cannot be negative or zero!"
-#~ msgstr "Cantidad de pedido no puede ser negativo o cero!"
-
-#~ msgid "Couldn't find a bill of material for this product."
-#~ msgstr "No se pudo encontrar una lista de materiales para este producto."
-
-#~ msgid "Reference must be unique per Company!"
-#~ msgstr "Referencia deben ser única por Empresa!"
-
-#~ msgid "Error"
-#~ msgstr "Error"

@@ -8,13 +8,14 @@ msgstr ""
 "Project-Id-Version: addons-vauxoo\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-11-07 01:11+0000\n"
-"PO-Revision-Date: 2013-11-07 02:46+0000\n"
-"Last-Translator: Julio Serna-http://www.vauxoo.com <Unknown>\n"
+"PO-Revision-Date: 2013-11-07 08:02+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: hr_expense_replenishment
@@ -30,7 +31,7 @@ msgstr "Línea de Gastos"
 #. module: hr_expense_replenishment
 #: view:account.voucher:0
 msgid "Payment Ref"
-msgstr ""
+msgstr "Ref. pago"
 
 #. module: hr_expense_replenishment
 #: model:ir.model,name:hr_expense_replenishment.model_hr_department
@@ -44,17 +45,20 @@ msgid ""
 "'type': type, 'analytic_exp': context.get('expense_id', False), "
 "'domain_exp':context.get('domain_exp_parent',[])}"
 msgstr ""
+"{'partner_id': partner_id, 'price_type': context.get('price_type') or False, "
+"'type': type, 'analytic_exp': context.get('expense_id', False), "
+"'domain_exp':context.get('domain_exp_parent',[])}"
 
 #. module: hr_expense_replenishment
 #: view:account.voucher:0
 msgid "Allocation"
-msgstr ""
+msgstr "Asignación"
 
 #. module: hr_expense_replenishment
 #: code:addons/hr_expense_replenishment/model/hr_expense.py:981
 #, python-format
 msgid "Entries"
-msgstr ""
+msgstr "Asientos"
 
 #. module: hr_expense_replenishment
 #: help:account.invoice,expense_id:0
@@ -66,23 +70,23 @@ msgstr "Nombre de la Declaración de Gastos"
 #: code:addons/hr_expense_replenishment/model/hr_expense.py:898
 #, python-format
 msgid "Pay Employee Expense"
-msgstr ""
+msgstr "Pagar Gasto de Empleado"
 
 #. module: hr_expense_replenishment
 #: view:account.invoice:0
 msgid "context.get('domain_exp', [])"
-msgstr ""
+msgstr "context.get('domain_exp', [])"
 
 #. module: hr_expense_replenishment
 #: code:addons/hr_expense_replenishment/model/hr_expense.py:863
 #, python-format
 msgid "Error!"
-msgstr ""
+msgstr "¡Error!"
 
 #. module: hr_expense_replenishment
 #: view:account.voucher:0
 msgid "e.g. 003/10"
-msgstr ""
+msgstr "Por ejemplo, 003/10"
 
 #. module: hr_expense_replenishment
 #: field:hr.expense.expense,skip:0
@@ -113,12 +117,12 @@ msgstr "ID de Declaración de Gasto"
 #. module: hr_expense_replenishment
 #: view:account.voucher:0
 msgid "Payment Information"
-msgstr ""
+msgstr "Información de pago"
 
 #. module: hr_expense_replenishment
 #: view:account.voucher:0
 msgid "Paid Amount"
-msgstr ""
+msgstr "Importe pagado"
 
 #. module: hr_expense_replenishment
 #: model:ir.actions.act_window,name:hr_expense_replenishment.act_attach_invoice_to_expense_wizard
@@ -384,7 +388,7 @@ msgstr "Anticipos asociados a la Declaración de Gastos del Empleado"
 #. module: hr_expense_replenishment
 #: view:account.voucher:0
 msgid "Invoices and outstanding transactions"
-msgstr ""
+msgstr "Facturas y transacciones de salida"
 
 #. module: hr_expense_replenishment
 #: code:addons/hr_expense_replenishment/model/hr_expense.py:137
@@ -433,7 +437,7 @@ msgstr "Anular"
 #. module: hr_expense_replenishment
 #: view:account.voucher:0
 msgid "Total Allocation"
-msgstr ""
+msgstr "Asignación total"
 
 #. module: hr_expense_replenishment
 #: view:account.voucher:0
@@ -468,18 +472,18 @@ msgstr ""
 #. module: hr_expense_replenishment
 #: view:account.voucher:0
 msgid "Payment Method"
-msgstr ""
+msgstr "Método de pago"
 
 #. module: hr_expense_replenishment
 #: view:account.voucher:0
 msgid "Credits"
-msgstr ""
+msgstr "Créditos"
 
 #. module: hr_expense_replenishment
 #: code:addons/hr_expense_replenishment/model/hr_expense.py:859
 #, python-format
 msgid "The folliwing invoices cannot be used in this Expense:\n"
-msgstr ""
+msgstr "Las siguientes facturas no pueden ser usadas en este Gasto:\n"
 
 #. module: hr_expense_replenishment
 #: field:hr.expense.expense,date_post:0
@@ -489,17 +493,17 @@ msgstr "Fecha Contable"
 #. module: hr_expense_replenishment
 #: view:account.voucher:0
 msgid "Payment"
-msgstr ""
+msgstr "Pago"
 
 #. module: hr_expense_replenishment
 #: view:account.voucher:0
 msgid "e.g. Invoice SAJ/0042"
-msgstr ""
+msgstr "Por ejemplo, factura FV/0042"
 
 #. module: hr_expense_replenishment
 #: view:account.voucher:0
 msgid "Customer"
-msgstr ""
+msgstr "Cliente"
 
 #. module: hr_expense_replenishment
 #: view:hr.expense.expense:0

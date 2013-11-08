@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: sale_uom_group
@@ -116,33 +116,3 @@ msgstr "Cancelar pedido"
 #: view:sale.order:0
 msgid "Ignore Exception"
 msgstr ""
-
-#~ msgid "Invoice Corrected"
-#~ msgstr "Factura corregida"
-
-#~ msgid ""
-#~ "\n"
-#~ "    What do this module:\n"
-#~ "    Add multi product uom sum of order line.\n"
-#~ "                    "
-#~ msgstr ""
-#~ "\n"
-#~ "    Que hace este module:\n"
-#~ "    Agrega sumatoria de multiples Unidades de medidas de productos por linea "
-#~ "de ordenes de venta.\n"
-#~ "                    "
-
-#~ msgid "salem_uom_group"
-#~ msgstr "salem_uom_group"
-
-#~ msgid "Confirm Order"
-#~ msgstr "Confirmar pedido"
-
-#~ msgid "Procurement Corrected"
-#~ msgstr "Abastecimiento corregido"
-
-#~ msgid "Set to Draft"
-#~ msgstr "Cambiar a borrador"
-
-#~ msgid "Recreate Procurement"
-#~ msgstr "Recrear abastecimiento"

@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: debit_credit_note
@@ -130,46 +130,3 @@ msgstr "Cancelar"
 #: view:account.invoice:0
 msgid "Debit-Credit Notes"
 msgstr "Notas de Crédito y Débito"
-
-#~ msgid "Debit and Credit Notes"
-#~ msgstr "Notas de Crédito y  Debito"
-
-#~ msgid "Force period"
-#~ msgstr "Forzar periodo"
-
-#~ msgid "Refund Journal"
-#~ msgstr "Diario de Devolución"
-
-#~ msgid "Operation date"
-#~ msgstr "Fecha de operación"
-
-#~ msgid "This is the main invoice that has generated this credit note"
-#~ msgstr "Esta es la factura padre de la cual se genero esta nota de credito"
-
-#~ msgid ""
-#~ "This date will be used as the invoice date for Refund Invoice and Period "
-#~ "will be chosen accordingly!"
-#~ msgstr ""
-#~ "Esta fecha sera usada como fecha de la devolucion y el periodo sera escogido "
-#~ "acorde a la fecha correspondiente"
-
-#~ msgid "Parent Invoice"
-#~ msgstr "Factura Padre"
-
-#~ msgid ""
-#~ "You can select here the journal to use for the refund invoice that will be "
-#~ "created. If you leave that field empty, it will use the same journal as the "
-#~ "current invoice."
-#~ msgstr ""
-#~ "Usted puede seleccionar aqui el diario a usar por la nota de credito que "
-#~ "sera creada. Si usted deja este campo vacio sera usado el mismo diario de la "
-#~ "factura origen"
-
-#~ msgid "Description"
-#~ msgstr "Descripción"
-
-#~ msgid "Comment"
-#~ msgstr "Comentario"
-
-#~ msgid "These are all credit and debit to this invoice"
-#~ msgstr "Estas son todas las notas de crédito y débito de esta factura"

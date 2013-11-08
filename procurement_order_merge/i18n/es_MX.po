@@ -13,7 +13,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: procurement_order_merge
@@ -79,16 +79,3 @@ msgstr ""
 " * Orden de abastecimiento tienen la misma ubicacion \n"
 " * Orden de abastecimiento tienen el misma metodo de abastecimiento \n"
 " * Orden de abastecimiento tienen el mismo producto "
-
-#~ msgid "Procurements can not be merged"
-#~ msgstr "Abastecimientos no pueden ser mezclados"
-
-#~ msgid "Please select multiple order to merge in the list view."
-#~ msgstr ""
-#~ "Por Favor seleccione varios abastecimientos en la lista para mezclarlos."
-
-#~ msgid "Error"
-#~ msgstr "Error"
-
-#~ msgid "Procurements must be in state draft"
-#~ msgstr "Los abastecimientos deben de estar en estado borrador"

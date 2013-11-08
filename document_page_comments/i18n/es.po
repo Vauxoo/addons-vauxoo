@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-07 01:11+0000\n"
-"PO-Revision-Date: 2013-11-07 03:27+0000\n"
-"Last-Translator: Moisés López - http://www.vauxoo.com "
-"<moylop260@vauxoo.com>\n"
+"PO-Revision-Date: 2013-11-07 07:46+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: document_page_comments
@@ -30,7 +30,7 @@ msgstr "Mensajes e hisrotial de comunicación"
 #. module: document_page_comments
 #: model:mail.message.subtype,description:document_page_comments.document_page_changed
 msgid "Document Changed"
-msgstr ""
+msgstr "Documento Cambiado"
 
 #. module: document_page_comments
 #: field:document.page,message_ids:0
@@ -45,13 +45,13 @@ msgstr "Página de documento"
 #. module: document_page_comments
 #: model:mail.message.subtype,name:document_page_comments.document_page_changed
 msgid "Documented Changed"
-msgstr ""
+msgstr "Documento Cambiado"
 
 #. module: document_page_comments
 #: model:mail.message.subtype,description:document_page_comments.document_page_new
 #: model:mail.message.subtype,name:document_page_comments.document_page_new
 msgid "Document Created"
-msgstr ""
+msgstr "Documento Creado"
 
 #. module: document_page_comments
 #: help:document.page,message_summary:0
@@ -81,6 +81,3 @@ msgstr "Resumen"
 #: help:document.page,message_unread:0
 msgid "If checked new messages require your attention."
 msgstr "If esta marcado nuevos mensajes requieren su atención"
-
-#~ msgid "The document %s has been modified"
-#~ msgstr "El documento %s ha sido modificado"

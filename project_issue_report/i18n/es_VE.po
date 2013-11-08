@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: project_issue_report
@@ -70,39 +70,3 @@ msgstr ""
 #: model:ir.actions.report.xml,name:project_issue_report.project_issue_report
 msgid "Issues"
 msgstr ""
-
-#~ msgid "Total amount due:"
-#~ msgstr "Monto total adeudado:"
-
-#~ msgid "Late Payments"
-#~ msgstr "Pagos Atrasados"
-
-#~ msgid "Description"
-#~ msgstr "Descripcion"
-
-#~ msgid "Due"
-#~ msgstr "Debe"
-
-#~ msgid "Paid"
-#~ msgstr "Pagado"
-
-#~ msgid "Balance :"
-#~ msgstr "Balance :"
-
-#~ msgid "Maturity"
-#~ msgstr "Vencido"
-
-#~ msgid "Maturity date"
-#~ msgstr "Fecha de Vencimiento"
-
-#~ msgid "Sub-Total :"
-#~ msgstr "Sub-Total :"
-
-#~ msgid "Date"
-#~ msgstr "Fecha"
-
-#~ msgid "."
-#~ msgstr "."
-
-#~ msgid "Ref"
-#~ msgstr "Ref"

@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: products_finished_scrap
@@ -31,9 +31,3 @@ msgstr "Orden de Producción"
 #: field:mrp.production,product_in_stock:0
 msgid "Total In Stock"
 msgstr "Total En Stock"
-
-#~ msgid "Order quantity cannot be negative or zero!"
-#~ msgstr "Cantidad de pedido no puede ser negativo o cero!"
-
-#~ msgid "Reference must be unique per Company!"
-#~ msgstr "Referencia deben ser única por Empresa!"

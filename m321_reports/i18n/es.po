@@ -7,13 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.3\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2013-11-07 01:10+0000\n"
-"PO-Revision-Date: 2013-11-07 03:27+0000\n"
-"Last-Translator: Miguel Delgado (Vauxoo) <Unknown>\n"
+"PO-Revision-Date: 2013-11-07 08:17+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: m321_reports
@@ -69,7 +70,7 @@ msgstr "Imprimir Reporte AMD Computadoras"
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
 msgid "FECHA DE VENCIMIENTO:"
-msgstr ""
+msgstr "FECHA DE VENCIMIENTO:"
 
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
@@ -84,17 +85,17 @@ msgstr "Sub-Total"
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
 msgid "DIRECCION FISCAL:"
-msgstr ""
+msgstr "DIRECCION FISCAL:"
 
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
 msgid "FECHA DE EMISION:"
-msgstr ""
+msgstr "FECHA DE EMISION:"
 
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
 msgid "%Discount:"
-msgstr ""
+msgstr "%Discount:"
 
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
@@ -134,7 +135,7 @@ msgstr "Cheques a Nombre de:"
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
 msgid "RAZON SOCIAL:"
-msgstr ""
+msgstr "RAZON SOCIAL:"
 
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
@@ -155,79 +156,3 @@ msgstr "Imprimir Reporte Computer Shop"
 #: report:m321_reports.cm321_report:0
 msgid "Total"
 msgstr "Neto"
-
-#~ msgid "Customer:"
-#~ msgstr "Cliente:"
-
-#~ msgid "M321 Reports Instalator"
-#~ msgstr "Instalador de reportes M321"
-
-#~ msgid "Transfer"
-#~ msgstr "Transferencia"
-
-#~ msgid "Payment method"
-#~ msgstr "Forma de Pago"
-
-#~ msgid "Issue Date"
-#~ msgstr "Fecha de Emisión"
-
-#~ msgid "% Discount:"
-#~ msgstr "% Descuento:"
-
-#~ msgid "Fax:"
-#~ msgstr "Fax:"
-
-#~ msgid "Phone:"
-#~ msgstr "Telefono:"
-
-#~ msgid "Invoice:"
-#~ msgstr "Factura:"
-
-#~ msgid "Payment Method"
-#~ msgstr "Forma de Pago"
-
-#~ msgid "%"
-#~ msgstr "%"
-
-#~ msgid "Address:"
-#~ msgstr "Dirección:"
-
-#~ msgid "Cash"
-#~ msgstr "Efectivo"
-
-#~ msgid "Deposit"
-#~ msgstr "Deposito"
-
-#~ msgid "N.I.T:"
-#~ msgstr "N.I.T:"
-
-#~ msgid ""
-#~ "In this field selects the payment method with which to cancel the invoice"
-#~ msgstr ""
-#~ "En este campo seleccione la forma de pago con el que desea cancelar la "
-#~ "factura"
-
-#~ msgid "Page:"
-#~ msgstr "Pagina:"
-
-#~ msgid "Invoice"
-#~ msgstr "Factura"
-
-#~ msgid ""
-#~ "\n"
-#~ "        This module installs the basic reports and formats for the M321 "
-#~ "Companies\n"
-#~ "                    "
-#~ msgstr ""
-#~ "\n"
-#~ "        Este modulo instala los reportes basicos para las compañias de M321\n"
-#~ "                    "
-
-#~ msgid "Expiration Date:"
-#~ msgstr "Fecha de Expiración:"
-
-#~ msgid "Check"
-#~ msgstr "Cheque"
-
-#~ msgid "payment.method"
-#~ msgstr "payment.method"

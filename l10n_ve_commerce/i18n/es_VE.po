@@ -13,7 +13,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: l10n_ve_commerce
@@ -103,17 +103,3 @@ msgstr ""
 #: model:account.account.type,name:l10n_ve_commerce.account_type_view
 msgid "View"
 msgstr ""
-
-#~ msgid ""
-#~ "\n"
-#~ "This Module load a generic format for manage medium and big business.\n"
-#~ "You will need accounting knowledge to understad sone concepts.\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Este modulo carga un formato generico para gestionar un negocio mediano o "
-#~ "grande.\n"
-#~ "Usted necesita conocimientos de contabilidad para entender algunos conceptos "
-#~ ".\n"
-
-#~ msgid "Commercial Chart Account for Venezuela"
-#~ msgstr "Catalogo de Cuentas Comerciales para Venezuela"

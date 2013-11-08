@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: invoice_print_multicompany
@@ -70,26 +70,3 @@ msgstr "Cancelar"
 #: view:print.account.invoice.report:0
 msgid "Print Invoice"
 msgstr "Imprimir Factura"
-
-#~ msgid "Error! You can not create recursive companies."
-#~ msgstr "Error! No puede crear compañías recursivas."
-
-#~ msgid "Account Invoice Multicompany Report"
-#~ msgstr "Modelos de facturas para varias compañías"
-
-#~ msgid "Print Invoicesss"
-#~ msgstr "Imprimir Factura"
-
-#~ msgid ""
-#~ "\n"
-#~ "        Adds a \"Report\" field on the Company model and a \"Print Invoice\" "
-#~ "button on the customer invoices view which calls\n"
-#~ "        a wizard to print an invoice on a MultiCompany enviroment\n"
-#~ "                    "
-#~ msgstr ""
-#~ "\n"
-#~ "        Agrega un campo \"Reporte\" en el modelo de la compañía y un botón "
-#~ "de \"Imprimir Factura\" en la vista de facturas de clientes\n"
-#~ "        el cual invoca un asistente para imprimir facturas en un ambiente "
-#~ "con más de una compañia (MultiCompany)\n"
-#~ "                    "

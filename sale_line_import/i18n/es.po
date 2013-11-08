@@ -13,7 +13,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: sale_line_import
@@ -89,18 +89,3 @@ msgstr ""
 #, python-format
 msgid "%s , Field: %s, CSV: %s, OPEN: %s \n"
 msgstr "%s , Campo: %s, CSV: %s, OPEN: %s \n"
-
-#~ msgid "%s \n"
-#~ msgstr "%s \n"
-
-#~ msgid "Warning of price difference, CSV VS System in the following products:"
-#~ msgstr ""
-#~ "Advertencia de diferencia de precios, CSV VS Sistema, en los siguientes "
-#~ "productos:"
-
-#~ msgid ""
-#~ "Warning differences in other fields, CSV VS System in the following products "
-#~ "and fields:"
-#~ msgstr ""
-#~ "Advertencia de diferencias en otros campos, CSV VS Sistema, en los "
-#~ "siguientes productos y campos:"

@@ -13,7 +13,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-07 05:52+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: invoice_commission
@@ -49,12 +49,3 @@ msgstr "El precio estandar de un producto no puede ser 0.0!"
 #: field:account.invoice.line,gain:0
 msgid "Gain"
 msgstr "Ganancia"
-
-#~ msgid ""
-#~ "The Document you have been entering for this Partner has already been "
-#~ "recorded"
-#~ msgstr ""
-#~ "El documento que esta intentando ingresar ya ha sido grabado en el sistema"
-
-#~ msgid "Invoice line"
-#~ msgstr "Línea de factura"
