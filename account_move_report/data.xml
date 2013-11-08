@@ -1,0 +1,99 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <record id="ir_header_webkit_account_move" model="ir.header_webkit">
+            <field name="footer_html"><![CDATA[<html>
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <script>
+            function subst() {
+            var vars={};
+            var x=document.location.search.substring(1).split('&');
+            for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+            var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+            for(var i in x) {
+            var y = document.getElementsByClassName(x[i]);
+            for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+                }
+            }
+        </script>
+    </head>
+    <body style="border:0; margin: 0;" onload="subst()">
+        <table style="border-top: 1px solid black; width: 100%">
+            <tr >
+                <td style="text-align:right;font-size:9;" width="35%">Generado con software libre en OpenERP y Webkit por http://www.vauxoo.com</td>
+                <td style="text-align:right;font-size:12;" width="55%">Page <span class="page"/></td><td style="text-align:left;font-size:12;">  of <span class="topage"/></td>
+            </tr>
+        </table>
+    </body>
+</html>]]></field>
+            <field name="orientation">Portrait</field>
+            <field name="format">Letter</field>
+            <field name="html"><![CDATA[<html>
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <script>
+            function subst() {
+            var vars={};
+            var x=document.location.search.substring(1).split('&');
+            for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+            var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+            for(var i in x) {
+            var y = document.getElementsByClassName(x[i]);
+            for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+                }
+            }
+        </script>
+        <style type="text/css">
+            ${css}
+        </style>
+    </head>
+    <body style="border:0; margin: 0;" onload="subst()">
+        ${_debug or ''|n} </body>
+</html>]]>
+</field>
+            <field eval="0.0" name="margin_top"/>
+            <field name="css" ><![CDATA[
+.company_font{
+text-align: center;
+font-size: 16pt;
+}
+td.basic_td
+{
+text-align: center;
+font-size: 10;
+padding-right:3px;
+padding-left:3px;
+}
+td.dir_font{
+font-size: 10;
+text-align: center;
+}
+td.date_font{
+font-size: 12;
+text-align: center;
+}
+.title
+{
+text-align: center;
+border-top:1px solid #000000;
+border-bottom: solid 1.5px #000000;
+font-size: 12;
+padding-right:3px;
+padding-left:3px;
+}
+.table
+{
+border-collapse:collapse;
+}
+
+
+]]> </field>
+            <field name="name">Poliza</field>
+        </record>
+        <record id="ir_header_img_companylogo0" model="ir.header_img">
+            <field eval="&quot;&quot;&quot;jpg&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;company_logo&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+</openerp>
