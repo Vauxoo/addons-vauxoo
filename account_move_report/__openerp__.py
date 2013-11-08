@@ -30,14 +30,16 @@
 Report for Journal Entries
 ==========================
 
-Add report for journal entries 
+It module adds a report in journal entries. You can print one o several
+journal entries in PDF file.
+
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : [
-		"account",
-		"report_webkit",
-	],
+        "account",
+        "report_webkit",
+    ],
     "demo" : [],
     "data" : [
         "data.xml",
