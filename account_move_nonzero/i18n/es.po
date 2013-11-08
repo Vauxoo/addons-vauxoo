@@ -6,19 +6,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-05-04 17:25+0000\n"
-"PO-Revision-Date: 2012-05-04 17:25+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:13+0000\n"
+"PO-Revision-Date: 2013-11-07 07:41+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
+#. module: account_move_nonzero
+#: model:ir.model,name:account_move_nonzero.model_account_move_line
+msgid "Journal Items"
+msgstr "Apuntes contables"
 
 #. module: account_move_nonzero
 #: constraint:account.move.line:0
-msgid "You can not create an entry with zero balance ! Please set amount !"
-msgstr "You can not create an entry with zero balance ! Please set amount !"
-
-
+msgid ""
+"You can not create an entry with zero balance !         Please set amount !"
+msgstr ""
+"No puede crear un Asiento con balance en cero! Por favor escriba un monto!"

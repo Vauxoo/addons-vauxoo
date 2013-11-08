@@ -6,14 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-24 23:11+0000\n"
-"PO-Revision-Date: 2012-07-24 23:11+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:12+0000\n"
+"PO-Revision-Date: 2013-11-07 03:27+0000\n"
+"Last-Translator: Moisés López - http://www.vauxoo.com "
+"<moylop260@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: company_description
 #: field:res.company,description_purchase:0
@@ -36,9 +38,9 @@ msgid "Companies"
 msgstr "Compañías"
 
 #. module: company_description
-#: constraint:res.company:0
-msgid "Error! You can not create recursive companies."
-msgstr "¡Error! No puede crear compañías recursivas."
+#: view:res.company:0
+msgid "Invoice Description"
+msgstr "Descripción Facturas"
 
 #. module: company_description
 #: field:res.company,description_sale:0
@@ -54,14 +56,3 @@ msgstr "Descripción Compras"
 #: view:res.company:0
 msgid "Descriptions"
 msgstr "Descripciones"
-
-#. module: company_description
-#: sql_constraint:res.company:0
-msgid "The company name must be unique !"
-msgstr "¡El nombre de la compañía debe ser único!"
-
-#. module: company_description
-#: view:res.company:0
-msgid "Invoice Description"
-msgstr "Descripción Facturas"
-

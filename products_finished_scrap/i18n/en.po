@@ -6,14 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-30 23:09+0000\n"
-"PO-Revision-Date: 2012-10-30 23:09+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:08+0000\n"
+"PO-Revision-Date: 2013-11-07 03:28+0000\n"
+"Last-Translator: Moisés López - http://www.vauxoo.com "
+"<moylop260@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: products_finished_scrap
 #: field:mrp.production,product_produced:0
@@ -26,17 +28,6 @@ msgid "Manufacturing Order"
 msgstr "Orden de Producción"
 
 #. module: products_finished_scrap
-#: constraint:mrp.production:0
-msgid "Order quantity cannot be negative or zero!"
-msgstr "Cantidad de pedido no puede ser negativo o cero!"
-
-#. module: products_finished_scrap
 #: field:mrp.production,product_in_stock:0
 msgid "Total In Stock"
 msgstr "Total En Stock"
-
-#. module: products_finished_scrap
-#: sql_constraint:mrp.production:0
-msgid "Reference must be unique per Company!"
-msgstr "Referencia deben ser única por Empresa!"
-

@@ -6,11 +6,109 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-05-25 21:08+0000\n"
-"PO-Revision-Date: 2012-05-28 10:11-0400\n"
-"Last-Translator: Miguel <miguel.delgado07@gmail.com>\n"
+"POT-Creation-Date: 2013-11-07 01:11+0000\n"
+"PO-Revision-Date: 2013-11-07 04:21+0000\n"
+"Last-Translator: Miguel Delgado (Vauxoo) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
+
+#. module: deliver_project
+#: report:ir.module.vauxoo:0
+msgid "Web"
+msgstr "Web"
+
+#. module: deliver_project
+#: report:ir.module.vauxoo:0
+msgid "Reports :"
+msgstr "Reportes :"
+
+#. module: deliver_project
+#: report:ir.module.vauxoo:0
+msgid "1cm 28cm 20cm 28cm"
+msgstr "1cm 28cm 20cm 28cm"
+
+#. module: deliver_project
+#: report:ir.module.vauxoo:0
+msgid "Version"
+msgstr "Version"
+
+#. module: deliver_project
+#: report:ir.module.vauxoo:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: deliver_project
+#: view:ir.module.module:0
+msgid "Docs"
+msgstr "Documentos"
+
+#. module: deliver_project
+#: view:ir.module.module:0
+msgid "Button"
+msgstr "Boton"
+
+#. module: deliver_project
+#: view:ir.module.module:0
+#: field:ir.module.module,doc_on_module:0
+msgid "Documentation"
+msgstr "Documentacion"
+
+#. module: deliver_project
+#: view:ir.module.module:0
+msgid "You can Instrospect on Code."
+msgstr "Usted puede hacer instrospeccion  en el codigo"
+
+#. module: deliver_project
+#: model:ir.model,name:deliver_project.model_ir_module_module
+#: report:ir.module.vauxoo:0
+msgid "Module"
+msgstr "Módulo"
+
+#. module: deliver_project
+#: report:ir.module.vauxoo:0
+msgid "Introspection report on objects"
+msgstr "introspección sobre el reporte de  los objetos"
+
+#. module: deliver_project
+#: report:ir.module.vauxoo:0
+msgid "Reference Guide"
+msgstr "Guia de Referencia"
+
+#. module: deliver_project
+#: model:ir.actions.report.xml,name:deliver_project.report_ir_model_overview
+msgid "Development Deliver"
+msgstr "Entregar el Desarrollo"
+
+#. module: deliver_project
+#: model:ir.actions.report.xml,name:deliver_project.ir_module_reference_print22
+msgid "Technical guide Vauxoo"
+msgstr "Guia Tecnica de Vauxoo"
+
+#. module: deliver_project
+#: report:ir.module.vauxoo:0
+msgid "Menu :"
+msgstr "Menu :"
+
+#. module: deliver_project
+#: report:ir.module.vauxoo:0
+msgid "Directory"
+msgstr "Directorio"
+
+#. module: deliver_project
+#: report:ir.module.vauxoo:0
+msgid "Object:"
+msgstr "Objeto:"
+
+#. module: deliver_project
+#: report:ir.module.vauxoo:0
+msgid "Dependencies :"
+msgstr "Dependencias :"
+
+#. module: deliver_project
+#: report:ir.module.vauxoo:0
+msgid "View :"
+msgstr "Vista :"

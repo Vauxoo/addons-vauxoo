@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2011-03-23 09:49+0000\n"
+"POT-Creation-Date: 2013-11-07 01:08+0000\n"
 "PO-Revision-Date: 2013-06-03 07:38+0000\n"
 "Last-Translator: Moisés López - http://www.vauxoo.com "
 "<moylop260@vauxoo.com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-10-30 05:55+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: product_images_olbs
@@ -24,14 +24,9 @@ msgid "Product"
 msgstr "Producto"
 
 #. module: product_images_olbs
-#: model:ir.module.module,shortdesc:product_images_olbs.module_meta_information
-msgid "Product Image Gallery"
+#: model:ir.model,name:product_images_olbs.model_product_images
+msgid "Products Image gallery"
 msgstr "Galería de imágenes"
-
-#. module: product_images_olbs
-#: constraint:product.product:0
-msgid "Several dimension values for the same dimension type"
-msgstr "Varios valores de dimensión para el mismo tipo"
 
 #. module: product_images_olbs
 #: field:product.images,preview:0
@@ -45,23 +40,11 @@ msgid "Image"
 msgstr "Imagen"
 
 #. module: product_images_olbs
-#: model:ir.module.module,description:product_images_olbs.module_meta_information
+#: help:product.images,link:0
 msgid ""
-"\n"
-"    This Module implements an Image Gallery for products.\n"
-"    You can add images against every product.\n"
-"    \n"
-"    This module is generic but built for Magento ERP connector and\n"
-"    the upcoming e-commerce system for Open ERP by Open Labs\n"
-"    "
+"Images can be linked from files on your\n"
+"                                       file system or remote (Preferred)"
 msgstr ""
-"\n"
-"    Gestión de galería de imágenes del producto.\n"
-"    Se puede añadir imágenes para cada producto.\n"
-"    \n"
-"    Este módulo es genérico pero se ha diseñado para el conector Magento "
-"para OpenERP\n"
-"    "
 
 #. module: product_images_olbs
 #: field:product.images,name:0
@@ -72,19 +55,6 @@ msgstr "Nombre de la imagen"
 #: view:product.images:0
 msgid "Preview (Only when saved)"
 msgstr "Previsualizar (disponible después de guardar)"
-
-#. module: product_images_olbs
-#: constraint:product.product:0
-msgid "Error: Invalid ean code"
-msgstr "Error: Código ean inválido"
-
-#. module: product_images_olbs
-#: help:product.images,link:0
-msgid ""
-"Images can be linked from files on your file system or remote (Preferred)"
-msgstr ""
-"Las imágenes pueden ser vinculadas des de su sistema de ficheros o "
-"remotamente (preferiblemente)"
 
 #. module: product_images_olbs
 #: view:product.images:0
@@ -114,7 +84,34 @@ msgstr "Imágenes del producto"
 msgid "Link?"
 msgstr "Vínculo?"
 
-#. module: product_images_olbs
-#: model:ir.model,name:product_images_olbs.model_product_images
-msgid "Products Image gallery"
-msgstr "Galería de imágenes"
+#~ msgid "Product Image Gallery"
+#~ msgstr "Galería de imágenes"
+
+#~ msgid "Several dimension values for the same dimension type"
+#~ msgstr "Varios valores de dimensión para el mismo tipo"
+
+#~ msgid ""
+#~ "\n"
+#~ "    This Module implements an Image Gallery for products.\n"
+#~ "    You can add images against every product.\n"
+#~ "    \n"
+#~ "    This module is generic but built for Magento ERP connector and\n"
+#~ "    the upcoming e-commerce system for Open ERP by Open Labs\n"
+#~ "    "
+#~ msgstr ""
+#~ "\n"
+#~ "    Gestión de galería de imágenes del producto.\n"
+#~ "    Se puede añadir imágenes para cada producto.\n"
+#~ "    \n"
+#~ "    Este módulo es genérico pero se ha diseñado para el conector Magento "
+#~ "para OpenERP\n"
+#~ "    "
+
+#~ msgid "Error: Invalid ean code"
+#~ msgstr "Error: Código ean inválido"
+
+#~ msgid ""
+#~ "Images can be linked from files on your file system or remote (Preferred)"
+#~ msgstr ""
+#~ "Las imágenes pueden ser vinculadas des de su sistema de ficheros o "
+#~ "remotamente (preferiblemente)"

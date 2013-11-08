@@ -6,19 +6,31 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-29 18:41+0000\n"
-"PO-Revision-Date: 2013-05-29 18:41+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:11+0000\n"
+"PO-Revision-Date: 2013-11-07 07:46+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: document_page_comments
 #: field:document.page,message_unread:0
 msgid "Unread Messages"
 msgstr "Mensajes sin leer"
+
+#. module: document_page_comments
+#: help:document.page,message_ids:0
+msgid "Messages and communication history"
+msgstr "Mensajes e hisrotial de comunicación"
+
+#. module: document_page_comments
+#: model:mail.message.subtype,description:document_page_comments.document_page_changed
+msgid "Document Changed"
+msgstr "Documento Cambiado"
 
 #. module: document_page_comments
 #: field:document.page,message_ids:0
@@ -31,30 +43,34 @@ msgid "Document Page"
 msgstr "Página de documento"
 
 #. module: document_page_comments
-#: code:addons/document_page_comments/model/document.py:44
-#, python-format
-msgid "The document %s has been modified"
-msgstr "El documento %s ha sido modificado"
+#: model:mail.message.subtype,name:document_page_comments.document_page_changed
+msgid "Documented Changed"
+msgstr "Documento Cambiado"
 
 #. module: document_page_comments
-#: help:document.page,message_ids:0
-msgid "Messages and communication history"
-msgstr "Mensajes e hisrotial de comunicación"
+#: model:mail.message.subtype,description:document_page_comments.document_page_new
+#: model:mail.message.subtype,name:document_page_comments.document_page_new
+msgid "Document Created"
+msgstr "Documento Creado"
 
 #. module: document_page_comments
 #: help:document.page,message_summary:0
-msgid "Holds the Chatter summary (number of messages, ...). This summary is directly in html format in order to be inserted in kanban views."
-msgstr "Mantiene el resumen de chat(numero de mensajes) Este resumen esta directamente en formato html in orden para ser insertado en la vista kanban"
-
-#. module: document_page_comments
-#: field:document.page,message_is_follower:0
-msgid "Is a Follower"
-msgstr "Es seguidor"
+msgid ""
+"Holds the Chatter summary (number of messages, ...). This summary is "
+"directly in html format in order to be inserted in kanban views."
+msgstr ""
+"Mantiene el resumen de chat(numero de mensajes) Este resumen esta "
+"directamente en formato html in orden para ser insertado en la vista kanban"
 
 #. module: document_page_comments
 #: field:document.page,message_follower_ids:0
 msgid "Followers"
 msgstr "Seguidores"
+
+#. module: document_page_comments
+#: field:document.page,message_is_follower:0
+msgid "Is a Follower"
+msgstr "Es seguidor"
 
 #. module: document_page_comments
 #: field:document.page,message_summary:0
@@ -65,4 +81,3 @@ msgstr "Resumen"
 #: help:document.page,message_unread:0
 msgid "If checked new messages require your attention."
 msgstr "If esta marcado nuevos mensajes requieren su atención"
-

@@ -1,313 +1,339 @@
-# Translation of OpenERP Server.
-# This file contains the translation of the following modules:
-#	* sign_youtube
+# Spanish translation for addons-vauxoo
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the addons-vauxoo package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-06 01:35+0000\n"
-"PO-Revision-Date: 2013-09-06 01:35+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"Project-Id-Version: addons-vauxoo\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-11-07 01:06+0000\n"
+"PO-Revision-Date: 2013-11-07 04:13+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:28+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
-#. module: sign_youtube
-#: model:ir.model,name:sign_youtube.model_sign_youtube_conf
-msgid "sign.youtube.conf"
-msgstr "sign.youtube.conf"
-
-#. module: sign_youtube
-#: field:sign.youtube.conf.line,url_swf:0
-msgid "Url "
-msgstr "Url "
-
-#. module: sign_youtube
-#: field:sign.youtube.conf,passwd:0
-msgid "YouTube Password"
-msgstr "Contraseña de YouTube"
-
-#. module: sign_youtube
-#: field:sign.youtube.conf.line,views:0
-msgid "Number of views"
-msgstr "Numero de Visitas"
-
-#. module: sign_youtube
-#: help:sign.youtube.conf,passwd:0
-msgid "Password used for your youtube account"
-msgstr "Contraseña utilizada para tu cuenta de youtube"
-
-#. module: sign_youtube
-#: field:sign.youtube.conf.line,tags:0
-msgid "Tags "
-msgstr "Tags "
-
-#. module: sign_youtube
-#: help:sign.youtube.conf.line,info:0
-msgid "Select if you want add this video in the company messages"
-msgstr "Selecciona si tu quieres agregar este video como un mensaje en la compañia"
-
-#. module: sign_youtube
-#: model:ir.model,name:sign_youtube.model_sign_youtube_conf_line
-msgid "sign.youtube.conf.line"
-msgstr "sign.youtube.conf.line"
-
-#. module: sign_youtube
-#: help:sign.youtube.conf.line,update:0
-msgid "Used to know if the video was update"
-msgstr "Usado para saber si el video fue actualizado"
-
-#. module: sign_youtube
-#: model:ir.model,name:sign_youtube.model_sing_youtube_conf
-msgid "sing.youtube.conf"
-msgstr "sing.youtube.conf"
-
-#. module: sign_youtube
-#: view:sign.youtube.conf.line:0
-msgid "Write off the message to show in inbox with the video.\n"
-"                        You can add attachments in this message"
-msgstr "Escribe un mensaje para mostrarlo en la bandeja de entrada junto con este video.\n"
-"                        Puedes agregar adjuntos a este mensaje"
-
-#. module: sign_youtube
-#: field:sign.youtube.conf.line,config_id:0
-msgid "Config"
-msgstr "Configurar"
-
-#. module: sign_youtube
-#: code:addons/sign_youtube/model/sign_youtube.py:219
-#, python-format
-msgid "You need watch this video "
-msgstr "Necesitas ver este video"
-
-#. module: sign_youtube
-#: view:sign.youtube.conf:0
-msgid "Launch Video"
-msgstr "Ir al video"
-
-#. module: sign_youtube
-#: field:sign.youtube.conf.line,description:0
-msgid "Description"
-msgstr "Descripción"
-
-#. module: sign_youtube
-#: selection:sign.youtube.conf.line,update:0
-msgid "Normal"
-msgstr "Normal"
-
-#. module: sign_youtube
-#: view:sign.youtube.conf.line:0
-msgid "Send to Inbox"
-msgstr "Enviar a la bandeja de entrada"
-
-#. module: sign_youtube
-#: help:sign.youtube.conf.line,url_swf:0
-msgid "URL for you can see the video"
-msgstr "URL para poder ver el video"
-
-#. module: sign_youtube
-#: field:sign.youtube.conf.line,update:0
-#: selection:sign.youtube.conf.line,update:0
-msgid "Update"
-msgstr "Actualizar"
-
-#. module: sign_youtube
-#: field:sign.youtube.conf.line,published:0
-msgid "Published "
-msgstr "Publicado"
-
-#. module: sign_youtube
-#: field:sign.youtube.conf.line,category:0
-msgid "Category "
-msgstr "Categoria"
-
-#. module: sign_youtube
-#: model:ir.actions.act_window,name:sign_youtube.sign_youtube_action
-#: view:sign.youtube.conf:0
-#: view:sign.youtube.conf.line:0
-msgid "Sign YouTube"
-msgstr "Firma de YouTube"
-
-#. module: sign_youtube
-#: help:sign.youtube.conf,max_v:0
-msgid "Number max of video to load"
-msgstr "Numero maximo de videos a cargar"
-
-#. module: sign_youtube
-#: field:sign.youtube.conf,name:0
-msgid "YouTube User"
-msgstr "Usuario YouTube"
-
-#. module: sign_youtube
-#: code:addons/sign_youtube/model/sign_youtube.py:97
-#, python-format
-msgid "Connection Completed"
-msgstr "Conexion completada"
-
-#. module: sign_youtube
-#: help:sign.youtube.conf.line,favorites:0
-#: help:sign.youtube.conf.line,views:0
-msgid "Number of times they have viewed the video"
-msgstr "Numero de veces que se ha visto este video"
-
-#. module: sign_youtube
-#: model:ir.model,name:sign_youtube.model_sing_youtube_conf_line
-msgid "sing.youtube.conf.line"
-msgstr "sing.youtube.conf.line"
-
-#. module: sign_youtube
-#: help:sign.youtube.conf,developer_key:0
-msgid "Developer key used by de API if you do not have one you can get one in the YouTube API https://code.google.com/apis/youtube/dashboard/gwt/index.html#product/AI39si7M7K5jj5AHA-VUGJW0XSgEWIS_qjFkfXwygeIF13AQR85UC2Ylo-8pu2G6gs-Q4MSNKzUG11_c45zO1CFaTbmA62rjLw"
-msgstr "Llave de desarrollador usada por la API. Si usted no posee una usted puede tenerla en este
-enlace  YouTube API https://code.google.com/apis/youtube/dashboard/gwt/index.html#product/AI39si7M7K5jj5AHA-VUGJW0XSgEWIS_qjFkfXwygeIF13AQR85UC2Ylo-8pu2G6gs-Q4MSNKzUG11_c45zO1CFaTbmA62rjLw"
-
-#. module: sign_youtube
-#: field:sign.youtube.conf,max_v:0
-msgid "Max Number Video to load"
-msgstr "Numero maximo de videos a cargar"
-
-#. module: sign_youtube
-#: help:sign.youtube.conf,client_id:0
-msgid "Client ID for your youtube account if you do not have a client ID you can a developer key in the YouTube API https://code.google.com/apis/youtube/dashboard/gwt/index.html#product/AI39si7M7K5jj5AHA-VUGJW0XSgEWIS_qjFkfXwygeIF13AQR85UC2Ylo-8pu2G6gs-Q4MSNKzUG11_c45zO1CFaTbmA62rjLw"
-msgstr "ID de cliente usado por la API YouTube junto a la llave de desarrollador. Si usted no posee
-una puede obtenerla en este link YouTube API https://code.google.com/apis/youtube/dashboard/gwt/index.html#product/AI39si7M7K5jj5AHA-VUGJW0XSgEWIS_qjFkfXwygeIF13AQR85UC2Ylo-8pu2G6gs-Q4MSNKzUG11_c45zO1CFaTbmA62rjLw"
-
-#. module: sign_youtube
-#: view:sign.youtube.conf:0
-msgid "Play the video"
-msgstr "Ver el Video"
-
-#. module: sign_youtube
-#: field:sign.youtube.conf.line,info:0
-msgid "Add in messages"
-msgstr "Agregar en bandeja de entrada"
-
-#. module: sign_youtube
-#: view:sign.youtube.conf:0
-msgid "Show on Inbox"
-msgstr "Mostrar en la bandeja de entrada"
-
-#. module: sign_youtube
-#: help:sign.youtube.conf.line,private:0
-msgid "Private info about the video"
-msgstr "Información privada sobre este video"
-
-#. module: sign_youtube
-#: field:sign.youtube.conf.line,favorites:0
-msgid "Number of favorites"
-msgstr "Numero de favoritos"
-
-#. module: sign_youtube
-#: view:sign.youtube.conf:0
-msgid "Load Videos"
-msgstr "Cargar Videos"
-
-#. module: sign_youtube
-#: help:sign.youtube.conf,name:0
-msgid "User name for youtube account used to login in youtube"
-msgstr "Nombre de ususario para su cuenta en YouTube usado como login "
-
-#. module: sign_youtube
-#: help:sign.youtube.conf.line,message:0
-msgid "Message to shown in inbox"
-msgstr "Mensaje que sera mostrado en la bandeja de entrada"
-
-#. module: sign_youtube
-#: view:sign.youtube.conf:0
-msgid "Test Connection"
-msgstr "Prueba de conexion"
-
-#. module: sign_youtube
-#: help:sign.youtube.conf.line,duration_seconds:0
-msgid "Video duration in seconds"
-msgstr "Duración del video en segundos"
-
-#. module: sign_youtube
-#: help:sign.youtube.conf.line,name:0
-msgid "Tittle for YouTube Video"
-msgstr "Titulo para el video en YouTube"
-
-#. module: sign_youtube
-#: field:sign.youtube.conf.line,attachment_ids:0
-msgid "Attachments"
-msgstr "Adjuntos"
-
-#. module: sign_youtube
-#: code:addons/sign_youtube/model/sign_youtube.py:92
-#, python-format
-msgid "Error!"
-msgstr "Error!"
-
-#. module: sign_youtube
-#: help:sign.youtube.conf.line,category:0
-msgid "Category seleted for this video from YouTube"
-msgstr "Categoria seleccionada para este video desde YouTube"
-
-#. module: sign_youtube
-#: field:sign.youtube.conf.line,name:0
-msgid "Video Title "
-msgstr "Titulo de Video"
-
-#. module: sign_youtube
-#: code:addons/sign_youtube/model/sign_youtube.py:96
-#, python-format
-msgid "Perfect!"
-msgstr "Perfecto!"
-
-#. module: sign_youtube
-#: field:sign.youtube.conf.line,private:0
-msgid "Private"
-msgstr "Privado"
-
-#. module: sign_youtube
-#: field:sign.youtube.conf,client_id:0
-msgid "ID Client"
-msgstr "ID del Cliente"
-
-#. module: sign_youtube
-#: field:sign.youtube.conf,developer_key:0
-msgid "Developer Key"
-msgstr "Llave de Desarrollador"
-
-#. module: sign_youtube
-#: model:ir.ui.menu,name:sign_youtube.sign_youtube_menu
-msgid "Sign YouTube Conf"
-msgstr "Configurador de firma de YouTube"
-
-#. module: sign_youtube
-#: field:sign.youtube.conf.line,duration_seconds:0
-msgid "Duration "
-msgstr "Duración"
-
-#. module: sign_youtube
-#: field:sign.youtube.conf.line,message:0
-msgid "Message"
-msgstr "Mensaje"
-
-#. module: sign_youtube
-#: view:sign.youtube.conf.line:0
-msgid "Used to send this video in company inbox"
-msgstr "Usado para enviar este video en la bandeja de entrada de la compañia"
-
-#. module: sign_youtube
-#: help:sign.youtube.conf.line,description:0
-msgid "Description added for this video when was created"
-msgstr "Descripción agregada en este video cuando fue creado"
-
-#. module: sign_youtube
+#. module: sync_youtube
 #: view:sign.youtube.conf:0
 #: field:sign.youtube.conf,line:0
 msgid "Videos Uploaded"
-msgstr "Videos Subidos"
+msgstr ""
 
-#. module: sign_youtube
-#: code:addons/sign_youtube/model/sign_youtube.py:93
+#. module: sync_youtube
+#: model:ir.model,name:sync_youtube.model_sign_youtube_conf
+msgid "sign.youtube.conf"
+msgstr ""
+
+#. module: sync_youtube
+#: field:sign.youtube.conf.line,url_swf:0
+msgid "Url "
+msgstr ""
+
+#. module: sync_youtube
+#: field:sign.youtube.conf,passwd:0
+msgid "YouTube Password"
+msgstr ""
+
+#. module: sync_youtube
+#: field:sign.youtube.conf.line,views:0
+msgid "Number of views"
+msgstr ""
+
+#. module: sync_youtube
+#: help:sign.youtube.conf,passwd:0
+msgid "Password used for your youtube account"
+msgstr ""
+
+#. module: sync_youtube
+#: field:sign.youtube.conf.line,tags:0
+msgid "Tags "
+msgstr ""
+
+#. module: sync_youtube
+#: view:sign.youtube.conf:0
+msgid "i.e: bigNumberWithoutAnySenceGivenInYoutube"
+msgstr ""
+
+#. module: sync_youtube
+#: model:ir.model,name:sync_youtube.model_sign_youtube_conf_line
+msgid "sign.youtube.conf.line"
+msgstr ""
+
+#. module: sync_youtube
+#: help:sign.youtube.conf,client_id:0
+msgid ""
+"Client ID for your youtube account if you do not have a client ID you can a "
+"developer key in the YouTube API "
+"https://code.google.com/apis/youtube/dashboard/gwt/index.html"
+msgstr ""
+
+#. module: sync_youtube
+#: help:sign.youtube.conf.line,update:0
+msgid "Used to know if the video was update"
+msgstr ""
+
+#. module: sync_youtube
+#: view:sign.youtube.conf.line:0
+msgid ""
+"Write off the message to show in inbox with the video.\n"
+"                        You can add attachments in this message"
+msgstr ""
+
+#. module: sync_youtube
+#: help:sign.youtube.conf.line,public_information:0
+msgid ""
+"This information accept htmland is the information that will be used in the "
+"portal page."
+msgstr ""
+
+#. module: sync_youtube
+#: field:sign.youtube.conf.line,config_id:0
+msgid "Config"
+msgstr ""
+
+#. module: sync_youtube
+#: code:addons/sync_youtube/model/sign_youtube.py:241
 #, python-format
-msgid "The config parameters are wrong please verify it and try\n"
-"                                           again"
-msgstr "Los parametros de configuración son errados, por favor verifica en intenta\n"
-"                                           nuevamente"
+msgid "You need watch this video "
+msgstr ""
 
+#. module: sync_youtube
+#: view:sign.youtube.conf:0
+msgid "Launch Video"
+msgstr ""
+
+#. module: sync_youtube
+#: field:sign.youtube.conf.line,description:0
+msgid "Description"
+msgstr ""
+
+#. module: sync_youtube
+#: selection:sign.youtube.conf.line,update:0
+msgid "Normal"
+msgstr ""
+
+#. module: sync_youtube
+#: view:sign.youtube.conf.line:0
+msgid "Send to Inbox"
+msgstr ""
+
+#. module: sync_youtube
+#: help:sign.youtube.conf.line,url_swf:0
+msgid "URL for you can see the video"
+msgstr ""
+
+#. module: sync_youtube
+#: field:sign.youtube.conf.line,update:0
+#: selection:sign.youtube.conf.line,update:0
+msgid "Update"
+msgstr ""
+
+#. module: sync_youtube
+#: field:sign.youtube.conf.line,published:0
+msgid "Published "
+msgstr ""
+
+#. module: sync_youtube
+#: field:sign.youtube.conf.line,category:0
+msgid "Category "
+msgstr ""
+
+#. module: sync_youtube
+#: model:ir.actions.act_window,name:sync_youtube.sign_youtube_action
+#: view:sign.youtube.conf:0
+#: view:sign.youtube.conf.line:0
+msgid "Sign YouTube"
+msgstr ""
+
+#. module: sync_youtube
+#: help:sign.youtube.conf,max_v:0
+msgid "Number max of video to load"
+msgstr ""
+
+#. module: sync_youtube
+#: field:sign.youtube.conf,name:0
+msgid "YouTube User"
+msgstr ""
+
+#. module: sync_youtube
+#: code:addons/sync_youtube/model/sign_youtube.py:106
+#, python-format
+msgid "Connection Completed"
+msgstr ""
+
+#. module: sync_youtube
+#: view:sign.youtube.conf:0
+msgid "i.e.: 123456789.apps.googleusercontent.com"
+msgstr ""
+
+#. module: sync_youtube
+#: view:sign.youtube.conf:0
+msgid "i.e.: yourgmailaccount@gmail.com"
+msgstr ""
+
+#. module: sync_youtube
+#: help:sign.youtube.conf.line,favorites:0
+#: help:sign.youtube.conf.line,views:0
+msgid "Number of times they have viewed the video"
+msgstr ""
+
+#. module: sync_youtube
+#: help:sign.youtube.conf,developer_key:0
+msgid ""
+"Developer key used by de API if you do not have one you can get one in the "
+"YouTube API https://code.google.com/apis/youtube/dashboard/gwt/index.html"
+msgstr ""
+
+#. module: sync_youtube
+#: field:sign.youtube.conf,max_v:0
+msgid "Max Number Video to load"
+msgstr ""
+
+#. module: sync_youtube
+#: field:sign.youtube.conf.line,favorites:0
+msgid "Number of favorites"
+msgstr ""
+
+#. module: sync_youtube
+#: view:sign.youtube.conf:0
+msgid "Play the video"
+msgstr ""
+
+#. module: sync_youtube
+#: field:sign.youtube.conf.line,info:0
+msgid "Add in messages"
+msgstr ""
+
+#. module: sync_youtube
+#: view:sign.youtube.conf:0
+msgid "Show on Inbox"
+msgstr ""
+
+#. module: sync_youtube
+#: help:sign.youtube.conf.line,private:0
+msgid "Private info about the video"
+msgstr ""
+
+#. module: sync_youtube
+#: help:sign.youtube.conf.line,info:0
+msgid "Select if you want add this video in the company messages"
+msgstr ""
+
+#. module: sync_youtube
+#: view:sign.youtube.conf:0
+msgid "Load Videos"
+msgstr ""
+
+#. module: sync_youtube
+#: help:sign.youtube.conf,name:0
+msgid "User name for youtube account used to login in youtube"
+msgstr ""
+
+#. module: sync_youtube
+#: help:sign.youtube.conf.line,message:0
+msgid "Message to shown in inbox"
+msgstr ""
+
+#. module: sync_youtube
+#: view:sign.youtube.conf:0
+msgid "Test Connection"
+msgstr ""
+
+#. module: sync_youtube
+#: help:sign.youtube.conf.line,duration_seconds:0
+msgid "Video duration in seconds"
+msgstr ""
+
+#. module: sync_youtube
+#: help:sign.youtube.conf.line,name:0
+msgid "Tittle for YouTube Video"
+msgstr ""
+
+#. module: sync_youtube
+#: field:sign.youtube.conf.line,attachment_ids:0
+msgid "Attachments"
+msgstr ""
+
+#. module: sync_youtube
+#: code:addons/sync_youtube/model/sign_youtube.py:101
+#, python-format
+msgid "Error!"
+msgstr ""
+
+#. module: sync_youtube
+#: help:sign.youtube.conf.line,category:0
+msgid "Category seleted for this video from YouTube"
+msgstr ""
+
+#. module: sync_youtube
+#: field:sign.youtube.conf.line,name:0
+msgid "Video Title "
+msgstr ""
+
+#. module: sync_youtube
+#: code:addons/sync_youtube/model/sign_youtube.py:105
+#, python-format
+msgid "Perfect!"
+msgstr ""
+
+#. module: sync_youtube
+#: field:sign.youtube.conf.line,private:0
+msgid "Private"
+msgstr ""
+
+#. module: sync_youtube
+#: field:sign.youtube.conf.line,public_information:0
+msgid "Public Information"
+msgstr ""
+
+#. module: sync_youtube
+#: field:sign.youtube.conf,client_id:0
+msgid "ID Client"
+msgstr ""
+
+#. module: sync_youtube
+#: field:sign.youtube.conf,developer_key:0
+msgid "Developer Key"
+msgstr ""
+
+#. module: sync_youtube
+#: model:ir.ui.menu,name:sync_youtube.sign_youtube_menu
+msgid "Sign YouTube Conf"
+msgstr ""
+
+#. module: sync_youtube
+#: field:sign.youtube.conf.line,duration_seconds:0
+msgid "Duration "
+msgstr ""
+
+#. module: sync_youtube
+#: field:sign.youtube.conf.line,message:0
+msgid "Message"
+msgstr ""
+
+#. module: sync_youtube
+#: view:sign.youtube.conf.line:0
+msgid "Used to send this video in company inbox"
+msgstr ""
+
+#. module: sync_youtube
+#: help:sign.youtube.conf.line,description:0
+msgid "Description added for this video when was created"
+msgstr ""
+
+#. module: sync_youtube
+#: view:sign.youtube.conf:0
+msgid "Publish Video"
+msgstr ""
+
+#. module: sync_youtube
+#: code:addons/sync_youtube/model/sign_youtube.py:102
+#, python-format
+msgid ""
+"The config parameters are wrong please verify it and try\n"
+"                                           again"
+msgstr ""

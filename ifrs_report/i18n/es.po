@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: addons-vauxoo\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-07-17 00:48+0000\n"
+"POT-Creation-Date: 2013-11-07 01:11+0000\n"
 "PO-Revision-Date: 2013-09-12 04:42+0000\n"
 "Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
 "<humbertoarocha@gmail.com>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-10-30 05:55+0000\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: ifrs_report
@@ -27,6 +27,13 @@ msgstr "Título"
 #: view:ifrs.report.wizard:0
 msgid "IFRS Report Options"
 msgstr "Opciones de Reporte NIIF"
+
+#. module: ifrs_report
+#: help:ifrs.lines,name:0
+msgid ""
+"Line name in the report. This name can be translatable, if there are "
+"multiple languages loaded it can be translated"
+msgstr ""
 
 #. module: ifrs_report
 #: model:ifrs.lines,name:ifrs_report.ifrs_lines_retirodeactivosfijos1
@@ -139,6 +146,11 @@ msgid "(E50 + E70)/280"
 msgstr ""
 
 #. module: ifrs_report
+#: selection:ifrs.report.wizard,report_format:0
+msgid "Spreadsheet"
+msgstr ""
+
+#. module: ifrs_report
 #: field:ifrs.ifrs,state:0
 msgid "State"
 msgstr "Estado"
@@ -201,6 +213,11 @@ msgstr ""
 #. module: ifrs_report
 #: model:ifrs.lines,name:ifrs_report.ifrs_lines_utilidaddeejerciciosanteriores0
 msgid "UTILIDAD DE EJERCICIOS ANTERIORES"
+msgstr ""
+
+#. module: ifrs_report
+#: model:ir.actions.report.xml,name:ifrs_report.ifrs_report_html
+msgid "ifrs_report Html"
 msgstr ""
 
 #. module: ifrs_report
@@ -346,11 +363,6 @@ msgid "Gastos de Fabricacion"
 msgstr ""
 
 #. module: ifrs_report
-#: field:ifrs.lines,level:0
-msgid "Level"
-msgstr "Nivel"
-
-#. module: ifrs_report
 #: field:ifrs.ifrs,currency_id:0
 msgid "Company Currency"
 msgstr "Moneda de la Compañía"
@@ -374,6 +386,11 @@ msgstr ""
 #: selection:ifrs.lines,operator:0
 msgid "Product"
 msgstr "Producto"
+
+#. module: ifrs_report
+#: selection:ifrs.lines,comparison:0
+msgid "No Comparison"
+msgstr ""
 
 #. module: ifrs_report
 #: model:ifrs.lines,name:ifrs_report.ifrs_lines_depreciacionenresultadoshistoricos1
@@ -400,6 +417,12 @@ msgstr ""
 #. module: ifrs_report
 #: model:ifrs.lines,name:ifrs_report.ifrs_lines_otrospasivoslp0
 msgid "OTROS PASIVOS LP"
+msgstr ""
+
+#. module: ifrs_report
+#: code:addons/ifrs_report/model/ifrs.py:200
+#, python-format
+msgid "ALL PERIODS OF THE FISCALYEAR"
 msgstr ""
 
 #. module: ifrs_report
@@ -642,6 +665,11 @@ msgid "Prueba del Acido"
 msgstr ""
 
 #. module: ifrs_report
+#: view:ifrs.lines:0
+msgid "Report"
+msgstr ""
+
+#. module: ifrs_report
 #: view:ifrs.ifrs:0
 msgid ""
 "Abstract: This type is the one you have to use to create label that just get "
@@ -676,6 +704,11 @@ msgstr ""
 #. module: ifrs_report
 #: model:ifrs.lines,name:ifrs_report.ifrs_lines_cambioenelcapitaldetrabajo1
 msgid "CAMBIO EN EL CAPITAL DE TRABAJO"
+msgstr ""
+
+#. module: ifrs_report
+#: model:ifrs.lines,name:ifrs_report.ifrs_lines_ventasnetasdelaoperacionperiodosdelejercicio0
+msgid "Ventas netas de la operacion * Periodos del Ejercicio"
 msgstr ""
 
 #. module: ifrs_report
@@ -794,6 +827,11 @@ msgid "DEVALUACION DE ACTIVO FIJO Y CARGOS DIFERIDOS"
 msgstr ""
 
 #. module: ifrs_report
+#: selection:ifrs.report.wizard,report_format:0
+msgid "PDF"
+msgstr ""
+
+#. module: ifrs_report
 #: view:ifrs.ifrs:0
 msgid "Report Lines"
 msgstr "Líneas del Reporte"
@@ -883,6 +921,11 @@ msgid "Comportamiento de Gastos / Ventas"
 msgstr ""
 
 #. module: ifrs_report
+#: model:ir.actions.report.xml,name:ifrs_report.report_webkit_html_12_html
+msgid "WebKit ifrs Html"
+msgstr ""
+
+#. module: ifrs_report
 #: model:ifrs.lines,name:ifrs_report.ifrs_lines_contribucionmarginalventas0
 msgid "Contribucion Marginal / Ventas"
 msgstr ""
@@ -908,10 +951,9 @@ msgid "Invisible"
 msgstr "Invisible"
 
 #. module: ifrs_report
-#: help:ifrs.ifrs,do_compute:0
-msgid "Allows the amount field automatically run when is calculated"
-msgstr ""
-"Permite que el campo cantidad se ejecute automaticamente cuando se calcula"
+#: view:ifrs.ifrs:0
+msgid "Arithmetic Operator"
+msgstr "Operador Aritmético"
 
 #. module: ifrs_report
 #: model:ifrs.lines,name:ifrs_report.ifrs_lines_contribucionmarginalproduccion1
@@ -1025,9 +1067,9 @@ msgid "VENTA BRUTA"
 msgstr ""
 
 #. module: ifrs_report
-#: field:ifrs.lines,period_4:0
-msgid "Periodo 4"
-msgstr "Período 4"
+#: model:ifrs.lines,name:ifrs_report.ifrs_lines_sumasaldofinalactivofijo1
+msgid "SUMA SALDO FINAL ACTIVO FIJO"
+msgstr ""
 
 #. module: ifrs_report
 #: model:ifrs.lines,name:ifrs_report.ifrs_lines_aumdismotrosacreedores0
@@ -1069,12 +1111,6 @@ msgid "SUMA DE INVERSIONES EN ACTIVOS FIJOS"
 msgstr ""
 
 #. module: ifrs_report
-#: code:addons/ifrs_report/model/ifrs.py:381
-#, python-format
-msgid "There are previous period to %s"
-msgstr "Hay períodos previos a %s"
-
-#. module: ifrs_report
 #: model:ifrs.lines,name:ifrs_report.ifrs_lines_cuentasporcobrarventasnetasdelaoperacion0
 msgid "Cuentas por Cobrar / Ventas Netas de la Operacion"
 msgstr ""
@@ -1083,12 +1119,6 @@ msgstr ""
 #: field:ifrs.ifrs,ifrs_lines_ids:0
 msgid "IFRS lines"
 msgstr "Líneas NIIF"
-
-#. module: ifrs_report
-#: code:addons/ifrs_report/model/ifrs.py:358
-#, python-format
-msgid "prueba001 %s"
-msgstr ""
 
 #. module: ifrs_report
 #: model:ifrs.lines,name:ifrs_report.ifrs_lines_gastosdefabricacionfijos0
@@ -1180,10 +1210,7 @@ msgid "ACTIVO CIRCULANTE"
 msgstr ""
 
 #. module: ifrs_report
-#: code:addons/ifrs_report/model/ifrs.py:341
-#: code:addons/ifrs_report/model/ifrs.py:358
-#: code:addons/ifrs_report/model/ifrs.py:366
-#: code:addons/ifrs_report/model/ifrs.py:381
+#: code:addons/ifrs_report/model/ifrs.py:550
 #, python-format
 msgid "Error !"
 msgstr "¡ Error !"
@@ -1322,11 +1349,6 @@ msgid "UTILIDAD DE LA OPERACION"
 msgstr ""
 
 #. module: ifrs_report
-#: model:ifrs.ifrs,title:ifrs_report.ifrs_ifrs_estadoderesultados0
-msgid "INCOME STATEMENT"
-msgstr ""
-
-#. module: ifrs_report
 #: model:ifrs.lines,name:ifrs_report.ifrs_lines_inversionesenacciones0
 #: model:ifrs.lines,name:ifrs_report.ifrs_lines_inversionesenacciones1
 msgid "INVERSIONES EN ACCIONES"
@@ -1363,11 +1385,6 @@ msgid "All Posted Entries"
 msgstr "Todos los asientos asentados"
 
 #. module: ifrs_report
-#: field:ifrs.report.wizard,columns:0
-msgid "Number of Columns"
-msgstr "Número de columnas"
-
-#. module: ifrs_report
 #: selection:ifrs.lines,value:0
 msgid "Credit"
 msgstr "Crédito"
@@ -1395,6 +1412,11 @@ msgstr "Nombre del Reporte"
 #. module: ifrs_report
 #: model:ifrs.lines,name:ifrs_report.ifrs_lines_otrasfuentesaplicacionesdeefectivo0
 msgid "OTRAS FUENTES (APLICACIONES) DE EFECTIVO"
+msgstr ""
+
+#. module: ifrs_report
+#: model:ifrs.ifrs,title:ifrs_report.ifrs_ifrs_estadoderesultados0
+msgid "ESTADO DE RESULTADOS"
 msgstr ""
 
 #. module: ifrs_report
@@ -1435,11 +1457,6 @@ msgid "CONTRIBUCION MARGINAL DISTRIBUCION"
 msgstr ""
 
 #. module: ifrs_report
-#: field:ifrs.lines,parent_left:0
-msgid "Parent Left"
-msgstr "Padre izquierdo"
-
-#. module: ifrs_report
 #: model:ifrs.lines,name:ifrs_report.ifrs_lines_costovariabledeventaestandar0
 msgid "COSTO (VARIABLE) DE VENTA ESTANDAR"
 msgstr ""
@@ -1478,7 +1495,7 @@ msgid ""
 msgstr ""
 
 #. module: ifrs_report
-#: code:addons/ifrs_report/model/ifrs.py:341
+#: code:addons/ifrs_report/model/ifrs.py:550
 #, python-format
 msgid "There are no special period in %s"
 msgstr "No hay período especial en %s"
@@ -1499,8 +1516,8 @@ msgid "Contribucion Marginal Mensual / Clientes + Inventarios"
 msgstr ""
 
 #. module: ifrs_report
-#: model:ifrs.lines,name:ifrs_report.ifrs_lines_ventasnetasdelaoperacionperiodosdelejercicio0
-msgid "Ventas netas de la operacion * Periodos del Ejercicio"
+#: view:ifrs.lines:0
+msgid "IFRS Lines Search"
 msgstr ""
 
 #. module: ifrs_report
@@ -1570,9 +1587,9 @@ msgid "Periodo 5"
 msgstr "Período 5"
 
 #. module: ifrs_report
-#: model:ifrs.lines,name:ifrs_report.ifrs_lines_sumasaldofinalactivofijo1
-msgid "SUMA SALDO FINAL ACTIVO FIJO"
-msgstr ""
+#: field:ifrs.lines,period_4:0
+msgid "Periodo 4"
+msgstr "Período 4"
 
 #. module: ifrs_report
 #: field:ifrs.lines,period_3:0
@@ -1649,6 +1666,7 @@ msgstr "Variaciones en Períodos"
 
 #. module: ifrs_report
 #: field:ifrs.ifrs,company_id:0
+#: field:ifrs.lines,company_id:0
 #: field:ifrs.report.wizard,company_id:0
 msgid "Company"
 msgstr "Compañía"
@@ -1701,11 +1719,6 @@ msgstr ""
 #: field:ifrs.lines,operator:0
 msgid "Operator"
 msgstr "Operador"
-
-#. module: ifrs_report
-#: view:ifrs.ifrs:0
-msgid "Arithmetic Operator"
-msgstr "Operador Aritmético"
 
 #. module: ifrs_report
 #: view:ifrs.ifrs:0
@@ -1878,15 +1891,6 @@ msgstr ""
 "se está consultando"
 
 #. module: ifrs_report
-#: help:ifrs.lines,name:0
-msgid ""
-"Line name in the report. This name can be translatable, if there are "
-"multiple languages ​​loaded it can be translated"
-msgstr ""
-"Nombre de la Línea en el reporte. Este nombre puede ser traducible, si hay "
-"multiples idiomas cargado el mismo puede ser traducido."
-
-#. module: ifrs_report
 #: model:ifrs.lines,name:ifrs_report.ifrs_lines_utilidadnetaacapitalcontable0
 msgid "Utilidad Neta a Capital Contable"
 msgstr ""
@@ -1898,7 +1902,6 @@ msgstr ""
 
 #. module: ifrs_report
 #: view:ifrs.ifrs:0
-#: field:ifrs.ifrs,do_compute:0
 msgid "Compute"
 msgstr "Calcular"
 
@@ -1948,6 +1951,7 @@ msgid "ifrs.ifrs"
 msgstr ""
 
 #. module: ifrs_report
+#: help:ifrs.lines,priority:0
 #: help:ifrs.lines,sequence:0
 msgid ""
 "Indicates the order of the line in the report. The sequence must be unique "
@@ -1961,6 +1965,11 @@ msgstr ""
 #: field:ifrs.lines,inv_sign:0
 msgid "Change Sign to Amount"
 msgstr "Cambiar Signo a la Cantidad"
+
+#. module: ifrs_report
+#: field:ifrs.report.wizard,report_format:0
+msgid "Report Format"
+msgstr ""
 
 #. module: ifrs_report
 #: help:ifrs.report.wizard,period:0
@@ -1977,10 +1986,9 @@ msgid "Exchange Date"
 msgstr "Fecha de Cambio"
 
 #. module: ifrs_report
-#: code:addons/ifrs_report/model/ifrs.py:366
-#, python-format
-msgid "There are no periods in %s"
-msgstr "No hay periodos en %s"
+#: field:ifrs.report.wizard,columns:0
+msgid "Number of Columns"
+msgstr "Número de columnas"
 
 #. module: ifrs_report
 #: model:ifrs.lines,name:ifrs_report.ifrs_lines_activocirculanteapasivototal0
@@ -2004,15 +2012,11 @@ msgid "Description"
 msgstr "Descripción"
 
 #. module: ifrs_report
+#: view:ifrs.lines:0
 #: field:ifrs.lines,type:0
 #: field:ifrs.report.wizard,report_type:0
 msgid "Type"
 msgstr "Tipo"
-
-#. module: ifrs_report
-#: field:ifrs.lines,parent_right:0
-msgid "Parent Right"
-msgstr "Padre Derecho"
 
 #. module: ifrs_report
 #: field:ifrs.lines,parent_abstract_id:0
@@ -2028,6 +2032,11 @@ msgstr "Valor Contable"
 #. module: ifrs_report
 #: model:ifrs.lines,name:ifrs_report.ifrs_lines_prestamosbancarioslp0
 msgid "PRESTAMOS BANCARIOS LP"
+msgstr ""
+
+#. module: ifrs_report
+#: selection:ifrs.lines,constant_type:0
+msgid "Number of customers* in portfolio"
 msgstr ""
 
 #. module: ifrs_report
@@ -2112,6 +2121,7 @@ msgstr "Constante"
 
 #. module: ifrs_report
 #: view:ifrs.ifrs:0
+#: field:ifrs.lines,priority:0
 #: field:ifrs.lines,sequence:0
 msgid "Sequence"
 msgstr "Secuencia"
@@ -2137,3 +2147,31 @@ msgid ""
 msgstr ""
 "campo de control cantidad de 11vo período, funciona para prevenir cálculos "
 "repetidos"
+
+#~ msgid "Level"
+#~ msgstr "Nivel"
+
+#~ msgid "Allows the amount field automatically run when is calculated"
+#~ msgstr ""
+#~ "Permite que el campo cantidad se ejecute automaticamente cuando se calcula"
+
+#~ msgid "Parent Left"
+#~ msgstr "Padre izquierdo"
+
+#~ msgid ""
+#~ "Line name in the report. This name can be translatable, if there are "
+#~ "multiple languages ​​loaded it can be translated"
+#~ msgstr ""
+#~ "Nombre de la Línea en el reporte. Este nombre puede ser traducible, si hay "
+#~ "multiples idiomas cargado el mismo puede ser traducido."
+
+#, python-format
+#~ msgid "There are no periods in %s"
+#~ msgstr "No hay periodos en %s"
+
+#~ msgid "Parent Right"
+#~ msgstr "Padre Derecho"
+
+#, python-format
+#~ msgid "There are previous period to %s"
+#~ msgstr "Hay períodos previos a %s"

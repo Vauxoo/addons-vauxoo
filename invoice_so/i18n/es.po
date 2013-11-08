@@ -6,14 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.3\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-01-27 13:31+0000\n"
-"PO-Revision-Date: 2012-01-27 13:31+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:10+0000\n"
+"PO-Revision-Date: 2013-11-07 03:27+0000\n"
+"Last-Translator: Moisés López - http://www.vauxoo.com "
+"<moylop260@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: invoice_so
 #: help:account.invoice,sale_ids:0
@@ -35,4 +37,3 @@ msgstr "Factura"
 #: view:account.invoice:0
 msgid "History"
 msgstr "Historia"
-
