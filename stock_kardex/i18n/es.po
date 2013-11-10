@@ -7,13 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-07 01:07+0000\n"
-"PO-Revision-Date: 2013-11-07 04:48+0000\n"
-"Last-Translator: Juan Carlos Hernandez Funes <Unknown>\n"
+"PO-Revision-Date: 2013-11-08 17:47+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-08 06:27+0000\n"
+"X-Launchpad-Export-Date: 2013-11-10 06:48+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: stock_kardex
@@ -44,7 +45,7 @@ msgstr "Delays"
 #. module: stock_kardex
 #: view:product.product:0
 msgid "Consumable products"
-msgstr ""
+msgstr "Productos consumibles"
 
 #. module: stock_kardex
 #: view:product.product:0
@@ -118,12 +119,12 @@ msgstr "Services"
 #. module: stock_kardex
 #: view:product.product:0
 msgid "Default Unit of Measure"
-msgstr ""
+msgstr "Unidad de medida por predeterminada"
 
 #. module: stock_kardex
 #: view:product.product:0
 msgid "Consumable"
-msgstr ""
+msgstr "Consumible"
 
 #. module: stock_kardex
 #: view:product.product:0
@@ -214,7 +215,7 @@ msgstr "Characteristics"
 #. module: stock_kardex
 #: view:product.product:0
 msgid "Can be Sold"
-msgstr ""
+msgstr "Puede ser vendido"
 
 #. module: stock_kardex
 #: view:product.product:0
