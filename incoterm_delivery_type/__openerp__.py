@@ -35,7 +35,9 @@ Incoterm Delivery Type
 This module add a delivery type boolan field in the incoterms model.
 ''',
     'depends': ['base', 'mail', 'stock'],
-    'data': [],
+    'data': [
+        'view/incoterm_delivery_type_view.xml',
+    ],
     'demo': [],
     'test': [],
     'active': False,
