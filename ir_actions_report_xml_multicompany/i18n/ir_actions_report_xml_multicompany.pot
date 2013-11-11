@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-08 17:43+0000\n"
-"PO-Revision-Date: 2013-11-08 17:43+0000\n"
+"POT-Creation-Date: 2013-11-11 19:35+0000\n"
+"PO-Revision-Date: 2013-11-11 19:35+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,20 +18,20 @@ msgstr ""
 #. module: ir_actions_report_xml_multicompany
 #: field:ir.actions.report.xml,active:0
 msgid "Active"
-msgstr "Activo"
+msgstr ""
 
 #. module: ir_actions_report_xml_multicompany
 #: field:ir.actions.report.xml,company_id:0
 msgid "Company"
-msgstr "Compañía"
+msgstr ""
 
 #. module: ir_actions_report_xml_multicompany
 #: model:ir.model,name:ir_actions_report_xml_multicompany.model_ir_actions_report_xml
 msgid "ir.actions.report.xml"
-msgstr "ir.acciones.informe.xml"
+msgstr ""
 
 #. module: ir_actions_report_xml_multicompany
 #: field:ir.actions.report.xml,sequence:0
 msgid "Sequence"
-msgstr "Secuencia"
+msgstr ""
 
