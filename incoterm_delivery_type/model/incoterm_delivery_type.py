@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Katherine Zaoral <kathy@vauxo.com>
+#    Coded by: Katherine Zaoral <kathy@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -23,4 +23,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import incoterm_delivery_type
+from openerp.osv import fields, osv, orm
+from openerp.tools.translate import _
+from openerp import tools
+
+
+class stock_incoterms(osv.Model):
+
+    _inherit = 'stock.incoterms'
+
+    _columns = {
+        'is_delivery': fields.boolean(
+            'This incoterm implies a delivery action',
+            help=('This option will be tell in the incoterms would be delivery'
+                  ' or will be picked up by the customer')),
+    }
+
+    _defaults = {
+        'is_delivery': False,
+    }
+
