@@ -6,19 +6,30 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.0-rc1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2011-03-08 08:12+0000\n"
-"PO-Revision-Date: 2013-06-03 07:38+0000\n"
-"Last-Translator: Raimon Esteve (www.zikzakmedia.com) "
-"<resteve@zikzakmedia.com>\n"
+"POT-Creation-Date: 2013-11-07 01:08+0000\n"
+"PO-Revision-Date: 2013-11-08 18:58+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-10-30 05:55+0000\n"
+"X-Launchpad-Export-Date: 2013-11-10 06:47+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: product_icecat
-#: code:addons/product_icecat/wizard/wizard_product_icecat.py:159
+#: code:addons/product_icecat/product_icecat.py:109
+#, python-format
+msgid ""
+"They are other icecat configuration with \"Active\" field                    "
+"checked. Only one configuration is avaible for active                    "
+"field."
+msgstr ""
+"Hay otras configuraciones icecat con el campo\"Activo\" marcado. Solamente "
+"una configuración está permitida para el campo activo"
+
+#. module: product_icecat
+#: code:addons/product_icecat/wizard/wizard_product_icecat.py:169
 #, python-format
 msgid "No"
 msgstr "No"
@@ -26,13 +37,13 @@ msgstr "No"
 #. module: product_icecat
 #: field:product.manufacturer.attribute,icecat_category:0
 msgid "Icecat Category"
-msgstr ""
+msgstr "Categoría Icecat"
 
 #. module: product_icecat
-#: code:addons/product_icecat/product_icecat.py:72
+#: code:addons/product_icecat/product_icecat.py:76
 #, python-format
-msgid "Ok !"
-msgstr "Ok !"
+msgid "Username/password FTP connection was not successfully!"
+msgstr "El usuario/password de la conexión FTP no se ha podido realizar!"
 
 #. module: product_icecat
 #: field:product.icecat.wizard,description_sale:0
@@ -43,16 +54,6 @@ msgstr "Descripción de venta"
 #: field:product.icecat.wizard,state:0
 msgid "State"
 msgstr "Estado"
-
-#. module: product_icecat
-#: code:addons/product_icecat/product_icecat.py:96
-#, python-format
-msgid ""
-"They are other icecat configuration with \"Active\" field checked. Only one "
-"configuration is avaible for active field."
-msgstr ""
-"Hay otra configuración de icecat como \"Activo\". Sólo una configuración "
-"puede contener este campo activo."
 
 #. module: product_icecat
 #: view:product.icecat:0
@@ -70,7 +71,7 @@ msgid "product.icecat.wizard"
 msgstr "product.icecat.wizard"
 
 #. module: product_icecat
-#: code:addons/product_icecat/wizard/wizard_product_icecat.py:378
+#: code:addons/product_icecat/wizard/wizard_product_icecat.py:433
 #, python-format
 msgid "EAN not avaible"
 msgstr "EAN no disponible"
@@ -89,7 +90,7 @@ msgstr "Usuario"
 #. module: product_icecat
 #: model:ir.model,name:product_icecat.model_product_product
 msgid "Product"
-msgstr ""
+msgstr "Producto"
 
 #. module: product_icecat
 #: field:product.icecat.wizard,html:0
@@ -97,8 +98,8 @@ msgid "HTML Code"
 msgstr "Código HTML"
 
 #. module: product_icecat
-#: code:addons/product_icecat/product_icecat.py:65
-#: code:addons/product_icecat/product_icecat.py:69
+#: code:addons/product_icecat/product_icecat.py:70
+#: code:addons/product_icecat/product_icecat.py:76
 #, python-format
 msgid "Error !"
 msgstr "Error !"
@@ -109,24 +110,10 @@ msgid "Description"
 msgstr "Descripción"
 
 #. module: product_icecat
-#: code:addons/product_icecat/product_icecat.py:69
-#, python-format
-msgid "Username/password FTP connection was not successfully!"
-msgstr "El usuario/password de la conexión FTP no se ha podido realizar!"
-
-#. module: product_icecat
-#: help:product.icecat,ftpdirectory:0
-msgid ""
-"If not use directory, insert . (point). If use directory, path FTP dir"
-msgstr ""
-"Si no utiliza ningún directorio, inserte un . (punto). Si utiliza un "
-"directorio, la ruta del directorio"
-
-#. module: product_icecat
-#: code:addons/product_icecat/wizard/wizard_product_icecat.py:324
+#: code:addons/product_icecat/wizard/wizard_product_icecat.py:371
 #, python-format
 msgid "Configure your icecat preferences!"
-msgstr ""
+msgstr "Configure sus preferencias icecat"
 
 #. module: product_icecat
 #: field:product.icecat,username:0
@@ -134,15 +121,16 @@ msgid "User Name"
 msgstr "Usuario"
 
 #. module: product_icecat
-#: code:addons/product_icecat/product_icecat.py:72
+#: code:addons/product_icecat/product_icecat.py:80
 #, python-format
 msgid "FTP connection was successfully!"
 msgstr "La conexión FTP se ha realizado correctamente!"
 
 #. module: product_icecat
-#: view:product.icecat:0
-msgid "Check FTP"
-msgstr "Comprobar FTP"
+#: code:addons/product_icecat/product_icecat.py:80
+#, python-format
+msgid "Ok !"
+msgstr "Ok !"
 
 #. module: product_icecat
 #: field:product.icecat.mapline,field_id:0
@@ -161,7 +149,7 @@ msgid "Active"
 msgstr "Activo"
 
 #. module: product_icecat
-#: code:addons/product_icecat/wizard/wizard_product_icecat.py:267
+#: code:addons/product_icecat/wizard/wizard_product_icecat.py:311
 #, python-format
 msgid "Product %s XML Import successfully"
 msgstr "La importación del XML del producto %s se ha realizado correctamente"
@@ -193,6 +181,15 @@ msgid "Mapline"
 msgstr "Líneas de mapeo"
 
 #. module: product_icecat
+#: help:product.icecat,ftpdirectory:0
+msgid ""
+"If not use directory, insert . (point). If use                directory, "
+"path FTP dir"
+msgstr ""
+"Si no se va a usar un directorio, inserte un . (punto). Si usará un "
+"directorio, indique la ruta FTP"
+
+#. module: product_icecat
 #: model:ir.model,name:product_icecat.model_product_icecat_mapline
 msgid "Icecat Mapline Configuration"
 msgstr "Configuración líneas de mapeo Icecat"
@@ -203,7 +200,7 @@ msgid "Language"
 msgstr "Lengua"
 
 #. module: product_icecat
-#: code:addons/product_icecat/wizard/wizard_product_icecat.py:316
+#: code:addons/product_icecat/wizard/wizard_product_icecat.py:362
 #, python-format
 msgid "Not exist %s image"
 msgstr "Not exist %s image"
@@ -219,28 +216,38 @@ msgid "IP"
 msgstr "IP"
 
 #. module: product_icecat
+#: code:addons/product_icecat/wizard/wizard_product_icecat.py:106
+#, python-format
+msgid ""
+"There are attributes avaible in this product.                    Delete this "
+"attributes or uncheck attributes option"
+msgstr ""
+"Hay atributos disponibles en este producto. Borre estos atributos o desmarce "
+"la opción atributos"
+
+#. module: product_icecat
 #: view:product.icecat.wizard:0
 msgid "update"
 msgstr "actualizar"
 
 #. module: product_icecat
-#: code:addons/product_icecat/product_icecat.py:96
+#: code:addons/product_icecat/product_icecat.py:109
 #, python-format
 msgid "Error!"
 msgstr "Error!"
 
 #. module: product_icecat
-#: code:addons/product_icecat/product_icecat.py:65
+#: code:addons/product_icecat/product_icecat.py:70
 #, python-format
 msgid "IP FTP connection was not successfully!"
 msgstr "No se ha podido conectar con FTP con la IP especificada!"
 
 #. module: product_icecat
-#: code:addons/product_icecat/wizard/wizard_product_icecat.py:101
-#: code:addons/product_icecat/wizard/wizard_product_icecat.py:324
+#: code:addons/product_icecat/wizard/wizard_product_icecat.py:106
+#: code:addons/product_icecat/wizard/wizard_product_icecat.py:371
 #, python-format
 msgid "Error"
-msgstr ""
+msgstr "¡Error!"
 
 #. module: product_icecat
 #: field:product.icecat,ftpdirectory:0
@@ -250,7 +257,7 @@ msgstr "Directorio"
 #. module: product_icecat
 #: field:product.icecat.wizard,attributes:0
 msgid "Attributes"
-msgstr ""
+msgstr "Atributos"
 
 #. module: product_icecat
 #: field:product.icecat.mapline,name:0
@@ -263,23 +270,19 @@ msgid "First"
 msgstr "Primero"
 
 #. module: product_icecat
-#: model:ir.model,name:product_icecat.model_product_icecat
-msgid "product.icecat"
-msgstr ""
-
-#. module: product_icecat
 #: field:product.icecat.mapline,model_id:0
 msgid "OpenERP Model"
 msgstr "Modelo OpenERP"
 
 #. module: product_icecat
-#: code:addons/product_icecat/wizard/wizard_product_icecat.py:373
+#: code:addons/product_icecat/wizard/wizard_product_icecat.py:428
 #, python-format
 msgid "Import image not avaible"
 msgstr "La importación de la imagen no está disponible"
 
 #. module: product_icecat
 #: model:ir.actions.act_window,name:product_icecat.action_product_icecat
+#: model:ir.model,name:product_icecat.model_product_icecat
 #: model:ir.ui.menu,name:product_icecat.product_icecat
 msgid "Icecat Configuration"
 msgstr "Configuración Icecat"
@@ -287,12 +290,12 @@ msgstr "Configuración Icecat"
 #. module: product_icecat
 #: model:ir.model,name:product_icecat.model_product_manufacturer_attribute
 msgid "Product attributes"
-msgstr ""
+msgstr "Atributos de producto"
 
 #. module: product_icecat
 #: field:product.manufacturer.attribute,sequence:0
 msgid "Sequence"
-msgstr ""
+msgstr "Secuencia"
 
 #. module: product_icecat
 #: field:product.icecat.wizard,image:0
@@ -311,9 +314,9 @@ msgid "Import icecat XML"
 msgstr "Importación XML icecat"
 
 #. module: product_icecat
-#: constraint:product.product:0
-msgid "Error: Invalid ean code"
-msgstr ""
+#: view:product.icecat:0
+msgid "Check FTP"
+msgstr "Comprobar FTP"
 
 #. module: product_icecat
 #: selection:product.icecat.wizard,state:0
@@ -337,7 +340,7 @@ msgid "Close"
 msgstr "Cerrar"
 
 #. module: product_icecat
-#: code:addons/product_icecat/wizard/wizard_product_icecat.py:157
+#: code:addons/product_icecat/wizard/wizard_product_icecat.py:167
 #, python-format
 msgid "Yes"
 msgstr "Si"
@@ -348,14 +351,20 @@ msgid "URL FTP Dir: http://domain/directory/"
 msgstr "URL FTP Dir: http://domain/directory/"
 
 #. module: product_icecat
-#: code:addons/product_icecat/wizard/wizard_product_icecat.py:101
-#, python-format
-msgid ""
-"There are attributes avaible in this product. Delete this attributes or "
-"uncheck attributes option"
-msgstr ""
-
-#. module: product_icecat
 #: help:product.icecat.mapline,name:0
 msgid "Insert ID Category from Icecat"
 msgstr "Inserte el ID de la categoría de Icecat"
+
+#, python-format
+#~ msgid ""
+#~ "They are other icecat configuration with \"Active\" field checked. Only one "
+#~ "configuration is avaible for active field."
+#~ msgstr ""
+#~ "Hay otra configuración de icecat como \"Activo\". Sólo una configuración "
+#~ "puede contener este campo activo."
+
+#~ msgid ""
+#~ "If not use directory, insert . (point). If use directory, path FTP dir"
+#~ msgstr ""
+#~ "Si no utiliza ningún directorio, inserte un . (punto). Si utiliza un "
+#~ "directorio, la ruta del directorio"

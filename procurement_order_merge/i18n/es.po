@@ -6,14 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-12 17:58+0000\n"
-"PO-Revision-Date: 2012-10-12 13:02-0600\n"
-"Last-Translator: julio <julio@vauxoo.com>\n"
+"POT-Creation-Date: 2013-11-07 01:08+0000\n"
+"PO-Revision-Date: 2013-11-08 17:43+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Launchpad-Export-Date: 2013-11-10 06:48+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: procurement_order_merge
 #: view:procurement.order.merge:0
@@ -31,11 +33,13 @@ msgid "procurement.order.merge"
 msgstr "procurement.order.merge"
 
 #. module: procurement_order_merge
-#: model:ir.actions.act_window,name:procurement_order_merge.create_procurement_merge_action
-#: model:ir.actions.act_window,name:procurement_order_merge.procurement_merge_wizard
-#: view:procurement.order.merge:0
-msgid "Procurement Merge"
-msgstr "Mezclar abastecimientos"
+#: code:addons/procurement_order_merge/wizard/procurement_order_merge.py:43
+#, python-format
+msgid ""
+"Please select multiple order to merge                                    in "
+"the list view."
+msgstr ""
+"Por favor seleccione múltiples órdenes para mezclar en la vista en lista."
 
 #. module: procurement_order_merge
 #: model:ir.model,name:procurement_order_merge.model_procurement_order
@@ -43,40 +47,22 @@ msgid "Procurement"
 msgstr "Abastecimiento"
 
 #. module: procurement_order_merge
-#: code:addons/procurement_order_merge/procurement.py:60
-#, python-format
-msgid "Procurements can not be merged"
-msgstr "Abastecimientos no pueden ser mezclados"
-
-#. module: procurement_order_merge
-#: code:addons/procurement_order_merge/wizard/procurement_order_merge.py:38
-#, python-format
-msgid "Please select multiple order to merge in the list view."
-msgstr "Por Favor seleccione varios abastecimientos en la lista para mezclarlos."
-
-#. module: procurement_order_merge
-#: code:addons/procurement_order_merge/procurement.py:57
-#: code:addons/procurement_order_merge/procurement.py:60
-#, python-format
-msgid "Error"
-msgstr "Error"
-
-#. module: procurement_order_merge
-#: view:procurement.order.merge:0
-msgid "Cancel"
-msgstr "Cancelar"
-
-#. module: procurement_order_merge
-#: code:addons/procurement_order_merge/wizard/procurement_order_merge.py:37
+#: code:addons/procurement_order_merge/wizard/procurement_order_merge.py:42
 #, python-format
 msgid "Warning"
 msgstr "Advertencia"
 
 #. module: procurement_order_merge
-#: code:addons/procurement_order_merge/procurement.py:57
-#, python-format
-msgid "Procurements must be in state draft"
-msgstr "Los abastecimientos deben de estar en estado borrador"
+#: model:ir.actions.act_window,name:procurement_order_merge.create_procurement_merge_action
+#: model:ir.actions.act_window,name:procurement_order_merge.procurement_merge_wizard
+#: view:procurement.order.merge:0
+msgid "Procurement Merge"
+msgstr "Mezclar abastecimientos"
+
+#. module: procurement_order_merge
+#: view:procurement.order.merge:0
+msgid "Cancel"
+msgstr "Cancelar"
 
 #. module: procurement_order_merge
 #: view:procurement.order.merge:0
@@ -89,10 +75,9 @@ msgid ""
 " * Procurments Orders have same procurement method \n"
 " * Procurments Orders have same product "
 msgstr ""
-"Por favor note que: \n"
+" Por favor note que: \n"
 "Abastecimientos solo se mezclaran si: \n"
 " *Orden de abastecimiento esta en estado borrador \n"
 " * Orden de abastecimiento tienen la misma ubicacion \n"
 " * Orden de abastecimiento tienen el misma metodo de abastecimiento \n"
-" * Orden de abastecimiento tienen el mismo producto"
-
+" * Orden de abastecimiento tienen el mismo producto "

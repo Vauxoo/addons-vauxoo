@@ -5,17 +5,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-23 19:38+0000\n"
-"PO-Revision-Date: 2013-07-23 14:47-0600\n"
-"Last-Translator: Ulises <ulises@vauxoo.com>\n"
+"POT-Creation-Date: 2013-11-07 01:10+0000\n"
+"PO-Revision-Date: 2013-11-07 04:12+0000\n"
+"Last-Translator: Ulises <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Launchpad-Export-Date: 2013-11-10 06:48+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: invoice_number_view_tree
 #: view:account.invoice:0
 msgid "Supplier Invoice Number"
 msgstr "No. Factura Proveedor"
-

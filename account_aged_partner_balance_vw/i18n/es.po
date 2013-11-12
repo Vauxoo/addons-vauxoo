@@ -6,16 +6,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-16 21:11+0000\n"
-"PO-Revision-Date: 2013-10-16 21:11+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:14+0000\n"
+"PO-Revision-Date: 2013-11-08 05:10+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-11-11 05:39+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: account_aged_partner_balance_vw
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:66
 #: view:wizard.report.aged.partner.balance:0
 #: field:wizard.report.aged.partner.balance,partner_ids:0
 msgid "Partners"
@@ -47,6 +50,11 @@ msgid "Partners default to show in Report"
 msgstr "Partners por default a mostrar en el reporte"
 
 #. module: account_aged_partner_balance_vw
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:20
+msgid "Period Length(days)"
+msgstr "Duración Periodo(días)"
+
+#. module: account_aged_partner_balance_vw
 #: model:ir.model,name:account_aged_partner_balance_vw.model_account_aged_partner_document
 msgid "account.aged.partner.document"
 msgstr "account.aged.partner.document"
@@ -59,6 +67,8 @@ msgstr "Lineas Mov abiertos"
 #. module: account_aged_partner_balance_vw
 #: field:account.aged.partner.balance.vw,not_due:0
 #: field:account.aged.partner.document,not_due:0
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:195
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:372
 msgid "Not Due"
 msgstr "No Vencido"
 
@@ -98,8 +108,15 @@ msgstr "Computar"
 
 #. module: account_aged_partner_balance_vw
 #: field:account.aged.partner.document,document_id:0
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:193
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:370
 msgid "Document"
 msgstr "Documento"
+
+#. module: account_aged_partner_balance_vw
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:17
+msgid "Chart of Accounts"
+msgstr "Plan de Cuentas"
 
 #. module: account_aged_partner_balance_vw
 #: field:wizard.report.aged.partner.balance,show_aml:0
@@ -119,6 +136,8 @@ msgstr "Fecha de vencimiento"
 
 #. module: account_aged_partner_balance_vw
 #: field:account.aged.partner.document,due_days:0
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:196
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:373
 msgid "Due Days"
 msgstr "Dias de atraso"
 
@@ -193,9 +212,24 @@ msgid "91/120"
 msgstr "91/120"
 
 #. module: account_aged_partner_balance_vw
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:23
+msgid "Target Moves"
+msgstr "Movimientos Objetivo"
+
+#. module: account_aged_partner_balance_vw
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:36
+msgid "Receivable and Payable Accounts"
+msgstr "Cuentas a cobrar y pagar"
+
+#. module: account_aged_partner_balance_vw
 #: help:wizard.report.aged.partner.balance,group_user:0
 msgid "¿Group report by user?"
 msgstr "¿Agrupar reporte por usuario?"
+
+#. module: account_aged_partner_balance_vw
+#: view:wizard.report.aged.partner.balance:0
+msgid "Vouchers Partner"
+msgstr "Pagos Partner"
 
 #. module: account_aged_partner_balance_vw
 #: view:account.aged.partner.balance.vw:0
@@ -216,6 +250,11 @@ msgid "Account Aged Trial balance Report"
 msgstr "Informe de balance de comprobación de vencimientos"
 
 #. module: account_aged_partner_balance_vw
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:44
+msgid "All Posted Entries"
+msgstr "Todos los asientos asentados"
+
+#. module: account_aged_partner_balance_vw
 #: model:ir.actions.report.xml,name:account_aged_partner_balance_vw.account_aged_partner_balance_report
 msgid "Aged Partner Balance"
 msgstr "Balance de Antiguedad por Partner"
@@ -226,9 +265,9 @@ msgid "Document State"
 msgstr "Estado Documento"
 
 #. module: account_aged_partner_balance_vw
-#: view:wizard.report.aged.partner.balance:0
-msgid "Vouchers Partner"
-msgstr "Pagos Partner"
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:22
+msgid "Analysis Direction"
+msgstr "Dirección análisis"
 
 #. module: account_aged_partner_balance_vw
 #: field:account.aged.partner.balance.vw,aatb_id:0
@@ -237,13 +276,35 @@ msgid "Aged Trial Balance"
 msgstr "Balance de comprobación de Antiguedad"
 
 #. module: account_aged_partner_balance_vw
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:303
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:493
+msgid "Grand Total"
+msgstr "Gran total"
+
+#. module: account_aged_partner_balance_vw
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:18
+msgid "Fiscal Year"
+msgstr "Ejercicio fiscal"
+
+#. module: account_aged_partner_balance_vw
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:41
+msgid "Future"
+msgstr "Futuro"
+
+#. module: account_aged_partner_balance_vw
 #: view:wizard.report.aged.partner.balance:0
-msgid "Select the partners to show in report, if this field is empty will take all partners"
-msgstr "Seleccionar los partners a mostrar en el reporte, si este campo es vacío se tomaran todos los partners"
+msgid ""
+"Select the partners to show in report, if this field is empty will take all "
+"partners"
+msgstr ""
+"Seleccionar los partners a mostrar en el reporte, si este campo es vacío se "
+"tomaran todos los partners"
 
 #. module: account_aged_partner_balance_vw
 #: view:account.aged.partner.document:0
 #: field:account.aged.partner.document,residual:0
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:197
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:374
 msgid "Residual"
 msgstr "Residual"
 
@@ -252,6 +313,11 @@ msgstr "Residual"
 #: help:wizard.report.aged.partner.balance,partner_ids:0
 msgid "Partners to show in Report"
 msgstr "Partners a mostrar en Reporte"
+
+#. module: account_aged_partner_balance_vw
+#: field:account.aged.trial.balance,type:0
+msgid "Type of Report"
+msgstr "Tipo de Reporte"
 
 #. module: account_aged_partner_balance_vw
 #: help:account.aged.partner.balance.vw,aatb_id:0
@@ -265,6 +331,12 @@ msgid "account.aged.partner.balance.vw"
 msgstr "account.aged.partner.balance.vw"
 
 #. module: account_aged_partner_balance_vw
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:194
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:371
+msgid "Type"
+msgstr "Tipo"
+
+#. module: account_aged_partner_balance_vw
 #: selection:account.aged.trial.balance,type:0
 msgid "Distributed Payments over Debts"
 msgstr "Distributed Payments over Debts"
@@ -275,12 +347,22 @@ msgid "Partners to show in Report by default"
 msgstr "Partners por default a mostrar en reporte"
 
 #. module: account_aged_partner_balance_vw
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:32
+msgid "Receivable Accounts"
+msgstr "Cuentas a cobrar"
+
+#. module: account_aged_partner_balance_vw
 #: field:account.aged.trial.balance,partner_doc_ids:0
 #: help:account.aged.trial.balance,partner_doc_ids:0
 #: field:account.aged.trial.balance,partner_line_ids:0
 #: help:account.aged.trial.balance,partner_line_ids:0
 msgid "Partner Aged Trail Balance"
 msgstr "Balance de comprobación de Antiguedad por cliente"
+
+#. module: account_aged_partner_balance_vw
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:34
+msgid "Payable Accounts"
+msgstr "Cuentas a pagar"
 
 #. module: account_aged_partner_balance_vw
 #: view:account.aged.partner.balance.vw:0
@@ -291,13 +373,19 @@ msgid "31/60"
 msgstr "31/60"
 
 #. module: account_aged_partner_balance_vw
-#: field:account.aged.trial.balance,type:0
-msgid "Type of Report"
-msgstr "Tipo de Reporte"
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:39
+msgid "Past"
+msgstr "Pasado"
+
+#. module: account_aged_partner_balance_vw
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:21
+msgid "Partners "
+msgstr "Partners "
 
 #. module: account_aged_partner_balance_vw
 #: view:account.aged.partner.balance.vw:0
 #: view:account.aged.partner.document:0
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:67
 msgid "Not due"
 msgstr "No Vencido"
 
@@ -339,10 +427,19 @@ msgid "Partner"
 msgstr "Empresa"
 
 #. module: account_aged_partner_balance_vw
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:19
+msgid "Start Date"
+msgstr "Fecha Inicial"
+
+#. module: account_aged_partner_balance_vw
 #: view:account.aged.partner.balance.vw:0
 #: field:account.aged.partner.balance.vw,total:0
 #: view:account.aged.partner.document:0
 #: field:account.aged.partner.document,total:0
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:72
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:116
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:262
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:450
 msgid "Total"
 msgstr "Total"
 
@@ -356,3 +453,7 @@ msgstr "Abierto"
 msgid "or"
 msgstr "o"
 
+#. module: account_aged_partner_balance_vw
+#: report:addons/account_aged_partner_balance_vw/report/account_aged_partner_balance.mako:46
+msgid "All Entries"
+msgstr "Todos los asientos"

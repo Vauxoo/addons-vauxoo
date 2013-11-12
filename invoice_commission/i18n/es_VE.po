@@ -6,11 +6,46 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.3\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-03-14 15:45+0000\n"
-"PO-Revision-Date: 2012-03-14 11:16-0400\n"
-"Last-Translator: Miguel <miguel.delgado07@gmail.com>\n"
+"POT-Creation-Date: 2013-11-07 01:10+0000\n"
+"PO-Revision-Date: 2013-11-07 04:27+0000\n"
+"Last-Translator: Miguel Delgado (Vauxoo) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Launchpad-Export-Date: 2013-11-10 06:48+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
+
+#. module: invoice_commission
+#: model:ir.model,name:invoice_commission.model_account_invoice_line
+msgid "Invoice Line"
+msgstr ""
+
+#. module: invoice_commission
+#: view:account.invoice:0
+#: field:account.invoice,commission:0
+#: field:account.invoice.line,commission:0
+msgid "Commission"
+msgstr "Comision"
+
+#. module: invoice_commission
+#: code:addons/invoice_commission/invoice_commission.py:77
+#, python-format
+msgid "User Error"
+msgstr "Error de Usuario"
+
+#. module: invoice_commission
+#: model:ir.model,name:invoice_commission.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: invoice_commission
+#: code:addons/invoice_commission/invoice_commission.py:77
+#, python-format
+msgid "The product standard price can't be 0.0!"
+msgstr "El precio estandar de un producto no puede ser 0.0!"
+
+#. module: invoice_commission
+#: field:account.invoice.line,gain:0
+msgid "Gain"
+msgstr "Ganancia"
