@@ -15,6 +15,17 @@
                     </xpath>
             </field>
         </record>
+        <record model="ir.ui.view" id="viewir_actions_report_xml_tree_inherit">
+            <field name="name">ir.actions.report.xml.inherit</field>
+            <field name="model">ir.actions.report.xml</field>
+            <field name="inherit_id" ref="base.act_report_xml_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name=&quot;type&quot;]" position="after">
+                    <field name="company_id"/>
+                    <field name="sequence"/>
+                </xpath>
+            </field>
+        </record>
         <record id="model_ir_actions_report_xml_rule" model="ir.rule">
             <field name="name">ir.actions.report.xml</field>
             <field name="model_id" ref="model_ir_actions_report_xml"/>
