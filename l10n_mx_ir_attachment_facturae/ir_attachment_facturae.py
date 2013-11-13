@@ -541,8 +541,7 @@ class ir_attachment_facturae_mx(osv.Model):
                                 else:
                                     inv_cancel_status = True
                         else:
-                            msj += _("Unknow cfdi driver for %s" %
-                                     (ir_attach_facturae_mx_id.type))
+                            msj += _("Unknow cfdi driver for %s" % (ir_attach_facturae_mx_id.type))
                     else:
                         wf_service.trg_validate(
                             uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
@@ -554,16 +553,14 @@ class ir_attachment_facturae_mx(osv.Model):
                         msj = 'cancelled'
                 elif 'cfd' in ir_attach_facturae_mx_id.type and not 'cfdi' in ir_attach_facturae_mx_id.type:
                     wf_service.trg_validate(
-                        uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
-                    inv_cancel_status = invoice_obj.action_cancel(
-                        cr, uid, [invoice.id], context=context)
+                                    uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
+                    inv_cancel_status = invoice_obj.action_cancel(cr, uid, [invoice.id], context=context)
                     msj = 'cancelled'
                     inv_cancel_status = True
                 elif 'cbb' in ir_attach_facturae_mx_id.type:
                     wf_service.trg_validate(
-                        uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
-                    inv_cancel_status = invoice_obj.action_cancel(
-                        cr, uid, [invoice.id], context=context)
+                                    uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
+                    inv_cancel_status = invoice_obj.action_cancel(cr, uid, [invoice.id], context=context)
                     msj = 'cancelled'
                     inv_cancel_status = True
                 else:
