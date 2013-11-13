@@ -196,6 +196,7 @@ class ir_attachment_facturae_mx(osv.Model):
             attachment_obj = self.pool.get('ir.attachment')
             type = self.browse(cr, uid, ids)[0].type
             wf_service = netsvc.LocalService("workflow")
+            attach_v3_2 = self.browse(cr, uid, ids)[0].file_input.id or False
             if 'cbb' in type:
                 msj = _("Signed")
             if 'cfd' in type and not 'cfdi' in type:
@@ -222,12 +223,13 @@ class ir_attachment_facturae_mx(osv.Model):
                         'datas_fname': fname_invoice,
                         'description': 'Factura-E XML CFD-I SIGN',
                         'res_model': 'account.invoice',
-                        #'res_id': invoice.id,
+                        'res_id': invoice.id,
                     }
                     # Context, because use a variable type of our code but we
                     # dont need it.
                     attach = attachment_obj.create(
                         cr, uid, data_attach, context=None)
+                    attachment_obj.write(cr, uid, attach_v3_2, {'res_id': None})
                 else:
                     msj += _("Unknow driver for %s" % (type))
             self.write(cr, uid, ids,
