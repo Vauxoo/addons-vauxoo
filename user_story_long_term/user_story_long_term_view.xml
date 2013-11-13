@@ -171,15 +171,14 @@
                         </group>
                     </group>
                     <notebook>
-                    <!--
                         <page string="Team Planning">
                             <field name="user_ids">
-                                 <tree editable="bottom" string="user_story Users">
+                                 <tree editable="bottom" string="User Story Users">
                                       <field name="user_id"/>
                                       <field name="date_start"/>
                                       <field name="date_end"/>
                                   </tree>
-                                  <form string="user_story Users" version="7.0">
+                                  <form string="User Story Users" version="7.0">
                                       <group col="4">
                                           <field name="user_id"/>
                                           <field name="date_start"/>
@@ -188,6 +187,7 @@
                                   </form>
                              </field>
                         </page>
+                    <!--
                         <page string="Tasks Details">
                             <field name="task_ids" readonly="1" context="{'default_user_story_id' :user_story_id}">
                                  <tree string="user_story's Tasks">

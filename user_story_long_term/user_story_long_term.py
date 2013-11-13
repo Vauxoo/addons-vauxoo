@@ -121,11 +121,11 @@ class user_story_phase(osv.Model):
         
         'constraint_date_end': fields.datetime('Deadline', help='force the phase to finish before this date', states={'done':[('readonly',True)], 'cancelled':[('readonly',True)]}),
         'user_force_ids': fields.many2many('res.users', string='Force Assigned Users'),
+        'user_ids': fields.one2many('user.story.user.allocation', 'phase_id', "Assigned Users",states={'done':[('readonly',True)], 'cancelled':[('readonly',True)]},
+            help="The resources on the project can be computed automatically by the scheduler."),
         }
         
 #        'task_ids': fields.one2many('project.task', 'phase_id', "Project Tasks", states={'done':[('readonly',True)], 'cancelled':[('readonly',True)]}),
-#        'user_ids': fields.one2many('project.user.allocation', 'phase_id', "Assigned Users",states={'done':[('readonly',True)], 'cancelled':[('readonly',True)]},
-#            help="The resources on the project can be computed automatically by the scheduler."),
 #        'progress': fields.function(_compute_progress, string='Progress', help="Computed based on related tasks"),
 
 #    _defaults = {
@@ -208,17 +208,18 @@ class user_story_phase(osv.Model):
 #        return result
 #project_phase()
 #
-#class project_user_allocation(osv.osv):
-#    _name = 'project.user.allocation'
-#    _description = 'Phase User Allocation'
-#    _rec_name = 'user_id'
-#    _columns = {
-#        'user_id': fields.many2one('res.users', 'User', required=True),
-#        'phase_id': fields.many2one('project.phase', 'Project Phase', ondelete='cascade', required=True),
-#        'project_id': fields.related('phase_id', 'project_id', type='many2one', relation="project.project", string='Project', store=True),
-#        'date_start': fields.datetime('Start Date', help="Starting Date"),
-#        'date_end': fields.datetime('End Date', help="Ending Date"),
-#    }
+class user_story_user_allocation(osv.Model):
+    _name = 'user.story.user.allocation'
+    _description = 'Phase User Allocation'
+    _rec_name = 'user_id'
+    _columns = {
+        'user_id': fields.many2one('res.users', 'User', required=True),
+        'phase_id': fields.many2one('user.story.phase', 'User Story Phase', ondelete='cascade', required=True),
+        'project_id': fields.related('phase_id', 'user_story_id', type='many2one',
+            relation="user.story", string='Project', store=True),
+        'date_start': fields.datetime('Start Date', help="Starting Date"),
+        'date_end': fields.datetime('End Date', help="Ending Date"),
+    }
 #project_user_allocation()
 
 class user_story(osv.Model):
