@@ -28,6 +28,7 @@
         </record>
         <record id="invoice_tree_supplier_number" model="ir.ui.view">
             <field name="name">account.invoice.tree</field>
+            <field name="priority">32</field>                                                                
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="invoice_tree" />
             <field name="arch" type="xml">
