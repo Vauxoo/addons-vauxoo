@@ -7,31 +7,31 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-01-28 04:40+0000\n"
-"PO-Revision-Date: 2013-06-03 07:38+0000\n"
-"Last-Translator: Moisés López - http://www.vauxoo.com "
-"<moylop260@vauxoo.com>\n"
+"PO-Revision-Date: 2013-11-13 06:04+0000\n"
+"Last-Translator: Federico Manuel Echeverri Choux -  (  Vauxoo  ) "
+"<echeverrifm@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-10-25 06:03+0000\n"
-"X-Generator: Launchpad (build 16810)\n"
+"X-Launchpad-Export-Date: 2013-11-13 06:11+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: l10n_mx_facturae
 #: selection:wizard.invoice.facturae.txt,init,month:0
 msgid "Junio"
-msgstr ""
+msgstr "Junio"
 
 #. module: l10n_mx_facturae
 #: wizard_field:wizard.invoice.facturae.txt,export,facturae:0
 #: wizard_field:wizard.invoice.facturae.xml,init,facturae:0
 msgid "facturae file"
-msgstr ""
+msgstr "Archivo facturae"
 
 #. module: l10n_mx_facturae
 #: help:res.company,invoice_out_sequence_id:0
 msgid "The sequence used for invoice out numbers."
-msgstr ""
+msgstr "Secuencia de numeros usada para facturas"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
@@ -41,13 +41,13 @@ msgstr "Origen:"
 #. module: l10n_mx_facturae
 #: field:res.company.facturae.certificate,fname_xslt:0
 msgid "Archivo XML Parser (.xslt)"
-msgstr ""
+msgstr "Archivo XML Parser (.xslt)"
 
 #. module: l10n_mx_facturae
 #: field:res.company,certificate_ids:0
 #: view:res.company.facturae.certificate:0
 msgid "Certificates"
-msgstr ""
+msgstr "Certificados"
 
 #. module: l10n_mx_facturae
 #: code:addons/l10n_mx_facturae/ir_sequence.py:0
@@ -56,11 +56,13 @@ msgid ""
 "You cannot remove/deactivate an account which is set as a property to any "
 "Partner!"
 msgstr ""
+"¡No puede eliminar/desactivar una cuenta que sea utilizada como propiedad de "
+"una empresa!"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
 msgid "Condicionde pago:"
-msgstr ""
+msgstr "Condición de pago"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
@@ -75,22 +77,22 @@ msgstr "Nombre:"
 #. module: l10n_mx_facturae
 #: selection:wizard.invoice.facturae.txt,init,month:0
 msgid "Septiembre"
-msgstr ""
+msgstr "Septiembre"
 
 #. module: l10n_mx_facturae
 #: selection:wizard.invoice.facturae.txt,init,month:0
 msgid "Marzo"
-msgstr ""
+msgstr "Marzo"
 
 #. module: l10n_mx_facturae
 #: selection:wizard.invoice.facturae.txt,init,month:0
 msgid "Abril"
-msgstr ""
+msgstr "Abril"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
 msgid "("
-msgstr ""
+msgstr "("
 
 #. module: l10n_mx_facturae
 #: field:res.company.facturae.certificate,company_id:0
@@ -100,17 +102,17 @@ msgstr "Compañia"
 #. module: l10n_mx_facturae
 #: view:res.company.facturae.certificate:0
 msgid "Certificates PEM FORMAT (Transformados de los originales)"
-msgstr ""
+msgstr "Certificados en Formato PEM  (Transformados de los originales)"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
 msgid ","
-msgstr ""
+msgstr ","
 
 #. module: l10n_mx_facturae
 #: field:res.company.facturae.certificate,serial_number:0
 msgid "Serial Number"
-msgstr ""
+msgstr "Número de serie"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
@@ -120,7 +122,7 @@ msgstr "Ret ("
 #. module: l10n_mx_facturae
 #: wizard_field:wizard.invoice.facturae.txt,init,date_end:0
 msgid "Fecha Final"
-msgstr ""
+msgstr "Fecha Final"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
@@ -152,27 +154,27 @@ msgstr "IMPORTE CON LETRA:"
 #: wizard_field:wizard.invoice.facturae.txt,export,facturae_fname:0
 #: wizard_field:wizard.invoice.facturae.xml,init,facturae_fname:0
 msgid "File name"
-msgstr ""
+msgstr "Nombre de Archivo"
 
 #. module: l10n_mx_facturae
 #: wizard_button:wizard.invoice.facturae.txt,init,get_invoices_month:0
 msgid "Obtener Facturas por filtro de _Mes"
-msgstr ""
+msgstr "Obtener Facturas por filtro de Mes"
 
 #. module: l10n_mx_facturae
 #: wizard_view:wizard.invoice.facturae.txt,init:0
 msgid "Filtro por fechas"
-msgstr ""
+msgstr "Filtro por fechas"
 
 #. module: l10n_mx_facturae
 #: field:res.company,invoice_out_sequence_id:0
 msgid "Invoice Out Sequence"
-msgstr ""
+msgstr "Secuencia de Factura"
 
 #. module: l10n_mx_facturae
 #: field:ir.sequence.approval,number_start:0
 msgid "Desde"
-msgstr ""
+msgstr "Desde"
 
 #. module: l10n_mx_facturae
 #: code:addons/l10n_mx_facturae/invoice.py:0
@@ -189,7 +191,7 @@ msgstr "Colonia:"
 #. module: l10n_mx_facturae
 #: field:res.company.facturae.certificate,date_start:0
 msgid "Fecha Inicio"
-msgstr ""
+msgstr "Fecha Inicio"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
@@ -199,7 +201,7 @@ msgstr "Año Aprobación:"
 #. module: l10n_mx_facturae
 #: wizard_button:wizard.invoice.facturae.txt,init,end:0
 msgid "_Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: l10n_mx_facturae
 #: model:ir.model,name:l10n_mx_facturae.model_ir_sequence_approval
@@ -219,7 +221,7 @@ msgstr "Nombre de Archivo de la Factura"
 #. module: l10n_mx_facturae
 #: selection:wizard.invoice.facturae.txt,init,month:0
 msgid "Octubre"
-msgstr ""
+msgstr "Octubre"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
@@ -234,47 +236,47 @@ msgstr "Total $"
 #. module: l10n_mx_facturae
 #: wizard_view:wizard.invoice.facturae.txt,export:0
 msgid "ARCHIVO TXT PARA EL SAT"
-msgstr ""
+msgstr "ARCHIVO TXT PARA EL SAT"
 
 #. module: l10n_mx_facturae
 #: model:ir.actions.wizard,name:l10n_mx_facturae.wizard_invoice_facturae_txt
 msgid "Factura Electronica TXT"
-msgstr ""
+msgstr "Factura Electronica TXT"
 
 #. module: l10n_mx_facturae
 #: wizard_field:wizard.invoice.facturae.txt,init,month:0
 msgid "Mes"
-msgstr ""
+msgstr "Mes"
 
 #. module: l10n_mx_facturae
 #: view:res.company:0
 msgid "Configuration"
-msgstr ""
+msgstr "Configuración"
 
 #. module: l10n_mx_facturae
 #: field:res.company.facturae.certificate,certificate_password:0
 msgid "Certificate Password"
-msgstr ""
+msgstr "Contraseña del certificado"
 
 #. module: l10n_mx_facturae
 #: view:res.company:0
 msgid "Certificados SAT"
-msgstr ""
+msgstr "Certificados SAT"
 
 #. module: l10n_mx_facturae
 #: field:res.company,invoice_out_refund_sequence_id:0
 msgid "Invoice Out Refund Sequence"
-msgstr ""
+msgstr "Secuencia de la Nota de Credito"
 
 #. module: l10n_mx_facturae
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr ""
+msgstr "¡XML inválido para la estructura de la vista!"
 
 #. module: l10n_mx_facturae
 #: field:res.company.facturae.certificate,certificate_file_pem:0
 msgid "Certificate File PEM"
-msgstr ""
+msgstr "Archivo del Certificado PEM"
 
 #. module: l10n_mx_facturae
 #: model:ir.module.module,description:l10n_mx_facturae.module_meta_information
@@ -283,47 +285,49 @@ msgid ""
 "SAT.\n"
 "    "
 msgstr ""
+"Este módulo de facturación electrónica con la norma mexicana de SAT\n"
+"    "
 
 #. module: l10n_mx_facturae
 #: wizard_view:wizard.invoice.facturae.xml,init:0
 msgid "facturae export"
-msgstr ""
+msgstr "Exportar Facturae"
 
 #. module: l10n_mx_facturae
 #: field:res.company.facturae.certificate,certificate_key_file_pem:0
 msgid "Certificate Key File PEM"
-msgstr ""
+msgstr "Archivo KEY del Certificado PEM"
 
 #. module: l10n_mx_facturae
 #: field:ir.sequence,approval_id:0
 msgid "Approval Current"
-msgstr ""
+msgstr "Aprobación Actual"
 
 #. module: l10n_mx_facturae
 #: wizard_field:wizard.invoice.facturae.txt,init,date_start:0
 msgid "Fecha Inicial"
-msgstr ""
+msgstr "Fecha Inicial"
 
 #. module: l10n_mx_facturae
 #: field:res.company,cif_file:0
 msgid "Cedula de Identificacion Fiscal"
-msgstr ""
+msgstr "Cedula de Identificación Fiscal"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
 msgid "“Este documento es la impresión de un Comprobante Fiscal Digital”"
-msgstr ""
+msgstr "“Este documento es la impresión de un Comprobante Fiscal Digital”"
 
 #. module: l10n_mx_facturae
 #: code:addons/l10n_mx_facturae/invoice.py:0
 #, python-format
 msgid "There is no active invoice sequence defined for the journal !"
-msgstr ""
+msgstr "No hay ninguna secuencia de factura activa definida por el diario!!"
 
 #. module: l10n_mx_facturae
 #: field:account.invoice,invoice_sequence_id:0
 msgid "Invoice Sequence"
-msgstr ""
+msgstr "Secuencia de factura"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
@@ -333,27 +337,27 @@ msgstr "Aprobación:"
 #. module: l10n_mx_facturae
 #: selection:wizard.invoice.facturae.txt,init,month:0
 msgid "Agosto"
-msgstr ""
+msgstr "Agosto"
 
 #. module: l10n_mx_facturae
 #: wizard_view:wizard.invoice.facturae.txt,init:0
 msgid "FILTROS PARA EXTRAER FACTURAS"
-msgstr ""
+msgstr "FILTROS PARA EXTRAER FACTURAS"
 
 #. module: l10n_mx_facturae
 #: view:res.company.facturae.certificate:0
 msgid "Certificates NO PEM FORMAT (Originales del SAT)"
-msgstr ""
+msgstr "Certificados [ No formato PEM ]  (Originales del SAT)"
 
 #. module: l10n_mx_facturae
 #: wizard_field:wizard.invoice.facturae.txt,init,year:0
 msgid "Año"
-msgstr ""
+msgstr "A;o"
 
 #. module: l10n_mx_facturae
 #: selection:wizard.invoice.facturae.txt,init,month:0
 msgid "Diciembre"
-msgstr ""
+msgstr "Diciembre"
 
 #. module: l10n_mx_facturae
 #: wizard_field:wizard.invoice.facturae.txt,export,note:0
@@ -374,22 +378,22 @@ msgstr "Expedido en:"
 #. module: l10n_mx_facturae
 #: field:res.company.facturae.certificate,certificate_key_file:0
 msgid "Certificate Key File"
-msgstr ""
+msgstr "Archivo KEY del Certificado"
 
 #. module: l10n_mx_facturae
 #: field:ir.sequence.approval,approval_number:0
 msgid "Numero de Aprobacion"
-msgstr ""
+msgstr "Numero de Aprobacion"
 
 #. module: l10n_mx_facturae
 #: model:ir.ui.menu,name:l10n_mx_facturae.menu_wizard_invoice_facturae_txt
 msgid "Factura Electronica Reporte Mensual TXT"
-msgstr ""
+msgstr "Factura Electronica Reporte Mensual TXT"
 
 #. module: l10n_mx_facturae
 #: field:res.company,certificate_id:0
 msgid "Certificate Current"
-msgstr ""
+msgstr "Certificado Actual"
 
 #. module: l10n_mx_facturae
 #: help:ir.sequence.approval,serie:0
@@ -397,26 +401,28 @@ msgid ""
 "Con la que se reporto al SAT, por ejemplo. FA (para facturas), NC (Para "
 "notas de credito)"
 msgstr ""
+"Con la que se reporto al SAT, por ejemplo. FA (para facturas), NC (Para "
+"notas de credito)"
 
 #. module: l10n_mx_facturae
 #: field:res.company.facturae.certificate,active:0
 msgid "Active"
-msgstr ""
+msgstr "Activo"
 
 #. module: l10n_mx_facturae
 #: wizard_button:wizard.invoice.facturae.txt,init,export:0
 msgid "_Generar Reporte Mensual TXT"
-msgstr ""
+msgstr "_Generar Reporte Mensual TXT"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
 msgid "a"
-msgstr ""
+msgstr "a"
 
 #. module: l10n_mx_facturae
 #: wizard_field:wizard.invoice.facturae.txt,init,invoice_ids:0
 msgid "Facturas"
-msgstr ""
+msgstr "Facturas"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
@@ -426,17 +432,17 @@ msgstr "R. F. C. :"
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
 msgid "CP"
-msgstr ""
+msgstr "CP"
 
 #. module: l10n_mx_facturae
 #: wizard_view:wizard.invoice.facturae.txt,export:0
 msgid "IMPORTANTE"
-msgstr ""
+msgstr "IMPORTANTE"
 
 #. module: l10n_mx_facturae
 #: wizard_view:wizard.invoice.facturae.txt,init:0
 msgid "FACTURAS"
-msgstr ""
+msgstr "FACTURAS"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
@@ -446,17 +452,17 @@ msgstr "Folio:"
 #. module: l10n_mx_facturae
 #: model:ir.model,name:l10n_mx_facturae.model_res_company_facturae_certificate
 msgid "res.company.facturae.certificate"
-msgstr ""
+msgstr "res.company.facturae.certificate"
 
 #. module: l10n_mx_facturae
 #: wizard_button:wizard.invoice.facturae.txt,init,get_invoices_date:0
 msgid "Obtener Facturas por filtro de _Fechas"
-msgstr ""
+msgstr "Obtener Facturas por filtro de _Fechas"
 
 #. module: l10n_mx_facturae
 #: wizard_view:wizard.invoice.facturae.txt,init:0
 msgid "Factura Electronica - Reporte Mensual TXT"
-msgstr ""
+msgstr "Factura Electronica - Reporte Mensual TXT"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
@@ -466,12 +472,12 @@ msgstr "Receptor"
 #. module: l10n_mx_facturae
 #: field:ir.sequence.approval,serie:0
 msgid "Serie de Folios"
-msgstr ""
+msgstr "Serie de Folios"
 
 #. module: l10n_mx_facturae
 #: field:res.company.facturae.certificate,date_end:0
 msgid "Fecha Fin"
-msgstr ""
+msgstr "Fecha Fin"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
@@ -493,11 +499,13 @@ msgstr "Teléfono(s):"
 msgid ""
 "The Object name must start with x_ and not contain any special character !"
 msgstr ""
+"El nombre del Objeto  debe empezar con x  y no debe contener  ningún "
+"carácter especial!"
 
 #. module: l10n_mx_facturae
 #: help:res.company,invoice_out_refund_sequence_id:0
 msgid "The sequence used for invoice out refund numbers."
-msgstr ""
+msgstr "La secuencia utilizada para facturar en notas de credito"
 
 #. module: l10n_mx_facturae
 #: code:addons/l10n_mx_facturae/wizard/wizard_invoice_facturae_txt.py:0
@@ -525,7 +533,7 @@ msgstr ""
 #. module: l10n_mx_facturae
 #: view:ir.sequence:0
 msgid "Aprobaciones"
-msgstr ""
+msgstr "Aprobaciones"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
@@ -535,22 +543,22 @@ msgstr "Serie:"
 #. module: l10n_mx_facturae
 #: field:res.company.facturae.certificate,certificate_file:0
 msgid "Certificate File"
-msgstr ""
+msgstr "Archivo del Certificado"
 
 #. module: l10n_mx_facturae
 #: model:ir.module.module,shortdesc:l10n_mx_facturae.module_meta_information
 msgid "Creacion de Factura Electronica para Mexico"
-msgstr ""
+msgstr "Creacion de Factura Electronica para Mexico"
 
 #. module: l10n_mx_facturae
 #: selection:wizard.invoice.facturae.txt,init,month:0
 msgid "Mayo"
-msgstr ""
+msgstr "Mayo"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
 msgid "RFC :"
-msgstr ""
+msgstr "RFC"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
@@ -568,16 +576,18 @@ msgid ""
 "Ubicacion en servidor de archivo XSLT, que parsea al XML.\n"
 "Puedes ser la ruta completa o suponiendo el prefijo del \"root_path\""
 msgstr ""
+"Ubicacion en servidor de archivo XSLT, que parsea al XML.\n"
+"Puedes ser la ruta completa o suponiendo el prefijo del \"root_path\""
 
 #. module: l10n_mx_facturae
 #: selection:wizard.invoice.facturae.txt,init,month:0
 msgid "Enero"
-msgstr ""
+msgstr "Enero"
 
 #. module: l10n_mx_facturae
 #: selection:wizard.invoice.facturae.txt,init,month:0
 msgid "Noviembre"
-msgstr ""
+msgstr "Noviembre"
 
 #. module: l10n_mx_facturae
 #: model:ir.actions.report.xml,name:l10n_mx_facturae.account_invoice_facturae_pdf
@@ -587,22 +597,22 @@ msgstr "Reporte de Factura Elec. en PDF"
 #. module: l10n_mx_facturae
 #: field:ir.sequence,approval_ids:0
 msgid "Sequences"
-msgstr ""
+msgstr "Secuencias"
 
 #. module: l10n_mx_facturae
 #: field:ir.sequence.approval,number_end:0
 msgid "Hasta"
-msgstr ""
+msgstr "Hasta"
 
 #. module: l10n_mx_facturae
 #: view:ir.sequence:0
 msgid "Aprobaciones SAT"
-msgstr ""
+msgstr "Aprobaciones SAT"
 
 #. module: l10n_mx_facturae
 #: field:ir.sequence.approval,approval_year:0
 msgid "Anio de Aprobacion"
-msgstr ""
+msgstr "Año de Aprobacion"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
@@ -612,23 +622,23 @@ msgstr "Descripción"
 #. module: l10n_mx_facturae
 #: selection:wizard.invoice.facturae.txt,init,month:0
 msgid "Julio"
-msgstr ""
+msgstr "Julio"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
 msgid "Cantidad"
-msgstr ""
+msgstr "Cantidad"
 
 #. module: l10n_mx_facturae
 #: view:ir.sequence:0
 #: field:ir.sequence.approval,sequence_id:0
 msgid "Sequence"
-msgstr ""
+msgstr "Secuencia"
 
 #. module: l10n_mx_facturae
 #: selection:wizard.invoice.facturae.txt,init,month:0
 msgid "Febrero"
-msgstr ""
+msgstr "Febrero"
 
 #. module: l10n_mx_facturae
 #: model:ir.actions.wizard,name:l10n_mx_facturae.wizard_invoice_facturae_xml
@@ -648,4 +658,4 @@ msgstr "P.Unitario"
 #. module: l10n_mx_facturae
 #: wizard_view:wizard.invoice.facturae.txt,init:0
 msgid "Filtro por Mes"
-msgstr ""
+msgstr "Filtro por Mes"

@@ -6,15 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-22 16:20+0000\n"
-"PO-Revision-Date: 2013-08-07 16:16+0000\n"
-"Last-Translator: Isaac López Zúñiga - http://www.vauxoo.com <Unknown>\n"
+"POT-Creation-Date: 2013-11-08 03:16+0000\n"
+"PO-Revision-Date: 2013-11-08 04:47+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-10-25 06:03+0000\n"
-"X-Generator: Launchpad (build 16810)\n"
+"X-Launchpad-Export-Date: 2013-11-13 06:11+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: city
 #: view:res.country.state.city:0
@@ -33,6 +34,13 @@ msgid "Name"
 msgstr "Nombre"
 
 #. module: city
+#: view:res.country.state.city:0
+#: field:res.country.state.city,state_id:0
+#: view:res.partner:0
+msgid "State"
+msgstr "Estado"
+
+#. module: city
 #: model:ir.model,name:city.model_res_country_state_city
 msgid "Country state city"
 msgstr "Pais-estado-ciudad"
@@ -48,10 +56,14 @@ msgid "City Code"
 msgstr "Código de Ciudad"
 
 #. module: city
-#: view:res.country.state.city:0
-#: field:res.country.state.city,state_id:0
-msgid "State"
-msgstr "Estado"
+#: model:res.groups,name:city.group_res_country_state_city_manager
+msgid "City Manager"
+msgstr "Administrador de Ciudades"
+
+#. module: city
+#: view:res.partner:0
+msgid "Ciudad"
+msgstr "Ciudad"
 
 #. module: city
 #: help:res.country.state.city,code:0

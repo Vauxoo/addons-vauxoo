@@ -6,14 +6,365 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-05 17:41+0000\n"
+"POT-Creation-Date: 2013-11-08 03:15+0000\n"
 "PO-Revision-Date: 2013-09-05 16:04+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-10-25 06:03+0000\n"
-"X-Generator: Launchpad (build 16810)\n"
+"X-Launchpad-Export-Date: 2013-11-13 06:11+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
+#. module: l10n_mx_import_info
+#: view:product.product:0
+msgid "Import Relation"
+msgstr ""
 
+#. module: l10n_mx_import_info
+#: help:product.import.info,import_id:0
+msgid "Import Document related"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: help:product.import.info,uom_id:0
+msgid ""
+"Unit of measure, be care this unit must be on the same category of unit "
+"indicated on the product form,"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: help:stock.tracking,import_id:0
+msgid ""
+"Import Information, it is required for manipulation if import info in "
+"invoices."
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: view:import.info:0
+msgid "Notes for Audit (Save after Analisys)"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: help:product.import.info,qty:0
+msgid "Quantity of this product on this document,"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: model:ir.actions.act_window,name:l10n_mx_import_info.act_product_stock_move_import
+msgid "Import Moves"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: view:stock.report.tracklots:0
+msgid "Tracking"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: view:stock.report.tracklots:0
+msgid "Without Customers and Suppliers"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: field:import.info,name:0
+msgid "Number of Operation"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: report:label.report.import.info:0
+msgid "Number of Document:"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: model:ir.model,name:l10n_mx_import_info.model_stock_picking
+msgid "Picking List"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: field:import.info,supplier_id:0
+msgid "Supplier"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: model:res.groups,name:l10n_mx_import_info.import_group_manager
+msgid "Warehouse / Import Manager"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: help:product.product,pack_control:0
+msgid ""
+"If you want to track import information to be used on invoices and other "
+"documents check this field, remember, if the product is a service this "
+"information can not be tracked, if this field is checked you will need to "
+"use consumable or stockable type of product on information page."
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: field:product.product,has_import:0
+msgid "Has Import"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: constraint:product.import.info:0
+msgid ""
+"Error: The default UOM and the Import Product Info must be in the same "
+"category."
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: field:import.info,rate:0
+msgid "Exchange Rate"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: field:stock.tracking,import_id:0
+msgid "Import Lot"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: model:ir.model,name:l10n_mx_import_info.model_stock_tracking
+msgid "Packs"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: view:import.info:0
+#: model:ir.actions.act_window,name:l10n_mx_import_info.action_import_info_tree
+#: field:product.import.info,import_id:0
+#: view:product.product:0
+#: field:product.product,import_info_ids:0
+msgid "Import Info"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: model:ir.actions.act_window,name:l10n_mx_import_info.act_stock_tracking_lot
+msgid "Stock per tracking"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: help:import.info,supplier_id:0
+msgid "Partner who i bught this product related to to this document."
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: field:import.info,customs:0
+msgid "Customs"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: field:product.product,pack_control:0
+msgid "Pack Control"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: view:stock.report.tracklots:0
+msgid "Stock Tracking"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: help:import.info,rate:0
+msgid ""
+"Exchange rate informed on Custom House when the transaction was approved"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: field:import.info,date:0
+msgid "Date"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: report:label.report.import.info:0
+msgid "Fernando Aranguren 850 PQUE. Belenes NTE CP 45150 GDL JAL MEX"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: field:product.import.info,qty:0
+msgid "Quantity"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: help:import.info,customs:0
+msgid ""
+"What Customs was used in your country for import this lot (Generally it is a "
+"legal information)"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: field:product.import.info,uom_id:0
+msgid "UoM"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: field:product.import.info,qty_moved:0
+msgid "Qty already moved"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: report:label.report.import.info:0
+msgid "Date:"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: field:import.info,product_info_ids:0
+msgid "Products Info"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: help:product.import.info,product_id:0
+msgid "Product to be counted on this Import Document information"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: constraint:stock.move:0
+msgid ""
+"You must assign a track lot with import information for this product, if it "
+"is assigned verify if you have enought products planified on this import "
+"document or at least if the product exist in the list of products in this "
+"import document, if you are trying to generate a new pack with the wizard it "
+"is not possible if the product is checked as Pack Control, check with your "
+"product manager to make the analisys of the situation.\n"
+"Other error can be on product_qty field,  Product qty is bigger than product "
+"qty on import info."
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: report:label.report.import.info:0
+msgid "MTS"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: report:label.report.import.info:0
+msgid "Customs:"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: report:label.report.import.info:0
+msgid "Tel: (0133)3540 - 1200 RFC: GPT-890807-CJ9, http://www.pessah.com.mx"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: model:ir.model,name:l10n_mx_import_info.model_product_product
+#: field:product.import.info,product_id:0
+msgid "Product"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: help:account.invoice.line,tracking_id:0
+msgid "Logistical shipping unit: pallet, box, pack ..."
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: view:import.info:0
+msgid "Products"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: report:label.report.import.info:0
+msgid "Made in:"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: help:import.info,company_id:0
+msgid "Company related to this document."
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: model:ir.model,name:l10n_mx_import_info.model_import_info
+msgid "Information about customs"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: help:import.info,date:0
+msgid "Date of Custom and Import Information (In Document)"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: field:import.info,audit_note:0
+msgid "Audit Notes"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: field:account.invoice.line,tracking_id:0
+msgid "Pack"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: field:import.info,lot_ids:0
+msgid "Production Lot"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: model:ir.model,name:l10n_mx_import_info.model_product_import_info
+msgid "product.import.info"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: model:res.groups,name:l10n_mx_import_info.import_group_user
+msgid "Warehouse / Import User"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: view:stock.report.tracklots:0
+msgid "Group By..."
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: view:import.info:0
+msgid "Invoices"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: view:stock.report.tracklots:0
+msgid ""
+"Just Internal, with this filter you will not inventory on Suppliers and "
+"Customers location"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: model:ir.actions.report.xml,name:l10n_mx_import_info.label_report_import_info
+msgid "Labels"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: model:ir.actions.act_window,help:l10n_mx_import_info.action_import_info_tree
+msgid ""
+"Here you are seeing the basical information need to track the packages aroun "
+"you importing information, it is used on Mexico and Latinamerica for put "
+"this information on every legal transport and transaction document "
+"(invoices, pickings, etc.)"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: model:ir.model,name:l10n_mx_import_info.model_account_invoice_line
+msgid "Invoice Line"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: model:ir.ui.menu,name:l10n_mx_import_info.menu_action_import_info_tree
+msgid "Import Information Packing"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: view:import.info:0
+msgid "Track Lots"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: field:import.info,invoice_ids:0
+msgid "Invoices Related"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: field:account.invoice.line,move_id:0
+#: model:ir.model,name:l10n_mx_import_info.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: help:import.info,name:0
+msgid "Transaction Number of tramit Information"
+msgstr ""
+
+#. module: l10n_mx_import_info
+#: field:import.info,company_id:0
+msgid "Company"
+msgstr ""

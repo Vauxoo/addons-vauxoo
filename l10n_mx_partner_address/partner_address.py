@@ -139,7 +139,7 @@ class res_partner(osv.Model):
             view_id = self.pool.get('ir.model.data').get_object_reference(
                 cr, user, 'base', 'view_partner_simple_form')[1]
         res = super(res_partner, self).fields_view_get(
-            cr, SUPERUSER_ID, view_id, view_type, context, toolbar=toolbar, submenu=submenu)
+            cr, user, view_id, view_type, context, toolbar=toolbar, submenu=submenu)
         if view_type == 'form':
             fields_get = self.fields_get(cr, user, [
                 'l10n_mx_street3', 'l10n_mx_street4', 'l10n_mx_city2'], context)

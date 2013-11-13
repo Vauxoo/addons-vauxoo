@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        
+        <record id="l10n_mx_partner_address.res_partner_address_vauxoo_0" model="res.partner">
+                <field eval="1" name="supplier"/>
+                <field name="type_of_third">04</field>
+                <field name="type_of_operation">85</field>
+        </record>
+
+     </data>
+</openerp>

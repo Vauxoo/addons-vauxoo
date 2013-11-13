@@ -7,85 +7,31 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openerp-mexico-localization\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-11-07 18:31+0000\n"
-"PO-Revision-Date: 2013-07-31 23:17+0000\n"
+"POT-Creation-Date: 2013-11-08 03:15+0000\n"
+"PO-Revision-Date: 2013-11-12 03:14+0000\n"
 "Last-Translator: Federico Manuel Echeverri Choux -  (  Vauxoo  ) "
 "<echeverrifm@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-10-25 06:03+0000\n"
-"X-Generator: Launchpad (build 16810)\n"
+"X-Launchpad-Export-Date: 2013-11-13 06:11+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: l10n_mx_facturae_pac_sf
-#: model:ir.actions.act_window,name:l10n_mx_facturae_pac_sf.action_wizard_export_pac_sf_form
-msgid "Export Invoice to pac SF V6"
-msgstr ""
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Teléfono(s):"
-msgstr "Teléfono(s):"
-
-#. module: l10n_mx_facturae_pac_sf
-#: model:ir.module.module,description:l10n_mx_facturae_pac_sf.module_meta_information
-msgid ""
-"This module creates interface for e-invoice files from invoices with "
-"Solucion Factible.\n"
-"Ubuntu Package Depends:\n"
-"    sudo apt-get install python-soappy\n"
-msgstr ""
+#: model:ir.model,name:l10n_mx_facturae_pac_sf.model_wizard_export_invoice_pac_sf_v6
+msgid "wizard.export.invoice.pac.sf.v6"
+msgstr "wizard.export.invoice.pac.sf.v6"
 
 #. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Sub Total $"
-msgstr "Sub Total $"
+msgid "Localidad:"
+msgstr "Localidad:"
 
 #. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Expedido en:"
-msgstr "Expedido en:"
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Origen:"
-msgstr "Origen:"
-
-#. module: l10n_mx_facturae_pac_sf
-#: field:account.invoice,cfdi_folio_fiscal:0
-msgid "CFD-I Folio Fiscal"
-msgstr "CFD-I Folio Fiscal"
-
-#. module: l10n_mx_facturae_pac_sf
-#: field:account.invoice,cfdi_cbb:0
-msgid "CFD-I CBB"
-msgstr "CFD-I CBB"
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Total $"
-msgstr "Total $"
-
-#. module: l10n_mx_facturae_pac_sf
-#: model:ir.model,name:l10n_mx_facturae_pac_sf.model_params_pac
-msgid "params.pac"
-msgstr ""
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Serie:"
-msgstr "Serie:"
-
-#. module: l10n_mx_facturae_pac_sf
-#: view:wizard.cancel.invoice.pac.sf:0
-msgid "_Cancel invoice"
-msgstr "Cancelar Factura"
-
-#. module: l10n_mx_facturae_pac_sf
-#: wizard_field:wizard.export.invoice.pac.sf,show_view,msg:0
-msgid "msg"
-msgstr ""
+msgid "Suma $"
+msgstr "Suma $"
 
 #. module: l10n_mx_facturae_pac_sf
 #: field:wizard.cancel.invoice.pac.sf,message:0
@@ -94,39 +40,44 @@ msgid "text"
 msgstr "texto"
 
 #. module: l10n_mx_facturae_pac_sf
-#: model:ir.model,name:l10n_mx_facturae_pac_sf.model_wizard_cancel_invoice_pac_sf
-msgid "wizard.cancel.invoice.pac.sf"
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Origen:"
+msgstr "Origen:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Últimos 4 dígitos de la cuenta bancaria:"
+msgstr "Últimos 4 dígitos de la cuenta bancaria:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Estado:"
+msgstr "Estado:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: help:account.invoice,cfdi_folio_fiscal:0
+msgid "Folio used in the electronic invoice"
+msgstr "Folio usado en la factura electronica"
+
+#. module: l10n_mx_facturae_pac_sf
+#: help:account.invoice,cfdi_no_certificado:0
+msgid "Serial Number of the Certificate"
+msgstr "Numero de serie del certificado"
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/ir_attachment_facturae.py:290
+#, python-format
+msgid "Can't extract the file XML of PAC"
+msgstr "No se puede extraer el archivo XML del PAC"
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/ir_attachment_facturae.py:143
+#, python-format
+msgid ""
+"\n"
+"- The process of cancellation                    has completed correctly.\n"
+"- The uuid cancelled is:                    "
 msgstr ""
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Certificado del emisor"
-msgstr "Certificado del emisor"
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "PAGO EN UNA SOLA EXHIBICIÓN"
-msgstr "PAGO EN UNA SOLA EXHIBICIÓN"
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Sello Digital SAT:"
-msgstr "Sello Digital SAT:"
-
-#. module: l10n_mx_facturae_pac_sf
-#: field:account.invoice,cfdi_fecha_timbrado:0
-msgid "CFD-I Fecha Timbrado"
-msgstr "CFD-I Fecha Timbrado"
-
-#. module: l10n_mx_facturae_pac_sf
-#: wizard_button:wizard.export.invoice.pac.sf,show_view,end:0
-msgid "_Cerrar"
-msgstr ""
-
-#. module: l10n_mx_facturae_pac_sf
-#: field:account.invoice,cfdi_sello:0
-msgid "CFD-I Sello"
-msgstr "Sello CFDI"
 
 #. module: l10n_mx_facturae_pac_sf
 #: view:wizard.cancel.invoice.pac.sf:0
@@ -136,58 +87,32 @@ msgstr "_Cerrar"
 
 #. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "("
+msgid "Nombre:"
+msgstr "Nombre:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: field:account.invoice,cfdi_sello:0
+msgid "CFD-I Sello"
+msgstr "Sello CFDI"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Sub Total $"
+msgstr "Sub Total $"
+
+#. module: l10n_mx_facturae_pac_sf
+#: help:wizard.cancel.invoice.pac.sf,message:0
+msgid ""
+"Shows the message             that returned after of cancel the Electronic "
+"Invoice"
 msgstr ""
+"Observe el mensaje que regreso luego de cancelar la factura electronica"
 
 #. module: l10n_mx_facturae_pac_sf
-#: model:ir.actions.report.xml,name:l10n_mx_facturae_pac_sf.account_invoice_facturae_pac_sf_pdf
-msgid "Factura Electronica PDF PAC SF"
-msgstr "Factura Electronica PDF PAC SF"
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid ","
-msgstr ""
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Certificado del SAT"
-msgstr "Certificado del SAT"
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "RFC :"
-msgstr ""
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "%) $"
-msgstr ""
-
-#. module: l10n_mx_facturae_pac_sf
-#: model:ir.actions.act_window,name:l10n_mx_facturae_pac_sf.action_wizard_cancel_pac_sf_form
-msgid "Cancel invoice pac SF"
-msgstr ""
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Dirección:"
-msgstr "Dirección:"
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Receptor"
-msgstr "Receptor"
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Sello Digital Emisor:"
-msgstr "Sello Digital Emisor:"
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "C.P.:"
-msgstr "C.P.:"
+#: code:addons/l10n_mx_facturae_pac_sf/params_pac.py:45
+#, python-format
+msgid "PAC SF - Sign"
+msgstr "PAC SF - Sign"
 
 #. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
@@ -196,40 +121,18 @@ msgstr "Ret ("
 
 #. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Folio Fiscal"
-msgstr "Folio Fiscal"
+msgid "Colonia:"
+msgstr "Colonia:"
 
 #. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Nombre:"
-msgstr "Nombre:"
+msgid "C.P.:"
+msgstr "C.P.:"
 
 #. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "“Este documento es una representacion impresa de un CFDI”"
-msgstr "“Este documento es una representacion impresa de un CFDI”"
-
-#. module: l10n_mx_facturae_pac_sf
-#: model:ir.module.module,shortdesc:l10n_mx_facturae_pac_sf.module_meta_information
-msgid ""
-"Creacion de Factura Electronica para Mexico (CFDI-2011) - PAC Solucion "
-"Factible"
-msgstr ""
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Condición de pago:"
-msgstr "Condición de pago:"
-
-#. module: l10n_mx_facturae_pac_sf
-#: model:ir.model,name:l10n_mx_facturae_pac_sf.model_account_invoice
-msgid "Invoice"
-msgstr "Factura"
-
-#. module: l10n_mx_facturae_pac_sf
-#: wizard_view:wizard.export.invoice.pac.sf,show_view:0
-msgid "Export invoice Solucion Factible"
-msgstr ""
+msgid "Unidad"
+msgstr "Unidad"
 
 #. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
@@ -238,13 +141,251 @@ msgstr "IMPORTE CON LETRA:"
 
 #. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "CFDI, Comprobante Fiscal Digital por Internet"
+msgstr "CFDI, Comprobante Fiscal Digital por Internet"
+
+#. module: l10n_mx_facturae_pac_sf
+#: field:account.invoice,cfdi_fecha_cancelacion:0
+msgid "CFD-I Fecha Cancelacion"
+msgstr "CFD-I Fecha Cancelacion"
+
+#. module: l10n_mx_facturae_pac_sf
+#: help:account.invoice,cfdi_fecha_cancelacion:0
+msgid "If the invoice is cancel, this field saved the date when is cancel"
+msgstr ""
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/ir_attachment_facturae.py:296
+#, python-format
+msgid ""
+"Not found information from web services of PAC, verify that the "
+"configuration of PAC is correct"
+msgstr ""
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "CP:"
+msgstr "CP:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/ir_attachment_facturae.py:152
+#: code:addons/l10n_mx_facturae_pac_sf/ir_attachment_facturae.py:205
+#: code:addons/l10n_mx_facturae_pac_sf/ir_attachment_facturae.py:210
+#: code:addons/l10n_mx_facturae_pac_sf/ir_attachment_facturae.py:245
+#: code:addons/l10n_mx_facturae_pac_sf/ir_attachment_facturae.py:248
+#: code:addons/l10n_mx_facturae_pac_sf/ir_attachment_facturae.py:292
+#: code:addons/l10n_mx_facturae_pac_sf/ir_attachment_facturae.py:296
+#, python-format
+msgid "Warning"
+msgstr "Advertencia"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Folio:"
+msgstr "Folio:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: model:ir.model,name:l10n_mx_facturae_pac_sf.model_ir_sequence_approval
+msgid "ir.sequence.approval"
+msgstr "ir.sequence.approval"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Dto %"
+msgstr "Dto %"
+
+#. module: l10n_mx_facturae_pac_sf
+#: field:account.invoice,cfdi_cbb:0
+msgid "CFD-I CBB"
+msgstr "CFD-I CBB"
+
+#. module: l10n_mx_facturae_pac_sf
+#: model:ir.model,name:l10n_mx_facturae_pac_sf.model_params_pac
+msgid "params.pac"
+msgstr "params.pac"
+
+#. module: l10n_mx_facturae_pac_sf
+#: help:account.invoice,cfdi_cadena_original:0
+msgid "Original String used in the electronic invoice"
+msgstr "Cadena Original usada por la factura electronica"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Descuento:"
+msgstr "Descuento:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: view:wizard.cancel.invoice.pac.sf:0
+msgid "_Cancel invoice"
+msgstr "Cancelar Factura"
+
+#. module: l10n_mx_facturae_pac_sf
+#: model:ir.actions.report.xml,name:l10n_mx_facturae_pac_sf.account_invoice_facturae_pac_sf_pdf
+msgid "Factura Electronica PDF PAC SF"
+msgstr "Factura Electronica PDF PAC SF"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Total $"
+msgstr "Total $"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Notas:"
+msgstr "Notas:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Folio Fiscal"
+msgstr "Folio Fiscal"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "“Este documento es una representacion impresa de un CFDI”"
+msgstr "“Este documento es una representacion impresa de un CFDI”"
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/ir_attachment_facturae.py:210
+#, python-format
+msgid "Namespace of PAC incorrect"
+msgstr ""
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Aprobación:"
+msgstr "Aprobación:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: help:wizard.cancel.invoice.pac.sf,file:0
+#: help:wizard.export.invoice.pac.sf.v6,file:0
+msgid "Shows the file returned"
+msgstr ""
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Año Aprobación:"
+msgstr "Año Aprobación:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: view:wizard.export.invoice.pac.sf.v6:0
+msgid "Export invoice V6"
+msgstr "Exportar Factura"
+
+#. module: l10n_mx_facturae_pac_sf
+#: view:wizard.cancel.invoice.pac.sf:0
+#: view:wizard.export.invoice.pac.sf.v6:0
+msgid "Message"
+msgstr "Mensage"
+
+#. module: l10n_mx_facturae_pac_sf
+#: view:wizard.export.invoice.pac.sf.v6:0
+msgid "or"
+msgstr "o"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "RFC:"
+msgstr "RFC:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/ir_attachment_facturae.py:152
+#, python-format
+msgid ""
+"Cancel Code: %s.-Status code %s.-Status UUID: %s.-Folio Cancel: %s.-Cancel "
+"Message: %s.-Answer Message: %s."
+msgstr ""
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Expedido en:"
+msgstr "Expedido en:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: field:account.invoice,cfdi_folio_fiscal:0
+msgid "CFD-I Folio Fiscal"
+msgstr "CFD-I Folio Fiscal"
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/ir_attachment_facturae.py:155
+#, python-format
+msgid ""
+"Not found information of webservices of PAC, verify that the configuration "
+"of PAC is correct"
+msgstr ""
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Certificado del emisor"
+msgstr "Certificado del emisor"
+
+#. module: l10n_mx_facturae_pac_sf
+#: field:account.invoice,cfdi_fecha_timbrado:0
+msgid "CFD-I Fecha Timbrado"
+msgstr "CFD-I Fecha Timbrado"
+
+#. module: l10n_mx_facturae_pac_sf
+#: model:ir.actions.act_window,name:l10n_mx_facturae_pac_sf.action_wizard_cancel_pac_sf_form
+msgid "Cancel invoice pac SF"
+msgstr "Cancelar factura PAC SF"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Int:"
+msgstr "Int:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: model:ir.model,name:l10n_mx_facturae_pac_sf.model_wizard_cancel_invoice_pac_sf
+msgid "wizard.cancel.invoice.pac.sf"
+msgstr ""
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Condición de pago:"
+msgstr "Condición de pago:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
 msgid "Cadena Original del complemento de certificación digital del SAT:"
 msgstr "Cadena Original del complemento de certificación digital del SAT:"
 
 #. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/ir_attachment_facturae.py:205
+#, python-format
+msgid "Web Service URL                         o PAC incorrect"
+msgstr "Web Service URL  o PAC incorrecto"
+
+#. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "P.Unitario"
-msgstr "P.Unitario"
+msgid "Vendedor:"
+msgstr "Vendedor:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "R. F. C. :"
+msgstr "R. F. C. :"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Método de Pago:"
+msgstr "Método de Pago:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/ir_attachment_facturae.py:292
+#, python-format
+msgid ""
+"Stamped Code: %s.-Validation code %s.-Folio Fiscal: %s.-Stamped Message: %s.-"
+"Validation Message: %s."
+msgstr ""
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Ciudad:"
+msgstr "Ciudad:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: view:wizard.cancel.invoice.pac.sf:0
+msgid "Cancel invoice"
+msgstr "Cancelar Factura"
 
 #. module: l10n_mx_facturae_pac_sf
 #: view:wizard.export.invoice.pac.sf.v6:0
@@ -252,23 +393,131 @@ msgid "_Upload Invoice"
 msgstr ""
 
 #. module: l10n_mx_facturae_pac_sf
-#: model:ir.model,name:l10n_mx_facturae_pac_sf.model_wizard_export_invoice_pac_sf_v6
-msgid "wizard.export.invoice.pac.sf.v6"
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Receptor"
+msgstr "Receptor"
+
+#. module: l10n_mx_facturae_pac_sf
+#: model:ir.model,name:l10n_mx_facturae_pac_sf.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/params_pac.py:44
+#, python-format
+msgid "PAC SF - Cancel"
+msgstr "PAC SF - Cancelar"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "PAGO EN UNA SOLA EXHIBICIÓN"
+msgstr "PAGO EN UNA SOLA EXHIBICIÓN"
+
+#. module: l10n_mx_facturae_pac_sf
+#: model:ir.actions.act_window,name:l10n_mx_facturae_pac_sf.action_wizard_export_pac_sf_form
+msgid "Export Invoice PAC SF V6"
+msgstr "Exportar Factura PAC SF V6"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Importe"
+msgstr "Importe"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Teléfono(s):"
+msgstr "Teléfono(s):"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Calle:"
+msgstr "Calle:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: help:wizard.export.invoice.pac.sf.v6,message:0
+msgid ""
+"Shows the message             that returned after of upload the xml to sign"
+msgstr ""
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:163
+#, python-format
+msgid "Press in the button  'Upload File'"
 msgstr ""
 
 #. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "CFDI, Comprobante Fiscal Digital por Internet"
-msgstr "CFDI, Comprobante Fiscal Digital por Internet"
+msgid "Serie:"
+msgstr "Serie:"
 
 #. module: l10n_mx_facturae_pac_sf
-#: model:ir.actions.wizard,name:l10n_mx_facturae_pac_sf.wizard_export_invoice_pac_sf_v5
-msgid "Export invoice PAC SF"
+#: code:addons/l10n_mx_facturae_pac_sf/ir_attachment_facturae.py:248
+#, python-format
+msgid ""
+"Failed to consult the SAT.\n"
+"Code 312"
+msgstr ""
+"Consulta fallida con el SAT.\n"
+"Codigo 312"
+
+#. module: l10n_mx_facturae_pac_sf
+#: help:account.invoice,cfdi_sello:0
+msgid "Sign assigned by the SAT"
 msgstr ""
 
 #. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/ir_attachment_facturae.py:245
+#, python-format
+msgid ""
+"Unauthorized.\n"
+"Code 311"
+msgstr ""
+"No autorizada.\n"
+"Codigo 311"
+
+#. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "CP"
+msgid "Certificado del SAT"
+msgstr "Certificado del SAT"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "%) $"
+msgstr "%) $"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Dirección:"
+msgstr "Dirección:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Clave"
+msgstr "Clave"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Sello Digital Emisor:"
+msgstr "Sello Digital Emisor:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Nro. Ext:"
+msgstr "Nro. Ext:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Sello Digital SAT:"
+msgstr "Sello Digital SAT:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/ir_attachment_facturae.py:274
+#, python-format
+msgid ""
+"\n"
+"Make Sure to the file really has generated correctly to the SAT\n"
+"https://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Vali"
+"dador%20cfdi.html"
 msgstr ""
 
 #. module: l10n_mx_facturae_pac_sf
@@ -283,53 +532,23 @@ msgstr "CFD-I Cadena Original"
 
 #. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Colonia:"
-msgstr "Colonia:"
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "a"
-msgstr ""
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Ciudad:"
-msgstr "Ciudad:"
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Aprobación:"
-msgstr "Aprobación:"
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
 msgid "Cantidad"
 msgstr "Cantidad"
 
 #. module: l10n_mx_facturae_pac_sf
-#: view:wizard.cancel.invoice.pac.sf:0
-msgid "Cancel invoice"
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Régimen Fiscal:"
+msgstr "Régimen Fiscal:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: help:account.invoice,cfdi_fecha_timbrado:0
+msgid "Date when is stamped the electronic invoice"
 msgstr ""
 
 #. module: l10n_mx_facturae_pac_sf
-#: wizard_button:wizard.export.invoice.pac.sf,show_view,upload_ws:0
-msgid "_Subir Archivo"
-msgstr ""
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Año Aprobación:"
-msgstr "Año Aprobación:"
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "R. F. C. :"
-msgstr "R. F. C. :"
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Clave"
-msgstr "Clave"
+#: model:ir.model,name:l10n_mx_facturae_pac_sf.model_ir_attachment_facturae_mx
+msgid "Email Thread"
+msgstr "Hilo de mensajes"
 
 #. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
@@ -339,7 +558,6 @@ msgstr "Fecha de Timbrado"
 #. module: l10n_mx_facturae_pac_sf
 #: view:wizard.cancel.invoice.pac.sf:0
 #: field:wizard.cancel.invoice.pac.sf,file:0
-#: wizard_field:wizard.export.invoice.pac.sf,show_view,file:0
 #: view:wizard.export.invoice.pac.sf.v6:0
 #: field:wizard.export.invoice.pac.sf.v6,file:0
 msgid "File"
@@ -347,24 +565,8 @@ msgstr "Fichero"
 
 #. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Folio:"
-msgstr "Folio:"
-
-#. module: l10n_mx_facturae_pac_sf
-#: view:wizard.export.invoice.pac.sf.v6:0
-msgid "Export invoice V6"
-msgstr ""
-
-#. module: l10n_mx_facturae_pac_sf
-#: view:wizard.cancel.invoice.pac.sf:0
-#: view:wizard.export.invoice.pac.sf.v6:0
-msgid "Message"
-msgstr "Mensage"
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Unidad"
-msgstr "Unidad"
+msgid "P.Unitario"
+msgstr "P.Unitario"
 
 #. module: l10n_mx_facturae_pac_sf
 #: field:account.invoice,cfdi_no_certificado:0
@@ -372,6 +574,9 @@ msgid "CFD-I Certificado"
 msgstr "CFD-I Certificado"
 
 #. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Importe"
-msgstr "Importe"
+#: code:addons/l10n_mx_facturae_pac_sf/ir_attachment_facturae.py:213
+#, python-format
+msgid ""
+"WARNING, SIGNED IN TEST!!!!\n"
+"\n"
+msgstr ""
