@@ -52,24 +52,24 @@
                 
                 %if line['type'] != 'view':
                     <tr class="prueba">
-                        <i><td class="celdaLineData" style="text-align:right;font-style:italic;" width="10%">${line['code'] or ''}</td></i>
+                        <i><td class="celdaLineData" style="text-align:right;font-style:italic;" width="10%">${line['label'] == True and line['code'] or ''}</td></i>
                         <td class="celdaLineDataName" width="50%">${line['name'].upper() or line['name'].title() or ''}</td>
-                        <td class="celdaLineData" width="20%">${formatLang(line['debit'], digits=2, date=False, date_time=False, grouping=3, monetary=True) or ''}</td>
-                        <td class="celdaLineData" width="20%">${formatLang(line['credit'], digits=2, date=False, date_time=False, grouping=3, monetary=True) or ''}</td>
+                        <td class="celdaLineData" width="20%">${(line['total']==True) and formatLang(line['debit'], digits=2, date=False, date_time=False, grouping=3, monetary=True) or ''}</td>
+                        <td class="celdaLineData" width="20%">${(line['total']==True) and formatLang(line['credit'], digits=2, date=False, date_time=False, grouping=3, monetary=True) or ''}</td>
                     </tr>
                 %elif line['total'] and not line['label']:
                     <tr class="prueba">
-                        <i><td class="celdaLineDataTotal" style="text-align:right;font-style:italic;" width="10%">${line['code'] or ''}</td></i>
+                        <i><td class="celdaLineDataTotal" style="text-align:right;font-style:italic;" width="10%">${line['label'] == True and line['code'] or ''}</td></i>
                         <td class="celdaLineDataTotal" style="text-align:right;" width="50%">${line['name'].upper() or line['name'].title() or ''}</td>
-                        <td class="celdaLineDataTotal" width="20%">${formatLang(line['debit'], digits=2, date=False, date_time=False, grouping=3, monetary=True) or ''}</td>
-                        <td class="celdaLineDataTotal" width="20%">${formatLang(line['credit'], digits=2, date=False, date_time=False, grouping=3, monetary=True) or ''}</td>
+                        <td class="celdaLineDataTotal" width="20%">${(line['total']==True) and formatLang(line['debit'], digits=2, date=False, date_time=False, grouping=3, monetary=True) or ''}</td>
+                        <td class="celdaLineDataTotal" width="20%">${(line['total']==True) and formatLang(line['credit'], digits=2, date=False, date_time=False, grouping=3, monetary=True) or ''}</td>
                     </tr>
                 %else:
                     <tr class="prueba">
-                        <i><td class="celdaLineDataView"  style="text-align:right;font-style:italic;" width="10%">${(line['label'] == True ) and line['code'] or ''}</td></i>
+                        <i><td class="celdaLineDataView"  style="text-align:right;font-style:italic;" width="10%">${line['label'] == True and line['code'] or ''}</td></i>
                         <td class="celdaLineDataNameView" width="50%">${line['name'].upper() or line['name'].title() or ''}</td>
-                        <td class="celdaLineDataView" width="20%">${formatLang(line['debit'], digits=2, date=False, date_time=False, grouping=3, monetary=True) or ''}</td>
-                        <td class="celdaLineDataView" width="20%">${formatLang(line['credit'], digits=2, date=False, date_time=False, grouping=3, monetary=True) or ''}</td>
+                        <td class="celdaLineDataView" width="20%">${(line['total']==True) and formatLang(line['debit'], digits=2, date=False, date_time=False, grouping=3, monetary=True) or ''}</td>
+                        <td class="celdaLineDataView" width="20%">${(line['total']==True) and formatLang(line['credit'], digits=2, date=False, date_time=False, grouping=3, monetary=True) or ''}</td>
                     </tr>
                 %endif
             %endfor

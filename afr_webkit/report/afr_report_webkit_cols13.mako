@@ -54,43 +54,43 @@
             %for line in obj.get_parser_method('lines',data['form']):
                 %if line['type'] != 'view':
                     <tr>
-                        <td class="celdaLineData" style="text-align:right;font-style:italic;" width="6%">${line['code'] or ''}</td>
+                        <td class="celdaLineData" style="text-align:right;font-style:italic;" width="6%">${line['label'] == True and line['code'] or ''}</td>
                         <td class="celdaLineDataName" width="16%">${line['name'].upper() or line['name'].title() or ''}</td>
-                        <td class="celdaLineData" width="6%">${formatLang(line['bal1'] and line['bal1'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineData" width="6%">${formatLang(line['bal2'] and line['bal2'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineData" width="6%">${formatLang(line['bal3'] and line['bal3'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineData" width="6%">${formatLang(line['bal4'] and line['bal4'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineData" width="6%">${formatLang(line['bal5'] and line['bal5'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineData" width="6%">${formatLang(line['bal6'] and line['bal6'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineData" width="6%">${formatLang(line['bal7'] and line['bal7'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineData" width="6%">${formatLang(line['bal8'] and line['bal8'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineData" width="6%">${formatLang(line['bal9'] and line['bal9'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineData" width="6%">${formatLang(line['bal10'] and line['bal10'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineData" width="6%">${formatLang(line['bal11'] and line['bal11'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineData" width="6%">${formatLang(line['bal12'] and line['bal12'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineData" width="6%">${formatLang(line['bal13'] and line['bal13'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineData" width="6%">${(line['total']==True) and formatLang(line['bal1'] and line['bal1'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineData" width="6%">${(line['total']==True) and formatLang(line['bal2'] and line['bal2'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineData" width="6%">${(line['total']==True) and formatLang(line['bal3'] and line['bal3'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineData" width="6%">${(line['total']==True) and formatLang(line['bal4'] and line['bal4'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineData" width="6%">${(line['total']==True) and formatLang(line['bal5'] and line['bal5'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineData" width="6%">${(line['total']==True) and formatLang(line['bal6'] and line['bal6'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineData" width="6%">${(line['total']==True) and formatLang(line['bal7'] and line['bal7'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineData" width="6%">${(line['total']==True) and formatLang(line['bal8'] and line['bal8'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineData" width="6%">${(line['total']==True) and formatLang(line['bal9'] and line['bal9'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineData" width="6%">${(line['total']==True) and formatLang(line['bal10'] and line['bal10'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineData" width="6%">${(line['total']==True) and formatLang(line['bal11'] and line['bal11'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineData" width="6%">${(line['total']==True) and formatLang(line['bal12'] and line['bal12'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineData" width="6%">${(line['total']==True) and formatLang(line['bal13'] and line['bal13'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
                     </tr>
                 %elif line['total'] and not line['label']:
                     <tr>
-                        <td class="celdaLineDataTotal" style="text-align:right;font-style:italic;" width="6%">${line['code'] or ''}</td>
+                        <td class="celdaLineDataTotal" style="text-align:right;font-style:italic;" width="6%">${line['label'] == True and line['code'] or ''}</td>
                         <td class="celdaLineDataTotal" width="16%">${line['name'].upper() or line['name'].title() or ''}</td>
-                        <td class="celdaLineDataTotal" width="6%">${formatLang(line['bal1'] and line['bal1'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineDataTotal" width="6%">${formatLang(line['bal2'] and line['bal2'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineDataTotal" width="6%">${formatLang(line['bal3'] and line['bal3'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineDataTotal" width="6%">${formatLang(line['bal4'] and line['bal4'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineDataTotal" width="6%">${formatLang(line['bal5'] and line['bal5'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineDataTotal" width="6%">${formatLang(line['bal6'] and line['bal6'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineDataTotal" width="6%">${formatLang(line['bal7'] and line['bal7'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineDataTotal" width="6%">${formatLang(line['bal8'] and line['bal8'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineDataTotal" width="6%">${formatLang(line['bal9'] and line['bal9'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineDataTotal" width="6%">${formatLang(line['bal10'] and line['bal10'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineDataTotal" width="6%">${formatLang(line['bal11'] and line['bal11'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineDataTotal" width="6%">${formatLang(line['bal12'] and line['bal12'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineDataTotal" width="6%">${formatLang(line['bal13'] and line['bal13'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineDataTotal" width="6%">${(line['total']==True) and formatLang(line['bal1'] and line['bal1'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineDataTotal" width="6%">${(line['total']==True) and formatLang(line['bal2'] and line['bal2'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineDataTotal" width="6%">${(line['total']==True) and formatLang(line['bal3'] and line['bal3'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineDataTotal" width="6%">${(line['total']==True) and formatLang(line['bal4'] and line['bal4'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineDataTotal" width="6%">${(line['total']==True) and formatLang(line['bal5'] and line['bal5'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineDataTotal" width="6%">${(line['total']==True) and formatLang(line['bal6'] and line['bal6'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineDataTotal" width="6%">${(line['total']==True) and formatLang(line['bal7'] and line['bal7'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineDataTotal" width="6%">${(line['total']==True) and formatLang(line['bal8'] and line['bal8'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineDataTotal" width="6%">${(line['total']==True) and formatLang(line['bal9'] and line['bal9'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineDataTotal" width="6%">${(line['total']==True) and formatLang(line['bal10'] and line['bal10'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineDataTotal" width="6%">${(line['total']==True) and formatLang(line['bal11'] and line['bal11'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineDataTotal" width="6%">${(line['total']==True) and formatLang(line['bal12'] and line['bal12'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineDataTotal" width="6%">${(line['total']==True) and formatLang(line['bal13'] and line['bal13'] * line.get('change_sign',1) or 0.0, digits=2, grouping=True)  or ''}</td>
                     </tr>
                 %else:
                     <tr>
-                        <td class="celdaLineDataView" style="text-align:right;font-style:italic;" width="6%">${line['code'] or ''}</td>
+                        <td class="celdaLineDataView" style="text-align:right;font-style:italic;" width="6%">${line['label'] == True and line['code'] or ''}</td>
                         <td class="celdaLineDataNameView" colspan="14">${line['name'].upper() or line['name'].title() or ''}</td>
                     </tr>
                 %endif

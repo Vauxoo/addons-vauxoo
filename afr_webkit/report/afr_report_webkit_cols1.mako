@@ -46,21 +46,21 @@
             %for line in obj.get_parser_method('lines',data['form']):
                 %if line['type'] != 'view':
                     <tr class="prueba">
-                        <i><td class="celdaLineData" style="text-align:right;font-style:italic;" width="10%">${line['code'] or ''}</td></i>
+                        <i><td class="celdaLineData" style="text-align:right;font-style:italic;" width="10%">${line['label'] == True and line['code'] or ''}</td></i>
                         <td class="celdaLineDataName" width="70%">${line['name'].upper() or line['name'].title() or ''}</td>
-                        <td class="celdaLineData" width="20%">${formatLang(line['balance'] and line['balance'] * line.get('change_sign',1.0) or 0.0, digits=2, grouping=True) or ''}</td>
+                        <td class="celdaLineData" width="20%">${(line['total']==True) and formatLang(line['balance'] and line['balance'] * line.get('change_sign',1.0) or 0.0, digits=2, grouping=True) or ''}</td>
                     </tr>
                 %elif line['total'] and not line['label']:
                     <tr class="prueba">
-                        <i><td class="celdaLineDataTotal" style="text-align:right;font-style:italic;" width="10%">${(line['label'] == True ) and line['code'] or ''}</td></i>
-                        <td class="celdaLineDataTotal" style="text-align:right;" width="70%">${(line['type'] == 'view') and line['name'].upper() or line['name'].title() or ''}</td>
-                        <td class="celdaLineDataTotal" width="20%">${formatLang(line['balance'] and line['balance'] * line.get('change_sign',1.0) or 0.0, digits=2, grouping=True) or ''}</td>
+                        <i><td class="celdaLineDataTotal" style="text-align:right;font-style:italic;" width="10%">${line['label'] == True and line['code'] or ''}</td></i>
+                        <td class="celdaLineDataTotal" style="text-align:right;" width="70%">${line['name'].upper() or line['name'].title() or ''}</td>
+                        <td class="celdaLineDataTotal" width="20%">${(line['total']==True) and formatLang(line['balance'] and line['balance'] * line.get('change_sign',1.0) or 0.0, digits=2, grouping=True) or ''}</td>
                     </tr>
                 %else:
                     <tr class="prueba">
-                        <i><td class="celdaLineDataView"  style="text-align:right;font-style:italic;" width="10%">${(line['label'] == True ) and line['code'] or ''}</td></i>
+                        <i><td class="celdaLineDataView"  style="text-align:right;font-style:italic;" width="10%">${line['label'] == True and line['code'] or ''}</td></i>
                         <td class="celdaLineDataNameView" width="70%">${line['name'].upper() or line['name'].title() or ''}</td>
-                        <td class="celdaLineDataView" width="20%">${formatLang(line['balance'] and line['balance'] * line.get('change_sign',1.0) or 0.0, digits=2, grouping=True) or ''}</td>
+                        <td class="celdaLineDataView" width="20%">${(line['total']==True) and formatLang(line['balance'] and line['balance'] * line.get('change_sign',1.0) or 0.0, digits=2, grouping=True) or ''}</td>
                     </tr>
                 %endif
             %endfor

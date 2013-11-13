@@ -74,12 +74,12 @@
             %if line['type']!= 'view':   
                 <tbody>     
                     <tr>
-                        <td class="celdaLineDataTotal" style="text-align:right;font-style:italic;" width="10%">${line['code'] or ''}</td>
+                        <td class="celdaLineDataTotal" style="text-align:right;font-style:italic;" width="10%">${line['label'] == True and line['code'] or ''}</td>
                         <td class="celdaLineDataNameTotal" colspan="5">${line['name'].upper() or line['name'].title() or ''}</td>
-                        <td class="celdaLineDataTotal" width="10%" style="text-align:right;">${formatLang(line['balanceinit'] and line['balanceinit'] * line.get('change_sign',1.0) or 0.0, digits=2, grouping=True)  or ''}</td>
-                        <td class="celdaLineDataTotal" width="10%" style="text-align:right;">${formatLang(line['debit'], digits=2, grouping=True) or ''}</td>
-                        <td class="celdaLineDataTotal" width="10%" style="text-align:right;">${formatLang(line['credit'], digits=2, grouping=True) or ''}</td>
-                        <td class="celdaLineDataTotal" width="10%" style="text-align:right;">${formatLang(line['balance'] and line['balance'] * line.get('change_sign',1.0) or 0.0, digits=2, grouping=True) or ''}</td>
+                        <td class="celdaLineDataTotal" width="10%" style="text-align:right;">${(line['total']==True) and formatLang(line['balanceinit'] and line['balanceinit'] * line.get('change_sign',1.0) or 0.0, digits=2, grouping=True)  or ''}</td>
+                        <td class="celdaLineDataTotal" width="10%" style="text-align:right;">${(line['total']==True) and formatLang(line['debit'], digits=2, grouping=True) or ''}</td>
+                        <td class="celdaLineDataTotal" width="10%" style="text-align:right;">${(line['total']==True) and formatLang(line['credit'], digits=2, grouping=True) or ''}</td>
+                        <td class="celdaLineDataTotal" width="10%" style="text-align:right;">${(line['total']==True) and formatLang(line['balance'] and line['balance'] * line.get('change_sign',1.0) or 0.0, digits=2, grouping=True) or ''}</td>
                     </tr>
                 </tbody>
                 %for m in line['mayor']:
