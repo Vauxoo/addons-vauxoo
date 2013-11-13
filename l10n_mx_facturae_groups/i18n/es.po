@@ -7,20 +7,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openerp-mexico-localization\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-06-19 23:14+0000\n"
-"PO-Revision-Date: 2013-08-09 15:09+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-11-08 03:15+0000\n"
+"PO-Revision-Date: 2013-11-13 06:08+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-04 06:05+0000\n"
+"X-Launchpad-Export-Date: 2013-11-13 06:11+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: l10n_mx_facturae_groups
 #: model:ir.module.category,name:l10n_mx_facturae_groups.module_l10n_mx_facturae
 msgid "Facturación Electrónica de México"
-msgstr ""
+msgstr "Facturación Electrónica de México"
 
 #. module: l10n_mx_facturae_groups
 #: model:ir.module.category,description:l10n_mx_facturae_groups.module_l10n_mx_facturae
@@ -28,24 +29,29 @@ msgid ""
 "User:This user has limitations to create or modify.Manager:The user will "
 "have an access to the Electronic Invoice data and configuration"
 msgstr ""
+"Usuario: Este usuario tiene limitaciones para crear o modificar. "
+"Administrador: El usuaria tendrá acceso a los datos y configuración de la "
+"factura electrónica"
 
 #. module: l10n_mx_facturae_groups
 #: model:res.groups,comment:l10n_mx_facturae_groups.group_l10n_mx_facturae_manager
 msgid ""
 "The user will have an access to the Electronic Invoice data and configuration"
 msgstr ""
+"El usuaria tendrá acceso a los datos y configuración de la factura "
+"electrónica"
 
 #. module: l10n_mx_facturae_groups
 #: model:res.groups,comment:l10n_mx_facturae_groups.group_l10n_mx_facturae_user
 msgid "This user has limitations to create or modify"
-msgstr ""
+msgstr "El usuario tiene limitaciones para crear y modificar"
 
 #. module: l10n_mx_facturae_groups
 #: model:res.groups,name:l10n_mx_facturae_groups.group_l10n_mx_facturae_manager
 msgid "Manager"
-msgstr ""
+msgstr "Administrador"
 
 #. module: l10n_mx_facturae_groups
 #: model:res.groups,name:l10n_mx_facturae_groups.group_l10n_mx_facturae_user
 msgid "User"
-msgstr ""
+msgstr "Usuario"

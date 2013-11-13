@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openerp-mexico-localization\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-06-21 01:31+0000\n"
+"POT-Creation-Date: 2013-11-08 03:15+0000\n"
 "PO-Revision-Date: 2013-09-10 02:12+0000\n"
 "Last-Translator: Federico Manuel Echeverri Choux -  (  Vauxoo  ) "
 "<echeverrifm@gmail.com>\n"
@@ -15,18 +15,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-04 06:05+0000\n"
+"X-Launchpad-Export-Date: 2013-11-13 06:11+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
 msgid "VA - Vaticano"
 msgstr "VA - Vaticano"
-
-#. module: l10n_mx_diot_report
-#: field:account.diot.report,filename:0
-msgid "Filename"
-msgstr "Nombre de Archivo"
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
@@ -64,14 +59,9 @@ msgid "CM - Camerun"
 msgstr "CM - Camerun"
 
 #. module: l10n_mx_diot_report
-#: selection:account.diot.report,state:0
-msgid "choose"
-msgstr "elegir"
-
-#. module: l10n_mx_diot_report
-#: selection:res.partner,diot_country:0
-msgid "IN - India"
-msgstr "IN - India"
+#: help:account.diot.report,filename:0
+msgid "This is File name"
+msgstr ""
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
@@ -79,14 +69,25 @@ msgid "CO - Colombia"
 msgstr "CO - Colombia"
 
 #. module: l10n_mx_diot_report
-#: selection:res.partner,type_of_operation:0
-msgid " 85 - Others"
-msgstr " 85 - Otros"
+#: selection:account.diot.report,entries_to_print:0
+msgid "Posted Entries"
+msgstr ""
+
+#. module: l10n_mx_diot_report
+#: field:account.diot.report,entries_to_print:0
+msgid "Entries to show"
+msgstr ""
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
 msgid "GW - Guinea Bissau"
 msgstr "GW - Guinea Bissau"
+
+#. module: l10n_mx_diot_report
+#: field:account.diot.report,filename:0
+#: field:account.diot.report,filename_csv:0
+msgid "File name"
+msgstr ""
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,type_of_third:0
@@ -99,6 +100,13 @@ msgid "SV - El Salvador"
 msgstr "SV - El Salvador"
 
 #. module: l10n_mx_diot_report
+#: selection:res.partner,diot_country:0
+msgid ""
+"GZ - Islas de Guernesey, Jersey, Alderney, Isla Great Sark, Herm, Little "
+"Sark, Berchou, Jethou, Lihou (Islas del Canal)"
+msgstr ""
+
+#. module: l10n_mx_diot_report
 #: selection:res.partner,type_of_operation:0
 msgid " 03 - Provision of Professional Services"
 msgstr " 03 - Provision de Servicios Profesionales"
@@ -109,6 +117,11 @@ msgid "JM - Jamaica"
 msgstr "JM - Jamaica"
 
 #. module: l10n_mx_diot_report
+#: help:account.diot.report,period_id:0
+msgid "Select period"
+msgstr ""
+
+#. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
 msgid "XX - Otro"
 msgstr "XX - Otro"
@@ -117,6 +130,16 @@ msgstr "XX - Otro"
 #: selection:res.partner,diot_country:0
 msgid "HT - Haiti"
 msgstr "HT - Haiti"
+
+#. module: l10n_mx_diot_report
+#: selection:res.partner,diot_country:0
+msgid "IT - Italia"
+msgstr "IT - Italia"
+
+#. module: l10n_mx_diot_report
+#: help:account.diot.report,file_csv:0
+msgid "It will open in your program office, to validate numbers"
+msgstr ""
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
@@ -179,6 +202,11 @@ msgid "UG - Uganda"
 msgstr "UG - Uganda"
 
 #. module: l10n_mx_diot_report
+#: selection:account.diot.report,state:0
+msgid "Choose"
+msgstr ""
+
+#. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
 msgid "KW - Estado de Kuwait"
 msgstr "KW - Estado de Kuwait"
@@ -194,6 +222,16 @@ msgid "GU - Guam"
 msgstr "GU - Guam"
 
 #. module: l10n_mx_diot_report
+#: view:account.diot.report:0
+msgid "- You do not have configured taxes correctly"
+msgstr ""
+
+#. module: l10n_mx_diot_report
+#: view:account.diot.report:0
+msgid "- Not exists movements in the selected period"
+msgstr ""
+
+#. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
 msgid "CR - Republica de Costa Rica"
 msgstr "CR - Republica de Costa Rica"
@@ -204,11 +242,6 @@ msgid "CL - Chile"
 msgstr "CL - Chile"
 
 #. module: l10n_mx_diot_report
-#: selection:account.diot.report,state:0
-msgid "get"
-msgstr "obtener"
-
-#. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
 msgid "VE - Venezuela"
 msgstr "VE - Venezuela"
@@ -217,11 +250,6 @@ msgstr "VE - Venezuela"
 #: selection:res.partner,diot_country:0
 msgid "HK - Hong Kong"
 msgstr "HK - Hong Kong"
-
-#. module: l10n_mx_diot_report
-#: selection:res.partner,diot_country:0
-msgid "PE - Peru"
-msgstr "PE - Peru"
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
@@ -244,6 +272,11 @@ msgid " 06 - Renting of buildings"
 msgstr " 06 - Renta de Edificios"
 
 #. module: l10n_mx_diot_report
+#: help:res.partner,type_of_operation:0
+msgid "Type of operation realiced for this partner"
+msgstr ""
+
+#. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
 msgid "LB - Libano"
 msgstr "LB - Libano"
@@ -254,14 +287,19 @@ msgid "KE - Kenia"
 msgstr "KE - Kenia"
 
 #. module: l10n_mx_diot_report
+#: selection:res.partner,diot_country:0
+msgid "ZC - Zona Especial Canaria"
+msgstr "ZC - Zona Especial Canaria"
+
+#. module: l10n_mx_diot_report
 #: field:res.partner,type_of_operation:0
 msgid "Type of Operation (DIOT)"
 msgstr "Tipo de Operacion (DIOT)"
 
 #. module: l10n_mx_diot_report
-#: field:account.diot.report,month_id:0
-msgid "Month"
-msgstr "Mes"
+#: model:ir.ui.menu,name:l10n_mx_diot_report.menu_account_diot_declaration
+msgid "Transactions with third parties [ DIOT ] "
+msgstr "Operaciones con terceros [ DIOT ] "
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
@@ -269,14 +307,19 @@ msgid "EC - Ecuador"
 msgstr "EC - Ecuador"
 
 #. module: l10n_mx_diot_report
+#: view:account.diot.report:0
+msgid "You DIOT report not has been created!"
+msgstr ""
+
+#. module: l10n_mx_diot_report
+#: selection:account.diot.report,entries_to_print:0
+msgid "All Entries"
+msgstr ""
+
+#. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
 msgid "ZA - Sudafrica"
 msgstr "ZA - Sudafrica"
-
-#. module: l10n_mx_diot_report
-#: view:account.diot.report:0
-msgid "Create invoices"
-msgstr "Crear facturas"
 
 #. module: l10n_mx_diot_report
 #: view:account.diot.report:0
@@ -319,14 +362,19 @@ msgid "ZW - Zimbawe"
 msgstr "ZW - Zimbawe"
 
 #. module: l10n_mx_diot_report
+#: view:account.diot.report:0
+msgid "Spreadsheet:"
+msgstr ""
+
+#. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
 msgid "DZ - Argelia"
 msgstr "DZ - Argelia"
 
 #. module: l10n_mx_diot_report
-#: selection:res.partner,diot_country:0
-msgid "ZC - Zona Especial Canaria"
-msgstr "ZC - Zona Especial Canaria"
+#: selection:account.diot.report,state:0
+msgid "Get"
+msgstr ""
 
 #. module: l10n_mx_diot_report
 #: field:account.diot.report,state:0
@@ -340,8 +388,8 @@ msgstr "ID - Indonesia"
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
-msgid "IT - Italia"
-msgstr "IT - Italia"
+msgid "IN - India"
+msgstr "IN - India"
 
 #. module: l10n_mx_diot_report
 #: field:res.partner,number_fiscal_id_diot:0
@@ -354,6 +402,16 @@ msgid "IR - Iran"
 msgstr "IR - Iran"
 
 #. module: l10n_mx_diot_report
+#: view:account.diot.report:0
+msgid "DIOT Report"
+msgstr ""
+
+#. module: l10n_mx_diot_report
+#: help:account.diot.report,file:0
+msgid "This file, you can import the SAT"
+msgstr ""
+
+#. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
 msgid "NL - Holanda"
 msgstr "NL - Holanda"
@@ -364,9 +422,24 @@ msgid "KY - Islas Caiman"
 msgstr "KY - Islas Caiman"
 
 #. module: l10n_mx_diot_report
+#: help:res.partner,diot_country:0
+msgid "Country used to DIOT"
+msgstr ""
+
+#. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
 msgid "LA - Republica Democratica de Laos"
 msgstr "LA - Republica Democratica de Laos"
+
+#. module: l10n_mx_diot_report
+#: selection:res.partner,type_of_third:0
+msgid " 04 - National Supplier"
+msgstr ""
+
+#. module: l10n_mx_diot_report
+#: view:account.diot.report:0
+msgid "TXT to import the SAT:"
+msgstr ""
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
@@ -385,13 +458,13 @@ msgstr "NV - Nevis"
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
-msgid "IS - Islandia"
-msgstr "IS - Islandia"
+msgid "YE - Republica del Yemen"
+msgstr "YE - Republica del Yemen"
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
-msgid "YE - Republica del Yemen"
-msgstr "YE - Republica del Yemen"
+msgid "NO - Noruega"
+msgstr "NO - Noruega"
 
 #. module: l10n_mx_diot_report
 #: view:account.diot.report:0
@@ -414,15 +487,6 @@ msgid "Type of Third (DIOT)"
 msgstr "Tipo de tercero"
 
 #. module: l10n_mx_diot_report
-#: selection:res.partner,diot_country:0
-msgid ""
-"GZ - Islas de Guernesey, Jersey, Alderney, Isla Great Sark,Herm, Little "
-"Sark, Berchou, Jethou, Lihou (Islas del Canal)"
-msgstr ""
-"GZ - Islas de Guernesey, Jersey, Alderney, Isla Great Sark,Herm, Little "
-"Sark, Berchou, Jethou, Lihou (Islas del Canal)"
-
-#. module: l10n_mx_diot_report
 #: view:account.diot.report:0
 msgid "DIOT Report - Statement of transactions with third parties [DIOT]"
 msgstr ""
@@ -430,13 +494,18 @@ msgstr ""
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
-msgid "NO - Noruega"
-msgstr "NO - Noruega"
+msgid "IS - Islandia"
+msgstr "IS - Islandia"
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
 msgid "ZR - Zaire"
 msgstr "ZR - Zaire"
+
+#. module: l10n_mx_diot_report
+#: field:account.diot.report,period_id:0
+msgid "Period"
+msgstr ""
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
@@ -499,9 +568,9 @@ msgid "ZM - Zambia"
 msgstr "ZM - Zambia"
 
 #. module: l10n_mx_diot_report
-#: model:ir.ui.menu,name:l10n_mx_diot_report.menu_account_diot_declaration
-msgid "Transactions with third parties [ DIOT ] "
-msgstr "Operaciones con terceros [ DIOT ] "
+#: selection:res.partner,type_of_operation:0
+msgid " 85 - Others"
+msgstr " 85 - Otros"
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
@@ -512,11 +581,6 @@ msgstr "BE - Belgica"
 #: selection:res.partner,diot_country:0
 msgid "ZO - Zona Libre de Ostrava"
 msgstr "ZO - Zona Libre de Ostrava"
-
-#. module: l10n_mx_diot_report
-#: help:account.diot.report,filename:0
-msgid "This is Filename"
-msgstr "Este es el nombre del archivo"
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
@@ -539,19 +603,19 @@ msgid "NU - Niue"
 msgstr "NU - Niue"
 
 #. module: l10n_mx_diot_report
+#: selection:account.diot.report,state:0
+msgid "Not File"
+msgstr ""
+
+#. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
 msgid "CN - China"
 msgstr "CN - China"
 
 #. module: l10n_mx_diot_report
-#: selection:res.partner,type_of_third:0
-msgid " 04 -National Supplier"
-msgstr " 04 -Proveedor National"
-
-#. module: l10n_mx_diot_report
-#: help:account.diot.report,month_id:0
-msgid "Select month"
-msgstr "Seleccione el mes"
+#: selection:res.partner,diot_country:0
+msgid "PE - Peru"
+msgstr "PE - Peru"
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
@@ -567,6 +631,16 @@ msgstr "GT - Guatemala"
 #: selection:res.partner,diot_country:0
 msgid " UY- Republica Oriental del Uruguay"
 msgstr " UY- Republica Oriental del Uruguay"
+
+#. module: l10n_mx_diot_report
+#: view:account.diot.report:0
+msgid "Probably by:"
+msgstr ""
+
+#. module: l10n_mx_diot_report
+#: help:res.partner,type_of_third:0
+msgid "Type of third for this partner"
+msgstr ""
 
 #. module: l10n_mx_diot_report
 #: field:res.partner,nacionality_diot:0
@@ -610,6 +684,7 @@ msgstr "KH - Campuchea Democratica"
 
 #. module: l10n_mx_diot_report
 #: field:account.diot.report,file:0
+#: field:account.diot.report,file_csv:0
 msgid "File"
 msgstr "Archivo"
 

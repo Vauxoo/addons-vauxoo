@@ -6,12 +6,96 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-12 23:18+0000\n"
-"PO-Revision-Date: 2013-07-12 23:18+0000\n"
+"POT-Creation-Date: 2013-11-08 03:15+0000\n"
+"PO-Revision-Date: 2013-11-08 04:36+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-11-13 06:11+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
+#. module: l10n_mx_notes_invoice
+#: code:addons/l10n_mx_notes_invoice/res_company.py:48
+#, python-format
+msgid ""
+"In the field 'Promissory note' you need put the text that you like that was "
+"colocate in the report as promissory, if you like take a data from the "
+"parner, company or the invoice you need create a new variable in the field "
+"'Variables to use in text' as follows : \n"
+"'name_variable' : object.value of object, and when you need use an variable "
+"you put %(variable)s for use information from an object. \n"
+"When you need information from the partner, use partner.field that you need "
+"from the partner, for company use company.field an equal for an field from "
+"invoice.\n"
+"NOTE: If you need use symbol '%', you need use %%."
+msgstr ""
+
+#. module: l10n_mx_notes_invoice
+#: field:res.company,details:0
+#: field:res.company,dict_var:0
+#: field:res.company,sample:0
+#: field:res.company,sample_dict:0
+msgid "Variables to use in text"
+msgstr ""
+
+#. module: l10n_mx_notes_invoice
+#: code:addons/l10n_mx_notes_invoice/res_company.py:58
+#, python-format
+msgid ""
+"If you like put the text \n"
+"I Partner pay to the order of My Company the amount of $500.00, you need put:"
+msgstr ""
+
+#. module: l10n_mx_notes_invoice
+#: help:res.company,dinamic_text:0
+msgid "This text will put in the report of Invoice"
+msgstr ""
+
+#. module: l10n_mx_notes_invoice
+#: model:ir.model,name:l10n_mx_notes_invoice.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: l10n_mx_notes_invoice
+#: code:addons/l10n_mx_notes_invoice/res_company.py:62
+#, python-format
+msgid ""
+"'partner_name' : partner.name, 'company_name' : company.name, "
+"'invoice_amount' : invoice.amount_total"
+msgstr ""
+
+#. module: l10n_mx_notes_invoice
+#: view:res.company:0
+msgid "Sample"
+msgstr ""
+
+#. module: l10n_mx_notes_invoice
+#: help:res.company,dict_var:0
+msgid "Put te variables used in text"
+msgstr ""
+
+#. module: l10n_mx_notes_invoice
+#: field:res.company,dinamic_text:0
+#: field:res.company,sample_text:0
+msgid "Promissory note"
+msgstr ""
+
+#. module: l10n_mx_notes_invoice
+#: code:addons/l10n_mx_notes_invoice/res_company.py:60
+#, python-format
+msgid ""
+"'I %(partner_name)s pay to the order of %(company_name)s the amount of "
+"%(invoice_amount)s'"
+msgstr ""
+
+#. module: l10n_mx_notes_invoice
+#: view:res.company:0
+msgid "Why fill the information?"
+msgstr ""
+
+#. module: l10n_mx_notes_invoice
+#: view:res.company:0
+msgid "Notes Invoice"
+msgstr ""

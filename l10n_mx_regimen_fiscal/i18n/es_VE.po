@@ -6,14 +6,44 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.3\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2011-12-15 03:07+0000\n"
+"POT-Creation-Date: 2013-11-08 03:15+0000\n"
 "PO-Revision-Date: 2013-09-05 16:36+0000\n"
 "Last-Translator: Ariel E. Figueroa <arielfigue@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-04 06:05+0000\n"
+"X-Launchpad-Export-Date: 2013-11-13 06:11+0000\n"
 "X-Generator: Launchpad (build 16820)\n"
 
+#. module: l10n_mx_regimen_fiscal
+#: model:ir.model,name:l10n_mx_regimen_fiscal.model_regimen_fiscal
+msgid "regimen.fiscal"
+msgstr ""
 
+#. module: l10n_mx_regimen_fiscal
+#: model:ir.ui.menu,name:l10n_mx_regimen_fiscal.cfd_22_regimen_fiscal
+msgid "Régimen Fiscal"
+msgstr ""
+
+#. module: l10n_mx_regimen_fiscal
+#: model:ir.actions.act_window,name:l10n_mx_regimen_fiscal.action_regimen_fiscal
+#: view:regimen.fiscal:0
+#: field:regimen.fiscal,name:0
+msgid "Regimen Fiscal"
+msgstr ""
+
+#. module: l10n_mx_regimen_fiscal
+#: field:res.partner,regimen_fiscal_id:0
+msgid "Regimen fiscal"
+msgstr ""
+
+#. module: l10n_mx_regimen_fiscal
+#: field:regimen.fiscal,description:0
+msgid "Descripcion"
+msgstr ""
+
+#. module: l10n_mx_regimen_fiscal
+#: model:ir.model,name:l10n_mx_regimen_fiscal.model_res_partner
+msgid "Partner"
+msgstr ""
