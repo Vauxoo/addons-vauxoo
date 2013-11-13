@@ -28,50 +28,50 @@ class user_story_phase(osv.Model):
     _name = "user.story.phase"
     _description = "User Story Phase"
 
-#    def _check_recursion(self, cr, uid, ids, context=None):
-#         if context is None:
-#            context = {}
-#
-#         data_phase = self.browse(cr, uid, ids[0], context=context)
-#         prev_ids = data_phase.previous_phase_ids
-#         next_ids = data_phase.next_phase_ids
-#         # it should neither be in prev_ids nor in next_ids
-#         if (data_phase in prev_ids) or (data_phase in next_ids):
-#             return False
-#         ids = [id for id in prev_ids if id in next_ids]
-#         # both prev_ids and next_ids must be unique
-#         if ids:
-#             return False
-#         # unrelated project
-#         prev_ids = [rec.id for rec in prev_ids]
-#         next_ids = [rec.id for rec in next_ids]
-#         # iter prev_ids
-#         while prev_ids:
-#             cr.execute('SELECT distinct prv_phase_id FROM project_phase_rel WHERE next_phase_id IN %s', (tuple(prev_ids),))
-#             prv_phase_ids = filter(None, map(lambda x: x[0], cr.fetchall()))
-#             if data_phase.id in prv_phase_ids:
-#                 return False
-#             ids = [id for id in prv_phase_ids if id in next_ids]
-#             if ids:
-#                 return False
-#             prev_ids = prv_phase_ids
-#         # iter next_ids
-#         while next_ids:
-#             cr.execute('SELECT distinct next_phase_id FROM project_phase_rel WHERE prv_phase_id IN %s', (tuple(next_ids),))
-#             next_phase_ids = filter(None, map(lambda x: x[0], cr.fetchall()))
-#             if data_phase.id in next_phase_ids:
-#                 return False
-#             ids = [id for id in next_phase_ids if id in prev_ids]
-#             if ids:
-#                 return False
-#             next_ids = next_phase_ids
-#         return True
-#
-#    def _check_dates(self, cr, uid, ids, context=None):
-#         for phase in self.read(cr, uid, ids, ['date_start', 'date_end'], context=context):
-#             if phase['date_start'] and phase['date_end'] and phase['date_start'] > phase['date_end']:
-#                 return False
-#         return True
+    def _check_recursion(self, cr, uid, ids, context=None):
+         if context is None:
+            context = {}
+
+         data_phase = self.browse(cr, uid, ids[0], context=context)
+         prev_ids = data_phase.previous_phase_ids
+         next_ids = data_phase.next_phase_ids
+         # it should neither be in prev_ids nor in next_ids
+         if (data_phase in prev_ids) or (data_phase in next_ids):
+             return False
+         ids = [id for id in prev_ids if id in next_ids]
+         # both prev_ids and next_ids must be unique
+         if ids:
+             return False
+         # unrelated user_story
+         prev_ids = [rec.id for rec in prev_ids]
+         next_ids = [rec.id for rec in next_ids]
+         # iter prev_ids
+         while prev_ids:
+             cr.execute('SELECT distinct prv_phase_id FROM user_story_phase_rel WHERE next_phase_id IN %s', (tuple(prev_ids),))
+             prv_phase_ids = filter(None, map(lambda x: x[0], cr.fetchall()))
+             if data_phase.id in prv_phase_ids:
+                 return False
+             ids = [id for id in prv_phase_ids if id in next_ids]
+             if ids:
+                 return False
+             prev_ids = prv_phase_ids
+         # iter next_ids
+         while next_ids:
+             cr.execute('SELECT distinct next_phase_id FROM user_story_phase_rel WHERE prv_phase_id IN %s', (tuple(next_ids),))
+             next_phase_ids = filter(None, map(lambda x: x[0], cr.fetchall()))
+             if data_phase.id in next_phase_ids:
+                 return False
+             ids = [id for id in next_phase_ids if id in prev_ids]
+             if ids:
+                 return False
+             next_ids = next_phase_ids
+         return True
+
+    def _check_dates(self, cr, uid, ids, context=None):
+         for phase in self.read(cr, uid, ids, ['date_start', 'date_end'], context=context):
+             if phase['date_start'] and phase['date_end'] and phase['date_start'] > phase['date_end']:
+                 return False
+         return True
 #
 #    def _compute_progress(self, cr, uid, ids, field_name, arg, context=None):
 #        res = {}
@@ -128,26 +128,26 @@ class user_story_phase(osv.Model):
 #        'task_ids': fields.one2many('project.task', 'phase_id', "Project Tasks", states={'done':[('readonly',True)], 'cancelled':[('readonly',True)]}),
 #        'progress': fields.function(_compute_progress, string='Progress', help="Computed based on related tasks"),
 
-#    _defaults = {
-#        'state': 'draft',
-#        'sequence': 10,
-#    }
-#    _order = "project_id, date_start, sequence"
-#    _constraints = [
-#        (_check_recursion,'Loops in phases not allowed',['next_phase_ids', 'previous_phase_ids']),
-#        (_check_dates, 'Phase start-date must be lower than phase end-date.', ['date_start', 'date_end']),
-#    ]
-#
-    def onchange_user_story(self, cr, uid, ids, project, context=None):
+    _defaults = {
+        'state': 'draft',
+        'sequence': 10,
+    }
+    _order = "user_story_id, date_start, sequence"
+    _constraints = [
+        (_check_recursion,'Loops in phases not allowed',['next_phase_ids', 'previous_phase_ids']),
+        (_check_dates, 'Phase start-date must be lower than phase end-date.', ['date_start', 'date_end']),
+    ]
+
+    def onchange_user_story(self, cr, uid, ids, user_story, context=None):
         return {}
-#
-#    def copy(self, cr, uid, id, default=None, context=None):
-#        if default is None:
-#            default = {}
-#        if not default.get('name', False):
-#            default.update(name=_('%s (copy)') % (self.browse(cr, uid, id, context=context).name))
-#        return super(project_phase, self).copy(cr, uid, id, default, context)
-#
+
+    def copy(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        if not default.get('name', False):
+            default.update(name=_('%s (copy)') % (self.browse(cr, uid, id, context=context).name))
+        return super(user_story_phase, self).copy(cr, uid, id, default, context)
+
     def set_draft(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'state': 'draft'})
         return True
