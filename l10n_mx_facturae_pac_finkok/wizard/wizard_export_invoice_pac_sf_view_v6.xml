@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        
+        <record id="view_wizard_export_pac_sf_form_v6" model="ir.ui.view">
+             <field name="name">view.wizard.export.pac.sf.form.v6</field>
+             <field name="model">wizard.export.invoice.pac.sf.v6</field>
+             <field name="arch" type="xml">
+                <form string="Export invoice V6" version="7.0">
+                    <separator string="File"/>
+                    <field name='file' nolabel="1" colspan="4"/>
+                    <separator colspan="4" string="Message"/>
+                    <field name='message' nolabel="1" colspan="4"/>
+                    <separator string="" colspan="4"/>
+                    <footer>
+                        <button string="_Close" class="oe_highlight" special="cancel"/>
+                        or
+                        <button name="upload_to_pac" string="_Upload Invoice" type="object"/>
+                    </footer>
+                </form>
+             </field>
+         </record>
+        
+        <act_window name="Export Invoice PAC SF V6"
+            res_model="wizard.export.invoice.pac.sf.v6"
+            src_model="account.invoice"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+            id="action_wizard_export_pac_sf_form"
+            groups="l10n_mx_facturae_group_show_wizards.res_group_facturae_show_default_wizards"/>
+            
+    </data>
+</openerp>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_wizard_cancel_pac_sf_form" model="ir.ui.view">
+            <field name="name">view.wizard.cancel.pac.sf.form</field>
+            <field name="model">wizard.cancel.invoice.pac.sf</field>
+            <field name="arch" type="xml">
+                <form string="Cancel invoice">
+                    <separator colspan="4" string="File"/>
+                        <field name='file' nolabel="1" colspan="4"/>
+                        <newline/>
+                        <separator colspan="4" string="Message"/>
+                        <field name='message' nolabel="1" colspan="4"/>
+                        <separator string="" colspan="4"/>
+                        <newline/>
+                        <button special="cancel" string="_Close" icon="gtk-cancel"/>
+                        <button name="upload_cancel_to_pac" type="object" string="_Cancel invoice" icon="gtk-ok"/>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="Cancel invoice pac SF"
+            res_model="wizard.cancel.invoice.pac.sf"
+            src_model="account.invoice"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+            id="action_wizard_cancel_pac_sf_form"
+            groups="l10n_mx_facturae_group_show_wizards.res_group_facturae_show_default_wizards"/>
+
+    </data>
+</openerp>

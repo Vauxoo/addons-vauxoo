@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        
+        <record id="params_pac_sf_cancelar_test" model="params.pac">
+            <field name="method_type">pac_sf_cancelar</field>
+            <field name="url_webservice">http://testing.solucionfactible.com/ws/services/Timbrado</field>
+            <field name="namespace">http://timbrado.ws.cfdi.solucionfactible.com</field>
+            <field name="user">testing@solucionfactible.com</field>
+            <field name="password">timbrado.SF.16672</field>
+            <field name="name">PAC SF - Cancelar - Test</field>
+            <field name="certificate_link">http://solucionfactible.com/sfic/resources/files/csdSAT-SF/testing/20001000000100005761.zip</field>
+        </record>
+        
+        <record id="params_pac_sf_firmar_test" model="params.pac">
+            <field name="method_type">pac_sf_firmar</field>
+            <field name="url_webservice">http://testing.solucionfactible.com/ws/services/Timbrado</field>
+            <field name="namespace">http://timbrado.ws.cfdi.solucionfactible.com</field>
+            <field name="user">testing@solucionfactible.com</field>
+            <field name="password">timbrado.SF.16672</field>
+            <field name="name">PAC SF - Firmar - Test</field>
+            <field name="certificate_link">http://solucionfactible.com/sfic/resources/files/csdSAT-SF/testing/20001000000100005761.zip</field>
+        </record>
+        <!--
+        <record id="params_pac_sf_cancelar_prod" model="params.pac">
+            <field name="method_type">pac_sf_cancelar</field>
+            <field name="url_webservice">https://solucionfactible.com/ws/services/Timbrado?wsdl</field>
+            <field name="namespace">http://timbrado.ws.cfdi.solucionfactible.com</field>
+            <field name="user">email_de_usuario</field>
+            <field name="password">password_usuario</field>
+            <field name="name">PAC SF - Cancelar</field>
+        </record>
+        
+        <record id="params_pac_sf_firmar_prod" model="params.pac">
+            <field name="method_type">pac_sf_firmar</field>
+            <field name="url_webservice">https://solucionfactible.com/ws/services/TimbradoCFD?wsdl</field>
+            <field name="namespace">http://timbradocfd.ws.cfdi.solucionfactible.com</field>
+            <field name="user">email_de_usuario</field>
+            <field name="password">password_usuario</field>
+            <field name="name">PAC SF - Firmar</field>
+        </record>
+        -->
+    </data>
+</openerp>
