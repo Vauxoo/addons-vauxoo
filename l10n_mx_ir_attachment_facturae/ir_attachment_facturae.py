@@ -229,7 +229,8 @@ class ir_attachment_facturae_mx(osv.Model):
                     # dont need it.
                     attach = attachment_obj.create(
                         cr, uid, data_attach, context=None)
-                    attachment_obj.write(cr, uid, attach_v3_2, {'res_id': None})
+                    if attach_v3_2:
+                        attachment_obj.write(cr, uid, attach_v3_2, {'res_id': None})
                 else:
                     msj += _("Unknow driver for %s" % (type))
             self.write(cr, uid, ids,
