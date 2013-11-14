@@ -405,7 +405,7 @@ class account_voucher(osv.Model):
         amount_base = 0
         tax_secondary = False
         if line_tax and line_tax.tax_category_id and line_tax.tax_category_id.name in (\
-            'IVA', 'IVA-EXENTO', 'IVA-RET'):
+            'IVA', 'IVA-EXENTO', 'IVA-RET', 'IVA-PART'):
             amount_base = line_tax.tax_category_id.value_tax and\
                             reference_amount/line_tax.tax_category_id.value_tax\
                             or amount_base_tax
