@@ -200,6 +200,9 @@ class ir_attachment_facturae_mx(osv.Model):
                 namespace = pac_params.namespace
                 url = 'https://solucionfactible.com/ws/services/Timbrado'
                 testing_url = 'http://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl'
+                #~ Dir_pac=http://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl
+                #~ usuario=isaac@vauxoo.com
+                #Contraseña=1Q2W3E4R5t_
                 if (wsdl_url == url) or (wsdl_url == testing_url):
                     pass
                 else:
@@ -231,10 +234,9 @@ class ir_attachment_facturae_mx(osv.Model):
                     #~ wsdl_client.soapproxy.config.debug = 0
                     #~ wsdl_client.soapproxy.config.dict_encoding = 'UTF-8'
                     resultado = wsdl_client.service.stamp(*params)
-                    print isinstance(resultado, object)
                     if resultado.Incidencias or None:
+                        
                         raise osv.except_osv(_('Warning'))
-                    print resultado, 'No hay problema,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,'
                     htz = int(invoice_obj._get_time_zone(
                         cr, uid, [ir_attachment_facturae_mx_id.invoice_id.id], context=context))
                     mensaje = _(tools.ustr(resultado.CodEstatus))
@@ -242,9 +244,6 @@ class ir_attachment_facturae_mx(osv.Model):
                         #~ resultado['resultados']['mensaje'] or ''
                     folio_fiscal = resultado.UUID
                     #~ resultado['resultados']['uuid'] or ''
-                    codigo_timbrado = resultado['status'] or '200'
-                    codigo_validacion = resultado['resultados'] and \
-                        resultado['resultados']['status'] or '200'
                     if codigo_timbrado == '311' or codigo_validacion == '311':
                         raise osv.except_osv(_('Warning'), _(
                             'Unauthorized.\nCode 311'))
