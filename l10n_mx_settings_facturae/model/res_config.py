@@ -91,7 +91,7 @@ class facturae_config_settings(osv.osv_memory):
         company_id = self.pool.get('res.users')._get_company(cr, uid, context=context)
         temp_report_obj = self.pool.get('ir.actions.report.xml')
         temp_report_id = temp_report_obj.search(cr, uid, [('company_id', '=', company_id), 
-            ('active', '=', True), ('report_name', 'ilike', 'account.invoice.facturae.webkit'),
+            ('active', '=', True), ('report_type', '=', 'webkit'),
                 ('model', '=', 'account.invoice')], limit = 1)
         return {'temp_report_id': temp_report_id or False}
 
@@ -106,6 +106,8 @@ class facturae_config_settings(osv.osv_memory):
                 cr, SUPERUSER_ID, [values.get('temp_report_id')])
             confg_data = self.browse(cr, uid, confg_id, context=context)
             if report_data:
+                actions_obj.write(cr, uid, [values.get('temp_report_id')], {
+                                        'company_id': confg_data.company_id.id}, context=context)
                 webkit_header_obj.write(cr, SUPERUSER_ID, [report_data[0].webkit_header.id], {
                                         'company_id': confg_data.company_id.id}, context=context)
             email_obj.write(cr, uid, [confg_data.email_tmp_id.id], {

@@ -267,19 +267,11 @@ class ir_attachment_facturae_mx(osv.Model):
 
             actions_obj = self.pool.get('ir.actions.report.xml')
             report_ids = actions_obj.search(
-                cr, uid, [('model', '=', 'account.invoice'), ('report_type', '=', 'webkit')])
-            report_data = actions_obj.browse(cr, uid, report_ids)
-            report_id = None
-            report_name = ''
+                cr, uid, [('model', '=', 'account.invoice'),('active', '=', True), ('report_type', '=', 'webkit'), 
+                          ('company_id','=',invoice.company_id.id)],order='sequence', limit=1) or False
 
-            for reporte in report_data:
-                if reporte.webkit_header and reporte.webkit_header.company_id and reporte.webkit_header.company_id.id == invoice.company_id.id:
-                    report_id = reporte.id
-                    break
-
-            if report_id:
-                report_name = actions_obj.read(
-                    cr, SUPERUSER_ID, [report_id], ['report_name'])[0].get('report_name') or False
+            if report_ids:
+                report_name = actions_obj.browse(cr, uid, report_ids[0]).report_name
                 if report_name:
                     report = invoice_obj.create_report(
                         cr, SUPERUSER_ID, [invoice.id],
@@ -376,17 +368,10 @@ class ir_attachment_facturae_mx(osv.Model):
 
                     actions_obj = self.pool.get('ir.actions.report.xml')
                     report_ids = actions_obj.search(
-                        cr, uid, [('model', '=', 'account.invoice'), ('report_type', '=', 'webkit')])
-                    report_data = actions_obj.browse(cr, uid, report_ids)
-                    report_id = None
-                    report_name = ''
-                    for reporte in report_data:
-                        if reporte.webkit_header and reporte.webkit_header.company_id and reporte.webkit_header.company_id.id == invoice.company_id.id:
-                            report_id = reporte.id
-                            break
-                    if report_id:
-                        report_name = actions_obj.read(
-                            cr, SUPERUSER_ID, [report_id], ['report_name'])[0].get('report_name') or False
+                        cr, uid, [('model', '=', 'account.invoice'),('active', '=', True), ('report_type', '=', 'webkit'), 
+                                  ('company_id','=',invoice.company_id.id)],order='sequence', limit=1) or False
+                    if report_ids:
+                        report_name = actions_obj.browse(cr, uid, report_ids[0]).report_name
                         if report_name:
                             tmp_id = email_pool.search(
                                 cr, uid, [(
