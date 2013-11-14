@@ -85,7 +85,7 @@ class update_amount_base_tax_wizard(osv.osv_memory):
         company_id = self.pool.get('res.company')._company_default_get(cr, uid,
             'update.amount.tax.wizard', context=context)
         category_iva_ids = acc_tax_category_obj.search(cr, uid, [\
-            ('name', 'in', ('IVA', 'IVA-EXENTO', 'IVA-RET'))], context=context)
+            ('name', 'in', ('IVA', 'IVA-EXENTO', 'IVA-RET', 'IVA-PART'))], context=context)
         tax_ids = acc_tax_obj.search(cr, uid, [
             ('company_id', '=' ,company_id),
             ('type_tax_use', '=', 'purchase'),
@@ -111,9 +111,10 @@ class update_amount_base_tax_wizard(osv.osv_memory):
                     SET amount_base = %s
                     WHERE id = %s""", (abs(amount_base/amount_tax), move.id))
             else:
-                cr.execute("""UPDATE account_move_line
-                    SET amount_base = %s
-                    WHERE id = %s""", (amount_base, move.id))
+                if amount_base:
+                    cr.execute("""UPDATE account_move_line
+                        SET amount_base = %s
+                        WHERE id = %s""", (amount_base, move.id))
         lines_incorects_ids = move_line_obj.search(cr, uid, [('company_id', '=', company_id),
             ('amount_base', '!=', False), ('tax_id_secondary', '=', False)], context=context)
         for line in lines_incorects_ids:
