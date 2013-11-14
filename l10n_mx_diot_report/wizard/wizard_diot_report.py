@@ -94,7 +94,7 @@ class wizard_account_diot_mx(osv.osv_memory):
         amount_exe = 0
         partner_company_id = this.company_id.partner_id.id
         category_iva_ids = acc_tax_category_obj.search(cr, uid, [
-            ('name', 'in', ('IVA', 'IVA-EXENTO', 'IVA-RET'))], context=context)
+            ('name', 'in', ('IVA', 'IVA-EXENTO', 'IVA-RET', 'IVA-PART'))], context=context)
         tax_purchase_ids = acc_tax_obj.search(cr, uid, [
             ('type_tax_use', '=', 'purchase'),
             ('tax_category_id', 'in', category_iva_ids)], context=context)
@@ -155,7 +155,7 @@ class wizard_account_diot_mx(osv.osv_memory):
                 if (category == 'IVA' and amount_base in [0.16, 0.11, 0]) or\
                     (category == 'IVA-EXENTO' and amount_base == 0) or category == 'IVA-RET':
                     line_diot = True
-                if category == 'IVA' and amount_base == 0.16 or\
+                if category in ('IVA', 'IVA-PART') and amount_base == 0.16 or\
                     line.tax_id_secondary.tax_diot == 'tax_16' and line_diot == False:
                     amount_16 = amount_base_tax or 0
                 if category == 'IVA' and amount_base == 0.11 or\
