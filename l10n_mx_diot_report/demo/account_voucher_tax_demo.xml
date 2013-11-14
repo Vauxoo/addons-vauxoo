@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="0">
+        
+        <record id="account_voucher_tax.account_voucher_tax_purchase_iva16" model="account.tax">
+            <field name="name">IVA 16% with purchase voucher accounts - Test</field>
+            <field model="account.tax.category" name="tax_category_id" search="[('name','like','IVA')]"/>
+        </record>
+        
+        <record id="account_voucher_tax.account_voucher_tax_purchase_iva11" model="account.tax">
+            <field name="name">IVA 11% with purchase voucher accounts - Test</field>
+            <field model="account.tax.category" name="tax_category_id" search="[('name','like','IVA')]"/>
+        </record>
+        
+        <record id="account_voucher_tax.account_voucher_tax_purchase_iva533" model="account.tax">
+            <field name="name">IVA 5.33% X ACREDITAR - Test</field>
+            <field name="tax_diot">tax_16</field>
+            <field model="account.tax.category" name="tax_category_id" search="[('name','like','IVA')]"/>
+        </record>
+        
+        <record id="account_voucher_tax.account_voucher_tax_purchase_iva1067_xacre_retenido" model="account.tax">
+            <field name="name">IVA 10.67% X ACREDITAR RETENIDO- Test</field>
+            <field name="tax_diot">tax_ret</field>
+            <field model="account.tax.category" name="tax_category_id" search="[('name','like','IVA-RET')]"/>
+        </record>
+        
+        <record id="account_voucher_tax.account_voucher_tax_purchase_iva10_rete_isr" model="account.tax">
+            <field name="name">IVA 10% RETENIDO ISR - Test</field>
+            <field model="account.tax.category" name="tax_category_id" search="[('name','like','ISR-RET')]"/>
+        </record>
+        
+        <record id="account_voucher_tax.account_voucher_tax_purchase_iva1067_retencion_iva" model="account.tax">
+            <field name="name">RETENCION IVA 10.67% - Test</field>
+            <field model="account.tax.category" name="tax_category_id" search="[('name','like','IVA-RET')]"/>
+        </record>
+        
+        <record id="account_voucher_tax.account_voucher_tax_purchase_0iva" model="account.tax">
+            <field name="name">IVA 0% purchase - Test</field>
+            <field model="account.tax.category" name="tax_category_id" search="[('name','like','IVA')]"/>
+        </record>
+        
+        <record id="account_voucher_tax.account_voucher_tax_purchase_iva_excento_iva" model="account.tax">
+            <field name="name">IVA EXENTO - Test</field>
+            <field model="account.tax.category" name="tax_category_id" search="[('name','like','IVA-EXCENTO')]"/>
+        </record>
+    </data>
+</openerp>

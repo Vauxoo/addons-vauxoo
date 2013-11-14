@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        
+<!--
+         Invoices 
+-->
+        <record id="account_invoice_diot_0" model="account.invoice">
+            <field name="date_due" eval="time.strftime('%Y-%m-%d')"/>
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="reference_type">none</field>
+            <field name="account_id" ref="account.a_pay"/>
+            <field name="payment_term" ref="account.account_payment_term"/>
+            <field name="reference_type">none</field>
+            <field name="journal_id" ref="account.expenses_journal"/>
+            <field name="state">draft</field>
+            <field name="type">in_invoice</field>
+            <field name="date_invoice" eval="time.strftime('%Y-%m-%d')"/>
+            <field name="partner_id" ref="l10n_mx_partner_address.res_partner_address_vauxoo_1"/>
+        </record>
+        
+        <record id="account_invoice_diot_0_line1" model="account.invoice.line">
+            <field name="invoice_id" ref="account_invoice_diot_0"/>
+            <field name="account_id" ref="account.a_expense"/>
+            <field name="uos_id" ref="product.product_uom_unit"/>
+            <field name="price_unit" eval="100.0" />
+            <field name="company_id" ref="base.main_company"/>
+            <field name="invoice_line_tax_id" eval="[(6,0,[ref('account_voucher_tax.account_voucher_tax_purchase_iva16')])]"/>
+            <field name="product_id" ref="product.product_product_3"/>
+            <field name="quantity" eval="1.0" />
+            <field name="partner_id" ref="l10n_mx_partner_address.res_partner_address_vauxoo_1"/>
+            <field name="name">PC Assemble SC234</field>
+        </record>
+        <record id="account_invoice_diot_0_line2" model="account.invoice.line">
+            <field name="invoice_id" ref="account_invoice_diot_0"/>
+            <field name="account_id" ref="account.a_expense"/>
+            <field name="uos_id" ref="product.product_uom_unit"/>
+            <field name="price_unit" eval="100.0" />
+            <field name="company_id" ref="base.main_company"/>
+            <field name="invoice_line_tax_id" eval="[(6,0,[ref('account_voucher_tax.account_voucher_tax_purchase_iva11')])]"/>
+            <field name="product_id" ref="product.product_product_5"/>
+            <field name="quantity" eval="1.0" />
+            <field name="partner_id" ref="l10n_mx_partner_address.res_partner_address_vauxoo_1"/>
+            <field name="name">PC Assemble + Custom (PC on Demand)</field>
+        </record>
+        <record id="account_invoice_diot_0_line3" model="account.invoice.line">
+            <field name="invoice_id" ref="account_invoice_diot_0"/>
+            <field name="account_id" ref="account.a_expense"/>
+            <field name="uos_id" ref="product.product_uom_unit"/>
+            <field name="price_unit" eval="100.0" />
+            <field name="company_id" ref="base.main_company"/>
+            <field name="invoice_line_tax_id" eval="[(6,0,[ref('account_voucher_tax.account_voucher_tax_purchase_iva1067_retencion_iva')])]"/>
+            <field name="product_id" ref="product.product_product_22"/>
+            <field name="quantity" eval="1.0" />
+            <field name="partner_id" ref="l10n_mx_partner_address.res_partner_address_vauxoo_1"/>
+            <field name="name">Processor Core i5 2.70 Ghz</field>
+        </record>
+        <record id="account_invoice_diot_0_line4" model="account.invoice.line">
+            <field name="invoice_id" ref="account_invoice_diot_0"/>
+            <field name="account_id" ref="account.a_expense"/>
+            <field name="uos_id" ref="product.product_uom_unit"/>
+            <field name="price_unit" eval="100.0" />
+            <field name="company_id" ref="base.main_company"/>
+            <field name="invoice_line_tax_id" eval="[(6,0,[ref('account_voucher_tax.account_voucher_tax_purchase_iva_excento_iva')])]"/>
+            <field name="product_id" ref="product.product_product_20"/>
+            <field name="quantity" eval="1.0" />
+            <field name="partner_id" ref="l10n_mx_partner_address.res_partner_address_vauxoo_1"/>
+            <field name="name">Motherboard I9P57</field>
+        </record>
+        <record id="account_invoice_diot_0_line5" model="account.invoice.line">
+            <field name="invoice_id" ref="account_invoice_diot_0"/>
+            <field name="account_id" ref="account.a_expense"/>
+            <field name="uos_id" ref="product.product_uom_unit"/>
+            <field name="price_unit" eval="100.0" />
+            <field name="company_id" ref="base.main_company"/>
+            <field name="invoice_line_tax_id" eval="[(6,0,[ref('account_voucher_tax.account_voucher_tax_purchase_0iva')])]"/>
+            <field name="product_id" ref="product.product_product_25"/>
+            <field name="quantity" eval="1.0" />
+            <field name="partner_id" ref="l10n_mx_partner_address.res_partner_address_vauxoo_1"/>
+            <field name="name">Laptop E5023</field>
+        </record>
+
+    </data>
+</openerp>

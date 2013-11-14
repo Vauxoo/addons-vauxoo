@@ -6,15 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-02 19:31+0000\n"
-"PO-Revision-Date: 2013-08-07 16:24+0000\n"
-"Last-Translator: Rodolfo Lopez <Unknown>\n"
+"POT-Creation-Date: 2013-11-08 03:16+0000\n"
+"PO-Revision-Date: 2013-11-08 04:49+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-10-25 06:03+0000\n"
-"X-Generator: Launchpad (build 16810)\n"
+"X-Launchpad-Export-Date: 2013-11-13 06:11+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: l10n_mx_account_tax_category
 #: field:account.tax.category,category_ids:0
@@ -22,23 +23,9 @@ msgid "Category"
 msgstr "Categoria"
 
 #. module: l10n_mx_account_tax_category
-#: model:res.groups,name:l10n_mx_account_tax_category.group_account_tax_category_manager
-msgid "Account Tax Category / Manager"
-msgstr "Categoria de Impuestos / Manager"
-
-#. module: l10n_mx_account_tax_category
 #: help:account.tax.category,active:0
 msgid "Indicate if this category is active"
 msgstr "Indica si esta categoria es activa"
-
-#. module: l10n_mx_account_tax_category
-#: help:account.invoice.tax,name2:0
-msgid ""
-"Is the code of category of the tax or name of tax but in uppers, without "
-"'.', '-', ' '"
-msgstr ""
-"Es el codigo de la categoria o el nombre del Impuesto pero en mayusculas y "
-"sin '.', '-', ' '"
 
 #. module: l10n_mx_account_tax_category
 #: field:account.invoice.tax,tax_percent:0
@@ -54,6 +41,15 @@ msgstr "Compañia"
 #: field:account.tax.category,active:0
 msgid "Active"
 msgstr "Activo"
+
+#. module: l10n_mx_account_tax_category
+#: help:account.invoice.tax,name2:0
+msgid ""
+"Is the code of category of the tax or name                 of tax but in "
+"uppers, without '.', '-', ' '"
+msgstr ""
+"Es el código de la categoría del impuesto o nombre del impuesto pero sin "
+"mayúsculas, y sin '.', '-', ' '"
 
 #. module: l10n_mx_account_tax_category
 #: view:account.tax.category:0
@@ -76,14 +72,19 @@ msgid "Company where will add this category"
 msgstr "Compañia Donde Se Agrega Esta Categoria"
 
 #. module: l10n_mx_account_tax_category
+#: help:account.tax.category,value_tax:0
+msgid "Amount of Tax Original"
+msgstr "Cantidad del Impuesto Original"
+
+#. module: l10n_mx_account_tax_category
 #: model:ir.model,name:l10n_mx_account_tax_category.model_account_tax_category
 msgid "account.tax.category"
 msgstr "account.tax.category"
 
 #. module: l10n_mx_account_tax_category
-#: model:res.groups,name:l10n_mx_account_tax_category.group_account_tax_category_user
-msgid "Account Tax Category / User"
-msgstr "Categoria de Impuestos / Usuario"
+#: field:account.tax.category,value_tax:0
+msgid "Value Tax"
+msgstr "Valor del Impuesto"
 
 #. module: l10n_mx_account_tax_category
 #: help:account.tax.category,name:0

@@ -6,16 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-05 17:41+0000\n"
-"PO-Revision-Date: 2013-09-06 20:02+0000\n"
-"Last-Translator: Moisés López - http://www.vauxoo.com "
-"<moylop260@vauxoo.com>\n"
+"POT-Creation-Date: 2013-11-08 03:15+0000\n"
+"PO-Revision-Date: 2013-11-08 04:52+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-10-25 06:03+0000\n"
-"X-Generator: Launchpad (build 16810)\n"
+"X-Launchpad-Export-Date: 2013-11-13 06:11+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: l10n_mx_facturae_seq
 #: model:ir.actions.act_window,name:l10n_mx_facturae_seq.action_facturae_sequence_tree
@@ -49,6 +49,15 @@ msgid "Error ! There ranges of numbers underhand between approvals."
 msgstr "Error ! Hay rangos de numeros solapados entre aprobaciones."
 
 #. module: l10n_mx_facturae_seq
+#: help:ir.sequence.approval,serie:0
+msgid ""
+"With which report to SAT, example. FA (for Invoices), NC             (For "
+"Invoice Refund)"
+msgstr ""
+"Con qué reportar al SAT, ejemplo. FA (para Facturas), NC (Para Notas de "
+"Créditos)"
+
+#. module: l10n_mx_facturae_seq
 #: field:ir.sequence.approval,type:0
 msgid "Type"
 msgstr "Tipo"
@@ -65,14 +74,14 @@ msgid "Aprobaciones"
 msgstr "Aprobaciones"
 
 #. module: l10n_mx_facturae_seq
+#: help:ir.sequence.approval,approval_number:0
+msgid "Name of the type of Electronic Invoice to             configure"
+msgstr "Nombre del tipo de Factura Electrónica a configurar"
+
+#. module: l10n_mx_facturae_seq
 #: help:ir.sequence,approval_id:0
 msgid "Approval active in this sequence"
 msgstr "Aprobación activa en esta secuencia"
-
-#. module: l10n_mx_facturae_seq
-#: help:ir.sequence.approval,sequence_id:0
-msgid "Sequence where will add this approval"
-msgstr "Secuencia donde se agregara esta aprobación"
 
 #. module: l10n_mx_facturae_seq
 #: view:ir.sequence.approval:0
@@ -101,37 +110,14 @@ msgid "ir.sequence"
 msgstr "ir.secuencia"
 
 #. module: l10n_mx_facturae_seq
-#: model:res.groups,name:l10n_mx_facturae_seq.group_facturae_mx_seq_manager
-msgid "FacturaE MX Seq / Manager"
-msgstr "FacturaE MX Seq / Manager"
-
-#. module: l10n_mx_facturae_seq
-#: help:account.invoice,invoice_sequence_id:0
-msgid "Sequence used in the invoice"
-msgstr "Secuencia utilizada en la factura"
-
-#. module: l10n_mx_facturae_seq
 #: help:ir.sequence.approval,company_id:0
 msgid "Company where will add this approval"
 msgstr "Compañia donde se agregara esta aprobación"
 
 #. module: l10n_mx_facturae_seq
-#: help:ir.sequence.approval,serie:0
-msgid ""
-"With which report to SAT, example. FA (for Invoices), NC (For Invoice Refund)"
-msgstr ""
-"Con la que se reporto al SAT, por ejemplo. FA (para facturas), NC (Para "
-"notas de credito)"
-
-#. module: l10n_mx_facturae_seq
 #: view:ir.sequence:0
 msgid "Aprobaciones SAT"
 msgstr "Aprobaciones SAT"
-
-#. module: l10n_mx_facturae_seq
-#: help:ir.sequence.approval,approval_number:0
-msgid "Name of the type of Electronic Invoice to configure"
-msgstr "Nombre del tipo de Factura Electronica a configurar"
 
 #. module: l10n_mx_facturae_seq
 #: field:account.invoice,invoice_sequence_id:0
@@ -149,12 +135,16 @@ msgid "The finished number (Until), must be higher to initial (Since)!"
 msgstr "El numero final (Hasta), tiene que ser mayor al inicial (Desde)!"
 
 #. module: l10n_mx_facturae_seq
+#: help:ir.sequence.approval,sequence_id:0
+msgid "Sequence where will add             this approval"
+msgstr "Secuencia donde se agregará esta aprobación"
+
+#. module: l10n_mx_facturae_seq
 #: help:ir.sequence.approval,number_start:0
 msgid "Initial Number of folios purchased"
 msgstr "Número Inicial de Folios Comprados"
 
 #. module: l10n_mx_facturae_seq
-#: view:ir.sequence:0
 #: view:ir.sequence.approval:0
 #: field:ir.sequence.approval,sequence_id:0
 msgid "Sequence"
@@ -169,6 +159,11 @@ msgstr "El numero inicial (Desde), tiene que ser menor al final (Hasta)!"
 #: help:ir.sequence.approval,number_end:0
 msgid "Finished Number of folios purchased"
 msgstr "Número Final de Folios Comprados"
+
+#. module: l10n_mx_facturae_seq
+#: help:account.invoice,invoice_sequence_id:0
+msgid "Sequence used             in the invoice"
+msgstr "Secuencia usada en la factura"
 
 #. module: l10n_mx_facturae_seq
 #: field:ir.sequence.approval,approval_number:0

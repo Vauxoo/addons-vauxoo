@@ -1,0 +1,129 @@
+-
+    Test DIOT
+-
+   I press the update button on the invoice
+-
+  !python {model: account.invoice}: |
+    self.button_reset_taxes(cr, uid, [ref('l10n_mx_diot_report.account_invoice_diot_0')], context=context)
+-
+    I getting the amount total of the invoice and write this amount in Verification Total
+-
+  !python {model: account.invoice}: |
+    amount_total = self.read(cr,uid,[ref('l10n_mx_diot_report.account_invoice_diot_0')], ['amount_total'])[0].get('amount_total')
+    self.write(cr,uid,[ref('l10n_mx_diot_report.account_invoice_diot_0')], {'check_total': amount_total})
+-
+  I change the state of invoice to open by clicking Validate button
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: l10n_mx_diot_report.account_invoice_diot_0}
+-
+  I check that the invoice state is now "Open"
+-
+  !assert {model: account.invoice, id: l10n_mx_diot_report.account_invoice_diot_0}:
+    - state == 'open'
+-
+  I set the context that will be used for the encoding of all the vouchers of this file
+-
+  !context
+    'type': 'payment'
+-
+   I create the voucher of payment
+-
+  !record {model: account.voucher, id: account_voucher_voucherfordiot0, view:  account_voucher.view_vendor_payment_form }:
+    account_id: account.cash
+    company_id: base.main_company
+    journal_id: account.expenses_journal
+    amount: 516.33
+    name: 'Voucher for Diot'
+    partner_id: l10n_mx_partner_address.res_partner_address_vauxoo_0
+    date: !eval time.strftime('%Y-%m-%d')
+    payment_option: 'with_writeoff'
+    writeoff_acc_id: account.a_expense
+    comment: 'Write Off'
+    payment_rate_currency_id: base.EUR
+-
+    I check the amount of invoice for release the payment
+-
+  !python {model: account.invoice}: |
+    account_voucher_obj = self.pool.get('account.voucher')
+    amount_total = self.read(cr,uid,[ref('l10n_mx_diot_report.account_invoice_diot_0')], ['amount_total'])[0].get('amount_total')
+    account_voucher_obj.write(cr,uid,[ref('account_voucher_voucherfordiot0')], {'amount': amount_total})
+-
+  I check that Initially customer voucher is in the "Draft" state
+-
+  !assert {model: account.voucher, id: account_voucher_voucherfordiot0}:
+    - state == 'draft'
+-
+  I compute the voucher to calculate the taxes by clicking Compute button
+-
+  !workflow {model: account.voucher, action: proforma_voucher, ref: account_voucher_voucherfordiot0}
+
+-
+  I create voucher by clicking on Create button
+-
+  !workflow {model: account.voucher, action: proforma_voucher, ref: account_voucher_voucherfordiot0}
+-
+  I clicked on Validate Button
+-
+  !assert {model: account.voucher, id: account_voucher_voucherfordiot0}:
+    - state == 'posted'
+-
+  I check that Moves get created for this voucher
+-
+  !python {model: account.voucher}: |
+    acc_id=self.browse(cr, uid, ref('account_voucher_voucherfordiot0'))
+    assert(acc_id.move_id)
+-
+  I create a record to wizard diot.
+-
+  !record {model: account.diot.report, id: wizard_diot_test_0 , view: l10n_mx_diot_report.view_account_diot_report}:
+    company_id: base.main_company
+    entries_to_print: all
+-
+  I create file of DIOT and Check Data of Diot
+-
+  !python {model: account.diot.report}: |
+    import base64
+    import time
+    
+    account_period_obj = self.pool.get('account.period')
+    period_id = account_period_obj.search(cr, uid,[('name','like','%'+time.strftime('%m/%Y')+'%')])
+    data_of_diot = {}
+    if period_id:
+        self.write(cr, uid, [ref('wizard_diot_test_0')], {'period_id' : period_id[0]}) 
+        create_id = self.create_diot(cr, uid, [ref('wizard_diot_test_0')], context=context)
+        data = self.read(cr, uid,[create_id.get('res_id')],['file_csv'])
+        if data:
+            data_split = base64.decodestring(self.read(cr, uid,[create_id.get('res_id')],['file'])[0].get('file')).split('|')
+            titles = ['type_of_third', 'type_of_operation',
+            'vat', 'number_id_fiscal', 'foreign_name',
+            'country_of_residence', 'nationality',
+            'value_of_acts_or_activities_paid_at_the_rate_of_16%',
+            'value_of_acts_or_activities_paid_at_the_rate_of_15%',
+            'amount_of_non-creditable_VAT_paid_at_the_rate_of_16%',
+            'value_of_acts_or_activities_paid_at_the_rate_of_11%_VAT',
+            'value_of_acts_or_activities_paid_at_the_rate_of_10%_VAT',
+            'amount_of_non-creditable_VAT_paid_at_the_rate_of_11%',
+            'value_of_acts_or_activities_paid_on_import_of_goods_and_'
+            'services_at_the_rate_of_16%_VAT',
+            'amount_of_non-creditable_VAT_paid_by_imports_at_the_rate_of_16%',
+            'value_of_acts_or_activities_paid_on_import_of_goods_and_'
+            'services_at_the_rate_of_11%_VAT',
+            'amount_of_non-creditable_VAT_paid_by_imports_at_the_rate_of_11%',
+            'value_of_acts_or_activities_paid_on_import_of_goods_and_'
+            'services_for_which_VAT_is_not_pay_(exempt)',
+            'value_of_the_other_acts_or_activities_paid_at_the_rate_of_0%_VAT',
+            'value_of_acts_or_activities_paid_by_those_who_do_not_pay_the_'
+            'VAT_(Exempt)',
+            'tax Withheld by the taxpayer',
+            'VAT for returns, discounts and rebates on purchases',
+            'show_pipe', ]
+            i = 0
+            for title in titles:
+                data_of_diot.update({title : data_split[i]})
+                i+=1
+            
+            assert int(data_of_diot.get('value_of_acts_or_activities_paid_at_the_rate_of_16%')) == 100 , 'Wrong, Valor de los actos o actividades pagados a la tasa del 15% ó 16% de IVA is not 100'
+            assert int(data_of_diot.get('value_of_acts_or_activities_paid_at_the_rate_of_11%_VAT')) == 100 , 'Wrong, Valor de los actos o actividades pagados a la tasa del 10% u 11% de IVA is not 100'
+            assert int(data_of_diot.get('value_of_the_other_acts_or_activities_paid_at_the_rate_of_0%_VAT')) == 100 , 'Wrong, Valor de los demás actos o actividades pagados a la tasa del 0% de IVA is not 100'
+            assert int(data_of_diot.get('value_of_acts_or_activities_paid_by_those_who_do_not_pay_the_VAT_(Exempt)')) == 100 , 'Wrong, Valor de los actos o actividades pagados por los que no se pagará el IVA (Exentos) is not100'
+            assert int(data_of_diot.get('tax Withheld by the taxpayer')) == 11 , 'Wrong, IVA Retenido por el contribuyente is not 11'
