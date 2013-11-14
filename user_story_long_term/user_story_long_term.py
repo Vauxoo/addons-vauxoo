@@ -224,17 +224,16 @@ class user_story_user_allocation(osv.Model):
 
 class user_story(osv.Model):
     _inherit = "user.story"
-
-#    def _phase_count(self, cr, uid, ids, field_name, arg, context=None):
-#        res = dict.fromkeys(ids, 0)
-#        phase_ids = self.pool.get('project.phase').search(cr, uid, [('project_id', 'in', ids)])
-#        for phase in self.pool.get('project.phase').browse(cr, uid, phase_ids, context):
-#            res[phase.project_id.id] += 1
-#        return res
+    def _phase_count(self, cr, uid, ids, field_name, arg, context=None):
+        res = dict.fromkeys(ids, 0)
+        phase_ids = self.pool.get('user.story.phase').search(cr, uid, [('user_story_id', 'in', ids)])
+        for phase in self.pool.get('user.story.phase').browse(cr, uid, phase_ids, context):
+            res[phase.user_story_id.id] += 1
+        return res
 
     _columns = {
         'phase_ids': fields.one2many('user.story.phase', 'user_story_id', "User Story Phases"),
-        #'phase_count': fields.function(_phase_count, type='integer', string="Open Phases"),
+        'phase_count': fields.function(_phase_count, type='integer', string="Open Phases"),
     }
 
 #    def schedule_phases(self, cr, uid, ids, context=None):
