@@ -31,7 +31,7 @@ class res_partner(osv.Model):
     _inherit = 'res.partner'
 
     def _get_base_vat_split(self, cr, uid, ids, field_names=None, arg=False, context=None):
-        if not context:
+        if context is None:
             context = {}
         res = {}
         for partner in self.browse(cr, uid, ids, context=context):

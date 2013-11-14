@@ -60,7 +60,7 @@ class account_invoice(osv.Model):
     #_order = 'invoice_datetime asc'
 
     def _get_date_invoice_tz(self, cr, uid, ids, field_names=None, arg=False, context=None):
-        if not context:
+        if context is None:
             context = {}
         res = {}
         if release.version >= '6':

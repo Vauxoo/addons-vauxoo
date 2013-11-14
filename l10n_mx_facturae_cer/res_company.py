@@ -255,7 +255,7 @@ class res_company(osv.Model):
         return res
 
     def _get_current_certificate(self, cr, uid, ids, field_names=False, arg=False, context=None):
-        if not context:
+        if context is None:
             context = {}
         res = {}.fromkeys(ids, False)
         certificate_obj = self.pool.get('res.company.facturae.certificate')

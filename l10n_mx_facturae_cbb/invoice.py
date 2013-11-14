@@ -42,7 +42,7 @@ class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
     def _get_fname_invoice(self, cr, uid, ids, field_names=None, arg=False, context=None):
-        if not context:
+        if context is None:
             context = {}
         res = {}
         sequence_obj = self.pool.get('ir.sequence')
@@ -111,7 +111,7 @@ class account_invoice(osv.Model):
         return (True, ret_file_name)
 
     def create_report_pdf(self, cr, uid, ids, context=None):
-        if not context:
+        if context is None:
             context = {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         (fileno, fname) = tempfile.mkstemp(

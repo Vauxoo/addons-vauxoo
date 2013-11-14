@@ -122,7 +122,7 @@ class ir_sequence(osv.Model):
         return super(ir_sequence, self).copy(cr, uid, id, default, context=context)
 
     def _get_current_approval(self, cr, uid, ids, field_names=None, arg=False, context=None):
-        if not context:
+        if context is None:
             context = {}
         res = {}
         for id in ids:
