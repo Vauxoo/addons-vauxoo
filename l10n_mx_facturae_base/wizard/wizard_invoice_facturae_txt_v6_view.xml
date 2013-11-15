@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_wizard_invoice_facturae_txt_v6_form" model="ir.ui.view">
+            <field name="name">view.wizard.invoice.facturae.txt.v6.form</field>
+            <field name="model">wizard.invoice.facturae.txt.v6</field>
+            <field name="arch" type="xml">
+                <form string="Electronic Invoice - Monthly Report TXT">
+                    <separator string="FILTERS FOR EXTRACT INVOICES" colspan="4"/>
+                    <separator string="Filter by month" colspan="4"/>
+                    <field name="month"/>
+                    <field name="year"/>
+                    <separator string="Filter by dates" colspan="4"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <separator string="INVOICES" colspan="4"/>
+                    <field name="invoice_ids" colspan="4"/>
+                    <button special="cancel" string="Cancel" colspan="2" icon="gtk-cancel"/>
+                    <button name="get_invoices_date" string="Get invoices by filter of Dates" type="object" colspan="1" icon="gtk-execute"/>
+                    <button name="get_invoices_month" string="Get invoices by filter of Month" type="object" colspan="1" icon="gtk-execute"/>
+                    <button name="create_facturae_txt" string="Generate Report Monthly TXT" colspan="2" type="object" icon="gtk-ok"/>
+                </form>
+            </field>
+        </record>
+        <record id="action_wizard_invoice_facturae_txt" model="ir.actions.act_window">
+             <field name="name">Electronic Invoice Report Monthly TXT</field>
+             <field name="res_model">wizard.invoice.facturae.txt.v6</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">tree,form</field>
+             <field name="view_id" ref="view_wizard_invoice_facturae_txt_v6_form"/>
+             <!--<field name="context">{'record_id':active_id}</field>-->
+             <field name="context">{}</field>
+             <field name="target">new</field>
+       </record>
+        <menuitem id="menu_wizard_invoice_facturae_txt_v6"
+            name="Electronic Invoice Report Monthly TXT" parent="account.menu_finance_receivables"
+            action="action_wizard_invoice_facturae_txt"
+            sequence="150"
+            groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user" 
+            
+        />
+
+        <record id="view_wizard_invoice_facturae_txt_v6_form2" model="ir.ui.view">
+            <field name="name">view.wizard.invoice.facturae.txt.v6.v2.form</field>
+            <field name="model">wizard.invoice.facturae.txt.v6</field>
+            <field name="arch" type="xml">
+                <form string="FILE TXT FOR THE SAT">
+                    <newline/>
+                    <separator/>
+                    <newline/>
+                    <field name="facturae_fname" invisible="1"/>
+                    <field name="facturae" filename="facturae_fname" nolabel="1"/>
+                    <newline/>
+                    <separator string="IMPORTANT"/>
+                    <newline/>
+                    <group  rowspan="10" colspan="4">
+                        <field name="note" readonly="1" nolabel="1"/>
+                        <newline/>
+                        <button special="cancel" string="Ok" icon="terp-dialog-close" default_focus="1"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

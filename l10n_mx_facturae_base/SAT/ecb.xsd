@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ecb="http://www.sat.gob.mx/ecb" targetNamespace="http://www.sat.gob.mx/ecb" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="EstadoDeCuentaBancario">
+		<xs:annotation>
+			<xs:documentation>Nodo opcional para recibir la información aplicable al estado de cuenta bancario a que hace referencia el artículo 29-C del CFF.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Movimientos">
+					<xs:annotation>
+						<xs:documentation>Nodo requerido para enlistar los conceptos cubiertos por Estado de Cuenta Bancario.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:choice maxOccurs="unbounded">
+							<xs:element name="MovimientoECB">
+								<xs:annotation>
+									<xs:documentation>Nodo requerido para expresar las operaciones a ser detalladas en el estado de cuenta bancario que no cuentan con un RFC</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="fecha" use="required">
+										<xs:annotation>
+											<xs:documentation>Atributo requerido únicamente para la expresión de la fecha (mes/día) de la operación realizada por el cuentahabiente.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:dateTime">
+												<xs:whiteSpace value="collapse"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="referencia" use="optional">
+										<xs:annotation>
+											<xs:documentation>Atributo opcional para indicar el número de referencia o autorización con el que se identifica la operación realizada por el cuentahabiente.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:whiteSpace value="collapse"/>
+												<xs:minLength value="1"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="descripcion" use="required">
+										<xs:annotation>
+											<xs:documentation>Atributo requerido para precisar la descripción del bien o servicio cubierto por el cargo a la cuenta bancaria.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:minLength value="1"/>
+												<xs:whiteSpace value="collapse"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="importe" use="required">
+										<xs:annotation>
+											<xs:documentation>Atributo requerido para indicar el importe de la operación realizada por el cuentahabiente por medio del instrumento bancario.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:decimal">
+												<xs:whiteSpace value="collapse"/>
+												<xs:fractionDigits value="2"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="moneda" use="optional">
+										<xs:annotation>
+											<xs:documentation>Atributo opcional para indicar en que moneda se realizó la operación. Si no se especifica dato alguno, se entenderá que el importe está expresado en moneda nacional. </xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:whiteSpace value="collapse"/>
+												<xs:minLength value="1"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="saldoInicial" use="optional">
+										<xs:annotation>
+											<xs:documentation>Atributo opcional para indicar el saldo inicial del instrumento bancario del cuentahabiente.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:decimal">
+												<xs:whiteSpace value="collapse"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="saldoAlCorte" use="optional">
+										<xs:annotation>
+											<xs:documentation>Atributo opcional para indicar el saldo al corte del instrumento bancario del cuentahabiente.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:decimal">
+												<xs:whiteSpace value="collapse"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="MovimientoECBFiscal">
+								<xs:annotation>
+									<xs:documentation>Nodo requerido para expresar las operaciones a ser detalladas en el estado de cuenta bancario con RFC  con efecto fiscal conforme al artículo 29-C del CFF.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="fecha" use="required">
+										<xs:annotation>
+											<xs:documentation>Atributo requerido únicamente para la expresión de la fecha (mes/día) de la operación realizada por el cuentahabiente.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:dateTime">
+												<xs:whiteSpace value="collapse"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="referencia" use="optional">
+										<xs:annotation>
+											<xs:documentation>Atributo opcional para indicar el número de referencia o autorización con el que se identifica la operación realizada por el cuentahabiente.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:whiteSpace value="collapse"/>
+												<xs:minLength value="1"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="descripcion" use="required">
+										<xs:annotation>
+											<xs:documentation>Atributo requerido para precisar la descripción del bien o servicio cubierto por el cargo a la cuenta bancaria.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:minLength value="1"/>
+												<xs:whiteSpace value="collapse"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="RFCenajenante" use="required">
+										<xs:annotation>
+											<xs:documentation>Atributo requerido para indicar el RFC del enajenante, sin el cual no se puede acreditar la compra de bienes o servicios por medio del estado de cuenta bancario.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:whiteSpace value="collapse"/>
+												<xs:minLength value="12"/>
+												<xs:maxLength value="13"/>
+												<xs:pattern value="[A-Z,Ñ,&amp;]{3,4}[0-9]{2}[0-1][0-9][0-3][0-9][A-Z,0-9]{2}[0-9,A]"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="Importe" use="required">
+										<xs:annotation>
+											<xs:documentation>Atributo requerido para indicar el importe de la operación realizada por el cuentahabiente por medio del instrumento bancario.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:decimal">
+												<xs:whiteSpace value="collapse"/>
+												<xs:fractionDigits value="2"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="moneda" use="optional">
+										<xs:annotation>
+											<xs:documentation>Atributo opcional para indicar en que moneda se realizó la operación. Si no se especifica dato alguno, se entenderá que el importe está expresado en moneda nacional. </xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:whiteSpace value="collapse"/>
+												<xs:minLength value="1"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="saldoInicial" use="optional">
+										<xs:annotation>
+											<xs:documentation>Atributo opcional para indicar el saldo inicial del instrumento bancario del cuentahabiente.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:decimal">
+												<xs:whiteSpace value="collapse"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="saldoAlCorte" use="optional">
+										<xs:annotation>
+											<xs:documentation>Atributo opcional para indicar el saldo al corte del instrumento bancario del cuentahabiente.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:decimal">
+												<xs:whiteSpace value="collapse"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="version" use="required" fixed="1.0">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido con valor prefijado a 1.0 que indica la versión del estándar bajo el que se encuentra expresado el complemento al comprobante.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="numeroCuenta" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para indicar el número de cuenta del producto bancario.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="nombreCliente" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para indicar el nombre del cuentahabiente de la institución bancaria.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="periodo" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para indicar periodo de los cargos o abonos al instrumento bancario.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="sucursal" use="optional">
+				<xs:annotation>
+					<xs:documentation>Atributo opcional para indicar la sucursal a la cual pertenece el cuentahabiente.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="collapse"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

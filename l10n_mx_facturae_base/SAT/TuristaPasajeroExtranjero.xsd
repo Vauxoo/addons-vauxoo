@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:tpe="http://www.sat.gob.mx/TuristaPasajeroExtranjero" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.sat.gob.mx/TuristaPasajeroExtranjero" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="TuristaPasajeroExtranjero">
+		<xs:annotation>
+			<xs:documentation>Complemento opcional al Comprobante Fiscal Digital (CFD) y Comprobante Fiscal Digital a través de Internet (CFDI) para el manejo de datos de TuristaPasajeroExtranjero.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="datosTransito">
+					<xs:annotation>
+						<xs:documentation>Elemento requerido para expresar la información de la operación realizada</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="Via" use="required">
+							<xs:annotation>
+								<xs:documentation>Atributo requerido para expresar si es vía “Aérea”, “Marítima” o "Terrestre"</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="Aérea"/>
+									<xs:enumeration value="Marítima"/>
+									<xs:enumeration value="Terrestre"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="TipoId" use="required">
+							<xs:annotation>
+								<xs:documentation>Atributo requerido para la expresión del número de pasaporte.</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="1"/>
+									<xs:whiteSpace value="collapse"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="NumeroId" use="required">
+							<xs:annotation>
+								<xs:documentation>Atributo requerido para expresar el número de identificación (pasaporte, visa, etc.)</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="1"/>
+									<xs:whiteSpace value="collapse"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="Nacionalidad" use="required">
+							<xs:annotation>
+								<xs:documentation>Atributo requerido para expresar la nacionalidad del turista.</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="1"/>
+									<xs:whiteSpace value="collapse"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="EmpresaTransporte" use="required">
+							<xs:annotation>
+								<xs:documentation>Atributo requerido para señalar la empresa de transporte que lo ingresa a territorio nacional o lo traslada de salida.</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:whiteSpace value="collapse"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="IdTransporte" type="xs:string" use="optional">
+							<xs:annotation>
+								<xs:documentation>Atributo opcional para expresar el identificador del medio de transporte usado, ejemplo: número de vuelo.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="version" type="xs:string" use="required" fixed="1.0">
+				<xs:annotation>
+					<xs:documentation>Versión del complemento para TuristaPasajeroExtranjero.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="fechadeTransito" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para expresar la fecha y hora del Arribo o Salida del medio de transporte utilizado. Se expresa en la forma aaaa-mm-ddThh:mm:ss, de acuerdo con la especificación ISO 8601.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:dateTime">
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="tipoTransito" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para incorporar la operación realizada: Arribo ó Salida.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Arribo"/>
+						<xs:enumeration value="Salida"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
