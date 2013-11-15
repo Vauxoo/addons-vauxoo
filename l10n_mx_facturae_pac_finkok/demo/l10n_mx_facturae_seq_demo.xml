@@ -1,9 +1,9 @@
 <?xml version="1.0" ?>
 <openerp>
     <data noupdate="1">
-        <record id="l10n_mx_cfdi_pac_sf_seq_0" model="ir.sequence">
+        <record id="l10n_mx_cfdi_pac_finkok_seq_0" model="ir.sequence">
             <field name="company_id" ref="base.main_company"/>
-            <field name="name">MX Sequence CFDI SF</field>
+            <field name="name">MX Sequence CFDI Finkok</field>
             <field name="active" eval="True"/>
             <field name="padding">0</field>
             <field name="number_next">1</field>
@@ -11,22 +11,22 @@
             <field name="implementation">no_gap</field>
         </record>
 
-        <record id="l10n_mx_cfdi_pac_sf_approval_0" model="ir.sequence.approval">
+        <record id="l10n_mx_cfdi_pac_finkok_approval_0" model="ir.sequence.approval">
             <field name="company_id" ref="base.main_company"/>
-            <field name="sequence_id" ref="l10n_mx_cfdi_pac_sf_seq_0"/>
+            <field name="sequence_id" ref="l10n_mx_cfdi_pac_finkok_seq_0"/>
             <field name="approval_number">12345</field>
-            <field name="serie">MXCFDISF</field>
+            <field name="serie">MXCFDIFINKOK</field>
             <field name="approval_year" eval="time.strftime('%Y')"/>
             <field name="number_start">1</field>
             <field name="number_end">9999</field>
-            <field name="type">cfdi32_pac_sf</field>
+            <field name="type">cfdi32_pac_finkok</field>
         </record>
 
-        <record id="l10n_mx_cfdi_pac_sf_journal_0" model="account.journal">
+        <record id="l10n_mx_cfdi_pac_finkok_journal_0" model="account.journal">
             <field name="company_id" ref="base.main_company"/>
-            <field name="sequence_id" ref="l10n_mx_cfdi_pac_sf_seq_0"/>
-            <field name="name">MX CFDI SF Journal</field>
-            <field name="code">CFDI</field>
+            <field name="sequence_id" ref="l10n_mx_cfdi_pac_finkok_seq_0"/>
+            <field name="name">MX CFDI FINKOK Journal</field>
+            <field name="code">CFDIF</field>
             <field name="type">sale</field>
         </record>
     </data>

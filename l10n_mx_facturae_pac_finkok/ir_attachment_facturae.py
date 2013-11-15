@@ -49,12 +49,18 @@ from pytz import timezone
 import pytz
 import time
 from openerp import tools
-from suds.client import Client
+import logging
+_logger = logging.getLogger(__name__)
 try:
     from SOAPpy import WSDL
 except:
-    print "Package SOAPpy missed"#TODO: Warning message
-    pass
+    #print "Package SOAPpy missed"#TODO: Warning message
+    _logger.error('Install SOAPpy "sudo apt-get install python-soappy" to use l10n_mx_facturae_pac_finkok module.')
+    #pass
+try:
+    from suds.client import Client
+except:
+    _logger.error('Install suds to use l10n_mx_facturae_pac_finkok module.')
 
 class ir_attachment_facturae_mx(osv.Model):
     _inherit = 'ir.attachment.facturae.mx'
@@ -63,7 +69,7 @@ class ir_attachment_facturae_mx(osv.Model):
         types = super(ir_attachment_facturae_mx, self)._get_type(
             cr, uid, ids, context=context)
         types.extend([
-            ('cfdi32_pac_sf', 'CFDI 3.2 Solución Factible'),
+            ('cfdi32_pac_finkok', 'CFDI 3.2 Solución Factible'),
         ])
         return types
     
@@ -71,14 +77,14 @@ class ir_attachment_facturae_mx(osv.Model):
         factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_sign()
         if factura_mx_type__fc == None:
             factura_mx_type__fc = {}
-        factura_mx_type__fc.update({'cfdi32_pac_sf': self._upload_ws_file})
+        factura_mx_type__fc.update({'cfdi32_pac_finkok': self._upload_ws_file})
         return factura_mx_type__fc
     
     def get_driver_fc_cancel(self):
         factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_cancel()
         if factura_mx_type__fc == None:
             factura_mx_type__fc = {}
-        factura_mx_type__fc.update({'cfdi32_pac_sf': self.sf_cancel})
+        factura_mx_type__fc.update({'cfdi32_pac_finkok': self.sf_cancel})
         return factura_mx_type__fc
         
     _columns = {
@@ -186,6 +192,7 @@ class ir_attachment_facturae_mx(osv.Model):
             invoice_ids = [invoice.id]
             file = False
             msg = ''
+            folio_fiscal = ''
             cfdi_xml = False
             pac_params_ids = pac_params_obj.search(cr, uid, [
                 ('method_type', '=', 'pac_sf_firmar'), (
@@ -198,28 +205,31 @@ class ir_attachment_facturae_mx(osv.Model):
                 password = pac_params.password
                 wsdl_url = pac_params.url_webservice
                 namespace = pac_params.namespace
-                url = 'https://solucionfactible.com/ws/services/Timbrado'
-                testing_url = 'http://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl'
+                #agregar otro campo para la URL de testing y poder validar sin cablear
+                url_sf = 'https://solucionfactible.com/ws/services/Timbrado'
+                testing_url_sf = 'http://testing.solucionfactible.com/ws/services/Timbrado'
+                url_finkok = 'http://facturacion.finkok.com/servicios/soap/stamp.wsdl'
+                testing_url_finkok = 'http://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl'
                 #~ Dir_pac=http://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl
                 #~ usuario=isaac@vauxoo.com
                 #Contraseña=1Q2W3E4R5t_
-                if (wsdl_url == url) or (wsdl_url == testing_url):
+                if (wsdl_url == url_finkok) or (wsdl_url == testing_url_finkok):
                     pass
                 else:
                     raise osv.except_osv(_('Warning'), _('Web Service URL \
                         o PAC incorrect'))
-                #~ if namespace == 'http://timbrado.ws.cfdi.solucionfactible.com':
+                #~ if namespace == 'http://facturacion.finkok.com/stamp':
                     #~ pass
                 #~ else:
-                    #~ raise osv.except_osv(_('Warning'), _(
-                        #~ 'Namespace of PAC incorrect'))
-                if 'demo' in wsdl_url:
+                    #~ raise osv.except_osv(_('Warning'), _('Namespace of PAC incorrect'))
+                if 'demo' or 'testing' in wsdl_url:
                     msg += _(u'WARNING, SIGNED IN TEST!!!!\n\n')
-                wsdl_client = Client(wsdl_url)
-                if True:  # if wsdl_client:
+                wsdl_client = Client(wsdl_url,cache=None)
+                if True: # if wsdl_client:
                     file_globals = invoice_obj._get_file_globals(
                         cr, uid, invoice_ids, context=context)
                     fname_cer_no_pem = file_globals['fname_cer']
+                    #cerCSD = open(fname_cer_no_pem).read().encode('base64') #Mejor forma de hacerlo
                     cerCSD = fname_cer_no_pem and base64.encodestring(
                         open(fname_cer_no_pem, "r").read()) or ''
                     fname_key_no_pem = file_globals['fname_key']
@@ -234,57 +244,37 @@ class ir_attachment_facturae_mx(osv.Model):
                     #~ wsdl_client.soapproxy.config.debug = 0
                     #~ wsdl_client.soapproxy.config.dict_encoding = 'UTF-8'
                     resultado = wsdl_client.service.stamp(*params)
-                    if resultado.Incidencias or None:
-                        
-                        raise osv.except_osv(_('Warning'))
-                    htz = int(invoice_obj._get_time_zone(
+                    print "inicidencias111\n", resultado.Incidencias.Incidencia
+                    if not resultado.Incidencias or None:
+                        msg += _(tools.ustr(resultado.CodEstatus))
+                        folio_fiscal = resultado.UUID or False
+                        msg +=" Folio Fisca l: " + resultado.UUID + "."
+                        htz = int(invoice_obj._get_time_zone(
                         cr, uid, [ir_attachment_facturae_mx_id.invoice_id.id], context=context))
-                    mensaje = _(tools.ustr(resultado.CodEstatus))
-                    #~ resultados_mensaje = resultado['resultados'] and \
-                        #~ resultado['resultados']['mensaje'] or ''
-                    folio_fiscal = resultado.UUID
-                    #~ resultado['resultados']['uuid'] or ''
-                    if codigo_timbrado == '311' or codigo_validacion == '311':
-                        raise osv.except_osv(_('Warning'), _(
-                            'Unauthorized.\nCode 311'))
-                    elif codigo_timbrado == '312' or codigo_validacion == '312':
-                        raise osv.except_osv(_('Warning'), _(
-                            'Failed to consult the SAT.\nCode 312'))
-                    elif codigo_timbrado == '200' and codigo_validacion == '200':
-                        fecha_timbrado = resultado[
-                            'resultados']['fechaTimbrado'] or False
+                        fecha_timbrado = resultado.Fecha or False
                         fecha_timbrado = fecha_timbrado and time.strftime(
-                            '%Y-%m-%d %H:%M:%S', time.strptime(
-                                fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
+                                '%Y-%m-%d %H:%M:%S', time.strptime(
+                                    fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
                         fecha_timbrado = fecha_timbrado and datetime.strptime(
-                            fecha_timbrado, '%Y-%m-%d %H:%M:%S') + timedelta(
-                                hours=htz) or False
+                            fecha_timbrado, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz) or False
                         cfdi_data = {
-                            'cfdi_cbb': resultado['resultados']['qrCode'] or False,  # ya lo regresa en base64
-                            'cfdi_sello': resultado['resultados'][
-                            'selloSAT'] or False,
-                            'cfdi_no_certificado': resultado['resultados'][
-                            'certificadoSAT'] or False,
-                            'cfdi_cadena_original': resultado['resultados'][
-                            'cadenaOriginal'] or False,
-                            'cfdi_fecha_timbrado': fecha_timbrado,
-                            'cfdi_xml': base64.decodestring(resultado[
-                            'resultados']['cfdiTimbrado'] or ''),  # este se necesita en uno que no es base64
-                            'cfdi_folio_fiscal': resultado['resultados']['uuid'] or '',
+                            #'cfdi_cbb': resultado['resultados']['qrCode'] or False,  # ya lo regresa en base64
+                            'cfdi_sello': resultado.SatSeal or False,
+                            'cfdi_no_certificado': resultado.NoCertificadoSAT or False,
+                            #'cfdi_cadena_original': resultado   or False,
+                            'cfdi_fecha_timbrado': resultado.Fecha or False,
+                            'cfdi_xml': resultado.xml or '',  # este se necesita en uno que no es base64
+                            'cfdi_folio_fiscal': folio_fiscal
                         }
-                        msg += mensaje + "." + resultados_mensaje + \
-                            " Folio Fiscal: " + folio_fiscal + "."
                         msg += _(
                                 u"\nMake Sure to the file really has generated correctly to the SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html")
                         if cfdi_data.get('cfdi_xml', False):
+                            #cambiar el link
                             url_pac = '</"%s"><!--Para validar el XML CFDI puede descargar el certificado del PAC desde la siguiente liga: https://solucionfactible.com/cfdi/00001000000102699425.zip-->' % (
                                 comprobante)
                             cfdi_data['cfdi_xml'] = cfdi_data[
                                 'cfdi_xml'].replace('</"%s">' % (comprobante), url_pac)
-                            file = base64.encodestring(
-                                cfdi_data['cfdi_xml'] or '')
-                            # invoice_obj.cfdi_data_write(cr, uid, [invoice.id],
-                            # cfdi_data, context=context)
+                            file = base64.encodestring(cfdi_data['cfdi_xml'] or '')
                             cfdi_xml = cfdi_data.pop('cfdi_xml')
                         if cfdi_xml:
                             invoice_obj.write(cr, uid, [invoice.id], cfdi_data)
@@ -292,8 +282,17 @@ class ir_attachment_facturae_mx(osv.Model):
                         else:
                             msg += _(u"Can't extract the file XML of PAC")
                     else:
-                        raise orm.except_orm(_('Warning'), _('Stamped Code: %s.-Validation code %s.-Folio Fiscal: %s.-Stamped Message: %s.-Validation Message: %s.') % (
-                            codigo_timbrado, codigo_validacion, folio_fiscal, mensaje, resultados_mensaje))
+                        inicidencias = resultado.Incidencias.Incidencia[0]
+                        IdIncidencia = resultado.Incidencias.Incidencia[0]['IdIncidencia']
+                        CodigoError = resultado.Incidencias.Incidencia[0]['CodigoError']
+                        MensajeIncidencia = resultado.Incidencias.Incidencia[0]['MensajeIncidencia']
+                        NoCertificadoPac = resultado.Incidencias.Incidencia[0]['NoCertificadoPac']
+                        RfcEmisor = resultado.Incidencias.Incidencia[0]['RfcEmisor']
+                        WorkProcessId = resultado.Incidencias.Incidencia[0]['WorkProcessId']
+                        FechaRegistro = resultado.Incidencias.Incidencia[0]['FechaRegistro']
+                        raise orm.except_orm(_('Warning'), _('Inicidencias: %s.') % (MensajeIncidencia))
+                else:
+                    raise orm.except_orm(_('Warning'), _('Not conexión'))
             else:
                 msg += 'Not found information from web services of PAC, verify that the configuration of PAC is correct'
                 raise osv.except_osv(_('Warning'), _(

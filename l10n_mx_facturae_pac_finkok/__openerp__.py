@@ -51,9 +51,9 @@ Ubuntu Package Depends:
     ],
     "data" : [
         #"security/l10n_mx_facturae_pac_sf_security.xml",
-        "l10n_mx_facturae_pac_sf_report.xml",
-        "wizard/wizard_cancel_invoice_pac_sf_view.xml",
-        "wizard/wizard_export_invoice_pac_sf_view_v6.xml",
+        #"l10n_mx_facturae_pac_sf_report.xml",
+        #wizard/wizard_cancel_invoice_pac_sf_view.xml",
+        #wizard/wizard_export_invoice_pac_sf_view_v6.xml",
     ],
     "test" : [
         "test/account_invoice_cfdi_pac_sf.yml",
