@@ -36,7 +36,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["view/view.xml",
-                    "view/actions.xml"],
+                    ],
     "test": [],
     "installable" : True,
     "active" : False,
