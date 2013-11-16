@@ -8,55 +8,55 @@ msgstr ""
 "Project-Id-Version: addons-vauxoo\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-11-07 01:06+0000\n"
-"PO-Revision-Date: 2013-11-07 03:36+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2013-11-15 21:18+0000\n"
+"Last-Translator: Saul Gonzalez <saul@vauxoo.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-10 06:48+0000\n"
-"X-Generator: Launchpad (build 16820)\n"
+"X-Launchpad-Export-Date: 2013-11-16 06:26+0000\n"
+"X-Generator: Launchpad (build 16831)\n"
 
 #. module: user_story
 #: view:user.story:0
 msgid "4.- Aceptability Criteria"
-msgstr ""
+msgstr "4.- Criterio de Aceptabilidad"
 
 #. module: user_story
 #: field:acceptability.criteria,name:0
 #: field:user.story,name:0
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 #. module: user_story
 #: model:mail.message.subtype,description:user_story.mt_task_started
 msgid "Task started"
-msgstr ""
+msgstr "Tarea iniciada"
 
 #. module: user_story
 #: view:user.story:0
 msgid "Group By..."
-msgstr ""
+msgstr "Agrupar por ..."
 
 #. module: user_story
 #: view:user.story:0
 msgid "Add a asumptions here ..."
-msgstr ""
+msgstr "Agregue un suposición aqui..."
 
 #. module: user_story
 #: view:user.story:0
 msgid "Progress"
-msgstr ""
+msgstr "Progreso"
 
 #. module: user_story
 #: view:user.story:0
 msgid "5.- Conclusion of analysis"
-msgstr ""
+msgstr "5.- Conclusión del análisis"
 
 #. module: user_story
 #: field:user.story,message_unread:0
 msgid "Unread Messages"
-msgstr ""
+msgstr "Mensajes no Leídos"
 
 #. module: user_story
 #: field:acceptability.criteria,accep_crit_id:0
@@ -75,42 +75,42 @@ msgstr ""
 #: view:user.story:0
 #: field:user.story,priority_level:0
 msgid "Priority Level"
-msgstr ""
+msgstr "Nivel de Prioridad"
 
 #. module: user_story
 #: view:user.story:0
 #: field:user.story,accep_crit_ids:0
 msgid "Acceptability Criteria"
-msgstr ""
+msgstr "Criterio de Aceptabilidad"
 
 #. module: user_story
 #: view:user.story:0
 msgid "Add a description here ..."
-msgstr ""
+msgstr "Agregue una descripción aquí..."
 
 #. module: user_story
 #: model:ir.model,name:user_story.model_project_task
 #: view:user.story:0
 msgid "Task"
-msgstr ""
+msgstr "Tarea"
 
 #. module: user_story
 #: field:acceptability.criteria,scenario:0
 #: view:user.story:0
 msgid "Scenario"
-msgstr ""
+msgstr "Escenario"
 
 #. module: user_story
 #: field:user.story,message_ids:0
 msgid "Messages"
-msgstr ""
+msgstr "Mensajes"
 
 #. module: user_story
 #: model:ir.model,name:user_story.model_project_project
 #: view:user.story:0
 #: field:user.story,project_id:0
 msgid "Project"
-msgstr ""
+msgstr "Proyecto"
 
 #. module: user_story
 #: help:user.story,user_execute_id:0
@@ -119,16 +119,19 @@ msgid ""
 "other human capital or running it by itself. For delegate work should "
 "monitor the proper implementation of associated activities."
 msgstr ""
+"La persona responsable de la historia del usuario toma lugar, bien delegando "
+"trabajo a otro capital humano o ejecutandolo el mismo. Para delegar trabajo "
+"se debe monitorear la implementación apropiada de las actividades asociadas."
 
 #. module: user_story
 #: field:user.story,user_id:0
 msgid "Responsible Supervisor"
-msgstr ""
+msgstr "Supervisor Responsable"
 
 #. module: user_story
 #: help:user.story,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "Si esta marcado, los nuevos mensajes requieren su atención."
 
 #. module: user_story
 #: help:user.story,message_summary:0
@@ -136,6 +139,9 @@ msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
 msgstr ""
+"Mantiene el resumen del \"chatter\" (numero de mensajes,... ). Este resumen "
+"se encuentra directamente en formato html con el propósito de ser insertado "
+"en vistas kanban."
 
 #. module: user_story
 #: view:user.story:0
@@ -146,47 +152,47 @@ msgstr ""
 #: view:project.task:0
 #: field:user.story,planned_hours:0
 msgid "Planned Hours"
-msgstr ""
+msgstr "Horas Estimadas"
 
 #. module: user_story
 #: model:ir.model,name:user_story.model_acceptability_criteria
 msgid "acceptability.criteria"
-msgstr ""
+msgstr "acceptability.criteria"
 
 #. module: user_story
 #: model:mail.message.subtype,description:user_story.mt_task_new
 msgid "Task created"
-msgstr ""
+msgstr "Tarea creada"
 
 #. module: user_story
 #: selection:user.story,priority_level:0
 msgid "Priority"
-msgstr ""
+msgstr "Prioridad"
 
 #. module: user_story
 #: field:user.story,state:0
 msgid "State"
-msgstr ""
+msgstr "Estado"
 
 #. module: user_story
 #: field:user.story,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "Seguidores"
 
 #. module: user_story
 #: view:project.project:0
 msgid "Add Description .."
-msgstr ""
+msgstr "Agregue descripción..."
 
 #. module: user_story
 #: selection:user.story,state:0
 msgid "New"
-msgstr ""
+msgstr "Nuevo"
 
 #. module: user_story
 #: view:user.story:0
 msgid "1.- Title of the Story"
-msgstr ""
+msgstr "1.- Título de la Historia"
 
 #. module: user_story
 #: model:ir.actions.act_window,name:user_story.action_my_user_story
