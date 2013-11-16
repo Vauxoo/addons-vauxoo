@@ -235,6 +235,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     fname_key_no_pem = file_globals['fname_key']
                     keyCSD = fname_key_no_pem and base64.encodestring(
                         open(fname_key_no_pem, "r").read()) or ''
+                    #keyCSD = open(fname_key_no_pem).read().encode('base64') #Mejor forma de hacerlo
                     cfdi = base64.encodestring(xml_res_str_addenda)
                     zip = False  # Validar si es un comprimido zip, con la extension del archivo
                     contrasenaCSD = file_globals.get('password', '')
@@ -244,11 +245,11 @@ class ir_attachment_facturae_mx(osv.Model):
                     #~ wsdl_client.soapproxy.config.debug = 0
                     #~ wsdl_client.soapproxy.config.dict_encoding = 'UTF-8'
                     resultado = wsdl_client.service.stamp(*params)
-                    print "inicidencias111\n", resultado.Incidencias.Incidencia
+                    print resultado
                     if not resultado.Incidencias or None:
                         msg += _(tools.ustr(resultado.CodEstatus))
                         folio_fiscal = resultado.UUID or False
-                        msg +=" Folio Fisca l: " + resultado.UUID + "."
+                        msg +=".Folio Fiscal: " + resultado.UUID + "."
                         htz = int(invoice_obj._get_time_zone(
                         cr, uid, [ir_attachment_facturae_mx_id.invoice_id.id], context=context))
                         fecha_timbrado = resultado.Fecha or False
