@@ -4,8 +4,8 @@
         
         <record id="params_pac_sf_cancelar_test2" model="params.pac">
             <field name="method_type">pac_sf_cancelar</field>
-            <field name="url_webservice">http://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl</field>
-            <field name="namespace">http://facturacion.finkok.com/stamp</field>
+            <field name="url_webservice">http://demo-facturacion.finkok.com/servicios/soap/cancel.wsdl</field>
+            <field name="namespace">http://facturacion.finkok.com/cancel</field>
             <field name="user">isaac@vauxoo.com</field>
             <field name="password">1Q2W3E4R5t_</field>
             <field name="name">FINKOK - Cancelar - Test</field>
@@ -20,24 +20,5 @@
             <field name="name">FINKOK - Firmar - Test</field>
             <field name="certificate_link"></field>
         </record>
-        <!--
-        <record id="params_pac_sf_cancelar_prod" model="params.pac">
-            <field name="method_type">pac_sf_cancelar</field>
-            <field name="url_webservice">https://solucionfactible.com/ws/services/Timbrado?wsdl</field>
-            <field name="namespace">http://timbrado.ws.cfdi.solucionfactible.com</field>
-            <field name="user">email_de_usuario</field>
-            <field name="password">password_usuario</field>
-            <field name="name">PAC SF - Cancelar</field>
-        </record>
-        
-        <record id="params_pac_sf_firmar_prod" model="params.pac">
-            <field name="method_type">pac_sf_firmar</field>
-            <field name="url_webservice">https://solucionfactible.com/ws/services/TimbradoCFD?wsdl</field>
-            <field name="namespace">http://timbradocfd.ws.cfdi.solucionfactible.com</field>
-            <field name="user">email_de_usuario</field>
-            <field name="password">password_usuario</field>
-            <field name="name">PAC SF - Firmar</field>
-        </record>
-        -->
     </data>
 </openerp>

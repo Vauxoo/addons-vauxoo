@@ -56,7 +56,6 @@ try:
 except:
     #print "Package SOAPpy missed"#TODO: Warning message
     _logger.error('Install SOAPpy "sudo apt-get install python-soappy" to use l10n_mx_facturae_pac_finkok module.')
-    #pass
 try:
     from suds.client import Client
 except:
@@ -94,6 +93,8 @@ class ir_attachment_facturae_mx(osv.Model):
     
     def sf_cancel(self, cr, uid, ids, context=None):
         msg = ''
+        folio_cancel = ''
+        uuids=[]
         certificate_obj = self.pool.get('res.company.facturae.certificate')
         pac_params_obj = self.pool.get('params.pac')
         invoice_obj = self.pool.get('account.invoice')
@@ -106,50 +107,48 @@ class ir_attachment_facturae_mx(osv.Model):
                 ('active', '=', True),
             ], limit=1, context=context)
             pac_params_id = pac_params_ids and pac_params_ids[0] or False
+            taxpayer_id = invoice.company_id.vat or invoice.company_id.partner_id.vat or False
             if pac_params_id:
                 file_globals = invoice_obj._get_file_globals(
                     cr, uid, [invoice.id], context=context)
                 pac_params_brw = pac_params_obj.browse(
                     cr, uid, [pac_params_id], context=context)[0]
-                user = pac_params_brw.user
+                username = pac_params_brw.user
                 password = pac_params_brw.password
                 wsdl_url = pac_params_brw.url_webservice
                 namespace = pac_params_brw.namespace
-                wsdl_client = False
-                wsdl_client = WSDL.SOAPProxy(wsdl_url, namespace)
+                if 'demo' or 'testing' in wsdl_url:
+                    msg += _(u'WARNING, CANCEL IN TEST!!!!')
                 fname_cer_no_pem = file_globals['fname_cer']
-                cerCSD = fname_cer_no_pem and base64.encodestring(
-                    open(fname_cer_no_pem, "r").read()) or ''
+                cerCSD = open(fname_cer_no_pem).read().encode('base64') #Mejor forma de hacerlo
+                #~cerCSD = fname_cer_no_pem and base64.encodestring(
+                    #~open(fname_cer_no_pem, "r").read()) or ''
                 fname_key_no_pem = file_globals['fname_key']
-                keyCSD = fname_key_no_pem and base64.encodestring(
-                    open(fname_key_no_pem, "r").read()) or ''
+                keyCSD = open(fname_key_no_pem).read().encode('base64') #Mejor forma de hacerlo
+                #~keyCSD = fname_key_no_pem and base64.encodestring(
+                    #~open(fname_key_no_pem, "r").read()) or ''
                 zip = False  # Validar si es un comprimido zip, con la extension del archivo
                 contrasenaCSD = file_globals.get('password', '')
-                uuids = invoice.cfdi_folio_fiscal  # cfdi_folio_fiscal
-                params = [
-                    user, password, uuids, cerCSD, keyCSD, contrasenaCSD]
-                wsdl_client.soapproxy.config.dumpSOAPOut = 0
-                wsdl_client.soapproxy.config.dumpSOAPIn = 0
-                wsdl_client.soapproxy.config.debug = 0
-                wsdl_client.soapproxy.config.dict_encoding = 'UTF-8'
-                result = wsdl_client.cancelar(*params)
-                codigo_cancel = result['status'] or ''
-                status_cancel = result['resultados'] and result[
-                    'resultados']['status'] or ''
-                uuid_nvo = result['resultados'] and result[
-                    'resultados']['uuid'] or ''
-                mensaje_cancel = _(tools.ustr(result['mensaje']))
-                msg_nvo = result['resultados'] and result[
-                    'resultados']['mensaje'] or ''
-                status_uuid = result['resultados'] and result[
-                    'resultados']['statusUUID'] or ''
-                folio_cancel = result['resultados'] and result[
-                    'resultados']['uuid'] or ''
-                if codigo_cancel == '200' and status_cancel == '200' and\
-                        status_uuid == '201':
+                uuids.append(invoice.cfdi_folio_fiscal)
+                print uuids
+                client = Client(wsdl_url, cache=None)
+                try:
+                    params = [uuids, username, password, taxpayer_id, cerCSD, keyCSD]
+                    result = client.service.cancel(*params)
+                except Exception, e:
+                    raise orm.except_orm(_('Warning'), _(e))
+                msg += _(tools.ustr(result.CodEstatus)) or ''
+                print result
+                fecha = result.Fecha or ''
+                rfc = result.RfcEmiros or ''
+                folio = result.Folios or ''
+                acuse = result.Acuse or ''
+                estatus_uuid = result.Folios.EstatusUUID or ''
+                #print estatusuuid
+                if estatus_uuid:
                     msg +=  mensaje_cancel + _('\n- The process of cancellation\
-                    has completed correctly.\n- The uuid cancelled is:\
-                    ') + folio_cancel
+                        has completed correctly.\n- The uuid cancelled is:\
+                            ') + folio_cancel
                     invoice_obj.write(cr, uid, [invoice.id], {
                         'cfdi_fecha_cancelacion': time.strftime(
                         '%Y-%m-%d %H:%M:%S')
@@ -224,7 +223,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     #~ raise osv.except_osv(_('Warning'), _('Namespace of PAC incorrect'))
                 if 'demo' or 'testing' in wsdl_url:
                     msg += _(u'WARNING, SIGNED IN TEST!!!!\n\n')
-                wsdl_client = Client(wsdl_url,cache=None)
+                client = Client(wsdl_url, cache=None)
                 if True: # if wsdl_client:
                     file_globals = invoice_obj._get_file_globals(
                         cr, uid, invoice_ids, context=context)
@@ -244,8 +243,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     #~ wsdl_client.soapproxy.config.dumpSOAPIn = 0
                     #~ wsdl_client.soapproxy.config.debug = 0
                     #~ wsdl_client.soapproxy.config.dict_encoding = 'UTF-8'
-                    resultado = wsdl_client.service.stamp(*params)
-                    print resultado
+                    resultado = client.service.stamp(*params)
                     if not resultado.Incidencias or None:
                         msg += _(tools.ustr(resultado.CodEstatus))
                         folio_fiscal = resultado.UUID or False
@@ -291,7 +289,7 @@ class ir_attachment_facturae_mx(osv.Model):
                         RfcEmisor = resultado.Incidencias.Incidencia[0]['RfcEmisor']
                         WorkProcessId = resultado.Incidencias.Incidencia[0]['WorkProcessId']
                         FechaRegistro = resultado.Incidencias.Incidencia[0]['FechaRegistro']
-                        raise orm.except_orm(_('Warning'), _('Inicidencias: %s.') % (MensajeIncidencia))
+                        raise orm.except_orm(_('Warning'), _('Inicidencias: %s.') % (inicidencias))
                 else:
                     raise orm.except_orm(_('Warning'), _('Not conexión'))
             else:
