@@ -37,7 +37,7 @@
 			<h2><field name="name"/></h2>
 			<group>
 				<group>
-					<field name="owner" select="1"/>
+					<field name="owner_id" select="1"/>
 					<field name="date" select="1"/>
 					<field name="user_id"/>
 					<field name="code"/>

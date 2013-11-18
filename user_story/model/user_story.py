@@ -87,7 +87,8 @@ class user_story(osv.Model):
      
     _columns = {
         'name': fields.char('Title', size=255, required=True, readonly=False),
-        'owner': fields.char('Owner', size=255, required=True, readonly=False),
+        'owner': fields.char('Owner', size=255, readonly=False),
+        'owner_id': fields.many2one('res.users', 'Owner'),
         'code': fields.char('Code', size=64, readonly=False),
         'planned_hours': fields.float('Planned Hours'),
         'project_id': fields.many2one('project.project', 'Project',
