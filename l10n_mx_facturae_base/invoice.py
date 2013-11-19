@@ -735,7 +735,7 @@ class account_invoice(osv.Model):
         data_dict = self._get_facturae_invoice_dict_data(
             cr, uid, ids, context=context)[0]
         doc_xml = self.dict2xml({
-                                'Comprobante': data_dict.get('cfdi:Comprobante')})
+                                'cfdi:Comprobante': data_dict.get('cfdi:Comprobante')})
         invoice_number = "sn"
         (fileno_xml, fname_xml) = tempfile.mkstemp(
             '.xml', 'openerp_' + (invoice_number or '') + '__facturae__')
@@ -777,7 +777,7 @@ class account_invoice(osv.Model):
             raise osv.except_osv(_('Error in Stamp !'), _(
                 "Can't generate the stamp of the voucher.\nCkeck your configuration.\ns%s") % (msg2))
 
-        nodeComprobante = doc_xml.getElementsByTagName("Comprobante")[0]
+        nodeComprobante = doc_xml.getElementsByTagName("cfdi:Comprobante")[0]
         nodeComprobante.setAttribute("sello", sign_str)
         data_dict['cfdi:Comprobante']['sello'] = sign_str
 
@@ -796,6 +796,10 @@ class account_invoice(osv.Model):
         nodeComprobante.setAttribute("certificado", cert_str)
         data_dict['cfdi:Comprobante']['certificado'] = cert_str
 
+        x = doc_xml.documentElement
+        nodeReceptor = doc_xml.getElementsByTagName('cfdi:Receptor')[0]
+        nodeConcepto = doc_xml.getElementsByTagName('cfdi:Conceptos')[0]
+        x.insertBefore(nodeReceptor, nodeConcepto)
         self.write_cfd_data(cr, uid, ids, data_dict, context=context)
 
         if context.get('type_data') == 'dict':
@@ -808,12 +812,10 @@ class account_invoice(osv.Model):
             data_dict['cfdi:Comprobante'].get('serie', '') or '') + '_' + (
             data_dict['cfdi:Comprobante'].get('folio', '') or '') + '.xml'
         data_xml = data_xml.replace('<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
-        date_invoice = data_dict.get('Comprobante',{}) and datetime.strptime( data_dict.get('Comprobante',{}).get('fecha',{}), '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d') or False
-        facturae_version = '2.2'
-        if date_invoice  and date_invoice < '2012-07-01':
-            facturae_version = '2.0'
+        date_invoice = data_dict.get('cfdi:Comprobante',{}) and datetime.strptime( data_dict.get('cfdi:Comprobante',{}).get('fecha',{}), '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d') or False
+        facturae_version = '3.2'
         self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], facturae_version)
-        data_dict.get('Comprobante',{})
+        data_dict.get('cfdi:Comprobante',{})
         return fname_xml, data_xml
 
     def validate_scheme_facturae_xml(self, cr, uid, ids, datas_xmls=[], facturae_version = None, facturae_type="cfdv", scheme_type='xsd'):
@@ -986,10 +988,6 @@ class account_invoice(osv.Model):
             })
             folio_data = self._get_folio(
                 cr, uid, [invoice.id], context=context)
-            invoice_data_parent['cfdi:Comprobante'].update({
-                'anoAprobacion': folio_data['anoAprobacion'],
-                'noAprobacion': folio_data['noAprobacion'],
-            })
             serie = folio_data.get('serie', False)
             if serie:
                 invoice_data_parent['cfdi:Comprobante'].update({
@@ -1229,7 +1227,7 @@ class account_invoice(osv.Model):
                 line_tax_id_amount = abs(line_tax_id.amount or 0.0)
                 if line_tax_id.amount >= 0:
                     impuesto_list = invoice_data_impuestos['cfdi:Traslados']
-                    impuesto_str = 'Traslado'
+                    impuesto_str = 'cfdi:Traslado'
                     totalImpuestosTrasladados += line_tax_id_amount
                 else:
                     # impuesto_list = invoice_data_impuestos['Retenciones']
