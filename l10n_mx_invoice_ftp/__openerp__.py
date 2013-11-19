@@ -32,7 +32,7 @@
     "description" : """This module supports attachment of invoice to ftp""",
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["l10n_mx_facturae","l10n_mx_upload_ftp"],
+    "depends" : ["l10n_mx_facturae_base","l10n_mx_upload_ftp"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["wizard/wizard_facturae_ftp_view.xml"],

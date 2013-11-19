@@ -8,7 +8,7 @@
             <field name="account_id" ref="account.a_recv"/>
             <field name="company_id" ref="base.main_company"/>
             <field name="partner_id" ref="l10n_mx_partner_address.res_partner_address_vauxoo_1"/>
-            <field name="journal_id" ref="l10n_mx_facturae.l10n_mx_cfd_journal_0"/>
+            <field name="journal_id" ref="l10n_mx_facturae_base.l10n_mx_cfd_journal_0"/>
             <field name="state">draft</field>
             <field name="type">out_invoice</field>
         </record>

@@ -127,7 +127,7 @@ class wizard_invoice_facturae_txt_v6(osv.TransientModel):
                    (6, 0, invoice_ids)]}, context=None)
         ir_model_data = self.pool.get('ir.model.data')
         form_res = ir_model_data.get_object_reference(
-            cr, uid, 'l10n_mx_facturae', 'view_wizard_invoice_facturae_txt_v6_form')
+            cr, uid, 'l10n_mx_facturae_base', 'view_wizard_invoice_facturae_txt_v6_form')
         form_id = form_res and form_res[1] or False
         return {
             'type': 'ir.actions.act_window',
@@ -166,7 +166,7 @@ class wizard_invoice_facturae_txt_v6(osv.TransientModel):
                    (6, 0, invoice_ids)]}, context=None)
         ir_model_data = self.pool.get('ir.model.data')
         form_res = ir_model_data.get_object_reference(
-            cr, uid, 'l10n_mx_facturae', 'view_wizard_invoice_facturae_txt_v6_form')
+            cr, uid, 'l10n_mx_facturae_base', 'view_wizard_invoice_facturae_txt_v6_form')
         form_id = form_res and form_res[1] or False
         return {
             'type': 'ir.actions.act_window',
@@ -198,7 +198,7 @@ class wizard_invoice_facturae_txt_v6(osv.TransientModel):
                     directly).\nTIP: Remember that this file too contains \
                     folios of credit note.")})
                 form_res = obj_model.get_object_reference(cr, uid,
-                    'l10n_mx_facturae', 'view_wizard_invoice_facturae_txt_v6_form2')
+                    'l10n_mx_facturae_base', 'view_wizard_invoice_facturae_txt_v6_form2')
                 form_id = form_res and form_res[1] or False
                 return {
                     'name': 'Monthly Report Ready',

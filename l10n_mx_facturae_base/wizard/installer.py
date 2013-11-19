@@ -36,7 +36,7 @@ class facturae_config(osv.TransientModel):
         defaults = super(facturae_config, self).default_get(
             cr, uid, fields_list=fields_list, context=context)
         logo = open(addons.get_module_resource(
-            'l10n_mx_facturae', 'images', 'piramide_azteca.jpg'), 'rb')
+            'l10n_mx_facturae_base', 'images', 'piramide_azteca.jpg'), 'rb')
         defaults['config_logo'] = base64.encodestring(logo.read())
         return defaults
 

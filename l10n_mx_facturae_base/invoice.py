@@ -428,10 +428,10 @@ class account_invoice(osv.Model):
                     all_paths = tools.config["addons_path"].split(",")
                     for my_path in all_paths:
                         if os.path.isdir(os.path.join(my_path,
-                            'l10n_mx_facturae', 'SAT')):
+                            'l10n_mx_facturae_base', 'SAT')):
                             # If dir is in path, save it on real_path
                             file_globals['fname_xslt'] = my_path and os.path.join(
-                                my_path, 'l10n_mx_facturae', 'SAT',
+                                my_path, 'l10n_mx_facturae_base', 'SAT',
                                 'cadenaoriginal_2_0_l.xslt') or ''
                             break
                 if not file_globals.get('fname_xslt', False):
@@ -461,20 +461,20 @@ class account_invoice(osv.Model):
             # Search char "," for addons_path, now is multi-path
             all_paths = tools.config["addons_path"].split(",")
             for my_path in all_paths:
-                if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae', 'SAT')):
+                if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT')):
                     # If dir is in path, save it on real_path
                     file_globals['fname_xslt'] = my_path and os.path.join(
-                        my_path, 'l10n_mx_facturae', 'SAT',
+                        my_path, 'l10n_mx_facturae_base', 'SAT',
                         'cadenaoriginal_2_2_l.xslt') or ''
                     break
         elif 'cfdi' in type_inv:
             # Search char "," for addons_path, now is multi-path
             all_paths = tools.config["addons_path"].split(",")
             for my_path in all_paths:
-                if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae', 'SAT')):
+                if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT')):
                     # If dir is in path, save it on real_path
                     file_globals['fname_xslt'] = my_path and os.path.join(
-                        my_path, 'l10n_mx_facturae', 'SAT','cadenaoriginal_3_2',
+                        my_path, 'l10n_mx_facturae_base', 'SAT','cadenaoriginal_3_2',
                         'cadenaoriginal_3_2_l.xslt') or ''
         return file_globals
 
@@ -799,6 +799,7 @@ class account_invoice(osv.Model):
         x = doc_xml.documentElement
         nodeReceptor = doc_xml.getElementsByTagName('cfdi:Receptor')[0]
         nodeConcepto = doc_xml.getElementsByTagName('cfdi:Conceptos')[0]
+        print nodeConcepto, 'nodeConcepto--------------------------------'
         x.insertBefore(nodeReceptor, nodeConcepto)
         self.write_cfd_data(cr, uid, ids, data_dict, context=context)
 
@@ -831,10 +832,10 @@ class account_invoice(osv.Model):
             os.close(fileno_data_xml)
             all_paths = tools.config["addons_path"].split(",")
             for my_path in all_paths:
-                if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae', 'SAT')):
+                if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT')):
                     # If dir is in path, save it on real_path
-                    fname_scheme = my_path and os.path.join(my_path, 'l10n_mx_facturae', 'SAT', facturae_type + facturae_version +  '.' + scheme_type) or ''
-                    #fname_scheme = os.path.join(tools.config["addons_path"], u'l10n_mx_facturae', u'SAT', facturae_type + facturae_version +  '.' + scheme_type )
+                    fname_scheme = my_path and os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT', facturae_type + facturae_version +  '.' + scheme_type) or ''
+                    #fname_scheme = os.path.join(tools.config["addons_path"], u'l10n_mx_facturae_base', u'SAT', facturae_type + facturae_version +  '.' + scheme_type )
                     fname_out = certificate_lib.b64str_to_tempfile( base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__schema_validation_result__' )
                     result = certificate_lib.check_xml_scheme(fname_data_xml, fname_scheme, fname_out)
                     if result: #Valida el xml mediante el archivo xsd
