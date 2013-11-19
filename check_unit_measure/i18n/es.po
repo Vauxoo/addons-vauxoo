@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2013-11-07 01:12+0000\n"
-"PO-Revision-Date: 2013-11-07 03:28+0000\n"
-"Last-Translator: Miguel <miguel.delgado07@gmail.com>\n"
+"PO-Revision-Date: 2013-11-18 21:34+0000\n"
+"Last-Translator: Saul Gonzalez <saul@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-10 06:48+0000\n"
-"X-Generator: Launchpad (build 16820)\n"
+"X-Launchpad-Export-Date: 2013-11-19 05:57+0000\n"
+"X-Generator: Launchpad (build 16831)\n"
 
 #. module: check_unit_measure
 #: constraint:sale.order.line:0
@@ -27,7 +27,7 @@ msgstr ""
 #. module: check_unit_measure
 #: model:ir.model,name:check_unit_measure.model_purchase_order_line
 msgid "Purchase Order Line"
-msgstr ""
+msgstr "Línea Orden de Compra"
 
 #. module: check_unit_measure
 #: code:addons/check_unit_measure/model/stock.py:51
@@ -52,11 +52,13 @@ msgid ""
 "The Unit measure in the line will be         the unit measure for this "
 "product."
 msgstr ""
+"¡Error! La unidad de medida en la línea será la unidad de medida para este "
+"producto."
 
 #. module: check_unit_measure
 #: field:stock.return.picking.memory,uom_id:0
 msgid "UOM"
-msgstr ""
+msgstr "Unidad de Medida"
 
 #. module: check_unit_measure
 #: constraint:stock.move:0
@@ -65,6 +67,8 @@ msgid ""
 "The Unit measure in the line will         be the unit measure for this "
 "product."
 msgstr ""
+"¡Error! La unidad de medida en la línea será la unidad de medida para este "
+"producto."
 
 #. module: check_unit_measure
 #: code:addons/check_unit_measure/model/invoice.py:47
@@ -75,18 +79,18 @@ msgstr ""
 #: code:addons/check_unit_measure/model/stock.py:63
 #, python-format
 msgid "Error !"
-msgstr ""
+msgstr "¡Error!"
 
 #. module: check_unit_measure
 #: code:addons/check_unit_measure/wizard/stock_return_picking.py:159
 #, python-format
 msgid "Please specify at least one non-zero quantity."
-msgstr ""
+msgstr "Por favor, especifique al menos una cantidad diferente a cero."
 
 #. module: check_unit_measure
 #: model:ir.model,name:check_unit_measure.model_stock_return_picking_memory
 msgid "stock.return.picking.memory"
-msgstr ""
+msgstr "stock.return.picking.memory"
 
 #. module: check_unit_measure
 #: code:addons/check_unit_measure/model/invoice.py:56
@@ -103,6 +107,8 @@ msgid ""
 "The Unit measure in the line will be the unit measure         for this "
 "product."
 msgstr ""
+"¡Error! La unidad de medida en la línea será la unidad de medida para este "
+"producto."
 
 #. module: check_unit_measure
 #: code:addons/check_unit_measure/model/stock.py:63
@@ -115,7 +121,7 @@ msgstr ""
 #. module: check_unit_measure
 #: model:ir.model,name:check_unit_measure.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimiento de Stock"
 
 #. module: check_unit_measure
 #: code:addons/check_unit_measure/model/invoice.py:47
@@ -136,32 +142,32 @@ msgstr ""
 #. module: check_unit_measure
 #: model:ir.model,name:check_unit_measure.model_account_invoice_line
 msgid "Invoice Line"
-msgstr ""
+msgstr "Línea Factura"
 
 #. module: check_unit_measure
 #: code:addons/check_unit_measure/wizard/stock_return_picking.py:176
 #, python-format
 msgid "Returned Picking"
-msgstr ""
+msgstr "Albarán Devuelto"
 
 #. module: check_unit_measure
 #: code:addons/check_unit_measure/wizard/stock_return_picking.py:159
 #, python-format
 msgid "Warning!"
-msgstr ""
+msgstr "¡Advertencia!"
 
 #. module: check_unit_measure
 #: code:addons/check_unit_measure/wizard/stock_return_picking.py:119
 #, python-format
 msgid "%s-%s-return"
-msgstr ""
+msgstr "%s-%s-devolver"
 
 #. module: check_unit_measure
 #: model:ir.model,name:check_unit_measure.model_stock_return_picking
 msgid "Return Picking"
-msgstr ""
+msgstr "Devolver Albarán"
 
 #. module: check_unit_measure
 #: model:ir.model,name:check_unit_measure.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Línea del pedido de venta"
