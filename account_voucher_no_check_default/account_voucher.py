@@ -30,15 +30,95 @@ class account_voucher(osv.Model):
     
     def onchange_partner_id(self, cr, uid, ids, partner_id, journal_id,\
         amount, currency_id, ttype, date, context=None):
-        res = super(account_voucher, self).onchange_partner_id(cr, uid, ids,\
-            partner_id, journal_id, amount, currency_id, ttype, date,\
-            context=context)
-        values = res.get('value', False)
-        if values and values.get('line_cr_ids') and ttype == 'payment':
+        if context is None:
+            context = {}
+        acc_move_line_obj = self.pool.get('account.move.line')
+        acc_invoice_obj = self.pool.get('account.invoice')
+        res = super(account_voucher, self).onchange_partner_id(cr, uid, ids, partner_id,\
+            journal_id, amount, currency_id, ttype, date, context=context)
+        values = res.get('value', {})
+        if values.get('line_cr_ids', False) and ttype == 'payment':
             for line in values.get('line_cr_ids'):
-                line.update({'reconcile' : False})
-        if values and values.get('line_dr_ids') and ttype == 'receipt':
+                acc_line = line.get('move_line_id', False)
+                move_id = acc_line and acc_move_line_obj.browse(cr, uid, acc_line,\
+                    context=context).move_id or False
+                invoice_line = move_id and acc_invoice_obj.search(cr, uid, [\
+                    ('move_id', '=', move_id.id)], context=context) or False
+                if invoice_line:
+                    line.update({'reconcile' : False, 'line_to_invoice' : True})
+        if values.get('line_dr_ids', False) and ttype == 'receipt':
             for line in values.get('line_dr_ids'):
-                line.update({'reconcile' : False})
+                acc_line = line.get('move_line_id', False)
+                move_id = acc_line and acc_move_line_obj.browse(cr, uid, acc_line,\
+                    context=context).move_id or False
+                invoice_line = move_id and acc_invoice_obj.search(cr, uid, [\
+                    ('move_id', '=', move_id.id)], context=context) or False
+                if invoice_line:
+                    line.update({'reconcile' : False, 'line_to_invoice' : True})
+        return res
+        
+    def onchange_amount(self, cr, uid, ids, amount, rate, partner_id, journal_id, currency_id,\
+        ttype, date, payment_rate_currency_id, company_id, context=None):
+        if context is None:
+            context = {}
+        acc_move_line_obj = self.pool.get('account.move.line')
+        acc_invoice_obj = self.pool.get('account.invoice')
+        res = super(account_voucher, self).onchange_partner_id(cr, uid, ids, partner_id,\
+            journal_id, amount, currency_id, ttype, date, context=context)
+        values = res.get('value', {})
+        if values.get('line_cr_ids', False) and ttype == 'payment':
+            for line in values.get('line_cr_ids'):
+                acc_line = line.get('move_line_id', False)
+                move_id = acc_line and acc_move_line_obj.browse(cr, uid, acc_line,\
+                    context=context).move_id or False
+                invoice_line = move_id and acc_invoice_obj.search(cr, uid, [\
+                    ('move_id', '=', move_id.id)], context=context) or False
+                if invoice_line:
+                    line.update({'reconcile' : False, 'line_to_invoice' : True})
+        if values.get('line_dr_ids', False) and ttype == 'receipt':
+            for line in values.get('line_dr_ids'):
+                acc_line = line.get('move_line_id', False)
+                move_id = acc_line and acc_move_line_obj.browse(cr, uid, acc_line,\
+                    context=context).move_id or False
+                invoice_line = move_id and acc_invoice_obj.search(cr, uid, [\
+                    ('move_id', '=', move_id.id)], context=context) or False
+                if invoice_line:
+                    line.update({'reconcile' : False, 'line_to_invoice' : True})
+        return res
+        
+    def onchange_journal(self, cr, uid, ids, journal_id, line_ids, tax_id,\
+        partner_id, date, amount, ttype, company_id, context=None):
+        if context is None:
+            context = {}
+        acc_move_line_obj = self.pool.get('account.move.line')
+        acc_invoice_obj = self.pool.get('account.invoice')
+        res = super(account_voucher, self).onchange_journal(cr, uid, ids, journal_id, line_ids,\
+            tax_id, partner_id, date, amount, ttype, company_id, context=context)
+        values = res.get('value', {})
+        if values.get('line_cr_ids', False) and ttype == 'payment':
+            for line in values.get('line_cr_ids'):
+                acc_line = line.get('move_line_id', False)
+                move_id = acc_line and acc_move_line_obj.browse(cr, uid, acc_line,\
+                    context=context).move_id or False
+                invoice_line = move_id and acc_invoice_obj.search(cr, uid, [\
+                    ('move_id', '=', move_id.id)], context=context) or False
+                if invoice_line:
+                    line.update({'reconcile' : False, 'line_to_invoice' : True})
+        if values.get('line_dr_ids', False) and ttype == 'receipt':
+            for line in values.get('line_dr_ids'):
+                acc_line = line.get('move_line_id', False)
+                move_id = acc_line and acc_move_line_obj.browse(cr, uid, acc_line,\
+                    context=context).move_id or False
+                invoice_line = move_id and acc_invoice_obj.search(cr, uid, [\
+                    ('move_id', '=', move_id.id)], context=context) or False
+                if invoice_line:
+                    line.update({'reconcile' : False, 'line_to_invoice' : True})
         return res
     
+class account_voucher_line(osv.Model):
+    _inherit = 'account.voucher.line'
+    
+    _columns = {
+        'line_to_invoice': fields.boolean('Line to Invoice', help='If this field is true indicates'\
+            ' that this line coming from an invoice refound')
+    }
