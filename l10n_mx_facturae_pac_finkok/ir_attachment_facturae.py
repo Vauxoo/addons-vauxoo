@@ -127,10 +127,22 @@ class ir_attachment_facturae_mx(osv.Model):
                 invoices_list = client.factory.create("UUIDS")
                 invoices_list.uuids.string = invoices
                 params = [invoices_list, username, password, taxpayer_id, cerCSD, keyCSD]
-                print 'params---------------------',params
                 result = client.service.cancel(*params)
-                print result
-                print "result.folios+++++++++++++++++",result.Folios
+                if not 'Folios' in result:
+                    msg += _('%s' %result.CodEstatus)
+                    raise orm.except_orm(_('Warning'), _('Mensaje %s') % (msg))
+                else:
+                    print "result.folios+++++++++++++++++",result.Folios
+                    EstausUUID = result.Folios.EstausUUID
+                    if EstausUUID == '201':
+                        msg += _('\n- The process of cancellation has completed correctly.\n\
+                                    The uuid cancelled is: ') + folio_cancel
+                        invoice_obj.write(cr, uid, [invoice.id], {
+                                        'cfdi_fecha_cancelacion': time.strftime('%Y-%m-%d %H:%M:%S')
+                        })
+                    #~ status = True
+                    else:
+                        raise orm.except_orm(_('Warning'), _('Mensaje %s') % (msg))
                 #~ try:
                     #~ result.Folios or False
                     #~ result.CodEstatus or False
@@ -141,15 +153,15 @@ class ir_attachment_facturae_mx(osv.Model):
                 #rfc = result.RfcEmiros or ''
                 #acuse = result.Acuse or ''
                 #fecha = result.Fecha or ''
-                if result:
-                    msg += _('\n- The process of cancellation has completed correctly.\n\
-                                The uuid cancelled is: ') + folio_cancel
-                    invoice_obj.write(cr, uid, [invoice.id], {
-                                    'cfdi_fecha_cancelacion': time.strftime('%Y-%m-%d %H:%M:%S')
-                    })
-                    status = True
-                else:
-                    raise orm.except_orm(_('Warning'), _('Mensaje') % (msg))
+                #~ if result:
+                    #~ msg += _('\n- The process of cancellation has completed correctly.\n\
+                                #~ The uuid cancelled is: ') + folio_cancel
+                    #~ invoice_obj.write(cr, uid, [invoice.id], {
+                                    #~ 'cfdi_fecha_cancelacion': time.strftime('%Y-%m-%d %H:%M:%S')
+                    #~ })
+                    #~ status = True
+                #~ else:
+                    #~ raise orm.except_orm(_('Warning'), _('Mensaje') % (msg))
             else:
                 msg = _('Not found information of webservices of PAC, verify that the configuration of PAC is correct')
         return {'message': msg}
