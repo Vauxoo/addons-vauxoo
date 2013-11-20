@@ -94,7 +94,7 @@ class ir_attachment_facturae_mx(osv.Model):
     def sf_cancel(self, cr, uid, ids, context=None):
         msg = ''
         folio_cancel = ''
-        uuids=[]
+        invoices = []
         certificate_obj = self.pool.get('res.company.facturae.certificate')
         pac_params_obj = self.pool.get('params.pac')
         invoice_obj = self.pool.get('account.invoice')
@@ -107,12 +107,10 @@ class ir_attachment_facturae_mx(osv.Model):
                 ('active', '=', True),
             ], limit=1, context=context)
             pac_params_id = pac_params_ids and pac_params_ids[0] or False
-            taxpayer_id = invoice.company_id.vat or invoice.company_id.partner_id.vat or False
+            taxpayer_id = invoice.company_id.vat[2::] or invoice.company_id.partner_id.vat[2::] or False
             if pac_params_id:
-                file_globals = invoice_obj._get_file_globals(
-                    cr, uid, [invoice.id], context=context)
-                pac_params_brw = pac_params_obj.browse(
-                    cr, uid, [pac_params_id], context=context)[0]
+                file_globals = invoice_obj._get_file_globals(cr, uid, [invoice.id], context=context)
+                pac_params_brw = pac_params_obj.browse(cr, uid, [pac_params_id], context=context)[0]
                 username = pac_params_brw.user
                 password = pac_params_brw.password
                 wsdl_url = pac_params_brw.url_webservice
@@ -120,46 +118,38 @@ class ir_attachment_facturae_mx(osv.Model):
                 if 'demo' or 'testing' in wsdl_url:
                     msg += _(u'WARNING, CANCEL IN TEST!!!!')
                 fname_cer_no_pem = file_globals['fname_cer']
-                cerCSD = open(fname_cer_no_pem).read().encode('base64') #Mejor forma de hacerlo
-                #~cerCSD = fname_cer_no_pem and base64.encodestring(
-                    #~open(fname_cer_no_pem, "r").read()) or ''
+                cerCSD = open(fname_cer_no_pem).read().encode('base64')
                 fname_key_no_pem = file_globals['fname_key']
-                keyCSD = open(fname_key_no_pem).read().encode('base64') #Mejor forma de hacerlo
-                #~keyCSD = fname_key_no_pem and base64.encodestring(
-                    #~open(fname_key_no_pem, "r").read()) or ''
-                zip = False  # Validar si es un comprimido zip, con la extension del archivo
-                contrasenaCSD = file_globals.get('password', '')
-                uuids.append(invoice.cfdi_folio_fiscal)
-                print uuids
+                keyCSD = open(fname_key_no_pem).read().encode('base64')
                 client = Client(wsdl_url, cache=None)
+                folio_cancel = invoice.cfdi_folio_fiscal
+                invoices.append(folio_cancel)
+                invoices_list = client.factory.create("UUIDS")
+                invoices_list.uuids.string = invoices
+                params = [invoices_list, username, password, taxpayer_id, cerCSD, keyCSD]
+                result = client.service.cancel(*params)
                 try:
-                    params = [uuids, username, password, taxpayer_id, cerCSD, keyCSD]
-                    result = client.service.cancel(*params)
+                    result.Folios or False
+                    result.CodEstatus or False
                 except Exception, e:
                     raise orm.except_orm(_('Warning'), _(e))
-                msg += _(tools.ustr(result.CodEstatus)) or ''
-                print result
-                fecha = result.Fecha or ''
-                rfc = result.RfcEmiros or ''
-                folio = result.Folios or ''
-                acuse = result.Acuse or ''
-                estatus_uuid = result.Folios.EstatusUUID or ''
-                #print estatusuuid
-                if estatus_uuid:
-                    msg +=  mensaje_cancel + _('\n- The process of cancellation\
-                        has completed correctly.\n- The uuid cancelled is:\
-                            ') + folio_cancel
+                #estatus_uuid = result.EstatusUUID or ''
+                #CodEstatus = _(tools.ustr(result.CodEstatus)) or ''
+                #rfc = result.RfcEmiros or ''
+                #acuse = result.Acuse or ''
+                #fecha = result.Fecha or ''
+                if result:
+                    msg += _('\n- The process of cancellation has completed correctly.\n\
+                                The uuid cancelled is: ') + folio_cancel
                     invoice_obj.write(cr, uid, [invoice.id], {
-                        'cfdi_fecha_cancelacion': time.strftime(
-                        '%Y-%m-%d %H:%M:%S')
+                                    'cfdi_fecha_cancelacion': time.strftime('%Y-%m-%d %H:%M:%S')
                     })
                     status = True
                 else:
-                    raise orm.except_orm(_('Warning'), _('Cancel Code: %s.-Status code %s.-Status UUID: %s.-Folio Cancel: %s.-Cancel Message: %s.-Answer Message: %s.') % (
-                        codigo_cancel, status_cancel, status_uuid, folio_cancel, mensaje_cancel, msg_nvo))
+                    raise orm.except_orm(_('Warning'), _('Mensaje') % (msg))
             else:
                 msg = _('Not found information of webservices of PAC, verify that the configuration of PAC is correct')
-        return {'message': msg, 'status_uuid': status_uuid, 'status': status}
+        return {'message': msg}
     
     def _upload_ws_file(self, cr, uid, ids, fdata=None, context={}):
         """
@@ -222,7 +212,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 #~ else:
                     #~ raise osv.except_osv(_('Warning'), _('Namespace of PAC incorrect'))
                 if 'demo' or 'testing' in wsdl_url:
-                    msg += _(u'WARNING, SIGNED IN TEST!!!!\n\n')
+                    msg += _(u'WARNING, SIGNED IN TEST!!!!\n\n' + wsdl_url)
                 client = Client(wsdl_url, cache=None)
                 if True: # if wsdl_client:
                     file_globals = invoice_obj._get_file_globals(
