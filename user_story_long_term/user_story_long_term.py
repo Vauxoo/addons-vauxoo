@@ -223,7 +223,21 @@ class user_story_user_allocation(osv.Model):
 #project_user_allocation()
 
 class user_story(osv.Model):
+    _name = "user.story"
     _inherit = "user.story"
+    _inherits = {'account.analytic.account': 'analytic_account_id'}
+
+    def search(self, cr, user, args, offset=0, limit=None, order=None, context=None, count=False):
+        if user == 1:
+            return super(user_story, self).search(cr, user, args, offset=offset, limit=limit, order=order, context=context, count=count)
+        if context and context.get('user_preference'):
+                cr.execute("""SELECT user_story.id FROM user_story user_story
+                           LEFT JOIN account_analytic_account account ON account.id = user_story.analytic_account_id
+                           LEFT JOIN user_story_user_rel rel ON rel.user_story_id = user_story.id
+                           WHERE (account.user_id = %s or rel.uid = %s)"""%(user, user))
+                return [(r[0]) for r in cr.fetchall()]
+        return super(user_story, self).search(cr, user, args, offset=offset, limit=limit, order=order,
+
     def _phase_count(self, cr, uid, ids, field_name, arg, context=None):
         res = dict.fromkeys(ids, 0)
         phase_ids = self.pool.get('user.story.phase').search(cr, uid, [('user_story_id', 'in', ids)])
@@ -232,9 +246,24 @@ class user_story(osv.Model):
         return res
 
     _columns = {
+       'analytic_account_id': fields.many2one('account.analytic.account', 'Contract/Analytic', 
+        help="Link this project to an analytic account if you need financial management on" 
+        "projects. It enables you to connect projects with budgets, planning, cost and revenue" 
+        "analysis, timesheets on projects, etc.", ondelete="cascade", required=True),
+
         'phase_ids': fields.one2many('user.story.phase', 'user_story_id', "User Story Phases"),
         'phase_count': fields.function(_phase_count, type='integer', string="Open Phases"),
     }
+
+    def create(self, cr, uid, vals, context=None):
+        if context is None: context = {}
+        # Prevent double project creation when 'use_tasks' is checked!
+        context = dict(context, project_creation_in_progress=True)
+        context['name'] = "User Story / " + vals['name'] 
+        if vals.get('type', False) not in ('template','contract'):
+            vals['type'] = 'contract'
+        user_story_id = super(user_story, self).create(cr, uid, vals, context=context)
+        return user_story_id
 
 #    def schedule_phases(self, cr, uid, ids, context=None):
 #        context = context or {}
@@ -277,26 +306,59 @@ class user_story(osv.Model):
 #        return True
 #project()
 
-#class account_analytic_account(osv.osv):
-#    _inherit = 'account.analytic.account'
-#    _description = 'Analytic Account'
-#    _columns = {
-#        'use_phases': fields.boolean('Phases', help="Check this field if you plan to use phase-based scheduling"),
-#    }
-#
-#    def on_change_template(self, cr, uid, ids, template_id, context=None):
-#        res = super(account_analytic_account, self).on_change_template(cr, uid, ids, template_id, context=context)
-#        if template_id and 'value' in res:
-#            template = self.browse(cr, uid, template_id, context=context)
-#            res['value']['use_phases'] = template.use_phases
-#        return res
-#
-#
-#    def _trigger_project_creation(self, cr, uid, vals, context=None):
-#        if context is None: context = {}
-#        res = super(account_analytic_account, self)._trigger_project_creation(cr, uid, vals, context=context)
-#        return res or (vals.get('use_phases') and not 'project_creation_in_progress' in context)
-#
+class account_analytic_account(osv.osv):
+    _inherit = 'account.analytic.account'
+    _description = 'Analytic Account'
+    _columns = {
+        'use_phases_user_story': fields.boolean('Phases', help="Check this field if you plan to use phase-based scheduling"),
+    }
+
+    def _trigger_user_story_creation(self, cr, uid, vals, context=None):
+        if context is None: context = {}
+        res = super(account_analytic_account, self)._trigger_project_creation(cr, uid, vals, context=context)
+        return res or (vals.get('use_phases_user_story') and not 'project_creation_in_progress' in context)
+
+    def on_change_template(self, cr, uid, ids, template_id, context=None):
+        res = super(account_analytic_account, self).on_change_template(cr, uid, ids, template_id, context=context)
+        if template_id and 'value' in res:
+            template = self.browse(cr, uid, template_id, context=context)
+            res['value']['use_phases_user_story'] = template.use_phases_user_story
+        return res
+
+    def user_story_create(self, cr, uid, analytic_account_id, vals, context=None):
+        '''
+        This function is called at the time of analytic account creation and is used to create a project automatically linked to it if the conditions are meet.
+        '''
+        project_pool = self.pool.get('user.story')
+        project_id = project_pool.search(cr, uid, [('analytic_account_id','=', analytic_account_id)])
+        if not project_id and self._trigger_user_story_creation(cr, uid, vals, context=context):
+            project_values = {
+                'name': vals.get('name'),
+                'analytic_account_id': analytic_account_id,
+                'type': vals.get('type','contract'),
+            }
+            return project_pool.create(cr, uid, project_values, context=context)
+        return False
+    
+    def create(self, cr, uid, vals, context=None):
+        if context is None:
+            context = {}
+        vals['name'] = context.get('name', False) and context.get('name') or ''
+        context.get('name', False) and context.pop('name')
+        analytic_account_id = super(account_analytic_account, self).create(cr, uid, vals, context=context)
+        self.user_story_create(cr, uid, analytic_account_id, vals, context=context)
+        return analytic_account_id
+
+    def write(self, cr, uid, ids, vals, context=None):
+        vals_for_project = vals.copy()
+        for account in self.browse(cr, uid, ids, context=context):
+            if not vals.get('name', False):
+                vals_for_project['name'] = account.name
+            if not vals.get('type', False):
+                vals_for_project['type'] = account.type
+            self.user_story_create(cr, uid, account.id, vals_for_project, context=context)
+        return super(account_analytic_account, self).write(cr, uid, ids, vals, context=context)
+
 #account_analytic_account()
 
 
