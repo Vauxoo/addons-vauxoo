@@ -1,0 +1,159 @@
+-
+  To test the Mexican Electronic Invoice CFD
+  dummy changes for test runbot
+-
+  I check that Journal is cfd
+-
+  !assert {model: account.invoice, id: account_invoice_cfd0}:
+    - journal_id.id == ref('l10n_mx_cfd_journal_0')
+-
+  I check that Initially customer invoice state is "Draft"
+-
+  !assert {model: account.invoice, id: account_invoice_cfd0}:
+    - state == 'draft'
+-
+  I open invoice by clicking on Create button
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: account_invoice_cfd0}
+-
+  I check that the invoice state is "Open"
+-
+  !assert {model: account.invoice, id: account_invoice_cfd0}:
+    - state == 'open'
+-
+  I confirm l10n_mx attachment facturae cfd by clicking on confirm button
+-
+  !python {model: ir.attachment.facturae.mx}: |
+    import netsvc, tools, os, base64
+    wf_service = netsvc.LocalService("workflow")
+    cfd_ids = self.search(cr, uid, [('invoice_id', '=', ref("account_invoice_cfd0") ), ('state', '<>', 'cancel')], limit=1)
+    cfd_id = cfd_ids and cfd_ids[0] or False
+    if cfd_id:
+        cfd = self.browse(cr, uid, [cfd_id])[0]
+        self.signal_confirm(cr, uid , cfd_ids ,context=context)
+        #print "cfd_state",tools.ustr(cfd.state)
+        #print "cfd_msj",tools.ustr(cfd.msj)
+        state = cfd.state
+-
+  I check that the state in l10n_mx attachment facturae cfd is "Confirmed"
+-
+  !python {model: ir.attachment.facturae.mx}: |
+    import netsvc, tools, os, base64
+    cfd_ids = self.search(cr, uid, [('invoice_id', '=', ref("account_invoice_cfd0") ), ('state', '<>', 'cancel')], limit=1)
+    cfd_id = cfd_ids and cfd_ids[0] or False
+    state = 'no attach file'
+    if cfd_id:
+        cfd = self.browse(cr, uid, [cfd_id])[0]
+        #print "cfd_state",tools.ustr( cfd.state )
+        #print "cfd_msj",tools.ustr( cfd.msj )
+        state = cfd.state
+        ir_attach_facturae_mx = cfd.file_input and cfd.file_input or False
+        fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
+        if fdata:
+            if tools.config['test_report_directory']:
+                open(os.path.join(tools.config['test_report_directory'], 'l10n_mx_facturae' + '_' + \
+                  'account_invoice_cfd0' + '_' + 'confirmed' + '-' + ir_attach_facturae_mx.datas_fname)\
+                  , 'wb+').write( base64.decodestring( fdata ) )
+        else:
+            state = 'no data in attach file'
+    assert state=='confirmed', 'No confirmed state l10n_mx attachment facturae cfd'
+-
+  I sign l10n_mx attachment facturae cfd by clicking on sign button
+-
+  !python {model: ir.attachment.facturae.mx}: |
+    import netsvc, tools
+    wf_service = netsvc.LocalService("workflow")
+    cfd_ids = self.search(cr, uid, [('invoice_id', '=', ref("account_invoice_cfd0") ), ('state', '<>', 'cancel')], limit=1)
+    cfd_id = cfd_ids and cfd_ids[0] or False
+    if cfd_id:
+        cfd = self.browse(cr, uid, [cfd_id], context=context)[0]
+        self.signal_sign(cr, uid, cfd_ids, context=context)
+        #print "cfd_state",tools.ustr( cfd.state )
+        #print "cfd_msj",tools.ustr( cfd.msj )
+        state = cfd.state
+-
+  I check that the state in l10n_mx attachment facturae cfd is "Signed"
+-
+  !python {model: ir.attachment.facturae.mx}: |
+    import netsvc, tools, os, base64
+    cfd_ids = self.search(cr, uid, [('invoice_id', '=', ref("account_invoice_cfd0") ), ('state', '<>', 'cancel')], limit=1)
+    cfd_id = len(cfd_ids) and cfd_ids[0] or False
+    state = 'no attach file'
+    if cfd_id:
+        cfd = self.browse(cr, uid, [cfd_id], context=context)[0]
+        state = cfd.state
+        ir_attach_facturae_mx = cfd.file_xml_sign and cfd.file_xml_sign or False
+        fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
+        if fdata:
+            state = cfd.state
+            if tools.config['test_report_directory']:
+                open(os.path.join(tools.config['test_report_directory'], 'l10n_mx_facturae' + '_' + \
+                  'account_invoice_cfd0' + '_' + 'signed' + '-' + ir_attach_facturae_mx.datas_fname),\
+                  'wb+').write( base64.decodestring( fdata ) )
+        else:
+            state = 'no data in attach file'
+    #print "state",tools.ustr( state )
+    assert state=='signed', 'No signed state l10n_mx attachment facturae cfd'
+-
+  I generate a printable l10n_mx attachment facturae cfd by clicking on printable button
+-
+  !python {model: ir.attachment.facturae.mx}: |
+    import netsvc, tools
+    wf_service = netsvc.LocalService("workflow")
+    cfd_ids = self.search(cr, uid, [('invoice_id', '=', ref("account_invoice_cfd0") ), ('state', '<>', 'cancel')], limit=1)
+    cfd_id = cfd_ids and cfd_ids[0] or False
+    if cfd_id:
+        cfd = self.browse(cr, uid, [cfd_id])[0]
+        self.signal_printable(cr, uid , cfd_ids ,context=context)
+        #print "cfd_state",tools.ustr( cfd.state )
+        #print "cfd_msj",tools.ustr( cfd.msj )
+        state = cfd.state
+-
+  I check that the state in l10n_mx attachment facturae cfd is Printable
+-
+  !python {model: ir.attachment.facturae.mx}: |
+    import netsvc, tools, os, base64
+    cfd_ids = self.search(cr, uid, [('invoice_id', '=', ref("account_invoice_cfd0") ), ('state', '<>', 'cancel')], limit=1)
+    cfd_id = cfd_ids and cfd_ids[0] or False
+    state = None
+    state = 'no attach file'
+    if cfd_id:
+        cfd = self.browse(cr, uid, [cfd_id], context=context)[0]
+        ir_attach_facturae_mx = cfd.file_pdf and cfd.file_pdf or False
+        fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
+        if fdata:
+            state = cfd.state
+            if tools.config['test_report_directory']:
+                open(os.path.join(tools.config['test_report_directory'], 'l10n_mx_facturae' + '_' + \
+                  'account_invoice_cfd0' + '_' + 'printable' + '-' + ir_attach_facturae_mx.datas_fname),\
+                  'wb+').write( base64.decodestring( fdata ) )
+        else:
+            state = 'no data in attach file'
+    assert state=='printable', 'No printable state l10n_mx attachment facturae cfd'
+-
+  I added update_posted in journal
+-
+  !python {model: account.journal}: |
+    journal_id = self.browse(cr, uid, ref('l10n_mx_cfd_journal_0'))
+    self.write(cr, uid, journal_id.id, {'update_posted': True})
+-
+  I generate a cancel l10n_mx attachment facturae cfd by clicking on cancel button
+-
+  !python {model: ir.attachment.facturae.mx}: |
+    cfd_ids = self.search(cr, uid, [('invoice_id', '=', ref("account_invoice_cfd0") ), ('state', '<>', 'cancel')], limit=1)
+    cfd_id = cfd_ids and cfd_ids[0] or False
+    if cfd_id:
+        self.signal_cancel(cr, uid , cfd_ids ,context=context)
+        cfd = self.browse(cr, uid, [cfd_id])[0]
+        state = cfd.state
+    assert state=='cancel', 'No cancel state l10n_mx attachment facturae cfd'
+-
+  I check that customer invoice state is "cancel"
+-
+  !assert {model: account.invoice, id: account_invoice_cfd0}:
+    - state == 'cancel'
+-
+  I check that customer invoice move_id is None
+-
+  !assert {model: account.invoice, id: account_invoice_cfd0}:
+    - move_id.name == None

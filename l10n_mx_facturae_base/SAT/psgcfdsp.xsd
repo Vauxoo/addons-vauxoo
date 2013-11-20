@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2009 sp1 (http://www.altova.com) by SAT (SAT) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:psgcfdsp="http://www.sat.gob.mx/psgcfdsp" targetNamespace="http://www.sat.gob.mx/psgcfdsp" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="PrestadoresDeServiciosDeCFDSP">
+		<xs:annotation>
+			<xs:documentation>Complemento requerido para los Prestadores de Servicios de Generación de CFD del Sistema Producto.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="version" type="xs:string" use="required" fixed="1.0">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para expresar la versión del complemento de prestadores de servicios de generación de CFD del sistema producto.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="nombre" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para el nombre o razón social del prestador de servicios de generación de CFD del sistema producto.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="rfc" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para el Registro Federal de Contribuyentes del prestador de servicios de generación de CFD del sistema producto.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="12"/>
+						<xs:maxLength value="13"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="noCertificado" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para expresar el número de serie del certificado de sello digital del prestador de servicios de generación de CFD del sistema producto.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="20"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="fechaPublicacion" type="xs:dateTime" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para la expresión de la fecha de publicación de la autorización del prestador de servicios de generación de CFD del sistema producto en la página de Internet del SAT. Se expresa en la forma  aaaa-mm-ddThh:mm:ss.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="noAutorizacion" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para precisar el número del oficio de autorización del prestador de servicios de generación de CFD del sistema producto.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="selloDelPSGCFDSP" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para contener el sello digital generado a partir de un CESD del prestador de servicios de generación de CFD del sistema producto. El sello deberá ser expresado cómo una cadena de texto en formato Base 64.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

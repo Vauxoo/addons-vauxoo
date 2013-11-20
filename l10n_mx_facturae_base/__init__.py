@@ -2,11 +2,12 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: el_rodo_1 (rodo@vauxoo.com)
+#    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,18 +25,7 @@
 #
 ##############################################################################
 
-{
-    "name" : "Attachment of invoice to FTP",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """This module supports attachment of invoice to ftp""",
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : ["l10n_mx_facturae_base","l10n_mx_upload_ftp"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : ["wizard/wizard_facturae_ftp_view.xml"],
-    "installable" : True,
-    "active" : False,
-}
+import invoice
+import wizard
+import ir_attachment_facturae
+import ir_sequence_approval

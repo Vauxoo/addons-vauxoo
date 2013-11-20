@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 (http://www.altova.com) by SAT (SAT) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ventavehiculos="http://www.sat.gob.mx/ventavehiculos" targetNamespace="http://www.sat.gob.mx/ventavehiculos" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="VentaVehiculos">
+		<xs:annotation>
+			<xs:documentation>Complemento concepto que permite incorporar a los fabricantes, ensambladores o distribuidores autorizados de automóviles nuevos, así como aquéllos que importen automóviles para permanecer en forma definitiva en la franja fronteriza norte del país y en los Estados de Baja California, Baja California Sur y la región parcial del Estado de Sonora, a un Comprobante Fiscal Digital (CFD) o a un Comprobante Fiscal Digital a través de Internet (CFDI) la clave vehicular que corresponda a la versión enajenada.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="InformacionAduanera" type="ventavehiculos:t_InformacionAduanera" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Nodo opcional para introducir la información aduanera aplicable cuando se trate de ventas de primera mano de mercancías importadas.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Parte" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Nodo opcional para expresar las partes o componentes que integran la totalidad del concepto expresado en el CFD o CFDI.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="InformacionAduanera" type="ventavehiculos:t_InformacionAduanera" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Nodo opcional para introducir la información aduanera aplicable cuando se trate de partes o componentes importados vendidos de primera mano.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="cantidad" use="required">
+							<xs:annotation>
+								<xs:documentation>Atributo requerido para precisar la cantidad de bienes o servicios del tipo particular definido por la presente parte.</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:decimal">
+									<xs:whiteSpace value="collapse"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="unidad" use="optional">
+							<xs:annotation>
+								<xs:documentation>Atributo opcional para precisar la unidad de medida aplicable para la cantidad expresada en la parte.</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:whiteSpace value="collapse"/>
+									<xs:minLength value="1"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="noIdentificacion" use="optional">
+							<xs:annotation>
+								<xs:documentation>Atributo opcional para expresar el número de serie del bien o identificador del servicio amparado por la presente parte.</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="1"/>
+									<xs:whiteSpace value="collapse"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="descripcion" use="required">
+							<xs:annotation>
+								<xs:documentation>Atributo requerido para precisar la descripción del bien o servicio cubierto por la presente parte.</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:minLength value="1"/>
+									<xs:whiteSpace value="collapse"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="valorUnitario" type="ventavehiculos:t_Importe" use="optional">
+							<xs:annotation>
+								<xs:documentation>Atributo opcional para precisar el valor o precio unitario del bien o servicio cubierto por la presente parte.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="importe" type="ventavehiculos:t_Importe" use="optional">
+							<xs:annotation>
+								<xs:documentation>Atributo opcional para precisar el importe total de los bienes o servicios de la presente parte. Debe ser equivalente al resultado de multiplicar la cantidad por el valor unitario expresado en la parte.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:attribute name="version" use="required" fixed="1.0">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido con valor prefijado a 1.0 que indica la versión del estándar bajo el que se encuentra expresado el comprobante.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ClaveVehicular" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para precisar Clave vehicular que corresponda a la versión del vehículo enajenado.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="t_InformacionAduanera">
+		<xs:annotation>
+			<xs:documentation>Tipo definido para expresar información aduanera</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="numero" use="required">
+			<xs:annotation>
+				<xs:documentation>Atributo requerido para expresar el número del documento aduanero que ampara la importación del bien.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="fecha" use="required">
+			<xs:annotation>
+				<xs:documentation>Atributo requerido para expresar la fecha de expedición del documento aduanero que ampara la importación del bien.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:date">
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="aduana">
+			<xs:annotation>
+				<xs:documentation>Atributo opcional para precisar la aduana por la que se efectuó la importación del bien.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="t_Importe">
+		<xs:annotation>
+			<xs:documentation>Tipo definido para expresar importes numéricos con fracción hasta seis decimales</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:fractionDigits value="6"/>
+			<xs:whiteSpace value="collapse"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
