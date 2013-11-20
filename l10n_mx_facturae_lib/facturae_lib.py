@@ -36,6 +36,7 @@ import tempfile
 import base64
 import logging
 _logger = logging.getLogger(__name__)
+from l10n_mx_facturae_lib import facturae_lib
 
 all_paths = tools.config["addons_path"].split(",")
 for my_path in all_paths:
@@ -63,26 +64,38 @@ else:
     app_openssl = 'openssl'
     app_xmlstarlet = 'xmlstarlet'
 
-app_openssl_fullpath = os.path.join(openssl_path, app_openssl)
-if not os.path.isfile(app_openssl_fullpath):
-    app_openssl_fullpath = tools.find_in_path(app_openssl)
+def library_openssl_xsltproc_xmlstarlet(self, cr, uid, ids, context=None):
+    if context is None:
+        context = {}
+    msj = ''
+    app_openssl_fullpath = os.path.join(openssl_path, app_openssl)
     if not os.path.isfile(app_openssl_fullpath):
-        app_openssl_fullpath = False
-        _logger.warning("Failed to find in path 'openssl' app")
-
-app_xsltproc_fullpath = os.path.join(xsltproc_path, app_xsltproc)
-if not os.path.isfile(app_xsltproc_fullpath):
-    app_xsltproc_fullpath = tools.find_in_path(app_xsltproc)
+        app_openssl_fullpath = tools.find_in_path(app_openssl)
+        if not os.path.isfile(app_openssl_fullpath):
+            app_openssl_fullpath = False
+            _logger.warning('Install openssl "sudo apt-get install openssl" to use l10n_mx_facturae_lib module.')
+            msj += 'Install openssl "sudo apt-get install openssl" to use l10n_mx_facturae_lib module.'
+    
+    app_xsltproc_fullpath = os.path.join(xsltproc_path, app_xsltproc) or False
     if not os.path.isfile(app_xsltproc_fullpath):
-        app_xsltproc_fullpath = False
-        _logger.warning("Failed to find in path 'xsltproc' app")
+        app_xsltproc_fullpath = tools.find_in_path(app_xsltproc) or False
+        try:
+            if not os.path.isfile(app_xsltproc_fullpath):
+                app_xsltproc_fullpath = False
+                _logger.warning("Install xsltproc 'sudo apt-get install xsltproc' to use l10n_mx_facturae_lib module.")
+                msj =  "Install xsltproc 'sudo apt-get install xsltproc' to use l10n_mx_facturae_lib module."
+        except Exception, e:
+            _logger.warning("Install xsltproc 'sudo apt-get install xsltproc' to use l10n_mx_facturae_lib module.")
+            msj +=  "Install xsltproc 'sudo apt-get install xsltproc' to use l10n_mx_facturae_lib module."
 
-app_xmlstarlet_fullpath = os.path.join(xmlstarlet_path, app_xmlstarlet)
-if not os.path.isfile( app_xmlstarlet_fullpath ):
-    app_xmlstarlet_fullpath = tools.find_in_path( app_xmlstarlet )
-    if not app_xmlstarlet_fullpath:
-        app_xmlstarlet_fullpath = False
-        _logger.warning("Failed to find in path 'xmlstarlet' app")
+    app_xmlstarlet_fullpath = os.path.join(xmlstarlet_path, app_xmlstarlet)
+    if not os.path.isfile( app_xmlstarlet_fullpath ):
+        app_xmlstarlet_fullpath = tools.find_in_path( app_xmlstarlet )
+        if not app_xmlstarlet_fullpath:
+            app_xmlstarlet_fullpath = False
+            _logger.warning('Install xmlstarlet "sudo apt-get install xmlstarlet" to use l10n_mx_facturae_lib module.')
+            msj += 'Install xmlstarlet "sudo apt-get install xmlstarlet" to use l10n_mx_facturae_lib module.'
+    return msj, app_xsltproc_fullpath, app_openssl_fullpath, app_xmlstarlet_fullpath
         
 
 class facturae_certificate_library(osv.Model):
@@ -90,7 +103,7 @@ class facturae_certificate_library(osv.Model):
     _auto = False
     # Agregar find subpath
 
-    def b64str_to_tempfile(self, b64_str="", file_suffix="", file_prefix=""):
+    def b64str_to_tempfile(self, cr, uid, ids, b64_str="", file_suffix="", file_prefix=""):
         """
         @param b64_str : Text in Base_64 format for add in the file
         @param file_suffix : Sufix of the file
@@ -153,24 +166,29 @@ class facturae_certificate_library(osv.Model):
             output.close()
         return result
 
-    def _get_param_serial(self, fname, fname_out=None, type='DER'):
+    def _get_param_serial(self, cr, uid, ids, fname, fname_out=None, type='DER', context=None):
         """
         @param fname : File.PEM with the information of the certificate
         @param fname_out : File.xml that is send
         """
-        result = self._get_params(fname, params=[
-                                  'serial'], fname_out=fname_out, type=type)
+        if context is None:
+            context = {}
+        result = self._get_params(cr, uid, ids, fname, params=['serial'], 
+                                    fname_out=fname_out, type=type)
         result = result and result.replace('serial=', '').replace(
             '33', 'B').replace('3', '').replace('B', '3').replace(
             ' ', '').replace('\r', '').replace('\n', '').replace('\r\n', '') or ''
         return result
 
-    def _transform_xml(self, fname_xml, fname_xslt, fname_out):
+    def _transform_xml(self, cr, uid, ids, fname_xml, fname_xslt, fname_out, context=None):
         """
         @param fname_xml : Path and name of the XML of Facturae
         @param fname_xslt : Path where is located the file 'Cadena Original'.xslt
         @param fname_out : Path and name of the file.xml that is send to sign
         """
+        if context is None:
+            context = {}
+        msj, app_xsltproc_fullpath, app_openssl_fullpath, app_xmlstarlet_fullpath = facturae_lib.library_openssl_xsltproc_xmlstarlet(cr, uid, ids, context)
         if not app_xsltproc_fullpath:
             raise osv.except_osv(_("Error!"), _(
                 "Failed to find in path '%s' app. This app is required for sign Mexican Electronic Invoice"%(app_xsltproc) ))
@@ -183,15 +201,17 @@ class facturae_certificate_library(osv.Model):
         output.close()
         return result
 
-    def _get_param_dates(self, fname, fname_out=None,
-        date_fmt_return='%Y-%m-%d %H:%M:%S', type='DER'):
+    def _get_param_dates(self, cr, uid, ids, fname, fname_out=None,
+        date_fmt_return='%Y-%m-%d %H:%M:%S', type='DER', context=None):
         """
         @param fname : File.cer with the information of the certificate
         @params fname_out : Path and name of the file.txt with info encrypted
         @param date_fmt_return : Format of the date used
         @param type : Type of file
         """
-        result_dict = self._get_params_dict(fname, params=[
+        if context is None:
+            context = {}
+        result_dict = self._get_params_dict(cr, uid, ids, fname, params=[
                                     'dates'], fname_out=fname_out, type=type)
         translate_key = {
             'notAfter': 'enddate',
@@ -207,14 +227,16 @@ class facturae_certificate_library(osv.Model):
                 result2[translate_key[key]] = date_fmt
         return result2
 
-    def _get_params_dict(self, fname, params=None, fname_out=None, type='DER'):
+    def _get_params_dict(self, cr, uid, ids, fname, params=None, fname_out=None, type='DER', context=None):
         """
         @param fname : File.cer with the information of the certificate
         @param params : List of params used for this function
         @param fname_out : Path and name of the file.txt with info encrypted
         @param type : Type of file
         """
-        result = self._get_params(fname, params, fname_out, type)
+        if context is None:
+            context = {}
+        result = self._get_params(cr, uid, ids, fname, params, fname_out, type)
         result = result.replace('\r\n', '\n').replace(
             '\r', '\n')  # .replace('\n', '\n)
         result = result.rstrip('\n').lstrip('\n').rstrip(' ').lstrip(' ')
@@ -226,11 +248,14 @@ class facturae_certificate_library(osv.Model):
                 params_dict[key] = value
         return params_dict
 
-    def _get_params(self, fname, params=None, fname_out=None, type='DER'):
+    def _get_params(self, cr, uid, ids, fname, params=None, fname_out=None, type='DER', context=None):
         """
         @params: list [noout serial startdate enddate subject issuer dates]
         @type: str DER or PEM
         """
+        if context is None:
+            context = {}
+        msj, app_xsltproc_fullpath, app_openssl_fullpath, app_xmlstarlet_fullpath = facturae_lib.library_openssl_xsltproc_xmlstarlet(cr, uid, ids, context)
         if not app_openssl_fullpath:
             raise osv.except_osv(_("Error!"), _(
                 "Failed to find in path '%s' app. This app is required for sign Mexican Electronic Invoice"%(app_openssl) ))
@@ -246,8 +271,8 @@ class facturae_certificate_library(osv.Model):
         output.close()
         return result
 
-    def _sign(self, fname, fname_xslt, fname_key, fname_out, encrypt='sha1',
-        type_key='PEM'):
+    def _sign(self, cr, uid, ids, fname, fname_xslt, fname_key, fname_out, encrypt='sha1',
+        type_key='PEM', context=None):
         """
          @params fname : Path and name of the XML of Facturae
          @params fname_xslt : Path where is located the file 'Cadena Original'.xslt
@@ -256,6 +281,10 @@ class facturae_certificate_library(osv.Model):
          @params encrypt : Type of encryptation for file
          @params type_key : Type of KEY
         """
+        if context is None:
+            context = {}
+        msj, app_xsltproc_fullpath, app_openssl_fullpath, app_xmlstarlet_fullpath = \
+                    facturae_lib.library_openssl_xsltproc_xmlstarlet(cr, uid, ids, context)
         result = ""
         cmd = ''
         if type_key == 'PEM':
@@ -275,8 +304,12 @@ class facturae_certificate_library(osv.Model):
             output.close()
         return result
 
-    def check_xml_scheme(self, fname_xml, fname_scheme, fname_out, type_scheme="xsd"):
+    def check_xml_scheme(self, cr, uid, ids, fname_xml, fname_scheme, fname_out, type_scheme="xsd",
+                            context=None):
         #xmlstarlet val -e --xsd cfdv2.xsd cfd_example.xml
+        if context is None:
+            context = {}
+        msj, app_xsltproc_fullpath, app_openssl_fullpath, app_xmlstarlet_fullpath = facturae_lib.library_openssl_xsltproc_xmlstarlet(cr, uid, ids, context)
         if app_xmlstarlet_fullpath:
             cmd = ''
             if type_scheme == 'xsd':

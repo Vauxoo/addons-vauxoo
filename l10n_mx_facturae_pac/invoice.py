@@ -172,7 +172,7 @@ class account_invoice(osv.Model):
         nodeComprobante.setAttribute("sello", sign_str)
         data_dict[comprobante]['sello'] = sign_str
 
-        noCertificado = self._get_noCertificado(context['fname_cer'])
+        noCertificado = self._get_noCertificado(cr, uid, ids, context['fname_cer'])
         if not noCertificado:
             raise osv.except_osv(_('Error in No. Certificate !'), _(
                 "Can't get the Certificate Number of the voucher.\nCkeck your configuration.\n%s") % (msg2))
@@ -231,8 +231,8 @@ class account_invoice(osv.Model):
                     # If dir is in path, save it on real_path
                     fname_scheme = my_path and os.path.join(my_path, 'l10n_mx_facturae', 'SAT', facturae_type + facturae_version +  '.' + scheme_type) or ''
                     #fname_scheme = os.path.join(tools.config["addons_path"], u'l10n_mx_facturae', u'SAT', facturae_type + facturae_version +  '.' + scheme_type )
-                    fname_out = certificate_lib.b64str_to_tempfile( base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__schema_validation_result__' )
-                    result = certificate_lib.check_xml_scheme(fname_data_xml, fname_scheme, fname_out)
+                    fname_out = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__schema_validation_result__' )
+                    result = certificate_lib.check_xml_scheme(cr, uid, ids, fname_data_xml, fname_scheme, fname_out)
                     if result: #Valida el xml mediante el archivo xsd
                         raise osv.except_osv('Error al validar la estructura del xml!', 'Validación de XML versión %s:\n%s'%(facturae_version, result))
         return True
