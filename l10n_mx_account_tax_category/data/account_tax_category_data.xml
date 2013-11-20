@@ -54,13 +54,23 @@
         </record>
      </data>
      
-       <data>
-         <record id="tax_category_ietu" model="account.tax.category">
+    <data>
+        <record id="tax_category_ietu" model="account.tax.category">
             <field name="name">IETU</field>
             <field name="code">IETU</field>
             <field name="active">1</field>
             <field name="sign">1</field>
         </record>
-     </data>
+    </data>
+    
+    <data>
+        <record id="tax_category_iva_part" model="account.tax.category">
+            <field name="name">IVA-PART</field>
+            <field name="code">IVA</field>
+            <field name="active">1</field>
+            <field name="sign">1</field>
+            <field name="value_tax">0.16</field>
+        </record>
+    </data>
     
 </openerp>

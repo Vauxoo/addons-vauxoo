@@ -4,7 +4,7 @@
   I check that Journal is cfdi_pac_sf
 -
   !assert {model: account.invoice, id: account_invoice_cfdi_pac_sf0}:
-    - journal_id.id == ref("l10n_mx_cfdi_pac_sf_journal_0")
+    - journal_id.id == ref("l10n_mx_facturae_pac_sf.l10n_mx_cfdi_pac_sf_journal_0")
 -
   I check that Initially customer invoice state is "Draft"
 -
@@ -132,7 +132,7 @@
   I added update_posted in journal
 -
   !python {model: account.journal}: |
-    journal_id = self.browse(cr, uid, ref("l10n_mx_cfdi_pac_sf_journal_0"))
+    journal_id = self.browse(cr, uid, ref("l10n_mx_facturae_pac_sf.l10n_mx_cfdi_pac_sf_journal_0"))
     self.write(cr, uid, journal_id.id, {'update_posted': True})
 -
   I generate a cancel l10n_mx attachment facturae cfdi_pac_sf by clicking on cancel button

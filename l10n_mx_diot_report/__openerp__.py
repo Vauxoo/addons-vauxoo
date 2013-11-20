@@ -52,8 +52,12 @@
         "l10n_mx_account_tax_category",
         "l10n_mx_base_vat_split",
         "account_voucher_tax",
+        "account_voucher",
+        "l10n_mx_partner_address",
         ],
-    "demo" : [],
+    "demo" : ["demo/account_voucher_tax_demo.xml",
+              "demo/res_partner_demo.xml",
+              "demo/account_invoice_demo.xml",],
     "data" : [
         "partner_view.xml",
         "wizard/wizard_diot_report_view.xml",
@@ -61,7 +65,7 @@
     'js': [],
     'qweb' : [],
     'css':[],
-    'test': [],
+    'test': ["test/validate_diot.yml",],
     "installable" : True,
     "active" : False,
 }
