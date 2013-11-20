@@ -127,12 +127,15 @@ class ir_attachment_facturae_mx(osv.Model):
                 invoices_list = client.factory.create("UUIDS")
                 invoices_list.uuids.string = invoices
                 params = [invoices_list, username, password, taxpayer_id, cerCSD, keyCSD]
+                print 'params---------------------',params
                 result = client.service.cancel(*params)
-                try:
-                    result.Folios or False
-                    result.CodEstatus or False
-                except Exception, e:
-                    raise orm.except_orm(_('Warning'), _(e))
+                print result
+                print "result.folios+++++++++++++++++",result.Folios
+                #~ try:
+                    #~ result.Folios or False
+                    #~ result.CodEstatus or False
+                #~ except Exception, e:
+                    #~ raise orm.except_orm(_('Warning'), _(e))
                 #estatus_uuid = result.EstatusUUID or ''
                 #CodEstatus = _(tools.ustr(result.CodEstatus)) or ''
                 #rfc = result.RfcEmiros or ''
@@ -229,10 +232,6 @@ class ir_attachment_facturae_mx(osv.Model):
                     zip = False  # Validar si es un comprimido zip, con la extension del archivo
                     contrasenaCSD = file_globals.get('password', '')
                     params = [cfdi, user, password]
-                    #~ wsdl_client.soapproxy.config.dumpSOAPOut = 0
-                    #~ wsdl_client.soapproxy.config.dumpSOAPIn = 0
-                    #~ wsdl_client.soapproxy.config.debug = 0
-                    #~ wsdl_client.soapproxy.config.dict_encoding = 'UTF-8'
                     resultado = client.service.stamp(*params)
                     if not resultado.Incidencias or None:
                         msg += _(tools.ustr(resultado.CodEstatus))

@@ -41,7 +41,7 @@ Ubuntu Package Depends:
         "l10n_mx_facturae_report",
         "l10n_mx_facturae_seq", 
         "l10n_mx_ir_attachment_facturae",
-        "l10n_mx_facturae_pac",
+        "l10n_mx_facturae_base",
         "l10n_mx_facturae_group_show_wizards",
         ],
     "demo" : [
