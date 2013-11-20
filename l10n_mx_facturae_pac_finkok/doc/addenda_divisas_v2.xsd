@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.solucionfactible.com/cfd/divisas" xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    targetNamespace="http://www.solucionfactible.com/cfd/divisas" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:element name="Divisa">
+        <xs:complexType mixed="true">
+            <xs:attribute name="codigoISO" use="optional">
+                <xs:annotation>
+                    <xs:documentation>Atributo requerido para expresar el código ISO de la divisa.</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:NMTOKEN">
+                        <xs:length value="3"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="nombre" use="required">
+                <xs:annotation>
+                    <xs:documentation>Atributo requerido para expresar el nombre de la divisa.</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:NMTOKEN">
+                        <xs:minLength value="3"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="tipoDeCambio" use="required" type="xs:decimal">
+                <xs:annotation>
+                    <xs:documentation>Atributo requerido para tipo de cambio de la divisa con respecto la moneda nacional.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

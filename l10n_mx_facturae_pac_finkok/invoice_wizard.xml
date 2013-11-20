@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    
+        <wizard id="wizard_export_invoice_pac_sf"
+            name="wizard.export.invoice.pac.sf"
+            string="Export invoice PAC SF"
+            model="account.invoice"
+            groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"
+        />
+        <wizard id="wizard_cancel_invoice_pac_sf_v5"
+            name="wizard.cancel.invoice.pac.sf.v5"
+            string="Cancel invoice CFDI PAC SF"
+            model="account.invoice"
+            groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"
+        />
+    
+    </data>
+</openerp>
+

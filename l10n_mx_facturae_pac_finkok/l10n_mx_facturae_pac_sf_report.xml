@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+        <report id="account_invoice_facturae_pac_sf_pdf"
+            name="account.invoice.facturae.pac.sf.pdf"
+            string="Factura Electronica PDF PAC SF"
+            model="account.invoice"
+            header="False"
+            rml="l10n_mx_facturae_pac_sf/report/invoice_facturae_pac_sf_pdf.rml"
+            attachment_use="1"
+            attachment="(object.state in ('open','paid')) and (object.cfdi_folio_fiscal) and (object.fname_invoice and (object.fname_invoice + ''))"
+            groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"
+            menu="False"/>
+        
+    </data>
+</openerp>
