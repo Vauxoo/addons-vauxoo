@@ -29,7 +29,6 @@ from openerp.osv import fields, osv, orm
 from openerp import tools
 from openerp import netsvc
 from openerp.tools.misc import ustr
-import wizard
 import base64
 import xml.dom.minidom
 import time
