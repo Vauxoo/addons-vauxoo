@@ -228,14 +228,14 @@ class invoice_facturae_html(report_sxw.rml_parse):
         res={}
         invoice = invoice_obj.browse(self.cr, self.uid, invoice_id)
         pac_params_ids = pac_params_obj.search(self.cr, self.uid, [
-            ('method_type', '=', 'pac_sf_firmar'),
+            ('method_type', 'ilike', 'firmar'),
             ('company_id', '=', invoice.company_id.id), 
             ('active', '=', True)], limit=1, context={})
         pac_params_id = pac_params_ids and pac_params_ids[0] or False
         if pac_params_id:
             data_pac = pac_params_obj.browse(self.cr, self.uid, pac_params_id)
             res.update({
-                'certificate_link' : data_pac.certificate_link or False,
+                'certificate_link' : data_pac.certificate_link or 'hola',
             })
         return res
         

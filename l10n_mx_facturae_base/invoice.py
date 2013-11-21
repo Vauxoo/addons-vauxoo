@@ -45,6 +45,9 @@ import tempfile
 import os
 import codecs
 from datetime import datetime, timedelta
+from pytz import timezone
+import pytz
+
 
 
 def exec_command_pipe(name, *args):
@@ -173,48 +176,6 @@ class account_invoice(osv.Model):
         self._attach_invoice(cr, uid, ids)
         return True
 
-    def ________action_number(self, cr, uid, ids, *args):
-        cr.execute('SELECT id, type, number, move_id, reference '
-                   'FROM account_invoice '
-                   'WHERE id IN ('+','.join(map(str, ids))+')')
-        obj_inv = self.browse(cr, uid, ids)[0]
-        invoice_id__sequence_id = self._get_sequence(cr, uid, ids)  # agregado
-        for (id, invtype, number, move_id, reference) in cr.fetchall():
-            if not number:
-                tmp_context = {
-                    'fiscalyear_id': obj_inv.period_id.fiscalyear_id.id,
-                }
-                if invoice_id__sequence_id[id]:
-                    sid = invoice_id__sequence_id[id]
-                    number = self.pool.get('ir.sequence').get_id(
-                        cr, uid, sid, 'id=%s', context=tmp_context)
-                elif obj_inv.journal_id.invoice_sequence_id:
-                    sid = obj_inv.journal_id.invoice_sequence_id.id
-                    number = self.pool.get('ir.sequence').get_id(
-                        cr, uid, sid, 'id=%s', context=tmp_context)
-                else:
-                    number = self.pool.get('ir.sequence').get_id(
-                        cr, uid,'account.invoice.' + invtype,
-                        'code=%s', context=tmp_context)
-                if not number:
-                    raise osv.except_osv(_('Warning !'), _(
-                        'No hay una secuencia de folios bien definida. !'))
-                if invtype in ('in_invoice', 'in_refund'):
-                    ref = reference
-                else:
-                    ref = self._convert_ref(cr, uid, number)
-                cr.execute('UPDATE account_invoice SET number=%s '
-                           'WHERE id=%d', (number, id))
-                cr.execute('UPDATE account_move_line SET ref=%s '
-                           'WHERE move_id=%d AND (ref is null OR ref = \'\')',
-                          (ref, move_id))
-                cr.execute('UPDATE account_analytic_line SET ref=%s '
-                           'FROM account_move_line '
-                           'WHERE account_move_line.move_id = %d '
-                           'AND account_analytic_line.move_id = account_move_line.id',
-                          (ref, move_id))
-        return True
-
     def _get_fname_invoice(self, cr, uid, ids, field_names=None, arg=False, context={}):
         if not context:
             context = {}
@@ -317,12 +278,38 @@ class account_invoice(osv.Model):
             help='Attachment that generated this invoice'),
         'rate': fields.float('Type of Change', readonly=True,
             help='Rate used in the date of invoice'),
+        'cfdi_cbb': fields.binary('CFD-I CBB'),
+        'cfdi_sello': fields.text('CFD-I Sello', help='Sign assigned by the SAT'),
+        'cfdi_no_certificado': fields.char('CFD-I Certificado', size=32,
+                                           help='Serial Number of the Certificate'),
+        'cfdi_cadena_original': fields.text('CFD-I Cadena Original',
+                                            help='Original String used in the electronic invoice'),
+        'cfdi_fecha_timbrado': fields.datetime('CFD-I Fecha Timbrado',
+                                               help='Date when is stamped the electronic invoice'),
+        'cfdi_fecha_cancelacion': fields.datetime('CFD-I Fecha Cancelacion',
+                                                  help='If the invoice is cancel, this field saved the date when is cancel'),
+        'cfdi_folio_fiscal': fields.char('CFD-I Folio Fiscal', size=64,
+                                         help='Folio used in the electronic invoice'),
     }
 
     _defaults = {
         #'date_invoice': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
-
+    
+    """
+    TODO: reset to draft considerated to delete these fields?
+    def action_cancel_draft(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {
+            'cfdi_cbb': False,
+            'cfdi_sello':False,
+            'cfdi_no_certificado':False,
+            'cfdi_cadena_original':False,
+            'cfdi_fecha_timbrado': False,
+            'cfdi_folio_fiscal': False,
+            'cfdi_fecha_cancelacion': False,
+        })
+        return super(account_invoice, self).action_cancel_draft(cr, uid, ids, args)
+    """
     def copy(self, cr, uid, id, default={}, context=None):
         if context is None:
             context = {}
@@ -332,6 +319,12 @@ class account_invoice(osv.Model):
             'certificado': False,
             'sello': False,
             'cadena_original': False,
+            'cfdi_sello': False,
+            'cfdi_no_certificado': False,
+            'cfdi_cadena_original': False,
+            'cfdi_fecha_timbrado': False,
+            'cfdi_folio_fiscal': False,
+            'cfdi_fecha_cancelacion': False,
         })
         return super(account_invoice, self).copy(cr, uid, id, default, context=context)
 
@@ -478,27 +471,6 @@ class account_invoice(osv.Model):
                         'cadenaoriginal_3_2_l.xslt') or ''
         return file_globals
 
-    def _____________get_facturae_invoice_txt_data(self, cr, uid, ids, context={}):
-        # TODO: Transform date to fmt %d/%m/%Y %H:%M:%S
-        certificate_lib = self.pool.get('facturae.certificate.library')
-        fname_repmensual_xslt = self._get_file_globals(
-            cr, uid, ids, context=context)['fname_repmensual_xslt']
-        fname_tmp = certificate_lib.b64str_to_tempfile(base64.encodestring(''),
-            file_suffix='.txt', file_prefix='openerp__' + (False or '') + \
-            '__repmensual__')
-        rep_mensual = ''
-        for invoice in self.browse(cr, uid, ids, context=context):
-            xml_b64 = invoice.cfd_xml_id and invoice.cfd_xml_id.datas or False
-            if xml_b64:
-                fname_xml = certificate_lib.b64str_to_tempfile(
-                    xml_b64 or '', file_suffix='.xml',
-                    file_prefix='openerp__' + (False or '') + '__xml__')
-                rep_mensual += certificate_lib._transform_xml(
-                    fname_xml=fname_xml, fname_xslt=fname_repmensual_xslt,
-                    fname_out=fname_tmp)
-                rep_mensual += '\r\n'
-        return rep_mensual, fname_tmp
-
     def _get_facturae_invoice_txt_data(self, cr, uid, ids, context={}):
         facturae_datas = self._get_facturae_invoice_dict_data(
             cr, uid, ids, context=context)
@@ -591,43 +563,7 @@ class account_invoice(osv.Model):
         id = ids and ids[0] or False
         if id:
             invoice = self.browse(cr, uid, id, context=context)
-            """
-            def get_id(self, cr, uid, sequence_id, test='id=%s', context=None):
-                if test not in ('id=%s', 'code=%s'):
-                    raise ValueError('invalid test')
-                cr.execute('SELECT id, number_next, prefix, suffix, padding FROM ir_sequence WHERE '+test+' AND active=%s FOR UPDATE', (sequence_id, True))
-                res = cr.dictfetchone()
-                if res:
-            """
-            """
-            tmp_context = {
-                'fiscalyear_id' : invoice.period_id.fiscalyear_id.id,
-            }
-            if invoice.journal_id.invoice_sequence_id:
-                sid = invoice.journal_id.invoice_sequence_id.id
-                number = self.pool.get('ir.sequence').get_id(cr, uid, sid, 'id=%s', context=tmp_context)
-            else:
-                number = self.pool.get('ir.sequence').get_id(cr, uid,
-                                                             'account.invoice.' + invtype,
-                                                             'code=%s',
-                                                             context=tmp_context)
-
-            if not number:
-                raise osv.except_osv('Warning !', 'There is no active invoice sequence defined for the journal !')
-            """
             sequence_id = self._get_invoice_sequence(cr, uid, [id])[id]
-            """
-            if invoice.journal_id.invoice_sequence_id or invoice_id__sequence_id[id]:
-                sequence_id = invoice_id__sequence_id[id] or invoice.journal_id.invoice_sequence_id.id
-            else:
-                test = 'code=%s'
-                test_value = 'account.invoice.' + invoice.type
-                test2 = '\n--company_id=%s\n'
-                test2_value = invoice.company_id.id
-                cr.execute('SELECT id, number_next, prefix, suffix, padding FROM ir_sequence WHERE '+test + test2+ ' AND active=%s FOR UPDATE', (test_value, test2_value, True))
-                res = cr.dictfetchone()
-                sequence_id = res and res['id'] or False
-            """
             if sequence_id:
                 # NO ES COMPATIBLE CON TINYERP approval_id =
                 # sequence.approval_id.id
@@ -1276,15 +1212,9 @@ class account_invoice(osv.Model):
             date_ctx = {'date': invoice.date_invoice_tz and time.strftime(
                 '%Y-%m-%d', time.strptime(invoice.date_invoice_tz,
                 '%Y-%m-%d %H:%M:%S')) or False}
-            # rate = self.pool.get('res.currency').compute(cr, uid, invoice.currency_id.id, invoice.company_id.currency_id.id, 1, round=False, context=date_ctx, account=None, account_invert=False)
-            # rate = 1.0/self.pool.get('res.currency')._current_rate(cr, uid,
-            # [invoice.currency_id.id], name=False, arg=[],
-            # context=date_ctx)[invoice.currency_id.id]
             currency = self.pool.get('res.currency').browse(
                 cr, uid, [invoice.currency_id.id], context=date_ctx)[0]
             rate = currency.rate != 0 and 1.0/currency.rate or 0.0
-            # print "currency.rate",currency.rate
-
             invoice_data_parent['rate'] = rate
 
         invoice_datetime = invoice_data_parents[0].get('invoice_datetime',
@@ -1318,9 +1248,6 @@ class account_invoice(osv.Model):
                 raise osv.except_osv(_('Missing Fiscal Regime!'), _(
                     'The Fiscal Regime of the company issuing of fiscal voucher is a data required'))
 
-            #~ invoice_data_parents[0]['Comprobante'][
-                #~ 'xsi:schemaLocation'] = 'http://www.sat.gob.mx/cfd/2 http://www.sat.gob.mx/sitio_internet/cfd/2/cfdv22.xsd'
-            #~ invoice_data_parents[0]['Comprobante']['version'] = '2.2'
             invoice_data_parents[0]['cfdi:Comprobante'][
                 'TipoCambio'] = invoice.rate or 1
             invoice_data_parents[0]['cfdi:Comprobante'][
@@ -1360,3 +1287,161 @@ class account_invoice(osv.Model):
         res['value'][
             'acc_payment'] = acc_partner_bank and acc_partner_bank.id or False
         return res
+        
+    def cfdi_data_write(self, cr, uid, ids, cfdi_data, context={}):
+        """
+        @params cfdi_data : * TODO
+        """
+        if not context:
+            context = {}
+        attachment_obj = self.pool.get('ir.attachment')
+        cfdi_xml = cfdi_data.pop('cfdi_xml')
+        if cfdi_xml:
+            self.write(cr, uid, ids, cfdi_data)
+            cfdi_data[
+                'cfdi_xml'] = cfdi_xml  # Regresando valor, despues de hacer el write normal
+        return True
+    def _get_file(self, cr, uid, inv_ids, context={}):
+        if not context:
+            context = {}
+        id = inv_ids[0]
+        invoice = self.browse(cr, uid, [id], context=context)[0]
+        fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
+            '.xml' or ''
+        aids = self.pool.get('ir.attachment').search(cr, uid, [(
+            'datas_fname', '=', invoice.fname_invoice+'.xml'), (
+                'res_model', '=', 'account.invoice'), ('res_id', '=', id)])
+        xml_data = ""
+        if aids:
+            brow_rec = self.pool.get('ir.attachment').browse(cr, uid, aids[0])
+            if brow_rec.datas:
+                xml_data = base64.decodestring(brow_rec.datas)
+        else:
+            fname, xml_data = self._get_facturae_invoice_xml_data(
+                cr, uid, inv_ids, context=context)
+            self.pool.get('ir.attachment').create(cr, uid, {
+                'name': fname_invoice,
+                'datas': base64.encodestring(xml_data),
+                'datas_fname': fname_invoice,
+                'res_model': 'account.invoice',
+                'res_id': invoice.id,
+            }, context=None)#Context, because use a variable type of our code but we dont need it.
+        self.fdata = base64.encodestring(xml_data)
+        msg = _("Press in the button  'Upload File'")
+        return {'file': self.fdata, 'fname': fname_invoice,
+                'name': fname_invoice, 'msg': msg}
+
+    def add_node(self, node_name=None, attrs=None, parent_node=None,
+                 minidom_xml_obj=None, attrs_types=None, order=False):
+        """
+            @params node_name : Name node to added
+            @params attrs : Attributes to add in node
+            @params parent_node : Node parent where was add new node children
+            @params minidom_xml_obj : File XML where add nodes
+            @params attrs_types : Type of attributes added in the node
+            @params order : If need add the params in order in the XML, add a
+                    list with order to params
+        """
+        if not order:
+            order = attrs
+        new_node = minidom_xml_obj.createElement(node_name)
+        for key in order:
+            if attrs_types[key] == 'attribute':
+                new_node.setAttribute(key, attrs[key])
+            elif attrs_types[key] == 'textNode':
+                key_node = minidom_xml_obj.createElement(key)
+                text_node = minidom_xml_obj.createTextNode(attrs[key])
+
+                key_node.appendChild(text_node)
+                new_node.appendChild(key_node)
+        parent_node.appendChild(new_node)
+        return new_node
+
+    def add_addenta_xml(self, cr, ids, xml_res_str=None, comprobante=None, context={}):
+        """
+         @params xml_res_str : File XML
+         @params comprobante : Name to the Node that contain the information the XML
+        """
+        if xml_res_str:
+            node_Addenda = xml_res_str.getElementsByTagName('cfdi:Addenda')
+            if len(node_Addenda) == 0:
+                nodeComprobante = xml_res_str.getElementsByTagName(
+                    comprobante)[0]
+                node_Addenda = self.add_node(
+                    'cfdi:Addenda', {}, nodeComprobante, xml_res_str, attrs_types={})
+                node_Partner_attrs = {
+                    'xmlns:sf': "http://timbrado.solucionfactible.com/partners",
+                    'xsi:schemaLocation': "http://timbrado.solucionfactible.com/partners https://solucionfactible.com/timbrado/partners/partners.xsd",
+                    'id': "150731"
+                }
+                node_Partner_attrs_types = {
+                    'xmlns:sf': 'attribute',
+                    'xsi:schemaLocation': 'attribute',
+                    'id': 'attribute'
+                }
+                node_Partner = self.add_node('sf:Partner', node_Partner_attrs,
+                                             node_Addenda, xml_res_str, attrs_types=node_Partner_attrs_types)
+            else:
+                node_Partner_attrs = {
+                    'xmlns:sf': "http://timbrado.solucionfactible.com/partners",
+                    'xsi:schemaLocation': "http://timbrado.solucionfactible.com/partners https://solucionfactible.com/timbrado/partners/partners.xsd",
+                    'id': "150731"
+                }
+                node_Partner_attrs_types = {
+                    'xmlns:sf': 'attribute',
+                    'xsi:schemaLocation': 'attribute',
+                    'id': 'attribute'
+                }
+                node_Partner = self.add_node('sf:Partner', node_Partner_attrs,
+                                             node_Addenda, xml_res_str, attrs_types=node_Partner_attrs_types)
+        return xml_res_str
+
+    def _get_type_sequence(self, cr, uid, ids, context=None):
+        ir_seq_app_obj = self.pool.get('ir.sequence.approval')
+        invoice = self.browse(cr, uid, ids[0], context=context)
+        sequence_app_id = ir_seq_app_obj.search(cr, uid, [(
+            'sequence_id', '=', invoice.invoice_sequence_id.id)], context=context)
+        type_inv = 'cfd22'
+        if sequence_app_id:
+            type_inv = ir_seq_app_obj.browse(
+                cr, uid, sequence_app_id[0], context=context).type
+        if 'cfdi' in type_inv:
+            comprobante = 'cfdi:Comprobante'
+        else:
+            comprobante = 'Comprobante'
+        return comprobante
+
+    def _get_time_zone(self, cr, uid, invoice_id, context=None):
+        res_users_obj = self.pool.get('res.users')
+        userstz = res_users_obj.browse(cr, uid, [uid])[0].partner_id.tz
+        a = 0
+        if userstz:
+            hours = timezone(userstz)
+            fmt = '%Y-%m-%d %H:%M:%S %Z%z'
+            now = datetime.now()
+            loc_dt = hours.localize(datetime(now.year, now.month, now.day,
+                                             now.hour, now.minute, now.second))
+            timezone_loc = (loc_dt.strftime(fmt))
+            diff_timezone_original = timezone_loc[-5:-2]
+            timezone_original = int(diff_timezone_original)
+            s = str(datetime.now(pytz.timezone(userstz)))
+            s = s[-6:-3]
+            timezone_present = int(s)*-1
+            a = timezone_original + ((
+                timezone_present + timezone_original)*-1)
+        return a
+    
+    def _get_file_cancel(self, cr, uid, inv_ids, context={}):
+        inv_ids = inv_ids[0]
+        atta_obj = self.pool.get('ir.attachment')
+        atta_id = atta_obj.search(cr, uid, [('res_id', '=', inv_ids), (
+            'name', 'ilike', '%.xml')], context=context)
+        res = {}
+        if atta_id:
+            atta_brw = atta_obj.browse(cr, uid, atta_id, context)[0]
+            inv_xml = atta_brw.datas or False
+        else:
+            inv_xml = False
+            raise osv.except_osv(('State of Cancellation!'), (
+                "This invoice hasn't stamped, so that not possible cancel."))
+        return {'file': inv_xml}

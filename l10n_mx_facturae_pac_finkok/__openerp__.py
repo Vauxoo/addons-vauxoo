@@ -45,9 +45,9 @@ Ubuntu Package Depends:
         "l10n_mx_facturae_group_show_wizards",
         ],
     "demo" : [
-        "demo/l10n_mx_facturae_pac_sf_demo.xml",
+        "demo/l10n_mx_facturae_pac_finkok_demo.xml",
         "demo/l10n_mx_facturae_seq_demo.xml",
-        "demo/account_invoice_cfdi_pac_sf_demo.xml",
+        "demo/account_invoice_cfdi_pac_finkok_demo.xml",
     ],
     "data" : [
         #"security/l10n_mx_facturae_pac_sf_security.xml",

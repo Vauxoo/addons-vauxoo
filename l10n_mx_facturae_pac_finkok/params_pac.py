@@ -2,7 +2,7 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
@@ -41,8 +41,8 @@ class params_pac(osv.Model):
         types = super(params_pac, self)._get_method_type_selection(
             cr, uid, context=context)
         types.extend([
-            ('pac_sf_cancelar', _('PAC SF - Cancel')),
-            ('pac_sf_firmar', _('PAC SF - Sign')),
+            ('pac_finkok_cancelar', _('PAC Finkok - Cancel')),
+            ('pac_finkok_firmar', _('PAC Finkok - Sign')),
         ])
         return types
 

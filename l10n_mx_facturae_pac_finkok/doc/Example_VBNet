@@ -1,0 +1,149 @@
+A continuación la información para Visual Basic .Net:
+
+Primero agregamos la referencia al servicio web, para ello escogemos la opción proyecto de la barra de menú  y en la lista desplegable escogemos la opción Agregar referencia web, si no aparece dicha opción, seleccionamos la que dice agregar referencia de servicio
+
+Luego, aparecerá una nueva ventana, ahí marcamos la opción avanzadas.
+
+Posteriormente, se abrirá otra nueva ventana, ahí hacemos clic sobre el botón Agregar referencia web
+
+Bien, en la ventana que aparecerá copiamos la WSDL del Servicio Web que corresponde la la url que lo identifica, la colocas donde dice dirección URL y presionas el botón Ir.
+
+Automáticamente se comienza a explorar el webservice y a listar todos los métodos o funciones que posee.
+
+Luego le colocamos el nombre de referencia web a nuestro servicio y presionamos el botón agregar referencia.
+
+Listo, una vez agregada la referencia se puede observar en el explorador de soluciones la estructura de nuestro web service, podemos pasar ahora a codificar en cada elemento de nuestro formulario.
+
+Imports cfdi2.com.finkok.demofacturacion 'Importamos el Web service.
+Imports System.Text
+Public Class rfmTimbrar
+    Private Sub btnTimbrar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnTimbrar.Click
+        Dim xml As String = "CFDIdePrueba.xml"
+        Try
+            Dim SelloSAT As String = ""
+            Dim noCertificadoSAT As String = ""
+            Dim FechaTimbrado As String = ""
+            Dim uuid As String = ""
+            Dim xmlTimbrado As String = ""
+            Dim xmlCfdi As New System.Xml.XmlDocument()
+            xmlCfdi.Load(xml)
+            Dim timbrado As New cfdi2.com.finkok.demofacturacion.StampSOAP
+            Dim timb As New stamp
+            timb.xml = stringToBase64ByteArray(xmlCfdi.OuterXml)
+            timb.username = "user"
+            timb.password = "pass"
+            Dim ResponseTimbrar As New stampResponse
+            Dim MensajeIncidencia As String = ""
+            Dim CodigoIncidencia As String = ""
+            ResponseTimbrar = timbrado.stamp(timb)
+            If DirectCast(ResponseTimbrar.stampResult, AcuseRecepcionCFDI).Incidencias.Length > 0 Then
+                CodigoIncidencia = DirectCast(ResponseTimbrar.stampResult, AcuseRecepcionCFDI).Incidencias(0).CodigoError
+                MensajeIncidencia = DirectCast(ResponseTimbrar.stampResult, AcuseRecepcionCFDI).Incidencias(0).MensajeIncidencia
+            Else
+                CodigoIncidencia = "000"
+                MensajeIncidencia = "Timbrado Satisfactorio"
+            End If
+            If CodigoIncidencia = "000" Then
+                uuid = ResponseTimbrar.stampResult.UUID
+                xmlTimbrado = ResponseTimbrar.stampResult.xml
+                FechaTimbrado = ResponseTimbrar.stampResult.Fecha
+                SelloSAT = ResponseTimbrar.stampResult.SatSeal
+                noCertificadoSAT = ResponseTimbrar.stampResult.NoCertificadoSAT
+                txtUUID.Text = uuid
+                xmlCfdi.LoadXml(xmlTimbrado)
+                xmlCfdi.Save(xml)
+
+            ElseIf CodigoIncidencia = "307" Then
+                Dim ResponseIsTimbrado As New stampedResponse
+                Dim isTimbrado As New stamped
+                isTimbrado.username = "user"
+                isTimbrado.password = "password"
+                isTimbrado.xml = stringToBase64ByteArray(xmlCfdi.OuterXml)
+                ResponseIsTimbrado = timbrado.stamped(isTimbrado)
+                uuid = ResponseIsTimbrado.stampedResult.UUID
+                xmlTimbrado = ResponseIsTimbrado.stampedResult.xml
+                FechaTimbrado = ResponseIsTimbrado.stampedResult.Fecha
+                SelloSAT = ResponseIsTimbrado.stampedResult.SatSeal
+                noCertificadoSAT = ResponseIsTimbrado.stampedResult.NoCertificadoSAT
+                xmlCfdi.LoadXml(xmlTimbrado)
+                xmlCfdi.Save(xml)
+            Else
+                MessageBox.Show(MensajeIncidencia)
+                Exit Sub
+            End If
+
+            MessageBox.Show("Timbrado exitoso.")
+
+        Catch ex As Exception
+            MessageBox.Show("No se realizo el timbrado " & ex.Message)
+        Finally
+            Windows.Forms.Cursor.Current = Cursors.Default
+        End Try
+    End Sub
+
+    Public Function stringToBase64ByteArray(ByVal input As String) As Byte()
+        Dim ret As Byte() = Encoding.UTF8.GetBytes(input)
+        Dim s As String = Convert.ToBase64String(ret)
+        ret = Convert.FromBase64String(s)
+        Return ret
+    End Function
+
+    Private Sub rfmTimbrar_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        CheckForIllegalCrossThreadCalls = False
+    End Sub
+End Class
+
+Adicionalmente envió la función para convertir la llave y el certificado en PEM para consumir los web services:
+
+    Public Sub FabricaPEM()
+        Dim ConvierteCerAPem As String
+        Dim ConvierteKeyAPem As String
+        Dim EncriptaKey As String
+        Dim ArchivoCer As String = "c:\OOOA520911GS2_1210231334S.cer"
+        Dim ArchivoKey As String = "c:\OOOA520911GS2_1210231334S.key"
+        Dim NombreArchivoCertificado As String = Path.GetFileName(ArchivoCer)
+        Dim NombreArchivoLlave As String = Path.GetFileName(ArchivoKey)
+        If File.Exists(RutaAplicacion & NombreArchivoCertificado & ".pem") = TrueThen
+            File.Delete(RutaAplicacion & NombreArchivoCertificado & ".pem")
+        End If
+        If File.Exists(RutaAplicacion & NombreArchivoLlave & ".pem") = True Then
+            File.Delete(RutaAplicacion & NombreArchivoLlave & ".pem")
+        End If
+        ConvierteCerAPem = RutaAplicacion & "openssl.exe x509 -inform DER -outform PEM -in " & ArchivoCer & " -pubkey -out " & RutaAplicacion & NombreArchivoCertificado & ".pem"
+        ConvierteKeyAPem = RutaAplicacion & "openssl.exe pkcs8 -inform DER -in " & ArchivoKey & " -passin pass:12345678a -out " & RutaAplicacion & NombreArchivoLlave &".pem"
+        EncriptaKey = RutaAplicacion & "openssl.exe rsa -in " & RutaAplicacion & NombreArchivoLlave & ".pem" & " -des3 -out " & RutaAplicacion & NombreArchivoLlave &".enc" & " -passout pass:" & quote & PassPhrassFINKOK & quote
+        'Crea el archivo Certificado.BAT
+        Dim oSW As New StreamWriter(RutaAplicacion & "Certificado.bat")
+        oSW.WriteLine(ConvierteCerAPem)
+        oSW.WriteLine(ConvierteKeyAPem)
+        oSW.WriteLine(EncriptaKey)
+        oSW.Close()
+        EjecutarPrograma(RutaAplicacion & "Certificado.bat")
+        Dim cPEM As StreamReader = New StreamReader(RutaAplicacion & NombreArchivoCertificado & ".pem")
+        CertificadoPEM = cPEM.ReadToEnd
+        cPEM.Close()
+        Dim kPEM As StreamReader = New StreamReader(RutaAplicacion & NombreArchivoLlave & ".enc")
+        LlavePEM = kPEM.ReadToEnd
+        kPEM.Close()
+        If File.Exists(RutaAplicacion & NombreArchivoCertificado & ".pem") = TrueThen
+
+            File.Delete(RutaAplicacion & NombreArchivoCertificado & ".pem")
+        End If
+        If File.Exists(RutaAplicacion & NombreArchivoLlave & ".pem") = True Then
+
+            File.Delete(RutaAplicacion & NombreArchivoLlave & ".pem")
+        End If
+        If File.Exists(RutaAplicacion & NombreArchivoLlave & ".enc") = True Then
+            File.Delete(RutaAplicacion & NombreArchivoLlave & ".enc")
+        End If
+     End Sub
+Después de hacer estos archivos, puedes convertirlos a base64 de la siguiente forma:
+Dim cPEMbytes As Byte() = stringToBase64ByteArray(CertificadoPEM)
+Dim kPEMbytes As Byte() = stringToBase64ByteArray(LlavePEM)
+
+Y proceder a terminar el consumo del web service de cancelación en base a la documentación que te proporcionamos.
+
+Saludos,
+
+David Cruz.
+www.finkok.com

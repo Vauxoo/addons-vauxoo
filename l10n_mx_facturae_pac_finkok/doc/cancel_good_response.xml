@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<senv:Envelope xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing" xmlns:tns="wis.soap.cancel" xmlns:plink="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:s3="uuid" xmlns:senc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s1="folio" xmlns:s0="queryresult" xmlns:s12env="http://www.w3.org/2003/05/soap-envelope/" xmlns:s5="receiptresult" xmlns:s4="cancelacfdresult" xmlns:s2="wis.soap.cancellation" xmlns:s12enc="http://www.w3.org/2003/05/soap-encoding/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:senv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<senv:Body>
+		<tns:cancelResponse>
+			<tns:cancelResult>
+				<s4:Folios>
+					<s1:Folio>
+						<s1:UUID>6308DF45-0D7F-4060-9121-6C8639FE1C14</s1:UUID>
+						<s1:EstatusUUID>201</s1:EstatusUUID>
+					</s1:Folio>
+				</s4:Folios>
+				<s4:Acuse>
+					&lt;?xml version="1.0" ?&gt;
+&lt;s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+	&lt;s:Body xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+		&lt;CancelaCFDResponse xmlns="http://cancelacfd.sat.gob.mx"&gt;
+			&lt;CancelaCFDResult Fecha="2013-03-27T17:56:59.9875109" RfcEmisor="AAQM610917QJA"&gt;
+				&lt;Folios&gt;
+					&lt;UUID&gt;
+						BE4E6C92-310D-478F-B204-5DD2FCE2857A
+					&lt;/UUID&gt;
+					&lt;EstatusUUID&gt;
+						205
+					&lt;/EstatusUUID&gt;
+				&lt;/Folios&gt;
+				&lt;Signature Id="SelloSAT" xmlns="http://www.w3.org/2000/09/xmldsig#"&gt;
+					&lt;SignedInfo&gt;
+						&lt;CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/&gt;
+						&lt;SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#hmac-sha512"/&gt;
+						&lt;Reference URI=""&gt;
+							&lt;Transforms&gt;
+								&lt;Transform Algorithm="http://www.w3.org/TR/1999/REC-xpath-19991116"&gt;
+									&lt;XPath&gt;
+										not(ancestor-or-self::*[local-name()='Signature'])
+									&lt;/XPath&gt;
+								&lt;/Transform&gt;
+							&lt;/Transforms&gt;
+							&lt;DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/&gt;
+							&lt;DigestValue&gt;
+								SZDlBluHBXHNJIJHXKw2kJwthNiZfyLAG35WYUA9swJiMippR5oYC1oCVNj49VUKMkAXGvsW62+0uiA2hi8WeQ==
+							&lt;/DigestValue&gt;
+						&lt;/Reference&gt;
+					&lt;/SignedInfo&gt;
+					&lt;SignatureValue&gt;
+						EGWe8oJAttPNWe8+n4/4AbFf9+jHPIGOBajtS0Ch3B+KWBB4baP40XoXtTDMhkkCk+WcCGSLaZQnw1sf+VWDTA==
+					&lt;/SignatureValue&gt;
+					&lt;KeyInfo&gt;
+						&lt;KeyName&gt;
+							00001088888800000093
+						&lt;/KeyName&gt;
+						&lt;KeyValue&gt;
+							&lt;RSAKeyValue&gt;
+								&lt;Modulus&gt;
+									yxMvUucuS+s3aeWTFZvJrrFWIdes7kIDJmO7DA5DP+ZTapofNt37fgeIHlTUdAVvd/fDKhfiwNSh+vbrNbD58X3UEdQor3ngb6zpjrDjgYsedckPLv6fro4DO0NXLCdALFqhN8ARyX77kYBnvIj1fOSVp401Vc3urLUtiEm16Kle3tOyWhfjgFzdK3oAIXF8oeei/GburWbJnpP+NeGaHVE5bkxLCBp5757nKVonXwzpfpEGuBp204NGkI2/jyA2EH8wyRN4yUvzjT7IJYrHng23klRDlJoRYwa98QQPdQSTpcrlNu8nLhpQdI/zMTLoNF2NiBCkQNuAMacKhnvlVw==
+								&lt;/Modulus&gt;
+								&lt;Exponent&gt;
+									AQAB
+								&lt;/Exponent&gt;
+							&lt;/RSAKeyValue&gt;
+						&lt;/KeyValue&gt;
+					&lt;/KeyInfo&gt;
+				&lt;/Signature&gt;
+			&lt;/CancelaCFDResult&gt;
+		&lt;/CancelaCFDResponse&gt;
+	&lt;/s:Body&gt;
+&lt;/s:Envelope&gt;
+				</s4:Acuse>
+				<s4:Fecha>2013-06-14 12:31:11.560654</s4:Fecha>
+				<s4:RfcEmisor>CSO050217EA1</s4:RfcEmisor>
+			</tns:cancelResult>
+		</tns:cancelResponse>
+	</senv:Body>
+</senv:Envelope>
