@@ -142,25 +142,6 @@ class ir_attachment_facturae_mx(osv.Model):
                     #~ status = True
                     else:
                         raise orm.except_orm(_('Warning'), _('Mensaje %s') % (msg))
-                #~ try:
-                    #~ result.Folios or False
-                    #~ result.CodEstatus or False
-                #~ except Exception, e:
-                    #~ raise orm.except_orm(_('Warning'), _(e))
-                #estatus_uuid = result.EstatusUUID or ''
-                #CodEstatus = _(tools.ustr(result.CodEstatus)) or ''
-                #rfc = result.RfcEmiros or ''
-                #acuse = result.Acuse or ''
-                #fecha = result.Fecha or ''
-                #~ if result:
-                    #~ msg += _('\n- The process of cancellation has completed correctly.\n\
-                                #~ The uuid cancelled is: ') + folio_cancel
-                    #~ invoice_obj.write(cr, uid, [invoice.id], {
-                                    #~ 'cfdi_fecha_cancelacion': time.strftime('%Y-%m-%d %H:%M:%S')
-                    #~ })
-                    #~ status = True
-                #~ else:
-                    #~ raise orm.except_orm(_('Warning'), _('Mensaje') % (msg))
             else:
                 msg = _('Not found information of webservices of PAC, verify that the configuration of PAC is correct')
         return {'message': msg}
@@ -242,6 +223,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     contrasenaCSD = file_globals.get('password', '')
                     params = [cfdi, user, password]
                     resultado = client.service.stamp(*params)
+                    print 'resultado en stamp',resultado
                     if not resultado.Incidencias or None:
                         msg += _(tools.ustr(resultado.CodEstatus))
                         folio_fiscal = resultado.UUID or False
@@ -255,10 +237,10 @@ class ir_attachment_facturae_mx(osv.Model):
                         fecha_timbrado = fecha_timbrado and datetime.strptime(
                             fecha_timbrado, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz) or False
                         cfdi_data = {
-                            #'cfdi_cbb': resultado['resultados']['qrCode'] or False,  # ya lo regresa en base64
+                            #~ 'cfdi_cbb': resultado['resultados']['qrCode'] or False,  # ya lo regresa en base64
                             'cfdi_sello': resultado.SatSeal or False,
                             'cfdi_no_certificado': resultado.NoCertificadoSAT or False,
-                            #'cfdi_cadena_original': resultado   or False,
+                            #~ 'cfdi_cadena_original': resultado   or False,
                             'cfdi_fecha_timbrado': resultado.Fecha or False,
                             'cfdi_xml': resultado.xml or '',  # este se necesita en uno que no es base64
                             'cfdi_folio_fiscal': folio_fiscal
