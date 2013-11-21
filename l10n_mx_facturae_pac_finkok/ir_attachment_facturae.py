@@ -75,14 +75,14 @@ class ir_attachment_facturae_mx(osv.Model):
         factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_sign()
         if factura_mx_type__fc == None:
             factura_mx_type__fc = {}
-        factura_mx_type__fc.update({'cfdi32_pac_finkok': self._upload_ws_file})
+        factura_mx_type__fc.update({'cfdi32_pac_finkok': self._finkok_stamp})
         return factura_mx_type__fc
     
     def get_driver_fc_cancel(self):
         factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_cancel()
         if factura_mx_type__fc == None:
             factura_mx_type__fc = {}
-        factura_mx_type__fc.update({'cfdi32_pac_finkok': self.sf_cancel})
+        factura_mx_type__fc.update({'cfdi32_pac_finkok': self._finkok_cancel})
         return factura_mx_type__fc
         
     _columns = {
@@ -90,7 +90,7 @@ class ir_attachment_facturae_mx(osv.Model):
                                  required=True, readonly=True, help="Type of Electronic Invoice"),
     }
     
-    def sf_cancel(self, cr, uid, ids, context=None):
+    def _finkok_cancel(self, cr, uid, ids, context=None):
         msg = ''
         folio_cancel = ''
         invoices = []
@@ -101,7 +101,7 @@ class ir_attachment_facturae_mx(osv.Model):
             status = False
             invoice = ir_attachment_facturae_mx_id.invoice_id
             pac_params_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'pac_sf_cancelar'),
+                ('method_type', '=', 'pac_finkok_cancelar'),
                 ('company_id', '=', invoice.company_emitter_id.id),
                 ('active', '=', True),
             ], limit=1, context=context)
@@ -165,7 +165,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 msg = _('Not found information of webservices of PAC, verify that the configuration of PAC is correct')
         return {'message': msg}
     
-    def _upload_ws_file(self, cr, uid, ids, fdata=None, context={}):
+    def _finkok_stamp(self, cr, uid, ids, fdata=None, context={}):
         """
         @params fdata : File.xml codification in base64
         """
@@ -185,7 +185,7 @@ class ir_attachment_facturae_mx(osv.Model):
             if tools.config['test_report_directory']:#TODO: Add if test-enabled:
                 ir_attach_facturae_mx_file_input = ir_attachment_facturae_mx_id.file_input and ir_attachment_facturae_mx_id.file_input or False
                 fname_suffix = ir_attach_facturae_mx_file_input and ir_attach_facturae_mx_file_input.datas_fname or ''
-                open( os.path.join(tools.config['test_report_directory'], 'l10n_mx_facturae_pac_sf' + '_' + \
+                open( os.path.join(tools.config['test_report_directory'], 'l10n_mx_facturae_pac_finkok' + '_' + \
                   'before_upload' + '-' + fname_suffix), 'wb+').write( xml_res_str_addenda )
             compr = xml_res_addenda.getElementsByTagName(comprobante)[0]
             date = compr.attributes['fecha'].value
@@ -198,7 +198,7 @@ class ir_attachment_facturae_mx(osv.Model):
             folio_fiscal = ''
             cfdi_xml = False
             pac_params_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'pac_sf_firmar'), (
+                ('method_type', '=', 'pac_finkok_firmar'), (
                     'company_id', '=', invoice.company_emitter_id.id), (
                         'active', '=', True)], limit=1, context=context)
             if pac_params_ids:
@@ -209,8 +209,6 @@ class ir_attachment_facturae_mx(osv.Model):
                 wsdl_url = pac_params.url_webservice
                 namespace = pac_params.namespace
                 #agregar otro campo para la URL de testing y poder validar sin cablear
-                url_sf = 'https://solucionfactible.com/ws/services/Timbrado'
-                testing_url_sf = 'http://testing.solucionfactible.com/ws/services/Timbrado'
                 url_finkok = 'http://facturacion.finkok.com/servicios/soap/stamp.wsdl'
                 testing_url_finkok = 'http://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl'
                 #~ Dir_pac=http://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl
