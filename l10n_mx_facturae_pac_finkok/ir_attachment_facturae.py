@@ -157,21 +157,14 @@ class ir_attachment_facturae_mx(osv.Model):
             comprobante = invoice_obj._get_type_sequence(
                 cr, uid, [invoice.id], context=context)
             cfd_data = base64.decodestring(fdata or invoice_obj.fdata)
-            xml_res_str = xml.dom.minidom.parseString(cfd_data)
-            xml_res_addenda = invoice_obj.add_addenta_xml(
-                cr, uid, xml_res_str, comprobante, context=context)
-            xml_res_str_addenda = xml_res_addenda.toxml('UTF-8')
-            xml_res_str_addenda = xml_res_str_addenda.replace(codecs.BOM_UTF8, '')
-            
             if tools.config['test_report_directory']:#TODO: Add if test-enabled:
                 ir_attach_facturae_mx_file_input = ir_attachment_facturae_mx_id.file_input and ir_attachment_facturae_mx_id.file_input or False
                 fname_suffix = ir_attach_facturae_mx_file_input and ir_attach_facturae_mx_file_input.datas_fname or ''
                 open( os.path.join(tools.config['test_report_directory'], 'l10n_mx_facturae_pac_finkok' + '_' + \
-                  'before_upload' + '-' + fname_suffix), 'wb+').write( xml_res_str_addenda )
-            compr = xml_res_addenda.getElementsByTagName(comprobante)[0]
-            date = compr.attributes['fecha'].value
+                  'before_upload' + '-' + fname_suffix), 'wb+').write( cfd_data )
+            date = invoice.date_invoice
             date_format = datetime.strptime(
-                date, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')
+                date, '%Y-%m-%d').strftime('%Y-%m-%d')
             context['date'] = date_format
             invoice_ids = [invoice.id]
             file = False
@@ -218,7 +211,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     keyCSD = fname_key_no_pem and base64.encodestring(
                         open(fname_key_no_pem, "r").read()) or ''
                     #keyCSD = open(fname_key_no_pem).read().encode('base64') #Mejor forma de hacerlo
-                    cfdi = base64.encodestring(xml_res_str_addenda)
+                    cfdi = base64.encodestring(cfd_data)
                     zip = False  # Validar si es un comprimido zip, con la extension del archivo
                     contrasenaCSD = file_globals.get('password', '')
                     params = [cfdi, user, password]
