@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<senv:Envelope xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing" xmlns:tns="wis.soap.cancel" xmlns:plink="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:s3="uuid" xmlns:senc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s1="folio" xmlns:s0="queryresult" xmlns:s12env="http://www.w3.org/2003/05/soap-envelope/" xmlns:s5="receiptresult" xmlns:s4="cancelacfdresult" xmlns:s2="wis.soap.cancellation" xmlns:s12enc="http://www.w3.org/2003/05/soap-encoding/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:senv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<senv:Body>
+		<tns:cancelResponse>
+			<tns:cancelResult>
+				<s4:Folios>
+					<s1:Folio>
+						<s1:UUID>6308DF45-0D7F-4060-9121-6C8639FE1C14</s1:UUID>
+						<s1:EstatusUUID>202</s1:EstatusUUID>
+					</s1:Folio>
+				</s4:Folios>
+				<s4:Acuse></s4:Acuse>
+				<s4:Fecha>2013-06-14 12:31:11.560654</s4:Fecha>
+				<s4:RfcEmisor>CSO050217EA1</s4:RfcEmisor>
+			</tns:cancelResult>
+		</tns:cancelResponse>
+	</senv:Body>
+</senv:Envelope>

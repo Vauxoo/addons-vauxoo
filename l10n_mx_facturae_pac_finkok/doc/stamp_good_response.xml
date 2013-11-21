@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<senv:Envelope xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing" xmlns:tns="wis.soap.stamp" xmlns:plink="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:senc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s1="acuse.recepcion.cfdi" xmlns:s0="incidencia" xmlns:s12env="http://www.w3.org/2003/05/soap-envelope/" xmlns:s2="queryresult" xmlns:s12enc="http://www.w3.org/2003/05/soap-encoding/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:senv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<senv:Body>
+		<tns:stampResponse>
+		<tns:stampResult>
+			<s1:xml>
+				&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;cfdi:Comprobante LugarExpedicion="MORELIA, Michoacán" Moneda="pesos" certificado="MIIEzDCCA7SgAwIBAgIUMDAwMDEwMDAwMDAyMDEyMzM3OTYwDQYJKoZIhvcNAQEFBQAwggGVMTgwNgYDVQQDDC9BLkMuIGRlbCBTZXJ2aWNpbyBkZSBBZG1pbmlzdHJhY2nDs24gVHJpYnV0YXJpYTEvMC0GA1UECgwmU2VydmljaW8gZGUgQWRtaW5pc3RyYWNpw7NuIFRyaWJ1dGFyaWExODA2BgNVBAsML0FkbWluaXN0cmFjacOzbiBkZSBTZWd1cmlkYWQgZGUgbGEgSW5mb3JtYWNpw7NuMSEwHwYJKoZIhvcNAQkBFhJhc2lzbmV0QHNhdC5nb2IubXgxJjAkBgNVBAkMHUF2LiBIaWRhbGdvIDc3LCBDb2wuIEd1ZXJyZXJvMQ4wDAYDVQQRDAUwNjMwMDELMAkGA1UEBhMCTVgxGTAXBgNVBAgMEERpc3RyaXRvIEZlZGVyYWwxFDASBgNVBAcMC0N1YXVodMOpbW9jMRUwEwYDVQQtEwxTQVQ5NzA3MDFOTjMxPjA8BgkqhkiG9w0BCQIML1Jlc3BvbnNhYmxlOiBDZWNpbGlhIEd1aWxsZXJtaW5hIEdhcmPDrWEgR3VlcnJhMB4XDTEyMDUzMTE3MzU0N1oXDTE2MDUzMTE3MzU0N1owggEMMTowOAYDVQQDEzFTRVJWSUNJT1MgQURNSU5JU1RSQVRJVk9TIFZBTExJU09MRVRBTk9TIFNBIERFIENWMTowOAYDVQQpEzFTRVJWSUNJT1MgQURNSU5JU1RSQVRJVk9TIFZBTExJU09MRVRBTk9TIFNBIERFIENWMTowOAYDVQQKEzFTRVJWSUNJT1MgQURNSU5JU1RSQVRJVk9TIFZBTExJU09MRVRBTk9TIFNBIERFIENWMSUwIwYDVQQtExxTQVYxMjA0MTBSQjAgLyBBRVJBODQwNjExRjg4MR4wHAYDVQQFExUgLyBBRVJBODQwNjExSFNMUkROMDkxDzANBgNVBAsTBk1BVFJJWjCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEA1IJf5MSfI5PURSvx17VzpaLU+IVWEB4CO7ii4xPGLAm8X0ZmWapV24CmFjpFUQh4IMKN0gYmvkI1BZHmnGx7bZqQnVoOceaf0dHRPshU1lbOmvoY99owJPA0WP5roXfrGOl8H9ASy6+nq9NQiXheAOaVdrTmePAfcoeOGSpbOAsCAwEAAaMdMBswDAYDVR0TAQH/BAIwADALBgNVHQ8EBAMCBsAwDQYJKoZIhvcNAQEFBQADggEBAB8oK2SoMPuuf6jlkgxCqwJd/a7hfpp10CEh2Lm8lZmj2SJjJKJ/XDrdJrtdqxIhPaJIkMMKUXikDBr5vNLezipagJde1sN/diYuJiiXtRlX0YYkl9ZPn4i/5F8927Yw1m24ax2FcmjzEkHdHecFNRLUy8P3yPyaP3rL1EdKrsSoc4khr8aoGINB80DnLQIbKKpKB/a96nnzktYa8KTy65i9RIXNDefYSnagg4PABJ8BtOHkI8perXo8VcnLphttfSnG6cBfx+7Eiad7V+DBjCBsQZRPx+RK9mCl2GXexdwawePjS3nCwAbxnOqB1hYfUpros0hoXmvRwi3+C4RVFsk=" condicionesDePago="Sera marcada como pagada en cuanto el receptor haya cubierto el pago." fecha="2013-06-14T11:23:41" folio="57" formaDePago="PAGO EN UNA SOLA EXHIBICION" metodoDePago="Efectivo" noCertificado="00001000000201233796" sello="iUCQWPCwbjFfj/01PhWKe+cX/dzyDJ2aggTOk+5HhNMqDLmML9b4f68OsPKqb0ZI8Uuf8Y4VhD4+NdeIIs9vtjnC6GyXxcRLFfy1XWDj5wozcScmD0zxPArAevtNYZGgbCm0pyZrLZONvg0kebpOA9u8gTiY0F+fP3SG3PzSIUM=" subTotal="40000.00" tipoDeComprobante="ingreso" total="40000.00" version="3.2" xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd"&gt;
+  &lt;cfdi:Emisor nombre="SERVICIOS ADMINISTRATIVOS VALLISOLETANOS S.A. DE C.V." rfc="SAV120410RB0"&gt;
+    &lt;cfdi:DomicilioFiscal calle="MADRIGAL DE LAS ALTAS TORRES" codigoPostal="58230" colonia="VASCO DE QUIROGA" estado="Michoacán" municipio="MORELIA" noExterior="348" pais="México" referencia="Sin Referencia"/&gt;
+    &lt;cfdi:ExpedidoEn calle="MADRIGAL DE LAS ALTAS TORRES" codigoPostal="58230" colonia="VASCO DE QUIROGA" estado="Michoacán" municipio="MORELIA" noExterior="348" pais="México" referencia="Sin Referencia"/&gt;
+    &lt;cfdi:RegimenFiscal Regimen="PERSONA MORAL"/&gt;
+  &lt;/cfdi:Emisor&gt;
+  &lt;cfdi:Receptor nombre="AGENCIA EMPRESARIAL RHT SA DE CV" rfc="AER090330RS5"&gt;
+    &lt;cfdi:Domicilio calle="Bernal Diaz del Castillo" codigoPostal="58260" colonia="Chapultepec Sur" estado="Michoacán" localidad="Morelia" noExterior="280" pais="México" referencia="Sin Referencia"/&gt;
+  &lt;/cfdi:Receptor&gt;
+  &lt;cfdi:Conceptos&gt;
+    &lt;cfdi:Concepto cantidad="2.0" descripcion="Asesoria-y Servicios Contables y Administrativos" importe="40000.00" noIdentificacion="001" unidad="NA" valorUnitario="20000.00"&gt;
+      &lt;cfdi:ComplementoConcepto/&gt;
+    &lt;/cfdi:Concepto&gt;
+  &lt;/cfdi:Conceptos&gt;
+  &lt;cfdi:Impuestos&gt;                &lt;/cfdi:Impuestos&gt;
+  &lt;cfdi:Complemento&gt;
+	&lt;tfd:TimbreFiscalDigital FechaTimbrado="2013-05-26T16:07:41" UUID="97724B2D-4DF2-45AA-A12C-045978E49F41" noCertificadoSAT="00001000000203220518" selloCFD="TXOcnlgC9OvRSzFIT73K1XqfYKIKY3WVplpGfU+MOSyiBL1puyqwTZ3ntJ70OV6Z5YqgtNK4jmWvB4Npd2UwitrbL3FlwG1SaKQ8eEvmU3oEejDumQLXnX3zBHZb8Ca2UGK0EmisOVlfDDlniFcOFMhtC8oybAyeYlDhlVD5e30=" selloSAT="zWZ+HYrpj79PLmE/E4rMhs0W9Ab6hfjjPIYrGkp3tWN3oxET68/GEWEgiUm1LNWlu/jP5B/efyBd0sVOSU9jORG41ipFFNcITmAa4o/tZs61T7bkCxGEGeD7cqnhvHl8tZXSuwi8+PwbRW6zF5CwmtV3+Z7wlJGubfGzqEhj/LA=" version="1.0" xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital" xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/TimbreFiscalDigital/TimbreFiscalDigital.xsd"/&gt;
+  &lt;/cfdi:Complemento&gt;
+			</s1:xml>
+			<s1:CodEstatus>Comprobante recibido satisfactoriamente</s1:CodEstatus>
+			<s1:Fecha>2013-05-26T16:07:41.3448595</s1:Fecha>
+			<s1:NoCertificadoSAT>12345678901234567890</s1:NoCertificadoSAT>
+			<s1:UUID>B88C86A7-33F7-4D5A-B928-75D7C6CFCA86</s1:UUID>
+			<s1:SatSeal>zWZ+HYrpj79PLmE/E4rMhs0W9Ab6hfjjPIYrGkp3tWN3oxET68/GEWEgiUm1LNWlu/jP5B/efyBd0sVOSU9jORG41ipFFNcITmAa4o/tZs61T7bkCxGEGeD7cqnhvHl8tZXSuwi8+PwbRW6zF5CwmtV3+Z7wlJGubfGzqEhj/LA=</s1:SatSeal>
+		</tns:stampResult>
+	</tns:stampResponse>
+	</senv:Body>
+</senv:Envelope>
