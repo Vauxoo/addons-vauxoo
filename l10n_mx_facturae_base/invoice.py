@@ -47,7 +47,10 @@ import codecs
 from datetime import datetime, timedelta
 from pytz import timezone
 import pytz
-
+try:
+    from qrcode import *
+except:
+    _logger.error('Execute "sudo pip install pil qrcode" to use l10n_mx_facturae_pac_finkok module.')
 
 
 def exec_command_pipe(name, *args):
@@ -130,7 +133,7 @@ class account_invoice(osv.Model):
             characters for no files duplicate
         """
         if context is None:
-                context = {}
+            context = {}
         if not report_name or not res_ids:
             return (False, Exception('Report name and Resources ids are required !!!'))
         # try:
@@ -735,7 +738,6 @@ class account_invoice(osv.Model):
         x = doc_xml.documentElement
         nodeReceptor = doc_xml.getElementsByTagName('cfdi:Receptor')[0]
         nodeConcepto = doc_xml.getElementsByTagName('cfdi:Conceptos')[0]
-        print nodeConcepto, 'nodeConcepto--------------------------------'
         x.insertBefore(nodeReceptor, nodeConcepto)
         self.write_cfd_data(cr, uid, ids, data_dict, context=context)
 
@@ -784,17 +786,16 @@ class account_invoice(osv.Model):
         """
         if not cfd_datas:
             cfd_datas = {}
-        # obtener cfd_data con varios ids
-        # for id in ids:
+        comprobante = self._get_type_sequence(cr, uid, ids, context=context)
         id = ids[0]
         if True:
             data = {}
             cfd_data = cfd_datas
             noCertificado = cfd_data.get(
-                'Comprobante', {}).get('noCertificado', '')
+                comprobante, {}).get('noCertificado', '')
             certificado = cfd_data.get(
-                'Comprobante', {}).get('certificado', '')
-            sello = cfd_data.get('Comprobante', {}).get('sello', '')
+                comprobante, {}).get('certificado', '')
+            sello = cfd_data.get(comprobante, {}).get('sello', '')
             cadena_original = cfd_data.get('cadena_original', '')
             data = {
                 'no_certificado': noCertificado,
@@ -1301,6 +1302,7 @@ class account_invoice(osv.Model):
             cfdi_data[
                 'cfdi_xml'] = cfdi_xml  # Regresando valor, despues de hacer el write normal
         return True
+
     def _get_file(self, cr, uid, inv_ids, context={}):
         if not context:
             context = {}
@@ -1330,71 +1332,6 @@ class account_invoice(osv.Model):
         msg = _("Press in the button  'Upload File'")
         return {'file': self.fdata, 'fname': fname_invoice,
                 'name': fname_invoice, 'msg': msg}
-
-    def add_node(self, node_name=None, attrs=None, parent_node=None,
-                 minidom_xml_obj=None, attrs_types=None, order=False):
-        """
-            @params node_name : Name node to added
-            @params attrs : Attributes to add in node
-            @params parent_node : Node parent where was add new node children
-            @params minidom_xml_obj : File XML where add nodes
-            @params attrs_types : Type of attributes added in the node
-            @params order : If need add the params in order in the XML, add a
-                    list with order to params
-        """
-        if not order:
-            order = attrs
-        new_node = minidom_xml_obj.createElement(node_name)
-        for key in order:
-            if attrs_types[key] == 'attribute':
-                new_node.setAttribute(key, attrs[key])
-            elif attrs_types[key] == 'textNode':
-                key_node = minidom_xml_obj.createElement(key)
-                text_node = minidom_xml_obj.createTextNode(attrs[key])
-
-                key_node.appendChild(text_node)
-                new_node.appendChild(key_node)
-        parent_node.appendChild(new_node)
-        return new_node
-
-    def add_addenta_xml(self, cr, ids, xml_res_str=None, comprobante=None, context={}):
-        """
-         @params xml_res_str : File XML
-         @params comprobante : Name to the Node that contain the information the XML
-        """
-        if xml_res_str:
-            node_Addenda = xml_res_str.getElementsByTagName('cfdi:Addenda')
-            if len(node_Addenda) == 0:
-                nodeComprobante = xml_res_str.getElementsByTagName(
-                    comprobante)[0]
-                node_Addenda = self.add_node(
-                    'cfdi:Addenda', {}, nodeComprobante, xml_res_str, attrs_types={})
-                node_Partner_attrs = {
-                    'xmlns:sf': "http://timbrado.solucionfactible.com/partners",
-                    'xsi:schemaLocation': "http://timbrado.solucionfactible.com/partners https://solucionfactible.com/timbrado/partners/partners.xsd",
-                    'id': "150731"
-                }
-                node_Partner_attrs_types = {
-                    'xmlns:sf': 'attribute',
-                    'xsi:schemaLocation': 'attribute',
-                    'id': 'attribute'
-                }
-                node_Partner = self.add_node('sf:Partner', node_Partner_attrs,
-                                             node_Addenda, xml_res_str, attrs_types=node_Partner_attrs_types)
-            else:
-                node_Partner_attrs = {
-                    'xmlns:sf': "http://timbrado.solucionfactible.com/partners",
-                    'xsi:schemaLocation': "http://timbrado.solucionfactible.com/partners https://solucionfactible.com/timbrado/partners/partners.xsd",
-                    'id': "150731"
-                }
-                node_Partner_attrs_types = {
-                    'xmlns:sf': 'attribute',
-                    'xsi:schemaLocation': 'attribute',
-                    'id': 'attribute'
-                }
-                node_Partner = self.add_node('sf:Partner', node_Partner_attrs,
-                                             node_Addenda, xml_res_str, attrs_types=node_Partner_attrs_types)
-        return xml_res_str
 
     def _get_type_sequence(self, cr, uid, ids, context=None):
         ir_seq_app_obj = self.pool.get('ir.sequence.approval')
@@ -1445,3 +1382,17 @@ class account_invoice(osv.Model):
             raise osv.except_osv(('State of Cancellation!'), (
                 "This invoice hasn't stamped, so that not possible cancel."))
         return {'file': inv_xml}
+        
+    def _create_qrcode(self, cr, uid, rfc_emmiter, rfc_receiver, ammount_total, uuid,context=None):
+        if context is None:
+            context={}
+        qrstr = "?re="+rfc_emmiter+"&rr="+rfc_receiver+"&tt="+ammount_total+"&id="+uuid
+        print '********************qrstr',qrstr
+        qr = QRCode(version=1, error_correction=ERROR_CORRECT_L)
+        qr.add_data(qrstr)
+        qr.make() # Generate the QRCode itself
+        im = qr.make_image()
+        fname=tempfile.NamedTemporaryFile(suffix='.png',delete=False)
+        print 'fname.name',fname.name
+        im.save(fname.name)
+        return fname.name

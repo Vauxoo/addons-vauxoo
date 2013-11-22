@@ -296,5 +296,4 @@ class ir_attachment_facturae_mx(osv.Model):
                 raise osv.except_osv(_('Warning'), _(
                     'Not found information from web services of PAC, verify that the configuration of PAC is correct'))
             return {'file': file, 'msg': msg, 'cfdi_xml': cfdi_xml}
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -60,8 +60,21 @@ try:
 except:
     _logger.error('Install suds to use l10n_mx_facturae_pac_finkok module.')
 
+def exec_command_pipe(*args):
+        # Agregue esta funcion, ya que con la nueva funcion original, de tools no funciona
+        # TODO: Hacer separacion de argumentos, no por espacio, sino tambien por "
+        # ", como tipo csv, pero separator espace & delimiter "
+        print args
+        cmd = ' '.join(args)
+        if os.name == "nt":
+            cmd = cmd.replace(
+                '"', '')  # provisionalmente, porque no funcionaba en win32
+        return os.popen2(cmd, 'b')
+        
 class ir_attachment_facturae_mx(osv.Model):
     _inherit = 'ir.attachment.facturae.mx'
+
+    
 
     def _get_type(self, cr, uid, ids=None, context=None):
         types = super(ir_attachment_facturae_mx, self)._get_type(
@@ -119,7 +132,15 @@ class ir_attachment_facturae_mx(osv.Model):
                 fname_cer_no_pem = file_globals['fname_cer']
                 cerCSD = open(fname_cer_no_pem).read().encode('base64')
                 fname_key_no_pem = file_globals['fname_key']
-                keyCSD = open(fname_key_no_pem).read().encode('base64')
+                fname_key_encry_pem = fname_key_no_pem.replace('.key', '.key.encryp')
+                cmd = 'openssl rsa -in %s -des3 -out %s -passout pass:1Q2W3E4R5t_' %(fname_key_no_pem, fname_key_encry_pem)
+                args = tuple(cmd.split(' '))
+                input, output = exec_command_pipe(*args)
+                time.sleep(2)
+                f = open(fname_key_encry_pem)
+                data = f.read()
+                f.close()
+                keyCSD = base64.encodestring(data)
                 client = Client(wsdl_url, cache=None)
                 folio_cancel = invoice.cfdi_folio_fiscal
                 invoices.append(folio_cancel)
@@ -132,8 +153,8 @@ class ir_attachment_facturae_mx(osv.Model):
                     raise orm.except_orm(_('Warning'), _('Mensaje %s') % (msg))
                 else:
                     print "result.folios+++++++++++++++++",result.Folios
-                    EstausUUID = result.Folios.EstausUUID
-                    if EstausUUID == '201':
+                    EstatusUUID = result.Folios[0][0].EstatusUUID
+                    if EstatusUUID == '201':
                         msg += _('\n- The process of cancellation has completed correctly.\n\
                                     The uuid cancelled is: ') + folio_cancel
                         invoice_obj.write(cr, uid, [invoice.id], {
@@ -157,21 +178,14 @@ class ir_attachment_facturae_mx(osv.Model):
             comprobante = invoice_obj._get_type_sequence(
                 cr, uid, [invoice.id], context=context)
             cfd_data = base64.decodestring(fdata or invoice_obj.fdata)
-            xml_res_str = xml.dom.minidom.parseString(cfd_data)
-            xml_res_addenda = invoice_obj.add_addenta_xml(
-                cr, uid, xml_res_str, comprobante, context=context)
-            xml_res_str_addenda = xml_res_addenda.toxml('UTF-8')
-            xml_res_str_addenda = xml_res_str_addenda.replace(codecs.BOM_UTF8, '')
-            
             if tools.config['test_report_directory']:#TODO: Add if test-enabled:
                 ir_attach_facturae_mx_file_input = ir_attachment_facturae_mx_id.file_input and ir_attachment_facturae_mx_id.file_input or False
                 fname_suffix = ir_attach_facturae_mx_file_input and ir_attach_facturae_mx_file_input.datas_fname or ''
                 open( os.path.join(tools.config['test_report_directory'], 'l10n_mx_facturae_pac_finkok' + '_' + \
-                  'before_upload' + '-' + fname_suffix), 'wb+').write( xml_res_str_addenda )
-            compr = xml_res_addenda.getElementsByTagName(comprobante)[0]
-            date = compr.attributes['fecha'].value
+                  'before_upload' + '-' + fname_suffix), 'wb+').write( cfd_data )
+            date = invoice.date_invoice
             date_format = datetime.strptime(
-                date, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')
+                date, '%Y-%m-%d').strftime('%Y-%m-%d')
             context['date'] = date_format
             invoice_ids = [invoice.id]
             file = False
@@ -218,7 +232,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     keyCSD = fname_key_no_pem and base64.encodestring(
                         open(fname_key_no_pem, "r").read()) or ''
                     #keyCSD = open(fname_key_no_pem).read().encode('base64') #Mejor forma de hacerlo
-                    cfdi = base64.encodestring(xml_res_str_addenda)
+                    cfdi = base64.encodestring(cfd_data)
                     zip = False  # Validar si es un comprimido zip, con la extension del archivo
                     contrasenaCSD = file_globals.get('password', '')
                     params = [cfdi, user, password]
@@ -236,8 +250,9 @@ class ir_attachment_facturae_mx(osv.Model):
                                     fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
                         fecha_timbrado = fecha_timbrado and datetime.strptime(
                             fecha_timbrado, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz) or False
+                        cbb = invoice_obj._create_qrcode(cr, uid,'EMI020202CV2', 'REC030303AS2', '25000.25', resultado.UUID, context=context)
                         cfdi_data = {
-                            #~ 'cfdi_cbb': resultado['resultados']['qrCode'] or False,  # ya lo regresa en base64
+                            'cfdi_cbb': open(cbb).read().encode('base64'),# ya lo regresa en base64
                             'cfdi_sello': resultado.SatSeal or False,
                             'cfdi_no_certificado': resultado.NoCertificadoSAT or False,
                             #~ 'cfdi_cadena_original': resultado   or False,
@@ -245,14 +260,15 @@ class ir_attachment_facturae_mx(osv.Model):
                             'cfdi_xml': resultado.xml or '',  # este se necesita en uno que no es base64
                             'cfdi_folio_fiscal': folio_fiscal
                         }
+                        comprobante_new = '</'+comprobante+'>'
                         msg += _(
                                 u"\nMake Sure to the file really has generated correctly to the SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html")
                         if cfdi_data.get('cfdi_xml', False):
                             #cambiar el link
-                            url_pac = '</"%s"><!--Para validar el XML CFDI puede descargar el certificado del PAC desde la siguiente liga: https://solucionfactible.com/cfdi/00001000000102699425.zip-->' % (
-                                comprobante)
+                            url_pac = '%s<!--Para validar el XML CFDI puede descargar el certificado del PAC desde la siguiente liga: https://liga que proporcione finkok-->' % (
+                                comprobante_new)
                             cfdi_data['cfdi_xml'] = cfdi_data[
-                                'cfdi_xml'].replace('</"%s">' % (comprobante), url_pac)
+                                'cfdi_xml'].replace(comprobante_new, url_pac)
                             file = base64.encodestring(cfdi_data['cfdi_xml'] or '')
                             cfdi_xml = cfdi_data.pop('cfdi_xml')
                         if cfdi_xml:
