@@ -250,8 +250,7 @@ class ir_attachment_facturae_mx(osv.Model):
                                     fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
                         fecha_timbrado = fecha_timbrado and datetime.strptime(
                             fecha_timbrado, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz) or False
-                        cbb = invoice_obj._create_qrcode(cr, uid,'EMI020202CV2', 'REC030303AS2', '25000.25', 'ad662d33-6934-459c-a128-BDf0393fjjj4',context=context)
-                        print 'el CBB es',cbb
+                        cbb = invoice_obj._create_qrcode(cr, uid,'EMI020202CV2', 'REC030303AS2', '25000.25', resultado.UUID, context=context)
                         cfdi_data = {
                             'cfdi_cbb': open(cbb).read().encode('base64'),# ya lo regresa en base64
                             'cfdi_sello': resultado.SatSeal or False,
@@ -261,14 +260,15 @@ class ir_attachment_facturae_mx(osv.Model):
                             'cfdi_xml': resultado.xml or '',  # este se necesita en uno que no es base64
                             'cfdi_folio_fiscal': folio_fiscal
                         }
+                        comprobante_new = '</'+comprobante+'>'
                         msg += _(
                                 u"\nMake Sure to the file really has generated correctly to the SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html")
                         if cfdi_data.get('cfdi_xml', False):
                             #cambiar el link
-                            url_pac = '</"%s"><!--Para validar el XML CFDI puede descargar el certificado del PAC desde la siguiente liga: https://solucionfactible.com/cfdi/00001000000102699425.zip-->' % (
-                                comprobante)
+                            url_pac = '%s<!--Para validar el XML CFDI puede descargar el certificado del PAC desde la siguiente liga: https://liga que proporcione finkok-->' % (
+                                comprobante_new)
                             cfdi_data['cfdi_xml'] = cfdi_data[
-                                'cfdi_xml'].replace('</"%s">' % (comprobante), url_pac)
+                                'cfdi_xml'].replace(comprobante_new, url_pac)
                             file = base64.encodestring(cfdi_data['cfdi_xml'] or '')
                             cfdi_xml = cfdi_data.pop('cfdi_xml')
                         if cfdi_xml:
