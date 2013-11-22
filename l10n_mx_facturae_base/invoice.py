@@ -735,7 +735,6 @@ class account_invoice(osv.Model):
         x = doc_xml.documentElement
         nodeReceptor = doc_xml.getElementsByTagName('cfdi:Receptor')[0]
         nodeConcepto = doc_xml.getElementsByTagName('cfdi:Conceptos')[0]
-        print nodeConcepto, 'nodeConcepto--------------------------------'
         x.insertBefore(nodeReceptor, nodeConcepto)
         self.write_cfd_data(cr, uid, ids, data_dict, context=context)
 
@@ -784,17 +783,17 @@ class account_invoice(osv.Model):
         """
         if not cfd_datas:
             cfd_datas = {}
-        # obtener cfd_data con varios ids
-        # for id in ids:
+        comprobante = self._get_type_sequence(cr, uid, ids, context=context)
         id = ids[0]
         if True:
             data = {}
             cfd_data = cfd_datas
             noCertificado = cfd_data.get(
-                'Comprobante', {}).get('noCertificado', '')
+                comprobante, {}).get('noCertificado', '')
+            print 'noCertificadolllllllllllllllllllllll',noCertificado
             certificado = cfd_data.get(
-                'Comprobante', {}).get('certificado', '')
-            sello = cfd_data.get('Comprobante', {}).get('sello', '')
+                comprobante, {}).get('certificado', '')
+            sello = cfd_data.get(comprobante, {}).get('sello', '')
             cadena_original = cfd_data.get('cadena_original', '')
             data = {
                 'no_certificado': noCertificado,
