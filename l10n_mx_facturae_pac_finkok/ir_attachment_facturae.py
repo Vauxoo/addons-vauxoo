@@ -60,8 +60,21 @@ try:
 except:
     _logger.error('Install suds to use l10n_mx_facturae_pac_finkok module.')
 
+def exec_command_pipe(*args):
+        # Agregue esta funcion, ya que con la nueva funcion original, de tools no funciona
+        # TODO: Hacer separacion de argumentos, no por espacio, sino tambien por "
+        # ", como tipo csv, pero separator espace & delimiter "
+        print args
+        cmd = ' '.join(args)
+        if os.name == "nt":
+            cmd = cmd.replace(
+                '"', '')  # provisionalmente, porque no funcionaba en win32
+        return os.popen2(cmd, 'b')
+        
 class ir_attachment_facturae_mx(osv.Model):
     _inherit = 'ir.attachment.facturae.mx'
+
+    
 
     def _get_type(self, cr, uid, ids=None, context=None):
         types = super(ir_attachment_facturae_mx, self)._get_type(
@@ -119,7 +132,15 @@ class ir_attachment_facturae_mx(osv.Model):
                 fname_cer_no_pem = file_globals['fname_cer']
                 cerCSD = open(fname_cer_no_pem).read().encode('base64')
                 fname_key_no_pem = file_globals['fname_key']
-                keyCSD = open(fname_key_no_pem).read().encode('base64')
+                fname_key_encry_pem = fname_key_no_pem.replace('.key', '.key.encryp')
+                cmd = 'openssl rsa -in %s -des3 -out %s -passout pass:1Q2W3E4R5t_' %(fname_key_no_pem, fname_key_encry_pem)
+                args = tuple(cmd.split(' '))
+                input, output = exec_command_pipe(*args)
+                time.sleep(2)
+                f = open(fname_key_encry_pem)
+                data = f.read()
+                f.close()
+                keyCSD = base64.encodestring(data)
                 client = Client(wsdl_url, cache=None)
                 folio_cancel = invoice.cfdi_folio_fiscal
                 invoices.append(folio_cancel)
@@ -132,8 +153,8 @@ class ir_attachment_facturae_mx(osv.Model):
                     raise orm.except_orm(_('Warning'), _('Mensaje %s') % (msg))
                 else:
                     print "result.folios+++++++++++++++++",result.Folios
-                    EstausUUID = result.Folios.EstausUUID
-                    if EstausUUID == '201':
+                    EstatusUUID = result.Folios[0][0].EstatusUUID
+                    if EstatusUUID == '201':
                         msg += _('\n- The process of cancellation has completed correctly.\n\
                                     The uuid cancelled is: ') + folio_cancel
                         invoice_obj.write(cr, uid, [invoice.id], {
