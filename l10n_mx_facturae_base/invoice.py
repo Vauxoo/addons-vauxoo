@@ -47,7 +47,10 @@ import codecs
 from datetime import datetime, timedelta
 from pytz import timezone
 import pytz
-
+try:
+    from qrcode import *
+except:
+    _logger.error('Execute "sudo pip install pil qrcode" to use l10n_mx_facturae_pac_finkok module.')
 
 
 def exec_command_pipe(name, *args):
@@ -130,7 +133,7 @@ class account_invoice(osv.Model):
             characters for no files duplicate
         """
         if context is None:
-                context = {}
+            context = {}
         if not report_name or not res_ids:
             return (False, Exception('Report name and Resources ids are required !!!'))
         # try:
@@ -790,7 +793,6 @@ class account_invoice(osv.Model):
             cfd_data = cfd_datas
             noCertificado = cfd_data.get(
                 comprobante, {}).get('noCertificado', '')
-            print 'noCertificadolllllllllllllllllllllll',noCertificado
             certificado = cfd_data.get(
                 comprobante, {}).get('certificado', '')
             sello = cfd_data.get(comprobante, {}).get('sello', '')
@@ -1380,3 +1382,17 @@ class account_invoice(osv.Model):
             raise osv.except_osv(('State of Cancellation!'), (
                 "This invoice hasn't stamped, so that not possible cancel."))
         return {'file': inv_xml}
+        
+    def _create_qrcode(self, cr, uid, rfc_emmiter, rfc_receiver, ammount_total, uuid,context=None):
+        if context is None:
+            context={}
+        qrstr = "?re="+rfc_emmiter+"&rr="+rfc_receiver+"&tt="+ammount_total+"&id="+uuid
+        print '********************qrstr',qrstr
+        qr = QRCode(version=1, error_correction=ERROR_CORRECT_L)
+        qr.add_data(qrstr)
+        qr.make() # Generate the QRCode itself
+        im = qr.make_image()
+        fname=tempfile.NamedTemporaryFile(suffix='.png',delete=False)
+        print 'fname.name',fname.name
+        im.save(fname.name)
+        return fname.name

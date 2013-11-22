@@ -32,7 +32,10 @@
     "category" : "Localization/Mexico",
     "description" : """This module creates interface for e-invoice files from invoices with Solucion Factible.
 Ubuntu Package Depends:
-    sudo apt-get install python-soappy
+    sudo apt-get install python-soappy 
+    sudo pip install pil qrcode
+    wet http://security.ubuntu.com/ubuntu/pool/main/s/suds/python-suds_0.4.1-2ubuntu1_all.deb
+    dpkg -i python-suds_0.4.1-2ubuntu1_all.deb
 """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",

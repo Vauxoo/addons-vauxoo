@@ -229,8 +229,10 @@ class ir_attachment_facturae_mx(osv.Model):
                                     fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
                         fecha_timbrado = fecha_timbrado and datetime.strptime(
                             fecha_timbrado, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz) or False
+                        cbb = invoice_obj._create_qrcode(cr, uid,'EMI020202CV2', 'REC030303AS2', '25000.25', 'ad662d33-6934-459c-a128-BDf0393fjjj4',context=context)
+                        print 'el CBB es',cbb
                         cfdi_data = {
-                            #~ 'cfdi_cbb': resultado['resultados']['qrCode'] or False,  # ya lo regresa en base64
+                            'cfdi_cbb': open(cbb).read().encode('base64'),# ya lo regresa en base64
                             'cfdi_sello': resultado.SatSeal or False,
                             'cfdi_no_certificado': resultado.NoCertificadoSAT or False,
                             #~ 'cfdi_cadena_original': resultado   or False,
