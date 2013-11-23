@@ -110,6 +110,9 @@ class ir_attachment_facturae_mx(osv.Model):
         certificate_obj = self.pool.get('res.company.facturae.certificate')
         pac_params_obj = self.pool.get('params.pac')
         invoice_obj = self.pool.get('account.invoice')
+        dict_error = {'202' : _('UUID previously canceled'), '203' : _('UUID does not match the RFC\
+            sender neither of the applicant'), '205' : _('Not exist UUID'),
+            '708' : _('Could not connect to the SAT')}
         for ir_attachment_facturae_mx_id in self.browse(cr, uid, ids, context=context):
             status = False
             invoice = ir_attachment_facturae_mx_id.invoice_id
@@ -162,7 +165,8 @@ class ir_attachment_facturae_mx(osv.Model):
                         })
                     #~ status = True
                     else:
-                        raise orm.except_orm(_('Warning'), _('Mensaje %s') % (msg))
+                        if EstatusUUID in dict_error:
+                            raise orm.except_orm(_('Warning'), _('Mensaje %s %s') % (msg, dict_error[EstatusUUID]))
             else:
                 msg = _('Not found information of webservices of PAC, verify that the configuration of PAC is correct')
         return {'message': msg}
