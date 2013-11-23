@@ -172,7 +172,7 @@ class ir_attachment_facturae_mx(osv.Model):
         @params fdata : File.xml codification in base64
         """
         invoice_obj = self.pool.get('account.invoice')
-        pac_params_obj = invoice_obj.pool.get('params.pac')
+        pac_params_obj = self.pool.get('params.pac')
         for ir_attachment_facturae_mx_id in self.browse(cr, uid, ids, context=context):
             invoice = ir_attachment_facturae_mx_id.invoice_id
             comprobante = invoice_obj._get_type_sequence(
@@ -250,7 +250,7 @@ class ir_attachment_facturae_mx(osv.Model):
                                     fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
                         fecha_timbrado = fecha_timbrado and datetime.strptime(
                             fecha_timbrado, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz) or False
-                        cbb = invoice_obj._create_qrcode(cr, uid,'EMI020202CV2', 'REC030303AS2', '25000.25', resultado.UUID, context=context)
+                        cbb = invoice_obj._create_qrcode(cr, uid, ids,invoice.id, resultado.UUID, context=context)
                         cfdi_data = {
                             'cfdi_cbb': open(cbb).read().encode('base64'),# ya lo regresa en base64
                             'cfdi_sello': resultado.SatSeal or False,

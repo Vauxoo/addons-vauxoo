@@ -47,6 +47,7 @@ import codecs
 from datetime import datetime, timedelta
 from pytz import timezone
 import pytz
+import string
 try:
     from qrcode import *
 except:
@@ -1383,10 +1384,15 @@ class account_invoice(osv.Model):
                 "This invoice hasn't stamped, so that not possible cancel."))
         return {'file': inv_xml}
         
-    def _create_qrcode(self, cr, uid, rfc_emmiter, rfc_receiver, ammount_total, uuid,context=None):
+    def _create_qrcode(self, cr, uid, ids, invoice_id , uuid, context=None):
         if context is None:
             context={}
-        qrstr = "?re="+rfc_emmiter+"&rr="+rfc_receiver+"&tt="+ammount_total+"&id="+uuid
+        invoice = self.browse(cr, uid, invoice_id)
+        rfc_transmitter = invoice.company_id.partner_id.vat_split or ''
+        rfc_receiver = invoice.partner_id.parent_id.vat_split or invoice.partner_id.parent_id.vat_split or ''
+        #~ amount_total = "%0.6f"%invoice.amount_total
+        amount_total = string.zfill("%0.6f"%invoice.amount_total,17)
+        qrstr = "?re="+rfc_transmitter+"&rr="+rfc_receiver+"&tt="+amount_total+"&id="+uuid
         print '********************qrstr',qrstr
         qr = QRCode(version=1, error_correction=ERROR_CORRECT_L)
         qr.add_data(qrstr)
