@@ -48,6 +48,8 @@ from datetime import datetime, timedelta
 from pytz import timezone
 import pytz
 import string
+import logging
+_logger = logging.getLogger(__name__)
 try:
     from qrcode import *
 except:

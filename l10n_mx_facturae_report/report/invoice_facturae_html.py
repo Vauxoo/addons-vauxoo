@@ -235,7 +235,7 @@ class invoice_facturae_html(report_sxw.rml_parse):
         if pac_params_id:
             data_pac = pac_params_obj.browse(self.cr, self.uid, pac_params_id)
             res.update({
-                'certificate_link' : data_pac.certificate_link or 'hola',
+                'certificate_link' : data_pac.certificate_link or False,
             })
         return res
         
