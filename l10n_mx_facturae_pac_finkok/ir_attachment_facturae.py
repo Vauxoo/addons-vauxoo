@@ -53,7 +53,6 @@ _logger = logging.getLogger(__name__)
 try:
     from SOAPpy import WSDL
 except:
-    #print "Package SOAPpy missed"#TODO: Warning message
     _logger.error('Install SOAPpy "sudo apt-get install python-soappy" to use l10n_mx_facturae_pac_finkok module.')
 try:
     from suds.client import Client
@@ -64,7 +63,6 @@ def exec_command_pipe(*args):
         # Agregue esta funcion, ya que con la nueva funcion original, de tools no funciona
         # TODO: Hacer separacion de argumentos, no por espacio, sino tambien por "
         # ", como tipo csv, pero separator espace & delimiter "
-        print args
         cmd = ' '.join(args)
         if os.name == "nt":
             cmd = cmd.replace(
@@ -155,7 +153,6 @@ class ir_attachment_facturae_mx(osv.Model):
                     msg += _('%s' %result.CodEstatus)
                     raise orm.except_orm(_('Warning'), _('Mensaje %s') % (msg))
                 else:
-                    print "result.folios+++++++++++++++++",result.Folios
                     EstatusUUID = result.Folios[0][0].EstatusUUID
                     if EstatusUUID == '201':
                         msg += _('\n- The process of cancellation has completed correctly.\n\
@@ -163,7 +160,6 @@ class ir_attachment_facturae_mx(osv.Model):
                         invoice_obj.write(cr, uid, [invoice.id], {
                                         'cfdi_fecha_cancelacion': time.strftime('%Y-%m-%d %H:%M:%S')
                         })
-                    #~ status = True
                     else:
                         if EstatusUUID in dict_error:
                             raise orm.except_orm(_('Warning'), _('Mensaje %s %s') % (msg, dict_error[EstatusUUID]))
@@ -241,7 +237,6 @@ class ir_attachment_facturae_mx(osv.Model):
                     contrasenaCSD = file_globals.get('password', '')
                     params = [cfdi, user, password]
                     resultado = client.service.stamp(*params)
-                    print 'resultado en stamp',resultado
                     if not resultado.Incidencias or None:
                         msg += _(tools.ustr(resultado.CodEstatus))
                         folio_fiscal = resultado.UUID or False
@@ -255,11 +250,12 @@ class ir_attachment_facturae_mx(osv.Model):
                         fecha_timbrado = fecha_timbrado and datetime.strptime(
                             fecha_timbrado, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz) or False
                         cbb = invoice_obj._create_qrcode(cr, uid, ids,invoice.id, resultado.UUID, context=context)
+                        original_string = invoice_obj._create_original_str(cr, uid, ids,invoice.id, resultado.UUID, resultado.Fecha, resultado.NoCertificadoSAT, context=context)
                         cfdi_data = {
                             'cfdi_cbb': open(cbb).read().encode('base64'),# ya lo regresa en base64
                             'cfdi_sello': resultado.SatSeal or False,
                             'cfdi_no_certificado': resultado.NoCertificadoSAT or False,
-                            #~ 'cfdi_cadena_original': resultado   or False,
+                            'cfdi_cadena_original': original_string or False,
                             'cfdi_fecha_timbrado': resultado.Fecha or False,
                             'cfdi_xml': resultado.xml or '',  # este se necesita en uno que no es base64
                             'cfdi_folio_fiscal': folio_fiscal

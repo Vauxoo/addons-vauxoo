@@ -1387,18 +1387,24 @@ class account_invoice(osv.Model):
     def _create_qrcode(self, cr, uid, ids, invoice_id , uuid, context=None):
         if context is None:
             context={}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         invoice = self.browse(cr, uid, invoice_id)
         rfc_transmitter = invoice.company_id.partner_id.vat_split or ''
         rfc_receiver = invoice.partner_id.parent_id.vat_split or invoice.partner_id.parent_id.vat_split or ''
-        #~ amount_total = "%0.6f"%invoice.amount_total
         amount_total = string.zfill("%0.6f"%invoice.amount_total,17)
         qrstr = "?re="+rfc_transmitter+"&rr="+rfc_receiver+"&tt="+amount_total+"&id="+uuid
-        print '********************qrstr',qrstr
         qr = QRCode(version=1, error_correction=ERROR_CORRECT_L)
         qr.add_data(qrstr)
         qr.make() # Generate the QRCode itself
         im = qr.make_image()
         fname=tempfile.NamedTemporaryFile(suffix='.png',delete=False)
-        print 'fname.name',fname.name
         im.save(fname.name)
         return fname.name
+        
+    def _create_original_str(self, cr, uid, ids, invoice_id , uuid, date_sign, cert_sat, context=None):
+        if context is None:
+            context={}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        invoice = self.browse(cr, uid, invoice_id)
+        original_string = '||1.0|'+uuid+'|'+str(date_sign)+'|'+invoice.sello+'|'+cert_sat+'||'
+        return original_string
