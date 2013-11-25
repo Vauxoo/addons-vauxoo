@@ -2,12 +2,14 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Financed by: http://www.sfsoluciones.com (aef@sfsoluciones.com)
+#              Isaac Lopez (isaac@vauxoo.com)
+#              Carlos Hdz (juan@vauxoo.com)
+#              Luis Garcia (ernesto_gm@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -26,15 +28,15 @@
 ##############################################################################
 
 {
-    "name" : "Creacion de Factura Electronica para Mexico (CFDI-2011) - PAC Solucion Factible",
+    "name" : "Creacion de Factura Electronica para Mexico (CFDI-2014) - PAC Finkok",
     "version" : "1.0",
-    "author" : "Vauxoo & Sfsoluciones",
+    "author" : "Vauxoo",
     "category" : "Localization/Mexico",
     "description" : """This module creates interface for e-invoice files from invoices with Solucion Factible.
 Ubuntu Package Depends:
     sudo apt-get install python-soappy 
     sudo pip install pil qrcode
-    wet http://security.ubuntu.com/ubuntu/pool/main/s/suds/python-suds_0.4.1-2ubuntu1_all.deb
+    wget http://security.ubuntu.com/ubuntu/pool/main/s/suds/python-suds_0.4.1-2ubuntu1_all.deb
     dpkg -i python-suds_0.4.1-2ubuntu1_all.deb
 """,
     "website" : "http://www.vauxoo.com/",
@@ -53,13 +55,9 @@ Ubuntu Package Depends:
         "demo/account_invoice_cfdi_pac_finkok_demo.xml",
     ],
     "data" : [
-        #"security/l10n_mx_facturae_pac_sf_security.xml",
-        #"l10n_mx_facturae_pac_sf_report.xml",
-        #wizard/wizard_cancel_invoice_pac_sf_view.xml",
-        #wizard/wizard_export_invoice_pac_sf_view_v6.xml",
     ],
     "test" : [
-        "test/account_invoice_cfdi_pac_sf.yml",
+        "test/account_invoice_cfdi_pac_finkok.yml",
     ],
     "installable" : True,
     "active" : False,
