@@ -2,7 +2,7 @@
 <openerp>
     <data noupdate="1">
         <!-- Invoices -->
-        <record id="account_invoice_cfdi_pac_finkok" model="account.invoice">
+        <record id="account_invoice_cfdi_pac_finkok0" model="account.invoice">
             <field name="payment_term" ref="account.account_payment_term"/>
             <field name="currency_id" ref="base.EUR"/>
             <field name="account_id" ref="account.a_recv"/>
@@ -19,7 +19,7 @@
             <field name="product_id" ref="product.product_product_5"/>
             <field name="price_unit" eval="900.0" />
             <field name="uos_id" ref="product.product_uom_unit"/>
-            <field name="invoice_id" ref="account_invoice_cfdi_pac_finkok"/>
+            <field name="invoice_id" ref="account_invoice_cfdi_pac_finkok0"/>
             <field name="quantity">32</field>
         </record>
     </data>
