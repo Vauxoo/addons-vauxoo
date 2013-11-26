@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: addons-vauxoo\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-11-07 01:06+0000\n"
-"PO-Revision-Date: 2013-11-15 21:18+0000\n"
+"PO-Revision-Date: 2013-11-25 21:28+0000\n"
 "Last-Translator: Saul Gonzalez <saul@vauxoo.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-16 06:26+0000\n"
-"X-Generator: Launchpad (build 16831)\n"
+"X-Launchpad-Export-Date: 2013-11-26 06:08+0000\n"
+"X-Generator: Launchpad (build 16840)\n"
 
 #. module: user_story
 #: view:user.story:0
@@ -69,7 +69,7 @@ msgstr "Mensajes no Leídos"
 #: field:project.task,userstory_id:0
 #: view:user.story:0
 msgid "User Story"
-msgstr ""
+msgstr "Historia del Usuario"
 
 #. module: user_story
 #: view:user.story:0
@@ -146,7 +146,7 @@ msgstr ""
 #. module: user_story
 #: view:user.story:0
 msgid "2.- Project related"
-msgstr ""
+msgstr "2.- Proyecto relacionado"
 
 #. module: user_story
 #: view:project.task:0
@@ -204,38 +204,38 @@ msgstr ""
 #: view:user.story:0
 #: selection:user.story,state:0
 msgid "Done"
-msgstr ""
+msgstr "Realizado"
 
 #. module: user_story
 #: field:acceptability.criteria,accepted:0
 #: view:user.story:0
 msgid "Accepted"
-msgstr ""
+msgstr "Aceptado"
 
 #. module: user_story
 #: view:user.story:0
 msgid "Total hours"
-msgstr ""
+msgstr "Horas Totales"
 
 #. module: user_story
 #: selection:user.story,state:0
 msgid "Cancelled"
-msgstr ""
+msgstr "Cancelado"
 
 #. module: user_story
 #: view:user.story:0
 msgid "here"
-msgstr ""
+msgstr "aquí"
 
 #. module: user_story
 #: model:mail.message.subtype,name:user_story.mt_task_closed
 msgid "Task Done"
-msgstr ""
+msgstr "Tarea Realizada"
 
 #. module: user_story
 #: view:user.story:0
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: user_story
 #: view:user.story:0
@@ -249,85 +249,85 @@ msgstr ""
 #. module: user_story
 #: view:user.story:0
 msgid "Tasks"
-msgstr ""
+msgstr "Tareas"
 
 #. module: user_story
 #: model:mail.message.subtype,name:user_story.mt_task_started
 msgid "Task Started"
-msgstr ""
+msgstr "Tarea Iniciada"
 
 #. module: user_story
 #: view:project.project:0
 msgid "User Stories"
-msgstr ""
+msgstr "Historias de Usuarios"
 
 #. module: user_story
 #: selection:user.story,priority_level:0
 msgid "Urgent"
-msgstr ""
+msgstr "Urgente"
 
 #. module: user_story
 #: view:user.story:0
 msgid "Here more information"
-msgstr ""
+msgstr "Más información aquí"
 
 #. module: user_story
 #: view:user.story:0
 #: field:user.story,owner:0
 msgid "Owner"
-msgstr ""
+msgstr "Dueño"
 
 #. module: user_story
 #: view:user.story:0
 msgid "3.- Description"
-msgstr ""
+msgstr "3.- Descripción"
 
 #. module: user_story
 #: field:user.story,user_execute_id:0
 msgid "Responsible Execution"
-msgstr ""
+msgstr "Responsable de Ejecución"
 
 #. module: user_story
 #: view:user.story:0
 msgid "Add a other info here ..."
-msgstr ""
+msgstr "Agregue información adicional aquí"
 
 #. module: user_story
 #: view:user.story:0
 msgid "Draft"
-msgstr ""
+msgstr "Borrador"
 
 #. module: user_story
 #: field:user.story,asumption:0
 msgid "Asumptions"
-msgstr ""
+msgstr "Supuestos"
 
 #. module: user_story
 #: view:user.story:0
 #: selection:user.story,state:0
 msgid "Pending"
-msgstr ""
+msgstr "Pendiente"
 
 #. module: user_story
 #: field:user.story,categ_ids:0
 msgid "Tags"
-msgstr ""
+msgstr "Etiquetas"
 
 #. module: user_story
 #: field:user.story,message_is_follower:0
 msgid "Is a Follower"
-msgstr ""
+msgstr "Es un Seguidor"
 
 #. module: user_story
 #: model:res.groups,name:user_story.group_user_story_user
 #: view:user.story:0
 msgid "User"
-msgstr ""
+msgstr "Usuario"
 
 #. module: user_story
 #: field:user.story,date:0
 msgid "Date"
-msgstr ""
+msgstr "Fecha"
 
 #. module: user_story
 #: help:user.story,user_id:0
@@ -336,22 +336,27 @@ msgid ""
 "progress or completion of the User History, in some cases also the "
 "supervisor for the correct execution of the user story."
 msgstr ""
+"Persona responsable de la interacción con el cliente para dar detalles del "
+"progreso o completación de la historia de usuario, en algunos casos, también "
+"es el supervisor de la correcta ejecución de la historia de usuario."
 
 #. module: user_story
 #: field:user.story,message_summary:0
 msgid "Summary"
-msgstr ""
+msgstr "Resumen"
 
 #. module: user_story
 #: view:user.story:0
 msgid "Filter"
-msgstr ""
+msgstr "Filtro"
 
 #. module: user_story
 #: help:user.story,priority_level:0
 msgid ""
 "User story level priority, used to define priority for each user story"
 msgstr ""
+"Nivel de prioridad de la historia de usuario, utilizado para definir la "
+"prioridad de cada historia de usuario."
 
 #. module: user_story
 #: view:user.story:0
@@ -359,31 +364,33 @@ msgid ""
 "A deeper explanation about what an user story is can be \n"
 "                found here."
 msgstr ""
+"Una explicación más profunda acerca de qué es una historia de usuario puede "
+"encontrarse aquí:"
 
 #. module: user_story
 #: field:user.story,code:0
 msgid "Code"
-msgstr ""
+msgstr "Código"
 
 #. module: user_story
 #: model:mail.message.subtype,name:user_story.mt_task_new
 msgid "Task Created"
-msgstr ""
+msgstr "Tarea Creada"
 
 #. module: user_story
 #: view:user.story:0
 msgid "GAP analysis results"
-msgstr ""
+msgstr "Resultados del análisis GAP"
 
 #. module: user_story
 #: field:user.story,task_ids:0
 msgid "Tasksss"
-msgstr ""
+msgstr "Tareas"
 
 #. module: user_story
 #: model:mail.message.subtype,name:user_story.mt_comment
 msgid "Discussions"
-msgstr ""
+msgstr "Discusiones"
 
 #. module: user_story
 #: selection:user.story,priority_level:0
