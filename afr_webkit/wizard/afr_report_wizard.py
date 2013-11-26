@@ -119,6 +119,11 @@ class wizard_report(osv.osv_memory):
                 res['report_name'] = 'afr_report_col13_html'
             else:
                 res['report_name'] = 'afr_report_col13'
+        if( res.get('report_name') == 'afr.partner.balance'):
+            if (res.get('datas').get('form')['report_format'] == 'spreadsheet'):
+                res['report_name'] = 'afr_report_partner_balance_html'
+            else:
+                res['report_name'] = 'afr_report_partner_balance'
         
         return res
 
