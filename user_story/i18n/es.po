@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: addons-vauxoo\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-11-07 01:06+0000\n"
-"PO-Revision-Date: 2013-11-25 21:28+0000\n"
-"Last-Translator: Saul Gonzalez <saul@vauxoo.com>\n"
+"PO-Revision-Date: 2013-11-26 16:02+0000\n"
+"Last-Translator: Gabriela Quilarque (Vauxoo) <Unknown>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-26 06:08+0000\n"
-"X-Generator: Launchpad (build 16840)\n"
+"X-Launchpad-Export-Date: 2013-11-27 05:40+0000\n"
+"X-Generator: Launchpad (build 16845)\n"
 
 #. module: user_story
 #: view:user.story:0
@@ -198,7 +198,7 @@ msgstr "1.- Título de la Historia"
 #: model:ir.actions.act_window,name:user_story.action_my_user_story
 #: model:ir.ui.menu,name:user_story.menu_action_my_user_story
 msgid "My User Stories Exc"
-msgstr ""
+msgstr "Mis Historias de Usuario a Ejecutar"
 
 #. module: user_story
 #: view:user.story:0
@@ -395,27 +395,27 @@ msgstr "Discusiones"
 #. module: user_story
 #: selection:user.story,priority_level:0
 msgid "Secondary"
-msgstr ""
+msgstr "Secundario"
 
 #. module: user_story
 #: field:project.task,branch_to_clone:0
 msgid "Branch to clone"
-msgstr ""
+msgstr "Branch a clonar"
 
 #. module: user_story
 #: selection:user.story,state:0
 msgid "In Progress"
-msgstr ""
+msgstr "En Progreso"
 
 #. module: user_story
 #: model:mail.message.subtype,description:user_story.mt_task_stage
 msgid "Stage changed"
-msgstr ""
+msgstr "Etapa cambiada"
 
 #. module: user_story
 #: field:user.story,info:0
 msgid "Other Info"
-msgstr ""
+msgstr "Otra Información"
 
 #. module: user_story
 #: model:ir.actions.act_window,help:user_story.action_user_story
@@ -435,48 +435,60 @@ msgid ""
 "      </p>\n"
 "      "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">El desarrollo dirigido por "
+"comportamiento (BDD por sus siglas en inglés, Behaviour Driven Development) "
+"es una metodología de “afuera hacia adentro”. Comienza desde afuera "
+"identificando resultados de negocio, y de ahí profundiza hasta el conjunto "
+"de características que alcanzará dichos resultados. Cada característica es "
+"capturada como una “historia”, que definirá el alcance de la característica "
+"junto con su criterio de aceptación. Este artículo introduce la manera en "
+"que BDD define e identifica historias y sus criterios de aceptación.</p><p>\n"
+"<a href=\"http://dannorth.net/whats-in-a-story/\" target=\"_NEW\">Más "
+"información aquí</a>\n"
+"</p>\n"
+"      "
 
 #. module: user_story
 #: view:user.story:0
 msgid "Details"
-msgstr ""
+msgstr "Detalles"
 
 #. module: user_story
 #: help:project.task,branch_to_clone:0
 msgid "Branch source for clone and make merge proposal"
-msgstr ""
+msgstr "Branch fuente para clonar y hacer propuesta de merge"
 
 #. module: user_story
 #: field:user.story,sk_id:0
 msgid "Sprint Kanban"
-msgstr ""
+msgstr "Sprint Kanban"
 
 #. module: user_story
 #: view:project.project:0
 #: field:project.project,descriptions:0
 #: field:user.story,description:0
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 #. module: user_story
 #: model:mail.message.subtype,name:user_story.mt_task_stage
 msgid "Stage Changed"
-msgstr ""
+msgstr "Etapa cambiada"
 
 #. module: user_story
 #: help:project.task,userstory_id:0
 msgid "Set here the User Story related with this task"
-msgstr ""
+msgstr "Establezca aquí la Historia de Usuario relacionada con esta tarea."
 
 #. module: user_story
 #: help:project.project,descriptions:0
 msgid "reference on what the project is about"
-msgstr ""
+msgstr "referente a de qué se trata el proyecto"
 
 #. module: user_story
 #: model:ir.actions.report.xml,name:user_story.report_user_story_with_task
 msgid "User Story With Task"
-msgstr ""
+msgstr "Historia de Usuario con Tareas"
 
 #. module: user_story
 #: view:user.story:0
@@ -493,12 +505,12 @@ msgstr ""
 #. module: user_story
 #: model:mail.message.subtype,name:user_story.mt_task_blocked
 msgid "Task Blocked"
-msgstr ""
+msgstr "Tarea bloqueada"
 
 #. module: user_story
 #: model:mail.message.subtype,description:user_story.mt_task_closed
 msgid "Task closed"
-msgstr ""
+msgstr "Tarea cerrada"
 
 #. module: user_story
 #: view:user.story:0
@@ -512,21 +524,26 @@ msgid ""
 "embebed code,\n"
 "                    you can see an example about how to do that"
 msgstr ""
+"En esta descripción debe ser tan explicito como pueda,  recuerde que puede "
+"subir un video de youtube e insertarlo aquí directamente, incrustado como "
+"una pagina web. También puede utilizar vimeo y otros elementos como imagenes "
+"y diagramas (usando servicios en linea) copiando y pegandolos en el código. "
+"Puede ver un ejemplo aquí."
 
 #. module: user_story
 #: view:user.story:0
 msgid "User Story Number: "
-msgstr ""
+msgstr "Número de Historia de Usuario: "
 
 #. module: user_story
 #: help:user.story,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "Mensajes e historial de comunicación"
 
 #. module: user_story
 #: view:project.task:0
 msgid "float_time"
-msgstr ""
+msgstr "float_time"
 
 #. module: user_story
 #: help:user.story,task_ids:0
@@ -539,34 +556,34 @@ msgstr ""
 #. module: user_story
 #: model:mail.message.subtype,description:user_story.mt_task_blocked
 msgid "Task blocked"
-msgstr ""
+msgstr "Tarea bloqueada"
 
 #. module: user_story
 #: view:user.story:0
 msgid "States"
-msgstr ""
+msgstr "Estados"
 
 #. module: user_story
 #: model:res.groups,name:user_story.group_user_story_manager
 msgid "Manager"
-msgstr ""
+msgstr "Administrador"
 
 #. module: user_story
 #: model:ir.model,name:user_story.model_user_story
 msgid "Email Thread"
-msgstr ""
+msgstr "Hilo de Emails"
 
 #. module: user_story
 #: view:user.story:0
 msgid "6.- Asumptions"
-msgstr ""
+msgstr "6.- Supuestos"
 
 #. module: user_story
 #: view:user.story:0
 msgid "Sprint"
-msgstr ""
+msgstr "Sprint"
 
 #. module: user_story
 #: help:acceptability.criteria,accepted:0
 msgid "Chek if this criteria apply"
-msgstr ""
+msgstr "Verifique si este criterio aplica"
