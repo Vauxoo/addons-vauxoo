@@ -30,6 +30,7 @@
     "depends": [
             "project",
             "portal_project_imp",
+            "bzr_to_task",
                 ],
     "description": """
         This module gets data from launchpad projects to OpenERP projects
