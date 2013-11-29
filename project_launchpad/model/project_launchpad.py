@@ -38,7 +38,6 @@ class project_project(osv.osv):
 
     def get_lp_data(self, cr, uid, ids, context=None):
         self_cache = self.browse(cr, uid, ids)[0]
-        print self_cache.lp_project
         if self_cache.lp_project:
             try:
                 from launchpadlib.launchpad import Launchpad
