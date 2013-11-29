@@ -38,6 +38,7 @@ class project_project(osv.osv):
 
     def get_lp_data(self, cr, uid, ids, context=None):
         self_cache = self.browse(cr, uid, ids)[0]
+        print self_cache.lp_project
         if self_cache.lp_project:
             try:
                 from launchpadlib.launchpad import Launchpad
@@ -46,16 +47,11 @@ class project_project(osv.osv):
                 lp_project_obj = lp.distributions[str(self_cache.lp_project)]
                 self.write(cr, uid, ids, {'public_information': lp_project_obj.description})
             except ValueError:
-                return {'warning': {'title': _('No launchpadlib library installed'),
-                                    'message': _('Please install launchpadlib you can get it from \
-                                            PyPi or you can install it via apt-get'),
-                                    }
-                        }
-
-        else:
-            return {'warning': {'title': _('No Launchpad project supplied'),
-                                'message': _('Please fill the Launchpad Project field in order to \
-                                        retrieve data from Launchpad.net'),
-                                }
-                    }
+                raise osv.except_osv('No launchpadlib library installed',
+                       'Please install launchpadlib you can it from PyPi or you can install it via\
+                        apt-get')
+            else:
+                raise osv.except_osv('No Launchpad project supplied',
+                                'Please fill the Launchpad Project field in order to retrieve data\
+                                from Launchpad.net')
 
