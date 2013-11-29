@@ -127,15 +127,18 @@ class facturae_certificate_library(osv.Model):
     _auto = False
     # Agregar find subpath
 
-    def b64str_to_tempfile(self, cr, uid, ids, b64_str="", file_suffix="", file_prefix=""):
+    def b64str_to_tempfile(self, cr, uid, ids, b64_str=None, file_suffix=None, file_prefix=None, context=None):
         """
         @param b64_str : Text in Base_64 format for add in the file
         @param file_suffix : Sufix of the file
         @param file_prefix : Name of file in TempFile
         """
+        if context is None:
+            context = {}
         (fileno, fname) = tempfile.mkstemp(file_suffix, file_prefix)
         f = open(fname, 'wb')
-        f.write(base64.decodestring(b64_str or ''))
+        if b64_str and f:
+            f.write(base64.decodestring(b64_str or False))
         f.close()
         os.close(fileno)
         return fname
