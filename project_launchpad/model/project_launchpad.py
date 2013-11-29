@@ -50,8 +50,9 @@ class project_project(osv.osv):
                 raise osv.except_osv('No launchpadlib library installed',
                        'Please install launchpadlib you can it from PyPi or you can install it via\
                         apt-get')
-            else:
-                raise osv.except_osv('No Launchpad project supplied',
+        else:
+            raise osv.except_osv('No Launchpad project supplied',
                                 'Please fill the Launchpad Project field in order to retrieve data\
                                 from Launchpad.net')
+        return True
 
