@@ -165,9 +165,9 @@
                     %endif
                     <br/>${_("a")} ${o.date_invoice_tz or ''|entity}
                     %if o.invoice_sequence_id.approval_id.type != 'cbb':
-                        ${_("Serie:")} ${get_approval() and get_approval().serie or _("Sin serie")|entity}
-                        <br/>${_("Aprobaci&oacute;n:")} ${get_approval() and get_approval().approval_number or _("Sin aprobaci&oacute;n")|entity}
-                        <br/>${_("A&ntilde;o Aprobaci&oacute;n:")} ${get_approval() and get_approval().approval_year or _("No v&aacute;lido")|entity}
+                        ${_("Serie:")} ${o.seq_approval_id and o.seq_approval_id.serie or _("Sin serie")|entity}
+                        <br/>${_("Aprobaci&oacute;n:")} ${o.seq_approval_id and o.seq_approval_id.approval_number or _("Sin aprobaci&oacute;n")|entity}
+                        <br/>${_("A&ntilde;o Aprobaci&oacute;n:")} ${o.seq_approval_id and o.seq_approval_id.approval_year or _("No v&aacute;lido")|entity}
                     %endif
                 </td>
             </tr>
@@ -369,7 +369,6 @@
         %if 'cfdi' in o.invoice_sequence_id.approval_id.type:
             <div style="page-break-inside:avoid; border:1.5px solid grey;">
                 <table width="100%" class="datos_fiscales">
-                    <%data_certificate=get_data_certificate(o.id)%>
                     <tr>
                         %if o.company_emitter_id.cif_file:
                         <td align="left">
@@ -393,7 +392,7 @@
                             <b>${_('Cadena original:')} </b><br/>
                             ${split_string(o.cfdi_cadena_original) or ''|entity}</br>
                             <b>${_('Enlace al certificado: ')}</b></br>
-                            ${data_certificate['certificate_link'] or ''|entity}</p>
+                            ${o.pac_id and o.pac_id.certificate_link or ''|entity}</p>
                         </td>
                         %if o.cfdi_cbb:
                         <td align="right">
