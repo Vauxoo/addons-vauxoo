@@ -64,6 +64,30 @@ else:
     app_openssl = 'openssl'
     app_xmlstarlet = 'xmlstarlet'
 
+app_openssl_fullpath = os.path.join(openssl_path, app_openssl)
+if not os.path.isfile(app_openssl_fullpath):
+    app_openssl_fullpath = tools.find_in_path(app_openssl)
+    if not os.path.isfile(app_openssl_fullpath):
+        app_openssl_fullpath = False
+        _logger.warning('Install openssl "sudo apt-get install openssl" to use l10n_mx_facturae_lib module.')
+
+app_xsltproc_fullpath = os.path.join(xsltproc_path, app_xsltproc) or False
+try:
+    if not os.path.isfile(app_xsltproc_fullpath):
+        app_xsltproc_fullpath = tools.find_in_path(app_xsltproc) or False
+        if not os.path.isfile(app_xsltproc_fullpath):
+            app_xsltproc_fullpath = False
+            _logger.warning('Install xsltproc "sudo apt-get install xsltproc" to use l10n_mx_facturae_lib module.')
+except Exception, e:
+    _logger.warning("Install xsltproc 'sudo apt-get install xsltproc' to use l10n_mx_facturae_lib module.")
+
+app_xmlstarlet_fullpath = os.path.join(xmlstarlet_path, app_xmlstarlet)
+if not os.path.isfile( app_xmlstarlet_fullpath ):
+    app_xmlstarlet_fullpath = tools.find_in_path( app_xmlstarlet )
+    if not app_xmlstarlet_fullpath:
+        app_xmlstarlet_fullpath = False
+        _logger.warning('Install xmlstarlet "sudo apt-get install xmlstarlet" to use l10n_mx_facturae_lib module.')
+
 def library_openssl_xsltproc_xmlstarlet(self, cr, uid, ids, context=None):
     if context is None:
         context = {}
