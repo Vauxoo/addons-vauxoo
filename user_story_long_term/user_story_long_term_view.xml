@@ -82,8 +82,8 @@
 -->
 
         <!-- Project Phase 
-             
             <field name="context">{'search_default_project_id': [active_id], 'default_project_id': active_id}</field>
+        -->
 
         <record id="act_user_story_phases" model="ir.actions.act_window">
             <field name="res_model">user.story.phase</field>
@@ -91,23 +91,27 @@
             <field name="name">Phases</field>
             <field name="view_mode">tree,form</field>
         </record>
-        -->
         
         
         <record id="user_story_phase_form" model="ir.ui.view">
-            <field name="name">Inherit project form : Phase</field>
+            <field name="name">Inherit User Story Form : Phase</field>
             <field name="model">user.story</field>
             <field name="inherit_id" ref="user_story.view_userstory_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='name']" position='after'>
-                    <group>
-                        <group>
-                            <field name='phase_ids'/> 
-                        </group>
-                    </group>
+                <xpath expr="//h2" position='after'>
+                    <div class="oe_right oe_button_box" name="buttons" >
+                    <button name="%(act_user_story_phases)d"
+                      string="Phases" type="action"
+                      attrs="{'invisible':[('use_phases_user_story','=', 0)]}"
+                      class="oe_inline" />
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='code']" position='after'>
+                    <field name="use_phases_user_story" class="oe_inline"/>
                 </xpath>
             </field>
         </record>
+
         <!--
         <record id="view_project_kanban_phase" model="ir.ui.view">
             <field name="name">project.project.kanban.inherited</field>
@@ -115,11 +119,11 @@
             <field name="inherit_id" ref="project.view_project_kanban"/>
             <field name="arch" type="xml">
                 <field name="use_tasks" position="after">
-                    <field name="use_phases"/>
+                    <field name="use_phases_user_story"/>
                     <field name="phase_count"/>
                 </field>
                 <xpath expr="//div[contains(@class, 'oe_kanban_project_list')]" position="inside">
-                    <a t-if="record.use_phases.raw_value"
+                    <a t-if="record.use_phases_user_story.raw_value"
                         name="%(act_project_phases)d" type="action">
                         <span t-if="record.phase_count.raw_value gt 1"><field name="phase_count"/> Phases</span>
                         <span t-if="record.phase_count.raw_value lt 2"><field name="phase_count"/> Phase</span>
@@ -127,7 +131,9 @@
                 </xpath>
             </field>
         </record>
-        
+        -->
+
+        <!--
         <record id="project_phase_task_list" model="ir.actions.act_window">
             <field name="res_model">project.task</field>
             <field name="view_type">form</field>
@@ -305,8 +311,8 @@
             <field eval="18" name="priority"/>
             <field name="arch" type="xml">
                 <xpath expr='//div[@name="project"]' position='inside'>
-                    <field name="use_phases"/>
-                    <label for="use_phases"/>
+                    <field name="use_phases_user_story"/>
+                    <label for="use_phases_user_story"/>
                 </xpath>
             </field>
         </record>

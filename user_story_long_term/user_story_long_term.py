@@ -236,7 +236,7 @@ class user_story(osv.Model):
                            LEFT JOIN user_story_user_rel rel ON rel.user_story_id = user_story.id
                            WHERE (account.user_id = %s or rel.uid = %s)"""%(user, user))
                 return [(r[0]) for r in cr.fetchall()]
-        return super(user_story, self).search(cr, user, args, offset=offset, limit=limit, order=order,
+        return super(user_story, self).search(cr, user, args, offset=offset, limit=limit, order=order, context=context, count=count)
 
     def _phase_count(self, cr, uid, ids, field_name, arg, context=None):
         res = dict.fromkeys(ids, 0)
