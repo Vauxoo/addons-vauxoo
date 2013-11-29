@@ -21,27 +21,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-{
-    "name": "Project Launchpad",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "website": "http://www.vauxoo.com",
-    "category": "Tools",
-    "depends": [
-            "project",
-                ],
-    "description": """
-        This module gets data from launchpad projects to OpenERP projects
-        the main pourpose of this feature is to have your CMS projects up
-        to date and consistent with the projects you acctually work on.
-    """,
-    "init_xml": [],
-    "demo_xml": [],
-    "test": [],
-    "update_xml": [
-                   "views/project_launchpad_view.xml",
-                    ],
-    'installable': True,
-    'active': False,
-    'certificate': None,
-}
+
+from openerp.osv import osv
+from openerp.osv import fields
+from openerp.tools.translate import _
+from openerp import pooler, tools
+from launchpadlib.launchpad import Launchpad
+
+class project_project(osv.osv):
+    _inherit = 'project.project'
+    _columns = {
+            'lp_project': fields.char('Launchpad Project', size=64, help='Put here the name of\
+                    the project ie. for lp:openobject-server you should use only \
+                    openobject-server'),
+            }
