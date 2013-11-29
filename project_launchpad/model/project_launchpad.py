@@ -26,7 +26,7 @@ from openerp.osv import osv
 from openerp.osv import fields
 from openerp.tools.translate import _
 from openerp import pooler, tools
-from launchpadlib.launchpad import Launchpad
+
 
 class project_project(osv.osv):
     _inherit = 'project.project'
@@ -35,3 +35,27 @@ class project_project(osv.osv):
                             help='Put here the name of the project ie. for lp:openobject-server you\
                                     should use only openobject-server'),
             }
+
+    def get_lp_data(self, cr, uid, ids, context=None):
+        self_cache = self.browse(cr, uid, ids)[0]
+        if self_cache.lp_project:
+            try:
+                from launchpadlib.launchpad import Launchpad
+                cachedir = '~/.launchpadlib/'
+                lp = Launchpad.login_anonymously('just testing', 'production', cachedir)
+                lp_project_obj = lp.distributions[str(self_cache.lp_project)]
+                self.write(cr, uid, ids, {'public_information': lp_project_obj.description})
+            except ValueError:
+                return {'warning': {'title': _('No launchpadlib library installed'),
+                                    'message': _('Please install launchpadlib you can get it from \
+                                            PyPi or you can install it via apt-get'),
+                                    }
+                        }
+
+        else:
+            return {'warning': {'title': _('No Launchpad project supplied'),
+                                'message': _('Please fill the Launchpad Project field in order to \
+                                        retrieve data from Launchpad.net'),
+                                }
+                    }
+
