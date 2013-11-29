@@ -31,7 +31,6 @@ from launchpadlib.launchpad import Launchpad
 class project_project(osv.osv):
     _inherit = 'project.project'
     _columns = {
-            'lp_project': fields.char('Launchpad Project', size=64, help='Put here the name of\
-                    the project ie. for lp:openobject-server you should use only \
-                    openobject-server'),
+            'lp_project': fields.char('Launchpad Project', size=64, help='Put here the name of the\
+                    project ie. for lp:openobject-server you should use only openobject-server'),
             }
