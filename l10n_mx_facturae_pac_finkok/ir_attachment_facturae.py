@@ -162,7 +162,7 @@ class ir_attachment_facturae_mx(osv.Model):
                         })
                     else:
                         if EstatusUUID in dict_error:
-                            raise orm.except_orm(_('Warning'), _('Mensaje %s %s') % (msg, dict_error[EstatusUUID]))
+                            raise orm.except_orm(_('Warning'), _('Mensaje %s %s Code: %s') % (msg, dict_error[EstatusUUID], EstatusUUID))
             else:
                 msg = _('Not found information of webservices of PAC, verify that the configuration of PAC is correct')
         return {'message': msg}
