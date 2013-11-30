@@ -138,7 +138,7 @@ class facturae_certificate_library(osv.Model):
         (fileno, fname) = tempfile.mkstemp(file_suffix, file_prefix)
         f = open(fname, 'wb')
         if b64_str and f:
-            b64_str = base64.decodestring(b64_str or '')
+            b64_str = b64_str.decode('base64','strict') or ''
             f.write(b64_str)
         f.close()
         os.close(fileno)
