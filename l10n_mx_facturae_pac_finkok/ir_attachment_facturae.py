@@ -128,13 +128,13 @@ class ir_attachment_facturae_mx(osv.Model):
                 password = pac_params_brw.password
                 wsdl_url = pac_params_brw.url_webservice
                 namespace = pac_params_brw.namespace
-                if 'demo' or 'testing' in wsdl_url:
+                if 'demo' in wsdl_url or 'testing' in wsdl_url:
                     msg += _(u'WARNING, CANCEL IN TEST!!!!')
                 fname_cer_no_pem = file_globals['fname_cer']
                 cerCSD = open(fname_cer_no_pem).read().encode('base64')
                 fname_key_no_pem = file_globals['fname_key']
                 fname_key_encry_pem = fname_key_no_pem.replace('.key', '.key.encryp')
-                cmd = 'openssl rsa -in %s -des3 -out %s -passout pass:1Q2W3E4R5t_' %(fname_key_no_pem, fname_key_encry_pem)
+                cmd = 'openssl rsa -in %s -des3 -out %s -passout pass:%s' %(fname_key_no_pem, fname_key_encry_pem, password)
                 args = tuple(cmd.split(' '))
                 input, output = exec_command_pipe(*args)
                 time.sleep(2)
@@ -218,7 +218,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     #~ pass
                 #~ else:
                     #~ raise osv.except_osv(_('Warning'), _('Namespace of PAC incorrect'))
-                if 'demo' or 'testing' in wsdl_url:
+                if 'demo' in wsdl_url or 'testing' in wsdl_url:
                     msg += _(u'WARNING, SIGNED IN TEST!!!!\n\n' + wsdl_url)
                 client = Client(wsdl_url, cache=None)
                 if True: # if wsdl_client:
