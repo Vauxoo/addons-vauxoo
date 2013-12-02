@@ -113,7 +113,7 @@ class user_story_phase(osv.Model):
         'next_phase_ids': fields.many2many('user.story.phase', 'user_story_phase_rel', 'prv_phase_id', 'next_phase_id', 'Next Phases', states={'cancelled':[('readonly',True)]}),
 
         'previous_phase_ids': fields.many2many('user.story.phase', 'user_story_phase_rel',
-            'next_user_story_id', 'prv_phase_id', 'Previous Phases', states={'cancelled':[('readonly',True)]}),
+            'next_phase_id', 'prv_phase_id', 'Previous Phases', states={'cancelled':[('readonly',True)]}),
 
         'product_uom': fields.many2one('product.uom', 'Duration Unit of Measure', required=True, help="Unit of Measure (Unit of Measure) is the unit of measurement for Duration", states={'done':[('readonly',True)], 'cancelled':[('readonly',True)]}),
 
@@ -226,18 +226,18 @@ class user_story(osv.Model):
     _name = "user.story"
     _inherit = "user.story"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
-
-    def search(self, cr, user, args, offset=0, limit=None, order=None, context=None, count=False):
-        if user == 1:
-            return super(user_story, self).search(cr, user, args, offset=offset, limit=limit, order=order, context=context, count=count)
-        if context and context.get('user_preference'):
-                cr.execute("""SELECT user_story.id FROM user_story user_story
-                           LEFT JOIN account_analytic_account account ON account.id = user_story.analytic_account_id
-                           LEFT JOIN user_story_user_rel rel ON rel.user_story_id = user_story.id
-                           WHERE (account.user_id = %s or rel.uid = %s)"""%(user, user))
-                return [(r[0]) for r in cr.fetchall()]
-        return super(user_story, self).search(cr, user, args, offset=offset, limit=limit, order=order, context=context, count=count)
-
+    
+    #def search(self, cr, user, args, offset=0, limit=None, order=None, context=None, count=False):
+    #    if user == 1:
+    #        return super(user_story, self).search(cr, user, args, offset=offset, limit=limit, order=order, context=context, count=count)
+    #    if context and context.get('user_preference'):
+    #            cr.execute("""SELECT user_story.id FROM user_story user_story
+    #                       LEFT JOIN account_analytic_account account ON account.id = user_story.analytic_account_id
+    #                       LEFT JOIN user_story_user_rel rel ON rel.user_story_id = user_story.id
+    #                       WHERE (account.user_id = %s or rel.uid = %s)"""%(user, user))
+    #            return [(r[0]) for r in cr.fetchall()]
+    #    return super(user_story, self).search(cr, user, args, offset=offset, limit=limit, order=order, context=context, count=count)
+    
     def _phase_count(self, cr, uid, ids, field_name, arg, context=None):
         res = dict.fromkeys(ids, 0)
         phase_ids = self.pool.get('user.story.phase').search(cr, uid, [('user_story_id', 'in', ids)])
@@ -258,7 +258,7 @@ class user_story(osv.Model):
     def create(self, cr, uid, vals, context=None):
         if context is None: context = {}
         # Prevent double project creation when 'use_tasks' is checked!
-        context = dict(context, project_creation_in_progress=True)
+        context = dict(context, user_story_creation_in_progress=True)
         context['name'] = "User Story / " + vals['name'] 
         if vals.get('type', False) not in ('template','contract'):
             vals['type'] = 'contract'
@@ -306,17 +306,13 @@ class user_story(osv.Model):
 #        return True
 #project()
 
-class account_analytic_account(osv.osv):
+class account_analytic_account(osv.Model):
     _inherit = 'account.analytic.account'
     _description = 'Analytic Account'
     _columns = {
         'use_phases_user_story': fields.boolean('Phases', help="Check this field if you plan to use phase-based scheduling"),
     }
 
-    def _trigger_user_story_creation(self, cr, uid, vals, context=None):
-        if context is None: context = {}
-        res = super(account_analytic_account, self)._trigger_project_creation(cr, uid, vals, context=context)
-        return res or (vals.get('use_phases_user_story') and not 'project_creation_in_progress' in context)
 
     def on_change_template(self, cr, uid, ids, template_id, context=None):
         res = super(account_analytic_account, self).on_change_template(cr, uid, ids, template_id, context=context)
@@ -324,6 +320,10 @@ class account_analytic_account(osv.osv):
             template = self.browse(cr, uid, template_id, context=context)
             res['value']['use_phases_user_story'] = template.use_phases_user_story
         return res
+
+    def _trigger_user_story_creation(self, cr, uid, vals, context=None):
+        if context is None: context = {}
+        return (vals.get('use_phases_user_story') and not 'user_story_creation_in_progress' in context)
 
     def user_story_create(self, cr, uid, analytic_account_id, vals, context=None):
         '''
@@ -349,8 +349,11 @@ class account_analytic_account(osv.osv):
         self.user_story_create(cr, uid, analytic_account_id, vals, context=context)
         return analytic_account_id
 
+    """
     def write(self, cr, uid, ids, vals, context=None):
         vals_for_project = vals.copy()
+        import pdb
+        pdb.set_trace()
         for account in self.browse(cr, uid, ids, context=context):
             if not vals.get('name', False):
                 vals_for_project['name'] = account.name
@@ -358,7 +361,7 @@ class account_analytic_account(osv.osv):
                 vals_for_project['type'] = account.type
             self.user_story_create(cr, uid, account.id, vals_for_project, context=context)
         return super(account_analytic_account, self).write(cr, uid, ids, vals, context=context)
-
+    """
 #account_analytic_account()
 
 
