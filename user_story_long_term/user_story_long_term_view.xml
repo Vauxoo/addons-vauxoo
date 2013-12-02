@@ -82,7 +82,6 @@
 -->
 
         <!-- Project Phase 
-            <field name="context">{'search_default_project_id': [active_id], 'default_project_id': active_id}</field>
         -->
 
         <record id="act_user_story_phases" model="ir.actions.act_window">
@@ -90,6 +89,7 @@
             <field name="view_type">form</field>
             <field name="name">Phases</field>
             <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_user_story_id': [active_id], 'default_user_story_id': active_id}</field>
         </record>
         
         
@@ -249,12 +249,23 @@
             </field>
         </record>
 
+        <record id="view_user_story_phase_search" model="ir.ui.view">
+            <field name="name">user.story.phase.search</field>
+            <field name="model">user.story.phase</field>
+            <field name="arch" type="xml">
+                <search string="User Story Phases">
+                    <field name="user_story_id"/>
+                </search>
+            </field>
+        </record>
+
         <record id="act_user_story_phase" model="ir.actions.act_window">
             <field name="name">User Story Phases</field>
             <field name="res_model">user.story.phase</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="context">{}</field>
+            <field name="search_view_id" ref="view_user_story_phase_search"/>
             <field name="help">A user_story can be split into the different phases. For each phase, you can define your users allocation, describe different tasks and link your phase to previous and next phases, add date constraints for the automated scheduling. Use the long term planning in order to planify your available users, convert your phases into a series of tasks when you start working on the user_story.</field>
         </record>
 
