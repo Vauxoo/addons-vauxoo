@@ -156,7 +156,10 @@ class facturae_certificate_library(osv.Model):
         missing_padding = 4 - len(data) % 4
         if missing_padding:
             data += b'='* missing_padding
-        return base64.decodestring(data)
+            data = base64.b64decode(data)
+            print data
+            #data = base64.decodestring(data)
+        return data
 
     def _read_file_attempts(self, file_obj, max_attempt=12, seconds_delay=0.5):
         """
