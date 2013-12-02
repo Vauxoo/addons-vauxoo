@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:terceros="http://www.sat.gob.mx/terceros" targetNamespace="http://www.sat.gob.mx/terceros" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="PorCuentadeTerceros">
+		<xs:annotation>
+			<xs:documentation> Complemento concepto para la emisión de Comprobante Fiscal Digital (CFD) y Comprobante Fiscal Digital a través de Internet (CFDI) por orden y cuenta de terceros.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="InformacionFiscalTercero" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Nodo opcional para expresar información fiscal de terceros</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="terceros:t_UbicacionFiscal"/>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:choice>
+					<xs:element name="InformacionAduanera" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Nodo opcional para introducir la información aduanera aplicable cuando se trate de ventas de primera mano de mercancías importadas.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="terceros:t_InformacionAduanera"/>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Parte" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Nodo opcional para expresar las partes o componentes que integran la totalidad del concepto expresado en el CFD o CFDI</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="InformacionAduanera" type="terceros:t_InformacionAduanera" minOccurs="0" maxOccurs="unbounded">
+									<xs:annotation>
+										<xs:documentation>Nodo opcional para introducir la información aduanera aplicable cuando se trate de partes o componentes importados vendidos de primera mano.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+							<xs:attribute name="cantidad" use="required">
+								<xs:annotation>
+									<xs:documentation>Atributo requerido para precisar la cantidad de bienes o servicios del tipo particular definido por la presente parte.</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:whiteSpace value="collapse"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="unidad" use="optional">
+								<xs:annotation>
+									<xs:documentation>Atributo opcional para precisar la unidad de medida aplicable para la cantidad expresada en la parte.</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:whiteSpace value="collapse"/>
+										<xs:minLength value="1"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="noIdentificacion" use="optional">
+								<xs:annotation>
+									<xs:documentation>Atributo opcional para expresar el número de serie del bien o identificador del servicio amparado por la presente parte.</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1"/>
+										<xs:whiteSpace value="collapse"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="descripcion" use="required">
+								<xs:annotation>
+									<xs:documentation>Atributo requerido para precisar la descripción del bien o servicio cubierto por la presente parte.</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1"/>
+										<xs:whiteSpace value="collapse"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="valorUnitario" type="terceros:t_Importe" use="optional">
+								<xs:annotation>
+									<xs:documentation>Atributo opcional para precisar el valor o precio unitario del bien o servicio cubierto por la presente parte.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="importe" type="terceros:t_Importe" use="optional">
+								<xs:annotation>
+									<xs:documentation>Atributo opcional para precisar el importe total de los bienes o servicios de la presente parte. Debe ser equivalente al resultado de multiplicar la cantidad por el valor unitario expresado en la parte.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="CuentaPredial" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Nodo opcional para asentar el número de cuenta predial con el que fue registrado el inmueble, en el sistema catastral de la entidad federativa de que trate.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:attribute name="numero" use="required">
+								<xs:annotation>
+									<xs:documentation>Atributo requerido para precisar el número de la cuenta predial del inmueble cubierto por el presente concepto en caso de recibos de arrendamiento.</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:whiteSpace value="collapse"/>
+										<xs:minLength value="1"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:complexType>
+					</xs:element>
+				</xs:choice>
+				<xs:element name="Impuestos">
+					<xs:annotation>
+						<xs:documentation>Nodo requerido para capturar los impuestos aplicables.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Retenciones" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Nodo opcional para capturar los impuestos retenidos aplicables</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Retencion" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Nodo para la información detallada de una retención de impuesto específico</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="impuesto" use="required">
+													<xs:annotation>
+														<xs:documentation>Atributo requerido para señalar el tipo de impuesto retenido</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:whiteSpace value="collapse"/>
+															<xs:enumeration value="ISR">
+																<xs:annotation>
+																	<xs:documentation>Impuesto sobre la renta</xs:documentation>
+																</xs:annotation>
+															</xs:enumeration>
+															<xs:enumeration value="IVA">
+																<xs:annotation>
+																	<xs:documentation>Impuesto al Valor Agregado</xs:documentation>
+																</xs:annotation>
+															</xs:enumeration>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="importe" type="terceros:t_Importe" use="required">
+													<xs:annotation>
+														<xs:documentation>Atributo requerido para señalar el importe o monto del impuesto retenido</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Traslados" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Nodo opcional para asentar o referir los impuestos trasladados aplicables</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Traslado" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>Nodo para la información detallada de un traslado de impuesto específico</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="impuesto" use="required">
+													<xs:annotation>
+														<xs:documentation>Atributo requerido para señalar el tipo de impuesto trasladado</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:whiteSpace value="collapse"/>
+															<xs:enumeration value="IVA">
+																<xs:annotation>
+																	<xs:documentation>Impuesto al Valor Agregado</xs:documentation>
+																</xs:annotation>
+															</xs:enumeration>
+															<xs:enumeration value="IEPS">
+																<xs:annotation>
+																	<xs:documentation>Impuesto especial sobre productos y servicios</xs:documentation>
+																</xs:annotation>
+															</xs:enumeration>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="tasa" type="terceros:t_Importe" use="required">
+													<xs:annotation>
+														<xs:documentation>Atributo requerido para señalar la tasa del impuesto que se traslada por cada concepto amparado en el comprobante</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="importe" type="terceros:t_Importe" use="required">
+													<xs:annotation>
+														<xs:documentation>Atributo requerido para señalar el importe del impuesto trasladado</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="version" use="required" fixed="1.1">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido con valor prefijado a 1.1 que indica la versión del estandar bajo el que se encuentra expresado el complemento.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="rfc" type="terceros:t_RFC" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para la Clave del Registro Federal de Contribuyentes correspondiente al contribuyente emisor del comprobante sin guiones o espacios.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="nombre">
+				<xs:annotation>
+					<xs:documentation>Atributo opcional para el nombre o razón social del contribuyente emisor del comprobante.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="t_UbicacionFiscal">
+		<xs:annotation>
+			<xs:documentation>Tipo definido para expresar domicilios o direcciones</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="calle" use="required">
+			<xs:annotation>
+				<xs:documentation>Este atributo requerido sirve para precisar la avenida, calle, camino o carretera donde se da la ubicación.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="noExterior" use="optional">
+			<xs:annotation>
+				<xs:documentation>Este atributo opcional sirve para expresar el número particular en donde se da la ubicación sobre una calle dada.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="noInterior" use="optional">
+			<xs:annotation>
+				<xs:documentation>Este atributo opcional sirve para expresar información adicional para especificar la ubicación cuando calle y número exterior (noExterior) no resulten suficientes para determinar la ubicación de forma precisa.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="colonia" use="optional">
+			<xs:annotation>
+				<xs:documentation>Este atributo opcional sirve para precisar la colonia en donde se da la ubicación cuando se desea ser más específico en casos de ubicaciones urbanas.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="localidad" use="optional">
+			<xs:annotation>
+				<xs:documentation>Atributo opcional que sirve para precisar la ciudad o población donde se da la ubicación.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="referencia" use="optional">
+			<xs:annotation>
+				<xs:documentation>Atributo opcional para expresar una referencia de ubicación adicional.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="collapse"/>
+					<xs:minLength value="1"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="municipio" use="required">
+			<xs:annotation>
+				<xs:documentation>Atributo requerido que sirve para precisar el municipio o delegación (en el caso del Distrito Federal) en donde se da la ubicación.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="estado" use="required">
+			<xs:annotation>
+				<xs:documentation>Atributo requerido que sirve para precisar el estado o entidad federativa donde se da la ubicación.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="pais" use="required">
+			<xs:annotation>
+				<xs:documentation>Atributo requerido que sirve para precisar el país donde se da la ubicación.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="codigoPostal" use="required">
+			<xs:annotation>
+				<xs:documentation>Atributo requerido que sirve para asentar el código postal en donde se da la ubicación.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="collapse"/>
+					<xs:length value="5"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="t_InformacionAduanera">
+		<xs:annotation>
+			<xs:documentation>Tipo definido para expresar información aduanera</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="numero" use="required">
+			<xs:annotation>
+				<xs:documentation>Atributo requerido para expresar el número del documento aduanero que ampara la importación del bien.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="fecha" use="required">
+			<xs:annotation>
+				<xs:documentation>Atributo requerido para expresar la fecha de expedición del documento aduanero que ampara la importación del bien.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:date">
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="aduana">
+			<xs:annotation>
+				<xs:documentation>Atributo opcional para precisar la aduana por la que se efectuó la importación del bien.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1"/>
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="t_RFC">
+		<xs:annotation>
+			<xs:documentation>Tipo definido para expresar claves del Registro Federal de Contribuyentes</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="12"/>
+			<xs:maxLength value="13"/>
+			<xs:whiteSpace value="collapse"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="t_Importe">
+		<xs:annotation>
+			<xs:documentation>Tipo definido para expresar importes numéricos con fracción hasta seis decimales</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:fractionDigits value="6"/>
+			<xs:whiteSpace value="collapse"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

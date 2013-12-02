@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<openerp>
+  <data>
+<!--
+Configurar Factura Electronica
+-->
+    <record id="invoice_elec_config_view" model="ir.ui.view">
+        <field name="name">configure.electronic.invoice.form</field>
+        <field name="model">facturae.config</field>
+        <field name="inherit_id" ref="base.res_config_view_base"/>
+        <field name="arch" type="xml">
+        <xpath expr="/form/group" position="replace">
+            <group string="Configure your data for Electronic Invoice"/>
+        </xpath>
+        <xpath expr="/form/footer" position="after">
+            <group colspan="1" col="1">
+                <field name="vat"/>
+            </group>
+        </xpath>
+        </field>
+    </record>
+<!--
+Acción
+-->
+    <record id="action_config_invoice_electronic" model="ir.actions.act_window">
+        <field name="name">Configure Electronic Invoice</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">facturae.config</field>
+        <field name="view_id" ref="invoice_elec_config_view"/>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <!-- register configuration wizard -->
+
+    <record model="ir.actions.todo" id="config_auto_invoice_electronic">
+        <field name="action_id" ref="action_config_invoice_electronic"/>
+        <field name="type">automatic</field>
+    </record>
+  </data>
+</openerp>
+
