@@ -46,8 +46,6 @@ class invoice_facturae_html(report_sxw.rml_parse):
             'split_string': self._split_string,
             'company_address': self._company_address,
             'subcompany_address': self._subcompany_address,
-            'get_invoice_sequence': self._get_invoice_sequence,
-            'get_approval': self._get_approval,
             'get_taxes': self._get_taxes,
             'get_taxes_ret': self._get_taxes_ret,
             'float': float,
@@ -55,7 +53,6 @@ class invoice_facturae_html(report_sxw.rml_parse):
             'get_data_partner': self._get_data_partner,
             'get_sum_total': self._get_sum_total,
             'has_disc': self._has_disc,
-            'get_data_certificate': self._get_data_certificate,
             'get_text_promissory' : self._get_text_promissory,
         })
         self.taxes = []
@@ -84,34 +81,7 @@ class invoice_facturae_html(report_sxw.rml_parse):
         except Exception, e:
             print "exception: %s" % (e)
             pass
-        try:
-            self._get_data_certificate(o.id)
-        except Exception, e:
-            print "exception: %s" % (e)
-            pass
         return ""
-
-    def _get_approval(self):
-        return self.approval
-
-    def _get_invoice_sequence(self):
-        return self.sequence
-
-    def _set_invoice_sequence_and_approval(self, invoice_id):
-        context = {}
-        pool = pooler.get_pool(self.cr.dbname)
-        invoice_obj = pool.get('account.invoice')
-        sequence_obj = pool.get('ir.sequence')
-        invoice = invoice_obj.browse(self.cr, self.uid, [
-                                     invoice_id], context=context)[0]
-        context.update({'number_work': invoice.number})
-        sequence = invoice.invoice_sequence_id or False
-        sequence_id = sequence and sequence.id or False
-        self.sequence = sequence
-        approval = sequence and sequence.approval_id or False
-        approval_id = approval and approval.id or False
-        self.approval = approval
-        return sequence, approval
 
     def _get_taxes(self):
         return self.taxes
@@ -163,7 +133,6 @@ class invoice_facturae_html(report_sxw.rml_parse):
         return self.invoice_data_dict
 
     def _get_facturae_data_dict(self, invoice):
-        self._set_invoice_sequence_and_approval(invoice.id)
         self.taxes = [
             tax for tax in invoice.tax_line if tax.tax_percent >= 0.0]
         self.taxes_ret = [
@@ -221,24 +190,6 @@ class invoice_facturae_html(report_sxw.rml_parse):
                 break
         return discount
 
-    def _get_data_certificate(self, invoice_id):
-        pool = pooler.get_pool(self.cr.dbname)
-        invoice_obj = pool.get('account.invoice')
-        pac_params_obj = self.pool.get('params.pac')
-        res={}
-        invoice = invoice_obj.browse(self.cr, self.uid, invoice_id)
-        pac_params_ids = pac_params_obj.search(self.cr, self.uid, [
-            ('method_type', '=', 'pac_sf_firmar'),
-            ('company_id', '=', invoice.company_id.id), 
-            ('active', '=', True)], limit=1, context={})
-        pac_params_id = pac_params_ids and pac_params_ids[0] or False
-        if pac_params_id:
-            data_pac = pac_params_obj.browse(self.cr, self.uid, pac_params_id)
-            res.update({
-                'certificate_link' : data_pac.certificate_link or False,
-            })
-        return res
-        
     def _get_text_promissory(self, company, partner, address_emitter, invoice):
         text = ''
         context = {}
