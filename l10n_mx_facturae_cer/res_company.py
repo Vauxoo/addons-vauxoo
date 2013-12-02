@@ -118,9 +118,7 @@ class res_company_facturae_certificate(osv.Model):
             fname_key_der = certificate_lib.b64str_to_tempfile(cr, uid, ids,
                 key_der_b64str, file_suffix='.der.key',
                 file_prefix='openerp__' + (False or '') + '__ssl__', context=context)
-            fname_password = certificate_lib.b64str_to_tempfile(cr, uid, ids,
-                base64.encodestring(password), file_suffix='der.txt',
-                file_prefix='openerp__' + (False or '') + '__ssl__', context=context)
+            fname_password = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.b64encode(password), file_suffix='der.txt', file_prefix='openerp__' + (False or '') + '__ssl__', context=context)
             fname_tmp = certificate_lib.b64str_to_tempfile(cr, uid, ids,
                 '', file_suffix='tmp.txt', file_prefix='openerp__' + (
                 False or '') + '__ssl__', context=context)
