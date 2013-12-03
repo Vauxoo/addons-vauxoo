@@ -139,9 +139,8 @@ class facturae_certificate_library(osv.Model):
         f = open(fname, 'wb')
         if b64_str and f:
             data=self.decode_base64(b64_str)
-            #print "con la funcion\n",data
+            
             #b64_str = base64.b64decode(b64_str)#(the '=' characters at the end of base64 encoded data) is "lossless":
-            #print "con b64decode\n",b64_str
             f.write(data)
         f.close()
         os.close(fileno)
@@ -156,9 +155,9 @@ class facturae_certificate_library(osv.Model):
         missing_padding = 4 - len(data) % 4
         if missing_padding:
             data += b'='* missing_padding
-            data = base64.b64decode(data)
-            print data
+            #data = base64.b64decode(data)
             #data = base64.decodestring(data)
+            data = base64.b64decode(data.encode('ascii'))
         return data
 
     def _read_file_attempts(self, file_obj, max_attempt=12, seconds_delay=0.5):
