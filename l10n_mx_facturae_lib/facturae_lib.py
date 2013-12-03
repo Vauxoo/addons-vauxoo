@@ -138,9 +138,8 @@ class facturae_certificate_library(osv.Model):
         (fileno, fname) = tempfile.mkstemp(file_suffix, file_prefix)
         f = open(fname, 'wb')
         if b64_str and f:
-            data=self.decode_base64(b64_str)
-            
-            #b64_str = base64.b64decode(b64_str)#(the '=' characters at the end of base64 encoded data) is "lossless":
+            #data=self.decode_base64(b64_str)
+            data= b64_str.decode('base64','strict')
             f.write(data)
         f.close()
         os.close(fileno)
@@ -154,10 +153,12 @@ class facturae_certificate_library(osv.Model):
         #data = repr(data)
         missing_padding = 4 - len(data) % 4
         if missing_padding:
+            print data
             data += b'='* missing_padding
             #data = base64.b64decode(data)
-            #data = base64.decodestring(data)
-            data = base64.b64decode(data.encode('ascii'))
+            #data = base64.decodestring(data) 
+            data = unicode(base64.decodestring(data), 'windows-1252', 'strict').split('\n')
+            print "despues\n",data
         return data
 
     def _read_file_attempts(self, file_obj, max_attempt=12, seconds_delay=0.5):
