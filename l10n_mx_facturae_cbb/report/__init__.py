@@ -25,4 +25,4 @@
 #
 ##############################################################################
 
-import invoice_facturae_pdf
+#~ import invoice_facturae_pdf
