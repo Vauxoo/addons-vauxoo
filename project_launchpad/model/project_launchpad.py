@@ -26,6 +26,12 @@ from openerp.osv import osv
 from openerp.osv import fields
 from openerp.tools.translate import _
 from openerp import pooler, tools
+try:
+    from launchpadlib.launchpad import Launchpad
+except ValueError:
+    raise osv.except_osv('No launchpadlib library installed',
+                        'Please install launchpadlib you can it from PyPi or you can install it via\
+                         apt-get')
 
 
 class project_project(osv.osv):
@@ -39,16 +45,19 @@ class project_project(osv.osv):
     def get_lp_data(self, cr, uid, ids, context=None):
         self_cache = self.browse(cr, uid, ids)[0]
         if self_cache.lp_project:
-            try:
-                from launchpadlib.launchpad import Launchpad
-                cachedir = '~/.launchpadlib/'
-                lp = Launchpad.login_anonymously('just testing', 'production', cachedir)
-                lp_project_obj = lp.distributions[str(self_cache.lp_project)]
-                self.write(cr, uid, ids, {'public_information': lp_project_obj.description})
-            except ValueError:
-                raise osv.except_osv('No launchpadlib library installed',
-                       'Please install launchpadlib you can it from PyPi or you can install it via\
-                        apt-get')
+            cachedir = '~/.launchpadlib/'
+            lp = Launchpad.login_anonymously('just testing', 'production', cachedir)
+            lp_project_obj = lp.distributions[str(self_cache.lp_project)]
+            title = '<h1>%s</h1>'%lp_project_obj.title
+            url = '</h6>Puedes descargarla desde <a href="%s">aqui</a></h6>\n'%lp_project_obj.download_url
+
+            summary = '<h3>%s</h3>'%lp_project_obj.summary
+            if lp_project_obj.description:
+                description = '<p>%s</p>'%lp_project_obj.description
+                public_information = title + summary + description + url
+            else:
+                public_information = title + summary + url
+            self.write(cr, uid, ids, {'public_information': public_information})
         else:
             raise osv.except_osv('No Launchpad project supplied',
                                 'Please fill the Launchpad Project field in order to retrieve data\
