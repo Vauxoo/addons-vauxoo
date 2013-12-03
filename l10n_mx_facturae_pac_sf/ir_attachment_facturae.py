@@ -256,13 +256,6 @@ class ir_attachment_facturae_mx(osv.Model):
                         fecha_timbrado = fecha_timbrado and datetime.strptime(
                             fecha_timbrado, '%Y-%m-%d %H:%M:%S') + timedelta(
                                 hours=htz) or False
-                        journal_id = invoice.journal_id or False
-                        sequence_id = journal_id and journal_id.sequence_id or False
-                        number_work = invoice.number or invoice.internal_number
-                        context.update({'number_work': number_work or False})
-                        approval_id = sequence_id and self.pool.get('ir.sequence').\
-                            _get_current_approval(cr, uid, [sequence_id.id], field_names=None,
-                            arg=False, context=context)[sequence_id.id] or False
                         cfdi_data = {
                             'cfdi_cbb': resultado['resultados']['qrCode'] or False,  # ya lo regresa en base64
                             'cfdi_sello': resultado['resultados'][
@@ -276,7 +269,6 @@ class ir_attachment_facturae_mx(osv.Model):
                             'resultados']['cfdiTimbrado'] or ''),  # este se necesita en uno que no es base64
                             'cfdi_folio_fiscal': resultado['resultados']['uuid'] or '',
                             'pac_id': pac_params.id,
-                            'seq_approval_id': approval_id,
                         }
                         msg += mensaje + "." + resultados_mensaje + \
                             " Folio Fiscal: " + folio_fiscal + "."

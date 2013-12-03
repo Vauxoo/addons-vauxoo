@@ -318,8 +318,6 @@ class account_invoice(osv.Model):
         'rate': fields.float('Type of Change', readonly=True,
             help='Rate used in the date of invoice'),
         'pac_id': fields.many2one('params.pac', 'Pac', help='Pac used in singned of the invoice'),
-        'seq_approval_id': fields.many2one('ir.sequence.approval', 'Sec. Approval',
-            help='Secuence approval used in signed of the invoice')
     }
 
     _defaults = {
