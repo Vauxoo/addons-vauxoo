@@ -34,6 +34,7 @@ import sys
 import time
 import tempfile
 import base64
+import binascii
 import logging
 _logger = logging.getLogger(__name__)
 from l10n_mx_facturae_lib import facturae_lib
@@ -137,28 +138,10 @@ class facturae_certificate_library(osv.Model):
             context = {}
         (fileno, fname) = tempfile.mkstemp(file_suffix, file_prefix)
         f = open(fname, 'wb')
-        if b64_str and f:
-            data=self.decode_base64(b64_str)
-            #data= b64_str.decode('base64','strict')
-            f.write(data)
+        f.write(base64.decodestring(b64_str or ''))
         f.close()
         os.close(fileno)
         return fname
-        
-    def decode_base64(self, data):
-        """Decode base64, padding being optional.
-
-        :param data: Base64 data as an ASCII byte string
-        :returns: The decoded byte string."""
-        data = repr(data)
-        missing_padding = 4 - len(data) % 4
-        if missing_padding:
-            data += b'='* missing_padding
-            #data = base64.b64decode(data)
-            #data = base64.decodestring(data) 
-            #data = base64.b64decode(data.decode('ascii'))
-            data = base64.decodestring(data) 
-        return data
 
     def _read_file_attempts(self, file_obj, max_attempt=12, seconds_delay=0.5):
         """
