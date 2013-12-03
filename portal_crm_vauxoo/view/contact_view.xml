@@ -9,7 +9,7 @@
                 <div t-attf-class="form-group #{error and 'captcha' in error and 'has-error' or ''}">
                         <label class="col-md-3 col-sm-4 control-label" for="captcha">Captcha</label>
                         <div class="col-md-7 col-sm-8">
-                            <span id='oerp_recaptcha' name='captcha'/>
+                            <span id='oerp_recaptcha' required="True" name='captcha'/>
                         </div>
                     </div>
             </xpath>
@@ -17,7 +17,7 @@
                 <div t-attf-class="form-group #{error and 'country_id' in error and 'has-error' or ''} ">
                     <label class="col-md-3 col-sm-4 control-label" for="country_id">Country</label>
                     <div class="col-md-7 col-sm-8">
-                        <select name="country_id" class="form-control">
+                        <select name="country_id"  required="True" class="form-control">
                             <option value="">Country...</option>          
                             <t t-foreach="countries or []" t-as="country">                                                                     
                                 <option t-att-value="country.id" t-att-selected="country.id == checkout.get('country_id')"><t t-esc="country.name"/></option>
@@ -28,7 +28,7 @@
                 <div t-attf-class="form-group #{error and 'state_id' in error and 'has-error' or ''} ">
                     <label class="col-md-3 col-sm-4 control-label" for="state_id">State/Province</label>
                     <div class="col-md-7 col-sm-8">
-                        <select name="state_id" class="form-control">
+                        <select name="state_id" required="True" class="form-control">
                             <option value="">State...</option>          
                             <t t-foreach="states or []" t-as="state">                                                                     
                                 <option t-att-value="state.id" t-att-selected="state.id == checkout.get('state_id')"><t t-esc="state.name"/></option>
@@ -39,7 +39,7 @@
                 <div t-attf-class="form-group #{error and 'city' in error and 'has-error' or ''} ">
                     <label class="col-md-3 col-sm-4 control-label" for="city">City</label>
                     <div class="col-md-7 col-sm-8">
-                         <input name="city" t-attf-value="#{city or ''}" class='form-control' type="text" placeholder="City..." />
+                         <input name="city" required="True" t-attf-value="#{city or ''}" class='form-control' type="text" placeholder="City..." />
 
                     </div>
                 </div>      

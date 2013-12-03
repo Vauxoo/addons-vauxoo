@@ -51,7 +51,7 @@ class crm_captcha(http.Controller):
         states = state_orm.browse(cr, SUPERUSER_ID, states_ids, context)
         post['user_id'] = False
         error = set()
-        values = dict((key, post.get(key)) for key in post)
+        values =  post
         values['error'] = error
         captcha_obj = registry.get('res.captcha')                              
         captcha_str = '%s,%s' % (str(post.get('recaptcha_challenge_field', '')),
@@ -73,7 +73,7 @@ class crm_captcha(http.Controller):
                 'checkout': {'state_id': int(post.get('state_id', 0)),
                              'country_id': int(post.get('country_id', 0))}
             })
-            values['error'] = 'Invalid captcha'
+            values['error'] = 'captcha'
             return request.website.render("website.contactus", values)
 
         # if not given: subject is contact name

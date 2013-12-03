@@ -7,7 +7,7 @@
             }).then( function(res_id) {                                          
        Recaptcha.create(res_id, "oerp_recaptcha", {
        theme: "clean",
-       callback: Recaptcha.focus_response_field});
+       });
    });
 
 }());
