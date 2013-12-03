@@ -6,19 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-26 20:14+0000\n"
-"PO-Revision-Date: 2013-08-26 20:14+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:09+0000\n"
+"PO-Revision-Date: 2013-11-07 08:03+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
-
-#. module: note_to_task
-#: field:convert.note.task,date_deadline:0
-msgid "Deadline"
-msgstr "Fecha Limite"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-11-10 06:48+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: note_to_task
 #: view:note.note:0
@@ -37,7 +34,7 @@ msgid "convert.note.task"
 msgstr "convert.note.task"
 
 #. module: note_to_task
-#: help:convert.note.task,date_end:0
+#: help:convert.note.task,date_deadline:0
 msgid "Date to complete the Task"
 msgstr "Fecha a completar la Tarea"
 
@@ -57,6 +54,11 @@ msgid "Project Linked"
 msgstr "Proyecto Vinculado"
 
 #. module: note_to_task
+#: field:convert.note.task,date_deadline:0
+msgid "Deadline"
+msgstr "Fecha Limite"
+
+#. module: note_to_task
 #: view:convert.note.task:0
 msgid "Create Task"
 msgstr "Crear Tarea"
@@ -67,9 +69,15 @@ msgid "Close"
 msgstr "Cerrar"
 
 #. module: note_to_task
-#: help:convert.note.task,estimated_time:0
-msgid "Estimated Time to Complete the\n"
-"                Task"
-msgstr "Tiempo Estimado a completar la\n"
-"                Tarea"
+#: view:convert.note.task:0
+msgid "or"
+msgstr "o"
 
+#. module: note_to_task
+#: help:convert.note.task,estimated_time:0
+msgid ""
+"Estimated Time to Complete the\n"
+"                Task"
+msgstr ""
+"Tiempo Estimado a completar la\n"
+"                Tarea"

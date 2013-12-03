@@ -6,14 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-18 02:53+0000\n"
-"PO-Revision-Date: 2013-05-18 02:53+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:12+0000\n"
+"PO-Revision-Date: 2013-11-07 07:45+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-11-10 06:48+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: add_followers
 #: field:mail.wizard.invite,p_a_g:0
@@ -21,19 +23,27 @@ msgid "Group and Partner"
 msgstr "Grupos y Usuarios"
 
 #. module: add_followers
+#: help:mail.wizard.invite,groups:0
+msgid ""
+"Used to add a followers group from mail group and not for Users directly"
+msgstr ""
+"Usado para agregar grupo de seguidores desde un grupo de correo y no desde "
+"usuarios directamente"
+
+#. module: add_followers
 #: field:mail.wizard.invite,mail_groups:0
 msgid "Mail Groups"
 msgstr "Grupos de Correo"
 
 #. module: add_followers
+#: view:mail.wizard.invite:0
+msgid "Add contacts to notify..."
+msgstr "Agregar contactos para notifiar..."
+
+#. module: add_followers
 #: field:mail.wizard.invite,partners:0
 msgid "Partners"
 msgstr "Clientes"
-
-#. module: add_followers
-#: help:mail.wizard.invite,groups:0
-msgid "Used to add a followers group from mail.group and not for Users directly"
-msgstr "Usado para agregar grupo de seguidores los cuales se encuentran en el modelos mail.group para no agregar usuarios directamente"
 
 #. module: add_followers
 #: code:addons/add_followers/wizard/add_followers.py:46
@@ -49,19 +59,16 @@ msgid "Add Followers"
 msgstr "Añadir seguidores"
 
 #. module: add_followers
-#: view:mail.wizard.invite:0
-msgid "or"
-msgstr "o"
-
-#. module: add_followers
-#: view:mail.wizard.invite:0
-msgid "Add contacts to notify..."
-msgstr "Agregar contactos para notifiar..."
+#: model:res.groups,name:add_followers.group_add_followers
+msgid "Add Followers/Managers"
+msgstr "Agregar Seguidores/Managers"
 
 #. module: add_followers
 #: help:mail.wizard.invite,p_a_g:0
 msgid "Used to add a followers for partner and group at the same time"
-msgstr "Utilizados para agregar seguidores por usuarios o grupos de correos al mismo tiempo"
+msgstr ""
+"Utilizados para agregar seguidores por usuarios o grupos de correos al mismo "
+"tiempo"
 
 #. module: add_followers
 #: field:mail.wizard.invite,groups:0
@@ -84,13 +91,17 @@ msgid "Invite wizard"
 msgstr "Asistente de invitación"
 
 #. module: add_followers
-#: code:addons/add_followers/wizard/add_followers.py:56
+#: code:addons/add_followers/wizard/add_followers.py:58
 #, python-format
 msgid "<div>You have been invited to follow %s.</div>"
 msgstr "<div>Ha sido invitado a seguir %s.</div>"
 
 #. module: add_followers
-#: help:mail.wizard.invite,partners:0
-msgid "Used to add a followers by users "
-msgstr "Usado para gregar seguidores por usuario"
+#: view:mail.wizard.invite:0
+msgid "or"
+msgstr "o"
 
+#. module: add_followers
+#: help:mail.wizard.invite,partners:0
+msgid "Used to add a followers group by users"
+msgstr "Usado para agregar seguidores al grupo por usuario"

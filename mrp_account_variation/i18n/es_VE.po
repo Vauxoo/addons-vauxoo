@@ -6,11 +6,76 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-30 01:21+0000\n"
-"PO-Revision-Date: 2012-10-30 16:09-0600\n"
+"POT-Creation-Date: 2013-11-07 01:10+0000\n"
+"PO-Revision-Date: 2013-11-08 00:14+0000\n"
 "Last-Translator: juan <openerp1@hotmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Launchpad-Export-Date: 2013-11-10 06:48+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
+
+#. module: mrp_account_variation
+#: code:addons/mrp_account_variation/mrp_account_variation.py:133
+#, python-format
+msgid ""
+"There is no journal defined on the product category:                    "
+"\"%s\" (id: %d)"
+msgstr ""
+
+#. module: mrp_account_variation
+#: code:addons/mrp_account_variation/mrp_account_variation.py:128
+#, python-format
+msgid "There is no account defined for this location: \"%s\" "
+msgstr ""
+
+#. module: mrp_account_variation
+#: model:ir.model,name:mrp_account_variation.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: mrp_account_variation
+#: model:ir.model,name:mrp_account_variation.model_mrp_production
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: mrp_account_variation
+#: field:stock.location,variation_in_account_id:0
+msgid "Stock Variation Account (Incoming)"
+msgstr ""
+
+#. module: mrp_account_variation
+#: field:stock.location,variation_out_account_id:0
+msgid "Stock Variation Account (Outgoing)"
+msgstr ""
+
+#. module: mrp_account_variation
+#: code:addons/mrp_account_variation/mrp_account_variation.py:127
+#: code:addons/mrp_account_variation/mrp_account_variation.py:132
+#, python-format
+msgid "Error!"
+msgstr ""
+
+#. module: mrp_account_variation
+#: model:ir.model,name:mrp_account_variation.model_stock_location
+msgid "Location"
+msgstr ""
+
+#. module: mrp_account_variation
+#: field:stock.location,property_account_in_production_price_difference:0
+msgid "Price Production Variation Account (Incoming)"
+msgstr ""
+
+#. module: mrp_account_variation
+#: field:stock.location,property_account_out_production_price_difference:0
+msgid "Price Production Variation Account (Outgoing)"
+msgstr ""
+
+#. module: mrp_account_variation
+#: code:addons/mrp_account_variation/mrp_account_variation_price.py:99
+#, python-format
+msgid ""
+"Deflection  by                                            difference on "
+"consume RM vs FP"
+msgstr ""

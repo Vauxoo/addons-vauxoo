@@ -1,0 +1,110 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* web_captcha
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-07 01:06+0000\n"
+"PO-Revision-Date: 2013-11-07 01:06+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_captcha
+#: model:ir.actions.act_window,name:web_captcha.action_web_captcha_tree
+msgid "Captcha Settings"
+msgstr ""
+
+#. module: web_captcha
+#: field:res.captcha,recaptcha_private_key:0
+msgid "Recaptcha Private Key"
+msgstr ""
+
+#. module: web_captcha
+#: help:res.company,recaptcha_id:0
+msgid "Computed captcha"
+msgstr ""
+
+#. module: web_captcha
+#: code:addons/web_captcha/model/res_company.py:43
+#, python-format
+msgid "Configuration Problems"
+msgstr ""
+
+#. module: web_captcha
+#: model:ir.model,name:web_captcha.model_res_captcha
+msgid "Captcha Object"
+msgstr ""
+
+#. module: web_captcha
+#: view:res.captcha:0
+#: field:res.captcha,company_id:0
+msgid "Company"
+msgstr ""
+
+#. module: web_captcha
+#: field:res.captcha,recaptcha_key:0
+msgid "Recaptcha Public Key"
+msgstr ""
+
+#. module: web_captcha
+#: model:ir.model,name:web_captcha.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: web_captcha
+#: view:res.captcha:0
+msgid "Captcha General Settings"
+msgstr ""
+
+#. module: web_captcha
+#: field:res.company,recaptcha_id:0
+msgid "Captcha Public Key"
+msgstr ""
+
+#. module: web_captcha
+#: view:base.config.settings:0
+msgid "Captcha"
+msgstr ""
+
+#. module: web_captcha
+#: help:res.captcha,company_id:0
+msgid "Company that will use those captcha key"
+msgstr ""
+
+#. module: web_captcha
+#: view:res.captcha:0
+msgid "Private Key"
+msgstr ""
+
+#. module: web_captcha
+#: view:res.captcha:0
+msgid "Public Key"
+msgstr ""
+
+#. module: web_captcha
+#: help:res.captcha,recaptcha_private_key:0
+msgid "Private key generated on http://code.google.com/recaptcha"
+msgstr ""
+
+#. module: web_captcha
+#: view:base.config.settings:0
+msgid "Configure Captcha"
+msgstr ""
+
+#. module: web_captcha
+#: code:addons/web_captcha/model/res_company.py:44
+#, python-format
+msgid "You must set a public key to be able to use the captcha widget. go to Settings > Config > General Settings > Captcha Section"
+msgstr ""
+
+#. module: web_captcha
+#: help:res.captcha,recaptcha_key:0
+msgid "Public key generated on http://code.google.com/recaptcha"
+msgstr ""
+

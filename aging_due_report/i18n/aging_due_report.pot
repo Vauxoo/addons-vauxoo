@@ -1,0 +1,234 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* aging_due_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-07 01:12+0000\n"
+"PO-Revision-Date: 2013-11-07 01:12+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: aging_due_report
+#: report:formal_due_report:0
+msgid "Atentamente,"
+msgstr ""
+
+#. module: aging_due_report
+#: report:detail_due_report:0
+msgid "RET.IVA."
+msgstr ""
+
+#. module: aging_due_report
+#: report:aging_due_report:0
+msgid "31-60 DIAS"
+msgstr ""
+
+#. module: aging_due_report
+#: report:formal_due_report:0
+msgid "C: N/CRED."
+msgstr ""
+
+#. module: aging_due_report
+#: report:formal_due_report:0
+msgid "TOTAL/DOC."
+msgstr ""
+
+#. module: aging_due_report
+#: report:detail_due_report:0
+#: report:formal_due_report:0
+msgid "F/EMISION"
+msgstr ""
+
+#. module: aging_due_report
+#: report:aging_due_report:0
+msgid "01-30 DIAS"
+msgstr ""
+
+#. module: aging_due_report
+#: report:formal_due_report:0
+msgid "DOCUMENTO"
+msgstr ""
+
+#. module: aging_due_report
+#: report:aging_due_report:0
+msgid "EMPRESA"
+msgstr ""
+
+#. module: aging_due_report
+#: report:formal_due_report:0
+msgid "C:"
+msgstr ""
+
+#. module: aging_due_report
+#: report:detail_due_report:0
+#: report:formal_due_report:0
+msgid "SALDO"
+msgstr ""
+
+#. module: aging_due_report
+#: report:detail_due_report:0
+#: report:formal_due_report:0
+msgid "ABONO"
+msgstr ""
+
+#. module: aging_due_report
+#: report:aging_due_report:0
+msgid "RIF"
+msgstr ""
+
+#. module: aging_due_report
+#: report:formal_due_report:0
+msgid "F: FACTURA"
+msgstr ""
+
+#. module: aging_due_report
+#: report:detail_due_report:0
+#: report:formal_due_report:0
+msgid "TOTAL"
+msgstr ""
+
+#. module: aging_due_report
+#: report:aging_due_report:0
+msgid "+ 120 DIAS"
+msgstr ""
+
+#. module: aging_due_report
+#: report:detail_due_report:0
+msgid "TOT/FACT."
+msgstr ""
+
+#. module: aging_due_report
+#: report:formal_due_report:0
+msgid "DOCUMENTO: Estado Contable del Cliente"
+msgstr ""
+
+#. module: aging_due_report
+#: report:detail_due_report:0
+msgid "RET.MUN."
+msgstr ""
+
+#. module: aging_due_report
+#: model:ir.actions.report.xml,name:aging_due_report.formal_due_report
+msgid "Customer Formal Report of Debts"
+msgstr ""
+
+#. module: aging_due_report
+#: report:detail_due_report:0
+#: report:formal_due_report:0
+msgid "F/VENC."
+msgstr ""
+
+#. module: aging_due_report
+#: report:aging_due_report:0
+#: report:detail_due_report:0
+msgid "Fecha de Impresion:"
+msgstr ""
+
+#. module: aging_due_report
+#: report:detail_due_report:0
+#: report:formal_due_report:0
+msgid "DIAS/VENC."
+msgstr ""
+
+#. module: aging_due_report
+#: report:detail_due_report:0
+msgid "N/C"
+msgstr ""
+
+#. module: aging_due_report
+#: report:formal_due_report:0
+msgid "FECHA:"
+msgstr ""
+
+#. module: aging_due_report
+#: report:detail_due_report:0
+msgid "TOTAL ESTE REPORTE"
+msgstr ""
+
+#. module: aging_due_report
+#: report:detail_due_report:0
+msgid "RET.ISLR."
+msgstr ""
+
+#. module: aging_due_report
+#: report:aging_due_report:0
+msgid "NO VENCIDO"
+msgstr ""
+
+#. module: aging_due_report
+#: report:aging_due_report:0
+msgid "TOT./COBRAR"
+msgstr ""
+
+#. module: aging_due_report
+#: report:formal_due_report:0
+msgid "Sin mas a que hacer referencia,"
+msgstr ""
+
+#. module: aging_due_report
+#: report:detail_due_report:0
+#: report:formal_due_report:0
+msgid "IMP."
+msgstr ""
+
+#. module: aging_due_report
+#: report:detail_due_report:0
+#: report:formal_due_report:0
+msgid "BASE IMP."
+msgstr ""
+
+#. module: aging_due_report
+#: model:ir.actions.report.xml,name:aging_due_report.detail_due_report
+msgid "Customer Detail Report of Debts"
+msgstr ""
+
+#. module: aging_due_report
+#: report:aging_due_report:0
+msgid "61-90 DIAS"
+msgstr ""
+
+#. module: aging_due_report
+#: model:ir.actions.report.xml,name:aging_due_report.aging_due_report
+msgid "Customer Aging Report of Debts"
+msgstr ""
+
+#. module: aging_due_report
+#: report:detail_due_report:0
+msgid "FACTURA"
+msgstr ""
+
+#. module: aging_due_report
+#: report:aging_due_report:0
+msgid "91-120 DIAS"
+msgstr ""
+
+#. module: aging_due_report
+#: report:formal_due_report:0
+msgid "D: N/DEB."
+msgstr ""
+
+#. module: aging_due_report
+#: report:aging_due_report:0
+#: report:detail_due_report:0
+#: report:formal_due_report:0
+msgid "Reporte Impreso en OpenERP con ReportLab"
+msgstr ""
+
+#. module: aging_due_report
+#: report:aging_due_report:0
+#: report:detail_due_report:0
+msgid "/ Pagina:"
+msgstr ""
+
+#. module: aging_due_report
+#: report:formal_due_report:0
+msgid "F:"
+msgstr ""
+

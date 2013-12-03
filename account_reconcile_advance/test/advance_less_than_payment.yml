@@ -20,6 +20,7 @@
         price_unit: 400.0
         product_id: product.product_product_5
         quantity: 1.0
+        invoice_line_tax_id: []
     journal_id: account.expenses_journal
     partner_id: base.res_partner_23
     reference_type: none
@@ -49,6 +50,7 @@
         price_unit: 200.0
         product_id: product.product_product_5
         quantity: 1.0
+        invoice_line_tax_id: []
     journal_id: account.expenses_journal
     partner_id: base.res_partner_23
     reference_type: none
@@ -78,6 +80,7 @@
         price_unit: 300.0
         product_id: product.product_product_5
         quantity: 1.0
+        invoice_line_tax_id: []
     journal_id: account.expenses_journal
     partner_id: base.res_partner_23
     reference_type: none

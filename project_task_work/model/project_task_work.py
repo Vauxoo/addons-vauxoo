@@ -71,7 +71,8 @@ class project_task_work(osv.Model):
     def _get_project(self, cr, uid, ids, fieldname, arg, context=None):
         if context is None:
             context = {}
-        res = {}
+        res = {}.fromkeys(ids,None)
+        ids = self.exists(cr, uid, ids, context=context)
         for ptw_brw in self.browse(cr, uid, ids, context=context):
 
             res[ptw_brw.id] = \
@@ -88,7 +89,8 @@ class project_task_work(osv.Model):
     def _get_issue(self, cr, uid, ids, fieldname, arg, context=None):
         if context is None:
             context = {}
-        res = {}
+        res = {}.fromkeys(ids,None)
+        ids = self.exists(cr, uid, ids, context=context)
         pi_obj = self.pool.get('project.issue')
         ptw_brws = self.browse(cr, uid, ids, context=context)
         for ptw_brw in ptw_brws:
@@ -103,7 +105,8 @@ class project_task_work(osv.Model):
     def _get_partner(self, cr, uid, ids, fieldname, arg, context=None):
         if context is None:
             context = {}
-        res = {}
+        res = {}.fromkeys(ids,None)
+        ids = self.exists(cr, uid, ids, context=context)
         for ptw_brw in self.browse(cr, uid, ids, context=context):
 
             res[ptw_brw.id] = \

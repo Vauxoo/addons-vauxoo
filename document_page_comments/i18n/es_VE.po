@@ -6,11 +6,75 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-29 18:41+0000\n"
-"PO-Revision-Date: 2013-05-29 18:41+0000\n"
+"POT-Creation-Date: 2013-11-07 01:11+0000\n"
+"PO-Revision-Date: 2013-11-07 04:59+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-11-10 06:48+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
+
+#. module: document_page_comments
+#: field:document.page,message_unread:0
+msgid "Unread Messages"
+msgstr ""
+
+#. module: document_page_comments
+#: help:document.page,message_ids:0
+msgid "Messages and communication history"
+msgstr ""
+
+#. module: document_page_comments
+#: model:mail.message.subtype,description:document_page_comments.document_page_changed
+msgid "Document Changed"
+msgstr ""
+
+#. module: document_page_comments
+#: field:document.page,message_ids:0
+msgid "Messages"
+msgstr ""
+
+#. module: document_page_comments
+#: model:ir.model,name:document_page_comments.model_document_page
+msgid "Document Page"
+msgstr ""
+
+#. module: document_page_comments
+#: model:mail.message.subtype,name:document_page_comments.document_page_changed
+msgid "Documented Changed"
+msgstr ""
+
+#. module: document_page_comments
+#: model:mail.message.subtype,description:document_page_comments.document_page_new
+#: model:mail.message.subtype,name:document_page_comments.document_page_new
+msgid "Document Created"
+msgstr ""
+
+#. module: document_page_comments
+#: help:document.page,message_summary:0
+msgid ""
+"Holds the Chatter summary (number of messages, ...). This summary is "
+"directly in html format in order to be inserted in kanban views."
+msgstr ""
+
+#. module: document_page_comments
+#: field:document.page,message_follower_ids:0
+msgid "Followers"
+msgstr ""
+
+#. module: document_page_comments
+#: field:document.page,message_is_follower:0
+msgid "Is a Follower"
+msgstr ""
+
+#. module: document_page_comments
+#: field:document.page,message_summary:0
+msgid "Summary"
+msgstr ""
+
+#. module: document_page_comments
+#: help:document.page,message_unread:0
+msgid "If checked new messages require your attention."
+msgstr ""

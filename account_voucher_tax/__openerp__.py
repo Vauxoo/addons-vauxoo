@@ -62,7 +62,8 @@ Caused VAT is that actually charged to customers.
         "analytic",
         "account_move_line_base_tax",
         ],
-    "demo" : ["demo/account_voucher_tax_demo.xml"],
+    "demo" : [
+    "demo/account_voucher_tax_demo.xml", ],
     "data" : [
         "account_tax_view.xml",
         "account_voucher_tax_view.xml",

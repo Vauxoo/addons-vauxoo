@@ -6,72 +6,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-05-28 15:52+0000\n"
-"PO-Revision-Date: 2012-05-28 11:35-0400\n"
-"Last-Translator: Miguel <miguel.delgado07@gmail.com>\n"
+"POT-Creation-Date: 2013-11-07 01:12+0000\n"
+"PO-Revision-Date: 2013-11-07 03:27+0000\n"
+"Last-Translator: Miguel Delgado (Vauxoo) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-
-#. module: account_smart_unreconcile
-#: constraint:account.move.line:0
-msgid "The date of your Journal Entry is not in the defined period!"
-msgstr "¡La fecha de su asiento no está en el periodo definido!"
-
-#. module: account_smart_unreconcile
-#: constraint:account.move.line:0
-msgid "Company must be same for its related account and period."
-msgstr "La empresa debe ser la misma para su cuenta y el período relacionado."
-
-#. module: account_smart_unreconcile
-#: model:ir.module.module,description:account_smart_unreconcile.module_meta_information
-msgid ""
-"\n"
-"        Allows send and account_move_reconcile and\n"
-"        a list of aml_ids to be excluded from reconciliation,\n"
-"        so that the result is a new account_move_reconcile\n"
-"        without aml_ids.\n"
-"    \n"
-"        In Future this module is intended to grow adding a wizard\n"
-"        that would allow an end user to do smart unreconciliations\n"
-"\n"
-"    "
-msgstr ""
-"\n"
-"         Permite enviar a los account_move_reconcile y \n"
-"         una lista de aml_ids a ser excluidos de la reconciliación, \n"
-"         de modo que el resultado es un nuevo account_move_reconcile \n"
-"         sin aml_ids. \n"
-"\n"
-"         En el futuro, se pretende que este modulo crezca con la adición de un asistente \n"
-"         que permitiría a un usuario final hacer desconciliaciones inteligentes \n"
-"\n"
-"    "
-
-#. module: account_smart_unreconcile
-#: constraint:account.move.line:0
-msgid "You can not create move line on closed account."
-msgstr "No se puede crear líneas de asiento en una cuenta que está cerrada."
-
-#. module: account_smart_unreconcile
-#: sql_constraint:account.move.line:0
-msgid "Wrong credit or debit value in accounting entry !"
-msgstr "Crédito equivocado o valor de débito en la entrada de la cuenta !"
+"X-Launchpad-Export-Date: 2013-11-10 06:48+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: account_smart_unreconcile
 #: model:ir.model,name:account_smart_unreconcile.model_account_move_line
 msgid "Journal Items"
 msgstr "Apuntes contables"
-
-#. module: account_smart_unreconcile
-#: model:ir.module.module,shortdesc:account_smart_unreconcile.module_meta_information
-msgid "Account Smart Unreconcile"
-msgstr "Desconciliacion Inteligente"
-
-#. module: account_smart_unreconcile
-#: constraint:account.move.line:0
-msgid "You can not create move line on view account."
-msgstr "Tu no puedes crear líneas de asiento en la vista de la cuenta."
-

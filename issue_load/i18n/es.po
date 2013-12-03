@@ -6,12 +6,99 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.3\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-01-27 13:31+0000\n"
-"PO-Revision-Date: 2012-01-27 13:31+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:10+0000\n"
+"PO-Revision-Date: 2013-11-14 16:57+0000\n"
+"Last-Translator: Saul Gonzalez <saul@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-11-15 06:33+0000\n"
+"X-Generator: Launchpad (build 16831)\n"
 
+#. module: issue_load
+#: model:ir.model,name:issue_load.model_load_issue
+msgid "load.issue"
+msgstr "load.issue"
+
+#. module: issue_load
+#: view:load.issue:0
+msgid "Xmind File"
+msgstr "Archivo Xmind"
+
+#. module: issue_load
+#: help:load.issue,user:0
+msgid "User of data base"
+msgstr "Usuario de la base de datos"
+
+#. module: issue_load
+#: field:load.issue,db:0
+msgid "Date Base"
+msgstr "Base de Datos"
+
+#. module: issue_load
+#: model:ir.actions.act_window,name:issue_load.xls_action
+#: view:load.issue:0
+msgid "XLS File"
+msgstr "Archivo XLS"
+
+#. module: issue_load
+#: help:load.issue,host:0
+msgid "IP adreess of server"
+msgstr "Dirección IP del servidor"
+
+#. module: issue_load
+#: model:ir.ui.menu,name:issue_load.xls_wz
+#: model:ir.ui.menu,name:issue_load.xls_wz2
+msgid "XLS Load"
+msgstr "Carga de XLS"
+
+#. module: issue_load
+#: field:load.issue,host:0
+msgid "Host"
+msgstr "Host"
+
+#. module: issue_load
+#: view:load.issue:0
+msgid "Exit"
+msgstr "Salir"
+
+#. module: issue_load
+#: field:load.issue,user:0
+msgid "User"
+msgstr "Usuario"
+
+#. module: issue_load
+#: help:load.issue,issue:0
+msgid "Put a xmind file"
+msgstr "Coloca un archivo xmind"
+
+#. module: issue_load
+#: help:load.issue,passs:0
+msgid "Password of data base"
+msgstr "Contraseña de la base de datos"
+
+#. module: issue_load
+#: help:load.issue,db:0
+msgid "Name of data base"
+msgstr "Nombre de la base de datos"
+
+#. module: issue_load
+#: field:load.issue,passs:0
+msgid "Password"
+msgstr "Contraseña"
+
+#. module: issue_load
+#: help:load.issue,port:0
+msgid "XML-RPC Port of server to load data"
+msgstr "Puerto XML-RPC del servidor para cargar datos"
+
+#. module: issue_load
+#: field:load.issue,issue:0
+msgid "File XLS"
+msgstr "Archivo XLS"
+
+#. module: issue_load
+#: field:load.issue,port:0
+msgid "XML-RPC Port"
+msgstr "Puerto XML-RPC"

@@ -5,6 +5,9 @@ var QWeb = instance.web.qweb;
 
 instance.web.form.FieldCharBS3 = instance.web.form.FieldChar.extend({                                    
     template: 'FieldCharBS3',
+    initialize_field: function(){
+            this._super()
+    }
 });  
 instance.web.form.FieldEmailBS3 = instance.web.form.FieldEmail.extend({                                    
     template: 'FieldEmailBS3',

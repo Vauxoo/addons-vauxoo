@@ -6,44 +6,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.3\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2011-09-13 17:55+0000\n"
-"PO-Revision-Date: 2011-09-13 17:55+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:11+0000\n"
+"PO-Revision-Date: 2013-11-07 03:27+0000\n"
+"Last-Translator: Moisés López - http://www.vauxoo.com "
+"<moylop260@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
-
-#. module: crm_profile_reporting
-#: model:ir.actions.report.xml,name:crm_profile_reporting.crm_report_profile
-msgid "Print Profile Report"
-msgstr "Imprimir Reporte del Perfil"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-11-10 06:48+0000\n"
+"X-Generator: Launchpad (build 16820)\n"
 
 #. module: crm_profile_reporting
 #: report:crm.profile.reporting:0
-msgid "NOTES"
-msgstr "OBSERVACIONES"
-
-#. module: crm_profile_reporting
-#: report:crm.profile.reporting:0
-msgid "OTHER INFORMATION:"
-msgstr "OTRA INFORMACION:"
-
-#. module: crm_profile_reporting
-#: report:crm.profile.reporting:0
-msgid "BILLING ADDRESS"
-msgstr "DIRECCION DE FACTURACION"
-
-#. module: crm_profile_reporting
-#: report:crm.profile.reporting:0
-msgid "EMAIL"
-msgstr "CORREO"
-
-#. module: crm_profile_reporting
-#: report:crm.profile.reporting:0
-msgid "ALL NAME"
-msgstr "NOMBRE COMPLETO"
+msgid "DATE :"
+msgstr "FECHA :"
 
 #. module: crm_profile_reporting
 #: report:crm.profile.reporting:0
@@ -61,9 +38,34 @@ msgid "PERSON(S) OF CONTACT:"
 msgstr "PERSONA(S) CONTACTO:"
 
 #. module: crm_profile_reporting
+#: model:ir.actions.report.xml,name:crm_profile_reporting.crm_report_profile
+msgid "Print Profile Report"
+msgstr "Imprimir Reporte del Perfil"
+
+#. module: crm_profile_reporting
 #: report:crm.profile.reporting:0
-msgid ","
-msgstr ","
+msgid "OTHER INFORMATION:"
+msgstr "OTRA INFORMACION:"
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "RELATED COMPANY"
+msgstr "EMPRESA RELACIONADA"
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "NOTES"
+msgstr "OBSERVACIONES"
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "ANSWERS"
+msgstr "RESPUESTAS"
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "EMAIL"
+msgstr "CORREO"
 
 #. module: crm_profile_reporting
 #: report:crm.profile.reporting:0
@@ -76,83 +78,14 @@ msgid "PHONE"
 msgstr "TELEFONO"
 
 #. module: crm_profile_reporting
-#: model:ir.module.module,description:crm_profile_reporting.module_meta_information
-msgid "\n"
-"    What do this module:\n"
-"\n"
-"    This module prints the report of the accepted partners and send it by mail\n"
-"\n"
-"    How Install:\n"
-"    1.- In the menu Tools/Configuration/Email Template/Email Accounts, the accounts are configured to send mail as follows Fill the fields as follows:\n"
-"          -Description: This stands as the mail sender's description Example: John Doe <john@doe.com>\n"
-"          -Server: smtp server is placed in the mail provider which is affiliated\n"
-"                GMAIL: smtp.gmail.com\n"
-"                HOTMAIL: smtp.live.com\n"
-"                YAHOO: smtp.yahoo.mail.com\n"
-"          -Smtp port: port is placed smtp mail provider which is affiliated\n"
-"                GMAIL: 587\n"
-"                HOTMAIL: 25\n"
-"                YAHOO: 587\n"
-"          -From Email: Put the mail sender. Example: John Doe <john@doe.com>.\n"
-"          -Password: The password is placed in the mail introduced in the previous field (This is used to test the connection to the SMTP server).\n"
-"          -User Name: Place the user name if required by the smtp server.\n"
-"        Click the button Test Outgoing Connection to test the SMTP server connection, otherwise check the above fields.\n"
-"    2.- In the menu Tools/Configuration/Email Template/Email Templates, the templates are configured as follows Fill the fields as follows:\n"
-"        2.1- In page Mail Details\n"
-"          -Name: Write the name that going to have the template  (CRM Profile Report Template).\n"
-"          -Resource: n this field we select the model from which we send the email  (res.partner).\n"
-"          -Email Account: Select the account created in the previous step.\n"
-"          -Recipient (to) write to whom it is addressed mail (${object.email})\n"
-"          -Subject: write the subject of the mail (CRM Profile Report)\n"
-"        2.2.- In page Advanced\n"
-"          -Report to send: Select this report (Print Profile Report)\n"
-"        2.3.- We create the action with the button Create Action.\n"
-"        2.4.- Save the configuration.\n"
-"                    "
-msgstr "\n"
-"    Que hace este modulo:\n"
-"\n"
-"    Este modulo imprime el reporte de los partners aceptados y lo envia por correo\n"
-"\n"
-"    Como Instalar:\n"
-"    1.- En el menu Tools/Configuration/Email Template/Email Accounts las cuentas para enviar correo son configuradas de la siguiente forma\n"
-"        Rellene los campos de la siguiente forma:\n"
-"          -Descripcion: En este campo escriba la descripcion del remitente Ejemplo: John Doe <john@doe.com>\n"
-"          -Servidor: En este campo se coloca el servidor SMTP del proveedor de correo electrónico al que está afiliada la cuenta\n"
-"                GMAIL: smtp.gmail.com\n"
-"                HOTMAIL: smtp.live.com\n"
-"                YAHOO: smtp.yahoo.mail.com\n"
-"          -Puerto Smtp: En este campo se coloca el puerto del servidor SMTP\n"
-"                GMAIL: 587\n"
-"                HOTMAIL: 25\n"
-"                YAHOO: 587\n"
-"          -Desde email: En este campo se coloca el email del remitente Ejemplo: John Doe <john@doe.com>.\n"
-"          -Clave: Coloque la clave asociada al email colocado anteriormente(esto se utiliza para probar la conexion\n"
-"           con el servidor SMTP).\n"
-"          -Nombre de usuario: Coloque el nombre de usuario si el servidor smtp lo requiere.\n"
-"        Haga clic sobre el boton Comprobar conexión de salida para verificar que exista conexion con el servidor SMTP, de otra forma revise los campos anteriores.\n"
-"    2.- En el menu Tools/Configuration/Email Template/Email Templates, se configuran las plantillas de la siguiente forma Rellene los campos de la siguiente forma:\n"
-"        2.1- En la pestaña Detalles del mail\n"
-"          -Nombre: Escriba el nombre que va a tener el template  (Plantilla reporte de Perfil CRM).\n"
-"          -Recurso: en este campo seleccione el modelo del cual se va a enviar el correo(res.partner).\n"
-"          -Cuenta de email: Seleccione la cuenta creada en el campo anterior.\n"
-"          -Receptores (A): Escriba a quien va dirigido el correo ($ {object.email})\n"
-"          -Asunto: Escriba el asunto del correo (Reporte de Perfil CRM)\n"
-"        2.2.- En la pestaña Avanzado\n"
-"          -Informe a enviar: Seleccione el siguiente Reporte (Imprimir Reporte del Perfil)\n"
-"        2.3.- Creamos la accion haciendo clic sobre el boton Crear acción.\n"
-"        2.4.- Salve la configuración.\n"
-"                    "
+#: report:crm.profile.reporting:0
+msgid "BILLING ADDRESS"
+msgstr "DIRECCION DE FACTURACION"
 
 #. module: crm_profile_reporting
 #: report:crm.profile.reporting:0
-msgid "SUPPLIER OF LEGAL DOCUMENTS"
-msgstr "DOCUMENTOS LEGALES DEL PROVEEDOR"
-
-#. module: crm_profile_reporting
-#: report:crm.profile.reporting:0
-msgid "DATE :"
-msgstr "FECHA :"
+msgid "VAT"
+msgstr "RIF"
 
 #. module: crm_profile_reporting
 #: report:crm.profile.reporting:0
@@ -161,31 +94,20 @@ msgstr "PREGUNTAS"
 
 #. module: crm_profile_reporting
 #: report:crm.profile.reporting:0
+msgid "SUPPLIER OF LEGAL DOCUMENTS"
+msgstr "DOCUMENTOS LEGALES DEL PROVEEDOR"
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
 msgid "SOCIAL REASON"
 msgstr "RAZON SOCIAL"
-
-#. module: crm_profile_reporting
-#: report:crm.profile.reporting:0
-msgid "VAT"
-msgstr "RIF"
-
-#. module: crm_profile_reporting
-#: model:ir.module.module,shortdesc:crm_profile_reporting.module_meta_information
-msgid "Crm Profiling Report"
-msgstr "REPORTE DE PERFIL CRM"
-
-#. module: crm_profile_reporting
-#: report:crm.profile.reporting:0
-msgid "RELATED COMPANY"
-msgstr "EMPRESA RELACIONADA"
-
-#. module: crm_profile_reporting
-#: report:crm.profile.reporting:0
-msgid "ANSWERS"
-msgstr "RESPUESTAS"
 
 #. module: crm_profile_reporting
 #: report:crm.profile.reporting:0
 msgid "CUSTOMER DATA"
 msgstr "DATOS DEL CLIENTE"
 
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "ALL NAME"
+msgstr "NOMBRE COMPLETO"
