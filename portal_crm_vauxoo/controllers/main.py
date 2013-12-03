@@ -84,7 +84,10 @@ class crm_captcha(http.Controller):
                                             post, request.context)
         company = request.website.company_id
         values = {
-            'google_map_url': self.generate_google_map_url(company.street, company.city, company.zip, company.country_id and company.country_id.name_get()[0][1] or '')
+            'google_map_url': self.generate_google_map_url(company.street,
+                                                           company.city,
+                                                           company.zip,
+                                                           company.country_id and company.country_id.name_get()[0][1] or '')
         }
         return request.website.render("website_crm.contactus_thanks", values)
     @website.route(['/website/get_public_id'], type='json', auth="public")
@@ -120,5 +123,4 @@ class crm_captcha(http.Controller):
         error = values['error']                                                
                                                                                
         return request.website.render("website.contactus", values) 
-
 
