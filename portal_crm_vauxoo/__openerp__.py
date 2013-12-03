@@ -42,8 +42,7 @@ the human recourses that is public.
     'website': 'http://www.vauxoo.com',
     'depends': [
                 'crm',
-                'portal',
-                'portal_news',
+                'website_crm',
                 'web_captcha',
                 'portal_hr_employees',
                 ],
@@ -56,9 +55,9 @@ the human recourses that is public.
     'installable': True,
     'auto_install': False,
     'css': [
-        'static/src/css/portal_crm.css'
     ],
-    'js': [ 'static/src/js/portal_crm.js' ],
-    'qweb': [ 'static/src/xml/portal_crm.xml' ],
+    'js': [
+        ],
+    'qweb': [],
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
