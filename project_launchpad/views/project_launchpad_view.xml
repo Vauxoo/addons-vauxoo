@@ -1,0 +1,17 @@
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="launchpad_project_form_view">
+            <field name="name">project.project.launchpad.view</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="bzr_to_task.bzr_to_task_project_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page[@string='Technical Features']/group" position="after">
+			        <group col="4" string="Launchpad Project">
+                        <field name="lp_project"/>
+                        <button name="get_lp_data" string="Get LP data" type="object" />
+                    </group>
+                </xpath>
+            </field>
+        </record>    
+    </data>
+</openerp>
