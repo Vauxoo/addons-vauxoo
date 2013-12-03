@@ -1385,7 +1385,7 @@ class account_invoice(osv.Model):
                 "This invoice hasn't stamped, so that not possible cancel."))
         return {'file': inv_xml}
         
-    def _create_qrcode(self, cr, uid, ids, invoice_id , uuid, context=None):
+    def _create_qrcode(self, cr, uid, ids, invoice_id, context=None):
         if context is None:
             context={}
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -1393,7 +1393,8 @@ class account_invoice(osv.Model):
         rfc_transmitter = invoice.company_id.partner_id.vat_split or ''
         rfc_receiver = invoice.partner_id.parent_id.vat_split or invoice.partner_id.parent_id.vat_split or ''
         amount_total = string.zfill("%0.6f"%invoice.amount_total,17)
-        qrstr = "?re="+rfc_transmitter+"&rr="+rfc_receiver+"&tt="+amount_total+"&id="+uuid
+        cfdi_folio_fiscal = invoice.cfdi_folio_fiscal or ''
+        qrstr = "?re="+rfc_transmitter+"&rr="+rfc_receiver+"&tt="+amount_total+"&id="+cfdi_folio_fiscal
         qr = QRCode(version=1, error_correction=ERROR_CORRECT_L)
         qr.add_data(qrstr)
         qr.make() # Generate the QRCode itself
@@ -1402,10 +1403,14 @@ class account_invoice(osv.Model):
         im.save(fname.name)
         return fname.name
         
-    def _create_original_str(self, cr, uid, ids, invoice_id , uuid, date_sign, cert_sat, context=None):
+    def _create_original_str(self, cr, uid, ids, invoice_id, context=None):
         if context is None:
             context={}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         invoice = self.browse(cr, uid, invoice_id)
-        original_string = '||1.0|'+uuid+'|'+str(date_sign)+'|'+invoice.sello+'|'+cert_sat+'||'
+        cfdi_folio_fiscal = invoice.cfdi_folio_fiscal or ''
+        cfdi_fecha_timbrado = invoice.cfdi_fecha_timbrado or ''
+        sello = invoice.sello or ''
+        cfdi_no_certificado = invoice.cfdi_no_certificado or ''
+        original_string = '||1.0|'+cfdi_folio_fiscal+'|'+str(cfdi_fecha_timbrado)+'|'+sello+'|'+cfdi_no_certificado+'||'
         return original_string
