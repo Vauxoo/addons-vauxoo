@@ -164,10 +164,10 @@
                         ${o.address_issued_id.country_id and o.address_issued_id.country_id.name or ''|entity}
                     %endif
                     <br/>${_("a")} ${o.date_invoice_tz or ''|entity}
-                    %if o.invoice_sequence_id.approval_id.type != 'cbb':
-                        ${_("Serie:")} ${o.seq_approval_id and o.seq_approval_id.serie or _("Sin serie")|entity}
-                        <br/>${_("Aprobaci&oacute;n:")} ${o.seq_approval_id and o.seq_approval_id.approval_number or _("Sin aprobaci&oacute;n")|entity}
-                        <br/>${_("A&ntilde;o Aprobaci&oacute;n:")} ${o.seq_approval_id and o.seq_approval_id.approval_year or _("No v&aacute;lido")|entity}
+                    %if o.invoice_sequence_id.approval_id and o.invoice_sequence_id.approval_id.type != 'cbb':
+                        ${_("Serie:")} ${o.invoice_sequence_id.approval_id.serie or _("Sin serie")|entity}
+                        <br/>${_("Aprobaci&oacute;n:")} ${o.invoice_sequence_id.approval_id.approval_number or _("Sin aprobaci&oacute;n")|entity}
+                        <br/>${_("A&ntilde;o Aprobaci&oacute;n:")} ${o.invoice_sequence_id.approval_id.approval_year or _("No v&aacute;lido")|entity}
                     %endif
                 </td>
             </tr>
@@ -315,35 +315,32 @@
             </table>
         %endif
         <!--code for cbb-->
-        %if o.invoice_sequence_id.approval_id.type == 'cbb':
-            %if get_approval():
-                <%cbb_approval_row = get_approval()%>
-                <table class="basic_table" style="page-break-inside:avoid; border:1.5px solid grey;">
-                    <tr>
-                        <td width="20%" valign="top">
-                            %if ( o.type  in ['out_invoice', 'out_refund'] ) and ( o.state in ['open', 'paid', 'cancel'] ):
-                                ${helper.embed_image('jpeg',str(o.invoice_sequence_id.approval_id.cbb_image),180, 180)}
-                            %else:
-                                <p> ${_('SIN FOLIO O ESTATUS NO VALIDO')}
-                            %endif
-                        </td>
-                        <td valign="top" class="tax_td" style="padding-top:3px;">
-                            %if ( o.type  in ['out_invoice', 'out_refund'] ) and ( o.state in ['open', 'paid', 'cancel'] ):
-                                Número de aprobación SICOFI: ${o.invoice_sequence_id.approval_id.approval_number or '' |entity}<br/>
-                            %else:
-                                <p> ${_('SIN FOLIO O ESTATUS NO VALIDO')}</br>
-                            %endif
-                            La reproducción apócrifa de este comprobante constituye un delito en los términos de las disposiciones fiscales.<br/>
-                            Este comprobante tendrá una vigencia de dos años contados a partir de la fecha aprobación de la asignación de folios, la cual es: ${o.invoice_sequence_id.approval_id.date_start or '' |entity}
-                        </td>
-                        <td width="15%" valign="top">
-                            ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),140, 220)}
-                        </td>
-                    </tr>
-                </table>
-            %else:
-                <p> ${_('La aprobaci&oacute;n CBB no pudo ser obtenida, por favor contacte a su administrador')}
-            %endif
+        %if o.invoice_sequence_id.approval_id and o.invoice_sequence_id.approval_id.type == 'cbb':
+            <table class="basic_table" style="page-break-inside:avoid; border:1.5px solid grey;">
+                <tr>
+                    <td width="20%" valign="top">
+                        %if ( o.type  in ['out_invoice', 'out_refund'] ) and ( o.state in ['open', 'paid', 'cancel'] ):
+                            ${helper.embed_image('jpeg',str(o.invoice_sequence_id.approval_id.cbb_image),180, 180)}
+                        %else:
+                            <p> ${_('SIN FOLIO O ESTATUS NO VALIDO')}
+                        %endif
+                    </td>
+                    <td valign="top" class="tax_td" style="padding-top:3px;">
+                        %if ( o.type  in ['out_invoice', 'out_refund'] ) and ( o.state in ['open', 'paid', 'cancel'] ):
+                            Número de aprobación SICOFI: ${o.invoice_sequence_id.approval_id.approval_number or '' |entity}<br/>
+                        %else:
+                            <p> ${_('SIN FOLIO O ESTATUS NO VALIDO')}</br>
+                        %endif
+                        La reproducción apócrifa de este comprobante constituye un delito en los términos de las disposiciones fiscales.<br/>
+                        Este comprobante tendrá una vigencia de dos años contados a partir de la fecha aprobación de la asignación de folios, la cual es: ${o.invoice_sequence_id.approval_id.date_start or '' |entity}
+                    </td>
+                    <td width="15%" valign="top">
+                        ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),140, 220)}
+                    </td>
+                </tr>
+            </table>
+        %else:
+            <p> ${_('La aprobaci&oacute;n CBB no pudo ser obtenida, por favor contacte a su administrador')}
         %endif
         <!--code for cfd22-->
         %if o.invoice_sequence_id.approval_id.type == 'cfd22':
