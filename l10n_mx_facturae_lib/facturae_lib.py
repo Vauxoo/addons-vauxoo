@@ -34,6 +34,7 @@ import sys
 import time
 import tempfile
 import base64
+import binascii
 import logging
 _logger = logging.getLogger(__name__)
 from l10n_mx_facturae_lib import facturae_lib
@@ -63,6 +64,30 @@ else:
     app_xsltproc = 'xsltproc'
     app_openssl = 'openssl'
     app_xmlstarlet = 'xmlstarlet'
+
+app_openssl_fullpath = os.path.join(openssl_path, app_openssl)
+if not os.path.isfile(app_openssl_fullpath):
+    app_openssl_fullpath = tools.find_in_path(app_openssl)
+    if not os.path.isfile(app_openssl_fullpath):
+        app_openssl_fullpath = False
+        _logger.warning('Install openssl "sudo apt-get install openssl" to use l10n_mx_facturae_lib module.')
+
+app_xsltproc_fullpath = os.path.join(xsltproc_path, app_xsltproc) or False
+try:
+    if not os.path.isfile(app_xsltproc_fullpath):
+        app_xsltproc_fullpath = tools.find_in_path(app_xsltproc) or False
+        if not os.path.isfile(app_xsltproc_fullpath):
+            app_xsltproc_fullpath = False
+            _logger.warning('Install xsltproc "sudo apt-get install xsltproc" to use l10n_mx_facturae_lib module.')
+except Exception, e:
+    _logger.warning("Install xsltproc 'sudo apt-get install xsltproc' to use l10n_mx_facturae_lib module.")
+
+app_xmlstarlet_fullpath = os.path.join(xmlstarlet_path, app_xmlstarlet)
+if not os.path.isfile( app_xmlstarlet_fullpath ):
+    app_xmlstarlet_fullpath = tools.find_in_path( app_xmlstarlet )
+    if not app_xmlstarlet_fullpath:
+        app_xmlstarlet_fullpath = False
+        _logger.warning('Install xmlstarlet "sudo apt-get install xmlstarlet" to use l10n_mx_facturae_lib module.')
 
 def library_openssl_xsltproc_xmlstarlet(self, cr, uid, ids, context=None):
     if context is None:
@@ -103,12 +128,14 @@ class facturae_certificate_library(osv.Model):
     _auto = False
     # Agregar find subpath
 
-    def b64str_to_tempfile(self, cr, uid, ids, b64_str="", file_suffix="", file_prefix=""):
+    def b64str_to_tempfile(self, cr, uid, ids, b64_str=None, file_suffix=None, file_prefix=None, context=None):
         """
         @param b64_str : Text in Base_64 format for add in the file
         @param file_suffix : Sufix of the file
         @param file_prefix : Name of file in TempFile
         """
+        if context is None:
+            context = {}
         (fileno, fname) = tempfile.mkstemp(file_suffix, file_prefix)
         f = open(fname, 'wb')
         f.write(base64.decodestring(b64_str or ''))

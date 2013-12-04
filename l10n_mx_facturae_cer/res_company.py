@@ -99,15 +99,15 @@ class res_company_facturae_certificate(osv.Model):
                                  'title'], data['warning']['message'])
         return self.write(cr, uid, ids, data['value'], context)
 
-    def onchange_certificate_info(self, cr, uid, ids, cer_der_b64str,
-        key_der_b64str, password, context=None):
+    def onchange_certificate_info(self, cr, uid, ids, cer_der_b64str = None,
+        key_der_b64str = None, password = None, context = None):
         """
         @param cer_der_b64str : File .cer in Base 64
         @param key_der_b64str : File .key in Base 64
         @param password : Password inserted in the certificate configuration
         """
         if context is None:
-            context = {}
+            contex={}
         certificate_lib = self.pool.get('facturae.certificate.library')
         value = {}
         warning = {}
@@ -115,19 +115,18 @@ class res_company_facturae_certificate(osv.Model):
         certificate_key_file_pem = False
         invoice_obj = self.pool.get('account.invoice')
         if cer_der_b64str and key_der_b64str and password:
-
-            fname_cer_der = certificate_lib.b64str_to_tempfile(
+            fname_cer_der = certificate_lib.b64str_to_tempfile(cr, uid, ids,
                 cer_der_b64str, file_suffix='.der.cer',
-                file_prefix='openerp__' + (False or '') + '__ssl__', )
-            fname_key_der = certificate_lib.b64str_to_tempfile(
+                file_prefix='openerp__' + (False or '') + '__ssl__', context=context )
+            fname_key_der = certificate_lib.b64str_to_tempfile(cr, uid, ids,
                 key_der_b64str, file_suffix='.der.key',
-                file_prefix='openerp__' + (False or '') + '__ssl__', )
-            fname_password = certificate_lib.b64str_to_tempfile(
-                base64.encodestring(password), file_suffix='der.txt',
-                file_prefix='openerp__' + (False or '') + '__ssl__', )
-            fname_tmp = certificate_lib.b64str_to_tempfile(
+                file_prefix='openerp__' + (False or '') + '__ssl__', context=context)
+            fname_password = certificate_lib.b64str_to_tempfile(cr, uid, ids, 
+                base64.encodestring(password), file_suffix='der.txt', 
+                file_prefix='openerp__' + (False or '') + '__ssl__', context=context)
+            fname_tmp = certificate_lib.b64str_to_tempfile(cr, uid, ids,
                 '', file_suffix='tmp.txt', file_prefix='openerp__' + (
-                False or '') + '__ssl__', )
+                False or '') + '__ssl__', context=context)
 
             cer_pem = certificate_lib._transform_der_to_pem(
                 fname_cer_der, fname_tmp, type_der='cer')
@@ -141,7 +140,7 @@ class res_company_facturae_certificate(osv.Model):
             date_fmt_return = '%Y-%m-%d'
             serial = False
             try:
-                serial = certificate_lib._get_param_serial(
+                serial = certificate_lib._get_param_serial(cr, uid, ids,
                     fname_cer_der, fname_tmp, type='DER')
                 value.update({
                     'serial_number': serial,
@@ -151,7 +150,7 @@ class res_company_facturae_certificate(osv.Model):
             date_start = False
             date_end = False
             try:
-                dates = certificate_lib._get_param_dates(fname_cer_der,
+                dates = certificate_lib._get_param_dates(cr, uid, ids, fname_cer_der,
                     fname_tmp, date_fmt_return=date_fmt_return, type='DER')
                 date_start = dates.get('startdate', False)
                 date_end = dates.get('enddate', False)
@@ -226,7 +225,8 @@ class res_company_facturae_certificate(osv.Model):
 class res_company(osv.Model):
     _inherit = 'res.company'
 
-    def ____get_current_certificate(self, cr, uid, ids, field_names=None, arg=False, context=None):
+    def ____get_current_certificate(self, cr, uid, ids, field_names=None,
+        arg=False, context={}):
         if not field_names:
             field_names = []
         res = {}

@@ -488,14 +488,14 @@ class account_invoice(osv.Model):
         certificate_lib = self.pool.get('facturae.certificate.library')
         fname_repmensual_xslt = self._get_file_globals(
             cr, uid, ids, context=context)['fname_repmensual_xslt']
-        fname_tmp = certificate_lib.b64str_to_tempfile(base64.encodestring(''),
+        fname_tmp = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(''),
             file_suffix='.txt', file_prefix='openerp__' + (False or '') + \
             '__repmensual__')
         rep_mensual = ''
         for invoice in self.browse(cr, uid, ids, context=context):
             xml_b64 = invoice.cfd_xml_id and invoice.cfd_xml_id.datas or False
             if xml_b64:
-                fname_xml = certificate_lib.b64str_to_tempfile(
+                fname_xml = certificate_lib.b64str_to_tempfile(cr, uid, ids,
                     xml_b64 or '', file_suffix='.xml',
                     file_prefix='openerp__' + (False or '') + '__xml__')
                 rep_mensual += certificate_lib._transform_xml(
