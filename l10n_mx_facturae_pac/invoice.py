@@ -172,7 +172,7 @@ class account_invoice(osv.Model):
         nodeComprobante.setAttribute("sello", sign_str)
         data_dict[comprobante]['sello'] = sign_str
 
-        noCertificado = self._get_noCertificado(context['fname_cer'])
+        noCertificado = self._get_noCertificado(cr, uid, ids, context['fname_cer'])
         if not noCertificado:
             raise osv.except_osv(_('Error in No. Certificate !'), _(
                 "Can't get the Certificate Number of the voucher.\nCkeck your configuration.\n%s") % (msg2))
