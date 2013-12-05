@@ -9,6 +9,7 @@
             <field name="user">isaac@vauxoo.com</field>
             <field name="password">1Q2W3E4R5t_</field>
             <field name="name">FINKOK - Cancelar - Test</field>
+            <field name="certificate_link">ftp://ftp2.sat.gob.mx/Certificados/FEA/000010/000002/03/22/05/00001000000203220518.cer</field>
         </record>
         
         <record id="params_pac_finkok_firmar_test2" model="params.pac">
@@ -18,6 +19,7 @@
             <field name="user">isaac@vauxoo.com</field>
             <field name="password">1Q2W3E4R5t_</field>
             <field name="name">FINKOK - Firmar - Test</field>
+            <field name="certificate_link">ftp://ftp2.sat.gob.mx/Certificados/FEA/000010/000002/03/22/05/00001000000203220518.cer</field>
         </record>
     </data>
 </openerp>
