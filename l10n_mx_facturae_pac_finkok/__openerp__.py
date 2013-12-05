@@ -35,7 +35,7 @@
     "description" : """This module creates interface for e-invoice files from invoices with Solucion Factible.
 Ubuntu Package Depends:
     sudo apt-get install python-soappy 
-    sudo pip install pil qrcode
+    sudo pip install pillow qrcode
     wget http://security.ubuntu.com/ubuntu/pool/main/s/suds/python-suds_0.4.1-2ubuntu1_all.deb
     dpkg -i python-suds_0.4.1-2ubuntu1_all.deb
 """,
