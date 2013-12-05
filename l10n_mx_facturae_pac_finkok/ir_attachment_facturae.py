@@ -151,7 +151,8 @@ class ir_attachment_facturae_mx(osv.Model):
                 result = client.service.cancel(*params)
                 if not 'Folios' in result:
                     msg += _('%s' %result.CodEstatus)
-                    raise orm.except_orm(_('Warning'), _('Mensaje %s') % (msg))
+                    if not ('demo' in wsdl_url or 'testing' in wsdl_url):
+                        raise orm.except_orm(_('Warning'), _('Mensaje %s') % (msg))
                 else:
                     EstatusUUID = result.Folios[0][0].EstatusUUID
                     if EstatusUUID == '201':
