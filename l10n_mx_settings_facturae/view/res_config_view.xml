@@ -30,8 +30,8 @@
                             </div>
 -->
                             <div>
-                                <label for="company_id"/>
-                                <field name="company_id" class="oe_inline" />
+                                <label for="company_id" groups="base.group_multi_company"/>
+                                <field name="company_id" class="oe_inline" groups="base.group_multi_company"/>
                             </div>
                             <div>
                                 <label for="mail_server_id" /> 
