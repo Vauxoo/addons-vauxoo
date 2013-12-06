@@ -43,6 +43,7 @@ Ubuntu Package Depends:
         "l10n_mx_ir_attachment_facturae",
         #~ "l10n_mx_facturae_pac",
         "l10n_mx_facturae_group_show_wizards",
+        "l10n_mx_settings_facturae",
         ],
     "demo" : [
         "demo/l10n_mx_facturae_pac_sf_demo.xml",
