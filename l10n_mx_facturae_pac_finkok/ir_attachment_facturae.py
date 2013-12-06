@@ -149,6 +149,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 invoices_list.uuids.string = invoices
                 params = [invoices_list, username, password, taxpayer_id, cerCSD, keyCSD]
                 result = client.service.cancel(*params)
+                time.sleep(1)
                 if not 'Folios' in result:
                     msg += _('%s' %result.CodEstatus)
                     if not ('demo' in wsdl_url or 'testing' in wsdl_url):
