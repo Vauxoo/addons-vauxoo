@@ -15,8 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-10 06:47+0000\n"
-"X-Generator: Launchpad (build 16820)\n"
+"X-Launchpad-Export-Date: 2013-12-06 06:25+0000\n"
+"X-Generator: Launchpad (build 16863)\n"
 
 #. module: ifrs_report
 #: field:ifrs.ifrs,title:0
@@ -2147,31 +2147,3 @@ msgid ""
 msgstr ""
 "campo de control cantidad de 11vo período, funciona para prevenir cálculos "
 "repetidos"
-
-#~ msgid "Level"
-#~ msgstr "Nivel"
-
-#~ msgid "Allows the amount field automatically run when is calculated"
-#~ msgstr ""
-#~ "Permite que el campo cantidad se ejecute automaticamente cuando se calcula"
-
-#~ msgid "Parent Left"
-#~ msgstr "Padre izquierdo"
-
-#~ msgid ""
-#~ "Line name in the report. This name can be translatable, if there are "
-#~ "multiple languages ​​loaded it can be translated"
-#~ msgstr ""
-#~ "Nombre de la Línea en el reporte. Este nombre puede ser traducible, si hay "
-#~ "multiples idiomas cargado el mismo puede ser traducido."
-
-#, python-format
-#~ msgid "There are no periods in %s"
-#~ msgstr "No hay periodos en %s"
-
-#~ msgid "Parent Right"
-#~ msgstr "Padre Derecho"
-
-#, python-format
-#~ msgid "There are previous period to %s"
-#~ msgstr "Hay períodos previos a %s"
