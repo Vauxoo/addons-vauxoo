@@ -15,6 +15,7 @@
                     <group id="electronic_invoicing_group">
                         <label for="electronic_invoicing_group" string="Electronic Invoicing"/>
                         <div>
+<!--
                             <div>
                                 <field name="module_l10n_mx_facturae" class="oe_inline"/>
                                 <label for="module_l10n_mx_facturae"/>
@@ -27,6 +28,7 @@
                                 <field name="module_l10n_mx_facturae_pac_sf" class="oe_inline"/>
                                 <label for="module_l10n_mx_facturae_pac_sf"/>
                             </div>
+-->
                             <div>
                                 <label for="company_id"/>
                                 <field name="company_id" class="oe_inline" />
@@ -46,10 +48,10 @@
                         </div>
                     </group>
                     <group >
-                        <label for="id" string="Parameters PAC" attrs="{'invisible':[('module_l10n_mx_facturae_pac_sf', '!=', True)]}" />
+                        <label for="id" string="Parameters PAC"/>
                         <div>
                             <div>
-                                <button type="object" name="open_parameters_pac" attrs="{'invisible':[('module_l10n_mx_facturae_pac_sf', '!=', True)]}" string="Configure your Parameters PAC" icon="gtk-execute" class="oe_inline oe_link"/>
+                                <button type="object" name="open_parameters_pac" string="Configure your Parameters PAC" icon="gtk-execute" class="oe_inline oe_link"/>
                             </div>
                         </div>
                     </group>
