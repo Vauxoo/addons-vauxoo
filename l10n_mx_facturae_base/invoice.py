@@ -1410,6 +1410,8 @@ class account_invoice(osv.Model):
         invoice = self.browse(cr, uid, invoice_id)
         cfdi_folio_fiscal = invoice.cfdi_folio_fiscal or ''
         cfdi_fecha_timbrado = invoice.cfdi_fecha_timbrado or ''
+        if cfdi_fecha_timbrado:
+            cfdi_fecha_timbrado=time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(cfdi_fecha_timbrado, '%Y-%m-%d %H:%M:%S'))
         sello = invoice.sello or ''
         cfdi_no_certificado = invoice.cfdi_no_certificado or ''
         original_string = '||1.0|'+cfdi_folio_fiscal+'|'+str(cfdi_fecha_timbrado)+'|'+sello+'|'+cfdi_no_certificado+'||'
