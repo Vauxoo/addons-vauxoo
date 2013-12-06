@@ -1172,8 +1172,8 @@ class account_invoice(osv.Model):
                 else:
                     # impuesto_list = invoice_data_impuestos['Retenciones']
                     impuesto_list = invoice_data_impuestos.setdefault(
-                        'Retenciones', [])
-                    impuesto_str = 'Retencion'
+                        'cfdi:Retenciones', [])
+                    impuesto_str = 'cfdi:Retencion'
                     totalImpuestosRetenidos += line_tax_id_amount
                 impuesto_dict = {impuesto_str:
                                 {
