@@ -260,10 +260,6 @@ class ir_attachment_facturae_mx(osv.Model):
                             'cfdi_xml': resultado.xml or '',  # este se necesita en uno que no es base64
                             'cfdi_folio_fiscal': folio_fiscal,
                         }
-                        if cfdi_data.get('cfdi_xml', False):
-                            invoice_obj.write(cr, uid, [invoice.id], cfdi_data)
-                        else:
-                            msg += _(u"Can't extract the file XML of PAC")
                         cbb = invoice_obj._create_qrcode(cr, uid, ids,invoice.id, context=context)
                         original_string = invoice_obj._create_original_str(cr, uid, ids,invoice.id, context=context)
                         cfdi_data_cbb_os = {
@@ -282,7 +278,12 @@ class ir_attachment_facturae_mx(osv.Model):
                                 'cfdi_xml'].replace(comprobante_new, url_pac)
                             file = base64.encodestring(cfdi_data['cfdi_xml'] or '')
                             cfdi_xml = cfdi_data.pop('cfdi_xml')
-
+                            if cfdi_xml:
+                                invoice_obj.write(cr, uid, [invoice.id], cfdi_data)
+                                cfdi_data['cfdi_xml'] = cfdi_xml
+                                status = True
+                            else:
+                                msg += _(u"Can't extract the file XML of PAC")
                     else:
                         inicidencias = resultado.Incidencias.Incidencia[0]
                         IdIncidencia = resultado.Incidencias.Incidencia[0]['IdIncidencia']
