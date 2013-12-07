@@ -259,6 +259,7 @@ class ir_attachment_facturae_mx(osv.Model):
                             'cfdi_fecha_timbrado': resultado.Fecha or False,
                             'cfdi_xml': resultado.xml or '',  # este se necesita en uno que no es base64
                             'cfdi_folio_fiscal': folio_fiscal,
+                            'pac_id': pac_params.id,
                         }
                         if cfdi_data.get('cfdi_xml', False):
                             invoice_obj.write(cr, uid, [invoice.id], cfdi_data)
