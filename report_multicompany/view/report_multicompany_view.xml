@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <openerp>
+        <data>
+            <record model="ir.ui.view" id="report_multicompany_form_view">
+                <field name="name">report.multicompany.form.view</field>
+                <field name="model">report.multicompany</field>
+                <field name="arch" type="xml">
+                    <form string="Report Multicompany" version="7.0">
+                        <sheet>
+                            <group>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="report_id" on_change="onchange_report_model_name(report_id)"/>
+                                <field name="report_name" invisible="1"/>
+                                <field name="sequence"/>
+                                <field name="model"/>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+            <record model="ir.ui.view" id="report_multicompany_tree_view">
+                <field name="name">report.multicompany.tree.view</field>
+                <field name="model">report.multicompany</field>
+                <field name="arch" type="xml">
+                    <tree string="Report Multicompany">
+                        <field name="report_id"/>
+                        <field name="report_name"/>
+                        <field name="sequence"/>
+                        <field name="company_id"/>
+                        <field name="model"/>
+                    </tree>
+                </field>
+            </record>
+            <record model="ir.actions.act_window" id="report_multicompany_list_action">
+                <field name="name">Report Multicompany Settings</field>
+                <field name="res_model">report.multicompany</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+            </record>
+
+            <menuitem id="report_multicompany_menu" name="Report Multicompany Settings"  parent="base.next_id_6"  action="report_multicompany_list_action" />
+        </data>
+</openerp>
