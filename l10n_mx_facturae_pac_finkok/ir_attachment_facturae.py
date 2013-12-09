@@ -225,8 +225,8 @@ class ir_attachment_facturae_mx(osv.Model):
                     #~ raise osv.except_osv(_('Warning'), _('Namespace of PAC incorrect'))
                 if 'demo' in wsdl_url or 'testing' in wsdl_url:
                     msg += _(u'WARNING, SIGNED IN TEST!!!!\n\n' + wsdl_url)
-                client = Client(wsdl_url, cache=None)
-                if True: # if wsdl_client:
+                try:
+                    client = Client(wsdl_url, cache=None)
                     file_globals = invoice_obj._get_file_globals(
                         cr, uid, invoice_ids, context=context)
                     fname_cer_no_pem = file_globals['fname_cer']
@@ -296,8 +296,8 @@ class ir_attachment_facturae_mx(osv.Model):
                         WorkProcessId = resultado.Incidencias.Incidencia[0]['WorkProcessId']
                         FechaRegistro = resultado.Incidencias.Incidencia[0]['FechaRegistro']
                         raise orm.except_orm(_('Warning'), _('Inicidencias: %s.') % (inicidencias))
-                else:
-                    raise orm.except_orm(_('Warning'), _('Not conexión'))
+                except:
+                    raise orm.except_orm(_('Warning'), _('Connection lost, verify your internet conection'))
             else:
                 msg += 'Not found information from web services of PAC, verify that the configuration of PAC is correct'
                 raise osv.except_osv(_('Warning'), _(
