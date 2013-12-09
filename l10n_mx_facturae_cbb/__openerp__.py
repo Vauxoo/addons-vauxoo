@@ -57,7 +57,6 @@ http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/comp
     "data" : [
         #'security/l10n_mx_facturae_cbb_security.xml',
         'ir_sequence_view_v6.xml',
-        "l10n_mx_facturae_report.xml",
     ],
     "test" : ["test/account_invoice_cbb.yml"],
     "installable" : True,

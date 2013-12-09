@@ -317,6 +317,7 @@ class account_invoice(osv.Model):
             help='Attachment that generated this invoice'),
         'rate': fields.float('Type of Change', readonly=True,
             help='Rate used in the date of invoice'),
+        'pac_id': fields.many2one('params.pac', 'Pac', help='Pac used in singned of the invoice'),
     }
 
     _defaults = {

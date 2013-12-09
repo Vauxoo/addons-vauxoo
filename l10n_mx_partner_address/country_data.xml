@@ -2,7 +2,7 @@
 <openerp>
     <data noupdate="1">
         <record id="base.mx" model="res.country">
-            <field name="address_format" eval="'%(l10n_mx_street3)s\n%(l10n_mx_street4)s\n%(l10n_mx_city2)s'" />
+            <field name="address_format" eval="'%(street)s %(l10n_mx_street3)s %(l10n_mx_street4)s\n%(street2)s %(city)s %(l10n_mx_city2)s\n%(state_name)s %(country_name)s %(zip)s'"/>
         </record>
     </data>
 </openerp>
