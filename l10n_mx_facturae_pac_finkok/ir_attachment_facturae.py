@@ -149,6 +149,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 invoices_list.uuids.string = invoices
                 params = [invoices_list, username, password, taxpayer_id, cerCSD, keyCSD]
                 result = client.service.cancel(*params)
+                time.sleep(1)
                 if not 'Folios' in result:
                     msg += _('%s' %result.CodEstatus)
                     if not ('demo' in wsdl_url or 'testing' in wsdl_url):
@@ -261,10 +262,6 @@ class ir_attachment_facturae_mx(osv.Model):
                             'cfdi_folio_fiscal': folio_fiscal,
                             'pac_id': pac_params.id,
                         }
-                        if cfdi_data.get('cfdi_xml', False):
-                            invoice_obj.write(cr, uid, [invoice.id], cfdi_data)
-                        else:
-                            msg += _(u"Can't extract the file XML of PAC")
                         cbb = invoice_obj._create_qrcode(cr, uid, ids,invoice.id, context=context)
                         original_string = invoice_obj._create_original_str(cr, uid, ids,invoice.id, context=context)
                         cfdi_data_cbb_os = {
@@ -283,7 +280,12 @@ class ir_attachment_facturae_mx(osv.Model):
                                 'cfdi_xml'].replace(comprobante_new, url_pac)
                             file = base64.encodestring(cfdi_data['cfdi_xml'] or '')
                             cfdi_xml = cfdi_data.pop('cfdi_xml')
-
+                            if cfdi_xml:
+                                invoice_obj.write(cr, uid, [invoice.id], cfdi_data)
+                                cfdi_data['cfdi_xml'] = cfdi_xml
+                                status = True
+                            else:
+                                msg += _(u"Can't extract the file XML of PAC")
                     else:
                         inicidencias = resultado.Incidencias.Incidencia[0]
                         IdIncidencia = resultado.Incidencias.Incidencia[0]['IdIncidencia']
