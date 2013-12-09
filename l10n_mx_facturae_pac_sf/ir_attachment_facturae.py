@@ -268,6 +268,7 @@ class ir_attachment_facturae_mx(osv.Model):
                             'cfdi_xml': base64.decodestring(resultado[
                             'resultados']['cfdiTimbrado'] or ''),  # este se necesita en uno que no es base64
                             'cfdi_folio_fiscal': resultado['resultados']['uuid'] or '',
+                            'pac_id': pac_params.id,
                         }
                         msg += mensaje + "." + resultados_mensaje + \
                             " Folio Fiscal: " + folio_fiscal + "."
