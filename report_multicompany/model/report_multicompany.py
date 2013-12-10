@@ -67,7 +67,12 @@ class report_multicompany(osv.Model):
 
     def report_multicompany_create(self, cr, uid, company_id, report_id, sequence=0, context=None):
         '''
-            This function create or update to registrer 
+            This function adds or updates a record in a report associated
+            with a company in which if the record exists and performs 
+            an upgrade assigning 0 in the sequence and all other reports a 
+            sequence 10. If this record not exist are creates and 
+            assigns in the sequence 0 and the others belonging to 
+            the model and company  is assigns Sequence 10
         '''
         actions_obj = self.pool.get('ir.actions.report.xml')
         report_data = actions_obj.browse(cr, uid, report_id)
@@ -98,6 +103,11 @@ class report_multicompany(osv.Model):
         return True
 
     def create(self, cr, uid, vals, context=None):
+        '''
+            This function updates records of all reports that equal 
+            model and company to sequence 10 before the insert the 
+            new record, the new record is assigns with sequence 0.
+        '''
         record_ids = self.search(
             cr, uid, [('company_id', '=', vals.get('company_id')),
                       ('model', '=', vals.get('model'))])
