@@ -40,7 +40,11 @@ relationship with company (similar to a property).
     """,
     "website": "http://vauxoo.com",
     "category": "Addons Vauxoo",
-    "data": ["view/report_multicompany_view.xml"],
+    "data": [
+    "security/ir.model.access.csv",
+    "view/report_multicompany_view.xml",
+    "security/report_multicompany_security.xml"
+    ],
     "test": [],
     "active": False,
     "installable": True,

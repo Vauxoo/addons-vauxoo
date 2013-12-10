@@ -26,7 +26,7 @@
 from openerp.osv import osv, fields
 
 
-class report_multicompany(osv.osv_memory):
+class report_multicompany(osv.Model):
 
     _name = 'report.multicompany'
 
@@ -66,6 +66,9 @@ class report_multicompany(osv.osv_memory):
         return {'value': {'report_name': report_name, 'model': model_id}}
 
     def report_multicompany_create(self, cr, uid, company_id, report_id, sequence=0, context=None):
+        '''
+            This function create or update to registrer 
+        '''
         actions_obj = self.pool.get('ir.actions.report.xml')
         report_data = actions_obj.browse(cr, uid, report_id)
         record_ids = self.search(cr, uid, [('company_id', '=', company_id),
