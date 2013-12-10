@@ -2,13 +2,6 @@
 <data>
     
     <!--
-        Amortization category menu item
-    -->
-    
-    <menuitem id="menu_finance_config_amortization" name="Amortization Expenses" parent="account.menu_finance_configuration" sequence="25"/>
-	<menuitem parent="menu_finance_config_amortization" id="menu_action_account_amortization_category_form" action="action_account_amortization_category_form"/>
-  
-    <!--
         Amortization category action
     -->
 
@@ -63,12 +56,12 @@
     </record>
     
     <!--
-        Amortization menu item
+        Amortization category menu item
     -->
     
-	<menuitem id="menu_finance_amortization" name="Amortization Expenses" parent="account.menu_finance" sequence="9"/>
-    <menuitem parent="menu_finance_amortization" id="menu_action_account_amortization_amortization_form" action="action_account_amortization_amortization_form"/>
-
+    <menuitem id="menu_finance_config_amortization" name="Amortization Expenses" parent="account.menu_finance_configuration" sequence="25"/>
+	<menuitem parent="menu_finance_config_amortization" id="menu_action_account_amortization_category_form" action="action_account_amortization_category_form"/>
+    
     <!--
         Amortization action
     -->
@@ -124,11 +117,11 @@
      </record>
      
     <!--
-        Amortization hierarchy view menu item
+        Amortization menu item
     -->
-
-    <menuitem parent="menu_finance_amortization" id="menu_action_account_amortization_amortization_hierarchy_tree"
-        sequence="100" action="action_account_amortization_amortization_hierarchy_tree"/>
+    
+	<menuitem id="menu_finance_amortization" name="Amortization Expenses" parent="account.menu_finance" sequence="9"/>
+    <menuitem parent="menu_finance_amortization" id="menu_action_account_amortization_amortization_form" action="action_account_amortization_amortization_form"/>
 
     <!--
         Amortization hierarchy view action
@@ -169,6 +162,13 @@
         <field name="view_mode">tree</field>                         
         <field name="view_id" ref="account_asset.view_account_asset_asset_hierarchy_tree"/>
     </record> 
+
+    <!--
+        Amortization hierarchy view menu item
+    -->
+
+    <menuitem parent="menu_finance_amortization" id="menu_action_account_amortization_amortization_hierarchy_tree"
+        sequence="100" action="action_account_amortization_amortization_hierarchy_tree"/>
 
     <!--
          Field category_id in account_asset view is overwritten adding doc_type domain
