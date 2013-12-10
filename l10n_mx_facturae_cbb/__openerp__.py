@@ -49,6 +49,7 @@ http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/comp
             "l10n_mx_ir_attachment_facturae",
             "l10n_mx_facturae_report",
             "l10n_mx_company_multi_address",
+            "l10n_mx_settings_facturae",
         ],
     "demo" : ["demo/l10n_mx_facturae_seq_demo.xml",
               "demo/account_invoice_cbb_demo.xml",
@@ -56,7 +57,6 @@ http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/comp
     "data" : [
         #'security/l10n_mx_facturae_cbb_security.xml',
         'ir_sequence_view_v6.xml',
-        "l10n_mx_facturae_report.xml",
     ],
     "test" : ["test/account_invoice_cbb.yml"],
     "installable" : True,

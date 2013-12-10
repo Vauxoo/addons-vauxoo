@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_facturae_config_settings" model="ir.ui.view">
+            <field name="name">facturae settings</field>
+            <field name="model">facturae.config.settings</field>
+            <field name="arch" type="xml">
+                <form string="Electronic Invoicing Settings" version="7.0" class="oe_form_configuration">
+                    <header>
+                        <button string="Apply" type="object" name="execute" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" type="object" name="cancel" class="oe_link"/>
+                    </header>
+                    <separator string="Electronic Invoicing Settings"/>
+                    <group id="electronic_invoicing_group">
+                        <label for="electronic_invoicing_group" string="Electronic Invoicing"/>
+                        <div>
+                            <div>
+                                <field name="module_l10n_mx_facturae" class="oe_inline"/>
+                                <label for="module_l10n_mx_facturae"/>
+                            </div>
+                            <div>
+                                <field name="module_l10n_mx_facturae_cbb" class="oe_inline"/>
+                                <label for="module_l10n_mx_facturae_cbb"/>
+                            </div>
+                            <div>
+                                <field name="module_l10n_mx_facturae_pac_sf" class="oe_inline"/>
+                                <label for="module_l10n_mx_facturae_pac_sf"/>
+                            </div>
+                            <div>
+                                <label for="company_id"/>
+                                <field name="company_id" class="oe_inline" />
+                            </div>
+                            <div>
+                                <label for="mail_server_id" /> 
+                                <field name="mail_server_id" class="oe_inline" domain="[('company_id', '=', company_id)]"/>
+                            </div>
+                            <div>
+                                <label for="email_tmp_id" />
+                                <field name="email_tmp_id" class="oe_inline" domain="['|', ('company_id', '=', company_id), ('model','=','account.invoice')]"/>
+                            </div>
+                            <div>
+                                <label for="temp_report_id" /> 
+                                <field name="temp_report_id" class="oe_inline" domain="[('model','=','account.invoice'),('report_type','=','webkit')]"/>
+                            </div>
+                        </div>
+                    </group>
+                    <group >
+                        <label for="id" string="Parameters PAC" attrs="{'invisible':[('module_l10n_mx_facturae_pac_sf', '!=', True)]}" />
+                        <div>
+                            <div>
+                                <button type="object" name="open_parameters_pac" attrs="{'invisible':[('module_l10n_mx_facturae_pac_sf', '!=', True)]}" string="Configure your Parameters PAC" icon="gtk-execute" class="oe_inline oe_link"/>
+                            </div>
+                        </div>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_facturae_config" model="ir.actions.act_window">
+            <field name="name">Electronic Invoicing Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">facturae.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <menuitem id="menu_facturae_config" name="Electronic Invoicing Settings" parent="base.menu_config"
+            sequence="27" action="action_facturae_config"/>
+
+    </data>
+</openerp>

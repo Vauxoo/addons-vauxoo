@@ -185,9 +185,9 @@ class ir_attachment_facturae_mx(osv.Model):
                 uid, self._name, ids[0], 'action_confirm', cr)
             return True
         except Exception, e:
-            error = tools.ustr( traceback.format_exc() )
+            error = tools.ustr(traceback.format_exc())
             self.write(cr, uid, ids, {'msj': error}, context=context)
-            _logger.error( error )
+            _logger.error(error)
             return False
 
     def action_confirm(self, cr, uid, ids, context=None):
@@ -254,9 +254,9 @@ class ir_attachment_facturae_mx(osv.Model):
                 wf_service.trg_validate(uid, self._name, data.id, 'action_sign', cr)
                 return True
         except Exception, e:
-            error = tools.ustr( traceback.format_exc() )
+            error = tools.ustr(traceback.format_exc())
             self.write(cr, uid, ids, {'msj': error}, context=context)
-            _logger.error( error )
+            _logger.error(error)
             return False
 
     def action_sign(self, cr, uid, ids, context=None):
@@ -277,9 +277,28 @@ class ir_attachment_facturae_mx(osv.Model):
             (fileno, fname) = tempfile.mkstemp(
                 '.pdf', 'openerp_' + (invoice.fname_invoice or '') + '__facturae__')
             os.close(fileno)
-            report = invoice_obj.create_report(cr, SUPERUSER_ID, [invoice.id],
-                                               "account.invoice.facturae.webkit",
-                                               fname)
+            #~ report = invoice_obj.create_report(cr, uid, [invoice.id],
+                                               #~ "account.invoice.facturae.webkit",
+                                               #~ fname)
+
+            actions_obj = self.pool.get('ir.actions.report.xml')
+            report_ids = actions_obj.search(
+                cr, uid, [('model', '=', 'account.invoice'),('active', '=', True), ('report_type', '=', 'webkit'), 
+                          ('company_id','=',invoice.company_id.id)],order='sequence', limit=1) or False
+
+            if report_ids:
+                report_name = actions_obj.browse(cr, uid, report_ids[0]).report_name
+                if report_name:
+                    report = invoice_obj.create_report(
+                        cr, SUPERUSER_ID, [invoice.id],
+                        report_name,
+                        invoice.fname_invoice)
+            else:
+                report = invoice_obj.create_report(
+                    cr, SUPERUSER_ID, [invoice.id],
+                    "account.invoice.facturae.webkit",
+                    invoice.fname_invoice)
+
             attachment_ids = attachment_obj.search(cr, uid, [
                 ('res_model', '=', 'account.invoice'),
                 ('res_id', '=', invoice.id),
@@ -303,9 +322,9 @@ class ir_attachment_facturae_mx(osv.Model):
                 uid, self._name, ids[0], 'action_printable', cr)
             return True
         except Exception, e:
-            error = tools.ustr( traceback.format_exc() )
+            error = tools.ustr(traceback.format_exc())
             self.write(cr, uid, ids, {'msj': error}, context=context)
-            _logger.error( error )
+            _logger.error(error)
             return False
 
     def action_printable(self, cr, uid, ids, context=None):
@@ -362,13 +381,34 @@ class ir_attachment_facturae_mx(osv.Model):
                     mail_compose_message_pool = self.pool.get(
                         'mail.compose.message')
                     email_pool = self.pool.get('email.template')
-                    tmp_id = email_pool.search(
-                        cr, uid, [('model_id.model', '=', 'account.invoice'),
-                                  ('company_id', '=', company_id),
-                                  ('mail_server_id', '=', smtp_server.id),
-                                  ('report_template.report_name', '=',
-                                   'account.invoice.facturae.webkit')
-                                  ], limit=1, context=context)
+
+                    actions_obj = self.pool.get('ir.actions.report.xml')
+                    report_ids = actions_obj.search(
+                        cr, uid, [('model', '=', 'account.invoice'),('active', '=', True), ('report_type', '=', 'webkit'), 
+                                  ('company_id','=',invoice.company_id.id)],order='sequence', limit=1) or False
+                    if report_ids:
+                        report_name = actions_obj.browse(cr, uid, report_ids[0]).report_name
+                        if report_name:
+                            tmp_id = email_pool.search(
+                                cr, uid, [(
+                                    'model_id.model', '=', 'account.invoice'),
+                                    ('company_id',
+                                     '=', company_id),
+                                    ('mail_server_id',
+                                     '=', smtp_server.id),
+                                    ('report_template.report_name', '=',
+                                     report_name)
+                                ], limit=1, context=context)
+                    else:
+                        tmp_id = email_pool.search(
+                            cr, uid, [(
+                                'model_id.model', '=', 'account.invoice'),
+                                ('company_id', '=', company_id),
+                                ('mail_server_id', '=', smtp_server.id),
+                                ('report_template.report_name', '=',
+                                 'account.invoice.facturae.webkit')
+                            ], limit=1, context=context)
+
                     if tmp_id:
                         message = mail_compose_message_pool.onchange_template_id(
                             cr, uid, [], template_id=tmp_id[
@@ -405,9 +445,10 @@ class ir_attachment_facturae_mx(osv.Model):
                                         msj = _('Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s') % (
                                             partner_mail, server_name)
                                         self.write(cr, uid, ids, {
-                                                                'msj': msj, 
-                                                                'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
-                                        wf_service.trg_validate( uid, self._name, ids[0], 'action_send_customer', cr)
+                                            'msj': msj,
+                                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
+                                        wf_service.trg_validate(
+                                            uid, self._name, ids[0], 'action_send_customer', cr)
                                         return True
                             else:
                                 raise osv.except_osv(
@@ -422,9 +463,9 @@ class ir_attachment_facturae_mx(osv.Model):
                     raise osv.except_osv(_('Warning'), _('Not Found\
                     outgoing mail server.Configure the outgoing mail server named "FacturaE"'))
         except Exception, e:
-            error = tools.ustr( traceback.format_exc() )
+            error = tools.ustr(traceback.format_exc())
             self.write(cr, uid, ids, {'msj': error}, context=context)
-            _logger.error( error )
+            _logger.error(error)
             return False
 
     def action_send_customer(self, cr, uid, ids, context=None):
@@ -444,11 +485,11 @@ class ir_attachment_facturae_mx(osv.Model):
                 uid, self._name, ids[0], 'action_send_backup', cr)
             return True
         except Exception, e:
-            error = tools.ustr( traceback.format_exc() )
+            error = tools.ustr(traceback.format_exc())
             self.write(cr, uid, ids, {'msj': error}, context=context)
-            _logger.error( error )
+            _logger.error(error)
             return False
-    
+
     def action_send_backup(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'sent_backup'}, context=context)
 
@@ -465,9 +506,9 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service.trg_validate(uid, self._name, ids[0], 'action_done', cr)
             return True
         except Exception, e:
-            error = tools.ustr( traceback.format_exc() )
+            error = tools.ustr(traceback.format_exc())
             self.write(cr, uid, ids, {'msj': error}, context=context)
-            _logger.error( error )
+            _logger.error(error)
             return False
 
     def action_done(self, cr, uid, ids, context=None):
@@ -561,9 +602,9 @@ class ir_attachment_facturae_mx(osv.Model):
                                       }, context=context)
             status_forward = True
         except Exception, e:
-            error = tools.ustr( traceback.format_exc() )
+            error = tools.ustr(traceback.format_exc())
             self.write(cr, uid, ids, {'msj': error}, context=context)
-            _logger.error( error )
+            _logger.error(error)
             status_forward = False
         return status_forward
 
@@ -572,10 +613,30 @@ class ir_attachment(osv.Model):
     _inherit = 'ir.attachment'
 
     def unlink(self, cr, uid, ids, context=None):
-        attachments = self.pool.get('ir.attachment.facturae.mx').search(cr, SUPERUSER_ID, ['|',
-            '|', ( 'file_input', 'in', ids), ('file_xml_sign', 'in', ids), ('file_pdf', 'in',
-                ids)])
+        attachments = self.pool.get(
+            'ir.attachment.facturae.mx').search(cr, SUPERUSER_ID, ['|',
+                                                                   '|', ('file_input', 'in', ids), ('file_xml_sign', 'in', ids), ('file_pdf', 'in',
+                                                                                                                                  ids)])
         if attachments:
             raise osv.except_osv(_('Warning!'), _(
                 'You can not remove an attachment of an invoice'))
         return super(ir_attachment, self).unlink(cr, uid, ids, context=context)
+
+
+class ir_mail_server(osv.Model):
+    _inherit = 'ir.mail_server'
+
+    def send_email(
+        self, cr, uid, message, mail_server_id=None, smtp_server=None, smtp_port=None,
+        smtp_user=None, smtp_password=None, smtp_encryption=None, smtp_debug=False,
+            context=None):
+        obj_ir_mail_server = self.pool.get('ir.mail_server')
+        company_id = self.pool.get('res.users').browse(
+            cr, uid, uid, context=context).company_id.id
+        mail_server_id = obj_ir_mail_server.search(cr, uid,
+                                                   ['|', ('company_id', '=', company_id), ('company_id', '=', False)], limit=1, order='sequence', context=None)[0]
+        super(
+            ir_mail_server, self).send_email(cr, uid, message, mail_server_id=mail_server_id, smtp_server=None, smtp_port=None,
+                                             smtp_user=None, smtp_password=None, smtp_encryption=None, smtp_debug=False,
+                                             context=None)
+        return True

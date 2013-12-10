@@ -82,7 +82,7 @@ class res_partner(osv.Model):
             if name == 'city_id':
                 city = '<field name="city" modifiers="{&quot;invisible&quot;: true}" placeholder="%s" style="width: 50%%"/><field name="city_id" on_change="onchange_city(city_id)" placeholder="%s" style="width: 40%%"/>' % (city2, city2)
         layouts = {
-            '%(l10n_mx_street3)s\n%(l10n_mx_street4)s\n%(l10n_mx_city2)s': """
+            '%(street)s %(l10n_mx_street3)s %(l10n_mx_street4)s\n%(street2)s %(city)s %(l10n_mx_city2)s\n%(state_name)s %(country_name)s %(zip)s': """
                     <group>
                         <group>
                             <label for="type" attrs="{'invisible': [('parent_id','=', False)]}"/>
