@@ -38,7 +38,6 @@ class account_asset_asset(osv.Model):
             ('amortization','Amortization'),], 'Type',              
             help='''Asset type, deprecation allows you depreciate an asset, the 
                 amortization allows you amortize an expense.'''),
-        'method_group': fields.integer('Grouping Factor', help='The method group is used to group amotization lines in a account entry.'),
         }
 
 class account_asset_category(osv.Model):
