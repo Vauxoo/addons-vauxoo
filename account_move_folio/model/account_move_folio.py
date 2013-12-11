@@ -31,6 +31,13 @@ class account_move(osv.Model):
         'folio_id': fields.many2one('account.move.folio', 'Folio Record'),
     }
 
+    def copy(self, cr, uid, id, default=None, context=None):
+        default = {} if default is None else default.copy()
+        default.update({
+            'folio_id': False
+        })
+        return super(account_move, self).copy(cr, uid, id, default=default, context=context)
+    
     def foliate(self, cr, uid, ids, context=None):
         context = context or {}
         folio_obj = self.pool.get('account.move.folio')
