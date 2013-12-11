@@ -274,7 +274,7 @@ class ir_attachment_facturae_mx(osv.Model):
                         
             report_multicompany_obj = self.pool.get('report.multicompany')
             report_ids = report_multicompany_obj.search(
-                cr, uid, [('model', '=', 'account.invoice'), ('company_id','=',invoice.company_id.id)], order='sequence', limit=1) or False
+                cr, uid, [('model', '=', 'account.invoice')], order='sequence', limit=1) or False
 
             if report_ids:
                 report_name = report_multicompany_obj.browse(cr, uid, report_ids[0]).report_name
@@ -374,7 +374,7 @@ class ir_attachment_facturae_mx(osv.Model):
                                         
                     report_multicompany_obj = self.pool.get('report.multicompany')
                     report_ids = report_multicompany_obj.search(
-                                    cr, uid, [('model', '=', 'account.invoice'), ('company_id','=',invoice.company_id.id)], order='sequence', limit=1) or False
+                                    cr, uid, [('model', '=', 'account.invoice')], order='sequence', limit=1) or False
                     if report_ids:
                         report_name = report_multicompany_obj.browse(cr, uid, report_ids[0]).report_name
                         if report_name:
