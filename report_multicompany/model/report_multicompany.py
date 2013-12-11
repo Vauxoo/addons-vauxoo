@@ -29,12 +29,13 @@ from openerp.osv import osv, fields
 class report_multicompany(osv.Model):
 
     _name = 'report.multicompany'
+    _order = 'sequence, model, company_id'
 
     _columns = {
         'company_id': fields.many2one('res.company', 'Company',),
         'report_id': fields.many2one('ir.actions.report.xml', 'Report Template',
                                      help="""This report template will be assigned for electronic invoicing in your company"""),
-        'report_name': fields.text('Report Name'),
+        'report_name': fields.related('report_id', 'report_name', type='char', string='Report Name', readonly=True),
         'sequence': fields.integer('Sequence'),
         'model': fields.many2one('ir.model', 'Model', required=True),
     }
@@ -45,51 +46,49 @@ class report_multicompany(osv.Model):
 
     _defaults = {
         'company_id': _default_company,
+        'sequence': 10,
     }
 
-    _sql_constraints = [
-        ('report_company_uniq', 'unique (company_id, report_id, model)',
-         'The combination of Report Template, Company and Model must be unique !'),
-    ]
+    #_sql_constraints = [
+    #    ('report_company_uniq', 'unique (company_id, report_id, model)',
+    #     'The combination of Report Template, Company and Model must be unique !'),
+    #]
 
-    def onchange_report_model_name(self, cr, uid, ids, report_id=False, context=None):
+    def onchange_report_model(self, cr, uid, ids, report_id=False, context=None):
         actions_obj = self.pool.get('ir.actions.report.xml')
         ir_model_obj = self.pool.get('ir.model')
         model_id = False
-        report_name = False
         if report_id:
             report_data = actions_obj.browse(cr, uid, report_id)
             model_ids = ir_model_obj.search(
                 cr, uid, [('model', '=', report_data.model)])
             model_id = model_ids and model_ids[0] or False
-            report_name = report_data.report_name or False
-        return {'value': {'report_name': report_name, 'model': model_id}}
+        return {'value': {'model': model_id}}
 
-    def report_multicompany_create(self, cr, uid, company_id, report_id, sequence=0, context=None):
+    def report_multicompany_create(self, cr, uid, company_id, report_id, sequence=10, context=None):
         '''
             This function adds or updates a record in a report associated
-            with a company in which if the record exists and performs 
-            an upgrade assigning 0 in the sequence and all other reports a 
-            sequence 10. If this record not exist are creates and 
-            assigns in the sequence 0 and the others belonging to 
-            the model and company  is assigns Sequence 10
+            with a company in which if the record exists and performs
+            an upgrade assigning the sequence minimal and subtract one.
+            If this record not exist are creates and
+            assigns in the sequence sequence minimal and subtract one
         '''
         actions_obj = self.pool.get('ir.actions.report.xml')
-        report_data = actions_obj.browse(cr, uid, report_id)
-        record_ids = self.search(cr, uid, [('company_id', '=', company_id),
-                                           ('model', '=', report_data.model)])
         ir_model_obj = self.pool.get('ir.model')
         model_id = False
-        record_id = self.search(cr, uid, [('company_id', '=', company_id),
-                               ('model', '=',
-                                report_data.model),
-            ('report_id', '=', report_id)])
-        if record_ids:
-            list_update = list(set(record_ids) - set(record_id))
-            self.write(cr, uid, list_update, {'sequence': 10})
+        report_data = actions_obj.browse(cr, uid, report_id)
+        sequence_min_id = self.search(
+            cr, uid, [('model', '=', report_data.model)], limit=1, order='sequence asc') or False
+        if sequence_min_id:
+            sequence_min = self.browse(
+                cr, uid, sequence_min_id[0]).sequence - 1
+        else:
+            sequence_min = sequence
 
+        record_id = self.search(cr, uid, [('model', '=', report_data.model),
+                                          ('report_id', '=', report_id)])
         if record_id:
-            self.write(cr, uid, record_id, {'sequence': sequence})
+            self.write(cr, uid, record_id, {'sequence': sequence_min})
         else:
             model_ids = ir_model_obj.search(
                 cr, uid, [('model', '=', report_data.model)])
@@ -97,19 +96,21 @@ class report_multicompany(osv.Model):
             data_create = {'company_id': company_id,
                            'report_id': report_id,
                            'report_name': report_data.report_name,
-                           'sequence': sequence,
+                           'sequence': sequence_min,
                            'model': model_id}
             self.create(cr, uid, data_create)
         return True
 
     def create(self, cr, uid, vals, context=None):
         '''
-            This function updates records of all reports that equal 
-            model and company to sequence 10 before the insert the 
-            new record, the new record is assigns with sequence 0.
+            This function create records of report assigning the
+            sequence minimal and subtract one.
         '''
-        record_ids = self.search(
-            cr, uid, [('company_id', '=', vals.get('company_id')),
-                      ('model', '=', vals.get('model'))])
-        self.write(cr, uid, record_ids, {'sequence': 10})
+        sequence_min = 10
+        sequence_min_id = self.search(
+            cr, uid, [('model', '=', vals.get('model'))], limit=1, order='sequence asc') or False
+        if sequence_min_id:
+            sequence_min = self.browse(
+                cr, uid, sequence_min_id[0]).sequence - 1
+        vals.update({'sequence': sequence_min})
         return super(report_multicompany, self).create(cr, uid, vals, context)
