@@ -30,7 +30,24 @@ class account_move(osv.Model):
     _columns = {
         'folio_id': fields.many2one('account.move.folio', 'Folio Record'),
     }
+    
+    def _check_folio(self, cr, uid, ids, context=None):
+        for move in self.browse(cr, uid, ids, context=context):
+            if move.folio_id:
+                move_ids = self.search(cr, uid, [
+                    ('company_id', '=', move.company_id.id),
+                    ('folio_id', '=', move.folio_id.id),
+                    ])
+                if len(move_ids) > 1:
+                    return False
+        return True
 
+    _constraints = [
+        (_check_folio,
+            'You cannot have duplicate Folio Record by company.',
+            ['folio_id']),
+    ]
+    
     def copy(self, cr, uid, id, default=None, context=None):
         default = {} if default is None else default.copy()
         default.update({
