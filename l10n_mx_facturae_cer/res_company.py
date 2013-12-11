@@ -225,8 +225,9 @@ class res_company_facturae_certificate(osv.Model):
 class res_company(osv.Model):
     _inherit = 'res.company'
 
-    def ____get_current_certificate(self, cr, uid, ids, field_names=None,
-        arg=False, context={}):
+    def ____get_current_certificate(self, cr, uid, ids, field_names=None, arg=False, context=None):
+        if context is None:
+            context = {}
         if not field_names:
             field_names = []
         res = {}
