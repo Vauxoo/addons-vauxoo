@@ -3,7 +3,7 @@
     <data noupdate="1">
         <record id="l10n_mx_cfdi_pac_finkok_seq_0" model="ir.sequence">
             <field name="company_id" ref="base.main_company"/>
-            <field name="name">MX Sequence CFDI Finkok</field>
+            <field name="name">MX Sequence CFDI</field>
             <field name="active" eval="True"/>
             <field name="padding">0</field>
             <field name="number_next">1</field>
@@ -15,7 +15,7 @@
             <field name="company_id" ref="base.main_company"/>
             <field name="sequence_id" ref="l10n_mx_cfdi_pac_finkok_seq_0"/>
             <field name="approval_number">12345</field>
-            <field name="serie">MXCFDIFINKOK</field>
+            <field name="serie">MXCFDI</field>
             <field name="approval_year" eval="time.strftime('%Y')"/>
             <field name="number_start">1</field>
             <field name="number_end">9999</field>
@@ -25,7 +25,7 @@
         <record id="l10n_mx_cfdi_pac_finkok_journal_0" model="account.journal">
             <field name="company_id" ref="base.main_company"/>
             <field name="sequence_id" ref="l10n_mx_cfdi_pac_finkok_seq_0"/>
-            <field name="name">MX CFDI FINKOK Journal</field>
+            <field name="name">MX CFDI Journal</field>
             <field name="code">CFDIF</field>
             <field name="type">sale</field>
         </record>
