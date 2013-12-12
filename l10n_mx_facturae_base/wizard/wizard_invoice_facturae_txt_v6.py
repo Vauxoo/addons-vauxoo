@@ -101,11 +101,10 @@ class wizard_invoice_facturae_txt_v6(osv.TransientModel):
     }
 
     def get_invoices_date(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
         invoice_ids = []
         data = self.read(cr, uid, ids, context=context)[0]
-        # invoice_ids.append(19)
-        if not context:
-            context = {}
         invoice_obj = self.pool.get('account.invoice')
         if data['invoice_ids']:
             invoice_ids = []
@@ -140,10 +139,10 @@ class wizard_invoice_facturae_txt_v6(osv.TransientModel):
         }
 
     def get_invoices_month(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
         invoice_ids = []
         data = self.read(cr, uid, ids, context=context)[0]
-        if not context:
-            context = {}
         invoice_obj = self.pool.get('account.invoice')
         invoice_ids = data['invoice_ids']
         year = data['year']
@@ -179,10 +178,10 @@ class wizard_invoice_facturae_txt_v6(osv.TransientModel):
         }
 
     def create_facturae_txt(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
         obj_model = self.pool.get('ir.model.data')
         data = self.read(cr, uid, ids, context=context)[0]
-        if not context:
-            context = {}
         invoice_obj = self.pool.get('account.invoice')
         invoice_ids = data['invoice_ids']
         if invoice_ids:

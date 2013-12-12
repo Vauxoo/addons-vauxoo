@@ -49,8 +49,8 @@ _fields = {
 # end_fields = {}
 
 
-def _create_facturae_file(self, cr, uid, data, context={}):
-    if not context:
+def _create_facturae_file(self, cr, uid, data, context=None):
+    if context is None:
         context = {}
     context.update({'date': data['form']['date']})
     pool = pooler.get_pool(cr.dbname)
