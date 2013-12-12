@@ -112,7 +112,7 @@ class facturae_config_settings(osv.osv_memory):
                             'report_template': values.get('temp_report_id')},
                             context=context)
             report_company_obj.report_multicompany_create(
-                cr, uid, confg_data.company_id.id, values.get('temp_report_id'), context=context)
+                cr, uid, values.get('temp_report_id'), context=context)
         return confg_id
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
