@@ -621,8 +621,6 @@ class account_invoice(osv.Model):
         """
         @param data_dict : Dictionary with data from invoice
         """
-        if context is None:
-            context = {}
         key_order = [
             'Emisor',
             'Receptor',
