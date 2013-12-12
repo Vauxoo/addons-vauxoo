@@ -75,7 +75,6 @@ class report_multicompany(osv.Model):
         '''
         if context is None:
             context={}
-        import pdb;pdb.set_trace()
         actions_obj = self.pool.get('ir.actions.report.xml')
         ir_model_obj = self.pool.get('ir.model')
         model_id = False
