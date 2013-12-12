@@ -41,10 +41,10 @@ from l10n_mx_facturae_lib import facturae_lib
 
 all_paths = tools.config["addons_path"].split(",")
 for my_path in all_paths:
-    if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae', 'depends_app')):
-        openssl_path = my_path and os.path.join(my_path, 'l10n_mx_facturae', 'depends_app', u'openssl_win') or ''
-        xsltproc_path = my_path and os.path.join(my_path, 'l10n_mx_facturae', 'depends_app', u'xsltproc_win') or ''
-        xmlstarlet_path = my_path and os.path.join(my_path, 'l10n_mx_facturae', 'depends_app', u'xmlstarlet_win') or ''
+    if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae_base', 'depends_app')):
+        openssl_path = my_path and os.path.join(my_path, 'l10n_mx_facturae_base', 'depends_app', u'openssl_win') or ''
+        xsltproc_path = my_path and os.path.join(my_path, 'l10n_mx_facturae_base', 'depends_app', u'xsltproc_win') or ''
+        xmlstarlet_path = my_path and os.path.join(my_path, 'l10n_mx_facturae_base', 'depends_app', u'xmlstarlet_win') or ''
 
 def exec_command_pipe(*args):
     # Agregue esta funcion, ya que con la nueva funcion original, de tools no funciona

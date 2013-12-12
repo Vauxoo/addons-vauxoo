@@ -280,14 +280,13 @@ class ir_attachment_facturae_mx(osv.Model):
             #~ report = invoice_obj.create_report(cr, uid, [invoice.id],
                                                #~ "account.invoice.facturae.webkit",
                                                #~ fname)
-
-            actions_obj = self.pool.get('ir.actions.report.xml')
-            report_ids = actions_obj.search(
-                cr, uid, [('model', '=', 'account.invoice'),('active', '=', True), ('report_type', '=', 'webkit'), 
-                          ('company_id','=',invoice.company_id.id)],order='sequence', limit=1) or False
+                        
+            report_multicompany_obj = self.pool.get('report.multicompany')
+            report_ids = report_multicompany_obj.search(
+                cr, uid, [('model', '=', 'account.invoice'), ('company_id','=',invoice.company_id.id)], order='sequence', limit=1) or False
 
             if report_ids:
-                report_name = actions_obj.browse(cr, uid, report_ids[0]).report_name
+                report_name = report_multicompany_obj.browse(cr, uid, report_ids[0]).report_name
                 if report_name:
                     report = invoice_obj.create_report(
                         cr, SUPERUSER_ID, [invoice.id],
@@ -381,13 +380,12 @@ class ir_attachment_facturae_mx(osv.Model):
                     mail_compose_message_pool = self.pool.get(
                         'mail.compose.message')
                     email_pool = self.pool.get('email.template')
-
-                    actions_obj = self.pool.get('ir.actions.report.xml')
-                    report_ids = actions_obj.search(
-                        cr, uid, [('model', '=', 'account.invoice'),('active', '=', True), ('report_type', '=', 'webkit'), 
-                                  ('company_id','=',invoice.company_id.id)],order='sequence', limit=1) or False
+                                        
+                    report_multicompany_obj = self.pool.get('report.multicompany')
+                    report_ids = report_multicompany_obj.search(
+                                    cr, uid, [('model', '=', 'account.invoice'), ('company_id','=',invoice.company_id.id)], order='sequence', limit=1) or False
                     if report_ids:
-                        report_name = actions_obj.browse(cr, uid, report_ids[0]).report_name
+                        report_name = report_multicompany_obj.browse(cr, uid, report_ids[0]).report_name
                         if report_name:
                             tmp_id = email_pool.search(
                                 cr, uid, [(
@@ -515,67 +513,61 @@ class ir_attachment_facturae_mx(osv.Model):
         return self.write(cr, uid, ids, {'state': 'done'}, context=context)
 
     def signal_cancel(self, cr, uid, ids, context=None):
-        try:
-            invoice_obj = self.pool.get('account.invoice')
-            attach_obj = self.pool.get('ir.attachment')
-            wf_service = netsvc.LocalService("workflow")
-            inv_cancel_status = False
-            for ir_attach_facturae_mx_id in self.browse(cr, uid, ids, context=context):
-                msj = ''
-                invoice = ir_attach_facturae_mx_id.invoice_id
-                if 'cfdi' in ir_attach_facturae_mx_id.type:
-                    if not ir_attach_facturae_mx_id.state in ['cancel', 'draft', 'confirmed']:
-                        type__fc = self.get_driver_fc_cancel()
-                        if ir_attach_facturae_mx_id.type in type__fc.keys():
-                            cfdi_cancel = res = type__fc[ir_attach_facturae_mx_id.type](
-                                cr, uid, [
-                                    ir_attach_facturae_mx_id.id], context=context
-                            )
-                            msj += tools.ustr(cfdi_cancel.get('message', False))
-                            # TODO, validate cfdi_cancel True or False
-                            if cfdi_cancel.get('status', True):
-                                wf_service.trg_validate(
-                                    uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
-                                if invoice.state != 'cancel':
-                                    inv_cancel_status = invoice_obj.action_cancel(
-                                        cr, uid, [invoice.id], context=context)
-                                else:
-                                    inv_cancel_status = True
-                        else:
-                            msj += _("Unknow cfdi driver for %s" % (ir_attach_facturae_mx_id.type))
+        invoice_obj = self.pool.get('account.invoice')
+        attach_obj = self.pool.get('ir.attachment')
+        wf_service = netsvc.LocalService("workflow")
+        inv_cancel_status = False
+        for ir_attach_facturae_mx_id in self.browse(cr, uid, ids, context=context):
+            msj = ''
+            invoice = ir_attach_facturae_mx_id.invoice_id
+            if 'cfdi' in ir_attach_facturae_mx_id.type:
+                if not ir_attach_facturae_mx_id.state in ['cancel', 'draft', 'confirmed']:
+                    type__fc = self.get_driver_fc_cancel()
+                    if ir_attach_facturae_mx_id.type in type__fc.keys():
+                        cfdi_cancel = res = type__fc[ir_attach_facturae_mx_id.type](
+                            cr, uid, [
+                                ir_attach_facturae_mx_id.id], context=context
+                        )
+                        msj += tools.ustr(cfdi_cancel.get('message', False))
+                        # TODO, validate cfdi_cancel True or False
+                        if cfdi_cancel.get('status', True):
+                            wf_service.trg_validate(
+                                uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
+                            if invoice.state != 'cancel':
+                                inv_cancel_status = invoice_obj.action_cancel(
+                                    cr, uid, [invoice.id], context=context)
+                            else:
+                                inv_cancel_status = True
                     else:
-                        wf_service.trg_validate(
-                            uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
-                        if invoice.state != 'cancel':
-                            inv_cancel_status = invoice_obj.action_cancel(
-                                cr, uid, [invoice.id], context=context)
-                        else:
-                            inv_cancel_status = True
-                        msj = 'cancelled'
-                elif 'cfd' in ir_attach_facturae_mx_id.type and not 'cfdi' in ir_attach_facturae_mx_id.type:
-                    wf_service.trg_validate(
-                                    uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
-                    inv_cancel_status = invoice_obj.action_cancel(cr, uid, [invoice.id], context=context)
-                    msj = 'cancelled'
-                    inv_cancel_status = True
-                elif 'cbb' in ir_attach_facturae_mx_id.type:
-                    wf_service.trg_validate(
-                                    uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
-                    inv_cancel_status = invoice_obj.action_cancel(cr, uid, [invoice.id], context=context)
-                    msj = 'cancelled'
-                    inv_cancel_status = True
+                        msj += _("Unknow cfdi driver for %s" % (ir_attach_facturae_mx_id.type))
                 else:
-                    raise osv.except_osv(_("Type Electronic Invoice Unknow!"), _(
-                        "The Type Electronic Invoice:" + (ir_attach_facturae_mx_id.type or '')))
-                self.write(cr, uid, ids, {
-                           'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                           'msj': msj,
-                           })
-        except Exception, e:
-            error = tools.ustr( traceback.format_exc() )
-            self.write(cr, uid, ids, {'msj': error}, context=context)
-            _logger.error( error )
-            return False
+                    wf_service.trg_validate(
+                        uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
+                    if invoice.state != 'cancel':
+                        inv_cancel_status = invoice_obj.action_cancel(
+                            cr, uid, [invoice.id], context=context)
+                    else:
+                        inv_cancel_status = True
+                    msj = 'cancelled'
+            elif 'cfd' in ir_attach_facturae_mx_id.type and not 'cfdi' in ir_attach_facturae_mx_id.type:
+                wf_service.trg_validate(
+                                uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
+                inv_cancel_status = invoice_obj.action_cancel(cr, uid, [invoice.id], context=context)
+                msj = 'cancelled'
+                inv_cancel_status = True
+            elif 'cbb' in ir_attach_facturae_mx_id.type:
+                wf_service.trg_validate(
+                                uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
+                inv_cancel_status = invoice_obj.action_cancel(cr, uid, [invoice.id], context=context)
+                msj = 'cancelled'
+                inv_cancel_status = True
+            else:
+                raise osv.except_osv(_("Type Electronic Invoice Unknow!"), _(
+                    "The Type Electronic Invoice:" + (ir_attach_facturae_mx_id.type or '')))
+            self.write(cr, uid, ids, {
+                       'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                       'msj': msj,
+                       })
         return inv_cancel_status
 
     def action_cancel(self, cr, uid, ids, context=None):

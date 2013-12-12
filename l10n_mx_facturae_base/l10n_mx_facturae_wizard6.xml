@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <wizard id="wizard_invoice_facturae_xml"
+            name="wizard.invoice.facturae.xml"
+            string="Factura Electronica XML"
+            model="account.invoice"
+            groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"
+        />
+        
+        <wizard id="wizard_invoice_facturae_txt"
+            name="wizard.invoice.facturae.txt"
+            string="Factura Electronica TXT"
+            model="account.invoice"
+            menu="False"
+        />
+        <menuitem id="menu_wizard_invoice_facturae_txt"
+            name="Factura-E Reporte Mensual TXT" parent="account.menu_finance_receivables"
+            action="wizard_invoice_facturae_txt"
+            type="wizard"
+            sequence="150"
+            groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"
+        />
+        
+    </data>
+</openerp>

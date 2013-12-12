@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Antonio (.) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:divisas="http://www.sat.gob.mx/divisas" targetNamespace="http://www.sat.gob.mx/divisas" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="Divisas">
+		<xs:annotation>
+			<xs:documentation>Nodo opcional para centros cambiarios y las casas de cambio para identificar las operaciones de compra y  venta de divisas que realizan, haciendo mención expresa de que los comprobantes se expiden por la “compra”, o bien, por la “venta” de divisas. Conforme a la RMF 2.4.20. Para los efectos de los artículos 29-A del CFF y 38, último párrafo de su Reglamento</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="version" type="xs:string" use="required" fixed="1.0">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para expresar la versión del complemento de divisas</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="tipoOperacion" use="required">
+				<xs:annotation>
+					<xs:documentation>Elemento para definir el tipo de operación realizada. venta o compra de divisas</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="compra"/>
+						<xs:enumeration value="venta"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

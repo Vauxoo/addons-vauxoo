@@ -28,6 +28,7 @@
         'account',
         'email_template',
         'email_template_multicompany',
+        'report_multicompany',
     ],
     "author": "Vauxoo",
     "description" : """

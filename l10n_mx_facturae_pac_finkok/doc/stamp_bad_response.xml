@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<senv:Envelope xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing" xmlns:tns="wis.soap.stamp" xmlns:plink="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:senc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s1="acuse.recepcion.cfdi" xmlns:s0="incidencia" xmlns:s12env="http://www.w3.org/2003/05/soap-envelope/" xmlns:s2="queryresult" xmlns:s12enc="http://www.w3.org/2003/05/soap-encoding/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:senv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<senv:Body>
+		<tns:stampResponse>
+		<tns:stampResult>
+			<s1:xml></s1:xml>
+			<s1:Incidencias>
+				<s0:Incidencia>
+					<MensajeIncidencia>La estructura del comprobante recibido no es v\u00e1lida.</MensajeIncidencia>
+					<NoCertificadoPac>AAA010101AAA</NoCertificadoPac>
+					<CodigoError>504</CodigoError>
+					<RfcEmisor>AAD990814BP7</RfcEmisor>
+					<IdIncidencia>e929f95a-6636-4f6a-b23b-93ddd3966605</IdIncidencia>
+					<Uuid>e736222a-55d7-44f0-80e1-df399820d2bc</Uuid>
+					<WorkProcessId>cf944b8b-c3a5-4345-a330-16b1c0d96398</WorkProcessId>
+					<FechaRegistro>2013-05-26T21:13:08.0948029</FechaRegistro>
+				</s0:Incidencia>
+				<s0:Incidencia>
+					<MensajeIncidencia>Metadatos no correspondientes al CFDI.</MensajeIncidencia>
+					<NoCertificadoPac>AAA010101AAA</NoCertificadoPac>
+					<CodigoError>505</CodigoError>
+					<RfcEmisor>AAD990814BP7</RfcEmisor>
+					<IdIncidencia>fca72741-5e6c-45f9-956a-d248692c581c</IdIncidencia>
+					<Uuid>e736222a-55d7-44f0-80e1-df399820d2bc</Uuid>
+					<WorkProcessId>cf944b8b-c3a5-4345-a330-16b1c0d96398</WorkProcessId>
+					<FechaRegistro>2013-05-26T21:13:08.0948029</FechaRegistro>
+				</s0:Incidencia>
+			</s1:Incidencias>
+		</tns:stampResult>
+	</tns:stampResponse>
+	</senv:Body>
+</senv:Envelope>
+
