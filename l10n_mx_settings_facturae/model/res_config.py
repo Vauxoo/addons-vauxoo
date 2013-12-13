@@ -86,14 +86,14 @@ class facturae_config_settings(osv.osv_memory):
         mail_server_obj = self.pool.get('ir.mail_server')
         mail_server_id = mail_server_obj.search(
             cr, uid, [('company_id', '=', company_id),
-                      ('active', '=', True)], order='sequence', limit=1)
+                      ('active', '=', True)], limit=1)
         return {'mail_server_id': mail_server_id or False}
 
     def get_default_temp_report_id(self, cr, uid, fields, context=None):
         report_id = False
         temp_report_obj = self.pool.get('report.multicompany')
         temp_report_ids = temp_report_obj.search(
-            cr, uid, [('model', '=', 'account.invoice')], limit=1, order='sequence asc')
+            cr, uid, [('model', '=', 'account.invoice')], limit=1)
         if temp_report_ids:
             report_id = temp_report_obj.browse(
                 cr, uid, temp_report_ids)[0].report_id.id
