@@ -29,7 +29,7 @@ from openerp.osv import osv, fields
 class report_multicompany(osv.Model):
 
     _name = 'report.multicompany'
-    _order = 'company_id,sequence, model'
+    _order = 'sequence, id desc'
 
     _columns = {
         'company_id': fields.many2one('res.company', 'Company',),
@@ -65,7 +65,7 @@ class report_multicompany(osv.Model):
             model_id = model_ids and model_ids[0] or False
         return {'value': {'model': model_id}}
 
-    def report_multicompany_create(self, cr, uid, report_id, sequence=10, context=None):
+    def report_multicompany_create(self, cr, uid, report_id, sequence=False, context=None):
         '''
             This function adds or updates a record in a report associated
             with a company in which if the record exists and performs
@@ -75,15 +75,19 @@ class report_multicompany(osv.Model):
         '''
         if context is None:
             context={}
+            
+        if sequence is False:
+            sequence=10
+            
         actions_obj = self.pool.get('ir.actions.report.xml')
         ir_model_obj = self.pool.get('ir.model')
         model_id = False
         report_data = actions_obj.browse(cr, uid, report_id)
         sequence_min_id = self.search(
-            cr, uid, [('model', '=', report_data.model)], limit=1, order='sequence asc') or False
+            cr, uid, [('model', '=', report_data.model)], limit=1) or False
         if sequence_min_id:
             sequence_min = self.browse(
-                cr, uid, sequence_min_id[0]).sequence - 1
+                cr, uid, sequence_min_id[0]).sequence - 10
         else:
             sequence_min = sequence
 
@@ -96,31 +100,10 @@ class report_multicompany(osv.Model):
                 cr, uid, [('model', '=', report_data.model)])
             model_id = model_ids and model_ids[0] or False
             
-            if context.get('install', False):
-                data_create = {'company_id': False,
-                               'report_id': report_id,
-                               'report_name': report_data.report_name,
-                               'sequence': sequence_min,
-                               'model': model_id}
-            else:
-                data_create = {
-                               'report_id': report_id,
-                               'report_name': report_data.report_name,
-                               'sequence': sequence_min,
-                               'model': model_id}
+            data_create = {
+                           'report_id': report_id,
+                           'report_name': report_data.report_name,
+                           'sequence': sequence_min,
+                           'model': model_id}
             self.create(cr, uid, data_create)
         return True
-
-    def create(self, cr, uid, vals, context=None):
-        '''
-            This function create records of report assigning the
-            sequence minimal and subtract one.
-        '''
-        sequence_min = 10
-        sequence_min_id = self.search(
-            cr, uid, [('model', '=', vals.get('model'))], limit=1, order='sequence asc') or False
-        if sequence_min_id:
-            sequence_min = self.browse(
-                cr, uid, sequence_min_id[0]).sequence - 1
-        vals.update({'sequence': sequence_min})
-        return super(report_multicompany, self).create(cr, uid, vals, context)
