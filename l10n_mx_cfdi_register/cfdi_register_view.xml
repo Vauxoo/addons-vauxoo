@@ -3,7 +3,7 @@
     <data>
         <record id="cfdi_register_form_view_readonly" model="ir.ui.view">
                     <field name="name">Contact form</field>
-                    <field name="model">create.instance.openerp</field>
+                    <field name="model">cfdi.register</field>
                     <field name="priority">400</field>
                     <field name="arch" type="xml">
                         <form string="Contact form" version="7.0" class="bs3 bs3-form-bg bs3-footer">
@@ -85,7 +85,7 @@
 
 <record id="instance_create_form_view_readonly" model="ir.ui.view">
             <field name="name">Contact form</field>
-            <field name="model">create.instance.openerp</field>
+            <field name="model">cfdi.register</field>
             <field name="arch" type="xml">
                 <form string="Contact form" version="7.0" class="bs3 bs3-form-bg bs3-footer">
                 <section class="bgvauxoo">
@@ -209,7 +209,7 @@
         </record>
 <record id="instance_create_form_view" model="ir.ui.view">
             <field name="name">Contact form</field>
-            <field name="model">create.instance.openerp</field>
+            <field name="model">cfdi.register</field>
             <field name="priority">200</field>
             <field name="arch" type="xml">
                 <form string="Contact form" version="7.0" class="bs3 bs3-form-bg bs3-footer">
@@ -357,7 +357,7 @@
 
         <record id="action_contpaq_openerp_create_intance" model="ir.actions.act_window">
             <field name="name">Create your DataBase</field>
-            <field name="res_model">create.instance.openerp</field>
+            <field name="res_model">cfdi.register</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="instance_create_form_view"/>
             <field name="target">inline</field>
@@ -365,7 +365,7 @@
         </record>
         <record id="action_contpaq_openerp_cfdi_register" model="ir.actions.act_window">
             <field name="name">Create your DataBase</field>
-            <field name="res_model">create.instance.openerp</field>
+            <field name="res_model">cfdi.register</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="cfdi_register_form_view_readonly"/>
             <field name="target">inline</field>
