@@ -78,7 +78,7 @@ class ir_attachment_facturae_mx(osv.Model):
         types = super(ir_attachment_facturae_mx, self)._get_type(
             cr, uid, ids, context=context)
         types.extend([
-            ('cfdi32_pac_finkok', 'CFDI 3.2 Finkok'),
+            ('cfdi32_pac_finkok', 'CFDI 3.2'),
         ])
         return types
     
@@ -115,7 +115,7 @@ class ir_attachment_facturae_mx(osv.Model):
             status = False
             invoice = ir_attachment_facturae_mx_id.invoice_id
             pac_params_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'pac_finkok_cancelar'),
+                ('method_type', '=', 'pac_cancelar'),
                 ('company_id', '=', invoice.company_emitter_id.id),
                 ('active', '=', True),
             ], limit=1, context=context)
@@ -198,7 +198,7 @@ class ir_attachment_facturae_mx(osv.Model):
             folio_fiscal = ''
             cfdi_xml = False
             pac_params_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'pac_finkok_firmar'), (
+                ('method_type', '=', 'pac_firmar'), (
                     'company_id', '=', invoice.company_emitter_id.id), (
                         'active', '=', True)], limit=1, context=context)
             if pac_params_ids:

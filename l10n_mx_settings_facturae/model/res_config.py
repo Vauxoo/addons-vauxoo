@@ -78,20 +78,26 @@ class facturae_config_settings(osv.osv_memory):
         data = dat and dat[0] or False
         if data:
             email_tmp_id = email_obj.browse(cr, uid, data)
-        return {'email_tmp_id': email_tmp_id and email_tmp_id.id or False,}
-    
+        return {'email_tmp_id': email_tmp_id and email_tmp_id.id or False, }
+
     def get_default_mail_server_id(self, cr, uid, fields, context=None):
-        company_id = self.pool.get('res.users')._get_company(cr, uid, context=context)
+        company_id = self.pool.get(
+            'res.users')._get_company(cr, uid, context=context)
         mail_server_obj = self.pool.get('ir.mail_server')
-        mail_server_id = mail_server_obj.search(cr, uid, [('company_id', '=', company_id),
-            ('active', '=', True)], order = 'sequence', limit = 1)
+        mail_server_id = mail_server_obj.search(
+            cr, uid, [('company_id', '=', company_id),
+                      ('active', '=', True)], limit=1)
         return {'mail_server_id': mail_server_id or False}
 
     def get_default_temp_report_id(self, cr, uid, fields, context=None):
-        temp_report_obj = self.pool.get('ir.actions.report.xml')
-        temp_report_id = temp_report_obj.search(cr, uid, [('report_type', '=', 'webkit'),
-                ('model', '=', 'account.invoice')], limit = 1)
-        return {'temp_report_id': temp_report_id or False}
+        report_id = False
+        temp_report_obj = self.pool.get('report.multicompany')
+        temp_report_ids = temp_report_obj.search(
+            cr, uid, [('model', '=', 'account.invoice')], limit=1)
+        if temp_report_ids:
+            report_id = temp_report_obj.browse(
+                cr, uid, temp_report_ids)[0].report_id.id
+        return {'temp_report_id': report_id or False}
 
     def create(self, cr, uid, values, context=None):
         confg_id = super(facturae_config_settings, self).create(
@@ -105,7 +111,8 @@ class facturae_config_settings(osv.osv_memory):
                             'mail_server_id': confg_data.mail_server_id.id,
                             'report_template': values.get('temp_report_id')},
                             context=context)
-            report_company_obj.report_multicompany_create(cr, uid, confg_data.company_id.id, values.get('temp_report_id'), sequence=0, context=context)
+            report_company_obj.report_multicompany_create(
+                cr, uid, values.get('temp_report_id'), context=context)
         return confg_id
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
