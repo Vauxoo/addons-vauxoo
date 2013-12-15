@@ -21,7 +21,7 @@
 
 
 {
-    'name': 'Create OpenERP Instance OnDemmand Page',
+    'name': 'Register CFDI Information',
     'version': '0.1',
     'category': 'Vauxoo Ondemmand',
     'complexity': 'easy',
@@ -43,14 +43,10 @@ Client Pay (Gain Positive Money Balance) > Client gain access to View to upload
     'depends': [
                 'account_analytic_analysis', #Each customer will have one and only one Contract one time he pay. 
                 'project_issue', #Each contract will have an issue per database. 
-                'portal_anonymous', #Necesary to marketing Stuff.
                 'account', #Necesary to compute balance.
-                'portal',
-                'portal_news',
-                'contpaq_openerp_vauxoo',
                 ],
     'data': [
-        'create_openerp_view.xml',
+        'cfdi_register_view.xml',
     ],
     'test': [
         #'test/contact_form.yml',

@@ -292,7 +292,7 @@ class cfdi_register(osv.TransientModel):
             r = super(cfdi_register,self).create(cr,SUPERUSER_ID,values,context=context)
             cr.commit()
             cr.execute('''
-                       UPDATE create_instance_openerp
+                       UPDATE cfdi_register
                        SET create_uid=%d
                        WHERE id=%d
                        ''' % (uid, r))
@@ -384,6 +384,39 @@ class cfdi_register(osv.TransientModel):
             raise osv.except_osv(_('Error'),
                                  _("You need accept the terms and conditions to continue"))
 
+        wz_obj = self.read(cr, SUPERUSER_ID, ids[0], [], context=context)
+        wz_obj.pop('partner_id', 'NO')
+        wz_obj.update({'name':wz_obj.get('company_name')})
+        wz_obj.update({'country_id':wz_obj.get('country_id')[0]})
+        wz_obj.update({'state_id':wz_obj.get('state_id')[0]})
+        user_obj = self.pool.get('res.users')
+        partner_obj = self.pool.get('res.partner')
+        user_brw = user_obj.browse(cr, SUPERUSER_ID, SUPERUSER_ID, context=context)
+        company_id = user_brw.company_id.id
+        partner_id = user_brw.company_id.partner_id.id
+        menu_obj = self.pool.get('ir.ui.menu')
+        data_obj = self.pool.get('ir.model.data')
+        company_obj = self.pool.get('res.company')
+        menu_id = data_obj.get_object_reference(cr, SUPERUSER_ID,
+                'l10n_mx_cfdi_register', 'company_cfdi_register')
+        group_id = data_obj.get_object_reference(cr, SUPERUSER_ID,
+                'base', 'group_no_one')
+        
+        partner_obj.write(cr, SUPERUSER_ID, partner_id,
+                          {
+                           'vat':wz_obj.get('vat') ,
+                           'regimen_fiscal_id':1,
+                           'type':'invoice',
+                              }  
+                         )
+        wz_obj.update({'address_invoice_parent_company_id':partner_id})
+        company_obj.write(cr, SUPERUSER_ID, company_id,
+                wz_obj
+                         )
+        menu_obj.write(cr, SUPERUSER_ID, menu_id[1],
+                        {'groups_id':[(6, 0, [group_id[1]])]},
+                        context=context)
+
         return {
                 'type': 'ir.actions.act_window',
                 'res_id': ids[0],
@@ -395,9 +428,26 @@ class cfdi_register(osv.TransientModel):
                 }
 
     def storage_cfdi(self, cr, uid, ids, context=None):
-        """ Dummy Function """
+        wz_obj = self.browse(cr, SUPERUSER_ID, ids[0], context=context)
+        certificate_obj = self.pool.get('res.company.facturae.certificate')
+        res = certificate_obj.onchange_certificate_info(cr, SUPERUSER_ID, ids,
+                                                        wz_obj.certificate_file,                                  
+                                                        wz_obj.certificate_key_file,                                  
+                                                        wz_obj.password_sat,                                  
+                                                        context=context)
+        res = res.get('value')
+        res.update({
+            'certificate_file':wz_obj.certificate_file, 
+            'certificate_key_file':wz_obj.certificate_key_file, 
+            'certificate_password':wz_obj.password_sat, 
+            
+            })
+        certificate_obj.create(cr, SUPERUSER_ID, res, context=context)
 
-        return True
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'reload',
+        }
     def _needaction_domain_get(self, cr, uid, context=None):
         """
         This model doesn't need the needactions mechanism inherited from

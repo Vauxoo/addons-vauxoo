@@ -83,7 +83,7 @@
                     </field>
                 </record>
 
-<record id="instance_create_form_view_readonly" model="ir.ui.view">
+<record id="cfdi_create_form_view_readonly" model="ir.ui.view">
             <field name="name">Contact form</field>
             <field name="model">cfdi.register</field>
             <field name="arch" type="xml">
@@ -207,7 +207,7 @@
                 </form>
             </field>
         </record>
-<record id="instance_create_form_view" model="ir.ui.view">
+<record id="cfdi_create_form_view" model="ir.ui.view">
             <field name="name">Contact form</field>
             <field name="model">cfdi.register</field>
             <field name="priority">200</field>
@@ -355,40 +355,26 @@
             </field>
         </record>
 
-        <record id="action_contpaq_openerp_create_intance" model="ir.actions.act_window">
+        <record id="action_openerp_cfdi_register" model="ir.actions.act_window">
             <field name="name">Create your DataBase</field>
             <field name="res_model">cfdi.register</field>
             <field name="view_mode">form</field>
-            <field name="view_id" ref="instance_create_form_view"/>
-            <field name="target">inline</field>
-            <field name="context">{'fromview':True}</field>
-        </record>
-        <record id="action_contpaq_openerp_cfdi_register" model="ir.actions.act_window">
-            <field name="name">Create your DataBase</field>
-            <field name="res_model">cfdi.register</field>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="cfdi_register_form_view_readonly"/>
+            <field name="view_id" ref="cfdi_create_form_view"/>
             <field name="target">inline</field>
             <field name="context">{'fromview':True}</field>
         </record>
 
-        <!-- attach it to the portal menu -->
-        <menuitem name="Create your Instance"
-                  id="portal_company_create_db"
-                  parent="portal.portal_company"
-                  action="action_contpaq_openerp_create_intance"
-                  sequence="40"/>
         <menuitem name="CFDI Register"
-                  id="portal_company_cfdi_register"
+                  id="company_cfdi_register"
                   sequence="1"/>
         <menuitem name="CFDI"
-                  id="portal_company_cfdi_register2"
-                  parent="portal_company_cfdi_register"
+                  id="company_cfdi_register2"
+                  parent="company_cfdi_register"
                   sequence="40"/>
         <menuitem name="CFDI"
-                  id="portal_company_cfdi_register3"
-                  parent="portal_company_cfdi_register2"
-                  action="action_contpaq_openerp_create_intance"
+                  id="company_cfdi_register3"
+                  parent="company_cfdi_register2"
+                  action="action_openerp_cfdi_register"
                   sequence="40"/>
     </data>
 </openerp>
