@@ -78,13 +78,13 @@ class cfdi_register(osv.TransientModel):
             <td style="right:12px; position:absolute;">'''+time.strftime('%d-%m-%Y')+u'''</td>                           
                 </tr>                                                                               
                 <tr style="height:100px;">                                                          
-        <td style="border-top: 30px solid transparent;" >'''+admin_brw.company_id.name+u'''</td>                                                            
+        <td style="border-top: 30px solid transparent;" >Vauxoo SA de CV</td>                                                            
                 </tr>                                                                               
                 <tr>                                                                                
                     <td style="text-align:center; max-width: 100%; word-wrap: break-word; 
                         ">Asunto: Manifestación de Conocimiento y                 
                         Autorización de entrega de CFDI para que                                    
-                        '''+admin_brw.company_id.name+u''', entregue al SAT, copia de                                       
+                        Vauxoo SA de CV, entregue al SAT, copia de                                       
                         los comprobantes certificados. </td>                                        
                     </tr>                                                                           
                 <tr style="margin-bottom: 100px;">                                                  
@@ -99,13 +99,13 @@ class cfdi_register(osv.TransientModel):
                     </tr>                                                                           
                 <tr >                                                                               
                     <td style=" border-top: 20px solid transparent;text-align:center; max-width: 80%; word-wrap: break-word;">
-                        1. Haré uso de los servicios de '''+admin_brw.company_id.name+u'''
+                        1. Haré uso de los servicios de Vauxoo SA de CV
                         para la certificación de Comprobantes Fiscales Digitales a través de Internet.                                             
             </td>                                                                                   
                     </tr>                                                                           
                 <tr >                                                                               
                     <td style=" border-bottom: 30px solid transparent;border-top: 10px solid transparent;text-align:center; max-width: 80%; word-wrap: break-word;">
-                         2. Tengo conocimiento y autorizo a '''+admin_brw.company_id.name+u''' para que entregue al        
+                         2. Tengo conocimiento y autorizo a Vauxoo SA de CV para que entregue al        
                          Servicio de                                                                
                                                                                                     
                          Administración Tributaria, copia de los comprobantes fiscales que haya     
@@ -495,13 +495,13 @@ class cfdi_register(osv.TransientModel):
             <td style="right:12px; position:absolute;">'''+time.strftime('%d-%m-%Y')+u'''</td>                           
                 </tr>                                                                               
                 <tr style="height:100px;">                                                          
-        <td style="border-top: 30px solid transparent;" >'''+admin_brw.company_id.name+u'''</td>                                                            
+        <td style="border-top: 30px solid transparent;" >Vauxoo SA de CV</td>                                                            
                 </tr>                                                                               
                 <tr>                                                                                
                     <td style="text-align:center; max-width: 100%; word-wrap: break-word;                     
                         position:absolute;">Asunto: Manifestación de Conocimiento y                 
                         Autorización de entrega de CFDI para que                                    
-                        '''+admin_brw.company_id.name+u''', entregue al SAT, copia de                                       
+                        Vauxoo SA de CV, entregue al SAT, copia de                                       
                         los comprobantes certificados. </td>                                        
                     </tr>                                                                           
                 <tr style="margin-bottom: 100px;">                                                  
@@ -515,13 +515,13 @@ class cfdi_register(osv.TransientModel):
                     </tr>                                                                           
                 <tr >                                                                               
                     <td style=" border-top: 20px solid transparent;text-align:center; max-width: 80%; word-wrap: break-word;">
-                        1. Haré uso de los servicios de '''+admin_brw.company_id.name+u'''
+                        1. Haré uso de los servicios de Vauxoo SA de CV
                         para la certificación de Comprobantes Fiscales Digitales a través de Internet.                                             
             </td>                                                                                   
                     </tr>                                                                           
                 <tr >                                                                               
                     <td style=" border-bottom: 30px solid transparent;border-top: 10px solid transparent;text-align:center; max-width: 80%; word-wrap: break-word;">
-                         2. Tengo conocimiento y autorizo a '''+admin_brw.company_id.name+u''' para que entregue al        
+                         2. Tengo conocimiento y autorizo a Vauxoo SA de CV para que entregue al        
                          Servicio de                                                                
                                                                                                     
                          Administración Tributaria, copia de los comprobantes fiscales que haya     
