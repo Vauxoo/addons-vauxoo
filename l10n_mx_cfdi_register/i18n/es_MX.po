@@ -1,0 +1,726 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* create_openerp_instance
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-11 17:13+0000\n"
+"PO-Revision-Date: 2013-11-11 17:13+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,serial_number:0
+msgid "Number of serie of the certificate"
+msgstr "Número de serie de el certificado"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,user_email:0
+msgid "User Email"
+msgstr "Email"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+msgid "General Information of Certificate"
+msgstr "Informacion General de el Certificado"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,progress:0
+msgid "Progress (%)"
+msgstr "Progreso (%)"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,message_unread:0
+msgid "Unread Messages"
+msgstr "Mensaje no leido"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,company_id:0
+msgid "Company"
+msgstr "Compañía"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,locality:0
+msgid "Locality"
+msgstr "Localidad"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,email_cc:0
+msgid "Watchers Emails"
+msgstr "Supervisor de correo Electronico"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,kanban_state:0
+msgid "A Issue's kanban state indicates special situations affecting it:\n"
+" * Normal is the default situation\n"
+" * Blocked indicates something is preventing the progress of this issue\n"
+" * Ready for next stage indicates the issue is ready to be pulled to the next stage"
+msgstr "A Issue's kanban state indicates special situations affecting it:\n"
+" * Normal is the default situation\n"
+" * Blocked indicates something is preventing the progress of this issue\n"
+" * Ready for next stage indicates the issue is ready to be pulled to the next stage"
+
+#. module: create_openerp_instance
+#: code:addons/create_openerp_instance/create_openerp.py:335
+#, python-format
+msgid "Serve Location"
+msgstr "Dirección"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+#: field:create.instance.openerp,serial_number:0
+msgid "Serial Number"
+msgstr "Número de Serial"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,day_open:0
+msgid "Days to Open"
+msgstr "Dias de apertura"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,date_end:0
+msgid "Date end of validity of the certificate"
+msgstr "Fecha final de validez de el certificado"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+msgid "Certificates DER FORMAT (Original)"
+msgstr "Certificados en Formato DER (Original)"
+
+#. module: create_openerp_instance
+#: selection:create.instance.openerp,priority:0
+msgid "Highest"
+msgstr "Mayor"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,inactivity_days:0
+msgid "Difference in days between last action and current date"
+msgstr "Diferencia en dias entre la ultima acción y el dia de hoy"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+#: help:create.instance.openerp,company_name:0
+msgid "Company Name"
+msgstr "Nombre de la Compañía"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,task_id:0
+msgid "Task"
+msgstr "Tarea"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,zip:0
+msgid "ZIP"
+msgstr "C.P."
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,phone:0
+#: help:create.instance.openerp,phone:0
+msgid "Phone Number"
+msgstr "Número de Telefono"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,message_ids:0
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,inactivity_days:0
+msgid "Days since last action"
+msgstr "Dias desde la ultima acción"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,project_id:0
+msgid "Project"
+msgstr "Proyecto"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+msgid "e.g. MXABC131106T1B"
+msgstr "Ej. MXABC131106T1B"
+
+#. module: create_openerp_instance
+#: selection:create.instance.openerp,state:0
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,channel_id:0
+msgid "Communication channel."
+msgstr "Canal de comunicación"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,message_unread:0
+msgid "If checked new messages require your attention."
+msgstr "If checked new messages require your attention."
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,term_conditions:0
+msgid "You need agree with the terms and condition to continue with the register for create your test instance"
+msgstr "Usted necesita estar de acuerdo con los terminos y condiciones para continuar con el registro y crear su instancia de pruebas"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,color:0
+msgid "Color Index"
+msgstr "Color Index"
+
+#. module: create_openerp_instance
+#: code:addons/create_openerp_instance/create_openerp.py:336
+#, python-format
+msgid "You have a request to join this user if you agree click on the following link"
+msgstr "You have a request to join this user if you agree click on the following link"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,date_action_next:0
+msgid "Next Action"
+msgstr "Siguiente Acción"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+msgid "Data Recorded"
+msgstr "Datos Registrados"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,message_summary:0
+msgid "Holds the Chatter summary (number of messages, ...). This summary is directly in html format in order to be inserted in kanban views."
+msgstr "Holds the Chatter summary (number of messages, ...). This summary is directly in html format in order to be inserted in kanban views."
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,date_deadline:0
+msgid "Deadline"
+msgstr "Fecha limite"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,date_closed:0
+msgid "Closed"
+msgstr "Cerrado"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,certificate_file_pem:0
+#: help:create.instance.openerp,certificate_key_file_pem:0
+msgid "This file is generated with the .cer file"
+msgstr "Este archivo es generado con el archivo .cer"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,priority:0
+msgid "Priority"
+msgstr "Prioridad"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,state_id:0
+msgid "State"
+msgstr "Estado"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+msgid ".cer File"
+msgstr "Archivo .cer"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,message_follower_ids:0
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,accept:0
+msgid "Select if you accept the terms and conditions to continue the register"
+msgstr "Seleccione si usted acepta los terminos y condiciones para continuar con su registro"
+
+#. module: create_openerp_instance
+#: code:addons/create_openerp_instance/create_openerp.py:335
+#, python-format
+msgid "Data Base"
+msgstr "Base de Datos"
+
+#. module: create_openerp_instance
+#: selection:create.instance.openerp,state:0
+msgid "New"
+msgstr "Nuevo"
+
+#. module: create_openerp_instance
+#: model:ir.actions.act_window,name:create_openerp_instance.action_contpaq_openerp_create_intance
+msgid "Create your DataBase"
+msgstr "Crea tu Base de Datos"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,email_from:0
+msgid "Email"
+msgstr "Correro Electronico"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,channel_id:0
+msgid "Channel"
+msgstr "Canal"
+
+#. module: create_openerp_instance
+#: selection:create.instance.openerp,priority:0
+msgid "Lowest"
+msgstr "Menor"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+msgid "CFDI Register"
+msgstr "Registro de CFDI"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,create_date:0
+msgid "Creation Date"
+msgstr "Fecha de Creación"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+msgid "Your Company name..."
+msgstr "Su nombre de compañía..."
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,city:0
+msgid "City of your company address"
+msgstr "Ciudad de la dirección de su compañía"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,password_sat:0
+msgid "Certificate Password"
+msgstr "Contraseña del certificado"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,stage_id:0
+msgid "Stage"
+msgstr "Etapa"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,certificate_file_pem:0
+msgid "Certificate File PEM"
+msgstr "Archivo del certificado PEM"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,password_sat:0
+#: help:create.instance.openerp,street:0
+msgid "Street of your company address"
+msgstr "Calle de la dirección de su compañía"
+
+#. module: create_openerp_instance
+#: code:addons/create_openerp_instance/create_openerp.py:352
+#, python-format
+msgid "You need a valid email account"
+msgstr "Usted necesita una cuenta de correo valida"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,vat:0
+msgid "RFC"
+msgstr "RFC"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,partner_id:0
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+msgid "Your name..."
+msgstr "Su nombre..."
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+msgid "Your city..."
+msgstr "Su ciudad..."
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+msgid "Contact form"
+msgstr "Formulario de Contacto"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,categ_ids:0
+msgid "Tags"
+msgstr "Etiquetas"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,progress:0
+msgid "Computed as: Time Spent / Total Time."
+msgstr "Metodo de Calculo: Tiempo consumido / Tiempo total."
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,name:0
+#: help:create.instance.openerp,name:0
+msgid "Contract Codes"
+msgstr "Código de Contrato"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+msgid "Your email..."
+msgstr "Su Email..."
+
+#. module: create_openerp_instance
+#: selection:create.instance.openerp,kanban_state:0
+msgid "Blocked"
+msgstr "Bloqueado"
+
+#. module: create_openerp_instance
+#: model:ir.ui.menu,name:create_openerp_instance.portal_company_create_db
+msgid "Create your Instance"
+msgstr "Cree su instancia"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,certificate_file:0
+msgid "The .cer file that was given by the SAT"
+msgstr "El archivo .cer que le fue entregado por el SAT"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,date_open:0
+msgid "Opened"
+msgstr "Abierto"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,certificate_key_file:0
+msgid "The .key file that was given by the SAT"
+msgstr "El archivo .key que le fue entragado por el SAT"
+
+#. module: create_openerp_instance
+#: selection:create.instance.openerp,state:0
+msgid "In Progress"
+msgstr "En progreso"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,description:0
+msgid "Private Note"
+msgstr "Nota Privada"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,email_cc:0
+msgid "These email addresses will be added to the CC field of all inbound and outbound emails for this record before being sent. Separate multiple email addresses with a comma"
+msgstr "Estas direcciones de correo seran agregadas al campo CC de todos los correos entrantes y
+salientes para este registro antes de ser enviados. Separe las direcciones de correo con una coma(,)"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,certificate_key_file:0
+#: field:create.instance.openerp,certificate_key_file_pem:0
+msgid "Certificate Key File"
+msgstr "Archivo Key del certificado"
+
+#. module: create_openerp_instance
+#: selection:create.instance.openerp,priority:0
+msgid "Low"
+msgstr "Bajo"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+msgid ".key File"
+msgstr "Archivo .key"
+
+#. module: create_openerp_instance
+#: selection:create.instance.openerp,state:0
+msgid "Pending"
+msgstr "Pendiente"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,state:0
+msgid "Status"
+msgstr "Estado"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+#: field:create.instance.openerp,term_conditions:0
+msgid "Terms and Conditions"
+msgstr "Terminos y Condiciones"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+msgid "Certificates PEM FORMAT (Transformed)"
+msgstr "Certificado en formato PEM (Transformado)"
+
+#. module: create_openerp_instance
+#: selection:create.instance.openerp,kanban_state:0
+#: selection:create.instance.openerp,priority:0
+msgid "Normal"
+msgstr "Normal"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,day_close:0
+msgid "Days to Close"
+msgstr "Fecha de cierre"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,message_is_follower:0
+msgid "Is a Follower"
+msgstr "Es un seguidor"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,state:0
+msgid "The status is set to 'Draft', when a case is created.                      If the case is in progress the status is set to 'Open'.                      When the case is over, the status is set to 'Done'.                      If the case needs to be reviewed then the status is                       set to 'Pending'."
+msgstr "The status is set to 'Draft', when a case is created.                      If the case is in progress the status is set to 'Open'.                      When the case is over, the status is set to 'Done'.                      If the case needs to be reviewed then the status is                       set to 'Pending'."
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,active:0
+msgid "Active"
+msgstr "Activo"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,state_id:0
+msgid "State of your company address"
+msgstr "Estado de la dirección de la su compañía"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,email_from:0
+msgid "Email to receive information"
+msgstr "Email para recibir Información"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,days_since_creation:0
+msgid "Difference in days between creation date and current date"
+msgstr "Difference in days between creation date and current date"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,process_ids:0
+msgid "Companies"
+msgstr "Compañias"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,message_summary:0
+msgid "Summary"
+msgstr "Resumen"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,date:0
+msgid "Date"
+msgstr "Fecha"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+msgid "Submit"
+msgstr "Submit"
+
+#. module: create_openerp_instance
+#: code:addons/create_openerp_instance/create_openerp.py:352
+#: code:addons/create_openerp_instance/create_openerp.py:355
+#, python-format
+msgid "Error"
+msgstr "Error"
+
+#. module: create_openerp_instance
+#: code:addons/create_openerp_instance/create_openerp.py:335
+#, python-format
+msgid "Merge Proposal"
+msgstr "Merge Proposal"
+
+#. module: create_openerp_instance
+#: code:addons/create_openerp_instance/create_openerp.py:338
+#, python-format
+msgid "If you do not agree ignore this email Contact with your administrator"
+msgstr "If you do not agree ignore this email Contact with your administrator"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,user_id:0
+msgid "Assigned to"
+msgstr "Assigned to"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,date_end:0
+msgid "Date End"
+msgstr "Fecha final"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,accept:0
+msgid "I accept the terms and conditions"
+msgstr "Acepto los terminos y condiciones"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+msgid "Your phone number..."
+msgstr "Su numero telefonico..."
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,version_id:0
+msgid "Version"
+msgstr "Version"
+
+#. module: create_openerp_instance
+#: selection:create.instance.openerp,state:0
+msgid "Done"
+msgstr "Listo"
+
+#. module: create_openerp_instance
+#: code:addons/create_openerp_instance/create_openerp.py:311
+#, python-format
+msgid "Email Required"
+msgstr "Email Requerido"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+msgid "Data Register"
+msgstr "Registo de Información"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,vat:0
+msgid "Your Company RFC to do commercial operation"
+msgstr "Su RFC para su compañíá"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,city:0
+msgid "City"
+msgstr "Ciudad"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+msgid "Your Street..."
+msgstr "Su calle..."
+
+#. module: create_openerp_instance
+#: model:ir.model,name:create_openerp_instance.model_create_instance_openerp
+msgid "Project Issue"
+msgstr "Incidencia proyecto"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,days_since_creation:0
+msgid "Days since creation date"
+msgstr "Days since creation date"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+msgid "Your country..."
+msgstr "Su País..."
+
+#. module: create_openerp_instance
+#: code:addons/create_openerp_instance/create_openerp.py:337
+#, python-format
+msgid "Direct Access"
+msgstr "Acceso Directo"
+
+#. module: create_openerp_instance
+#: selection:create.instance.openerp,kanban_state:0
+msgid "Ready for next stage"
+msgstr "Ready for next stage"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,kanban_state:0
+msgid "Kanban State"
+msgstr "Kanban State"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,date_start:0
+msgid "Date start the certificate before the SAT"
+msgstr "Date start the certificate before the SAT"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,certificate_file:0
+msgid "Certificate File"
+msgstr "Certificate File"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+msgid "Your Locality..."
+msgstr "Su Localidad..."
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,locality:0
+msgid "Locality of your company address"
+msgstr "Localidad de la dirección de su compañía"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,working_hours_open:0
+msgid "Working Hours to Open the Issue"
+msgstr "Working Hours to Open the Issue"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+msgid "Your ZIP Code..."
+msgstr "Su C.P...."
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,zip:0
+msgid "ZIP code for your city"
+msgstr "C.P. Para su ciudad"
+
+#. module: create_openerp_instance
+#: code:addons/create_openerp_instance/create_openerp.py:356
+#, python-format
+msgid "You need accept the terms and conditions to continue"
+msgstr "Usted necesita aceptar los terminos y condiciones para continuar"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+#: field:create.instance.openerp,company_name:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,country_id:0
+msgid "Country"
+msgstr "País"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,section_id:0
+msgid "Sales team to which Case belongs to.                             Define Responsible user and Email account for mail gateway."
+msgstr "Sales team to which Case belongs to.                             Define Responsible user and Email account for mail gateway."
+
+#. module: create_openerp_instance
+#: code:addons/create_openerp_instance/create_openerp.py:311
+#, python-format
+msgid "The current user must have an email address configured in User Preferences to be able to send outgoing emails."
+msgstr "The current user must have an email address configured in User Preferences to be able to send outgoing emails."
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,country_id:0
+msgid "Country of your company address"
+msgstr "País de la dirección de su compañías "
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,working_hours_close:0
+msgid "Working Hours to Close the Issue"
+msgstr "Working Hours to Close the Issue"
+
+#. module: create_openerp_instance
+#: help:create.instance.openerp,message_ids:0
+msgid "Messages and communication history"
+msgstr "Messages and communication history"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,write_date:0
+msgid "Update Date"
+msgstr "Update Date"
+
+#. module: create_openerp_instance
+#: view:create.instance.openerp:0
+msgid "Your State..."
+msgstr "Su Estado..."
+
+#. module: create_openerp_instance
+#: selection:create.instance.openerp,priority:0
+msgid "High"
+msgstr "Alto"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,section_id:0
+msgid "Sales Team"
+msgstr "Equipo de ventas:"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,street:0
+msgid "Street"
+msgstr "Calle"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,date_action_last:0
+msgid "Last Action"
+msgstr "Ultima Acción"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,duration:0
+msgid "Duration"
+msgstr "Duración"
+
+#. module: create_openerp_instance
+#: field:create.instance.openerp,date_start:0
+msgid "Date Start"
+msgstr "Fecha de Inicio"
+

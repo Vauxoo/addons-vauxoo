@@ -1,0 +1,8 @@
+.panel-group, .panel-heading, .panel-body {
+background-color: transparent;
+}
+.panel-body > .oe_form_embedded_html {
+    width: 100% !important;                                                                                     
+    float:right;
+
+}

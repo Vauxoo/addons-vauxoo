@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="cfdi_register_form_view_readonly" model="ir.ui.view">
+                    <field name="name">Contact form</field>
+                    <field name="model">create.instance.openerp</field>
+                    <field name="priority">400</field>
+                    <field name="arch" type="xml">
+                        <form string="Contact form" version="7.0" class="bs3 bs3-form-bg bs3-footer">
+                        <section class="bgvauxoo">
+                        <div class="form-horizontal mt32">
+                            <div class="container"> 
+                                <h1><i class="icon-info-sign"></i><span>CFDI Register</span></h1>
+                                    <div class="row"> 
+                                        <div class ="col-md-2">
+                                        </div>
+                                        <div class ="col-md-8">
+                                            <separator string="Certificates DER FORMAT (Original)" colspan="4"/>
+                                            <label for="certificate_file" class="col-md-3 col-sm-4 control-label"/>
+                                            <field name="certificate_file"
+                                                   widget="FieldBinaryBS3"
+                                                   placeholder=".cer File"
+                                                   on_change="onchange_certificate(certificate_file, certificate_key_file, password_sat)"
+                                                   nolabel="1"/>
+                                            <label for="certificate_key_file" class="col-md-3 col-sm-4 control-label"/>
+                                            <field name="certificate_key_file"
+                                                   widget="FieldBinaryBS3"
+                                                   placeholder=".key File"
+                                                   on_change="onchange_certificate(certificate_file, certificate_key_file, password_sat)"
+                                                   nolabel="1"/>
+                                            <label for="password_sat" class="col-md-3 col-sm-4 control-label"/>
+                                            <field name="password_sat"
+                                                   widget="FieldCharBS3"
+                                                   password="1"
+                                                   required="1"
+                                                   on_change="onchange_certificate(certificate_file, certificate_key_file, password_sat)"
+                                                   nolabel="1"/>
+                                            <separator string="Certificates PEM FORMAT (Transformed)" colspan="4"/>
+                                            <label for="certificate_file_pem" class="col-md-3 col-sm-4 control-label"/>
+                                            <field name="certificate_file_pem"
+                                                   widget="FieldBinaryBS3"
+                                                   placeholder=".cer File"
+                                                   nolabel="1"/>
+                                            <label for="certificate_key_file_pem" class="col-md-3 col-sm-4 control-label"/>
+                                            <field name="certificate_key_file_pem"
+                                                   widget="FieldBinaryBS3"
+                                                   placeholder=".key File"
+                                                   nolabel="1"/>
+                                            <separator string="General Information of Certificate" colspan="4"/>
+                                            <label for="serial_number" class="col-md-3 col-sm-4 control-label"/>
+                                            <field name="serial_number"
+                                                   widget="FieldCharBS3"
+                                                   placeholder="Serial Number"
+                                                   nolabel="1"/>
+                                            <label for="date_start" class="col-md-3 col-sm-4 control-label"/>
+                                            <div class="form-group ">
+                                                <div class="col-md-7 col-sm-8">
+                                                <field name="date_start"
+                                                       placeholder="Serial Number"
+                                                       nolabel="1"/>
+                                               </div>
+                                               </div>
+                                            <label for="date_end" class="col-md-3 col-sm-4 control-label"/>
+                                            <div class="form-group ">
+                                                <div class="col-md-7 col-sm-8">
+                                                    <field name="date_end"
+                                                           placeholder="Serial Number"
+                                                           nolabel="1"/>
+                                               </div>
+                                               </div>
+                                            <div class="form-group">
+                                                <div class="col-md-offset-8 col-sm-offset-8 col-sm-8 col-md-7">
+                                                    <button string="Submit" name="storage_cfdi" type="object" 
+                                                            class="btn btn-danger btn-lg"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        </section>
+                        </form>
+                    </field>
+                </record>
+
+<record id="instance_create_form_view_readonly" model="ir.ui.view">
+            <field name="name">Contact form</field>
+            <field name="model">create.instance.openerp</field>
+            <field name="arch" type="xml">
+                <form string="Contact form" version="7.0" class="bs3 bs3-form-bg bs3-footer">
+                <section class="bgvauxoo">
+                <div class="form-horizontal mt32">
+                    <div class="container"> 
+                        <h1><i class="icon-info-sign"></i><span>Data Recorded</span></h1>
+                            <div class="row"> 
+                                <div class ="col-md-2">
+                                </div>
+                                <div class ="col-md-8">
+                                    <label for="name" class="col-md-3 col-sm-4 control-label"/>
+                                    <div class="form-group">
+                                        <div class="col-md-7 col-sm-8">
+                                            <field name="name" 
+                                                   nolabel="1" 
+                                                   readonly="1" 
+                                            />
+                                        </div>
+                                    </div>
+                                    <label for="company_name" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="company_name"
+                                           widget="FieldCharBS3"
+                                           string="Name"
+                                           readonly="1" 
+                                           placeholder="Your name..."
+                                           nolabel="1"/>
+                                    <label for="vat" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="vat"
+                                           widget="FieldEmailBS3"
+                                           placeholder="e.g. MXABC131106T1B"
+                                           readonly="1" 
+                                           nolabel="1"/>
+                                    <label for="email_from" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="email_from"
+                                           widget="FieldEmailBS3"
+                                           placeholder="Your email..."
+                                           readonly="1" 
+                                           nolabel="1"/>
+                                    <label for="phone" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="phone"
+                                           widget="FieldCharBS3"
+                                           placeholder="Your phone number..."
+                                           readonly="1" 
+                                           nolabel="1"/>
+                                    <label for="country_id" class="col-md-3 col-sm-4 control-label"/>
+                                    <div class="form-group ">
+                                    <div class="col-md-7 col-sm-8">
+                                        <field name="country_id"
+                                               placeholder="Your country..."
+                                               nolabel="1"
+                                           readonly="1" 
+                                         />
+                                    </div>
+                                    </div>
+                                        <label for="state_id" class="col-md-3 col-sm-4 control-label"/>
+                                    <div class="form-group">
+                                    <div class="col-md-7 col-sm-8">
+                                        <field name="state_id"
+                                               domai="[('country_id', '=', country_id)]"
+                                               placeholder="Your State..."
+                                           readonly="1" 
+                                               nolabel="1"
+                                          />
+                                    </div>
+                                    </div>
+                                    <label for="street" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="street"
+                                           widget="FieldCharBS3"
+                                           placeholder="Your Street..."
+                                           nolabel="1"
+                                           readonly="1" 
+                                           />
+                                    <label for="city" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="city"
+                                           widget="FieldCharBS3" 
+                                           placeholder="Your city..." 
+                                           nolabel="1" 
+                                           readonly="1" 
+                                           />
+                                    <label for="locality" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="locality" 
+                                           widget="FieldCharBS3" 
+                                           placeholder="Your Locality..." 
+                                           nolabel="1" 
+                                           readonly="1" 
+                                           />
+                                    <label for="zip" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="zip" widget="FieldCharBS3" placeholder="Your ZIP Code..." nolabel="1" required="True"/>
+                                    <label for="term_conditions" class="col-md-3 col-sm-4 control-label"/>
+                                    <div class="panel-group col-md-8 col-sm-4" id="accordion">
+                                      <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                          <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                              Terms and Conditions
+                                            </a>
+                                          </h4>
+                                        </div>
+                                        <div id="collapseOne" class="panel-collapse collapse">
+                                          <div class="panel-body">
+                                                <field name="term_conditions" readonly="1"  nolabel="1" />
+                                                <label for="accept" />
+                                                <field name="accept" />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-8 col-sm-offset-8 col-sm-8 col-md-7">
+                                            <!--   <button string="Submit" name="submit2" type="object" 
+                                                    class="btn btn-danger btn-lg"/>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                </section>
+                </form>
+            </field>
+        </record>
+<record id="instance_create_form_view" model="ir.ui.view">
+            <field name="name">Contact form</field>
+            <field name="model">create.instance.openerp</field>
+            <field name="priority">200</field>
+            <field name="arch" type="xml">
+                <form string="Contact form" version="7.0" class="bs3 bs3-form-bg bs3-footer">
+                <section class="bgvauxoo">
+                <div class="form-horizontal mt32">
+                    <div class="container"> 
+                        <h1><i class="icon-info-sign"></i><span>Data Register</span></h1>
+                            <div class="row"> 
+                                <div class ="col-md-2">
+                                </div>
+                                <div class ="col-md-8">
+                                    <label for="name" class="col-md-3 col-sm-4 control-label"/>
+                                    <div class="form-group">
+                                        <div class="col-md-7 col-sm-8">
+                                            <field name="name"
+                                                   nolabel="1"
+                                                   on_change="onchange_fill_terms(company_name, vat, country_id, state_id, street, city, locality, zip)"
+                                                   required="True"/>
+                                        </div>
+                                    </div>
+                                    <label for="company_name" string="Company Name" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="company_name"
+                                           widget="FieldCharBS3" 
+                                           string="Name" 
+                                           on_change="onchange_fill_terms(company_name, vat, country_id, state_id, street, city, locality, zip)"
+                                           placeholder="Your Company name..." 
+                                           required="True" nolabel="1"/>
+                                    <label for="vat" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="vat"
+                                           widget="FieldEmailBS3"
+                                           placeholder="e.g. MXABC131106T1B"
+                                           required="True"
+                                           on_change="onchange_fill_terms(company_name, vat, country_id, state_id, street, city, locality, zip)"
+                                           nolabel="1"/>
+                                    <label for="cif_file" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="cif_file"
+                                           widget="FieldBinaryBS3"
+                                           placeholder="Fiscal Identification Card"
+                                           required="True"
+                                           nolabel="1"/>
+                                    <label for="email_from" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="email_from"
+                                           widget="FieldEmailBS3"
+                                           placeholder="Your email..."
+                                           required="True"
+                                           nolabel="1"/>
+                                    <label for="phone" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="phone"
+                                           widget="FieldCharBS3"
+                                           placeholder="Your phone number..."
+                                           nolabel="1"/>
+                                    <label for="country_id" class="col-md-3 col-sm-4 control-label"/>
+                                    <div class="form-group ">
+                                    <div class="col-md-7 col-sm-8">
+                                        <field name="country_id"
+                                               placeholder="Your country..."
+                                               nolabel="1" 
+                                               on_change="onchange_fill_terms(company_name, vat, country_id, state_id, street, city, locality, zip)"
+                                               required="True"/>
+                                    </div>
+                                    </div>
+                                        <label for="state_id" class="col-md-3 col-sm-4 control-label"/>
+                                    <div class="form-group">
+                                    <div class="col-md-7 col-sm-8">
+                                        <field name="state_id"
+                                               domai="[('country_id', '=', country_id)]"
+                                               placeholder="Your State..."
+                                               on_change="onchange_fill_terms(company_name, vat, country_id, state_id, street, city, locality, zip)"
+                                               nolabel="1"
+                                               required="True"/>
+                                    </div>
+                                    </div>
+                                    <label for="street" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="street"
+                                           widget="FieldCharBS3" 
+                                           placeholder="Your Street..." 
+                                           nolabel="1" 
+                                           on_change="onchange_fill_terms(company_name, vat, country_id, state_id, street, city, locality, zip)"
+                                           required="True"/>
+                                    <label for="city" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="city" 
+                                           widget="FieldCharBS3" 
+                                           placeholder="Your city..." 
+                                           nolabel="1" 
+                                           on_change="onchange_fill_terms(company_name, vat, country_id, state_id, street, city, locality, zip)"
+                                           required="True"/>
+                                    <label for="locality" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="locality" 
+                                           widget="FieldCharBS3" 
+                                           placeholder="Your Locality..." 
+                                           nolabel="1" 
+                                           on_change="onchange_fill_terms(company_name, vat, country_id, state_id, street, city, locality, zip)"
+                                           required="True"/>
+                                    <label for="zip" class="col-md-3 col-sm-4 control-label"/>
+                                    <field name="zip" 
+                                           context="{'term_conditions':term_conditions}"
+                                           widget="FieldCharBS3" 
+                                           placeholder="Your ZIP Code..." 
+                                           on_change="onchange_fill_terms(company_name, vat, country_id, state_id, street, city, locality, zip)"
+                                           nolabel="1" 
+                                           required="True"/>
+                                            <label for="term_conditions" class="col-md-3 col-sm-4 control-label"/>
+                                            <div class="panel-group col-md-8 col-sm-4" id="accordion">
+                                              <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                  <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                                      Terms and Conditions
+                                                    </a>
+                                                  </h4>
+                                                </div>
+                                                <div id="collapseOne" class="panel-collapse collapse">
+                                                  <div class="panel-body">
+                                                      <field name="term_conditions"
+                                                             widget='html_readonly'
+                                                             context="{'term_conditions':term_conditions}"
+                                                             nolabel="1" />
+                                                        <label for="accept" />
+                                                        <field name="accept" 
+                                                               on_change="onchange_fill_terms(company_name, vat, country_id, state_id, street, city, locality, zip)"
+                                                            />
+
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                        <div class="form-group">
+                                            <div class="col-md-offset-8 col-sm-offset-8 col-sm-8 col-md-6">
+                                                <button string="Submit"
+                                                        name="submit2"
+                                                        type="object"
+                                                        context="{'term_conditions':term_conditions}"
+                                                        class="btn btn-danger btn-lg"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                </section>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_contpaq_openerp_create_intance" model="ir.actions.act_window">
+            <field name="name">Create your DataBase</field>
+            <field name="res_model">create.instance.openerp</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="instance_create_form_view"/>
+            <field name="target">inline</field>
+            <field name="context">{'fromview':True}</field>
+        </record>
+        <record id="action_contpaq_openerp_cfdi_register" model="ir.actions.act_window">
+            <field name="name">Create your DataBase</field>
+            <field name="res_model">create.instance.openerp</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="cfdi_register_form_view_readonly"/>
+            <field name="target">inline</field>
+            <field name="context">{'fromview':True}</field>
+        </record>
+
+        <!-- attach it to the portal menu -->
+        <menuitem name="Create your Instance"
+                  id="portal_company_create_db"
+                  parent="portal.portal_company"
+                  action="action_contpaq_openerp_create_intance"
+                  sequence="40"/>
+        <menuitem name="CFDI Register"
+                  id="portal_company_cfdi_register"
+                  sequence="1"/>
+        <menuitem name="CFDI"
+                  id="portal_company_cfdi_register2"
+                  parent="portal_company_cfdi_register"
+                  sequence="40"/>
+        <menuitem name="CFDI"
+                  id="portal_company_cfdi_register3"
+                  parent="portal_company_cfdi_register2"
+                  action="action_contpaq_openerp_create_intance"
+                  sequence="40"/>
+    </data>
+</openerp>
