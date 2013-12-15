@@ -44,7 +44,7 @@ class cfdi_register(osv.TransientModel):
             res = self.pool.get('account.analytic.account').read(cr, uid, cont_ids,
                 ['id','vx_contract_code','date_start','date'], context=context)
             for list in res:
-                name_contract = list['vx_contract_code'] + ' [' + list['date_start']+ ' / ' + \
+                name_contract = list.get('vx_contract_code', '') + ' [' + list['date_start']+ ' / ' + \
                 list['date']+ ']' 
                 result.append((list['id'],name_contract))
         return result 
