@@ -61,7 +61,7 @@ class wizard_invoice_facturae_xml_v6(osv.TransientModel):
     }
 
     def _get_invoice_facturae_xml(self, cr, uid, data, context=None):
-        if not context:
+        if context is None:
             context = {}
         invoice_obj = self.pool.get('account.invoice')
         ids = data['active_ids']

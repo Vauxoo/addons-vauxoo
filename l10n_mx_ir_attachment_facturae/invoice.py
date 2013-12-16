@@ -32,6 +32,9 @@ class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
     def action_cancel(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         ir_attach_facturae_mx_obj = self.pool.get('ir.attachment.facturae.mx')
         inv_type_facturae = {
             'out_invoice': True,
@@ -50,6 +53,8 @@ class account_invoice(osv.Model):
         return res
 
     def create_ir_attachment_facturae(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
         attach = ''
         ir_attach_obj = self.pool.get('ir.attachment.facturae.mx')
         mod_obj = self.pool.get('ir.model.data')

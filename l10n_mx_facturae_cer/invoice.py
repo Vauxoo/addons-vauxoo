@@ -33,9 +33,8 @@ from openerp import tools
 class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
-    def _get_invoice_certificate(self, cr, uid, ids, field_names=None,
-        arg=False, context={}):
-        if not context:
+    def _get_invoice_certificate(self, cr, uid, ids, field_names=None, arg=False, context=None):
+        if context is None:
             context = {}
         company_obj = self.pool.get('res.company')
         certificate_obj = self.pool.get('res.company.facturae.certificate')

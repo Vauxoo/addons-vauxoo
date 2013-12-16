@@ -42,7 +42,9 @@ import os
 class account_payment_term(osv.Model):
     _inherit = "account.payment.term"
 
-    def compute(self, cr, uid, id, value, date_ref=False, context={}):
+    def compute(self, cr, uid, id, value, date_ref=False, context=None):
+        if context is None:
+            context = {}
         if date_ref:
             try:
                 date_ref = time.strftime('%Y-%m-%d', time.strptime(
@@ -57,9 +59,8 @@ class account_invoice(osv.Model):
     _inherit = 'account.invoice'
     #_order = 'invoice_datetime asc'
 
-    def _get_date_invoice_tz(self, cr, uid, ids, field_names=None, arg=False,
-        context={}):
-        if not context:
+    def _get_date_invoice_tz(self, cr, uid, ids, field_names=None, arg=False, context=None):
+        if context is None:
             context = {}
         res = {}
         if release.version >= '6':
@@ -95,6 +96,8 @@ class account_invoice(osv.Model):
     }
 
     def create(self, cr, uid, vals, context=None):
+        if context is None:
+            context = {}
         res = self.assigned_datetime(cr, uid, vals, context=context)
         if res:
             vals.update(res)
@@ -116,12 +119,16 @@ class account_invoice(osv.Model):
                                                             context=context)
         
     def copy(self, cr, uid, id, default=None, context=None):
+        if context is None:
+            context = {}
         if default is None:
             default = {}
         default.update({'invoice_datetime': False, 'date_invoice' : False})
         return super(account_invoice, self).copy(cr, uid, id, default, context)
     
     def _get_time_zone(self, cr, uid, invoice_id, context=None):
+        if context is None:
+            context = {}
         res_users_obj = self.pool.get('res.users')
         userstz = res_users_obj.browse(cr, uid, [uid])[0].partner_id.tz
         a = 0

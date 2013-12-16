@@ -36,9 +36,8 @@ import amount_to_text_es_MX
 class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
-    def _get_amount_to_text(self, cr, uid, ids, field_names=None, arg=False,
-        context={}):
-        if not context:
+    def _get_amount_to_text(self, cr, uid, ids, field_names=None, arg=False, context=None):
+        if context is None:
             context = {}
         res = {}
         for invoice in self.browse(cr, uid, ids, context=context):

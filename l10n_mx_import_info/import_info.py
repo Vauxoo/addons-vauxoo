@@ -24,7 +24,9 @@ class import_info(osv.Model):
     _description = "Information about customs"
     _order = 'name asc'
 
-    def _get_audit(self, cr, uid, ids, field_name, arg, context):
+    def _get_audit(self, cr, uid, ids, field_name, arg, context=None):
+        if context is None:
+            context = {}
         result = {}
         prod_obj = self.pool.get('product.product')
         for i in ids:

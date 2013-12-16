@@ -82,8 +82,8 @@ _fields = {
 }
 
 
-def _create_facturae_txt(self, cr, uid, data, context={}):
-    if not context:
+def _create_facturae_txt(self, cr, uid, data, context=None):
+    if context is None:
         context = {}
     pool = pooler.get_pool(cr.dbname)
     invoice_obj = pool.get('account.invoice')
@@ -129,8 +129,8 @@ end_fields = {
 }
 
 
-def _get_invoices_month(self, cr, uid, data, context={}):
-    if not context:
+def _get_invoices_month(self, cr, uid, data, context=None):
+    if context is None:
         context = {}
     pool = pooler.get_pool(cr.dbname)
     invoice_obj = pool.get('account.invoice')
@@ -168,9 +168,9 @@ def _get_invoices_month(self, cr, uid, data, context={}):
     return {'invoice_ids': invoice_ids}
 
 
-def _get_invoices_date(self, cr, uid, data, context={}):
+def _get_invoices_date(self, cr, uid, data, context=None):
     # invoice_ids.append(19)
-    if not context:
+    if context is None:
         context = {}
     pool = pooler.get_pool(cr.dbname)
     invoice_obj = pool.get('account.invoice')

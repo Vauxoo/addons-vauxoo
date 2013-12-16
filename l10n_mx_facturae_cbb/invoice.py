@@ -41,9 +41,8 @@ msg2 = "Contact you administrator &/or info@vauxoo.com"
 class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
-    def _get_fname_invoice(self, cr, uid, ids, field_names=None, arg=False,
-        context={}):
-        if not context:
+    def _get_fname_invoice(self, cr, uid, ids, field_names=None, arg=False, context=None):
+        if context is None:
             context = {}
         res = {}
         sequence_obj = self.pool.get('ir.sequence')
@@ -87,7 +86,7 @@ class account_invoice(osv.Model):
         #'date_invoice': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
 
-    def create_report(self, cr, uid, res_ids, report_name=False, file_name=False):
+    def create_report(self, cr, uid, res_ids, report_name=False, file_name=False, context=None):
         """
         @param report_name : Name of report with the name of object more type
             of report
@@ -95,6 +94,8 @@ class account_invoice(osv.Model):
             name of report that is 'openerp___facturae__' more six random
             characters for no files duplicate
         """
+        if context is None:
+            context = {}
         if not report_name or not res_ids:
             return (False, Exception('Report name and Resources ids are required !!!'))
         # try:
@@ -109,11 +110,10 @@ class account_invoice(osv.Model):
             # return (False,str(e))
         return (True, ret_file_name)
 
-    def create_report_pdf(self, cr, uid, ids, context={}):
-        if not context:
+    def create_report_pdf(self, cr, uid, ids, context=None):
+        if context is None:
             context = {}
-        id = ids[0]
-
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         (fileno, fname) = tempfile.mkstemp(
             '.pdf', 'openerp_' + (False or '') + '__facturae__')
         os.close(fileno)

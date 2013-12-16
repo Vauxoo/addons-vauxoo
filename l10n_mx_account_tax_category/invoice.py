@@ -37,8 +37,8 @@ import os
 class account_invoice_tax(osv.Model):
     _inherit = "account.invoice.tax"
 
-    def _get_tax_data(self, cr, uid, ids, field_names=None, arg=False, context={}):
-        if not context:
+    def _get_tax_data(self, cr, uid, ids, field_names=None, arg=False, context=None):
+        if context is None:
             context = {}
         res = {}
         for invoice_tax in self.browse(cr, uid, ids, context=context):

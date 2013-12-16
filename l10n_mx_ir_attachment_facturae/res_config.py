@@ -35,6 +35,8 @@ class l10n_mx_email_config_settings(osv.TransientModel):
     }
 
     def get_default_email_tmp_id(self, cr, uid, fields, context=None):
+        if context is None:
+            context = {}
         email_tmp_id = False
         cr.execute(
             """ select max(id) as email_tmp_id from l10n_mx_email_config_settings """)

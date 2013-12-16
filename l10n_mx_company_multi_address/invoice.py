@@ -32,6 +32,8 @@ class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
     def _get_address_issued_invoice(self, cr, uid, ids, name, args, context=None):
+        if context is None:
+            context = {}
         res = {}
         journal_obj = self.pool.get('account.journal')
         for id_ in ids:
@@ -52,6 +54,8 @@ class account_invoice(osv.Model):
         return res
 
     def _get_company_emitter_invoice(self, cr, uid, ids, name, args, context=None):
+        if context is None:
+            context = {}
         res = {}
         journal_obj = self.pool.get('account.journal')
         for id_ in ids:
@@ -77,6 +81,8 @@ class account_invoice(osv.Model):
     }
 
     def onchange_journal_id(self, cr, uid, ids, journal_id=False, context=None):
+        if context is None:
+            context = {}
         result = super(account_invoice, self).onchange_journal_id(
             cr, uid, ids, journal_id, context=context)
         address_id = journal_id and self.pool.get('account.journal').browse(

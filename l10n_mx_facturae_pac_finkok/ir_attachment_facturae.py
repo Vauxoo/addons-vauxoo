@@ -172,10 +172,12 @@ class ir_attachment_facturae_mx(osv.Model):
                 msg = _('Not found information of webservices of PAC, verify that the configuration of PAC is correct')
         return {'message': msg}
     
-    def _finkok_stamp(self, cr, uid, ids, fdata=None, context={}):
+    def _finkok_stamp(self, cr, uid, ids, fdata=None, context=None):
         """
         @params fdata : File.xml codification in base64
         """
+        if context is None:
+            context = {}
         invoice_obj = self.pool.get('account.invoice')
         pac_params_obj = self.pool.get('params.pac')
         for ir_attachment_facturae_mx_id in self.browse(cr, uid, ids, context=context):

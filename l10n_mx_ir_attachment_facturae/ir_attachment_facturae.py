@@ -41,6 +41,8 @@ class ir_attachment_facturae_mx(osv.Model):
     _inherit = ['mail.thread', 'ir.needaction_mixin']
 
     def _get_type(self, cr, uid, ids=None, context=None):
+        if context is None:
+            context = {}
         types = []
         return types
 
@@ -124,6 +126,9 @@ class ir_attachment_facturae_mx(osv.Model):
         if msj:
             raise osv.except_osv(_('Warning'),_(msj))
         try:
+            if context is None:
+                context = {}
+            ids = isinstance(ids, (int, long)) and [ids] or ids
             invoice_obj = self.pool.get('account.invoice')
             attach = ''
             msj = ''
@@ -186,12 +191,16 @@ class ir_attachment_facturae_mx(osv.Model):
             return False
 
     def action_confirm(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         return self.write(cr, uid, ids, {'state': 'confirmed'}, context=context)
 
     def signal_sign(self, cr, uid, ids, context=None):
         try:
             if context is None:
                 context = {}
+            ids = isinstance(ids, (int, long)) and [ids] or ids
             invoice_obj = self.pool.get('account.invoice')
             attachment_obj = self.pool.get('ir.attachment')
             attach = ''

@@ -85,6 +85,9 @@ class res_company_facturae_certificate(osv.Model):
     }
 
     def get_certificate_info(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         certificate = self.browse(cr, uid, ids, context=context)[0]
         cer_der_b64str = certificate.certificate_file
         key_der_b64str = certificate.certificate_key_file
@@ -133,6 +136,7 @@ class res_company_facturae_certificate(osv.Model):
                 fname_key_der, fname_tmp, fname_password, type_der='key')
             key_pem_b64 = base64.encodestring(key_pem)
 
+            # date_fmt_return='%Y-%m-%d %H:%M:%S'
             date_fmt_return = '%Y-%m-%d'
             serial = False
             try:
@@ -221,8 +225,9 @@ class res_company_facturae_certificate(osv.Model):
 class res_company(osv.Model):
     _inherit = 'res.company'
 
-    def ____get_current_certificate(self, cr, uid, ids, field_names=None,
-        arg=False, context={}):
+    def ____get_current_certificate(self, cr, uid, ids, field_names=None, arg=False, context=None):
+        if context is None:
+            context = {}
         if not field_names:
             field_names = []
         res = {}
@@ -250,9 +255,8 @@ class res_company(osv.Model):
                         res[company.id][f] = certificate_id
         return res
 
-    def _get_current_certificate(self, cr, uid, ids, field_names=False,
-        arg=False, context={}):
-        if not context:
+    def _get_current_certificate(self, cr, uid, ids, field_names=False, arg=False, context=None):
+        if context is None:
             context = {}
         res = {}.fromkeys(ids, False)
         certificate_obj = self.pool.get('res.company.facturae.certificate')
@@ -280,7 +284,7 @@ class res_company(osv.Model):
         return res
 
     """
-    def copy(self, cr, uid, id, default={}, context={}, done_list=[], local=False):
+    def copy(self, cr, uid, id, default={}, context=None, done_list=[], local=False):
         if not default:
             default = {}
         default = default.copy()
