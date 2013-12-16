@@ -181,13 +181,8 @@ class account_invoice(osv.Model):
 
         if  not values.get('invoice_datetime', False) and\
                                         not values.get('date_invoice', False):
-                
-            date_ts = fields.datetime.context_timestamp(cr, uid,
-                datetime.datetime.strptime(fields.datetime.now(),
-                tools.DEFAULT_SERVER_DATETIME_FORMAT), context=context)
-            res['date_invoice'] = date_ts
-            res['invoice_datetime'] = fields.datetime.now()
-            return res
+            res['date_invoice'] = False
+            res['invoice_datetime'] = False
         return res
 
 #    def action_move_create(self, cr, uid, ids, *args):
