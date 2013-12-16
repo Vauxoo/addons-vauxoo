@@ -33,6 +33,8 @@ class facturae_config(osv.TransientModel):
     _description = __doc__
 
     def default_get(self, cr, uid, fields_list=None, context=None):
+        if context is None:
+            context = {}
         defaults = super(facturae_config, self).default_get(
             cr, uid, fields_list=fields_list, context=context)
         logo = open(addons.get_module_resource(
@@ -45,7 +47,8 @@ class facturae_config(osv.TransientModel):
         @param vat : VAT that will be set in the company
         @param company_id : Id from the company that the user works
         """
-        print 'company_id', company_id
+        if context is None:
+            context = {}
         partner_id = self.pool.get('res.company').browse(
             cr, uid, company_id).partner_id.id
         partner_obj = self.pool.get('res.partner')
@@ -55,11 +58,13 @@ class facturae_config(osv.TransientModel):
             }, context=context)
 
     def execute(self, cr, uid, ids, context=None):
-        company_id = self.pool.get('res.users').browse(
-            cr, uid, [uid], context)[0].company_id.partner_id.id
-        wiz_data = self.read(cr, uid, ids[0])
-        if wiz_data['vat']:
-            self._assign_vat(cr, uid, wiz_data["vat"], company_id, context)
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        company_id = self.pool.get('res.users').browse(cr, uid, [uid], context)[0].company_id.partner_id.id
+        wiz_data = self.read(cr, uid, ids)
+        if wiz_data[0]['vat']:
+            self._assign_vat(cr, uid, wiz_data[0]["vat"], company_id, context)
 
     _columns = {
         'vat': fields.char('VAT', 64, help='Federal Register of Causes'),

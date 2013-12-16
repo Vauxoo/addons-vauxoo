@@ -43,13 +43,18 @@ class wizard_facturae_ftp(osv.TransientModel):
     _name = 'wizard.facturae.ftp'
 
     def invoice_ftp(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         ftp_id = False
         data = self.read(cr, uid, ids)[0]
         atta_obj = self.pool.get('ir.attachment')
         atta_obj.file_ftp(cr, uid, data['files'], context=context)
         return {}
 
-    def _get_files(self, cr, uid, context):
+    def _get_files(self, cr, uid, context=None):
+        if context is None:
+            context = {}
         atta_obj = self.pool.get('ir.attachment')
         atta_ids = atta_obj.search(cr, uid, [('res_id', 'in', context[
             'active_ids']), ('res_model', '=', context['active_model'])],

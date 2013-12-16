@@ -51,16 +51,20 @@ import time
 class wizard_cancel_invoice_pac_sf(osv.TransientModel):
     _name = 'wizard.cancel.invoice.pac.sf'
 
-    def _get_cancel_invoice_id(self, cr, uid, data, context={}):
+    def _get_cancel_invoice_id(self, cr, uid, data, context=None):
         """
         @params data : Dictionary with information of the user, and active ids
         """
+        if context is None:
+            context = {}
         res = {}
         invoice_obj = self.pool.get('account.invoice')
         res = invoice_obj._get_file_cancel(cr, uid, data['active_ids'])
         return res['file']
 
-    def upload_cancel_to_pac(self, cr, uid, ids, context={}):
+    def upload_cancel_to_pac(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
         res = {}
         invoice_obj = self.pool.get('account.invoice')
         res = invoice_obj.sf_cancel(cr, uid, context[
