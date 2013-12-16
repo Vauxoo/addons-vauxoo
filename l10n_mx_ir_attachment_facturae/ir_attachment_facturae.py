@@ -281,13 +281,12 @@ class ir_attachment_facturae_mx(osv.Model):
                                                #~ "account.invoice.facturae.webkit",
                                                #~ fname)
 
-            actions_obj = self.pool.get('ir.actions.report.xml')
-            report_ids = actions_obj.search(
-                cr, uid, [('model', '=', 'account.invoice'),('active', '=', True), ('report_type', '=', 'webkit'), 
-                          ('company_id','=',invoice.company_id.id)],order='sequence', limit=1) or False
+            report_multicompany_obj = self.pool.get('report.multicompany')
+            report_ids = report_multicompany_obj.search(
+                cr, uid, [('model', '=', 'account.invoice')], limit=1) or False
 
             if report_ids:
-                report_name = actions_obj.browse(cr, uid, report_ids[0]).report_name
+                report_name = report_multicompany_obj.browse(cr, uid, report_ids[0]).report_name
                 if report_name:
                     report = invoice_obj.create_report(
                         cr, SUPERUSER_ID, [invoice.id],
@@ -382,12 +381,11 @@ class ir_attachment_facturae_mx(osv.Model):
                         'mail.compose.message')
                     email_pool = self.pool.get('email.template')
 
-                    actions_obj = self.pool.get('ir.actions.report.xml')
-                    report_ids = actions_obj.search(
-                        cr, uid, [('model', '=', 'account.invoice'),('active', '=', True), ('report_type', '=', 'webkit'), 
-                                  ('company_id','=',invoice.company_id.id)],order='sequence', limit=1) or False
+                    report_multicompany_obj = self.pool.get('report.multicompany')
+                    report_ids = report_multicompany_obj.search(
+                                    cr, uid, [('model', '=', 'account.invoice')], limit=1) or False
                     if report_ids:
-                        report_name = actions_obj.browse(cr, uid, report_ids[0]).report_name
+                        report_name = report_multicompany_obj.browse(cr, uid, report_ids[0]).report_name
                         if report_name:
                             tmp_id = email_pool.search(
                                 cr, uid, [(
