@@ -185,40 +185,9 @@ class account_invoice(osv.Model):
                 if date_invoice != values['date_invoice']:
                     raise osv.except_osv(_('Warning!'),
                             _('Invoice dates should be equal'))
-
-        if  not values.get('invoice_datetime', False) and\
-                                        not values.get('date_invoice', False):
-                
-            date_ts = fields.datetime.context_timestamp(cr, uid,
-                datetime.datetime.strptime(fields.datetime.now(),
-                tools.DEFAULT_SERVER_DATETIME_FORMAT), context=context)
-            res['date_invoice'] = date_ts
-            res['invoice_datetime'] = fields.datetime.now()
-            return res
+#remove validation because don't use anymore
+#        if  not values.get('invoice_datetime', False) and\
+#                                        not values.get('date_invoice', False):
+#            res['date_invoice'] = False
+#            res['invoice_datetime'] = False
         return res
-
-#    def action_move_create(self, cr, uid, ids, *args):
- #       for inv in self.browse(cr, uid, ids):
-  #          values = {'date_invoice': inv.date_invoice,
-   #                     'invoice_datetime': inv.invoice_datetime}
-    #        date_value = self.assigned_datetime(cr, uid, values)
-     #       if inv.move_id:
-      #          continue
-       #     if inv.date_invoice and inv.invoice_datetime:
-        #        return super(account_invoice, self).action_move_create(cr,
-         #                           uid, ids, *args)
-          #  t1 = time.strftime('%Y-%m-%d')
-           # t2 = time.strftime('%Y-%m-%d %H:%M:%S')
-           # self.write(cr, uid, [inv.id], {
-            #           'date_invoice': date_value.get('date_invoice', t1),
-             #          'invoice_datetime': date_value.get('invoice_datetime', t2)})
-        #return super(account_invoice, self).action_move_create(cr, uid, ids, *args)
-
-# class account_invoice_refund(osv.TransientModel):
- #   _inherit = 'account.invoice.refund'
-  #  _columns = {
-   #     'date': fields.datetime('Operation date', help='This date will be used as the invoice date for Refund Invoice and Period will be chosen accordingly!'),
-   # }
-    # _defaults = {
-     #   'date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
-   # }
