@@ -104,7 +104,7 @@ class facturae_config_settings(osv.osv_memory):
             cr, uid, values, context)
         report_company_obj = self.pool.get('report.multicompany')
         email_obj = self.pool.get('email.template')
-        if values.get('mail_server_id') and values.get('company_id') and values.get('email_tmp_id') and values.get('temp_report_id'):
+        if values.get('mail_server_id') and values.get('email_tmp_id') and values.get('temp_report_id'):
             confg_data = self.browse(cr, uid, confg_id, context=context)
             email_obj.write(cr, uid, [confg_data.email_tmp_id.id], {
                             'company_id': confg_data.company_id.id,
@@ -112,7 +112,7 @@ class facturae_config_settings(osv.osv_memory):
                             'report_template': values.get('temp_report_id')},
                             context=context)
             report_company_obj.report_multicompany_create(
-                cr, uid, values.get('temp_report_id'), context=context)        
+                cr, uid, values.get('temp_report_id'), values.get('company_id'), context=context)        
         return confg_id
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
