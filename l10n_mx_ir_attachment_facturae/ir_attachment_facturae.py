@@ -532,6 +532,9 @@ class ir_attachment_facturae_mx(osv.Model):
                                 if invoice.state != 'cancel':
                                     inv_cancel_status = invoice_obj.action_cancel(
                                         cr, uid, [invoice.id], context=context)
+                                    cr.execute("""UPDATE ir_attachment
+                                                SET res_id = Null
+                                                WHERE res_id = %s and res_model='account.invoice'""", (invoice.id,))
                                 else:
                                     inv_cancel_status = True
                         else:
@@ -542,6 +545,9 @@ class ir_attachment_facturae_mx(osv.Model):
                         if invoice.state != 'cancel':
                             inv_cancel_status = invoice_obj.action_cancel(
                                 cr, uid, [invoice.id], context=context)
+                            cr.execute("""UPDATE ir_attachment
+                                        SET res_id = Null
+                                        WHERE res_id = %s and res_model='account.invoice'""", (invoice.id,))
                         else:
                             inv_cancel_status = True
                         msj = 'cancelled'
