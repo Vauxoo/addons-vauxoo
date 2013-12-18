@@ -286,18 +286,13 @@ class ir_attachment_facturae_mx(osv.Model):
                 cr, uid, [('model', '=', 'account.invoice')], limit=1) or False
 
             if report_ids:
-                report_name = report_multicompany_obj.browse(cr, uid, report_ids[0]).report_name
-                if report_name:
-                    report = invoice_obj.create_report(
-                        cr, SUPERUSER_ID, [invoice.id],
-                        report_name,
-                        invoice.fname_invoice)
-            else:
-                report = invoice_obj.create_report(
-                    cr, SUPERUSER_ID, [invoice.id],
-                    "account.invoice.facturae.webkit",
-                    invoice.fname_invoice)
-
+                report_name = report_multicompany_obj.browse(cr, uid, report_ids[0]).report_name or "account.invoice.facturae.webkit" 
+                service = netsvc.LocalService("report."+report_name)
+                (result, format) = service.create(cr, SUPERUSER_ID, [invoice.id], report_name, context=context)                
+                #~ report = invoice_obj.create_report(
+                    #~ cr, SUPERUSER_ID, [invoice.id],
+                    #~ report_name,
+                    #~ invoice.fname_invoice)
             attachment_ids = attachment_obj.search(cr, uid, [
                 ('res_model', '=', 'account.invoice'),
                 ('res_id', '=', invoice.id),
