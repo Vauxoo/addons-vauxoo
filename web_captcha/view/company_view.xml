@@ -6,6 +6,14 @@
             <field name="model">res.company</field>
             <field name="inherit_id" ref="base.view_company_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <div class="oe_form_box_warning oe_text_center" attrs="{'invisible' : [('recaptcha_id','!=','CONFIGURE YOUR CAPTCHA')] }">
+                        <h1>Configuration Problems!</h1>
+                        <p>
+                            <b>You must set a public key to be able to use the captcha widget. go to Settings > Config > General Settings > Captcha Section</b>
+                        </p>
+                    </div>
+                </xpath>
                 <xpath expr="//field[@name='currency_id']" position="after">
                      <label for="recaptcha_id"/>
                      <field name="recaptcha_id" nolabel="1" class="oe_captcha_field"/>
