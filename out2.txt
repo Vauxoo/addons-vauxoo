@@ -1,0 +1,2 @@
+./l10n_mx_cfdi_register/controller/main.py:            cr.commit()
+./l10n_mx_cfdi_register/cfdi_register.py:            cr.commit()
