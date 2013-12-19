@@ -33,7 +33,7 @@ class report_multicompany(osv.Model):
 
     _columns = {
         'company_id': fields.many2one('res.company', 'Company',),
-        'report_id': fields.many2one('ir.actions.report.xml', 'Report Template',
+        'report_id': fields.many2one('ir.actions.report.xml', 'Report Template', required=True,
                                      help="""This report template will be assigned for electronic invoicing in your company"""),
         'report_name': fields.related('report_id', 'report_name', type='char', string='Report Name', readonly=True),
         'sequence': fields.integer('Sequence'),
