@@ -284,20 +284,11 @@ class ir_attachment_facturae_mx(osv.Model):
             report_multicompany_obj = self.pool.get('report.multicompany')
             report_ids = report_multicompany_obj.search(
                 cr, uid, [('model', '=', 'account.invoice')], limit=1) or False
-
+            report_name = "account.invoice.facturae.webkit" 
             if report_ids:
                 report_name = report_multicompany_obj.browse(cr, uid, report_ids[0]).report_name
-                if report_name:
-                    report = invoice_obj.create_report(
-                        cr, SUPERUSER_ID, [invoice.id],
-                        report_name,
-                        invoice.fname_invoice)
-            else:
-                report = invoice_obj.create_report(
-                    cr, SUPERUSER_ID, [invoice.id],
-                    "account.invoice.facturae.webkit",
-                    invoice.fname_invoice)
-
+            service = netsvc.LocalService("report."+report_name)
+            (result, format) = service.create(cr, SUPERUSER_ID, [invoice.id], report_name, context=context)                
             attachment_ids = attachment_obj.search(cr, uid, [
                 ('res_model', '=', 'account.invoice'),
                 ('res_id', '=', invoice.id),
@@ -537,6 +528,9 @@ class ir_attachment_facturae_mx(osv.Model):
                                 if invoice.state != 'cancel':
                                     inv_cancel_status = invoice_obj.action_cancel(
                                         cr, uid, [invoice.id], context=context)
+                                    cr.execute("""UPDATE ir_attachment
+                                                SET res_id = Null
+                                                WHERE res_id = %s and res_model='account.invoice'""", (invoice.id,))
                                 else:
                                     inv_cancel_status = True
                         else:
@@ -547,6 +541,9 @@ class ir_attachment_facturae_mx(osv.Model):
                         if invoice.state != 'cancel':
                             inv_cancel_status = invoice_obj.action_cancel(
                                 cr, uid, [invoice.id], context=context)
+                            cr.execute("""UPDATE ir_attachment
+                                        SET res_id = Null
+                                        WHERE res_id = %s and res_model='account.invoice'""", (invoice.id,))
                         else:
                             inv_cancel_status = True
                         msj = 'cancelled'
