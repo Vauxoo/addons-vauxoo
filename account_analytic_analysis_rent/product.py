@@ -22,6 +22,7 @@
 from openerp.osv import osv, fields
 from datetime import datetime, timedelta
 from tools.translate import _
+import decimal_precision as dp
 
 class product_template(osv.osv):
     _inherit='product.template'
@@ -65,7 +66,7 @@ class product_feature_line(osv.osv):
         'product_line_id':fields.many2one('product.product','Product'),
         'counter':fields.integer('Counter'),
         'analytic_id':fields.many2one('account.analytic.account','Product'),
-        'cost':fields.float('cost'),
+        'cost':fields.float('cost', digits_compute=dp.get_precision('Account')),
         'prodlot_feature_id': fields.many2one('stock.production.lot', 'Production Lot', help="Production lot is used to put a serial number on the production", select=True),
     }
     
