@@ -464,23 +464,16 @@ class ir_attachment_facturae_mx(osv.Model):
         return self.write(cr, uid, ids, {'state': 'sent_customer'}, context=context)
 
     def signal_send_backup(self, cr, uid, ids, context=None):
-        try:
-            if context is None:
-                context = {}
-            msj = ''
-            wf_service = netsvc.LocalService("workflow")
-            msj = _('Send Backup\n')
-            self.write(cr, uid, ids, {'msj': msj,
-                                      'last_date': time.strftime('%Y-%m-%d %H:%M:%S')
-                                      }, context=context)
-            wf_service.trg_validate(
-                uid, self._name, ids[0], 'action_send_backup', cr)
-            return True
-        except Exception, e:
-            error = tools.ustr(traceback.format_exc())
-            self.write(cr, uid, ids, {'msj': error}, context=context)
-            _logger.error(error)
-            return False
+        if context is None:
+            context = {}
+        msj = ''
+        wf_service = netsvc.LocalService("workflow")
+        msj = _('Send Backup\n')
+        self.write(cr, uid, ids, {'msj': msj,
+                                  'last_date': time.strftime('%Y-%m-%d %H:%M:%S')
+                                  }, context=context)
+        wf_service.trg_validate(uid, self._name, ids[0], 'action_send_backup', cr)
+        return True
 
     def action_send_backup(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'sent_backup'}, context=context)
