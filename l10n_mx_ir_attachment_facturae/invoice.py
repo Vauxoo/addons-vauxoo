@@ -34,6 +34,7 @@ class account_invoice(osv.Model):
     def action_cancel(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
+        res = False
         ids = isinstance(ids, (int, long)) and [ids] or ids
         ir_attach_facturae_mx_obj = self.pool.get('ir.attachment.facturae.mx')
         inv_type_facturae = {
@@ -45,11 +46,16 @@ class account_invoice(osv.Model):
             if inv_type_facturae.get(inv.type, False):
                 ir_attach_facturae_mx_ids = ir_attach_facturae_mx_obj.search(
                     cr, uid, [('invoice_id', '=', inv.id)], context=context)
-                for attach in ir_attach_facturae_mx_obj.browse(cr, uid, ir_attach_facturae_mx_ids, context=context):
-                    if attach.state <> 'cancel':
-                        ir_attach_facturae_mx_obj.signal_cancel(cr, uid, [attach.id], context=context)
-        res = super(account_invoice, self).action_cancel(cr, uid, ids, context=context)
-        self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
+                if ir_attach_facturae_mx_ids:
+                    for attach in ir_attach_facturae_mx_obj.browse(cr, uid, ir_attach_facturae_mx_ids, context=context):
+                        if attach.state <> 'cancel':
+                            res = super(account_invoice, self).action_cancel(cr, uid, ids, context=context)
+                            if res:
+                                attach = ir_attach_facturae_mx_obj.signal_cancel(cr, uid, [attach.id], context=context)
+                                if attach:
+                                    self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
+                else:
+                    res = super(account_invoice, self).action_cancel(cr, uid, ids, context=context)
         return res
 
     def create_ir_attachment_facturae(self, cr, uid, ids, context=None):
