@@ -1,26 +1,26 @@
 -
-  To test the Mexican Electronic Invoice CFDI PAC Finkok_1
+  1 To test the Mexican Electronic Invoice CFDI PAC Finkok_1 
 -
-  I check that Journal is cfdi_pac_finkok_1
+  2 I check that Journal is cfdi_pac_finkok_1
 -
   !assert {model: account.invoice, id: ai_pac_finkok_1}:
     - journal_id.id == ref("l10n_mx_facturae_pac_finkok.l10n_mx_cfdi_pac_finkok_journal_0")
 -
-  I check that Initially customer invoice cfdi_pac_finkok_1 state is "Draft" 
+  3 I check that Initially customer invoice cfdi_pac_finkok_1 state is "Draft" 
 -
   !assert {model: account.invoice, id: ai_pac_finkok_1}:
     - state == 'draft'
 -
-  I open invoice cfdi_pac_finkok_1 by clicking on Create button
+  4 I open invoice cfdi_pac_finkok_1 by clicking on Create button
 -
   !workflow {model: account.invoice, action: invoice_open, ref: ai_pac_finkok_1}
 -
-  I check that the invoice state is "Open"
+  5 I check that the invoice state is "Open"
 -
   !assert {model: account.invoice, id: ai_pac_finkok_1}:
     - state == 'open'
 -
-  I confirm l10n_mx attachment facturae cfdi_pac_finkok_1 by clicking on confirm button
+  6 I confirm l10n_mx attachment facturae cfdi_pac_finkok_1 by clicking on confirm button
 -
   !python {model: ir.attachment.facturae.mx}: |
     import netsvc, tools, os, base64
@@ -34,7 +34,7 @@
         #print "cfdi_pac_finkok_msj",tools.ustr( cfdi_pac_finkok.msj )
         state = cfdi_pac_finkok.state
 -
-  I check that the state in l10n_mx attachment facturae cfdi_pac_finkok_1 is "Confirmed"
+  7 I check that the state in l10n_mx attachment facturae cfdi_pac_finkok_1 is "Confirmed"
 -
   !python {model: ir.attachment.facturae.mx}: |
     import netsvc, tools, os, base64
@@ -57,7 +57,7 @@
             state = 'no data in attach file'
     assert state=='confirmed', 'No confirmed state l10n_mx attachment facturae cfdi_pac_finkok'
 -
-  I sign l10n_mx attachment facturae cfdi_pac_finkok_1 by clicking on sign button upload pac
+  8 I sign l10n_mx attachment facturae cfdi_pac_finkok_1 by clicking on sign button upload pac
 -
   !python {model: ir.attachment.facturae.mx}: |
     import netsvc, tools
@@ -71,7 +71,7 @@
         #print "cfdi_pac_finkok_msj",tools.ustr( cfdi_pac_finkok.msj )
         state = cfdi_pac_finkok.state
 -
-  I check that the state in l10n_mx attachment facturae cfdi_pac_finkok_1 is "Signed"
+  9 I check that the state in l10n_mx attachment facturae cfdi_pac_finkok_1 is "Signed"
 -
   !python {model: ir.attachment.facturae.mx}: |
     import netsvc, tools, os, base64
@@ -93,7 +93,7 @@
     #print "state",tools.ustr( state )
     assert state=='signed', 'No signed state l10n_mx attachment facturae cfdi_pac_finkok'
 -
-  I generate a printable l10n_mx attachment facturae cfdi_pac_finkok_1 by clicking on printable button
+  10 I generate a printable l10n_mx attachment facturae cfdi_pac_finkok_1 by clicking on printable button
 -
   !python {model: ir.attachment.facturae.mx}: |
     import netsvc, tools
@@ -107,7 +107,7 @@
         #print "cfdi_pac_finkok_msj",tools.ustr( cfdi_pac_finkok.msj )
         state = cfdi_pac_finkok.state
 -
-  I check that the state in l10n_mx attachment facturae cfdi_pac_finkok_1 is Printable
+  11 I check that the state in l10n_mx attachment facturae cfdi_pac_finkok_1 is Printable
 -
   !python {model: ir.attachment.facturae.mx}: |
     import netsvc, tools, os, base64
@@ -129,16 +129,16 @@
             state = 'no data in attach file'
     assert state=='printable', 'No printable state l10n_mx attachment facturae cfdi_pac_finkok'
 -
-  I generate a cancel facturae cfdi_pac_finkok_1 by clicking on cancel button
+  12 I generate a cancel facturae cfdi_pac_finkok_1 by clicking on cancel button
 -
  !workflow {model: account.invoice, action: invoice_cancel, ref: ai_pac_finkok_1}
 -
-  I check that customer invoice cfdi_pac_finkok_1 state is "cancel"
+  13 I check that customer invoice cfdi_pac_finkok_1 state is "cancel"
 -
   !assert {model: account.invoice, id: ai_pac_finkok_1}:
     - state == 'cancel'
 -
-  I check that attachment in invoice cfdi_pac_finkok_1 state is "cancel"
+  14 I check that attachment in invoice cfdi_pac_finkok_1 state is "cancel"
 -
   !python {model: ir.attachment.facturae.mx}: |
     cfdi_pac_finkok_ids = self.search(cr, uid, [('invoice_id', '=', ref("ai_pac_finkok_1") ), ('state', '=', 'cancel')], limit=1)
@@ -148,7 +148,7 @@
         state = cfdi_pac_finkok.state
     assert state=='cancel', 'No cancel state l10n_mx attachment facturae cfdi_pac_finkok'
 -
-  I check that customer invoice cfdi_pac_finkok_1 move_id is None
+  15 I check that customer invoice cfdi_pac_finkok_1 move_id is None
 -
   !assert {model: account.invoice, id: ai_pac_finkok_1}:
     - move_id.name == None
