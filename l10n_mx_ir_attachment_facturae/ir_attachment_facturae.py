@@ -337,6 +337,7 @@ class ir_attachment_facturae_mx(osv.Model):
         state = ''
         partner_mail = ''
         user_mail = ''
+        status = False
         company_id = self.pool.get('res.users').browse(
             cr, uid, uid, context=context).company_id.id
         invoice = self.browse(cr, uid, ids)[0].invoice_id
