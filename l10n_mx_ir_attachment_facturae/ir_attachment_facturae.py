@@ -34,7 +34,8 @@ import logging
 _logger = logging.getLogger(__name__)
 import traceback
 import sys
-
+from xml.dom import minidom
+import xml.dom.minidom
 
 class ir_attachment_facturae_mx(osv.Model):
     _name = 'ir.attachment.facturae.mx'
@@ -181,18 +182,19 @@ class ir_attachment_facturae_mx(osv.Model):
                 'res_id': invoice.id,
             }, context=None)
             if attach:
-                index_xml = attachment_obj.browse(cr, uid, attach).index_content
                 msj = _("Attached Successfully XML CFD 2.2")
             status = True
         else:
             raise osv.except_osv(_("Type Electronic Invoice Unknow!"), _(
                 "The Type Electronic Invoice:" + (type or '')))
         if status:
+            doc_xml = xml.dom.minidom.parseString(xml_data)
+            index_xml = doc_xml.toprettyxml()
             self.write(cr, uid, ids,
                        {'file_input': attach or False,
                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                            'msj': msj,
-                           'file_xml_sign_index': index_xml}, context=context)
+                           'file_input_index': index_xml}, context=context)
             wf_service.trg_validate(uid, self._name, ids[0], 'action_confirm', cr)
         return status
 
@@ -217,23 +219,20 @@ class ir_attachment_facturae_mx(osv.Model):
             type = data.type
             wf_service = netsvc.LocalService("workflow")
             attach_v3_2 = data.file_input and data.file_input.id or False
+            index_content = data.file_input and data.file_input.index_content.encode('utf-8') or False
             if 'cbb' in type:
                 msj = _("Signed")
                 status = True
             if 'cfd' in type and not 'cfdi' in type:
                 attach = data.file_input and data.file_input.id or False
-                index_xml = data.file_xml_sign_index or False
                 msj = _("Attached Successfully XML CFD 2.2\n")
                 status = True
             if 'cfdi' in type:
                 # upload file in custom module for pac
                 type__fc = self.get_driver_fc_sign()
                 if type in type__fc.keys():
-                    fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
-                        '.xml' or ''
-                    fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(
-                        cr, uid, [invoice.id], context=context)
-                    fdata = base64.encodestring(xml_data)
+                    fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
+                    fdata = base64.encodestring(index_content)
                     res = type__fc[type](cr, uid, [data.id], fdata, context=context)
                     msj = tools.ustr(res.get('msg', False))
                     index_xml = res.get('cfdi_xml', False)
@@ -257,6 +256,8 @@ class ir_attachment_facturae_mx(osv.Model):
                         status = True
                 else:
                     msj += _("Unknow driver for %s" % (type))
+            doc_xml = xml.dom.minidom.parseString(index_xml)
+            index_xml = doc_xml.toprettyxml()
             if status:
                 self.write(cr, uid, ids,
                        {'file_xml_sign': attach or False,
