@@ -106,33 +106,27 @@ class ir_attachment_facturae_mx(osv.Model):
             context = {}
         status = False
         try:
-            savepoint=1
-            cr.execute("SAVEPOINT ir_attachment_facturae_mx_savepoint1")
+            cr.execute("SAVEPOINT ir_attachment_facturae_mx_savepoint")
             status = self.signal_confirm(cr, uid, ids, context=context)
-            cr.execute("RELEASE SAVEPOINT ir_attachment_facturae_mx_savepoint1")
-            savepoint=2
-            cr.execute("SAVEPOINT ir_attachment_facturae_mx_savepoint2")
+            cr.execute("RELEASE SAVEPOINT ir_attachment_facturae_mx_savepoint")
+            cr.execute("SAVEPOINT ir_attachment_facturae_mx_savepoint")
             self.signal_sign(cr, uid, ids, context=context)
-            cr.execute("RELEASE SAVEPOINT ir_attachment_facturae_mx_savepoint2")
-            savepoint=3
-            cr.execute("SAVEPOINT ir_attachment_facturae_mx_savepoint3")
+            cr.execute("RELEASE SAVEPOINT ir_attachment_facturae_mx_savepoint")
+            cr.execute("SAVEPOINT ir_attachment_facturae_mx_savepoint")
             self.signal_printable(cr, uid, ids, context=context)
-            cr.execute("RELEASE SAVEPOINT ir_attachment_facturae_mx_savepoint3")
-            savepoint=4
-            cr.execute("SAVEPOINT ir_attachment_facturae_mx_savepoint4")
+            cr.execute("RELEASE SAVEPOINT ir_attachment_facturae_mx_savepoint")
+            cr.execute("SAVEPOINT ir_attachment_facturae_mx_savepoint")
             self.signal_send_customer(cr, uid, ids, context=context)
-            cr.execute("RELEASE SAVEPOINT ir_attachment_facturae_mx_savepoint4")
-            savepoint=5
-            cr.execute("SAVEPOINT ir_attachment_facturae_mx_savepoint5")
+            cr.execute("RELEASE SAVEPOINT ir_attachment_facturae_mx_savepoint")
+            cr.execute("SAVEPOINT ir_attachment_facturae_mx_savepoint")
             self.signal_send_backup(cr, uid, ids, context=context)
-            cr.execute("RELEASE SAVEPOINT ir_attachment_facturae_mx_savepoint5")
-            savepoint=6
-            cr.execute("SAVEPOINT ir_attachment_facturae_mx_savepoint6")
+            cr.execute("RELEASE SAVEPOINT ir_attachment_facturae_mx_savepoint")
+            cr.execute("SAVEPOINT ir_attachment_facturae_mx_savepoint")
             self.signal_done(cr, uid, ids, context=context)
-            cr.execute("RELEASE SAVEPOINT ir_attachment_facturae_mx_savepoint6")
+            cr.execute("RELEASE SAVEPOINT ir_attachment_facturae_mx_savepoint")
             status = True
         except Exception, e:
-            cr.execute("ROLLBACK TO SAVEPOINT ir_attachment_facturae_mx_savepoint%s",(savepoint,))
+            cr.execute("ROLLBACK TO SAVEPOINT ir_attachment_facturae_mx_savepoint")
             error = tools.ustr(traceback.format_exc())
             self.write(cr, uid, ids, {'msj': error}, context=context)
             _logger.error(error)
