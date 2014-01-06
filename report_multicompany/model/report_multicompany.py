@@ -33,7 +33,7 @@ class report_multicompany(osv.Model):
 
     _columns = {
         'company_id': fields.many2one('res.company', 'Company',),
-        'report_id': fields.many2one('ir.actions.report.xml', 'Report Template',
+        'report_id': fields.many2one('ir.actions.report.xml', 'Report Template', required=True,
                                      help="""This report template will be assigned for electronic invoicing in your company"""),
         'report_name': fields.related('report_id', 'report_name', type='char', string='Report Name', readonly=True),
         'sequence': fields.integer('Sequence'),
@@ -65,7 +65,7 @@ class report_multicompany(osv.Model):
             model_id = model_ids and model_ids[0] or False
         return {'value': {'model': model_id}}
 
-    def report_multicompany_create(self, cr, uid, report_id, sequence=False, context=None):
+    def report_multicompany_create(self, cr, uid, report_id, company_id=False, sequence=False, context=None):
         '''
             This function adds or updates a record in a report associated
             with a company in which if the record exists and performs
@@ -78,13 +78,12 @@ class report_multicompany(osv.Model):
             
         if sequence is False:
             sequence=10
-            
         actions_obj = self.pool.get('ir.actions.report.xml')
         ir_model_obj = self.pool.get('ir.model')
         model_id = False
         report_data = actions_obj.browse(cr, uid, report_id)
         sequence_min_id = self.search(
-            cr, uid, [('model', '=', report_data.model)], limit=1) or False
+            cr, uid, [('model', '=', report_data.model),('company_id','=',company_id)], limit=1) or False
         if sequence_min_id:
             sequence_min = self.browse(
                 cr, uid, sequence_min_id[0]).sequence - 10
@@ -92,7 +91,8 @@ class report_multicompany(osv.Model):
             sequence_min = sequence
 
         record_id = self.search(cr, uid, [('model', '=', report_data.model),
-                                          ('report_id', '=', report_id)])
+                                          ('report_id', '=', report_id),
+                                          ('company_id','=',company_id)])
         if record_id:
             self.write(cr, uid, record_id, {'sequence': sequence_min})
         else:
@@ -100,7 +100,7 @@ class report_multicompany(osv.Model):
                 cr, uid, [('model', '=', report_data.model)])
             model_id = model_ids and model_ids[0] or False
             
-            data_create = {
+            data_create = {'company_id': company_id,
                            'report_id': report_id,
                            'report_name': report_data.report_name,
                            'sequence': sequence_min,
