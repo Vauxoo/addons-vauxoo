@@ -433,14 +433,23 @@ class ir_attachment_facturae_mx(osv.Model):
                                         if mail.state == 'exception':
                                             msj = _(
                                                 '\nNot correct email of the user or customer. Check in Menu Configuración\Tecnico\Email\Emails\n')
+                                            raise osv.except_osv(_('Warning'), _('Not correct email of the user or customer. Check in Menu Configuración\Tecnico\Email\Emails'))
+                                    msj = _('Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s') % (
+                                    partner_mail, server_name)
+                                    self.write(cr, uid, ids, {
+                                            'msj': msj,
+                                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
+                                    wf_service.trg_validate(
+                                            uid, self._name, ids[0], 'action_send_customer', cr)
+                                    status = True
                                 else:
                                     msj = _('Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s') % (
-                                        partner_mail, server_name)
+                                    partner_mail, server_name)
                                     self.write(cr, uid, ids, {
-                                        'msj': msj,
-                                        'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
+                                            'msj': msj,
+                                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
                                     wf_service.trg_validate(
-                                        uid, self._name, ids[0], 'action_send_customer', cr)
+                                            uid, self._name, ids[0], 'action_send_customer', cr)
                                     status = True
                         else:
                             raise osv.except_osv(
