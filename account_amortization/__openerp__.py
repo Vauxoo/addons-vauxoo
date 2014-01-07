@@ -30,7 +30,6 @@
     "depends": [
                 "account_asset",
                 "account_asset_date",
-                "account_asset_analytic",
                ],
     "author": "Vauxoo",
     "licence": "AGPL v3",
@@ -39,20 +38,8 @@
     "description": """
 Vauxoo Account Amortization.
 ============================
-
-Work summary:
--------------
-- Copy and adapt the view account.asset.asset.form
-- Copy the view account.asset.asset.search
-- inherit action action_account_asset_asset_form to add domain and default
-	the new field its type
-	the new values ​​are deprecation and amortization,
-	in this case the domain is for type amortization
-- Create action for the new form view with domain and default
-	in this case the domain is for type deprecation
-- The action line call same tree view
-- The action line call the new form view
-- Menu for call the action
+This module allows to separate the expenses amortization of the assets 
+depreciation.
 
 This module adds:
 -----------------
@@ -60,7 +47,6 @@ This module adds:
 - Accounting > Amortization > Amortization
 - Configuration > Amortization
 - Configuration > Amortization > Amortization Categories
-
 
 See the documentation here:
 ---------------------------
