@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-10 06:47+0000\n"
-"X-Generator: Launchpad (build 16820)\n"
+"X-Launchpad-Export-Date: 2013-12-26 06:25+0000\n"
+"X-Generator: Launchpad (build 16877)\n"
 
 #. module: purchase_discount
 #: model:ir.model,name:purchase_discount.model_purchase_order
@@ -41,69 +41,3 @@ msgstr ""
 #: field:purchase.order.line,discount:0
 msgid "Discount (%)"
 msgstr "Desconto (%)"
-
-#~ msgid "Fax :"
-#~ msgstr "Fax :"
-
-#~ msgid "Date Req."
-#~ msgstr "Dados Req."
-
-#~ msgid "Disc. (%)"
-#~ msgstr "Desc. (%)"
-
-#~ msgid "Tél. :"
-#~ msgstr "Tél. :"
-
-#~ msgid "Purchase Order Lines With Discounts"
-#~ msgstr "Ordem de Compra Linhas com descontos"
-
-#~ msgid "Description"
-#~ msgstr "Description"
-
-#~ msgid "Total :"
-#~ msgstr "Total :"
-
-#~ msgid "Our Order Reference"
-#~ msgstr "Nossa Referência à Ordem"
-
-#~ msgid "Validated By"
-#~ msgstr "Validado Por"
-
-#~ msgid "Shipping address :"
-#~ msgstr "Endereço de entrega:"
-
-#~ msgid "TVA :"
-#~ msgstr "TVA :"
-
-#~ msgid "Qty"
-#~ msgstr "Qtde"
-
-#~ msgid "Net Total :"
-#~ msgstr "Net Total :"
-
-#~ msgid "Taxes"
-#~ msgstr "Impostos"
-
-#~ msgid "Purchase Order Confirmation N°"
-#~ msgstr "Ordem de Compra N°"
-
-#~ msgid "Date Ordered"
-#~ msgstr "Data do Pedido"
-
-#~ msgid "Invalid XML for View Architecture!"
-#~ msgstr "Invalido XML para Arquitetura da View"
-
-#~ msgid "Your Order Reference"
-#~ msgstr "Sua referência à ordem"
-
-#~ msgid "Net Price"
-#~ msgstr "Preço Líquido"
-
-#~ msgid "Unit Price"
-#~ msgstr "Preço unitário"
-
-#~ msgid "Request for Quotation N°"
-#~ msgstr "Solicitação de Cotação N °"
-
-#~ msgid "Taxes :"
-#~ msgstr "Impostos :"
