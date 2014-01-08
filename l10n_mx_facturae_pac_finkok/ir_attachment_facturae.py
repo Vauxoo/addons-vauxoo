@@ -299,7 +299,10 @@ class ir_attachment_facturae_mx(osv.Model):
                         FechaRegistro = resultado.Incidencias.Incidencia[0]['FechaRegistro']
                         raise orm.except_orm(_('Warning'), _('Inicidencias: %s.') % (inicidencias))
                 except:
-                    raise orm.except_orm(_('Warning'), _('Connection lost, verify your internet conection'))
+                    if inicidencias:
+                        raise orm.except_orm(_('Warning'), _('Error al timbrar XML, Incidencias: %s.') % (inicidencias))
+                    else:
+                        raise orm.except_orm(_('Warning'), _('Connection lost, verify your internet conection or '))
             else:
                 msg += 'Not found information from web services of PAC, verify that the configuration of PAC is correct'
                 raise osv.except_osv(_('Warning'), _(
