@@ -44,6 +44,7 @@ Features:
     """,
     'demo': [
         #'user_story_long_term_demo.xml'
+        'data/user_story_conf.xml',
         ],
     'test': [],
     'data': [
