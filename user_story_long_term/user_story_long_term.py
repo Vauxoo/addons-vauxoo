@@ -226,7 +226,72 @@ class user_story(osv.Model):
     _name = "user.story"
     _inherit = "user.story"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
-    
+
+    def send_mail_hu(self,cr,uid,ids,template,context=None):
+        imd_obj = self.pool.get('ir.model.data')
+        template_ids = imd_obj.search(
+            cr, uid, [('model', '=', 'email.template'), ('name', '=', template)])
+        if template_ids:
+            res_id = imd_obj.read(
+                cr, uid, template_ids, ['res_id'])[0]['res_id']
+            import pdb
+            pdb.set_trace()
+
+            followers = self.read(cr, uid, ids[0], [
+                                  'message_follower_ids'])['message_follower_ids']
+
+            
+            body_html = self.pool.get('email.template').read(
+                cr, uid, res_id, ['body_html']).get('body_html')
+            context.update({'default_template_id': res_id,
+                            'default_body': body_html,
+                            'default_use_template': True,
+                            'default_composition_mode': 'comment',
+                            'active_model': 'user.story',
+                            'default_partner_ids': followers,
+                            'mail_post_autofollow_partner_ids': followers,
+                            'active_id': ids and type(ids) is list and
+                            ids[0] or ids,
+                            'active_ids': ids and type(ids) is list and
+                            ids or [ids],
+                            })
+
+            mail_obj = self.pool.get('mail.compose.message')
+            fields = mail_obj.fields_get(cr, uid)
+            mail_ids = mail_obj.default_get(
+                cr, uid, fields.keys(), context=context)
+            mail_ids.update(
+                {'model': 'user.story', 'body': body_html, 'composition_mode': 'mass_mail', 'partner_ids': [(6, 0, followers)]})
+            mail_ids = mail_obj.create(cr, uid, mail_ids, context=context)
+            mail_obj.send_mail(cr, uid, [mail_ids], context=context)
+
+            mail_mail = self.pool.get('mail.mail')
+
+            hu = self.browse(cr, uid, ids[0], context=context)
+
+            mail_id = mail_mail.create(cr, uid,
+                       {
+                           'model': 'user.story',
+                           'res_id': hu.id,
+                           'subject':('#'+ str(hu.id) +' User Story - '+ hu.name),
+                           'body_html': body_html,
+                           'auto_delete': True,
+                       }, context=context)
+            
+            mail_mail.send(cr, uid, [mail_id],
+                           recipient_ids=followers,
+                           context=context)
+
+
+        return False
+
+    def write(self, cr, uid, ids, vals, context=None):
+        if 'accep_crit_ids' in vals:
+            print "cambio************"
+            self.send_mail_hu(cr,uid,ids,'template_send_email_hu',context)
+        return super(user_story, self).write(cr, uid, ids,
+                                             vals, context=context)
+
     #def search(self, cr, user, args, offset=0, limit=None, order=None, context=None, count=False):
     #    if user == 1:
     #        return super(user_story, self).search(cr, user, args, offset=offset, limit=limit, order=order, context=context, count=count)
