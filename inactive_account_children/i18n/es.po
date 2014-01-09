@@ -6,17 +6,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-21 23:09+0000\n"
-"PO-Revision-Date: 2013-06-21 23:09+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:11+0000\n"
+"PO-Revision-Date: 2013-11-07 08:02+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-12-26 06:26+0000\n"
+"X-Generator: Launchpad (build 16877)\n"
 
 #. module: inactive_account_children
-#: code:addons/inactive_account_children/wizard/inactive_account_wizard.py:62
+#: code:addons/inactive_account_children/wizard/inactive_account_wizard.py:63
 #, python-format
 msgid "You cannot remove an account that contains journal items."
 msgstr "No puede desactivar una cuenta que contiene apuntes."
@@ -33,13 +35,13 @@ msgid "Inactive Acounts"
 msgstr "Desactivar Cuentas"
 
 #. module: inactive_account_children
-#: model:ir.model,name:inactive_account_children.model_inactive_account_wizard
-msgid "inactive.account.wizard"
-msgstr "inactive.account.wizard"
+#: view:inactive.account.wizard:0
+msgid "or"
+msgstr "O"
 
 #. module: inactive_account_children
 #: code:addons/inactive_account_children/wizard/inactive_account_wizard.py:59
-#: code:addons/inactive_account_children/wizard/inactive_account_wizard.py:62
+#: code:addons/inactive_account_children/wizard/inactive_account_wizard.py:63
 #, python-format
 msgid "Error!"
 msgstr "Error!"
@@ -50,15 +52,15 @@ msgid "Inactive accounts"
 msgstr "Desactivar Cuentas"
 
 #. module: inactive_account_children
-#: code:addons/inactive_account_children/wizard/inactive_account_wizard.py:75
+#: code:addons/inactive_account_children/wizard/inactive_account_wizard.py:79
 #, python-format
 msgid "Warning!"
 msgstr "Warning!"
 
 #. module: inactive_account_children
-#: field:inactive.account.wizard,account_ids:0
-msgid "accounts"
-msgstr "Cuentas"
+#: model:ir.model,name:inactive_account_children.model_inactive_account_wizard
+msgid "inactive.account.wizard"
+msgstr "inactive.account.wizard"
 
 #. module: inactive_account_children
 #: view:inactive.account.wizard:0
@@ -66,10 +68,9 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: inactive_account_children
-#: code:addons/inactive_account_children/wizard/inactive_account_wizard.py:75
-#, python-format
-msgid "You cannotremove/deactivate an account which is set on a customeror supplier."
-msgstr "No puede eliminar/desactivar una cuenta que está establecida en un cliente o proveedor."
+#: field:inactive.account.wizard,account_ids:0
+msgid "accounts"
+msgstr "Cuentas"
 
 #. module: inactive_account_children
 #: code:addons/inactive_account_children/wizard/inactive_account_wizard.py:59
@@ -78,7 +79,11 @@ msgid "You cannot deactivate an account that contains journal items."
 msgstr "No puede desactivar una cuenta que contiene apuntes."
 
 #. module: inactive_account_children
-#: view:inactive.account.wizard:0
-msgid "or"
-msgstr "O"
-
+#: code:addons/inactive_account_children/wizard/inactive_account_wizard.py:79
+#, python-format
+msgid ""
+"You cannot remove/deactivate an account which is set on a customer or "
+"supplier."
+msgstr ""
+"No puede eliminar/desactivar una cuenta que está establecida en un cliente o "
+"proveedor."

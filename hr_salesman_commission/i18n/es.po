@@ -6,14 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.7\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2010-02-14 01:41:49+0000\n"
-"PO-Revision-Date: 2010-02-14 01:41:49+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:11+0000\n"
+"PO-Revision-Date: 2013-11-07 08:09+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-12-26 06:26+0000\n"
+"X-Generator: Launchpad (build 16877)\n"
 
 #. module: hr_salesman_commission
 #: model:ir.ui.menu,name:hr_salesman_commission.sales_commission_payment_new_mi
@@ -23,43 +25,12 @@ msgstr "Nueva Comisión"
 #. module: hr_salesman_commission
 #: model:ir.model,name:hr_salesman_commission.model_salesman_commission_payment_line
 msgid "salesman.commission.payment.line"
-msgstr ""
-
-#. module: hr_salesman_commission
-#: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
-msgstr "¡El nombre del objeto debe empezar con x_ y no contener ningún carácter especial!"
-
-#. module: hr_salesman_commission
-#: view:salesman.commission.payment:0
-msgid "Prepare Commission"
-msgstr "Preparar Comisión"
-
-#. module: hr_salesman_commission
-#: model:ir.module.module,description:hr_salesman_commission.module_meta_information
-msgid "Sales Commissions Report\n"
-"  Show the commissions based on the payments made by a particular salesman throughout the span of a specific period\n"
-"  TODO:\n"
-"  - Allow preparing the commisions to be paid (or been paid) to a particular salesman during certain period:\n"
-"        * Ordered by Payments Number,\n"
-"            + Show a Tree View\n"
-"            + Allow to print a report\n"
-"        * Grouped by Salesman,\n"
-"            + Show a Tree View\n"
-"            + Allow to print a report\n"
-"  - Allow pay those commissions and make the regarding entries to the intended journal\n"
-"  "
-msgstr ""
+msgstr "salesman.commission.payment.line"
 
 #. module: hr_salesman_commission
 #: view:salesman.commission.payment:0
 msgid "Execute Commission"
 msgstr "Ejecutar Comisión"
-
-#. module: hr_salesman_commission
-#: view:salesman.commission.payment:0
-msgid "Salesman Commission by Payment"
-msgstr "Comisión de Vendedores por Pagos"
 
 #. module: hr_salesman_commission
 #: field:salesman.commission.payment.line,period_id:0
@@ -89,9 +60,9 @@ msgid "Draft"
 msgstr "Borrador"
 
 #. module: hr_salesman_commission
-#: constraint:ir.actions.act_window:0
-msgid "Invalid model name in the action definition."
-msgstr "Nombre de modelo no válido en la definición de acción."
+#: view:salesman.commission.payment:0
+msgid "Prepare Commission"
+msgstr "Preparar Comisión"
 
 #. module: hr_salesman_commission
 #: field:salesman.commission.payment.line,debit:0
@@ -115,12 +86,7 @@ msgid "Print Commission"
 msgstr "Imprimir Comisión"
 
 #. module: hr_salesman_commission
-#: model:ir.module.module,shortdesc:hr_salesman_commission.module_meta_information
-msgid "Sales Commissions Report"
-msgstr "Reporte Comisiones de Venta"
-
-#. module: hr_salesman_commission
-#: model:ir.ui.menu,name:hr_salesman_commission.salesman_commission_mi
+#: model:ir.ui.menu,name:hr_salesman_commission.menu_salesman_commission
 #: view:salesman.commission.payment:0
 msgid "Salesman Commission"
 msgstr "Comisión de Vendedores"
@@ -138,7 +104,7 @@ msgstr "Día del Pago"
 #. module: hr_salesman_commission
 #: field:salesman.commission.payment.line,ref:0
 msgid "Ref."
-msgstr ""
+msgstr "Ref."
 
 #. module: hr_salesman_commission
 #: field:salesman.commission.payment.line,partner_id:0
@@ -156,9 +122,9 @@ msgid "Update Payments on Bank"
 msgstr "Actualizar pagos en Banco"
 
 #. module: hr_salesman_commission
-#: constraint:ir.ui.view:0
-msgid "Invalid XML for View Architecture!"
-msgstr "¡XML inválido para la definición de la vista!"
+#: view:salesman.commission.payment:0
+msgid "Salesman Commission by Payment"
+msgstr "Comisión de Vendedores por Pagos"
 
 #. module: hr_salesman_commission
 #: field:salesman.commission.payment.line,name:0
@@ -234,4 +200,3 @@ msgstr "Abierto"
 #: field:salesman.commission.payment.line,journal_id:0
 msgid "Journal"
 msgstr "Diario"
-

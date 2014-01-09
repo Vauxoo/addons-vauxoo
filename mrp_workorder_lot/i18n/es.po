@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: addons-vauxoo\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2013-09-25 20:11+0000\n"
+"POT-Creation-Date: 2013-11-07 01:09+0000\n"
 "PO-Revision-Date: 2013-09-25 21:56+0000\n"
 "Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
 "<humbertoarocha@gmail.com>\n"
@@ -15,8 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-10-21 04:58+0000\n"
-"X-Generator: Launchpad (build 16807)\n"
+"X-Launchpad-Export-Date: 2013-12-26 06:25+0000\n"
+"X-Generator: Launchpad (build 16877)\n"
 
 #. module: mrp_workorder_lot
 #: model:ir.actions.act_window,name:mrp_workorder_lot.mrp_workoder_by_lot_kanban_action
@@ -106,6 +106,18 @@ msgid ""
 msgstr ""
 
 #. module: mrp_workorder_lot
+#: help:res.company,batch_type:0
+msgid ""
+"Two options when management the batch work orders:\n"
+"\n"
+" - Avoid Production Bottleneck: Will create the batch work orders taking "
+"into a count the minium workcenter capacity. - Maxime Workcenter "
+"Productivity / Minimizing Production Cost: For every workcenter will create "
+"a batch of works orders that always explotes the product capacity of the "
+"workcenter.\n"
+msgstr ""
+
+#. module: mrp_workorder_lot
 #: view:mrp.workorder.lot:0
 msgid "WO LOT:"
 msgstr ""
@@ -123,17 +135,6 @@ msgstr ""
 #: code:addons/mrp_workorder_lot/wizard/mrp_consume_produce.py:181
 #, python-format
 msgid "Error!"
-msgstr ""
-
-#. module: mrp_workorder_lot
-#: help:mrp.config.settings,batch_type:0
-msgid ""
-"Two options when management the batch work orders:\n"
-"\n"
-" - Maximize Production Cost: For every workcenter will create a batch of "
-"works orders that always explotes the product capacity of the workcenter.\n"
-" - Avoid Production Bottleneck: Will create the batch work orders taking "
-"into a count the minium workcenter capacity."
 msgstr ""
 
 #. module: mrp_workorder_lot
@@ -167,14 +168,8 @@ msgid ""
 msgstr ""
 
 #. module: mrp_workorder_lot
-#: help:res.company,batch_type:0
-msgid ""
-"Two options when management the batch work orders:\n"
-"\n"
-" - Avoid Production Bottleneck: Will create the batch work orders taking "
-"into a count the minium workcenter capacity. - Maximize Production Cost: For "
-"every workcenter will create a batch of works orders that always explotes "
-"the product capacity of the workcenter.\n"
+#: model:ir.model,name:mrp_workorder_lot.model_stock_move
+msgid "Stock Move"
 msgstr ""
 
 #. module: mrp_workorder_lot
@@ -184,8 +179,9 @@ msgid "Active Work Orders"
 msgstr ""
 
 #. module: mrp_workorder_lot
-#: model:ir.model,name:mrp_workorder_lot.model_stock_move
-msgid "Stock Move"
+#: field:mrp.config.settings,batch_type:0
+#: field:res.company,batch_type:0
+msgid "Production Batch Process Type"
 msgstr ""
 
 #. module: mrp_workorder_lot
@@ -206,12 +202,6 @@ msgstr ""
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr ""
-
-#. module: mrp_workorder_lot
-#: field:mrp.config.settings,batch_type:0
-#: field:res.company,batch_type:0
-msgid "Production Batch Process Type"
 msgstr ""
 
 #. module: mrp_workorder_lot
@@ -281,6 +271,18 @@ msgid "Indicate the state of the Lot."
 msgstr ""
 
 #. module: mrp_workorder_lot
+#: help:mrp.config.settings,batch_type:0
+msgid ""
+"Two options when management the batch work orders:\n"
+"\n"
+" - Maxime Workcenter Productivity / Minimizing Production Cost: For every "
+"workcenter will create a batch of works orders that always explotes the "
+"product capacity of the workcenter.\n"
+" - Avoid Production Bottleneck: Will create the batch work orders taking "
+"into a count the minium workcenter capacity."
+msgstr ""
+
+#. module: mrp_workorder_lot
 #: code:addons/mrp_workorder_lot/wizard/mrp_consume_produce.py:279
 #, python-format
 msgid "You can Produce because you have not Ready to Finish Work Order Lots."
@@ -316,13 +318,13 @@ msgid "Work Order Lot"
 msgstr ""
 
 #. module: mrp_workorder_lot
-#: selection:mrp.workorder.lot,state:0
-msgid "In progress"
+#: selection:res.company,batch_type:0
+msgid "Maxime Workcenter Productivity / Minimizing Production Cost"
 msgstr ""
 
 #. module: mrp_workorder_lot
-#: selection:res.company,batch_type:0
-msgid "Maximize Production Cost"
+#: selection:mrp.workorder.lot,state:0
+msgid "In progress"
 msgstr ""
 
 #. module: mrp_workorder_lot
@@ -428,11 +430,6 @@ msgid ""
 msgstr ""
 
 #. module: mrp_workorder_lot
-#: model:product.template,name:mrp_workorder_lot.product_product_papas0_product_template
-msgid "papas"
-msgstr ""
-
-#. module: mrp_workorder_lot
 #: field:mrp.workorder.stage,message_is_follower:0
 msgid "Is a Follower"
 msgstr ""
@@ -445,11 +442,6 @@ msgstr ""
 #. module: mrp_workorder_lot
 #: model:ir.model,name:mrp_workorder_lot.model_mrp_consume
 msgid "mrp.consume"
-msgstr ""
-
-#. module: mrp_workorder_lot
-#: model:product.template,name:mrp_workorder_lot.product_product_papasfritas0_product_template
-msgid "Papas Fritas"
 msgstr ""
 
 #. module: mrp_workorder_lot

@@ -6,11 +6,107 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.3\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2011-09-13 17:55+0000\n"
-"PO-Revision-Date: 2011-09-13 17:55+0000\n"
+"POT-Creation-Date: 2013-11-07 01:11+0000\n"
+"PO-Revision-Date: 2013-11-07 05:08+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-12-26 06:26+0000\n"
+"X-Generator: Launchpad (build 16877)\n"
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "DATE :"
+msgstr ""
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "APPLICATION FOR REGISTRATION:"
+msgstr ""
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "FAX"
+msgstr ""
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "PERSON(S) OF CONTACT:"
+msgstr ""
+
+#. module: crm_profile_reporting
+#: model:ir.actions.report.xml,name:crm_profile_reporting.crm_report_profile
+msgid "Print Profile Report"
+msgstr ""
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "OTHER INFORMATION:"
+msgstr ""
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "RELATED COMPANY"
+msgstr ""
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "NOTES"
+msgstr ""
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "ANSWERS"
+msgstr ""
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "EMAIL"
+msgstr ""
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "CELL"
+msgstr ""
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "PHONE"
+msgstr ""
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "BILLING ADDRESS"
+msgstr ""
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "VAT"
+msgstr ""
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "QUESTIONS"
+msgstr ""
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "SUPPLIER OF LEGAL DOCUMENTS"
+msgstr ""
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "SOCIAL REASON"
+msgstr ""
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "CUSTOMER DATA"
+msgstr ""
+
+#. module: crm_profile_reporting
+#: report:crm.profile.reporting:0
+msgid "ALL NAME"
+msgstr ""

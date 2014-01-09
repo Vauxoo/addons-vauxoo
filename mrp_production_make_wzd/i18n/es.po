@@ -1,0 +1,133 @@
+# Spanish translation for addons-vauxoo
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the addons-vauxoo package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: addons-vauxoo\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-11-07 01:09+0000\n"
+"PO-Revision-Date: 2013-11-15 20:52+0000\n"
+"Last-Translator: Luis Torres - http://www.vauxoo.com <luis_t@vauxoo.com>\n"
+"Language-Team: Spanish <es@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-12-26 06:26+0000\n"
+"X-Generator: Launchpad (build 16877)\n"
+
+#. module: mrp_production_make_wzd
+#: code:addons/mrp_production_make_wzd/wizard/wizard_production_make.py:63
+#, python-format
+msgid "Not set a location of raw material for the product: "
+msgstr ""
+"No se ha establecido una ubicación de materia prima para el producto: "
+
+#. module: mrp_production_make_wzd
+#: field:wizard.production.make,date_planned:0
+msgid "Scheduled date"
+msgstr "Fecha planificada"
+
+#. module: mrp_production_make_wzd
+#: view:mrp.production:0
+msgid "Total Hours"
+msgstr "Horas Totales"
+
+#. module: mrp_production_make_wzd
+#: view:mrp.production:0
+msgid "Total Qty"
+msgstr "Cant. Total"
+
+#. module: mrp_production_make_wzd
+#: field:wizard.production.make,products_ids:0
+msgid "Products"
+msgstr "Productos"
+
+#. module: mrp_production_make_wzd
+#: model:ir.actions.act_window,name:mrp_production_make_wzd.act_mrp_product_produce_wizard
+#: view:wizard.production.make:0
+msgid "Production Make"
+msgstr "Realizar Producción"
+
+#. module: mrp_production_make_wzd
+#: model:ir.ui.menu,name:mrp_production_make_wzd.menu_action_mrp_product_produce_wizard_form
+msgid "Add Many Manufacturing Orders"
+msgstr "Agregar ordenes de producción"
+
+#. module: mrp_production_make_wzd
+#: field:wizard.production.make,location_src_id:0
+msgid "Raw Materials Location"
+msgstr "Ubicación materias primas"
+
+#. module: mrp_production_make_wzd
+#: view:wizard.production.make:0
+msgid "Destination Location"
+msgstr "Ubicación destino"
+
+#. module: mrp_production_make_wzd
+#: view:wizard.production.make:0
+msgid "Source Location"
+msgstr "Ubicación de Origen"
+
+#. module: mrp_production_make_wzd
+#: model:ir.model,name:mrp_production_make_wzd.model_wizard_production_make
+msgid "wizard.production.make"
+msgstr "wizard.production.make"
+
+#. module: mrp_production_make_wzd
+#: view:mrp.production:0
+msgid "Total Cycles"
+msgstr "Ciclos Totales"
+
+#. module: mrp_production_make_wzd
+#: view:mrp.production:0
+msgid "Manufacturing Orders"
+msgstr "Orden de Producción"
+
+#. module: mrp_production_make_wzd
+#: code:addons/mrp_production_make_wzd/wizard/wizard_production_make.py:63
+#: code:addons/mrp_production_make_wzd/wizard/wizard_production_make.py:68
+#, python-format
+msgid "Error!"
+msgstr "¡Error!"
+
+#. module: mrp_production_make_wzd
+#: view:wizard.production.make:0
+msgid "or"
+msgstr "o"
+
+#. module: mrp_production_make_wzd
+#: code:addons/mrp_production_make_wzd/wizard/wizard_production_make.py:68
+#, python-format
+msgid ""
+"Not set a location of finished products for the                        "
+"product: "
+msgstr ""
+"No se ha establecido una ubicación de productos terminados para el producto: "
+
+#. module: mrp_production_make_wzd
+#: view:wizard.production.make:0
+msgid "Add Production"
+msgstr "Agregar Producción"
+
+#. module: mrp_production_make_wzd
+#: view:wizard.production.make:0
+msgid "_Cancel"
+msgstr "Cancelar"
+
+#. module: mrp_production_make_wzd
+#: help:wizard.production.make,location_src_id:0
+msgid "Location where the system will look for components."
+msgstr "Ubicación donde el sistema buscará componentes."
+
+#. module: mrp_production_make_wzd
+#: field:wizard.production.make,location_dest_id:0
+msgid "Finished Products Location"
+msgstr "Ubicación de Productos Terminados"
+
+#. module: mrp_production_make_wzd
+#: help:wizard.production.make,location_dest_id:0
+msgid ""
+"Location where the system will stock the                finished products."
+msgstr "Ubicación donde el sistema almacenará los productos terminados."

@@ -6,11 +6,115 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-29 18:58+0000\n"
-"PO-Revision-Date: 2012-10-29 13:02-0600\n"
+"POT-Creation-Date: 2013-11-07 01:09+0000\n"
+"PO-Revision-Date: 2013-11-07 05:14+0000\n"
 "Last-Translator: fernando <fernando_ld@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Launchpad-Export-Date: 2013-12-26 06:26+0000\n"
+"X-Generator: Launchpad (build 16877)\n"
+
+#. module: mrp_production_wizard
+#: view:mrp.production.wizard:0
+#: field:mrp.production.wizard,product_id:0
+#: field:wizard.data,product_id_consume:0
+msgid "Product"
+msgstr ""
+
+#. module: mrp_production_wizard
+#: field:wizard.data,name:0
+msgid "Name"
+msgstr ""
+
+#. module: mrp_production_wizard
+#: model:ir.model,name:mrp_production_wizard.model_mrp_production_wizard
+msgid "mrp.production.wizard"
+msgstr ""
+
+#. module: mrp_production_wizard
+#: model:ir.model,name:mrp_production_wizard.model_mrp_production
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: mrp_production_wizard
+#: view:mrp.production.wizard:0
+msgid "Create production order"
+msgstr ""
+
+#. module: mrp_production_wizard
+#: code:addons/mrp_production_wizard/mrp.py:102
+#, python-format
+msgid "Error"
+msgstr ""
+
+#. module: mrp_production_wizard
+#: code:addons/mrp_production_wizard/mrp.py:102
+#, python-format
+msgid ""
+"The category of the product to produce has not                predefined "
+"locations "
+msgstr ""
+
+#. module: mrp_production_wizard
+#: view:mrp.production.wizard:0
+msgid "Qty"
+msgstr ""
+
+#. module: mrp_production_wizard
+#: field:wizard.data,product_qty:0
+msgid "Product Qty"
+msgstr ""
+
+#. module: mrp_production_wizard
+#: field:wizard.data,product_uom:0
+msgid "Product UOM"
+msgstr ""
+
+#. module: mrp_production_wizard
+#: view:mrp.production.wizard:0
+msgid "Produce without BoM"
+msgstr ""
+
+#. module: mrp_production_wizard
+#: view:mrp.production.wizard:0
+msgid "Products to consume"
+msgstr ""
+
+#. module: mrp_production_wizard
+#: code:addons/mrp_production_wizard/wizard/special_order_wizard.py:66
+#, python-format
+msgid "Manufacturing orders"
+msgstr ""
+
+#. module: mrp_production_wizard
+#: view:mrp.production.wizard:0
+msgid "Cancel"
+msgstr ""
+
+#. module: mrp_production_wizard
+#: model:ir.actions.act_window,name:mrp_production_wizard.mrp_production_wizard_act
+#: model:ir.ui.menu,name:mrp_production_wizard.mrp_production_wizard_action
+msgid "Special Order"
+msgstr ""
+
+#. module: mrp_production_wizard
+#: field:mrp.production.wizard,wiz_data:0
+msgid "Prod lines"
+msgstr ""
+
+#. module: mrp_production_wizard
+#: model:ir.model,name:mrp_production_wizard.model_wizard_data
+msgid "wizard.data"
+msgstr ""
+
+#. module: mrp_production_wizard
+#: view:mrp.production.wizard:0
+msgid "UOM"
+msgstr ""
+
+#. module: mrp_production_wizard
+#: field:wizard.data,mrp_production_wiz:0
+msgid "Padre"
+msgstr ""

@@ -1,0 +1,116 @@
+# Spanish translation for addons-vauxoo
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the addons-vauxoo package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: addons-vauxoo\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-11-07 01:06+0000\n"
+"PO-Revision-Date: 2013-11-14 17:56+0000\n"
+"Last-Translator: Saul Gonzalez <saul@vauxoo.com>\n"
+"Language-Team: Spanish <es@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-12-26 06:26+0000\n"
+"X-Generator: Launchpad (build 16877)\n"
+
+#. module: web_captcha
+#: model:ir.actions.act_window,name:web_captcha.action_web_captcha_tree
+msgid "Captcha Settings"
+msgstr "Configuración de Captcha"
+
+#. module: web_captcha
+#: field:res.captcha,recaptcha_private_key:0
+msgid "Recaptcha Private Key"
+msgstr "Clave Privada de Recaptcha"
+
+#. module: web_captcha
+#: help:res.company,recaptcha_id:0
+msgid "Computed captcha"
+msgstr "Captcha Procesado"
+
+#. module: web_captcha
+#: code:addons/web_captcha/model/res_company.py:43
+#, python-format
+msgid "Configuration Problems"
+msgstr "Problemas de Configuración"
+
+#. module: web_captcha
+#: model:ir.model,name:web_captcha.model_res_captcha
+msgid "Captcha Object"
+msgstr "Objeto Captcha"
+
+#. module: web_captcha
+#: view:res.captcha:0
+#: field:res.captcha,company_id:0
+msgid "Company"
+msgstr "Compañía"
+
+#. module: web_captcha
+#: field:res.captcha,recaptcha_key:0
+msgid "Recaptcha Public Key"
+msgstr "Clave Pública de Recaptcha"
+
+#. module: web_captcha
+#: model:ir.model,name:web_captcha.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: web_captcha
+#: view:res.captcha:0
+msgid "Captcha General Settings"
+msgstr "Configuración General de Captcha"
+
+#. module: web_captcha
+#: field:res.company,recaptcha_id:0
+msgid "Captcha Public Key"
+msgstr "Clave Pública de Captcha"
+
+#. module: web_captcha
+#: view:base.config.settings:0
+msgid "Captcha"
+msgstr "Captcha"
+
+#. module: web_captcha
+#: help:res.captcha,company_id:0
+msgid "Company that will use those captcha key"
+msgstr "Compañía que utilizará esas claves Captcha"
+
+#. module: web_captcha
+#: view:res.captcha:0
+msgid "Private Key"
+msgstr "Clave Privada"
+
+#. module: web_captcha
+#: view:res.captcha:0
+msgid "Public Key"
+msgstr "Clave Pública"
+
+#. module: web_captcha
+#: help:res.captcha,recaptcha_private_key:0
+msgid "Private key generated on http://code.google.com/recaptcha"
+msgstr "Clave Privada generada en http://code.google.com/recaptcha"
+
+#. module: web_captcha
+#: view:base.config.settings:0
+msgid "Configure Captcha"
+msgstr "Configurar Captcha"
+
+#. module: web_captcha
+#: code:addons/web_captcha/model/res_company.py:44
+#, python-format
+msgid ""
+"You must set a public key to be able to use the captcha widget. go to "
+"Settings > Config > General Settings > Captcha Section"
+msgstr ""
+"Debe establecer una Clave Pública para poder usar el widget de Captcha. Vaya "
+"a Configuración>Configuración>Configuraciones Generales, en la sección "
+"Captcha, pulsar Configurar Captcha."
+
+#. module: web_captcha
+#: help:res.captcha,recaptcha_key:0
+msgid "Public key generated on http://code.google.com/recaptcha"
+msgstr "Clave Pública generada en http://code.google.com/recaptcha"

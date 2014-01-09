@@ -6,75 +6,110 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-05-25 19:25+0000\n"
-"PO-Revision-Date: 2012-05-25 14:56-0400\n"
-"Last-Translator: Miguel <miguel.delgado07@gmail.com>\n"
+"POT-Creation-Date: 2013-11-07 01:07+0000\n"
+"PO-Revision-Date: 2013-11-08 19:01+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Launchpad-Export-Date: 2013-12-26 06:26+0000\n"
+"X-Generator: Launchpad (build 16877)\n"
 
-#. module: sale_multi_report
-#: code:addons/sale_multi_report/wizard/sale_order_multicompany.py:45
+#. module: sale_multicompany_report
+#: code:addons/sale_multicompany_report/order.py:35
+#: code:addons/sale_multicompany_report/wizard/sale_order_multicompany.py:46
 #, python-format
 msgid "There is no company configured for this user"
 msgstr "No hay compañia configurada para este usuario"
 
-#. module: sale_multi_report
-#: sql_constraint:sale.order:0
-msgid "Order Reference must be unique !"
-msgstr "¡La referencia del pedido debe ser única!"
+#. module: sale_multicompany_report
+#: view:print.sale.order.report:0
+msgid "or"
+msgstr "o"
 
-#. module: sale_multi_report
-#: code:addons/sale_multi_report/wizard/sale_order_multicompany.py:45
+#. module: sale_multicompany_report
+#: code:addons/sale_multicompany_report/order.py:35
+#: code:addons/sale_multicompany_report/wizard/sale_order_multicompany.py:46
 #, python-format
 msgid "ERROR !"
 msgstr "ERROR !"
 
-#. module: sale_multi_report
-#: model:ir.model,name:sale_multi_report.model_print_sale_order_report
+#. module: sale_multicompany_report
+#: model:ir.model,name:sale_multicompany_report.model_print_sale_order_report
 msgid "print.sale.order.report"
 msgstr "print.sale.order.report"
 
-#. module: sale_multi_report
-#: model:ir.model,name:sale_multi_report.model_res_company
+#. module: sale_multicompany_report
+#: field:res.company,sale_report_id:0
+msgid "Sale Order Report"
+msgstr "Reporte de Orden de Venta"
+
+#. module: sale_multicompany_report
+#: field:sale.order.line,att_bro:0
+msgid "Attach Brochure"
+msgstr "Adjuntar Folleto"
+
+#. module: sale_multicompany_report
+#: field:print.sale.order.report,report_format:0
+msgid "Report"
+msgstr "Reporte"
+
+#. module: sale_multicompany_report
+#: model:ir.model,name:sale_multicompany_report.model_res_company
 msgid "Companies"
 msgstr "Compañías"
 
-#. module: sale_multi_report
-#: constraint:res.company:0
-msgid "Error! You can not create recursive companies."
-msgstr "¡Error! No puede crear compañías recursivas."
-
-#. module: sale_multi_report
-#: model:ir.actions.act_window,name:sale_multi_report.sale_multicompany_report
-#: view:print.sale.order.report:0
-msgid "Print"
-msgstr "Imprimir"
-
-#. module: sale_multi_report
-#: view:sale.order:0
-msgid "Print With Attachments"
-msgstr "Imprimir con Archivos Adjuntos"
-
-#. module: sale_multi_report
-#: view:print.sale.order.report:0
-msgid "Cancel"
-msgstr "Cancelar"
-
-#. module: sale_multi_report
-#: model:ir.model,name:sale_multi_report.model_sale_order
-msgid "Sales Order"
-msgstr "Pedido de venta"
-
-#. module: sale_multi_report
+#. module: sale_multicompany_report
 #: view:print.sale.order.report:0
 msgid "Print Invoice"
 msgstr "Print Invoice"
 
-#. module: sale_multi_report
-#: model:ir.model,name:sale_multi_report.model_sale_order_line
+#. module: sale_multicompany_report
+#: view:print.sale.order.report:0
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: sale_multicompany_report
+#: field:print.sale.order.report,wa:0
+msgid "With Attachment?"
+msgstr "¿Con adjunto?"
+
+#. module: sale_multicompany_report
+#: model:ir.actions.act_window,name:sale_multicompany_report.sale_multicompany_report
+msgid "Print with Attachment"
+msgstr "Imprimir con Adjunto"
+
+#. module: sale_multicompany_report
+#: view:print.sale.order.report:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: sale_multicompany_report
+#: model:ir.model,name:sale_multicompany_report.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venta"
+
+#. module: sale_multicompany_report
+#: help:sale.order.line,att_bro:0
+msgid ""
+"If you check this\n"
+"        option, the first attachment related to the product_id marked as "
+"brochure will be printed\n"
+"        as extra info with sale order"
+msgstr ""
+"Si usted marcó esta\n"
+"        opción, el primer adjunto relacionado al product_id marcado como "
+"folleto se imprimirá\n"
+"        como información extra con la orden de venta"
+
+#. module: sale_multicompany_report
+#: field:print.sale.order.report,company:0
+msgid "Company"
+msgstr "Compañía"
+
+#. module: sale_multicompany_report
+#: model:ir.model,name:sale_multicompany_report.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Línea pedido de venta"
-

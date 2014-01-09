@@ -85,7 +85,7 @@ class update_amount_base_tax_wizard(osv.osv_memory):
         company_id = self.pool.get('res.company')._company_default_get(cr, uid,
             'update.amount.tax.wizard', context=context)
         category_iva_ids = acc_tax_category_obj.search(cr, uid, [\
-            ('name', 'in', ('IVA', 'IVA-EXENTO', 'IVA-RET'))], context=context)
+            ('name', 'in', ('IVA', 'IVA-EXENTO', 'IVA-RET', 'IVA-PART'))], context=context)
         tax_ids = acc_tax_obj.search(cr, uid, [
             ('company_id', '=' ,company_id),
             ('type_tax_use', '=', 'purchase'),
@@ -98,28 +98,23 @@ class update_amount_base_tax_wizard(osv.osv_memory):
             attrs.append(('amount_base', '=', False))
         lines_without_amount = move_line_obj.search(cr, uid, attrs, context=context)
         for move in move_line_obj.browse(cr, uid, lines_without_amount, context=context):
-            amount_tax = move.tax_id_secondary.amount
+            amount_tax = move.tax_id_secondary.tax_category_id.value_tax or move.tax_id_secondary.amount
             amount_base = 0
             if move.debit != 0:
                 amount_base = move.debit
-            if move.credit != 0:
+            elif move.credit != 0:
                 amount_base = move.credit
             if move.tax_id_secondary.amount == 0:
-                invoice_move_ids = invoice_obj.search(cr, uid, [\
-                    ('move_id','=', move.move_id.id)], context=context)
-                for invo in invoice_obj.browse(cr, uid, invoice_move_ids,\
-                    context=context):
-                    for tax_inv in invo.tax_line:
-                        if tax_inv.amount == 0:
-                            amount_base = tax_inv.base_amount
+                amount_base = move.tax_voucher_id and move.tax_voucher_id.amount_base or 0
             if amount_tax != 0:
                 cr.execute("""UPDATE account_move_line
                     SET amount_base = %s
                     WHERE id = %s""", (abs(amount_base/amount_tax), move.id))
             else:
-                cr.execute("""UPDATE account_move_line
-                    SET amount_base = %s
-                    WHERE id = %s""", (amount_base, move.id))
+                if amount_base:
+                    cr.execute("""UPDATE account_move_line
+                        SET amount_base = %s
+                        WHERE id = %s""", (amount_base, move.id))
         lines_incorects_ids = move_line_obj.search(cr, uid, [('company_id', '=', company_id),
             ('amount_base', '!=', False), ('tax_id_secondary', '=', False)], context=context)
         for line in lines_incorects_ids:

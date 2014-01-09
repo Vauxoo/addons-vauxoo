@@ -481,7 +481,7 @@
                                                                         <div mc:edit="std_content01" >
                                                                             <strong>Acesso Sistema</strong>
                                                                             <br />
-                                                                            <a>http://erp.vauxoo.com</a>
+                                                                            <a>https://erp.vauxoo.com</a>
                                                                             <br />
                                                                             <br />
                                                                             %if object.date_deadline:
@@ -500,7 +500,7 @@
                                                                             % endif
                                                                             <strong>Instruciones:</strong>
                                                                             <br />
-                                                                              <a href="http://erp.vauxoo.com/vauxoo_documentation/static/html/OperationManuals/project_and_task.html">Manejo de Tareas</a> 
+                                                                              <a href="https://erp.vauxoo.com/vauxoo_doc/static/html/OperationManuals/project_and_task.html">Manejo de Tareas</a> 
                                                                             <br />
                                                                             <br />
                                                                             %if object.manager_id.name:
@@ -1005,7 +1005,7 @@
                                                                         <div mc:edit="std_content01" >
                                                                             <strong>Acesso Sistema</strong>
                                                                             <br />
-                                                                            <a>http://erp.vauxoo.com</a>
+                                                                            <a>https://erp.vauxoo.com</a>
                                                                             <br />
                                                                             <br />
                                                                             %if object.date_deadline:
@@ -1024,7 +1024,7 @@
                                                                             % endif
                                                                             <strong>Instruciones:</strong>
                                                                             <br />
-                                                                            <a href="http://erp.vauxoo.com/vauxoo_documentation/static/html/OperationManuals/project_and_task.html">Manejo de Tareas</a> 
+                                                                            <a href="https://erp.vauxoo.com/vauxoo_doc/static/html/OperationManuals/project_and_task.html">Manejo de Tareas</a> 
                                                                             <br />
                                                                             <br />
                                                                             %if object.manager_id.name:

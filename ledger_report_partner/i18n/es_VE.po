@@ -1,17 +1,312 @@
-# Translation of OpenERP Server.
-# This file contains the translation of the following modules:
-#	* ledger_report_partner
+# Spanish (Venezuela) translation for addons-vauxoo
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the addons-vauxoo package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 6.0.4\n"
-"Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-04-23 14:04+0000\n"
-"PO-Revision-Date: 2012-04-23 14:04+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"Project-Id-Version: addons-vauxoo\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-11-07 01:10+0000\n"
+"PO-Revision-Date: 2013-11-07 04:28+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Spanish (Venezuela) <es_VE@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-12-26 06:26+0000\n"
+"X-Generator: Launchpad (build 16877)\n"
 
+#. module: ledger_report_partner
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "PAGINA:"
+msgstr ""
+
+#. module: ledger_report_partner
+#: selection:ledger.report,filter:0
+msgid "No Filters"
+msgstr ""
+
+#. module: ledger_report_partner
+#: model:ir.actions.report.xml,name:ledger_report_partner.report_ledger_request
+#: model:ir.actions.report.xml,name:ledger_report_partner.report_ledger_request_partner_field
+msgid "Request Ledger Report"
+msgstr ""
+
+#. module: ledger_report_partner
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "FECHA DE IMPRESION:"
+msgstr ""
+
+#. module: ledger_report_partner
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "Rif:"
+msgstr ""
+
+#. module: ledger_report_partner
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "Debit"
+msgstr ""
+
+#. module: ledger_report_partner
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "Filter By"
+msgstr ""
+
+#. module: ledger_report_partner
+#: view:ledger.report:0
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "General Ledger"
+msgstr ""
+
+#. module: ledger_report_partner
+#: code:addons/ledger_report_partner/report/request_ledger_report.py:320
+#: selection:ledger.report,sortby:0
+#, python-format
+msgid "Journal & Partner"
+msgstr ""
+
+#. module: ledger_report_partner
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "Entry Label"
+msgstr ""
+
+#. module: ledger_report_partner
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "Display Account"
+msgstr ""
+
+#. module: ledger_report_partner
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "Ref"
+msgstr ""
+
+#. module: ledger_report_partner
+#: field:ledger.report,company_id:0
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "Company"
+msgstr ""
+
+#. module: ledger_report_partner
+#: field:ledger.report,amount_currency:0
+msgid "With Currency"
+msgstr ""
+
+#. module: ledger_report_partner
+#: model:ir.actions.act_window,name:ledger_report_partner.action_ledger_report_menu
+msgid "Ledger Report"
+msgstr ""
+
+#. module: ledger_report_partner
+#: view:ledger.report:0
+msgid ""
+"This report allows you to print or generate a pdf of your general ledger "
+"with details of all your account journals"
+msgstr ""
+
+#. module: ledger_report_partner
+#: selection:ledger.report,display_account:0
+msgid "With balance is not equal to 0"
+msgstr ""
+
+#. module: ledger_report_partner
+#: code:addons/ledger_report_partner/report/request_ledger_report.py:318
+#: code:addons/ledger_report_partner/report/request_ledger_report.py:321
+#: selection:ledger.report,filter:0
+#: selection:ledger.report,sortby:0
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+#, python-format
+msgid "Date"
+msgstr ""
+
+#. module: ledger_report_partner
+#: field:ledger.report,chart_account_id:0
+msgid "Chart of Account"
+msgstr ""
+
+#. module: ledger_report_partner
+#: field:ledger.report,journal_ids:0
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "Journals"
+msgstr ""
+
+#. module: ledger_report_partner
+#: field:ledger.report,target_move:0
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "Target Moves"
+msgstr ""
+
+#. module: ledger_report_partner
+#: help:ledger.report,chart_account_id:0
+msgid "Select Charts of Accounts"
+msgstr ""
+
+#. module: ledger_report_partner
+#: field:ledger.report,date_to:0
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "End Date"
+msgstr ""
+
+#. module: ledger_report_partner
+#: field:ledger.report,period_from:0
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "Start Period"
+msgstr ""
+
+#. module: ledger_report_partner
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "Entries Sorted By"
+msgstr ""
+
+#. module: ledger_report_partner
+#: selection:ledger.report,target_move:0
+msgid "All Posted Entries"
+msgstr ""
+
+#. module: ledger_report_partner
+#: help:ledger.report,fiscalyear_id:0
+msgid "Keep empty for all open fiscal year"
+msgstr ""
+
+#. module: ledger_report_partner
+#: field:ledger.report,period_to:0
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "End Period"
+msgstr ""
+
+#. module: ledger_report_partner
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "Credit"
+msgstr ""
+
+#. module: ledger_report_partner
+#: field:ledger.report,fiscalyear_id:0
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "Fiscal Year"
+msgstr ""
+
+#. module: ledger_report_partner
+#: field:ledger.report,display_account:0
+msgid "Display Accounts"
+msgstr ""
+
+#. module: ledger_report_partner
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "Balance"
+msgstr ""
+
+#. module: ledger_report_partner
+#: help:ledger.report,partner_id:0
+msgid "Select the Partner"
+msgstr ""
+
+#. module: ledger_report_partner
+#: selection:ledger.report,display_account:0
+msgid "With movements"
+msgstr ""
+
+#. module: ledger_report_partner
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "Counterpart"
+msgstr ""
+
+#. module: ledger_report_partner
+#: selection:ledger.report,display_account:0
+msgid "All"
+msgstr ""
+
+#. module: ledger_report_partner
+#: help:ledger.report,initial_balance:0
+msgid ""
+"If you selected to filter by date or period, this field allow you to add a "
+"row to display the amount of debit/credit/balance that precedes the filter "
+"you've set."
+msgstr ""
+
+#. module: ledger_report_partner
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "Move"
+msgstr ""
+
+#. module: ledger_report_partner
+#: field:ledger.report,sortby:0
+msgid "Sort by"
+msgstr ""
+
+#. module: ledger_report_partner
+#: help:ledger.report,amount_currency:0
+msgid ""
+"It adds the currency column on report if the currency differs from the "
+"company currency."
+msgstr ""
+
+#. module: ledger_report_partner
+#: field:ledger.report,initial_balance:0
+msgid "Include Initial Balances"
+msgstr ""
+
+#. module: ledger_report_partner
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "Currency"
+msgstr ""
+
+#. module: ledger_report_partner
+#: model:ir.model,name:ledger_report_partner.model_ledger_report
+msgid "General Ledger Report"
+msgstr ""
+
+#. module: ledger_report_partner
+#: selection:ledger.report,filter:0
+msgid "Periods"
+msgstr ""
+
+#. module: ledger_report_partner
+#: field:ledger.report,landscape:0
+msgid "Landscape Mode"
+msgstr ""
+
+#. module: ledger_report_partner
+#: field:ledger.report,partner_id:0
+#: report:report.ledger_partner_field:0
+msgid "Partner"
+msgstr ""
+
+#. module: ledger_report_partner
+#: field:ledger.report,date_from:0
+#: report:report.ledger:0
+#: report:report.ledger_partner_field:0
+msgid "Start Date"
+msgstr ""
+
+#. module: ledger_report_partner
+#: field:ledger.report,filter:0
+msgid "Filter by"
+msgstr ""
+
+#. module: ledger_report_partner
+#: selection:ledger.report,target_move:0
+msgid "All Entries"
+msgstr ""
