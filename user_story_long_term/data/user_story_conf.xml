@@ -30,7 +30,7 @@
     SERVERT OUT
     =====================================================
     -->
-        <record id="template_outgoing_mail_server" model="ir.mail_server">
+        <record id="template_outgoing_mail_server_test" model="ir.mail_server">
             <field name="name">SERVER PRUEBA YANI</field>
             <field name="smtp_host">smtp.gmail.com</field>
             <field name="sequence">15</field>
@@ -45,14 +45,13 @@
     SEND EMAIL TEMPLATE
     =====================================================
     -->        
-    <!-- 
         <record id="template_send_email_hu" model="email.template">
             <field name="name">Accept Criteria</field>
             <field name="email_from">yanina.aular@vauxoo.com</field>
             <field name="model_id" ref="user_story.model_user_story" />
             <field name="subject">#${object.id} - ${object.name} - ${'Aqui va el usuario'}</field>
             <field name="auto_delete" eval="True"/>
-            <field name="mail_server_id" ref="template_outgoing_mail_server"/>
+            <field name="mail_server_id" ref="template_outgoing_mail_server_test"/>
             <field name="email_to">${object.user_id.email}</field>
             <field name="body_html"><![CDATA[<html>
     <head>
@@ -66,7 +65,6 @@
 
             ]]></field>
         </record>
-    -->        
 
     </data>
 </openerp>
