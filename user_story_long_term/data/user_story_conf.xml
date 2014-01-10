@@ -53,13 +53,14 @@
             <field name="auto_delete" eval="True"/>
             <field name="mail_server_id" ref="template_outgoing_mail_server_test"/>
             <field name="email_to">${object.user_id.email}</field>
+            <field name="sequence">5</field>
             <field name="body_html"><![CDATA[<html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>*|MC:SUBJECT|*</title>
 	</head>
     <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
-        PRUEBA
+        Has been accepted the NAME_CRI criteria.
     </body>
 </html>
 
