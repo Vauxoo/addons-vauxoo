@@ -231,6 +231,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 if 'demo' in wsdl_url or 'testing' in wsdl_url:
                     msg += _(u'WARNING, SIGNED IN TEST!!!!\n\n' + wsdl_url)
                 try:
+                    inicidencias = True
                     client = Client(wsdl_url, cache=None)
                     file_globals = invoice_obj._get_file_globals(
                         cr, uid, invoice_ids, context=context)
