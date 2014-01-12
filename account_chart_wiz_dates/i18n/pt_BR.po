@@ -1,0 +1,54 @@
+# Brazilian Portuguese translation for addons-vauxoo
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# This file is distributed under the same license as the addons-vauxoo package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: addons-vauxoo\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-11-07 01:13+0000\n"
+"PO-Revision-Date: 2014-01-11 14:24+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-01-12 05:49+0000\n"
+"X-Generator: Launchpad (build 16890)\n"
+
+#. module: account_chart_wiz_dates
+#: field:account.chart,end_date:0
+msgid "End date"
+msgstr ""
+
+#. module: account_chart_wiz_dates
+#: view:account.chart:0
+#: selection:account.chart,filter:0
+msgid "Dates"
+msgstr ""
+
+#. module: account_chart_wiz_dates
+#: model:ir.model,name:account_chart_wiz_dates.model_account_chart
+msgid "Account chart"
+msgstr ""
+
+#. module: account_chart_wiz_dates
+#: field:account.chart,filter:0
+msgid "Filter"
+msgstr ""
+
+#. module: account_chart_wiz_dates
+#: field:account.chart,initial_date:0
+msgid "Initial date"
+msgstr ""
+
+#. module: account_chart_wiz_dates
+#: selection:account.chart,filter:0
+msgid "Periods"
+msgstr ""
+
+#. module: account_chart_wiz_dates
+#: selection:account.chart,filter:0
+msgid "Unfiltered"
+msgstr ""
