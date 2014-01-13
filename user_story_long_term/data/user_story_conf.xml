@@ -8,19 +8,19 @@
         </record>
         
         <record id="criteria_record_1" model="acceptability.criteria">
-            <field name="name">Criterio 1 Story 1</field>
+            <field name="name">Sección de Contacto e Inicio</field>
             <field name="scenario">Scenario 1</field>
             <field name="accep_crit_id" ref="user_story_record_1"/>
         </record>
         
         <record id="criteria_record_2" model="acceptability.criteria">
-            <field name="name">Criterio 2 Story 1</field>
+            <field name="name">Diseño elegante con bordes redondeados</field>
             <field name="scenario">Scenario 2</field>
             <field name="accep_crit_id" ref="user_story_record_1"/>
         </record>
 
         <record id="criteria_record_3" model="acceptability.criteria">
-            <field name="name">Criterio 3 Story 1</field>
+            <field name="name">Enlace a redes sociales</field>
             <field name="scenario">Scenario 3</field>
             <field name="accep_crit_id" ref="user_story_record_1"/>
         </record>
@@ -30,6 +30,7 @@
     SERVERT OUT
     =====================================================
     -->
+    <!-- 
         <record id="template_outgoing_mail_server_test" model="ir.mail_server">
             <field name="name">SERVER PRUEBA YANI</field>
             <field name="smtp_host">smtp.gmail.com</field>
@@ -39,33 +40,7 @@
             <field name="smtp_user">yanina.aular@vauxoo.com</field>
             <field name="smtp_pass"></field>
         </record>
-
-    <!-- 
-    =====================================================
-    SEND EMAIL TEMPLATE
-    =====================================================
-    -->        
-        <record id="template_send_email_hu" model="email.template">
-            <field name="name">Accept Criteria</field>
-            <field name="email_from">yanina.aular@vauxoo.com</field>
-            <field name="model_id" ref="user_story.model_user_story" />
-            <field name="subject">#${object.id} - ${object.name} - ${'Aqui va el usuario'}</field>
-            <field name="auto_delete" eval="True"/>
-            <field name="mail_server_id" ref="template_outgoing_mail_server_test"/>
-            <field name="email_to">${object.user_id.email}</field>
-            <field name="sequence">5</field>
-            <field name="body_html"><![CDATA[<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>*|MC:SUBJECT|*</title>
-	</head>
-    <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
-        Has been accepted the NAME_CRI criteria.
-    </body>
-</html>
-
-            ]]></field>
-        </record>
+    -->
 
     </data>
 </openerp>

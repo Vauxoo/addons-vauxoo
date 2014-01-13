@@ -234,8 +234,6 @@ class user_story(osv.Model):
         if template_ids:
             res_id = imd_obj.read(
                 cr, uid, template_ids, ['res_id'])[0]['res_id']
-            import pdb
-            pdb.set_trace()
 
             followers = self.read(cr, uid, ids[0], [
                                   'message_follower_ids'])['message_follower_ids']
@@ -261,7 +259,7 @@ class user_story(osv.Model):
             user_id = self.pool.get('res.users').browse(cr,uid,[uid],context=context)[0]
 
             body_html = body_html.replace('Has been accepted',user_id.name + ' has been accepted')
-            
+
             mail_mail = self.pool.get('mail.mail')
             mail_id = mail_mail.create(cr, uid,
                        {
