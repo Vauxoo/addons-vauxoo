@@ -192,6 +192,7 @@ class ir_attachment_facturae_mx(osv.Model):
             file = False
             msg = ''
             cfdi_xml = False
+            status = False
             pac_params_ids = pac_params_obj.search(cr, uid, [
                 ('method_type', '=', 'pac_sf_firmar'), (
                     'company_id', '=', invoice.company_emitter_id.id), (
@@ -293,6 +294,7 @@ class ir_attachment_facturae_mx(osv.Model):
                         if cfdi_xml:
                             invoice_obj.write(cr, uid, [invoice.id], cfdi_data)
                             cfdi_data['cfdi_xml'] = cfdi_xml
+                            status = True
                         else:
                             msg += _(u"Can't extract the file XML of PAC")
                     else:
@@ -302,6 +304,6 @@ class ir_attachment_facturae_mx(osv.Model):
                 msg += 'Not found information from web services of PAC, verify that the configuration of PAC is correct'
                 raise osv.except_osv(_('Warning'), _(
                     'Not found information from web services of PAC, verify that the configuration of PAC is correct'))
-            return {'file': file, 'msg': msg, 'cfdi_xml': cfdi_xml}
+            return {'file': file, 'msg': msg, 'cfdi_xml': cfdi_xml, 'status': status}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
