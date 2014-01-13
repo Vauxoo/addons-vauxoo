@@ -172,14 +172,14 @@ class cfdi_register(osv.TransientModel):
         
     }
 
-    def fields_view_get(self, cr, uid, view_id=None, view_type=False, context=None, toolbar=False,
-            submenu=False):
-        if context.get('fromview') and len(self._get_domain_contracts(cr, uid,context=context)) == 0:
-            mod_obj = self.pool.get('ir.model.data') 
-            model, view_id = mod_obj.get_object_reference(cr, uid, 'contpaq_openerp_vauxoo',
-                'wizard_contact_form_view_nocontract')
-        return super(cfdi_register, self).fields_view_get(cr, uid, view_id=view_id,
-                view_type=view_type, context=context, toolbar=toolbar, submenu=submenu)
+#    def fields_view_get(self, cr, uid, view_id=None, view_type=False, context=None, toolbar=False,
+#            submenu=False):
+#        if context.get('fromview') and len(self._get_domain_contracts(cr, uid,context=context)) == 0:
+#            mod_obj = self.pool.get('ir.model.data') 
+#            model, view_id = mod_obj.get_object_reference(cr, uid, 'contpaq_openerp_vauxoo',
+#                'wizard_contact_form_view_nocontract')
+#        return super(cfdi_register, self).fields_view_get(cr, uid, view_id=view_id,
+#                view_type=view_type, context=context, toolbar=toolbar, submenu=submenu)
 
     def _get_process(self, cr, uid, context=None):
         """
