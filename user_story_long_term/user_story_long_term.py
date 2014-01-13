@@ -245,44 +245,32 @@ class user_story(osv.Model):
             body_html = self.pool.get('email.template').read(
                 cr, uid, res_id, ['body_html']).get('body_html')
             body_html = body_html.replace('NAME_CRI',criteria[1])
-            context.update({'default_template_id': res_id,
-                            'default_subject':'sdfasdf',
+            context.update({
                             'default_body': body_html,
-                            'default_use_template': True,
-                            'default_composition_mode': 'comment',
-                            'active_model': 'user.story',
-                            'default_partner_ids': followers,
-                            'mail_post_autofollow_partner_ids': followers,
-                            'active_id': ids and type(ids) is list and
-                            ids[0] or ids,
-                            'active_ids': ids and type(ids) is list and
-                            ids or [ids],
+           #                 'default_template_id': res_id,
+           #                 'default_use_template': True,
+           #                 'default_composition_mode': 'comment',
+           #                 'active_model': 'user.story',
+           #                 'default_partner_ids': followers,
+           #                 'mail_post_autofollow_partner_ids': followers,
+           #                 'active_id': ids and type(ids) is list and
+           #                 ids[0] or ids,
+           #                 'active_ids': ids and type(ids) is list and
+           #                 ids or [ids],
                             })
-            user_id = self.pool.get('res.users').browse(cr,uid,[uid],context=context)
+            user_id = self.pool.get('res.users').browse(cr,uid,[uid],context=context)[0]
 
-           # mail_obj = self.pool.get('mail.compose.message')
-           # fields = mail_obj.fields_get(cr, uid)
-           # mail_ids = mail_obj.default_get(
-           #     cr, uid, fields.keys(), context=context)
-           # mail_ids.update(
-           #         {'subject':'Accepted '+ ' Criteria '+ ' - '+  criteria[1],'model':
-           #             'user.story', 'body':
-           #             body_html, 'composition_mode': 'mass_mail', 'partner_ids': [(6, 0, followers)]})
-           # mail_ids = mail_obj.create(cr, uid, mail_ids, context=context)
-           # mail_obj.send_mail(cr, uid, [mail_ids], context=context)
-
-            
-            body_html = body_html.replace('Has been accepted',user_id[0].name + ' has been accepted')
+            body_html = body_html.replace('Has been accepted',user_id.name + ' has been accepted')
             
             mail_mail = self.pool.get('mail.mail')
             mail_id = mail_mail.create(cr, uid,
                        {
                            'model': 'user.story',
                            'res_id': hu.id,
-                           'subject': _('User Story #'+ str(hu.id) +' - '+ hu.name + ', Accepted '+ \
-                               ' Criteria '+ ' - '+  criteria[1]),
+                           'subject':'Accepted '+ ' Criteria '+ ' - '+  criteria[1],
                            'body_html': body_html,
-                           'auto_delete': True,
+                           'auto_delete': False,
+                           'email_from': user_id.email,
                        }, context=context)
             mail_mail.send(cr, uid, [mail_id],
                            recipient_ids=followers,
@@ -297,8 +285,6 @@ class user_story(osv.Model):
         if 'accep_crit_ids' in vals:
             ac_obj = self.pool.get('acceptability.criteria')
             criteria = [False, False]
-            import pdb
-            pdb.set_trace()
             for ac in vals.get('accep_crit_ids'):
                 if ac[2] and ac[2].get('accepted', False):
                     ac_brw = ac_obj.browse(cr, uid, ac[1], context=context)
