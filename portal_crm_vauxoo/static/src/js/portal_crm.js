@@ -15,8 +15,12 @@ instance.web.form.FieldEmailBS3 = instance.web.form.FieldEmail.extend({
 instance.web.form.FieldTextBS3 = instance.web.form.FieldText.extend({                                    
     template: 'FieldTextBS3',
 });  
+instance.web.form.FieldBinaryBS3 = instance.web.form.FieldBinaryFile.extend({                                   
+    template: 'FieldBinaryBS3',
+});
 instance.web.form.widgets.add('FieldCharBS3','instance.web.form.FieldCharBS3');
 instance.web.form.widgets.add('FieldEmailBS3','instance.web.form.FieldEmailBS3');
 instance.web.form.widgets.add('FieldTextBS3','instance.web.form.FieldTextBS3');
+instance.web.form.widgets.add('FieldBinaryBS3','instance.web.form.FieldBinaryBS3');                     
 };
 
