@@ -94,29 +94,6 @@ class account_invoice(osv.Model):
     _defaults = {
         #'date_invoice': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
-
-    def create(self, cr, uid, vals, context=None):
-        if context is None:
-            context = {}
-        res = self.assigned_datetime(cr, uid, vals, context=context)
-        if res:
-            vals.update(res)
-        return super(account_invoice, self).create(cr, uid, vals, context)
-
-    def write(self, cr, uid, ids, vals, context=None):
-        if context is None:
-            context = {}
-        res = {}
-        if vals.get('date_invoice', False):
-            vals.update({'invoice_datetime': False})
-            res = self.assigned_datetime(cr, uid, vals, context=context)
-        if vals.get('invoice_datetime', False):
-            vals.update({'date_invoice' : False})
-            res = self.assigned_datetime(cr, uid, vals, context=context)
-        if res:
-            vals.update(res)
-        return super(account_invoice, self).write(cr, uid, ids, vals,
-                                                            context=context)
         
     def copy(self, cr, uid, id, default=None, context=None):
         if context is None:
@@ -166,7 +143,6 @@ class account_invoice(osv.Model):
 
             res['invoice_datetime'] = dt_invoice
             res['date_invoice'] = values['date_invoice']
-            return res
             
         if values.get('invoice_datetime', False) and not\
             values.get('date_invoice', False):
@@ -175,7 +151,6 @@ class account_invoice(osv.Model):
                 tools.DEFAULT_SERVER_DATETIME_FORMAT), context=context)
             res['date_invoice'] = date_invoice
             res['invoice_datetime'] = values['invoice_datetime']
-            return res
         
         if 'invoice_datetime' in values  and 'date_invoice' in values:
             if values['invoice_datetime'] and values['date_invoice']:
@@ -185,9 +160,20 @@ class account_invoice(osv.Model):
                 if date_invoice != values['date_invoice']:
                     raise osv.except_osv(_('Warning!'),
                             _('Invoice dates should be equal'))
-#remove validation because don't use anymore
-#        if  not values.get('invoice_datetime', False) and\
-#                                        not values.get('date_invoice', False):
-#            res['date_invoice'] = False
-#            res['invoice_datetime'] = False
+                            
+        if  not values.get('invoice_datetime', False) and\
+                                        not values.get('date_invoice', False):
+            res['date_invoice'] = fields.date.context_today(self,cr,uid,context=context)
+            res['invoice_datetime'] = fields.datetime.now()
+            
         return res
+
+    def action_move_create(self, cr, uid, ids, context=None):
+        for inv in self.browse(cr, uid, ids, context=context):
+            vals_date = self.assigned_datetime(cr, uid,
+                {'invoice_datetime': inv.invoice_datetime,
+                    'date_invoice': inv.date_invoice},
+                    context=context)
+            self.write(cr, uid, ids, vals_date, context=context)
+        return super(account_invoice,
+                        self).action_move_create(cr, uid, ids, context=context)

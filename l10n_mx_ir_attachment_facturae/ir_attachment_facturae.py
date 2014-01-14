@@ -227,6 +227,7 @@ class ir_attachment_facturae_mx(osv.Model):
             if 'cfd' in type and not 'cfdi' in type:
                 attach = data.file_input and data.file_input.id or False
                 msj = _("Attached Successfully XML CFD 2.2\n")
+                index_xml = index_content
                 status = True
             if 'cfdi' in type:
                 # upload file in custom module for pac
@@ -260,6 +261,9 @@ class ir_attachment_facturae_mx(osv.Model):
             doc_xml = xml.dom.minidom.parseString(index_xml)
             index_xml = doc_xml.toprettyxml()
             if status:
+                if index_xml:
+                    doc_xml = xml.dom.minidom.parseString(index_xml)
+                    index_xml = doc_xml.toprettyxml()
                 self.write(cr, uid, ids,
                        {'file_xml_sign': attach or False,
                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
