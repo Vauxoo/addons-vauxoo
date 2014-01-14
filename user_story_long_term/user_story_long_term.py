@@ -278,16 +278,19 @@ class user_story(osv.Model):
         return False
 
     def write(self, cr, uid, ids, vals, context=None):
-        res = super(user_story, self).write(cr, uid, ids,
-                                             vals, context=context)
+        res = super(user_story, self).write(cr, uid, ids, vals, context=context)
+
         if 'accep_crit_ids' in vals:
             ac_obj = self.pool.get('acceptability.criteria')
             criteria = [False, False]
             for ac in vals.get('accep_crit_ids'):
                 if ac[2] and ac[2].get('accepted', False):
-                    ac_brw = ac_obj.browse(cr, uid, ac[1], context=context)
-                    criteria[0] = ac[1]
-                    criteria[1] = ac_brw.name
+                    if ac[1]:
+                        ac_brw = ac_obj.browse(cr, uid, ac[1] , context=context)
+                        #criteria[0] = ac[1]
+                        criteria[1] = ac_brw.name
+                    else:
+                        criteria[1] = ac[2].get('name', False)
                     self.send_mail_hu(cr,uid,ids,'template_send_email_hu', criteria,context)
         return res
 

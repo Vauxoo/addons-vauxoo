@@ -25,22 +25,5 @@
             <field name="accep_crit_id" ref="user_story_record_1"/>
         </record>
 
-    <!-- 
-    =====================================================
-    SERVERT OUT
-    =====================================================
-    -->
-    <!-- 
-        <record id="template_outgoing_mail_server_test" model="ir.mail_server">
-            <field name="name">SERVER PRUEBA YANI</field>
-            <field name="smtp_host">smtp.gmail.com</field>
-            <field name="sequence">15</field>
-            <field name="smtp_port">465</field>
-            <field name="smtp_encryption">ssl</field>
-            <field name="smtp_user">yanina.aular@vauxoo.com</field>
-            <field name="smtp_pass"></field>
-        </record>
-    -->
-
     </data>
 </openerp>
