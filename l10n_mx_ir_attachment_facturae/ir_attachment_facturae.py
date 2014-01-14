@@ -258,8 +258,6 @@ class ir_attachment_facturae_mx(osv.Model):
                         status = True
                 else:
                     msj += _("Unknow driver for %s" % (type))
-            doc_xml = xml.dom.minidom.parseString(index_xml)
-            index_xml = doc_xml.toprettyxml()
             if status:
                 if index_xml:
                     doc_xml = xml.dom.minidom.parseString(index_xml)
