@@ -339,8 +339,9 @@
                     </td>
                 </tr>
             </table>
-        %else:
+        <!--%else:
             <p> ${_('La aprobaci&oacute;n CBB no pudo ser obtenida, por favor contacte a su administrador')}
+        -->
         %endif
         <!--code for cfd22-->
         %if o.invoice_sequence_id.approval_id.type == 'cfd22':
