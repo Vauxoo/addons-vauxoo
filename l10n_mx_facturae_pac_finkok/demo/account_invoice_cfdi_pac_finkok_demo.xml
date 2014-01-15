@@ -2,7 +2,7 @@
 <openerp>
     <data noupdate="1">
         <!-- Invoices -->
-        <record id="account_invoice_cfdi_pac_finkok0" model="account.invoice">
+        <record id="ai_pac_finkok_0" model="account.invoice">
             <field name="payment_term" ref="account.account_payment_term"/>
             <field name="currency_id" ref="base.EUR"/>
             <field name="account_id" ref="account.a_recv"/>
@@ -14,13 +14,14 @@
             <field name="state">draft</field>
             <field name="type">out_invoice</field>
         </record>
-        <record id="account_invoice_cfdi_pac_finkok_line" model="account.invoice.line">
+        <record id="ail_pac_finkok_0" model="account.invoice.line">
             <field name="name">PC Assemble + Custom RAM (PC on Demand)</field>
             <field name="product_id" ref="product.product_product_5"/>
             <field name="price_unit" eval="900.0" />
             <field name="uos_id" ref="product.product_uom_unit"/>
-            <field name="invoice_id" ref="account_invoice_cfdi_pac_finkok0"/>
+            <field name="invoice_id" ref="ai_pac_finkok_0"/>
             <field name="quantity">32</field>
+            <field name="account_id" ref="account.a_expense"/>
         </record>
     </data>
 </openerp>
