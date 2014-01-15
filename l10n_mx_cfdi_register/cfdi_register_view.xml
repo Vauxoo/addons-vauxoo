@@ -366,6 +366,7 @@
 
         <menuitem name="CFDI Register"
                   id="company_cfdi_register"
+                  groups="l10n_mx_cfdi_register.register_files_groups"
                   sequence="1"/>
         <menuitem name="CFDI"
                   id="company_cfdi_register2"

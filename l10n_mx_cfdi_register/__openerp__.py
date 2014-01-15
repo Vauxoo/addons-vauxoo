@@ -26,18 +26,9 @@
     'category': 'Vauxoo Ondemmand',
     'complexity': 'easy',
     'description': """
-Contpaq OpenERP onDemmand Service
+CFDI Register Files
+===================
 
-The plan for Contpaq Openerp:
-========================================
-
-1.- Only visible in the Client Dashboard.
-2.- Webserve available to upload the Database.
-
-THe logic is this.
-
-Client Pay (Gain Positive Money Balance) > Client gain access to View to upload
-> Client Upload > Server make the magic > Server Send A message "All ready"
     """,
     'author': 'Vauxoo',
     'depends': [
@@ -46,6 +37,7 @@ Client Pay (Gain Positive Money Balance) > Client gain access to View to upload
                 'account', #Necesary to compute balance.
                 ],
     'data': [
+        'security/register_cfdi_security.xml',
         'cfdi_register_view.xml',
     ],
     'test': [

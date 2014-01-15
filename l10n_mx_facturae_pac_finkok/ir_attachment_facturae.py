@@ -105,6 +105,7 @@ class ir_attachment_facturae_mx(osv.Model):
         msg = ''
         folio_cancel = ''
         invoices = []
+        status = False
         certificate_obj = self.pool.get('res.company.facturae.certificate')
         pac_params_obj = self.pool.get('params.pac')
         invoice_obj = self.pool.get('account.invoice')
@@ -162,6 +163,7 @@ class ir_attachment_facturae_mx(osv.Model):
                         invoice_obj.write(cr, uid, [invoice.id], {
                                         'cfdi_fecha_cancelacion': time.strftime('%Y-%m-%d %H:%M:%S')
                         })
+                        status = True
                     else:
                         if EstatusUUID in dict_error:
                             if not ('demo' in wsdl_url or 'testing' in wsdl_url):
@@ -170,7 +172,7 @@ class ir_attachment_facturae_mx(osv.Model):
                                  msg += _('Mensaje %s %s Code: %s') % (msg, dict_error[EstatusUUID], EstatusUUID)
             else:
                 msg = _('Not found information of webservices of PAC, verify that the configuration of PAC is correct')
-        return {'message': msg}
+        return {'message': msg, 'status': status}
     
     def _finkok_stamp(self, cr, uid, ids, fdata=None, context=None):
         """
@@ -199,6 +201,7 @@ class ir_attachment_facturae_mx(osv.Model):
             msg = ''
             folio_fiscal = ''
             cfdi_xml = False
+            status = False
             pac_params_ids = pac_params_obj.search(cr, uid, [
                 ('method_type', '=', 'pac_firmar'), (
                     'company_id', '=', invoice.company_emitter_id.id), (
@@ -228,6 +231,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 if 'demo' in wsdl_url or 'testing' in wsdl_url:
                     msg += _(u'WARNING, SIGNED IN TEST!!!!\n\n' + wsdl_url)
                 try:
+                    inicidencias = True
                     client = Client(wsdl_url, cache=None)
                     file_globals = invoice_obj._get_file_globals(
                         cr, uid, invoice_ids, context=context)
@@ -299,11 +303,14 @@ class ir_attachment_facturae_mx(osv.Model):
                         FechaRegistro = resultado.Incidencias.Incidencia[0]['FechaRegistro']
                         raise orm.except_orm(_('Warning'), _('Inicidencias: %s.') % (inicidencias))
                 except:
-                    raise orm.except_orm(_('Warning'), _('Connection lost, verify your internet conection'))
+                    if inicidencias:
+                        raise orm.except_orm(_('Warning'), _('Error al timbrar XML, Incidencias: %s.') % (inicidencias))
+                    else:
+                        raise orm.except_orm(_('Warning'), _('Connection lost, verify your internet conection or '))
             else:
                 msg += 'Not found information from web services of PAC, verify that the configuration of PAC is correct'
                 raise osv.except_osv(_('Warning'), _(
                     'Not found information from web services of PAC, verify that the configuration of PAC is correct'))
-            return {'file': file, 'msg': msg, 'cfdi_xml': cfdi_xml}
+            return {'file': file, 'msg': msg, 'cfdi_xml': cfdi_xml, 'status': status}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
