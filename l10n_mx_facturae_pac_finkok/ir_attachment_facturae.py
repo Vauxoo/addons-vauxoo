@@ -230,8 +230,12 @@ class ir_attachment_facturae_mx(osv.Model):
                     #~ raise osv.except_osv(_('Warning'), _('Namespace of PAC incorrect'))
                 if 'demo' in wsdl_url or 'testing' in wsdl_url:
                     msg += _(u'WARNING, SIGNED IN TEST!!!!\n\n' + wsdl_url)
+                incidencias = False
+                try:            
+                    client = Client(wsdl_url, cache=None)
+                except:
+                    raise orm.except_orm(_('Warning'), _('Connection lost, verify your internet conection or verify your PAC'))
                 try:
-                    inicidencias = True
                     client = Client(wsdl_url, cache=None)
                     file_globals = invoice_obj._get_file_globals(
                         cr, uid, invoice_ids, context=context)
@@ -293,7 +297,7 @@ class ir_attachment_facturae_mx(osv.Model):
                             else:
                                 msg += _(u"Can't extract the file XML of PAC")
                     else:
-                        inicidencias = resultado.Incidencias.Incidencia[0]
+                        incidencias = resultado.Incidencias.Incidencia[0]
                         IdIncidencia = resultado.Incidencias.Incidencia[0]['IdIncidencia']
                         CodigoError = resultado.Incidencias.Incidencia[0]['CodigoError']
                         MensajeIncidencia = resultado.Incidencias.Incidencia[0]['MensajeIncidencia']
@@ -301,12 +305,12 @@ class ir_attachment_facturae_mx(osv.Model):
                         RfcEmisor = resultado.Incidencias.Incidencia[0]['RfcEmisor']
                         WorkProcessId = resultado.Incidencias.Incidencia[0]['WorkProcessId']
                         FechaRegistro = resultado.Incidencias.Incidencia[0]['FechaRegistro']
-                        raise orm.except_orm(_('Warning'), _('Inicidencias: %s.') % (inicidencias))
+                        raise orm.except_orm(_('Warning'), _('Incidencias: %s.') % (incidencias))
                 except:
-                    if inicidencias:
-                        raise orm.except_orm(_('Warning'), _('Error al timbrar XML, Incidencias: %s.') % (inicidencias))
+                    if incidencias:
+                        raise orm.except_orm(_('Warning'), _('Error al timbrar XML, Incidencias: %s.') % (incidencias))
                     else:
-                        raise orm.except_orm(_('Warning'), _('Connection lost, verify your internet conection or '))
+                        raise orm.except_orm(_('Warning'), _('Connection lost, verify your internet conection or verify your PAC'))
             else:
                 msg += 'Not found information from web services of PAC, verify that the configuration of PAC is correct'
                 raise osv.except_osv(_('Warning'), _(
