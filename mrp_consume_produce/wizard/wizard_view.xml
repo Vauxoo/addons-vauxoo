@@ -2,7 +2,7 @@
 <openerp>
     <data>
 <!--
-	View to wizard Consume
+    View to wizard Consume
 -->
         <record id="mrp_consume_produce_form" model="ir.ui.view">
             <field name="name">mrp.consume.produce.form</field>
@@ -10,35 +10,35 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Consume">
-			<field name="consume_line_ids" mode="tree" nolabel="1" width="640" height="240">
-				<tree string="Consume" editable="bottom">
-					<field name="product_id"/>
-					<field name="quantity"/>
-					<field name="product_uom"/>
-				</tree>
-				<form string="Consume">
-					<field name="product_id"/>
-					<field name="quantity"/>
-					<field name="product_uom"/>
-				</form>
-			</field>
-			<group colspan="4">
-				<button string="Cancel" icon="gtk-cancel" type="object" special="cancel"/>
-				<button string="Consume" icon="gtk-ok" name="action_consume" type="object"/>
-			</group>
+            <field name="consume_line_ids" mode="tree" nolabel="1" width="640" height="240">
+                <tree string="Consume" editable="bottom">
+                    <field name="product_id"/>
+                    <field name="quantity"/>
+                    <field name="product_uom"/>
+                </tree>
+                <form string="Consume">
+                    <field name="product_id"/>
+                    <field name="quantity"/>
+                    <field name="product_uom"/>
+                </form>
+            </field>
+            <group colspan="4">
+                <button string="Cancel" icon="gtk-cancel" type="object" special="cancel"/>
+                <button string="Consume" icon="gtk-ok" name="action_consume" type="object"/>
+            </group>
                 </form>
             </field>
         </record>
 
-	<act_window id="consume_wizard"
-		name="Consume"
-		src_model="mrp.production"
-		res_model="mrp.consume"
-		view_mode="form"
-		target="new"
-		key2="client_action_multi"
-		multi="True"
-		/>
+    <act_window id="consume_wizard"
+        name="Consume"
+        src_model="mrp.production"
+        res_model="mrp.consume"
+        view_mode="form"
+        target="new"
+        key2="client_action_multi"
+        multi="True"
+        />
 
 
        <record id="create_consume_action" model="ir.actions.act_window">
@@ -51,7 +51,7 @@
 
 
 <!--
-	View to wizard Produce
+    View to wizard Produce
 -->
 
         <record id="mrp_consume_produce2_form" model="ir.ui.view">
@@ -60,35 +60,35 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Produce">
-			<field name="produce_line_ids" mode="tree" nolabel="1" width="640" height="240">
-				<tree string="Produce" editable="bottom">
-					<field name="product_id"/>
-					<field name="quantity"/>
-					<field name="product_uom"/>
-				</tree>
-				<form string="Produce">
-					<field name="product_id"/>
-					<field name="quantity"/>
-					<field name="product_uom"/>
-				</form>
-			</field>
-			<group colspan="4">
-				<button string="Cancel" icon="gtk-cancel" type="object" special="cancel"/>
-				<button string="Products Produced" icon="gtk-ok" name="action_produce" type="object"/>
-			</group>
+            <field name="produce_line_ids" mode="tree" nolabel="1" width="640" height="240">
+                <tree string="Produce" editable="bottom">
+                    <field name="product_id"/>
+                    <field name="quantity"/>
+                    <field name="product_uom"/>
+                </tree>
+                <form string="Produce">
+                    <field name="product_id"/>
+                    <field name="quantity"/>
+                    <field name="product_uom"/>
+                </form>
+            </field>
+            <group colspan="4">
+                <button string="Cancel" icon="gtk-cancel" type="object" special="cancel"/>
+                <button string="Products Produced" icon="gtk-ok" name="action_produce" type="object"/>
+            </group>
                 </form>
             </field>
         </record>
 
-	<act_window id="produce_wizard"
-		name="Produce"
-		src_model="mrp.production"
-		res_model="mrp.produce"
-		view_mode="form"
-		target="new"
-		key2="client_action_multi"
-		multi="True"
-		/>
+    <act_window id="produce_wizard"
+        name="Produce"
+        src_model="mrp.production"
+        res_model="mrp.produce"
+        view_mode="form"
+        target="new"
+        key2="client_action_multi"
+        multi="True"
+        />
 
        <record id="create_produce_action" model="ir.actions.act_window">
             <field name="name">Produce</field>

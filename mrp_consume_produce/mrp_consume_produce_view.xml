@@ -13,7 +13,7 @@
                     </xpath>
 
                     <xpath expr="/form/notebook/page[@string='Consumed Products']/group/button[@name='%(mrp.act_mrp_product_produce)d']" position="after">
-            <button name="%(create_consume_action)d" states="in_production" string="Consumed" icon="gtk-ok" type="action"  attrs="{'invisible': ['|',('consumed','=',True),('state','!=','in_production')]}"/>
+            <button name="%(create_consume_action)d" states="in_production" string="Consumed" icon="gtk-ok" type="action"/>
                     </xpath>
 
                     <xpath expr="/form/group/field[@name='origin']" position="after">
@@ -21,15 +21,15 @@
                     </xpath>
 
                     <xpath expr="/form/notebook/page[@string='Consumed Products']/group/button[@name='%(create_consume_action)d']" position="after">
-            <button name="action_finished_consume" string="Finished Consumed" icon="gtk-convert" type="object" attrs="{'invisible': ['|',('consumed','=',True),('state','!=','in_production')]}"/>
+            <button name="action_finished_consume" states="in_production" string="Finished Consumed" icon="gtk-convert" type="object"/>
                     </xpath>
 
                     <xpath expr="/form/notebook/page[@string='Finished Products']" position="inside">
-            <button name="%(create_produce_action)d" string="Products Produced" icon="gtk-yes" type="action" attrs="{'invisible': ['|',('len_move','=',0),('state','=','done')]}"/>
+            <button name="%(create_produce_action)d" states="in_production" string="Products Produced" icon="gtk-yes" type="action"/>
                     </xpath>
 
                     <xpath expr="/form/notebook/page[@string='Finished Products']" position="inside">
-            <button name="action_finish" string="Finish Production" icon="gtk-ok" type="object" attrs="{'invisible': ['|','|',('consumed','=',False),('state','=','done'),('len_move_prod','=',0)]}"/>
+            <button name="action_finish" states="in_production" string="Finish Production" icon="gtk-ok" type="object"/>
                     </xpath>
 
                     <xpath expr="/form/group/field[@name='origin']" position="after">

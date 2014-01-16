@@ -54,9 +54,9 @@ class mrp_production(osv.osv):
         return res
             
     _columns = {
-        'consumed' : fields.function(_check_boolean, string='consumed?', type='boolean', help="indicates if product to consume have been consumed or canceled"),
-        'len_move' : fields.function(_check_len_move, string='moves', type='float'),
-        'len_move_prod' : fields.function(_check_len_move_prod, string='produced', type='integer',),
+        'consumed' : fields.function(_check_boolean, method=True, string='consumed?', type='boolean', help="indicates if product to consume have been consumed or canceled"),
+        'len_move' : fields.function(_check_len_move, method=True, string='moves', type='float'),
+        'len_move_prod' : fields.function(_check_len_move_prod, method=True, string='produced', type='integer',),
     }
     
     def action_finished_consume(self,cr,uid,ids,context={}):
@@ -72,11 +72,11 @@ class mrp_production(osv.osv):
         for production in self.browse(cr,uid,ids,context=context):
             for moves in production.move_created_ids:
                 stock_move.write(cr,uid,[moves.id],{'state':'cancel'})
-                
-        pickings=stock_picking.search(cr, uid, [('production_id','=',production.id),('state','not in',('done','cancel'))], limit=80, context=context)
+        #esta linea marca error por que la relacion de pickings con produccion esta en el modulo mrp_request_return
+        #pickings=stock_picking.search(cr, uid, [('production_id','=',production.id),('state','not in',('done','cancel'))], limit=80, context=context)
         moves=stock_move.search(cr, uid, [('production_id','=',production.id),('state','not in',('done','cancel'))], limit=80, context=context)
 
-        if pickings or moves:
+        if moves:
             raise osv.except_osv(_('Error !'), _('You can not Finish Production With Pickings or Moves in state Open or Reserved!'))
         try:
             wf_service = netsvc.LocalService("workflow")

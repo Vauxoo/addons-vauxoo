@@ -76,4 +76,4 @@ class stock_picking(osv.osv):
     _columns = {
         'production_id' : fields.many2one('mrp.production', 'Production')
     }
-mrp_production()
+stock_picking()
