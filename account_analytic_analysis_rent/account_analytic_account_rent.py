@@ -125,7 +125,7 @@ class account_analytic_account(osv.osv):
             for prod in product_ids:
                 if prod[2]['product_id']:
                     for feature in product_obj.browse(cr, uid, prod[2]['product_id'], context=context).feature_ids:
-                        list_feature.append({'name':feature.name.id, 'product_line_id':prod[2]['product_id'],'counter':feature.counter, 'prodlot_feature_id' : prod[2]['prodlot_id']})
+                        list_feature.append({'name': feature.name and feature.name.id or False, 'product_line_id':prod[2]['product_id'],'counter':feature.counter or False, 'prodlot_feature_id' : prod[2]['prodlot_id']})
         return {'value':{'feature_ids': [(0, 6, data) for data in list_feature]}}
 
     def _get_journal(self, cr, uid, context=None):
@@ -189,9 +189,9 @@ class account_analytic_account(osv.osv):
         else:
             raise osv.except_osv(_('Error!'),  _('You not have a configured client location'))
         for contract in self.browse(cr, uid , ids , context=context):
-            picking_id=picking_obj.create(cr, uid, {'origin':contract.name, 'address_id':contract.contact_id.id,'date':contract.date_start,'type':'in'}, context=context)
+            picking_id=picking_obj.create(cr, uid, {'origin':contract.name or False, 'address_id': contract.contact_id and contract.contact_id.id or False,'date':contract.date_start or False,'type':'in'}, context=context)
             for prod in contract.product_ids:
-                move_obj.create(cr, uid, {'name':prod.product_id.name,'product_id':prod.product_id.id,'product_qty':1,'picking_id':picking_id,'product_uom':prod.product_id.uom_id.id,'location_id':location,'location_dest_id':warehouse.lot_input_id.id, 'prodlot_id':prod.prodlot_id.id}, context=context)
+                move_obj.create(cr, uid, {'name':prod.product_id.name,'product_id':prod.product_id.id,'product_qty':1,'picking_id':picking_id,'product_uom':prod.product_id.uom_id.id,'location_id':location,'location_dest_id': warehouse.lot_input_id and warehouse.lot_input_id.id or False, 'prodlot_id': prod.prodlot_id and prod.prodlot_id.id or 1}, context=context)
                 product_obj.write(cr, uid, prod.product_id.id, {'rent':False, 'contract_id': False}, context=context)
         return super(account_analytic_account, self).set_close(cr, uid, ids, context=context)
     
@@ -207,9 +207,9 @@ class account_analytic_account(osv.osv):
         for contract in self.browse(cr, uid , ids , context=context):
             date_invoice=contract.date_start
             #~ date_invoice=datetime.strptime(contract.date_start, "%Y-%m-%d")
-            picking_id=picking_obj.create(cr, uid, {'origin':contract.name, 'address_id':contract.contact_id.id,'date':contract.date_start,'type':'out'}, context=context)
+            picking_id=picking_obj.create(cr, uid, {'origin':contract.name, 'address_id': contract.contact_id and contract.contact_id.id or False,'date':contract.date_start,'type':'out'}, context=context)
             for prod in contract.product_ids:
-                move_obj.create(cr, uid, {'name':prod.product_id.name,'product_id':prod.product_id.id,'product_qty':1,'picking_id':picking_id,'product_uom':prod.product_id.uom_id.id,'location_id':warehouse.lot_stock_id.id,'location_dest_id':warehouse.lot_output_id.id, 'prodlot_id':prod.prodlot_id.id}, context=context)
+                move_obj.create(cr, uid, {'name':prod.product_id.name,'product_id':prod.product_id.id,'product_qty':1,'picking_id':picking_id,'product_uom':prod.product_id.uom_id.id,'location_id': warehouse.lot_stock_id and warehouse.lot_stock_id.id or False,'location_dest_id': warehouse.lot_output_id and warehouse.lot_output_id.id or False, 'prodlot_id': prod.prodlot_id and prod.prodlot_id.id or 1}, context=context)
             for line in range(0,contract.term_id.no_term):
                 for prod in contract.product_ids:
                     a = prod.product_id.product_tmpl_id.property_account_income.id
@@ -217,8 +217,8 @@ class account_analytic_account(osv.osv):
                         a = prod.product_id.categ_id.property_account_income_categ.id
                     for feature in contract.feature_ids:
                         if feature.product_line_id.id==prod.product_id.id:
-                            line_obj.create(cr, uid, {'date':date_invoice,'name':feature.name.name,'product_id':prod.product_id.id,'product_uom_id':prod.product_id.uom_id.id,'general_account_id':a,'to_invoice':1,'account_id':contract.id,'journal_id':contract.journal_id.analytic_journal_id.id,'amount':feature.cost, 'feature_id':feature.id, 'prodlot_id':prod.prodlot_id.id},context=context)
-                    product_obj.write(cr, uid, prod.product_id.id, {'rent':True,'contract_id':contract.id}, context=context)
+                            line_obj.create(cr, uid, {'date':date_invoice,'name':feature.name and feature.name.name or False,'product_id':prod.product_id.id,'product_uom_id':prod.product_id.uom_id.id,'general_account_id':a,'to_invoice':1,'account_id': contract and contract.id or False,'journal_id': contract.journal_id and contract.journal_id.analytic_journal_id and contract.journal_id.analytic_journal_id.id or False,'amount': feature and feature.cost or False, 'feature_id':feature and feature.id or False, 'prodlot_id': prod.prodlot_id and prod.prodlot_id.id or 1},context=context)
+                    product_obj.write(cr, uid, prod.product_id.id, {'rent':True,'contract_id': contract and contract.id or False}, context=context)
                 date_invoice=(datetime.strptime(date_invoice, "%Y-%m-%d") + relativedelta(months=1)).strftime("%Y-%m-%d")
         return super(account_analytic_account, self).set_open(cr, uid, ids, context=context)
     
@@ -257,5 +257,14 @@ class hr_timesheet_invoice_create(osv.osv_memory):
         res['product']=line.product_id.id
         return res
 hr_timesheet_invoice_create()
-        
 
+
+class stock_production_lot(osv.osv):
+    _inherit='stock.production.lot'
+
+    def name_get(self, cr, uid, ids, context=None):
+        if ids and ids[0] == False:
+            ids=[]
+        return super(stock_production_lot, self).name_get(
+            cr, uid, ids, context=context)
+stock_production_lot()

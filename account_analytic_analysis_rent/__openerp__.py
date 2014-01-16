@@ -29,7 +29,11 @@
     'description' : """
         This module added product in account_analytic_analysis to product control
         """,
-    'data' : ['account_analytic_account_rent.xml','product_view.xml','account_analytic_analysis_report.xml','wizard/lines_invoice_create_view.xml','res_company_view.xml'],
+    'data' : ['account_analytic_account_rent.xml',
+        'product_view.xml',
+        'account_analytic_analysis_report.xml',
+        'wizard/lines_invoice_create_view.xml',
+        'res_company_view.xml'],
     'installable': True,
     'auto_install': False,
 }
