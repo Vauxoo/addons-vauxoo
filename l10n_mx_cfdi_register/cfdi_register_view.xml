@@ -325,6 +325,7 @@
                                                   <div class="panel-body">
                                                       <field name="term_conditions"
                                                              widget='html_readonly'
+                                                             readonly='1'
                                                              context="{'term_conditions':term_conditions}"
                                                              nolabel="1" />
                                                         <label for="accept" />
