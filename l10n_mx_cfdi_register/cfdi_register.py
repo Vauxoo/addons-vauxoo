@@ -129,6 +129,65 @@ class cfdi_register(osv.TransientModel):
             
         return res
 
+    def _get_terms_conditions(self, cr, uid, ids, name, args, context=None):
+        context = context or {}
+        res = {}
+        for register in self.browse(cr, uid, ids, context=context):
+            a = '''
+<head>                                                                                              
+    <body>                                                                                          
+        <div style="position:relative;">                                                            
+            <table style="text-align:center;">                               
+                <tr>                                                                                                                                                                                                                   
+            <td style="right:12px; position:absolute;">'''+time.strftime('%d-%m-%Y')+u'''</td>                           
+                </tr>                                                                               
+                <tr style="height:100px;">                                                          
+        <td style="border-top: 30px solid transparent;" >Vauxoo SA de CV</td>                                                            
+                </tr>                                                                               
+                <tr>                                                                                
+                    <td style="text-align:center; max-width: 100%; word-wrap: break-word; 
+                        ">Asunto: Manifestación de Conocimiento y                 
+                        Autorización de entrega de CFDI para que                                    
+                        Vauxoo SA de CV, entregue al SAT, copia de                                       
+                        los comprobantes certificados. </td>                                        
+                    </tr>                                                                           
+                <tr style="margin-bottom: 100px;">                                                  
+                    <td style="border-top: 80px solid transparent;text-align:center; max-width: 80%; word-wrap: break-word;">
+                       '''+register.company_name+u''' con registro federal de contribuyentes
+                       '''+register.vat+u''' y con domicilio fiscal en '''+register.street+u'''
+                   , CP '''+register.zip+u', '+register.locality+ ', '+register.state_id.name+u''', 
+                   '''+register.country_id.name+u''', con la finalidad de que la presente sirva como constancia de lo
+                        previsto en la regla I.2.7.2.1 de la Resolución Miscelánea Fiscal en vigor manifiesto que:
+            </td>                                                                                   
+                    </tr>                                                                           
+                <tr >                                                                               
+                    <td style=" border-top: 20px solid transparent;text-align:center; max-width: 80%; word-wrap: break-word;">
+                        1. Haré uso de los servicios de Vauxoo SA de CV
+                        para la certificación de Comprobantes Fiscales Digitales a través de Internet.                                             
+            </td>                                                                                   
+                    </tr>                                                                           
+                <tr >                                                                               
+                    <td style=" border-bottom: 30px solid transparent;border-top: 10px solid transparent;text-align:center; max-width: 80%; word-wrap: break-word;">
+                         2. Tengo conocimiento y autorizo a Vauxoo SA de CV para que entregue al        
+                         Servicio de                                                                
+                                                                                                    
+                         Administración Tributaria, copia de los comprobantes fiscales que haya     
+                         certificado a mí                                                           
+                                                                                                    
+                         persona en dicho servicio.                                                 
+            </td>                                                                                   
+                    </tr>                                                                           
+            </table>                                                                                
+        </div>                                                                                      
+    </body>                                                                                         
+</head>      
+'''
+            res.update({register.id:a})
+
+        return res
+
+        
+
     
     _columns = {
 
@@ -140,10 +199,21 @@ class cfdi_register(osv.TransientModel):
                                      'the register'), 
         
         'vat':fields.char('RFC', 32, help='Your Company RFC to do commercial operation'), 
-        'term_conditions':fields.html("Terms and Conditions", help="You need agree with the terms "
-                                                                   "and condition to continue "
-                                                                   "with the register for create "
-                                                                   "your test instance"),
+        'term_conditions':fields.function(_get_terms_conditions, method=True,
+                                         store={
+                                             'cfdi.register':(lambda self, cr,
+                                                 uid, ids, ctx: ids, ['name',
+                                                     'company_name', 'accept',
+                                                     'vat', 'zip', 'street',
+                                                     'city', 'locality',
+                                                     'country_id', 'state_id',
+                                                     ] , 10)
+                                             }, type='html',
+                                         string='Terms and Condition', 
+                                          help="You need agree with the terms "
+                                           "and condition to continue "
+                                           "with the register for create "
+                                           "your test instance"), 
         'zip':fields.char('ZIP', 24, help='ZIP code for your city'), 
         'email_from':fields.char('Email', 255, help='Email to receive information'), 
         'phone':fields.char('Phone Number', 255, help='Phone Number'), 

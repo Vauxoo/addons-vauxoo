@@ -186,7 +186,7 @@
                                         </div>
                                         <div id="collapseOne" class="panel-collapse in">
                                           <div class="panel-body">
-                                                <field name="term_conditions" widget='html_readonly'  nolabel="1" />
+                                                <field name="term_conditions" widget='html'  nolabel="1" />
                                                 <label for="accept" />
                                                 <field name="accept" />
                                           </div>
@@ -324,7 +324,6 @@
                                                 <div id="collapseOne" class="panel-collapse in">
                                                   <div class="panel-body">
                                                       <field name="term_conditions"
-                                                             widget='html_readonly'
                                                              on_change="onchange_fill_terms(company_name, vat, country_id, state_id, street, city, locality, zip)"
                                                              context="{'term_conditions':term_conditions}"
                                                              nolabel="1" />
