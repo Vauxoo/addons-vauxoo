@@ -96,6 +96,7 @@ class account_invoice_refund(osv.osv_memory):
         """
         Return  default origin value
         """
+        nro_ref = ''
         if inv.type == 'out_invoice':
             nro_ref = inv.number
         orig = _('INV REFUND:') + (nro_ref or '') + _('- DATE:') + (
@@ -238,7 +239,6 @@ class account_invoice_refund(osv.osv_memory):
                             cr, uid, invoice['tax_line'], context=context)
                         tax_lines = inv_obj._refund_cleanup_lines(
                             cr, uid, tax_lines, context=context)
-                        print '---------------------------------------'
                         invoice.update({
                             'type': inv.type,
                             'date_invoice': date,
