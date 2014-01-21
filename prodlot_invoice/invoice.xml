@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_invoice_line_tree_prodlot_inh" model="ir.ui.view">
+            <field name="name">view.invoice.line.tree.prodlot.inh</field>
+            <field name="model">account.invoice.line</field>
+            <field name="inherit_id" ref="account.view_invoice_line_tree"/>
+            <field name="arch" type="xml">
+            <xpath expr="//field[@name='uos_id']" position="after">
+                <field name="prodlot_id"/>
+            </xpath>
+            </field>
+        </record>
+
+        <record id="view_invoice_line_form_prodlot_inh" model="ir.ui.view">
+            <field name="name">view.invoice.line.form.prodlot.inh</field>
+            <field name="model">account.invoice.line</field>
+            <field name="inherit_id" ref="account.view_invoice_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='account_id']" position="after">
+                    <field name="prodlot_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="invoice_supplier_form_prodlot_inh" model="ir.ui.view">
+            <field name="name">invoice.supplier.form.prodlot.inh</field>
+            <field name="model">account.invoice</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+            <xpath expr="/form/notebook/page[@string='Invoice']/field[@name='invoice_line']/tree[@string='Invoice lines']/field[@name='quantity']" position="after">
+                <field name="prodlot_id"/>
+            </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
