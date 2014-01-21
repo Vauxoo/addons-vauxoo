@@ -399,9 +399,6 @@ class cfdi_register(osv.TransientModel):
         company_obj = self.pool.get('res.company')
         menu_id = data_obj.get_object_reference(cr, SUPERUSER_ID,
                 'l10n_mx_cfdi_register', 'company_cfdi_register')
-        group_id = data_obj.get_object_reference(cr, SUPERUSER_ID,
-                'base', 'group_no_one')
-        
         partner_obj.write(cr, SUPERUSER_ID, partner_id,
                           {
                            'vat':wz_obj.get('vat') ,
@@ -411,11 +408,8 @@ class cfdi_register(osv.TransientModel):
                          )
         wz_obj.update({'address_invoice_parent_company_id':partner_id})
         company_obj.write(cr, SUPERUSER_ID, company_id,
-                wz_obj
+                    wz_obj
                          )
-        menu_obj.write(cr, SUPERUSER_ID, menu_id[1],
-                        {'groups_id':[(6, 0, [group_id[1]])]},
-                        context=context)
 
         return {
                 'type': 'ir.actions.act_window',
@@ -443,6 +437,16 @@ class cfdi_register(osv.TransientModel):
             
             })
         certificate_obj.create(cr, SUPERUSER_ID, res, context=context)
+
+        menu_obj = self.pool.get('ir.ui.menu')
+        data_obj = self.pool.get('ir.model.data')
+        menu_id = data_obj.get_object_reference(cr, SUPERUSER_ID,
+                'l10n_mx_cfdi_register', 'company_cfdi_register')
+        group_id = data_obj.get_object_reference(cr, SUPERUSER_ID,
+                'base', 'group_no_one')
+        menu_obj.write(cr, SUPERUSER_ID, menu_id[1],
+                        {'groups_id':[(6, 0, [group_id[1]])]},
+                        context=context)
 
         return {
             'type': 'ir.actions.client',
