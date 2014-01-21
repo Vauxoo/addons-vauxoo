@@ -120,7 +120,8 @@ class cfdi_register(osv.TransientModel):
 </head>      
 '''
             a = a.encode('utf-8', 'ignore')
-            res.update({'term_conditions':a})
+            if not res.get('term_conditions',False):
+                res.update({'term_conditions':a})
         
        # if model_ids:
        #     raise osv.except_osv(('Error'), ("""You have a server created"""))
