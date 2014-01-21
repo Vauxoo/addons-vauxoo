@@ -60,19 +60,6 @@ class account_invoice(osv.Model):
             context = {}
         default.update({
             'child_ids':[],
-            'nro_ctrl':None,
-            'supplier_invoice_number':None, 
-            'sin_cred': False,
-            # No cleaned in this copy because it is related to the previous
-            # document, if previous document says so this too
-            # 'parent_id':False,
-            'date_document': False,
-            'invoice_printer' : '',
-            'fiscal_printer' : '',
-            # No cleaned in this copy because it is related to the previous
-            # document, if previous document says so this too
-            #'loc_req':False, 
-            'z_report': '',
         })
         return super(account_invoice, self).copy(cr, uid, id, default, context)
 
