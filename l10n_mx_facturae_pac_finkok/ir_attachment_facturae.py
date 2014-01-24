@@ -272,7 +272,7 @@ class ir_attachment_facturae_mx(osv.Model):
                             'cfdi_folio_fiscal': folio_fiscal,
                             'pac_id': pac_params.id,
                         }
-                        cbb = invoice_obj._create_qrcode(cr, uid, ids,invoice.id, context=context)
+                        cbb = invoice_obj._create_qrcode(cr, uid, ids,invoice.id, folio_fiscal, context=context)
                         original_string = invoice_obj._create_original_str(cr, uid, ids,invoice.id, context=context)
                         cfdi_data_cbb_os = {
                             'cfdi_cbb': open(cbb).read().encode('base64'),# ya lo regresa en base64
