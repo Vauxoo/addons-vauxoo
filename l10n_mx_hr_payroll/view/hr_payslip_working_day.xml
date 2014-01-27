@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_payroll_working_day_tree" model="ir.ui.view">
+            <field name="name">payroll.working.day.tree</field>
+            <field name="model">payroll.working.day</field>
+            <field name="arch" type="xml">
+                <tree string="Working Day">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_payroll_working_day_form" model="ir.ui.view">
+            <field name="name">payroll.working.day.form</field>
+            <field name="model">payroll.working.day</field>
+            <field name="arch" type="xml">
+                <form string="Working Day" version="7.0">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_hr_payroll_working_day_form" model="ir.actions.act_window">
+            <field name="name">Working Day</field>
+            <field name="res_model">payroll.working.day</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_payroll_working_day_tree"/>
+        </record>
+        
+        <menuitem id="hr_payroll_working_day" parent="hr_payroll.payroll_configure" name="Working Day" action="action_view_hr_payroll_working_day_form"/>
+        
+    </data>
+</openerp>

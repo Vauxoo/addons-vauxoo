@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_employee_payroll_regime_tree" model="ir.ui.view">
+            <field name="name">payroll.regime.employee.tree</field>
+            <field name="model">payroll.regime.employee</field>
+            <field name="arch" type="xml">
+                <tree string="Payroll Regime">
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_employee_payroll_regime_form" model="ir.ui.view">
+            <field name="name">payroll.regime.employee.form</field>
+            <field name="model">payroll.regime.employee</field>
+            <field name="arch" type="xml">
+                <form string="Payroll Regime" version="7.0">
+                    <sheet>
+                        <group>
+                            <field name="code"/>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_hr_payroll_regime_form" model="ir.actions.act_window">
+            <field name="name">Payroll Regime</field>
+            <field name="res_model">payroll.regime.employee</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_employee_payroll_regime_tree"/>
+        </record>
+        
+        <menuitem id="hr_payroll_regime" parent="hr_payroll.payroll_configure" name="Payroll Regime" action="action_view_hr_payroll_regime_form"/>
+
+    </data>
+</openerp>

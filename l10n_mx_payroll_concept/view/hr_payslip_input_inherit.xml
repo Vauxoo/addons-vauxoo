@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_hr_payslip_form_salary_rule_id_inherit">
+            <field name="name">view.hr.payslip.form.salary.rule.id.inherit</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='input_line_ids']/tree/field[@name='name']" position="before">
+                    <field name="salary_rule_id" on_change="onchange_salary_rule(salary_rule_id,parent.contract_id)"/>
+                    <field name="exempt_amount" sum="Total Excempt"/>
+                </xpath>
+                <xpath expr="//field[@name='input_line_ids']/tree/field[@name='name']" position="replace">
+                    <field name="name" invisible="1" />
+                </xpath>
+                <xpath expr="//field[@name='input_line_ids']/tree/field[@name='code']" position="replace">
+                    <field name="code" invisible="1" />
+                </xpath>
+                <xpath expr="//field[@name='input_line_ids']/tree/field[@name='amount']" position="replace">
+                    <field name="amount" sum="Total Entries" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

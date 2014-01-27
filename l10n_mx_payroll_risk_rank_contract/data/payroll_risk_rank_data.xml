@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <record id='hr_payroll_risk_rank01' model='payroll.risk.rank.contract'>
+            <field name='code'>1</field>
+            <field name='name'>Clase I</field>
+        </record>
+        <record id='hr_payroll_risk_rank02' model='payroll.risk.rank.contract'>
+            <field name='code'>2</field>
+            <field name='name'>Clase II</field>
+        </record>
+        <record id='hr_payroll_risk_rank03' model='payroll.risk.rank.contract'>
+            <field name='code'>3</field>
+            <field name='name'>Clase III</field>
+        </record>
+        <record id='hr_payroll_risk_rank04' model='payroll.risk.rank.contract'>
+            <field name='code'>4</field>
+            <field name='name'>Clase IV</field>
+        </record>
+        <record id='hr_payroll_risk_rank05' model='payroll.risk.rank.contract'>
+            <field name='code'>5</field>
+            <field name='name'>Clase V</field>
+        </record>
+    </data>
+</openerp>

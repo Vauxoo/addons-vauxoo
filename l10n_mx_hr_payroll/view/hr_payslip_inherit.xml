@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_hr_payslip_form_inherit0">
+            <field name="name">view.hr.payslip.form.inherit0</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@string='Worked Days &amp; Inputs']/field[@name='input_line_ids']" position="after">
+                    <separator string="Overtime"/>
+                    <field name="overtime_line_ids" colspan="4" nolabel="1">
+                        <tree string="Overtime" editable="bottom">
+                            <field name="name"/>
+                            <field name="number_of_days" sum="Total Days"/>
+                            <field name="number_of_hours" sum="Total Hours"/>
+                            <field name="type_hours"/>
+                            <field name="amount" sum="Total Overtime"/>
+<!--
+                            <field name="category_id"/>
+                            <field name="code"/>
+-->
+                            <field name="sequence" invisible="True"/>
+                        </tree>
+                        <form string="Payslip Line">
+                            <group col="4">
+                                <field name="name"/>
+                                <field name="number_of_days"/>
+                                <field name="number_of_hours"/>
+                                <field name="type_hours"/>
+                                <field name="sequence"/>
+<!--
+                                <field name="code"/>
+                                <field name="category_id"/>
+-->
+                                <field name="amount"/>
+                            </group>
+                        </form>
+                    </field>
+                    <separator string="Inability"/>
+                    <field name="inability_line_ids" colspan="4" nolabel="1">
+                        <tree string="Inability" editable="bottom">
+                            <field name="inability_id"/>
+                            <field name="number_of_days" sum="Total Days"/>
+                            <field name="amount" sum="Total Inability"/>
+<!--
+                            <field name="category_id"/>
+                            <field name="code"/>
+-->
+                            <field name="sequence" invisible="True"/>
+                        </tree>
+                        <form string="Payslip Line">
+                            <group col="4">
+                                <field name="inability_id"/>
+                                <field name="number_of_days"/>
+                                <field name="sequence"/>
+<!--
+                                <field name="code"/>
+                                <field name="category_id"/>
+-->
+                                <field name="amount"/>
+                            </group>
+                        </form>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

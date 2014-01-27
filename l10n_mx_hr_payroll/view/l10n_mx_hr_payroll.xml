@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_hr_employee_form_inherit_hr_payroll0">
+            <field name="name">view.hr.employee.form.inherit.hr.payroll0</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='passport_id']" position="after">
+                    <field name="curp"/>
+                    <field name="nss"/>
+                    <field name="employer_registration"/>
+                </xpath>
+                <xpath expr="//group[@name='active_group']" position="after">
+                    <group>
+                        <group string="Seniority" name="seniority_group">
+                            <field name="seniority"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

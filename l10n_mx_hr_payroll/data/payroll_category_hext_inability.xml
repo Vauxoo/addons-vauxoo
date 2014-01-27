@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        
+        <record id="hr_salary_rule_category_hext" model="hr.salary.rule.category">
+            <field name="name">Overtime</field>
+            <field name="code">OVERTIME</field>
+        </record>
+        
+        <record id="hr_salary_rule_category_inability" model="hr.salary.rule.category">
+            <field name="name">Inability</field>
+            <field name="code">INAB</field>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_payroll_inability_tree0" model="ir.ui.view">
+            <field name="name">payroll.hr.inability.tree</field>
+            <field name="model">payroll.hr.inability</field>
+            <field name="arch" type="xml">
+                <tree string="Inability">
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_payroll_inability_form0" model="ir.ui.view">
+            <field name="name">payroll.hr.inability.form</field>
+            <field name="model">payroll.hr.inability</field>
+            <field name="arch" type="xml">
+                <form string="Inability" version="7.0">
+                    <sheet>
+                        <group>
+                            <field name="code"/>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_payroll_hr_inability_form0" model="ir.actions.act_window">
+            <field name="name">Inability</field>
+            <field name="res_model">payroll.hr.inability</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_payroll_inability_tree0"/>
+        </record>
+        
+        <menuitem id="hr_payroll_inability0" parent="hr_payroll.payroll_configure" name="Inability" action="action_view_payroll_hr_inability_form0"/>
+        
+    </data>
+</openerp>

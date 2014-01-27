@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <record id='hr_payroll_regime02' model='payroll.regime.employee'>
+            <field name='code'>2</field>
+            <field name='name'>Sueldos y salarios</field>
+        </record>
+        <record id='hr_payroll_regime03' model='payroll.regime.employee'>
+            <field name='code'>3</field>
+            <field name='name'>Jubilados</field>
+        </record>
+        <record id='hr_payroll_regime04' model='payroll.regime.employee'>
+            <field name='code'>4</field>
+            <field name='name'>Pensionados</field>
+        </record>
+        <record id='hr_payroll_regime05' model='payroll.regime.employee'>
+            <field name='code'>5</field>
+            <field name='name'>Asimilados a salarios, Miembros de las sociedades Cooperativas de Producción</field>
+        </record>
+        <record id='hr_payroll_regime06' model='payroll.regime.employee'>
+            <field name='code'>6</field>
+            <field name='name'>Asimilados a salarios, Integrantes de sociedades y Asociaciones Civiles</field>
+        </record>
+        <record id='hr_payroll_regime07' model='payroll.regime.employee'>
+            <field name='code'>7</field>
+            <field name='name'>Asimilados a salarios, Miembros de consejos directivos, de vigilancia, consultivos, honorarios a administradores, comisarios y gerentes generales.</field>
+        </record>
+        <record id='hr_payroll_regime08' model='payroll.regime.employee'>
+            <field name='code'>8</field>
+            <field name='name'>Asimilados a salarios, Actividad empresarial (comisionistas)</field>
+        </record>
+        <record id='hr_payroll_regime09' model='payroll.regime.employee'>
+            <field name='code'>9</field>
+            <field name='name'>Asimilados a salarios, Honorarios asimilados a salarios</field>
+        </record>
+        <record id='hr_payroll_regime10' model='payroll.regime.employee'>
+            <field name='code'>10</field>
+            <field name='name'>Asimilados a salarios, Ingresos acciones o títulos valor</field>
+        </record>
+    </data>
+</openerp>

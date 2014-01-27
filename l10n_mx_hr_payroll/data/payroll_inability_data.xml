@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <record id='hr_payroll_inability01' model='payroll.hr.inability'>
+            <field name='code'>1</field>
+            <field name='name'>Riesgo de trabajo</field>
+        </record>
+        <record id='hr_payroll_inability02' model='payroll.hr.inability'>
+            <field name='code'>2</field>
+            <field name='name'>Enfermedad en general</field>
+        </record>
+        <record id='hr_payroll_inability03' model='payroll.hr.inability'>
+            <field name='code'>3</field>
+            <field name='name'>Maternidad</field>
+        </record>
+    </data>
+</openerp>

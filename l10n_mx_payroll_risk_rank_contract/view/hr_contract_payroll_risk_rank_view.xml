@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_hr_contract_form_inherit_risk_rank">
+            <field name="name">view.hr.contract.form.inherit.risk.rank</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group//field[@name='type_id']" position="after">
+                    <field name="risk_rank_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

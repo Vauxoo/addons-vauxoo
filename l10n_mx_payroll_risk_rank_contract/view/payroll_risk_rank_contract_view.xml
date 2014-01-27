@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_payroll_risk_rank_contract_tree" model="ir.ui.view">
+            <field name="name">payroll.risk.rank.contract.tree</field>
+            <field name="model">payroll.risk.rank.contract</field>
+            <field name="arch" type="xml">
+                <tree string="Payroll Risk Rank">
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_payroll_risk_rank_contract_form" model="ir.ui.view">
+            <field name="name">payroll.risk.rank.contract.form</field>
+            <field name="model">payroll.risk.rank.contract</field>
+            <field name="arch" type="xml">
+                <form string="Payroll Risk Rank" version="7.0">
+                    <sheet>
+                        <group>
+                            <field name="code"/>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_hr_payroll_risk_rank_contract_form" model="ir.actions.act_window">
+            <field name="name">Payroll Risk Rank</field>
+            <field name="res_model">payroll.risk.rank.contract</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_payroll_risk_rank_contract_tree"/>
+        </record>
+        
+        <menuitem id="hr_payroll_regime" parent="hr_payroll.payroll_configure" name="Payroll Risk Rank" action="action_view_hr_payroll_risk_rank_contract_form"/>
+        
+    </data>
+</openerp>

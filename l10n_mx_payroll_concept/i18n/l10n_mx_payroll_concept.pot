@@ -1,0 +1,72 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* l10n_mx_payroll_concept
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-01-14 00:53+0000\n"
+"PO-Revision-Date: 2014-01-14 00:53+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_payroll_concept
+#: model:ir.model,name:l10n_mx_payroll_concept.model_hr_salary_rule
+msgid "hr.salary.rule"
+msgstr ""
+
+#. module: l10n_mx_payroll_concept
+#: field:hr.salary.rule,type_concept:0
+msgid "Type"
+msgstr ""
+
+#. module: l10n_mx_payroll_concept
+#: selection:hr.salary.rule,type_concept:0
+msgid "Perception"
+msgstr ""
+
+#. module: l10n_mx_payroll_concept
+#: model:ir.model,name:l10n_mx_payroll_concept.model_hr_payslip_input
+msgid "Payslip Input"
+msgstr ""
+
+#. module: l10n_mx_payroll_concept
+#: field:hr.payslip.input,exempt_amount:0
+msgid "Exempt Amount"
+msgstr ""
+
+#. module: l10n_mx_payroll_concept
+#: help:hr.salary.rule,type_concept:0
+msgid "Type of concept(Perception and Deduction)"
+msgstr ""
+
+#. module: l10n_mx_payroll_concept
+#: selection:hr.salary.rule,type_concept:0
+msgid "Deduction"
+msgstr ""
+
+#. module: l10n_mx_payroll_concept
+#: field:hr.salary.rule,clave:0
+msgid "Clave"
+msgstr ""
+
+#. module: l10n_mx_payroll_concept
+#: view:hr.payslip:0
+msgid "Total Entries"
+msgstr ""
+
+#. module: l10n_mx_payroll_concept
+#: field:hr.payslip.input,salary_rule_id:0
+msgid "Salary Rule"
+msgstr ""
+
+#. module: l10n_mx_payroll_concept
+#: model:ir.model,name:l10n_mx_payroll_concept.model_hr_payslip
+msgid "Pay Slip"
+msgstr ""
+

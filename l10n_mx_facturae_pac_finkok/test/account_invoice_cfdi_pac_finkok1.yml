@@ -43,7 +43,7 @@
     state = 'no attach file'
     if cfdi_pac_finkok_id:
         cfdi_pac_finkok = self.browse(cr, uid, [cfdi_pac_finkok_id])[0]
-        #print "cfdi_pac_finkok_state",tools.ustr( cfdi_pac_finkok.state )
+        print "cfdi_pac_finkok_state",tools.ustr( cfdi_pac_finkok.state )
         #print "cfdi_pac_finkok_msj",tools.ustr( cfdi_pac_finkok.msj )
         state = cfdi_pac_finkok.state
         ir_attach_facturae_mx = cfdi_pac_finkok.file_input and cfdi_pac_finkok.file_input or False
