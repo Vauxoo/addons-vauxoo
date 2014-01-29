@@ -9,6 +9,7 @@
                 <xpath expr="//field[@name='number']" position="before">
                     <field name="date_payslip"/>
                     <field name="journal_id"/>
+                    <field name="payslip_datetime"/>
                 </xpath>
                 <xpath expr="//field[@name='name']" position="after">
                     <field name="pay_method_id"/>
