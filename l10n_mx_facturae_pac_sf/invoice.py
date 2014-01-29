@@ -54,116 +54,116 @@ import time
 class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
-    _columns = {
-        'cfdi_cbb': fields.binary('CFD-I CBB'),
-        'cfdi_sello': fields.text('CFD-I Sello', help='Sign assigned by the SAT'),
-        'cfdi_no_certificado': fields.char('CFD-I Certificado', size=32,
-                                           help='Serial Number of the Certificate'),
-        'cfdi_cadena_original': fields.text('CFD-I Cadena Original',
-                                            help='Original String used in the electronic invoice'),
-        'cfdi_fecha_timbrado': fields.datetime('CFD-I Fecha Timbrado',
-                                               help='Date when is stamped the electronic invoice'),
-        'cfdi_fecha_cancelacion': fields.datetime('CFD-I Fecha Cancelacion',
-                                                  help='If the invoice is cancel, this field saved the date when is cancel'),
-        'cfdi_folio_fiscal': fields.char('CFD-I Folio Fiscal', size=64,
-                                         help='Folio used in the electronic invoice'),
-    }
-
-    def cfdi_data_write(self, cr, uid, ids, cfdi_data, context=None):
-        """
-        @params cfdi_data : * TODO
-        """
-        if context is None:
-            context = {}
-        ids = isinstance(ids, (int, long)) and [ids] or ids
-        attachment_obj = self.pool.get('ir.attachment')
-        cfdi_xml = cfdi_data.pop('cfdi_xml')
-        if cfdi_xml:
-            self.write(cr, uid, ids, cfdi_data)
-            cfdi_data[
-                'cfdi_xml'] = cfdi_xml  # Regresando valor, despues de hacer el write normal
-            """for invoice in self.browse(cr, uid, ids):
-                #fname, xml_data = self.pool.get('account.invoice').\
-                    _get_facturae_invoice_xml_data(cr, uid, [inv.id],
-                    context=context)
-                fname_invoice = invoice.fname_invoice and invoice.\
-                    fname_invoice + '.xml' or ''
-                data_attach = {
-                    'name': fname_invoice,
-                    'datas': base64.encodestring( cfdi_xml or '') or False,
-                    'datas_fname': fname_invoice,
-                    'description': 'Factura-E XML CFD-I',
-                    'res_model': 'account.invoice',
-                    'res_id': invoice.id,
-                }
-                attachment_ids = attachment_obj.search(cr, uid, [('name','=',\
-                    fname_invoice),('res_model','=','account.invoice'),(
-                    'res_id', '=', invoice.id)])
-                if attachment_ids:
-                    attachment_obj.write(cr, uid, attachment_ids, data_attach,
-                        context=context)
-                else:
-                    attachment_obj.create(cr, uid, data_attach, context=context)
-                """
-        return True
-
-    def copy(self, cr, uid, id, default={}, context=None):
-        if context is None:
-            context = {}
-        default.update({
-            'cfdi_cbb': False,
-            'cfdi_sello': False,
-            'cfdi_no_certificado': False,
-            'cfdi_cadena_original': False,
-            'cfdi_fecha_timbrado': False,
-            'cfdi_folio_fiscal': False,
-            'cfdi_fecha_cancelacion': False,
-        })
-        return super(account_invoice, self).copy(cr, uid, id, default, context)
-    """
-    TODO: reset to draft considerated to delete these fields?
-    def action_cancel_draft(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {
-            'cfdi_cbb': False,
-            'cfdi_sello':False,
-            'cfdi_no_certificado':False,
-            'cfdi_cadena_original':False,
-            'cfdi_fecha_timbrado': False,
-            'cfdi_folio_fiscal': False,
-            'cfdi_fecha_cancelacion': False,
-        })
-        return super(account_invoice, self).action_cancel_draft(cr, uid, ids, args)
-    """
-
-    def _get_file(self, cr, uid, inv_ids, context=None):
-        if context is None:
-            context = {}
-        ids = isinstance(ids, (int, long)) and [ids] or ids
-        invoice = self.browse(cr, uid, ids, context=context)[0]
-        fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
-            '.xml' or ''
-        aids = self.pool.get('ir.attachment').search(cr, uid, [(
-            'datas_fname', '=', invoice.fname_invoice+'.xml'), (
-                'res_model', '=', 'account.invoice'), ('res_id', '=', id)])
-        xml_data = ""
-        if aids:
-            brow_rec = self.pool.get('ir.attachment').browse(cr, uid, aids[0])
-            if brow_rec.datas:
-                xml_data = base64.decodestring(brow_rec.datas)
-        else:
-            fname, xml_data = self._get_facturae_invoice_xml_data(
-                cr, uid, inv_ids, context=context)
-            self.pool.get('ir.attachment').create(cr, uid, {
-                'name': fname_invoice,
-                'datas': base64.encodestring(xml_data),
-                'datas_fname': fname_invoice,
-                'res_model': 'account.invoice',
-                'res_id': invoice.id,
-            }, context=None)#Context, because use a variable type of our code but we dont need it.
-        self.fdata = base64.encodestring(xml_data)
-        msg = _("Press in the button  'Upload File'")
-        return {'file': self.fdata, 'fname': fname_invoice,
-                'name': fname_invoice, 'msg': msg}
+    #~ _columns = {
+        #~ 'cfdi_cbb': fields.binary('CFD-I CBB'),
+        #~ 'cfdi_sello': fields.text('CFD-I Sello', help='Sign assigned by the SAT'),
+        #~ 'cfdi_no_certificado': fields.char('CFD-I Certificado', size=32,
+                                           #~ help='Serial Number of the Certificate'),
+        #~ 'cfdi_cadena_original': fields.text('CFD-I Cadena Original',
+                                            #~ help='Original String used in the electronic invoice'),
+        #~ 'cfdi_fecha_timbrado': fields.datetime('CFD-I Fecha Timbrado',
+                                               #~ help='Date when is stamped the electronic invoice'),
+        #~ 'cfdi_fecha_cancelacion': fields.datetime('CFD-I Fecha Cancelacion',
+                                                  #~ help='If the invoice is cancel, this field saved the date when is cancel'),
+        #~ 'cfdi_folio_fiscal': fields.char('CFD-I Folio Fiscal', size=64,
+                                         #~ help='Folio used in the electronic invoice'),
+    #~ }
+#~ 
+    #~ def cfdi_data_write(self, cr, uid, ids, cfdi_data, context=None):
+        #~ """
+        #~ @params cfdi_data : * TODO
+        #~ """
+        #~ if context is None:
+            #~ context = {}
+        #~ ids = isinstance(ids, (int, long)) and [ids] or ids
+        #~ attachment_obj = self.pool.get('ir.attachment')
+        #~ cfdi_xml = cfdi_data.pop('cfdi_xml')
+        #~ if cfdi_xml:
+            #~ self.write(cr, uid, ids, cfdi_data)
+            #~ cfdi_data[
+                #~ 'cfdi_xml'] = cfdi_xml  # Regresando valor, despues de hacer el write normal
+            #~ """for invoice in self.browse(cr, uid, ids):
+                #~ #fname, xml_data = self.pool.get('account.invoice').\
+                    #~ _get_facturae_invoice_xml_data(cr, uid, [inv.id],
+                    #~ context=context)
+                #~ fname_invoice = invoice.fname_invoice and invoice.\
+                    #~ fname_invoice + '.xml' or ''
+                #~ data_attach = {
+                    #~ 'name': fname_invoice,
+                    #~ 'datas': base64.encodestring( cfdi_xml or '') or False,
+                    #~ 'datas_fname': fname_invoice,
+                    #~ 'description': 'Factura-E XML CFD-I',
+                    #~ 'res_model': 'account.invoice',
+                    #~ 'res_id': invoice.id,
+                #~ }
+                #~ attachment_ids = attachment_obj.search(cr, uid, [('name','=',\
+                    #~ fname_invoice),('res_model','=','account.invoice'),(
+                    #~ 'res_id', '=', invoice.id)])
+                #~ if attachment_ids:
+                    #~ attachment_obj.write(cr, uid, attachment_ids, data_attach,
+                        #~ context=context)
+                #~ else:
+                    #~ attachment_obj.create(cr, uid, data_attach, context=context)
+                #~ """
+        #~ return True
+#~ 
+    #~ def copy(self, cr, uid, id, default={}, context=None):
+        #~ if context is None:
+            #~ context = {}
+        #~ default.update({
+            #~ 'cfdi_cbb': False,
+            #~ 'cfdi_sello': False,
+            #~ 'cfdi_no_certificado': False,
+            #~ 'cfdi_cadena_original': False,
+            #~ 'cfdi_fecha_timbrado': False,
+            #~ 'cfdi_folio_fiscal': False,
+            #~ 'cfdi_fecha_cancelacion': False,
+        #~ })
+        #~ return super(account_invoice, self).copy(cr, uid, id, default, context)
+    #~ """
+    #~ TODO: reset to draft considerated to delete these fields?
+    #~ def action_cancel_draft(self, cr, uid, ids, *args):
+        #~ self.write(cr, uid, ids, {
+            #~ 'cfdi_cbb': False,
+            #~ 'cfdi_sello':False,
+            #~ 'cfdi_no_certificado':False,
+            #~ 'cfdi_cadena_original':False,
+            #~ 'cfdi_fecha_timbrado': False,
+            #~ 'cfdi_folio_fiscal': False,
+            #~ 'cfdi_fecha_cancelacion': False,
+        #~ })
+        #~ return super(account_invoice, self).action_cancel_draft(cr, uid, ids, args)
+    #~ """
+#~ 
+    #~ def _get_file(self, cr, uid, inv_ids, context=None):
+        #~ if context is None:
+            #~ context = {}
+        #~ ids = isinstance(ids, (int, long)) and [ids] or ids
+        #~ invoice = self.browse(cr, uid, ids, context=context)[0]
+        #~ fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
+            #~ '.xml' or ''
+        #~ aids = self.pool.get('ir.attachment').search(cr, uid, [(
+            #~ 'datas_fname', '=', invoice.fname_invoice+'.xml'), (
+                #~ 'res_model', '=', 'account.invoice'), ('res_id', '=', id)])
+        #~ xml_data = ""
+        #~ if aids:
+            #~ brow_rec = self.pool.get('ir.attachment').browse(cr, uid, aids[0])
+            #~ if brow_rec.datas:
+                #~ xml_data = base64.decodestring(brow_rec.datas)
+        #~ else:
+            #~ fname, xml_data = self._get_facturae_invoice_xml_data(
+                #~ cr, uid, inv_ids, context=context)
+            #~ self.pool.get('ir.attachment').create(cr, uid, {
+                #~ 'name': fname_invoice,
+                #~ 'datas': base64.encodestring(xml_data),
+                #~ 'datas_fname': fname_invoice,
+                #~ 'res_model': 'account.invoice',
+                #~ 'res_id': invoice.id,
+            #~ }, context=None)#Context, because use a variable type of our code but we dont need it.
+        #~ self.fdata = base64.encodestring(xml_data)
+        #~ msg = _("Press in the button  'Upload File'")
+        #~ return {'file': self.fdata, 'fname': fname_invoice,
+                #~ 'name': fname_invoice, 'msg': msg}
 
     def add_node(self, node_name=None, attrs=None, parent_node=None,
                  minidom_xml_obj=None, attrs_types=None, order=False):
@@ -232,87 +232,87 @@ class account_invoice(osv.Model):
                                              node_Addenda, xml_res_str, attrs_types=node_Partner_attrs_types)
         return xml_res_str
 
-    def _get_type_sequence(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        ir_seq_app_obj = self.pool.get('ir.sequence.approval')
-        invoice = self.browse(cr, uid, ids[0], context=context)
-        sequence_app_id = ir_seq_app_obj.search(cr, uid, [(
-            'sequence_id', '=', invoice.invoice_sequence_id.id)], context=context)
-        type_inv = 'cfd22'
-        if sequence_app_id:
-            type_inv = ir_seq_app_obj.browse(
-                cr, uid, sequence_app_id[0], context=context).type
-        if 'cfdi' in type_inv:
-            comprobante = 'cfdi:Comprobante'
-        else:
-            comprobante = 'Comprobante'
-        return comprobante
-
-    def _get_time_zone(self, cr, uid, invoice_id, context=None):
-        if context is None:
-            context = {}
-        res_users_obj = self.pool.get('res.users')
-        userstz = res_users_obj.browse(cr, uid, [uid])[0].partner_id.tz
-        a = 0
-        if userstz:
-            hours = timezone(userstz)
-            fmt = '%Y-%m-%d %H:%M:%S %Z%z'
-            now = datetime.now()
-            loc_dt = hours.localize(datetime(now.year, now.month, now.day,
-                                             now.hour, now.minute, now.second))
-            timezone_loc = (loc_dt.strftime(fmt))
-            diff_timezone_original = timezone_loc[-5:-2]
-            timezone_original = int(diff_timezone_original)
-            s = str(datetime.now(pytz.timezone(userstz)))
-            s = s[-6:-3]
-            timezone_present = int(s)*-1
-            a = timezone_original + ((
-                timezone_present + timezone_original)*-1)
-        return a
-    
-    def _get_file_cancel(self, cr, uid, inv_ids, context=None):
-        if context is None:
-            context = {}
-        inv_ids = inv_ids[0]
-        atta_obj = self.pool.get('ir.attachment')
-        atta_id = atta_obj.search(cr, uid, [('res_id', '=', inv_ids), (
-            'name', 'ilike', '%.xml')], context=context)
-        res = {}
-        if atta_id:
-            atta_brw = atta_obj.browse(cr, uid, atta_id, context)[0]
-            inv_xml = atta_brw.datas or False
-        else:
-            inv_xml = False
-            raise osv.except_osv(('State of Cancellation!'), (
-                "This invoice hasn't stamped, so that not possible cancel."))
-        return {'file': inv_xml}
-
-    def write_cfd_data(self, cr, uid, ids, cfd_datas, context=None):
-        """
-        @param cfd_datas : Dictionary with data that is used in facturae CFDI
-        """
-        if context is None:
-            context = {}
-        if not cfd_datas:
-            cfd_datas = {}
-        comprobante = self._get_type_sequence(cr, uid, ids, context=context)
-        # obtener cfd_data con varios ids
-        # for id in ids:
-        ids = isinstance(ids, (int, long)) and [ids] or ids
-        if True:
-            data = {}
-            cfd_data = cfd_datas
-            noCertificado = cfd_data.get(
-                comprobante, {}).get('noCertificado', '')
-            certificado = cfd_data.get(comprobante, {}).get('certificado', '')
-            sello = cfd_data.get(comprobante, {}).get('sello', '')
-            cadena_original = cfd_data.get('cadena_original', '')
-            data = {
-                'no_certificado': noCertificado,
-                'certificado': certificado,
-                'sello': sello,
-                'cadena_original': cadena_original,
-            }
-            self.write(cr, uid, ids, data, context=context)
-        return True
+    #~ def _get_type_sequence(self, cr, uid, ids, context=None):
+        #~ if context is None:
+            #~ context = {}
+        #~ ir_seq_app_obj = self.pool.get('ir.sequence.approval')
+        #~ invoice = self.browse(cr, uid, ids[0], context=context)
+        #~ sequence_app_id = ir_seq_app_obj.search(cr, uid, [(
+            #~ 'sequence_id', '=', invoice.invoice_sequence_id.id)], context=context)
+        #~ type_inv = 'cfd22'
+        #~ if sequence_app_id:
+            #~ type_inv = ir_seq_app_obj.browse(
+                #~ cr, uid, sequence_app_id[0], context=context).type
+        #~ if 'cfdi' in type_inv:
+            #~ comprobante = 'cfdi:Comprobante'
+        #~ else:
+            #~ comprobante = 'Comprobante'
+        #~ return comprobante
+#~ 
+    #~ def _get_time_zone(self, cr, uid, invoice_id, context=None):
+        #~ if context is None:
+            #~ context = {}
+        #~ res_users_obj = self.pool.get('res.users')
+        #~ userstz = res_users_obj.browse(cr, uid, [uid])[0].partner_id.tz
+        #~ a = 0
+        #~ if userstz:
+            #~ hours = timezone(userstz)
+            #~ fmt = '%Y-%m-%d %H:%M:%S %Z%z'
+            #~ now = datetime.now()
+            #~ loc_dt = hours.localize(datetime(now.year, now.month, now.day,
+                                             #~ now.hour, now.minute, now.second))
+            #~ timezone_loc = (loc_dt.strftime(fmt))
+            #~ diff_timezone_original = timezone_loc[-5:-2]
+            #~ timezone_original = int(diff_timezone_original)
+            #~ s = str(datetime.now(pytz.timezone(userstz)))
+            #~ s = s[-6:-3]
+            #~ timezone_present = int(s)*-1
+            #~ a = timezone_original + ((
+                #~ timezone_present + timezone_original)*-1)
+        #~ return a
+    #~ 
+    #~ def _get_file_cancel(self, cr, uid, inv_ids, context=None):
+        #~ if context is None:
+            #~ context = {}
+        #~ inv_ids = inv_ids[0]
+        #~ atta_obj = self.pool.get('ir.attachment')
+        #~ atta_id = atta_obj.search(cr, uid, [('res_id', '=', inv_ids), (
+            #~ 'name', 'ilike', '%.xml')], context=context)
+        #~ res = {}
+        #~ if atta_id:
+            #~ atta_brw = atta_obj.browse(cr, uid, atta_id, context)[0]
+            #~ inv_xml = atta_brw.datas or False
+        #~ else:
+            #~ inv_xml = False
+            #~ raise osv.except_osv(('State of Cancellation!'), (
+                #~ "This invoice hasn't stamped, so that not possible cancel."))
+        #~ return {'file': inv_xml}
+#~ 
+    #~ def write_cfd_data(self, cr, uid, ids, cfd_datas, context=None):
+        #~ """
+        #~ @param cfd_datas : Dictionary with data that is used in facturae CFDI
+        #~ """
+        #~ if context is None:
+            #~ context = {}
+        #~ if not cfd_datas:
+            #~ cfd_datas = {}
+        #~ comprobante = self._get_type_sequence(cr, uid, ids, context=context)
+        #~ # obtener cfd_data con varios ids
+        #~ # for id in ids:
+        #~ ids = isinstance(ids, (int, long)) and [ids] or ids
+        #~ if True:
+            #~ data = {}
+            #~ cfd_data = cfd_datas
+            #~ noCertificado = cfd_data.get(
+                #~ comprobante, {}).get('noCertificado', '')
+            #~ certificado = cfd_data.get(comprobante, {}).get('certificado', '')
+            #~ sello = cfd_data.get(comprobante, {}).get('sello', '')
+            #~ cadena_original = cfd_data.get('cadena_original', '')
+            #~ data = {
+                #~ 'no_certificado': noCertificado,
+                #~ 'certificado': certificado,
+                #~ 'sello': sello,
+                #~ 'cadena_original': cadena_original,
+            #~ }
+            #~ self.write(cr, uid, ids, data, context=context)
+        #~ return True

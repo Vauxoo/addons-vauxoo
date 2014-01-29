@@ -221,6 +221,7 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service = netsvc.LocalService("workflow")
             attach_v3_2 = data.file_input and data.file_input.id or False
             index_content = data.file_input and data.file_input.index_content.encode('utf-8') or False
+            print 'index_content', index_content
             if 'cbb' in type:
                 msj = _("Signed")
                 status = True
@@ -231,13 +232,21 @@ class ir_attachment_facturae_mx(osv.Model):
                 status = True
             if 'cfdi' in type:
                 # upload file in custom module for pac
+                print 'type', type
                 type__fc = self.get_driver_fc_sign()
+                print 'type__fc', type__fc
                 if type in type__fc.keys():
                     fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
+                    print 'fname_invoice', fname_invoice
                     fdata = base64.encodestring(index_content)
+                    print 'fdata', fdata
+                    print 'type__fc[type]', type__fc[type]
                     res = type__fc[type](cr, uid, [data.id], fdata, context=context)
+                    print 'res', res
                     msj = tools.ustr(res.get('msg', False))
+                    print 'msj', msj
                     index_xml = res.get('cfdi_xml', False)
+                    print 'index_xml', index_xml
                     status = res.get('status', False)
                     if status:
                         data_attach = {
@@ -258,6 +267,7 @@ class ir_attachment_facturae_mx(osv.Model):
                         status = True
                 else:
                     msj += _("Unknow driver for %s" % (type))
+            print 'sssssssssssssssssstatus', status
             if status:
                 if index_xml:
                     doc_xml = xml.dom.minidom.parseString(index_xml)
