@@ -254,7 +254,7 @@ class account_voucher(osv.Model):
                         line_tax.analytic_account_id and\
                                     line_tax.analytic_account_id.id or False,
                         line_tax.amount_base,
-                        factor, context=context)
+                        factor, voucher, context=context)
                     for move_line_tax in move_lines_tax:
                         move_create = move_line_obj.create(cr ,uid, move_line_tax,
                                                 context=context)
@@ -282,7 +282,7 @@ class account_voucher(osv.Model):
                                 line_tax.analytic_account_id and\
                                             line_tax.analytic_account_id.id or False,
                                 line_tax.amount_base,
-                                factor, context=context)
+                                factor, voucher, context=context)
                             for move_line_tax in move_lines_tax:
                                 move_create = move_line_obj.create(cr ,uid, move_line_tax,
                                                         context=context)
@@ -317,7 +317,7 @@ class account_voucher(osv.Model):
                             company_currency, reference_amount,
                             amount_tax_unround, reference_currency_id,
                             tax_id, line_tax, acc_a, amount_base_tax,#informacion de lineas de impuestos
-                            factor=0, context=None):
+                            factor=0, voucher=False, context=None):
         acc_tax_obj = self.pool.get('account.tax')
         if type == 'payment' or reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
@@ -361,7 +361,9 @@ class account_voucher(osv.Model):
                     'date' : date,
                     'tax_voucher_id' : tax_id,
         }
-
+        if voucher and voucher.amount < 0:
+            debit_line_vals.update({'credit': debit_line_vals.get('debit', 0.0), 'debit': 0.0})
+            credit_line_vals.update({'debit': credit_line_vals.get('credit', 0.0), 'credit': 0.0})
         if type in ('payment','purchase'):
             reference_amount < 0 and\
                 [credit_line_vals.pop('analytic_account_id'),
