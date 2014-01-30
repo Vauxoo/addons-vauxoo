@@ -154,12 +154,6 @@ class ir_attachment_facturae_mx(osv.Model):
                 params = [invoices_list, username, password, taxpayer_id, cerCSD, keyCSD]
                 result = client.service.cancel(*params)
                 time.sleep(1)
-                url_finkok = 'http://facturacion.finkok.com/servicios/soap/cancel.wsdl'
-                testing_url_finkok = 'http://demo-facturacion.finkok.com/servicios/soap/cancel.wsdl'
-                if (wsdl_url == url_finkok) or (wsdl_url == testing_url_finkok):
-                    pass
-                else:
-                    raise osv.except_osv(_('Warning'), _('Web Service URL o PAC incorrect'))
                 if not 'Folios' in result:
                     msg += _('%s' %result)
                     raise orm.except_orm(_('Warning'), _('Mensaje %s') % (msg))
