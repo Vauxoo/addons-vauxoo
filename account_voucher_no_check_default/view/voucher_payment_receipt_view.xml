@@ -12,6 +12,9 @@
                 <xpath expr="//field[@name='line_cr_ids']/tree/field[@name='reconcile']" position="attributes">
                     <attribute name="attrs">{'readonly': [('line_to_invoice', '=', True)]}</attribute>
                 </xpath>
+                <xpath expr="//field[@name='line_cr_ids']/tree/field[@name='amount']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('line_to_invoice', '=', True)]}</attribute>
+                </xpath>
             </field>
         </record>
 
@@ -25,6 +28,9 @@
                 </xpath>
                 <xpath expr="//field[@name='line_dr_ids']/tree/field[@name='reconcile']" position="attributes">
                      <attribute name="attrs">{'readonly': [('line_to_invoice', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='line_dr_ids']/tree/field[@name='amount']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('line_to_invoice', '=', True)]}</attribute>
                 </xpath>
             </field>
         </record>
