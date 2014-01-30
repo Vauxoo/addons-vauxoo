@@ -50,13 +50,15 @@ class mrp_production(osv.osv):
     def _check_len_move_prod(self,cr,uid,ids,field_name,args,context={}):
         res = {}
         for production in self.browse(cr,uid,ids,context=context):
-            res[production.id]=len(production.move_created_ids2)
+            res[production.id] = False
+            if len(production.move_created_ids2) > 0:
+                res[production.id] = True
         return res
             
     _columns = {
         'consumed' : fields.function(_check_boolean, method=True, string='consumed?', type='boolean', help="indicates if product to consume have been consumed or canceled"),
         'len_move' : fields.function(_check_len_move, method=True, string='moves', type='float'),
-        'len_move_prod' : fields.function(_check_len_move_prod, method=True, string='produced', type='integer',),
+        'len_move_prod' : fields.function(_check_len_move_prod, method=True, string='produced', type='boolean',),
     }
     
     def action_finished_consume(self,cr,uid,ids,context={}):
