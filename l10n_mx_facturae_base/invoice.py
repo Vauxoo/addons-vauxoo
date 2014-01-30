@@ -901,12 +901,6 @@ class account_invoice(osv.Model):
         invoice_tax_obj = self.pool.get("account.invoice.tax")
         invoice_datas = []
         invoice_data_parents = []
-        #'type': fields.selection([
-            #('out_invoice','Customer Invoice'),
-            #('in_invoice','Supplier Invoice'),
-            #('out_refund','Customer Refund'),
-            #('in_refund','Supplier Refund'),
-            #],'Type', readonly=True, select=True),
         for invoice in invoices:
             invoice_data_parent = {}
             if invoice.type == 'out_invoice':
