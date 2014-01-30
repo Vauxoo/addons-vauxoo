@@ -25,7 +25,7 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, osv
+from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 from openerp import pooler, tools
 from openerp import netsvc
@@ -765,8 +765,10 @@ class account_invoice(osv.Model):
         data_xml = data_xml.replace('<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
         date_invoice = data_dict.get('cfdi:Comprobante',{}) and datetime.strptime( data_dict.get('cfdi:Comprobante',{}).get('fecha',{}), '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d') or False
         facturae_version = '3.2'
-        self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], facturae_version)
-        data_dict.get('cfdi:Comprobante',{})
+        try:
+            self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], facturae_version)
+        except Exception, e:
+            raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (e))
         return fname_xml, data_xml
 
     def validate_scheme_facturae_xml(self, cr, uid, ids, datas_xmls=[], facturae_version = None, facturae_type="cfdv", scheme_type='xsd'):
