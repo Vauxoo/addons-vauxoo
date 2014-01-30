@@ -153,6 +153,10 @@ class ir_attachment_facturae_mx(osv.Model):
                 invoices_list.uuids.string = invoices
                 params = [invoices_list, username, password, taxpayer_id, cerCSD, keyCSD]
                 result = client.service.cancel(*params)
+                get_receipt = [username, password, taxpayer_id, folio_cancel]
+                query_pending_cancellation = [username, password, folio_cancel]
+                get_receipt = client.service.get_receipt(*get_receipt)
+                query_pending_cancellation = client.service.query_pending_cancellation(*query_pending_cancellation)
                 time.sleep(1)
                 if not 'Folios' in result:
                     msg += _('%s' %result)
