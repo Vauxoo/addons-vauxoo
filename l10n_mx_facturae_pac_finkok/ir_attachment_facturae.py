@@ -78,7 +78,7 @@ class ir_attachment_facturae_mx(osv.Model):
         types = super(ir_attachment_facturae_mx, self)._get_type(
             cr, uid, ids, context=context)
         types.extend([
-            ('cfdi32_pac_finkok', 'CFDI 3.2'),
+            ('cfdi32_pac_finkok', 'CFDI 3.2 FINKOK'),
         ])
         return types
     
