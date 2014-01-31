@@ -21,7 +21,7 @@
                     </xpath>
 
                     <xpath expr="/form/notebook/page[@string='Consumed Products']/group/button[@name='%(create_consume_action)d']" position="after">
-            <button name="action_finished_consume" states="in_production" string="Finished Consumed" icon="gtk-convert" type="object"/>
+            <button name="action_finished_consume" string="Finished Consumed" icon="gtk-convert" type="object" attrs="{'invisible': ['|','|',('consumed','=',False),('state','!=','in_production'),('moves_lines2','=',0)]}"/>
                     </xpath>
 
                     <xpath expr="/form/notebook/page[@string='Finished Products']" position="inside">
@@ -29,7 +29,7 @@
                     </xpath>
 
                     <xpath expr="/form/notebook/page[@string='Finished Products']" position="inside">
-            <button name="action_finish" states="in_production" string="Finish Production" icon="gtk-ok" type="object"/>
+            <button name="action_finish" string="Finish Production" icon="gtk-ok" type="object" attrs="{'invisible': ['|','|',('consumed','=',False),('state','=','done'),('len_move_prod','=',0)]}"/>
                     </xpath>
 
                     <xpath expr="/form/group/field[@name='origin']" position="after">
