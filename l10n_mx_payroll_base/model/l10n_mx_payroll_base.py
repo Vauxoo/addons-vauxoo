@@ -34,6 +34,11 @@ import os
 import tempfile
 import jinja2
 import base64
+import cgi
+
+import urllib
+from markupsafe import Markup
+
 
 class hr_payslip_product_line(osv.Model):
     
@@ -47,6 +52,8 @@ class hr_payslip_product_line(osv.Model):
 
 class hr_payslip(osv.Model):
 
+    def string_to_xml_format(self, cr, uid, ids, text):
+        return cgi.escape(text, True).encode('ascii', 'xmlcharrefreplace').replace('\n\n', ' ')
     _inherit = 'hr.payslip'
 
     def _get_company_emitter_invoice(self, cr, uid, ids, name, args, context=None):
@@ -375,7 +382,6 @@ class hr_payslip(osv.Model):
         approval_id = False
         id = ids and ids[0] or False
         if journal_id:
-            print journal_id, 'journal_id'*4
             journal_id = self.pool.get('account.journal').browse(cr, uid, journal_id, context=context)
             #~ sequence_id = self._get_invoice_sequence(cr, uid, [id])[id]
             sequence_id = journal_id and journal_id.sequence_id and journal_id.sequence_id.id
@@ -737,7 +743,7 @@ class hr_payslip(osv.Model):
             payslip_data_parents[0]['cfdi:Comprobante']['cfdi:Emisor']['cfdi:RegimenFiscal'] = {
                 'Regimen': ''}
             payslip_data_parents[0]['cfdi:Comprobante']['LugarExpedicion'] = address.encode('ascii', 'xmlcharrefreplace')
-        return payslip.company_emitter_id
+        return payslip_data_parent
 
     def binary2file(self, cr, uid, ids, binary_data, file_prefix="", file_suffix=""):
         """
@@ -766,7 +772,6 @@ class hr_payslip(osv.Model):
             certificate_id = self.pool.get('res.company')._get_current_certificate(
                 cr, uid, [payslip.company_emitter_id.id],
                 context=context)[payslip.company_emitter_id.id]
-            print payslip.company_emitter_id,'AA'*4
             certificate_id = certificate_id and self.pool.get(
                 'res.company.facturae.certificate').browse(
                 cr, uid, [certificate_id], context=context)[0] or False
@@ -777,7 +782,6 @@ class hr_payslip(osv.Model):
                     # del certificate_id.certificate_file
                     pass
                 fname_cer_pem = False
-                print certificate_id.certificate_file_pem, 'certificate_id.certificate_file_pemcertificate_id.certificate_file_pemcertificate_id.certificate_file_pem'
                 try:
                     fname_cer_pem = self.binary2file(cr, uid, ids,
                         certificate_id.certificate_file_pem, 'openerp_' + (
@@ -875,13 +879,13 @@ class hr_payslip(osv.Model):
                     #~ break
         #~ elif 'cfdi' in type_inv:
             #~ # Search char "," for addons_path, now is multi-path
-            #~ all_paths = tools.config["addons_path"].split(",")
-            #~ for my_path in all_paths:
-                #~ if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT')):
-                    #~ # If dir is in path, save it on real_path
-                    #~ file_globals['fname_xslt'] = my_path and os.path.join(
-                        #~ my_path, 'l10n_mx_facturae_base', 'SAT','cadenaoriginal_3_2',
-                        #~ 'cadenaoriginal_3_2_l.xslt') or ''
+            all_paths = tools.config["addons_path"].split(",")
+            for my_path in all_paths:
+                if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT')):
+                    # If dir is in path, save it on real_path
+                    file_globals['fname_xslt'] = my_path and os.path.join(
+                        my_path, 'l10n_mx_facturae_base', 'SAT','cadenaoriginal_3_2',
+                        'cadenaoriginal_3_2_l.xslt') or ''
         return file_globals
 
     def _get_noCertificado(self, cr, uid, ids, fname_cer, pem=True):
@@ -898,6 +902,26 @@ class hr_payslip(osv.Model):
             fname_cer, fname_out=fname_serial, type='PEM')
         return result
 
+    def _get_sello(self, cr=False, uid=False, ids=False, context=None):
+        # TODO: Put encrypt date dynamic
+        if context is None:
+            context = {}
+        fecha = context['fecha']
+        year = float(time.strftime('%Y', time.strptime(
+            fecha, '%Y-%m-%dT%H:%M:%S')))
+        if year >= 2011:
+            encrypt = "sha1"
+        if year <= 2010:
+            encrypt = "md5"
+        certificate_lib = self.pool.get('facturae.certificate.library')
+        fname_sign = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(
+            ''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + \
+            '__sign__')
+        result = certificate_lib._sign(cr, uid, ids, fname=context['fname_xml'],
+            fname_xslt=context['fname_xslt'], fname_key=context['fname_key'],
+            fname_out=fname_sign, encrypt=encrypt, type_key='PEM')
+        return result
+
     def _get_facturae_payroll_xml_data(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
@@ -909,20 +933,26 @@ class hr_payslip(osv.Model):
             facturae_type='nomina'
             dict_new = self._get_payroll_comp_dict_data(cr, uid, ids, context=context)
             context.update(self._get_file_globals(cr, uid, ids, context=context))
-            noCertificado = self._get_noCertificado(cr, uid, ids, context['fname_cer'])
-            print noCertificado, 'noCertificado'*5
+            context['fecha'] = time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(payroll.payslip_datetime, '%Y-%m-%d %H:%M:%S'))
             
+            noCertificado = self._get_noCertificado(cr, uid, ids, context['fname_cer'])
             data_dict_payroll = self._get_dict_payroll(cr, uid, ids, context=context)[0]
-            dict_new[0]['cfdi:Comprobante']['noCertificado'] = noCertificado
-            print dict_new, 'DICTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT'
+            dict_new['cfdi:Comprobante']['noCertificado'] = noCertificado
             all_paths = tools.config["addons_path"].split(",")
+            formaDePago = payroll.string_to_xml_format(u'Pago en una sola exhibición')
+            
             
             for my_path in all_paths:
                 if os.path.isdir(os.path.join(my_path, 'l10n_mx_payroll_base', 'template')):
                     fname_jinja_tmpl = my_path and os.path.join(my_path, 'l10n_mx_payroll_base', 'template', 'cfdi' + '.xml') or ''
             dictargs2 = {
-                'o': payslip.company_emitter_id,
+                'o': dict_new,
+                'a': payroll,
                 'time': time,
+                'cgi': cgi,
+                'employee': payroll.employee_id,
+                'noCertificado': noCertificado,
+                'formaDePago': formaDePago,
                 }
             payroll = "payroll_compro"
             (fileno_xml, fname_xml) = tempfile.mkstemp('.xml', 'openerp_' + (payroll or '') + '__facturae__')
@@ -944,6 +974,18 @@ class hr_payslip(osv.Model):
                 raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (e))
             
             
+            fname_txt = fname_xml + '.txt'
+            (fileno_sign, fname_sign) = tempfile.mkstemp('.txt', 'openerp_' + (
+                payroll.number or '') + '__facturae_txt_md5__')
+            os.close(fileno_sign)
+
+            context.update({
+                'fname_xml': fname_xml,
+                'fname_txt': fname_txt,
+                'fname_sign': fname_sign,
+            })
+            sello = sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
+            print sello, 'sellor' * 10
             for my_path in all_paths:
                 if os.path.isdir(os.path.join(my_path, 'l10n_mx_payroll_base', 'template')):
                     fname_jinja_tmpl = my_path and os.path.join(my_path, 'l10n_mx_payroll_base', 'template', 'nomina11' + '.xml') or ''
@@ -1003,5 +1045,4 @@ class hr_payslip(osv.Model):
             #~data_xml_with_payroll = doc_xml_full.documentElement
             data_xml = doc_xml.toxml('UTF-8')
             data_xml = codecs.BOM_UTF8 + data_xml
-            print data_xml
         return fname_xml, data_xml
