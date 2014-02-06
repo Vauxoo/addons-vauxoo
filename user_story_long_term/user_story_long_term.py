@@ -259,6 +259,7 @@ class user_story(osv.Model):
             user_id = self.pool.get('res.users').browse(cr,uid,[uid],context=context)[0]
 
             body_html = body_html.replace('Has been accepted',user_id.name + ' has been accepted')
+            body_html = body_html.replace('NAME_HU',str(hu.id))
 
             mail_mail = self.pool.get('mail.mail')
             mail_id = mail_mail.create(cr, uid,
