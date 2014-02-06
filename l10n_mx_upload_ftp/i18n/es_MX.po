@@ -1,0 +1,61 @@
+# Spanish translation for openerp-mexico-localization
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the openerp-mexico-localization package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: openerp-mexico-localization\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-11-08 03:15+0000\n"
+"PO-Revision-Date: 2013-11-12 03:33+0000\n"
+"Last-Translator: Federico Manuel Echeverri Choux <echeverrifm@gmail.com>\n"
+"Language-Team: Spanish <es@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-01-22 06:15+0000\n"
+"X-Generator: Launchpad (build 16901)\n"
+
+#. module: l10n_mx_upload_ftp
+#: view:ftp.server:0
+#: field:ftp.server,name:0
+#: model:ir.actions.act_window,name:l10n_mx_upload_ftp.action_ftp_server_form
+#: model:ir.ui.menu,name:l10n_mx_upload_ftp.ftp_server_view
+msgid "ftp server"
+msgstr "Servidor ftp"
+
+#. module: l10n_mx_upload_ftp
+#: model:ir.ui.menu,name:l10n_mx_upload_ftp.ftp_server_menu
+msgid "ftp Server"
+msgstr "Servidor ftp"
+
+#. module: l10n_mx_upload_ftp
+#: field:ftp.server,ftp_source:0
+msgid "ftp source"
+msgstr "origen del ftp"
+
+#. module: l10n_mx_upload_ftp
+#: field:ftp.server,ftp_pwd:0
+msgid "ftp pwd"
+msgstr "Contraseña del ftp"
+
+#. module: l10n_mx_upload_ftp
+#: model:ir.model,name:l10n_mx_upload_ftp.model_ir_attachment
+msgid "ir.attachment"
+msgstr "ir.attachment"
+
+#. module: l10n_mx_upload_ftp
+#: help:ftp.server,ftp_source:0
+msgid "Format example \"/done\""
+msgstr "Formato de ejemplo \"/done\""
+
+#. module: l10n_mx_upload_ftp
+#: model:ir.model,name:l10n_mx_upload_ftp.model_ftp_server
+msgid "ftp.server"
+msgstr "ftp.server"
+
+#. module: l10n_mx_upload_ftp
+#: field:ftp.server,ftp_user:0
+msgid "ftp user"
+msgstr "Usuario ftp"
