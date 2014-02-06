@@ -1,2 +1,2 @@
-id	name	model_id:id	group_id:id	perm_read	perm_write	perm_create	perm_unlink
-access_res_user_ftp_server	ftp.sever	model_ftp_server		1	1	1	1
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_user_ftp_server_manager,ftp_sever_manager,model_ftp_server,,1,1,1,1
