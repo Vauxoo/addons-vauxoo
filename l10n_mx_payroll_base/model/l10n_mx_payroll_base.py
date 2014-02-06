@@ -423,249 +423,249 @@ class hr_payslip(osv.Model):
                     #~ 'Not found a sequence of configuration. %s !') % (msg2))
         return {'value' : {'approval_id' : approval_id}}
 
-    def _get_payroll_comp_dict_data(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        payslips = self.browse(cr, uid, ids, context=context)
-        payslip_datas = []
-        payslip_data_parents = []
-        for payslip in payslips:
-            payslip_data_parent = {}
-            # Inicia seccion: Comprobante
-            payslip_data_parent['cfdi:Comprobante'] = {}
-            # default data
-            payslip_data_parent['cfdi:Comprobante'].update({
-                'xmlns:cfdi': "http://www.sat.gob.mx/cfd/3",
-                'xmlns:xsi': "http://www.w3.org/2001/XMLSchema-instance",
-                'xsi:schemaLocation': "http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd",
-                'version': "3.2",
-            })
-            number_work = payslip.number
-            payslip_data_parent['cfdi:Comprobante'].update({
-                'folio': number_work,
-                'fecha': payslip.payslip_datetime and
-                # time.strftime('%d/%m/%y',
-                # time.strptime(invoice.date_invoice, '%Y-%m-%d'))
-                time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(
-                payslip.payslip_datetime, '%Y-%m-%d %H:%M:%S'))
-                or '',
-                'tipoDeComprobante': u"egreso",
-                'formaDePago': u'Pago en una sola exhibición'.encode('ascii', 'xmlcharrefreplace'),#Cableado!!
-                'noCertificado': '@',
-                'sello': '@',
-                'certificado': '@',
-                'subTotal': "%.2f" % (payslip.line_payslip_product_ids and payslip.line_payslip_product_ids[0] and 
-                    payslip.line_payslip_product_ids[0].amount or 0.0),
-                'descuento': "0",  # Add field general
-                'total': "%.2f" % (payslip.line_payslip_product_ids and payslip.line_payslip_product_ids[0] and 
-                    payslip.line_payslip_product_ids[0].amount or 0.0),
-            })
+    #~ def _get_payroll_comp_dict_data(self, cr, uid, ids, context=None):
+        #~ if context is None:
+            #~ context = {}
+        #~ payslips = self.browse(cr, uid, ids, context=context)
+        #~ payslip_datas = []
+        #~ payslip_data_parents = []
+        #~ for payslip in payslips:
+            #~ payslip_data_parent = {}
+            #~ # Inicia seccion: Comprobante
+            #~ payslip_data_parent['cfdi:Comprobante'] = {}
+            #~ # default data
+            #~ payslip_data_parent['cfdi:Comprobante'].update({
+                #~ 'xmlns:cfdi': "http://www.sat.gob.mx/cfd/3",
+                #~ 'xmlns:xsi': "http://www.w3.org/2001/XMLSchema-instance",
+                #~ 'xsi:schemaLocation': "http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd",
+                #~ 'version': "3.2",
+            #~ })
+            #~ number_work = payslip.number
+            #~ payslip_data_parent['cfdi:Comprobante'].update({
+                #~ 'folio': number_work,
+                #~ 'fecha': payslip.payslip_datetime and
+                #~ # time.strftime('%d/%m/%y',
+                #~ # time.strptime(invoice.date_invoice, '%Y-%m-%d'))
+                #~ time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(
+                #~ payslip.payslip_datetime, '%Y-%m-%d %H:%M:%S'))
+                #~ or '',
+                #~ 'tipoDeComprobante': u"egreso",
+                #~ 'formaDePago': u'Pago en una sola exhibición'.encode('ascii', 'xmlcharrefreplace'),#Cableado!!
+                #~ 'noCertificado': '@',
+                #~ 'sello': '@',
+                #~ 'certificado': '@',
+                #~ 'subTotal': "%.2f" % (payslip.line_payslip_product_ids and payslip.line_payslip_product_ids[0] and 
+                    #~ payslip.line_payslip_product_ids[0].amount or 0.0),
+                #~ 'descuento': "0",  # Add field general
+                #~ 'total': "%.2f" % (payslip.line_payslip_product_ids and payslip.line_payslip_product_ids[0] and 
+                    #~ payslip.line_payslip_product_ids[0].amount or 0.0),
+            #~ })
             #~ folio_data = self._get_folio(
                 #~ cr, uid, [invoice.id], context=context)
-            serie = 'serie'
+            #~ serie = 'serie'
             #~ serie = folio_data.get('serie', False)
-            if serie:
-                payslip_data_parent['cfdi:Comprobante'].update({
-                    'serie': 'serie',
-                })
+            #~ if serie:
+                #~ payslip_data_parent['cfdi:Comprobante'].update({
+                    #~ 'serie': 'serie',
+                #~ })
             # Termina seccion: Comprobante
             # Inicia seccion: Emisor
-            partner_obj = self.pool.get('res.partner')
-            address_payslip = payslip.address_issued_id or False
-            address_payslip_parent = payslip.company_emitter_id and \
-            payslip.company_emitter_id.address_invoice_parent_company_id or False
+            #~ partner_obj = self.pool.get('res.partner')
+            #~ address_payslip = payslip.address_issued_id or False
+            #~ address_payslip_parent = payslip.company_emitter_id and \
+            #~ payslip.company_emitter_id.address_invoice_parent_company_id or False
 
             #~ if not address_invoice:
                 #~ raise osv.except_osv(_('Warning !'), _(
                     #~ "Don't have defined the address issuing!"))
 
-            if not address_payslip_parent:
-                raise osv.except_osv(_('Warning !'), _(
-                    "Don't have defined an address of invoicing from the company!"))
-
-            if not address_payslip_parent.vat:
-                raise osv.except_osv(_('Warning !'), _(
-                    "Don't have defined RFC for the address of invoice to the company!"))
-
-            payslip_data = payslip_data_parent['cfdi:Comprobante']
-            payslip_data['cfdi:Emisor'] = {}
-            payslip_data['cfdi:Emisor'].update({
-
-                'rfc': (('vat_split' in address_payslip_parent._columns and \
-                address_payslip_parent.vat_split or address_payslip_parent.vat) \
-                or '').replace('-', ' ').replace(' ', ''),
-                'nombre': address_payslip_parent.name or '',
+            #~ if not address_payslip_parent:
+                #~ raise osv.except_osv(_('Warning !'), _(
+                    #~ "Don't have defined an address of invoicing from the company!"))
+#~ 
+            #~ if not address_payslip_parent.vat:
+                #~ raise osv.except_osv(_('Warning !'), _(
+                    #~ "Don't have defined RFC for the address of invoice to the company!"))
+#~ 
+            #~ payslip_data = payslip_data_parent['cfdi:Comprobante']
+            #~ payslip_data['cfdi:Emisor'] = {}
+            #~ payslip_data['cfdi:Emisor'].update({
+#~ 
+                #~ 'rfc': (('vat_split' in address_payslip_parent._columns and \
+                #~ address_payslip_parent.vat_split or address_payslip_parent.vat) \
+                #~ or '').replace('-', ' ').replace(' ', ''),
+                #~ 'nombre': address_payslip_parent.name or '',
                 # Obtener domicilio dinamicamente
                 # virtual_invoice.append( (invoice.company_id and
                 # invoice.company_id.partner_id and
                 # invoice.company_id.partner_id.vat or '').replac
 
-                'cfdi:DomicilioFiscal': {
-                    'calle': address_payslip_parent.street and \
-                        address_payslip_parent.street.replace('\n\r', ' ').\
-                        replace('\r\n', ' ').replace('\n', ' ').replace(
-                        '\r', ' ') or '',
-                    'noExterior': address_payslip_parent.l10n_mx_street3 and \
-                        address_payslip_parent.l10n_mx_street3.replace(
-                        '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
-                        replace('\r', ' ') or 'N/A',  # "Numero Exterior"
-                    'noInterior': address_payslip_parent.l10n_mx_street4 and \
-                        address_payslip_parent.l10n_mx_street4.replace(
-                        '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
-                        replace('\r', ' ') or 'N/A',  # "Numero Interior"
-                    'colonia':  address_payslip_parent.street2 and \
-                        address_payslip_parent.street2.replace('\n\r', ' ').\
-                        replace('\r\n', ' ').replace('\n', ' ').replace(
-                        '\r', ' ') or False,
-                    'localidad': address_payslip_parent.l10n_mx_city2 and \
-                        address_payslip_parent.l10n_mx_city2.replace(
-                        '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
-                        replace('\r', ' ').encode('ascii', 'xmlcharrefreplace') or False,
-                    'municipio': address_payslip_parent.city and \
-                        address_payslip_parent.city.replace('\n\r', ' ').\
-                        replace('\r\n', ' ').replace('\n', ' ').replace(
-                        '\r', ' ') or '',
-                    'estado': address_payslip_parent.state_id and \
-                        address_payslip_parent.state_id.name and \
-                        address_payslip_parent.state_id.name.replace(
-                        '\n\r', ' ').replace('\r\n', ' ').replace(
-                        '\n', ' ').replace('\r', ' ') or '',
-                    'pais': address_payslip_parent.country_id and \
-                        address_payslip_parent.country_id.name and \
-                        address_payslip_parent.country_id.name.replace(
-                        '\n\r', ' ').replace('\r\n', ' ').replace(
-                        '\n', ' ').replace('\r', ' ').encode('ascii', 'xmlcharrefreplace') or '',
-                    'codigoPostal': address_payslip_parent.zip and \
-                        address_payslip_parent.zip.replace('\n\r', ' ').\
-                        replace('\r\n', ' ').replace('\n', ' ').replace(
-                        '\r', ' ').replace(' ', '') or '',
-                },
-                'cfdi:ExpedidoEn': {
-                    'calle': address_payslip.street and address_payslip.\
-                        street.replace('\n\r', ' ').replace('\r\n', ' ').\
-                        replace('\n', ' ').replace('\r', ' ') or '',
-                    'noExterior': address_payslip.l10n_mx_street3 and \
-                        address_payslip.l10n_mx_street3.replace(
-                        '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
-                        replace('\r', ' ') or 'N/A',  # "Numero Exterior"
-                    'noInterior': address_payslip.l10n_mx_street4 and \
-                        address_payslip.l10n_mx_street4.replace('\n\r', ' ').\
-                        replace('\r\n', ' ').replace('\n', ' ').replace(
-                        '\r', ' ') or 'N/A',  # "Numero Interior"
-                    'colonia':  address_payslip.street2 and address_payslip.\
-                        street2.replace('\n\r', ' ').replace('\r\n', ' ').\
-                        replace('\n', ' ').replace('\r', ' ') or False,
-                    'localidad': address_payslip.l10n_mx_city2 and \
-                        address_payslip.l10n_mx_city2.replace('\n\r', ' ').\
-                        replace('\r\n', ' ').replace('\n', ' ').replace(
-                        '\r', ' ').encode('ascii', 'xmlcharrefreplace') or False,
-                    'municipio': address_payslip.city and address_payslip.\
-                        city.replace('\n\r', ' ').replace('\r\n', ' ').replace(
-                        '\n', ' ').replace('\r', ' ') or '',
-                    'estado': address_payslip.state_id and address_payslip.\
-                        state_id.name and address_payslip.state_id.name.replace(
-                        '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
-                        replace('\r', ' ') or '',
-                    'pais': address_payslip.country_id and address_payslip.\
-                        country_id.name and address_payslip.country_id.name.\
-                        replace('\n\r', ' ').replace('\r\n', ' ').replace(
-                        '\n', ' ').replace('\r', ' ').encode('ascii', 'xmlcharrefreplace') or '',
-                    'codigoPostal': address_payslip.zip and address_payslip.\
-                        zip.replace('\n\r', ' ').replace('\r\n', ' ').replace(
-                        '\n', ' ').replace('\r', ' ').replace(' ', '') or '',
-                },
-            })
-            if payslip_data['cfdi:Emisor']['cfdi:DomicilioFiscal'].get('colonia') == False:
-                payslip_data['cfdi:Emisor']['cfdi:DomicilioFiscal'].pop('colonia')
-            if payslip_data['cfdi:Emisor']['cfdi:ExpedidoEn'].get('colonia') == False:
-                payslip_data['cfdi:Emisor']['cfdi:ExpedidoEn'].pop('colonia')
-            if payslip_data['cfdi:Emisor']['cfdi:DomicilioFiscal'].get('localidad') == False:
-                payslip_data['cfdi:Emisor']['cfdi:DomicilioFiscal'].pop('localidad')
-            if payslip_data['cfdi:Emisor']['cfdi:ExpedidoEn'].get('localidad') == False:
-                payslip_data['cfdi:Emisor']['cfdi:ExpedidoEn'].pop('localidad')
-            # Termina seccion: Emisor
-            # Inicia seccion: Receptor
-            parent_id = payslip.employee_id and payslip.employee_id.address_home_id and payslip.employee_id.address_home_id.id
-            parent_obj = partner_obj.browse(cr, uid, parent_id, context=context)
-            if not parent_obj.vat:
-                raise osv.except_osv(_('Warning !'), _(
-                    "Don't have defined RFC of the partner[%s].\n%s !") % (
-                    parent_obj.name, msg2))
-            if parent_obj._columns.has_key('vat_split') and\
-                parent_obj.vat[0:2] <> 'MX':
-                rfc = 'XAXX010101000'
-            else:
-                rfc = ((parent_obj._columns.has_key('vat_split')\
-                    and parent_obj.vat_split or parent_obj.vat)\
-                    or '').replace('-', ' ').replace(' ','')
-            address_payslip = partner_obj.browse(cr, uid, \
-                payslip.employee_id and payslip.employee_id.address_home_id and payslip.employee_id.address_home_id.id, context=context)
-            payslip_data['cfdi:Receptor'] = {}
-            payslip_data['cfdi:Receptor'].update({
-                'rfc': rfc,
-                'nombre': (parent_obj.name or ''),
-                'cfdi:Domicilio': {
-                    'calle': address_payslip.street and address_payslip.\
-                        street.replace('\n\r', ' ').replace('\r\n', ' ').replace(
-                        '\n', ' ').replace('\r', ' ') or '',
-                    'noExterior': address_payslip.l10n_mx_street3 and \
-                        address_payslip.l10n_mx_street3.replace('\n\r', ' ').\
-                        replace('\r\n', ' ').replace('\n', ' ').replace(
-                        '\r', ' ') or 'N/A',  # "Numero Exterior"
-                    'noInterior': address_payslip.l10n_mx_street4 and \
-                        address_payslip.l10n_mx_street4.replace('\n\r', ' ').\
-                        replace('\r\n', ' ').replace('\n', ' ').replace(
-                        '\r', ' ') or 'N/A',  # "Numero Interior"
-                    'colonia':  address_payslip.street2 and address_payslip.\
-                        street2.replace('\n\r', ' ').replace('\r\n', ' ').\
-                        replace('\n', ' ').replace('\r', ' ') or False,
-                    'localidad': address_payslip.l10n_mx_city2 and \
-                        address_payslip.l10n_mx_city2.replace('\n\r', ' ').\
-                        replace('\r\n', ' ').replace('\n', ' ').replace(
-                        '\r', ' ').encode('ascii', 'xmlcharrefreplace')  or False,
-                    'municipio': address_payslip.city and address_payslip.\
-                        city.replace('\n\r', ' ').replace('\r\n', ' ').replace(
-                        '\n', ' ').replace('\r', ' ') or '',
-                    'estado': address_payslip.state_id and address_payslip.\
-                        state_id.name and address_payslip.state_id.name.replace(
-                        '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
-                        replace('\r', ' ') or '',
-                    'pais': address_payslip.country_id and address_payslip.\
-                        country_id.name and address_payslip.country_id.name.\
-                        replace('\n\r', ' ').replace('\r\n', ' ').replace(
-                        '\n', ' ').replace('\r', ' ') .encode('ascii', 'xmlcharrefreplace') or '',
-                    'codigoPostal': address_payslip.zip and address_payslip.\
-                        zip.replace('\n\r', ' ').replace('\r\n', ' ').replace(
-                        '\n', ' ').replace('\r', ' ') or '',
-                },
-            })
-            if payslip_data['cfdi:Receptor']['cfdi:Domicilio'].get('colonia') == False:
-                payslip_data['cfdi:Receptor']['cfdi:Domicilio'].pop('colonia')
-            if payslip_data['cfdi:Receptor']['cfdi:Domicilio'].get('localidad') == False:
-                payslip_data['cfdi:Receptor']['cfdi:Domicilio'].pop('localidad')
-            # Termina seccion: Receptor
-            # Inicia seccion: Conceptos
-            payslip_data['cfdi:Conceptos'] = []
-            payslip_data['cfdi:Impuestos'] = []
-            for line in payslip.line_payslip_product_ids:
-                # price_type = invoice._columns.has_key('price_type') and invoice.price_type or 'tax_excluded'
-                # if price_type == 'tax_included':
-# price_unit = line.price_subtotal/line.quantity#Agrega compatibilidad con
-# modulo TaxIncluded
-                price_unit = line.amount != 0
-                concepto = {
-                    'descripcion': line.product_id and line.product_id.name or '',
-                    'valorUnitario': "%.2f" % (price_unit or 0.0),
-                    'importe': "%.2f" % (price_unit or 0.0),  # round(line.price_unit *(1-(line.discount/100)),2) or 0.00),#Calc: iva, disc, qty
-                    # Falta agregar discount
-                }
+                #~ 'cfdi:DomicilioFiscal': {
+                    #~ 'calle': address_payslip_parent.street and \
+                        #~ address_payslip_parent.street.replace('\n\r', ' ').\
+                        #~ replace('\r\n', ' ').replace('\n', ' ').replace(
+                        #~ '\r', ' ') or '',
+                    #~ 'noExterior': address_payslip_parent.l10n_mx_street3 and \
+                        #~ address_payslip_parent.l10n_mx_street3.replace(
+                        #~ '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
+                        #~ replace('\r', ' ') or 'N/A',  # "Numero Exterior"
+                    #~ 'noInterior': address_payslip_parent.l10n_mx_street4 and \
+                        #~ address_payslip_parent.l10n_mx_street4.replace(
+                        #~ '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
+                        #~ replace('\r', ' ') or 'N/A',  # "Numero Interior"
+                    #~ 'colonia':  address_payslip_parent.street2 and \
+                        #~ address_payslip_parent.street2.replace('\n\r', ' ').\
+                        #~ replace('\r\n', ' ').replace('\n', ' ').replace(
+                        #~ '\r', ' ') or False,
+                    #~ 'localidad': address_payslip_parent.l10n_mx_city2 and \
+                        #~ address_payslip_parent.l10n_mx_city2.replace(
+                        #~ '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
+                        #~ replace('\r', ' ').encode('ascii', 'xmlcharrefreplace') or False,
+                    #~ 'municipio': address_payslip_parent.city and \
+                        #~ address_payslip_parent.city.replace('\n\r', ' ').\
+                        #~ replace('\r\n', ' ').replace('\n', ' ').replace(
+                        #~ '\r', ' ') or '',
+                    #~ 'estado': address_payslip_parent.state_id and \
+                        #~ address_payslip_parent.state_id.name and \
+                        #~ address_payslip_parent.state_id.name.replace(
+                        #~ '\n\r', ' ').replace('\r\n', ' ').replace(
+                        #~ '\n', ' ').replace('\r', ' ') or '',
+                    #~ 'pais': address_payslip_parent.country_id and \
+                        #~ address_payslip_parent.country_id.name and \
+                        #~ address_payslip_parent.country_id.name.replace(
+                        #~ '\n\r', ' ').replace('\r\n', ' ').replace(
+                        #~ '\n', ' ').replace('\r', ' ').encode('ascii', 'xmlcharrefreplace') or '',
+                    #~ 'codigoPostal': address_payslip_parent.zip and \
+                        #~ address_payslip_parent.zip.replace('\n\r', ' ').\
+                        #~ replace('\r\n', ' ').replace('\n', ' ').replace(
+                        #~ '\r', ' ').replace(' ', '') or '',
+                #~ },
+                #~ 'cfdi:ExpedidoEn': {
+                    #~ 'calle': address_payslip.street and address_payslip.\
+                        #~ street.replace('\n\r', ' ').replace('\r\n', ' ').\
+                        #~ replace('\n', ' ').replace('\r', ' ') or '',
+                    #~ 'noExterior': address_payslip.l10n_mx_street3 and \
+                        #~ address_payslip.l10n_mx_street3.replace(
+                        #~ '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
+                        #~ replace('\r', ' ') or 'N/A',  # "Numero Exterior"
+                    #~ 'noInterior': address_payslip.l10n_mx_street4 and \
+                        #~ address_payslip.l10n_mx_street4.replace('\n\r', ' ').\
+                        #~ replace('\r\n', ' ').replace('\n', ' ').replace(
+                        #~ '\r', ' ') or 'N/A',  # "Numero Interior"
+                    #~ 'colonia':  address_payslip.street2 and address_payslip.\
+                        #~ street2.replace('\n\r', ' ').replace('\r\n', ' ').\
+                        #~ replace('\n', ' ').replace('\r', ' ') or False,
+                    #~ 'localidad': address_payslip.l10n_mx_city2 and \
+                        #~ address_payslip.l10n_mx_city2.replace('\n\r', ' ').\
+                        #~ replace('\r\n', ' ').replace('\n', ' ').replace(
+                        #~ '\r', ' ').encode('ascii', 'xmlcharrefreplace') or False,
+                    #~ 'municipio': address_payslip.city and address_payslip.\
+                        #~ city.replace('\n\r', ' ').replace('\r\n', ' ').replace(
+                        #~ '\n', ' ').replace('\r', ' ') or '',
+                    #~ 'estado': address_payslip.state_id and address_payslip.\
+                        #~ state_id.name and address_payslip.state_id.name.replace(
+                        #~ '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
+                        #~ replace('\r', ' ') or '',
+                    #~ 'pais': address_payslip.country_id and address_payslip.\
+                        #~ country_id.name and address_payslip.country_id.name.\
+                        #~ replace('\n\r', ' ').replace('\r\n', ' ').replace(
+                        #~ '\n', ' ').replace('\r', ' ').encode('ascii', 'xmlcharrefreplace') or '',
+                    #~ 'codigoPostal': address_payslip.zip and address_payslip.\
+                        #~ zip.replace('\n\r', ' ').replace('\r\n', ' ').replace(
+                        #~ '\n', ' ').replace('\r', ' ').replace(' ', '') or '',
+                #~ },
+            #~ })
+            #~ if payslip_data['cfdi:Emisor']['cfdi:DomicilioFiscal'].get('colonia') == False:
+                #~ payslip_data['cfdi:Emisor']['cfdi:DomicilioFiscal'].pop('colonia')
+            #~ if payslip_data['cfdi:Emisor']['cfdi:ExpedidoEn'].get('colonia') == False:
+                #~ payslip_data['cfdi:Emisor']['cfdi:ExpedidoEn'].pop('colonia')
+            #~ if payslip_data['cfdi:Emisor']['cfdi:DomicilioFiscal'].get('localidad') == False:
+                #~ payslip_data['cfdi:Emisor']['cfdi:DomicilioFiscal'].pop('localidad')
+            #~ if payslip_data['cfdi:Emisor']['cfdi:ExpedidoEn'].get('localidad') == False:
+                #~ payslip_data['cfdi:Emisor']['cfdi:ExpedidoEn'].pop('localidad')
+            #~ # Termina seccion: Emisor
+            #~ # Inicia seccion: Receptor
+            #~ parent_id = payslip.employee_id and payslip.employee_id.address_home_id and payslip.employee_id.address_home_id.id
+            #~ parent_obj = partner_obj.browse(cr, uid, parent_id, context=context)
+            #~ if not parent_obj.vat:
+                #~ raise osv.except_osv(_('Warning !'), _(
+                    #~ "Don't have defined RFC of the partner[%s].\n%s !") % (
+                    #~ parent_obj.name, msg2))
+            #~ if parent_obj._columns.has_key('vat_split') and\
+                #~ parent_obj.vat[0:2] <> 'MX':
+                #~ rfc = 'XAXX010101000'
+            #~ else:
+                #~ rfc = ((parent_obj._columns.has_key('vat_split')\
+                    #~ and parent_obj.vat_split or parent_obj.vat)\
+                    #~ or '').replace('-', ' ').replace(' ','')
+            #~ address_payslip = partner_obj.browse(cr, uid, \
+                #~ payslip.employee_id and payslip.employee_id.address_home_id and payslip.employee_id.address_home_id.id, context=context)
+            #~ payslip_data['cfdi:Receptor'] = {}
+            #~ payslip_data['cfdi:Receptor'].update({
+                #~ 'rfc': rfc,
+                #~ 'nombre': (parent_obj.name or ''),
+                #~ 'cfdi:Domicilio': {
+                    #~ 'calle': address_payslip.street and address_payslip.\
+                        #~ street.replace('\n\r', ' ').replace('\r\n', ' ').replace(
+                        #~ '\n', ' ').replace('\r', ' ') or '',
+                    #~ 'noExterior': address_payslip.l10n_mx_street3 and \
+                        #~ address_payslip.l10n_mx_street3.replace('\n\r', ' ').\
+                        #~ replace('\r\n', ' ').replace('\n', ' ').replace(
+                        #~ '\r', ' ') or 'N/A',  # "Numero Exterior"
+                    #~ 'noInterior': address_payslip.l10n_mx_street4 and \
+                        #~ address_payslip.l10n_mx_street4.replace('\n\r', ' ').\
+                        #~ replace('\r\n', ' ').replace('\n', ' ').replace(
+                        #~ '\r', ' ') or 'N/A',  # "Numero Interior"
+                    #~ 'colonia':  address_payslip.street2 and address_payslip.\
+                        #~ street2.replace('\n\r', ' ').replace('\r\n', ' ').\
+                        #~ replace('\n', ' ').replace('\r', ' ') or False,
+                    #~ 'localidad': address_payslip.l10n_mx_city2 and \
+                        #~ address_payslip.l10n_mx_city2.replace('\n\r', ' ').\
+                        #~ replace('\r\n', ' ').replace('\n', ' ').replace(
+                        #~ '\r', ' ').encode('ascii', 'xmlcharrefreplace')  or False,
+                    #~ 'municipio': address_payslip.city and address_payslip.\
+                        #~ city.replace('\n\r', ' ').replace('\r\n', ' ').replace(
+                        #~ '\n', ' ').replace('\r', ' ') or '',
+                    #~ 'estado': address_payslip.state_id and address_payslip.\
+                        #~ state_id.name and address_payslip.state_id.name.replace(
+                        #~ '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
+                        #~ replace('\r', ' ') or '',
+                    #~ 'pais': address_payslip.country_id and address_payslip.\
+                        #~ country_id.name and address_payslip.country_id.name.\
+                        #~ replace('\n\r', ' ').replace('\r\n', ' ').replace(
+                        #~ '\n', ' ').replace('\r', ' ') .encode('ascii', 'xmlcharrefreplace') or '',
+                    #~ 'codigoPostal': address_payslip.zip and address_payslip.\
+                        #~ zip.replace('\n\r', ' ').replace('\r\n', ' ').replace(
+                        #~ '\n', ' ').replace('\r', ' ') or '',
+                #~ },
+            #~ })
+            #~ if payslip_data['cfdi:Receptor']['cfdi:Domicilio'].get('colonia') == False:
+                #~ payslip_data['cfdi:Receptor']['cfdi:Domicilio'].pop('colonia')
+            #~ if payslip_data['cfdi:Receptor']['cfdi:Domicilio'].get('localidad') == False:
+                #~ payslip_data['cfdi:Receptor']['cfdi:Domicilio'].pop('localidad')
+            #~ # Termina seccion: Receptor
+            #~ # Inicia seccion: Conceptos
+            #~ payslip_data['cfdi:Conceptos'] = []
+            #~ payslip_data['cfdi:Impuestos'] = []
+            #~ for line in payslip.line_payslip_product_ids:
+                #~ # price_type = invoice._columns.has_key('price_type') and invoice.price_type or 'tax_excluded'
+                #~ # if price_type == 'tax_included':
+#~ # price_unit = line.price_subtotal/line.quantity#Agrega compatibilidad con
+#~ # modulo TaxIncluded
+                #~ price_unit = line.amount != 0
+                #~ concepto = {
+                    #~ 'descripcion': line.product_id and line.product_id.name or '',
+                    #~ 'valorUnitario': "%.2f" % (price_unit or 0.0),
+                    #~ 'importe': "%.2f" % (price_unit or 0.0),  # round(line.price_unit *(1-(line.discount/100)),2) or 0.00),#Calc: iva, disc, qty
+                    #~ # Falta agregar discount
+                #~ }
                 #~ unidad = line.uos_id and line.uos_id.name or ''
                 #~ if unidad:
                     #~ concepto.update({'unidad': unidad})
-                product_code = line.product_id and line.product_id.default_code or ''
-                if product_code:
-                    concepto.update({'noIdentificacion': product_code})
-                payslip_data['cfdi:Conceptos'].append({'cfdi:Concepto': concepto})
+                #~ product_code = line.product_id and line.product_id.default_code or ''
+                #~ if product_code:
+                    #~ concepto.update({'noIdentificacion': product_code})
+                #~ payslip_data['cfdi:Conceptos'].append({'cfdi:Concepto': concepto})
 
                 #~ pedimento = None
                 #~ if 'tracking_id' in line._columns:
@@ -679,71 +679,71 @@ class hr_payslip(osv.Model):
                         #~ concepto.update({
                                         #~ 'InformacionAduanera': informacion_aduanera})
                 # Termina seccion: Conceptos
-            payslip_data_parents.append(payslip_data_parent)
-            payslip_data_parent['state'] = payslip.state
-            payslip_data_parent['invoice_datetime'] = payslip.payslip_datetime
-            payslip_data_parent['date_invoice_tz'] = payslip.payslip_datetime
-            payslip_data_parent['currency_id'] = payslip.currency_id.id
-
-            date_ctx = {'date': payslip.payslip_datetime and time.strftime(
-                '%Y-%m-%d', time.strptime(payslip.payslip_datetime,
-                '%Y-%m-%d %H:%M:%S')) or False}
-            currency = self.pool.get('res.currency').browse(
-                cr, uid, [payslip.currency_id.id], context=date_ctx)[0]
-            rate = currency.rate != 0 and 1.0/currency.rate or 0.0
-            payslip_data_parent['rate'] = rate
-
-        payslip_datetime = payslip_data_parents[0].get('invoice_datetime',
-            {}) and datetime.strptime(payslip_data_parents[0].get(
-            'invoice_datetime', {}), '%Y-%m-%d %H:%M:%S').strftime(
-            '%Y-%m-%d') or False
-        if not payslip_datetime:
-            raise osv.except_osv(_('Date Invoice Empty'), _(
-                "Can't generate a invoice without date, make sure that the state of invoice not is draft & the date of invoice not is empty"))
-        if payslip_datetime < '2012-07-01':
-            return payslip_data_parent
-        else:
-            payslip = self.browse(cr, uid, ids, context={
-                                  'date': payslip_datetime})[0]
-            city = payslip_data_parents and payslip_data_parents[0].get(
-                'cfdi:Comprobante', {}).get('cfdi:Emisor', {}).get('cfdi:ExpedidoEn', {}).get(
-                'municipio', {}) or False
-            state = payslip_data_parents and payslip_data_parents[0].get(
-                'cfdi:Comprobante', {}).get('cfdi:Emisor', {}).get('cfdi:ExpedidoEn', {}).get(
-                'estado', {}) or False
-            country = payslip_data_parents and payslip_data_parents[0].get(
-                'cfdi:Comprobante', {}).get('cfdi:Emisor', {}).get('cfdi:ExpedidoEn', {}).get(
-                'pais', {}).encode('ascii', 'xmlcharrefreplace') or False
-            if city and state and country:
-                address = city + ' ' + state + ', ' + country
-            else:
-                raise osv.except_osv(_('Address Incomplete!'), _(
-                    'Ckeck that the address of company issuing of fiscal voucher is complete (City - State - Country)'))
+            #~ payslip_data_parents.append(payslip_data_parent)
+            #~ payslip_data_parent['state'] = payslip.state
+            #~ payslip_data_parent['invoice_datetime'] = payslip.payslip_datetime
+            #~ payslip_data_parent['date_invoice_tz'] = payslip.payslip_datetime
+            #~ payslip_data_parent['currency_id'] = payslip.currency_id.id
+#~ 
+            #~ date_ctx = {'date': payslip.payslip_datetime and time.strftime(
+                #~ '%Y-%m-%d', time.strptime(payslip.payslip_datetime,
+                #~ '%Y-%m-%d %H:%M:%S')) or False}
+            #~ currency = self.pool.get('res.currency').browse(
+                #~ cr, uid, [payslip.currency_id.id], context=date_ctx)[0]
+            #~ rate = currency.rate != 0 and 1.0/currency.rate or 0.0
+            #~ payslip_data_parent['rate'] = rate
+#~ 
+        #~ payslip_datetime = payslip_data_parents[0].get('invoice_datetime',
+            #~ {}) and datetime.strptime(payslip_data_parents[0].get(
+            #~ 'invoice_datetime', {}), '%Y-%m-%d %H:%M:%S').strftime(
+            #~ '%Y-%m-%d') or False
+        #~ if not payslip_datetime:
+            #~ raise osv.except_osv(_('Date Invoice Empty'), _(
+                #~ "Can't generate a invoice without date, make sure that the state of invoice not is draft & the date of invoice not is empty"))
+        #~ if payslip_datetime < '2012-07-01':
+            #~ return payslip_data_parent
+        #~ else:
+            #~ payslip = self.browse(cr, uid, ids, context={
+                                  #~ 'date': payslip_datetime})[0]
+            #~ city = payslip_data_parents and payslip_data_parents[0].get(
+                #~ 'cfdi:Comprobante', {}).get('cfdi:Emisor', {}).get('cfdi:ExpedidoEn', {}).get(
+                #~ 'municipio', {}) or False
+            #~ state = payslip_data_parents and payslip_data_parents[0].get(
+                #~ 'cfdi:Comprobante', {}).get('cfdi:Emisor', {}).get('cfdi:ExpedidoEn', {}).get(
+                #~ 'estado', {}) or False
+            #~ country = payslip_data_parents and payslip_data_parents[0].get(
+                #~ 'cfdi:Comprobante', {}).get('cfdi:Emisor', {}).get('cfdi:ExpedidoEn', {}).get(
+                #~ 'pais', {}).encode('ascii', 'xmlcharrefreplace') or False
+            #~ if city and state and country:
+                #~ address = city + ' ' + state + ', ' + country
+            #~ else:
+                #~ raise osv.except_osv(_('Address Incomplete!'), _(
+                    #~ 'Ckeck that the address of company issuing of fiscal voucher is complete (City - State - Country)'))
 
             #~ if not invoice.company_emitter_id.partner_id.regimen_fiscal_id.name:
                 #~ raise osv.except_osv(_('Missing Fiscal Regime!'), _(
                     #~ 'The Fiscal Regime of the company issuing of fiscal voucher is a data required'))
 
-            payslip_data_parents[0]['cfdi:Comprobante'][
-                'TipoCambio'] = 1
-            payslip_data_parents[0]['cfdi:Comprobante'][
-                'Moneda'] = payslip.currency_id.name or ''
+            #~ payslip_data_parents[0]['cfdi:Comprobante'][
+                #~ 'TipoCambio'] = 1
+            #~ payslip_data_parents[0]['cfdi:Comprobante'][
+                #~ 'Moneda'] = payslip.currency_id.name or ''
             #~ invoice_data_parents[0]['cfdi:Comprobante'][
                 #~ 'NumCtaPago'] = invoice.acc_payment.last_acc_number\
                     #~ or 'No identificado'
-            payslip_data_parents[0]['cfdi:Comprobante'][
-                'NumCtaPago'] = 'No identificado'
+            #~ payslip_data_parents[0]['cfdi:Comprobante'][
+                #~ 'NumCtaPago'] = 'No identificado'
             #~ invoice_data_parents[0]['cfdi:Comprobante'][
                 #~ 'metodoDePago'] = invoice.pay_method_id.name or 'No identificado'
-            payslip_data_parents[0]['cfdi:Comprobante'][
-                'metodoDePago'] = 'No identificado'
+            #~ payslip_data_parents[0]['cfdi:Comprobante'][
+                #~ 'metodoDePago'] = 'No identificado'
             #~ invoice_data_parents[0]['cfdi:Comprobante']['cfdi:Emisor']['cfdi:RegimenFiscal'] = {
                 #~ 'Regimen': invoice.company_emitter_id.partner_id.\
                     #~ regimen_fiscal_id.name or ''}
-            payslip_data_parents[0]['cfdi:Comprobante']['cfdi:Emisor']['cfdi:RegimenFiscal'] = {
-                'Regimen': ''}
-            payslip_data_parents[0]['cfdi:Comprobante']['LugarExpedicion'] = address.encode('ascii', 'xmlcharrefreplace')
-        return payslip_data_parent
+            #~ payslip_data_parents[0]['cfdi:Comprobante']['cfdi:Emisor']['cfdi:RegimenFiscal'] = {
+                #~ 'Regimen': ''}
+            #~ payslip_data_parents[0]['cfdi:Comprobante']['LugarExpedicion'] = address.encode('ascii', 'xmlcharrefreplace')
+        #~ return payslip_data_parent
 
     def binary2file(self, cr, uid, ids, binary_data, file_prefix="", file_suffix=""):
         """
@@ -922,6 +922,25 @@ class hr_payslip(osv.Model):
             fname_out=fname_sign, encrypt=encrypt, type_key='PEM')
         return result
 
+    def _get_certificate_str(self, fname_cer_pem=""):
+        """
+        @param fname_cer_pem : Path and name the file .pem
+        """
+        fcer = open(fname_cer_pem, "r")
+        lines = fcer.readlines()
+        fcer.close()
+        cer_str = ""
+        loading = False
+        for line in lines:
+            if 'END CERTIFICATE' in line:
+                loading = False
+            if loading:
+                cer_str += line
+            if 'BEGIN CERTIFICATE' in line:
+                loading = True
+        return cer_str
+
+
     def _get_facturae_payroll_xml_data(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
@@ -931,31 +950,28 @@ class hr_payslip(osv.Model):
         if payroll:
             facturae_version = '11'
             facturae_type='nomina'
-            dict_new = self._get_payroll_comp_dict_data(cr, uid, ids, context=context)
             context.update(self._get_file_globals(cr, uid, ids, context=context))
             context['fecha'] = time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(payroll.payslip_datetime, '%Y-%m-%d %H:%M:%S'))
-            
+            cert_str = self._get_certificate_str(context['fname_cer'])
             noCertificado = self._get_noCertificado(cr, uid, ids, context['fname_cer'])
             data_dict_payroll = self._get_dict_payroll(cr, uid, ids, context=context)[0]
-            dict_new['cfdi:Comprobante']['noCertificado'] = noCertificado
             all_paths = tools.config["addons_path"].split(",")
             formaDePago = payroll.string_to_xml_format(u'Pago en una sola exhibición')
-            
-            
+            cert_str = self._get_certificate_str(context['fname_cer'])
+            print payroll.line_payslip_product_ids, 'AQUI!!!!!!!!!!!!!!!!!!!!!!!!!!1'
             for my_path in all_paths:
                 if os.path.isdir(os.path.join(my_path, 'l10n_mx_payroll_base', 'template')):
                     fname_jinja_tmpl = my_path and os.path.join(my_path, 'l10n_mx_payroll_base', 'template', 'cfdi' + '.xml') or ''
             dictargs2 = {
-                'o': dict_new,
                 'a': payroll,
                 'time': time,
                 'cgi': cgi,
                 'employee': payroll.employee_id,
                 'noCertificado': noCertificado,
                 'formaDePago': formaDePago,
+                'certificado': cert_str,
                 }
-            payroll = "payroll_compro"
-            (fileno_xml, fname_xml) = tempfile.mkstemp('.xml', 'openerp_' + (payroll or '') + '__facturae__')
+            (fileno_xml, fname_xml) = tempfile.mkstemp('.xml', 'openerp_' + (payroll.number or '') + '__facturae__')
             if fname_jinja_tmpl:
                 with open(fname_jinja_tmpl, 'r') as f_jinja_tmpl:
                     jinja_tmpl_str = f_jinja_tmpl.read().encode('utf-8')
@@ -968,24 +984,27 @@ class hr_payslip(osv.Model):
             if not noCertificado:
                 raise osv.except_osv(_('Error in No. Certificate !'), _(
                     "Can't get the Certificate Number of the voucher.\nCkeck your configuration.\n%s") % (msg2))
+            fname_txt = fname_xml + '.txt'
+            (fileno_sign, fname_sign) = tempfile.mkstemp('.txt', 'openerp_' + (
+                payroll.number or '') + '__facturae_txt_md5__')
+            os.close(fileno_sign)
+            context.update({
+                'fname_xml': fname_xml,
+                'fname_txt': fname_txt,
+                'fname_sign': fname_sign,
+            })
+            sello = self._get_sello(cr=False, uid=False, ids=False, context=context)
+            doc_xml_payroll = xml.dom.minidom.parseString(data_xml_payroll)
+            node_comprobante = doc_xml_payroll.getElementsByTagName('cfdi:Comprobante')[0]
+            node_comprobante.setAttribute("sello", sello)
+            data_xml = doc_xml_payroll.toxml('UTF-8')
+            print data_xml, 'TEXTTTTTTTTTTTTTTTTTTTTTT'
             try:
                 invoice_obj.validate_scheme_facturae_xml(cr, uid, ids, [data_xml_payroll], 'v3.2', 'cfd')
             except Exception, e:
                 raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (e))
             
             
-            fname_txt = fname_xml + '.txt'
-            (fileno_sign, fname_sign) = tempfile.mkstemp('.txt', 'openerp_' + (
-                payroll.number or '') + '__facturae_txt_md5__')
-            os.close(fileno_sign)
-
-            context.update({
-                'fname_xml': fname_xml,
-                'fname_txt': fname_txt,
-                'fname_sign': fname_sign,
-            })
-            sello = sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
-            print sello, 'sellor' * 10
             for my_path in all_paths:
                 if os.path.isdir(os.path.join(my_path, 'l10n_mx_payroll_base', 'template')):
                     fname_jinja_tmpl = my_path and os.path.join(my_path, 'l10n_mx_payroll_base', 'template', 'nomina11' + '.xml') or ''
