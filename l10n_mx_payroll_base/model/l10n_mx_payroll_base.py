@@ -958,14 +958,12 @@ class hr_payslip(osv.Model):
             all_paths = tools.config["addons_path"].split(",")
             formaDePago = payroll.string_to_xml_format(u'Pago en una sola exhibición')
             cert_str = self._get_certificate_str(context['fname_cer'])
-            print payroll.line_payslip_product_ids, 'AQUI!!!!!!!!!!!!!!!!!!!!!!!!!!1'
             for my_path in all_paths:
                 if os.path.isdir(os.path.join(my_path, 'l10n_mx_payroll_base', 'template')):
                     fname_jinja_tmpl = my_path and os.path.join(my_path, 'l10n_mx_payroll_base', 'template', 'cfdi' + '.xml') or ''
             dictargs2 = {
                 'a': payroll,
                 'time': time,
-                'cgi': cgi,
                 'employee': payroll.employee_id,
                 'noCertificado': noCertificado,
                 'formaDePago': formaDePago,
@@ -998,9 +996,8 @@ class hr_payslip(osv.Model):
             node_comprobante = doc_xml_payroll.getElementsByTagName('cfdi:Comprobante')[0]
             node_comprobante.setAttribute("sello", sello)
             data_xml = doc_xml_payroll.toxml('UTF-8')
-            print data_xml, 'TEXTTTTTTTTTTTTTTTTTTTTTT'
             try:
-                invoice_obj.validate_scheme_facturae_xml(cr, uid, ids, [data_xml_payroll], 'v3.2', 'cfd')
+                invoice_obj.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], 'v3.2', 'cfd')
             except Exception, e:
                 raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (e))
             
@@ -1010,6 +1007,8 @@ class hr_payslip(osv.Model):
                     fname_jinja_tmpl = my_path and os.path.join(my_path, 'l10n_mx_payroll_base', 'template', 'nomina11' + '.xml') or ''
             dictargs = {
                 'o': data_dict_payroll,
+                'a': payroll,
+                'employee': payroll.employee_id,
                 'time': time,
                 }
             payroll = "payroll"
@@ -1027,41 +1026,43 @@ class hr_payslip(osv.Model):
             except Exception, e:
                 raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (e))
             #Agregar nodo Nomina en nodo Complemento
-            doc_xml_payroll = xml.dom.minidom.parseString(data_xml_payroll)
+            doc_xml_payroll_2 = xml.dom.minidom.parseString(data_xml_payroll)
             complemento = """<cfdi:Complemento xmlns:cfdi="http://www.sat.gob.mx/cfd/3"></cfdi:Complemento>"""
             cfdi_complemento = xml.dom.minidom.parseString(complemento)
             complemento = cfdi_complemento.documentElement
-            nomina = doc_xml_payroll.getElementsByTagName('nomina:Nomina')[0]
+            nomina = doc_xml_payroll_2.getElementsByTagName('nomina:Nomina')[0]
             complemento.appendChild(nomina)
-            data_xml = complemento.toxml('UTF-8')
-            doc_xml = xml.dom.minidom.parseString(data_xml)
+            #~ complemento = complemento.getElementsByTagName('cfdi:Complemento')[0]
+            #~ print complemento, 'complemento'*10
             #Falta Agregar Nodo Complemento en Nodo Comprobante
             #doc_xml = xml.dom.minidom.parseString(data_xml)
             #doc_xml_comprobante = doc_xml.documentElement
-            #doc_xml_comprobante.appendChild(complemento)
+            node_comprobante.appendChild(complemento)
+            data_xml = doc_xml_payroll.toxml('UTF-8')
+            #~ doc_xml = xml.dom.minidom.parseString(data_xml)
             #data_xml = doc_xml_comprobante.toxml('UTF-8')
             #doc_xml_full = xml.dom.minidom.parseString(data_xml)
-            payroll = "payroll"
-            (fileno_xml, fname_xml) = tempfile.mkstemp('.xml', 'openerp_' + (payroll or '') + '__facturae__')
-            fname_txt = fname_xml + '.txt'
-            f = open(fname_xml, 'w')
-            doc_xml.writexml(f, indent='    ', addindent='    ', newl='\r\n', encoding='UTF-8')
-            f.close()
-            os.close(fileno_xml)
-            (fileno_sign, fname_sign) = tempfile.mkstemp('.txt', 'openerp_' + (
-                payroll or '') + '__facturae_txt_md5__')
-            os.close(fileno_sign)
-            context.update({
-                'fname_xml': fname_xml,
-                'fname_txt': fname_txt,
-                'fname_sign': fname_sign,
-            })
+            #~ payroll = "payroll"
+            #~ (fileno_xml, fname_xml) = tempfile.mkstemp('.xml', 'openerp_' + (payroll or '') + '__facturae__')
+            #~ fname_txt = fname_xml + '.txt'
+            #~ f = open(fname_xml, 'w')
+            #~ doc_xml.writexml(f, indent='    ', addindent='    ', newl='\r\n', encoding='UTF-8')
+            #~ f.close()
+            #~ os.close(fileno_xml)
+            #~ (fileno_sign, fname_sign) = tempfile.mkstemp('.txt', 'openerp_' + (
+                #~ payroll or '') + '__facturae_txt_md5__')
+            #~ os.close(fileno_sign)
+            #~ context.update({
+                #~ 'fname_xml': fname_xml,
+                #~ 'fname_txt': fname_txt,
+                #~ 'fname_sign': fname_sign,
+            #~ })
             #context.update({'fecha': data_dict_payroll['cfdi:Comprobante']['fecha']}) #No borrar se va a ocupar
-            context.update({'fecha': '2014-01-27T20:20:20'})
+            #~ context.update({'fecha': '2014-01-27T20:20:20'})
             #~sign_str = invoice_obj._get_sello(cr=False, uid=False, ids=False, context=context)
             #~nodeComprobante = doc_xml_full.getElementsByTagName("cfdi:Comprobante")[0]
             #~nodeComprobante.setAttribute("sello", sign_str)
             #~data_xml_with_payroll = doc_xml_full.documentElement
-            data_xml = doc_xml.toxml('UTF-8')
-            data_xml = codecs.BOM_UTF8 + data_xml
+            #~ data_xml = doc_xml.toxml('UTF-8')
+            #~ data_xml = codecs.BOM_UTF8 + data_xml
         return fname_xml, data_xml
