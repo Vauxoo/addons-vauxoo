@@ -212,168 +212,175 @@ class hr_payslip(osv.Model):
             a = timezone_original + ((
                 timezone_present + timezone_original)*-1)
         return a
+    
+    def get_input_line_ids_type(self, cr, uid, ids, lines, type_line):
+        lines_get = []
+        for line in lines:
+            if line.salary_rule_id.type_concept == type_line:
+                lines_get.append(line)
+        return lines_get
 
-    def _get_dict_payroll(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        ids = isinstance(ids, (int, long)) and [ids] or ids
-        list_data = []
-        department = ''
-        for p in self.browse(cr, uid, ids, context=context):
-            dict_data = {}
-            tipoComprobante = 'egreso'
-            # Inicia seccion: Nomina
-            htz = int(self._get_time_zone(cr, uid, [p.id], context=context))
-            now = time.strftime('%Y-%m-%d %H:%M:%S')
+    #~ def _get_dict_payroll(self, cr, uid, ids, context=None):
+        #~ if context is None:
+            #~ context = {}
+        #~ ids = isinstance(ids, (int, long)) and [ids] or ids
+        #~ list_data = []
+        #~ department = ''
+        #~ for p in self.browse(cr, uid, ids, context=context):
+            #~ dict_data = {}
+            #~ tipoComprobante = 'egreso'
+            #~ # Inicia seccion: Nomina
+            #~ htz = int(self._get_time_zone(cr, uid, [p.id], context=context))
+            #~ now = time.strftime('%Y-%m-%d %H:%M:%S')
             #~ date_now = now and datetime.strptime(p.payslip_datetime, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz) or False
-            date_now = now
-            date_now = time.strftime('%Y-%m-%d', time.strptime(str(date_now), '%Y-%m-%d %H:%M:%S')) or False
-            number_of_days=0
-            worked_days_line_ids = p.worked_days_line_ids
-            if worked_days_line_ids:
-                for n in worked_days_line_ids:
-                    number_of_days += n['number_of_days']
-            if p.employee_id.department_id:
-                department = p.employee_id.department_id.name
-                department = self.conv_ascii(cr, uid, ids, department)
-            dict_data['nomina:Nomina'] = {}
-            dict_data['nomina:Nomina'].update({
-                'RegistroPatronal': p.employee_id.employer_registration and \
-                p.employee_id.employer_registration.replace('\n\r', ' ').replace(
-                    '\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A',
-                'NumEmpleado': p.employee_id.identification_id or 'S/N',
-                'CURP': p.employee_id.curp and \
-                            p.employee_id.curp.replace('\n\r', ' ').replace(
-                                '\r\n', ' ').replace('\n', ' ').replace('\r', ' ').upper() or 'S/N',
-                'TipoRegimen': p.employee_id.regime_id.code and\
-                                   p.employee_id.regime_id.code or '2',
-                'NumSeguridadSocial':p.employee_id.nss and \
-                            p.employee_id.nss.replace('\n\r', ' ').replace(
-                                '\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'S/N',
-                'FechaPago': date_now or False,
-                'FechaInicialPago': p.date_from or False,
-                'FechaFinalPago': p.date_to or False,
-                'FechaInicioRelLaboral': p.contract_id.date_start and \
-                                            p.contract_id.date_start or False,
-                'NumDiasPagados': number_of_days or 0.0,
-                'Departamento': department or 'N/A',
-                'CLABE': p.employee_id.bank_account_id.clabe and \
-                        p.employee_id.bank_account_id.clabe.replace('\n\r', ' ').\
-                        replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '000000000000000000',
-                'Banco': p.employee_id.bank_account_id.bank and \
-                            p.employee_id.bank_account_id.bank.code.replace(
-                                '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace(
-                                        '\r', ' ') or '001',
-                'Antiguedad':p.employee_id.seniority or 0,
-                'Puesto': p.employee_id.job_id.name and \
-                                p.contract_id.job_id.name or 'N/A',
-                'TipoContrato': p.contract_id.type_id.name or '',
-                'TipoJornada': p.contract_id.working_day_id.name or '',
-                'PeriodicidadPago': p.contract_id.schedule_pay or '',
-                'RiesgoPuesto': p.contract_id.risk_rank_id.code or '1',
-                'SalarioBaseCotApor': p.contract_id.wage or 0,
-                'SalarioDiarioIntegrado': p.contract_id.integrated_salary or 0,
-                'xmlns:nomina':'http://www.sat.gob.mx/nomina',
-                'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-                'Version': '1.1'
-            })
-            input_line_ids = p.input_line_ids
-            if input_line_ids:
-                TotalGravado_percepcion = 0
-                TotalExento_percepcion = 0
-                TotalExento_deduccion = 0
-                TotalGravado_deduccion = 0
-                lista_percepciones = []
-                lista_deducciones = []
-                var = 0
-                percepciones_data = dict_data['nomina:Nomina']
-                percepciones_data['nomina:Percepciones'] = {}
-                deducciones_data = dict_data['nomina:Nomina']
-                deducciones_data['nomina:Deducciones'] = {}
-                for n in input_line_ids:
-                    if n['salary_rule_id']['type_concept']=='perception':
-                        concepto = self.conv_ascii(cr, uid, ids, n['salary_rule_id']['name'])
-                        data_percepciones = {
-                                        'TipoPercepcion': n['salary_rule_id']['code'],
-                                        'Clave': n['salary_rule_id']['code']+'clave',
-                                        'Concepto': concepto or '',
-                                        'ImporteGravado': n['amount'],
-                                        'ImporteExento': n['exempt_amount']
-                                        }
-                        TotalGravado_percepcion +=  n['amount']
-                        TotalExento_percepcion +=  n['exempt_amount']
-                        lista_percepciones.append(data_percepciones)
-                    if n['salary_rule_id']['type_concept']=='deduction':
-                        concepto = self.conv_ascii(cr, uid, ids, n['salary_rule_id']['name'])
-                        data_deducciones = {
-                                        'TipoDeduccion': n['salary_rule_id']['code'],
-                                        'Clave': n['salary_rule_id']['clave'] or '',
-                                        'Concepto': concepto or '',
-                                        'ImporteGravado': n['amount'],
-                                        'ImporteExento': n['exempt_amount'],
-                                        }
-                        TotalGravado_deduccion +=  n['amount']
-                        TotalExento_deduccion += n['exempt_amount']
-                        lista_deducciones.append(data_deducciones)
-                percepciones_data['nomina:Percepciones'].update({
-                                            'TotalGravado': TotalGravado_percepcion,
-                                            'TotalExento': TotalExento_percepcion,
-                                            'nomina:Percepcion' : lista_percepciones,
-                                                        })
-
-                deducciones_data['nomina:Deducciones'].update({
-                                            'TotalGravado': TotalGravado_deduccion,
-                                            'TotalExento': TotalExento_deduccion,
-                                            'nomina:Deduccion' : lista_deducciones,
-                                                        })
-            else:
-                raise orm.except_orm(_('Warning'), _('The payroll not have deductions or perceptions'))
-            inability_line_ids = p.inability_line_ids
-            if inability_line_ids:
-                lista_incapacidades = []
-                descuento = 0
-                number_of_days = 0
-                incapacidades_data = dict_data['nomina:Nomina']
-                incapacidades_data['nomina:Incapacidades'] = {}
-                for n in inability_line_ids:
-                    descuento += n['amount']
-                    number_of_days += n['number_of_days']
-                    data_incapacidades = {
-                                        'DiasIncapacidad': n['number_of_days'] or 0,
-                                        'TipoIncapacidad': n['inability_id']['code'] or 1,
-                                        'Descuento': n['amount'] or 0,
-                                        }
-                    lista_incapacidades.append(data_incapacidades)
-                incapacidades_data['nomina:Incapacidades'].update({
-                                                    'nomina:Incapacidad' : lista_incapacidades
-                                                            })
-            overtime_line_ids = p.overtime_line_ids
-            if overtime_line_ids:
-                lista_horasextras = []
-                ImportePagado = 0
-                number_of_days = 0
-                number_of_hours = 0
-                horasextras_data = dict_data['nomina:Nomina']
-                horasextras_data['nomina:HorasExtras'] = {}
-                for n in overtime_line_ids:
-                    ImportePagado += n['amount']
-                    number_of_days += n['number_of_days']
-                    number_of_hours += n['number_of_hours']
-                    if n['type_hours'] == 'double':
-                        TipoHoras = 'Dobles'
-                    if n['type_hours'] == 'triples':
-                        TipoHoras = 'Triples'
-                    data_horasextras = {'Dias': n['number_of_days'] or 0,
-                                        'TipoHoras': TipoHoras,
-                                        'HorasExtra': n['number_of_hours'] or 0,
-                                        'ImportePagado': n['amount'] or 0,
-                                        }
-                    lista_horasextras.append(data_horasextras)
-                horasextras_data['nomina:HorasExtras'].update({
-                                            'nomina:HorasExtra' : lista_horasextras
-                                                            })
-        list_data.append(dict_data)
-        return list_data
+            #~ date_now = now
+            #~ date_now = time.strftime('%Y-%m-%d', time.strptime(str(date_now), '%Y-%m-%d %H:%M:%S')) or False
+            #~ number_of_days=0
+            #~ worked_days_line_ids = p.worked_days_line_ids
+            #~ if worked_days_line_ids:
+                #~ for n in worked_days_line_ids:
+                    #~ number_of_days += n['number_of_days']
+            #~ if p.employee_id.department_id:
+                #~ department = p.employee_id.department_id.name
+                #~ department = self.conv_ascii(cr, uid, ids, department)
+            #~ dict_data['nomina:Nomina'] = {}
+            #~ dict_data['nomina:Nomina'].update({
+                #~ 'RegistroPatronal': p.employee_id.employer_registration and \
+                #~ p.employee_id.employer_registration.replace('\n\r', ' ').replace(
+                    #~ '\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A',
+                #~ 'NumEmpleado': p.employee_id.identification_id or 'S/N',
+                #~ 'CURP': p.employee_id.curp and \
+                            #~ p.employee_id.curp.replace('\n\r', ' ').replace(
+                                #~ '\r\n', ' ').replace('\n', ' ').replace('\r', ' ').upper() or 'S/N',
+                #~ 'TipoRegimen': p.employee_id.regime_id.code and\
+                                   #~ p.employee_id.regime_id.code or '2',
+                #~ 'NumSeguridadSocial':p.employee_id.nss and \
+                            #~ p.employee_id.nss.replace('\n\r', ' ').replace(
+                                #~ '\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'S/N',
+                #~ 'FechaPago': date_now or False,
+                #~ 'FechaInicialPago': p.date_from or False,
+                #~ 'FechaFinalPago': p.date_to or False,
+                #~ 'FechaInicioRelLaboral': p.contract_id.date_start and \
+                                            #~ p.contract_id.date_start or False,
+                #~ 'NumDiasPagados': number_of_days or 0.0,
+                #~ 'Departamento': department or 'N/A',
+                #~ 'CLABE': p.employee_id.bank_account_id.clabe and \
+                        #~ p.employee_id.bank_account_id.clabe.replace('\n\r', ' ').\
+                        #~ replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '000000000000000000',
+                #~ 'Banco': p.employee_id.bank_account_id.bank and \
+                            #~ p.employee_id.bank_account_id.bank.code.replace(
+                                #~ '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace(
+                                        #~ '\r', ' ') or '001',
+                #~ 'Antiguedad':p.employee_id.seniority or 0,
+                #~ 'Puesto': p.employee_id.job_id.name and \
+                                #~ p.contract_id.job_id.name or 'N/A',
+                #~ 'TipoContrato': p.contract_id.type_id.name or '',
+                #~ 'TipoJornada': p.contract_id.working_day_id.name or '',
+                #~ 'PeriodicidadPago': p.contract_id.schedule_pay or '',
+                #~ 'RiesgoPuesto': p.contract_id.risk_rank_id.code or '1',
+                #~ 'SalarioBaseCotApor': p.contract_id.wage or 0,
+                #~ 'SalarioDiarioIntegrado': p.contract_id.integrated_salary or 0,
+                #~ 'xmlns:nomina':'http://www.sat.gob.mx/nomina',
+                #~ 'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+                #~ 'Version': '1.1'
+            #~ })
+            #~ input_line_ids = p.input_line_ids
+            #~ if input_line_ids:
+                #~ TotalGravado_percepcion = 0
+                #~ TotalExento_percepcion = 0
+                #~ TotalExento_deduccion = 0
+                #~ TotalGravado_deduccion = 0
+                #~ lista_percepciones = []
+                #~ lista_deducciones = []
+                #~ var = 0
+                #~ percepciones_data = dict_data['nomina:Nomina']
+                #~ percepciones_data['nomina:Percepciones'] = {}
+                #~ deducciones_data = dict_data['nomina:Nomina']
+                #~ deducciones_data['nomina:Deducciones'] = {}
+                #~ for n in input_line_ids:
+                    #~ if n['salary_rule_id']['type_concept']=='perception':
+                        #~ concepto = self.conv_ascii(cr, uid, ids, n['salary_rule_id']['name'])
+                        #~ data_percepciones = {
+                                        #~ 'TipoPercepcion': n['salary_rule_id']['code'],
+                                        #~ 'Clave': n['salary_rule_id']['code']+'clave',
+                                        #~ 'Concepto': concepto or '',
+                                        #~ 'ImporteGravado': n['amount'],
+                                        #~ 'ImporteExento': n['exempt_amount']
+                                        #~ }
+                        #~ TotalGravado_percepcion +=  n['amount']
+                        #~ TotalExento_percepcion +=  n['exempt_amount']
+                        #~ lista_percepciones.append(data_percepciones)
+                    #~ if n['salary_rule_id']['type_concept']=='deduction':
+                        #~ concepto = self.conv_ascii(cr, uid, ids, n['salary_rule_id']['name'])
+                        #~ data_deducciones = {
+                                        #~ 'TipoDeduccion': n['salary_rule_id']['code'],
+                                        #~ 'Clave': n['salary_rule_id']['clave'] or '',
+                                        #~ 'Concepto': concepto or '',
+                                        #~ 'ImporteGravado': n['amount'],
+                                        #~ 'ImporteExento': n['exempt_amount'],
+                                        #~ }
+                        #~ TotalGravado_deduccion +=  n['amount']
+                        #~ TotalExento_deduccion += n['exempt_amount']
+                        #~ lista_deducciones.append(data_deducciones)
+                #~ percepciones_data['nomina:Percepciones'].update({
+                                            #~ 'TotalGravado': TotalGravado_percepcion,
+                                            #~ 'TotalExento': TotalExento_percepcion,
+                                            #~ 'nomina:Percepcion' : lista_percepciones,
+                                                        #~ })
+#~ 
+                #~ deducciones_data['nomina:Deducciones'].update({
+                                            #~ 'TotalGravado': TotalGravado_deduccion,
+                                            #~ 'TotalExento': TotalExento_deduccion,
+                                            #~ 'nomina:Deduccion' : lista_deducciones,
+                                                        #~ })
+            #~ else:
+                #~ raise orm.except_orm(_('Warning'), _('The payroll not have deductions or perceptions'))
+            #~ inability_line_ids = p.inability_line_ids
+            #~ if inability_line_ids:
+                #~ lista_incapacidades = []
+                #~ descuento = 0
+                #~ number_of_days = 0
+                #~ incapacidades_data = dict_data['nomina:Nomina']
+                #~ incapacidades_data['nomina:Incapacidades'] = {}
+                #~ for n in inability_line_ids:
+                    #~ descuento += n['amount']
+                    #~ number_of_days += n['number_of_days']
+                    #~ data_incapacidades = {
+                                        #~ 'DiasIncapacidad': n['number_of_days'] or 0,
+                                        #~ 'TipoIncapacidad': n['inability_id']['code'] or 1,
+                                        #~ 'Descuento': n['amount'] or 0,
+                                        #~ }
+                    #~ lista_incapacidades.append(data_incapacidades)
+                #~ incapacidades_data['nomina:Incapacidades'].update({
+                                                    #~ 'nomina:Incapacidad' : lista_incapacidades
+                                                            #~ })
+            #~ overtime_line_ids = p.overtime_line_ids
+            #~ if overtime_line_ids:
+                #~ lista_horasextras = []
+                #~ ImportePagado = 0
+                #~ number_of_days = 0
+                #~ number_of_hours = 0
+                #~ horasextras_data = dict_data['nomina:Nomina']
+                #~ horasextras_data['nomina:HorasExtras'] = {}
+                #~ for n in overtime_line_ids:
+                    #~ ImportePagado += n['amount']
+                    #~ number_of_days += n['number_of_days']
+                    #~ number_of_hours += n['number_of_hours']
+                    #~ if n['type_hours'] == 'double':
+                        #~ TipoHoras = 'Dobles'
+                    #~ if n['type_hours'] == 'triples':
+                        #~ TipoHoras = 'Triples'
+                    #~ data_horasextras = {'Dias': n['number_of_days'] or 0,
+                                        #~ 'TipoHoras': TipoHoras,
+                                        #~ 'HorasExtra': n['number_of_hours'] or 0,
+                                        #~ 'ImportePagado': n['amount'] or 0,
+                                        #~ }
+                    #~ lista_horasextras.append(data_horasextras)
+                #~ horasextras_data['nomina:HorasExtras'].update({
+                                            #~ 'nomina:HorasExtra' : lista_horasextras
+                                                            #~ })
+        #~ list_data.append(dict_data)
+        #~ return list_data
 
     def onchange_journal_id(self, cr, uid, ids, journal_id, context=None):
         if context is None:
@@ -422,328 +429,6 @@ class hr_payslip(osv.Model):
                 #~ raise osv.except_osv(_('Warning !'), _(
                     #~ 'Not found a sequence of configuration. %s !') % (msg2))
         return {'value' : {'approval_id' : approval_id}}
-
-    #~ def _get_payroll_comp_dict_data(self, cr, uid, ids, context=None):
-        #~ if context is None:
-            #~ context = {}
-        #~ payslips = self.browse(cr, uid, ids, context=context)
-        #~ payslip_datas = []
-        #~ payslip_data_parents = []
-        #~ for payslip in payslips:
-            #~ payslip_data_parent = {}
-            #~ # Inicia seccion: Comprobante
-            #~ payslip_data_parent['cfdi:Comprobante'] = {}
-            #~ # default data
-            #~ payslip_data_parent['cfdi:Comprobante'].update({
-                #~ 'xmlns:cfdi': "http://www.sat.gob.mx/cfd/3",
-                #~ 'xmlns:xsi': "http://www.w3.org/2001/XMLSchema-instance",
-                #~ 'xsi:schemaLocation': "http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd",
-                #~ 'version': "3.2",
-            #~ })
-            #~ number_work = payslip.number
-            #~ payslip_data_parent['cfdi:Comprobante'].update({
-                #~ 'folio': number_work,
-                #~ 'fecha': payslip.payslip_datetime and
-                #~ # time.strftime('%d/%m/%y',
-                #~ # time.strptime(invoice.date_invoice, '%Y-%m-%d'))
-                #~ time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(
-                #~ payslip.payslip_datetime, '%Y-%m-%d %H:%M:%S'))
-                #~ or '',
-                #~ 'tipoDeComprobante': u"egreso",
-                #~ 'formaDePago': u'Pago en una sola exhibición'.encode('ascii', 'xmlcharrefreplace'),#Cableado!!
-                #~ 'noCertificado': '@',
-                #~ 'sello': '@',
-                #~ 'certificado': '@',
-                #~ 'subTotal': "%.2f" % (payslip.line_payslip_product_ids and payslip.line_payslip_product_ids[0] and 
-                    #~ payslip.line_payslip_product_ids[0].amount or 0.0),
-                #~ 'descuento': "0",  # Add field general
-                #~ 'total': "%.2f" % (payslip.line_payslip_product_ids and payslip.line_payslip_product_ids[0] and 
-                    #~ payslip.line_payslip_product_ids[0].amount or 0.0),
-            #~ })
-            #~ folio_data = self._get_folio(
-                #~ cr, uid, [invoice.id], context=context)
-            #~ serie = 'serie'
-            #~ serie = folio_data.get('serie', False)
-            #~ if serie:
-                #~ payslip_data_parent['cfdi:Comprobante'].update({
-                    #~ 'serie': 'serie',
-                #~ })
-            # Termina seccion: Comprobante
-            # Inicia seccion: Emisor
-            #~ partner_obj = self.pool.get('res.partner')
-            #~ address_payslip = payslip.address_issued_id or False
-            #~ address_payslip_parent = payslip.company_emitter_id and \
-            #~ payslip.company_emitter_id.address_invoice_parent_company_id or False
-
-            #~ if not address_invoice:
-                #~ raise osv.except_osv(_('Warning !'), _(
-                    #~ "Don't have defined the address issuing!"))
-
-            #~ if not address_payslip_parent:
-                #~ raise osv.except_osv(_('Warning !'), _(
-                    #~ "Don't have defined an address of invoicing from the company!"))
-#~ 
-            #~ if not address_payslip_parent.vat:
-                #~ raise osv.except_osv(_('Warning !'), _(
-                    #~ "Don't have defined RFC for the address of invoice to the company!"))
-#~ 
-            #~ payslip_data = payslip_data_parent['cfdi:Comprobante']
-            #~ payslip_data['cfdi:Emisor'] = {}
-            #~ payslip_data['cfdi:Emisor'].update({
-#~ 
-                #~ 'rfc': (('vat_split' in address_payslip_parent._columns and \
-                #~ address_payslip_parent.vat_split or address_payslip_parent.vat) \
-                #~ or '').replace('-', ' ').replace(' ', ''),
-                #~ 'nombre': address_payslip_parent.name or '',
-                # Obtener domicilio dinamicamente
-                # virtual_invoice.append( (invoice.company_id and
-                # invoice.company_id.partner_id and
-                # invoice.company_id.partner_id.vat or '').replac
-
-                #~ 'cfdi:DomicilioFiscal': {
-                    #~ 'calle': address_payslip_parent.street and \
-                        #~ address_payslip_parent.street.replace('\n\r', ' ').\
-                        #~ replace('\r\n', ' ').replace('\n', ' ').replace(
-                        #~ '\r', ' ') or '',
-                    #~ 'noExterior': address_payslip_parent.l10n_mx_street3 and \
-                        #~ address_payslip_parent.l10n_mx_street3.replace(
-                        #~ '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
-                        #~ replace('\r', ' ') or 'N/A',  # "Numero Exterior"
-                    #~ 'noInterior': address_payslip_parent.l10n_mx_street4 and \
-                        #~ address_payslip_parent.l10n_mx_street4.replace(
-                        #~ '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
-                        #~ replace('\r', ' ') or 'N/A',  # "Numero Interior"
-                    #~ 'colonia':  address_payslip_parent.street2 and \
-                        #~ address_payslip_parent.street2.replace('\n\r', ' ').\
-                        #~ replace('\r\n', ' ').replace('\n', ' ').replace(
-                        #~ '\r', ' ') or False,
-                    #~ 'localidad': address_payslip_parent.l10n_mx_city2 and \
-                        #~ address_payslip_parent.l10n_mx_city2.replace(
-                        #~ '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
-                        #~ replace('\r', ' ').encode('ascii', 'xmlcharrefreplace') or False,
-                    #~ 'municipio': address_payslip_parent.city and \
-                        #~ address_payslip_parent.city.replace('\n\r', ' ').\
-                        #~ replace('\r\n', ' ').replace('\n', ' ').replace(
-                        #~ '\r', ' ') or '',
-                    #~ 'estado': address_payslip_parent.state_id and \
-                        #~ address_payslip_parent.state_id.name and \
-                        #~ address_payslip_parent.state_id.name.replace(
-                        #~ '\n\r', ' ').replace('\r\n', ' ').replace(
-                        #~ '\n', ' ').replace('\r', ' ') or '',
-                    #~ 'pais': address_payslip_parent.country_id and \
-                        #~ address_payslip_parent.country_id.name and \
-                        #~ address_payslip_parent.country_id.name.replace(
-                        #~ '\n\r', ' ').replace('\r\n', ' ').replace(
-                        #~ '\n', ' ').replace('\r', ' ').encode('ascii', 'xmlcharrefreplace') or '',
-                    #~ 'codigoPostal': address_payslip_parent.zip and \
-                        #~ address_payslip_parent.zip.replace('\n\r', ' ').\
-                        #~ replace('\r\n', ' ').replace('\n', ' ').replace(
-                        #~ '\r', ' ').replace(' ', '') or '',
-                #~ },
-                #~ 'cfdi:ExpedidoEn': {
-                    #~ 'calle': address_payslip.street and address_payslip.\
-                        #~ street.replace('\n\r', ' ').replace('\r\n', ' ').\
-                        #~ replace('\n', ' ').replace('\r', ' ') or '',
-                    #~ 'noExterior': address_payslip.l10n_mx_street3 and \
-                        #~ address_payslip.l10n_mx_street3.replace(
-                        #~ '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
-                        #~ replace('\r', ' ') or 'N/A',  # "Numero Exterior"
-                    #~ 'noInterior': address_payslip.l10n_mx_street4 and \
-                        #~ address_payslip.l10n_mx_street4.replace('\n\r', ' ').\
-                        #~ replace('\r\n', ' ').replace('\n', ' ').replace(
-                        #~ '\r', ' ') or 'N/A',  # "Numero Interior"
-                    #~ 'colonia':  address_payslip.street2 and address_payslip.\
-                        #~ street2.replace('\n\r', ' ').replace('\r\n', ' ').\
-                        #~ replace('\n', ' ').replace('\r', ' ') or False,
-                    #~ 'localidad': address_payslip.l10n_mx_city2 and \
-                        #~ address_payslip.l10n_mx_city2.replace('\n\r', ' ').\
-                        #~ replace('\r\n', ' ').replace('\n', ' ').replace(
-                        #~ '\r', ' ').encode('ascii', 'xmlcharrefreplace') or False,
-                    #~ 'municipio': address_payslip.city and address_payslip.\
-                        #~ city.replace('\n\r', ' ').replace('\r\n', ' ').replace(
-                        #~ '\n', ' ').replace('\r', ' ') or '',
-                    #~ 'estado': address_payslip.state_id and address_payslip.\
-                        #~ state_id.name and address_payslip.state_id.name.replace(
-                        #~ '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
-                        #~ replace('\r', ' ') or '',
-                    #~ 'pais': address_payslip.country_id and address_payslip.\
-                        #~ country_id.name and address_payslip.country_id.name.\
-                        #~ replace('\n\r', ' ').replace('\r\n', ' ').replace(
-                        #~ '\n', ' ').replace('\r', ' ').encode('ascii', 'xmlcharrefreplace') or '',
-                    #~ 'codigoPostal': address_payslip.zip and address_payslip.\
-                        #~ zip.replace('\n\r', ' ').replace('\r\n', ' ').replace(
-                        #~ '\n', ' ').replace('\r', ' ').replace(' ', '') or '',
-                #~ },
-            #~ })
-            #~ if payslip_data['cfdi:Emisor']['cfdi:DomicilioFiscal'].get('colonia') == False:
-                #~ payslip_data['cfdi:Emisor']['cfdi:DomicilioFiscal'].pop('colonia')
-            #~ if payslip_data['cfdi:Emisor']['cfdi:ExpedidoEn'].get('colonia') == False:
-                #~ payslip_data['cfdi:Emisor']['cfdi:ExpedidoEn'].pop('colonia')
-            #~ if payslip_data['cfdi:Emisor']['cfdi:DomicilioFiscal'].get('localidad') == False:
-                #~ payslip_data['cfdi:Emisor']['cfdi:DomicilioFiscal'].pop('localidad')
-            #~ if payslip_data['cfdi:Emisor']['cfdi:ExpedidoEn'].get('localidad') == False:
-                #~ payslip_data['cfdi:Emisor']['cfdi:ExpedidoEn'].pop('localidad')
-            #~ # Termina seccion: Emisor
-            #~ # Inicia seccion: Receptor
-            #~ parent_id = payslip.employee_id and payslip.employee_id.address_home_id and payslip.employee_id.address_home_id.id
-            #~ parent_obj = partner_obj.browse(cr, uid, parent_id, context=context)
-            #~ if not parent_obj.vat:
-                #~ raise osv.except_osv(_('Warning !'), _(
-                    #~ "Don't have defined RFC of the partner[%s].\n%s !") % (
-                    #~ parent_obj.name, msg2))
-            #~ if parent_obj._columns.has_key('vat_split') and\
-                #~ parent_obj.vat[0:2] <> 'MX':
-                #~ rfc = 'XAXX010101000'
-            #~ else:
-                #~ rfc = ((parent_obj._columns.has_key('vat_split')\
-                    #~ and parent_obj.vat_split or parent_obj.vat)\
-                    #~ or '').replace('-', ' ').replace(' ','')
-            #~ address_payslip = partner_obj.browse(cr, uid, \
-                #~ payslip.employee_id and payslip.employee_id.address_home_id and payslip.employee_id.address_home_id.id, context=context)
-            #~ payslip_data['cfdi:Receptor'] = {}
-            #~ payslip_data['cfdi:Receptor'].update({
-                #~ 'rfc': rfc,
-                #~ 'nombre': (parent_obj.name or ''),
-                #~ 'cfdi:Domicilio': {
-                    #~ 'calle': address_payslip.street and address_payslip.\
-                        #~ street.replace('\n\r', ' ').replace('\r\n', ' ').replace(
-                        #~ '\n', ' ').replace('\r', ' ') or '',
-                    #~ 'noExterior': address_payslip.l10n_mx_street3 and \
-                        #~ address_payslip.l10n_mx_street3.replace('\n\r', ' ').\
-                        #~ replace('\r\n', ' ').replace('\n', ' ').replace(
-                        #~ '\r', ' ') or 'N/A',  # "Numero Exterior"
-                    #~ 'noInterior': address_payslip.l10n_mx_street4 and \
-                        #~ address_payslip.l10n_mx_street4.replace('\n\r', ' ').\
-                        #~ replace('\r\n', ' ').replace('\n', ' ').replace(
-                        #~ '\r', ' ') or 'N/A',  # "Numero Interior"
-                    #~ 'colonia':  address_payslip.street2 and address_payslip.\
-                        #~ street2.replace('\n\r', ' ').replace('\r\n', ' ').\
-                        #~ replace('\n', ' ').replace('\r', ' ') or False,
-                    #~ 'localidad': address_payslip.l10n_mx_city2 and \
-                        #~ address_payslip.l10n_mx_city2.replace('\n\r', ' ').\
-                        #~ replace('\r\n', ' ').replace('\n', ' ').replace(
-                        #~ '\r', ' ').encode('ascii', 'xmlcharrefreplace')  or False,
-                    #~ 'municipio': address_payslip.city and address_payslip.\
-                        #~ city.replace('\n\r', ' ').replace('\r\n', ' ').replace(
-                        #~ '\n', ' ').replace('\r', ' ') or '',
-                    #~ 'estado': address_payslip.state_id and address_payslip.\
-                        #~ state_id.name and address_payslip.state_id.name.replace(
-                        #~ '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
-                        #~ replace('\r', ' ') or '',
-                    #~ 'pais': address_payslip.country_id and address_payslip.\
-                        #~ country_id.name and address_payslip.country_id.name.\
-                        #~ replace('\n\r', ' ').replace('\r\n', ' ').replace(
-                        #~ '\n', ' ').replace('\r', ' ') .encode('ascii', 'xmlcharrefreplace') or '',
-                    #~ 'codigoPostal': address_payslip.zip and address_payslip.\
-                        #~ zip.replace('\n\r', ' ').replace('\r\n', ' ').replace(
-                        #~ '\n', ' ').replace('\r', ' ') or '',
-                #~ },
-            #~ })
-            #~ if payslip_data['cfdi:Receptor']['cfdi:Domicilio'].get('colonia') == False:
-                #~ payslip_data['cfdi:Receptor']['cfdi:Domicilio'].pop('colonia')
-            #~ if payslip_data['cfdi:Receptor']['cfdi:Domicilio'].get('localidad') == False:
-                #~ payslip_data['cfdi:Receptor']['cfdi:Domicilio'].pop('localidad')
-            #~ # Termina seccion: Receptor
-            #~ # Inicia seccion: Conceptos
-            #~ payslip_data['cfdi:Conceptos'] = []
-            #~ payslip_data['cfdi:Impuestos'] = []
-            #~ for line in payslip.line_payslip_product_ids:
-                #~ # price_type = invoice._columns.has_key('price_type') and invoice.price_type or 'tax_excluded'
-                #~ # if price_type == 'tax_included':
-#~ # price_unit = line.price_subtotal/line.quantity#Agrega compatibilidad con
-#~ # modulo TaxIncluded
-                #~ price_unit = line.amount != 0
-                #~ concepto = {
-                    #~ 'descripcion': line.product_id and line.product_id.name or '',
-                    #~ 'valorUnitario': "%.2f" % (price_unit or 0.0),
-                    #~ 'importe': "%.2f" % (price_unit or 0.0),  # round(line.price_unit *(1-(line.discount/100)),2) or 0.00),#Calc: iva, disc, qty
-                    #~ # Falta agregar discount
-                #~ }
-                #~ unidad = line.uos_id and line.uos_id.name or ''
-                #~ if unidad:
-                    #~ concepto.update({'unidad': unidad})
-                #~ product_code = line.product_id and line.product_id.default_code or ''
-                #~ if product_code:
-                    #~ concepto.update({'noIdentificacion': product_code})
-                #~ payslip_data['cfdi:Conceptos'].append({'cfdi:Concepto': concepto})
-
-                #~ pedimento = None
-                #~ if 'tracking_id' in line._columns:
-                    #~ pedimento = line.tracking_id and line.tracking_id.import_id or False
-                    #~ if pedimento:
-                        #~ informacion_aduanera = {
-                            #~ 'numero': pedimento.name or '',
-                            #~ 'fecha': pedimento.date or '',
-                            #~ 'aduana': pedimento.customs,
-                        #~ }
-                        #~ concepto.update({
-                                        #~ 'InformacionAduanera': informacion_aduanera})
-                # Termina seccion: Conceptos
-            #~ payslip_data_parents.append(payslip_data_parent)
-            #~ payslip_data_parent['state'] = payslip.state
-            #~ payslip_data_parent['invoice_datetime'] = payslip.payslip_datetime
-            #~ payslip_data_parent['date_invoice_tz'] = payslip.payslip_datetime
-            #~ payslip_data_parent['currency_id'] = payslip.currency_id.id
-#~ 
-            #~ date_ctx = {'date': payslip.payslip_datetime and time.strftime(
-                #~ '%Y-%m-%d', time.strptime(payslip.payslip_datetime,
-                #~ '%Y-%m-%d %H:%M:%S')) or False}
-            #~ currency = self.pool.get('res.currency').browse(
-                #~ cr, uid, [payslip.currency_id.id], context=date_ctx)[0]
-            #~ rate = currency.rate != 0 and 1.0/currency.rate or 0.0
-            #~ payslip_data_parent['rate'] = rate
-#~ 
-        #~ payslip_datetime = payslip_data_parents[0].get('invoice_datetime',
-            #~ {}) and datetime.strptime(payslip_data_parents[0].get(
-            #~ 'invoice_datetime', {}), '%Y-%m-%d %H:%M:%S').strftime(
-            #~ '%Y-%m-%d') or False
-        #~ if not payslip_datetime:
-            #~ raise osv.except_osv(_('Date Invoice Empty'), _(
-                #~ "Can't generate a invoice without date, make sure that the state of invoice not is draft & the date of invoice not is empty"))
-        #~ if payslip_datetime < '2012-07-01':
-            #~ return payslip_data_parent
-        #~ else:
-            #~ payslip = self.browse(cr, uid, ids, context={
-                                  #~ 'date': payslip_datetime})[0]
-            #~ city = payslip_data_parents and payslip_data_parents[0].get(
-                #~ 'cfdi:Comprobante', {}).get('cfdi:Emisor', {}).get('cfdi:ExpedidoEn', {}).get(
-                #~ 'municipio', {}) or False
-            #~ state = payslip_data_parents and payslip_data_parents[0].get(
-                #~ 'cfdi:Comprobante', {}).get('cfdi:Emisor', {}).get('cfdi:ExpedidoEn', {}).get(
-                #~ 'estado', {}) or False
-            #~ country = payslip_data_parents and payslip_data_parents[0].get(
-                #~ 'cfdi:Comprobante', {}).get('cfdi:Emisor', {}).get('cfdi:ExpedidoEn', {}).get(
-                #~ 'pais', {}).encode('ascii', 'xmlcharrefreplace') or False
-            #~ if city and state and country:
-                #~ address = city + ' ' + state + ', ' + country
-            #~ else:
-                #~ raise osv.except_osv(_('Address Incomplete!'), _(
-                    #~ 'Ckeck that the address of company issuing of fiscal voucher is complete (City - State - Country)'))
-
-            #~ if not invoice.company_emitter_id.partner_id.regimen_fiscal_id.name:
-                #~ raise osv.except_osv(_('Missing Fiscal Regime!'), _(
-                    #~ 'The Fiscal Regime of the company issuing of fiscal voucher is a data required'))
-
-            #~ payslip_data_parents[0]['cfdi:Comprobante'][
-                #~ 'TipoCambio'] = 1
-            #~ payslip_data_parents[0]['cfdi:Comprobante'][
-                #~ 'Moneda'] = payslip.currency_id.name or ''
-            #~ invoice_data_parents[0]['cfdi:Comprobante'][
-                #~ 'NumCtaPago'] = invoice.acc_payment.last_acc_number\
-                    #~ or 'No identificado'
-            #~ payslip_data_parents[0]['cfdi:Comprobante'][
-                #~ 'NumCtaPago'] = 'No identificado'
-            #~ invoice_data_parents[0]['cfdi:Comprobante'][
-                #~ 'metodoDePago'] = invoice.pay_method_id.name or 'No identificado'
-            #~ payslip_data_parents[0]['cfdi:Comprobante'][
-                #~ 'metodoDePago'] = 'No identificado'
-            #~ invoice_data_parents[0]['cfdi:Comprobante']['cfdi:Emisor']['cfdi:RegimenFiscal'] = {
-                #~ 'Regimen': invoice.company_emitter_id.partner_id.\
-                    #~ regimen_fiscal_id.name or ''}
-            #~ payslip_data_parents[0]['cfdi:Comprobante']['cfdi:Emisor']['cfdi:RegimenFiscal'] = {
-                #~ 'Regimen': ''}
-            #~ payslip_data_parents[0]['cfdi:Comprobante']['LugarExpedicion'] = address.encode('ascii', 'xmlcharrefreplace')
-        #~ return payslip_data_parent
 
     def binary2file(self, cr, uid, ids, binary_data, file_prefix="", file_suffix=""):
         """
@@ -940,7 +625,6 @@ class hr_payslip(osv.Model):
                 loading = True
         return cer_str
 
-
     def _get_facturae_payroll_xml_data(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
@@ -954,7 +638,7 @@ class hr_payslip(osv.Model):
             context['fecha'] = time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(payroll.payslip_datetime, '%Y-%m-%d %H:%M:%S'))
             cert_str = self._get_certificate_str(context['fname_cer'])
             noCertificado = self._get_noCertificado(cr, uid, ids, context['fname_cer'])
-            data_dict_payroll = self._get_dict_payroll(cr, uid, ids, context=context)[0]
+            #~ data_dict_payroll = self._get_dict_payroll(cr, uid, ids, context=context)[0]
             all_paths = tools.config["addons_path"].split(",")
             formaDePago = payroll.string_to_xml_format(u'Pago en una sola exhibición')
             cert_str = self._get_certificate_str(context['fname_cer'])
@@ -1006,7 +690,7 @@ class hr_payslip(osv.Model):
                 if os.path.isdir(os.path.join(my_path, 'l10n_mx_payroll_base', 'template')):
                     fname_jinja_tmpl = my_path and os.path.join(my_path, 'l10n_mx_payroll_base', 'template', 'nomina11' + '.xml') or ''
             dictargs = {
-                'o': data_dict_payroll,
+                #~ 'o': data_dict_payroll,
                 'a': payroll,
                 'employee': payroll.employee_id,
                 'time': time,
