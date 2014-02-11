@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_lines_create" model="ir.ui.view">
+            <field name="name">lines.create.form</field>
+            <field name="model">lines.create</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            <form string="Create Invoice">
+                <notebook colspan="4">
+                    <page string="Billing Data">
+                       <group col="4" colspan="4">
+                           <separator string="Do you want to show details of work in invoice ?" colspan="4"/>
+                                <field name="month" on_change="onchange_date(month,contract_id)"/>
+                                <newline/>
+                                <field name="line_ids" nolabel="1" colspan="4">
+                                    <tree editable="top" string="Analytic Entries">
+                                        <field name="date" />
+                                        <field name="ref" />
+                                        <field name="name" />
+                                        <field name="journal_id" />
+                                        <field name="amount" sum="Total" />
+                                        <field name="product_id" on_change="on_change_unit_amount(product_id, unit_amount, company_id, product_uom_id, journal_id)" />
+                                        <field name="prodlot_id"/>
+                                        <field name="w_start" on_change="onchange_copys(w_start,w_end)"/>
+                                        <field name="w_end" on_change="onchange_copys(w_start,w_end)" />
+                                        <field name="unit_amount" on_change="on_change_unit_amount(product_id, unit_amount, company_id, product_uom_id)" sum="Total Quantity" />
+                                        <field name="product_uom_id" on_change="on_change_unit_amount(product_id, unit_amount, company_id, product_uom_id)" />
+                                        <field name="general_account_id" />
+                                        <field name="user_id" invisible="1"/>
+
+                                    </tree>
+                                </field>
+                                <field name="contract_id" invisible="1"/>
+                           </group>
+                    </page>
+                </notebook>
+                <separator colspan="4"/>
+                <group col="2" colspan="4">
+                    <button special="cancel"  string="Cancel" icon='gtk-cancel'/>
+                    <button name="do_create" string="Create Invoices" colspan="1" type="object" icon="terp-gtk-go-back-rtl"/>
+                </group>
+            </form>
+            </field>
+        </record>
+
+        <record id="lines_invoice_create" model="ir.actions.act_window">
+            <field name="name">Create Invoice</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">lines.create</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    <act_window id="lines_invoice_create_wizard"
+        name="Create Invoice"
+        src_model="account.analytic.account"
+        res_model="lines.create"
+        view_mode="form"
+        target="new"
+        key2="client_action_multi"/>
+
+    </data>
+</openerp>
