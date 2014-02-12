@@ -183,20 +183,20 @@ class ir_attachment_facturae_mx(osv.Model):
         invoice_obj = self.pool.get('account.invoice')
         pac_params_obj = self.pool.get('params.pac')
         for ir_attachment_facturae_mx_id in self.browse(cr, uid, ids, context=context):
-            invoice = ir_attachment_facturae_mx_id.invoice_id
-            comprobante = invoice_obj._get_type_sequence(
-                cr, uid, [invoice.id], context=context)
-            cfd_data = base64.decodestring(fdata or invoice_obj.fdata)
+            #~ invoice = ir_attachment_facturae_mx_id.invoice_id
+            #~ comprobante = invoice_obj._get_type_sequence(
+                #~ cr, uid, [invoice.id], context=context)
+            cfd_data = base64.decodestring(fdata or ir_attachment_facturae_mx_id.file_input.index_content)
             if tools.config['test_report_directory']:#TODO: Add if test-enabled:
                 ir_attach_facturae_mx_file_input = ir_attachment_facturae_mx_id.file_input and ir_attachment_facturae_mx_id.file_input or False
                 fname_suffix = ir_attach_facturae_mx_file_input and ir_attach_facturae_mx_file_input.datas_fname or ''
                 open( os.path.join(tools.config['test_report_directory'], 'l10n_mx_facturae_pac_finkok' + '_' + \
                   'before_upload' + '-' + fname_suffix), 'wb+').write( cfd_data )
-            date = invoice.date_invoice
-            date_format = datetime.strptime(
-                date, '%Y-%m-%d').strftime('%Y-%m-%d')
-            context['date'] = date_format
-            invoice_ids = [invoice.id]
+            #~ date = invoice.date_invoice
+            #~ date_format = datetime.strptime(
+                #~ date, '%Y-%m-%d').strftime('%Y-%m-%d')
+            #~ context['date'] = date_format
+            #~ invoice_ids = [invoice.id]
             file = False
             msg = ''
             folio_fiscal = ''
@@ -204,8 +204,9 @@ class ir_attachment_facturae_mx(osv.Model):
             status = False
             pac_params_ids = pac_params_obj.search(cr, uid, [
                 ('method_type', '=', 'pac_firmar'), (
-                    'company_id', '=', invoice.company_emitter_id.id), (
+                    'company_id', '=', ir_attachment_facturae_mx_id.company_emitter_id.id), (
                         'active', '=', True)], limit=1, context=context)
+            print pac_params_ids, 'pac_params_idspac_params_idspac_params_idspac_params_idspac_params_ids'
             if pac_params_ids:
                 pac_params = pac_params_obj.browse(
                     cr, uid, pac_params_ids, context)[0]
@@ -237,19 +238,26 @@ class ir_attachment_facturae_mx(osv.Model):
                     raise orm.except_orm(_('Warning'), _('Connection lost, verify your internet conection or verify your PAC'))
                 try:
                     client = Client(wsdl_url, cache=None)
-                    file_globals = invoice_obj._get_file_globals(
-                        cr, uid, invoice_ids, context=context)
-                    fname_cer_no_pem = file_globals['fname_cer']
+                    print ir_attachment_facturae_mx_id.certificate_id, 'ir_attachment_facturae_mx_id.certificate_idir_attachment_facturae_mx_id.certificate_id'
+                    #~ file_globals = invoice_obj._get_file_globals(
+                        #~ cr, uid, invoice_ids, context=context)
+                    #~ fname_cer_no_pem = file_globals['fname_cer']
                     #cerCSD = open(fname_cer_no_pem).read().encode('base64') #Mejor forma de hacerlo
-                    cerCSD = fname_cer_no_pem and base64.encodestring(
-                        open(fname_cer_no_pem, "r").read()) or ''
-                    fname_key_no_pem = file_globals['fname_key']
-                    keyCSD = fname_key_no_pem and base64.encodestring(
-                        open(fname_key_no_pem, "r").read()) or ''
+                    #~ cerCSD = fname_cer_no_pem and base64.encodestring(
+                        #~ open(fname_cer_no_pem, "r").read()) or ''
+                    cerCSD = ir_attachment_facturae_mx_id.certificate_id and base64.encodestring(
+                        ir_attachment_facturae_mx_id.certificate_id.certificate_file) or ''
+                    #~ fname_key_no_pem = file_globals['fname_key']
+                    #~ keyCSD = fname_key_no_pem and base64.encodestring(
+                        #~ open(fname_key_no_pem, "r").read()) or ''
+                    keyCSD = ir_attachment_facturae_mx_id.certificate_id and base64.encodestring(
+                        ir_attachment_facturae_mx_id.certificate_id.certificate_key_file) or ''
                     #keyCSD = open(fname_key_no_pem).read().encode('base64') #Mejor forma de hacerlo
                     cfdi = base64.encodestring(cfd_data)
                     zip = False  # Validar si es un comprimido zip, con la extension del archivo
-                    contrasenaCSD = file_globals.get('password', '')
+                    #~ contrasenaCSD = file_globals.get('password', '')
+                    contrasenaCSD = ir_attachment_facturae_mx_id.certificate_id and base64.encodestring(
+                        ir_attachment_facturae_mx_id.certificate_id.certificate_password) or ''
                     params = [cfdi, user, password]
                     resultado = client.service.stamp(*params)
                     if not resultado.Incidencias or None:

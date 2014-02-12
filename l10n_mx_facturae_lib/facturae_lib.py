@@ -325,6 +325,7 @@ class facturae_certificate_library(osv.Model):
             # TODO: Dev for type certificate DER
             pass
         if cmd:
+            print cmd, 'cmd'*20
             input, output = exec_command_pipe(cmd)
             result = self._read_file_attempts(open(fname_out, "r"))
             input.close()

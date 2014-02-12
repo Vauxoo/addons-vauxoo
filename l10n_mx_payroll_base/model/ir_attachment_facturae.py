@@ -65,7 +65,7 @@ class ir_attachment_facturae_mx(osv.Model):
                         'datas': base64.encodestring(xml_data),
                         'datas_fname': fname_invoice,
                         'res_model': 'hr.payslip',
-                        'res_id': data.id
+                        'res_id': data.payroll_id.id
                     }, context=context)
                     msj = _("Attached Successfully XML CFDI 3.2\n")
                     status = True
