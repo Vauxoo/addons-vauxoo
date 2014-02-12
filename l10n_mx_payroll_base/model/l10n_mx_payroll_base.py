@@ -719,7 +719,7 @@ class hr_payslip(osv.Model):
                     with open(fname_xml_payroll, 'w') as new_xml:
                         new_xml.write( tmpl.render(**dictargs) )
             with open(fname_xml_payroll,'rb') as b:
-                data_xml_payroll = b.read()
+                data_xml_payroll = b.read().encode('UTF-8')
                 #~ print data_xml_payroll, '1111111111111111111'
             try:
                 invoice_obj.validate_scheme_facturae_xml(cr, uid, ids, [data_xml_payroll], facturae_version, facturae_type)
@@ -727,6 +727,7 @@ class hr_payslip(osv.Model):
                 raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (e))
             #Agregar nodo Nomina en nodo Complemento
             doc_xml = xml.dom.minidom.parseString(data_xml)
+            print doc_xml.toxml().encode('ascii', 'xmlcharrefreplace') , 'T'*20
             doc_xml_payroll_2 = xml.dom.minidom.parseString(data_xml_payroll)
             complemento = """<cfdi:Complemento xmlns:cfdi="http://www.sat.gob.mx/cfd/3"></cfdi:Complemento>"""
             cfdi_complemento = xml.dom.minidom.parseString(complemento)
@@ -741,15 +742,16 @@ class hr_payslip(osv.Model):
             doc_xml_comprobante = doc_xml.documentElement
             #~ cfdi_complemento = xml.dom.minidom.parseString(complemento)
             
-            doc_xml_full = doc_xml.toxml()
+            doc_xml_full = doc_xml.toxml().encode('ascii', 'xmlcharrefreplace')
             print "doc_xml_full",doc_xml_full
             data_xml2 = doc_xml_full.replace('<?xml version="1.0" ?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
-            data_xml2 = xml.dom.minidom.parseString(data_xml2)
             print 'data_xml2',data_xml2
+            data_xml2 = xml.dom.minidom.parseString(data_xml2)
+            
             #~ print doc_xml_full
             #~ doc_xml_full = xml.dom.minidom.parseString(data_xml)
             #~ print doc_xml_full, '2222222222222222222222l'
-            f = open(fname_xml, 'w')
+            f = codecs.open(fname_xml,'w','utf-8')
             data_xml2.writexml(f, indent='    ', addindent='    ', newl='\r\n', encoding='UTF-8')
             f.close()
             print doc_xml_full, 'QQQQQQQQQQQQQQQQQQQQQQq'
