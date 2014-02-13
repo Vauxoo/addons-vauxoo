@@ -13,8 +13,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-11-10 06:47+0000\n"
-"X-Generator: Launchpad (build 16820)\n"
+"X-Launchpad-Export-Date: 2014-01-29 06:04+0000\n"
+"X-Generator: Launchpad (build 16916)\n"
 
 #. module: product_icecat
 #: code:addons/product_icecat/product_icecat.py:109
@@ -347,17 +347,3 @@ msgstr "URL FTP Dir: http://domain/directory/"
 #: help:product.icecat.mapline,name:0
 msgid "Insert ID Category from Icecat"
 msgstr "Insereix ID de la categoria de icecat"
-
-#, python-format
-#~ msgid ""
-#~ "They are other icecat configuration with \"Active\" field checked. Only one "
-#~ "configuration is avaible for active field."
-#~ msgstr ""
-#~ "Hi ha una altra configuració amb l'estat \"Actiu\" activat. Només una "
-#~ "configuració pot tenir aquest estat activat."
-
-#~ msgid ""
-#~ "If not use directory, insert . (point). If use directory, path FTP dir"
-#~ msgstr ""
-#~ "Si no utilitza cap directori, insereix . (punt). Si utilitza un directori, "
-#~ "introdueix la ruta dels directori de les imatges"
