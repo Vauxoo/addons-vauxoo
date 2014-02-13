@@ -44,7 +44,6 @@ the human recourses that is public.
                 'crm',
                 'website_crm',
                 'web_captcha',
-                'portal_hr_employees',
                 ],
     'data': [
         'view/contact_view.xml',

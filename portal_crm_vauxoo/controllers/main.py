@@ -39,7 +39,7 @@ class crm_captcha(http.Controller):
         )
         return url
 
-    @website.route(['/crm/contactus'], type='http', auth="admin", multilang=True)
+    @http.route(['/crm/contactus'], type='http', auth="admin", website=True, multilang=True)
     def contactus(self, *arg, **post):
         cr, uid, context, registry = request.cr, request.uid, request.context, request.registry
         required_fields = ['contact_name', 'email_from', 'description']
@@ -90,7 +90,7 @@ class crm_captcha(http.Controller):
                                                            company.country_id and company.country_id.name_get()[0][1] or '')
         }
         return request.website.render("website_crm.contactus_thanks", values)
-    @website.route(['/website/get_public_id'], type='json', auth="public")
+    @http.route(['/website/get_public_id'], type='json', auth="public")
     def get_public_id(self, object):
         _object = request.registry[object]
         obj = _object.browse(request.cr, request.uid, request.uid)
@@ -98,7 +98,7 @@ class crm_captcha(http.Controller):
 
         return res_id
 
-    @website.route(['/page/website.contactus'], type='http', auth="public", multilang=True)
+    @http.route(['/page/website.contactus'], type='http', auth="public", website=True, multilang=True)
     def checkout(self, **post):                                                
         cr, uid, context, registry = request.cr, request.uid, request.context, request.registry
                                                                                
