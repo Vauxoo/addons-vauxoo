@@ -35,6 +35,8 @@ class ir_attachment_facturae_mx(osv.Model):
     _columns = {
         'journal_id': fields.many2one('account.journal','Journal'),
         'payroll_id': fields.many2one('hr.payslip', 'Payslip'),
+        'company_emitter_id': fields.many2one('res.company', 'Company emmiter'),
+        'certificate_id': fields.many2one('res.company.facturae.certificate'),
     }
     
     def signal_confirm(self, cr, uid, ids, context=None):
@@ -56,8 +58,8 @@ class ir_attachment_facturae_mx(osv.Model):
         for data in self.browse(cr, uid, ids, context=context):
             if data.payroll_id:
                 if 'cfdi' in type:
-                    fname_invoice = data.payroll_id and data.payroll_id.name + \
-                        '_V3_2_payroll.xml' or ''
+                    fname_invoice = data.payroll_id and data.payroll_id.name + '_' + \
+                        data.payroll_id.number + _('_payroll.xml') or ''
                     fname, xml_data = hr_payslip_obj._get_facturae_payroll_xml_data(
                         cr, uid, [data.payroll_id.id], context=context)
                     attach = attachment_obj.create(cr, uid, {

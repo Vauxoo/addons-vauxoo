@@ -55,7 +55,9 @@ class hr_payslip(osv.Model):
 
     def string_to_xml_format(self, cr, uid, ids, text):
         #~ return text.encode('utf-8', 'xmlcharrefreplace')
-        return cgi.escape(text, True).encode('ascii', 'xmlcharrefreplace').replace('\n\n', ' ')
+        if text:
+            return cgi.escape(text, True).encode('ascii', 'xmlcharrefreplace').replace('\n\n', ' ')
+
     _inherit = 'hr.payslip'
 
     def _get_company_emitter_invoice(self, cr, uid, ids, name, args, context=None):
@@ -171,34 +173,6 @@ class hr_payslip(osv.Model):
             result['views'] = [(res and res[1] or False, 'form')]
             return result
         return True
-
-    def conv_ascii(self, cr, uid, ids, text):
-        """
-        @param text : text that need convert vowels accented & characters to ASCII
-        Converts accented vowels, ñ and ç to their ASCII equivalent characters
-        """
-        old_chars = [
-            'á', 'é', 'í', 'ó', 'ú', 'à', 'è', 'ì', 'ò', 'ù', 'ä', 'ë', 'ï', 'ö',
-            'ü', 'â', 'ê', 'î', 'ô', 'û', 'Á', 'É', 'Í', 'Ó', 'Ú', 'À', 'È', 'Ì',
-            'Ò', 'Ù', 'Ä', 'Ë', 'Ï', 'Ö', 'Ü', 'Â', 'Ê', 'Î', 'Ô', 'Û', 'ñ', 'Ñ',
-            'ç', 'Ç', 'ª', 'º', '°', ' ', 'Ã', 'Ø', '&'
-        ]
-        new_chars = [
-            'a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', 'o',
-            'u', 'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U', 'A', 'E', 'I',
-            'O', 'U', 'A', 'E', 'I', 'O', 'U', 'A', 'E', 'I', 'O', 'U', 'n', 'N',
-            'c', 'C', 'a', 'o', 'o', ' ', 'A', '0' ,'y'
-        ]
-        for old, new in zip(old_chars, new_chars):
-            try:
-                text = text.replace(unicode(old, 'UTF-8'), new)
-            except:
-                try:
-                    text = text.replace(old, new)
-                except:
-                    raise osv.except_osv(_('Warning !'), _(
-                        "Can't recode the string [%s] in the letter [%s]") % (text, old))
-        return text
 
     def _get_time_zone(self, cr, uid, payroll_id, context=None):
         if context is None:
@@ -391,19 +365,6 @@ class hr_payslip(osv.Model):
         #~ list_data.append(dict_data)
         #~ return list_data
 
-    #~ def onchange_employee_id(self, cr, uid, ids, date_from, date_to, employee_id=False, contract_id=False, context=None):
-        #~ if context is None:
-            #~ context = {}
-        #~ partner_id = False
-        #~ result = super(hr_payslip, self).onchange_employee_id(cr, uid, ids, date_from, date_to, employee_id, contract_id)
-        #~ if employee_id:
-            #~ employee_obj = self.pool.get('hr.employee').browse(cr, uid, employee_id, context=context)
-            #~ partner_id = employee_obj.address_home_id and employee_obj.address_home_id.id
-        #~ result['value'].update({'partner_id': partner_id}) 
-        return {'value' : {'partner_id' : partner_id}}
-        #~ print result, 'RESULTTTTTTTTTTTTTTTTTTTTTT'
-        #~ return result
-
     def onchange_journal_id(self, cr, uid, ids, journal_id, context=None):
         if context is None:
             context = {}
@@ -562,7 +523,7 @@ class hr_payslip(osv.Model):
                 file_globals['serial_number'] = certificate_id.serial_number
             else:
                 raise osv.except_osv(_('Warning !'), _(
-                    'Check date of invoice and the validity of certificate, & that the register of the certificate is active.\n%s!') % (msg2))
+                    'Check date of invoice and the validity of certificate, & that the register of the certificate is active.\n!') )
         
         #~ invoice_datetime = self.browse(cr, uid, ids)[0].invoice_datetime
         #~ ir_seq_app_obj = self.pool.get('ir.sequence.approval')
@@ -660,11 +621,10 @@ class hr_payslip(osv.Model):
             context.update(self._get_file_globals(cr, uid, ids, context=context))
             context['fecha'] = time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(payroll.payslip_datetime, '%Y-%m-%d %H:%M:%S'))
             cert_str = self._get_certificate_str(context['fname_cer'])
+            cert_str = cert_str.replace('\n\r', '').replace('\r\n', '').replace('\n', '').replace('\r', '').replace(' ', '')
             noCertificado = self._get_noCertificado(cr, uid, ids, context['fname_cer'])
-            #~ data_dict_payroll = self._get_dict_payroll(cr, uid, ids, context=context)[0]
             all_paths = tools.config["addons_path"].split(",")
             formaDePago = payroll.string_to_xml_format(u'Pago en una sola exhibicion')
-            cert_str = self._get_certificate_str(context['fname_cer'])
             for my_path in all_paths:
                 if os.path.isdir(os.path.join(my_path, 'l10n_mx_payroll_base', 'template')):
                     fname_jinja_tmpl = my_path and os.path.join(my_path, 'l10n_mx_payroll_base', 'template', 'cfdi' + '.xml') or ''
@@ -676,7 +636,7 @@ class hr_payslip(osv.Model):
                 'formaDePago': formaDePago,
                 'certificado': cert_str,
                 }
-            (fileno_xml, fname_xml) = tempfile.mkstemp('.xml', 'openerp_' + (payroll.number or '') + '__facturae__')
+            (fileno_xml, fname_xml) = tempfile.mkstemp('.xml', 'openerp_' + '__facturae__')
             if fname_jinja_tmpl:
                 with open(fname_jinja_tmpl, 'r') as f_jinja_tmpl:
                     jinja_tmpl_str = f_jinja_tmpl.read().encode('utf-8')
@@ -685,33 +645,28 @@ class hr_payslip(osv.Model):
                         new_xml.write( tmpl.render(**dictargs2) )
             with open(fname_xml,'rb') as b:
                 data_xml = b.read().encode('utf-8')
-            print data_xml, 'data_xmldata_xmldata_xml'
             b.close()
             if not noCertificado:
                 raise osv.except_osv(_('Error in No. Certificate !'), _(
                     "Can't get the Certificate Number of the voucher.\nCkeck your configuration.\n%s") % (msg2))
             fname_txt = fname_xml + '.txt'
-            (fileno_sign, fname_sign) = tempfile.mkstemp('.txt', 'openerp_' + (
-                payroll.number or '') + '__facturae_txt_md5__')
+            (fileno_sign, fname_sign) = tempfile.mkstemp('.txt', 'openerp_' + '__facturae_txt_md5__')
             os.close(fileno_sign)
             
             try:
                 invoice_obj.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], 'v3.2', 'cfd')
             except Exception, e:
                 raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (e))
-            
-            
             for my_path in all_paths:
                 if os.path.isdir(os.path.join(my_path, 'l10n_mx_payroll_base', 'template')):
                     fname_jinja_tmpl = my_path and os.path.join(my_path, 'l10n_mx_payroll_base', 'template', 'nomina11' + '.xml') or ''
             dictargs = {
-                #~ 'o': data_dict_payroll,
                 'a': payroll,
                 'employee': payroll.employee_id,
                 'time': time,
                 }
-            payroll = "payroll"
-            (fileno_xml, fname_xml_payroll) = tempfile.mkstemp('.xml', 'openerp_' + (payroll or '') + '__facturae__')
+            payroll2 = "payroll"
+            (fileno_xml, fname_xml_payroll) = tempfile.mkstemp('.xml', 'openerp_' + (payroll2 or '') + '__facturae__')
             if fname_jinja_tmpl:
                 with open(fname_jinja_tmpl, 'r') as f_jinja_tmpl:
                     jinja_tmpl_str = f_jinja_tmpl.read()
@@ -720,78 +675,40 @@ class hr_payslip(osv.Model):
                         new_xml.write( tmpl.render(**dictargs) )
             with open(fname_xml_payroll,'rb') as b:
                 data_xml_payroll = b.read().encode('UTF-8')
-                #~ print data_xml_payroll, '1111111111111111111'
             try:
                 invoice_obj.validate_scheme_facturae_xml(cr, uid, ids, [data_xml_payroll], facturae_version, facturae_type)
             except Exception, e:
                 raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (e))
             #Agregar nodo Nomina en nodo Complemento
             doc_xml = xml.dom.minidom.parseString(data_xml)
-            print doc_xml.toxml().encode('ascii', 'xmlcharrefreplace') , 'T'*20
             doc_xml_payroll_2 = xml.dom.minidom.parseString(data_xml_payroll)
             complemento = """<cfdi:Complemento xmlns:cfdi="http://www.sat.gob.mx/cfd/3"></cfdi:Complemento>"""
             cfdi_complemento = xml.dom.minidom.parseString(complemento)
             complemento = cfdi_complemento.documentElement
             nomina = doc_xml_payroll_2.getElementsByTagName('nomina:Nomina')[0]
             complemento.appendChild(nomina)
+            #Agregar nodo nodo Complemento en nodo Comprobante
             node_comprobante = doc_xml.getElementsByTagName('cfdi:Comprobante')[0]
             node_comprobante.appendChild(complemento)
-            #~ print complemento, 'complemento'*10
-            #Falta Agregar Nodo Complemento en Nodo Comprobante
-            #~ doc_xml = xml.dom.minidom.parseString(data_xml)
-            doc_xml_comprobante = doc_xml.documentElement
-            #~ cfdi_complemento = xml.dom.minidom.parseString(complemento)
             
             doc_xml_full = doc_xml.toxml().encode('ascii', 'xmlcharrefreplace')
-            print "doc_xml_full",doc_xml_full
-            data_xml2 = doc_xml_full.replace('<?xml version="1.0" ?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
-            print 'data_xml2',data_xml2
-            data_xml2 = xml.dom.minidom.parseString(data_xml2)
-            
-            #~ print doc_xml_full
-            #~ doc_xml_full = xml.dom.minidom.parseString(data_xml)
-            #~ print doc_xml_full, '2222222222222222222222l'
+            data_xml2 = xml.dom.minidom.parseString(doc_xml_full)
+            data_xml3 = data_xml2.toxml('UTF-8')
             f = codecs.open(fname_xml,'w','utf-8')
             data_xml2.writexml(f, indent='    ', addindent='    ', newl='\r\n', encoding='UTF-8')
             f.close()
-            print doc_xml_full, 'QQQQQQQQQQQQQQQQQQQQQQq'
-            #~ data_xml = doc_xml_payroll.toxml('UTF-8')
-            #~ sello = self._get_sello(cr=False, uid=False, ids=False, context=context)
-            #~ node_comprobante.setAttribute("sello", sello)
-            #~ doc_xml = xml.dom.minidom.parseString(data_xml)
-            #data_xml = doc_xml_comprobante.toxml('UTF-8')
-            #doc_xml_full = xml.dom.minidom.parseString(data_xml)
-            #~ payroll = "payroll"
-            #~ (fileno_xml, fname_xml) = tempfile.mkstemp('.xml', 'openerp_' + (payroll or '') + '__facturae__')
-            #~ fname_txt = fname_xml + '.txt'
-            #~ f = open(fname_xml, 'w')
-            #~ doc_xml.writexml(f, indent='    ', addindent='    ', newl='\r\n', encoding='UTF-8')
-            #~ f.close()
-            #~ os.close(fileno_xml)
-            #~ (fileno_sign, fname_sign) = tempfile.mkstemp('.txt', 'openerp_' + (
-                #~ payroll or '') + '__facturae_txt_md5__')
-            #~ os.close(fileno_sign)
             context.update({
                 'fname_xml': fname_xml,
                 'fname_txt': fname_txt,
                 'fname_sign': fname_sign,
             })
-            #context.update({'fecha': data_dict_payroll['cfdi:Comprobante']['fecha']}) #No borrar se va a ocupar
-            #~ context.update({'fecha': '2014-01-27T20:20:20'})
-            #~ import pdb;pdb.set_trace()
+            context.update({'fecha': payroll.payslip_datetime and time.strftime('%Y-%m-%dT%H:%M:%S',
+                            time.strptime(payroll.payslip_datetime, '%Y-%m-%d %H:%M:%S')) or ''})
             sign_str = invoice_obj._get_sello(cr=False, uid=False, ids=False, context=context)
-            nodeComprobante = doc_xml_full.getElementsByTagName("cfdi:Comprobante")[0]
-            nodeComprobante.setAttribute("sello", sign_str)
-            data_xml_with_payroll = doc_xml_full.documentElement
-            data_xml = data_xml_with_payroll.toxml('UTF-8')
-            #~ data_xml = codecs.BOM_UTF8 + data_xml
-        return fname_xml, data_xml
 
-class ir_attachment_facturae_mx(osv.Model):
-    _inherit = 'ir.attachment.facturae.mx'
-    
-    _columns = {
-        'company_emitter_id': fields.many2one('res.company', 'Company emmiter'),
-        'certificate_id': fields.many2one('res.company.facturae.certificate'),
-        
-    }
+            nodeComprobante = data_xml2.getElementsByTagName("cfdi:Comprobante")[0]
+            nodeComprobante.setAttribute("sello", sign_str)
+            data_xml = data_xml2.toxml('UTF-8')
+            #~data_xml = codecs.BOM_UTF8 + data_xml
+            data_xml = data_xml.replace('<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
+        return fname_xml, data_xml

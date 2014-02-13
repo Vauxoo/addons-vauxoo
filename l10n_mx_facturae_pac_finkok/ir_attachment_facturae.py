@@ -206,7 +206,6 @@ class ir_attachment_facturae_mx(osv.Model):
                 ('method_type', '=', 'pac_firmar'), (
                     'company_id', '=', ir_attachment_facturae_mx_id.company_emitter_id.id), (
                         'active', '=', True)], limit=1, context=context)
-            print pac_params_ids, 'pac_params_idspac_params_idspac_params_idspac_params_idspac_params_ids'
             if pac_params_ids:
                 pac_params = pac_params_obj.browse(
                     cr, uid, pac_params_ids, context)[0]
@@ -238,7 +237,6 @@ class ir_attachment_facturae_mx(osv.Model):
                     raise orm.except_orm(_('Warning'), _('Connection lost, verify your internet conection or verify your PAC'))
                 try:
                     client = Client(wsdl_url, cache=None)
-                    print ir_attachment_facturae_mx_id.certificate_id, 'ir_attachment_facturae_mx_id.certificate_idir_attachment_facturae_mx_id.certificate_id'
                     #~ file_globals = invoice_obj._get_file_globals(
                         #~ cr, uid, invoice_ids, context=context)
                     #~ fname_cer_no_pem = file_globals['fname_cer']
