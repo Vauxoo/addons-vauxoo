@@ -39,7 +39,7 @@ class crm_captcha(http.Controller):
         )
         return url
 
-    @http.route(['/crm/contactus'], type='http', auth="admin", website=True, multilang=True)
+    @http.route(['/crm/contactus'], type='http', auth="public", website=True, multilang=True)
     def contactus(self, *arg, **post):
         cr, uid, context, registry = request.cr, request.uid, request.context, request.registry
         required_fields = ['contact_name', 'email_from', 'description']
