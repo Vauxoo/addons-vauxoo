@@ -80,6 +80,7 @@ class account_invoice(osv.Model):
                       'type': invoice.invoice_sequence_id.approval_id.type},
                       context=None)#Context, because use a variable type of our code but we dont need it.
                     )
+                    ir_attach_obj.signal_confirm(cr, uid, attach_ids, context=context)
         if attach_ids:
             result = mod_obj.get_object_reference(cr, uid, 'l10n_mx_ir_attachment_facturae',
                                                             'action_ir_attachment_facturae_mx')

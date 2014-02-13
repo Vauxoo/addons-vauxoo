@@ -78,7 +78,7 @@ class ir_attachment_facturae_mx(osv.Model):
         types = super(ir_attachment_facturae_mx, self)._get_type(
             cr, uid, ids, context=context)
         types.extend([
-            ('cfdi32_pac_finkok', 'CFDI 3.2'),
+            ('cfdi32_pac_finkok', 'CFDI 3.2 FINKOK'),
         ])
         return types
     
@@ -143,18 +143,24 @@ class ir_attachment_facturae_mx(osv.Model):
                 data = f.read()
                 f.close()
                 keyCSD = base64.encodestring(data)
-                client = Client(wsdl_url, cache=None)
+                try:            
+                    client = Client(wsdl_url, cache=None)
+                except:
+                    raise orm.except_orm(_('Warning'), _('Connection lost, verify your internet conection or verify your PAC'))
                 folio_cancel = invoice.cfdi_folio_fiscal
                 invoices.append(folio_cancel)
                 invoices_list = client.factory.create("UUIDS")
                 invoices_list.uuids.string = invoices
                 params = [invoices_list, username, password, taxpayer_id, cerCSD, keyCSD]
                 result = client.service.cancel(*params)
+                get_receipt = [username, password, taxpayer_id, folio_cancel]
+                query_pending_cancellation = [username, password, folio_cancel]
+                get_receipt = client.service.get_receipt(*get_receipt)
+                query_pending_cancellation = client.service.query_pending_cancellation(*query_pending_cancellation)
                 time.sleep(1)
                 if not 'Folios' in result:
-                    msg += _('%s' %result.CodEstatus)
-                    if not ('demo' in wsdl_url or 'testing' in wsdl_url):
-                        raise orm.except_orm(_('Warning'), _('Mensaje %s') % (msg))
+                    msg += _('%s' %result)
+                    raise orm.except_orm(_('Warning'), _('Mensaje %s') % (msg))
                 else:
                     EstatusUUID = result.Folios[0][0].EstatusUUID
                     if EstatusUUID == '201':
@@ -222,8 +228,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 if (wsdl_url == url_finkok) or (wsdl_url == testing_url_finkok):
                     pass
                 else:
-                    raise osv.except_osv(_('Warning'), _('Web Service URL \
-                        o PAC incorrect'))
+                    raise osv.except_osv(_('Warning'), _('Web Service URL o PAC incorrect'))
                 #~ if namespace == 'http://facturacion.finkok.com/stamp':
                     #~ pass
                 #~ else:
