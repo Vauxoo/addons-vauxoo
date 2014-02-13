@@ -691,7 +691,7 @@ class account_invoice(osv.Model):
         (fileno_xml, fname_xml) = tempfile.mkstemp(
             '.xml', 'openerp_' + (invoice_number or '') + '__facturae__')
         fname_txt = fname_xml + '.txt'
-        f = open(fname_xml, 'w')
+        f = codecs.open(fname_xml,'w','utf-8')
         doc_xml.writexml(
             f, indent='    ', addindent='    ', newl='\r\n', encoding='UTF-8')
         f.close()
