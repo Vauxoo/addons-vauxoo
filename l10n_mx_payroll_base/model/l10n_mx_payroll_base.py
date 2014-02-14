@@ -174,7 +174,7 @@ class hr_payslip(osv.Model):
             if not hr.line_payslip_product_ids:
                 raise osv.except_osv(_('No Product Lines!'), _('Please create some product lines.'))
             super(hr_payslip, self).hr_verify_sheet(cr, uid, ids)
-            result = self.create_ir_attachment_payroll(cr, uid, ids, context)
+            result = self.create_ir_attachment_payroll(cr, uid, ids, context=context)
             return result
 
     def create_ir_attachment_payroll(self, cr, uid, ids, context=None):
@@ -491,7 +491,7 @@ class hr_payslip(osv.Model):
         if id:
             payslip = self.browse(cr, uid, id, context=context)
             print payslip
-            # certificate_id = invoice.company_id.certificate_id
+            # certificate_id = payslip.company_id.certificate_id
             context.update({'date_work': payslip.payslip_datetime})
             certificate_id = self.pool.get('res.company')._get_current_certificate(
                 cr, uid, [payslip.company_emitter_id.id],
