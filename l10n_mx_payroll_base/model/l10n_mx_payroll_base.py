@@ -35,9 +35,12 @@ import tempfile
 import jinja2
 import base64
 import cgi
-
 import urllib
 from markupsafe import Markup
+try:
+    from qrcode import *
+except:
+    _logger.error('Execute "sudo pip install pil qrcode" to use l10n_mx_facturae_pac_finkok module.')
 
 
 class hr_payslip_product_line(osv.Model):
@@ -46,7 +49,7 @@ class hr_payslip_product_line(osv.Model):
 
     _columns = {
         'payslip_id': fields.many2one('hr.payslip'),
-        'product_id': fields.many2one('product.product', 'Product'),
+        'product_id': fields.many2one('product.product', 'Product', required=True),
         'amount': fields.float('Amount'),
         
     }
@@ -99,31 +102,80 @@ class hr_payslip(osv.Model):
         return res
 
     _columns = {
-        'journal_id': fields.many2one('account.journal','Journal'),
+        'journal_id': fields.many2one('account.journal','Journal', required=True),
         'date_payslip': fields.date('Payslip Date'),
         'payslip_datetime': fields.datetime('Electronic Payslip Date'),
-        'line_payslip_product_ids': fields.one2many('hr.payslip.product.line', 'payslip_id', 'Generic Product'),
+        'line_payslip_product_ids': fields.one2many('hr.payslip.product.line', 'payslip_id', 'Generic Product', required=True),
         'pay_method_id': fields.many2one('pay.method', 'Payment Method',
             readonly=True, states={'draft': [('readonly', False)]}),
         'company_emitter_id': fields.function(_get_company_emitter_invoice,
             type="many2one", relation='res.company', string='Company Emitter \
-            Invoice', help='This company will be used as emitter company in \
-            the electronic invoice'),
+            Payroll', help='This company will be used as emitter company in \
+            the electronic payroll'),
         'address_issued_id': fields.function(_get_address_issued_invoice,
             type="many2one", relation='res.partner', string='Address Issued \
             Invoice', help='This address will be used as address that issued \
-            for electronic invoice'),
+            for electronic payroll'),
         'currency_id': fields.many2one('res.currency', 'Currency',
             required=False, readonly=True, states={'draft':[('readonly',False)]},
             change_default=True, help='Currency used in the invoice'),
         'approval_id' : fields.many2one('ir.sequence.approval', 'Approval'),
+        'cfdi_cbb': fields.binary('CFD-I CBB'),
+        'cfdi_sello': fields.text('CFD-I Sello', help='Sign assigned by the SAT'),
+        'cfdi_no_certificado': fields.char('CFD-I Certificado', size=32,
+                                           help='Serial Number of the Certificate'),
+        'cfdi_cadena_original': fields.text('CFD-I Cadena Original',
+                                            help='Original String used in the electronic payroll'),
+        'cfdi_fecha_timbrado': fields.datetime('CFD-I Fecha Timbrado',
+                                               help='Date when is stamped the electronic payroll'),
+        'cfdi_folio_fiscal': fields.char('CFD-I Folio Fiscal', size=64,
+                                         help='Folio used in the electronic payroll'),
+        'date_invoice_cancel': fields.datetime('Date Payroll Cancelled',
+            readonly=True, help='If the payroll is cancelled, save the date when was cancel'),
+        'pac_id': fields.many2one('params.pac', 'Pac', help='Pac used in singned of the invoice'),
         #~ 'partner_id': fields.many2one('res.partner', 'Partner')
     }
 
+    def _create_qrcode(self, cr, uid, ids, invoice_id, folio_fiscal=False, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        invoice = self.browse(cr, uid, invoice_id)
+        print invoice
+        rfc_transmitter = invoice.company_id.partner_id.vat_split or ''
+        rfc_receiver = invoice.employee_id.address_home_id.parent_id.vat_split or invoice.employee_id.address_home_id.parent_id.vat_split or ''
+        amount_total = string.zfill("%0.6f"%invoice.amount_total,17)
+        cfdi_folio_fiscal = folio_fiscal or ''
+        qrstr = "?re="+rfc_transmitter+"&rr="+rfc_receiver+"&tt="+amount_total+"&id="+cfdi_folio_fiscal
+        qr = QRCode(version=1, error_correction=ERROR_CORRECT_L)
+        qr.add_data(qrstr)
+        qr.make() # Generate the QRCode itself
+        im = qr.make_image()
+        fname=tempfile.NamedTemporaryFile(suffix='.png',delete=False)
+        im.save(fname.name)
+        return fname.name
+
+    def _create_original_str(self, cr, uid, ids, invoice_id, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        invoice = self.browse(cr, uid, invoice_id)
+        cfdi_folio_fiscal = invoice.cfdi_folio_fiscal or ''
+        cfdi_fecha_timbrado = invoice.cfdi_fecha_timbrado or ''
+        if cfdi_fecha_timbrado:
+            cfdi_fecha_timbrado=time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(cfdi_fecha_timbrado, '%Y-%m-%d %H:%M:%S'))
+        sello = invoice.sello or ''
+        cfdi_no_certificado = invoice.cfdi_no_certificado or ''
+        original_string = '||1.0|'+cfdi_folio_fiscal+'|'+str(cfdi_fecha_timbrado)+'|'+sello+'|'+cfdi_no_certificado+'||'
+        return original_string
+
     def hr_verify_sheet(self, cr, uid, ids, context=None):
-        super(hr_payslip, self).hr_verify_sheet(cr, uid, ids)
-        result = self.create_ir_attachment_payroll(cr, uid, ids, context)
-        return result
+        for hr in self.browse(cr, uid, ids, context=context):
+            if not hr.line_payslip_product_ids:
+                raise osv.except_osv(_('No Product Lines!'), _('Please create some product lines.'))
+            super(hr_payslip, self).hr_verify_sheet(cr, uid, ids)
+            result = self.create_ir_attachment_payroll(cr, uid, ids, context)
+            return result
 
     def create_ir_attachment_payroll(self, cr, uid, ids, context=None):
         if context is None:
@@ -134,19 +186,21 @@ class hr_payslip(osv.Model):
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
         attach_ids = []
-        
         for payroll in self.browse(cr, uid, ids, context=context):
             cert_id = self.pool.get('res.company')._get_current_certificate(
                 cr, uid, [payroll.company_emitter_id.id],
                 context=context)[payroll.company_emitter_id.id]
             approval_id = payroll.journal_id and payroll.journal_id.sequence_id and \
-                payroll.journal_id.sequence_id.approval_ids[0] and \
+                payroll.journal_id.sequence_id.approval_ids and \
                         payroll.journal_id.sequence_id.approval_ids[0] or False
             if approval_id:
                 if payroll.employee_id.address_home_id:
-                    type = payroll.journal_id and payroll.journal_id.sequence_id and \
+                    try:
+                        type = payroll.journal_id and payroll.journal_id.sequence_id and \
                             payroll.journal_id.sequence_id.approval_ids[0] and \
                                         payroll.journal_id.sequence_id.approval_ids[0].type
+                    except:
+                        raise orm.except_orm(_('Warning'), _('This journal does not have an approval'))
                     attach_ids.append( ir_attach_obj.create(cr, uid, {
                           'name': payroll.number or '/', 'type': type,
                           'journal_id': payroll.journal_id and payroll.journal_id.id or False,
@@ -431,10 +485,12 @@ class hr_payslip(osv.Model):
     def _get_file_globals(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
+        print ids
         id = ids and ids[0] or False
         file_globals = {}
         if id:
             payslip = self.browse(cr, uid, id, context=context)
+            print payslip
             # certificate_id = invoice.company_id.certificate_id
             context.update({'date_work': payslip.payslip_datetime})
             certificate_id = self.pool.get('res.company')._get_current_certificate(
@@ -619,7 +675,11 @@ class hr_payslip(osv.Model):
             facturae_version = '11'
             facturae_type='nomina'
             context.update(self._get_file_globals(cr, uid, ids, context=context))
-            context['fecha'] = time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(payroll.payslip_datetime, '%Y-%m-%d %H:%M:%S'))
+            htz = int(self._get_time_zone(cr, uid, ids, context=context))
+            now = time.strftime('%Y-%m-%d %H:%M:%S')
+            date_now = now and datetime.strptime(payroll.payslip_datetime, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz) or False
+            date_now = time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(str(date_now), '%Y-%m-%d %H:%M:%S')) or False
+            context.update({'fecha': date_now or ''})
             cert_str = self._get_certificate_str(context['fname_cer'])
             cert_str = cert_str.replace('\n\r', '').replace('\r\n', '').replace('\n', '').replace('\r', '').replace(' ', '')
             noCertificado = self._get_noCertificado(cr, uid, ids, context['fname_cer'])
@@ -635,6 +695,7 @@ class hr_payslip(osv.Model):
                 'noCertificado': noCertificado,
                 'formaDePago': formaDePago,
                 'certificado': cert_str,
+                'fecha': date_now,
                 }
             (fileno_xml, fname_xml) = tempfile.mkstemp('.xml', 'openerp_' + '__facturae__')
             if fname_jinja_tmpl:
@@ -693,7 +754,7 @@ class hr_payslip(osv.Model):
             
             doc_xml_full = doc_xml.toxml().encode('ascii', 'xmlcharrefreplace')
             data_xml2 = xml.dom.minidom.parseString(doc_xml_full)
-            data_xml3 = data_xml2.toxml('UTF-8')
+            #~data_xml3 = data_xml2.toxml('UTF-8')
             f = codecs.open(fname_xml,'w','utf-8')
             data_xml2.writexml(f, indent='    ', addindent='    ', newl='\r\n', encoding='UTF-8')
             f.close()
@@ -702,13 +763,20 @@ class hr_payslip(osv.Model):
                 'fname_txt': fname_txt,
                 'fname_sign': fname_sign,
             })
-            context.update({'fecha': payroll.payslip_datetime and time.strftime('%Y-%m-%dT%H:%M:%S',
-                            time.strptime(payroll.payslip_datetime, '%Y-%m-%d %H:%M:%S')) or ''})
+            #context.update({'fecha': date_now or ''})
             sign_str = invoice_obj._get_sello(cr=False, uid=False, ids=False, context=context)
-
             nodeComprobante = data_xml2.getElementsByTagName("cfdi:Comprobante")[0]
             nodeComprobante.setAttribute("sello", sign_str)
             data_xml = data_xml2.toxml('UTF-8')
             #~data_xml = codecs.BOM_UTF8 + data_xml
             data_xml = data_xml.replace('<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
         return fname_xml, data_xml
+
+    def copy(self, cr, uid, id, default={}, context=None):
+        if context is None:
+            context = {}
+        default.update({
+            'date_payslip': False,
+            'payslip_datetime': False,
+        })
+        return super(hr_payslip, self).copy(cr, uid, id, default, context=context)

@@ -37,7 +37,7 @@
                     <sheet string="Attachment Factura-E">
                         <group>
                             <field name="name"/>
-                            <field name="invoice_id"/>
+                            <field name="invoice_id" attrs="{'invisible':[('invoice_id','=', False)]}"/>
                             <field name="type"/>
                             <field name="company_id"/>
                             <field name="file_input"/>
