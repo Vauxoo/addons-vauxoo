@@ -59,6 +59,15 @@
 				"l10n_mx_settings_facturae",
 				"l10n_mx_states",
 				"l10n_mx_upload_ftp",
+				"account_invoice_line_currency",
+				"account_invoice_tax",
+				"account_move_line_base_tax",
+				"account_move_report",
+				"account_voucher_tax",
+				"hr_expense_analytic",
+				"hr_expense_replenishment",
+				"hr_expense_replenishment_tax",
+				"report_multicompany",
 				],
     "author" : "Vauxoo",
     "description" : """
@@ -141,6 +150,23 @@ This module will install for you:
   
   -  l10n_mx_upload_ftp
 
+Additionally of lp:addons-vauxoo, will be installed:
+
+  -  account_invoice_line_currency
+  
+  -  account_invoice_tax
+    
+  -  account_move_line_base_tax
+      
+  -  account_voucher_tax
+  
+  -  hr_expense_analytic
+  
+  -  hr_expense_replenishment
+  
+  -  hr_expense_replenishment_tax
+  
+  -  report_multicompany
                     """,
     "website" : "http://openerp.org.ve",
     "category" : "Localization/Application",
