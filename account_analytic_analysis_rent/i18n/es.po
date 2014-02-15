@@ -1,0 +1,560 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* account_analytic_analysis_rent
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-02-15 01:01+0000\n"
+"PO-Revision-Date: 2014-02-15 01:01+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_analytic_analysis_rent
+#: report:account.analytic.account.report:0
+msgid "Contratos"
+msgstr "Contratos"
+
+#. module: account_analytic_analysis_rent
+#: field:account.analytic.line,w_end:0
+#: field:account.invoice.line,w_end:0
+msgid "Final"
+msgstr "Final"
+
+#. module: account_analytic_analysis_rent
+#: view:product.product:0
+msgid "Services"
+msgstr "Servicios"
+
+#. module: account_analytic_analysis_rent
+#: code:addons/account_analytic_analysis_rent/account_analytic_account_rent.py:190
+#, python-format
+msgid "Error!"
+msgstr "Error!"
+
+#. module: account_analytic_analysis_rent
+#: model:ir.model,name:account_analytic_analysis_rent.model_account_analytic_product
+msgid "account.analytic.product"
+msgstr "account.analytic.product"
+
+#. module: account_analytic_analysis_rent
+#: view:analytic.term:0
+#: model:ir.actions.act_window,name:account_analytic_analysis_rent.analytic_term_action
+#: model:ir.ui.menu,name:account_analytic_analysis_rent.analytic_term_action_menu
+msgid "Analytic Term"
+msgstr "Plazo Analítico"
+
+#. module: account_analytic_analysis_rent
+#: report:account.analytic.account.report:0
+msgid "Para el c"
+msgstr "Para el c"
+
+#. module: account_analytic_analysis_rent
+#: code:addons/account_analytic_analysis_rent/wizard/lines_invoice_create.py:239
+#, python-format
+msgid "Warning !"
+msgstr "Advertencia !"
+
+#. module: account_analytic_analysis_rent
+#: model:ir.model,name:account_analytic_analysis_rent.model_hr_timesheet_invoice_create
+msgid "Create invoice from timesheet"
+msgstr "Crear factura desde hoja de servicios"
+
+#. module: account_analytic_analysis_rent
+#: report:account.analytic.account.report:0
+msgid "Firma Cliente:"
+msgstr "Firma Cliente:"
+
+#. module: account_analytic_analysis_rent
+#: view:lines.create:0
+msgid "Create Invoices"
+msgstr "Crear Factura"
+
+#. module: account_analytic_analysis_rent
+#: code:addons/account_analytic_analysis_rent/wizard/lines_invoice_create.py:65
+#, python-format
+msgid "Analytic Account incomplete"
+msgstr "Cuenta Analítica Incompleta"
+
+#. module: account_analytic_analysis_rent
+#: report:account.analytic.account.report:0
+msgid "____________________"
+msgstr "____________________"
+
+#. module: account_analytic_analysis_rent
+#: field:account.analytic.line,w_start:0
+#: field:account.invoice.line,w_start:0
+msgid "Inicial"
+msgstr "Inicial"
+
+#. module: account_analytic_analysis_rent
+#: constraint:account.analytic.account:0
+msgid "Error! You can not create recursive analytic accounts."
+msgstr "¡Error! No se pueden crear cuentas analíticas recursivas."
+
+#. module: account_analytic_analysis_rent
+#: model:ir.model,name:account_analytic_analysis_rent.model_stock_production_lot
+msgid "Production lot"
+msgstr "Lote de producción"
+
+#. module: account_analytic_analysis_rent
+#: model:ir.actions.act_window,name:account_analytic_analysis_rent.product_accesory_action
+#: model:ir.ui.menu,name:account_analytic_analysis_rent.product_accesory_action_menu
+msgid "Accesory Product"
+msgstr "Accesorio Producto"
+
+#. module: account_analytic_analysis_rent
+#: model:ir.model,name:account_analytic_analysis_rent.model_lines_create_line
+msgid "lines.create.line"
+msgstr "lines.create.line"
+
+#. module: account_analytic_analysis_rent
+#: constraint:res.company:0
+msgid "Error! You can not create recursive companies."
+msgstr "¡Error! No puede crear compañías recursivas."
+
+#. module: account_analytic_analysis_rent
+#: field:product.feature.line,cost:0
+msgid "cost"
+msgstr "Costo"
+
+#. module: account_analytic_analysis_rent
+#: field:account.analytic.account,group_product:0
+msgid "Group Product"
+msgstr "Grupo Producto"
+
+#. module: account_analytic_analysis_rent
+#: sql_constraint:stock.production.lot:0
+msgid "The combination of serial number and internal reference must be unique !"
+msgstr "¡La combinación de número de serie y referencia interna debe ser única!"
+
+#. module: account_analytic_analysis_rent
+#: report:account.analytic.account.report:0
+msgid "Terminos:"
+msgstr "Terminos:"
+
+#. module: account_analytic_analysis_rent
+#: model:ir.model,name:account_analytic_analysis_rent.model_account_analytic_account
+msgid "Analytic Account"
+msgstr "Cuenta Analítica"
+
+#. module: account_analytic_analysis_rent
+#: code:addons/account_analytic_analysis_rent/account_analytic_account_rent.py:86
+#, python-format
+msgid "Error !"
+msgstr "Error !"
+
+#. module: account_analytic_analysis_rent
+#: code:addons/account_analytic_analysis_rent/account_analytic_account_rent.py:49
+#, python-format
+msgid "This product is already rented,check serial number."
+msgstr "Este producto ya esta rentado, revisa el número de serie."
+
+#. module: account_analytic_analysis_rent
+#: code:addons/account_analytic_analysis_rent/wizard/lines_invoice_create.py:69
+#, python-format
+msgid "Partner incomplete"
+msgstr "Partner incompleto"
+
+#. module: account_analytic_analysis_rent
+#: report:account.analytic.account.report:0
+msgid "___________________"
+msgstr "___________________"
+
+#. module: account_analytic_analysis_rent
+#: report:account.analytic.account.report:0
+msgid "Cliente:"
+msgstr "Cliente:"
+
+#. module: account_analytic_analysis_rent
+#: field:account.analytic.account,term_id:0
+#: field:analytic.term,name:0
+msgid "Term"
+msgstr "Termino"
+
+#. module: account_analytic_analysis_rent
+#: model:ir.model,name:account_analytic_analysis_rent.model_analytic_term
+msgid "analytic.term"
+msgstr "analytic.term"
+
+#. module: account_analytic_analysis_rent
+#: field:product.feature.line,counter:0
+msgid "Counter"
+msgstr "Contador"
+
+#. module: account_analytic_analysis_rent
+#: code:addons/account_analytic_analysis_rent/wizard/lines_invoice_create.py:124
+#, python-format
+msgid "Configuration Error"
+msgstr "Error de Configuración"
+
+#. module: account_analytic_analysis_rent
+#: code:addons/account_analytic_analysis_rent/account_analytic_account_rent.py:190
+#, python-format
+msgid "You not have a configured client location"
+msgstr "No se tiene configurada una ubicación de cliente"
+
+#. module: account_analytic_analysis_rent
+#: code:addons/account_analytic_analysis_rent/wizard/lines_invoice_create.py:252
+#, python-format
+msgid "Invoices"
+msgstr "Facturas"
+
+#. module: account_analytic_analysis_rent
+#: model:ir.model,name:account_analytic_analysis_rent.model_account_invoice_line
+msgid "Invoice Line"
+msgstr "Línea de factura"
+
+#. module: account_analytic_analysis_rent
+#: view:account.analytic.account:0
+msgid "products"
+msgstr "Productos"
+
+#. module: account_analytic_analysis_rent
+#: field:lines.create,date_start:0
+msgid "Start Date"
+msgstr "Fecha Inicial"
+
+#. module: account_analytic_analysis_rent
+#: model:ir.actions.act_window,name:account_analytic_analysis_rent.product_rent_action
+#: model:ir.ui.menu,name:account_analytic_analysis_rent.product_rent_action_menu
+msgid "Rent Product"
+msgstr "Rentar Producto"
+
+#. module: account_analytic_analysis_rent
+#: code:addons/account_analytic_analysis_rent/account_analytic_account_rent.py:48
+#, python-format
+msgid "This product is already rented  !"
+msgstr "Este producto ya esta rentado  !"
+
+#. module: account_analytic_analysis_rent
+#: code:addons/account_analytic_analysis_rent/wizard/lines_invoice_create.py:239
+#, python-format
+msgid "Invoice is already linked to some of the analytic line(s)!"
+msgstr "La factura ya esta relacionada a alguna linea analítica!"
+
+#. module: account_analytic_analysis_rent
+#: field:analytic.term,no_term:0
+msgid "No Term"
+msgstr "No Termino"
+
+#. module: account_analytic_analysis_rent
+#: constraint:product.template:0
+msgid "Error: The default UOM and the purchase UOM must be in the same category."
+msgstr "Error: La UdM por defecto y la UdM de compra deben estar en la misma categoría."
+
+#. module: account_analytic_analysis_rent
+#: code:addons/account_analytic_analysis_rent/wizard/lines_invoice_create.py:124
+#, python-format
+msgid "No income account defined for product '%s'"
+msgstr "No hay cuenta de ingresos definida para el producto '%s'"
+
+#. module: account_analytic_analysis_rent
+#: report:account.analytic.account.report:0
+msgid "desde el d"
+msgstr "desde el d"
+
+#. module: account_analytic_analysis_rent
+#: report:account.analytic.account.report:0
+msgid "Fecha Inicial :"
+msgstr "Fecha Inicial :"
+
+#. module: account_analytic_analysis_rent
+#: model:ir.model,name:account_analytic_analysis_rent.model_account_analytic_line
+msgid "Analytic Line"
+msgstr "Línea analítica"
+
+#. module: account_analytic_analysis_rent
+#: report:account.analytic.account.report:0
+msgid "í"
+msgstr "í"
+
+#. module: account_analytic_analysis_rent
+#: report:account.analytic.account.report:0
+msgid "."
+msgstr "."
+
+#. module: account_analytic_analysis_rent
+#: code:addons/account_analytic_analysis_rent/wizard/lines_invoice_create.py:70
+#, python-format
+msgid "Please fill in the Address field in the Partner: %s."
+msgstr "Por Favor llene la dirección del partner: %s."
+
+#. module: account_analytic_analysis_rent
+#: field:product.template,rent_ok:0
+msgid "Rentable"
+msgstr "Rentable"
+
+#. module: account_analytic_analysis_rent
+#: model:ir.model,name:account_analytic_analysis_rent.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: account_analytic_analysis_rent
+#: model:ir.actions.report.xml,name:account_analytic_analysis_rent.report_account_analytic_account
+#: model:ir.ui.menu,name:account_analytic_analysis_rent.analytic_contract
+#: field:lines.create,contract_id:0
+#: field:product.template,contract_id:0
+msgid "Contract"
+msgstr "Contrato"
+
+#. module: account_analytic_analysis_rent
+#: code:addons/account_analytic_analysis_rent/wizard/lines_invoice_create.py:108
+#, python-format
+msgid "Error"
+msgstr "Error"
+
+#. module: account_analytic_analysis_rent
+#: report:account.analytic.account.report:0
+msgid "Sirva este documento para hacer valer el contrato del equipo:"
+msgstr "Sirva este documento para hacer valer el contrato del equipo:"
+
+#. module: account_analytic_analysis_rent
+#: field:account.analytic.line,prodlot_id:0
+#: field:account.analytic.product,prodlot_id:0
+#: field:product.feature.line,prodlot_feature_id:0
+msgid "Production Lot"
+msgstr "Lote de Producción"
+
+#. module: account_analytic_analysis_rent
+#: help:account.analytic.line,prodlot_id:0
+#: help:account.analytic.product,prodlot_id:0
+#: help:product.feature.line,prodlot_feature_id:0
+msgid "Production lot is used to put a serial number on the production"
+msgstr "El lote de producción se utiliza para colocar el número de serie en la producción"
+
+#. module: account_analytic_analysis_rent
+#: view:account.analytic.account:0
+#: field:account.analytic.account,feature_ids:0
+#: model:ir.actions.act_window,name:account_analytic_analysis_rent.product_feature_action
+#: model:ir.ui.menu,name:account_analytic_analysis_rent.product_feature
+#: model:ir.ui.menu,name:account_analytic_analysis_rent.product_feature_action_menu
+#: view:product.feature:0
+#: view:product.product:0
+#: field:product.product,feature_ids:0
+msgid "Features"
+msgstr "Caracteristicas"
+
+#. module: account_analytic_analysis_rent
+#: view:lines.create:0
+msgid "Do you want to show details of work in invoice ?"
+msgstr "Mostrar los detalles del trabajo en la factura ?"
+
+#. module: account_analytic_analysis_rent
+#: field:lines.create,period_id:0
+msgid "Period"
+msgstr "Periodo"
+
+#. module: account_analytic_analysis_rent
+#: report:account.analytic.account.report:0
+msgid "Firma Responsable:"
+msgstr "Firma Responsable:"
+
+#. module: account_analytic_analysis_rent
+#: constraint:account.analytic.line:0
+msgid "You can not create analytic line on view account."
+msgstr "No puede crear una línea analítica en una cuenta vista"
+
+#. module: account_analytic_analysis_rent
+#: view:account.analytic.account:0
+#: field:account.analytic.account,invoice_ids:0
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: account_analytic_analysis_rent
+#: view:lines.create:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: account_analytic_analysis_rent
+#: sql_constraint:product.product:0
+msgid "The code of Product must be unique !"
+msgstr "El codigo del producto debe ser unico !"
+
+#. module: account_analytic_analysis_rent
+#: view:lines.create:0
+msgid "Analytic Entries"
+msgstr "Poliza Analítica"
+
+#. module: account_analytic_analysis_rent
+#: report:account.analytic.account.report:0
+msgid "Responsable:"
+msgstr "Responsable:"
+
+#. module: account_analytic_analysis_rent
+#: view:lines.create:0
+msgid "Billing Data"
+msgstr "Datos de Factura"
+
+#. module: account_analytic_analysis_rent
+#: code:addons/account_analytic_analysis_rent/wizard/lines_invoice_create.py:66
+#, python-format
+msgid "Please fill in the Partner or Customer and Sale Pricelist fields in the Analytic Account:\n"
+"%s"
+msgstr "Por favor llene en el Proveedor o Cliente y la lista de precios en la cuenta analítica:\n"
+"%s"
+
+#. module: account_analytic_analysis_rent
+#: field:account.analytic.line,feature_id:0
+#: field:product.feature.line,name:0
+msgid "Feature"
+msgstr "Caracteristica"
+
+#. module: account_analytic_analysis_rent
+#: model:ir.model,name:account_analytic_analysis_rent.model_product_feature_line
+msgid "product.feature.line"
+msgstr "product.feature.line"
+
+#. module: account_analytic_analysis_rent
+#: model:ir.actions.act_window,name:account_analytic_analysis_rent.lines_invoice_create
+#: model:ir.actions.act_window,name:account_analytic_analysis_rent.lines_invoice_create_wizard
+#: view:lines.create:0
+msgid "Create Invoice"
+msgstr "Crear factura"
+
+#. module: account_analytic_analysis_rent
+#: code:addons/account_analytic_analysis_rent/wizard/lines_invoice_create.py:108
+#, python-format
+msgid "At least one line has no product !"
+msgstr "Al menos una linea no tiene producto !"
+
+#. module: account_analytic_analysis_rent
+#: report:account.analytic.account.report:0
+msgid "liente:"
+msgstr "liente:"
+
+#. module: account_analytic_analysis_rent
+#: view:account.analytic.account:0
+#: field:account.analytic.product,product_id:0
+#: model:ir.model,name:account_analytic_analysis_rent.model_product_product
+#: field:product.feature.line,analytic_id:0
+#: field:product.feature.line,product_id:0
+#: field:product.feature.line,product_line_id:0
+msgid "Product"
+msgstr "Producto"
+
+#. module: account_analytic_analysis_rent
+#: view:lines.create:0
+msgid "Total Quantity"
+msgstr "Cantidad Total"
+
+#. module: account_analytic_analysis_rent
+#: field:res.company,img_report:0
+msgid "Imagen Contratos"
+msgstr "Imagen Contratos"
+
+#. module: account_analytic_analysis_rent
+#: field:product.feature,description:0
+msgid "Description"
+msgstr "Descripcion"
+
+#. module: account_analytic_analysis_rent
+#: field:account.analytic.product,type:0
+msgid "Type"
+msgstr "Tipo"
+
+#. module: account_analytic_analysis_rent
+#: field:account.analytic.account,journal_id:0
+msgid "Journal"
+msgstr "Diario"
+
+#. module: account_analytic_analysis_rent
+#: selection:account.analytic.product,type:0
+#: field:product.template,accesory_ok:0
+msgid "Accesory"
+msgstr "Accesorio"
+
+#. module: account_analytic_analysis_rent
+#: field:account.analytic.product,analytic_id:0
+msgid "Account Analytic"
+msgstr "Cuenta Analitica"
+
+#. module: account_analytic_analysis_rent
+#: report:account.analytic.account.report:0
+msgid "Dirección:"
+msgstr "Dirección:"
+
+#. module: account_analytic_analysis_rent
+#: field:lines.create,date_end:0
+msgid "End Date"
+msgstr "Fecha Final"
+
+#. module: account_analytic_analysis_rent
+#: sql_constraint:res.company:0
+msgid "The company name must be unique !"
+msgstr "¡El nombre de la compañía debe ser único!"
+
+#. module: account_analytic_analysis_rent
+#: field:product.feature,name:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: account_analytic_analysis_rent
+#: model:ir.model,name:account_analytic_analysis_rent.model_lines_create
+msgid "lines.create"
+msgstr "lines.create"
+
+#. module: account_analytic_analysis_rent
+#: report:account.analytic.account.report:0
+msgid "Fecha Final:"
+msgstr "Fecha Final:"
+
+#. module: account_analytic_analysis_rent
+#: model:ir.model,name:account_analytic_analysis_rent.model_product_feature
+msgid "product.feature"
+msgstr "product.feature"
+
+#. module: account_analytic_analysis_rent
+#: model:ir.model,name:account_analytic_analysis_rent.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: account_analytic_analysis_rent
+#: view:account.analytic.account:0
+#: field:account.analytic.account,voucher_ids:0
+msgid "Payments"
+msgstr "Pagos"
+
+#. module: account_analytic_analysis_rent
+#: report:account.analytic.account.report:0
+msgid "a:"
+msgstr "a:"
+
+#. module: account_analytic_analysis_rent
+#: code:addons/account_analytic_analysis_rent/account_analytic_account_rent.py:87
+#, python-format
+msgid "You cannot modify an invoiced analytic lines!"
+msgstr "No se pueden modificar una linea analítica facturada!"
+
+#. module: account_analytic_analysis_rent
+#: field:lines.create,line_ids:0
+msgid "lines"
+msgstr "lineas"
+
+#. module: account_analytic_analysis_rent
+#: constraint:product.product:0
+msgid "Error: Invalid ean code"
+msgstr "Error: Código EAN erróneo"
+
+#. module: account_analytic_analysis_rent
+#: selection:account.analytic.product,type:0
+#: view:product.product:0
+#: field:product.template,rent:0
+msgid "Rent"
+msgstr "Renta"
+
+#. module: account_analytic_analysis_rent
+#: field:account.analytic.account,product_ids:0
+msgid "Products"
+msgstr "Productos"
+
+#. module: account_analytic_analysis_rent
+#: view:lines.create:0
+msgid "Total"
+msgstr "Total"
+
