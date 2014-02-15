@@ -76,9 +76,12 @@ class account_invoice(osv.Model):
                 approval_id = invoice.invoice_sequence_id and invoice.invoice_sequence_id.approval_id or False
                 if approval_id:
                     attach_ids.append( ir_attach_obj.create(cr, uid, {
-                      'name': invoice.fname_invoice, 'invoice_id': invoice.id,
-                      'type': invoice.invoice_sequence_id.approval_id.type},
-                      context=None)#Context, because use a variable type of our code but we dont need it.
+                        'name': invoice.fname_invoice, 'invoice_id': invoice.id,
+                        'type': invoice.invoice_sequence_id.approval_id.type,
+                        'journal_id': invoice.journal_id and invoice.journal_id.id or False,
+                        'company_emitter_id': invoice.company_emitter_id.id,
+                        },
+                      context=context)#Context, because use a variable type of our code but we dont need it.
                     )
                     ir_attach_obj.signal_confirm(cr, uid, attach_ids, context=context)
         if attach_ids:

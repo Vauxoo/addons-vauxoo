@@ -137,12 +137,14 @@ class hr_payslip(osv.Model):
     }
 
     def _create_qrcode(self, cr, uid, ids, invoice_id, folio_fiscal=False, context=None):
+        print "entrooooooooooooooooo"
         if context is None:
             context = {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
+        print invoice_id
         invoice = self.browse(cr, uid, invoice_id)
-        print invoice
-        rfc_transmitter = invoice.company_id.partner_id.vat_split or ''
+        print "invoice",invoice
+        rfc_transmitter = invoice.company_emitter_id.partner_id.vat_split or ''
         rfc_receiver = invoice.employee_id.address_home_id.parent_id.vat_split or invoice.employee_id.address_home_id.parent_id.vat_split or ''
         amount_total = string.zfill("%0.6f"%invoice.amount_total,17)
         cfdi_folio_fiscal = folio_fiscal or ''
@@ -485,12 +487,12 @@ class hr_payslip(osv.Model):
     def _get_file_globals(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        print ids
+        print "ids",ids
         id = ids and ids[0] or False
         file_globals = {}
         if id:
             payslip = self.browse(cr, uid, id, context=context)
-            print payslip
+            print "paysip",payslip
             # certificate_id = payslip.company_id.certificate_id
             context.update({'date_work': payslip.payslip_datetime})
             certificate_id = self.pool.get('res.company')._get_current_certificate(
@@ -778,5 +780,11 @@ class hr_payslip(osv.Model):
         default.update({
             'date_payslip': False,
             'payslip_datetime': False,
+            'cfdi_sello': False,
+            'cfdi_no_certificado': False,
+            'cfdi_fecha_timbrado': False,
+            'cfdi_xml': False,
+            'cfdi_folio_fiscal': False,
+            'pac_id': False,
         })
         return super(hr_payslip, self).copy(cr, uid, id, default, context=context)

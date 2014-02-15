@@ -101,6 +101,29 @@ class ir_attachment_facturae_mx(osv.Model):
                                  required=True, readonly=True, help="Type of Electronic Invoice"),
     }
     
+
+    def _get_time_zone(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        res_users_obj = self.pool.get('res.users')
+        userstz = res_users_obj.browse(cr, uid, [uid])[0].partner_id.tz
+        a = 0
+        if userstz:
+            hours = timezone(userstz)
+            fmt = '%Y-%m-%d %H:%M:%S %Z%z'
+            now = datetime.now()
+            loc_dt = hours.localize(datetime(now.year, now.month, now.day,
+                                             now.hour, now.minute, now.second))
+            timezone_loc = (loc_dt.strftime(fmt))
+            diff_timezone_original = timezone_loc[-5:-2]
+            timezone_original = int(diff_timezone_original)
+            s = str(datetime.now(pytz.timezone(userstz)))
+            s = s[-6:-3]
+            timezone_present = int(s)*-1
+            a = timezone_original + ((
+                timezone_present + timezone_original)*-1)
+        return a
+
     def _finkok_cancel(self, cr, uid, ids, context=None):
         msg = ''
         folio_cancel = ''
@@ -200,19 +223,19 @@ class ir_attachment_facturae_mx(osv.Model):
                 open( os.path.join(tools.config['test_report_directory'], 'l10n_mx_facturae_pac_finkok' + '_' + \
                   'before_upload' + '-' + fname_suffix), 'wb+').write( cfd_data )
             model = generic_obj.browse(cr, uid, active_ids, context=context)[0]
+            htz = int(self._get_time_zone(cr, uid, ids, context=context))
+            now = time.strftime('%Y-%m-%d')
             if 'date_invoice' in model._columns:
-                date = model.date_invoice or False
+                date = model.date_invoice or now
             else:
-                date = model.date_payslip or False
-            date_format = datetime.strptime(date, '%Y-%m-%d').strftime('%Y-%m-%d')
-            context['date'] = date_format
+                date = model.date_payslip or now
+            date_now = time.strftime('%Y-%m-%d', time.strptime(str(date), '%Y-%m-%d')) or False
+            context['date'] = date_now
             file = False
             msg = ''
             folio_fiscal = ''
             cfdi_xml = False
             status = False
-            print "context22",context
-            print ir_attachment_facturae_mx_id.company_emitter_id
             pac_params_ids = pac_params_obj.search(cr, uid, [
                 ('method_type', '=', 'pac_firmar'), (
                     'company_id', '=', ir_attachment_facturae_mx_id.company_emitter_id.id), (
@@ -276,12 +299,13 @@ class ir_attachment_facturae_mx(osv.Model):
                             'cfdi_sello': resultado.SatSeal or False,
                             'cfdi_no_certificado': resultado.NoCertificadoSAT or False,
                             'cfdi_fecha_timbrado': resultado.Fecha or False,
-                            'cfdi_xml': resultado.xml or '',  # este se necesita en uno que no es base64
+                            'cfdi_xml': resultado.xml.encode('ascii', 'xmlcharrefreplace') or '',  # este se necesita en uno que no es base64
                             'cfdi_folio_fiscal': folio_fiscal,
                             'pac_id': pac_params.id,
                         }
-                        print "ddddddd",cfdi_data
-                        cbb = generic_obj._create_qrcode(cr, uid, ids, [active_ids], folio_fiscal, context=context)
+                        generic_obj.write(cr, uid, active_ids, cfdi_data)
+                        print active_ids
+                        cbb = generic_obj._create_qrcode(cr, uid, ids, active_ids[0], folio_fiscal, context=context)
                         print cbb
                         original_string = generic_obj._create_original_str(cr, uid, ids, active_ids, context=context)
                         cfdi_data_cbb_os = {
@@ -301,7 +325,7 @@ class ir_attachment_facturae_mx(osv.Model):
                             file = base64.encodestring(cfdi_data['cfdi_xml'] or '')
                             cfdi_xml = cfdi_data.pop('cfdi_xml')
                             if cfdi_xml:
-                                generic_obj.write(cr, uid, [active_ids], cfdi_data)
+                                generic_obj.write(cr, uid, active_ids, cfdi_data)
                                 cfdi_data['cfdi_xml'] = cfdi_xml
                                 status = True
                             else:
@@ -316,10 +340,11 @@ class ir_attachment_facturae_mx(osv.Model):
                         WorkProcessId = resultado.Incidencias.Incidencia[0]['WorkProcessId']
                         FechaRegistro = resultado.Incidencias.Incidencia[0]['FechaRegistro']
                         raise orm.except_orm(_('Warning'), _('Incidencias: %s.') % (incidencias))
-                except:
+                except Exception, e:
                     if incidencias:
                         raise orm.except_orm(_('Warning'), _('Error al timbrar XML, Incidencias: %s.') % (incidencias))
-                
+                    else:
+                        raise orm.except_orm(_('Warning'), _('Error al timbrar XML: %s.') % (e))
             else:
                 msg += 'Not found information from web services of PAC, verify that the configuration of PAC is correct'
                 raise osv.except_osv(_('Warning'), _(

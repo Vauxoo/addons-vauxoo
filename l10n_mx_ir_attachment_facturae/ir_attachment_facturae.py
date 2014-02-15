@@ -94,6 +94,7 @@ class ir_attachment_facturae_mx(osv.Model):
             ('done', 'Done'),
             ('cancel', 'Cancelled'), ],
             'State', readonly=True, required=True, help='State of attachments'),
+        'journal_id': fields.many2one('account.journal','Journal', required=True),
     }
 
     _defaults = {
