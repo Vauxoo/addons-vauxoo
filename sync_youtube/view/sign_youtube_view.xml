@@ -86,7 +86,7 @@
       <field name="name">Sign YouTube</field>
       <field name="res_model">sign.youtube.conf</field>
       <field name="view_type">form</field>
-      <field name="vies_mode">tree,form</field>
+      <field name="view_mode">tree,form</field>
     </record>
 
 
