@@ -36,11 +36,46 @@ import traceback
 import sys
 from xml.dom import minidom
 import xml.dom.minidom
-
+try:
+    from qrcode import *
+except:
+    _logger.error('Execute "sudo pip install pil qrcode" to use l10n_mx_facturae_pac_finkok module.')
 
 class ir_attachment_facturae_mx(osv.Model):
     _name = 'ir.attachment.facturae.mx'
     _inherit = ['mail.thread', 'ir.needaction_mixin']
+
+    def _create_qrcode(self, cr, uid, ids, rfc_receiver, rfc_transmitter, amount_total=0, folio_fiscal=False, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        #~ invoice = self.browse(cr, uid, invoice_id)
+        #~ rfc_transmitter = invoice.company_id.partner_id.vat_split or ''
+        #~ rfc_receiver = invoice.partner_id.parent_id.vat_split or invoice.partner_id.parent_id.vat_split or ''
+        #~ amount_total = string.zfill("%0.6f"%invoice.amount_total,17)
+        cfdi_folio_fiscal = folio_fiscal or ''
+        qrstr = "?re="+rfc_transmitter+"&rr="+rfc_receiver+"&tt="+amount_total+"&id="+cfdi_folio_fiscal
+        qr = QRCode(version=1, error_correction=ERROR_CORRECT_L)
+        qr.add_data(qrstr)
+        qr.make() # Generate the QRCode itself
+        im = qr.make_image()
+        fname=tempfile.NamedTemporaryFile(suffix='.png',delete=False)
+        im.save(fname.name)
+        return fname.name
+
+    def _create_original_str(self, cr, uid, ids, result, context=None):
+        if context is None:
+            context = {}
+        #~ ids = isinstance(ids, (int, long)) and [ids] or ids
+        #~ invoice = self.browse(cr, uid, invoice_id)
+        cfdi_folio_fiscal = result.UUID or ''
+        cfdi_fecha_timbrado = result.Fecha or ''
+        #~ if cfdi_fecha_timbrado:
+            #~ cfdi_fecha_timbrado=time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(cfdi_fecha_timbrado, '%Y-%m-%d %H:%M:%S'))
+        sello = result.SatSeal or ''
+        cfdi_no_certificado = result.NoCertificadoSAT or ''
+        original_string = '||1.0|'+cfdi_folio_fiscal+'|'+str(cfdi_fecha_timbrado)+'|'+sello+'|'+cfdi_no_certificado+'||'
+        return original_string
 
     def _get_type(self, cr, uid, ids=None, context=None):
         if context is None:
@@ -95,6 +130,7 @@ class ir_attachment_facturae_mx(osv.Model):
             ('cancel', 'Cancelled'), ],
             'State', readonly=True, required=True, help='State of attachments'),
         'journal_id': fields.many2one('account.journal','Journal', required=True),
+        'partner_id': fields.many2one('res.partner', 'Partner'),
     }
 
     _defaults = {
@@ -217,7 +253,6 @@ class ir_attachment_facturae_mx(osv.Model):
         msj = ''
         status = False
         for data in self.browse(cr, uid, ids, context=context):
-            print data.type, 'dataAAAAAAAAAAAAAAAAAAAAAAAA'
             if data.invoice_id:
                 invoice = data.invoice_id
                 type = data.type

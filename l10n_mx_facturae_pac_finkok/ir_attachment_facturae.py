@@ -289,7 +289,6 @@ class ir_attachment_facturae_mx(osv.Model):
                         #~ir_attachment_facturae_mx_id.certificate_id.certificate_password) or ''
                     params = [cfdi, user, password]
                     resultado = client.service.stamp(*params)
-                    print resultado
                     if not resultado.Incidencias or None:
                         msg += _(tools.ustr(resultado.CodEstatus))
                         folio_fiscal = resultado.UUID or False
@@ -304,15 +303,15 @@ class ir_attachment_facturae_mx(osv.Model):
                             'pac_id': pac_params.id,
                         }
                         generic_obj.write(cr, uid, active_ids, cfdi_data)
-                        print active_ids
-                        cbb = generic_obj._create_qrcode(cr, uid, ids, active_ids[0], folio_fiscal, context=context)
-                        print cbb
-                        original_string = generic_obj._create_original_str(cr, uid, ids, active_ids, context=context)
+                        rfc_emitter = ir_attachment_facturae_mx_id.company_id and ir_attachment_facturae_mx_id.company_id.partner_id and ir_attachment_facturae_mx_id.company_id.partner_id.vat_split or ""
+                        rfc_receiver =  ir_attachment_facturae_mx_id.partner_id and ir_attachment_facturae_mx_id.partner_id.vat_split or ""
+                        cbb = self.pool.get('ir.attachment.facturae.mx')._create_qrcode(cr, uid, ids, rfc_emitter, rfc_receiver, folio_fiscal, context=context)
+                        original_string = self.pool.get('ir.attachment.facturae.mx')._create_original_str(cr, uid, ids, resultado, context=context)
                         cfdi_data_cbb_os = {
                             'cfdi_cbb': open(cbb).read().encode('base64'),# ya lo regresa en base64
                             'cfdi_cadena_original': original_string or False,
                         }
-                        generic_obj.write(cr, uid, [active_ids], cfdi_data_cbb_os)
+                        generic_obj.write(cr, uid, active_ids, cfdi_data_cbb_os)
                         comprobante_new = '</'+comprobante+'>'
                         msg += _(
                                 u"\nMake Sure to the file really has generated correctly to the SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html")

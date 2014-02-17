@@ -133,29 +133,11 @@ class hr_payslip(osv.Model):
         'date_invoice_cancel': fields.datetime('Date Payroll Cancelled',
             readonly=True, help='If the payroll is cancelled, save the date when was cancel'),
         'pac_id': fields.many2one('params.pac', 'Pac', help='Pac used in singned of the invoice'),
-        #~ 'partner_id': fields.many2one('res.partner', 'Partner')
+        'partner_id': fields.many2one('res.partner', 'Partner'),
+        'sello': fields.text('Stamp', size=512, help='Digital Stamp'),
+        'certificado': fields.text('Certificate', size=64,
+            help='Certificate used in the Payroll'),
     }
-
-    def _create_qrcode(self, cr, uid, ids, invoice_id, folio_fiscal=False, context=None):
-        print "entrooooooooooooooooo"
-        if context is None:
-            context = {}
-        ids = isinstance(ids, (int, long)) and [ids] or ids
-        print invoice_id
-        invoice = self.browse(cr, uid, invoice_id)
-        print "invoice",invoice
-        rfc_transmitter = invoice.company_emitter_id.partner_id.vat_split or ''
-        rfc_receiver = invoice.employee_id.address_home_id.parent_id.vat_split or invoice.employee_id.address_home_id.parent_id.vat_split or ''
-        amount_total = string.zfill("%0.6f"%invoice.amount_total,17)
-        cfdi_folio_fiscal = folio_fiscal or ''
-        qrstr = "?re="+rfc_transmitter+"&rr="+rfc_receiver+"&tt="+amount_total+"&id="+cfdi_folio_fiscal
-        qr = QRCode(version=1, error_correction=ERROR_CORRECT_L)
-        qr.add_data(qrstr)
-        qr.make() # Generate the QRCode itself
-        im = qr.make_image()
-        fname=tempfile.NamedTemporaryFile(suffix='.png',delete=False)
-        im.save(fname.name)
-        return fname.name
 
     def _create_original_str(self, cr, uid, ids, invoice_id, context=None):
         if context is None:
@@ -208,7 +190,9 @@ class hr_payslip(osv.Model):
                           'journal_id': payroll.journal_id and payroll.journal_id.id or False,
                           'payroll_id': payroll and payroll.id or False,
                           'company_emitter_id': payroll.company_emitter_id.id,
-                          'certificate_id': cert_id},
+                          'certificate_id': cert_id,
+                          'partner_id': payroll.partner_id and payroll.partner_id.id or False},
+                          
                           context=None)#Context, because use a variable type of our code but we dont need it.
                         )
                     ir_attach_obj.signal_confirm(cr, uid, attach_ids, context=context)
