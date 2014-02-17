@@ -231,53 +231,62 @@ class user_story(osv.Model):
     _inherit = "user.story"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
 
-    def send_mail_hu(self,cr,uid,ids,template,criteria,context=None):
+    def body_criteria(self, cr, uid, ids, template, criteria, context=None):
+
         imd_obj = self.pool.get('ir.model.data')
         template_ids = imd_obj.search(
             cr, uid, [('model', '=', 'email.template'), ('name', '=', template)])
         if template_ids:
             res_id = imd_obj.read(
                 cr, uid, template_ids, ['res_id'])[0]['res_id']
-
-            followers = self.read(cr, uid, ids[0], [
-                                  'message_follower_ids'])['message_follower_ids']
-
-            hu = self.browse(cr, uid, ids[0], context=context)
-            
             body_html = self.pool.get('email.template').read(
                 cr, uid, res_id, ['body_html']).get('body_html')
-            body_html = body_html.replace('NAME_CRI',criteria[1])
-            context.update({
-                            'default_body': body_html,
-           #                 'default_template_id': res_id,
-           #                 'default_use_template': True,
-           #                 'default_composition_mode': 'comment',
-           #                 'active_model': 'user.story',
-           #                 'default_partner_ids': followers,
-           #                 'mail_post_autofollow_partner_ids': followers,
-           #                 'active_id': ids and type(ids) is list and
-           #                 ids[0] or ids,
-           #                 'active_ids': ids and type(ids) is list and
-           #                 ids or [ids],
-                            })
+
             user_id = self.pool.get('res.users').browse(cr,uid,[uid],context=context)[0]
+            hu = self.browse(cr, uid, ids[0], context=context)
 
             body_html = body_html.replace('Has been accepted',user_id.name + ' has been accepted')
+            body_html = body_html.replace('NAME_CRI', criteria)
             body_html = body_html.replace('NAME_HU',str(hu.id))
+            
+            return body_html
+        else:
+            return False
+            
 
-            mail_mail = self.pool.get('mail.mail')
-            mail_id = mail_mail.create(cr, uid,
-                       {
-                           'model': 'user.story',
-                           'res_id': hu.id,
-                           'subject':'Accepted '+ ' Criteria '+ ' - '+  criteria[1],
-                           'body_html': body_html,
-                           'auto_delete': False,
-                           'email_from': user_id.email,
-                       }, context=context)
-            mail_mail.send(cr, uid, [mail_id],
-                           recipient_ids=followers,
-                           context=context)
+    def send_mail_hu(self, cr, uid, ids, subject, body, res_id, context=None):
+
+        followers = self.read(cr, uid, ids[0], [
+                              'message_follower_ids'])['message_follower_ids']
+
+        context.update({
+                        'default_body': body,
+       #                 'default_template_id': res_id,
+       #                 'default_use_template': True,
+       #                 'default_composition_mode': 'comment',
+       #                 'active_model': 'user.story',
+       #                 'default_partner_ids': followers,
+       #                 'mail_post_autofollow_partner_ids': followers,
+       #                 'active_id': ids and type(ids) is list and
+       #                 ids[0] or ids,
+       #                 'active_ids': ids and type(ids) is list and
+       #                 ids or [ids],
+                        })
+        user_id = self.pool.get('res.users').browse(cr,uid,[uid],context=context)[0]
+
+        mail_mail = self.pool.get('mail.mail')
+        mail_id = mail_mail.create(cr, uid,
+                   {
+                       'model': 'user.story',
+                       'res_id': res_id,
+                       'subject': subject,
+                       'body_html': body,
+                       'auto_delete': False,
+                       'email_from': user_id.email,
+                   }, context=context)
+        mail_mail.send(cr, uid, [mail_id],
+                       recipient_ids=followers,
+                       context=context)
 
 
         return False
@@ -292,14 +301,17 @@ class user_story(osv.Model):
                 if ac[2] and ac[2].get('accepted', False):
                     if ac[1]:
                         ac_brw = ac_obj.browse(cr, uid, ac[1] , context=context)
-                        #criteria[0] = ac[1]
                         criteria[1] = ac_brw.name
                     else:
                         criteria[1] = ac[2].get('name', False)
-                    self.send_mail_hu(cr,uid,ids,'template_send_email_hu', criteria,context)
+                    
+                    body = self.body_criteria(cr, uid, ids, 'template_send_email_hu', criteria[1], context)
+                    subject = 'Accepted '+ ' Criteria '+ ' - '+  criteria[1]
+                    hu = self.browse(cr, uid, ids[0], context=context)
+                    self.send_mail_hu(cr, uid, ids, subject, body, hu.id, context=context)
         return res
 
-    #def search(self, cr, user, args, offset=0, limit=None, order=None, context=None, count=False):
+    #def search(self, cr, user, args, offset=0, lmit=None, order=None, context=None, count=False):
     #    if user == 1:
     #        return super(user_story, self).search(cr, user, args, offset=offset, limit=limit, order=order, context=context, count=count)
     #    if context and context.get('user_preference'):
