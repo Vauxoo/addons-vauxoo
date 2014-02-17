@@ -19,7 +19,6 @@
     <record model="ir.ui.view" id="inherit_tasks_userstory_branch_clone_form_view">
       <field name="name">inherit.userstory.sprint.kanban</field>
       <field name="model">project.task</field>
-      <field name="type">form</field>
       <field name="inherit_id" ref="sprint_kanban.inherit_tasks_sprint_kanban_form_view" />
       <field name="arch" type="xml">
         
