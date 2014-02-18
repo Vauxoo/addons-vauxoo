@@ -171,16 +171,11 @@ class lines_create(osv.osv_memory):
 
     _name = 'lines.create'
     _columns = {
-        'month': fields.selection([('1','January'), ('2','February'),
-            ('3','March'), ('4','April'), ('5','May'), ('6','June'),
-            ('7','July'), ('8','August'), ('9','September'), ('10','October'),
-            ('11','November'), ('12','December')], 'Month'),
+        'period_id':  fields.many2one('account.period', 'Period', required=True),
         'line_ids': fields.many2many('account.analytic.line','analytic_wiz_lines_rel','wiz_id','line_id','lines'),
-        'contract_id': fields.many2one('account.analytic.account','Contract')
-        #~ 'time': fields.boolean('Time spent', help='The time of each work done will be displayed on the invoice'),
-        #~ 'name': fields.boolean('Description', help='The detail of each work done will be displayed on the invoice'),
-        #~ 'price': fields.boolean('Cost', help='The cost of each work done will be displayed on the invoice. You probably don\'t want to check this'),
-        #~ 'product': fields.many2one('product.product', 'Product', help='Complete this field only if you want to force to use a specific product. Keep empty to use the real product that comes from the cost.'),
+        'contract_id': fields.many2one('account.analytic.account','Contract'),
+        'date_start': fields.date('Start Date'),
+        'date_end': fields.date('End Date'),
     }
 
     def default_get(self, cr, uid, fields, context=None):
@@ -189,69 +184,65 @@ class lines_create(osv.osv_memory):
         res = super(lines_create, self).default_get(
             cr, uid, fields, context=context)
         analytic_obj = self.pool.get('account.analytic.account')
-        product_obj = self.pool.get('product.product')
-        line_obj = self.pool.get('account.analytic.line')
+        period_obj = self.pool.get('account.period')
         lines_ids=[]
         if context.get('active_model') == 'account.analytic.account':
-            res['contract_id']=context.get('active_id')
-            res['month']=str(datetime.strptime(datetime.now().strftime('%Y-%m-%d'), "%Y-%m-%d").month)
-            for contract in analytic_obj.browse(cr,uid,context['active_ids'],context):
-                lines_ids=[]
-                for line in contract.line_ids:
-                    if not line.invoice_id and line.to_invoice:
-                        date_line=datetime.strptime(line.date, "%Y-%m-%d")
-                        #~ date=datetime.strptime(datetime.now().strftime('%Y-%m-%d'), "%Y-%m-%d")
-                        if date_line.month==res['month']:
-                            lines_ids.append(line.id)
+            res['contract_id'] = context.get('active_id')
+            date = datetime.strptime(datetime.now().strftime('%Y-%m-%d'), "%Y-%m-%d")
+            period = period_obj.find(cr, uid, date, context=context)
+            if period:
+                res['period_id'] = period[0] or False
+                for contract in analytic_obj.browse(cr,uid,context['active_ids'],context):
+                    res['date_start'] = contract.date_start
+                    res['date_end'] = contract.date
+                    lines_ids=[]
+                    for line in contract.line_ids:
+                        if not line.invoice_id and line.to_invoice:
+                            period_br = period_obj.browse(cr, uid, res['period_id'], context=context)
+                            if line.date >= period_br.date_start and line.date <= period_br.date_stop:
+                                lines_ids.append(line.id)
             res['line_ids']=lines_ids
         return res
 
-    def onchange_date(self, cr, uid, ids, month, contract_id, context=None):
+    def onchange_date(self, cr, uid, ids, period_id, contract_id, context=None):
         if context is None:
             context = {}
         res={}
         analytic_obj = self.pool.get('account.analytic.account')
-        line_obj = self.pool.get('account.analytic.line')
+        period_obj = self.pool.get('account.period')
         lines_ids=[]
-        for contract in analytic_obj.browse(cr,uid,[contract_id],context):
-            lines_ids=[]
-            for line in contract.line_ids:
-                if not line.invoice_id and line.to_invoice:
-                    date_line=datetime.strptime(line.date, "%Y-%m-%d")
-                    #~ date_new=datetime.strptime(month, "%Y-%m-%d")
-                    if str(month)==str(date_line.month):
-                        for feature in contract.feature_ids:
-                                if feature.id==line.feature_id.id:
-                                    line_obj.write(cr, uid, line.id, {'w_start':feature.counter}, context=context)
-                        lines_ids.append(line.id)
+        if period_id:
+            for contract in analytic_obj.browse(cr,uid,[contract_id],context):
+                lines_ids=[]
+                for line in contract.line_ids:
+                    if not line.invoice_id and line.to_invoice:
+                        period_br = period_obj.browse(cr, uid, period_id, context=context)
+                        if line.date >= period_br.date_start and line.date <= period_br.date_stop:
+                            lines_ids.append(line.id)
         res['value']={'line_ids':lines_ids}
         return res
         
-
-
     def do_create(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
         analytic_obj = self.pool.get('account.analytic.account')
-        data = self.read(cr, uid, ids, [], context=context)[0]
-        if context.get('active_model') == 'account.analytic.account':
-            invs=[]
-            for contract in analytic_obj.browse(cr,uid,context['active_ids'],context):
-                new_lines=[]
-                for prod in contract.product_ids:
-                    lines_ids=[]
-                    for line in contract.line_ids:
-                        if not line.invoice_id and line.to_invoice and line.product_id.id==prod.product_id.id and prod.type=='rent':
-                            date_line=datetime.strptime(line.date, "%Y-%m-%d")
-                            #~ date=datetime.strptime(data['date'], "%Y-%m-%d")
-                            if str(date_line.month)==data['month']:
-                                lines_ids.append(line.id)
-                    if not lines_ids and prod.type=='rent':
-                        raise osv.except_osv(_('Warning !'), _("Invoice is already linked to some of the analytic line(s)!"))
-                    if contract.group_product and prod.type=='rent':
-                        new_lines=new_lines + lines_ids
-                    elif not contract.group_product and prod.type=='rent':
-                        invs.append(self.pool.get('account.analytic.line').invoice_cost_create(cr, uid, lines_ids, {}, context=context))
-                if contract.group_product:
-                    invs.append(self.pool.get('account.analytic.line').invoice_cost_create(cr, uid, new_lines, {}, context=context))
+        data = self.browse(cr, uid, ids, context=context)[0]
+        contract = data.contract_id
+        invs = []
+        new_lines = []
+        for prod in contract.product_ids:
+            lines_ids=[]
+            for line in data.line_ids:
+                if not line.invoice_id and line.to_invoice and line.product_id.id==prod.product_id.id and prod.type=='rent':
+                    lines_ids.append(line.id)
+            if not lines_ids and prod.type=='rent':
+                raise osv.except_osv(_('Warning !'), _("Invoice is already linked to some of the analytic line(s)!"))
+            if contract.group_product and prod.type=='rent':
+                new_lines = new_lines + lines_ids
+            elif not contract.group_product and prod.type=='rent':
+                invs.append(self.pool.get('account.analytic.line').invoice_cost_create(cr, uid, lines_ids, {}, context=context))
+        if contract.group_product:
+            invs.append(self.pool.get('account.analytic.line').invoice_cost_create(cr, uid, new_lines, {}, context=context))
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
         mod_ids = mod_obj.search(cr, uid, [('name', '=', 'action_invoice_tree1')], context=context)[0]

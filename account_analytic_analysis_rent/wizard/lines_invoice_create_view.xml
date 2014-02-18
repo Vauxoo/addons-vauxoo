@@ -12,7 +12,9 @@
                     <page string="Billing Data">
                        <group col="4" colspan="4">
                            <separator string="Do you want to show details of work in invoice ?" colspan="4"/>
-                                <field name="month" on_change="onchange_date(month,contract_id)"/>
+                                <field name="date_start" invisible="1"/>
+                                <field name="date_end" invisible="1"/>
+                                <field name="period_id" on_change="onchange_date(period_id,contract_id)" domain="[('date_start', '&gt;=', date_start), ('date_stop', '&lt;=', date_end)]"/>
                                 <newline/>
                                 <field name="line_ids" nolabel="1" colspan="4">
                                     <tree editable="top" string="Analytic Entries">
