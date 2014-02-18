@@ -1,3 +1,4 @@
 import account_analytic_account_rent
 import product
 import report
+import wizard

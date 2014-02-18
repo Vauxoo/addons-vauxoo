@@ -3,19 +3,42 @@
     <data>
 
     <record model="ir.ui.view" id="product_rentable">
-        <field name="name">product_rentable</field>
+        <field name="name">product.rentable</field>
         <field name="model">product.product</field>
             <field name="type">form</field> 
             <field name="inherit_id" ref="product.product_normal_form_view"/>
             <field name="arch" type="xml">
                 <field name="purchase_ok" position="after">
                     <field name="rent_ok"/>
+                    <field name="accesory_ok"/>
                 </field>
             </field>
     </record>
     
+    <record model="ir.ui.view" id="product_feature_product">
+        <field name="name">product.feature.product</field>
+        <field name="model">product.product</field>
+            <field name="type">form</field> 
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <group name="misc" position="after">
+                    <group name="Features" colspan="2">
+                        <separator colspan="4" string='Features'/>
+                        <field name="feature_ids" nolabel="1">
+                            <tree string='Features'>
+                                <field name="name"/>
+                            </tree>
+                            <form string='Features'>
+                                <field name="name"/>
+                            </form>
+                        </field>
+                    </group>
+                </group>
+            </field>
+    </record>
+    
     <record model="ir.ui.view" id="product_rent">
-        <field name="name">product_rent</field>
+        <field name="name">product.rent</field>
         <field name="model">product.product</field>
             <field name="type">form</field> 
             <field name="inherit_id" ref="product.product_normal_form_view"/>
@@ -48,6 +71,49 @@
     </record>
 
     <menuitem action="product_rent_action" id="product_rent_action_menu" parent="base.menu_sales"/>
+    
+    <record model="ir.actions.act_window" id="product_accesory_action">
+        <field name="name">Accesory Product</field>
+        <field name="res_model">product.product</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('accesory_ok','=',True)]</field>
+    </record>
+
+    <menuitem action="product_accesory_action" id="product_accesory_action_menu" parent="base.menu_sales"/>
+    
+    <record id="view_feature_product_tree" model="ir.ui.view">
+        <field name="name">view.feature.product.tree</field>
+        <field name="model">product.feature</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Features">
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="view_feature_product_form" model="ir.ui.view">
+        <field name="name">view.feature.product.form</field>
+        <field name="model">product.feature</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Features">
+                <field name="name"/>
+                <field name="description"/>
+            </form>
+        </field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="product_feature_action">
+        <field name="name">Features</field>
+        <field name="res_model">product.feature</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="product_feature" name="Features" parent="base.menu_sale_config_sales"/>
+    <menuitem action="product_feature_action" id="product_feature_action_menu" parent="product_feature"/>
     
     </data>
 </openerp>

@@ -10,11 +10,172 @@
             <field name="arch" type="xml">
                 <notebook position="inside">
                     <page string="Product">
-                        <field name="product_id"/>
+                        <field name="product_ids" on_change="onchange_product_lines(product_ids, feature_ids)" nolabel="1">
+                            <tree string="products" editable="top">
+                                <field name="product_id" on_change="onchange_product_id(product_id)"/>
+                                <field name="prodlot_id" 
+                                context="{'product_id':product_id}"
+                                domain="[('product_id','=?',product_id)]"
+                                on_change="onchange_prodlot(prodlot_id)"/>
+                                <field name="type"/>
+                            </tree>
+                            <form string="products">
+                                <field name="product_id" on_change="onchange_product_id(product_id)"/>
+                                <field name="prodlot_id" 
+                                context="{'product_id':product_id}"
+                                domain="[('product_id','=?',product_id)]"
+                                on_change="onchange_prodlot(prodlot_id)"/>
+                                <field name="type"/>
+                            </form>
+                        </field>
+                        <newline/>
+                        <field name="feature_ids" nolabel="1">
+                            <tree string='Features' editable="top">
+                                <field name="product_line_id"/>
+                                <field name="name"/>
+                                <field name="counter"/>
+                                <field name="cost"/>
+                                <field name="prodlot_feature_id" invisible = '1'/>
+                            </tree>
+                            <form string='Features'>
+                                <field name="product_line_id"/>
+                                <field name="name"/>
+                                <field name="counter"/>
+                                <field name="cost"/>
+                            </form>
+                        </field>
                     </page>
                 </notebook>
             </field>
     </record>
+    
+    <record model="ir.ui.view" id="account_analytic_analysis_invoice_page">
+        <field name="name">account.analytic.analysis.invoice.page</field>
+        <field name="model">account.analytic.account</field>
+            <field name="type">form</field> 
+            <field name="inherit_id" ref="account.view_account_analytic_account_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Invoice">
+                        <field name="invoice_ids" nolabel="1"/>
+                    </page>
+                </notebook>
+            </field>
+    </record>
+    
+    <record model="ir.ui.view" id="account_analytic_analysis_payments">
+        <field name="name">account.analytic.analysis.payments</field>
+        <field name="model">account.analytic.account</field>
+            <field name="type">form</field> 
+            <field name="inherit_id" ref="account.view_account_analytic_account_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Payments">
+                        <field name="voucher_ids" nolabel="1"/>
+                    </page>
+                </notebook>
+            </field>
+    </record>
+    
+    
+    <record id="view_analytic_term_tree" model="ir.ui.view">
+        <field name="name">view.analytic.term.tree</field>
+        <field name="model">analytic.term</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Analytic Term">
+                <field name="name"/>
+                <field name="no_term"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="view_analytic_term_form" model="ir.ui.view">
+        <field name="name">view.analytic.term.form</field>
+        <field name="model">analytic.term</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Analytic Term">
+                <field name="name"/>
+                <field name="no_term"/>
+            </form>
+        </field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="analytic_term_action">
+        <field name="name">Analytic Term</field>
+        <field name="res_model">analytic.term</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="analytic_contract" name="Contract" parent="base.menu_sale_config_sales"/>
+    <menuitem action="analytic_term_action" id="analytic_term_action_menu" parent="analytic_contract"/>
+    
+    
+    <record model="ir.ui.view" id="account_analytic_analysis_term_contract">
+        <field name="name">account.analytic.analysis.term.contract</field>
+        <field name="model">account.analytic.account</field>
+            <field name="type">form</field> 
+            <field name="inherit_id" ref="account.view_account_analytic_account_form"/>
+            <field name="arch" type="xml">
+                    <field name="quantity_max" position="after">
+                        <field name="term_id"/>
+                    </field>
+            </field>
+    </record>
+    
+    <record model="ir.ui.view" id="account_analytic_analysis_journal_contract">
+        <field name="name">account.analytic.analysis.journal.contract</field>
+        <field name="model">account.analytic.account</field>
+            <field name="type">form</field> 
+            <field name="inherit_id" ref="account.view_account_analytic_account_form"/>
+            <field name="arch" type="xml">
+                    <field name="user_id" position="after">
+                        <field name="journal_id" widget="selection"/>
+                    </field>
+            </field>
+    </record>
+
+    <record model="ir.ui.view" id="account_analytic_analysis_group_prod">
+        <field name="name">account.analytic.analysis.group.prod</field>
+        <field name="model">account.analytic.account</field>
+            <field name="type">form</field> 
+            <field name="inherit_id" ref="hr_timesheet_invoice.account_analytic_account_form_form"/>
+            <field name="arch" type="xml">
+                    <field name="amount_invoiced" position="after">
+                        <field name="group_product"/>
+                    </field>
+            </field>
+    </record>
+    
+    
+    <record model="ir.ui.view" id="account_analytic_line_product_visible">
+        <field name="name">account.analytic.line.product.visible</field>
+        <field name="model">account.analytic.line</field>
+            <field name="type">form</field> 
+            <field name="inherit_id" ref="account.view_account_analytic_line_tree"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="replace">
+                    <field name="product_id" on_change="on_change_unit_amount(product_id, unit_amount, company_id, product_uom_id, journal_id)" />
+                </field>
+            </field>
+    </record>
+
+    <record model="ir.ui.view" id="account_invoice_line_write">
+        <field name="name">account.invoice.line_write</field>
+        <field name="model">account.invoice.line</field>
+            <field name="type">form</field> 
+            <field name="inherit_id" ref="account.view_invoice_line_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="product_id" />
+                    <field name="prodlot_id" />
+                    <field name="w_start" />
+                    <field name="w_end" />
+                </field>
+            </field>
+    </record>
+
 
     </data>
 </openerp>
