@@ -118,12 +118,12 @@ class account_analytic_account(osv.osv):
     def onchange_product_lines(self, cr, uid, ids, product_ids, feature_ids, context=None):
         res={}
         list_feature=[]
-        if context==None:
-            context={}
+        if context is None:
+            context = {}
         if product_ids:
-            product_obj=self.pool.get('product.product')
+            product_obj = self.pool.get('product.product')
             for prod in product_ids:
-                if prod[2]['product_id']:
+                if prod[2] and prod[2]['product_id']:
                     for feature in product_obj.browse(cr, uid, prod[2]['product_id'], context=context).feature_ids:
                         list_feature.append({'name': feature.name and feature.name.id or False, 'product_line_id':prod[2]['product_id'],'counter':feature.counter or False, 'prodlot_feature_id' : prod[2]['prodlot_id']})
         return {'value':{'feature_ids': [(0, 6, data) for data in list_feature]}}
@@ -217,7 +217,13 @@ class account_analytic_account(osv.osv):
                         a = prod.product_id.categ_id.property_account_income_categ.id
                     for feature in contract.feature_ids:
                         if feature.product_line_id.id==prod.product_id.id:
-                            line_obj.create(cr, uid, {'date':date_invoice,'name':feature.name and feature.name.name or False,'product_id':prod.product_id.id,'product_uom_id':prod.product_id.uom_id.id,'general_account_id':a,'to_invoice':1,'account_id': contract and contract.id or False,'journal_id': contract.journal_id and contract.journal_id.analytic_journal_id and contract.journal_id.analytic_journal_id.id or False,'amount': feature and feature.cost or False, 'feature_id':feature and feature.id or False, 'prodlot_id': prod.prodlot_id and prod.prodlot_id.id or 1},context=context)
+                            journal_analytic = contract.journal_id and\
+                                contract.journal_id.analytic_journal_id and\
+                                contract.journal_id.analytic_journal_id.id or False
+                            if not journal_analytic:
+                                 raise osv.except_osv(_('Error !'),
+                                    _("Don't have configured a journal analytic in the journal of contract!"))
+                            line_obj.create(cr, uid, {'date':date_invoice,'name':feature.name and feature.name.name or False,'product_id':prod.product_id.id,'product_uom_id':prod.product_id.uom_id.id,'general_account_id':a,'to_invoice':1,'account_id': contract and contract.id or False,'journal_id': journal_analytic, 'amount': feature and feature.cost or False, 'feature_id':feature and feature.id or False, 'prodlot_id': prod.prodlot_id and prod.prodlot_id.id or 1},context=context)
                     product_obj.write(cr, uid, prod.product_id.id, {'rent':True,'contract_id': contract and contract.id or False}, context=context)
                 date_invoice=(datetime.strptime(date_invoice, "%Y-%m-%d") + relativedelta(months=1)).strftime("%Y-%m-%d")
         return super(account_analytic_account, self).set_open(cr, uid, ids, context=context)
