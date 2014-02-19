@@ -140,11 +140,12 @@ class ir_attachment_facturae_mx(osv.Model):
             invoice = ir_attachment_facturae_mx_id.invoice_id
             pac_params_ids = pac_params_obj.search(cr, uid, [
                 ('method_type', '=', 'pac_cancelar'),
-                ('company_id', '=', invoice.company_emitter_id.id),
+                #~ ('company_id', '=', invoice.company_emitter_id.id),
+                ('company_id', '=', ir_attachment_facturae_mx_id.company_id.id),
                 ('active', '=', True),
             ], limit=1, context=context)
             pac_params_id = pac_params_ids and pac_params_ids[0] or False
-            taxpayer_id = invoice.company_id.vat[2::] or invoice.company_id.partner_id.vat[2::] or False
+            taxpayer_id = ir_attachment_facturae_mx_id.company_id.vat[2::] or ir_attachment_facturae_mx_id.company_id.partner_id.vat[2::] or False
             if pac_params_id:
                 file_globals = invoice_obj._get_file_globals(cr, uid, [invoice.id], context=context)
                 pac_params_brw = pac_params_obj.browse(cr, uid, [pac_params_id], context=context)[0]
