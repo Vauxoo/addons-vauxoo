@@ -37,6 +37,9 @@ import base64
 import cgi
 import urllib
 from markupsafe import Markup
+
+from openerp import release
+
 try:
     from qrcode import *
 except:
@@ -101,6 +104,25 @@ class hr_payslip(osv.Model):
             res[data.id] = address_invoice
         return res
 
+    def _get_date_payslip_tz(self, cr, uid, ids, field_names=None, arg=False, context=None):
+        if context is None:
+            context = {}
+        res = {}
+        if release.version >= '6':
+            dt_format = tools.DEFAULT_SERVER_DATETIME_FORMAT
+            tz = context.get('tz_invoice_mx', 'America/Mexico_City')
+            for invoice in self.browse(cr, uid, ids, context=context):
+                res[invoice.id] = invoice.payslip_datetime and tools.\
+                    server_to_local_timestamp(invoice.payslip_datetime,
+                    tools.DEFAULT_SERVER_DATETIME_FORMAT,
+                    tools.DEFAULT_SERVER_DATETIME_FORMAT, context.get(
+                    'tz_invoice_mx', 'America/Mexico_City')) or False
+        elif release.version < '6':
+            # TODO: tz change for openerp5
+            for invoice in self.browse(cr, uid, ids, context=context):
+                res[invoice.id] = invoice.date_invoice
+        return res
+
     _columns = {
         'journal_id': fields.many2one('account.journal','Journal', required=True),
         'date_payslip': fields.date('Payslip Date'),
@@ -137,6 +159,9 @@ class hr_payslip(osv.Model):
         'sello': fields.text('Stamp', size=512, help='Digital Stamp'),
         'certificado': fields.text('Certificate', size=64,
             help='Certificate used in the Payroll'),
+        'date_payslip_tz':  fields.function(_get_date_payslip_tz, method=True,
+            type='datetime', string='Date Invoiced with TZ', store=True,
+            help='Date of Invoice with Time Zone'),
     }
 
     def _create_original_str(self, cr, uid, ids, invoice_id, context=None):
@@ -155,6 +180,15 @@ class hr_payslip(osv.Model):
 
     def hr_verify_sheet(self, cr, uid, ids, context=None):
         for hr in self.browse(cr, uid, ids, context=context):
+            if not hr.date_payslip:
+                now = datetime.now()
+                htz = int(self._get_time_zone(cr, uid, ids, context=context))
+                #~ hours_diff = self._get_time_zone(cr, uid, [], context=context)
+                #~ date_order = datetime.strptime(str(now), '%Y-%m-%d %H:%M:%S')
+                res = (now).strftime('%Y-%m-%d %H:%M:%S')
+                #~ res = (now + timedelta(hours=htz)).strftime('%Y-%m-%d %H:%M:%S')
+                #~ date_today = datetime.strptime(now, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz)
+                self.write(cr, uid, ids, {'date_payslip' : res, 'payslip_datetime': res})
             if not hr.line_payslip_product_ids:
                 raise osv.except_osv(_('No Product Lines!'), _('Please create some product lines.'))
             super(hr_payslip, self).hr_verify_sheet(cr, uid, ids)
@@ -471,20 +505,22 @@ class hr_payslip(osv.Model):
     def _get_file_globals(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        print "ids",ids
         id = ids and ids[0] or False
         file_globals = {}
+        
         if id:
             payslip = self.browse(cr, uid, id, context=context)
-            print "paysip",payslip
+            #~ now = time.strftime('%Y-%m-%d %H:%M:%S')
+            #~ htz = int(self._get_time_zone(cr, uid, ids, context=context))
+            #~ date_today = now and datetime.strptime(payslip.payslip_datetime, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz) or False
             # certificate_id = payslip.company_id.certificate_id
-            context.update({'date_work': payslip.payslip_datetime})
+            #~ context.update({'date_work': payslip.payslip_datetime })
             certificate_id = self.pool.get('res.company')._get_current_certificate(
                 cr, uid, [payslip.company_emitter_id.id],
                 context=context)[payslip.company_emitter_id.id]
             certificate_id = certificate_id and self.pool.get(
                 'res.company.facturae.certificate').browse(
-                cr, uid, [certificate_id], context=context)[0] or False
+                cr, uid, [certificate_id], context=None)[0] or False
 
             if certificate_id:
                 if not certificate_id.certificate_file_pem:

@@ -209,7 +209,7 @@ class ir_attachment_facturae_mx(osv.Model):
         """
         if context is None:
             context = {}
-        invoice_obj = self.pool.get('account.invoice')
+        #~ invoice_obj = self.pool.get('account.invoice')
         pac_params_obj = self.pool.get('params.pac')
         for ir_attachment_facturae_mx_id in self.browse(cr, uid, ids, context=context):
             obj = context['active_model']
@@ -222,15 +222,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 fname_suffix = ir_attach_facturae_mx_file_input and ir_attach_facturae_mx_file_input.datas_fname or ''
                 open( os.path.join(tools.config['test_report_directory'], 'l10n_mx_facturae_pac_finkok' + '_' + \
                   'before_upload' + '-' + fname_suffix), 'wb+').write( cfd_data )
-            model = generic_obj.browse(cr, uid, active_ids, context=context)[0]
-            htz = int(self._get_time_zone(cr, uid, ids, context=context))
-            now = time.strftime('%Y-%m-%d')
-            if 'date_invoice' in model._columns:
-                date = model.date_invoice or now
-            else:
-                date = model.date_payslip or now
-            date_now = time.strftime('%Y-%m-%d', time.strptime(str(date), '%Y-%m-%d')) or False
-            context['date'] = date_now
+             
             file = False
             msg = ''
             folio_fiscal = ''
@@ -269,22 +261,25 @@ class ir_attachment_facturae_mx(osv.Model):
                 except:
                     raise orm.except_orm(_('Warning'), _('Connection lost, verify your internet conection or verify your PAC'))
                 try:
-                    file_globals = generic_obj._get_file_globals(cr, uid, active_ids, context=context)
-                    fname_cer_no_pem = file_globals['fname_cer']
-                    cerCSD = open(fname_cer_no_pem).read().encode('base64') #Mejor forma de hacerlo
+                    #~ file_globals = generic_obj._get_file_globals(cr, uid, active_ids, context=context)
+                    #~ fname_cer_no_pem = file_globals['fname_cer']
+                    #~ cerCSD = open(fname_cer_no_pem).read().encode('base64') #Mejor forma de hacerlo
+                    #~ cerCSD =  ir_attachment_facturae_mx_id.certificate_id and ir_attachment_facturae_mx_id.certificate_id.certificate_file_pem.encode('base64') #Mejor forma de hacerlo
                     #~ cerCSD = fname_cer_no_pem and base64.encodestring(
                         #~ open(fname_cer_no_pem, "r").read()) or ''
                     #~cerCSD = ir_attachment_facturae_mx_id.certificate_id and base64.encodestring(
                         #~ir_attachment_facturae_mx_id.certificate_id.certificate_file) or ''
-                    fname_key_no_pem = file_globals['fname_key']
+                    #~ fname_key_no_pem = file_globals['fname_key']
                     #~ keyCSD = fname_key_no_pem and base64.encodestring(
                         #~ open(fname_key_no_pem, "r").read()) or ''
                     #~keyCSD = ir_attachment_facturae_mx_id.certificate_id and base64.encodestring(
                         #~ir_attachment_facturae_mx_id.certificate_id.certificate_key_file) or ''
-                    keyCSD = open(fname_key_no_pem).read().encode('base64') #Mejor forma de hacerlo
+                    #~ keyCSD = open(fname_key_no_pem).read().encode('base64') #Mejor forma de hacerlo
+                    #~ keyCSD = ir_attachment_facturae_mx_id.certificate_id and ir_attachment_facturae_mx_id.certificate_id.certificate_key_file_pem.encode('base64') #Mejor forma de hacerlo
                     cfdi = base64.encodestring(cfd_data)
                     zip = False  # Validar si es un comprimido zip, con la extension del archivo
-                    contrasenaCSD = file_globals.get('password', '')
+                    #~ contrasenaCSD = file_globals.get('password', '')
+                    #~ contrasenaCSD = ir_attachment_facturae_mx_id.certificate_id and ir_attachment_facturae_mx_id.certificate_id.certificate_password
                     #~contrasenaCSD = ir_attachment_facturae_mx_id.certificate_id and base64.encodestring(
                         #~ir_attachment_facturae_mx_id.certificate_id.certificate_password) or ''
                     params = [cfdi, user, password]
