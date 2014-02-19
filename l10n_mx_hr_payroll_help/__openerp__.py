@@ -20,36 +20,22 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
+
 {
-    "name": "Mexican Payroll",
-    "version": "1.0",
-    "depends": [
-                "hr_payroll",
-                "l10n_mx_hr_payroll",
-                "l10n_mx_data_bank",
-                "l10n_mx_payroll_concept",
-                "l10n_mx_payroll_regime_employee",
-                "l10n_mx_payroll_risk_rank_contract",
-                "l10n_mx_facturae_pac_finkok",
-                "l10n_mx_ir_attachment_facturae",
-                "l10n_mx_params_pac",
-    ],
-    "author": "Vauxoo",
-    "description": """
-Mexican Payroll
-===============
+    "name" : "Payroll Help Fields",
+    "version" : "1.0",
+    "author" : "Vauxoo",
+    "category" : "Localization/Mexico",
+    "description" : """Module that adds aid for fields used in payroll
     """,
-    "website": "http://vauxoo.com",
-    "category": "Addons Vauxoo",
-    "data": [
-        "view/l10n_mx_payroll_base_view.xml"
+    "website" : "http://www.vauxoo.com/",
+    "license" : "AGPL-3",
+    "depends" : ["l10n_mx_payroll_base",
+        ],
+    "data" : [
     ],
     "demo" : [
-        "demo/l10n_mx_facturae_seq_demo.xml",
-        "demo/l10n_mx_payroll_demo.xml",
-        "demo/l10n_mx_payroll_contrac.xml",
     ],
-    "test": [],
-    "active": False,
-    "installable": True,
+    "installable" : True,
+    "active" : False,
 }

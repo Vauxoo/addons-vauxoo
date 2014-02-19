@@ -33,6 +33,6 @@ class payroll_risk_rank_contract(osv.Model):
 
     _name = "payroll.risk.rank.contract"
     _columns = {
-        'code': fields.integer('Code'),
-        'name': fields.char("Description", size=256)
+        'code': fields.integer('Code',help='Number with which the SAT identified the class of risk.'),
+        'name': fields.char("Description", size=256, help='Name of risks based on the catalog issued by the sat.'),
     }

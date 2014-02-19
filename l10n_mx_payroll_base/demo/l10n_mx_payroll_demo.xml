@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <record id="clabe_bank_employee_al" model="res.partner.bank">
+            <field name='state'>bank</field>
+            <field name='acc_number' eval="12345678912345678"/>
+            <field name='partner_id' ref="l10n_mx_partner_address.res_partner_address_vauxoo_1"/>
+            <field name='bank' ref="l10n_mx_data_bank.acc_bank_002_BANAMEX"/>
+            <field name='clabe' eval="123456789123456789"/>
+        </record>
+        <record id="hr.employee_al" model="hr.employee">
+            <field name='nss' eval="123456789236958"/>
+            <field name='identification_id' eval="1136525"/>
+            <field name='employer_registration' eval="1203256"/>
+            <field name='curp'>PUXB571021HNELXR00</field>
+            <field name='bank_account_id' ref="clabe_bank_employee_al"/>
+            <field name='address_home_id' ref="l10n_mx_partner_address.res_partner_address_vauxoo_1"/>
+            <field name='regime_id' ref="l10n_mx_payroll_regime_employee.hr_payroll_regime02"/>
+        </record>
+        <record id="payroll_structure_demo_01" model="hr.payroll.structure">
+            <field name='name'>Structure Demo CFDI</field>
+            <field name='code'>Demo CFDI Payroll</field>
+            <field name='parent_id'></field>
+            <field eval="[(6, 0, [ref('l10n_mx_payroll_concept.hr_rule_l10n_mx_payroll_perception_005'), ref('l10n_mx_payroll_concept.hr_rule_l10n_mx_payroll_deduction_001')])]" name="rule_ids"/>
+        </record>
+    </data>
+</openerp>

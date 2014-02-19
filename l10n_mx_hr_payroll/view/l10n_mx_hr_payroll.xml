@@ -11,13 +11,6 @@
                     <field name="nss"/>
                     <field name="employer_registration"/>
                 </xpath>
-                <xpath expr="//group[@name='active_group']" position="after">
-                    <group>
-                        <group string="Seniority" name="seniority_group">
-                            <field name="seniority"/>
-                        </group>
-                    </group>
-                </xpath>
             </field>
         </record>
     </data>
