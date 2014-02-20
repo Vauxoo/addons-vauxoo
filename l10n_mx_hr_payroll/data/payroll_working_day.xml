@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="payroll_working_day0" model="payroll.working.day">
+            <field name="name">Day</field>
+        </record>
+        <record id="payroll_working_day1" model="payroll.working.day">
+            <field name="name">Night</field>
+        </record>
+        <record id="payroll_working_day2" model="payroll.working.day">
+            <field name="name">Mixed</field>
+        </record>
+        <record id="payroll_working_day3" model="payroll.working.day">
+            <field name="name">Per Hour</field>
+        </record>
+        <record id="payroll_working_day4" model="payroll.working.day">
+            <field name="name">By Turns</field>
+        </record>
+    </data>
+</openerp>

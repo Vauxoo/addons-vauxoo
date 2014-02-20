@@ -47,6 +47,7 @@ HR Payroll Mexican
              "view/hr_payslip_working_day.xml",
              "view/hr_inability_view.xml",
              #~ "data/payroll_category_hext_inability.xml",
+             "data/payroll_working_day.xml",
              "data/payroll_inability_data.xml",],
     "test": [],
     "active": False,

@@ -8,6 +8,8 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='input_line_ids']/tree/field[@name='name']" position="before">
                     <field name="salary_rule_id" on_change="onchange_salary_rule(salary_rule_id,parent.contract_id)"/>
+                </xpath>
+                <xpath expr="//field[@name='input_line_ids']/tree/field[@name='amount']" position="after">
                     <field name="exempt_amount" sum="Total Excempt"/>
                 </xpath>
                 <xpath expr="//field[@name='input_line_ids']/tree/field[@name='name']" position="replace">

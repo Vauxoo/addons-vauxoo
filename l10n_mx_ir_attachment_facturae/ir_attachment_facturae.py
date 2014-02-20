@@ -36,11 +36,46 @@ import traceback
 import sys
 from xml.dom import minidom
 import xml.dom.minidom
-
+try:
+    from qrcode import *
+except:
+    _logger.error('Execute "sudo pip install pil qrcode" to use l10n_mx_facturae_pac_finkok module.')
 
 class ir_attachment_facturae_mx(osv.Model):
     _name = 'ir.attachment.facturae.mx'
     _inherit = ['mail.thread', 'ir.needaction_mixin']
+
+    def _create_qrcode(self, cr, uid, ids, rfc_receiver, rfc_transmitter, amount_total=0, folio_fiscal=False, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        #~ invoice = self.browse(cr, uid, invoice_id)
+        #~ rfc_transmitter = invoice.company_id.partner_id.vat_split or ''
+        #~ rfc_receiver = invoice.partner_id.parent_id.vat_split or invoice.partner_id.parent_id.vat_split or ''
+        #~ amount_total = string.zfill("%0.6f"%invoice.amount_total,17)
+        cfdi_folio_fiscal = folio_fiscal or ''
+        qrstr = "?re="+rfc_transmitter+"&rr="+rfc_receiver+"&tt="+amount_total+"&id="+cfdi_folio_fiscal
+        qr = QRCode(version=1, error_correction=ERROR_CORRECT_L)
+        qr.add_data(qrstr)
+        qr.make() # Generate the QRCode itself
+        im = qr.make_image()
+        fname=tempfile.NamedTemporaryFile(suffix='.png',delete=False)
+        im.save(fname.name)
+        return fname.name
+
+    def _create_original_str(self, cr, uid, ids, result, context=None):
+        if context is None:
+            context = {}
+        #~ ids = isinstance(ids, (int, long)) and [ids] or ids
+        #~ invoice = self.browse(cr, uid, invoice_id)
+        cfdi_folio_fiscal = result.UUID or ''
+        cfdi_fecha_timbrado = result.Fecha or ''
+        #~ if cfdi_fecha_timbrado:
+            #~ cfdi_fecha_timbrado=time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(cfdi_fecha_timbrado, '%Y-%m-%d %H:%M:%S'))
+        sello = result.SatSeal or ''
+        cfdi_no_certificado = result.NoCertificadoSAT or ''
+        original_string = '||1.0|'+cfdi_folio_fiscal+'|'+str(cfdi_fecha_timbrado)+'|'+sello+'|'+cfdi_no_certificado+'||'
+        return original_string
 
     def _get_type(self, cr, uid, ids=None, context=None):
         if context is None:
@@ -94,6 +129,8 @@ class ir_attachment_facturae_mx(osv.Model):
             ('done', 'Done'),
             ('cancel', 'Cancelled'), ],
             'State', readonly=True, required=True, help='State of attachments'),
+        'journal_id': fields.many2one('account.journal','Journal', required=True),
+        'partner_id': fields.many2one('res.partner', 'Partner'),
     }
 
     _defaults = {
@@ -216,7 +253,9 @@ class ir_attachment_facturae_mx(osv.Model):
         msj = ''
         status = False
         for data in self.browse(cr, uid, ids, context=context):
-            invoice = data.invoice_id
+            #~ if data.invoice_id:
+            print context, 'CONTEXTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT'
+            #~ invoice = data.invoice_id
             type = data.type
             wf_service = netsvc.LocalService("workflow")
             attach_v3_2 = data.file_input and data.file_input.id or False
@@ -233,7 +272,8 @@ class ir_attachment_facturae_mx(osv.Model):
                 # upload file in custom module for pac
                 type__fc = self.get_driver_fc_sign()
                 if type in type__fc.keys():
-                    fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
+                    #~ fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
+                    fname_invoice = data.name and data.name + '.xml' or ''
                     fdata = base64.encodestring(index_content)
                     res = type__fc[type](cr, uid, [data.id], fdata, context=context)
                     msj = tools.ustr(res.get('msg', False))
@@ -245,8 +285,9 @@ class ir_attachment_facturae_mx(osv.Model):
                             'datas': base64.encodestring(res.get('cfdi_xml', False)),
                             'datas_fname': fname_invoice,
                             'description': 'Factura-E XML CFD-I SIGN',
-                            'res_model': 'account.invoice',
-                            'res_id': invoice.id,
+                            #~ 'res_model': 'account.invoice',
+                            'res_model': context.get('active_model'),
+                            'res_id': context.get('active_ids'),
                         }
                     # Context, because use a variable type of our code but we
                     # dont need it.
@@ -268,6 +309,51 @@ class ir_attachment_facturae_mx(osv.Model):
                            'msj': msj,
                            'file_xml_sign_index': index_xml}, context=context)
                 wf_service.trg_validate(uid, self._name, data.id, 'action_sign', cr)
+            #~ if data.payroll_id:
+                #~ invoice = data.payroll_id
+                #~ type = data.type
+                #~ wf_service = netsvc.LocalService("workflow")
+                #~ attach_v3_2 = data.file_input and data.file_input.id or False
+                #~ index_content = data.file_input and data.file_input.index_content.encode('utf-8') or False
+                #~ if 'cfdi' in type:
+                    #~ # upload file in custom module for pac
+                    #~ type__fc = self.get_driver_fc_sign()
+                    #~ if type in type__fc.keys():
+                        #~ fname_invoice = invoice.number + '.xml' or ''
+                        #~ fdata = base64.encodestring(index_content)
+                        #~ res = type__fc[type](cr, uid, [data.id], fdata, context=context)
+                        #~ msj = tools.ustr(res.get('msg', False))
+                        #~ index_xml = res.get('cfdi_xml', False)
+                        #~ status = res.get('status', False)
+                        #~ if status:
+                            #~ data_attach = {
+                                #~ 'name': fname_invoice,
+                                #~ 'datas': base64.encodestring(res.get('cfdi_xml', False)),
+                                #~ 'datas_fname': fname_invoice,
+                                #~ 'description': 'Factura-E XML CFD-I SIGN',
+                                #~ 'res_model': 'hr.payslip',
+                                #~ 'res_id': invoice.id,
+                            #~ }
+                        #~ # Context, because use a variable type of our code but we
+                        #~ # dont need it.
+                            #~ attach = attachment_obj.create(cr, uid, data_attach, context=None)
+                            #~ if attach_v3_2:
+                                #~ cr.execute("""UPDATE ir_attachment
+                                    #~ SET res_id = Null
+                                    #~ WHERE id = %s""", (attach_v3_2,))
+                            #~ status = True
+                    #~ else:
+                        #~ msj += _("Unknow driver for %s" % (type))
+                #~ if status:
+                    #~ if index_xml:
+                        #~ doc_xml = xml.dom.minidom.parseString(index_xml)
+                        #~ index_xml = doc_xml.toprettyxml()
+                    #~ self.write(cr, uid, ids,
+                           #~ {'file_xml_sign': attach or False,
+                               #~ 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                               #~ 'msj': msj,
+                               #~ 'file_xml_sign_index': index_xml}, context=context)
+                    #~ wf_service.trg_validate(uid, self._name, data.id, 'action_sign', cr)
         return status
 
     def action_sign(self, cr, uid, ids, context=None):

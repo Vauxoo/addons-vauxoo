@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+        <record id="hr_payslip_al_cfdi0" model="hr.payslip">
+            <field name="name">Payroll Test Antony Lesuisse</field>
+            <field name="employee_id" ref="hr.employee_al"/>
+            <field name="journal_id" ref="l10n_mx_cfdi_payroll_pac_finkok_journal_0"/>
+            <field name="contract_id" ref="hr_contract_antony_lesuisse_cfdi0"/>
+            <field name="partner_id" ref="l10n_mx_partner_address.res_partner_address_vauxoo_1"/>
+            <field name="struct_id" ref="payroll_structure_demo_01"/>
+            <field name="date_payslip" eval="time.strftime('%Y-%m-%d')"/>
+            <field name="payslip_datetime" eval="time.strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="pay_method_id" ref="account.account_payment_term"/>
+        </record>
+        <record id="hr_payslip_al_cfdi0_product_line" model="hr.payslip.product.line">
+            <field name="product_id" ref="product.product_product_5"/>
+            <field name="amount" eval="900.0" />
+            <field name="payslip_id" ref="hr_payslip_al_cfdi0"/>
+        </record>
+        <record id="hr_payslip_al_cfdi0_worked_days_line" model="hr.payslip.worked_days">
+            <field name="name">Normal Working Days paid at 100%</field>
+            <field name="code">WORK100</field>
+            <field name="number_of_days" eval="15"/>
+            <field name="number_of_hours" eval="40"/>
+            <field name="contract_id" ref="hr_contract_antony_lesuisse_cfdi0"/>
+            <field name="payslip_id" ref="hr_payslip_al_cfdi0"/>
+        </record>
+        <record id="hr_payslip_al_cfdi0_input_line0" model="hr.payslip.input">
+            <field name="salary_rule_id" ref="l10n_mx_payroll_concept.hr_rule_l10n_mx_payroll_perception_005"/>
+            <field name="amount" eval="100.0"/>
+            <field name="code">fondo_ahorro</field>
+            <field name="name">fondo_ahorro</field>
+            <field name="exempt_amount" eval="10.0"/>
+            <field name="contract_id" ref="hr_contract_antony_lesuisse_cfdi0"/>
+            <field name="payslip_id" ref="hr_payslip_al_cfdi0"/>
+        </record>
+        <record id="hr_payslip_al_cfdi0_input_line1" model="hr.payslip.input">
+            <field name="salary_rule_id" ref="l10n_mx_payroll_concept.hr_rule_l10n_mx_payroll_deduction_001"/>
+            <field name="amount" eval="100.0"/>
+            <field name="code">seguridad_social</field>
+            <field name="name">seguridad_social</field>
+            <field name="exempt_amount" eval="10.0"/>
+            <field name="contract_id" ref="hr_contract_antony_lesuisse_cfdi0"/>
+            <field name="payslip_id" ref="hr_payslip_al_cfdi0"/>
+        </record>
+        <record id="hr_payslip_al_cfdi0_overtime_line0" model="hr.payslip.overtime">
+            <field name="amount" eval="150.0"/>
+            <field name="name">Overtime test</field>
+            <field name="number_of_days" eval="2"/>
+            <field name="number_of_hours" eval="5"/>
+            <field name="type_hours">double</field>
+            <field name="payslip_id" ref="hr_payslip_al_cfdi0"/>
+        </record>
+        <record id="hr_payslip_al_cfdi0_inability_line0" model="hr.payslip.inability">
+            <field name="amount" eval="150.0"/>
+            <field name="number_of_days" eval="2"/>
+            <field name="inability_id" ref="l10n_mx_hr_payroll.hr_payroll_inability02"/>
+            <field name="payslip_id" ref="hr_payslip_al_cfdi0"/>
+        </record>
+    </data>
+</openerp>
