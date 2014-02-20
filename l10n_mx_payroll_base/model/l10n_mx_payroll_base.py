@@ -181,8 +181,7 @@ class hr_payslip(osv.Model):
         for hr in self.browse(cr, uid, ids, context=context):
             if hr.payslip_datetime:
                 htz = int(self._get_time_zone(cr, uid, ids, context=context))
-                self.write(cr, uid, ids, {'date_payslip_tz' : (datetime.strptime(hr.payslip_datetime, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz)).strftime('%Y-%m-%d %H:%M:%S'),
-                    'date_payslip': (datetime.strptime(hr.payslip_datetime, '%Y-%m-%d').strftime('%Y-%m-%d'))})
+                self.write(cr, uid, ids, {'date_payslip_tz' : (datetime.strptime(hr.payslip_datetime, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz)).strftime('%Y-%m-%d %H:%M:%S')})
             else:
                 now = datetime.now()
                 htz = int(self._get_time_zone(cr, uid, ids, context=context))
