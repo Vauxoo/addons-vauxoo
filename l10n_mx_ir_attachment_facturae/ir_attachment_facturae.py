@@ -253,104 +253,107 @@ class ir_attachment_facturae_mx(osv.Model):
         msj = ''
         status = False
         for data in self.browse(cr, uid, ids, context=context):
-            if data.invoice_id:
-                invoice = data.invoice_id
-                type = data.type
-                wf_service = netsvc.LocalService("workflow")
-                attach_v3_2 = data.file_input and data.file_input.id or False
-                index_content = data.file_input and data.file_input.index_content.encode('utf-8') or False
-                if 'cbb' in type:
-                    msj = _("Signed")
-                    status = True
-                if 'cfd' in type and not 'cfdi' in type:
-                    attach = data.file_input and data.file_input.id or False
-                    msj = _("Attached Successfully XML CFD 2.2\n")
-                    index_xml = index_content
-                    status = True
-                if 'cfdi' in type:
-                    # upload file in custom module for pac
-                    type__fc = self.get_driver_fc_sign()
-                    if type in type__fc.keys():
-                        fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
-                        fdata = base64.encodestring(index_content)
-                        res = type__fc[type](cr, uid, [data.id], fdata, context=context)
-                        msj = tools.ustr(res.get('msg', False))
-                        index_xml = res.get('cfdi_xml', False)
-                        status = res.get('status', False)
-                        if status:
-                            data_attach = {
-                                'name': fname_invoice,
-                                'datas': base64.encodestring(res.get('cfdi_xml', False)),
-                                'datas_fname': fname_invoice,
-                                'description': 'Factura-E XML CFD-I SIGN',
-                                'res_model': 'account.invoice',
-                                'res_id': invoice.id,
-                            }
-                        # Context, because use a variable type of our code but we
-                        # dont need it.
-                            attach = attachment_obj.create(cr, uid, data_attach, context=None)
-                            if attach_v3_2:
-                                cr.execute("""UPDATE ir_attachment
-                                    SET res_id = Null
-                                    WHERE id = %s""", (attach_v3_2,))
-                            status = True
-                    else:
-                        msj += _("Unknow driver for %s" % (type))
-                if status:
-                    if index_xml:
-                        doc_xml = xml.dom.minidom.parseString(index_xml)
-                        index_xml = doc_xml.toprettyxml()
-                    self.write(cr, uid, ids,
-                           {'file_xml_sign': attach or False,
-                               'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                               'msj': msj,
-                               'file_xml_sign_index': index_xml}, context=context)
-                    wf_service.trg_validate(uid, self._name, data.id, 'action_sign', cr)
-            if data.payroll_id:
-                invoice = data.payroll_id
-                type = data.type
-                wf_service = netsvc.LocalService("workflow")
-                attach_v3_2 = data.file_input and data.file_input.id or False
-                index_content = data.file_input and data.file_input.index_content.encode('utf-8') or False
-                if 'cfdi' in type:
-                    # upload file in custom module for pac
-                    type__fc = self.get_driver_fc_sign()
-                    if type in type__fc.keys():
-                        fname_invoice = invoice.number + '.xml' or ''
-                        fdata = base64.encodestring(index_content)
-                        res = type__fc[type](cr, uid, [data.id], fdata, context=context)
-                        msj = tools.ustr(res.get('msg', False))
-                        index_xml = res.get('cfdi_xml', False)
-                        status = res.get('status', False)
-                        if status:
-                            data_attach = {
-                                'name': fname_invoice,
-                                'datas': base64.encodestring(res.get('cfdi_xml', False)),
-                                'datas_fname': fname_invoice,
-                                'description': 'Factura-E XML CFD-I SIGN',
-                                'res_model': 'hr.payslip',
-                                'res_id': invoice.id,
-                            }
-                        # Context, because use a variable type of our code but we
-                        # dont need it.
-                            attach = attachment_obj.create(cr, uid, data_attach, context=None)
-                            if attach_v3_2:
-                                cr.execute("""UPDATE ir_attachment
-                                    SET res_id = Null
-                                    WHERE id = %s""", (attach_v3_2,))
-                            status = True
-                    else:
-                        msj += _("Unknow driver for %s" % (type))
-                if status:
-                    if index_xml:
-                        doc_xml = xml.dom.minidom.parseString(index_xml)
-                        index_xml = doc_xml.toprettyxml()
-                    self.write(cr, uid, ids,
-                           {'file_xml_sign': attach or False,
-                               'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                               'msj': msj,
-                               'file_xml_sign_index': index_xml}, context=context)
-                    wf_service.trg_validate(uid, self._name, data.id, 'action_sign', cr)
+            #~ if data.invoice_id:
+            print context, 'CONTEXTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT'
+            #~ invoice = data.invoice_id
+            type = data.type
+            wf_service = netsvc.LocalService("workflow")
+            attach_v3_2 = data.file_input and data.file_input.id or False
+            index_content = data.file_input and data.file_input.index_content.encode('utf-8') or False
+            if 'cbb' in type:
+                msj = _("Signed")
+                status = True
+            if 'cfd' in type and not 'cfdi' in type:
+                attach = data.file_input and data.file_input.id or False
+                msj = _("Attached Successfully XML CFD 2.2\n")
+                index_xml = index_content
+                status = True
+            if 'cfdi' in type:
+                # upload file in custom module for pac
+                type__fc = self.get_driver_fc_sign()
+                if type in type__fc.keys():
+                    #~ fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
+                    fname_invoice = data.name and data.name + '.xml' or ''
+                    fdata = base64.encodestring(index_content)
+                    res = type__fc[type](cr, uid, [data.id], fdata, context=context)
+                    msj = tools.ustr(res.get('msg', False))
+                    index_xml = res.get('cfdi_xml', False)
+                    status = res.get('status', False)
+                    if status:
+                        data_attach = {
+                            'name': fname_invoice,
+                            'datas': base64.encodestring(res.get('cfdi_xml', False)),
+                            'datas_fname': fname_invoice,
+                            'description': 'Factura-E XML CFD-I SIGN',
+                            #~ 'res_model': 'account.invoice',
+                            'res_model': context.get('active_model'),
+                            'res_id': context.get('active_ids'),
+                        }
+                    # Context, because use a variable type of our code but we
+                    # dont need it.
+                        attach = attachment_obj.create(cr, uid, data_attach, context=None)
+                        if attach_v3_2:
+                            cr.execute("""UPDATE ir_attachment
+                                SET res_id = Null
+                                WHERE id = %s""", (attach_v3_2,))
+                        status = True
+                else:
+                    msj += _("Unknow driver for %s" % (type))
+            if status:
+                if index_xml:
+                    doc_xml = xml.dom.minidom.parseString(index_xml)
+                    index_xml = doc_xml.toprettyxml()
+                self.write(cr, uid, ids,
+                       {'file_xml_sign': attach or False,
+                           'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                           'msj': msj,
+                           'file_xml_sign_index': index_xml}, context=context)
+                wf_service.trg_validate(uid, self._name, data.id, 'action_sign', cr)
+            #~ if data.payroll_id:
+                #~ invoice = data.payroll_id
+                #~ type = data.type
+                #~ wf_service = netsvc.LocalService("workflow")
+                #~ attach_v3_2 = data.file_input and data.file_input.id or False
+                #~ index_content = data.file_input and data.file_input.index_content.encode('utf-8') or False
+                #~ if 'cfdi' in type:
+                    #~ # upload file in custom module for pac
+                    #~ type__fc = self.get_driver_fc_sign()
+                    #~ if type in type__fc.keys():
+                        #~ fname_invoice = invoice.number + '.xml' or ''
+                        #~ fdata = base64.encodestring(index_content)
+                        #~ res = type__fc[type](cr, uid, [data.id], fdata, context=context)
+                        #~ msj = tools.ustr(res.get('msg', False))
+                        #~ index_xml = res.get('cfdi_xml', False)
+                        #~ status = res.get('status', False)
+                        #~ if status:
+                            #~ data_attach = {
+                                #~ 'name': fname_invoice,
+                                #~ 'datas': base64.encodestring(res.get('cfdi_xml', False)),
+                                #~ 'datas_fname': fname_invoice,
+                                #~ 'description': 'Factura-E XML CFD-I SIGN',
+                                #~ 'res_model': 'hr.payslip',
+                                #~ 'res_id': invoice.id,
+                            #~ }
+                        #~ # Context, because use a variable type of our code but we
+                        #~ # dont need it.
+                            #~ attach = attachment_obj.create(cr, uid, data_attach, context=None)
+                            #~ if attach_v3_2:
+                                #~ cr.execute("""UPDATE ir_attachment
+                                    #~ SET res_id = Null
+                                    #~ WHERE id = %s""", (attach_v3_2,))
+                            #~ status = True
+                    #~ else:
+                        #~ msj += _("Unknow driver for %s" % (type))
+                #~ if status:
+                    #~ if index_xml:
+                        #~ doc_xml = xml.dom.minidom.parseString(index_xml)
+                        #~ index_xml = doc_xml.toprettyxml()
+                    #~ self.write(cr, uid, ids,
+                           #~ {'file_xml_sign': attach or False,
+                               #~ 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                               #~ 'msj': msj,
+                               #~ 'file_xml_sign_index': index_xml}, context=context)
+                    #~ wf_service.trg_validate(uid, self._name, data.id, 'action_sign', cr)
         return status
 
     def action_sign(self, cr, uid, ids, context=None):
