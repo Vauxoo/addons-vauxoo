@@ -213,9 +213,7 @@ class ir_attachment_facturae_mx(osv.Model):
         #~ invoice_obj = self.pool.get('account.invoice')
         pac_params_obj = self.pool.get('params.pac')
         for ir_attachment_facturae_mx_id in self.browse(cr, uid, ids, context=context):
-            obj = context['active_model']
-            generic_obj = self.pool.get(obj)
-            active_ids = context['active_ids']
+            
             comprobante = 'cfdi:Comprobante'
             cfd_data = base64.decodestring(fdata or ir_attachment_facturae_mx_id.file_input.index_content)
             if tools.config['test_report_directory']:#TODO: Add if test-enabled:
@@ -231,7 +229,7 @@ class ir_attachment_facturae_mx(osv.Model):
             status = False
             pac_params_ids = pac_params_obj.search(cr, uid, [
                 ('method_type', '=', 'pac_firmar'), (
-                    'company_id', '=', ir_attachment_facturae_mx_id.company_emitter_id.id), (
+                    'company_id', '=', ir_attachment_facturae_mx_id.company_id.id), (
                         'active', '=', True)], limit=1, context=context)
             if pac_params_ids:
                 pac_params = pac_params_obj.browse(
@@ -298,7 +296,7 @@ class ir_attachment_facturae_mx(osv.Model):
                             'cfdi_folio_fiscal': folio_fiscal,
                             'pac_id': pac_params.id,
                         }
-                        generic_obj.write(cr, uid, active_ids, cfdi_data)
+                        
                         rfc_emitter = ir_attachment_facturae_mx_id.company_id and ir_attachment_facturae_mx_id.company_id.partner_id and ir_attachment_facturae_mx_id.company_id.partner_id.vat_split or ""
                         rfc_receiver =  ir_attachment_facturae_mx_id.partner_id and ir_attachment_facturae_mx_id.partner_id.vat_split or ""
                         cbb = self.pool.get('ir.attachment.facturae.mx')._create_qrcode(cr, uid, ids, rfc_emitter, rfc_receiver, folio_fiscal, context=context)
@@ -307,24 +305,31 @@ class ir_attachment_facturae_mx(osv.Model):
                             'cfdi_cbb': open(cbb).read().encode('base64'),# ya lo regresa en base64
                             'cfdi_cadena_original': original_string or False,
                         }
-                        generic_obj.write(cr, uid, active_ids, cfdi_data_cbb_os)
+                        
                         comprobante_new = '</'+comprobante+'>'
+                        
                         msg += _(
                                 u"\nMake Sure to the file really has generated correctly to the SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html")
-                        if cfdi_data.get('cfdi_xml', False):
-                            #cambiar el link
-                            url_pac = '%s<!--Para validar el XML CFDI puede descargar el certificado del PAC desde la siguiente liga: https://liga que proporcione finkok-->' % (
-                                comprobante_new)
-                            cfdi_data['cfdi_xml'] = cfdi_data[
-                                'cfdi_xml'].replace(comprobante_new, url_pac)
-                            file = base64.encodestring(cfdi_data['cfdi_xml'] or '')
-                            cfdi_xml = cfdi_data.pop('cfdi_xml')
-                            if cfdi_xml:
-                                generic_obj.write(cr, uid, active_ids, cfdi_data)
-                                cfdi_data['cfdi_xml'] = cfdi_xml
-                                status = True
-                            else:
-                                msg += _(u"Can't extract the file XML of PAC")
+                        if context.get("active_model", False) and context.get("active_ids", False):
+                            obj = context['active_model']
+                            generic_obj = self.pool.get(obj)
+                            active_ids = context['active_ids']
+                            generic_obj.write(cr, uid, active_ids, cfdi_data)
+                            generic_obj.write(cr, uid, active_ids, cfdi_data_cbb_os)
+                            if cfdi_data.get('cfdi_xml', False):
+                                #cambiar el link
+                                url_pac = '%s<!--Para validar el XML CFDI puede descargar el certificado del PAC desde la siguiente liga: https://liga que proporcione finkok-->' % (
+                                    comprobante_new)
+                                cfdi_data['cfdi_xml'] = cfdi_data[
+                                    'cfdi_xml'].replace(comprobante_new, url_pac)
+                                file = base64.encodestring(cfdi_data['cfdi_xml'] or '')
+                                cfdi_xml = cfdi_data.pop('cfdi_xml')
+                                if cfdi_xml:
+                                    generic_obj.write(cr, uid, active_ids, cfdi_data)
+                                    cfdi_data['cfdi_xml'] = cfdi_xml
+                                    status = True
+                                else:
+                                    msg += _(u"Can't extract the file XML of PAC")
                     else:
                         incidencias = resultado.Incidencias.Incidencia[0]
                         IdIncidencia = resultado.Incidencias.Incidencia[0]['IdIncidencia']
