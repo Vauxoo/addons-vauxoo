@@ -50,14 +50,12 @@
             <field name="number_of_days" eval="2"/>
             <field name="number_of_hours" eval="5"/>
             <field name="type_hours">double</field>
-            <field name="contract_id" ref="hr_contract_antony_lesuisse_cfdi0"/>
             <field name="payslip_id" ref="hr_payslip_al_cfdi0"/>
         </record>
         <record id="hr_payslip_al_cfdi0_inability_line0" model="hr.payslip.inability">
             <field name="amount" eval="150.0"/>
             <field name="number_of_days" eval="2"/>
             <field name="inability_id" ref="l10n_mx_hr_payroll.hr_payroll_inability02"/>
-            <field name="contract_id" ref="hr_contract_antony_lesuisse_cfdi0"/>
             <field name="payslip_id" ref="hr_payslip_al_cfdi0"/>
         </record>
     </data>
