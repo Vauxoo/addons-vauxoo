@@ -154,13 +154,13 @@ class hr_payslip(osv.Model):
                                          help='Folio used in the electronic payroll'),
         'date_invoice_cancel': fields.datetime('Date Payroll Cancelled',
             readonly=True, help='If the payroll is cancelled, save the date when was cancel'),
-        'pac_id': fields.many2one('params.pac', 'Pac', help='Pac used in singned of the invoice'),
+        'pac_id': fields.many2one('params.pac', 'Pac', help='Pac used in singned of the payrol'),
         'partner_id': fields.many2one('res.partner', 'Partner'),
         'sello': fields.text('Stamp', size=512, help='Digital Stamp'),
         'certificado': fields.text('Certificate', size=64,
             help='Certificate used in the Payroll'),
-        'date_payslip_tz':  fields.datetime(string='Date Invoiced with TZ',
-            help='Date of Invoice with Time Zone'),
+        'date_payslip_tz':  fields.datetime(string='Date Payroll with TZ',
+            help='Date of Payroll with Time Zone'),
     }
 
     def _create_original_str(self, cr, uid, ids, invoice_id, context=None):

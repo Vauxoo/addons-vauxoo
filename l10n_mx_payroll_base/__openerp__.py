@@ -24,9 +24,11 @@
     "name": "Mexican Payroll",
     "version": "1.0",
     "depends": [
+                "account",
                 "hr_payroll",
                 "l10n_mx_hr_payroll",
                 "l10n_mx_data_bank",
+                "l10n_mx_partner_address",
                 "l10n_mx_payroll_concept",
                 "l10n_mx_payroll_regime_employee",
                 "l10n_mx_payroll_risk_rank_contract",
@@ -47,9 +49,12 @@ Mexican Payroll
     "demo" : [
         "demo/l10n_mx_facturae_seq_demo.xml",
         "demo/l10n_mx_payroll_demo.xml",
-        "demo/l10n_mx_payroll_contrac.xml",
+        "demo/l10n_mx_payroll_contract.xml",
+        "demo/l10n_mx_payroll_cfdi0.xml",
     ],
-    "test": [],
+    "test": [
+        "test/hr_payroll_cfdi.yml",
+    ],
     "active": False,
     "installable": True,
 }
