@@ -302,7 +302,7 @@ class ir_attachment_facturae_mx(osv.Model):
                             'description': 'Factura-E XML CFD-I SIGN',
                             #~ 'res_model': 'account.invoice',
                             'res_model': context.get('active_model'),
-                            'res_id': context.get('active_ids'),
+                            'res_id': context.get('active_id'),
                         }
                     # Context, because use a variable type of our code but we
                     # dont need it.
