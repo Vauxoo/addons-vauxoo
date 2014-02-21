@@ -131,6 +131,21 @@ class ir_attachment_facturae_mx(osv.Model):
             'State', readonly=True, required=True, help='State of attachments'),
         'journal_id': fields.many2one('account.journal','Journal', required=True),
         'partner_id': fields.many2one('res.partner', 'Partner'),
+        'user_pac': fields.char('User PAC', size=128, help='Name user for login to PAC'),
+        'password_pac': fields.char('Password PAC', size=128, help='Password user for login to PAC'),
+        'url_webservice_pac': fields.char('URL WebService', size=256, help='URL of WebService used for send to sign the XML to PAC'),
+        'certificate_link': fields.char('Certificate link', size=256 , 
+            help='PAC have a public certificate that is necessary by customers to check the validity of the XML and PDF'),
+        'certificate_file': fields.binary('Certificate File',
+            filters='*.cer,*.certificate,*.cert', help='This file .cer is proportionate by the SAT'),
+        'certificate_key_file': fields.binary('Certificate Key File',
+            filters='*.key', help='This file .key is proportionate by the SAT'),
+        'certificate_password': fields.char('Certificate Password', size=64,
+            invisible=False, help='This password is proportionate by the SAT'),
+        'attachment_email': fields.char('Email', size=128, help='Email receptor'),
+        'uuid_xml': fields.char('Folio Fiscal(UUID)', size=256, help='UUID the XML'),
+        'model_source': fields.char('Source Model', size=128, help='Source Model'),
+        'id_source': fields.integer('Source ID', help="Source ID"),
     }
 
     _defaults = {
