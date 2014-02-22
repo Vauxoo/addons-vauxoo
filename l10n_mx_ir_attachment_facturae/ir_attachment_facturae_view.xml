@@ -11,6 +11,7 @@
                     <field name="identifier"/>
                     <field name="type"/>
                     <field name="state"/>
+                    <field name="id_source"/>
                 </search>
             </field>
         </record>
@@ -42,7 +43,6 @@
                             <field name="file_xml_sign"/>
                             <field name="file_pdf"/>
                             <field name="identifier"/>
-                            <field name="file_input_index" invisible="False"/>
                             <field name="file_xml_sign_index"/>
                             <field name="file_pdf_index"/>
                         </group>

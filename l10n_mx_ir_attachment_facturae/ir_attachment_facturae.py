@@ -214,9 +214,8 @@ class ir_attachment_facturae_mx(osv.Model):
             if attachment_id:
                 msj = _("Attached Successfully XML CFD 3.2.")
             xml_data = base64.decodestring(attach.file_input_index)
-            print xml_data
-            #doc_xml = xml.dom.minidom.parseString(xml_data)
-            #index_xml = doc_xml.toprettyxml()
+            #~doc_xml = xml.dom.minidom.parseString(xml_data)
+            #~index_xml = doc_xml.toprettyxml()
             index_xml = ''
             self.write(cr, uid, ids,
                        {'file_input': attachment_id or False,
