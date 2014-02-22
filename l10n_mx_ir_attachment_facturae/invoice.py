@@ -84,7 +84,6 @@ class account_invoice(osv.Model):
                             cr, uid, ids, context=context)
                     attach_ids.append( ir_attach_obj.create(cr, uid, {
                         'name': invoice.fname_invoice, 
-                        #'invoice_id': invoice.id,Deprecated for autonomy
                         'type': invoice.invoice_sequence_id.approval_id.type,
                         'journal_id': invoice.journal_id and invoice.journal_id.id or False,
                         'company_emitter_id': invoice.company_emitter_id.id,

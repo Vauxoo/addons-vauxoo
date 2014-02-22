@@ -198,32 +198,13 @@ class ir_attachment_facturae_mx(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         attachment_obj = self.pool.get('ir.attachment')
         wf_service = netsvc.LocalService("workflow")
-        attach = ''
         msj = ''
-        index_xml = ''
-        status = False
         for attach in self.browse(cr, uid, ids, context=context):
             id_source = attach.id_source
             model_source = attach.model_source
             xml_data = attach.file_input_index
-            #obj_source = self.pool.get(model_source)
             type = attach.type
-            #~if 'cbb' in type:
-                #~msj = _("Confirmed")
-                #~status = True
-            #~if 'cfdi' in type:
             fname = str(attach.id) + '_XML_V3_2.xml' or ''
-            #~if id_source:
-                #agregar funcion generica
-                #~if model_source=='account.invoice':
-                    #~xml_fname, xml_data = obj_source._get_facturae_invoice_xml_data(
-                        #~cr, uid, [id_source], context=context)
-                #~elif model_source=='hr.payslip':
-                    #~xml_fname, xml_data = obj_source._get_facturae_payroll_xml_data(
-                        #~cr, uid, [id_source], context=context)
-                #~else:
-                    #~xml_fname, xml_data = obj_source._get_facturae_invoice_xml_data(
-                        #~cr, uid, [id_source], context=context)
             attachment_id = attachment_obj.create(cr, uid, {
                 'name': fname,
                 'datas': base64.encodestring(xml_data),
@@ -231,48 +212,8 @@ class ir_attachment_facturae_mx(osv.Model):
                 'res_model': model_source or False,
                 'res_id': id_source or False,
             }, context=context)
-            #~status = True
-            #~else:
-                #~xml_fname, xml_data = obj_source._get_facturae_invoice_xml_data(
-                #~cr, uid, [ids], context=context)
-                #~attachment_id = attachment_obj.create(cr, uid, {
-                    #~'name': fname,
-                    #~'datas': base64.encodestring(xml_data),
-                    #~'datas_fname': fname,
-                    #~'res_model': model_source,
-                    #~'res_id': id_source,
-                #~}, context=context)
-                #~status = True
             if attachment_id:
                 msj = _("Attached Successfully XML CFD 3.2.")
-            #~elif 'cfd' in type and not 'cfdi' in type:
-                #~if id_source:
-                    #~xml_fname, xml_data = obj_source._get_facturae_invoice_xml_data(
-                    #~cr, uid, [id_source], context=context)
-                    #~attachment_id = attachment_obj.create(cr, uid, {
-                        #~'name': fname,
-                        #~'datas': base64.encodestring(xml_data),
-                        #~'datas_fname': fname,
-                        #~'res_model': model_source,
-                        #~'res_id': id_source,
-                    #~}, context=context)
-                #~else:
-                    #~xml_fname, xml_data = obj_source._get_facturae_invoice_xml_data(
-                    #~cr, uid, [ids], context=context)
-                    #~attachment_id = attachment_obj.create(cr, uid, {
-                        #~'name': fname,
-                        #~'datas': base64.encodestring(xml_data),
-                        #~'datas_fname': fname,
-                        #~'res_model': model_source,
-                        #~'res_id': id_source,
-                    #~}, context=context)
-                    #~status = True
-                #~if attachment_id:
-                    #~msj = _("Attached Successfully XML CFD 2.2")
-            #~else:
-                #~raise osv.except_osv(_("Type Electronic Invoice Unknow!"), _(
-                    #~"The Type Electronic Invoice:" + (type or '')))
-            #~if status:
             doc_xml = xml.dom.minidom.parseString(xml_data)
             index_xml = doc_xml.toprettyxml()
             self.write(cr, uid, ids,
