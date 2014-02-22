@@ -202,27 +202,29 @@ class ir_attachment_facturae_mx(osv.Model):
         for attach in self.browse(cr, uid, ids, context=context):
             id_source = attach.id_source
             model_source = attach.model_source
-            xml_data = attach.file_input_index
             type = attach.type
             fname = str(attach.id) + '_XML_V3_2.xml' or ''
             attachment_id = attachment_obj.create(cr, uid, {
                 'name': fname,
-                'datas': base64.encodestring(xml_data),
+                'datas': attach.file_input_index,
                 'datas_fname': fname,
                 'res_model': model_source or False,
                 'res_id': id_source or False,
             }, context=context)
             if attachment_id:
                 msj = _("Attached Successfully XML CFD 3.2.")
-            doc_xml = xml.dom.minidom.parseString(xml_data)
-            index_xml = doc_xml.toprettyxml()
+            xml_data = base64.decodestring(attach.file_input_index)
+            print xml_data
+            #doc_xml = xml.dom.minidom.parseString(xml_data)
+            #index_xml = doc_xml.toprettyxml()
+            index_xml = ''
             self.write(cr, uid, ids,
                        {'file_input': attachment_id or False,
                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                            'msj': msj,
-                           'file_input_index': index_xml}, context=context)
+                           'file_input_index': index_xml or ''}, context=context)
             wf_service.trg_validate(uid, self._name, ids[0], 'action_confirm', cr)
-            return status
+            return True
 
     def action_confirm(self, cr, uid, ids, context=None):
         if context is None:

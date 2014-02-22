@@ -176,7 +176,7 @@ class account_invoice(osv.Model):
             if inv_type_facturae.get(invoice.type, False):
                 approval_id = invoice.invoice_sequence_id and invoice.invoice_sequence_id.approval_id or False
                 if approval_id:
-                    xml_fname, xml_data = obj_source._get_facturae_invoice_xml_data(
+                    xml_fname, xml_data = self._get_facturae_invoice_xml_data(
                             cr, uid, ids, context=context)
                     attach_ids.append( ir_attach_obj.create(cr, uid, {
                         'name': invoice.fname_invoice, 
@@ -192,7 +192,7 @@ class account_invoice(osv.Model):
                         'user_pac': '',
                         'password_pac': '',
                         'url_webservice_pac': '',
-                        'file_input_index': xml_data or '',
+                        'file_input_index': base64.encodestring(xml_data),
                         },
                       context=context)#Context, because use a variable type of our code but we dont need it.
                     )
