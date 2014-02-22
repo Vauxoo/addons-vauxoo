@@ -79,7 +79,7 @@ Requires the following programs:
         #'security/ir.model.access.csv',
         #"l10n_mx_facturae_report.xml",
         "wizard/installer_view.xml",
-        #"invoice_view.xml",
+        "invoice_view.xml",
     ],
     "test" : [
         #~ "test/account_invoice_cfd.yml",
