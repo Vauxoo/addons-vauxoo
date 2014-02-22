@@ -302,7 +302,7 @@ class ir_attachment_facturae_mx(osv.Model):
                             'description': 'Factura-E XML CFD-I SIGN',
                             #~ 'res_model': 'account.invoice',
                             'res_model': context.get('active_model'),
-                            'res_id': context.get('active_ids'),
+                            'res_id': context.get('active_id'),
                         }
                     # Context, because use a variable type of our code but we
                     # dont need it.
@@ -437,19 +437,14 @@ class ir_attachment_facturae_mx(osv.Model):
         partner_mail = ''
         user_mail = ''
         status = False
-        company_id = self.pool.get('res.users').browse(
-            cr, uid, uid, context=context).company_id.id
-        invoice = self.browse(cr, uid, ids)[0].invoice_id
-        address_id = self.pool.get('res.partner').address_get(
-            cr, uid, [invoice.partner_id.id], ['invoice'])['invoice']
-        partner_invoice_address = self.pool.get(
-            'res.partner').browse(cr, uid, address_id, context=context)
-        type = self.browse(cr, uid, ids)[0].type
+        data = self.browse(cr, uid, ids)[0]
+        company_id = data.company_id and data.company_id.id or False
+        invoice = data.invoice_id
+        type = data.type
         wf_service = netsvc.LocalService("workflow")
-        fname_invoice = invoice.fname_invoice and invoice.fname_invoice or ''
         adjuntos = self.pool.get('ir.attachment').search(cr, uid, [(
-            'res_model', '=', 'account.invoice'), ('res_id', '=', invoice)])
-        subject = 'Invoice ' + (invoice.number or '')
+            'res_model', '=', data.model_source), ('res_id', '=', data.id_source)])
+        #~ subject = 'Invoice ' + (invoice.number or '')
         for attach in self.pool.get('ir.attachment').browse(cr, uid, adjuntos):
             attachments.append(attach.id)
             attach_name += attach.name + ', '
@@ -475,19 +470,18 @@ class ir_attachment_facturae_mx(osv.Model):
                     except Exception, e:
                         raise osv.except_osv(_("Connection test failed!"), _(
                             "Configure outgoing mail server named FacturaE:\n %s") % tools.ustr(e))
-                mail_compose_message_pool = self.pool.get(
-                    'mail.compose.message')
+                mail_compose_message_pool = self.pool.get('mail.compose.message')
                 email_pool = self.pool.get('email.template')
 
                 report_multicompany_obj = self.pool.get('report.multicompany')
                 report_ids = report_multicompany_obj.search(
-                                cr, uid, [('model', '=', 'account.invoice')], limit=1) or False
+                                cr, uid, [('model', '=',  data.model_source)], limit=1) or False
                 if report_ids:
                     report_name = report_multicompany_obj.browse(cr, uid, report_ids[0]).report_name
                     if report_name:
                         tmp_id = email_pool.search(
                             cr, uid, [(
-                                'model_id.model', '=', 'account.invoice'),
+                                'model_id.model', '=', data.model_source),
                                 ('company_id',
                                  '=', company_id),
                                 ('mail_server_id',
@@ -498,7 +492,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 else:
                     tmp_id = email_pool.search(
                         cr, uid, [(
-                            'model_id.model', '=', 'account.invoice'),
+                            'model_id.model', '=', data.model_source),
                             ('company_id', '=', company_id),
                             ('mail_server_id', '=', smtp_server.id),
                             ('report_template.report_name', '=',
@@ -509,15 +503,15 @@ class ir_attachment_facturae_mx(osv.Model):
                     message = mail_compose_message_pool.onchange_template_id(
                         cr, uid, [], template_id=tmp_id[
                             0], composition_mode=None,
-                        model='account.invoice', res_id=invoice.id, context=context)
+                        model=data.model_source, res_id=data.id_source, context=context)
                     mssg = message.get('value', False)
                     user_mail = obj_users.browse(
                         cr, uid, uid, context=None).email
                     partner_id = mssg.get('partner_ids', False)
-                    partner_mail = obj_partner.browse(
-                        cr, uid, partner_id)[0].email
-                    partner_name = obj_partner.browse(
-                        cr, uid, partner_id)[0].name
+                    partner_mail = data.attachment_email
+                    #~ partner_name = obj_partner.browse(
+                        #~ cr, uid, partner_id)[0].name
+                    partner_name = ''
                     if partner_mail:
                         if user_mail:
                             if mssg.get('partner_ids', False) and tmp_id:
