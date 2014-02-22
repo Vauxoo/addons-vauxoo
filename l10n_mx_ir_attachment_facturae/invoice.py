@@ -71,15 +71,33 @@ class account_invoice(osv.Model):
             'out_refund': True,
             'in_invoice': False,
             'in_refund': False}
+        file_globals = self._get_file_globals(cr, uid, ids, context=context)
+        fname_cer_no_pem = file_globals['fname_cer']
+        cerCSD = open(fname_cer_no_pem).read().encode('base64') #Mejor forma de hacerlo
+        fname_key_no_pem = file_globals['fname_key']
+        keyCSD = fname_key_no_pem and base64.encodestring(open(fname_key_no_pem, "r").read()) or ''
         for invoice in self.browse(cr, uid, ids, context=context):
             if inv_type_facturae.get(invoice.type, False):
                 approval_id = invoice.invoice_sequence_id and invoice.invoice_sequence_id.approval_id or False
                 if approval_id:
+                    xml_fname, xml_data = obj_source._get_facturae_invoice_xml_data(
+                            cr, uid, ids, context=context)
                     attach_ids.append( ir_attach_obj.create(cr, uid, {
-                        'name': invoice.fname_invoice, 'invoice_id': invoice.id,
+                        'name': invoice.fname_invoice, 
+                        #'invoice_id': invoice.id,Deprecated for autonomy
                         'type': invoice.invoice_sequence_id.approval_id.type,
                         'journal_id': invoice.journal_id and invoice.journal_id.id or False,
                         'company_emitter_id': invoice.company_emitter_id.id,
+                        'model_source': self._name or '',
+                        'id_source': invoice.id,
+                        'attachment_email': invoice.partner_id.email or '',
+                        'certificate_password': file_globals.get('password', ''),
+                        'certificate_file': cerCSD or '',
+                        'certificate_key_file': keyCSD or '',
+                        'user_pac': '',
+                        'password_pac': '',
+                        'url_webservice_pac': '',
+                        'file_input_index': xml_data or '',
                         },
                       context=context)#Context, because use a variable type of our code but we dont need it.
                     )
