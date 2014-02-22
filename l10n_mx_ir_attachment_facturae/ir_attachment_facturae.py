@@ -381,7 +381,8 @@ class ir_attachment_facturae_mx(osv.Model):
         msj = ''
         index_pdf = ''
         attachment_obj = self.pool.get('ir.attachment')
-        invoice = self.browse(cr, uid, ids)[0].invoice_id
+        invoice_data = self.browse(cr, uid, ids)
+        invoice = invoice_data[0].invoice_id
         invoice_obj = self.pool.get('account.invoice')
         type = self.browse(cr, uid, ids)[0].type
         wf_service = netsvc.LocalService("workflow")
@@ -393,21 +394,23 @@ class ir_attachment_facturae_mx(osv.Model):
                                            #~ "account.invoice.facturae.webkit",
                                            #~ fname)
 
-        report_multicompany_obj = self.pool.get('report.multicompany')
-        report_ids = report_multicompany_obj.search(
-            cr, uid, [('model', '=', 'account.invoice')], limit=1) or False
-        report_name = "account.invoice.facturae.webkit" 
-        if report_ids:
-            report_name = report_multicompany_obj.browse(cr, uid, report_ids[0]).report_name
+        #~ report_multicompany_obj = self.pool.get('report.multicompany')
+        #~ report_ids = report_multicompany_obj.search(
+            #~ cr, uid, [('model', '=', 'account.invoice')], limit=1) or False
+        report_name = 'account.invoice.facturae.webkit'
+        #~ if report_ids:
+            #~ report_name = report_multicompany_obj.browse(cr, uid, report_ids[0]).report_name
         service = netsvc.LocalService("report."+report_name)
+        #~ print service.create(cr, SUPERUSER_ID, [invoice.id], report_name, context=context)                
         (result, format) = service.create(cr, SUPERUSER_ID, [invoice.id], report_name, context=context)                
         attachment_ids = attachment_obj.search(cr, uid, [
-            ('res_model', '=', 'account.invoice'),
+            ('res_model', '=', invoice_data[0].model_source.encode('ascii','replace')),
             ('res_id', '=', invoice.id),
-            ('datas_fname', '=', invoice.fname_invoice + '.pdf')])
+            ('datas_fname', '=', invoice.fname_invoice.encode('ascii','replace') + '.pdf')])
         for attachment in self.browse(cr, uid, attachment_ids, context=context):
             # TODO: aids.append( attachment.id ) but without error in last
             # write
+            
             aids = attachment.id
             attachment_obj.write(cr, uid, [attachment.id], {
                 'name': invoice.fname_invoice + '.pdf', }, context=context)
