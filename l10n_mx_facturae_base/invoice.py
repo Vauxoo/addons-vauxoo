@@ -173,7 +173,6 @@ class account_invoice(osv.Model):
         fname_key_no_pem = file_globals['fname_key']
         keyCSD = fname_key_no_pem and base64.encodestring(open(fname_key_no_pem, "r").read()) or ''
         for invoice in self.browse(cr, uid, ids, context=context):
-            print invoice,'invoiceinvoiceinvoiceinvoiceinvoiceinvoiceinvoiceinvoiceinvoiceinvoiceinvoiceinvoiceinvoiceinvoiceinvoice'
             if inv_type_facturae.get(invoice.type, False):
                 approval_id = invoice.invoice_sequence_id and invoice.invoice_sequence_id.approval_id or False
                 if approval_id:
@@ -198,7 +197,6 @@ class account_invoice(osv.Model):
                       context=context)#Context, because use a variable type of our code but we dont need it.
                     )
                     ir_attach_obj.signal_confirm(cr, uid, attach_ids, context=context)
-        print attach_ids,'attach_ids'
         if attach_ids:
             result = mod_obj.get_object_reference(cr, uid, 'l10n_mx_ir_attachment_facturae',
                                                             'action_ir_attachment_facturae_mx')
