@@ -196,60 +196,33 @@ class ir_attachment_facturae_mx(osv.Model):
         if context is None:
             context = {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
-        invoice_obj = self.pool.get('account.invoice')
         attachment_obj = self.pool.get('ir.attachment')
-        attach = ''
-        msj = ''
-        index_xml = ''
-        attach = self.browse(cr, uid, ids[0])
-        invoice = attach.invoice_id
-        type = attach.type
         wf_service = netsvc.LocalService("workflow")
-        status = False
-        if 'cbb' in type:
-            msj = _("Confirmed")
-            status = False
-        elif 'cfdi' in type:
-            fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
-                '_V3_2.xml' or ''
-            fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(
-                cr, uid, [invoice.id], context=context)
-            attach = attachment_obj.create(cr, uid, {
-                'name': fname_invoice,
-                'datas': base64.encodestring(xml_data),
-                'datas_fname': fname_invoice,
-                'res_model': 'account.invoice',
-                'res_id': invoice.id,
-            }, context=None)
-            msj = _("Attached Successfully XML CFDI 3.2\n")
-            status = True
-        elif 'cfd' in type and not 'cfdi' in type:
-            fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
-            fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(
-                cr, uid, [invoice.id], context=context)
-            attach = attachment_obj.create(cr, uid, {
-                'name': fname_invoice,
-                'datas': base64.encodestring(xml_data),
-                'datas_fname': fname_invoice,
-                'res_model': 'account.invoice',
-                'res_id': invoice.id,
-            }, context=None)
-            if attach:
-                msj = _("Attached Successfully XML CFD 2.2")
-            status = True
-        else:
-            raise osv.except_osv(_("Type Electronic Invoice Unknow!"), _(
-                "The Type Electronic Invoice:" + (type or '')))
-        if status:
+        msj = ''
+        for attach in self.browse(cr, uid, ids, context=context):
+            id_source = attach.id_source
+            model_source = attach.model_source
+            type = attach.type
+            fname = str(attach.id) + '_XML_V3_2.xml' or ''
+            attachment_id = attachment_obj.create(cr, uid, {
+                'name': fname,
+                'datas': attach.file_input_index,
+                'datas_fname': fname,
+                'res_model': model_source or False,
+                'res_id': id_source or False,
+            }, context=context)
+            if attachment_id:
+                msj = _("Attached Successfully XML CFD 3.2.")
+            xml_data = base64.decodestring(attach.file_input_index)
             doc_xml = xml.dom.minidom.parseString(xml_data)
             index_xml = doc_xml.toprettyxml()
             self.write(cr, uid, ids,
-                       {'file_input': attach or False,
+                       {'file_input': attachment_id or False,
                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                            'msj': msj,
-                           'file_input_index': index_xml}, context=context)
+                           'file_input_index': index_xml or ''}, context=context)
             wf_service.trg_validate(uid, self._name, ids[0], 'action_confirm', cr)
-        return status
+            return True
 
     def action_confirm(self, cr, uid, ids, context=None):
         if context is None:
@@ -268,9 +241,6 @@ class ir_attachment_facturae_mx(osv.Model):
         msj = ''
         status = False
         for data in self.browse(cr, uid, ids, context=context):
-            #~ if data.invoice_id:
-            print context, 'CONTEXTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT'
-            #~ invoice = data.invoice_id
             type = data.type
             wf_service = netsvc.LocalService("workflow")
             attach_v3_2 = data.file_input and data.file_input.id or False
