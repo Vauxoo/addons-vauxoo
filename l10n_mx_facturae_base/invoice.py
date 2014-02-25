@@ -178,7 +178,7 @@ class account_invoice(osv.Model):
                 if approval_id:
                     xml_fname, xml_data = self._get_facturae_invoice_xml_data(
                             cr, uid, ids, context=context)
-                    attach_ids.append( ir_attach_obj.create(cr, uid, {
+                    attach_ids = ir_attach_obj.create(cr, uid, {
                         'name': invoice.fname_invoice, 
                         'type': invoice.invoice_sequence_id.approval_id.type,
                         'journal_id': invoice.journal_id and invoice.journal_id.id or False,
@@ -195,20 +195,19 @@ class account_invoice(osv.Model):
                         'file_input_index': base64.encodestring(xml_data),
                         },
                       context=context)#Context, because use a variable type of our code but we dont need it.
-                    )
-                    ir_attach_obj.signal_confirm(cr, uid, attach_ids, context=context)
-        if attach_ids:
-            result = mod_obj.get_object_reference(cr, uid, 'l10n_mx_ir_attachment_facturae',
-                                                            'action_ir_attachment_facturae_mx')
-            id = result and result[1] or False
-            result = act_obj.read(cr, uid, [id], context=context)[0]
-            #choose the view_mode accordingly
-            result['domain'] = "[('id','in',["+','.join(map(str, attach_ids))+"])]"
-            result['res_id'] = attach_ids and attach_ids[0] or False
-            res = mod_obj.get_object_reference(cr, uid, 'l10n_mx_ir_attachment_facturae', 
-                                                            'view_ir_attachment_facturae_mx_form')
-            result['views'] = [(res and res[1] or False, 'form')]
-            return result
+                    ir_attach_obj.signal_confirm(cr, uid, [attach_ids], context=context)
+                    if attach_ids:
+                        result = mod_obj.get_object_reference(cr, uid, 'l10n_mx_ir_attachment_facturae',
+                                                                        'action_ir_attachment_facturae_mx')
+                        id = result and result[1] or False
+                        result = act_obj.read(cr, uid, [id], context=context)[0]
+                        #choose the view_mode accordingly
+                        result['domain'] = "[('id','in',["+','.join(map(str, [attach_ids]))+"])]"
+                        result['res_id'] = attach_ids or False
+                        res = mod_obj.get_object_reference(cr, uid, 'l10n_mx_ir_attachment_facturae', 
+                                                                        'view_ir_attachment_facturae_mx_form')
+                        result['views'] = [(res and res[1] or False, 'form')]
+                        return result
         return True
 
 
