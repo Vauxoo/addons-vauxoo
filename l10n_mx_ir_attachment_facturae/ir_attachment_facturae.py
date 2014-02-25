@@ -245,14 +245,14 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service = netsvc.LocalService("workflow")
             attach_v3_2 = data.file_input and data.file_input.id or False
             index_content = data.file_input and data.file_input.index_content.encode('utf-8') or False
-            if 'cbb' in type:
-                msj = _("Signed")
-                status = True
-            if 'cfd' in type and not 'cfdi' in type:
-                attach = data.file_input and data.file_input.id or False
-                msj = _("Attached Successfully XML CFD 2.2\n")
-                index_xml = index_content
-                status = True
+            #~if 'cbb' in type:
+                #~msj = _("Signed")
+                #~status = True
+            #~if 'cfd' in type and not 'cfdi' in type:
+                #~attach = data.file_input and data.file_input.id or False
+                #~msj = _("Attached Successfully XML CFD 2.2\n")
+                #~index_xml = index_content
+                #~status = True
             if 'cfdi' in type:
                 # upload file in custom module for pac
                 type__fc = self.get_driver_fc_sign()

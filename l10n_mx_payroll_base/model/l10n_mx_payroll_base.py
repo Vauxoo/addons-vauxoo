@@ -202,6 +202,11 @@ class hr_payslip(osv.Model):
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
         attach_ids = []
+        file_globals = self._get_file_globals(cr, uid, ids, context=context)
+        fname_cer_no_pem = file_globals['fname_cer']
+        cerCSD = open(fname_cer_no_pem).read().encode('base64') #Mejor forma de hacerlo
+        fname_key_no_pem = file_globals['fname_key']
+        keyCSD = fname_key_no_pem and base64.encodestring(open(fname_key_no_pem, "r").read()) or ''
         for payroll in self.browse(cr, uid, ids, context=context):
             cert_id = self.pool.get('res.company')._get_current_certificate(
                 cr, uid, [payroll.company_emitter_id.id],
@@ -217,15 +222,29 @@ class hr_payslip(osv.Model):
                                         payroll.journal_id.sequence_id.approval_ids[0].type
                     except:
                         raise orm.except_orm(_('Warning'), _('This journal does not have an approval'))
+                    xml_fname, xml_data = self._get_facturae_payroll_xml_data(cr, uid, ids, context=context)
                     attach_ids.append( ir_attach_obj.create(cr, uid, {
-                          'name': payroll.number or '/', 'type': type,
-                          'journal_id': payroll.journal_id and payroll.journal_id.id or False,
-                          'payroll_id': payroll and payroll.id or False,
-                          'company_emitter_id': payroll.company_emitter_id.id,
-                          'certificate_id': cert_id,
-                          'partner_id': payroll.partner_id and payroll.partner_id.id or False},
+                        'name': payroll.number or '/',
+                        'type': type,
+                        'journal_id': payroll.journal_id and payroll.journal_id.id or False,
+                        #'payroll_id': payroll and payroll.id or False,
+                        'company_emitter_id': payroll.company_emitter_id.id,
+                        'model_source': self._name or '',
+                        'id_source': payroll.id,
+                        'attachment_email': payroll.employee_id.work_email or payroll.employee_id.address_home_id.email or  '',
+                        'certificate_id': cert_id,
+                        'certificate_password': file_globals.get('password', ''),
+                        'certificate_file': cerCSD or '',
+                        'certificate_key_file': keyCSD or '',
+                        'user_pac': '',
+                        'password_pac': '',
+                        'url_webservice_pac': '',
+                        'file_input_index': base64.encodestring(xml_data),
+                            
+                          #'partner_id': payroll.partner_id and payroll.partner_id.id or False
+                            },
                           
-                          context=None)#Context, because use a variable type of our code but we dont need it.
+                          context=context)#Context, because use a variable type of our code but we dont need it.
                         )
                     ir_attach_obj.signal_confirm(cr, uid, attach_ids, context=context)
                 else:
