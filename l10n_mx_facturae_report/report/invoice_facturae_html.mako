@@ -8,23 +8,26 @@
 <body>
     %for o in objects :
         ${set_global_data(o)}
+        <% dict_data = set_dict_data(o) %>
         <table class="basic_table">
             <tr>
                 <td>
                     <table class="basic_table">
                         <tr>
-                            <td width='50%'>
+                            <td width='20%'>
+                                %if dict_data['@tipoDeComprobante'] == 'ingreso':
+                                    <div class="invoice">${_("Factura:")}
+                                %elif dict_data['@tipoDeComprobante'] == 'egreso':
+                                    <div class="refund">${_("NOTA DE CREDITO:")}
+                                %endif
                             </td>
-                        </tr> 
-                        %for dic in [set_dict_data(o)]:
-						<tr>
-							<td class="total_td">${ dic['Conceptos']['Concepto']['@descripcion'] }</td>
-						</tr>
-						%endfor
+                        </tr>
                     </table>
                 </td>
             </tr>
-        </table>
+        </table>        
+        <table class="line" width="100%" border="1"></table>
+    <p style="page-break-after:always"></p>
     %endfor
 </body>
 </html>
