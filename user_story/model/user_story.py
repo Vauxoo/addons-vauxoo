@@ -162,9 +162,17 @@ class acceptability_criteria(osv.Model):
                                          required=True),
         'accepted': fields.boolean('Accepted',
                                    help='Chek if this criteria apply'),
+        'development': fields.boolean('Development'),
+        'difficulty': fields.selection(
+            [('low','Low'),
+             ('medium','Medium'),
+             ('high','High'),
+             ('na','Not Apply')],
+            string='Difficulty'),
     }
     _defaults = {
         'name': lambda *a: None,
+        'difficulty': 'na',
     }
 
 
