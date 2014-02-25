@@ -442,9 +442,9 @@ class ir_attachment_facturae_mx(osv.Model):
         invoice = data.invoice_id
         type = data.type
         wf_service = netsvc.LocalService("workflow")
-        adjuntos = self.pool.get('ir.attachment').search(cr, uid, [(
-            'res_model', '=', data.model_source), ('res_id', '=', data.id_source)])
-        #~ subject = 'Invoice ' + (invoice.number or '')
+        adjuntos = []
+        data.file_pdf and adjuntos.append(data.file_pdf.id)
+        data.file_xml_sign and adjuntos.append(data.file_xml_sign.id)
         for attach in self.pool.get('ir.attachment').browse(cr, uid, adjuntos):
             attachments.append(attach.id)
             attach_name += attach.name + ', '
@@ -498,9 +498,7 @@ class ir_attachment_facturae_mx(osv.Model):
                             ('report_template.report_name', '=',
                              'account.invoice.facturae.webkit')
                         ], limit=1, context=context)
-                print 'tmp_id', tmp_id
                 if tmp_id:
-                    print 'self._name', self._name
                     message = mail_compose_message_pool.onchange_template_id(
                         cr, uid, [], template_id=tmp_id[
                             0], composition_mode=None,
@@ -510,9 +508,6 @@ class ir_attachment_facturae_mx(osv.Model):
                         cr, uid, uid, context=None).email
                     partner_id = mssg.get('partner_ids', False)
                     partner_mail = data.attachment_email
-                    #~ partner_name = obj_partner.browse(
-                        #~ cr, uid, partner_id)[0].name
-                    partner_name = ''
                     if partner_mail:
                         if user_mail:
                             if mssg.get('partner_ids', False) and tmp_id:
@@ -555,7 +550,7 @@ class ir_attachment_facturae_mx(osv.Model):
                                 _('Warning'), _('This user does not have mail'))
                     else:
                         raise osv.except_osv(
-                            _('Warning'), _('The customer %s does not have mail') % (partner_name))
+                            _('Warning'), _('The attachment does not have mail'))
                 else:
                     raise osv.except_osv(
                         _('Warning'), _('Check that your template is assigned outgoing mail server named %s.\nAlso the field has report_template = Factura Electronica Report.\nTemplate is associated with the same company') % (server_name))
