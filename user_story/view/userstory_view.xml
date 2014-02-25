@@ -183,7 +183,7 @@
     </record>
  
     <record model="ir.actions.act_window" id="action_user_story">
-      <field name="name">User Story</field>
+      <field name="name">User Stories</field>
       <field name="res_model">user.story</field>
       <field name="view_type">form</field>
       <field name="view_mode">tree,form</field>
@@ -200,8 +200,9 @@
       </p>
       </field>
     </record>
-    <menuitem parent="project.menu_project_management" id="menu_action_user_story" action="action_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user"/>
-    <menuitem parent="project.menu_project_management" id="menu_action_my_user_story" action="action_my_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user"/>
+    <menuitem parent="base.menu_main_pm" sequence="2" id="menu_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user" name="User Story"/>
+    <menuitem parent="menu_user_story" id="menu_action_user_story" action="action_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user"/>
+    <menuitem parent="menu_user_story" id="menu_action_my_user_story" action="action_my_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user"/>
   </data>
 </openerp>
 
