@@ -227,7 +227,6 @@ class hr_payslip(osv.Model):
                         'name': payroll.number or '/',
                         'type': type,
                         'journal_id': payroll.journal_id and payroll.journal_id.id or False,
-                        #'payroll_id': payroll and payroll.id or False,
                         'company_emitter_id': payroll.company_emitter_id.id,
                         'model_source': self._name or '',
                         'id_source': payroll.id,
@@ -240,11 +239,8 @@ class hr_payslip(osv.Model):
                         'password_pac': '',
                         'url_webservice_pac': '',
                         'file_input_index': base64.encodestring(xml_data),
-                            
-                          #'partner_id': payroll.partner_id and payroll.partner_id.id or False
                             },
-                          
-                          context=context)#Context, because use a variable type of our code but we dont need it.
+                          context=context)
                         )
                     ir_attach_obj.signal_confirm(cr, uid, attach_ids, context=context)
                 else:

@@ -242,17 +242,11 @@ class ir_attachment_facturae_mx(osv.Model):
         status = False
         for data in self.browse(cr, uid, ids, context=context):
             type = data.type
+            id_source = attach.id_source
+            model_source = attach.model_source
             wf_service = netsvc.LocalService("workflow")
             attach_v3_2 = data.file_input and data.file_input.id or False
             index_content = data.file_input and data.file_input.index_content.encode('utf-8') or False
-            #~if 'cbb' in type:
-                #~msj = _("Signed")
-                #~status = True
-            #~if 'cfd' in type and not 'cfdi' in type:
-                #~attach = data.file_input and data.file_input.id or False
-                #~msj = _("Attached Successfully XML CFD 2.2\n")
-                #~index_xml = index_content
-                #~status = True
             if 'cfdi' in type:
                 # upload file in custom module for pac
                 type__fc = self.get_driver_fc_sign()
@@ -270,9 +264,8 @@ class ir_attachment_facturae_mx(osv.Model):
                             'datas': base64.encodestring(res.get('cfdi_xml', False)),
                             'datas_fname': fname_invoice,
                             'description': 'Factura-E XML CFD-I SIGN',
-                            #~ 'res_model': 'account.invoice',
-                            'res_model': context.get('active_model'),
-                            'res_id': context.get('active_id'),
+                            'res_model': model_source,
+                            'res_id': id_source,
                         }
                     # Context, because use a variable type of our code but we
                     # dont need it.
