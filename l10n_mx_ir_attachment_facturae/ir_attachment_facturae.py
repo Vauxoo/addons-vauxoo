@@ -381,39 +381,31 @@ class ir_attachment_facturae_mx(osv.Model):
         msj = ''
         index_pdf = ''
         attachment_obj = self.pool.get('ir.attachment')
-        invoice_data = self.browse(cr, uid, ids)
-        invoice = invoice_data[0].invoice_id
-        invoice_obj = self.pool.get('account.invoice')
+        attachment_mx_data = self.browse(cr, uid, ids)
         type = self.browse(cr, uid, ids)[0].type
         wf_service = netsvc.LocalService("workflow")
         status = False
         (fileno, fname) = tempfile.mkstemp(
-            '.pdf', 'openerp_' + (invoice.fname_invoice or '') + '__facturae__')
+            '.pdf', 'openerp_pdfcfid_' + (str(attachment_mx_data[0].id) or '') + '__facturae__')
         os.close(fileno)
-        #~ report = invoice_obj.create_report(cr, uid, [invoice.id],
-                                           #~ "account.invoice.facturae.webkit",
-                                           #~ fname)
-
-        #~ report_multicompany_obj = self.pool.get('report.multicompany')
-        #~ report_ids = report_multicompany_obj.search(
-            #~ cr, uid, [('model', '=', 'account.invoice')], limit=1) or False
+        report_multicompany_obj = self.pool.get('report.multicompany')
+        report_ids = report_multicompany_obj.search(
+            cr, uid, [('model', '=', 'ir.attachment.facturae.mx')], limit=1) or False
         report_name = 'account.invoice.facturae.webkit'
-        #~ if report_ids:
-            #~ report_name = report_multicompany_obj.browse(cr, uid, report_ids[0]).report_name
+        if report_ids:
+            report_name = report_multicompany_obj.browse(cr, uid, report_ids[0]).report_name
         service = netsvc.LocalService("report."+report_name)
-        #~ print service.create(cr, SUPERUSER_ID, [invoice.id], report_name, context=context)                
-        (result, format) = service.create(cr, SUPERUSER_ID, [invoice.id], report_name, context=context)                
-        attachment_ids = attachment_obj.search(cr, uid, [
-            ('res_model', '=', invoice_data[0].model_source.encode('ascii','replace')),
-            ('res_id', '=', invoice.id),
-            ('datas_fname', '=', invoice.fname_invoice.encode('ascii','replace') + '.pdf')])
+        (result, format) = service.create(cr, SUPERUSER_ID, [attachment_mx_data[0].id], report_name, context=context)                
+        attachment_ids = attachment_obj.search(cr, uid, [('res_model', '=', self._name),('res_id', '=', attachment_mx_data[0].id)])
+        file_name_attachment = attachment_obj.browse(cr, uid, attachment_ids, context=context)[0].datas_fname
         for attachment in self.browse(cr, uid, attachment_ids, context=context):
             # TODO: aids.append( attachment.id ) but without error in last
             # write
             
             aids = attachment.id
+            
             attachment_obj.write(cr, uid, [attachment.id], {
-                'name': invoice.fname_invoice + '.pdf', }, context=context)
+                'name': file_name_attachment }, context=context)
             status = True
         if status and aids:
             msj = _("Attached Successfully PDF\n")

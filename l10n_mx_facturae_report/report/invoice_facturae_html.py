@@ -117,22 +117,15 @@ class invoice_facturae_html(report_sxw.rml_parse):
         return dicc
 
     def _set_dict_data(self, o):
-        print '---------------------',
-        print o
-        print dzfsdf
-		#~ invoice_id = o.id_source
-        #~ invoice_obj = self.pool.get('account.invoice')
-        #~ attachment_obj = self.pool.get('ir.attachment')
-        #~ invoice_brw = invoice_obj.browse(self.cr, self.uid, [invoice_id])
-        #~ attachment_ids = attachment_obj.search(self.cr, self.uid, [
-            #~ ('res_model', '=', 'account.invoice'),
-            #~ ('res_id', '=', invoice_id),
-            #~ ('datas_fname', '=', invoice_brw[0].fname_invoice +'.xml')])
-        #~ db_data = attachment_obj.browse(self.cr, self.uid, attachment_ids)[0].db_datas
-        #~ xml_data = base64.decodestring(db_data)        
-        #~ dict_data = dict(xmltodict.parse(xml_data)['cfdi:Comprobante'])
-        #~ return self._modify_recursively_dict(dict_data)
-        return True
+        source_id = o.id_source
+        source_obj = self.pool.get(o.model_source.encode('ascii','replace'))
+        attachment_obj = self.pool.get('ir.attachment')
+        source_brw = source_obj.browse(self.cr, self.uid, [source_id])
+        attachment_ids = o.file_xml_sign.id
+        db_data = attachment_obj.browse(self.cr, self.uid, [attachment_ids])[0].db_datas
+        xml_data = base64.decodestring(db_data)        
+        dict_data = dict(xmltodict.parse(xml_data)['cfdi:Comprobante'])
+        return self._modify_recursively_dict(dict_data)
 
     def _get_approval(self):
         return self.approval
@@ -303,7 +296,7 @@ class invoice_facturae_html(report_sxw.rml_parse):
         
 
 webkit_report.WebKitParser('report.account.invoice.facturae.webkit',
-            'account.invoice',
+            'ir.attachment.facturae.mx',
             'addons/l10n_mx_facturae_report/report/invoice_facturae_html.mako',
             parser=invoice_facturae_html)
 
