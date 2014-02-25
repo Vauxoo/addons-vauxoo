@@ -432,27 +432,20 @@ class ir_attachment_facturae_mx(osv.Model):
             context = {}
         attachments = []
         msj = ''
-        attach_name = ''
         state = ''
         partner_mail = ''
         user_mail = ''
         status = False
         data = self.browse(cr, uid, ids)[0]
         company_id = data.company_id and data.company_id.id or False
-        invoice = data.invoice_id
-        type = data.type
         wf_service = netsvc.LocalService("workflow")
-        adjuntos = []
-        data.file_pdf and adjuntos.append(data.file_pdf.id)
-        data.file_xml_sign and adjuntos.append(data.file_xml_sign.id)
-        for attach in self.pool.get('ir.attachment').browse(cr, uid, adjuntos):
-            attachments.append(attach.id)
-            attach_name += attach.name + ', '
+        attachments = []
+        data.file_pdf and attachments.append(data.file_pdf.id)
+        data.file_xml_sign and attachments.append(data.file_xml_sign.id)
         if release.version >= '7':
             obj_ir_mail_server = self.pool.get('ir.mail_server')
             obj_mail_mail = self.pool.get('mail.mail')
             obj_users = self.pool.get('res.users')
-            obj_partner = self.pool.get('res.partner')
             mail_server_id = obj_ir_mail_server.search(cr, uid,
                                                        ['|', ('company_id', '=', company_id), ('company_id', '=', False)], limit=1, order='sequence', context=None)
             if mail_server_id:
