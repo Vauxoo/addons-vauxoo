@@ -475,13 +475,13 @@ class ir_attachment_facturae_mx(osv.Model):
 
                 report_multicompany_obj = self.pool.get('report.multicompany')
                 report_ids = report_multicompany_obj.search(
-                                cr, uid, [('model', '=',  data.model_source)], limit=1) or False
+                                cr, uid, [('model', '=',  self._name)], limit=1) or False
                 if report_ids:
                     report_name = report_multicompany_obj.browse(cr, uid, report_ids[0]).report_name
                     if report_name:
                         tmp_id = email_pool.search(
                             cr, uid, [(
-                                'model_id.model', '=', data.model_source),
+                                'model_id.model', '=', self._name),
                                 ('company_id',
                                  '=', company_id),
                                 ('mail_server_id',
@@ -492,18 +492,19 @@ class ir_attachment_facturae_mx(osv.Model):
                 else:
                     tmp_id = email_pool.search(
                         cr, uid, [(
-                            'model_id.model', '=', data.model_source),
+                            'model_id.model', '=', self._name),
                             ('company_id', '=', company_id),
                             ('mail_server_id', '=', smtp_server.id),
                             ('report_template.report_name', '=',
                              'account.invoice.facturae.webkit')
                         ], limit=1, context=context)
-
+                print 'tmp_id', tmp_id
                 if tmp_id:
+                    print 'self._name', self._name
                     message = mail_compose_message_pool.onchange_template_id(
                         cr, uid, [], template_id=tmp_id[
                             0], composition_mode=None,
-                        model=data.model_source, res_id=data.id_source, context=context)
+                        model = self._name, res_id = data.id, context=context)
                     mssg = message.get('value', False)
                     user_mail = obj_users.browse(
                         cr, uid, uid, context=None).email
