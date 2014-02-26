@@ -125,18 +125,23 @@
                 <th width="15%">${_("Importe")}</th>
             </tr>
             <%row_count = 1%>
-            %for dict in range(0,len(dict_data['Conceptos']['Concepto'])):
+            %if not isinstance(dict_data['Conceptos']['Concepto'], list):
+                <% dict_lines =  [dict_data['Conceptos']['Concepto']]%>
+            %else:
+                <% dict_lines =  dict_data['Conceptos']['Concepto']%>
+            %endif
+            %for dict in range(0,len(dict_lines)):
                 %if (row_count%2==0):
                     <tr  class="nonrow">
                 %else:
                     <tr>
                 %endif
-                    <td width="10%" class="number_td"><% qty = dict_data['Conceptos']['Concepto'][dict]['@cantidad'] %>${ qty or '0.0'}</td>
-                    <td width="10%" class="basic_td"><% uni = dict_data['Conceptos']['Concepto'][dict]['@unidad'] %>${ uni or '0.0'}</td>
-                    <td class="basic_td"><% desc = dict_data['Conceptos']['Concepto'][dict]['@descripcion'] %>${ desc or '0.0'}</td>
-                    <td width="9%" class="number_td"><% vuni = dict_data['Conceptos']['Concepto'][dict]['@valorUnitario'] %>${ vuni or '0.0'}</td>
-                    <td width="15%" class="number_td"><% imp = dict_data['Conceptos']['Concepto'][dict]['@importe'] %>${ imp or '0.0'}</td>
-                </tr>
+                    <td width="10%" class="number_td"><% qty = dict_lines[dict]['@cantidad'] %>${ qty or '0.0'}</td>
+                    <td width="10%" class="basic_td"><% uni = dict_lines[dict]['@unidad'] %>${ uni or '0.0'}</td>
+                    <td class="basic_td"><% desc = dict_lines[dict]['@descripcion'] %>${ desc or '0.0'}</td>
+                    <td width="9%" class="number_td"><% vuni = dict_lines[dict]['@valorUnitario'] %>${ vuni or '0.0'}</td>
+                    <td width="15%" class="number_td"><% imp = dict_lines[dict]['@importe'] %>${ imp or '0.0'}</td>
+                    </tr>
                 <%row_count+=1%>
             %endfor
         </table>
@@ -145,12 +150,21 @@
                 <td class="total_td">${_("Sub Total:")}</td>
                 <td align="right" class="total_td">$ ${ dict_data['@subTotal'] or ''|entity}</td>
             </tr>
-            %for imp in range(0,len(dict_data['Impuestos']['Traslados']['Traslado'])):
+            %if not isinstance(dict_data['Impuestos']['Traslados']['Traslado'], list):
+                <% dict_imp =  [dict_data['Impuestos']['Traslados']['Traslado']]%>
+            %else:
+                <% dict_imp =  dict_data['Impuestos']['Traslados']['Traslado']%>
+            %endif
+            %for imp in range(0,len(dict_imp)):
             <tr>
-                <td class="tax_td"><% imp_name = dict_data['Impuestos']['Traslados']['Traslado'][imp]['@impuesto'] %>
-                                    <% tasa = dict_data['Impuestos']['Traslados']['Traslado'][imp]['@tasa'] %>
-                                    <% text = imp_name+' ('+tasa+') %' %>${ text or '0.0'}</td>
-                <td class="tax_td" align="right"><% importe = dict_data['Impuestos']['Traslados']['Traslado'][imp]['@importe'] %>${importe or ''|entity}</td>
+                <td class="tax_td">
+                    <% imp_name = dict_imp[imp]['@impuesto'] %>
+                    <% tasa = dict_imp[imp]['@tasa'] %>
+                    <% text = imp_name+' ('+tasa+') %' %>${ text or '0.0'}
+                </td>
+                <td class="tax_td" align="right">
+                    <% importe = dict_imp[imp]['@importe'] %>${importe or ''|entity}
+                </td>
             </tr>
             %endfor       
             <tr align="left">
@@ -200,8 +214,22 @@
                     <td class="center_td">${ dict_data['@NumCtaPago'] or 'No identificado'|entity }</td>
                 </tr>
         </table>
+        <table width="100%" class="datos_fiscales">
+            <tr>
+                <td align="left">
+                    ${helper.embed_image('jpeg',str(o.company_id.cif_file), 140, 220)}
+                </td>
+                <td valign="top" align="left">
+                    <b>${_('Sello Digital Emisor:')} </b><br/>
+                    ${ dict_data['@sello'] or ''|entity}<br/>
+                    <b>${_('Sello Digital SAT:')} </b><br/>
+                    ${ dict_data['Complemento']['TimbreFiscalDigital']['@selloSAT'] or ''|entity}</p>
+                </td>
+                <td align="right">
+                </td>
+            </tr>
+        </table>
     <p style="page-break-after:always"></p>
     %endfor
 </body>
 </html>
-
