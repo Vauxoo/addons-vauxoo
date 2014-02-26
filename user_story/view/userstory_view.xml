@@ -46,7 +46,7 @@
 				<group>
 					<field name="planned_hours" />
 					<field name="sk_id" context="{'current_model3': 'sprint.kanban'}" />
-					<field name="priority_level" />
+					<field name="priority_level" widget="selection"/>
                     <field name="categ_ids" widget="many2many_tags" context="{'current_model1': 'project.category'}"/>
 				</group>
 			</group>
