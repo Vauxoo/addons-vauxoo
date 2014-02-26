@@ -20,7 +20,7 @@
                     <field name="journal_id" on_change="onchange_journal_id(journal_id)"/>
                     <field name="payslip_datetime"/>
                     <field name="currency_id"/>
-                    <field name="approval_id"/>
+                    <field name="approval_id" invisible="True"/>
                     <field name="partner_id"/>
                     
                 </xpath>
