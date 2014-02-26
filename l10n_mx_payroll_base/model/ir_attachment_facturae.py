@@ -28,15 +28,15 @@ import xml
 import base64
 import time
 
-class ir_attachment_facturae_mx(osv.Model):
+#~class ir_attachment_facturae_mx(osv.Model):
 
     _inherit = 'ir.attachment.facturae.mx'
 
     _columns = {
         #~'journal_id': fields.many2one('account.journal','Journal'),
         #~'payroll_id': fields.many2one('hr.payslip', 'Payslip'),
-        'company_emitter_id': fields.many2one('res.company', 'Company emmiter'),
-        'certificate_id': fields.many2one('res.company.facturae.certificate'),
+        #~'company_emitter_id': fields.many2one('res.company', 'Company emmiter'),
+        #~'certificate_id': fields.many2one('res.company.facturae.certificate'),
     }
     
     #~def signal_confirm(self, cr, uid, ids, context=None):

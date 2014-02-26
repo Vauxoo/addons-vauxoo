@@ -146,6 +146,8 @@ class ir_attachment_facturae_mx(osv.Model):
         'uuid_xml': fields.char('Folio Fiscal(UUID)', size=256, help='UUID the XML'),
         'model_source': fields.char('Source Model', size=128, help='Source Model'),
         'id_source': fields.integer('Source ID', help="Source ID"),
+        'company_emitter_id': fields.many2one('res.company', 'Company emmiter'),
+        'certificate_id': fields.many2one('res.company.facturae.certificate'),
     }
 
     _defaults = {
