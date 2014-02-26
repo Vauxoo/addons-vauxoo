@@ -95,7 +95,7 @@
             </page>
           
             <page string="GAP analysis results">
-			  <label for="info" colspan="4" string="5.- Conclusion of analysis" class="oe_horizontal_separator oe_clear"/>
+			  <label for="info" colspan="4" string="5.- Technical Conclusions" class="oe_horizontal_separator oe_clear"/>
               <field name="info" colspan="4" placeholder="Add a other info here ..."/> 
               <label for="asumption" colspan="4" string="6.- Asumptions" class="oe_horizontal_separator oe_clear"/>
               <field name="asumption" colspan="4" placeholder="Add a asumptions here ..."/>
