@@ -236,7 +236,6 @@ class ir_attachment_facturae_mx(osv.Model):
         if context is None:
             context = {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
-        invoice_obj = self.pool.get('account.invoice')
         attachment_obj = self.pool.get('ir.attachment')
         attach = ''
         index_xml = ''
@@ -249,11 +248,8 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service = netsvc.LocalService("workflow")
             attach_v3_2 = data.file_input and data.file_input.id or False
             index_content = data.file_input and data.file_input.index_content.encode('utf-8') or False
-            #~if 'cfdi' in type:
-            # upload file in custom module for pac
             type__fc = self.get_driver_fc_sign()
             if type in type__fc.keys():
-                #~ fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
                 fname_invoice = data.name and data.name + '.xml' or ''
                 fdata = base64.encodestring(index_content)
                 res = type__fc[type](cr, uid, [data.id], fdata, context=context)
