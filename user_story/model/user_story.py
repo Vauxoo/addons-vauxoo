@@ -185,6 +185,11 @@ class acceptability_criteria(osv.Model):
                                      type="many2one", string='Project',
                                      help='User Story Project',
                                      store=True),
+        'tag': fields.related('accep_crit_id', 'categ_ids',
+                                     relation="project.category",
+                                     type="many2one", string='Tag',
+                                     help='User Story Project',
+                                     store=True),
     }
     _defaults = {
         'name': lambda *a: None,
