@@ -344,141 +344,103 @@ class ir_attachment_facturae_mx(osv.Model):
             context = {}
         attachments = []
         msj = ''
-        attach_name = ''
         state = ''
         partner_mail = ''
         user_mail = ''
         status = False
-        company_id = self.pool.get('res.users').browse(
-            cr, uid, uid, context=context).company_id.id
-        invoice = self.browse(cr, uid, ids)[0].invoice_id
-        address_id = self.pool.get('res.partner').address_get(
-            cr, uid, [invoice.partner_id.id], ['invoice'])['invoice']
-        partner_invoice_address = self.pool.get(
-            'res.partner').browse(cr, uid, address_id, context=context)
-        type = self.browse(cr, uid, ids)[0].type
+        data = self.browse(cr, uid, ids)[0]
+        company_id = data.company_id and data.company_id.id or False
         wf_service = netsvc.LocalService("workflow")
-        fname_invoice = invoice.fname_invoice and invoice.fname_invoice or ''
-        adjuntos = self.pool.get('ir.attachment').search(cr, uid, [(
-            'res_model', '=', 'account.invoice'), ('res_id', '=', invoice)])
-        subject = 'Invoice ' + (invoice.number or '')
-        for attach in self.pool.get('ir.attachment').browse(cr, uid, adjuntos):
-            attachments.append(attach.id)
-            attach_name += attach.name + ', '
-        if release.version >= '7':
-            obj_ir_mail_server = self.pool.get('ir.mail_server')
-            obj_mail_mail = self.pool.get('mail.mail')
-            obj_users = self.pool.get('res.users')
-            obj_partner = self.pool.get('res.partner')
-            mail_server_id = obj_ir_mail_server.search(cr, uid,
-                                                       ['|', ('company_id', '=', company_id), ('company_id', '=', False)], limit=1, order='sequence', context=None)
-            if mail_server_id:
-                for smtp_server in obj_ir_mail_server.browse(cr, uid,
-                                                             mail_server_id, context=context):
-                    server_name = smtp_server.name
-                    smtp = False
-                    try:
-                        smtp = obj_ir_mail_server.connect(
-                            smtp_server.smtp_host, smtp_server.smtp_port,
-                            user=smtp_server.smtp_user,
-                            password=smtp_server.smtp_pass,
-                            encryption=smtp_server.smtp_encryption,
-                            smtp_debug=smtp_server.smtp_debug)
-                    except Exception, e:
-                        raise osv.except_osv(_("Connection test failed!"), _(
-                            "Configure outgoing mail server named FacturaE:\n %s") % tools.ustr(e))
-                mail_compose_message_pool = self.pool.get(
-                    'mail.compose.message')
-                email_pool = self.pool.get('email.template')
+        attachments = []
+        data.file_pdf and attachments.append(data.file_pdf.id)
+        data.file_xml_sign and attachments.append(data.file_xml_sign.id)
+        obj_ir_mail_server = self.pool.get('ir.mail_server')
+        obj_mail_mail = self.pool.get('mail.mail')
+        obj_users = self.pool.get('res.users')
+        mail_server_id = obj_ir_mail_server.search(cr, uid,
+                                                   ['|', ('company_id', '=', company_id), ('company_id', '=', False)], limit=1, order='sequence', context=None)
+        if mail_server_id:
+            for smtp_server in obj_ir_mail_server.browse(cr, uid,
+                                                         mail_server_id, context=context):
+                server_name = smtp_server.name
+                smtp = False
+                try:
+                    smtp = obj_ir_mail_server.connect(
+                        smtp_server.smtp_host, smtp_server.smtp_port,
+                        user=smtp_server.smtp_user,
+                        password=smtp_server.smtp_pass,
+                        encryption=smtp_server.smtp_encryption,
+                        smtp_debug=smtp_server.smtp_debug)
+                except Exception, e:
+                    raise osv.except_osv(_("Connection test failed!"), _(
+                        "Configure outgoing mail server named FacturaE:\n %s") % tools.ustr(e))
+            mail_compose_message_pool = self.pool.get('mail.compose.message')
+            email_pool = self.pool.get('email.template')
 
-                report_multicompany_obj = self.pool.get('report.multicompany')
-                report_ids = report_multicompany_obj.search(
-                                cr, uid, [('model', '=', 'account.invoice')], limit=1) or False
-                if report_ids:
-                    report_name = report_multicompany_obj.browse(cr, uid, report_ids[0]).report_name
-                    if report_name:
-                        tmp_id = email_pool.search(
-                            cr, uid, [(
-                                'model_id.model', '=', 'account.invoice'),
-                                ('company_id',
-                                 '=', company_id),
-                                ('mail_server_id',
-                                 '=', smtp_server.id),
-                                ('report_template.report_name', '=',
-                                 report_name)
-                            ], limit=1, context=context)
-                else:
-                    tmp_id = email_pool.search(
-                        cr, uid, [(
-                            'model_id.model', '=', 'account.invoice'),
-                            ('company_id', '=', company_id),
-                            ('mail_server_id', '=', smtp_server.id),
-                            ('report_template.report_name', '=',
-                             'account.invoice.facturae.webkit')
-                        ], limit=1, context=context)
-
-                if tmp_id:
-                    message = mail_compose_message_pool.onchange_template_id(
-                        cr, uid, [], template_id=tmp_id[
-                            0], composition_mode=None,
-                        model='account.invoice', res_id=invoice.id, context=context)
-                    mssg = message.get('value', False)
-                    user_mail = obj_users.browse(
-                        cr, uid, uid, context=None).email
-                    partner_id = mssg.get('partner_ids', False)
-                    partner_mail = obj_partner.browse(
-                        cr, uid, partner_id)[0].email
-                    partner_name = obj_partner.browse(
-                        cr, uid, partner_id)[0].name
-                    if partner_mail:
-                        if user_mail:
-                            if mssg.get('partner_ids', False) and tmp_id:
-                                mssg['partner_ids'] = [
-                                    (6, 0, mssg['partner_ids'])]
-                                mssg['attachment_ids'] = [
-                                    (6, 0, attachments)]
-                                mssg_id = self.pool.get(
-                                    'mail.compose.message').create(cr, uid, mssg, context=None)
-                                state = self.pool.get('mail.compose.message').send_mail(
-                                    cr, uid, [mssg_id], context=context)
-                                asunto = mssg['subject']
-                                id_mail = obj_mail_mail.search(
-                                    cr, uid, [('subject', '=', asunto)])
-                                if id_mail:
-                                    for mail in obj_mail_mail.browse(cr, uid, id_mail, context=None):
-                                        if mail.state == 'exception':
-                                            msj = _(
-                                                '\nNot correct email of the user or customer. Check in Menu Configuración\Tecnico\Email\Emails\n')
-                                            raise osv.except_osv(_('Warning'), _('Not correct email of the user or customer. Check in Menu Configuración\Tecnico\Email\Emails'))
-                                    msj = _('Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s') % (
-                                    partner_mail, server_name)
-                                    self.write(cr, uid, ids, {
-                                            'msj': msj,
-                                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
-                                    wf_service.trg_validate(
-                                            uid, self._name, ids[0], 'action_send_customer', cr)
-                                    status = True
-                                else:
-                                    msj = _('Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s') % (
-                                    partner_mail, server_name)
-                                    self.write(cr, uid, ids, {
-                                            'msj': msj,
-                                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
-                                    wf_service.trg_validate(
-                                            uid, self._name, ids[0], 'action_send_customer', cr)
-                                    status = True
-                        else:
-                            raise osv.except_osv(
-                                _('Warning'), _('This user does not have mail'))
+            tmp_id = email_pool.search(cr, uid, [(
+                    'model_id.model', '=', self._name),
+                    ('company_id', '=', company_id),
+                    ('mail_server_id', '=', smtp_server.id),
+                    ], limit=1, context=context)
+            if tmp_id:
+                message = mail_compose_message_pool.onchange_template_id(
+                    cr, uid, [], template_id=tmp_id[
+                        0], composition_mode=None,
+                    model = self._name, res_id = data.id, context=context)
+                mssg = message.get('value', False)
+                user_mail = obj_users.browse(
+                    cr, uid, uid, context=None).email
+                partner_id = mssg.get('partner_ids', False)
+                partner_mail = data.attachment_email
+                if partner_mail:
+                    if user_mail:
+                        if mssg.get('partner_ids', False) and tmp_id:
+                            mssg['partner_ids'] = [
+                                (6, 0, mssg['partner_ids'])]
+                            mssg['attachment_ids'] = [
+                                (6, 0, attachments)]
+                            mssg_id = self.pool.get(
+                                'mail.compose.message').create(cr, uid, mssg, context=None)
+                            state = self.pool.get('mail.compose.message').send_mail(
+                                cr, uid, [mssg_id], context=context)
+                            asunto = mssg['subject']
+                            id_mail = obj_mail_mail.search(
+                                cr, uid, [('subject', '=', asunto)])
+                            if id_mail:
+                                for mail in obj_mail_mail.browse(cr, uid, id_mail, context=None):
+                                    if mail.state == 'exception':
+                                        msj = _(
+                                            '\nNot correct email of the user or customer. Check in Menu Configuración\Tecnico\Email\Emails\n')
+                                        raise osv.except_osv(_('Warning'), _('Not correct email of the user or customer. Check in Menu Configuración\Tecnico\Email\Emails'))
+                                msj = _('Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s') % (
+                                partner_mail, server_name)
+                                self.write(cr, uid, ids, {
+                                        'msj': msj,
+                                        'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
+                                wf_service.trg_validate(
+                                        uid, self._name, ids[0], 'action_send_customer', cr)
+                                status = True
+                            else:
+                                msj = _('Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s') % (
+                                partner_mail, server_name)
+                                self.write(cr, uid, ids, {
+                                        'msj': msj,
+                                        'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
+                                wf_service.trg_validate(
+                                        uid, self._name, ids[0], 'action_send_customer', cr)
+                                status = True
                     else:
                         raise osv.except_osv(
-                            _('Warning'), _('The customer %s does not have mail') % (partner_name))
+                            _('Warning'), _('This user does not have mail'))
                 else:
                     raise osv.except_osv(
-                        _('Warning'), _('Check that your template is assigned outgoing mail server named %s.\nAlso the field has report_template = Factura Electronica Report.\nTemplate is associated with the same company') % (server_name))
+                        _('Warning'), _('The attachment does not have mail'))
             else:
-                raise osv.except_osv(_('Warning'), _('Not Found\
-                outgoing mail server.Configure the outgoing mail server named "FacturaE"'))
+                raise osv.except_osv(
+                    _('Warning'), _('Check that your template is assigned outgoing mail server named %s.\nAlso the field has report_template = Factura Electronica Report.\nTemplate is associated with the same company') % (server_name))
+        else:
+            raise osv.except_osv(_('Warning'), _('Not Found\
+            outgoing mail server.Configure the outgoing mail server named "FacturaE"'))
         return status
 
     def action_send_customer(self, cr, uid, ids, context=None):
