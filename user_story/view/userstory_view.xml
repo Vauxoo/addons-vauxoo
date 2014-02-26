@@ -252,6 +252,13 @@
       <field name="view_mode">tree,form</field>
       <field name="view_id" ref="view_acceptability_criteria_tree"/>
     </record>
+
+    <record model="ir.actions.act_window" id="action_user_story_priority">
+      <field name="name">Priority Level</field>
+      <field name="res_model">user.story.priority</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
  
     <record model="ir.actions.act_window" id="action_user_story">
       <field name="name">User Stories</field>
@@ -275,6 +282,8 @@
     <menuitem parent="menu_user_story" id="menu_action_user_story" action="action_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user"/>
     <menuitem parent="menu_user_story" id="menu_action_my_user_story" action="action_my_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user"/>
     <menuitem parent="menu_user_story" id="menu_acceptability_criteria" action="action_acceptability_criteria" groups="user_story.group_user_story_manager,user_story.group_user_story_user"/>
+    <menuitem parent="base.menu_definitions" id="menu_conf_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user" name="User Story"/>
+    <menuitem parent="menu_conf_user_story" id="menu_config_user_story_priority" action="action_user_story_priority" groups="user_story.group_user_story_manager,user_story.group_user_story_user"/>
   </data>
 </openerp>
 
