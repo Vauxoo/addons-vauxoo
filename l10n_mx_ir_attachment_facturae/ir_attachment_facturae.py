@@ -164,6 +164,9 @@ class ir_attachment_facturae_mx(osv.Model):
         'cadena_original': fields.text('String Original', size=512,
             help='Data stream with the information contained in the electronic \
             invoice'),
+        'sello': fields.text('Stamp', size=512, help='Digital Stamp'),
+        'no_certificado': fields.char('No. Certificate', size=64,
+            help='Number of serie of certificate used for the invoice'),
         'document_source': fields.char('Document Source', size=128, help='Number or reference of document source'),
     }
 
@@ -254,6 +257,7 @@ class ir_attachment_facturae_mx(osv.Model):
             context = {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         attachment_obj = self.pool.get('ir.attachment')
+        wf_service = netsvc.LocalService("workflow")
         attach = ''
         index_xml = ''
         msj = ''
@@ -262,7 +266,6 @@ class ir_attachment_facturae_mx(osv.Model):
             type = data.type
             id_source = data.id_source
             model_source = data.model_source
-            wf_service = netsvc.LocalService("workflow")
             attach_v3_2 = data.file_input and data.file_input.id or False
             index_content = data.file_input and data.file_input.index_content.encode('utf-8') or False
             type__fc = self.get_driver_fc_sign()
