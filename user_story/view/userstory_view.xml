@@ -167,6 +167,7 @@
                 <field name="name"/>
                 <field name="scenario"/>
                 <field name="accep_crit_id"/>
+                <field name="project_id" invisible="True"/>
                 <field name="accepted"/>
                 <field name="development"/>
                 <field name="difficulty"/>
@@ -193,6 +194,7 @@
                 <group expand="1" string="Group By...">
                     <filter name="accept_criteria_user_story_id" string="User Story" context="{'group_by':'accep_crit_id'}"/>
                     <filter name="accept_criteria_difficulty" string="Difficulty" context="{'group_by':'difficulty'}"/>
+                    <filter name="accept_criteria_project_id" string="Project" context="{'group_by':'project_id'}"/>
                 </group>
             </search>
         </field>

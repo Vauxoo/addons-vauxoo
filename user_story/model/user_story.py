@@ -180,6 +180,11 @@ class acceptability_criteria(osv.Model):
              ('high','High'),
              ('na','Not Apply')],
             string='Difficulty'),
+        'project_id': fields.related('accep_crit_id', 'project_id',
+                                     relation="project.project",
+                                     type="many2one", string='Project',
+                                     help='User Story Project',
+                                     store=True),
     }
     _defaults = {
         'name': lambda *a: None,
