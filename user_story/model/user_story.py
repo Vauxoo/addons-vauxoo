@@ -188,7 +188,12 @@ class acceptability_criteria(osv.Model):
         'tag': fields.related('accep_crit_id', 'categ_ids',
                                      relation="project.category",
                                      type="many2one", string='Tag',
-                                     help='User Story Project',
+                                     help='User Story Category',
+                                     store=True),
+        'user_id': fields.related('accep_crit_id', 'user_id',
+                                     relation="res.users",
+                                     type="many2one", string='Responsible Supervisor',
+                                     help='User Story Supervisor',
                                      store=True),
     }
     _defaults = {
