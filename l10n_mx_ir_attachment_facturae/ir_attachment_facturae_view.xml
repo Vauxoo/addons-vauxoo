@@ -10,8 +10,8 @@
                     <field name="name"/>
                     <field name="identifier"/>
                     <field name="type"/>
-                    <field name="invoice_id"/>
                     <field name="state"/>
+                    <field name="id_source"/>
                 </search>
             </field>
         </record>
@@ -37,14 +37,13 @@
                     <sheet string="Attachment Factura-E">
                         <group>
                             <field name="name"/>
-                            <field name="invoice_id" attrs="{'invisible':[('invoice_id','=', False)]}"/>
                             <field name="type"/>
                             <field name="company_id"/>
                             <field name="file_input"/>
                             <field name="file_xml_sign"/>
                             <field name="file_pdf"/>
                             <field name="identifier"/>
-                            <field name="file_input_index" invisible="True"/>
+                            <field name="file_input_index"/>
                             <field name="file_xml_sign_index"/>
                             <field name="file_pdf_index"/>
                         </group>

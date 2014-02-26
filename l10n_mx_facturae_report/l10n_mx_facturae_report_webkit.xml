@@ -3,13 +3,13 @@
     <data>
         <report auto="False"
                 id="account_invoice_facturae_webkit"
-                model="account.invoice"
+                model="ir.attachment.facturae.mx"
                 name="account.invoice.facturae.webkit"
                 file="l10n_mx_facturae_report/report/invoice_facturae_html.mako"
                 string="Factura Electronica Report"
                 report_type="webkit"
                 attachment_use="1"
-                attachment="(object.state in ('open','paid')) and (object.fname_invoice and (object.fname_invoice + ''))"
+                attachment="(object.state in ('signed')) and (object.name and (object.name + ''))"
                 menu="False"/>
         
         <record id="property_l10n_mx_facturae_report_webkit" model="ir.property">

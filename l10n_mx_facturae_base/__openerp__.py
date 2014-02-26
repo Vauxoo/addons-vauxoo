@@ -78,8 +78,9 @@ Requires the following programs:
         #'security/l10n_mx_facturae_security.xml',
         #'security/ir.model.access.csv',
         #"l10n_mx_facturae_report.xml",
+        "l10n_mx_facturae_workflow.xml",
         "wizard/installer_view.xml",
-        #"invoice_view.xml",
+        "invoice_view.xml",
     ],
     "test" : [
         #~ "test/account_invoice_cfd.yml",

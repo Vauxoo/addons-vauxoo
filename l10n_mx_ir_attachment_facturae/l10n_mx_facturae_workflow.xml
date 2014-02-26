@@ -171,15 +171,5 @@
             <field name="condition">True</field>
         </record>
 
-    <!--Inherited the workflow account-->
-        <record id="account.act_open" model="workflow.activity">
-            <field name="action">action_date_assign()
-action_move_create()
-action_number()
-invoice_validate()
-create_ir_attachment_facturae()
-</field>
-        </record>
-
     </data>
 </openerp>

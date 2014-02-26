@@ -3,23 +3,12 @@
     <data>
 
         <act_window
-            context="{'search_default_payroll_id': [active_ids], 'default_payroll_id': [active_ids]}"
+            context="{'search_default_id_source': [active_ids], 'default_id_source': [active_ids]}"
             id="act_payroll_attachment"
             name="Attachment Payroll"
             res_model="ir.attachment.facturae.mx"
             src_model="hr.payslip"
             />
-
-        <record model="ir.ui.view" id="view_ir_attachment_facturae_mx_filter_inherit">
-            <field name="name">view.ir.attachment.facturae.mx.filter.inherit</field>
-            <field name="model">ir.attachment.facturae.mx</field>
-            <field name="inherit_id" ref="l10n_mx_ir_attachment_facturae.view_ir_attachment_facturae_mx_filter"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='type']" position="after">
-                    <field name="payroll_id" attrs="{'invisible':[('payroll_id','=', False)]}"/>
-                </xpath>
-            </field>
-        </record>
 
         <record model="ir.ui.view" id="l10n_mx_hr_payslip_view">
             <field name="name">l10n.mx.hr.payslip.view</field>
@@ -31,7 +20,7 @@
                     <field name="journal_id" on_change="onchange_journal_id(journal_id)"/>
                     <field name="payslip_datetime"/>
                     <field name="currency_id"/>
-                    <field name="approval_id"/>
+                    <field name="approval_id" invisible="True"/>
                     <field name="partner_id"/>
                     
                 </xpath>
@@ -50,24 +39,6 @@
                 </xpath>
             </field>
         </record>
-    </data>
 
-    <data>
-        <record model="ir.ui.view" id="view_ir_attachment_payroll_mx_form">
-            <field name="name">view.ir.attachment.payroll.mx.form</field>
-            <field name="model">ir.attachment.facturae.mx</field>
-            <field name="inherit_id" ref="l10n_mx_ir_attachment_facturae.view_ir_attachment_facturae_mx_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='name']" position="after">
-                    <field name="payroll_id" attrs="{'invisible':[('payroll_id','=', False)]}"/>
-                    <field name="journal_id" attrs="{'invisible':[('payroll_id','=', False)]}"/>
-                </xpath>
-<!--
-                <xpath expr="//field[@name='invoice_id']" position="attributes">
-                    <attribute name="invisible">('payroll_id','&lt;&gt;', False)</attribute>
-                </xpath>
--->
-            </field>
-        </record>
     </data>
 </openerp>
