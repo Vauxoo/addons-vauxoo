@@ -99,6 +99,8 @@
               <field name="info" colspan="4" placeholder="Add a other info here ..."/> 
               <label for="asumption" colspan="4" string="6.- Asumptions" class="oe_horizontal_separator oe_clear"/>
               <field name="asumption" colspan="4" placeholder="Add a asumptions here ..."/>
+              <label for="implementation" colspan="4" string="7.- Implementation Conclusions" class="oe_horizontal_separator oe_clear"/>
+              <field name="implementation" colspan="4" placeholder="Add a Implementation Conclusions here ..."/>
             </page>
             
             <page string="Tasks">

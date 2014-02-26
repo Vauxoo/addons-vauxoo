@@ -118,6 +118,7 @@ class user_story(osv.Model):
                                             the product and location
                                             of that orderpoint"""),
         'categ_ids': fields.many2many('project.category','project_category_user_story_rel','userstory_id','categ_id', string="Tags"),
+        'implementation': fields.text('Implementation Conclusions', translate=True),
     }
     _defaults = {
         'name': lambda *a: None,
