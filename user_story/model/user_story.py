@@ -195,6 +195,11 @@ class acceptability_criteria(osv.Model):
                                      type="many2one", string='Responsible Supervisor',
                                      help='User Story Supervisor',
                                      store=True),
+        'user_execute_id': fields.related('accep_crit_id', 'user_execute_id',
+                                     relation="res.users",
+                                     type="many2one", string='Responsible Execution',
+                                     help='User Story Responsible Execution',
+                                     store=True),
     }
     _defaults = {
         'name': lambda *a: None,

@@ -170,6 +170,7 @@
                 <field name="project_id" invisible="True"/>
                 <field name="tag" invisible="True"/>
                 <field name="user_id" invisible="True"/>
+                <field name="user_execute_id" invisible="True"/>
                 <field name="accepted"/>
                 <field name="development"/>
                 <field name="difficulty"/>
@@ -199,6 +200,7 @@
                     <filter name="accept_criteria_project_id" string="Project" context="{'group_by':'project_id'}"/>
                     <filter name="accept_criteria_tag" string="Tag" context="{'group_by':'tag'}"/>
                     <filter name="accept_criteria_user_id" string="Responsible Supervisor" context="{'group_by':'user_id'}"/>
+                    <filter name="accept_criteria_user_execute_id" string="Responsible Execution" context="{'group_by':'user_execute_id'}"/>
                 </group>
             </search>
         </field>
