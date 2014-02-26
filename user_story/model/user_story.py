@@ -124,7 +124,9 @@ class user_story(osv.Model):
         'user_id': lambda self, cr, uid, ctx: uid,
         'user_execute_id': lambda self, cr, uid, ctx: uid,
         'state': 'draft',
-        # TODO: 'priority_level'
+        'priority_level': lambda self, cr, uid, ctx: self.pool.get(
+            'user.story.priority').search(
+                cr, uid, [('name', 'like', 'Secondary')], context=ctx)[0]
     }
 
     def do_draft(self, cr, uid, ids, context=None):
