@@ -86,24 +86,25 @@ class user_story(osv.Model):
         
      
     _columns = {
-        'name': fields.char('Title', size=255, required=True, readonly=False),
+        'name': fields.char('Title', size=255, required=True, readonly=False,
+            translate=True),
         'owner': fields.char('Owner', size=255, required=True, readonly=False),
         'code': fields.char('Code', size=64, readonly=False),
         'planned_hours': fields.float('Planned Hours'),
         'project_id': fields.many2one('project.project', 'Project',
                                       required=True),
-        'description': fields.text('Description'),
+        'description': fields.text('Description', translate=True),
         'accep_crit_ids': fields.one2many('acceptability.criteria',
                                           'accep_crit_id',
                                           'Acceptability Criteria',
                                           required=False),
-        'info': fields.text('Other Info'),
+        'info': fields.text('Other Info', translate=True),
         'priority_level':fields.many2one(
             'user.story.priority',
             'Priority Level',
             help=('User story level priority, used to define priority for'
                   ' each user story')), 
-        'asumption': fields.text('Asumptions'),
+        'asumption': fields.text('Asumptions', translate=True),
         'date': fields.date('Date'),
         'user_id': fields.many2one('res.users', 'Responsible Supervisor',help="Person responsible for interacting with the client to give details of the progress or completion of the User History, in some cases also the supervisor for the correct execution of the user story."),
         'user_execute_id': fields.many2one('res.users', 'Responsible Execution',help="Person responsible for user story takes place, either by delegating work to other human capital or running it by itself. For delegate work should monitor the proper implementation of associated activities."),
@@ -164,8 +165,9 @@ class acceptability_criteria(osv.Model):
     _name = 'acceptability.criteria'
 
     _columns = {
-        'name': fields.char('Title', size=255, required=True, readonly=False),
-        'scenario': fields.text('Scenario', required=True),
+        'name': fields.char('Title', size=255, required=True, readonly=False,
+            translate=True),
+        'scenario': fields.text('Scenario', required=True, translate=True),
         'accep_crit_id': fields.many2one('user.story',
                                          'User Story',
                                          required=True),
