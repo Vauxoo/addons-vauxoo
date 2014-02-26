@@ -198,6 +198,7 @@
                 <group expand="1" string="Group By...">
                     <filter name="accept_criteria_user_story_id" string="User Story" context="{'group_by':'accep_crit_id'}"/>
                     <filter name="accept_criteria_difficulty" string="Difficulty" context="{'group_by':'difficulty'}"/>
+                    <separator/>
                     <filter name="accept_criteria_project_id" string="Project" context="{'group_by':'project_id'}"/>
                     <filter name="accept_criteria_sprint" string="Sprint" context="{'group_by':'sprint'}"/>
                     <filter name="accept_criteria_tag" string="Tag" context="{'group_by':'tag'}"/>
