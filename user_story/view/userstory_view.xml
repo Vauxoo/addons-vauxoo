@@ -136,6 +136,68 @@
       </field>
     </record>
     
+    <record model="ir.ui.view" id="view_acceptability_criteria_form">
+        <field name="name">acceptability.criteria.form</field>
+        <field name="model">acceptability.criteria</field>
+        <field name="arch" type="xml">
+            <form string="Acceptability Criterion" version="7.0">
+                <sheet string="Acceptability Criterion">
+                    <h1><label for="id" string="Acceptability Criterion" class="oe_horizontal_separator oe_clear"/>
+                        <field name="id" readonly="True"/>
+                        <field name="name" placeholder="Acceptabilit Criterion summary..."/>
+                    </h1>
+                    <group>
+                        <field name="scenario"/>
+                        <field name="accep_crit_id"/>
+                        <field name="accepted"/>
+                        <field name="development"/>
+                        <field name="difficulty"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <record model="ir.ui.view" id="view_acceptability_criteria_tree">
+        <field name="name">acceptability.criteria.tree</field>
+        <field name="model">acceptability.criteria</field>
+        <field name="arch" type="xml">
+            <tree string="Acceptability Criteria">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="scenario"/>
+                <field name="accep_crit_id"/>
+                <field name="accepted"/>
+                <field name="development"/>
+                <field name="difficulty"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_acceptability_criteria_search" model="ir.ui.view">
+        <field name="name">acceptability.criteria.search</field>
+        <field name="model">acceptability.criteria</field>
+        <field name="arch" type="xml">
+            <search string="Acceptability Criteria">
+                <group string="Filter">
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="scenario"/>
+                    <field name="accep_crit_id"/>
+                    <field name="accepted"/>
+                    <field name="development"/>
+                    <field name="difficulty"/>
+                </group>
+                <filter name="accept_criteria_development" string="In Development" domain="[('development','=',True)]"/>
+                <filter name="accept_criteria_accepted" string="Accepted" domain="[('accepted','=',True)]"/>
+                <group expand="1" string="Group By...">
+                    <filter name="accept_criteria_user_story_id" string="User Story" context="{'group_by':'accep_crit_id'}"/>
+                    <filter name="accept_criteria_difficulty" string="Difficulty" context="{'group_by':'difficulty'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
      <record id="view_userstory_search" model="ir.ui.view">
       <field name="name">user.story.search</field>
       <field name="model">user.story</field>
@@ -173,6 +235,7 @@
       </field>
     </record>
     
+
     <record model="ir.actions.act_window" id="action_my_user_story">
       <field name="name">My User Stories Exc</field>
       <field name="res_model">user.story</field>
@@ -180,6 +243,14 @@
       <field name="view_mode">tree,form</field>
       <field name="domain">[('user_id','=',uid),('state','not in',('cancel','done'))]</field>
       <field name="view_id" ref="view_userstory_tree"/>
+    </record>
+ 
+    <record model="ir.actions.act_window" id="action_acceptability_criteria">
+      <field name="name">Acceptability Criteria</field>
+      <field name="res_model">acceptability.criteria</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="view_acceptability_criteria_tree"/>
     </record>
  
     <record model="ir.actions.act_window" id="action_user_story">
@@ -203,6 +274,7 @@
     <menuitem parent="base.menu_main_pm" sequence="2" id="menu_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user" name="User Story"/>
     <menuitem parent="menu_user_story" id="menu_action_user_story" action="action_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user"/>
     <menuitem parent="menu_user_story" id="menu_action_my_user_story" action="action_my_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user"/>
+    <menuitem parent="menu_user_story" id="menu_acceptability_criteria" action="action_acceptability_criteria" groups="user_story.group_user_story_manager,user_story.group_user_story_user"/>
   </data>
 </openerp>
 
