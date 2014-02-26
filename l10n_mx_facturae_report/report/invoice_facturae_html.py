@@ -35,6 +35,9 @@ from openerp import netsvc
 import openerp
 from report_webkit import webkit_report
 import datetime
+import base64
+import xmltodict
+from collections import OrderedDict
 
 class invoice_facturae_html(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context=None):
@@ -44,6 +47,8 @@ class invoice_facturae_html(report_sxw.rml_parse):
             cr, uid, name, context=context)
         self.localcontext.update({
             'set_global_data': self._set_global_data,
+            'set_dict_data': self._set_dict_data,
+            'modify_recursively_dict': self._modify_recursively_dict,
             'facturae_data_dict': self._facturae_data_dict,
             'split_string': self._split_string,
             'company_address': self._company_address,
@@ -61,37 +66,66 @@ class invoice_facturae_html(report_sxw.rml_parse):
             'get_text_promissory' : self._get_text_promissory,
         })
         self.taxes = []
+        self._set_dict_data
+        self._modify_recursively_dict
 
     def _exists_key(self, key):
         return key in self.invoice._columns
 
     def _set_global_data(self, o):
+        #~ try:
+            #~ self._get_data_partner(o.partner_id)
+        #~ except Exception, e:
+            #~ print "exception: %s" % (e)
+            #~ pass
+        #~ try:
+            #~ self.setLang(o.partner_id.lang)
+        #~ except Exception, e:
+            #~ print "exception: %s" % (e)
+            #~ pass
+        #~ try:
+            #~ self._get_company_address(o.id)
+        #~ except Exception, e:
+            #~ print "exception: %s" % (e)
+            #~ pass
+        #~ try:
+            #~ self._get_facturae_data_dict(o)
+        #~ except Exception, e:
+            #~ print "exception: %s" % (e)
+            #~ pass
+        #~ try:
+            #~ self._get_data_certificate(o.id)
+        #~ except Exception, e:
+            #~ print "exception: %s" % (e)
+            #~ pass
         try:
-            self._get_data_partner(o.partner_id)
-        except Exception, e:
-            print "exception: %s" % (e)
-            pass
-        try:
-            self.setLang(o.partner_id.lang)
-        except Exception, e:
-            print "exception: %s" % (e)
-            pass
-        try:
-            self._get_company_address(o.id)
-        except Exception, e:
-            print "exception: %s" % (e)
-            pass
-        try:
-            self._get_facturae_data_dict(o)
-        except Exception, e:
-            print "exception: %s" % (e)
-            pass
-        try:
-            self._get_data_certificate(o.id)
+            self._set_dict_data(o)
         except Exception, e:
             print "exception: %s" % (e)
             pass
         return ""
+
+    def _modify_recursively_dict(self, dicc):
+        for key in dicc.keys():
+            str_key = key.encode('ascii','replace')
+            new_key = ":" in str_key and str_key[str_key.index(':')+1:] or str_key
+            value = dicc.get(str_key, str_key)
+            dicc.update({new_key.decode("ascii", "ignore"): value})
+            if str_key <> new_key: del(dicc[key.encode('ascii','replace')])
+            if type(dicc[new_key.encode('ascii','replace')]) == OrderedDict:
+                self._modify_recursively_dict( dicc[new_key.encode('ascii','replace')] )
+        return dicc
+
+    def _set_dict_data(self, o):
+        source_id = o.id_source
+        source_obj = self.pool.get(o.model_source.encode('ascii','replace'))
+        attachment_obj = self.pool.get('ir.attachment')
+        source_brw = source_obj.browse(self.cr, self.uid, [source_id])
+        attachment_ids = o.file_xml_sign.id
+        db_data = attachment_obj.browse(self.cr, self.uid, [attachment_ids])[0].db_datas
+        xml_data = base64.decodestring(db_data)        
+        dict_data = dict(xmltodict.parse(xml_data)['cfdi:Comprobante'])
+        return self._modify_recursively_dict(dict_data)
 
     def _get_approval(self):
         return self.approval
@@ -262,7 +296,7 @@ class invoice_facturae_html(report_sxw.rml_parse):
         
 
 webkit_report.WebKitParser('report.account.invoice.facturae.webkit',
-            'account.invoice',
+            'ir.attachment.facturae.mx',
             'addons/l10n_mx_facturae_report/report/invoice_facturae_html.mako',
             parser=invoice_facturae_html)
 
