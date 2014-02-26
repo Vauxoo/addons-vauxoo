@@ -98,14 +98,11 @@ class user_story(osv.Model):
                                           'Acceptability Criteria',
                                           required=False),
         'info': fields.text('Other Info'),
-        'priority_level':fields.selection([('urgent','Urgent'),
-                                           ('priority','Priority'),
-                                           ('secondary','Secondary')],
-                                           'Priority Level',
-                                           help='User story level priority,'
-                                                   ' used to define priority'
-                                                   ' for each user story'), 
-        
+        'priority_level':fields.many2one(
+            'user.story.priority',
+            'Priority Level',
+            help=('User story level priority, used to define priority for'
+                  ' each user story')), 
         'asumption': fields.text('Asumptions'),
         'date': fields.date('Date'),
         'user_id': fields.many2one('res.users', 'Responsible Supervisor',help="Person responsible for interacting with the client to give details of the progress or completion of the User History, in some cases also the supervisor for the correct execution of the user story."),
@@ -127,7 +124,7 @@ class user_story(osv.Model):
         'user_id': lambda self, cr, uid, ctx: uid,
         'user_execute_id': lambda self, cr, uid, ctx: uid,
         'state': 'draft',
-        'priority_level':'secondary',
+        # TODO: 'priority_level'
     }
 
     def do_draft(self, cr, uid, ids, context=None):
@@ -145,6 +142,16 @@ class user_story(osv.Model):
     def do_cancel(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'cancelled'},
                           context=context)
+
+class user_story_priority(osv.Model):
+    """
+    User Story Priority Level
+    """
+
+    _name = 'user.story.priority'
+    _columns = {
+        'name': fields.char('Name', size=255, required=True),
+    }
 
 
 class acceptability_criteria(osv.Model):
