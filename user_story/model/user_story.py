@@ -112,7 +112,7 @@ class user_story(osv.Model):
         'task_ids': fields.function(_get_tasks, type='many2many',
                                     relation="project.task",
                                     fnct_inv=_set_task,
-                                    string="Tasksss",
+                                    string="Tasks",
                                     help="""Draft procurement of
                                             the product and location
                                             of that orderpoint"""),
