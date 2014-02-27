@@ -236,7 +236,6 @@ class ir_attachment_facturae_mx(osv.Model):
         if context is None:
             context = {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
-        invoice_obj = self.pool.get('account.invoice')
         attachment_obj = self.pool.get('ir.attachment')
         attach = ''
         index_xml = ''

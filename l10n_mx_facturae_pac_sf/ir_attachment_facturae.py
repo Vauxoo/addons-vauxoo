@@ -163,15 +163,18 @@ class ir_attachment_facturae_mx(osv.Model):
         """
         @params fdata : File.xml codification in base64
         """
+        print '.'*100
         if context is None:
             context = {}
         invoice_obj = self.pool.get('account.invoice')
-        pac_params_obj = invoice_obj.pool.get('params.pac')
-        for ir_attachment_facturae_mx_id in self.browse(cr, uid, ids, context=context):
-            invoice = ir_attachment_facturae_mx_id.invoice_id
-            comprobante = invoice_obj._get_type_sequence(
-                cr, uid, [invoice.id], context=context)
-            cfd_data = base64.decodestring(fdata or invoice_obj.fdata)
+        pac_params_obj = self.pool.get('params.pac')
+        for attachment in self.browse(cr, uid, ids, context=context):
+            invoice = attachment.invoice_id
+            #~ comprobante = invoice_obj._get_type_sequence(cr, uid, [invoice.id], context=context)
+            comprobante = 'cfdi:Comprobante'
+            print 'attachment.file_input_index', attachment.file_input_index
+            #~ cfd_data = base64.decodestring(attachment.file_input_index)
+            cfd_data = attachment.file_input_index
             xml_res_str = xml.dom.minidom.parseString(cfd_data)
             xml_res_addenda = invoice_obj.add_addenta_xml(
                 cr, uid, xml_res_str, comprobante, context=context)
@@ -179,7 +182,7 @@ class ir_attachment_facturae_mx(osv.Model):
             xml_res_str_addenda = xml_res_str_addenda.replace(codecs.BOM_UTF8, '')
             
             if tools.config['test_report_directory']:#TODO: Add if test-enabled:
-                ir_attach_facturae_mx_file_input = ir_attachment_facturae_mx_id.file_input and ir_attachment_facturae_mx_id.file_input or False
+                ir_attach_facturae_mx_file_input = attachment.file_input and attachment.file_input or False
                 fname_suffix = ir_attach_facturae_mx_file_input and ir_attach_facturae_mx_file_input.datas_fname or ''
                 open( os.path.join(tools.config['test_report_directory'], 'l10n_mx_facturae_pac_sf' + '_' + \
                   'before_upload' + '-' + fname_suffix), 'wb+').write( xml_res_str_addenda )
@@ -188,15 +191,16 @@ class ir_attachment_facturae_mx(osv.Model):
             date_format = datetime.strptime(
                 date, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')
             context['date'] = date_format
-            invoice_ids = [invoice.id]
+            #~ invoice_ids = [invoice.id]
             file = False
             msg = ''
             cfdi_xml = False
             status = False
             pac_params_ids = pac_params_obj.search(cr, uid, [
                 ('method_type', '=', 'pac_sf_firmar'), (
-                    'company_id', '=', invoice.company_emitter_id.id), (
+                    'company_id', '=', attachment.company_id.id), (
                         'active', '=', True)], limit=1, context=context)
+            print 'pac_params_ids', pac_params_ids
             if pac_params_ids:
                 pac_params = pac_params_obj.browse(
                     cr, uid, pac_params_ids, context)[0]
@@ -220,17 +224,19 @@ class ir_attachment_facturae_mx(osv.Model):
                     msg += _(u'WARNING, SIGNED IN TEST!!!!\n\n')
                 wsdl_client = WSDL.SOAPProxy(wsdl_url, namespace)
                 if True:  # if wsdl_client:
+                    print '='*50
                     file_globals = invoice_obj._get_file_globals(
-                        cr, uid, invoice_ids, context=context)
-                    fname_cer_no_pem = file_globals['fname_cer']
-                    cerCSD = fname_cer_no_pem and base64.encodestring(
-                        open(fname_cer_no_pem, "r").read()) or ''
-                    fname_key_no_pem = file_globals['fname_key']
-                    keyCSD = fname_key_no_pem and base64.encodestring(
-                        open(fname_key_no_pem, "r").read()) or ''
+                        cr, uid, [43], context=context)
+                    print 'file_globals', file_globals
+                    #~ fname_cer_no_pem = file_globals['fname_cer']
+                    #~ cerCSD = fname_cer_no_pem and base64.encodestring(
+                        #~ open(fname_cer_no_pem, "r").read()) or ''
+                    #~ fname_key_no_pem = file_globals['fname_key']
+                    #~ keyCSD = fname_key_no_pem and base64.encodestring(
+                        #~ open(fname_key_no_pem, "r").read()) or ''
                     cfdi = base64.encodestring(xml_res_str_addenda)
                     zip = False  # Validar si es un comprimido zip, con la extension del archivo
-                    contrasenaCSD = file_globals.get('password', '')
+                    contrasenaCSD = attachment.certificate_password or ''
                     params = [
                         user, password, cfdi, zip]
                     wsdl_client.soapproxy.config.dumpSOAPOut = 0
@@ -239,7 +245,8 @@ class ir_attachment_facturae_mx(osv.Model):
                     wsdl_client.soapproxy.config.dict_encoding = 'UTF-8'
                     resultado = wsdl_client.timbrar(*params)
                     htz = int(invoice_obj._get_time_zone(
-                        cr, uid, [ir_attachment_facturae_mx_id.invoice_id.id], context=context))
+                        cr, uid, [43], context=context))
+                    print 'htz', htz
                     mensaje = _(tools.ustr(resultado['mensaje']))
                     resultados_mensaje = resultado['resultados'] and \
                         resultado['resultados']['mensaje'] or ''
@@ -257,6 +264,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     elif codigo_timbrado == '200' and codigo_validacion == '200':
                         fecha_timbrado = resultado[
                             'resultados']['fechaTimbrado'] or False
+                        print 'fecha_timbrado', fecha_timbrado
                         fecha_timbrado = fecha_timbrado and time.strftime(
                             '%Y-%m-%d %H:%M:%S', time.strptime(
                                 fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
