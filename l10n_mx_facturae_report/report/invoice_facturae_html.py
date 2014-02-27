@@ -36,8 +36,16 @@ import openerp
 from report_webkit import webkit_report
 import datetime
 import base64
+import os
 import xmltodict
 from collections import OrderedDict
+from l10n_mx_invoice_amount_to_text import amount_to_text_es_MX
+import string
+try:
+    from qrcode import *
+except:
+    _logger.error('Execute "sudo pip install pil qrcode" to use l10n_mx_facturae_pac_finkok module.')
+import tempfile
 
 class invoice_facturae_html(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context=None):
@@ -49,6 +57,8 @@ class invoice_facturae_html(report_sxw.rml_parse):
             'set_global_data': self._set_global_data,
             'set_dict_data': self._set_dict_data,
             'modify_recursively_dict': self._modify_recursively_dict,
+            'amount_to_text': self._amount_to_text,
+            'create_qrcode': self._create_qrcode,
             'facturae_data_dict': self._facturae_data_dict,
             'split_string': self._split_string,
             'company_address': self._company_address,
@@ -68,6 +78,8 @@ class invoice_facturae_html(report_sxw.rml_parse):
         self.taxes = []
         self._set_dict_data
         self._modify_recursively_dict
+        self._amount_to_text
+        self._create_qrcode
 
     def _exists_key(self, key):
         return key in self.invoice._columns
@@ -104,7 +116,21 @@ class invoice_facturae_html(report_sxw.rml_parse):
             print "exception: %s" % (e)
             pass
         return ""
-
+    
+    def _amount_to_text(self, num, currency):
+        return amount_to_text_es_MX.get_amount_to_text(self, num, currency)
+        
+    def _create_qrcode(self, rfc_emisor, rfc_receptor, amount_total, folio_fiscal):
+        amount_total = string.zfill("%0.6f"%amount_total,17)
+        qrstr = "?re="+rfc_emisor+"&rr="+rfc_receptor+"&tt="+amount_total+"&id="+folio_fiscal
+        qr = QRCode(version=1, error_correction=ERROR_CORRECT_L)
+        qr.add_data(qrstr)
+        qr.make() # Generate the QRCode itself
+        im = qr.make_image()
+        fname=tempfile.NamedTemporaryFile(suffix='.png',delete=False)
+        im.save(fname.name)
+        return base64.encodestring(open(os.path.join(fname.name), 'rb+').read())
+    
     def _modify_recursively_dict(self, dicc):
         for key in dicc.keys():
             str_key = key.encode('ascii','replace')
