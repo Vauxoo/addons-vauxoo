@@ -545,25 +545,13 @@ class account_invoice(osv.Model):
                 cr, uid, sequence_app_id[0], context=context).type
         if invoice_datetime < '2012-07-01 00:00:00':
             return file_globals
-        elif 'cfd' in type_inv and not 'cfdi' in type_inv:
-            # Search char "," for addons_path, now is multi-path
-            all_paths = tools.config["addons_path"].split(",")
-            for my_path in all_paths:
-                if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT')):
-                    # If dir is in path, save it on real_path
-                    file_globals['fname_xslt'] = my_path and os.path.join(
-                        my_path, 'l10n_mx_facturae_base', 'SAT',
-                        'cadenaoriginal_2_2_l.xslt') or ''
-                    break
-        elif 'cfdi' in type_inv:
-            # Search char "," for addons_path, now is multi-path
-            all_paths = tools.config["addons_path"].split(",")
-            for my_path in all_paths:
-                if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT')):
-                    # If dir is in path, save it on real_path
-                    file_globals['fname_xslt'] = my_path and os.path.join(
-                        my_path, 'l10n_mx_facturae_base', 'SAT','cadenaoriginal_3_2',
-                        'cadenaoriginal_3_2_l.xslt') or ''
+        all_paths = tools.config["addons_path"].split(",")
+        for my_path in all_paths:
+            if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT')):
+                # If dir is in path, save it on real_path
+                file_globals['fname_xslt'] = my_path and os.path.join(
+                    my_path, 'l10n_mx_facturae_base', 'SAT','cadenaoriginal_3_2',
+                    'cadenaoriginal_3_2_l.xslt') or ''
         return file_globals
 
     def _get_facturae_invoice_txt_data(self, cr, uid, ids, context=None):

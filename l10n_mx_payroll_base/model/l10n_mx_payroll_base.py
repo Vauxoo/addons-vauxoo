@@ -216,12 +216,9 @@ class hr_payslip(osv.Model):
                         payroll.journal_id.sequence_id.approval_ids[0] or False
             if approval_id:
                 if payroll.employee_id.address_home_id:
-                    try:
-                        type = payroll.journal_id and payroll.journal_id.sequence_id and \
+                    type = payroll.journal_id and payroll.journal_id.sequence_id and \
                             payroll.journal_id.sequence_id.approval_ids[0] and \
                                         payroll.journal_id.sequence_id.approval_ids[0].type
-                    except:
-                        raise orm.except_orm(_('Warning'), _('This journal does not have an approval'))
                     xml_fname, xml_data = self._get_facturae_payroll_xml_data(cr, uid, ids, context=context)
                     attach_ids.append( ir_attach_obj.create(cr, uid, {
                         'name': payroll.number or '/',
@@ -245,8 +242,6 @@ class hr_payslip(osv.Model):
                     ir_attach_obj.signal_confirm(cr, uid, attach_ids, context=context)
                 else:
                     raise orm.except_orm(_('Warning'), _('This employee does not have a home address'))
-            else:
-                raise orm.except_orm(_('Warning'), _('This journal does not have an approval'))
         if attach_ids:
             result = mod_obj.get_object_reference(cr, uid, 'l10n_mx_ir_attachment_facturae',
                                                             'action_ir_attachment_facturae_mx')
