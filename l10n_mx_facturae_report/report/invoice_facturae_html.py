@@ -37,15 +37,19 @@ from report_webkit import webkit_report
 import datetime
 import base64
 import os
-import xmltodict
 from collections import OrderedDict
 from l10n_mx_invoice_amount_to_text import amount_to_text_es_MX
 import string
+import tempfile
 try:
     from qrcode import *
 except:
-    _logger.error('Execute "sudo pip install pil qrcode" to use l10n_mx_facturae_pac_finkok module.')
-import tempfile
+    _logger.error('Execute "sudo pip install pil qrcode" to use l10n_mx_facturae_report module.')
+try:
+    import xmltodict
+except:
+    _logger.error('Execute "sudo pip install xmltodict" to use l10n_mx_facturae_report module.')
+
 
 class invoice_facturae_html(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context=None):
