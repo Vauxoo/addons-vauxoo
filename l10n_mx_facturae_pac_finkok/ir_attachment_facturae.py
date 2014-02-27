@@ -101,29 +101,6 @@ class ir_attachment_facturae_mx(osv.Model):
                                  required=True, readonly=True, help="Type of Electronic Invoice"),
     }
     
-
-    def _get_time_zone(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        res_users_obj = self.pool.get('res.users')
-        userstz = res_users_obj.browse(cr, uid, [uid])[0].partner_id.tz
-        a = 0
-        if userstz:
-            hours = timezone(userstz)
-            fmt = '%Y-%m-%d %H:%M:%S %Z%z'
-            now = datetime.now()
-            loc_dt = hours.localize(datetime(now.year, now.month, now.day,
-                                             now.hour, now.minute, now.second))
-            timezone_loc = (loc_dt.strftime(fmt))
-            diff_timezone_original = timezone_loc[-5:-2]
-            timezone_original = int(diff_timezone_original)
-            s = str(datetime.now(pytz.timezone(userstz)))
-            s = s[-6:-3]
-            timezone_present = int(s)*-1
-            a = timezone_original + ((
-                timezone_present + timezone_original)*-1)
-        return a
-
     def _finkok_cancel(self, cr, uid, ids, context=None):
         msg = ''
         folio_cancel = ''
