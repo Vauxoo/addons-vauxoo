@@ -193,6 +193,7 @@ class account_invoice(osv.Model):
                         'password_pac': '',
                         'url_webservice_pac': '',
                         'file_input_index': base64.encodestring(xml_data),
+                        'document_source': invoice.number,
                         },
                       context=context)#Context, because use a variable type of our code but we dont need it.
                     ir_attach_obj.signal_confirm(cr, uid, [attach_ids], context=context)
