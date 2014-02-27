@@ -812,7 +812,6 @@ class hr_payslip(osv.Model):
             'cfdi_sello': False,
             'cfdi_no_certificado': False,
             'cfdi_fecha_timbrado': False,
-            'cfdi_xml': False,
             'cfdi_folio_fiscal': False,
             'pac_id': False,
         })
