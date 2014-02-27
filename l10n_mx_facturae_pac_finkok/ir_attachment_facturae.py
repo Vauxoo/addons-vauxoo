@@ -254,7 +254,7 @@ class ir_attachment_facturae_mx(osv.Model):
                             #'cfdi_xml': resultado.xml.encode('ascii', 'xmlcharrefreplace') or '',  # este se necesita en uno que no es base64, ademas no se ve funcionalidad de este campo
                             'cfdi_folio_fiscal': folio_fiscal,
                             'pac_id': pac_params.id,
-                            'cfdi_cbb': open(cbb).read().encode('base64'),# ya lo regresa en base64
+                            #~'cfdi_cbb': open(cbb).read().encode('base64'),# ya lo regresa en base64, ya se crea qr desde funcion
                             'cfdi_cadena_original': original_string or False,
                         }
                         cfdi_xml = resultado.xml.encode('ascii', 'xmlcharrefreplace') or ''
@@ -262,13 +262,11 @@ class ir_attachment_facturae_mx(osv.Model):
                         msg += _(
                                 u"\nMake Sure to the file really has generated correctly to the SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html")
                         if cfdi_xml:
-                            #cambiar el link
                             url_pac = '%s<!--Para validar el XML CFDI puede descargar el certificado del PAC desde la siguiente liga: https://liga que proporcione finkok-->' % (
                                 comprobante_new)
                             cfdi_xml = cfdi_xml.replace(comprobante_new, url_pac)
                             file = base64.encodestring(cfdi_xml or '')
                             self.write(cr, uid, ids, cfdi_data)
-                            #~cfdi_xml = cfdi_data.get('cfdi_xml', False)
                             status = True
                         else:
                             msg += _(u"Can't extract the file XML of PAC")

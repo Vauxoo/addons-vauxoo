@@ -152,7 +152,7 @@ class ir_attachment_facturae_mx(osv.Model):
         'id_source': fields.integer('Source ID', help="Source ID"),
         'company_emitter_id': fields.many2one('res.company', 'Company emmiter'),
         'certificate_id': fields.many2one('res.company.facturae.certificate'),
-        'cfdi_cbb': fields.binary('CFD-I CBB'),
+        #~'cfdi_cbb': fields.binary('CFD-I CBB'),depreciado porque se crea desde funcion
         'cfdi_sello': fields.text('CFD-I Sello', help='Sign assigned by the SAT'),
         'cfdi_no_certificado': fields.char('CFD-I Certificado', size=32,
                                            help='Serial Number of the Certificate'),
