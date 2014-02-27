@@ -91,21 +91,16 @@ class ir_attachment_facturae_mx(osv.Model):
         if context is None:
             context = {}
         msg = ''
-        certificate_obj = self.pool.get('res.company.facturae.certificate')
         pac_params_obj = self.pool.get('params.pac')
-        invoice_obj = self.pool.get('account.invoice')
-        for ir_attachment_facturae_mx_id in self.browse(cr, uid, ids, context=context):
+        for attachment in self.browse(cr, uid, ids, context=context):
             status = False
-            invoice = ir_attachment_facturae_mx_id.invoice_id
             pac_params_ids = pac_params_obj.search(cr, uid, [
                 ('method_type', '=', 'pac_sf_cancelar'),
-                ('company_id', '=', invoice.company_emitter_id.id),
+                ('company_id', '=', attachment.company_id.id),
                 ('active', '=', True),
             ], limit=1, context=context)
             pac_params_id = pac_params_ids and pac_params_ids[0] or False
             if pac_params_id:
-                file_globals = invoice_obj._get_file_globals(
-                    cr, uid, [invoice.id], context=context)
                 pac_params_brw = pac_params_obj.browse(
                     cr, uid, [pac_params_id], context=context)[0]
                 user = pac_params_brw.user
@@ -114,40 +109,35 @@ class ir_attachment_facturae_mx(osv.Model):
                 namespace = pac_params_brw.namespace
                 wsdl_client = False
                 wsdl_client = WSDL.SOAPProxy(wsdl_url, namespace)
-                fname_cer_no_pem = file_globals['fname_cer']
+                fname_cer_no_pem = self.binary2file(cr, uid, ids,
+                        attachment.certificate_file, 'openerp_' + '' + '__certificate__', '.cer')
                 cerCSD = fname_cer_no_pem and base64.encodestring(
                     open(fname_cer_no_pem, "r").read()) or ''
-                fname_key_no_pem = file_globals['fname_key']
+                fname_key_no_pem = self.binary2file(cr, uid, ids,
+                        attachment.certificate_key_file, 'openerp_' +'' + '__key__', '.key')
                 keyCSD = fname_key_no_pem and base64.encodestring(
                     open(fname_key_no_pem, "r").read()) or ''
                 zip = False  # Validar si es un comprimido zip, con la extension del archivo
-                contrasenaCSD = file_globals.get('password', '')
-                uuids = invoice.cfdi_folio_fiscal  # cfdi_folio_fiscal
-                params = [
-                    user, password, uuids, cerCSD, keyCSD, contrasenaCSD]
+                contrasenaCSD = attachment.certificate_password or ''
+                uuids = attachment.cfdi_folio_fiscal  # cfdi_folio_fiscal
+                params = [user, password, uuids, cerCSD, keyCSD, contrasenaCSD]
                 wsdl_client.soapproxy.config.dumpSOAPOut = 0
                 wsdl_client.soapproxy.config.dumpSOAPIn = 0
                 wsdl_client.soapproxy.config.debug = 0
                 wsdl_client.soapproxy.config.dict_encoding = 'UTF-8'
                 result = wsdl_client.cancelar(*params)
                 codigo_cancel = result['status'] or ''
-                status_cancel = result['resultados'] and result[
-                    'resultados']['status'] or ''
-                uuid_nvo = result['resultados'] and result[
-                    'resultados']['uuid'] or ''
+                status_cancel = result['resultados'] and result['resultados']['status'] or ''
+                uuid_nvo = result['resultados'] and result['resultados']['uuid'] or ''
                 mensaje_cancel = _(tools.ustr(result['mensaje']))
-                msg_nvo = result['resultados'] and result[
-                    'resultados']['mensaje'] or ''
-                status_uuid = result['resultados'] and result[
-                    'resultados']['statusUUID'] or ''
-                folio_cancel = result['resultados'] and result[
-                    'resultados']['uuid'] or ''
-                if codigo_cancel == '200' and status_cancel == '200' and\
-                        status_uuid == '201':
+                msg_nvo = result['resultados'] and result['resultados']['mensaje'] or ''
+                status_uuid = result['resultados'] and result['resultados']['statusUUID'] or ''
+                folio_cancel = result['resultados'] and result['resultados']['uuid'] or ''
+                if codigo_cancel == '200' and status_cancel == '200' and status_uuid == '201':
                     msg +=  mensaje_cancel + _('\n- The process of cancellation\
                     has completed correctly.\n- The uuid cancelled is:\
                     ') + folio_cancel
-                    invoice_obj.write(cr, uid, [invoice.id], {
+                    attachment.write({
                         'cfdi_fecha_cancelacion': time.strftime(
                         '%Y-%m-%d %H:%M:%S')
                     })
