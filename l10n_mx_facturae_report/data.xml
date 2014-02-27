@@ -254,6 +254,18 @@ white-space: -pre-wrap;
 white-space: -o-pre-wrap;
 word-wrap: break-word;
 }
+# Nomina style
+
+.imagen_company {
+  vertical-align: top;
+  width: 35%; }              
+
+.data_emitter {
+  vertical-align: top;
+  color: black;
+  text-align: left;
+  font-size: 6; }
+  
 ]]> </field>
             <field name="name">Facturae</field>
         </record>
