@@ -24,7 +24,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import invoice
 #~ import wizard
 import params_pac
 import ir_sequence_approval

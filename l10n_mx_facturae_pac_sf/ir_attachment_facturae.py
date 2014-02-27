@@ -91,21 +91,16 @@ class ir_attachment_facturae_mx(osv.Model):
         if context is None:
             context = {}
         msg = ''
-        certificate_obj = self.pool.get('res.company.facturae.certificate')
         pac_params_obj = self.pool.get('params.pac')
-        invoice_obj = self.pool.get('account.invoice')
-        for ir_attachment_facturae_mx_id in self.browse(cr, uid, ids, context=context):
+        for attachment in self.browse(cr, uid, ids, context=context):
             status = False
-            invoice = ir_attachment_facturae_mx_id.invoice_id
             pac_params_ids = pac_params_obj.search(cr, uid, [
                 ('method_type', '=', 'pac_sf_cancelar'),
-                ('company_id', '=', invoice.company_emitter_id.id),
+                ('company_id', '=', attachment.company_id.id),
                 ('active', '=', True),
             ], limit=1, context=context)
             pac_params_id = pac_params_ids and pac_params_ids[0] or False
             if pac_params_id:
-                file_globals = invoice_obj._get_file_globals(
-                    cr, uid, [invoice.id], context=context)
                 pac_params_brw = pac_params_obj.browse(
                     cr, uid, [pac_params_id], context=context)[0]
                 user = pac_params_brw.user
@@ -114,40 +109,35 @@ class ir_attachment_facturae_mx(osv.Model):
                 namespace = pac_params_brw.namespace
                 wsdl_client = False
                 wsdl_client = WSDL.SOAPProxy(wsdl_url, namespace)
-                fname_cer_no_pem = file_globals['fname_cer']
+                fname_cer_no_pem = self.binary2file(cr, uid, ids,
+                        attachment.certificate_file, 'openerp_' + '' + '__certificate__', '.cer')
                 cerCSD = fname_cer_no_pem and base64.encodestring(
                     open(fname_cer_no_pem, "r").read()) or ''
-                fname_key_no_pem = file_globals['fname_key']
+                fname_key_no_pem = self.binary2file(cr, uid, ids,
+                        attachment.certificate_key_file, 'openerp_' +'' + '__key__', '.key')
                 keyCSD = fname_key_no_pem and base64.encodestring(
                     open(fname_key_no_pem, "r").read()) or ''
                 zip = False  # Validar si es un comprimido zip, con la extension del archivo
-                contrasenaCSD = file_globals.get('password', '')
-                uuids = invoice.cfdi_folio_fiscal  # cfdi_folio_fiscal
-                params = [
-                    user, password, uuids, cerCSD, keyCSD, contrasenaCSD]
+                contrasenaCSD = attachment.certificate_password or ''
+                uuids = attachment.cfdi_folio_fiscal  # cfdi_folio_fiscal
+                params = [user, password, uuids, cerCSD, keyCSD, contrasenaCSD]
                 wsdl_client.soapproxy.config.dumpSOAPOut = 0
                 wsdl_client.soapproxy.config.dumpSOAPIn = 0
                 wsdl_client.soapproxy.config.debug = 0
                 wsdl_client.soapproxy.config.dict_encoding = 'UTF-8'
                 result = wsdl_client.cancelar(*params)
                 codigo_cancel = result['status'] or ''
-                status_cancel = result['resultados'] and result[
-                    'resultados']['status'] or ''
-                uuid_nvo = result['resultados'] and result[
-                    'resultados']['uuid'] or ''
+                status_cancel = result['resultados'] and result['resultados']['status'] or ''
+                uuid_nvo = result['resultados'] and result['resultados']['uuid'] or ''
                 mensaje_cancel = _(tools.ustr(result['mensaje']))
-                msg_nvo = result['resultados'] and result[
-                    'resultados']['mensaje'] or ''
-                status_uuid = result['resultados'] and result[
-                    'resultados']['statusUUID'] or ''
-                folio_cancel = result['resultados'] and result[
-                    'resultados']['uuid'] or ''
-                if codigo_cancel == '200' and status_cancel == '200' and\
-                        status_uuid == '201':
+                msg_nvo = result['resultados'] and result['resultados']['mensaje'] or ''
+                status_uuid = result['resultados'] and result['resultados']['statusUUID'] or ''
+                folio_cancel = result['resultados'] and result['resultados']['uuid'] or ''
+                if codigo_cancel == '200' and status_cancel == '200' and status_uuid == '201':
                     msg +=  mensaje_cancel + _('\n- The process of cancellation\
                     has completed correctly.\n- The uuid cancelled is:\
                     ') + folio_cancel
-                    invoice_obj.write(cr, uid, [invoice.id], {
+                    attachment.write({
                         'cfdi_fecha_cancelacion': time.strftime(
                         '%Y-%m-%d %H:%M:%S')
                     })
@@ -165,37 +155,32 @@ class ir_attachment_facturae_mx(osv.Model):
         """
         if context is None:
             context = {}
-        invoice_obj = self.pool.get('account.invoice')
-        pac_params_obj = invoice_obj.pool.get('params.pac')
-        for ir_attachment_facturae_mx_id in self.browse(cr, uid, ids, context=context):
-            invoice = ir_attachment_facturae_mx_id.invoice_id
-            comprobante = invoice_obj._get_type_sequence(
-                cr, uid, [invoice.id], context=context)
-            cfd_data = base64.decodestring(fdata or invoice_obj.fdata)
-            xml_res_str = xml.dom.minidom.parseString(cfd_data)
-            xml_res_addenda = invoice_obj.add_addenta_xml(
+        pac_params_obj = self.pool.get('params.pac')
+        for attachment in self.browse(cr, uid, ids, context=context):
+            comprobante = 'cfdi:Comprobante'
+            cfd_data = attachment.file_input_index
+            xml_res_str = xml.dom.minidom.parseString(cfd_data.encode('ascii', 'xmlcharrefreplace'))
+            xml_res_addenda = self.add_addenta_xml(
                 cr, uid, xml_res_str, comprobante, context=context)
             xml_res_str_addenda = xml_res_addenda.toxml('UTF-8')
             xml_res_str_addenda = xml_res_str_addenda.replace(codecs.BOM_UTF8, '')
             
             if tools.config['test_report_directory']:#TODO: Add if test-enabled:
-                ir_attach_facturae_mx_file_input = ir_attachment_facturae_mx_id.file_input and ir_attachment_facturae_mx_id.file_input or False
+                ir_attach_facturae_mx_file_input = attachment.file_input and attachment.file_input or False
                 fname_suffix = ir_attach_facturae_mx_file_input and ir_attach_facturae_mx_file_input.datas_fname or ''
                 open( os.path.join(tools.config['test_report_directory'], 'l10n_mx_facturae_pac_sf' + '_' + \
                   'before_upload' + '-' + fname_suffix), 'wb+').write( xml_res_str_addenda )
             compr = xml_res_addenda.getElementsByTagName(comprobante)[0]
             date = compr.attributes['fecha'].value
-            date_format = datetime.strptime(
-                date, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')
+            date_format = datetime.strptime(date, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')
             context['date'] = date_format
-            invoice_ids = [invoice.id]
             file = False
             msg = ''
             cfdi_xml = False
             status = False
             pac_params_ids = pac_params_obj.search(cr, uid, [
                 ('method_type', '=', 'pac_sf_firmar'), (
-                    'company_id', '=', invoice.company_emitter_id.id), (
+                    'company_id', '=', attachment.company_id.id), (
                         'active', '=', True)], limit=1, context=context)
             if pac_params_ids:
                 pac_params = pac_params_obj.browse(
@@ -220,26 +205,16 @@ class ir_attachment_facturae_mx(osv.Model):
                     msg += _(u'WARNING, SIGNED IN TEST!!!!\n\n')
                 wsdl_client = WSDL.SOAPProxy(wsdl_url, namespace)
                 if True:  # if wsdl_client:
-                    file_globals = invoice_obj._get_file_globals(
-                        cr, uid, invoice_ids, context=context)
-                    fname_cer_no_pem = file_globals['fname_cer']
-                    cerCSD = fname_cer_no_pem and base64.encodestring(
-                        open(fname_cer_no_pem, "r").read()) or ''
-                    fname_key_no_pem = file_globals['fname_key']
-                    keyCSD = fname_key_no_pem and base64.encodestring(
-                        open(fname_key_no_pem, "r").read()) or ''
                     cfdi = base64.encodestring(xml_res_str_addenda)
                     zip = False  # Validar si es un comprimido zip, con la extension del archivo
-                    contrasenaCSD = file_globals.get('password', '')
-                    params = [
-                        user, password, cfdi, zip]
+                    contrasenaCSD = attachment.certificate_password or ''
+                    params = [user, password, cfdi, zip]
                     wsdl_client.soapproxy.config.dumpSOAPOut = 0
                     wsdl_client.soapproxy.config.dumpSOAPIn = 0
                     wsdl_client.soapproxy.config.debug = 0
                     wsdl_client.soapproxy.config.dict_encoding = 'UTF-8'
                     resultado = wsdl_client.timbrar(*params)
-                    htz = int(invoice_obj._get_time_zone(
-                        cr, uid, [ir_attachment_facturae_mx_id.invoice_id.id], context=context))
+                    htz = int(self._get_time_zone(cr, uid, ids, context=context))
                     mensaje = _(tools.ustr(resultado['mensaje']))
                     resultados_mensaje = resultado['resultados'] and \
                         resultado['resultados']['mensaje'] or ''
@@ -249,14 +224,12 @@ class ir_attachment_facturae_mx(osv.Model):
                     codigo_validacion = resultado['resultados'] and \
                         resultado['resultados']['status'] or ''
                     if codigo_timbrado == '311' or codigo_validacion == '311':
-                        raise osv.except_osv(_('Warning'), _(
-                            'Unauthorized.\nCode 311'))
+                        raise osv.except_osv(_('Warning'), _('Unauthorized.\nCode 311'))
                     elif codigo_timbrado == '312' or codigo_validacion == '312':
                         raise osv.except_osv(_('Warning'), _(
                             'Failed to consult the SAT.\nCode 312'))
                     elif codigo_timbrado == '200' and codigo_validacion == '200':
-                        fecha_timbrado = resultado[
-                            'resultados']['fechaTimbrado'] or False
+                        fecha_timbrado = resultado['resultados']['fechaTimbrado'] or False
                         fecha_timbrado = fecha_timbrado and time.strftime(
                             '%Y-%m-%d %H:%M:%S', time.strptime(
                                 fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
@@ -264,7 +237,7 @@ class ir_attachment_facturae_mx(osv.Model):
                             fecha_timbrado, '%Y-%m-%d %H:%M:%S') + timedelta(
                                 hours=htz) or False
                         cfdi_data = {
-                            'cfdi_cbb': resultado['resultados']['qrCode'] or False,  # ya lo regresa en base64
+                            #'cfdi_cbb': resultado['resultados']['qrCode'] or False,  # ya lo regresa en base64
                             'cfdi_sello': resultado['resultados'][
                             'selloSAT'] or False,
                             'cfdi_no_certificado': resultado['resultados'][
@@ -288,11 +261,9 @@ class ir_attachment_facturae_mx(osv.Model):
                                 'cfdi_xml'].replace('</"%s">' % (comprobante), url_pac)
                             file = base64.encodestring(
                                 cfdi_data['cfdi_xml'] or '')
-                            # invoice_obj.cfdi_data_write(cr, uid, [invoice.id],
-                            # cfdi_data, context=context)
                             cfdi_xml = cfdi_data.pop('cfdi_xml')
                         if cfdi_xml:
-                            invoice_obj.write(cr, uid, [invoice.id], cfdi_data)
+                            attachment.write(cfdi_data)
                             cfdi_data['cfdi_xml'] = cfdi_xml
                             status = True
                         else:
@@ -305,5 +276,72 @@ class ir_attachment_facturae_mx(osv.Model):
                 raise osv.except_osv(_('Warning'), _(
                     'Not found information from web services of PAC, verify that the configuration of PAC is correct'))
             return {'file': file, 'msg': msg, 'cfdi_xml': cfdi_xml, 'status': status}
+            
+    def add_node(self, node_name=None, attrs=None, parent_node=None,
+                 minidom_xml_obj=None, attrs_types=None, order=False):
+        """
+            @params node_name : Name node to added
+            @params attrs : Attributes to add in node
+            @params parent_node : Node parent where was add new node children
+            @params minidom_xml_obj : File XML where add nodes
+            @params attrs_types : Type of attributes added in the node
+            @params order : If need add the params in order in the XML, add a
+                    list with order to params
+        """
+        if not order:
+            order = attrs
+        new_node = minidom_xml_obj.createElement(node_name)
+        for key in order:
+            if attrs_types[key] == 'attribute':
+                new_node.setAttribute(key, attrs[key])
+            elif attrs_types[key] == 'textNode':
+                key_node = minidom_xml_obj.createElement(key)
+                text_node = minidom_xml_obj.createTextNode(attrs[key])
+
+                key_node.appendChild(text_node)
+                new_node.appendChild(key_node)
+        parent_node.appendChild(new_node)
+        return new_node
+
+    def add_addenta_xml(self, cr, ids, xml_res_str=None, comprobante=None, context=None):
+        """
+         @params xml_res_str : File XML
+         @params comprobante : Name to the Node that contain the information the XML
+        """
+        if context is None:
+            context = {}
+        if xml_res_str:
+            node_Addenda = xml_res_str.getElementsByTagName('cfdi:Addenda')
+            if len(node_Addenda) == 0:
+                nodeComprobante = xml_res_str.getElementsByTagName(
+                    comprobante)[0]
+                node_Addenda = self.add_node(
+                    'cfdi:Addenda', {}, nodeComprobante, xml_res_str, attrs_types={})
+                node_Partner_attrs = {
+                    'xmlns:sf': "http://timbrado.solucionfactible.com/partners",
+                    'xsi:schemaLocation': "http://timbrado.solucionfactible.com/partners https://solucionfactible.com/timbrado/partners/partners.xsd",
+                    'id': "150731"
+                }
+                node_Partner_attrs_types = {
+                    'xmlns:sf': 'attribute',
+                    'xsi:schemaLocation': 'attribute',
+                    'id': 'attribute'
+                }
+                node_Partner = self.add_node('sf:Partner', node_Partner_attrs,
+                                             node_Addenda, xml_res_str, attrs_types=node_Partner_attrs_types)
+            else:
+                node_Partner_attrs = {
+                    'xmlns:sf': "http://timbrado.solucionfactible.com/partners",
+                    'xsi:schemaLocation': "http://timbrado.solucionfactible.com/partners https://solucionfactible.com/timbrado/partners/partners.xsd",
+                    'id': "150731"
+                }
+                node_Partner_attrs_types = {
+                    'xmlns:sf': 'attribute',
+                    'xsi:schemaLocation': 'attribute',
+                    'id': 'attribute'
+                }
+                node_Partner = self.add_node('sf:Partner', node_Partner_attrs,
+                                             node_Addenda, xml_res_str, attrs_types=node_Partner_attrs_types)
+        return xml_res_str
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
