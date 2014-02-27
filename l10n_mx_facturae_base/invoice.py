@@ -1508,3 +1508,17 @@ class account_invoice(osv.Model):
         cfdi_no_certificado = invoice.cfdi_no_certificado or ''
         original_string = '||1.0|'+cfdi_folio_fiscal+'|'+str(cfdi_fecha_timbrado)+'|'+sello+'|'+cfdi_no_certificado+'||'
         return original_string
+
+class ir_attachment_facturae_mx(osv.Model):
+
+    _inherit = 'ir.attachment.facturae.mx'
+
+    def signal_cancel(self, cr, uid, ids, context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        res = super(ir_attachment_facturae_mx, self).signal_cancel(cr, uid, ids)
+        for att in self.browse(cr, uid, ids):
+            if res and att.model_source == 'account.invoice' and att.id_source:
+                if self.pool.get(att.model_source).browse(cr, uid, att.id_source).state != 'cancel':
+                    res = self.pool.get(att.model_source).action_cancel(
+                        cr, uid, [att.id_source], context=context)
+        return res
