@@ -141,7 +141,7 @@ class account_invoice(osv.Model):
         for inv in self.browse(cr, uid, ids, context=context):
             if inv_type_facturae.get(inv.type, False):
                 ir_attach_facturae_mx_ids = ir_attach_facturae_mx_obj.search(
-                    cr, uid, [('invoice_id', '=', inv.id)], context=context)
+                    cr, uid, [('id_source', '=', inv.id), ('model_source', '=', self._name)], context=context)
                 if ir_attach_facturae_mx_ids:
                     for attach in ir_attach_facturae_mx_obj.browse(cr, uid, ir_attach_facturae_mx_ids, context=context):
                         if attach.state <> 'cancel':
@@ -307,13 +307,6 @@ class account_invoice(osv.Model):
             'date_invoice_cancel': False,
         })
         return super(account_invoice, self).action_cancel_draft(cr, uid, ids, args)
-
-    def action_cancel(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        self.write(cr, uid, ids, {
-                   'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
-        return super(account_invoice, self).action_cancel(cr, uid, ids, context=context)
 
     def action_date_assign(self, cr, uid, ids, *args):
         context = {}
