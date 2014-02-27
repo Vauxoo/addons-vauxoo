@@ -72,7 +72,6 @@ def exec_command_pipe(*args):
 class ir_attachment_facturae_mx(osv.Model):
     _inherit = 'ir.attachment.facturae.mx'
 
-    
 
     def _get_type(self, cr, uid, ids=None, context=None):
         types = super(ir_attachment_facturae_mx, self)._get_type(
@@ -104,17 +103,14 @@ class ir_attachment_facturae_mx(osv.Model):
     def _finkok_cancel(self, cr, uid, ids, context=None):
         msg = ''
         folio_cancel = ''
-        invoices = []
+        UUIDS = []
         status = False
-        certificate_obj = self.pool.get('res.company.facturae.certificate')
         pac_params_obj = self.pool.get('params.pac')
-        invoice_obj = self.pool.get('account.invoice')
         dict_error = {'202' : _('UUID previously canceled'), '203' : _('UUID does not match the RFC\
             sender neither of the applicant'), '205' : _('Not exist UUID'),
             '708' : _('Could not connect to the SAT')}
         for ir_attachment_facturae_mx_id in self.browse(cr, uid, ids, context=context):
             status = False
-            invoice = ir_attachment_facturae_mx_id.invoice_id
             pac_params_ids = pac_params_obj.search(cr, uid, [
                 ('method_type', '=', 'pac_cancelar'),
                 #~ ('company_id', '=', invoice.company_emitter_id.id),
@@ -124,7 +120,6 @@ class ir_attachment_facturae_mx(osv.Model):
             pac_params_id = pac_params_ids and pac_params_ids[0] or False
             taxpayer_id = ir_attachment_facturae_mx_id.company_id.vat[2::] or ir_attachment_facturae_mx_id.company_id.partner_id.vat[2::] or False
             if pac_params_id:
-                file_globals = invoice_obj._get_file_globals(cr, uid, [invoice.id], context=context)
                 pac_params_brw = pac_params_obj.browse(cr, uid, [pac_params_id], context=context)[0]
                 username = pac_params_brw.user
                 password = pac_params_brw.password
@@ -132,11 +127,16 @@ class ir_attachment_facturae_mx(osv.Model):
                 namespace = pac_params_brw.namespace
                 if 'demo' in wsdl_url or 'testing' in wsdl_url:
                     msg += _(u'WARNING, CANCEL IN TEST!!!!')
-                fname_cer_no_pem = file_globals['fname_cer']
-                cerCSD = open(fname_cer_no_pem).read().encode('base64')
-                fname_key_no_pem = file_globals['fname_key']
-                fname_key_encry_pem = fname_key_no_pem.replace('.key', '.key.encryp')
-                cmd = 'openssl rsa -in %s -des3 -out %s -passout pass:%s' %(fname_key_no_pem, fname_key_encry_pem, password)
+                cerCSD_file = self.binary2file(cr, uid, ids,
+                        ir_attachment_facturae_mx_id.certificate_file, 'openerp_' + '' + '__certificate__',
+                        '.cer')
+                keyCSD_file = self.binary2file(cr, uid, ids,
+                        ir_attachment_facturae_mx_id.certificate_key_file, 'openerp_' +'' + '__key__',
+                        '.key')
+                (fileno_xml, fname_key_encry_pem) = tempfile.mkstemp('.key.encryp', 'openerp_' + '__key_encryp__')
+                with open(cerCSD_file, 'r') as cer_file:
+                    cerCSD = cer_file.read()
+                cmd = 'openssl rsa -in %s -des3 -out %s -passout pass:%s' %(keyCSD_file, fname_key_encry_pem, password)
                 args = tuple(cmd.split(' '))
                 input, output = exec_command_pipe(*args)
                 time.sleep(2)
@@ -148,11 +148,11 @@ class ir_attachment_facturae_mx(osv.Model):
                     client = Client(wsdl_url, cache=None)
                 except:
                     raise orm.except_orm(_('Warning'), _('Connection lost, verify your internet conection or verify your PAC'))
-                folio_cancel = invoice.cfdi_folio_fiscal
-                invoices.append(folio_cancel)
-                invoices_list = client.factory.create("UUIDS")
-                invoices_list.uuids.string = invoices
-                params = [invoices_list, username, password, taxpayer_id, cerCSD, keyCSD]
+                folio_cancel = ir_attachment_facturae_mx_id.cfdi_folio_fiscal
+                UUIDS.append(folio_cancel)
+                UUIDS_list = client.factory.create("UUIDS")
+                UUIDS_list.uuids.string = UUIDS
+                params = [UUIDS_list, username, password, taxpayer_id, cerCSD.encode('base64'), keyCSD]
                 result = client.service.cancel(*params)
                 get_receipt = [username, password, taxpayer_id, folio_cancel]
                 query_pending_cancellation = [username, password, folio_cancel]
@@ -167,7 +167,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     if EstatusUUID == '201':
                         msg += _('\n- The process of cancellation has completed correctly.\n\
                                     The uuid cancelled is: ') + folio_cancel
-                        invoice_obj.write(cr, uid, [invoice.id], {
+                        self.write(cr, uid, [ir_attachment_facturae_mx_id.id], {
                                         'cfdi_fecha_cancelacion': time.strftime('%Y-%m-%d %H:%M:%S')
                         })
                         status = True
@@ -254,7 +254,7 @@ class ir_attachment_facturae_mx(osv.Model):
                             #'cfdi_xml': resultado.xml.encode('ascii', 'xmlcharrefreplace') or '',  # este se necesita en uno que no es base64, ademas no se ve funcionalidad de este campo
                             'cfdi_folio_fiscal': folio_fiscal,
                             'pac_id': pac_params.id,
-                            'cfdi_cbb': open(cbb).read().encode('base64'),# ya lo regresa en base64
+                            #~'cfdi_cbb': open(cbb).read().encode('base64'),# ya lo regresa en base64, ya se crea qr desde funcion
                             'cfdi_cadena_original': original_string or False,
                         }
                         cfdi_xml = resultado.xml.encode('ascii', 'xmlcharrefreplace') or ''
@@ -262,13 +262,11 @@ class ir_attachment_facturae_mx(osv.Model):
                         msg += _(
                                 u"\nMake Sure to the file really has generated correctly to the SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html")
                         if cfdi_xml:
-                            #cambiar el link
                             url_pac = '%s<!--Para validar el XML CFDI puede descargar el certificado del PAC desde la siguiente liga: https://liga que proporcione finkok-->' % (
                                 comprobante_new)
                             cfdi_xml = cfdi_xml.replace(comprobante_new, url_pac)
                             file = base64.encodestring(cfdi_xml or '')
                             self.write(cr, uid, ids, cfdi_data)
-                            #~cfdi_xml = cfdi_data.get('cfdi_xml', False)
                             status = True
                         else:
                             msg += _(u"Can't extract the file XML of PAC")

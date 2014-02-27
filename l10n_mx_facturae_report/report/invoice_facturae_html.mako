@@ -18,14 +18,11 @@
                     <table class="basic_table">
                         <tr>
                             <td width='50%'>
-                                <div class="title">${o.company_id.address_invoice_parent_company_id.name or ''|entity}</div>
+                                <div class="title">${ dict_data['Emisor']['@nombre'] or ''|entity}</div>
                             </td>
                             <td width='20%'>
-                                %if dict_data['@tipoDeComprobante'] == 'ingreso':
-                                    <div class="invoice">${_("Factura:")}
-                                %elif dict_data['@tipoDeComprobante'] == 'egreso':
-                                    <div class="refund">${_("NOTA DE CREDITO:")}
-                                %endif
+                                <div class="invoice">${_("Documento:")}
+                                ${o.document_source or ''|entity}
                             </td>
                         </tr>
                         <tr>
@@ -47,6 +44,7 @@
                             <td class="td_data_exp">
                                 <div class="fiscal_address">
                                     <br/>Expedido en:
+                                        ${ dict_data['Emisor']['@nombre'] or ''|entity}
                                         <br/>${ dict_data['Emisor']['ExpedidoEn']['@calle'] or ''|entity}
                                         ${ dict_data['Emisor']['ExpedidoEn']['@noExterior'] or ''|entity}
                                         ${ dict_data['Emisor']['ExpedidoEn']['@noInterior'] or ''|entity}
@@ -181,7 +179,8 @@
             </tr>
             <tr>
                 <td class="center_td">
-                    <i>${'AGREGAR IMPORTE EN LETRAS' or ''|entity}</i>
+                    <% amount_in_text = amount_to_text(float(dict_data['@total'].encode('ascii','replace')),dict_data['@Moneda']) %>
+                    <i>${ amount_in_text or ''|entity}</i>
                 </td>
             </tr>
             <tr>
@@ -190,6 +189,9 @@
                 </td>
             </tr>            
         </table>
+        <br clear="all"/>
+        <font class="font">“Este documento es una representación impresa de un CFDI”
+        <br/>CFDI, Comprobante Fiscal Digital por Internet</font>
         <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
                 <tr>
                     <th width="33%"> ${_('Certificado del SAT')}</th>
@@ -214,21 +216,29 @@
                     <td class="center_td">${ dict_data['@NumCtaPago'] or 'No identificado'|entity }</td>
                 </tr>
         </table>
-        <table width="100%" class="datos_fiscales">
-            <tr>
-                <td align="left">
-                    ${helper.embed_image('jpeg',str(o.company_id.cif_file), 140, 220)}
-                </td>
-                <td valign="top" align="left">
-                    <b>${_('Sello Digital Emisor:')} </b><br/>
-                    ${ dict_data['@sello'] or ''|entity}<br/>
-                    <b>${_('Sello Digital SAT:')} </b><br/>
-                    ${ dict_data['Complemento']['TimbreFiscalDigital']['@selloSAT'] or ''|entity}</p>
-                </td>
-                <td align="right">
-                </td>
-            </tr>
-        </table>
+        <div style="page-break-inside:avoid; border:1.5px solid grey;">
+            <table width="100%" class="datos_fiscales">
+                <tr>
+                    <td align="left">
+                        ${helper.embed_image('jpeg',str(o.company_id.cif_file), 140, 220)}
+                    </td>
+                    <td valign="top" align="left">
+                        <b>${_('Sello Digital Emisor:')} </b><br/>
+                        ${ dict_data['@sello'] or ''|entity}<br/>
+                        <b>${_('Sello Digital SAT:')} </b><br/>
+                        ${ dict_data['Complemento']['TimbreFiscalDigital']['@selloSAT'] or ''|entity}<br/>
+                        <b>${_('Cadena original:')} </b><br/>
+                        ${o.cfdi_cadena_original or ''|entity}</br>
+                        <b>${_('Enlace al certificado: ')}</b></br>
+                        ${o.certificate_link or ''|entity}</p>
+                    </td>
+                    <td align="right">
+                        <% img = create_qrcode(dict_data['Emisor']['@rfc'], dict_data['Receptor']['@rfc'], float(dict_data['@total'].encode('ascii','replace')), dict_data['Complemento']['TimbreFiscalDigital']['@UUID']) %>
+                        ${helper.embed_image('jpeg',str(img),180, 180)}
+                    </td>
+                </tr>
+            </table>
+        </div>
     <p style="page-break-after:always"></p>
     %endfor
 </body>

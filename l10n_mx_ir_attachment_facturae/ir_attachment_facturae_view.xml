@@ -12,6 +12,7 @@
                     <field name="type"/>
                     <field name="state"/>
                     <field name="id_source"/>
+                    <field name="model_source"/>
                 </search>
             </field>
         </record>

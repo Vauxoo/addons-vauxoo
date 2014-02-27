@@ -236,6 +236,7 @@ class hr_payslip(osv.Model):
                         'password_pac': '',
                         'url_webservice_pac': '',
                         'file_input_index': base64.encodestring(xml_data),
+                        'document_source': payroll.number,
                             },
                           context=context)
                         )
@@ -811,7 +812,6 @@ class hr_payslip(osv.Model):
             'cfdi_sello': False,
             'cfdi_no_certificado': False,
             'cfdi_fecha_timbrado': False,
-            'cfdi_xml': False,
             'cfdi_folio_fiscal': False,
             'pac_id': False,
         })
