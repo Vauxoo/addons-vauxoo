@@ -143,11 +143,26 @@ class ir_attachment_facturae_mx(osv.Model):
         'certificate_password': fields.char('Certificate Password', size=64,
             invisible=False, help='This password is proportionate by the SAT'),
         'attachment_email': fields.char('Email', size=128, help='Email receptor'),
-        'uuid_xml': fields.char('Folio Fiscal(UUID)', size=256, help='UUID the XML'),
+        'cfdi_folio_fiscal': fields.char('Folio Fiscal(UUID)', size=256, help='UUID the XML'),
         'model_source': fields.char('Source Model', size=128, help='Source Model'),
         'id_source': fields.integer('Source ID', help="Source ID"),
         'company_emitter_id': fields.many2one('res.company', 'Company emmiter'),
         'certificate_id': fields.many2one('res.company.facturae.certificate'),
+        'cfdi_cbb': fields.binary('CFD-I CBB'),
+        'cfdi_sello': fields.text('CFD-I Sello', help='Sign assigned by the SAT'),
+        'cfdi_no_certificado': fields.char('CFD-I Certificado', size=32,
+                                           help='Serial Number of the Certificate'),
+        'cfdi_cadena_original': fields.text('CFD-I Cadena Original',
+                                            help='Original String used in the electronic invoice'),
+        'cfdi_fecha_timbrado': fields.datetime('CFD-I Fecha Timbrado',
+                                               help='Date when is stamped the electronic invoice'),
+        'cfdi_fecha_cancelacion': fields.datetime('CFD-I Fecha Cancelacion',
+                                                  help='If the invoice is cancel, this field saved the date when is cancel'),
+        'pac_id': fields.many2one('params.pac', 'Pac', help='Pac used in singned of the invoice'),
+        'cadena_original': fields.text('String Original', size=512,
+            help='Data stream with the information contained in the electronic \
+            invoice'),
+        'document_source': fields.char('Document Source', size=128, help='Number or reference of document source'),
     }
 
     _defaults = {
@@ -237,6 +252,7 @@ class ir_attachment_facturae_mx(osv.Model):
             context = {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         attachment_obj = self.pool.get('ir.attachment')
+        wf_service = netsvc.LocalService("workflow")
         attach = ''
         index_xml = ''
         msj = ''
@@ -245,46 +261,42 @@ class ir_attachment_facturae_mx(osv.Model):
             type = data.type
             id_source = data.id_source
             model_source = data.model_source
-            wf_service = netsvc.LocalService("workflow")
             attach_v3_2 = data.file_input and data.file_input.id or False
             index_content = data.file_input and data.file_input.index_content.encode('utf-8') or False
-            if 'cfdi' in type:
-                # upload file in custom module for pac
-                type__fc = self.get_driver_fc_sign()
-                if type in type__fc.keys():
-                    #~ fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
-                    fname_invoice = data.name and data.name + '.xml' or ''
-                    fdata = base64.encodestring(index_content)
-                    res = type__fc[type](cr, uid, [data.id], fdata, context=context)
-                    msj = tools.ustr(res.get('msg', False))
-                    index_xml = res.get('cfdi_xml', False)
-                    status = res.get('status', False)
-                    if status:
-                        data_attach = {
-                            'name': fname_invoice,
-                            'datas': base64.encodestring(res.get('cfdi_xml', False)),
-                            'datas_fname': fname_invoice,
-                            'description': 'XML CFD-I SIGN',
-                            'res_model': model_source,
-                            'res_id': id_source,
-                        }
-                        attach = attachment_obj.create(cr, uid, data_attach, context=None)
-                        if attach_v3_2:
-                            cr.execute("""UPDATE ir_attachment
-                                SET res_id = Null
-                                WHERE id = %s""", (attach_v3_2,))
-                        doc_xml = xml.dom.minidom.parseString(index_xml)
-                        index_xml = doc_xml.toprettyxml()
-                        self.write(cr, uid, ids,
-                               {'file_xml_sign': attach or False,
-                                   'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                                   'msj': msj,
-                                   'file_xml_sign_index': index_xml}, context=context)
-                        wf_service.trg_validate(uid, self._name, data.id, 'action_sign', cr)
-                        status = True
-                else:
-                    msj += _("Unknow driver for %s" % (type))
-                    status = False
+            type__fc = self.get_driver_fc_sign()
+            if type in type__fc.keys():
+                fname_invoice = data.name and data.name + '.xml' or ''
+                fdata = base64.encodestring(index_content)
+                res = type__fc[type](cr, uid, [data.id], fdata, context=context)
+                msj = tools.ustr(res.get('msg', False))
+                index_xml = res.get('cfdi_xml', False)
+                status = res.get('status', False)
+                if status:
+                    data_attach = {
+                        'name': fname_invoice,
+                        'datas': base64.encodestring(res.get('cfdi_xml', False)),
+                        'datas_fname': fname_invoice,
+                        'description': 'XML CFD-I SIGN',
+                        'res_model': model_source,
+                        'res_id': id_source,
+                    }
+                    attach = attachment_obj.create(cr, uid, data_attach, context=None)
+                    if attach_v3_2:
+                        cr.execute("""UPDATE ir_attachment
+                            SET res_id = Null
+                            WHERE id = %s""", (attach_v3_2,))
+                    doc_xml = xml.dom.minidom.parseString(index_xml)
+                    index_xml = doc_xml.toprettyxml()
+                    self.write(cr, uid, ids,
+                           {'file_xml_sign': attach or False,
+                               'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                               'msj': msj,
+                               'file_xml_sign_index': index_xml}, context=context)
+                    wf_service.trg_validate(uid, self._name, data.id, 'action_sign', cr)
+                    status = True
+            else:
+                msj += _("Unknow driver for %s" % (type))
+                status = False
         return status
 
     def action_sign(self, cr, uid, ids, context=None):
@@ -568,6 +580,28 @@ class ir_attachment_facturae_mx(osv.Model):
             _logger.error(error)
             status_forward = False
         return status_forward
+        
+    def _get_time_zone(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        res_users_obj = self.pool.get('res.users')
+        userstz = res_users_obj.browse(cr, uid, [uid])[0].partner_id.tz
+        a = 0
+        if userstz:
+            hours = timezone(userstz)
+            fmt = '%Y-%m-%d %H:%M:%S %Z%z'
+            now = datetime.now()
+            loc_dt = hours.localize(datetime(now.year, now.month, now.day,
+                                             now.hour, now.minute, now.second))
+            timezone_loc = (loc_dt.strftime(fmt))
+            diff_timezone_original = timezone_loc[-5:-2]
+            timezone_original = int(diff_timezone_original)
+            s = str(datetime.now(pytz.timezone(userstz)))
+            s = s[-6:-3]
+            timezone_present = int(s)*-1
+            a = timezone_original + ((
+                timezone_present + timezone_original)*-1)
+        return a
 
 
 class ir_attachment(osv.Model):
