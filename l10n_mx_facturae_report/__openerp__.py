@@ -32,6 +32,12 @@
     "category" : "Localization/Mexico",
     "description" : """This module add a report for facturae, this includes report for
         cfd, cfdi and cbb
+        
+You will need some extra packages::
+
+  $ sudo pip install xmltodict
+  $ sudo pip install pil qrcode
+  
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
