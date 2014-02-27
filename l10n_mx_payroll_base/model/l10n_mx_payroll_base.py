@@ -236,6 +236,7 @@ class hr_payslip(osv.Model):
                         'password_pac': '',
                         'url_webservice_pac': '',
                         'file_input_index': base64.encodestring(xml_data),
+                        'document_source': payroll.number,
                             },
                           context=context)
                         )
