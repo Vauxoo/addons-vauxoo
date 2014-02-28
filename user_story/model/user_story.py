@@ -165,6 +165,30 @@ class acceptability_criteria(osv.Model):
 
     _name = 'acceptability.criteria'
 
+    def _get_ac_ids_by_us_ids(self, cr, uid, us_ids, context=None):
+        """
+        This method is use for get the acceptability criteria ids in a
+        sensitive field project_id to be use in the store field.
+        """
+        context = context or {}
+        us_obj = self.pool.get('user.story')
+        ac_obj = self.pool.get('acceptability.criteria')
+        ac_ids = ac_obj.search(
+            cr, uid, [('accep_crit_id', 'in', us_ids)], context=context)
+        return ac_ids
+
+    def _get_project_id(self, cr, uid, ids, fieldname, arg, context=None):
+        """
+        function for the project_id field functional field.
+        """
+        context = context or {}
+        res = {}.fromkeys(ids)
+        for ac_brw in self.browse(cr, uid, ids, context=context):
+            res[ac_brw.id] = \
+            ac_brw.accep_crit_id.project_id and \
+            ac_brw.accep_crit_id.project_id.id or False
+        return res
+
     _columns = {
         'name': fields.char('Title', size=255, required=True, readonly=False,
             translate=True),
@@ -181,12 +205,16 @@ class acceptability_criteria(osv.Model):
              ('high','High'),
              ('na','Not Apply')],
             string='Difficulty'),
-        'project_id': fields.related('accep_crit_id', 'project_id',
-                                     relation="project.project",
-                                     type="many2one", string='Project',
-                                     help='User Story Project',
-                                     readonly=True,
-                                     store=True),
+        'project_id': fields.function(
+            _get_project_id,
+            type="many2one",
+            relation='project.project',
+            string='Project',
+            help='User Story Project',
+            store={
+                'acceptability.criteria': (lambda s, c, u, i, ctx: i, ['accep_crit_id'], 16),
+                'user.story': (_get_ac_ids_by_us_ids, ['project_id'], 20),
+            }),
         'sprint': fields.related('accep_crit_id', 'sk_id',
                                      relation="sprint.kanban",
                                      type="many2one", string='Sprint',
