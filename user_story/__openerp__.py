@@ -52,6 +52,7 @@ siguientes:
     "init_xml" : [
     ],
     "demo_xml" : [
+        'demo/demo.xml',
     ],
     "update_xml" : [
         "report/ir_report.xml",
