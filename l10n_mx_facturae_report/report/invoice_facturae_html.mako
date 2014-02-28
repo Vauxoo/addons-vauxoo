@@ -36,43 +36,99 @@
                         ${o.document_source or ''|entity}
                     </td>
                 </tr>
-            </table>        
+            </table>
+            <br/>       
             <table width="100%">
+                <tr class="regular_table">
+                    <td width="50%" style="text-align:center">
+                        <b>${_('DATOS DEL EMPLEADO')}</b>
+                    </td>
+                    <td width="50%" style="text-align:center">
+                        <b>${_('INFORMACIÓN LABORAL')}</b>
+                    </td>
+                </tr>
                 <tr>
-                    <td width="40%">
-                        <div class="panel_border_radius_top panel_bg_color_title" style="text-align:center">
-                            ${_('DATOS DEL EMPLEADO')}
-                        </div>
-                        <div class="panel_border_radius_bottom td_vertical_middle">
-                            <table width="100%" class="data_emitter">
-                                <tr colspan="6">
-                                    <td><font class="p_title">${_('No. Empleado')}</font></td><td>${ dict_data['Complemento']['Nomina']['@NumEmpleado'] or ''|entity }</td>
-                                </tr>
-                                <tr>
-                                    <td><font class="p_title">${_('Nombre')}</font></td><td>${ '????????????' or ''|entity }</td>
-                                    <td><font class="p_title">${_('RFC')}</font></td><td>${ '????????????' or ''|entity}</td>
-                                    <td><font class="p_title">${_('NSS')}</font></td><td>${ '????????????' or ''|entity }</td>
-                                </tr>
-                                <tr>
-                                    <td><font class="p_title">${_('Régimen')}</font></td><td>${ '????????????' or ''|entity}</td>
-                                    <td><font class="p_title">${_('CURP')}</font></td><td>${ dict_data['Complemento']['Nomina']['@CURP'] or ''|entity }</td>
-                                    <td><font class="p_title">${_('Departamento')}</font></td><td>${ dict_data['Complemento']['Nomina']['@Departamento'] or ''|entity }</td>
-                                </tr>
-                                <tr>
-                                    <td><font class="p_title">${_('Puesto')}</font></td><td>${ dict_data['Complemento']['Nomina']['@Puesto'] or ''|entity}</td>
-                                    <td><font class="p_title">${_('Riesgo de puesto')}</font></td><td>${ dict_data['Complemento']['Nomina']['@RiesgoPuesto'] or ''|entity }</td>
-                                    <td></td><td></td>
-                                </tr>
-                            </table>
-                            
-                        </div>
+                    <td width="50%">
+                        <table class="regular_table">
+                            <tr>                                
+                                <td width="25%">
+                                    ${_('No. Empleado')}</br>
+                                    ${_('Nombre')}</br>
+                                    ${_('Régimen')}</br>
+                                    ${_('Puesto')}</br>
+                                    ${_('RFC')}</br>
+                                    ${_('CURP')}</br>
+                                    ${_('Riesgo de puesto')}
+                                    ${_('NSS')}</br>
+                                    ${_('Departamento')}</br>
+                                </td>
+                                <td width="25%">
+                                    ${ dict_data['Complemento']['Nomina']['@NumEmpleado'] or ''|entity }</br>
+                                    ${ '?' or ''|entity }</br>
+                                    ${ '?' or ''|entity }</br>
+                                    ${ dict_data['Complemento']['Nomina']['@Puesto'] or ''|entity }</br>
+                                    ${ '?' or ''|entity }</br>
+                                    ${ dict_data['Complemento']['Nomina']['@CURP'] or ''|entity }</br>
+                                    ${ dict_data['Complemento']['Nomina']['@RiesgoPuesto'] or ''|entity }</br>
+                                    ${ '?' or ''|entity }</br>                                    
+                                    ${ dict_data['Complemento']['Nomina']['@Departamento'] or ''|entity }</br>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="50%">
+                        <table class="regular_table">
+                            <tr>
+                                <td width="25%">
+                                    ${_('Contrato')}</br>
+                                    ${_('Días Pagados')}</br>
+                                    ${_('Rel. Laboral')}</br>
+                                    ${_('Salario diario')}</br>                                    
+                                    ${_('Jornada')}</br>
+                                    ${_('Antiguedad')}</br>
+                                    ${_('Salario base')}</br>
+                                    ${_('Periodo')}</br>                                 
+                                </td>
+                                <td width="25%">
+                                    ${ dict_data['Complemento']['Nomina']['@TipoContrato'] or ''|entity }</br>
+                                    ${ dict_data['Complemento']['Nomina']['@NumDiasPagados'] or ''|entity }</br>
+                                    ${ dict_data['Complemento']['Nomina']['@FechaInicioRelLaboral'] or ''|entity }</br>
+                                    ${ dict_data['Complemento']['Nomina']['@SalarioDiarioIntegrado'] or ''|entity }</br>                                
+                                    ${ dict_data['Complemento']['Nomina']['@TipoJornada'] or ''|entity }</br>
+                                    ${ dict_data['Complemento']['Nomina']['@Antiguedad'] or ''|entity }</br>
+                                    ${ dict_data['Complemento']['Nomina']['@SalarioBaseCotApor'] or ''|entity }</br>
+                                    ${ dict_data['Complemento']['Nomina']['@PeriodicidadPago'] or ''|entity }</br>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
             </table>
-
-        
-        
-        
+            <table width="100%" class="regular_table">
+                <tr>
+                    <table width="100%" class="regular_table">
+                        <tr>
+                            <td style="text-align:center">
+                                <b>${_('PAGO')}</b>
+                            </td>
+                        </tr>
+                    </table>
+                </tr>
+                <tr>
+                    <table width="100%" class="regular_table">
+                        <tr>
+                            <td>${_('Fecha Pago')}</td><td>${ dict_data['Complemento']['Nomina']['@FechaPago'] or ''|entity}</td>
+                            <td>${_('Fecha Inicio')}</td><td>${ dict_data['Complemento']['Nomina']['@FechaInicialPago'] or ''|entity}</td>
+                            <td>${_('Fecha Fin')}</td><td>${ dict_data['Complemento']['Nomina']['@FechaFinalPago'] or ''|entity }</td>
+                        </tr>
+                        <tr>
+                            <td>${_('CLABE')}</td><td>${ dict_data['Complemento']['Nomina']['@CLABE'] or ''|entity }</td>
+                            <td>${_('Método de pago')}</td><td>${ '?' or 'No identificado'|entity } </td>
+                            <td>${_('Banco')}</td><td>${ dict_data['Complemento']['Nomina']['@Banco'] or ''|entity } </td>
+                        </tr>
+                    </table>
+                </tr>
+            </table>
         %else:
             <table class="basic_table">
                 <tr>

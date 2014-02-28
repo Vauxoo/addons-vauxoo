@@ -264,8 +264,20 @@ word-wrap: break-word;
   vertical-align: top;
   color: black;
   text-align: left;
-  font-size: 6; }
-  
+  font-size: 8; }
+
+.regular_table{
+border-collapse: collapse;
+font-size: 10;
+
+.medium_table{
+border-collapse: collapse;
+font-size: 8;
+}
+
+.td_center {
+  text-align: center; }
+
 ]]> </field>
             <field name="name">Facturae</field>
         </record>
