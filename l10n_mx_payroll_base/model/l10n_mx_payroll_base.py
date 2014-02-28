@@ -152,7 +152,7 @@ class hr_payslip(osv.Model):
                                                help='Date when is stamped the electronic payroll'),
         'cfdi_folio_fiscal': fields.char('CFD-I Folio Fiscal', size=64,
                                          help='Folio used in the electronic payroll'),
-        'date_invoice_cancel': fields.datetime('Date Payroll Cancelled',
+        'date_payslip_cancel': fields.datetime('Date Payroll Cancelled',
             readonly=True, help='If the payroll is cancelled, save the date when was cancel'),
         'pac_id': fields.many2one('params.pac', 'Pac', help='Pac used in singned of the payrol'),
         'partner_id': fields.many2one('res.partner', 'Partner'),
