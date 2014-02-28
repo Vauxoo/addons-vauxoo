@@ -100,8 +100,8 @@
 -
   !assert {model:  hr.payslip, id: hr_payslip_al_cfdi0}:
     - state == 'cancel'
--
-  11 I check that customer payroll move_id is None (ID hr_payslip_al_cfdi0)
--
-  !assert {model:  hr.payslip, id: hr_payslip_al_cfdi0}:
-    - move_id.name == None
+#~ -
+  #~ 11 I check that customer payroll move_id is None (ID hr_payslip_al_cfdi0)
+#~ -
+  #~ !assert {model:  hr.payslip, id: hr_payslip_al_cfdi0}:
+    #~ - move_id.name == None #move_id no existe en modelo hr_payslip
