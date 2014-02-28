@@ -177,16 +177,19 @@ class acceptability_criteria(osv.Model):
             cr, uid, [('accep_crit_id', 'in', us_ids)], context=context)
         return ac_ids
 
-    def _get_project_id(self, cr, uid, ids, fieldname, arg, context=None):
+    def _get_user_story_field(self, cr, uid, ids, fieldname, arg, context=None):
         """
-        function for the project_id field functional field.
+        Method used as the function for extracting values for the user.story
+        model using functional fields. This method is used for various fields,
+        the fieldname it matters to extract the value, the field name need to
+        be the same from the user.story model.
         """
         context = context or {}
         res = {}.fromkeys(ids)
         for ac_brw in self.browse(cr, uid, ids, context=context):
             res[ac_brw.id] = \
-            ac_brw.accep_crit_id.project_id and \
-            ac_brw.accep_crit_id.project_id.id or False
+                getattr(ac_brw.accep_crit_id, fieldname, False) and \
+                getattr(ac_brw.accep_crit_id, fieldname).id or False
         return res
 
     _columns = {
@@ -206,7 +209,7 @@ class acceptability_criteria(osv.Model):
              ('na','Not Apply')],
             string='Difficulty'),
         'project_id': fields.function(
-            _get_project_id,
+            _get_user_story_field,
             type="many2one",
             relation='project.project',
             string='Project',
