@@ -170,7 +170,7 @@
                 <field name="scenario"/>
                 <field name="accep_crit_id"/>
                 <field name="project_id" invisible="True"/>
-                <field name="sprint" invisible="True"/>
+                <field name="sk_id" invisible="True"/>
                 <field name="tag" invisible="True"/>
                 <field name="user_id" invisible="True"/>
                 <field name="user_execute_id" invisible="True"/>
@@ -202,7 +202,7 @@
                     <filter name="accept_criteria_difficulty" string="Difficulty" context="{'group_by':'difficulty'}"/>
                     <separator/>
                     <filter name="accept_criteria_project_id" string="Project" context="{'group_by':'project_id'}"/>
-                    <filter name="accept_criteria_sprint" string="Sprint" context="{'group_by':'sprint'}"/>
+                    <filter name="accept_criteria_sk_id" string="Sprint" context="{'group_by':'sk_id'}"/>
                     <filter name="accept_criteria_tag" string="Tag" context="{'group_by':'tag'}"/>
                     <filter name="accept_criteria_user_id" string="Responsible Supervisor" context="{'group_by':'user_id'}"/>
                     <filter name="accept_criteria_user_execute_id" string="Responsible Execution" context="{'group_by':'user_execute_id'}"/>

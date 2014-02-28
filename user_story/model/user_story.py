@@ -167,8 +167,11 @@ class acceptability_criteria(osv.Model):
 
     def _get_ac_ids_by_us_ids(self, cr, uid, us_ids, context=None):
         """
-        This method is use for get the acceptability criteria ids in a
-        sensitive field project_id to be use in the store field.
+        This method is as the method of the sensitive store tuple for the
+        functional fields defined in the current field that pretend to pull
+        data form the user.story model. The method get us_ids and make a search
+        for the acceptability.criteria records that need to be updated.
+        @return a list of the acceptability.criteria that need to be updated.
         """
         context = context or {}
         us_obj = self.pool.get('user.story')
@@ -218,12 +221,16 @@ class acceptability_criteria(osv.Model):
                 'acceptability.criteria': (lambda s, c, u, i, ctx: i, ['accep_crit_id'], 16),
                 'user.story': (_get_ac_ids_by_us_ids, ['project_id'], 20),
             }),
-        'sprint': fields.related('accep_crit_id', 'sk_id',
-                                     relation="sprint.kanban",
-                                     type="many2one", string='Sprint',
-                                     help='User Story Sprint',
-                                     readonly=True,
-                                     store=True),
+        'sk_id': fields.function(
+            _get_user_story_field,
+            type="many2one",
+            relation="sprint.kanban",
+            string='Sprint',
+            help='Sprint Kanban',
+            store={
+                'acceptability.criteria': (lambda s, c, u, i, ctx: i, ['accep_crit_id'], 16),
+                'user.story': (_get_ac_ids_by_us_ids, ['sk_id'], 20),
+            }),
         'tag': fields.related('accep_crit_id', 'categ_ids',
                                      relation="project.category",
                                      type="many2one", string='Tag',
