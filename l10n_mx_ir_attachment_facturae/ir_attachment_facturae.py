@@ -349,7 +349,9 @@ class ir_attachment_facturae_mx(osv.Model):
             aids = attachment.id
             
             attachment_obj.write(cr, uid, [attachment.id], {
-                'name': file_name_attachment }, context=context)
+                'name': file_name_attachment,
+                'res_model': attachment_mx_data[0].model_source,
+                'res_id': attachment_mx_data[0].id_source}, context=context)
             status = True
         if status and aids:
             msj = _("Attached Successfully PDF\n")
