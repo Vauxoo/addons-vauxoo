@@ -251,12 +251,16 @@ class acceptability_criteria(osv.Model):
                 'acceptability.criteria': (lambda s, c, u, i, ctx: i, ['accep_crit_id'], 16),
                 'user.story': (_get_ac_ids_by_us_ids, ['user_id'], 20),
             }),
-        'user_execute_id': fields.related('accep_crit_id', 'user_execute_id',
-                                     relation="res.users",
-                                     type="many2one", string='Responsible Execution',
-                                     help='User Story Responsible Execution',
-                                     readonly=True,
-                                     store=True),
+        'user_execute_id': fields.function(
+            _get_user_story_field,
+            type="many2one",
+            relation="res.users",
+            string='Responsible Execution',
+            help='Responsible Execution',
+            store={
+                'acceptability.criteria': (lambda s, c, u, i, ctx: i, ['accep_crit_id'], 16),
+                'user.story': (_get_ac_ids_by_us_ids, ['user_execute_id'], 20),
+            }),
     }
     _defaults = {
         'name': lambda *a: None,
