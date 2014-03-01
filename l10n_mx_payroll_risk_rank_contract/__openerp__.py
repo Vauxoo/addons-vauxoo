@@ -42,7 +42,8 @@
     "data": [
         "data/payroll_risk_rank_data.xml",
         "view/payroll_risk_rank_contract_view.xml",
-        "view/hr_contract_payroll_risk_rank_view.xml"
+        "view/hr_contract_payroll_risk_rank_view.xml",
+        'security/ir.model.access.csv',
     ],
     "installable": True,
     "active": False,

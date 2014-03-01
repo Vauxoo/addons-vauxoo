@@ -40,7 +40,8 @@
     "data": [
         "data/payroll_regime_data.xml",
         "view/payroll_regime_employee_view.xml",
-        "view/hr_employee_payroll_regime_view.xml"
+        "view/hr_employee_payroll_regime_view.xml",
+        'security/ir.model.access.csv',
     ],
     "installable": True,
     "active": False,
