@@ -226,6 +226,7 @@ class account_invoice(osv.Model):
         for data_xml in datas_xmls:
             (fileno_data_xml, fname_data_xml) = tempfile.mkstemp('.xml', 'openerp_' + (False or '') + '__facturae__' )
             f = open(fname_data_xml, 'wb')
+            data_xml = data_xml.replace("&amp;", "Y")#Replace temp for process with xmlstartlet
             f.write( data_xml )
             f.close()
             os.close(fileno_data_xml)
