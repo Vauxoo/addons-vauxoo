@@ -21,44 +21,31 @@
 
 
 {
-    'name': 'Portal CRM with Captcha',
+    'name': 'Vauxoo Widgets',
     'version': '0.1',
     'category': 'Tools',
     'complexity': 'easy',
     'description': """
-Contact page with Captcha widget.
+Widgets to customize the openerp views with Qweb extension
 =================================
 
-You will need to install recaptcha and recaptcha client::
-
-    $ sudo pip install recaptcha
-    $ sudo pip install recaptcha-client
-
-Added Menu 'Our Team ' as principal Menu, this menu show
-the human recourses that is public.
 
     """,
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com',
     'depends': [
-                'crm',
-                'portal',
-                'portal_news',
-                'web_captcha',
-                'portal_hr_employees',
-                'vauxoo_widgets',
+                'portal_home',
                 ],
     'data': [
-        'view/contact_view.xml',
     ],
     'test': [
-        #'test/contact_form.yml',
     ],
     'installable': True,
     'auto_install': False,
     'css': [
+        'static/src/css/vauxoo_widget.css'
     ],
-    'js': [],
-    'qweb': [],
+    'js': [ 'static/src/js/vauxoo_widgets.js' ],
+    'qweb': [ 'static/src/xml/vauxoo_widget.xml' ],
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
