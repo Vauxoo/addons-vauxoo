@@ -18,7 +18,7 @@
             <!--<field name="type">invoice</field> Now not necessary-->
             <field name="email">info(at)vauxoo.com</field>
             <field name="phone">477-773-3346</field>
-            <field name="vat">MXVAU111017CG&amp;</field>
+            <field name="vat">MXVA&amp;111017CG9</field>
             <field name="regimen_fiscal_id" eval="ref('l10n_mx_regimen_fiscal.regimen_fiscal_personasmoralesdelrgimengeneral0')"/>
         </record>
 
