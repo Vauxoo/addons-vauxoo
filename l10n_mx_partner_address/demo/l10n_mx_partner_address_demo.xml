@@ -3,7 +3,7 @@
     <data noupdate="1">
 
         <record id="res_partner_address_vauxoo_0" model="res.partner">
-            <field name="name">VAUXOO S.A. de C.V.</field>
+            <field name="name">VAUXOO S.A. de C.V. &amp;</field>
             <field eval="1" name="customer"/>
             <field name="is_company">1</field>
             <field name="street">Campobasso Norte</field>
@@ -18,7 +18,7 @@
             <!--<field name="type">invoice</field> Now not necessary-->
             <field name="email">info(at)vauxoo.com</field>
             <field name="phone">477-773-3346</field>
-            <field name="vat">MXVAU111017CG9</field>
+            <field name="vat">MXVAU111017CG&amp;</field>
             <field name="regimen_fiscal_id" eval="ref('l10n_mx_regimen_fiscal.regimen_fiscal_personasmoralesdelrgimengeneral0')"/>
         </record>
 
