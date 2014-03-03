@@ -26,10 +26,10 @@ from openerp.tools.translate import _
 from openerp import pooler, tools, netsvc
 import xml
 import codecs
-from datetime import datetime, timedelta
+import datetime
+from datetime import *
 import pytz
 from pytz import timezone
-import time
 import os
 import tempfile
 import jinja2
@@ -37,6 +37,7 @@ import base64
 import cgi
 import urllib
 from markupsafe import Markup
+import time as ti
 
 from openerp import release
 
@@ -103,25 +104,66 @@ class hr_payslip(osv.Model):
             address_invoice = a or b or c or False
             res[data.id] = address_invoice
         return res
+        
+    def _get_date_payslip_tz(self, cr, uid, ids, field_names=None, arg=False, context=None):
+        if context is None:
+            context = {}
+        res = {}
+        if release.version >= '6':
+            dt_format = tools.DEFAULT_SERVER_DATETIME_FORMAT
+            tz = context.get('tz_invoice_mx', 'America/Mexico_City')
+            for payroll in self.browse(cr, uid, ids, context=context):
+                res[payroll.id] = payroll.payslip_datetime and tools.\
+                    server_to_local_timestamp(payroll.payslip_datetime,
+                    tools.DEFAULT_SERVER_DATETIME_FORMAT,
+                    tools.DEFAULT_SERVER_DATETIME_FORMAT, context.get(
+                    'tz_invoice_mx', 'America/Mexico_City')) or False
+        elif release.version < '6':
+            # TODO: tz change for openerp5
+            for payroll in self.browse(cr, uid, ids, context=context):
+                res[payroll.id] = payroll.date_payslip
+        return res
+        
+    def assigned_datetime(self, cr, uid, values, context=None):
+        if context is None:
+            context = {}
+        res = {}
+        if values.get('date_payslip', False) and\
+                                    not values.get('payslip_datetime', False):
+                                    
+            user_hour = self._get_time_zone(cr, uid, [], context=context)
+            time_payslip = time(abs(user_hour), 0, 0)
 
-    #~ def _get_date_payslip_tz(self, cr, uid, ids, field_names=None, arg=False, context=None):
-        #~ if context is None:
-            #~ context = {}
-        #~ res = {}
-        #~ if release.version >= '6':
-            #~ dt_format = tools.DEFAULT_SERVER_DATETIME_FORMAT
-            #~ tz = context.get('tz_invoice_mx', 'America/Mexico_City')
-            #~ for invoice in self.browse(cr, uid, ids, context=context):
-                #~ res[invoice.id] = invoice.payslip_datetime and tools.\
-                    #~ server_to_local_timestamp(invoice.payslip_datetime,
-                    #~ tools.DEFAULT_SERVER_DATETIME_FORMAT,
-                    #~ tools.DEFAULT_SERVER_DATETIME_FORMAT, context.get(
-                    #~ 'tz_invoice_mx', 'America/Mexico_City')) or False
-        #~ elif release.version < '6':
-            #~ # TODO: tz change for openerp5
-            #~ for invoice in self.browse(cr, uid, ids, context=context):
-                #~ res[invoice.id] = invoice.date_invoice
-        #~ return res
+            date_payslip = datetime.strptime(values['date_payslip'], '%Y-%m-%d').date()
+                
+            dt_payslip = datetime.combine(date_payslip, time_payslip).strftime('%Y-%m-%d %H:%M:%S')
+
+            res['payslip_datetime'] = dt_payslip
+            res['date_payslip'] = values['date_payslip']
+            
+        if values.get('payslip_datetime', False) and not\
+            values.get('date_payslip', False):
+            date_payslip = fields.datetime.context_timestamp(cr, uid,
+                datetime.datetime.strptime(values['payslip_datetime'],
+                tools.DEFAULT_SERVER_DATETIME_FORMAT), context=context)
+            res['date_payslip'] = date_payslip
+            res['payslip_datetime'] = values['payslip_datetime']
+        
+        if 'payslip_datetime' in values  and 'date_payslip' in values:
+            if values['payslip_datetime'] and values['date_payslip']:
+                date_payslip = datetime.strptime(
+                    values['payslip_datetime'],
+                    '%Y-%m-%d %H:%M:%S').date().strftime('%Y-%m-%d')
+                if date_payslip != values['date_payslip']:
+                    raise osv.except_osv(_('Warning!'),
+                            _('Payslip dates should be equal'))
+                            
+        if  not values.get('payslip_datetime', False) and\
+                                        not values.get('date_payslip', False):
+            res['date_payslip'] = fields.date.context_today(self,cr,uid,context=context)
+            res['payslip_datetime'] = fields.datetime.now()
+            
+        return res
 
     _columns = {
         'journal_id': fields.many2one('account.journal','Journal', required=True),
@@ -159,8 +201,9 @@ class hr_payslip(osv.Model):
         'sello': fields.text('Stamp', size=512, help='Digital Stamp'),
         'certificado': fields.text('Certificate', size=64,
             help='Certificate used in the Payroll'),
-        'date_payslip_tz':  fields.datetime(string='Date Payroll with TZ',
-            help='Date of Payroll with Time Zone'),
+        'date_payslip_tz': fields.function(_get_date_payslip_tz, method=True,
+            type='datetime', string='Date Payroll', store=True,
+            help='Date of payroll with Time Zone'),
     }
 
     def _create_original_str(self, cr, uid, ids, invoice_id, context=None):
@@ -171,22 +214,50 @@ class hr_payslip(osv.Model):
         cfdi_folio_fiscal = invoice.cfdi_folio_fiscal or ''
         cfdi_fecha_timbrado = invoice.cfdi_fecha_timbrado or ''
         if cfdi_fecha_timbrado:
-            cfdi_fecha_timbrado=time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(cfdi_fecha_timbrado, '%Y-%m-%d %H:%M:%S'))
+            cfdi_fecha_timbrado=ti.strftime('%Y-%m-%dT%H:%M:%S', ti.strptime(cfdi_fecha_timbrado, '%Y-%m-%d %H:%M:%S'))
         sello = invoice.sello or ''
         cfdi_no_certificado = invoice.cfdi_no_certificado or ''
         original_string = '||1.0|'+cfdi_folio_fiscal+'|'+str(cfdi_fecha_timbrado)+'|'+sello+'|'+cfdi_no_certificado+'||'
         return original_string
+        
+
+    def _get_time_zone(self, cr, uid, payroll_id, context=None):
+        if context is None:
+            context = {}
+        res_users_obj = self.pool.get('res.users')
+        userstz = res_users_obj.browse(cr, uid, [uid])[0].partner_id.tz
+        a = 0
+        if userstz:
+            hours = timezone(userstz)
+            fmt = '%Y-%m-%d %H:%M:%S %Z%z'
+            now = datetime.now()
+            loc_dt = hours.localize(datetime(now.year, now.month, now.day,now.hour, now.minute, now.second))
+            timezone_loc = (loc_dt.strftime(fmt))
+            diff_timezone_original = timezone_loc[-5:-2]
+            timezone_original = int(diff_timezone_original)
+            s = str(datetime.now(pytz.timezone(userstz)))
+            s = s[-6:-3]
+            timezone_present = int(s)*-1
+            a = timezone_original + ((
+                timezone_present + timezone_original)*-1)
+        return a
+    
 
     def hr_verify_sheet(self, cr, uid, ids, context=None):
         for hr in self.browse(cr, uid, ids, context=context):
-            if hr.payslip_datetime:
-                htz = int(self._get_time_zone(cr, uid, ids, context=context))
-                self.write(cr, uid, ids, {'date_payslip_tz' : (datetime.strptime(hr.payslip_datetime, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz)).strftime('%Y-%m-%d %H:%M:%S')})
-            else:
-                now = datetime.now()
-                htz = int(self._get_time_zone(cr, uid, ids, context=context))
-                res = (now).strftime('%Y-%m-%d %H:%M:%S')
-                self.write(cr, uid, ids, {'date_payslip_tz' : (now + timedelta(hours=htz)).strftime('%Y-%m-%d %H:%M:%S'), 'payslip_datetime': res,'date_payslip': (now).strftime('%Y-%m-%d')})
+            #~ if hr.payslip_datetime:
+                #~ htz = int(self._get_time_zone(cr, uid, ids, context=context))
+                #~ self.write(cr, uid, ids, {'date_payslip_tz' : (datetime.strptime(hr.payslip_datetime, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz)).strftime('%Y-%m-%d %H:%M:%S')})
+            #~ else:
+                #~ now = datetime.now()
+                #~ htz = int(self._get_time_zone(cr, uid, ids, context=context))
+                #~ res = (now).strftime('%Y-%m-%d %H:%M:%S')
+                #~ self.write(cr, uid, ids, {'date_payslip_tz' : (now + timedelta(hours=htz)).strftime('%Y-%m-%d %H:%M:%S'), 'payslip_datetime': res,'date_payslip': (now).strftime('%Y-%m-%d')})
+            vals_date = self.assigned_datetime(cr, uid,
+                {'date_payslip': hr.date_payslip,
+                    'payslip_datetime': hr.payslip_datetime},
+                    context=context)
+            self.write(cr, uid, ids, vals_date, context=context)
             if not hr.line_payslip_product_ids:
                 raise osv.except_osv(_('No Product Lines!'), _('Please create some product lines.'))
             super(hr_payslip, self).hr_verify_sheet(cr, uid, ids)
@@ -256,28 +327,6 @@ class hr_payslip(osv.Model):
             result['views'] = [(res and res[1] or False, 'form')]
             return result
         return True
-
-    def _get_time_zone(self, cr, uid, payroll_id, context=None):
-        if context is None:
-            context = {}
-        res_users_obj = self.pool.get('res.users')
-        userstz = res_users_obj.browse(cr, uid, [uid])[0].partner_id.tz
-        a = 0
-        if userstz:
-            hours = timezone(userstz)
-            fmt = '%Y-%m-%d %H:%M:%S %Z%z'
-            now = datetime.now()
-            loc_dt = hours.localize(datetime(now.year, now.month, now.day,
-                                             now.hour, now.minute, now.second))
-            timezone_loc = (loc_dt.strftime(fmt))
-            diff_timezone_original = timezone_loc[-5:-2]
-            timezone_original = int(diff_timezone_original)
-            s = str(datetime.now(pytz.timezone(userstz)))
-            s = s[-6:-3]
-            timezone_present = int(s)*-1
-            a = timezone_original + ((
-                timezone_present + timezone_original)*-1)
-        return a
     
     def get_input_line_ids_type(self, cr, uid, ids, lines, type_line):
         lines_get = []
@@ -519,7 +568,7 @@ class hr_payslip(osv.Model):
         
         if id:
             payslip = self.browse(cr, uid, id, context=context)
-            #~ now = time.strftime('%Y-%m-%d %H:%M:%S')
+            now = ti.strftime('%Y-%m-%d %H:%M:%S')
             #~ htz = int(self._get_time_zone(cr, uid, ids, context=context))
             #~ date_today = now and datetime.strptime(payslip.payslip_datetime, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz) or False
             # certificate_id = payslip.company_id.certificate_id
@@ -662,7 +711,7 @@ class hr_payslip(osv.Model):
         if context is None:
             context = {}
         fecha = context['fecha']
-        year = float(time.strftime('%Y', time.strptime(
+        year = float(ti.strftime('%Y', ti.strptime(
             fecha, '%Y-%m-%dT%H:%M:%S')))
         if year >= 2011:
             encrypt = "sha1"
@@ -706,11 +755,11 @@ class hr_payslip(osv.Model):
             facturae_version = '11'
             facturae_type='nomina'
             context.update(self._get_file_globals(cr, uid, ids, context=context))
-            htz = int(self._get_time_zone(cr, uid, ids, context=context))
-            now = time.strftime('%Y-%m-%d %H:%M:%S')
-            date_now = now and datetime.strptime(payroll.payslip_datetime, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz) or False
-            date_now = time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(str(date_now), '%Y-%m-%d %H:%M:%S')) or False
-            context.update({'fecha': date_now or ''})
+            #~ htz = int(self._get_time_zone(cr, uid, ids, context=context))
+            #~ now = time.strftime('%Y-%m-%d %H:%M:%S')
+            #~ date_now = now and datetime.strptime(payroll.payslip_datetime, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz) or False
+            #~ date_now = time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(str(date_now), '%Y-%m-%d %H:%M:%S')) or False
+            #~ context.update({'fecha': date_now or ''})
             cert_str = self._get_certificate_str(context['fname_cer'])
             cert_str = cert_str.replace('\n\r', '').replace('\r\n', '').replace('\n', '').replace('\r', '').replace(' ', '')
             noCertificado = self._get_noCertificado(cr, uid, ids, context['fname_cer'])
@@ -721,13 +770,14 @@ class hr_payslip(osv.Model):
                     fname_jinja_tmpl = my_path and os.path.join(my_path, 'l10n_mx_payroll_base', 'template', 'cfdi' + '.xml') or ''
             dictargs2 = {
                 'a': payroll,
-                'time': time,
+                'time': ti,
                 'employee': payroll.employee_id,
                 'noCertificado': noCertificado,
                 'formaDePago': formaDePago,
                 'certificado': cert_str,
-                'fecha':  time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(str(payroll.date_payslip_tz), '%Y-%m-%d %H:%M:%S'))
+                'fecha': ti.strftime('%Y-%m-%dT%H:%M:%S', ti.strptime(str(payroll.date_payslip_tz), '%Y-%m-%d %H:%M:%S')) ,
                 }
+            context.update({'fecha': ti.strftime('%Y-%m-%dT%H:%M:%S', ti.strptime(str(payroll.date_payslip_tz), '%Y-%m-%d %H:%M:%S')) or ''})
             (fileno_xml, fname_xml) = tempfile.mkstemp('.xml', 'openerp_' + '__facturae__')
             if fname_jinja_tmpl:
                 with open(fname_jinja_tmpl, 'r') as f_jinja_tmpl:
@@ -755,7 +805,7 @@ class hr_payslip(osv.Model):
             dictargs = {
                 'a': payroll,
                 'employee': payroll.employee_id,
-                'time': time,
+                'time': ti,
                 }
             payroll2 = "payroll"
             (fileno_xml, fname_xml_payroll) = tempfile.mkstemp('.xml', 'openerp_' + (payroll2 or '') + '__facturae__')

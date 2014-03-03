@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <openerp>
-    <data>
+    <data noupdate="0">
         <record id="hr_payslip_al_cfdi0" model="hr.payslip">
             <field name="name">Payroll Test Antony Lesuisse</field>
             <field name="employee_id" ref="hr.employee_al"/>
@@ -8,10 +8,8 @@
             <field name="contract_id" ref="hr_contract_antony_lesuisse_cfdi0"/>
             <field name="partner_id" ref="l10n_mx_partner_address.res_partner_address_vauxoo_1"/>
             <field name="struct_id" ref="payroll_structure_demo_01"/>
-<!--
             <field name="date_payslip" eval="time.strftime('%Y-%m-%d')"/>
             <field name="payslip_datetime" eval="time.strftime('%Y-%m-%d %H:%M:%S')"/>
--->
             <field name="currency_id" ref="base.EUR"/>
             <field name="pay_method_id" ref="account.account_payment_term"/>
         </record>
