@@ -10,7 +10,7 @@
                     <field name="working_day_id"/>
                 </xpath>
                 <xpath expr="//field[@name='wage']" position="before">
-                    <field name="integrated_salary"/>
+                    <field name="integrated_salary" required="1"/>
                 </xpath>
                 <xpath expr="//field[@name='working_day_id']" position="after">
                     <field name="seniority"/>

@@ -7,8 +7,8 @@
             <field name="inherit_id" ref="hr_payroll.hr_salary_rule_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='appears_on_payslip']" position="after">
-                    <field name="type_concept"/>
-                    <field name="clave"/>
+                    <field name="type_concept" required="1"/>
+                    <field name="clave" required="1"/>
                 </xpath>
             </field>
         </record>
