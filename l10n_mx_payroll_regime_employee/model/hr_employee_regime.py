@@ -34,5 +34,5 @@ class hr_employee(osv.Model):
     _inherit = "hr.employee"
 
     _columns = {
-        'regime_id': fields.many2one('payroll.regime.employee', 'Payroll Regime',required=True, help='Attribute to the expression of key regime by which has engaged the employee, according to the catalog published on the website of online SAT'),
+        'regime_id': fields.many2one('payroll.regime.employee', 'Payroll Regime', help='Attribute to the expression of key regime by which has engaged the employee, according to the catalog published on the website of online SAT'),
     }
