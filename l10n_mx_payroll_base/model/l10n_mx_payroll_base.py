@@ -245,14 +245,6 @@ class hr_payslip(osv.Model):
 
     def hr_verify_sheet(self, cr, uid, ids, context=None):
         for hr in self.browse(cr, uid, ids, context=context):
-            #~ if hr.payslip_datetime:
-                #~ htz = int(self._get_time_zone(cr, uid, ids, context=context))
-                #~ self.write(cr, uid, ids, {'date_payslip_tz' : (datetime.strptime(hr.payslip_datetime, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz)).strftime('%Y-%m-%d %H:%M:%S')})
-            #~ else:
-                #~ now = datetime.now()
-                #~ htz = int(self._get_time_zone(cr, uid, ids, context=context))
-                #~ res = (now).strftime('%Y-%m-%d %H:%M:%S')
-                #~ self.write(cr, uid, ids, {'date_payslip_tz' : (now + timedelta(hours=htz)).strftime('%Y-%m-%d %H:%M:%S'), 'payslip_datetime': res,'date_payslip': (now).strftime('%Y-%m-%d')})
             vals_date = self.assigned_datetime(cr, uid,
                 {'date_payslip': hr.date_payslip,
                     'payslip_datetime': hr.payslip_datetime},
@@ -569,10 +561,6 @@ class hr_payslip(osv.Model):
         if id:
             payslip = self.browse(cr, uid, id, context=context)
             now = ti.strftime('%Y-%m-%d %H:%M:%S')
-            #~ htz = int(self._get_time_zone(cr, uid, ids, context=context))
-            #~ date_today = now and datetime.strptime(payslip.payslip_datetime, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz) or False
-            # certificate_id = payslip.company_id.certificate_id
-            #~ context.update({'date_work': payslip.payslip_datetime })
             certificate_id = self.pool.get('res.company')._get_current_certificate(
                 cr, uid, [payslip.company_emitter_id.id],
                 context=context)[payslip.company_emitter_id.id]
@@ -755,11 +743,6 @@ class hr_payslip(osv.Model):
             facturae_version = '11'
             facturae_type='nomina'
             context.update(self._get_file_globals(cr, uid, ids, context=context))
-            #~ htz = int(self._get_time_zone(cr, uid, ids, context=context))
-            #~ now = time.strftime('%Y-%m-%d %H:%M:%S')
-            #~ date_now = now and datetime.strptime(payroll.payslip_datetime, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz) or False
-            #~ date_now = time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(str(date_now), '%Y-%m-%d %H:%M:%S')) or False
-            #~ context.update({'fecha': date_now or ''})
             cert_str = self._get_certificate_str(context['fname_cer'])
             cert_str = cert_str.replace('\n\r', '').replace('\r\n', '').replace('\n', '').replace('\r', '').replace(' ', '')
             noCertificado = self._get_noCertificado(cr, uid, ids, context['fname_cer'])
