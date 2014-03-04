@@ -155,8 +155,6 @@ class invoice_facturae_html(report_sxw.rml_parse):
         attachment_ids = o.file_xml_sign.id
         db_data = attachment_obj.browse(self.cr, self.uid, [attachment_ids])[0].db_datas
         xml_data = base64.decodestring(db_data)
-        xml_data = tools.ustr(xml_data)
-        xml_data = HTMLParser.HTMLParser().unescape(xml_data)
         dict_data = dict(xmltodict.parse(xml_data)['cfdi:Comprobante'])
         return self._modify_recursively_dict(dict_data)
 
