@@ -44,7 +44,8 @@ Mexican Payroll
     "website": "http://vauxoo.com",
     "category": "Addons Vauxoo",
     "data": [
-        "view/l10n_mx_payroll_base_view.xml"
+        "view/l10n_mx_payroll_base_view.xml",
+        'security/ir.model.access.csv',
     ],
     "demo" : [
         "demo/l10n_mx_facturae_seq_demo.xml",

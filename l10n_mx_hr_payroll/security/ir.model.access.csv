@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+,,,,,,,
+,,,,,,,
+payroll_hr_inability,payroll.hr.inability,model_payroll_hr_inability,,1,1,1,1
+payroll_hr_day,payroll.hr.day,model_payroll_working_day,,1,1,1,1
+hr_payslip_overtime,hr.payslip.overtime,model_hr_payslip_overtime,,1,1,1,1
+hr_payslip_inability,hr.payslip.inability,model_hr_payslip_inability,,1,1,1,1

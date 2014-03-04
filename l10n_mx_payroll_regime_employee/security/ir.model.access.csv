@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+,,,,,,,
+,,,,,,,
+payroll_regime_employee,payroll.regime.employee,model_payroll_regime_employee,,1,1,1,1

@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <openerp>
-    <data>
+    <data noupdate="1">
         <record id="hr_payslip_al_cfdi0" model="hr.payslip">
             <field name="name">Payroll Test Antony Lesuisse</field>
             <field name="employee_id" ref="hr.employee_al"/>

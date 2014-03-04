@@ -23,10 +23,9 @@
   !python {model: ir.attachment.facturae.mx}: |
     import netsvc, tools
     wf_service = netsvc.LocalService("workflow")
-    cfdi_pac_finkok_ids = self.search(cr, uid, [('payroll_id', '=', ref("hr_payslip_al_cfdi0") ), ('state', '<>', 'cancel')], limit=1)
+    cfdi_pac_finkok_ids = self.search(cr, uid, [('id_source', '=', ref("hr_payslip_al_cfdi0") ), ('model_source', '=', 'hr.payslip'), ('state', '<>', 'cancel')], limit=1)
     cfdi_pac_finkok_id = cfdi_pac_finkok_ids and cfdi_pac_finkok_ids[0] or False
     if cfdi_pac_finkok_id:
-        context.update({'active_model': 'hr.payslip','active_ids':[ref("hr_payslip_al_cfdi0")]})
         cfdi_pac_finkok = self.browse(cr, uid, [cfdi_pac_finkok_id], context=context)[0]
         self.signal_sign(cr, uid, cfdi_pac_finkok_ids, context=context)
         state = cfdi_pac_finkok.state
@@ -35,7 +34,7 @@
 -
   !python {model: ir.attachment.facturae.mx}: |
     import netsvc, tools, os, base64
-    cfdi_pac_finkok_ids = self.search(cr, uid, [('payroll_id', '=', ref("hr_payslip_al_cfdi0") ), ('state', '<>', 'cancel')], limit=1)
+    cfdi_pac_finkok_ids = self.search(cr, uid, [('id_source', '=', ref("hr_payslip_al_cfdi0") ), ('model_source', '=', 'hr.payslip'), ('state', '<>', 'cancel')], limit=1)
     cfdi_pac_finkok_id = len(cfdi_pac_finkok_ids) and cfdi_pac_finkok_ids[0] or False
     state = 'no attach file'
     if cfdi_pac_finkok_id:
@@ -57,7 +56,7 @@
   !python {model: ir.attachment.facturae.mx}: |
     import netsvc, tools
     wf_service = netsvc.LocalService("workflow")
-    cfdi_pac_finkok_ids = self.search(cr, uid, [('payroll_id', '=', ref("hr_payslip_al_cfdi0") ), ('state', '<>', 'cancel')], limit=1)
+    cfdi_pac_finkok_ids = self.search(cr, uid, [('id_source', '=', ref("hr_payslip_al_cfdi0") ), ('model_source', '=', 'hr.payslip'), ('state', '<>', 'cancel')], limit=1)
     cfdi_pac_finkok_id = cfdi_pac_finkok_ids and cfdi_pac_finkok_ids[0] or False
     if cfdi_pac_finkok_id:
         cfdi_pac_finkok = self.browse(cr, uid, [cfdi_pac_finkok_id])[0]
@@ -68,7 +67,7 @@
 -
   !python {model: ir.attachment.facturae.mx}: |
     import netsvc, tools, os, base64
-    cfdi_pac_finkok_ids = self.search(cr, uid, [('payroll_id', '=', ref("hr_payslip_al_cfdi0") ), ('state', '<>', 'cancel')], limit=1)
+    cfdi_pac_finkok_ids = self.search(cr, uid, [('id_source', '=', ref("hr_payslip_al_cfdi0") ), ('model_source', '=', 'hr.payslip'), ('state', '<>', 'cancel')], limit=1)
     cfdi_pac_finkok_id = cfdi_pac_finkok_ids and cfdi_pac_finkok_ids[0] or False
     state = None
     state = 'no attach file'
@@ -89,7 +88,7 @@
   9 I generate a cancel l10n_mx attachment facturae cfdi_pac_finkok by clicking on cancel button (ID hr_payslip_al_cfdi0)
 -
   !python {model: ir.attachment.facturae.mx}: |
-    cfdi_pac_finkok_ids = self.search(cr, uid, [('payroll_id', '=', ref("hr_payslip_al_cfdi0") ), ('state', '<>', 'cancel')], limit=1)
+    cfdi_pac_finkok_ids = self.search(cr, uid, [('id_source', '=', ref("hr_payslip_al_cfdi0") ), ('model_source', '=', 'hr.payslip'), ('state', '<>', 'cancel')], limit=1)
     cfdi_pac_finkok_id = cfdi_pac_finkok_ids and cfdi_pac_finkok_ids[0] or False
     if cfdi_pac_finkok_id:
         self.signal_cancel(cr, uid , cfdi_pac_finkok_ids ,context=context)
@@ -101,8 +100,8 @@
 -
   !assert {model:  hr.payslip, id: hr_payslip_al_cfdi0}:
     - state == 'cancel'
--
-  11 I check that customer payroll move_id is None (ID hr_payslip_al_cfdi0)
--
-  !assert {model:  hr.payslip, id: hr_payslip_al_cfdi0}:
-    - move_id.name == None
+#~ -
+  #~ 11 I check that customer payroll move_id is None (ID hr_payslip_al_cfdi0)
+#~ -
+  #~ !assert {model:  hr.payslip, id: hr_payslip_al_cfdi0}:
+    #~ - move_id.name == None #move_id no existe en modelo hr_payslip
