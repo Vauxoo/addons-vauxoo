@@ -781,7 +781,7 @@ class hr_payslip(osv.Model):
             try:
                 invoice_obj.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], 'v3.2', 'cfd')
             except Exception, e:
-                raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (e))
+                raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (tools.ustr(e)))
             for my_path in all_paths:
                 if os.path.isdir(os.path.join(my_path, 'l10n_mx_payroll_base', 'template')):
                     fname_jinja_tmpl = my_path and os.path.join(my_path, 'l10n_mx_payroll_base', 'template', 'nomina11' + '.xml') or ''
@@ -803,7 +803,7 @@ class hr_payslip(osv.Model):
             try:
                 invoice_obj.validate_scheme_facturae_xml(cr, uid, ids, [data_xml_payroll], facturae_version, facturae_type)
             except Exception, e:
-                raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (e))
+                raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (tools.ustr(e)))
             #Agregar nodo Nomina en nodo Complemento
             doc_xml = xml.dom.minidom.parseString(data_xml)
             doc_xml_payroll_2 = xml.dom.minidom.parseString(data_xml_payroll)
