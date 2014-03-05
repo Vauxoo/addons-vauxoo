@@ -37,6 +37,6 @@
     "depends" : ["l10n_mx_facturae_base"],
     "demo" : [],
     "data" : [],
-    "installable" : True,
+    "installable" : False,
     "active" : False,
 }
