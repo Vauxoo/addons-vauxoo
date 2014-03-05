@@ -25,13 +25,16 @@
 {
     "name" : "Message Post Log",
     "version" : "0.1",
-    "depends" : ['account'],
+    "depends" : ['mail'],
     "author" : "Vauxoo",
     "description" : """
     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
-    "data" : [],
+    "data" : [
+       'security/ir.model.access.csv', 
+        ],
     "active": False,
     "installable": True,
+
 }
