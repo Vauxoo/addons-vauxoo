@@ -752,7 +752,7 @@ class hr_payslip(osv.Model):
                 if os.path.isdir(os.path.join(my_path, 'l10n_mx_payroll_base', 'template')):
                     fname_jinja_tmpl = my_path and os.path.join(my_path, 'l10n_mx_payroll_base', 'template', 'cfdi' + '.xml') or ''
             dictargs2 = {
-                'a': payroll,
+                'o': payroll,
                 'time': ti,
                 'employee': payroll.employee_id,
                 'noCertificado': noCertificado,
