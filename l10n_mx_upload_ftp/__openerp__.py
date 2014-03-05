@@ -33,9 +33,9 @@
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : ["base"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : ["upload_ftp_view.xml"],
+    "demo" : [],
+    "data" : ["security/ir.model.access.csv",
+                "upload_ftp_view.xml"],
     "installable" : True,
     "active" : False,
 }

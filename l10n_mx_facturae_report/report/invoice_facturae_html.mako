@@ -30,7 +30,7 @@
                                 <div class="emitter">
                                     <br/>${ dict_data['Emisor']['DomicilioFiscal']['@calle'] or ''|entity}
                                     ${ dict_data['Emisor']['DomicilioFiscal']['@noExterior'] or ''|entity}
-                                    ${ dict_data['Emisor']['DomicilioFiscal']['@noInterior'] or ''|entity}
+                                    ${ dict_data['Emisor']['DomicilioFiscal']['@noInterior'] or ''|entity}</br>
                                     ${ dict_data['Emisor']['DomicilioFiscal']['@colonia'] or ''|entity}
                                     ${ dict_data['Emisor']['DomicilioFiscal']['@codigoPostal'] or ''|entity}
                                     <br/>${ _("Localidad:")} ${ dict_data['Emisor']['DomicilioFiscal']['@localidad'] or ''|entity}                                    
@@ -113,7 +113,227 @@
                 </td>
             </tr>
         </table>
-        <br/>   
+        <br/><!-- Inicio Nodo Nomina -->
+        %if dict_data['Complemento'].has_key('Nomina'):
+            <table width="100%" class="basic_table" style="font-size:12;">
+                <tr>
+                    <td width="50%" style="text-align:center;">
+                        <b>${_('DATOS DEL EMPLEADO')}</b>
+                    </td>
+                    <td width="50%" style="text-align:center;">
+                        <b>${_('INFORMACIÓN LABORAL')}</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top">
+                        <table class="basic_table" style="font-size:9;">
+                            <tr>                                
+                                <td class="cliente" width="25%"><b>
+                                    ${_('No. Empleado')}</br>
+                                    ${_('Reg. Patronal')}</br>
+                                    ${_('Puesto')}</br>
+                                    ${_('CURP')}</br>
+                                    ${_('Riesgo de puesto')}</br>
+                                    ${_('Departamento')}</br>
+                                    ${_('Núm. seguridad social')}</br></b>
+                                </td>
+                                <td class="cliente" width="25%">
+                                    ${ dict_data['Complemento']['Nomina']['@NumEmpleado'] or ''|entity }</br>
+                                    ${ dict_data['Complemento']['Nomina']['@RegistroPatronal'] or ''|entity }</br>
+                                    ${ dict_data['Complemento']['Nomina']['@Puesto'] or ''|entity }</br>
+                                    ${ dict_data['Complemento']['Nomina']['@CURP'] or ''|entity }</br>
+                                    ${ dict_data['Complemento']['Nomina']['@RiesgoPuesto'] or ''|entity }</br>                                   
+                                    ${ dict_data['Complemento']['Nomina']['@Departamento'] or ''|entity }</br>
+                                    ${ dict_data['Complemento']['Nomina']['@NumSeguridadSocial'] or ''|entity }</br>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="50%" valign="top">
+                        <table class="basic_table" style="font-size:9;">
+                            <tr>
+                                <td class="cliente" width="25%"><b>
+                                    ${_('Contrato')}</br>
+                                    ${_('Días Pagados')}</br>
+                                    ${_('Rel. Laboral')}</br>
+                                    ${_('Salario diario')}</br>                                    
+                                    ${_('Jornada')}</br>
+                                    ${_('Antiguedad')}</br>
+                                    ${_('Salario base')}</br>
+                                    ${_('Periodo')}</br></b>                                 
+                                </td>
+                                <td class="cliente" width="25%">
+                                    ${ dict_data['Complemento']['Nomina']['@TipoContrato'] or ''|entity }</br>
+                                    ${ dict_data['Complemento']['Nomina']['@NumDiasPagados'] or ''|entity }</br>
+                                    ${datetime.strptime(dict_data['Complemento']['Nomina']['@FechaInicioRelLaboral'].encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity}</br>
+                                    ${ dict_data['Complemento']['Nomina']['@SalarioDiarioIntegrado'] or ''|entity }</br>                                
+                                    ${ dict_data['Complemento']['Nomina']['@TipoJornada'] or ''|entity }</br>
+                                    ${ dict_data['Complemento']['Nomina']['@Antiguedad'] or ''|entity }</br>
+                                    ${ dict_data['Complemento']['Nomina']['@SalarioBaseCotApor'] or ''|entity }</br>
+                                    ${ dict_data['Complemento']['Nomina']['@PeriodicidadPago'] or ''|entity }</br>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <table width="100%">
+                <tr>
+                    <table width="100%" class="basic_table" style="font-size:12;">
+                        <tr>
+                            <td style="text-align:center;">
+                                <b>${_('PAGO')}</b>
+                            </td>
+                        </tr>
+                    </table>
+                </tr>
+                <tr>
+                    <table width="100%" class="basic_table" style="font-size:9; border:1.5px solid grey;">
+                        <tr>                          
+                            <td class="cliente"><b>${_('Fecha Pago')}</b></td><td class="cliente">${datetime.strptime(dict_data['Complemento']['Nomina']['@FechaPago'].encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity}</td>
+                            <td class="cliente"><b>${_('Fecha Inicio')}</b></td><td class="cliente">${datetime.strptime(dict_data['Complemento']['Nomina']['@FechaInicialPago'].encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity}</td>
+                            <td class="cliente"><b>${_('Fecha Fin')}</b></td><td class="cliente">${datetime.strptime(dict_data['Complemento']['Nomina']['@FechaFinalPago'].encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity}</td>
+                        </tr>
+                        <tr>
+                            <td class="cliente"><b>${_('CLABE')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@CLABE'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('Método de pago')}</b></td><td class="cliente">${ dict_data['@metodoDePago'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('Banco')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@Banco'] or ''|entity } </td>
+                        </tr>
+                    </table>
+                </tr>
+            </table>
+            <br/>   
+            <table width="100%" style="color:#121212">
+                <tr>
+                    <td width="50%" valign="top">
+                        <table class="basic_table">
+                            <tr style="text-align:center;">
+                                <td width="10%" colspan="5" style="font-size:12;"><b>${_('PERCEPCIONES')}</b></td>
+                            </tr>
+                            <tr class="firstrow">
+                                <th width="5%">${_('Tipo')}</th>
+                                <th width="10%">${_('Clave')}</th>
+                                <th>${_('Concepto')}</th>
+                                <th width="11%" >${_('Importe Gravado')}</th>
+                                <th width="11%" >${_('Importe Exento')}</th>
+                            </tr>
+                            %if not isinstance(dict_data['Complemento']['Nomina']['Percepciones']['Percepcion'], list):
+                                <% dict_perc =  [dict_data['Complemento']['Nomina']['Percepciones']['Percepcion']] %>
+                            %else:
+                                <% dict_perc =  dict_data['Complemento']['Nomina']['Percepciones']['Percepcion'] %>
+                            %endif
+                            %for dict in range(0,len(dict_perc)):
+                                <tr style="font-size:9; border:1.5px solid grey;">
+                                    <td width="5%" class="basic_td"><% t_perc = dict_perc[dict]['@TipoPercepcion'] %>${ t_perc or ''}</td>
+                                    <td width="10%" class="basic_td"><% clave = dict_perc[dict]['@Clave'] %>${ clave or ''}</td>
+                                    <td class="basic_td"><% concep = dict_perc[dict]['@Concepto'] %>${ concep or ''}</td>
+                                    <td width="11%" class="number_td"><% i_grava = dict_perc[dict]['@ImporteGravado'] %>$ ${ i_grava or '0.0'}</td>
+                                    <td width="15%" class="number_td"><% i_exen = dict_perc[dict]['@ImporteExento'] %>$ ${ i_exen or '0.0'}</td>
+                                </tr>
+                             %endfor
+                             <tr style="font-size:9; border:1.5px solid grey;">
+                                <td class="basic_td" colspan="3"><b>${_('Total Percepciones')}</b></td>
+                                <td width="9%" class="number_td">$ ${ dict_data['Complemento']['Nomina']['Percepciones']['@TotalGravado'] or '0.0'|entity}</td>
+                                <td width="15%" class="number_td">$ ${ dict_data['Complemento']['Nomina']['Percepciones']['@TotalExento'] or '0.0'|entity}</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="50%" valign="top">
+                        <table class="basic_table">
+                            <tr style="text-align:center;">
+                                <td width="10%" colspan="5" style="font-size:12;"><b>${_('DEDUCCIONES')}</b></td>
+                            </tr>
+                            <tr class="firstrow">
+                                <th width="5%">${_('Tipo')}</th>
+                                <th width="10%">${_('Clave')}</th>
+                                <th>${_('Concepto')}</th>
+                                <th width="11%" >${_('Importe Gravado')}</th>
+                                <th width="11%" >${_('Importe Exento')}</th>
+                            </tr>
+                            %if not isinstance(dict_data['Complemento']['Nomina']['Deducciones']['Deduccion'], list):
+                                <% dict_deduc =  [dict_data['Complemento']['Nomina']['Deducciones']['Deduccion']] %>
+                            %else:
+                                <% dict_deduc =  dict_data['Complemento']['Nomina']['Deducciones']['Deduccion'] %>
+                            %endif
+                            %for dict in range(0,len(dict_deduc)):
+                                <tr style="font-size:9; border:1.5px solid grey;">
+                                    <td width="5%" class="basic_td"><% t_deduc = dict_deduc[dict]['@TipoDeduccion'] %>${ t_deduc or ''}</td>
+                                    <td width="10%" class="basic_td"><% clave = dict_deduc[dict]['@Clave'] %>${ clave or ''}</td>
+                                    <td class="basic_td"><% concep = dict_deduc[dict]['@Concepto'] %>${ concep or ''}</td>
+                                    <td width="11%" class="number_td"><% i_grava = dict_deduc[dict]['@ImporteGravado'] %>$ ${ i_grava or '0.0'}</td>
+                                    <td width="15%" class="number_td"><% i_exen = dict_deduc[dict]['@ImporteExento'] %>$ ${ i_exen or '0.0'}</td>
+                                </tr>
+                            %endfor
+                            <tr style="font-size:9; border:1.5px solid grey;">
+                                <td class="basic_td" colspan="3"><b>${_('Total Deducciones')}</b></td>
+                                <td width="9%" class="number_td">$ ${ dict_data['Complemento']['Nomina']['Deducciones']['@TotalGravado']or '0.0'|entity}</td>
+                                <td width="15%" class="number_td">$ ${ dict_data['Complemento']['Nomina']['Deducciones']['@TotalExento']or '0.0'|entity}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                <td width="50%" valign="top">
+                    <table class="basic_table">
+                        <tr style="text-align:center;">
+                            <td width="10%" colspan="4" style="font-size:12;"><b>${_('HORAS EXTRAS')}</b></td>
+                        </tr>
+                        <tr class="firstrow">
+                            <th width="10%">${_('Dias')}</th>
+                            <th width="10%">${_('Tipo')}</th>
+                            <th width="9%" >${_('Cant. de hrs')}</th>
+                            <th width="9%" >${_('Importe')}</th>
+                        </tr>
+                        %if dict_data['Complemento']['Nomina'].has_key('HorasExtras'):
+                            %if not isinstance(dict_data['Complemento']['Nomina']['HorasExtras']['HorasExtra'], list):
+                                <% dict_he =  [dict_data['Complemento']['Nomina']['HorasExtras']['HorasExtra']] %>
+                            %else:
+                                <% dict_he =  dict_data['Complemento']['Nomina']['HorasExtras']['HorasExtra'] %>
+                            %endif
+                            %for dict in range(0,len(dict_he)):
+                                <tr style="font-size:9; border:1.5px solid grey;">
+                                    <td width="10%" class="basic_td"><% dias = dict_he[dict]['@Dias'] %>${ dias or '' | entity}</td>
+                                    <td width="10%" class="basic_td"><% tipo = dict_he[dict]['@TipoHoras'] %>${ tipo or '' | entity}</td>
+                                    <td width="9%" class="basic_td"><% hrs = dict_he[dict]['@HorasExtra'] %>${ hrs or '' | entity}</td>
+                                    <td width="10%" class="number_td"><% imp = dict_he[dict]['@ImportePagado'] %>${ imp or '0.0' | entity}</td>
+                                </tr>
+                            %endfor
+                        %endif
+                    </table>
+                </td>
+                <td width="50%" valign="top">
+                    <table class="basic_table">
+                        <tr style="text-align:center;">
+                            <td width="10%" colspan="3" style="font-size:12;"><b>${_('INCAPACIDAD')}</b></td>
+                        </tr>
+                        <tr class="firstrow">
+                            <th width="10%">${_('Dias')}</th>
+                            <th width="10%">${_('Tipo')}</th>
+                            <th width="9%">${_('Importe')}</th>
+                        </tr>
+                        %if dict_data['Complemento']['Nomina'].has_key('Incapacidades'):
+                            %if not isinstance(dict_data['Complemento']['Nomina']['Incapacidades']['Incapacidad'], list):
+                                <% dict_inc =  [dict_data['Complemento']['Nomina']['Incapacidades']['Incapacidad']] %>
+                            %else:
+                                <% dict_inc =  dict_data['Complemento']['Nomina']['Incapacidades']['Incapacidad'] %>
+                            %endif
+                            %for dict in range(0,len(dict_inc)):
+                                <tr style="font-size:9; border:1.5px solid grey;">
+                                    <td width="10%" class="basic_td"><% dias = dict_inc[dict]['@DiasIncapacidad'] %>${ dias or '' | entity}</td>
+                                    <td width="10%" class="basic_td"><% tipo = dict_inc[dict]['@TipoIncapacidad'] %>${ tipo or '' | entity}</td>
+                                    <td width="9%" class="number_td"><% desc = dict_inc[dict]['@Descuento'] %>${ desc or '0.0' | entity}</td>
+                                </tr>
+                            %endfor
+                        %endif
+                    </table>
+                </td>
+            </tr>
+        </table>
+        </br>
+        </br>
+        %endif
+        <!-- Fin Nodo Nomina -->
         <table class="basic_table" style="color:#121212">
             <tr class="firstrow">
                 <th width="10%">${_("Cant.")}</th>
@@ -223,6 +443,7 @@
                         ${helper.embed_image('jpeg',str(o.company_id.cif_file), 140, 220)}
                     </td>
                     <td valign="top" align="left">
+                        <p class="cadena_with_cbb_cfd">
                         <b>${_('Sello Digital Emisor:')} </b><br/>
                         ${ dict_data['@sello'] or ''|entity}<br/>
                         <b>${_('Sello Digital SAT:')} </b><br/>
@@ -239,7 +460,7 @@
                 </tr>
             </table>
         </div>
-    <p style="page-break-after:always"></p>
+        <p style="page-break-after:always"></p>
     %endfor
 </body>
 </html>

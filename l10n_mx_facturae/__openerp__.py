@@ -47,6 +47,7 @@ Requires the following programs:
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
+    
     "depends" : [ "l10n_mx_facturae_groups", "account", "base_vat", 
             "document",
             "l10n_mx_facturae_lib",
@@ -68,6 +69,7 @@ Requires the following programs:
             "l10n_mx_facturae_report",
             "l10n_mx_facturae_group_show_wizards",
             "l10n_mx_settings_facturae",
+            #~ "l10n_mx_params_pac"
         ],
     "demo" : [
         "demo/l10n_mx_facturae_seq_demo.xml",
@@ -85,6 +87,6 @@ Requires the following programs:
     "test" : [
         "test/account_invoice_cfd.yml",
     ],
-    "installable" : True,
+    "installable" : False,
     "active" : False,
 }

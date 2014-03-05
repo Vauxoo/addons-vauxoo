@@ -245,6 +245,7 @@ width:10em;
 p.cadena_with_cbb_cfd{
 width:55em;
 }
+
 pre {
 font-size: 6pt;
 font-family:helvetica;
@@ -254,6 +255,28 @@ white-space: -pre-wrap;
 white-space: -o-pre-wrap;
 word-wrap: break-word;
 }
+
+.imagen_company {
+  vertical-align: top;
+  width: 35%; }              
+
+.data_emitter {
+  vertical-align: top;
+  color: black;
+  text-align: left;
+  font-size: 8;
+}
+
+.regular_table {
+border-collapse: collapse;
+font-size: 10;
+}
+
+tr.centrar{
+text-align:center;
+font-weight:bold;
+}
+
 ]]> </field>
             <field name="name">Facturae</field>
         </record>
