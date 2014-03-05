@@ -87,6 +87,6 @@ Requires the following programs:
     "test" : [
         "test/account_invoice_cfd.yml",
     ],
-    "installable" : True,
+    "installable" : False,
     "active" : False,
 }
