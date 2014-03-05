@@ -362,19 +362,21 @@
                             <td width="9%" >${_('Cant. de hrs')}</td>
                             <td width="9%" >${_('Importe')}</td>
                         </tr>
-                        %if not isinstance(dict_data['Complemento']['Nomina']['HorasExtras']['HorasExtra'], list):
-                            <% dict_he =  [dict_data['Complemento']['Nomina']['HorasExtras']['HorasExtra']] %>
-                        %else:
-                            <% dict_he =  dict_data['Complemento']['Nomina']['HorasExtras']['HorasExtra'] %>
+                        %if dict_data['Complemento']['Nomina'].has_key('HorasExtras'):
+                            %if not isinstance(dict_data['Complemento']['Nomina']['HorasExtras']['HorasExtra'], list):
+                                <% dict_he =  [dict_data['Complemento']['Nomina']['HorasExtras']['HorasExtra']] %>
+                            %else:
+                                <% dict_he =  dict_data['Complemento']['Nomina']['HorasExtras']['HorasExtra'] %>
+                            %endif
+                            %for dict in range(0,len(dict_he)):
+                                <tr style="border:1.5px solid grey;">
+                                    <td width="10%" class="basic_td"><% dias = dict_he[dict]['@Dias'] %>${ dias or '' | entity}</td>
+                                    <td width="10%" class="basic_td"><% tipo = dict_he[dict]['@TipoHoras'] %>${ tipo or '' | entity}</td>
+                                    <td width="9%" class="basic_td"><% hrs = dict_he[dict]['@HorasExtra'] %>${ hrs or '' | entity}</td>
+                                    <td width="10%" class="number_td"><% imp = dict_he[dict]['@ImportePagado'] %>${ imp or '0.0' | entity}</td>
+                                </tr>
+                            %endfor
                         %endif
-                        %for dict in range(0,len(dict_he)):
-                            <tr style="border:1.5px solid grey;">
-                                <td width="10%" class="basic_td"><% dias = dict_he[dict]['@Dias'] %>${ dias or '' | entity}</td>
-                                <td width="10%" class="basic_td"><% tipo = dict_he[dict]['@TipoHoras'] %>${ tipo or '' | entity}</td>
-                                <td width="9%" class="basic_td"><% hrs = dict_he[dict]['@HorasExtra'] %>${ hrs or '' | entity}</td>
-                                <td width="10%" class="number_td"><% imp = dict_he[dict]['@ImportePagado'] %>${ imp or '0.0' | entity}</td>
-                            </tr>
-                        %endfor
                     </table>
                 </td>
                 <td width="50%" valign="top">
@@ -387,18 +389,20 @@
                             <td width="10%">${_('Tipo')}</td>
                             <td width="9%">${_('Importe')}</td>
                         </tr>
-                        %if not isinstance(dict_data['Complemento']['Nomina']['Incapacidades']['Incapacidad'], list):
-                            <% dict_inc =  [dict_data['Complemento']['Nomina']['Incapacidades']['Incapacidad']] %>
-                        %else:
-                            <% dict_inc =  dict_data['Complemento']['Nomina']['Incapacidades']['Incapacidad'] %>
+                        %if dict_data['Complemento']['Nomina'].has_key('Incapacidades'):
+                            %if not isinstance(dict_data['Complemento']['Nomina']['Incapacidades']['Incapacidad'], list):
+                                <% dict_inc =  [dict_data['Complemento']['Nomina']['Incapacidades']['Incapacidad']] %>
+                            %else:
+                                <% dict_inc =  dict_data['Complemento']['Nomina']['Incapacidades']['Incapacidad'] %>
+                            %endif
+                            %for dict in range(0,len(dict_inc)):
+                                <tr style="border:1.5px solid grey;">
+                                    <td width="10%" class="basic_td"><% dias = dict_inc[dict]['@DiasIncapacidad'] %>${ dias or '' | entity}</td>
+                                    <td width="10%" class="basic_td"><% tipo = dict_inc[dict]['@TipoIncapacidad'] %>${ tipo or '' | entity}</td>
+                                    <td width="9%" class="number_td"><% desc = dict_inc[dict]['@Descuento'] %>${ desc or '0.0' | entity}</td>
+                                </tr>
+                            %endfor
                         %endif
-                        %for dict in range(0,len(dict_inc)):
-                            <tr style="border:1.5px solid grey;">
-                                <td width="10%" class="basic_td"><% dias = dict_inc[dict]['@DiasIncapacidad'] %>${ dias or '' | entity}</td>
-                                <td width="10%" class="basic_td"><% tipo = dict_inc[dict]['@TipoIncapacidad'] %>${ tipo or '' | entity}</td>
-                                <td width="9%" class="number_td"><% desc = dict_inc[dict]['@Descuento'] %>${ desc or '0.0' | entity}</td>
-                            </tr>
-                        %endfor
                     </table>
                 </td>
             </tr>
