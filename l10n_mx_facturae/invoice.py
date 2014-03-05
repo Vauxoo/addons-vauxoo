@@ -1090,16 +1090,12 @@ class account_invoice(osv.Model):
                 raise osv.except_osv(_('Warning !'), _(
                     "Don't have defined RFC of the partner[%s].\n%s !") % (
                     parent_obj.name, msg2))
-            if parent_obj._columns.has_key('vat_split') and parent_obj.vat[0:2] <> 'MX':
-                if parent_obj.vat[0:2].upper() == 'MX':
-                    parent_obj.write({'vat' : parent_obj.vat.upper()})
-                    rfc = parent_obj.vat.upper()
-                else:
+            if parent_obj._columns.has_key('vat_split') and parent_obj.vat[0:2].upper() <> 'MX':
                     rfc = 'XAXX010101000'
             else:
                 rfc = ((parent_obj._columns.has_key('vat_split')\
                     and parent_obj.vat_split or parent_obj.vat)\
-                    or '').replace('-', ' ').replace(' ','')
+                    or '').replace('-', ' ').replace(' ','').upper()
             address_invoice = partner_obj.browse(cr, uid, \
                 invoice.partner_id.id, context=context)
             invoice_data['Receptor'] = {}
