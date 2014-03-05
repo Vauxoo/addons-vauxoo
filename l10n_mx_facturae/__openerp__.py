@@ -69,7 +69,7 @@ Requires the following programs:
             "l10n_mx_facturae_report",
             "l10n_mx_facturae_group_show_wizards",
             "l10n_mx_settings_facturae",
-            "l10n_mx_params_pac"
+            #~ "l10n_mx_params_pac"
         ],
     "demo" : [
         "demo/l10n_mx_facturae_seq_demo.xml",

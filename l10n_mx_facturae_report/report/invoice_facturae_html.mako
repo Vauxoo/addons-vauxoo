@@ -447,7 +447,7 @@
                         <b>${_('Cadena original:')} </b><br/>
                         ${o.cfdi_cadena_original or ''|entity}</br>
                         <b>${_('Enlace al certificado: ')}</b></br>
-                        ${'' or ''|entity}</p>
+                        ${o.certificate_link or ''|entity}</p>
                     </td>
                     <td align="right">
                         <% img = create_qrcode(dict_data['Emisor']['@rfc'], dict_data['Receptor']['@rfc'], float(dict_data['@total'].encode('ascii','replace')), dict_data['Complemento']['TimbreFiscalDigital']['@UUID']) %>
