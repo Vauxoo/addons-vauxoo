@@ -112,7 +112,7 @@ class ir_attachment_facturae_mx(osv.Model):
         for ir_attachment_facturae_mx_id in self.browse(cr, uid, ids, context=context):
             status = False
             pac_params_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'pac_cancelar'),
+                ('method_type', '=', 'pac_fk_cancelar'),
                 #~ ('company_id', '=', invoice.company_emitter_id.id),
                 ('company_id', '=', ir_attachment_facturae_mx_id.company_id.id),
                 ('active', '=', True),
@@ -202,7 +202,7 @@ class ir_attachment_facturae_mx(osv.Model):
             cfdi_xml = False
             status = False
             pac_params_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'pac_firmar'), (
+                ('method_type', '=', 'pac_fk_firmar'), (
                     'company_id', '=', ir_attachment_facturae_mx_id.company_id.id), (
                         'active', '=', True)], limit=1, context=context)
             if pac_params_ids:
