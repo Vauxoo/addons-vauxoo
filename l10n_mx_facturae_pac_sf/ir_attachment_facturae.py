@@ -189,6 +189,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 password = pac_params.password
                 wsdl_url = pac_params.url_webservice
                 namespace = pac_params.namespace
+                certificate_link = pac_params.certificate_link
                 url = 'https://solucionfactible.com/ws/services/Timbrado'
                 testing_url = 'http://testing.solucionfactible.com/ws/services/Timbrado'
                 if (wsdl_url == url) or (wsdl_url == testing_url):
@@ -249,6 +250,7 @@ class ir_attachment_facturae_mx(osv.Model):
                             'resultados']['cfdiTimbrado'] or ''),  # este se necesita en uno que no es base64
                             'cfdi_folio_fiscal': resultado['resultados']['uuid'] or '',
                             'pac_id': pac_params.id,
+                            'certificate_link': certificate_link or False,
                         }
                         msg += mensaje + "." + resultados_mensaje + \
                             " Folio Fiscal: " + folio_fiscal + "."
