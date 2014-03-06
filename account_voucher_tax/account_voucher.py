@@ -242,7 +242,7 @@ class account_voucher(osv.Model):
                     else:
                         account_tax_voucher=line_tax.tax_id.account_paid_voucher_id.id
                     account_tax_collected=line_tax.tax_id.account_collected_id.id
-                    
+                    context['date'] = line.move_line_id.date
                     reference_amount = line_tax.amount_tax
                     move_lines_tax = self._preparate_move_line_tax(cr, uid,
                         account_tax_voucher, account_tax_collected,
@@ -259,34 +259,35 @@ class account_voucher(osv.Model):
                         move_create = move_line_obj.create(cr ,uid, move_line_tax,
                                                 context=context)
                         move_ids.append(move_create)
-
-                    amount_exchange = self._convert_amount(cr, uid, line.untax_amount or line.amount, voucher.id, context=context)
-                    tax_amount_exchange = self._convert_amount(cr, uid, line.amount_original, voucher.id, context=context)
-                    base_exchange = self._convert_amount(cr, uid, 2.88, voucher.id, context=context)
-                    if line.amount == line.amount_unreconciled:
-                        if not line.move_line_id:
-                            raise osv.except_osv(_('Wrong voucher line'),_("The invoice you are willing to pay is not valid anymore."))
-                        sign = voucher.type in ('payment', 'purchase') and -1 or 1
-                        currency_rate_difference = sign * (line.move_line_id.amount_residual - amount_exchange)
-                        if round(currency_rate_difference, 2):
-                            factor=self.get_percent_pay_vs_invoice(cr ,uid, tax_amount_exchange, currency_rate_difference,context=context)
-                            base_amount=self.get_partial_amount_tax_pay(cr, uid, line_tax.tax_id.amount, base_exchange, context=context)
-                            move_lines_tax = self._preparate_move_line_tax(cr, uid,
-                                account_tax_voucher, account_tax_collected,
-                                move_id, voucher.type, voucher.partner_id.id,
-                                voucher.period_id.id, voucher.journal_id.id,
-                                voucher.date, company_currency,
-                                factor * base_amount, None,
-                                company_currency,
-                                line_tax.id, line_tax.tax_id,
-                                line_tax.analytic_account_id and\
-                                            line_tax.analytic_account_id.id or False,
-                                line_tax.amount_base,
-                                factor, context=context)
-                            for move_line_tax in move_lines_tax:
-                                move_create = move_line_obj.create(cr ,uid, move_line_tax,
-                                                        context=context)
-                                move_ids.append(move_create)
+##commented code section that we are not considering
+##taxes actually paid by cases lost exchange
+#                    amount_exchange = self._convert_amount(cr, uid, line.untax_amount or line.amount, voucher.id, context=context)
+ #                   tax_amount_exchange = self._convert_amount(cr, uid, line.amount_original, voucher.id, context=context)
+  #                  base_exchange = self._convert_amount(cr, uid, 2.88, voucher.id, context=context)
+   #                 if line.amount == line.amount_unreconciled:
+    #                    if not line.move_line_id:
+     #                       raise osv.except_osv(_('Wrong voucher line'),_("The invoice you are willing to pay is not valid anymore."))
+      #                  sign = voucher.type in ('payment', 'purchase') and -1 or 1
+       #                 currency_rate_difference = sign * (line.move_line_id.amount_residual - amount_exchange)
+        #                if round(currency_rate_difference, 2):
+         #                   factor=self.get_percent_pay_vs_invoice(cr ,uid, tax_amount_exchange, currency_rate_difference,context=context)
+          #                  base_amount=self.get_partial_amount_tax_pay(cr, uid, line_tax.tax_id.amount, base_exchange, context=context)
+           #                 move_lines_tax = self._preparate_move_line_tax(cr, uid,
+            #                    account_tax_voucher, account_tax_collected,
+             #                   move_id, voucher.type, voucher.partner_id.id,
+              #                  voucher.period_id.id, voucher.journal_id.id,
+               #                 voucher.date, company_currency,
+                #                factor * base_amount, None,
+                 #               company_currency,
+                  #              line_tax.id, line_tax.tax_id,
+                   #             line_tax.analytic_account_id and\
+                    #                        line_tax.analytic_account_id.id or False,
+                     #           line_tax.amount_base,
+                      #          factor, context=context)
+                       #     for move_line_tax in move_lines_tax:
+                        #        move_create = move_line_obj.create(cr ,uid, move_line_tax,
+                         #                               context=context)
+                          #      move_ids.append(move_create)
                                 
 ##commented code section that we are not considering
 ##taxes actually paid by cases writeoff
@@ -361,7 +362,6 @@ class account_voucher(osv.Model):
                     'date' : date,
                     'tax_voucher_id' : tax_id,
         }
-
         if type in ('payment','purchase'):
             reference_amount < 0 and\
                 [credit_line_vals.pop('analytic_account_id'),
