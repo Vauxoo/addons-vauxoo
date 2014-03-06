@@ -113,7 +113,7 @@ class user_story(osv.Model):
                   " details of the progress or completion of the User Story,"
                   " in some cases also the supervisor for the correct"
                   " execution of the user story.")),
-        'user_execute_id': fields.many2one('res.users', 'Execution Responsible',help="Person responsible for user story takes place, either by delegating work to other human capital or running it by itself. For delegate work should monitor the proper implementation of associated activities."),
+        'user_execute_id': fields.many2one('res.users', 'Execution Responsible',help="Person responsible for user story takes place, either by delegating work to other human resource or running it by itself. For delegate work should monitor the proper implementation of associated activities."),
         'sk_id': fields.many2one('sprint.kanban', 'Sprint Kanban'),
         'state': fields.selection(_US_STATE, 'State', readonly=True),
         'task_ids': fields.function(_get_tasks, type='many2many',
