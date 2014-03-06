@@ -769,12 +769,6 @@ class hr_payslip(osv.Model):
         invoice_data['Impuestos'].update({
             'totalImpuestosRetenidos': "%.2f"%( (iva_amount + isr_amount) or 0.0 )
         })
-        for tax_required in tax_requireds:
-            invoice_data_impuestos['Traslados'].append({'Traslado': {
-                'impuesto': self.string_to_xml_format(cr, uid, ids, tax_required),
-                'tasa': "%.2f" % (0.0),
-                'importe': "%.2f" % (0.0),
-            }})
         invoice_data['Impuestos'].update({
             'totalImpuestosTrasladados': "%.2f"%( iva_amount or 0.0),
         })
