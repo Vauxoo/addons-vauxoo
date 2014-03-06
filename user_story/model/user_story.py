@@ -153,6 +153,7 @@ class user_story_priority(osv.Model):
     """
 
     _name = 'user.story.priority'
+    _description = "User Story Priority Level"
     _columns = {
         'name': fields.char('Name', size=255, required=True),
     }
