@@ -57,7 +57,7 @@
                 <field name="arch" type="xml">
                         <xpath expr="//page[last()]" position="after">
                             <page string="Description">
-                                <field name="descriptions" widget="html" attrs="{'readonly':[('state','=','done')]}" placeholder="Add Description .." />
+                                <field name="descriptions" widget="html" attrs="{'readonly':[('state','=','done')]}" placeholder="Add Description..." />
                             </page>
                         </xpath>
                         <xpath expr="//div[@name='buttons']" > 
