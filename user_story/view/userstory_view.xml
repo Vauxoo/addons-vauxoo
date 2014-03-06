@@ -51,7 +51,7 @@
 				</group>
 			</group>
 			<h3>
-		        <label for="project_id" string="2.- Project related" class="oe_horizontal_separator oe_clear"/>
+		        <label for="project_id" string="2.- Related Project" class="oe_horizontal_separator oe_clear"/>
 			</h3>
             <div>
                 <p class="oe_grey">
