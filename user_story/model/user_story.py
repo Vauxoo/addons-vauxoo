@@ -211,7 +211,7 @@ class acceptability_criteria(osv.Model):
                                          'User Story',
                                          required=True),
         'accepted': fields.boolean('Accepted',
-                                   help='Chek if this criteria apply'),
+                                   help='Check if this criterion apply'),
         'development': fields.boolean('Development'),
         'difficulty': fields.selection(
             [('low','Low'),
