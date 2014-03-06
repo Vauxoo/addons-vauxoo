@@ -145,7 +145,7 @@
                 <sheet string="Acceptability Criterion">
                     <h1><label for="id" string="Acceptability Criterion" class="oe_horizontal_separator oe_clear"/>
                         <field name="id" readonly="True"/>
-                        <field name="name" placeholder="Acceptabilit Criterion summary..."/>
+                        <field name="name" placeholder="Acceptability Criterion summary..."/>
                     </h1>
                     <group>
                         <field name="scenario"/>
