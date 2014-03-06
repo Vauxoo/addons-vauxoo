@@ -35,6 +35,7 @@ class user_story(osv.Model):
     """
 
     _name = 'user.story'
+    _description = 'User Story'
     _inherit = ['mail.thread']
 
     def _get_tasks(self, cr, uid, ids, field_name, arg, context=None):
