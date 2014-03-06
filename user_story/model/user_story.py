@@ -166,6 +166,7 @@ class acceptability_criteria(osv.Model):
     """
 
     _name = 'acceptability.criteria'
+    _description = 'Acceptability Criteria'
 
     def _get_ac_ids_by_us_ids(self, cr, uid, us_ids, context=None):
         """
