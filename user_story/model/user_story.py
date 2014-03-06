@@ -35,6 +35,7 @@ class user_story(osv.Model):
     """
 
     _name = 'user.story'
+    _description = 'User Story'
     _inherit = ['mail.thread']
 
     def _get_tasks(self, cr, uid, ids, field_name, arg, context=None):
@@ -104,10 +105,15 @@ class user_story(osv.Model):
             'Priority Level',
             help=('User story level priority, used to define priority for'
                   ' each user story')), 
-        'asumption': fields.text('Asumptions', translate=True),
+        'asumption': fields.text('Assumptions', translate=True),
         'date': fields.date('Date'),
-        'user_id': fields.many2one('res.users', 'Responsible Supervisor',help="Person responsible for interacting with the client to give details of the progress or completion of the User History, in some cases also the supervisor for the correct execution of the user story."),
-        'user_execute_id': fields.many2one('res.users', 'Responsible Execution',help="Person responsible for user story takes place, either by delegating work to other human capital or running it by itself. For delegate work should monitor the proper implementation of associated activities."),
+        'user_id': fields.many2one(
+            'res.users', 'Responsible Supervisor',
+            help=("Person responsible for interacting with the client to give"
+                  " details of the progress or completion of the User Story,"
+                  " in some cases also the supervisor for the correct"
+                  " execution of the user story.")),
+        'user_execute_id': fields.many2one('res.users', 'Execution Responsible',help="Person responsible for user story takes place, either by delegating work to other human resource or running it by itself. For delegate work should monitor the proper implementation of associated activities."),
         'sk_id': fields.many2one('sprint.kanban', 'Sprint Kanban'),
         'state': fields.selection(_US_STATE, 'State', readonly=True),
         'task_ids': fields.function(_get_tasks, type='many2many',
@@ -153,6 +159,7 @@ class user_story_priority(osv.Model):
     """
 
     _name = 'user.story.priority'
+    _description = "User Story Priority Level"
     _columns = {
         'name': fields.char('Name', size=255, required=True),
     }
@@ -164,6 +171,7 @@ class acceptability_criteria(osv.Model):
     """
 
     _name = 'acceptability.criteria'
+    _description = 'Acceptability Criteria'
 
     def _get_ac_ids_by_us_ids(self, cr, uid, us_ids, context=None):
         """
@@ -203,7 +211,7 @@ class acceptability_criteria(osv.Model):
                                          'User Story',
                                          required=True),
         'accepted': fields.boolean('Accepted',
-                                   help='Chek if this criteria apply'),
+                                   help='Check if this criterion apply'),
         'development': fields.boolean('Development'),
         'difficulty': fields.selection(
             [('low','Low'),
@@ -255,8 +263,8 @@ class acceptability_criteria(osv.Model):
             _get_user_story_field,
             type="many2one",
             relation="res.users",
-            string='Responsible Execution',
-            help='Responsible Execution',
+            string='Execution Responsible',
+            help='Execution Responsible',
             store={
                 'acceptability.criteria': (lambda s, c, u, i, ctx: i, ['accep_crit_id'], 16),
                 'user.story': (_get_ac_ids_by_us_ids, ['user_execute_id'], 20),
@@ -302,8 +310,7 @@ class project_task(osv.Model):
                                         #domain="[('sk_id', '=', sprint_id)]",
                                         help="Set here the User Story related with this task"),
         'branch_to_clone':fields.char('Branch to clone', 512,
-                                      help='Branch source for clone and'
-                                           ' make merge proposal'), 
+            help='Source branch to be clone and make merge proposal'), 
         
     }
 class inherit_project(osv.Model):
@@ -314,6 +321,5 @@ class inherit_project(osv.Model):
 
     _columns = {
             'descriptions':fields.text('Description',
-                                       help="reference on what the project "
-                                            "is about"),
+                help="Reference on what the project is about"),
             }
