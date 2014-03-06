@@ -105,7 +105,7 @@ class user_story(osv.Model):
             'Priority Level',
             help=('User story level priority, used to define priority for'
                   ' each user story')), 
-        'asumption': fields.text('Asumptions', translate=True),
+        'asumption': fields.text('Assumptions', translate=True),
         'date': fields.date('Date'),
         'user_id': fields.many2one('res.users', 'Responsible Supervisor',help="Person responsible for interacting with the client to give details of the progress or completion of the User History, in some cases also the supervisor for the correct execution of the user story."),
         'user_execute_id': fields.many2one('res.users', 'Execution Responsible',help="Person responsible for user story takes place, either by delegating work to other human capital or running it by itself. For delegate work should monitor the proper implementation of associated activities."),
