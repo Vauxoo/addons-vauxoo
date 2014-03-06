@@ -204,7 +204,7 @@
                     <filter name="accept_criteria_sk_id" string="Sprint" context="{'group_by':'sk_id'}"/>
                     <filter name="accept_criteria_categ_ids" string="Tag" context="{'group_by':'categ_ids'}"/>
                     <filter name="accept_criteria_user_id" string="Responsible Supervisor" context="{'group_by':'user_id'}"/>
-                    <filter name="accept_criteria_user_execute_id" string="Responsible Execution" context="{'group_by':'user_execute_id'}"/>
+                    <filter name="accept_criteria_user_execute_id" string="Execution Responsible" context="{'group_by':'user_execute_id'}"/>
                 </group>
             </search>
         </field>
