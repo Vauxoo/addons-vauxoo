@@ -316,6 +316,5 @@ class inherit_project(osv.Model):
 
     _columns = {
             'descriptions':fields.text('Description',
-                                       help="reference on what the project "
-                                            "is about"),
+                help="Reference on what the project is about"),
             }
