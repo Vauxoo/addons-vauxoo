@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: addons-vauxoo\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-03-01 07:22+0000\n"
-"PO-Revision-Date: 2014-03-01 08:09+0000\n"
+"PO-Revision-Date: 2014-03-05 14:31+0000\n"
 "Last-Translator: Katherine Zaoral (Vauxoo) <katherine.zaoral@vauxoo.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-03-02 05:28+0000\n"
+"X-Launchpad-Export-Date: 2014-03-06 06:16+0000\n"
 "X-Generator: Launchpad (build 16948)\n"
 
 #. module: user_story
@@ -84,7 +84,7 @@ msgstr "Nivel de Prioridad"
 #: view:user.story:0
 #: field:user.story,accep_crit_ids:0
 msgid "Acceptability Criteria"
-msgstr "Criterio de Aceptabilidad"
+msgstr "Criterios de Aceptabilidad"
 
 #. module: user_story
 #: view:user.story:0
@@ -133,32 +133,32 @@ msgstr "Si esta marcado, los nuevos mensajes requieren su atención."
 #. module: user_story
 #: model:acceptability.criteria,name:user_story.ac_22
 msgid "criterion 2.2"
-msgstr ""
+msgstr "Criterio 2.2"
 
 #. module: user_story
 #: view:user.story:0
 msgid "Add a Implementation Conclusions here ..."
-msgstr ""
+msgstr "Agregue las conclusiones de implementación aquí..."
 
 #. module: user_story
 #: view:acceptability.criteria:0
 msgid "Acceptabilit Criterion summary..."
-msgstr ""
+msgstr "Título del criterio de aceptabilidad"
 
 #. module: user_story
 #: model:acceptability.criteria,name:user_story.ac_12
 msgid "criterion 1.2"
-msgstr ""
+msgstr "Criterio 1.2"
 
 #. module: user_story
 #: model:acceptability.criteria,name:user_story.ac_11
 msgid "criterion 1.1"
-msgstr ""
+msgstr "Criterio 1.1"
 
 #. module: user_story
 #: view:user.story:0
 msgid "7.- Implementation Conclusions"
-msgstr ""
+msgstr "7.- Conclusiones de Implementación"
 
 #. module: user_story
 #: help:user.story,message_summary:0
@@ -175,7 +175,7 @@ msgstr ""
 #: field:acceptability.criteria,categ_ids:0
 #: help:acceptability.criteria,categ_ids:0
 msgid "Tag"
-msgstr ""
+msgstr "Categoría"
 
 #. module: user_story
 #: view:user.story:0
@@ -191,7 +191,7 @@ msgstr "Horas Estimadas"
 #. module: user_story
 #: selection:acceptability.criteria,difficulty:0
 msgid "Low"
-msgstr ""
+msgstr "Baja"
 
 #. module: user_story
 #: model:ir.model,name:user_story.model_acceptability_criteria
@@ -237,7 +237,7 @@ msgstr "Mis Historias de Usuario a Ejecutar"
 #. module: user_story
 #: selection:acceptability.criteria,difficulty:0
 msgid "Medium"
-msgstr ""
+msgstr "Media"
 
 #. module: user_story
 #: view:user.story:0
@@ -260,17 +260,17 @@ msgstr "Horas Totales"
 #. module: user_story
 #: model:acceptability.criteria,scenario:user_story.ac_21
 msgid "sc 2.1"
-msgstr ""
+msgstr "Escenario 2.1"
 
 #. module: user_story
 #: model:acceptability.criteria,scenario:user_story.ac_22
 msgid "sc 2.2"
-msgstr ""
+msgstr "Escenario 2.2"
 
 #. module: user_story
 #: view:acceptability.criteria:0
 msgid "In Development"
-msgstr ""
+msgstr "En Desarollo"
 
 #. module: user_story
 #: view:user.story:0
@@ -317,7 +317,7 @@ msgstr "Historias de Usuarios"
 #. module: user_story
 #: model:ir.model,name:user_story.model_user_story_priority
 msgid "user.story.priority"
-msgstr ""
+msgstr "Prioridad de Historias de Usuario"
 
 #. module: user_story
 #: view:user.story:0
@@ -351,7 +351,7 @@ msgstr "Agregue información adicional aquí"
 #. module: user_story
 #: view:user.story:0
 msgid "5.- Technical Conclusions"
-msgstr ""
+msgstr "5.- Conclusiones Técnicas"
 
 #. module: user_story
 #: view:user.story:0
@@ -366,17 +366,17 @@ msgstr "Supuestos"
 #. module: user_story
 #: model:user.story,name:user_story.us_1
 msgid "us 1"
-msgstr ""
+msgstr "Historia de Usuario 1"
 
 #. module: user_story
 #: model:user.story,name:user_story.us_2
 msgid "us 2"
-msgstr ""
+msgstr "Historia de Usuario 2"
 
 #. module: user_story
 #: model:user.story,name:user_story.us_3
 msgid "us 3"
-msgstr ""
+msgstr "Historia de Usuario 3"
 
 #. module: user_story
 #: view:user.story:0
@@ -407,7 +407,7 @@ msgstr "Etiquetas"
 #: view:acceptability.criteria:0
 #: field:acceptability.criteria,difficulty:0
 msgid "Difficulty"
-msgstr ""
+msgstr "Dificultad"
 
 #. module: user_story
 #: field:user.story,message_is_follower:0
@@ -439,7 +439,7 @@ msgstr ""
 #. module: user_story
 #: selection:acceptability.criteria,difficulty:0
 msgid "Not Apply"
-msgstr ""
+msgstr "No Aplica"
 
 #. module: user_story
 #: field:user.story,message_summary:0
@@ -472,7 +472,7 @@ msgstr ""
 #. module: user_story
 #: model:acceptability.criteria,scenario:user_story.ac_31
 msgid "sc 3.1"
-msgstr ""
+msgstr "Escenario 3.1"
 
 #. module: user_story
 #: field:user.story,code:0
@@ -533,12 +533,12 @@ msgstr "Otra Información"
 #. module: user_story
 #: model:acceptability.criteria,scenario:user_story.ac_12
 msgid "sc 1.2"
-msgstr ""
+msgstr "Escenario 1.2"
 
 #. module: user_story
 #: model:acceptability.criteria,scenario:user_story.ac_11
 msgid "sc 1.1"
-msgstr ""
+msgstr "Escenario 1.1"
 
 #. module: user_story
 #: model:ir.actions.act_window,help:user_story.action_user_story
@@ -584,12 +584,12 @@ msgstr "Branch fuente para clonar y hacer propuesta de merge"
 #. module: user_story
 #: field:acceptability.criteria,development:0
 msgid "Development"
-msgstr ""
+msgstr "Desarrollo"
 
 #. module: user_story
 #: selection:acceptability.criteria,difficulty:0
 msgid "High"
-msgstr ""
+msgstr "Alta"
 
 #. module: user_story
 #: help:acceptability.criteria,sk_id:0
@@ -635,11 +635,18 @@ msgid ""
 "\n"
 "                is available"
 msgstr ""
+"Por favor, cargar como archivo adjunto, todos los documentos que soportan \n"
+"                 sus explicaciones \n"
+"                 aquí en XMind u otros formatos con las explicaciones \n"
+"                 que usted necesita para llenar aquí. \n"
+"                 Un ejemplo con todas las referencias acerca de aspectos que "
+"debe tener en cuenta \n"
+"                 está disponible"
 
 #. module: user_story
 #: field:user.story.priority,name:0
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #. module: user_story
 #: model:mail.message.subtype,name:user_story.mt_task_blocked
@@ -649,7 +656,7 @@ msgstr "Tarea bloqueada"
 #. module: user_story
 #: view:acceptability.criteria:0
 msgid "Acceptability Criterion"
-msgstr ""
+msgstr "Criterio de Aceptabilidad"
 
 #. module: user_story
 #: model:mail.message.subtype,description:user_story.mt_task_closed
@@ -677,7 +684,7 @@ msgstr ""
 #. module: user_story
 #: model:acceptability.criteria,name:user_story.ac_31
 msgid "criterion 3.1"
-msgstr ""
+msgstr "Criterio 3.1"
 
 #. module: user_story
 #: view:user.story:0
