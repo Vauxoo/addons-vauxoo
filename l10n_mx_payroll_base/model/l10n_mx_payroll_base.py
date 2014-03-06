@@ -733,6 +733,53 @@ class hr_payslip(osv.Model):
                 loading = True
         return cer_str
 
+    def _get_taxes(self, cr, uid, ids, context=None):
+        importe = 0.0
+        tasa = 0.0
+        impuesto=''
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        payroll = self.browse(cr, uid, ids)[0]
+        totalImpuestosTrasladados = 0.0
+        tax_requireds = ['IVA', 'IEPS']
+        invoice_data_parent = {}
+        invoice_data = invoice_data_parent = {}
+        invoice_data['Impuestos'] = {}
+        
+        invoice_data_impuestos = invoice_data['Impuestos']
+        invoice_data_impuestos['Traslados'] = []
+        invoice_data_impuestos['Retenciones'] = []
+        totalImpuestosTrasladados = 0
+        totalImpuestosRetenidos = 0
+        isr_amount = 0
+        iva_amount = 0
+        for line in payroll.input_line_ids:
+            rule = line.name.upper()
+            if rule == 'ISR':
+                isr_amount = line.amount
+                invoice_data_impuestos['Retenciones'].append({'Retencion': {
+                            'impuesto': 'ISR',
+                            'importe': "%.2f" % (isr_amount),
+                        }})
+            elif rule == 'IVA':
+                iva_amount = line.amount
+                invoice_data_impuestos['Retenciones'].append({'Retencion': {
+                            'impuesto': 'IVA',
+                            'importe': "%.2f" % (iva_amount),
+                        }})
+        invoice_data['Impuestos'].update({
+            'totalImpuestosRetenidos': "%.2f"%( (iva_amount + isr_amount) or 0.0 )
+        })
+        for tax_required in tax_requireds:
+            invoice_data_impuestos['Traslados'].append({'Traslado': {
+                'impuesto': self.string_to_xml_format(cr, uid, ids, tax_required),
+                'tasa': "%.2f" % (0.0),
+                'importe': "%.2f" % (0.0),
+            }})
+        invoice_data['Impuestos'].update({
+            'totalImpuestosTrasladados': "%.2f"%( iva_amount or 0.0),
+        })
+        return invoice_data_impuestos
+
     def _get_facturae_payroll_xml_data(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
@@ -748,6 +795,7 @@ class hr_payslip(osv.Model):
             noCertificado = self._get_noCertificado(cr, uid, ids, context['fname_cer'])
             all_paths = tools.config["addons_path"].split(",")
             formaDePago = payroll.string_to_xml_format(u'Pago en una sola exhibicion')
+            data_taxes = self._get_taxes(cr, uid, ids, context=None)
             for my_path in all_paths:
                 if os.path.isdir(os.path.join(my_path, 'l10n_mx_payroll_base', 'template')):
                     fname_jinja_tmpl = my_path and os.path.join(my_path, 'l10n_mx_payroll_base', 'template', 'cfdi' + '.xml') or ''
@@ -759,6 +807,7 @@ class hr_payslip(osv.Model):
                 'formaDePago': formaDePago,
                 'certificado': cert_str,
                 'fecha': ti.strftime('%Y-%m-%dT%H:%M:%S', ti.strptime(str(payroll.date_payslip_tz), '%Y-%m-%d %H:%M:%S')) ,
+                'data_taxes':data_taxes
                 }
             context.update({'fecha': ti.strftime('%Y-%m-%dT%H:%M:%S', ti.strptime(str(payroll.date_payslip_tz), '%Y-%m-%d %H:%M:%S')) or ''})
             (fileno_xml, fname_xml) = tempfile.mkstemp('.xml', 'openerp_' + '__facturae__')
