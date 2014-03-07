@@ -769,6 +769,13 @@ class hr_payslip(osv.Model):
         invoice_data['Impuestos'].update({
             'totalImpuestosRetenidos': "%.2f"%( (iva_amount + isr_amount) or 0.0 )
         })
+        tax_requireds = ['IVA', 'IEPS']
+        for tax_required in tax_requireds:
+            invoice_data_impuestos['Traslados'].append({'Traslado': {
+                'impuesto': self.string_to_xml_format(cr, uid, ids, tax_required),
+                'tasa': "%.2f" % (0.0),
+                'importe': "%.2f" % (0.0),
+            }})
         invoice_data['Impuestos'].update({
             'totalImpuestosTrasladados': "%.2f"%( iva_amount or 0.0),
         })
@@ -807,12 +814,12 @@ class hr_payslip(osv.Model):
             (fileno_xml, fname_xml) = tempfile.mkstemp('.xml', 'openerp_' + '__facturae__')
             if fname_jinja_tmpl:
                 with open(fname_jinja_tmpl, 'r') as f_jinja_tmpl:
-                    jinja_tmpl_str = f_jinja_tmpl.read().encode('utf-8')
+                    jinja_tmpl_str = f_jinja_tmpl.read()
                     tmpl = jinja2.Template( jinja_tmpl_str )
                     with open(fname_xml, 'w') as new_xml:
                         new_xml.write( tmpl.render(**dictargs2) )
             with open(fname_xml,'rb') as b:
-                data_xml = b.read().encode('utf-8')
+                data_xml = b.read().encode('UTF-8')
             b.close()
             if not noCertificado:
                 raise osv.except_osv(_('Error in No. Certificate !'), _(
@@ -820,7 +827,6 @@ class hr_payslip(osv.Model):
             fname_txt = fname_xml + '.txt'
             (fileno_sign, fname_sign) = tempfile.mkstemp('.txt', 'openerp_' + '__facturae_txt_md5__')
             os.close(fileno_sign)
-            
             try:
                 invoice_obj.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], 'v3.2', 'cfd')
             except Exception, e:
