@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: addons-vauxoo\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-03-01 07:22+0000\n"
+"POT-Creation-Date: 2014-03-06 14:23+0000\n"
 "PO-Revision-Date: 2014-03-05 14:31+0000\n"
 "Last-Translator: Katherine Zaoral (Vauxoo) <katherine.zaoral@vauxoo.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-03-06 06:16+0000\n"
+"X-Launchpad-Export-Date: 2014-03-07 07:25+0000\n"
 "X-Generator: Launchpad (build 16948)\n"
 
 #. module: user_story
@@ -41,11 +41,6 @@ msgstr "Agrupar por ..."
 
 #. module: user_story
 #: view:user.story:0
-msgid "Add a asumptions here ..."
-msgstr "Agregue un suposición aqui..."
-
-#. module: user_story
-#: view:user.story:0
 msgid "Progress"
 msgstr "Progreso"
 
@@ -60,6 +55,13 @@ msgid "Unread Messages"
 msgstr "Mensajes no Leídos"
 
 #. module: user_story
+#: view:user.story:0
+msgid ""
+"The link to the project, all projects listed here\n"
+"                    are of the lower level available in the Master WBS."
+msgstr ""
+
+#. module: user_story
 #: model:acceptability.criteria,name:user_story.ac_21
 msgid "criterion 2.1"
 msgstr "Criterio 2.1"
@@ -68,6 +70,11 @@ msgstr "Criterio 2.1"
 #: field:user.story,implementation:0
 msgid "Implementation Conclusions"
 msgstr "Conclusiones de Implementación"
+
+#. module: user_story
+#: help:acceptability.criteria,accepted:0
+msgid "Check if this criterion apply"
+msgstr ""
 
 #. module: user_story
 #: model:ir.actions.act_window,name:user_story.action_user_story_priority
@@ -80,6 +87,7 @@ msgstr "Nivel de Prioridad"
 #. module: user_story
 #: view:acceptability.criteria:0
 #: model:ir.actions.act_window,name:user_story.action_acceptability_criteria
+#: model:ir.model,name:user_story.model_acceptability_criteria
 #: model:ir.ui.menu,name:user_story.menu_acceptability_criteria
 #: view:user.story:0
 #: field:user.story,accep_crit_ids:0
@@ -104,6 +112,11 @@ msgid "Scenario"
 msgstr "Escenario"
 
 #. module: user_story
+#: model:acceptability.criteria,scenario:user_story.ac_31
+msgid "sc 3.1"
+msgstr "Escenario 3.1"
+
+#. module: user_story
 #: field:user.story,message_ids:0
 msgid "Messages"
 msgstr "Mensajes"
@@ -116,6 +129,11 @@ msgstr "Mensajes"
 #: field:user.story,project_id:0
 msgid "Project"
 msgstr "Proyecto"
+
+#. module: user_story
+#: view:user.story:0
+msgid "Add assumptions here ..."
+msgstr ""
 
 #. module: user_story
 #: view:acceptability.criteria:0
@@ -134,16 +152,6 @@ msgstr "Si esta marcado, los nuevos mensajes requieren su atención."
 #: model:acceptability.criteria,name:user_story.ac_22
 msgid "criterion 2.2"
 msgstr "Criterio 2.2"
-
-#. module: user_story
-#: view:user.story:0
-msgid "Add a Implementation Conclusions here ..."
-msgstr "Agregue las conclusiones de implementación aquí..."
-
-#. module: user_story
-#: view:acceptability.criteria:0
-msgid "Acceptabilit Criterion summary..."
-msgstr "Título del criterio de aceptabilidad"
 
 #. module: user_story
 #: model:acceptability.criteria,name:user_story.ac_12
@@ -178,11 +186,6 @@ msgid "Tag"
 msgstr "Categoría"
 
 #. module: user_story
-#: view:user.story:0
-msgid "2.- Project related"
-msgstr "2.- Proyecto relacionado"
-
-#. module: user_story
 #: view:project.task:0
 #: field:user.story,planned_hours:0
 msgid "Planned Hours"
@@ -194,9 +197,17 @@ msgid "Low"
 msgstr "Baja"
 
 #. module: user_story
-#: model:ir.model,name:user_story.model_acceptability_criteria
-msgid "acceptability.criteria"
-msgstr "acceptability.criteria"
+#: view:user.story:0
+msgid ""
+"Here in the description, you must be as explícit as you can,\n"
+"                    Remember you can upload a Youtube video, and insert \n"
+"                    directly here, embeded as a webpage, you can use vimeo "
+"and \n"
+"                    other elements as images, diagrams (using some \n"
+"                    online services) you just must copy and paste the "
+"embeded code,\n"
+"                    you can see an example about how to do that"
+msgstr ""
 
 #. module: user_story
 #: model:mail.message.subtype,description:user_story.mt_task_new
@@ -214,11 +225,6 @@ msgid "Followers"
 msgstr "Seguidores"
 
 #. module: user_story
-#: view:project.project:0
-msgid "Add Description .."
-msgstr "Agregue descripción..."
-
-#. module: user_story
 #: selection:user.story,state:0
 msgid "New"
 msgstr "Nuevo"
@@ -229,15 +235,25 @@ msgid "1.- Title of the Story"
 msgstr "1.- Título de la Historia"
 
 #. module: user_story
-#: model:ir.actions.act_window,name:user_story.action_my_user_story
-#: model:ir.ui.menu,name:user_story.menu_action_my_user_story
-msgid "My User Stories Exc"
-msgstr "Mis Historias de Usuario a Ejecutar"
+#: view:user.story:0
+msgid "6.- Assumptions"
+msgstr ""
 
 #. module: user_story
 #: selection:acceptability.criteria,difficulty:0
 msgid "Medium"
 msgstr "Media"
+
+#. module: user_story
+#: model:ir.actions.act_window,name:user_story.action_my_user_story
+#: model:ir.ui.menu,name:user_story.menu_action_my_user_story
+msgid "My User Stories to Execute"
+msgstr ""
+
+#. module: user_story
+#: field:user.story,asumption:0
+msgid "Assumptions"
+msgstr ""
 
 #. module: user_story
 #: view:user.story:0
@@ -289,15 +305,6 @@ msgstr "Cancelar"
 
 #. module: user_story
 #: view:user.story:0
-msgid ""
-"the link to the project, all projects listed here\n"
-"                    are of the lower level available in the Master WBS. "
-"This\n"
-"                    represent thumbs in your wbs"
-msgstr ""
-
-#. module: user_story
-#: view:user.story:0
 #: field:user.story,task_ids:0
 msgid "Tasks"
 msgstr "Tareas"
@@ -315,9 +322,17 @@ msgid "User Stories"
 msgstr "Historias de Usuarios"
 
 #. module: user_story
-#: model:ir.model,name:user_story.model_user_story_priority
-msgid "user.story.priority"
-msgstr "Prioridad de Historias de Usuario"
+#: help:user.story,user_execute_id:0
+msgid ""
+"Person responsible for user story takes place, either by delegating work to "
+"other human resource or running it by itself. For delegate work should "
+"monitor the proper implementation of associated activities."
+msgstr ""
+
+#. module: user_story
+#: help:project.task,branch_to_clone:0
+msgid "Source branch to be clone and make merge proposal"
+msgstr ""
 
 #. module: user_story
 #: view:user.story:0
@@ -340,13 +355,8 @@ msgstr "3.- Descripción"
 #: field:acceptability.criteria,user_execute_id:0
 #: help:acceptability.criteria,user_execute_id:0
 #: field:user.story,user_execute_id:0
-msgid "Responsible Execution"
-msgstr "Responsable de Ejecución"
-
-#. module: user_story
-#: view:user.story:0
-msgid "Add a other info here ..."
-msgstr "Agregue información adicional aquí"
+msgid "Execution Responsible"
+msgstr ""
 
 #. module: user_story
 #: view:user.story:0
@@ -359,9 +369,9 @@ msgid "Draft"
 msgstr "Borrador"
 
 #. module: user_story
-#: field:user.story,asumption:0
-msgid "Asumptions"
-msgstr "Supuestos"
+#: view:user.story:0
+msgid "Add another info here ..."
+msgstr ""
 
 #. module: user_story
 #: model:user.story,name:user_story.us_1
@@ -389,6 +399,7 @@ msgstr "Pendiente"
 #: field:acceptability.criteria,accep_crit_id:0
 #: model:ir.actions.act_window,name:user_story.act_project_project_users_story_all
 #: model:ir.actions.report.xml,name:user_story.report_user_story
+#: model:ir.model,name:user_story.model_user_story
 #: model:ir.module.category,name:user_story.module_user_story
 #: model:ir.ui.menu,name:user_story.menu_conf_user_story
 #: model:ir.ui.menu,name:user_story.menu_user_story
@@ -426,17 +437,6 @@ msgid "Date"
 msgstr "Fecha"
 
 #. module: user_story
-#: help:user.story,user_id:0
-msgid ""
-"Person responsible for interacting with the client to give details of the "
-"progress or completion of the User History, in some cases also the "
-"supervisor for the correct execution of the user story."
-msgstr ""
-"Persona responsable de la interacción con el cliente para dar detalles del "
-"progreso o completación de la historia de usuario, en algunos casos, también "
-"es el supervisor de la correcta ejecución de la historia de usuario."
-
-#. module: user_story
 #: selection:acceptability.criteria,difficulty:0
 msgid "Not Apply"
 msgstr "No Aplica"
@@ -470,9 +470,22 @@ msgstr ""
 "encontrarse aquí:"
 
 #. module: user_story
-#: model:acceptability.criteria,scenario:user_story.ac_31
-msgid "sc 3.1"
-msgstr "Escenario 3.1"
+#: help:project.project,descriptions:0
+msgid "Reference on what the project is about"
+msgstr ""
+
+#. module: user_story
+#: help:user.story,user_id:0
+msgid ""
+"Person responsible for interacting with the client to give details of the "
+"progress or completion of the User Story, in some cases also the supervisor "
+"for the correct execution of the user story."
+msgstr ""
+
+#. module: user_story
+#: model:ir.model,name:user_story.model_user_story_priority
+msgid "User Story Priority Level"
+msgstr ""
 
 #. module: user_story
 #: field:user.story,code:0
@@ -498,17 +511,6 @@ msgstr "Resultados del análisis GAP"
 #: model:mail.message.subtype,name:user_story.mt_comment
 msgid "Discussions"
 msgstr "Discusiones"
-
-#. module: user_story
-#: help:user.story,user_execute_id:0
-msgid ""
-"Person responsible for user story takes place, either by delegating work to "
-"other human capital or running it by itself. For delegate work should "
-"monitor the proper implementation of associated activities."
-msgstr ""
-"La persona responsable de la historia del usuario toma lugar, bien delegando "
-"trabajo a otro capital humano o ejecutandolo el mismo. Para delegar trabajo "
-"se debe monitorear la implementación apropiada de las actividades asociadas."
 
 #. module: user_story
 #: field:project.task,branch_to_clone:0
@@ -573,13 +575,13 @@ msgstr ""
 
 #. module: user_story
 #: view:user.story:0
-msgid "Details"
-msgstr "Detalles"
+msgid "Add Implementation Conclusions here ..."
+msgstr ""
 
 #. module: user_story
-#: help:project.task,branch_to_clone:0
-msgid "Branch source for clone and make merge proposal"
-msgstr "Branch fuente para clonar y hacer propuesta de merge"
+#: view:user.story:0
+msgid "Details"
+msgstr "Detalles"
 
 #. module: user_story
 #: field:acceptability.criteria,development:0
@@ -610,14 +612,24 @@ msgid "Stage Changed"
 msgstr "Etapa cambiada"
 
 #. module: user_story
+#: view:acceptability.criteria:0
+msgid "Acceptability Criterion summary..."
+msgstr ""
+
+#. module: user_story
 #: help:project.task,userstory_id:0
 msgid "Set here the User Story related with this task"
 msgstr "Establezca aquí la Historia de Usuario relacionada con esta tarea."
 
 #. module: user_story
-#: help:project.project,descriptions:0
-msgid "reference on what the project is about"
-msgstr "referente a de qué se trata el proyecto"
+#: view:user.story:0
+msgid "2.- Related Project"
+msgstr ""
+
+#. module: user_story
+#: view:project.project:0
+msgid "Add Description..."
+msgstr ""
 
 #. module: user_story
 #: model:ir.actions.report.xml,name:user_story.report_user_story_with_task
@@ -664,24 +676,6 @@ msgid "Task closed"
 msgstr "Tarea cerrada"
 
 #. module: user_story
-#: view:user.story:0
-msgid ""
-"Here in the description, you must be as explícit as you can,\n"
-"                    Remember you can upload a Youtube video, and insert \n"
-"                    directly here, embeded as a webpage, you can use vimeo "
-"and \n"
-"                    other elements as images, diagrams (using some \n"
-"                    online services) you just must copy and paste the "
-"embebed code,\n"
-"                    you can see an example about how to do that"
-msgstr ""
-"En esta descripción debe ser tan explicito como pueda,  recuerde que puede "
-"subir un video de youtube e insertarlo aquí directamente, incrustado como "
-"una pagina web. También puede utilizar vimeo y otros elementos como imagenes "
-"y diagramas (usando servicios en linea) copiando y pegandolos en el código. "
-"Puede ver un ejemplo aquí."
-
-#. module: user_story
 #: model:acceptability.criteria,name:user_story.ac_31
 msgid "criterion 3.1"
 msgstr "Criterio 3.1"
@@ -725,38 +719,96 @@ msgid "Manager"
 msgstr "Administrador"
 
 #. module: user_story
-#: model:ir.model,name:user_story.model_user_story
-msgid "Email Thread"
-msgstr "Hilo de Emails"
-
-#. module: user_story
-#: view:user.story:0
-msgid "6.- Asumptions"
-msgstr "6.- Supuestos"
-
-#. module: user_story
 #: view:acceptability.criteria:0
 #: field:acceptability.criteria,sk_id:0
 #: view:user.story:0
 msgid "Sprint"
 msgstr "Sprint"
 
-#. module: user_story
-#: help:acceptability.criteria,accepted:0
-msgid "Chek if this criteria apply"
-msgstr "Verifique si este criterio aplica"
+#~ msgid "Add a asumptions here ..."
+#~ msgstr "Agregue un suposición aqui..."
 
 #~ msgid "5.- Conclusion of analysis"
 #~ msgstr "5.- Conclusión del análisis"
 
+#~ msgid ""
+#~ "Person responsible for user story takes place, either by delegating work to "
+#~ "other human capital or running it by itself. For delegate work should "
+#~ "monitor the proper implementation of associated activities."
+#~ msgstr ""
+#~ "La persona responsable de la historia del usuario toma lugar, bien delegando "
+#~ "trabajo a otro capital humano o ejecutandolo el mismo. Para delegar trabajo "
+#~ "se debe monitorear la implementación apropiada de las actividades asociadas."
+
 #~ msgid "Priority"
 #~ msgstr "Prioridad"
+
+#~ msgid "acceptability.criteria"
+#~ msgstr "acceptability.criteria"
+
+#~ msgid "Add Description .."
+#~ msgstr "Agregue descripción..."
+
+#~ msgid "2.- Project related"
+#~ msgstr "2.- Proyecto relacionado"
 
 #~ msgid "Urgent"
 #~ msgstr "Urgente"
 
+#~ msgid "Responsible Execution"
+#~ msgstr "Responsable de Ejecución"
+
+#~ msgid "Add a other info here ..."
+#~ msgstr "Agregue información adicional aquí"
+
+#~ msgid "Asumptions"
+#~ msgstr "Supuestos"
+
 #~ msgid "Tasksss"
 #~ msgstr "Tareas"
 
+#~ msgid ""
+#~ "Person responsible for interacting with the client to give details of the "
+#~ "progress or completion of the User History, in some cases also the "
+#~ "supervisor for the correct execution of the user story."
+#~ msgstr ""
+#~ "Persona responsable de la interacción con el cliente para dar detalles del "
+#~ "progreso o completación de la historia de usuario, en algunos casos, también "
+#~ "es el supervisor de la correcta ejecución de la historia de usuario."
+
 #~ msgid "Secondary"
 #~ msgstr "Secundario"
+
+#~ msgid "Branch source for clone and make merge proposal"
+#~ msgstr "Branch fuente para clonar y hacer propuesta de merge"
+
+#~ msgid ""
+#~ "Here in the description, you must be as explícit as you can,\n"
+#~ "                    Remember you can upload a Youtube video, and insert \n"
+#~ "                    directly here, embeded as a webpage, you can use vimeo "
+#~ "and \n"
+#~ "                    other elements as images, diagrams (using some \n"
+#~ "                    online services) you just must copy and paste the "
+#~ "embebed code,\n"
+#~ "                    you can see an example about how to do that"
+#~ msgstr ""
+#~ "En esta descripción debe ser tan explicito como pueda,  recuerde que puede "
+#~ "subir un video de youtube e insertarlo aquí directamente, incrustado como "
+#~ "una pagina web. También puede utilizar vimeo y otros elementos como imagenes "
+#~ "y diagramas (usando servicios en linea) copiando y pegandolos en el código. "
+#~ "Puede ver un ejemplo aquí."
+
+#~ msgid "reference on what the project is about"
+#~ msgstr "referente a de qué se trata el proyecto"
+
+#~ msgid "Email Thread"
+#~ msgstr "Hilo de Emails"
+
+#~ msgid "6.- Asumptions"
+#~ msgstr "6.- Supuestos"
+
+#~ msgid "Chek if this criteria apply"
+#~ msgstr "Verifique si este criterio aplica"
+
+#~ msgid "My User Stories Exc"
+#~ msgstr "Mis Historias de Usuario a Ejecutar"
