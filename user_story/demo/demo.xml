@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="us_1" model="user.story">
+            <field name="name">us 1</field>
+            <field name="owner">ow 1</field>
+            <field name="project_id" ref="project.project_project_1"/>
+        </record>
+
+        <record id="us_2" model="user.story">
+            <field name="name">us 2</field>
+            <field name="owner">ow 2</field>
+            <field name="project_id" ref="project.project_project_1"/>
+        </record>
+
+        <record id="us_3" model="user.story">
+            <field name="name">us 3</field>
+            <field name="owner">ow 3</field>
+            <field name="project_id" ref="project.project_project_2"/>
+        </record>
+
+        <record id="ac_11" model="acceptability.criteria">
+            <field name="name">criterion 1.1</field>
+            <field name="scenario">sc 1.1</field>
+            <field name="accep_crit_id" ref="us_1"/>
+            <field name="development">True</field>
+            <field name="difficulty">low</field>
+        </record>
+
+        <record id="ac_12" model="acceptability.criteria">
+            <field name="name">criterion 1.2</field>
+            <field name="scenario">sc 1.2</field>
+            <field name="accep_crit_id" ref="us_1"/>
+            <field name="accepted">True</field>
+            <field name="difficulty">high</field>
+        </record>
+
+        <record id="ac_21" model="acceptability.criteria">
+            <field name="name">criterion 2.1</field>
+            <field name="scenario">sc 2.1</field>
+            <field name="accep_crit_id" ref="us_2"/>
+            <field name="development">True</field>
+        </record>
+
+        <record id="ac_22" model="acceptability.criteria">
+            <field name="name">criterion 2.2</field>
+            <field name="scenario">sc 2.2</field>
+            <field name="accep_crit_id" ref="us_2"/>
+            <field name="difficulty">low</field>
+        </record>
+
+        <record id="ac_31" model="acceptability.criteria">
+            <field name="name">criterion 3.1</field>
+            <field name="scenario">sc 3.1</field>
+            <field name="accep_crit_id" ref="us_3"/>
+            <field name="difficulty">low</field>
+        </record>
+
+        <record id="group_user_story_manager" model="res.groups">
+            <field name="users" eval="[(4,ref('base.user_root'))]"/>
+        </record>
+
+   </data>
+</openerp>

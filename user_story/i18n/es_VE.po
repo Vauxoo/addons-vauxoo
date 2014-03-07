@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 01:06+0000\n"
+"POT-Creation-Date: 2014-03-01 07:22+0000\n"
 "PO-Revision-Date: 2013-11-07 04:49+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-01-21 06:22+0000\n"
-"X-Generator: Launchpad (build 16901)\n"
+"X-Launchpad-Export-Date: 2014-03-02 05:28+0000\n"
+"X-Generator: Launchpad (build 16948)\n"
 
 #. module: user_story
 #: view:user.story:0
@@ -33,6 +33,7 @@ msgid "Task started"
 msgstr ""
 
 #. module: user_story
+#: view:acceptability.criteria:0
 #: view:user.story:0
 msgid "Group By..."
 msgstr ""
@@ -48,8 +49,8 @@ msgid "Progress"
 msgstr ""
 
 #. module: user_story
-#: view:user.story:0
-msgid "5.- Conclusion of analysis"
+#: help:acceptability.criteria,project_id:0
+msgid "User Story Project"
 msgstr ""
 
 #. module: user_story
@@ -58,25 +59,27 @@ msgid "Unread Messages"
 msgstr ""
 
 #. module: user_story
-#: field:acceptability.criteria,accep_crit_id:0
-#: model:ir.actions.act_window,name:user_story.act_project_project_users_story_all
-#: model:ir.actions.act_window,name:user_story.action_user_story
-#: model:ir.actions.report.xml,name:user_story.report_user_story
-#: model:ir.module.category,name:user_story.module_user_story
-#: model:ir.ui.menu,name:user_story.menu_action_user_story
-#: view:project.task:0
-#: field:project.task,userstory_id:0
-#: view:user.story:0
-msgid "User Story"
+#: model:acceptability.criteria,name:user_story.ac_21
+msgid "criterion 2.1"
 msgstr ""
 
 #. module: user_story
+#: field:user.story,implementation:0
+msgid "Implementation Conclusions"
+msgstr ""
+
+#. module: user_story
+#: model:ir.actions.act_window,name:user_story.action_user_story_priority
+#: model:ir.ui.menu,name:user_story.menu_config_user_story_priority
 #: view:user.story:0
 #: field:user.story,priority_level:0
 msgid "Priority Level"
 msgstr ""
 
 #. module: user_story
+#: view:acceptability.criteria:0
+#: model:ir.actions.act_window,name:user_story.action_acceptability_criteria
+#: model:ir.ui.menu,name:user_story.menu_acceptability_criteria
 #: view:user.story:0
 #: field:user.story,accep_crit_ids:0
 msgid "Acceptability Criteria"
@@ -105,6 +108,8 @@ msgid "Messages"
 msgstr ""
 
 #. module: user_story
+#: view:acceptability.criteria:0
+#: field:acceptability.criteria,project_id:0
 #: model:ir.model,name:user_story.model_project_project
 #: view:user.story:0
 #: field:user.story,project_id:0
@@ -112,14 +117,9 @@ msgid "Project"
 msgstr ""
 
 #. module: user_story
-#: help:user.story,user_execute_id:0
-msgid ""
-"Person responsible for user story takes place, either by delegating work to "
-"other human capital or running it by itself. For delegate work should "
-"monitor the proper implementation of associated activities."
-msgstr ""
-
-#. module: user_story
+#: view:acceptability.criteria:0
+#: field:acceptability.criteria,user_id:0
+#: help:acceptability.criteria,user_id:0
 #: field:user.story,user_id:0
 msgid "Responsible Supervisor"
 msgstr ""
@@ -130,10 +130,47 @@ msgid "If checked new messages require your attention."
 msgstr ""
 
 #. module: user_story
+#: model:acceptability.criteria,name:user_story.ac_22
+msgid "criterion 2.2"
+msgstr ""
+
+#. module: user_story
+#: view:user.story:0
+msgid "Add a Implementation Conclusions here ..."
+msgstr ""
+
+#. module: user_story
+#: view:acceptability.criteria:0
+msgid "Acceptabilit Criterion summary..."
+msgstr ""
+
+#. module: user_story
+#: model:acceptability.criteria,name:user_story.ac_12
+msgid "criterion 1.2"
+msgstr ""
+
+#. module: user_story
+#: model:acceptability.criteria,name:user_story.ac_11
+msgid "criterion 1.1"
+msgstr ""
+
+#. module: user_story
+#: view:user.story:0
+msgid "7.- Implementation Conclusions"
+msgstr ""
+
+#. module: user_story
 #: help:user.story,message_summary:0
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
+msgstr ""
+
+#. module: user_story
+#: view:acceptability.criteria:0
+#: field:acceptability.criteria,categ_ids:0
+#: help:acceptability.criteria,categ_ids:0
+msgid "Tag"
 msgstr ""
 
 #. module: user_story
@@ -148,6 +185,11 @@ msgid "Planned Hours"
 msgstr ""
 
 #. module: user_story
+#: selection:acceptability.criteria,difficulty:0
+msgid "Low"
+msgstr ""
+
+#. module: user_story
 #: model:ir.model,name:user_story.model_acceptability_criteria
 msgid "acceptability.criteria"
 msgstr ""
@@ -155,11 +197,6 @@ msgstr ""
 #. module: user_story
 #: model:mail.message.subtype,description:user_story.mt_task_new
 msgid "Task created"
-msgstr ""
-
-#. module: user_story
-#: selection:user.story,priority_level:0
-msgid "Priority"
 msgstr ""
 
 #. module: user_story
@@ -194,12 +231,18 @@ msgid "My User Stories Exc"
 msgstr ""
 
 #. module: user_story
+#: selection:acceptability.criteria,difficulty:0
+msgid "Medium"
+msgstr ""
+
+#. module: user_story
 #: view:user.story:0
 #: selection:user.story,state:0
 msgid "Done"
 msgstr ""
 
 #. module: user_story
+#: view:acceptability.criteria:0
 #: field:acceptability.criteria,accepted:0
 #: view:user.story:0
 msgid "Accepted"
@@ -211,8 +254,18 @@ msgid "Total hours"
 msgstr ""
 
 #. module: user_story
-#: selection:user.story,state:0
-msgid "Cancelled"
+#: model:acceptability.criteria,scenario:user_story.ac_21
+msgid "sc 2.1"
+msgstr ""
+
+#. module: user_story
+#: model:acceptability.criteria,scenario:user_story.ac_22
+msgid "sc 2.2"
+msgstr ""
+
+#. module: user_story
+#: view:acceptability.criteria:0
+msgid "In Development"
 msgstr ""
 
 #. module: user_story
@@ -241,6 +294,7 @@ msgstr ""
 
 #. module: user_story
 #: view:user.story:0
+#: field:user.story,task_ids:0
 msgid "Tasks"
 msgstr ""
 
@@ -250,13 +304,15 @@ msgid "Task Started"
 msgstr ""
 
 #. module: user_story
+#: model:ir.actions.act_window,name:user_story.action_user_story
+#: model:ir.ui.menu,name:user_story.menu_action_user_story
 #: view:project.project:0
 msgid "User Stories"
 msgstr ""
 
 #. module: user_story
-#: selection:user.story,priority_level:0
-msgid "Urgent"
+#: model:ir.model,name:user_story.model_user_story_priority
+msgid "user.story.priority"
 msgstr ""
 
 #. module: user_story
@@ -276,6 +332,9 @@ msgid "3.- Description"
 msgstr ""
 
 #. module: user_story
+#: view:acceptability.criteria:0
+#: field:acceptability.criteria,user_execute_id:0
+#: help:acceptability.criteria,user_execute_id:0
 #: field:user.story,user_execute_id:0
 msgid "Responsible Execution"
 msgstr ""
@@ -283,6 +342,11 @@ msgstr ""
 #. module: user_story
 #: view:user.story:0
 msgid "Add a other info here ..."
+msgstr ""
+
+#. module: user_story
+#: view:user.story:0
+msgid "5.- Technical Conclusions"
 msgstr ""
 
 #. module: user_story
@@ -296,14 +360,49 @@ msgid "Asumptions"
 msgstr ""
 
 #. module: user_story
+#: model:user.story,name:user_story.us_1
+msgid "us 1"
+msgstr ""
+
+#. module: user_story
+#: model:user.story,name:user_story.us_2
+msgid "us 2"
+msgstr ""
+
+#. module: user_story
+#: model:user.story,name:user_story.us_3
+msgid "us 3"
+msgstr ""
+
+#. module: user_story
 #: view:user.story:0
 #: selection:user.story,state:0
 msgid "Pending"
 msgstr ""
 
 #. module: user_story
+#: view:acceptability.criteria:0
+#: field:acceptability.criteria,accep_crit_id:0
+#: model:ir.actions.act_window,name:user_story.act_project_project_users_story_all
+#: model:ir.actions.report.xml,name:user_story.report_user_story
+#: model:ir.module.category,name:user_story.module_user_story
+#: model:ir.ui.menu,name:user_story.menu_conf_user_story
+#: model:ir.ui.menu,name:user_story.menu_user_story
+#: view:project.task:0
+#: field:project.task,userstory_id:0
+#: view:user.story:0
+msgid "User Story"
+msgstr ""
+
+#. module: user_story
 #: field:user.story,categ_ids:0
 msgid "Tags"
+msgstr ""
+
+#. module: user_story
+#: view:acceptability.criteria:0
+#: field:acceptability.criteria,difficulty:0
+msgid "Difficulty"
 msgstr ""
 
 #. module: user_story
@@ -331,11 +430,17 @@ msgid ""
 msgstr ""
 
 #. module: user_story
+#: selection:acceptability.criteria,difficulty:0
+msgid "Not Apply"
+msgstr ""
+
+#. module: user_story
 #: field:user.story,message_summary:0
 msgid "Summary"
 msgstr ""
 
 #. module: user_story
+#: view:acceptability.criteria:0
 #: view:user.story:0
 msgid "Filter"
 msgstr ""
@@ -354,8 +459,18 @@ msgid ""
 msgstr ""
 
 #. module: user_story
+#: model:acceptability.criteria,scenario:user_story.ac_31
+msgid "sc 3.1"
+msgstr ""
+
+#. module: user_story
 #: field:user.story,code:0
 msgid "Code"
+msgstr ""
+
+#. module: user_story
+#: selection:user.story,state:0
+msgid "Cancelled"
 msgstr ""
 
 #. module: user_story
@@ -369,18 +484,16 @@ msgid "GAP analysis results"
 msgstr ""
 
 #. module: user_story
-#: field:user.story,task_ids:0
-msgid "Tasksss"
-msgstr ""
-
-#. module: user_story
 #: model:mail.message.subtype,name:user_story.mt_comment
 msgid "Discussions"
 msgstr ""
 
 #. module: user_story
-#: selection:user.story,priority_level:0
-msgid "Secondary"
+#: help:user.story,user_execute_id:0
+msgid ""
+"Person responsible for user story takes place, either by delegating work to "
+"other human capital or running it by itself. For delegate work should "
+"monitor the proper implementation of associated activities."
 msgstr ""
 
 #. module: user_story
@@ -401,6 +514,16 @@ msgstr ""
 #. module: user_story
 #: field:user.story,info:0
 msgid "Other Info"
+msgstr ""
+
+#. module: user_story
+#: model:acceptability.criteria,scenario:user_story.ac_12
+msgid "sc 1.2"
+msgstr ""
+
+#. module: user_story
+#: model:acceptability.criteria,scenario:user_story.ac_11
+msgid "sc 1.1"
 msgstr ""
 
 #. module: user_story
@@ -433,6 +556,17 @@ msgid "Branch source for clone and make merge proposal"
 msgstr ""
 
 #. module: user_story
+#: field:acceptability.criteria,development:0
+msgid "Development"
+msgstr ""
+
+#. module: user_story
+#: selection:acceptability.criteria,difficulty:0
+msgid "High"
+msgstr ""
+
+#. module: user_story
+#: help:acceptability.criteria,sk_id:0
 #: field:user.story,sk_id:0
 msgid "Sprint Kanban"
 msgstr ""
@@ -477,8 +611,18 @@ msgid ""
 msgstr ""
 
 #. module: user_story
+#: field:user.story.priority,name:0
+msgid "Name"
+msgstr ""
+
+#. module: user_story
 #: model:mail.message.subtype,name:user_story.mt_task_blocked
 msgid "Task Blocked"
+msgstr ""
+
+#. module: user_story
+#: view:acceptability.criteria:0
+msgid "Acceptability Criterion"
 msgstr ""
 
 #. module: user_story
@@ -497,6 +641,11 @@ msgid ""
 "                    online services) you just must copy and paste the "
 "embebed code,\n"
 "                    you can see an example about how to do that"
+msgstr ""
+
+#. module: user_story
+#: model:acceptability.criteria,name:user_story.ac_31
+msgid "criterion 3.1"
 msgstr ""
 
 #. module: user_story
@@ -548,6 +697,8 @@ msgid "6.- Asumptions"
 msgstr ""
 
 #. module: user_story
+#: view:acceptability.criteria:0
+#: field:acceptability.criteria,sk_id:0
 #: view:user.story:0
 msgid "Sprint"
 msgstr ""
