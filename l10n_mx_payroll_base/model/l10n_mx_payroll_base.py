@@ -165,8 +165,26 @@ class hr_payslip(osv.Model):
             
         return res
 
+    def _get_journal(self, cr, uid, context=None):
+        if context is None:
+            context = {}
+        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
+        company_id = context.get('company_id', user.company_id.id)
+        journal_obj = self.pool.get('account.journal')
+        domain = [('company_id', '=', company_id)]
+        res = journal_obj.search(cr, uid, domain, limit=1)
+        return res and res[0] or False
+
+    def _get_currency(self, cr, uid, context=None):
+        res = False
+        journal_id = self._get_journal(cr, uid, context=context)
+        if journal_id:
+            journal = self.pool.get('account.journal').browse(cr, uid, journal_id, context=context)
+            res = journal.currency and journal.currency.id or journal.company_id.currency_id.id
+        return res
+
     _columns = {
-        'journal_id': fields.many2one('account.journal','Journal', required=True),
+        'journal_id': fields.many2one('account.journal', 'Journal', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'date_payslip': fields.date('Payslip Date'),
         'payslip_datetime': fields.datetime('Electronic Payslip Date'),
         'line_payslip_product_ids': fields.one2many('hr.payslip.product.line', 'payslip_id', 'Generic Product', required=True),
@@ -180,9 +198,9 @@ class hr_payslip(osv.Model):
             type="many2one", relation='res.partner', string='Address Issued \
             Invoice', help='This address will be used as address that issued \
             for electronic payroll'),
-        'currency_id': fields.many2one('res.currency', 'Currency',
-            required=False, readonly=True, states={'draft':[('readonly',False)]},
-            change_default=True, help='Currency used in the invoice'),
+        'currency_id': fields.many2one('res.currency', 'Currency', required=True, 
+                readonly=True, states={'draft':[('readonly',False)]}, track_visibility='always',
+            change_default=True, help='Currency used in the payroll'),
         'approval_id' : fields.many2one('ir.sequence.approval', 'Approval'),
         'cfdi_cbb': fields.binary('CFD-I CBB'),
         'cfdi_sello': fields.text('CFD-I Sello', help='Sign assigned by the SAT'),
@@ -204,6 +222,12 @@ class hr_payslip(osv.Model):
         'date_payslip_tz': fields.function(_get_date_payslip_tz, method=True,
             type='datetime', string='Date Payroll', store=True,
             help='Date of payroll with Time Zone'),
+    }
+
+    _defaults = {
+        'currency_id': _get_currency,
+        'journal_id': _get_journal,
+        'company_id': lambda self,cr,uid,c: self.pool.get('res.company')._company_default_get(cr, uid, 'hr.payslip', context=c),
     }
 
     def _create_original_str(self, cr, uid, ids, invoice_id, context=None):
@@ -494,10 +518,14 @@ class hr_payslip(osv.Model):
             context = {}
         folio_data = {}
         approval_id = False
+        currency_id = False
+        company_id = False
         id = ids and ids[0] or False
         if journal_id:
             journal_id = self.pool.get('account.journal').browse(cr, uid, journal_id, context=context)
             #~ sequence_id = self._get_invoice_sequence(cr, uid, [id])[id]
+            currency_id = journal_id.currency and journal_id.currency.id or journal_id.company_id.currency_id.id
+            company_id = journal_id.company_id.id
             sequence_id = journal_id and journal_id.sequence_id and journal_id.sequence_id.id
             if sequence_id:
                 #~ # NO ES COMPATIBLE CON TINYERP approval_id =
@@ -535,7 +563,13 @@ class hr_payslip(osv.Model):
             #~ else:
                 #~ raise osv.except_osv(_('Warning !'), _(
                     #~ 'Not found a sequence of configuration. %s !') % (msg2))
-        return {'value' : {'approval_id' : approval_id}}
+        result = {'value' : {
+                'approval_id' : approval_id, 
+                'currency_id': currency_id,
+                'company_id': company_id
+                }
+            }
+        return result
 
     def binary2file(self, cr, uid, ids, binary_data, file_prefix="", file_suffix=""):
         """
