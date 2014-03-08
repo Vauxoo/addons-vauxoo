@@ -881,5 +881,6 @@ class hr_payslip(osv.Model):
             'cfdi_fecha_timbrado': False,
             'cfdi_folio_fiscal': False,
             'pac_id': False,
+            'currency_id': self._get_currency(cr, uid, context=context),
         })
         return super(hr_payslip, self).copy(cr, uid, id, default, context=context)
