@@ -191,7 +191,7 @@ class hr_expense_expense(osv.Model):
             for move in aml_obj.browse(cr, uid, move_ids, context=context):
                 if move.amount_tax_unround:
                     move_round += move.credit
-                    move_without_round += move.amount_tax_unround
+                    move_without_round += abs(move.amount_tax_unround)
             move_diff = abs(move_without_round) - abs(move_round)
             move_diff = round(move_diff, 2)
             if move_diff <> 0.00:
