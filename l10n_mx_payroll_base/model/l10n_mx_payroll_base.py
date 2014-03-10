@@ -787,13 +787,13 @@ class hr_payslip(osv.Model):
             context = {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         payroll = self.browse(cr, uid, ids)[0]
-        isr = 0
+        descuento = 0
         for line in payroll.input_line_ids:
             rule = line.name.upper()
             if line.salary_rule_id.type_concept == 'deduction':
                 if not rule == 'ISR':
-                    isr = line.amount + line.exempt_amount
-        return isr
+                    descuento = line.amount + line.exempt_amount
+        return descuento
 
     def _get_facturae_payroll_xml_data(self, cr, uid, ids, context=None):
         if context is None:
