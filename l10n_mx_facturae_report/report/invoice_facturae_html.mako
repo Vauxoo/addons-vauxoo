@@ -368,22 +368,32 @@
                 <td class="total_td">${_("Sub Total:")}</td>
                 <td align="right" class="total_td">$ ${ dict_data['@subTotal'] or ''|entity}</td>
             </tr>
+            <% desc_amount = float(dict_data['@descuento']) %>
+            %if desc_amount > 0:
+            <tr>
+                <td class="total_td">${_("Descuento:")}</td>
+                <td align="right" class="total_td">$ ${ dict_data['@descuento'] or ''|entity}</td>
+            </tr>
+            %endif
             %if not isinstance(dict_data['Impuestos']['Traslados']['Traslado'], list):
                 <% dict_imp =  [dict_data['Impuestos']['Traslados']['Traslado']]%>
             %else:
                 <% dict_imp =  dict_data['Impuestos']['Traslados']['Traslado']%>
             %endif
             %for imp in range(0,len(dict_imp)):
-            <tr>
-                <td class="tax_td">
-                    <% imp_name = dict_imp[imp]['@impuesto'] %>
-                    <% tasa = dict_imp[imp]['@tasa'] %>
-                    <% text = imp_name+' ('+tasa+') %' %>${ text or '0.0'}
-                </td>
-                <td class="tax_td" align="right">
-                    <% importe = dict_imp[imp]['@importe'] %>${importe or ''|entity}
-                </td>
-            </tr>
+                <% imp_amount = float(dict_imp[imp]['@importe']) %>
+                %if imp_amount > 0:
+                    <tr>
+                        <td class="tax_td">
+                            <% imp_name = dict_imp[imp]['@impuesto'] %>
+                            <% tasa = dict_imp[imp]['@tasa'] %>
+                            <% text = imp_name+' ('+tasa+') %' %>${ text or '0.0'}
+                        </td>
+                        <td class="tax_td" align="right">
+                            <% importe = dict_imp[imp]['@importe'] %>${importe or ''|entity}
+                        </td>
+                    </tr>
+                %endif
             %endfor       
             <tr align="left">
                 <td class="total_td"><b>${_("Total:")}</b></td>
