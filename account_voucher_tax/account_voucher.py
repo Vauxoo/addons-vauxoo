@@ -264,8 +264,8 @@ class account_voucher(osv.Model):
         tax_lines = {}
         lines_ids = []
         if lines and lines.get('value', False):
-            lines_ids.extend(lines['value'].get('line_cr_ids'))
-            lines_ids.extend(lines['value'].get('line_dr_ids'))
+            lines_ids.extend(lines['value'].get('line_cr_ids', []))
+            lines_ids.extend(lines['value'].get('line_dr_ids', []))
             for line in lines_ids:
                 factor = self.get_percent_pay_vs_invoice(cr, uid, line[\
                     'amount_original'], line['amount'], context=context)
