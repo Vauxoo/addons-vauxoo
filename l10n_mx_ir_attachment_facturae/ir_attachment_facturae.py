@@ -321,7 +321,6 @@ class ir_attachment_facturae_mx(osv.Model):
     def signal_printable(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        aids = ''
         msj = ''
         index_pdf = ''
         attachment_obj = self.pool.get('ir.attachment')
@@ -342,19 +341,22 @@ class ir_attachment_facturae_mx(osv.Model):
         (result, format) = service.create(cr, SUPERUSER_ID, [attachment_mx_data[0].id], report_name, context=context)                
         attachment_ids = attachment_obj.search(cr, uid, [('res_model', '=', self._name),('res_id', '=', attachment_mx_data[0].id)])
         file_name_attachment = attachment_obj.browse(cr, uid, attachment_ids, context=context)[0].datas_fname
-        for attachment in self.browse(cr, uid, attachment_ids, context=context):
+        #for attachment in self.browse(cr, uid, attachment_ids, context=context):
             # TODO: aids.append( attachment.id ) but without error in last
             # write
+        
+        attachment_obj.write(cr, uid, attachment_ids, {
+            'name': file_name_attachment,
+            'res_model': attachment_mx_data[0].model_source,
+            'res_id': attachment_mx_data[0].id_source}, context=context)
             
-            aids = attachment.id
-            
-            attachment_obj.write(cr, uid, [attachment.id], {
-                'name': file_name_attachment }, context=context)
-            status = True
+        status = True
+        aids = attachment_ids and attachment_ids[0] or False
+        
         if status and aids:
             msj = _("Attached Successfully PDF\n")
             self.write(cr, uid, ids, {
-                'file_pdf': aids or False,
+                'file_pdf': aids,
                 'msj': msj,
                 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                 'file_pdf_index': index_pdf}, context=context)
