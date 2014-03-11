@@ -22,12 +22,10 @@
                     <field name="currency_id"/>
                     <field name="approval_id" invisible="True"/>
                     <field name="partner_id"/>
-                    
                 </xpath>
                 <xpath expr="//field[@name='name']" position="after">
                     <field name="pay_method_id"/>
                 </xpath>
-                
                 <xpath expr="//separator[@string='Worked Days']" position="before">
                     <separator string="Generic Product"/>
                     <field name="line_payslip_product_ids">
@@ -36,6 +34,21 @@
                             <field name="amount"/>
                         </tree>
                     </field>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_hr_payslip_form_salary_rule_id_inherit2">
+            <field name="name">view.hr.payslip.form.salary.rule.id.inherit2</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='input_line_ids']" position="before">
+                    <separator string="Totales"/>
+                    <group>
+                    <field name="deduction_total"/>
+                    <field name="perception_total"/>
+                    </group>
                 </xpath>
             </field>
         </record>

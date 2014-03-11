@@ -165,6 +165,30 @@ class hr_payslip(osv.Model):
             
         return res
 
+    def _deductions(self, cr, uid, ids, name, arg, context=None):
+        res = {}
+        for id in ids:
+            res.setdefault(id, 0.0)
+        deduction = 0
+        payroll = self.browse(cr, uid, ids, context=context)[0]
+        for line in payroll.input_line_ids:
+            if line.salary_rule_id.type_concept == 'deduction':
+                deduction += line.amount + line.exempt_amount
+            res[id] =  deduction
+        return res
+
+    def _perceptions(self, cr, uid, ids, name, arg, context=None):
+        res = {}
+        for id in ids:
+            res.setdefault(id, 0.0)
+        deduction = 0
+        payroll = self.browse(cr, uid, ids, context=context)[0]
+        for line in payroll.input_line_ids:
+            if line.salary_rule_id.type_concept == 'perception':
+                deduction += line.amount + line.exempt_amount
+            res[id] =  deduction
+        return res
+
     _columns = {
         'journal_id': fields.many2one('account.journal','Journal', required=True),
         'date_payslip': fields.date('Payslip Date'),
@@ -204,6 +228,8 @@ class hr_payslip(osv.Model):
         'date_payslip_tz': fields.function(_get_date_payslip_tz, method=True,
             type='datetime', string='Date Payroll', store=True,
             help='Date of payroll with Time Zone'),
+        'deduction_total' : fields.function(_deductions, type='float', string='Deductions Total'),
+        'perception_total' : fields.function(_perceptions, type='float', string='Perception Total'),
     }
 
     def _create_original_str(self, cr, uid, ids, invoice_id, context=None):
