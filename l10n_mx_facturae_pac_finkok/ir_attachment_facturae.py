@@ -212,6 +212,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 password = pac_params.password
                 wsdl_url = pac_params.url_webservice
                 namespace = pac_params.namespace
+                certificate_link = pac_params.certificate_link
                 #agregar otro campo para la URL de testing y poder validar sin cablear
                 url_finkok = 'http://facturacion.finkok.com/servicios/soap/stamp.wsdl'
                 testing_url_finkok = 'http://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl'
@@ -256,6 +257,7 @@ class ir_attachment_facturae_mx(osv.Model):
                             'pac_id': pac_params.id,
                             #~'cfdi_cbb': open(cbb).read().encode('base64'),# ya lo regresa en base64, ya se crea qr desde funcion
                             'cfdi_cadena_original': original_string or False,
+                            'certificate_link': certificate_link or False,
                         }
                         cfdi_xml = resultado.xml.encode('ascii', 'xmlcharrefreplace') or ''
                         comprobante_new = '</'+comprobante+'>'
