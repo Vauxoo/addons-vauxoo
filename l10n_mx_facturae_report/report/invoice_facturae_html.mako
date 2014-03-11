@@ -390,11 +390,32 @@
                             <% text = imp_name+' ('+tasa+') %' %>${ text or '0.0'}
                         </td>
                         <td class="tax_td" align="right">
-                            <% importe = dict_imp[imp]['@importe'] %>${importe or ''|entity}
+                            $ ${imp_amount or '0.0'|entity}
                         </td>
                     </tr>
                 %endif
-            %endfor       
+            %endfor
+            %if dict_data['Impuestos'].has_key('Retenciones'):
+                %if not isinstance(dict_data['Impuestos']['Retenciones']['Retencion'], list):
+                    <% dict_ret =  [dict_data['Impuestos']['Retenciones']['Retencion']]%>
+                %else:
+                    <% dict_ret =  dict_data['Impuestos']['Retenciones']['Retencion']%>
+                %endif
+                %for ret in range(0,len(dict_ret)):
+                    <% ret_amount = float(dict_ret[ret]['@importe']) %>
+                    %if ret_amount > 0:
+                        <tr>
+                            <td class="tax_td">
+                                <% ret_name = dict_ret[ret]['@impuesto'] %>
+                                ${_("Ret. ")} ${ ret_name or '' | entity }
+                            </td>
+                            <td class="tax_td" align="right">
+                                $ ${ ret_amount or '' | entity }
+                            </td>
+                        </tr>
+                    %endif
+                %endfor
+            %endif
             <tr align="left">
                 <td class="total_td"><b>${_("Total:")}</b></td>
                 <td class="total_td" align="right"><b>$ ${ dict_data['@total'] or ''|entity}</b></td>
