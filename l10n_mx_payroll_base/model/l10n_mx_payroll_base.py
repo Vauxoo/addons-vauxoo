@@ -67,7 +67,7 @@ class hr_payslip(osv.Model):
 
     _inherit = 'hr.payslip'
 
-    def _get_company_emitter_invoice(self, cr, uid, ids, name, args, context=None):
+    def _get_company_emitter_payroll(self, cr, uid, ids, name, args, context=None):
         if context is None:
             context = {}
         res = {}
@@ -77,13 +77,13 @@ class hr_payslip(osv.Model):
             journal_id = data.journal_id.id
             data_journal = journal_obj.browse(
                 cr, uid, journal_id, context=context)
-            company_invoice = data_journal.company2_id and \
+            company_payroll = data_journal.company2_id and \
                 data_journal.company2_id.id or data.company_id and \
                 data.company_id.id or False
-            res[data.id] = company_invoice
+            res[data.id] = company_payroll
         return res
 
-    def _get_address_issued_invoice(self, cr, uid, ids, name, args, context=None):
+    def _get_address_issued_payroll(self, cr, uid, ids, name, args, context=None):
         if context is None:
             context = {}
         res = {}
@@ -101,8 +101,8 @@ class hr_payslip(osv.Model):
             c = data.company_id and \
             data.company_id.address_invoice_parent_company_id and \
             data.company_id.address_invoice_parent_company_id.id or False
-            address_invoice = a or b or c or False
-            res[data.id] = address_invoice
+            address_payroll = a or b or c or False
+            res[data.id] = address_payroll
         return res
         
     def _get_date_payslip_tz(self, cr, uid, ids, field_names=None, arg=False, context=None):
@@ -172,17 +172,17 @@ class hr_payslip(osv.Model):
         'line_payslip_product_ids': fields.one2many('hr.payslip.product.line', 'payslip_id', 'Generic Product', required=True),
         'pay_method_id': fields.many2one('pay.method', 'Payment Method',
             readonly=True, states={'draft': [('readonly', False)]}),
-        'company_emitter_id': fields.function(_get_company_emitter_invoice,
+        'company_emitter_id': fields.function(_get_company_emitter_payroll,
             type="many2one", relation='res.company', string='Company Emitter \
             Payroll', help='This company will be used as emitter company in \
             the electronic payroll'),
-        'address_issued_id': fields.function(_get_address_issued_invoice,
+        'address_issued_id': fields.function(_get_address_issued_payroll,
             type="many2one", relation='res.partner', string='Address Issued \
-            Invoice', help='This address will be used as address that issued \
+            payroll', help='This address will be used as address that issued \
             for electronic payroll'),
         'currency_id': fields.many2one('res.currency', 'Currency',
             required=False, readonly=True, states={'draft':[('readonly',False)]},
-            change_default=True, help='Currency used in the invoice'),
+            change_default=True, help='Currency used in the payroll'),
         'approval_id' : fields.many2one('ir.sequence.approval', 'Approval'),
         'cfdi_cbb': fields.binary('CFD-I CBB'),
         'cfdi_sello': fields.text('CFD-I Sello', help='Sign assigned by the SAT'),
@@ -206,17 +206,17 @@ class hr_payslip(osv.Model):
             help='Date of payroll with Time Zone'),
     }
 
-    def _create_original_str(self, cr, uid, ids, invoice_id, context=None):
+    def _create_original_str(self, cr, uid, ids, payroll_id, context=None):
         if context is None:
             context = {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
-        invoice = self.browse(cr, uid, invoice_id)
-        cfdi_folio_fiscal = invoice.cfdi_folio_fiscal or ''
-        cfdi_fecha_timbrado = invoice.cfdi_fecha_timbrado or ''
+        payroll = self.browse(cr, uid, payroll_id)
+        cfdi_folio_fiscal = payroll.cfdi_folio_fiscal or ''
+        cfdi_fecha_timbrado = payroll.cfdi_fecha_timbrado or ''
         if cfdi_fecha_timbrado:
             cfdi_fecha_timbrado=ti.strftime('%Y-%m-%dT%H:%M:%S', ti.strptime(cfdi_fecha_timbrado, '%Y-%m-%d %H:%M:%S'))
-        sello = invoice.sello or ''
-        cfdi_no_certificado = invoice.cfdi_no_certificado or ''
+        sello = payroll.sello or ''
+        cfdi_no_certificado = payroll.cfdi_no_certificado or ''
         original_string = '||1.0|'+cfdi_folio_fiscal+'|'+str(cfdi_fecha_timbrado)+'|'+sello+'|'+cfdi_no_certificado+'||'
         return original_string
         
@@ -327,168 +327,6 @@ class hr_payslip(osv.Model):
                 lines_get.append(line)
         return lines_get
 
-    #~ def _get_dict_payroll(self, cr, uid, ids, context=None):
-        #~ if context is None:
-            #~ context = {}
-        #~ ids = isinstance(ids, (int, long)) and [ids] or ids
-        #~ list_data = []
-        #~ department = ''
-        #~ for p in self.browse(cr, uid, ids, context=context):
-            #~ dict_data = {}
-            #~ tipoComprobante = 'egreso'
-            #~ # Inicia seccion: Nomina
-            #~ htz = int(self._get_time_zone(cr, uid, [p.id], context=context))
-            #~ now = time.strftime('%Y-%m-%d %H:%M:%S')
-            #~ date_now = now and datetime.strptime(p.payslip_datetime, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz) or False
-            #~ date_now = now
-            #~ date_now = time.strftime('%Y-%m-%d', time.strptime(str(date_now), '%Y-%m-%d %H:%M:%S')) or False
-            #~ number_of_days=0
-            #~ worked_days_line_ids = p.worked_days_line_ids
-            #~ if worked_days_line_ids:
-                #~ for n in worked_days_line_ids:
-                    #~ number_of_days += n['number_of_days']
-            #~ if p.employee_id.department_id:
-                #~ department = p.employee_id.department_id.name
-                #~ department = self.conv_ascii(cr, uid, ids, department)
-            #~ dict_data['nomina:Nomina'] = {}
-            #~ dict_data['nomina:Nomina'].update({
-                #~ 'RegistroPatronal': p.employee_id.employer_registration and \
-                #~ p.employee_id.employer_registration.replace('\n\r', ' ').replace(
-                    #~ '\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A',
-                #~ 'NumEmpleado': p.employee_id.identification_id or 'S/N',
-                #~ 'CURP': p.employee_id.curp and \
-                            #~ p.employee_id.curp.replace('\n\r', ' ').replace(
-                                #~ '\r\n', ' ').replace('\n', ' ').replace('\r', ' ').upper() or 'S/N',
-                #~ 'TipoRegimen': p.employee_id.regime_id.code and\
-                                   #~ p.employee_id.regime_id.code or '2',
-                #~ 'NumSeguridadSocial':p.employee_id.nss and \
-                            #~ p.employee_id.nss.replace('\n\r', ' ').replace(
-                                #~ '\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'S/N',
-                #~ 'FechaPago': date_now or False,
-                #~ 'FechaInicialPago': p.date_from or False,
-                #~ 'FechaFinalPago': p.date_to or False,
-                #~ 'FechaInicioRelLaboral': p.contract_id.date_start and \
-                                            #~ p.contract_id.date_start or False,
-                #~ 'NumDiasPagados': number_of_days or 0.0,
-                #~ 'Departamento': department or 'N/A',
-                #~ 'CLABE': p.employee_id.bank_account_id.clabe and \
-                        #~ p.employee_id.bank_account_id.clabe.replace('\n\r', ' ').\
-                        #~ replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '000000000000000000',
-                #~ 'Banco': p.employee_id.bank_account_id.bank and \
-                            #~ p.employee_id.bank_account_id.bank.code.replace(
-                                #~ '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace(
-                                        #~ '\r', ' ') or '001',
-                #~ 'Antiguedad':p.employee_id.seniority or 0,
-                #~ 'Puesto': p.employee_id.job_id.name and \
-                                #~ p.contract_id.job_id.name or 'N/A',
-                #~ 'TipoContrato': p.contract_id.type_id.name or '',
-                #~ 'TipoJornada': p.contract_id.working_day_id.name or '',
-                #~ 'PeriodicidadPago': p.contract_id.schedule_pay or '',
-                #~ 'RiesgoPuesto': p.contract_id.risk_rank_id.code or '1',
-                #~ 'SalarioBaseCotApor': p.contract_id.wage or 0,
-                #~ 'SalarioDiarioIntegrado': p.contract_id.integrated_salary or 0,
-                #~ 'xmlns:nomina':'http://www.sat.gob.mx/nomina',
-                #~ 'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-                #~ 'Version': '1.1'
-            #~ })
-            #~ input_line_ids = p.input_line_ids
-            #~ if input_line_ids:
-                #~ TotalGravado_percepcion = 0
-                #~ TotalExento_percepcion = 0
-                #~ TotalExento_deduccion = 0
-                #~ TotalGravado_deduccion = 0
-                #~ lista_percepciones = []
-                #~ lista_deducciones = []
-                #~ var = 0
-                #~ percepciones_data = dict_data['nomina:Nomina']
-                #~ percepciones_data['nomina:Percepciones'] = {}
-                #~ deducciones_data = dict_data['nomina:Nomina']
-                #~ deducciones_data['nomina:Deducciones'] = {}
-                #~ for n in input_line_ids:
-                    #~ if n['salary_rule_id']['type_concept']=='perception':
-                        #~ concepto = self.conv_ascii(cr, uid, ids, n['salary_rule_id']['name'])
-                        #~ data_percepciones = {
-                                        #~ 'TipoPercepcion': n['salary_rule_id']['code'],
-                                        #~ 'Clave': n['salary_rule_id']['code']+'clave',
-                                        #~ 'Concepto': concepto or '',
-                                        #~ 'ImporteGravado': n['amount'],
-                                        #~ 'ImporteExento': n['exempt_amount']
-                                        #~ }
-                        #~ TotalGravado_percepcion +=  n['amount']
-                        #~ TotalExento_percepcion +=  n['exempt_amount']
-                        #~ lista_percepciones.append(data_percepciones)
-                    #~ if n['salary_rule_id']['type_concept']=='deduction':
-                        #~ concepto = self.conv_ascii(cr, uid, ids, n['salary_rule_id']['name'])
-                        #~ data_deducciones = {
-                                        #~ 'TipoDeduccion': n['salary_rule_id']['code'],
-                                        #~ 'Clave': n['salary_rule_id']['clave'] or '',
-                                        #~ 'Concepto': concepto or '',
-                                        #~ 'ImporteGravado': n['amount'],
-                                        #~ 'ImporteExento': n['exempt_amount'],
-                                        #~ }
-                        #~ TotalGravado_deduccion +=  n['amount']
-                        #~ TotalExento_deduccion += n['exempt_amount']
-                        #~ lista_deducciones.append(data_deducciones)
-                #~ percepciones_data['nomina:Percepciones'].update({
-                                            #~ 'TotalGravado': TotalGravado_percepcion,
-                                            #~ 'TotalExento': TotalExento_percepcion,
-                                            #~ 'nomina:Percepcion' : lista_percepciones,
-                                                        #~ })
-#~ 
-                #~ deducciones_data['nomina:Deducciones'].update({
-                                            #~ 'TotalGravado': TotalGravado_deduccion,
-                                            #~ 'TotalExento': TotalExento_deduccion,
-                                            #~ 'nomina:Deduccion' : lista_deducciones,
-                                                        #~ })
-            #~ else:
-                #~ raise orm.except_orm(_('Warning'), _('The payroll not have deductions or perceptions'))
-            #~ inability_line_ids = p.inability_line_ids
-            #~ if inability_line_ids:
-                #~ lista_incapacidades = []
-                #~ descuento = 0
-                #~ number_of_days = 0
-                #~ incapacidades_data = dict_data['nomina:Nomina']
-                #~ incapacidades_data['nomina:Incapacidades'] = {}
-                #~ for n in inability_line_ids:
-                    #~ descuento += n['amount']
-                    #~ number_of_days += n['number_of_days']
-                    #~ data_incapacidades = {
-                                        #~ 'DiasIncapacidad': n['number_of_days'] or 0,
-                                        #~ 'TipoIncapacidad': n['inability_id']['code'] or 1,
-                                        #~ 'Descuento': n['amount'] or 0,
-                                        #~ }
-                    #~ lista_incapacidades.append(data_incapacidades)
-                #~ incapacidades_data['nomina:Incapacidades'].update({
-                                                    #~ 'nomina:Incapacidad' : lista_incapacidades
-                                                            #~ })
-            #~ overtime_line_ids = p.overtime_line_ids
-            #~ if overtime_line_ids:
-                #~ lista_horasextras = []
-                #~ ImportePagado = 0
-                #~ number_of_days = 0
-                #~ number_of_hours = 0
-                #~ horasextras_data = dict_data['nomina:Nomina']
-                #~ horasextras_data['nomina:HorasExtras'] = {}
-                #~ for n in overtime_line_ids:
-                    #~ ImportePagado += n['amount']
-                    #~ number_of_days += n['number_of_days']
-                    #~ number_of_hours += n['number_of_hours']
-                    #~ if n['type_hours'] == 'double':
-                        #~ TipoHoras = 'Dobles'
-                    #~ if n['type_hours'] == 'triples':
-                        #~ TipoHoras = 'Triples'
-                    #~ data_horasextras = {'Dias': n['number_of_days'] or 0,
-                                        #~ 'TipoHoras': TipoHoras,
-                                        #~ 'HorasExtra': n['number_of_hours'] or 0,
-                                        #~ 'ImportePagado': n['amount'] or 0,
-                                        #~ }
-                    #~ lista_horasextras.append(data_horasextras)
-                #~ horasextras_data['nomina:HorasExtras'].update({
-                                            #~ 'nomina:HorasExtra' : lista_horasextras
-                                                            #~ })
-        #~ list_data.append(dict_data)
-        #~ return list_data
-
     def onchange_journal_id(self, cr, uid, ids, journal_id, context=None):
         if context is None:
             context = {}
@@ -497,44 +335,13 @@ class hr_payslip(osv.Model):
         id = ids and ids[0] or False
         if journal_id:
             journal_id = self.pool.get('account.journal').browse(cr, uid, journal_id, context=context)
-            #~ sequence_id = self._get_invoice_sequence(cr, uid, [id])[id]
             sequence_id = journal_id and journal_id.sequence_id and journal_id.sequence_id.id
             if sequence_id:
                 #~ # NO ES COMPATIBLE CON TINYERP approval_id =
                 #~ # sequence.approval_id.id
-            #~ number_work = payslip.number or invoice.internal_number
-            #~ if invoice.type in ['out_invoice', 'out_refund']:
-                #~ try:
-                    #~ if number_work:
-                        #~ int(number_work)
-                #~ except(ValueError):
-                    #~ raise osv.except_osv(_('Warning !'), _(
-                        #~ 'The folio [%s] must be integer number, without letters')\
-                            #~ % (number_work))
-            #~ context.update({'number_work': number_work or False})
                 approval_id = self.pool.get('ir.sequence')._get_current_approval(
                     cr, uid, [sequence_id], field_names=None, arg=False,
                     context=context)[sequence_id]
-            #~ approval = approval_id and self.pool.get(
-                #~ 'ir.sequence.approval').browse(cr, uid, [approval_id],
-                #~ context=context)[0] or False
-            #~ if approval:
-                #~ folio_data = {
-                    #~ 'serie': approval.serie or '',
-                    #~ #'folio': '1',
-                    #~ 'noAprobacion': approval.approval_number or '',
-                    #~ 'anoAprobacion': approval.approval_year or '',
-                    #~ 'desde': approval.number_start or '',
-                    #~ 'hasta': approval.number_end or '',
-                    #~ #'noCertificado': "30001000000100000800",
-                #~ }
-            #~ else:
-                #~ raise osv.except_osv(_('Warning !'), _(
-                    #~ "The sequence don't have data of electronic invoice\nIn the sequence_id [%d].\n %s !")\
-                        #~ % (sequence_id, msg2))
-            #~ else:
-                #~ raise osv.except_osv(_('Warning !'), _(
-                    #~ 'Not found a sequence of configuration. %s !') % (msg2))
         return {'value' : {'approval_id' : approval_id}}
 
     def binary2file(self, cr, uid, ids, binary_data, file_prefix="", file_suffix=""):
@@ -647,31 +454,7 @@ class hr_payslip(osv.Model):
                 file_globals['serial_number'] = certificate_id.serial_number
             else:
                 raise osv.except_osv(_('Warning !'), _(
-                    'Check date of invoice and the validity of certificate, & that the register of the certificate is active.\n!') )
-        
-        #~ invoice_datetime = self.browse(cr, uid, ids)[0].invoice_datetime
-        #~ ir_seq_app_obj = self.pool.get('ir.sequence.approval')
-        #~ invoice = self.browse(cr, uid, ids[0], context=context)
-        #~ sequence_app_id = ir_seq_app_obj.search(cr, uid, [(
-            #~ 'sequence_id', '=', invoice.invoice_sequence_id.id)], context=context)
-        #~ if sequence_app_id:
-            #~ type_inv = ir_seq_app_obj.browse(
-                #~ cr, uid, sequence_app_id[0], context=context).type
-        #~ if invoice_datetime < '2012-07-01 00:00:00':
-            #~ return file_globals
-        #~ elif 'cfd' in type_inv and not 'cfdi' in type_inv:
-            #~ # Search char "," for addons_path, now is multi-path
-            #~ all_paths = tools.config["addons_path"].split(",")
-            #~ for my_path in all_paths:
-                #~ if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT')):
-                    #~ # If dir is in path, save it on real_path
-                    #~ file_globals['fname_xslt'] = my_path and os.path.join(
-                        #~ my_path, 'l10n_mx_facturae_base', 'SAT',
-                        #~ 'cadenaoriginal_2_2_l.xslt') or ''
-                    #~ break
-        #~ elif 'cfdi' in type_inv:
-            #~ # Search char "," for addons_path, now is multi-path
-            all_paths = tools.config["addons_path"].split(",")
+                    'Check date of payroll and the validity of certificate, & that the register of the certificate is active.\n!') )
             for my_path in all_paths:
                 if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT')):
                     # If dir is in path, save it on real_path
@@ -733,15 +516,38 @@ class hr_payslip(osv.Model):
                 loading = True
         return cer_str
 
+    def validate_scheme_facturae_xml(self, cr, uid, ids, datas_xmls=[], payroll_version = None, payroll_type="cfdv", scheme_type='xsd'):
+    #TODO: bzr add to file fname_schema
+        if not datas_xmls:
+            datas_xmls = []
+        certificate_lib = self.pool.get('facturae.certificate.library')
+        for data_xml in datas_xmls:
+            (fileno_data_xml, fname_data_xml) = tempfile.mkstemp('.xml', 'openerp_' + (False or '') + '__facturae__' )
+            f = open(fname_data_xml, 'wb')
+            data_xml = data_xml.replace("&amp;", "Y")#Replace temp for process with xmlstartle
+            f.write( data_xml )
+            f.close()
+            os.close(fileno_data_xml)
+            all_paths = tools.config["addons_path"].split(",")
+            for my_path in all_paths:
+                if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT')):
+                    # If dir is in path, save it on real_path
+                    fname_scheme = my_path and os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT', payroll_type + payroll_version +  '.' + scheme_type) or ''
+                    #fname_scheme = os.path.join(tools.config["addons_path"], u'l10n_mx_facturae_base', u'SAT', facturae_type + facturae_version +  '.' + scheme_type )
+                    fname_out = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__schema_validation_result__' )
+                    result = certificate_lib.check_xml_scheme(cr, uid, ids, fname_data_xml, fname_scheme, fname_out)
+                    if result: #Valida el xml mediante el archivo xsd
+                        raise osv.except_osv('Error al validar la estructura del xml!', 'Validación de XML versión %s:\n%s'%(payroll_version, result))
+        return True
+
     def _get_facturae_payroll_xml_data(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         payroll = self.browse(cr, uid, ids)[0]
-        invoice_obj = self.pool.get('account.invoice')
         if payroll:
-            facturae_version = '11'
-            facturae_type='nomina'
+            payroll_version = '11'
+            payroll_type='nomina'
             context.update(self._get_file_globals(cr, uid, ids, context=context))
             cert_str = self._get_certificate_str(context['fname_cer'])
             cert_str = cert_str.replace('\n\r', '').replace('\r\n', '').replace('\n', '').replace('\r', '').replace(' ', '')
@@ -779,7 +585,7 @@ class hr_payslip(osv.Model):
             os.close(fileno_sign)
             
             try:
-                invoice_obj.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], 'v3.2', 'cfd')
+                self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], 'v3.2', 'cfd')
             except Exception, e:
                 raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (tools.ustr(e)))
             for my_path in all_paths:
@@ -801,7 +607,7 @@ class hr_payslip(osv.Model):
             with open(fname_xml_payroll,'rb') as b:
                 data_xml_payroll = b.read().encode('UTF-8')
             try:
-                invoice_obj.validate_scheme_facturae_xml(cr, uid, ids, [data_xml_payroll], facturae_version, facturae_type)
+                self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml_payroll], payroll_version, payroll_type)
             except Exception, e:
                 raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (tools.ustr(e)))
             #Agregar nodo Nomina en nodo Complemento
@@ -828,7 +634,7 @@ class hr_payslip(osv.Model):
                 'fname_sign': fname_sign,
             })
             #context.update({'fecha': date_now or ''})
-            sign_str = invoice_obj._get_sello(cr=False, uid=False, ids=False, context=context)
+            sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
             nodeComprobante = data_xml2.getElementsByTagName("cfdi:Comprobante")[0]
             nodeComprobante.setAttribute("sello", sign_str)
             data_xml = data_xml2.toxml('UTF-8')
