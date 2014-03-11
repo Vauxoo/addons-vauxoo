@@ -539,6 +539,68 @@ class hr_payslip(osv.Model):
                     if result: #Valida el xml mediante el archivo xsd
                         raise osv.except_osv('Error al validar la estructura del xml!', 'Validación de XML versión %s:\n%s'%(payroll_version, result))
         return True
+        
+    def _get_taxes(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        importe = 0.0
+        tasa = 0.0
+        impuesto=''
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        payroll = self.browse(cr, uid, ids)[0]
+        totalImpuestosTrasladados = 0.0
+        tax_requireds = ['IVA', 'IEPS']
+        payroll_data_parent = {}
+        payroll_data = payroll_data_parent = {}
+        payroll_data['Impuestos'] = {}
+        payroll_data_impuestos = payroll_data['Impuestos']
+        payroll_data_impuestos['Traslados'] = []
+        payroll_data_impuestos['Retenciones'] = []
+        totalImpuestosTrasladados = 0
+        totalImpuestosRetenidos = 0
+        isr_amount = 0
+        iva_amount = 0
+        for line in payroll.input_line_ids:
+            rule = line.name.upper()
+            if rule == 'ISR':
+                isr_amount = line.amount + line.exempt_amount
+                payroll_data_impuestos['Retenciones'].append({'Retencion': {
+                            'impuesto': 'ISR',
+                            'importe': "%.2f" % (isr_amount),
+                        }})
+            elif rule == 'IVA':
+                iva_amount = line.amount
+                payroll_data_impuestos['Retenciones'].append({'Retencion': {
+                            'impuesto': 'IVA',
+                            'importe': "%.2f" % (iva_amount),
+                        }})
+        payroll_data['Impuestos'].update({
+            'totalImpuestosRetenidos': "%.2f"%( (iva_amount + isr_amount) or 0.0 )
+        })
+        tax_requireds = ['IVA', 'IEPS']
+        for tax_required in tax_requireds:
+            payroll_data_impuestos['Traslados'].append({'Traslado': {
+                'impuesto': self.string_to_xml_format(cr, uid, ids, tax_required),
+                'tasa': "%.2f" % (0.0),
+                'importe': "%.2f" % (0.0),
+            }})
+        payroll_data['Impuestos'].update({
+            'totalImpuestosTrasladados': "%.2f"%( iva_amount or 0.0),
+        })
+        return payroll_data_impuestos
+
+    def _get_descuento(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        payroll = self.browse(cr, uid, ids)[0]
+        discount = 0
+        for line in payroll.input_line_ids:
+            rule = line.name.upper()
+            if line.salary_rule_id.type_concept == 'deduction':
+                if not rule == 'ISR':
+                    discount += line.amount + line.exempt_amount
+        return discount
 
     def _get_facturae_payroll_xml_data(self, cr, uid, ids, context=None):
         if context is None:
@@ -554,28 +616,30 @@ class hr_payslip(osv.Model):
             noCertificado = self._get_noCertificado(cr, uid, ids, context['fname_cer'])
             all_paths = tools.config["addons_path"].split(",")
             formaDePago = payroll.string_to_xml_format(u'Pago en una sola exhibicion')
+            data_taxes = self._get_taxes(cr, uid, ids, context=None)
             for my_path in all_paths:
                 if os.path.isdir(os.path.join(my_path, 'l10n_mx_payroll_base', 'template')):
                     fname_jinja_tmpl = my_path and os.path.join(my_path, 'l10n_mx_payroll_base', 'template', 'cfdi' + '.xml') or ''
             dictargs2 = {
-                'a': payroll,
+                'o': payroll,
                 'time': ti,
                 'employee': payroll.employee_id,
                 'noCertificado': noCertificado,
                 'formaDePago': formaDePago,
                 'certificado': cert_str,
                 'fecha': ti.strftime('%Y-%m-%dT%H:%M:%S', ti.strptime(str(payroll.date_payslip_tz), '%Y-%m-%d %H:%M:%S')) ,
+                'data_taxes':data_taxes
                 }
             context.update({'fecha': ti.strftime('%Y-%m-%dT%H:%M:%S', ti.strptime(str(payroll.date_payslip_tz), '%Y-%m-%d %H:%M:%S')) or ''})
             (fileno_xml, fname_xml) = tempfile.mkstemp('.xml', 'openerp_' + '__facturae__')
             if fname_jinja_tmpl:
                 with open(fname_jinja_tmpl, 'r') as f_jinja_tmpl:
-                    jinja_tmpl_str = f_jinja_tmpl.read().encode('utf-8')
+                    jinja_tmpl_str = f_jinja_tmpl.read()
                     tmpl = jinja2.Template( jinja_tmpl_str )
                     with open(fname_xml, 'w') as new_xml:
                         new_xml.write( tmpl.render(**dictargs2) )
             with open(fname_xml,'rb') as b:
-                data_xml = b.read().encode('utf-8')
+                data_xml = b.read().encode('UTF-8')
             b.close()
             if not noCertificado:
                 raise osv.except_osv(_('Error in No. Certificate !'), _(
@@ -583,7 +647,6 @@ class hr_payslip(osv.Model):
             fname_txt = fname_xml + '.txt'
             (fileno_sign, fname_sign) = tempfile.mkstemp('.txt', 'openerp_' + '__facturae_txt_md5__')
             os.close(fileno_sign)
-            
             try:
                 self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], 'v3.2', 'cfd')
             except Exception, e:
