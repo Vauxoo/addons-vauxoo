@@ -166,6 +166,8 @@ class hr_payslip(osv.Model):
         return res
 
     def _deductions(self, cr, uid, ids, name, arg, context=None):
+        if context is None:
+            context = {}
         res = {}
         for id in ids:
             res.setdefault(id, 0.0)
@@ -178,6 +180,8 @@ class hr_payslip(osv.Model):
         return res
 
     def _perceptions(self, cr, uid, ids, name, arg, context=None):
+        if context is None:
+            context = {}
         res = {}
         for id in ids:
             res.setdefault(id, 0.0)
@@ -187,6 +191,21 @@ class hr_payslip(osv.Model):
             if line.salary_rule_id.type_concept == 'perception':
                 deduction += line.amount + line.exempt_amount
             res[id] =  deduction
+        return res
+        
+    def _total(self, cr, uid, ids, name, arg, context=None):
+        if context is None:
+            context = {}
+        res = {}
+        perception = 0
+        deduction = 0
+        total = 0
+        for id in ids:
+            res.setdefault(id, 0.0)
+        perception = self._perceptions(cr, uid, ids, name, arg, context=context)
+        deduction =  self._deductions(cr, uid, ids, name, arg, context=context)
+        total = perception.values()[0] - deduction.values()[0]
+        res[id] =  total
         return res
 
     _columns = {
@@ -228,8 +247,9 @@ class hr_payslip(osv.Model):
         'date_payslip_tz': fields.function(_get_date_payslip_tz, method=True,
             type='datetime', string='Date Payroll', store=True,
             help='Date of payroll with Time Zone'),
-        'deduction_total' : fields.function(_deductions, type='float', string='Deductions Total'),
-        'perception_total' : fields.function(_perceptions, type='float', string='Perception Total'),
+        'deduction_total' : fields.function(_deductions, type='float', string='Deductions Total', store=True),
+        'perception_total' : fields.function(_perceptions, type='float', string='Perception Total', store=True),
+        'total' : fields.function(_total, type='float', string='Total', store=True),
     }
 
     def _create_original_str(self, cr, uid, ids, invoice_id, context=None):

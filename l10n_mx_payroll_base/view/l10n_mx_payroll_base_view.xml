@@ -41,13 +41,13 @@
         <record model="ir.ui.view" id="view_hr_payslip_form_salary_rule_id_inherit2">
             <field name="name">view.hr.payslip.form.salary.rule.id.inherit2</field>
             <field name="model">hr.payslip</field>
-            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="inherit_id" ref="l10n_mx_hr_payroll.view_hr_payslip_form_inherit0"/>
             <field name="arch" type="xml">
-                 <xpath expr="//field[@name='input_line_ids']" position="before">
-                    <separator string="Totales"/>
-                    <group>
-                    <field name="deduction_total"/>
-                    <field name="perception_total"/>
+                 <xpath expr="//notebook/page[@string='Worked Days &amp; Inputs']/separator[@string='Overtime']" position="before">
+                    <group col="8">
+                    <field name="perception_total" colspan="2"/>
+                    <field name="deduction_total" colspan="2"/>
+                    <field name="total" colspan="2"/>
                     </group>
                 </xpath>
             </field>
