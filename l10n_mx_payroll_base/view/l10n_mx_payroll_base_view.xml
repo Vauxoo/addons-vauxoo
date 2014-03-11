@@ -20,10 +20,6 @@
                     <field name="journal_id" on_change="onchange_journal_id(journal_id)"/>
                     <field name="payslip_datetime"/>
                     <field name="currency_id"/>
-                    <field name="approval_id" invisible="True"/>
-                    <field name="partner_id"/>
-                    <field name="schedule_pay"/>
-                    
                 </xpath>
                 <xpath expr="//field[@name='name']" position="after">
                     <field name="pay_method_id"/>
@@ -38,6 +34,14 @@
                         </tree>
                     </field>
                 </xpath>
+                <xpath expr="//field[@name='credit_note']" position="before">
+                    <field name="schedule_pay"/>
+                    <field name="partner_id"/>
+                </xpath>
+                <xpath expr="//field[@name='credit_note']" position="after">
+                    <field name="approval_id" invisible="True"/>
+                </xpath>
+                    
             </field>
         </record>
 
