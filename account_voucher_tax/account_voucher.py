@@ -264,8 +264,8 @@ class account_voucher(osv.Model):
         tax_lines = {}
         lines_ids = []
         if lines and lines.get('value', False):
-            lines_ids.extend(lines['value'].get('line_cr_ids'))
-            lines_ids.extend(lines['value'].get('line_dr_ids'))
+            lines_ids.extend(lines['value'].get('line_cr_ids', []))
+            lines_ids.extend(lines['value'].get('line_dr_ids', []))
             for line in lines_ids:
                 factor = self.get_percent_pay_vs_invoice(cr, uid, line[\
                     'amount_original'], line['amount'], context=context)
@@ -375,8 +375,8 @@ class account_voucher(osv.Model):
 class account_voucher_line(osv.Model):
     _inherit = 'account.voucher.line'
     
-    def onchange_amount(self, cr, uid, ids, amount, voucher_id, move_line_id,\
-        amount_original, context=None):
+    def onchange_amount(self, cr, uid, ids, amount=False, amount_unreconciled=False, context=None, voucher_id=False,\
+        move_line_id=False, amount_original=False):
         if not context:
             context = {}
         currency_obj = self.pool.get('res.currency')
@@ -398,7 +398,9 @@ class account_voucher_line(osv.Model):
                 context=context).currency_id.id
         factor = voucher_obj.get_percent_pay_vs_invoice(cr, uid,\
             amount_original, amount, context=context)
-        res = {'value' : {}}
+        res = super(account_voucher_line, self).onchange_amount(cr, uid, ids, amount, amount_unreconciled)
+        if not voucher_id and not move_line_id and not amount_original:
+            return res
         if amount > 0:
             list_tax = []
             move_id = move_obj.browse(cr, uid, move_line_id, context=context).\
