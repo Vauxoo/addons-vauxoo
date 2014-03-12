@@ -100,6 +100,7 @@ class account_voucher(osv.Model):
         current_currency = self._get_current_currency(cr, uid, voucher_id, context)
         move_ids=[]
         for voucher in self.browse(cr, uid, [voucher_id], context=context):
+            context.update({'amount_voucher': voucher.amount or 0.0})
             for line in voucher.line_ids:
                 if line.tax_line_ids:
                     if line.amount > line.amount_original:
@@ -184,6 +185,11 @@ class account_voucher(osv.Model):
                     'date' : date,
                     'tax_voucher_id' : tax_id,
         }
+        
+        if context.get('amount_voucher') and context.get('amount_voucher') < 0:
+            debit_line_vals.update({'credit': debit_line_vals.get('debit', 0.0), 'debit': 0.0})
+            credit_line_vals.update({'debit': credit_line_vals.get('credit', 0.0), 'credit': 0.0})
+            
         if type in ('payment','purchase'):
             reference_amount < 0 and\
                 [credit_line_vals.pop('analytic_account_id'),
