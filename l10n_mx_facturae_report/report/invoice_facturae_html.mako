@@ -121,7 +121,7 @@
                         <b>${_('DATOS DEL EMPLEADO')}</b>
                     </td>
                     <td width="50%" style="text-align:center;">
-                        <b>${_('INFORMACIÓN LABORAL')}</b>
+                        <b>${_('INFORMACI&Oacute;N LABORAL')}</b>
                     </td>
                 </tr>
                 <tr>
@@ -135,7 +135,7 @@
                                     ${_('CURP')}</br>
                                     ${_('Riesgo de puesto')}</br>
                                     ${_('Departamento')}</br>
-                                    ${_('Núm. seguridad social')}</br></b>
+                                    ${_('N&uacute;m. seguridad social')}</br></b>
                                 </td>
                                 <td class="cliente" width="25%">
                                     ${ dict_data['Complemento']['Nomina']['@NumEmpleado'] or ''|entity }</br>
@@ -154,7 +154,7 @@
                             <tr>
                                 <td class="cliente" width="25%"><b>
                                     ${_('Contrato')}</br>
-                                    ${_('Días Pagados')}</br>
+                                    ${_('D&iacute;as Pagados')}</br>
                                     ${_('Rel. Laboral')}</br>
                                     ${_('Salario diario')}</br>                                    
                                     ${_('Jornada')}</br>
@@ -197,7 +197,7 @@
                         </tr>
                         <tr>
                             <td class="cliente"><b>${_('CLABE')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@CLABE'] or ''|entity }</td>
-                            <td class="cliente"><b>${_('Método de pago')}</b></td><td class="cliente">${ dict_data['@metodoDePago'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('M&eacute;todo de pago')}</b></td><td class="cliente">${ dict_data['@metodoDePago'] or ''|entity }</td>
                             <td class="cliente"><b>${_('Banco')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@Banco'] or ''|entity } </td>
                         </tr>
                     </table>
@@ -441,7 +441,7 @@
             </tr>            
         </table>
         <br clear="all"/>
-        <font class="font">“Este documento es una representación impresa de un CFDI”
+        <font class="font">“Este documento es una representaci&oacute;n impresa de un CFDI”
         <br/>CFDI, Comprobante Fiscal Digital por Internet</font>
         <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
                 <tr>
