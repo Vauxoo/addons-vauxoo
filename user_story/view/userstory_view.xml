@@ -84,11 +84,17 @@
                   <field name="scenario" colspan="4" nolabel="1"/>
                   <separator string="Accepted" colspan="4"/>
                   <field name="accepted" colspan="4" nolabel="1"/>
+                  <separator string="Development" colspan="4"/>
+                  <field name="development" colspan="4" nolabel="1"/>
+                  <separator string="Difficulty" colspan="4"/>
+                  <field name="difficulty" colspan="4" nolabel="1"/>
                 </form>
                 <tree string="Acceptability Criteria">
                   <field name="name"/>
                   <field name="scenario"/>
                   <field name="accepted"/>
+                  <field name="development"/>
+                  <field name="difficulty"/>
                 </tree>
               </field>
             </page>
