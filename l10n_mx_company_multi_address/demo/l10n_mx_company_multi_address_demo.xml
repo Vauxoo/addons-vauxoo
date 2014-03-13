@@ -19,11 +19,11 @@
             <field name="country_id" ref="base.mx"/>
             <field name="email">tu_email@tu_dominio.com</field>
             <field name="phone">tu-telefono</field>
-            <field name="vat">MXAAA010101AAA</field> <!--TODO: Should be use parent_id.vat in py-->
+            <field name="vat">MXVEBD700616Q44</field> <!--TODO: Should be use parent_id.vat in py-->
         </record>
         
         <record id="base.main_partner" model="res.partner">
-            <field name="vat">MXAAA010101AAA</field>
+            <field name="vat">MXVEBD700616Q44</field>
         </record>
         
         <record id="base.main_company" model="res.company">
