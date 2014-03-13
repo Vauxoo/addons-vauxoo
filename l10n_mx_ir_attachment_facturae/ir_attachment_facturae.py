@@ -179,6 +179,8 @@ class ir_attachment_facturae_mx(osv.Model):
                                                   help='If the invoice is cancel, this field saved the date when is cancel'),
         'pac_id': fields.many2one('params.pac', 'Pac', help='Pac used in singned of the invoice'),
         'document_source': fields.char('Document Source', size=128, help='Number or reference of document source'),
+        'date_print_report': fields.datetime('Date print', help='Saved the date of last print'),
+        'date_send_mail': fields.datetime('Date send mail', help='Saved the date of last send mail'),
     }
 
     _defaults = {
@@ -357,8 +359,8 @@ class ir_attachment_facturae_mx(osv.Model):
                 'file_pdf': aids or False,
                 'msj': msj,
                 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                'file_pdf_index': index_pdf}, context=context)
-            wf_service.trg_validate(uid, self._name, ids[0], 'action_printable', cr)
+                'file_pdf_index': index_pdf,
+                'date_print_report': time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
         else:
             raise osv.except_osv(_('Warning'), _('Not Attached PDF\n'))
         return status
@@ -443,16 +445,16 @@ class ir_attachment_facturae_mx(osv.Model):
                                 partner_mail, server_name)
                                 self.write(cr, uid, ids, {
                                         'msj': msj,
-                                        'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
-                                wf_service.trg_validate(
-                                        uid, self._name, ids[0], 'action_send_customer', cr)
+                                        'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                                        'date_send_mail': time.strftime('%Y-%m-%d %H:%M:%S')})
                                 status = True
                             else:
                                 msj = _('Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s') % (
                                 partner_mail, server_name)
                                 self.write(cr, uid, ids, {
                                         'msj': msj,
-                                        'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
+                                        'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                                        'date_send_mail': time.strftime('%Y-%m-%d %H:%M:%S')})
                                 wf_service.trg_validate(
                                         uid, self._name, ids[0], 'action_send_customer', cr)
                                 status = True
