@@ -119,8 +119,7 @@ class ir_attachment_facturae_mx(osv.Model):
                                       help='Company to which it belongs this attachment'),
         'file_input': fields.many2one('ir.attachment', 'File input',
                                       readonly=True, help='File input'),
-        'file_input_index': fields.text('File input',
-                                        help='File input index'),
+        #~'file_input_index': fields.text('File input', help='File input index'),
         'file_xml_sign': fields.many2one('ir.attachment', 'File XML Sign',
                                          readonly=True, help='File XML signed'),
         'file_xml_sign_index': fields.text('File XML Sign Index',
@@ -229,31 +228,23 @@ class ir_attachment_facturae_mx(osv.Model):
         if context is None:
             context = {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
-        attachment_obj = self.pool.get('ir.attachment')
         wf_service = netsvc.LocalService("workflow")
         msj = ''
         for attach in self.browse(cr, uid, ids, context=context):
-            id_source = attach.id_source
-            model_source = attach.model_source
-            type = attach.type
-            fname = str(attach.id) + '_XML_V3_2.xml' or ''
-            attachment_id = attachment_obj.create(cr, uid, {
-                'name': fname,
-                'datas': attach.file_input_index,
-                'datas_fname': fname,
-                'res_model': model_source or False,
-                'res_id': id_source or False,
-            }, context=context)
-            if attachment_id:
+            #~id_source = attach.id_source
+            #~model_source = attach.model_source
+            #~type = attach.type
+            #~fname = str(attach.id) + '_XML_V3_2.xml' or ''
+            if attach.file_input:
                 msj = _("Attached Successfully XML CFD 3.2.")
-            xml_data = base64.decodestring(attach.file_input_index)
-            doc_xml = xml.dom.minidom.parseString(xml_data)
-            index_xml = doc_xml.toprettyxml()
-            self.write(cr, uid, ids,
-                       {'file_input': attachment_id or False,
+            #~xml_data = base64.decodestring(attach.file_input_index)
+            #~doc_xml = xml.dom.minidom.parseString(xml_data)
+            #~index_xml = doc_xml.toprettyxml()
+            self.write(cr, uid, ids,{
                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                            'msj': msj,
-                           'file_input_index': index_xml or ''}, context=context)
+                           #~'file_input_index': index_xml or ''
+                        }, context=context)
             wf_service.trg_validate(uid, self._name, ids[0], 'action_confirm', cr)
             return True
 
