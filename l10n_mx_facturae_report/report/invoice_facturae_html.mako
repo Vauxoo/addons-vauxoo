@@ -121,7 +121,7 @@
                         <b>${_('DATOS DEL EMPLEADO')}</b>
                     </td>
                     <td width="50%" style="text-align:center;">
-                        <b>${_('INFORMACIÓN LABORAL')}</b>
+                        <b>${_('INFORMACI&Oacute;N LABORAL')}</b>
                     </td>
                 </tr>
                 <tr>
@@ -135,7 +135,7 @@
                                     ${_('CURP')}</br>
                                     ${_('Riesgo de puesto')}</br>
                                     ${_('Departamento')}</br>
-                                    ${_('Núm. seguridad social')}</br></b>
+                                    ${_('N&uacute;m. seguridad social')}</br></b>
                                 </td>
                                 <td class="cliente" width="25%">
                                     ${ dict_data['Complemento']['Nomina']['@NumEmpleado'] or ''|entity }</br>
@@ -154,7 +154,7 @@
                             <tr>
                                 <td class="cliente" width="25%"><b>
                                     ${_('Contrato')}</br>
-                                    ${_('Días Pagados')}</br>
+                                    ${_('D&iacute;as Pagados')}</br>
                                     ${_('Rel. Laboral')}</br>
                                     ${_('Salario diario')}</br>                                    
                                     ${_('Jornada')}</br>
@@ -197,7 +197,7 @@
                         </tr>
                         <tr>
                             <td class="cliente"><b>${_('CLABE')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@CLABE'] or ''|entity }</td>
-                            <td class="cliente"><b>${_('Método de pago')}</b></td><td class="cliente">${ dict_data['@metodoDePago'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('M&eacute;todo de pago')}</b></td><td class="cliente">${ dict_data['@metodoDePago'] or ''|entity }</td>
                             <td class="cliente"><b>${_('Banco')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@Banco'] or ''|entity } </td>
                         </tr>
                     </table>
@@ -368,23 +368,54 @@
                 <td class="total_td">${_("Sub Total:")}</td>
                 <td align="right" class="total_td">$ ${ dict_data['@subTotal'] or ''|entity}</td>
             </tr>
+            <% desc_amount = float(dict_data['@descuento']) %>
+            %if desc_amount > 0:
+            <tr>
+                <td class="total_td">${_("Descuento:")}</td>
+                <td align="right" class="total_td">$ ${ dict_data['@descuento'] or ''|entity}</td>
+            </tr>
+            %endif
             %if not isinstance(dict_data['Impuestos']['Traslados']['Traslado'], list):
                 <% dict_imp =  [dict_data['Impuestos']['Traslados']['Traslado']]%>
             %else:
                 <% dict_imp =  dict_data['Impuestos']['Traslados']['Traslado']%>
             %endif
             %for imp in range(0,len(dict_imp)):
-            <tr>
-                <td class="tax_td">
-                    <% imp_name = dict_imp[imp]['@impuesto'] %>
-                    <% tasa = dict_imp[imp]['@tasa'] %>
-                    <% text = imp_name+' ('+tasa+') %' %>${ text or '0.0'}
-                </td>
-                <td class="tax_td" align="right">
-                    <% importe = dict_imp[imp]['@importe'] %>${importe or ''|entity}
-                </td>
-            </tr>
-            %endfor       
+                <% imp_amount = float(dict_imp[imp]['@importe']) %>
+                %if imp_amount > 0:
+                    <tr>
+                        <td class="tax_td">
+                            <% imp_name = dict_imp[imp]['@impuesto'] %>
+                            <% tasa = dict_imp[imp]['@tasa'] %>
+                            <% text = imp_name+' ('+tasa+') %' %>${ text or '0.0'}
+                        </td>
+                        <td class="tax_td" align="right">
+                            $ ${imp_amount or '0.0'|entity}
+                        </td>
+                    </tr>
+                %endif
+            %endfor
+            %if dict_data['Impuestos'].has_key('Retenciones'):
+                %if not isinstance(dict_data['Impuestos']['Retenciones']['Retencion'], list):
+                    <% dict_ret =  [dict_data['Impuestos']['Retenciones']['Retencion']]%>
+                %else:
+                    <% dict_ret =  dict_data['Impuestos']['Retenciones']['Retencion']%>
+                %endif
+                %for ret in range(0,len(dict_ret)):
+                    <% ret_amount = float(dict_ret[ret]['@importe']) %>
+                    %if ret_amount > 0:
+                        <tr>
+                            <td class="tax_td">
+                                <% ret_name = dict_ret[ret]['@impuesto'] %>
+                                ${_("Ret. ")} ${ ret_name or '' | entity }
+                            </td>
+                            <td class="tax_td" align="right">
+                                $ ${ ret_amount or '' | entity }
+                            </td>
+                        </tr>
+                    %endif
+                %endfor
+            %endif
             <tr align="left">
                 <td class="total_td"><b>${_("Total:")}</b></td>
                 <td class="total_td" align="right"><b>$ ${ dict_data['@total'] or ''|entity}</b></td>
@@ -410,7 +441,7 @@
             </tr>            
         </table>
         <br clear="all"/>
-        <font class="font">“Este documento es una representación impresa de un CFDI”
+        <font class="font">“Este documento es una representaci&oacute;n impresa de un CFDI”
         <br/>CFDI, Comprobante Fiscal Digital por Internet</font>
         <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
                 <tr>

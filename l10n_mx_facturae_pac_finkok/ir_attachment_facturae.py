@@ -112,7 +112,7 @@ class ir_attachment_facturae_mx(osv.Model):
         for ir_attachment_facturae_mx_id in self.browse(cr, uid, ids, context=context):
             status = False
             pac_params_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'pac_cancelar'),
+                ('method_type', '=', 'pac_fk_cancelar'),
                 #~ ('company_id', '=', invoice.company_emitter_id.id),
                 ('company_id', '=', ir_attachment_facturae_mx_id.company_id.id),
                 ('active', '=', True),
@@ -202,7 +202,7 @@ class ir_attachment_facturae_mx(osv.Model):
             cfdi_xml = False
             status = False
             pac_params_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'pac_firmar'), (
+                ('method_type', '=', 'pac_fk_firmar'), (
                     'company_id', '=', ir_attachment_facturae_mx_id.company_id.id), (
                         'active', '=', True)], limit=1, context=context)
             if pac_params_ids:
@@ -212,6 +212,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 password = pac_params.password
                 wsdl_url = pac_params.url_webservice
                 namespace = pac_params.namespace
+                certificate_link = pac_params.certificate_link
                 #agregar otro campo para la URL de testing y poder validar sin cablear
                 url_finkok = 'http://facturacion.finkok.com/servicios/soap/stamp.wsdl'
                 testing_url_finkok = 'http://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl'
@@ -256,6 +257,7 @@ class ir_attachment_facturae_mx(osv.Model):
                             'pac_id': pac_params.id,
                             #~'cfdi_cbb': open(cbb).read().encode('base64'),# ya lo regresa en base64, ya se crea qr desde funcion
                             'cfdi_cadena_original': original_string or False,
+                            'certificate_link': certificate_link or False,
                         }
                         cfdi_xml = resultado.xml.encode('ascii', 'xmlcharrefreplace') or ''
                         comprobante_new = '</'+comprobante+'>'
