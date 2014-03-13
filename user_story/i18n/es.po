@@ -8,19 +8,19 @@ msgstr ""
 "Project-Id-Version: addons-vauxoo\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-03-06 14:23+0000\n"
-"PO-Revision-Date: 2014-03-07 14:49+0000\n"
+"PO-Revision-Date: 2014-03-12 23:31+0000\n"
 "Last-Translator: Katherine Zaoral (Vauxoo) <katherine.zaoral@vauxoo.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-03-08 06:55+0000\n"
-"X-Generator: Launchpad (build 16948)\n"
+"X-Launchpad-Export-Date: 2014-03-13 07:17+0000\n"
+"X-Generator: Launchpad (build 16963)\n"
 
 #. module: user_story
 #: view:user.story:0
 msgid "4.- Aceptability Criteria"
-msgstr "4.- Criterio de Aceptabilidad"
+msgstr "4.- Criterio de Aceptación"
 
 #. module: user_story
 #: field:acceptability.criteria,name:0
@@ -94,7 +94,7 @@ msgstr "Nivel de Prioridad"
 #: view:user.story:0
 #: field:user.story,accep_crit_ids:0
 msgid "Acceptability Criteria"
-msgstr "Criterios de Aceptabilidad"
+msgstr "Criterios de Aceptación"
 
 #. module: user_story
 #: view:user.story:0
@@ -579,9 +579,8 @@ msgstr ""
 "identificando resultados de negocio, y de ahí profundiza hasta el conjunto "
 "de características que alcanzará dichos resultados. Cada característica es "
 "capturada como una “historia”, que definirá el alcance de la característica "
-"junto con su criterio de aceptabilidad. Este artículo introduce la manera en "
-"que BDD define e identifica historias y sus criterios de "
-"aceptabilidad.</p><p>\n"
+"junto con su criterio de aceptación. Este artículo introduce la manera en "
+"que BDD define e identifica historias y sus criterios de aceptación.</p><p>\n"
 "<a href=\"http://dannorth.net/whats-in-a-story/\" target=\"_NEW\">Más "
 "información aquí</a>\n"
 "</p>\n"
@@ -628,7 +627,7 @@ msgstr "Etapa cambiada"
 #. module: user_story
 #: view:acceptability.criteria:0
 msgid "Acceptability Criterion summary..."
-msgstr "Título del Criterio de Aceptabilidad"
+msgstr "Título del Criterio de Aceptación"
 
 #. module: user_story
 #: help:project.task,userstory_id:0
@@ -682,7 +681,7 @@ msgstr "Tarea bloqueada"
 #. module: user_story
 #: view:acceptability.criteria:0
 msgid "Acceptability Criterion"
-msgstr "Criterio de Aceptabilidad"
+msgstr "Criterio de Aceptación"
 
 #. module: user_story
 #: model:mail.message.subtype,description:user_story.mt_task_closed
