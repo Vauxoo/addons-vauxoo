@@ -298,6 +298,7 @@ class hr_payslip(osv.Model):
         ir_attach_obj = self.pool.get('ir.attachment.facturae.mx')
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
+        attachment_obj = self.pool.get('ir.attachment')
         attach_ids = []
         file_globals = self._get_file_globals(cr, uid, ids, context=context)
         fname_cer_no_pem = file_globals['fname_cer']
@@ -317,6 +318,14 @@ class hr_payslip(osv.Model):
                             payroll.journal_id.sequence_id.approval_ids[0] and \
                                         payroll.journal_id.sequence_id.approval_ids[0].type
                     xml_fname, xml_data = self._get_facturae_payroll_xml_data(cr, uid, ids, context=context)
+                    fname = str(payroll.id) + '_XML_V3_2.xml' or ''
+                    attachment_id = attachment_obj.create(cr, uid, {
+                                        'name': fname,
+                                        'datas': base64.encodestring(xml_data),
+                                        'datas_fname': fname,
+                                        'res_model': self._name,
+                                        'res_id': payroll.id
+                                }, context=context)
                     attach_ids.append( ir_attach_obj.create(cr, uid, {
                         'name': payroll.number or '/',
                         'type': type,
@@ -332,8 +341,9 @@ class hr_payslip(osv.Model):
                         'user_pac': '',
                         'password_pac': '',
                         'url_webservice_pac': '',
-                        'file_input_index': base64.encodestring(xml_data),
+                        #~'file_input_index': base64.encodestring(xml_data),
                         'document_source': payroll.number,
+                        'file_input': attachment_id,
                             },
                           context=context)
                         )
