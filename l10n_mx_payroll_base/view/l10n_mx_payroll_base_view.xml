@@ -21,7 +21,6 @@
                     <field name="payslip_datetime"/>
                     <field name="currency_id" groups="base.group_multi_currency" widget="selection"/>
                     <field name="approval_id" invisible="True" widget="selection"/>
-                    <field name="partner_id"/>
                 </xpath>
                 <xpath expr="//field[@name='name']" position="after">
                     <field name="pay_method_id"/>
