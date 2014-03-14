@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <openerp>
-    <data noupdate="0">
+    <data noupdate="1">
         <record id="clabe_bank_employee_a_negrin" model="res.partner.bank">
             <field name='state'>bank</field>
             <field name='acc_number' eval="12345678912345678"/>
