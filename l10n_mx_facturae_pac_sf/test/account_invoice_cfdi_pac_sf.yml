@@ -93,7 +93,7 @@
         #print "cfdi_pac_sf_msj",tools.ustr( cfdi_pac_sf.msj )
         state = cfdi_pac_sf.state
 -
-  I check that the state in l10n_mx attachment facturae cfdi_pac_sf is Printable
+  I check that the state in l10n_mx attachment facturae cfdi_pac_sf is Signed
 -
   !python {model: ir.attachment.facturae.mx}: |
     import netsvc, tools, os, base64
@@ -101,19 +101,23 @@
     cfdi_pac_sf_id = cfdi_pac_sf_ids and cfdi_pac_sf_ids[0] or False
     state = None
     state = 'no attach file'
+    date_print_report = False
     if cfdi_pac_sf_id:
         cfdi_pac_sf = self.browse(cr, uid, [cfdi_pac_sf_id], context=context)[0]
         ir_attach_facturae_mx = cfdi_pac_sf.file_pdf and cfdi_pac_sf.file_pdf or False
         fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
         if fdata:
+            print 'state', state
             state = cfdi_pac_sf.state
+            date_print_report = cfdi_pac_sf.date_print_report
             if tools.config['test_report_directory']:
                 open(os.path.join(tools.config['test_report_directory'], 'l10n_mx_facturae_pac_sf' + '_' + \
                   'account_invoice_cfdi_pac_sf0' + '_' + 'printable' + '-' + ir_attach_facturae_mx.datas_fname),\
                   'wb+').write( base64.decodestring( fdata ) )
         else:
             state = 'no data in attach file'
-    assert state=='printable', 'No printable state l10n_mx attachment facturae cfdi_pac_sf'
+    assert state=='signed', 'No signed state l10n_mx attachment facturae cfdi_pac_sf'
+    assert date_print_report!=False, 'No date print report in l10n_mx attachment facturae cfdi_pac_sf'
 -
   I added update_posted in journal
 -
