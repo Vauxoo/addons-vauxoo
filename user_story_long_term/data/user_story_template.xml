@@ -32,5 +32,27 @@
             ]]></field>
         </record>
 
+        <record id="template_send_email_hu_progress" model="email.template">
+            <field name="name">User Story in Progress</field>
+            <field name="email_from"></field>
+            <field name="model_id" ref="user_story.model_user_story" />
+            <field name="subject"></field>
+            <field name="auto_delete" eval="True"/>
+            <field name="mail_server_id">1</field>
+            <field name="email_to"></field>
+            <field name="sequence">5</field>
+            <field name="body_html"><![CDATA[
+            <html>
+                <head>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+                <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+                   The NAME_HU User Story is in Progress.
+                </body>
+            </html>
+
+            ]]></field>
+        </record>
+
     </data>
 </openerp>

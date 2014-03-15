@@ -231,8 +231,37 @@ class user_story(osv.Model):
     _inherit = "user.story"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
 
-    def body_criteria(self, cr, uid, ids, template, criteria, context=None):
+    def body_progress(self, cr, uid, ids, template, hu, context=None):
+        imd_obj = self.pool.get('ir.model.data')
+        template_ids = imd_obj.search(
+            cr, uid, [('model', '=', 'email.template'), ('name', '=', template)])
+        if template_ids:
+            res_id = imd_obj.read(
+                cr, uid, template_ids, ['res_id'])[0]['res_id']
+            body_html = self.pool.get('email.template').read(
+                cr, uid, res_id, ['body_html']).get('body_html')
 
+            user_id = self.pool.get('res.users').browse(cr,uid,[uid],context=context)[0]
+            hu = self.browse(cr, uid, ids[0], context=context)
+
+            #body_html = body_html.replace('NAME_HU',str(hu.id))
+            return body_html
+        else:
+            return False
+        
+
+    def do_progress(self, cr, uid, ids, context=None):
+
+        body = self.body_criteria(cr, uid, ids, 'template_send_email_hu_progress', 'hu', context)
+        hu = self.browse(cr, uid, ids[0], context=context)
+        import pdb
+        #pdb.set_trace()
+        subject = 'The User Story ' + str(hu.name) + ' is now in Progress'
+        self.send_mail_hu(cr, uid, ids, subject, body, hu.id, context=context)
+
+        return super(user_story, self).do_progress(cr, uid, ids, context=context)
+
+    def body_criteria(self, cr, uid, ids, template, criteria, context=None):
         imd_obj = self.pool.get('ir.model.data')
         template_ids = imd_obj.search(
             cr, uid, [('model', '=', 'email.template'), ('name', '=', template)])
@@ -250,6 +279,7 @@ class user_story(osv.Model):
             body_html = body_html.replace('NAME_HU',str(hu.id))
             
             return body_html
+
         else:
             return False
             
