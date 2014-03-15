@@ -40,6 +40,19 @@
     "description": """
 Mexican Payroll
 ===============
+
+This module installs the necessary work to CFDI MX Payroll. 
+For example, data banks, catalogs required for SAT to generate payroll, 
+fields needed in view of employees and contracts.
+
+
+ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfdi/catalogoscomplementonomina.pdf
+
+
+ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfd/nomina11.pdf
+
+
+ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfdi/guianomina.pdf
     """,
     "website": "http://vauxoo.com",
     "category": "Addons Vauxoo",
