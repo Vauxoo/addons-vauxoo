@@ -254,7 +254,6 @@ class aging_parser(report_sxw.rml_parse):
                     res['120+'] += inv['residual']
 
             result.append(res)
-        print 'THIS IS THE RESULT ', result
         return result
 
 report_sxw.report_sxw(
