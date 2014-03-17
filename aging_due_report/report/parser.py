@@ -219,6 +219,17 @@ class aging_parser(report_sxw.rml_parse):
                 '120+'      : 0.00,
             }]
         '''
+
+        res_total = {
+            'not_due'   : 0.00, 
+            '1to30'     : 0.00, 
+            '31to60'    : 0.00, 
+            '61to90'    : 0.00, 
+            '91to120'   : 0.00, 
+            '120+'      : 0.00,
+            'total'      : 0.00,
+        }
+
         result = []
         for ixp in ixp_gen:
             res = {
@@ -235,25 +246,34 @@ class aging_parser(report_sxw.rml_parse):
 
             for inv in ixp['inv_ids']:
                 res['total'] += inv['residual']
+                res_total['total'] += inv['residual']
+                
                 if inv['due_days'] <= 0:
                     res['not_due'] += inv['residual']
+                    res_total['not_due'] += inv['residual']
 
                 elif inv['due_days'] > 0 and inv['due_days'] <= 30:
                     res['1to30'] += inv['residual']
+                    res_total['1to30'] += inv['residual']
 
                 elif inv['due_days'] > 30 and inv['due_days'] <= 60:
                     res['31to60'] += inv['residual']
+                    res_total['31to60'] += inv['residual']
 
                 elif inv['due_days'] > 60 and inv['due_days'] <= 90:
                     res['61to90'] += inv['residual']
+                    res_total['61to90'] += inv['residual']
 
                 elif inv['due_days'] > 90 and inv['due_days'] <= 120:
                     res['91to120'] += inv['residual']
-
+                    res_total['91to120'] += inv['residual']
                 else:
                     res['120+'] += inv['residual']
-
+                    res_total['120+'] += inv['residual']
+            
             result.append(res)
+        result.append(res_total)
+        
         return result
 
 report_sxw.report_sxw(
