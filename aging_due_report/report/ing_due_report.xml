@@ -7,5 +7,7 @@
             
         <report id="aging_due_report" model="res.partner" name="aging_due_report" rml="addons/aging_due_report/report/aging_due_report.rml" string="Customer Aging Report of Debts" auto="False" header="False" menu="True"/>
 
+        <report id="provision_due_report" model="res.partner" name="provision_due_report" rml="addons/aging_due_report/report/provision_due_report.rml" string="Customer Provision Report of Debts" auto="False" header="False" menu="True"/>
+
     </data>
 </openerp>
