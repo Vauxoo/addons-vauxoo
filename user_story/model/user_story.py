@@ -198,9 +198,10 @@ class acceptability_criteria(osv.Model):
         context = context or {}
         res = {}.fromkeys(ids)
         for ac_brw in self.browse(cr, uid, ids, context=context):
-            res[ac_brw.id] = \
-                getattr(ac_brw.accep_crit_id, fieldname, False) and \
-                getattr(ac_brw.accep_crit_id, fieldname).id or False
+            copy_field = getattr(ac_brw.accep_crit_id, fieldname, False)
+            copy_field = copy_field and (isinstance(copy_field, (list)) and [
+                elem.id for elem in copy_field ] or copy_field.id) or False
+            res[ac_brw.id] = copy_field
         return res
 
     _columns = {
