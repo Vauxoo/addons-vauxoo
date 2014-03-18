@@ -31,7 +31,12 @@
     "author": "Vauxoo",
     "category": "Generic Modules",
     "description" : """
-    Add model and data of Risk Rank of payrolls requested by the SAT based upon the payrolls
+Risk Rank of Payrolls
+=====================
+
+    Add model and data of Risk Rank of employee requested by the SAT based upon the payrolls
+    
+    ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfdi/catalogoscomplementonomina.pdf
     """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
