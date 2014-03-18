@@ -86,16 +86,16 @@
                 <td><para style="ITEMSTITLELEFT">RIF</para></td>
                 <td><para style="ITEMSTITLELEFT">EMPRESA</para></td>
                 <td><para style="ITEMSTITLERIGHT">NO VENCIDO</para></td>
-                <td><para style="ITEMSTITLERIGHT">01-30 DIAS</para></td>
-                <td><para style="ITEMSTITLERIGHT">31-60 DIAS</para></td>
-                <td><para style="ITEMSTITLERIGHT">61-90 DIAS</para></td>
-                <td><para style="ITEMSTITLERIGHT">91-120 DIAS</para></td>
-                <td><para style="ITEMSTITLERIGHT">+ 120 DIAS</para></td>
+                <td><para style="ITEMSTITLERIGHT">01-90 DIAS</para></td>
+                <td><para style="ITEMSTITLERIGHT">91-180 DIAS</para></td>
+                <td><para style="ITEMSTITLERIGHT">181-270 DIAS</para></td>
+                <td><para style="ITEMSTITLERIGHT">271-360 DIAS</para></td>
+                <td><para style="ITEMSTITLERIGHT">+ 360 DIAS</para></td>
                 <td><para style="ITEMSTITLERIGHT">TOT./COBRAR</para></td>
             </tr>
             <tr>
-                <td><para style="ITEMSLEFT">[[repeatIn(get_aged_lines(objects),'o')]][[o.get('type')=='partner' and o.get('rp_brw').vat and '%s-%s-%s'%(o.get('rp_brw').vat[2],o.get('rp_brw').vat[3:-1],o.get('rp_brw').vat[-1])]]</para></td>
-                <td><para style="ITEMSLEFT">[[ o.get('type')=='partner' and o.get('rp_brw').name or o.get('type')=='total' and 'TOTAL' or o.get('type')=='provision' and removeParentNode('tr') ]]</para></td>
+                <td><para style="ITEMSLEFT">[[repeatIn(get_aged_lines(objects,span=90),'o')]][[o.get('type')=='partner' and o.get('rp_brw').vat and '%s-%s-%s'%(o.get('rp_brw').vat[2],o.get('rp_brw').vat[3:-1],o.get('rp_brw').vat[-1])]]</para></td>
+                <td><para style="ITEMSLEFT">[[ o.get('type')=='partner' and o.get('rp_brw').name or o.get('type')=='total' and 'TOTAL' or o.get('type')=='provision' and 'PROVISION' ]]</para></td>
                 <td><para style="ITEMSRIGHT">[[  formatLang(o.get('not_due'), digits=2, grouping=True) ]]</para></td>
                 <td><para style="ITEMSRIGHT">[[  formatLang(o.get('1to30'), digits=2, grouping=True) ]]</para></td>
                 <td><para style="ITEMSRIGHT">[[  formatLang(o.get('31to60'), digits=2, grouping=True) ]]</para></td>
