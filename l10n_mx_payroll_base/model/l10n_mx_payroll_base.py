@@ -183,6 +183,49 @@ class hr_payslip(osv.Model):
             res = journal.currency and journal.currency.id or journal.company_id.currency_id.id
         return res
 
+    def _deductions(self, cr, uid, ids, name, arg, context=None):
+        if context is None:
+            context = {}
+        res = {}
+        for id in ids:
+            res.setdefault(id, 0.0)
+        deduction = 0
+        payroll = self.browse(cr, uid, ids, context=context)[0]
+        for line in payroll.input_line_ids:
+            if line.salary_rule_id.type_concept == 'deduction':
+                deduction += line.amount + line.exempt_amount
+            res[id] =  deduction
+        return res
+
+    def _perceptions(self, cr, uid, ids, name, arg, context=None):
+        if context is None:
+            context = {}
+        res = {}
+        for id in ids:
+            res.setdefault(id, 0.0)
+        deduction = 0
+        payroll = self.browse(cr, uid, ids, context=context)[0]
+        for line in payroll.input_line_ids:
+            if line.salary_rule_id.type_concept == 'perception':
+                deduction += line.amount + line.exempt_amount
+            res[id] =  deduction
+        return res
+        
+    def _total(self, cr, uid, ids, name, arg, context=None):
+        if context is None:
+            context = {}
+        res = {}
+        perception = 0
+        deduction = 0
+        total = 0
+        for id in ids:
+            res.setdefault(id, 0.0)
+        perception = self._perceptions(cr, uid, ids, name, arg, context=context)
+        deduction =  self._deductions(cr, uid, ids, name, arg, context=context)
+        total = perception.values()[0] - deduction.values()[0]
+        res[id] =  total
+        return res
+
     _columns = {
         'journal_id': fields.many2one('account.journal', 'Journal', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'date_payslip': fields.date('Payslip Date'),
@@ -232,6 +275,9 @@ class hr_payslip(osv.Model):
         'date_payslip_tz': fields.function(_get_date_payslip_tz, method=True,
             type='datetime', string='Date Payroll', store=True,
             help='Date of payroll with Time Zone'),
+        'deduction_total' : fields.function(_deductions, type='float', string='Deductions Total', store=True),
+        'perception_total' : fields.function(_perceptions, type='float', string='Perception Total', store=True),
+        'total' : fields.function(_total, type='float', string='Total', store=True),
     }
 
     _defaults = {
@@ -298,6 +344,7 @@ class hr_payslip(osv.Model):
         ir_attach_obj = self.pool.get('ir.attachment.facturae.mx')
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
+        attachment_obj = self.pool.get('ir.attachment')
         attach_ids = []
         file_globals = self._get_file_globals(cr, uid, ids, context=context)
         fname_cer_no_pem = file_globals['fname_cer']
@@ -317,6 +364,14 @@ class hr_payslip(osv.Model):
                             payroll.journal_id.sequence_id.approval_ids[0] and \
                                         payroll.journal_id.sequence_id.approval_ids[0].type
                     xml_fname, xml_data = self._get_facturae_payroll_xml_data(cr, uid, ids, context=context)
+                    fname = str(payroll.id) + '_XML_V3_2.xml' or ''
+                    attachment_id = attachment_obj.create(cr, uid, {
+                                        'name': fname,
+                                        'datas': base64.encodestring(xml_data),
+                                        'datas_fname': fname,
+                                        'res_model': self._name,
+                                        'res_id': payroll.id
+                                }, context=context)
                     attach_ids.append( ir_attach_obj.create(cr, uid, {
                         'name': payroll.number or '/',
                         'type': type,
@@ -332,8 +387,9 @@ class hr_payslip(osv.Model):
                         'user_pac': '',
                         'password_pac': '',
                         'url_webservice_pac': '',
-                        'file_input_index': base64.encodestring(xml_data),
+                        #~'file_input_index': base64.encodestring(xml_data),
                         'document_source': payroll.number,
+                        'file_input': attachment_id,
                             },
                           context=context)
                         )

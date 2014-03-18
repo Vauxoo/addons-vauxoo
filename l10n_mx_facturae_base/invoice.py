@@ -163,6 +163,7 @@ class account_invoice(osv.Model):
         ir_attach_obj = self.pool.get('ir.attachment.facturae.mx')
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
+        attachment_obj = self.pool.get('ir.attachment')
         attach_ids = []
         inv_type_facturae = {
             'out_invoice': True,
@@ -180,6 +181,14 @@ class account_invoice(osv.Model):
                 if approval_id:
                     xml_fname, xml_data = self._get_facturae_invoice_xml_data(
                             cr, uid, ids, context=context)
+                    fname = str(invoice.id) + '_XML_V3_2.xml' or ''
+                    attachment_id = attachment_obj.create(cr, uid, {
+                                        'name': fname,
+                                        'datas': base64.encodestring(xml_data),
+                                        'datas_fname': fname,
+                                        'res_model': self._name,
+                                        'res_id': invoice.id
+                                }, context=context)
                     attach_ids = ir_attach_obj.create(cr, uid, {
                         'name': invoice.fname_invoice, 
                         'type': invoice.invoice_sequence_id.approval_id.type,
@@ -194,8 +203,9 @@ class account_invoice(osv.Model):
                         'user_pac': '',
                         'password_pac': '',
                         'url_webservice_pac': '',
-                        'file_input_index': base64.encodestring(xml_data),
+                        #~'file_input_index': base64.encodestring(xml_data),
                         'document_source': invoice.number,
+                        'file_input': attachment_id,
                         },
                       context=context)#Context, because use a variable type of our code but we dont need it.
                     ir_attach_obj.signal_confirm(cr, uid, [attach_ids], context=context)

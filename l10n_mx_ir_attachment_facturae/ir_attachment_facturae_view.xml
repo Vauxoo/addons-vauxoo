@@ -44,7 +44,9 @@
                             <field name="file_xml_sign"/>
                             <field name="file_pdf"/>
                             <field name="identifier"/>
+<!--
                             <field name="file_input_index"/>
+-->
                             <field name="file_xml_sign_index"/>
                             <field name="file_pdf_index"/>
                         </group>
