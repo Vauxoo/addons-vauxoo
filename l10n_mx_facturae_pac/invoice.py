@@ -71,8 +71,6 @@ class account_invoice(osv.Model):
                 domicilio_receptor = comprobante['Receptor']['Domicilio']
                 totalImpuestosTrasladados = comprobante[
                     'Impuestos']['totalImpuestosTrasladados']
-                totalImpuestosRetenidos = comprobante[
-                    'Impuestos']['totalImpuestosRetenidos']
                 dict_cfdi_comprobante = {}
                 dict_emisor = dict({'rfc': rfc, 'nombre': nombre,
                                     'cfdi:DomicilioFiscal': dom_Fiscal, 'cfdi:ExpedidoEn':
@@ -82,8 +80,11 @@ class account_invoice(osv.Model):
                 list_conceptos = []
                 dict_impuestos = dict({'totalImpuestosTrasladados':
                                        totalImpuestosTrasladados, 'cfdi:Traslados': []})
-                dict_impuestos2 = dict({'totalImpuestosRetenidos':
-                                       totalImpuestosRetenidos, 'cfdi:Retenciones': []})
+                totalret = comprobante.get('Impuestos',{}).get('totalImpuestosRetenidos', False)
+                if totalret:
+                    totalImpuestosRetenidos = comprobante['Impuestos']['totalImpuestosRetenidos']
+                    dict_impuestos2 = dict({'totalImpuestosRetenidos':
+                                           totalImpuestosRetenidos, 'cfdi:Retenciones': []})
                 for concepto in comprobante['Conceptos']:
                     list_conceptos.append(dict({'cfdi:Concepto':
                                                 concepto['Concepto']}))
