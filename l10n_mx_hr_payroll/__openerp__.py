@@ -24,7 +24,7 @@
 #
 #
 {
-    "name": "HR Payroll Mexican",
+    "name": "HR Employee Fields MX",
     "version": "1.0",
     "depends": [
         'hr',
@@ -35,8 +35,19 @@
     ],
     "author": "Vauxoo",
     "description": """
-HR Payroll Mexican
-===================
+HR Employee Fields MX
+=====================
+
+This module adds fields in view form employee that are needed 
+to perform the process of Payroll CFDI MX.
+
+.. image:: l10n_mx_hr_payroll/static/src/img/employee13.png
+
+
+.. image:: l10n_mx_hr_payroll/static/src/img/employee21.png
+
+
+.. image:: l10n_mx_hr_payroll/static/src/img/contract1.png
 
     """,
     "website": "http://vauxoo.com",
@@ -48,7 +59,8 @@ HR Payroll Mexican
              "view/hr_inability_view.xml",
              #~ "data/payroll_category_hext_inability.xml",
              "data/payroll_working_day.xml",
-             "data/payroll_inability_data.xml",],
+             "data/payroll_inability_data.xml",
+             'security/ir.model.access.csv',],
     "test": [],
     "active": False,
     "installable": True,

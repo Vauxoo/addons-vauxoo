@@ -73,16 +73,18 @@ class inherits_sale(osv.Model):
             context = {}
         res = super(inherits_sale,self).onchange_partner_id(cr, uid, ids,
                                                             part, context)
-        part = self.pool.get('res.partner').browse(cr, uid, part, context)
+        if part:
+            part = self.pool.get('res.partner').browse(cr, uid, part, context)
+            part = self.pool.get('res.partner')._find_accounting_partner(part)
 
-        payment_term = part.pay_method_id and part.pay_method_id.id or False
-        partner_bank_obj = self.pool.get('res.partner.bank')
-        bank_partner_id = partner_bank_obj.search(
-                                        cr, uid,
-                                        [('partner_id', '=', part.id)])
-        res.get('value',{}).update({                                                                     
-            'pay_method_id': payment_term,                                           
-            'acc_payment': bank_partner_id and bank_partner_id[0] or False,
-        })                                                                           
+            payment_term = part.pay_method_id and part.pay_method_id.id or False
+            partner_bank_obj = self.pool.get('res.partner.bank')
+            bank_partner_id = partner_bank_obj.search(
+                                            cr, uid,
+                                            [('partner_id', '=', part.id)])
+            res.get('value',{}).update({                                                                     
+                'pay_method_id': payment_term,                                           
+                'acc_payment': bank_partner_id and bank_partner_id[0] or False,
+            })                                                                           
 
         return res 

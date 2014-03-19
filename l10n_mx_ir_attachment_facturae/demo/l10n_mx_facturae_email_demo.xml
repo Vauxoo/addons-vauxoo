@@ -5,11 +5,11 @@
         <record model="email.template" id="email_template_template_facturae_mx">
             <field name="name">Plantilla Adjunto</field>
             <field name="email_from">${object.company_id.email or 'noreply@localhost'}</field>
-            <field name="email_recipients">${object.attachment_email}</field>
+            <field name="email_to">${object.attachment_email}</field>
             <field name="subject">Documento ${object.name}</field>
             <field name="mail_server_id" ref="email_template_account_facturae_mx"/>
             <field name="body_html">Documento: "${object.name}". Favor de validarla ante el SAT, para corroborar su correcta creación.</field>
-            <field name="model_id" ref="account.model_account_invoice"/>
+            <field name="model_id" ref="l10n_mx_ir_attachment_facturae.model_ir_attachment_facturae_mx"/>
             <field name="auto_delete" eval="True"/>
             <field name="company_id" ref="base.main_company"/>
             <field name="report_template" ref="l10n_mx_facturae_report.account_invoice_facturae_webkit"/>

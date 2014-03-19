@@ -48,7 +48,9 @@
                     <notebook>
                         <page string="General Information">
                             <group colspan="4">
+<!--
                                 <field name="file_input_index"/>
+-->
                                 <field name="file_xml_sign_index"/>
                                 <field name="file_pdf_index"/>
                             </group>

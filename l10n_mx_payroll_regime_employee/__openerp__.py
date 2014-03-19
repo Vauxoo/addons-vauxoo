@@ -31,7 +31,13 @@
     "author": "Vauxoo",
     "category": "Generic Modules",
     "description" : """
-    Add model and data regime payroll requested by the SAT based upon the payrolls
+Regime of payrolls
+==================
+    
+    Add model and data regime of employee requested by the SAT based upon the payrolls
+    
+    ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfdi/catalogoscomplementonomina.pdf
+
     """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
@@ -40,7 +46,8 @@
     "data": [
         "data/payroll_regime_data.xml",
         "view/payroll_regime_employee_view.xml",
-        "view/hr_employee_payroll_regime_view.xml"
+        "view/hr_employee_payroll_regime_view.xml",
+        'security/ir.model.access.csv',
     ],
     "installable": True,
     "active": False,

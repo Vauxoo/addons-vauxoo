@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+,,,,,,,
+,,,,,,,
+payroll_risk_rank_contract,payroll.risk.rank.contract,model_payroll_risk_rank_contract,,1,1,1,1

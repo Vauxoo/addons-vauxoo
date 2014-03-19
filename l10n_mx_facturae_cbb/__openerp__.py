@@ -59,6 +59,6 @@ http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/comp
         'ir_sequence_view_v6.xml',
     ],
     "test" : ["test/account_invoice_cbb.yml"],
-    "installable" : True,
+    "installable" : False,
     "active" : False,
 }

@@ -41,6 +41,8 @@ Data Payroll Concept
 
 Added data of deductions and perceptions for use of payroll. 
 This data was obtained of official documentation of SAT
+
+ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfdi/catalogoscomplementonomina.pdf
     """,
     "website": "http://vauxoo.com",
     "category": "Addons Vauxoo",

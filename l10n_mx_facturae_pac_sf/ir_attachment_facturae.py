@@ -158,13 +158,14 @@ class ir_attachment_facturae_mx(osv.Model):
         pac_params_obj = self.pool.get('params.pac')
         for attachment in self.browse(cr, uid, ids, context=context):
             comprobante = 'cfdi:Comprobante'
-            cfd_data = attachment.file_input_index
-            xml_res_str = xml.dom.minidom.parseString(cfd_data.encode('ascii', 'xmlcharrefreplace'))
+            cfd_data = base64.decodestring(fdata or attachment.file_input.index_content)
+            #~cfd_data = attachment.file_input_index
+            xml_res_str = xml.dom.minidom.parseString(cfd_data)
+            #~xml_res_str = xml.dom.minidom.parseString(cfd_data.encode('ascii', 'xmlcharrefreplace'))
             xml_res_addenda = self.add_addenta_xml(
                 cr, uid, xml_res_str, comprobante, context=context)
             xml_res_str_addenda = xml_res_addenda.toxml('UTF-8')
             xml_res_str_addenda = xml_res_str_addenda.replace(codecs.BOM_UTF8, '')
-            
             if tools.config['test_report_directory']:#TODO: Add if test-enabled:
                 ir_attach_facturae_mx_file_input = attachment.file_input and attachment.file_input or False
                 fname_suffix = ir_attach_facturae_mx_file_input and ir_attach_facturae_mx_file_input.datas_fname or ''
@@ -189,6 +190,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 password = pac_params.password
                 wsdl_url = pac_params.url_webservice
                 namespace = pac_params.namespace
+                certificate_link = pac_params.certificate_link
                 url = 'https://solucionfactible.com/ws/services/Timbrado'
                 testing_url = 'http://testing.solucionfactible.com/ws/services/Timbrado'
                 if (wsdl_url == url) or (wsdl_url == testing_url):
@@ -249,6 +251,7 @@ class ir_attachment_facturae_mx(osv.Model):
                             'resultados']['cfdiTimbrado'] or ''),  # este se necesita en uno que no es base64
                             'cfdi_folio_fiscal': resultado['resultados']['uuid'] or '',
                             'pac_id': pac_params.id,
+                            'certificate_link': certificate_link or False,
                         }
                         msg += mensaje + "." + resultados_mensaje + \
                             " Folio Fiscal: " + folio_fiscal + "."
