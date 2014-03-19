@@ -1,0 +1,122 @@
+-
+  To test the Mexican Electronic Payroll CFDI FINKOK
+-
+  1 Duplicate payroll of l10n_mx_payroll_base for l10n_mx_cfdi_test.hr_payslip_al_cfdi_finkok_0
+-
+  !python {model: hr.payslip}: |
+    ir_model_data = self.pool.get('ir.model.data')
+    data_ids = ir_model_data.search(cr, uid, [('model', '=', self._name), ('name', 'like', 'hr_payslip_al_cfdi_finkok_0')])
+    if not data_ids: 
+        duplicate_id = self.copy(cr, uid, ref('l10n_mx_payroll_base.hr_payslip_al_cfdi0'), context=context)
+        self.write(cr, uid, [duplicate_id], {'journal_id':ref("l10n_mx_facturae_pac_finkok.l10n_mx_cfdi_pac_finkok_journal_0")},context=context)
+        model_id = ir_model_data.create(cr, uid, {
+                        'name': 'hr_payslip_al_cfdi_finkok_0',
+                        'model': self._name,
+                        'res_id': duplicate_id,
+                        'module': 'l10n_mx_cfdi_test',
+                    })
+-
+  2 I check that Journal is cfdi_pac_finkok 
+-
+  !assert {model: hr.payslip, id: l10n_mx_cfdi_test.hr_payslip_al_cfdi_finkok_0}:
+    - journal_id.id == ref("l10n_mx_facturae_pac_finkok.l10n_mx_cfdi_pac_finkok_journal_0")
+-
+  3 I check that Initially payroll state is "Draft" 
+-
+  !assert {model: hr.payslip, id: l10n_mx_cfdi_test.hr_payslip_al_cfdi_finkok_0}:
+    - state == 'draft'
+-
+  4 I confirm l10n_mx attachment payroll cfdi_pac_finkok by clicking on confirm button 
+-
+  !python {model: hr.payslip}: |
+    import netsvc, tools, os, base64
+    wf_service = netsvc.LocalService("workflow")
+    self.hr_verify_sheet(cr, uid , [ref("l10n_mx_cfdi_test.hr_payslip_al_cfdi_finkok_0")] ,context=context)
+-
+  5 I sign l10n_mx attachment facturae cfdi_pac_finkok by clicking on sign button upload pac
+-
+  !python {model: ir.attachment.facturae.mx}: |
+    import netsvc, tools
+    wf_service = netsvc.LocalService("workflow")
+    cfdi_pac_finkok_ids = self.search(cr, uid, [('id_source', '=', ref("l10n_mx_cfdi_test.hr_payslip_al_cfdi_finkok_0") ), ('model_source', '=', 'hr.payslip'), ('state', '<>', 'cancel')], limit=1)
+    cfdi_pac_finkok_id = cfdi_pac_finkok_ids and cfdi_pac_finkok_ids[0] or False
+    if cfdi_pac_finkok_id:
+        cfdi_pac_finkok = self.browse(cr, uid, [cfdi_pac_finkok_id], context=context)[0]
+        self.signal_sign(cr, uid, cfdi_pac_finkok_ids, context=context)
+        state = cfdi_pac_finkok.state
+-
+  6 I check that the state in l10n_mx attachment facturae cfdi_pac_finkok is "Signed"
+-
+  !python {model: ir.attachment.facturae.mx}: |
+    import netsvc, tools, os, base64
+    cfdi_pac_finkok_ids = self.search(cr, uid, [('id_source', '=', ref("l10n_mx_cfdi_test.hr_payslip_al_cfdi_finkok_0") ), ('model_source', '=', 'hr.payslip'), ('state', '<>', 'cancel')], limit=1)
+    cfdi_pac_finkok_id = len(cfdi_pac_finkok_ids) and cfdi_pac_finkok_ids[0] or False
+    state = 'no attach file'
+    if cfdi_pac_finkok_id:
+        cfdi_pac_finkok = self.browse(cr, uid, [cfdi_pac_finkok_id], context=context)[0]
+        ir_attach_facturae_mx = cfdi_pac_finkok.file_xml_sign and cfdi_pac_finkok.file_xml_sign or False
+        fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
+        if fdata:
+            state = cfdi_pac_finkok.state
+            if tools.config['test_report_directory']:
+                open(os.path.join(tools.config['test_report_directory'], 'l10n_mx_facturae_pac_finkok' + '_' + \
+                  'l10n_mx_cfdi_test.hr_payslip_al_cfdi_finkok_0' + '_' + 'signed' + '-' + ir_attach_facturae_mx.datas_fname),\
+                  'wb+').write( base64.decodestring( fdata ) )
+        else:
+            state = 'no data in attach file'
+    assert state=='signed', 'No signed state l10n_mx attachment facturae cfdi_pac_finkok'
+-
+  7 I generate a printable l10n_mx attachment facturae cfdi_pac_finkok by clicking on printable button (ID l10n_mx_cfdi_test.hr_payslip_al_cfdi_finkok_0)
+-
+  !python {model: ir.attachment.facturae.mx}: |
+    import netsvc, tools
+    wf_service = netsvc.LocalService("workflow")
+    cfdi_pac_finkok_ids = self.search(cr, uid, [('id_source', '=', ref("l10n_mx_cfdi_test.hr_payslip_al_cfdi_finkok_0") ), ('model_source', '=', 'hr.payslip'), ('state', '<>', 'cancel')], limit=1)
+    cfdi_pac_finkok_id = cfdi_pac_finkok_ids and cfdi_pac_finkok_ids[0] or False
+    if cfdi_pac_finkok_id:
+        cfdi_pac_finkok = self.browse(cr, uid, [cfdi_pac_finkok_id])[0]
+        self.signal_printable(cr, uid , cfdi_pac_finkok_ids ,context=context)
+        state = cfdi_pac_finkok.state
+-
+  8 I check that the state in l10n_mx attachment facturae cfdi_pac_finkok is Printable (ID l10n_mx_cfdi_test.hr_payslip_al_cfdi_finkok_0)
+-
+  !python {model: ir.attachment.facturae.mx}: |
+    import netsvc, tools, os, base64
+    cfdi_pac_finkok_ids = self.search(cr, uid, [('id_source', '=', ref("l10n_mx_cfdi_test.hr_payslip_al_cfdi_finkok_0") ), ('model_source', '=', 'hr.payslip'), ('state', '<>', 'cancel')], limit=1)
+    cfdi_pac_finkok_id = cfdi_pac_finkok_ids and cfdi_pac_finkok_ids[0] or False
+    state = None
+    state = 'no attach file'
+    if cfdi_pac_finkok_id:
+        cfdi_pac_finkok = self.browse(cr, uid, [cfdi_pac_finkok_id], context=context)[0]
+        ir_attach_facturae_mx = cfdi_pac_finkok.file_pdf and cfdi_pac_finkok.file_pdf or False
+        fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
+        if fdata:
+            state = cfdi_pac_finkok.state
+            if tools.config['test_report_directory']:
+                open(os.path.join(tools.config['test_report_directory'], 'l10n_mx_facturae_pac_finkok' + '_' + \
+                  'l10n_mx_cfdi_test.hr_payslip_al_cfdi_finkok_0' + '_' + 'printable' + '-' + ir_attach_facturae_mx.datas_fname),\
+                  'wb+').write( base64.decodestring( fdata ) )
+        else:
+            state = 'no data in attach file'
+    assert state=='printable', 'No printable state l10n_mx attachment facturae cfdi_pac_finkok' 
+-
+  9 I generate a cancel l10n_mx attachment facturae cfdi_pac_finkok by clicking on cancel button (ID l10n_mx_cfdi_test.hr_payslip_al_cfdi_finkok_0)
+-
+  !python {model: ir.attachment.facturae.mx}: |
+    cfdi_pac_finkok_ids = self.search(cr, uid, [('id_source', '=', ref("l10n_mx_cfdi_test.hr_payslip_al_cfdi_finkok_0") ), ('model_source', '=', 'hr.payslip'), ('state', '<>', 'cancel')], limit=1)
+    cfdi_pac_finkok_id = cfdi_pac_finkok_ids and cfdi_pac_finkok_ids[0] or False
+    if cfdi_pac_finkok_id:
+        self.signal_cancel(cr, uid , cfdi_pac_finkok_ids ,context=context)
+        cfdi_pac_finkok = self.browse(cr, uid, [cfdi_pac_finkok_id])[0]
+        state = cfdi_pac_finkok.state
+    assert state=='cancel', 'No cancel state l10n_mx attachment facturae cfdi_pac_finkok'
+-
+  10 I check that customer payroll state is "cancel" (ID l10n_mx_cfdi_test.hr_payslip_al_cfdi_finkok_0)
+-
+  !assert {model:  hr.payslip, id: l10n_mx_cfdi_test.hr_payslip_al_cfdi_finkok_0}:
+    - state == 'cancel'
+#~ -
+  #~ 11 I check that customer payroll move_id is None (ID l10n_mx_cfdi_test.hr_payslip_al_cfdi_finkok_0)
+#~ -
+  #~ !assert {model:  hr.payslip, id: l10n_mx_cfdi_test.hr_payslip_al_cfdi_finkok_0}:
+    #~ - move_id.name == None #move_id no existe en modelo hr_payslip

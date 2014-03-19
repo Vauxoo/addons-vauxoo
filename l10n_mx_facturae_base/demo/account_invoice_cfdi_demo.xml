@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="1">
+    <data noupdate="0">
         <!-- Invoices -->
         <record id="ai_pac_facturae_0" model="account.invoice">
             <field name="payment_term" ref="account.account_payment_term"/>
@@ -9,8 +9,6 @@
             <field name="company_id" ref="base.main_company"/>
             <field name="partner_id" ref="l10n_mx_partner_address.res_partner_address_vauxoo_1"/>
             <field name="journal_id" ref="account.sales_journal"/>
-            <field name="date_invoice" eval="time.strftime('%Y-%m-%d')"/>
-            <field name="invoice_datetime" eval="time.strftime('%Y-%m-%d %H:%M:%S')"/>
             <field name="state">draft</field>
             <field name="type">out_invoice</field>
         </record>

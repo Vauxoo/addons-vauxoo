@@ -1,40 +1,41 @@
 -
   To test the Mexican Electronic Invoice CFDI PAC SF
 -
-  Duplicate invoice of l10n_mx_facturae_base for l10n_mx_cfdi_test.ai_pac_facturae_sf_0
+  1 Duplicate invoice of l10n_mx_facturae_base for l10n_mx_cfdi_test.ai_pac_facturae_sf_0
 -
   !python {model: account.invoice}: |
     ir_model_data = self.pool.get('ir.model.data')
     data_ids = ir_model_data.search(cr, uid, [('model', '=', self._name), ('name', 'like', 'ai_pac_facturae_sf_0')])
-    duplicate_id = self.copy(cr, uid, ref('l10n_mx_facturae_base.ai_pac_facturae_0'), context=context)
-    self.write(cr, uid, [duplicate_id], {'journal_id':ref("l10n_mx_facturae_pac_sf.l10n_mx_cfdi_pac_sf_journal_0")},context=context)
-    model_id = ir_model_data.create(cr, uid, {
-                    'name': 'ai_pac_facturae_sf_0',
-                    'model': self._name,
-                    'res_id': duplicate_id,
-                    'module': 'l10n_mx_cfdi_test',
-                })
+    if not data_ids:
+        duplicate_id = self.copy(cr, uid, ref('l10n_mx_facturae_base.ai_pac_facturae_0'), context=context)
+        self.write(cr, uid, [duplicate_id], {'journal_id':ref("l10n_mx_facturae_pac_sf.l10n_mx_cfdi_pac_sf_journal_0")},context=context)
+        model_id = ir_model_data.create(cr, uid, {
+                        'name': 'ai_pac_facturae_sf_0',
+                        'model': self._name,
+                        'res_id': duplicate_id,
+                        'module': 'l10n_mx_cfdi_test',
+                    })
 -
-  I check that Journal is cfdi_pac_sf
+  2 I check that Journal is cfdi_pac_sf
 -
   !assert {model: account.invoice, id: l10n_mx_cfdi_test.ai_pac_facturae_sf_0}:
     - journal_id.id == ref("l10n_mx_facturae_pac_sf.l10n_mx_cfdi_pac_sf_journal_0")
 -
-  I check that Initially customer invoice state is "Draft"
+  3 I check that Initially customer invoice state is "Draft"
 -
   !assert {model: account.invoice, id: l10n_mx_cfdi_test.ai_pac_facturae_sf_0}:
     - state == 'draft'
 -
-  I open invoice by clicking on Create button
+  4 I open invoice by clicking on Create button
 -
   !workflow {model: account.invoice, action: invoice_open, ref: l10n_mx_cfdi_test.ai_pac_facturae_sf_0}
 -
-  I check that the invoice state is "Open"
+  5 I check that the invoice state is "Open"
 -
   !assert {model: account.invoice, id: l10n_mx_cfdi_test.ai_pac_facturae_sf_0}:
     - state == 'open'
 -
-  I check that the state in l10n_mx attachment facturae cfdi_pac_sf is "Confirmed"
+  6 I check that the state in l10n_mx attachment facturae cfdi_pac_sf is "Confirmed"
 -
   !python {model: ir.attachment.facturae.mx}: |
     import netsvc, tools, os, base64
@@ -57,7 +58,7 @@
             state = 'no data in attach file'
     assert state=='confirmed', 'No confirmed state l10n_mx attachment facturae cfdi_pac_sf'
 -
-  I sign l10n_mx attachment facturae cfdi_pac_sf by clicking on sign button upload pac
+  7 I sign l10n_mx attachment facturae cfdi_pac_sf by clicking on sign button upload pac
 -
   !python {model: ir.attachment.facturae.mx}: |
     import netsvc, tools
@@ -71,7 +72,7 @@
         #print "cfdi_pac_sf_msj",tools.ustr( cfdi_pac_sf.msj )
         state = cfdi_pac_sf.state
 -
-  I check that the state in l10n_mx attachment facturae cfdi_pac_sf is "Signed"
+  8 I check that the state in l10n_mx attachment facturae cfdi_pac_sf is "Signed"
 -
   !python {model: ir.attachment.facturae.mx}: |
     import netsvc, tools, os, base64
@@ -93,7 +94,7 @@
     #print "state",tools.ustr( state )
     assert state=='signed', 'No signed state l10n_mx attachment facturae cfdi_pac_sf'
 -
-  I generate a printable l10n_mx attachment facturae cfdi_pac_sf by clicking on printable button
+  9 I generate a printable l10n_mx attachment facturae cfdi_pac_sf by clicking on printable button
 -
   !python {model: ir.attachment.facturae.mx}: |
     import netsvc, tools
@@ -107,7 +108,7 @@
         #print "cfdi_pac_sf_msj",tools.ustr( cfdi_pac_sf.msj )
         state = cfdi_pac_sf.state
 -
-  I check that the state in l10n_mx attachment facturae cfdi_pac_sf is Printable
+  10 I check that the state in l10n_mx attachment facturae cfdi_pac_sf is Printable
 -
   !python {model: ir.attachment.facturae.mx}: |
     import netsvc, tools, os, base64
@@ -129,13 +130,13 @@
             state = 'no data in attach file'
     assert state=='printable', 'No printable state l10n_mx attachment facturae cfdi_pac_sf'
 -
-  I added update_posted in journal
+  11 I added update_posted in journal
 -
   !python {model: account.journal}: |
     journal_id = self.browse(cr, uid, ref("l10n_mx_facturae_pac_sf.l10n_mx_cfdi_pac_sf_journal_0"))
     self.write(cr, uid, journal_id.id, {'update_posted': True})
 -
-  I generate a cancel l10n_mx attachment facturae cfdi_pac_sf by clicking on cancel button
+  12 I generate a cancel l10n_mx attachment facturae cfdi_pac_sf by clicking on cancel button
 -
   !python {model: ir.attachment.facturae.mx}: |
     cfdi_pac_sf_ids = self.search(cr, uid, [('id_source', '=', ref("l10n_mx_cfdi_test.ai_pac_facturae_sf_0") ),('model_source','=','account.invoice'), ('state', '<>', 'cancel')], limit=1)
@@ -146,12 +147,12 @@
         state = cfdi_pac_sf.state
     assert state=='cancel', 'No cancel state l10n_mx attachment facturae cfdi_pac_sf'
 -
-  I check that customer invoice state is "cancel"
+  13 I check that customer invoice state is "cancel"
 -
   !assert {model: account.invoice, id: l10n_mx_cfdi_test.ai_pac_facturae_sf_0}:
     - state == 'cancel'
 -
-  I check that customer invoice move_id is None
+  14 I check that customer invoice move_id is None
 -
   !assert {model: account.invoice, id: l10n_mx_cfdi_test.ai_pac_facturae_sf_0}:
     - move_id.name == None
