@@ -1271,9 +1271,8 @@ class account_invoice(osv.Model):
             invoice_data['Impuestos'].update({
                 'totalImpuestosTrasladados': "%.2f" % (totalImpuestosTrasladados),
             })
-            if totalImpuestosRetenidos:
-                invoice_data['Impuestos'].update({
-                    'totalImpuestosRetenidos': "%.2f" % (totalImpuestosRetenidos)
+            invoice_data['Impuestos'].update({
+                'totalImpuestosRetenidos': "%.2f" % (totalImpuestosRetenidos)
                 })
 
             tax_requireds = ['IVA', 'IEPS']
