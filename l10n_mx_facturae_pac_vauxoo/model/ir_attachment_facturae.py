@@ -29,6 +29,7 @@ from openerp.tools.translate import _
 from openerp.osv import fields, osv, orm
 from openerp import tools
 from openerp import netsvc
+import openerp.tools.config as config
 from openerp.tools.misc import ustr
 import base64
 import xml.dom.minidom
@@ -97,11 +98,12 @@ class ir_attachment_facturae_mx(osv.Model):
     def _upload_ws_file_vx(self, cr, uid, ids, fdata=None, context=None):
         if context is None:
             context = {}
-        HOST=''
-        PORT=
-        DB=''
-        USER=''
-        PASS=''
+        HOST = config['xmlrpc_interface'] or '0.0.0.0'
+        PORT = config['xmlrpc_port']
+        DB = config['db_name']
+        user = self.pool.get('res.users').browse(cr, uid, uid)
+        USER = user.login
+        PASS = user.password
         url ='http://%s:%d/xmlrpc/' % (HOST,PORT)
         common_proxy = xmlrpclib.ServerProxy(url+'common')
         object_proxy = xmlrpclib.ServerProxy(url+'object')
