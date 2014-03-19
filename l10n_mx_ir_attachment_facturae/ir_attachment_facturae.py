@@ -287,6 +287,7 @@ class ir_attachment_facturae_mx(osv.Model):
                         'res_model': model_source,
                         'res_id': id_source,
                     }
+                    cr.commit()
                     attach = attachment_obj.create(cr, uid, data_attach, context=None)
                     if attach_v3_2:
                         cr.execute("""UPDATE ir_attachment

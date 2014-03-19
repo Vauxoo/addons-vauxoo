@@ -72,7 +72,7 @@ class ir_attachment_facturae_mx(osv.Model):
         factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_sign()
         if factura_mx_type__fc == None:
             factura_mx_type__fc = {}
-        factura_mx_type__fc.update({'cfdi32_pac_vx': self._upload_ws_file})
+        factura_mx_type__fc.update({'cfdi32_pac_vx': self._upload_ws_file_vx})
         return factura_mx_type__fc
 
     def get_driver_fc_cancel(self):
@@ -94,7 +94,7 @@ class ir_attachment_facturae_mx(osv.Model):
         pac_params_obj = self.pool.get('params.pac')
         return True
 
-    def _upload_ws_file(self, cr, uid, ids, fdata=None, context=None):
+    def _upload_ws_file_vx(self, cr, uid, ids, fdata=None, context=None):
         if context is None:
             context = {}
         HOST=''
@@ -162,11 +162,13 @@ class ir_attachment_facturae_mx(osv.Model):
                                 'url_webservice_pac': 'http://testing.solucionfactible.com/ws/services/Timbrado',
                                 'file_input': attachment.file_input.id,
                                 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                                'file_input_index': attachment.file_input_index,
                                }
             attachment_face_id = object_proxy.execute(DB, uid, PASS, 'ir.attachment.facturae.mx', 'create', attachment_face)
             object_proxy.execute(DB, uid, PASS,'ir.attachment.facturae.mx','signal_confirm',[attachment_face_id])
-            object_proxy.execute(DB, uid, PASS,'ir.attachment.facturae.mx','signal_sign',[attachment_face_id])
+            try:
+                object_proxy.execute(DB, uid, PASS,'ir.attachment.facturae.mx','signal_sign',[attachment_face_id])
+            except Exception, e:
+                raise osv.except_osv(_("failed!"), _("FacturaE:\n %s") % tools.ustr(e))                
             ir_attach = object_proxy.execute(DB, uid, PASS,'ir.attachment.facturae.mx','read',[attachment_face_id],['file_xml_sign'])
             data = object_proxy.execute(DB, uid, PASS,'ir.attachment','read',[ir_attach[0]['file_xml_sign'][0]],['db_datas'])
             xml_sign = base64.decodestring(data[0]['db_datas']) or ''
