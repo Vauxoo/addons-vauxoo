@@ -62,7 +62,7 @@ class merge_fuse_wizard(osv.TransientModel):
                 to_unlink = []
                 target_ids = []
                 target_model = self.pool.get(related.model)
-                field_obj = target_model._columns.get(related.name)
+                field_obj = target_model and target_model._columns.get(related.name)
                 if isinstance(field_obj, fields.property):
                     property_ids = []
                     for field_id in active_ids:
@@ -89,7 +89,9 @@ class merge_fuse_wizard(osv.TransientModel):
                         continue
 
                 else:
-                    target_ids = target_model.search(cr,uid,[(related.name,'in',active_ids)])
+                    target_ids = target_model and  \
+                                         target_model.search(cr, uid, 
+                                                            [(related.name,'in',active_ids)])
                     if target_ids:
                         try:
                             target_model.write(cr,uid,target_ids,{str(related.name):base_id})
