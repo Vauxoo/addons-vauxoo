@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="action_ir_attachment_invoice" model="ir.actions.act_window">
+                <field name="name">Attachments Invoices</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">ir.attachment.facturae.mx</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[('model_source','=','account.invoice')]</field>
+                <field eval="False" name="view_id"/>
+            </record>
+            <menuitem id="menu_ir_attachment_facturae_mx_invoice"
+                name="Attacment FacturaE"
+                parent="account.menu_finance_receivables"
+                action="action_ir_attachment_invoice"
+            />
+            
+    </data>
+</openerp>
