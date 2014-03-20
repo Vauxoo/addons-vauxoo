@@ -100,7 +100,7 @@ class ir_attachment_facturae_mx(osv.Model):
             context = {}
         HOST = config['xmlrpc_interface'] or '0.0.0.0'
         PORT = config['xmlrpc_port']
-        DB = config['db_name']
+        DB = cr.dbname
         user = self.pool.get('res.users').browse(cr, uid, uid)
         USER = user.login
         PASS = user.password
@@ -108,7 +108,9 @@ class ir_attachment_facturae_mx(osv.Model):
         common_proxy = xmlrpclib.ServerProxy(url+'common')
         object_proxy = xmlrpclib.ServerProxy(url+'object')
         uid = common_proxy.login(DB,USER,PASS)
-        for attachment in self.browse(cr, uid, ids, context=context): 
+        for attachment in self.browse(cr, uid, ids, context=context):
+            ir_model_data_id = object_proxy.execute(DB, uid, PASS, 'ir.model.data', 'search', [('module','=','l10n_mx_facturae_pac_sf'),('model','=','account.journal')])
+            journal_id = object_proxy.execute(DB, uid, PASS,'ir.model.data','read',ir_model_data_id,['res_id'])[0]['res_id']
             attachment_values = {
                                 'name': attachment.file_input.name,
                                 'datas': attachment.file_input.datas,
@@ -120,7 +122,7 @@ class ir_attachment_facturae_mx(osv.Model):
             attachment_face = { 'name': attachment.name, 
                                 'type': 'cfdi32_pac_sf',
                                 'company_id': attachment.company_id.id,
-                                'journal_id': 11,
+                                'journal_id': journal_id,
                                 'id_source': False,
                                 'model_source': attachment.model_source,
                                 'attachment_email': '',
@@ -167,10 +169,7 @@ class ir_attachment_facturae_mx(osv.Model):
                                }
             attachment_face_id = object_proxy.execute(DB, uid, PASS, 'ir.attachment.facturae.mx', 'create', attachment_face)
             object_proxy.execute(DB, uid, PASS,'ir.attachment.facturae.mx','signal_confirm',[attachment_face_id])
-            try:
-                object_proxy.execute(DB, uid, PASS,'ir.attachment.facturae.mx','signal_sign',[attachment_face_id])
-            except Exception, e:
-                raise osv.except_osv(_("failed!"), _("FacturaE:\n %s") % tools.ustr(e))                
+            object_proxy.execute(DB, uid, PASS,'ir.attachment.facturae.mx','signal_sign',[attachment_face_id])
             ir_attach = object_proxy.execute(DB, uid, PASS,'ir.attachment.facturae.mx','read',[attachment_face_id],['file_xml_sign'])
             data = object_proxy.execute(DB, uid, PASS,'ir.attachment','read',[ir_attach[0]['file_xml_sign'][0]],['db_datas'])
             xml_sign = base64.decodestring(data[0]['db_datas']) or ''
