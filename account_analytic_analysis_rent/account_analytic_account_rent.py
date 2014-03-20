@@ -123,7 +123,7 @@ class account_analytic_account(osv.osv):
         if product_ids:
             product_obj = self.pool.get('product.product')
             for prod in product_ids:
-                if prod[2] and prod[2]['product_id']:
+                if len(prod) > 2 and isinstance(prod[2], dict) and prod[2].get('product_id', False):
                     for feature in product_obj.browse(cr, uid, prod[2]['product_id'], context=context).feature_ids:
                         list_feature.append({'name': feature.name and feature.name.id or False, 'product_line_id':prod[2]['product_id'],'counter':feature.counter or False, 'prodlot_feature_id' : prod[2]['prodlot_id']})
         return {'value':{'feature_ids': [(0, 6, data) for data in list_feature]}}
