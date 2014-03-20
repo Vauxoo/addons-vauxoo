@@ -68,8 +68,9 @@ class invite_wizard(osv.osv_memory):
                                  'group from mail group '
                                  'and not for Users '
                                  'directly'),
-        'partners': fields.boolean('Partners', help='Used to add a followers '
+        'partners': fields.boolean('Partners', help='Used to add a follower '
                                                     'group by users'),
+        'remove': fields.boolean('Remove Partners', help='Used to remove followers'),
         'p_a_g': fields.boolean('Group and Partner', help='Used to add a '
                                 'followers for partner '
                                 'and group at the same '
@@ -146,6 +147,26 @@ class invite_wizard(osv.osv_memory):
                 res = super(invite_wizard, self).add_followers(cr, uid, ids,
                                                                context=context)
 
+        return res
+
+    def remove_followers(self, cr, uid, ids, context=None):
+        '''
+        Overwrite the original model work with many documents at the same time
+        and add followers in eech.
+
+        Each id is get by context field
+        '''
+        res = {'type': 'ir.actions.act_window_close'}
+        for wizard in self.browse(cr, uid, ids, context=context):
+            for res_id in context.get('active_ids', []):
+                model_obj = self.pool.get(wizard.res_model)
+                document = model_obj.browse(cr, uid, res_id,
+                                            context=context)
+                new_follower_ids = [p.id for p in wizard.partner_ids]
+                follower_ids = [i.id for i in  document.message_follower_ids]
+                remove_ids = list(set(follower_ids) -  set(new_follower_ids))
+                document.write({'message_follower_ids':[(6, 0, remove_ids)]})
+                    
         return res
 
     def load_partners(self, cr, uid, ids, mail_groups, check, check2,
