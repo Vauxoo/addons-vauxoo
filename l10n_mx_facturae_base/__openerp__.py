@@ -71,7 +71,7 @@ Requires the following programs:
             "l10n_mx_params_pac",
         ],
     "demo" : [
-        #~ "demo/l10n_mx_facturae_seq_demo.xml",
+         "demo/l10n_mx_facturae_users.xml",
         #~ "demo/account_invoice_cfd_demo.xml",
     ],
     "data" : [
