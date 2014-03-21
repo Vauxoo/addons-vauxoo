@@ -69,15 +69,15 @@ class ir_attachment_facturae_mx(osv.Model):
         ])
         return types
 
-    def get_driver_vx_sign(self):
-        factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_vx_sign()
+    def get_driver_fc_sign(self):
+        factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_sign()
         if factura_mx_type__fc == None:
             factura_mx_type__fc = {}
         factura_mx_type__fc.update({'cfdi32_pac_vx': self._vauxoo_stamp})
         return factura_mx_type__fc
 
-    def get_driver_vx_cancel(self):
-        factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_vx_cancel()
+    def get_driver_fc_cancel(self):
+        factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_cancel()
         if factura_mx_type__fc == None:
             factura_mx_type__fc = {}
         factura_mx_type__fc.update({'cfdi32_pac_vx': self._vauxoo_cancel})
@@ -98,21 +98,37 @@ class ir_attachment_facturae_mx(osv.Model):
     def _vauxoo_stamp(self, cr, uid, ids, fdata=None, context=None):
         if context is None:
             context = {}
-            
-        params_pac_obj = self.pool.get('params.pac')
-        params_pac_sch = params_pac_obj.search(cr, uid, ['method_type','=','pac_vx_firmar'])
-        
-        HOST = config['xmlrpc_interface'] or '0.0.0.0'
-        PORT = config['xmlrpc_port']
-        DB = cr.dbname
-        user = self.pool.get('res.users').browse(cr, uid, uid)
-        USER = user.login
-        PASS = user.password
-        url ='http://%s:%d/xmlrpc/' % (HOST,PORT)
-        common_proxy = xmlrpclib.ServerProxy(url+'common')
-        object_proxy = xmlrpclib.ServerProxy(url+'object')
-        uid2 = common_proxy.login(DB,USER,PASS)
-        for attachment in self.browse(cr, uid, ids, context=context):
+        pac_params_obj = self.pool.get('params.pac')
+        res_com_facte_certif_obj = self.pool.get('res.company.facturae.certificate')
+        for attachment in self.browse(cr, uid, ids, context=context):            
+            pac_params_ids = pac_params_obj.search(cr, uid, [
+                ('method_type', '=', 'pac_vx_firmar'), (
+                    'company_id', '=', attachment.company_id.id), (
+                        'active', '=', True)], limit=1, context=context)
+            if pac_params_ids:
+                pac_params = pac_params_obj.browse(
+                    cr, uid, pac_params_ids, context)[0]
+            pac_params_server_ids = pac_params_obj.search(cr, uid, [
+                ('method_type', '=', 'pac_sf_firmar'), (
+                    'company_id', '=', attachment.company_id.id), (
+                        'active', '=', True)], limit=1, context=context)
+            if pac_params_server_ids:
+                pac_params_server = pac_params_obj.browse(
+                    cr, uid, pac_params_server_ids, context)[0]
+            res_com_facte_certif_ids = res_com_facte_certif_obj.search(cr, uid, [
+                ('company_id', '=', attachment.company_id.id), (
+                        'active', '=', True)], limit=1, context=context)
+            if res_com_facte_certif_ids:
+                res_com_facte_certif = res_com_facte_certif_obj.browse(
+                    cr, uid, res_com_facte_certif_ids, context)[0]
+            DB = cr.dbname
+            wsdl_url = pac_params.url_webservice
+            USER = pac_params.user
+            PASS = pac_params.password
+            url ='http://%s/xmlrpc/' % (wsdl_url)
+            common_proxy = xmlrpclib.ServerProxy(url+'common')
+            object_proxy = xmlrpclib.ServerProxy(url+'object')
+            uid2 = common_proxy.login(DB,USER,PASS)
             ir_model_data_id = object_proxy.execute(DB, uid2, PASS, 'ir.model.data', 'search', [('module','=','l10n_mx_facturae_pac_sf'),('model','=','account.journal')])
             journal_id = object_proxy.execute(DB, uid2, PASS,'ir.model.data','read',ir_model_data_id,['res_id'])[0]['res_id']
             attachment_values = {
@@ -130,44 +146,12 @@ class ir_attachment_facturae_mx(osv.Model):
                                 'id_source': False,
                                 'model_source': attachment.model_source,
                                 'attachment_email': '',
-                                'certificate_password': '12345678a',
-                                'certificate_file': '''MIIEdDCCA1ygAwIBAgIUMjAwMDEwMDAwMDAxMDAwMDU4NjcwDQYJKoZIhvcNAQEFBQAwggFvMRgw
-            FgYDVQQDDA9BLkMuIGRlIHBydWViYXMxLzAtBgNVBAoMJlNlcnZpY2lvIGRlIEFkbWluaXN0cmFj
-            acOzbiBUcmlidXRhcmlhMTgwNgYDVQQLDC9BZG1pbmlzdHJhY2nDs24gZGUgU2VndXJpZGFkIGRl
-            IGxhIEluZm9ybWFjacOzbjEpMCcGCSqGSIb3DQEJARYaYXNpc25ldEBwcnVlYmFzLnNhdC5nb2Iu
-            bXgxJjAkBgNVBAkMHUF2LiBIaWRhbGdvIDc3LCBDb2wuIEd1ZXJyZXJvMQ4wDAYDVQQRDAUwNjMw
-            MDELMAkGA1UEBhMCTVgxGTAXBgNVBAgMEERpc3RyaXRvIEZlZGVyYWwxEjAQBgNVBAcMCUNveW9h
-            Y8OhbjEVMBMGA1UELRMMU0FUOTcwNzAxTk4zMTIwMAYJKoZIhvcNAQkCDCNSZXNwb25zYWJsZTog
-            SMOpY3RvciBPcm5lbGFzIEFyY2lnYTAeFw0xMjA3MjcxNzAyMDBaFw0xNjA3MjcxNzAyMDBaMIHb
-            MSkwJwYDVQQDEyBBQ0NFTSBTRVJWSUNJT1MgRU1QUkVTQVJJQUxFUyBTQzEpMCcGA1UEKRMgQUND
-            RU0gU0VSVklDSU9TIEVNUFJFU0FSSUFMRVMgU0MxKTAnBgNVBAoTIEFDQ0VNIFNFUlZJQ0lPUyBF
-            TVBSRVNBUklBTEVTIFNDMSUwIwYDVQQtExxBQUEwMTAxMDFBQUEgLyBIRUdUNzYxMDAzNFMyMR4w
-            HAYDVQQFExUgLyBIRUdUNzYxMDAzTURGUk5OMDkxETAPBgNVBAsTCFVuaWRhZCAxMIGfMA0GCSqG
-            SIb3DQEBAQUAA4GNADCBiQKBgQC2TTQSPONBOVxpXv9wLYo8jezBrb34i/tLx8jGdtyy27BcesOa
-            v2c1NS/Gdv10u9SkWtwdy34uRAVe7H0a3VMRLHAkvp2qMCHaZc4T8k47Jtb9wrOEh/XFS8LgT4y5
-            OQYo6civfXXdlvxWU/gdM/e6I2lg6FGorP8H4GPAJ/qCNwIDAQABox0wGzAMBgNVHRMBAf8EAjAA
-            MAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQUFAAOCAQEATxMecTpMbdhSHo6KVUg4QVF4Op2IBhiM
-            aOrtrXBdJgzGotUFcJgdBCMjtTZXSlq1S4DG1jr8p4NzQlzxsdTxaB8nSKJ4KEMgIT7E62xRUj15
-            jI49qFz7f2uMttZLNThipunsN/NF1XtvESMTDwQFvas/Ugig6qwEfSZc0MDxMpKLEkEePmQwtZD+
-            zXFSMVa6hmOu4M+FzGiRXbj4YJXn9Myjd8xbL/c+9UIcrYoZskxDvMxc6/6M3rNNDY3OFhBK+V/s
-            PMzWWGt8S1yjmtPfXgFs1t65AZ2hcTwTAuHrKwDatJ1ZPfa482ZBROAAX1waz7WwXp0gso7sDCm2
-            /yUVww==''',
-                                'certificate_key_file': '''MIICxjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDgQIV+FZR/7E9+8CAggAMBQGCCqGSIb3
-            DQMHBAgiwhoDhotSegSCAoDi82IsNHCEL07pbLApGWi9yUN2uLoVxemj3ehNeYTBRa3i/1wPjmoE
-            JG07sZSUG+bANexY82lL0zlNePXx58Pw2ZrnNgt4I1K3t1mk/cz3clz1sp6Xlwf2UQWPB0CIIxbu
-            YLxWNnPJIYC0n7ovcsgqrP7W0t0Tk/oDPFWxYAFKHI7b+Sbeg/r7IYJWQb6esY7KDjSeFZ+1qAse
-            vVv9+db6c5h1qiUNkqe9LoSCyF1T6pSmKPdChmA/AV5gP7VKN5Sjactd3dMT85JDxFR6vgkAclKy
-            SJc0FGgeu1G8BdzX2sDjtoy00Q+ImZYzdDnuZbBJKVDnR42ox/Wgzv9FyqwKACF+tRxAifDxjWTh
-            McUFlZCLZFX/Mr56royDHVH5TImJ5eqy2KYuoYcIXPREmV/XGXjGWhOED8HX/8nNlF0Zt7GWzARj
-            U4hBzt8ONIbmVzV7G+42zQ1jGi3sZgLSW2BmbZvLkePsSO0cLtE2UEFhq54i8kN1V8j/GJI24ob6
-            PhxuT8SGxZHi4fWBT8w3irgAdrIgQzm5Re53bA+/QAzlNUXvmW3cHE8iWvDbyiLiUGvBRPjNJYoL
-            fgHRkhfZ4l++fucP8V0kuau/+w/R6skQjNEbBPlqo6bqcme/ErzVOf4mYE9cfL7xZ14A30Ri13uR
-            rCrR5PJJirXZ9EP0EsCMKRPUQ6bT3jPgLUBd965ADYZmOR6tGxRQgC4X2iXg99N08+/H6Et2Ox4C
-            qKB637nTnBgTrWrrOxGhivYSr2sogItw35uqu5IM6scuvNmzes8Wv0lYn/R3rSv7cvOWTxqFfT0T
-            w5Y+c5ypauUSDyY6TQVB9qPf3Wwl0QP20sEY4exP''',
-                                'user_pac': 'testing@solucionfactible.com',
-                                'password_pac': 'timbrado.SF.16672',
-                                'url_webservice_pac': 'http://testing.solucionfactible.com/ws/services/Timbrado',
+                                'certificate_password': res_com_facte_certif.certificate_password,
+                                'certificate_file': res_com_facte_certif.certificate_file,
+                                'certificate_key_file': res_com_facte_certif.certificate_file,
+                                'user_pac': pac_params_server.user,
+                                'password_pac': pac_params_server.password,
+                                'url_webservice_pac': pac_params_server.url_webservice,
                                 'file_input': attachment.file_input.id,
                                 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                                }

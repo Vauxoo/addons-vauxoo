@@ -288,16 +288,21 @@ class ir_attachment_facturae_mx(osv.Model):
                         'res_id': id_source,
                     }
                     attach = attachment_obj.create(cr, uid, data_attach, context=None)
-                    #~ if attach_v3_2:
-                        #~ cr.execute("""UPDATE ir_attachment
-                            #~ SET res_id = Null
-                            #~ WHERE id = %s""", (attach_v3_2,))
-                    #~ doc_xml = xml.dom.minidom.parseString(index_xml)
-                    #~ index_xml = doc_xml.toprettyxml()
-                    self.write(cr, uid, [data.id],
-                           {'file_xml_sign': attach or False,
-                               'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                               'msj': msj,}, context=context)
+                    '''
+                    if attach_v3_2:
+                        cr.execute("""UPDATE ir_attachment
+                            SET res_id = Null
+                            WHERE id = %s""", (attach_v3_2,))
+                    doc_xml = xml.dom.minidom.parseString(index_xml)
+                    index_xml = doc_xml.toprettyxml()
+                    self.write(cr, uid, ids,
+                    '''
+                    self.write(cr, uid, [data.id], 
+                            {'file_xml_sign': attach or False,
+                                'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                                'msj': msj,
+                               #'file_xml_sign_index': index_xml}, context=context)
+                            }, context=context)
                     wf_service.trg_validate(uid, self._name, data.id, 'action_sign', cr)
                     status = True
             else:
