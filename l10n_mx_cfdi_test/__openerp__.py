@@ -43,12 +43,7 @@ This module execute all test yaml of invoice and payroll CFDI.
     "demo" : [],
     "data" : [],
     "test" : [
-        #~ "test/test_facturae_pac_sf.yml",
-        #~ "test/test_payroll_pac_sf.yml",
-        #~ "test/test_facturae_pac_finkok.yml",
-        #~ "test/test_payroll_pac_finkok.yml",
-        "test/test_facturae_pac_all_cancel_from_attachment.yml",
-        "test/test_facturae_pac_all_cancel_from_invoce.yml",
+        "test/test_facturae_pac_all.yml",
     ],
     "installable" : True,
     "active" : False,
