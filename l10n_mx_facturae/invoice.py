@@ -1257,6 +1257,9 @@ class account_invoice(osv.Model):
                         'Retenciones', [])
                     impuesto_str = 'Retencion'
                     totalImpuestosRetenidos += line_tax_id_amount
+                    invoice_data['Impuestos'].update({
+                                    'totalImpuestosRetenidos': "%.2f" % (totalImpuestosRetenidos)
+                                    })
                 impuesto_dict = {impuesto_str:
                                 {
                                  'impuesto': tax_name,
@@ -1267,15 +1270,9 @@ class account_invoice(osv.Model):
                     impuesto_dict[impuesto_str].update({
                             'tasa': "%.2f" % (abs(line_tax_id.tax_percent))})
                 impuesto_list.append(impuesto_dict)
-
             invoice_data['Impuestos'].update({
                 'totalImpuestosTrasladados': "%.2f" % (totalImpuestosTrasladados),
             })
-            if totalImpuestosRetenidos:
-                invoice_data['Impuestos'].update({
-                    'totalImpuestosRetenidos': "%.2f" % (totalImpuestosRetenidos)
-                })
-
             tax_requireds = ['IVA', 'IEPS']
             for tax_required in tax_requireds:
                 if tax_required in tax_names:

@@ -80,17 +80,29 @@ class account_invoice(osv.Model):
                 list_conceptos = []
                 dict_impuestos = dict({'totalImpuestosTrasladados':
                                        totalImpuestosTrasladados, 'cfdi:Traslados': []})
+                totalret = comprobante.get('Impuestos',{}).get('totalImpuestosRetenidos', False)
+                if totalret:
+                    totalImpuestosRetenidos = comprobante['Impuestos']['totalImpuestosRetenidos']
+                    dict_impuestos2 = dict({'totalImpuestosRetenidos':
+                                           totalImpuestosRetenidos, 'cfdi:Retenciones': []})
                 for concepto in comprobante['Conceptos']:
                     list_conceptos.append(dict({'cfdi:Concepto':
                                                 concepto['Concepto']}))
                 for traslado in comprobante['Impuestos']['Traslados']:
                     dict_impuestos['cfdi:Traslados'].append(dict(
                         {'cfdi:Traslado': traslado['Traslado']}))
+                ret = comprobante.get('Impuestos',{}).get('Retenciones',{})
+                if ret:
+                    for traslado in ret:
+                        dict_impuestos2['cfdi:Retenciones'].append(dict(
+                            {'cfdi:Retencion': traslado['Retencion']}))
                 comprobante.update({'cfdi:Emisor': dict_emisor,
                                     'cfdi:Receptor': dict_receptor,
                                     'cfdi:Conceptos': list_conceptos,
                                     'cfdi:Impuestos': dict_impuestos,
                                     })
+                if ret:
+                    comprobante['cfdi:Impuestos'].update(dict_impuestos2)
                 comprobante.pop('Emisor')
                 comprobante.pop('Impuestos')
                 comprobante.pop('Conceptos')
