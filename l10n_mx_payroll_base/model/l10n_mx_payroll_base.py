@@ -324,6 +324,7 @@ class hr_payslip(osv.Model):
     
 
     def hr_verify_sheet(self, cr, uid, ids, context=None):
+        obj_sequence = self.pool.get('ir.sequence')
         for hr in self.browse(cr, uid, ids, context=context):
             vals_date = self.assigned_datetime(cr, uid,
                 {'date_payslip': hr.date_payslip,
@@ -333,6 +334,8 @@ class hr_payslip(osv.Model):
             if not hr.line_payslip_product_ids:
                 raise osv.except_osv(_('No Product Lines!'), _('Please create some product lines.'))
             super(hr_payslip, self).hr_verify_sheet(cr, uid, ids)
+            if hr.journal_id.sequence_id and hr.journal_id.sequence_id.id:
+                obj_sequence.next_by_id(cr, uid, hr.journal_id.sequence_id.id, context=context)
             result = self.create_ir_attachment_payroll(cr, uid, ids, context=context)
             return result
 
