@@ -16,7 +16,7 @@
     res_id = False
     for journal_data in acc_jour_obj.browse(cr, uid, journal_ids, context=context):
         if (journal_data.sequence_id and journal_data.sequence_id.approval_id and journal_data.sequence_id.approval_id.id) and journal_data.type in ('sale'):
-            for type_test_cancel in ['cancel_from_invoce','cancel_from_attachment_factuare_mx']:
+            for type_test_cancel in ['cancel_from_invoce','cancel_from_attachment_facturae_mx']:
                 all_ok = False
                 pac_type = journal_data.sequence_id.approval_id.type
                 ir_model_id = ir_model_data.search(cr, uid, [('res_id','=',journal_data.id),('model','=','account.journal')])
@@ -25,7 +25,7 @@
                     name_journal = ir_model_data.browse(cr, uid, ir_model_id[0], context=context).name.encode('UTF8')
                     journal_xml_id = '%s.%s' % (module_journal,name_journal)
                     try:
-                        log("To test the Mexican Electronic Invoice %s" % (pac_type))
+                        log("To test the Mexican Electronic Invoice %s %s" % (pac_type,type_test_cancel))
                         #################################################################################################
                         #     1 Duplicate invoice of l10n_mx_facturae_base to xx                                        #
                         #################################################################################################
@@ -147,7 +147,7 @@
                             #############################################################################################################
                             log("11 I cancel from invoce %s by clicking on cancel button"% (xml_id_invoice))
                             wf_service.trg_validate(uid, 'account.invoice', ref(xml_id_invoice), 'invoice_cancel', cr)
-                        if type_test_cancel == 'cancel_from_attachment_factuare_mx':
+                        if type_test_cancel == 'cancel_from_attachment_facturae_mx':
                             ########################################################################################################
                             #   11 I cancel from attachment                                                                        #
                             ########################################################################################################
