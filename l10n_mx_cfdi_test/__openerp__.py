@@ -2,12 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2014 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Financed by: http://www.sfsoluciones.com (aef@sfsoluciones.com)
+#    Coded by: Jorge Naranjo (jorge_nr@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -26,38 +25,26 @@
 ##############################################################################
 
 {
-    "name" : "Creacion de Factura Electronica para Mexico (CFDI-2011) - PAC Solucion Factible",
+    "name" : "Tests Invoice and Payroll CFDI Pacs SF and Finkok",
     "version" : "1.0",
-    "author" : "Vauxoo & Sfsoluciones",
+    "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module creates interface for e-invoice files from invoices with Solucion Factible.
-Ubuntu Package Depends:
-    sudo apt-get install python-soappy
+    "description" : """
+This module execute all test yaml of invoice and payroll CFDI.
 """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["l10n_mx_facturae_groups",
-        "l10n_mx_facturae_base",
-        "l10n_mx_params_pac", 
-        "l10n_mx_account_tax_category",
-        "l10n_mx_facturae_report",
-        "l10n_mx_facturae_seq", 
-        "l10n_mx_ir_attachment_facturae",
-        #"l10n_mx_facturae_pac",
-        "l10n_mx_facturae_group_show_wizards",
-        "l10n_mx_settings_facturae"
+    "depends" : [
+        "l10n_mx_facturae_pac_sf",
+        "l10n_mx_facturae_pac_finkok",
+        "l10n_mx_payroll_base",
         ],
-    "demo" : [
-        "demo/l10n_mx_facturae_pac_sf_demo.xml",
-        "demo/l10n_mx_facturae_seq_demo.xml",
-        "demo/l10n_mx_payroll_seq_demo.xml",
+    "demo" : [],
+    "data" : [],
+    "test" : [
+        "test/test_facturae_pac_all.yml",
+        "test/test_payrolle_pac_all.yml",
     ],
-    "data" : [
-        #"security/l10n_mx_facturae_pac_sf_security.xml",
-        #~ "wizard/wizard_cancel_invoice_pac_sf_view.xml",
-        #~ "wizard/wizard_export_invoice_pac_sf_view_v6.xml",
-    ],
-    "test" : [],
     "installable" : True,
     "active" : False,
 }

@@ -32,7 +32,6 @@
                 "l10n_mx_payroll_concept",
                 "l10n_mx_payroll_regime_employee",
                 "l10n_mx_payroll_risk_rank_contract",
-                "l10n_mx_facturae_pac_finkok",
                 "l10n_mx_ir_attachment_facturae",
                 "l10n_mx_params_pac",
     ],
@@ -61,13 +60,11 @@ ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfdi/guianomina.pdf
         'security/ir.model.access.csv',
     ],
     "demo" : [
-        "demo/l10n_mx_facturae_seq_demo.xml",
         "demo/l10n_mx_payroll_demo.xml",
         "demo/l10n_mx_payroll_contract.xml",
         "demo/l10n_mx_payroll_cfdi0.xml",
     ],
     "test": [
-        "test/hr_payroll_cfdi.yml",
     ],
     "active": False,
     "installable": True,
