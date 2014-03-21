@@ -46,8 +46,6 @@
 <!--
                             <field name="file_input_index"/>
 -->
-                            <field name="file_xml_sign_index"/>
-                            <field name="file_pdf_index"/>
                         </group>
                         <group colspan="4">
                             <field name="msj" invisible="1"/>
