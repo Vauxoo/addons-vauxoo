@@ -28,7 +28,7 @@
             <field name="name">CFDI SF Journal</field>
             <field name="code">SFACT</field>
             <field name="type">sale</field>
-            <field name="update_posted">1</field>
+            <field name="update_posted" eval="True"/>
         </record>
     </data>
 </openerp>
