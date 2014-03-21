@@ -7,7 +7,6 @@
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
 #    Coded by: Jorge Naranjo (jorge_nr@vauxoo.com)
-#    Financed by: http://www.sfsoluciones.com (aef@sfsoluciones.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
