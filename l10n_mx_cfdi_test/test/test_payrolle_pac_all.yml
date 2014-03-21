@@ -1,7 +1,7 @@
 -
-  To test the Mexican Electronic Invoice
+  To test the Mexican Electronic payroll
 -
-  !python {model: account.invoice}: |
+  !python {model: hr.payslip}: |
     import netsvc
     import tools, os, base64
     import logging
@@ -15,8 +15,8 @@
     _logger = logging.getLogger("openerp.tools.yaml_import")
     res_id = False
     for journal_data in acc_jour_obj.browse(cr, uid, journal_ids, context=context):
-        if (journal_data.sequence_id and journal_data.sequence_id.approval_id and journal_data.sequence_id.approval_id.id) and journal_data.type in ('sale'):
-            for type_test_cancel in ['cancel_from_invoce','cancel_from_attachment_factuare_mx']:
+        if (journal_data.sequence_id and journal_data.sequence_id.approval_id and journal_data.sequence_id.approval_id.id) and journal_data.type in ('purchase'):
+            for type_test_cancel in ['cancel_from_payroll','cancel_from_attachment_factuare_mx']:
                 all_ok = False
                 pac_type = journal_data.sequence_id.approval_id.type
                 ir_model_id = ir_model_data.search(cr, uid, [('res_id','=',journal_data.id),('model','=','account.journal')])
@@ -25,145 +25,134 @@
                     name_journal = ir_model_data.browse(cr, uid, ir_model_id[0], context=context).name.encode('UTF8')
                     journal_xml_id = '%s.%s' % (module_journal,name_journal)
                     try:
-                        log("To test the Mexican Electronic Invoice %s" % (pac_type))
+                        log("To test the Mexican Electronic Payroll %s" % (pac_type))
                         #################################################################################################
-                        #     1 Duplicate invoice of l10n_mx_facturae_base to xx                                        #
+                        #     1 Duplicate payroll of l10n_mx_payroll_base to xx                                        #
                         #################################################################################################
-                        log("1 Duplicate invoice of l10n_mx_facturae_base") 
-                        invoice_id = self.copy(cr, uid, ref('l10n_mx_facturae_base.ai_pac_facturae_0'), context=context)
-                        self.write(cr, uid, [invoice_id], {'journal_id':ref(journal_xml_id)},context=context)
-                        xml_id_invoice = 'ai_pac_facturae_%s_%s'% (pac_type,invoice_id)
-                        data_ids = ir_model_data.search(cr, uid, [('model', '=', self._name), ('name', 'like', xml_id_invoice)])
+                        log("1 Duplicate payroll of l10n_mx_payroll_base") 
+                        payroll_id = self.copy(cr, uid, ref('l10n_mx_payroll_base.hr_payslip_al_cfdi0'), context=context)
+                        self.write(cr, uid, [payroll_id], {'journal_id':ref(journal_xml_id)},context=context)
+                        xml_id_payroll = 'hr_payslip_pac_%s_%s'% (pac_type,payroll_id)
+                        data_ids = ir_model_data.search(cr, uid, [('model', '=', self._name), ('name', 'like', xml_id_payroll)])
                         if not data_ids:
                             res_id = ir_model_data.create(cr, uid, {
-                                            'name': xml_id_invoice,
+                                            'name': xml_id_payroll,
                                             'model': self._name,
-                                            'res_id': invoice_id,
+                                            'res_id': payroll_id,
                                             'module': 'l10n_mx_cfdi_test',
                                         })
                         #################################################################################################
-                        #                                Browse of invoice                                              #
+                        #                                Browse of payroll                                              #
                         #################################################################################################
-                        invoice_data = self.browse(cr, uid, invoice_id, context=context)
+                        payroll_data = self.browse(cr, uid, payroll_id, context=context)
                         
                         #################################################################################################
                         #                       2 I check that Journal is                                               #
                         #################################################################################################
                         log("2 I check that Journal is %s" % (journal_xml_id))
-                        assert invoice_data.journal_id.id==ref(journal_xml_id), 'This invoice has not assigned this %s' % (journal_xml_id)
+                        assert payroll_data.journal_id.id==ref(journal_xml_id), 'This payroll has not assigned this %s' % (journal_xml_id)
                         
                         #################################################################################################
-                        #                       3 I check that Initially customer invoice state is "Draft"              #
+                        #                       3 I check that Initially customer payroll state is "Draft"              #
                         #################################################################################################
-                        log("3 I check that Initially customer invoice %s state is Draft"% (xml_id_invoice))
-                        assert invoice_data.state == 'draft', 'This invoice has not state in draft'
+                        log("3 I check that Initially customer payroll %s state is Draft"% (xml_id_payroll))
+                        assert payroll_data.state == 'draft', 'This payroll has not state in draft'
                         
                         #################################################################################################
-                        #                       4 I open invoice by clicking on Create button                           #
+                        #                       4 I confirm payroll by clicking on Create button                           #
                         #################################################################################################
-                        log("4 I open invoice by clicking on Create button %s" % (xml_id_invoice))
-                        wf_service.trg_validate(uid, 'account.invoice', ref(xml_id_invoice), 'invoice_open', cr)
+                        log("4 I open payroll by clicking on Create button %s" % (xml_id_payroll))
+                        self.hr_verify_sheet(cr, uid , [ref(xml_id_payroll)] ,context=context)
                         
                         #################################################################################################
-                        #                                Update browse of invoice                                       #
+                        #    5 I check that the state in l10n_mx attachment payroll is "Confirmed"     #
                         #################################################################################################
-                        invoice_data = self.browse(cr, uid, invoice_id, context=context)
-                        
-                        #################################################################################################
-                        #                       5 I check that the invoice state is "Open"                              #
-                        #################################################################################################
-                        log("5 I check that the invoice %s state is Open"% (xml_id_invoice))
-                        assert invoice_data.state == 'open', 'This invoice has not state in open'
-                        
-                        #################################################################################################
-                        #    6 I check that the state in l10n_mx attachment facturae is "Confirmed"     #
-                        #################################################################################################
-                        log("6 I check that the state in l10n_mx attachment facturae %s is Confirmed"% (xml_id_invoice))
-                        cfdi_attachment_ids = ir_attachment_mx_obj.search(cr, uid, [('id_source', '=', ref(xml_id_invoice) ),('model_source','=','account.invoice'), ('state', '<>', 'cancel')], limit=1)
+                        log("5 I check that the state in l10n_mx attachment payroll %s is Confirmed"% (xml_id_payroll))
+                        cfdi_attachment_ids = ir_attachment_mx_obj.search(cr, uid, [('id_source', '=', ref(xml_id_payroll) ),('model_source','=','hr.payslip'), ('state', '<>', 'cancel')], limit=1)
                         cfdi_attachment_id = cfdi_attachment_ids and cfdi_attachment_ids[0] or False
                         state = 'no attach file'
                         if cfdi_attachment_id:
                             cfdi_attachment_data = ir_attachment_mx_obj.browse(cr, uid, cfdi_attachment_id)
                             state = cfdi_attachment_data.state
-                            ir_attach_facturae_mx = cfdi_attachment_data.file_input and cfdi_attachment_data.file_input or False
-                            fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
+                            ir_attach_payroll_mx = cfdi_attachment_data.file_input and cfdi_attachment_data.file_input or False
+                            fdata = ir_attach_payroll_mx and ir_attach_payroll_mx.db_datas or False
                             if fdata:
                                 if tools.config['test_report_directory']:
                                     open(os.path.join(tools.config['test_report_directory'], 'l10n_mx_cfdi_test' + '_' + \
-                                      xml_id_invoice + '_' + 'confirmed' + '-' + ir_attach_facturae_mx.datas_fname)\
+                                      xml_id_payroll + '_' + 'confirmed' + '-' + ir_attach_payroll_mx.datas_fname)\
                                       , 'wb+').write( base64.decodestring( fdata ) )
                             else:
                                 state = 'no data in attach file'
-                        assert state=='confirmed', 'No confirmed state l10n_mx attachment facturae %s' % (pac_type)
+                        assert state=='confirmed', 'No confirmed state l10n_mx attachment payroll %s' % (pac_type)
                         
                         #################################################################################################
-                        #   7 I sign l10n_mx attachment facturae cfdi_pac_finkok by clicking on sign button upload pac  #
+                        #   6 I sign l10n_mx attachment payroll cfdi_pac_finkok by clicking on sign button upload pac  #
                         #################################################################################################
-                        log("7 I sign l10n_mx attachment facturae %s by clicking on sign button upload %s"% (xml_id_invoice,pac_type))
+                        log("6 I sign l10n_mx attachment payroll %s by clicking on sign button upload %s"% (xml_id_payroll,pac_type))
                         cfdi_attachment_data = ir_attachment_mx_obj.browse(cr, uid, cfdi_attachment_id, context=context)
                         ir_attachment_mx_obj.signal_sign(cr, uid, cfdi_attachment_ids, context=context)
                             
                         #################################################################################################
-                        #    8 I check that the state in l10n_mx attachment facturae cfdi_attachment_data is "Signed"   #
+                        #    7 I check that the state in l10n_mx attachment payroll cfdi_attachment_data is "Signed"   #
                         #################################################################################################
-                        log("8 I check that the state in l10n_mx attachment facturae %s is Signed"% (xml_id_invoice))
+                        log("7 I check that the state in l10n_mx attachment payroll %s is Signed"% (xml_id_payroll))
                         cfdi_attachment_data = ir_attachment_mx_obj.browse(cr, uid, cfdi_attachment_id, context=context)
-                        ir_attach_facturae_mx = cfdi_attachment_data.file_xml_sign and cfdi_attachment_data.file_xml_sign or False
-                        fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
+                        ir_attach_payroll_mx = cfdi_attachment_data.file_xml_sign and cfdi_attachment_data.file_xml_sign or False
+                        fdata = ir_attach_payroll_mx and ir_attach_payroll_mx.db_datas or False
                         if fdata:
                             state = cfdi_attachment_data.state
                             if tools.config['test_report_directory']:
                                 open(os.path.join(tools.config['test_report_directory'], 'l10n_mx_cfdi_test' + '_' + \
-                                  xml_id_invoice + '_' + 'signed' + '-' + ir_attach_facturae_mx.datas_fname)\
+                                  xml_id_payroll + '_' + 'signed' + '-' + ir_attach_payroll_mx.datas_fname)\
                                   , 'wb+').write( base64.decodestring( fdata ) )
                         else:
                             state = 'no data in attach file'
-                        assert state=='signed', 'No signed state l10n_mx attachment facturae %s' % (pac_type)
+                        assert state=='signed', 'No signed state l10n_mx attachment payroll %s' % (pac_type)
                         
                         ################################################################################################################
-                        #   9 I generate a printable l10n_mx attachment facturae cfdi_attachment_data by clicking on printable button  #
+                        #   8 I generate a printable l10n_mx attachment payroll cfdi_attachment_data by clicking on printable button  #
                         ################################################################################################################
-                        log("9 I generate a printable l10n_mx attachment facturae %s by clicking on printable button"% (xml_id_invoice))
+                        log("8 I generate a printable l10n_mx attachment payroll %s by clicking on printable button"% (xml_id_payroll))
                         cfdi_attachment_data = ir_attachment_mx_obj.browse(cr, uid, cfdi_attachment_id, context=context)
                         ir_attachment_mx_obj.signal_printable(cr, uid , cfdi_attachment_ids ,context=context)
                         
                         #######################################################################################################
-                        #   10 I check that the file pdf in l10n_mx attachment facturae cfdi_attachment_data was created      #
+                        #   9 I check that the file pdf in l10n_mx attachment payroll cfdi_attachment_data was created      #
                         #######################################################################################################
-                        log("10 I check that the file pdf in l10n_mx attachment facturae %s was created"% (xml_id_invoice))
+                        log("9 I check that the file pdf in l10n_mx attachment payroll %s was created"% (xml_id_payroll))
                         cfdi_attachment_data = ir_attachment_mx_obj.browse(cr, uid, cfdi_attachment_id, context=context)
-                        ir_attach_facturae_mx = cfdi_attachment_data.file_pdf and cfdi_attachment_data.file_pdf or False
-                        fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
+                        ir_attach_payroll_mx = cfdi_attachment_data.file_pdf and cfdi_attachment_data.file_pdf or False
+                        fdata = ir_attach_payroll_mx and ir_attach_payroll_mx.db_datas or False
                         if fdata:
                             if tools.config['test_report_directory']:
                                 open(os.path.join(tools.config['test_report_directory'], 'l10n_mx_cfdi_test' + '_' + \
-                                  xml_id_invoice + '_' + 'printable' + '-' + ir_attach_facturae_mx.datas_fname)\
+                                  xml_id_payroll + '_' + 'printable' + '-' + ir_attach_payroll_mx.datas_fname)\
                                   , 'wb+').write( base64.decodestring( fdata ) )
-                        assert ir_attach_facturae_mx, 'No printable state l10n_mx attachment facturae %s'% (xml_id_invoice)
+                        assert ir_attach_payroll_mx, 'No printable state l10n_mx attachment payroll %s'% (xml_id_payroll)
                         
-                        if type_test_cancel == 'cancel_from_invoce':
+                        if type_test_cancel == 'cancel_from_payroll':
                             #############################################################################################################
-                            #   11 I cancel from invoice by clicking on cancel button                                                   #
+                            #   11 I cancel from payroll by clicking on cancel button                                                   #
                             #############################################################################################################
-                            log("11 I cancel from invoce %s by clicking on cancel button"% (xml_id_invoice))
-                            wf_service.trg_validate(uid, 'account.invoice', ref(xml_id_invoice), 'invoice_cancel', cr)
+                            log("11 I cancel from payroll %s by clicking on cancel button"% (xml_id_payroll))
+                            self.cancel_sheet(cr, uid, [ref(xml_id_payroll)], context=context)
                         if type_test_cancel == 'cancel_from_attachment_factuare_mx':
                             ########################################################################################################
                             #   11 I cancel from attachment                                                                        #
                             ########################################################################################################
-                            log("11 I cancel from l10n_mx attachment facturae %s by clicking on cancel button"% (xml_id_invoice))
+                            log("11 I cancel from l10n_mx attachment payroll %s by clicking on cancel button"% (xml_id_payroll))
                             ir_attachment_mx_obj.signal_cancel(cr, uid , cfdi_attachment_ids ,context=context)
                     
                         #######################################################################################################
-                        #    12 I check that the state in l10n_mx attachment and facturae cfdi_attachment_data are "Cancel"   #
+                        #    12 I check that the state in l10n_mx attachment and payroll cfdi_attachment_data are "Cancel"   #
                         #######################################################################################################
-                        log("12 I check that the state in l10n_mx attachment and facturae %s are Cancel"% (xml_id_invoice))
+                        log("12 I check that the state in l10n_mx attachment and payroll %s are Cancel"% (xml_id_payroll))
                         cfdi_attachment_data = ir_attachment_mx_obj.browse(cr, uid, cfdi_attachment_id, context=context)
                         state = cfdi_attachment_data.state
                         assert state=='cancel', 'No cancel state l10n_mx attachment' % (pac_type)
-                        invoice_data = self.browse(cr, uid, invoice_id, context=context)
-                        state = invoice_data.state
-                        assert state=='cancel', 'No cancel state invoice %s' % (xml_id_invoice)
+                        payroll_data = self.browse(cr, uid, payroll_id, context=context)
+                        state = payroll_data.state
+                        assert state=='cancel', 'No cancel state payroll %s' % (xml_id_payroll)
                         
                         #######################
                         #   end all test      #
