@@ -69,18 +69,18 @@ class ir_attachment_facturae_mx(osv.Model):
         ])
         return types
 
-    def get_driver_fc_sign(self):
-        factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_sign()
+    def get_driver_vx_sign(self):
+        factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_vx_sign()
         if factura_mx_type__fc == None:
             factura_mx_type__fc = {}
-        factura_mx_type__fc.update({'cfdi32_pac_vx': self._upload_ws_file_vx})
+        factura_mx_type__fc.update({'cfdi32_pac_vx': self._vauxoo_stamp})
         return factura_mx_type__fc
 
-    def get_driver_fc_cancel(self):
-        factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_cancel()
+    def get_driver_vx_cancel(self):
+        factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_vx_cancel()
         if factura_mx_type__fc == None:
             factura_mx_type__fc = {}
-        factura_mx_type__fc.update({'cfdi32_pac_vx': self.sf_cancel})
+        factura_mx_type__fc.update({'cfdi32_pac_vx': self._vauxoo_cancel})
         return factura_mx_type__fc
 
     _columns = {
@@ -88,16 +88,20 @@ class ir_attachment_facturae_mx(osv.Model):
                                  required=True, readonly=True, help="Type of Electronic Invoice"),
     }
 
-    def sf_cancel(self, cr, uid, ids, context=None):
+    def _vauxoo_cancel(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
         msg = ''
         pac_params_obj = self.pool.get('params.pac')
         return True
 
-    def _upload_ws_file_vx(self, cr, uid, ids, fdata=None, context=None):
+    def _vauxoo_stamp(self, cr, uid, ids, fdata=None, context=None):
         if context is None:
             context = {}
+            
+        params_pac_obj = self.pool.get('params.pac')
+        params_pac_sch = params_pac_obj.search(cr, uid, ['method_type','=','pac_vx_firmar'])
+        
         HOST = config['xmlrpc_interface'] or '0.0.0.0'
         PORT = config['xmlrpc_port']
         DB = cr.dbname
@@ -107,10 +111,10 @@ class ir_attachment_facturae_mx(osv.Model):
         url ='http://%s:%d/xmlrpc/' % (HOST,PORT)
         common_proxy = xmlrpclib.ServerProxy(url+'common')
         object_proxy = xmlrpclib.ServerProxy(url+'object')
-        uid = common_proxy.login(DB,USER,PASS)
+        uid2 = common_proxy.login(DB,USER,PASS)
         for attachment in self.browse(cr, uid, ids, context=context):
-            ir_model_data_id = object_proxy.execute(DB, uid, PASS, 'ir.model.data', 'search', [('module','=','l10n_mx_facturae_pac_sf'),('model','=','account.journal')])
-            journal_id = object_proxy.execute(DB, uid, PASS,'ir.model.data','read',ir_model_data_id,['res_id'])[0]['res_id']
+            ir_model_data_id = object_proxy.execute(DB, uid2, PASS, 'ir.model.data', 'search', [('module','=','l10n_mx_facturae_pac_sf'),('model','=','account.journal')])
+            journal_id = object_proxy.execute(DB, uid2, PASS,'ir.model.data','read',ir_model_data_id,['res_id'])[0]['res_id']
             attachment_values = {
                                 'name': attachment.file_input.name,
                                 'datas': attachment.file_input.datas,
@@ -118,7 +122,7 @@ class ir_attachment_facturae_mx(osv.Model):
                                 'res_model': attachment.file_input.res_model,
                                 'res_id': False,
                                 }
-            attachment_id = object_proxy.execute(DB, uid, PASS, 'ir.attachment', 'create', attachment_values)
+            attachment_id = object_proxy.execute(DB, uid2, PASS, 'ir.attachment', 'create', attachment_values)
             attachment_face = { 'name': attachment.name, 
                                 'type': 'cfdi32_pac_sf',
                                 'company_id': attachment.company_id.id,
@@ -167,11 +171,11 @@ class ir_attachment_facturae_mx(osv.Model):
                                 'file_input': attachment.file_input.id,
                                 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                                }
-            attachment_face_id = object_proxy.execute(DB, uid, PASS, 'ir.attachment.facturae.mx', 'create', attachment_face)
-            object_proxy.execute(DB, uid, PASS,'ir.attachment.facturae.mx','signal_confirm',[attachment_face_id])
-            object_proxy.execute(DB, uid, PASS,'ir.attachment.facturae.mx','signal_sign',[attachment_face_id])
-            ir_attach = object_proxy.execute(DB, uid, PASS,'ir.attachment.facturae.mx','read',[attachment_face_id],['file_xml_sign'])
-            data = object_proxy.execute(DB, uid, PASS,'ir.attachment','read',[ir_attach[0]['file_xml_sign'][0]],['db_datas'])
+            attachment_face_id = object_proxy.execute(DB, uid2, PASS, 'ir.attachment.facturae.mx', 'create', attachment_face)
+            object_proxy.execute(DB, uid2, PASS,'ir.attachment.facturae.mx','signal_confirm',[attachment_face_id])
+            object_proxy.execute(DB, uid2, PASS,'ir.attachment.facturae.mx','signal_sign',[attachment_face_id])
+            ir_attach = object_proxy.execute(DB, uid2, PASS,'ir.attachment.facturae.mx','read',[attachment_face_id],['file_xml_sign'])
+            data = object_proxy.execute(DB, uid2, PASS,'ir.attachment','read',[ir_attach[0]['file_xml_sign'][0]],['db_datas'])
             xml_sign = base64.decodestring(data[0]['db_datas']) or ''
             file = base64.encodestring(xml_sign or '')
         return {'file': file, 'msg': 'QUE EXITO!', 'cfdi_xml': xml_sign, 'status': True}
