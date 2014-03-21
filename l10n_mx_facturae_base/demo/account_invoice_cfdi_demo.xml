@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="0">
+    <data noupdate="1">
         <!-- Invoices -->
         <record id="ai_pac_facturae_0" model="account.invoice">
             <field name="payment_term" ref="account.account_payment_term"/>
