@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="product_template_demo" model="product.template">
+            <field name="name">product demo con ret</field>
+            <field name="list_price">450.0</field>
+            <field name="standard_price">300.0</field>
+            <field name="type">service</field>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field name="uom_po_id" ref="product.product_uom_unit"/>
+            <field name="description_sale">product demo</field>
+        </record>
+        
+        <record id="product_product_demo" model="product.product">
+            <field name="product_tmpl_id" ref="product_template_demo"/>
+            <field name="taxes_id" eval="[(6,0,[ref('l10n_mx_facturae_base.account_demo_ret')])]"/>
+            <field name="default_code">P1</field> 
+            <field name="supply_method">buy</field>
+            <field name="mes_type">fixed</field>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field name="type">service</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="name">Product demo with ret</field>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field eval="1" name="track_incoming"/>
+            <field name="procure_method">make_to_stock</field>
+            <field name="cost_method">standard</field>
+            <field eval="1" name="seller_delay"/>
+            <field eval="7.0" name="sale_delay"/>
+            <field name="categ_id" ref="product.product_category_all"/>
+        </record>
+
+        <record id="product_template_demo" model="product.template">
+            <field name="name">product demo con ret</field>
+            <field name="list_price">450.0</field>
+            <field name="standard_price">300.0</field>
+            <field name="type">service</field>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field name="uom_po_id" ref="product.product_uom_unit"/>
+            <field name="description_sale">product demo</field>
+        </record>
+        
+        <record id="product_product_demo" model="product.product">
+            <field name="product_tmpl_id" ref="product_template_demo"/>
+            <field name="taxes_id" eval="[(6,0,[ref('l10n_mx_facturae_base.account_demo_iva')])]"/>
+            <field name="default_code">P2</field> 
+            <field name="supply_method">buy</field>
+            <field name="mes_type">fixed</field>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field name="type">service</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="name">Product demo with ret</field>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field eval="1" name="track_incoming"/>
+            <field name="procure_method">make_to_stock</field>
+            <field name="cost_method">standard</field>
+            <field eval="1" name="seller_delay"/>
+            <field eval="7.0" name="sale_delay"/>
+            <field name="categ_id" ref="product.product_category_all"/>
+        </record>
+
+    </data>
+</openerp>
