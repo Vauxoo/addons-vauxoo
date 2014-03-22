@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="account_demo_ret" model="account.tax">
+            <field name="name">RET ISR HONORARIOS 10% - Test</field>
+            <field model="account.tax.category" name="tax_category_id" search="[('name','like','ISR-RET')]"/>
+        </record>
+
+        <record id="account_demo_iva" model="account.tax">
+            <field name="name">IVA 16% FOR ELECTRONIC INVOICES - Test</field>
+            <field model="account.tax.category" name="tax_category_id" search="[('name','like','IVA')]"/>
+        </record>
+        
+    </data>
+</openerp>
