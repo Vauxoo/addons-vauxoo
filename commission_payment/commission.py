@@ -8,7 +8,19 @@ from tools import config
 from tools.translate import _
 import decimal_precision as dp
 
+class product_product(osv.osv):
+    _inherit = "product.product"
+    
+    _columns = {
+        'commission_apply': fields.boolean('Apply Commision',
+            help="If check this product will be used to compute commissions"),
+    }
 
+    _defaults = {
+        'commission_apply': lambda *a: True,
+    }
+    
+product_product()
 
 class commission_payment(osv.osv):
     """
@@ -16,6 +28,7 @@ class commission_payment(osv.osv):
     """
     
     _name = 'commission.payment'
+    _order = 'date_start desc'
     _description = __doc__
     
     _columns = {
@@ -202,7 +215,7 @@ class commission_payment(osv.osv):
                                             #~ #~ print 'Producto: ', inv_lin.name, '\n'
                                             
                                             # Verificar si tiene producto asociado
-                                            if inv_lin.product_id:
+                                            if inv_lin.product_id and inv_lin.product_id.commission_apply:
                                                 #~ DETERMINAR EL PORCENTAJE DE IVA EN LA LINEA (perc_iva)
                                                 #~ ====================================================================
                                                 #~ ====================================================================
