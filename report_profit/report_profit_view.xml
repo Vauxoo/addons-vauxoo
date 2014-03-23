@@ -131,7 +131,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="search_view_id" ref="view_report_profit_filter"/>
-            <field name="context">{'search_default_year':1,'search_default_Customer':1,'group_by_no_leaf':0,'group_by':[]}</field>
+            <field name="context">{'search_default_year':1,'group_by_no_leaf':0,'group_by':[]}</field>
             <field name="help">This report performs the equivalent of a third unit for the analysis of sales.</field>
         </record>
         <menuitem id="profit_reporting" name="Profit Reporting" parent="account.menu_finance_receivables" action="action_profit_product_tree"/>
