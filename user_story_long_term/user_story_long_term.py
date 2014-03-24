@@ -214,64 +214,6 @@ class user_story_phase(osv.Model):
 #
 
 
-#class account_analytic_account(osv.Model):
-#    _inherit = 'account.analytic.account'
-#    _description = 'Analytic Account'
-#    _columns = {
-#        'use_phases_user_story': fields.boolean('Phases', help="Check this field if you plan to use phase-based scheduling"),
-#    }
-#
-#
-#    def on_change_template(self, cr, uid, ids, template_id, context=None):
-#        res = super(account_analytic_account, self).on_change_template(cr, uid, ids, template_id, context=context)
-#        if template_id and 'value' in res:
-#            template = self.browse(cr, uid, template_id, context=context)
-#            res['value']['use_phases_user_story'] = template.use_phases_user_story
-#        return res
-#
-#    def _trigger_user_story_creation(self, cr, uid, vals, context=None):
-#        if context is None: context = {}
-#        return (vals.get('use_phases_user_story') and not 'user_story_creation_in_progress' in context)
-#
-#    def user_story_create(self, cr, uid, analytic_account_id, vals, context=None):
-#        '''
-#        This function is called at the time of analytic account creation and is used to create a project automatically linked to it if the conditions are meet.
-#        '''
-#        project_pool = self.pool.get('user.story')
-#        project_id = project_pool.search(cr, uid, [('analytic_account_id','=', analytic_account_id)])
-#        if not project_id and self._trigger_user_story_creation(cr, uid, vals, context=context):
-#            project_values = {
-#                'name': vals.get('name'),
-#                'analytic_account_id': analytic_account_id,
-#                'type': vals.get('type','contract'),
-#            }
-#            return project_pool.create(cr, uid, project_values, context=context)
-#        return False
-#    
-#    def create(self, cr, uid, vals, context=None):
-#        if context is None:
-#            context = {}
-#        vals['name'] = context.get('name', False) and context.get('name') or ''
-#        context.get('name', False) and context.pop('name')
-#        analytic_account_id = super(account_analytic_account, self).create(cr, uid, vals, context=context)
-#        self.user_story_create(cr, uid, analytic_account_id, vals, context=context)
-#        return analytic_account_id
-#
-#    """
-#    def write(self, cr, uid, ids, vals, context=None):
-#        vals_for_project = vals.copy()
-#        import pdb
-#        pdb.set_trace()
-#        for account in self.browse(cr, uid, ids, context=context):
-#            if not vals.get('name', False):
-#                vals_for_project['name'] = account.name
-#            if not vals.get('type', False):
-#                vals_for_project['type'] = account.type
-#            self.user_story_create(cr, uid, account.id, vals_for_project, context=context)
-#        return super(account_analytic_account, self).write(cr, uid, ids, vals, context=context)
-#    """
-#account_analytic_account()
-
 
 class user_story_user_allocation(osv.Model):
     _name = 'user.story.user.allocation'
@@ -290,7 +232,6 @@ class user_story_user_allocation(osv.Model):
 class user_story(osv.Model):
     _name = "user.story"
     _inherit = "user.story"
-#    _inherits = {'account.analytic.account': 'analytic_account_id'}
 
     def body_progress(self, cr, uid, ids, template, hu, context=None):
         imd_obj = self.pool.get('ir.model.data')
@@ -405,17 +346,6 @@ class user_story(osv.Model):
                     hu = self.browse(cr, uid, ids[0], context=context)
                     self.send_mail_hu(cr, uid, ids, subject, body, hu.id, context=context)
         return res
-
-    #def search(self, cr, user, args, offset=0, lmit=None, order=None, context=None, count=False):
-    #    if user == 1:
-    #        return super(user_story, self).search(cr, user, args, offset=offset, limit=limit, order=order, context=context, count=count)
-    #    if context and context.get('user_preference'):
-    #            cr.execute("""SELECT user_story.id FROM user_story user_story
-    #                       LEFT JOIN account_analytic_account account ON account.id = user_story.analytic_account_id
-    #                       LEFT JOIN user_story_user_rel rel ON rel.user_story_id = user_story.id
-    #                       WHERE (account.user_id = %s or rel.uid = %s)"""%(user, user))
-    #            return [(r[0]) for r in cr.fetchall()]
-    #    return super(user_story, self).search(cr, user, args, offset=offset, limit=limit, order=order, context=context, count=count)
     
     def _phase_count(self, cr, uid, ids, field_name, arg, context=None):
         res = dict.fromkeys(ids, 0)
@@ -425,11 +355,6 @@ class user_story(osv.Model):
         return res
 
     _columns = {
-#       'analytic_account_id': fields.many2one('account.analytic.account', 'Contract/Analytic', 
-#        help="Link this project to an analytic account if you need financial management on" 
-#        "projects. It enables you to connect projects with budgets, planning, cost and revenue" 
-#        "analysis, timesheets on projects, etc.", ondelete="cascade", required=True),
-
         'phase_ids': fields.one2many('user.story.phase', 'user_story_id', "User Story Phases"),
         'phase_count': fields.function(_phase_count, type='integer', string="Open Phases"),
     }
@@ -483,17 +408,5 @@ class user_story(osv.Model):
 #                    'date_end': p.end.strftime('%Y-%m-%d %H:%M:%S')
 #                }, context=context)
 #        return True
-#project()
-
-
-
-
-
-#class project_task(osv.osv):
-#    _inherit = "project.task"
-#    _columns = {
-#        'phase_id': fields.many2one('project.phase', 'Project Phase', domain="[('project_id', '=', project_id)]"),
-#    }
-#project_task()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
