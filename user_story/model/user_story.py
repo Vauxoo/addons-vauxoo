@@ -35,6 +35,7 @@ class user_story(osv.Model):
     """
 
     _name = 'user.story'
+    _description = 'User Story'
     _inherit = ['mail.thread']
 
     def _get_tasks(self, cr, uid, ids, field_name, arg, context=None):
@@ -86,40 +87,44 @@ class user_story(osv.Model):
         
      
     _columns = {
-        'name': fields.char('Title', size=255, required=True, readonly=False),
+        'name': fields.char('Title', size=255, required=True, readonly=False,
+            translate=True),
         'owner': fields.char('Owner', size=255, required=True, readonly=False),
         'code': fields.char('Code', size=64, readonly=False),
         'planned_hours': fields.float('Planned Hours'),
         'project_id': fields.many2one('project.project', 'Project',
                                       required=True),
-        'description': fields.text('Description'),
+        'description': fields.text('Description', translate=True),
         'accep_crit_ids': fields.one2many('acceptability.criteria',
                                           'accep_crit_id',
                                           'Acceptability Criteria',
                                           required=False),
-        'info': fields.text('Other Info'),
-        'priority_level':fields.selection([('urgent','Urgent'),
-                                           ('priority','Priority'),
-                                           ('secondary','Secondary')],
-                                           'Priority Level',
-                                           help='User story level priority,'
-                                                   ' used to define priority'
-                                                   ' for each user story'), 
-        
-        'asumption': fields.text('Asumptions'),
+        'info': fields.text('Other Info', translate=True),
+        'priority_level':fields.many2one(
+            'user.story.priority',
+            'Priority Level',
+            help=('User story level priority, used to define priority for'
+                  ' each user story')), 
+        'asumption': fields.text('Assumptions', translate=True),
         'date': fields.date('Date'),
-        'user_id': fields.many2one('res.users', 'Responsible Supervisor',help="Person responsible for interacting with the client to give details of the progress or completion of the User History, in some cases also the supervisor for the correct execution of the user story."),
-        'user_execute_id': fields.many2one('res.users', 'Responsible Execution',help="Person responsible for user story takes place, either by delegating work to other human capital or running it by itself. For delegate work should monitor the proper implementation of associated activities."),
+        'user_id': fields.many2one(
+            'res.users', 'Responsible Supervisor',
+            help=("Person responsible for interacting with the client to give"
+                  " details of the progress or completion of the User Story,"
+                  " in some cases also the supervisor for the correct"
+                  " execution of the user story.")),
+        'user_execute_id': fields.many2one('res.users', 'Execution Responsible',help="Person responsible for user story takes place, either by delegating work to other human resource or running it by itself. For delegate work should monitor the proper implementation of associated activities."),
         'sk_id': fields.many2one('sprint.kanban', 'Sprint Kanban'),
         'state': fields.selection(_US_STATE, 'State', readonly=True),
         'task_ids': fields.function(_get_tasks, type='many2many',
                                     relation="project.task",
                                     fnct_inv=_set_task,
-                                    string="Tasksss",
+                                    string="Tasks",
                                     help="""Draft procurement of
                                             the product and location
                                             of that orderpoint"""),
         'categ_ids': fields.many2many('project.category','project_category_user_story_rel','userstory_id','categ_id', string="Tags"),
+        'implementation': fields.text('Implementation Conclusions', translate=True),
     }
     _defaults = {
         'name': lambda *a: None,
@@ -127,7 +132,9 @@ class user_story(osv.Model):
         'user_id': lambda self, cr, uid, ctx: uid,
         'user_execute_id': lambda self, cr, uid, ctx: uid,
         'state': 'draft',
-        'priority_level':'secondary',
+        'priority_level': lambda self, cr, uid, ctx: self.pool.get(
+            'user.story.priority').search(
+                cr, uid, [('name', 'like', 'Secondary')], context=ctx)[0]
     }
 
     def do_draft(self, cr, uid, ids, context=None):
@@ -146,6 +153,17 @@ class user_story(osv.Model):
         return self.write(cr, uid, ids, {'state': 'cancelled'},
                           context=context)
 
+class user_story_priority(osv.Model):
+    """
+    User Story Priority Level
+    """
+
+    _name = 'user.story.priority'
+    _description = "User Story Priority Level"
+    _columns = {
+        'name': fields.char('Name', size=255, required=True),
+    }
+
 
 class acceptability_criteria(osv.Model):
     """
@@ -153,18 +171,109 @@ class acceptability_criteria(osv.Model):
     """
 
     _name = 'acceptability.criteria'
+    _description = 'Acceptability Criteria'
+
+    def _get_ac_ids_by_us_ids(self, cr, uid, us_ids, context=None):
+        """
+        This method is as the method of the sensitive store tuple for the
+        functional fields defined in the current field that pretend to pull
+        data form the user.story model. The method get us_ids and make a search
+        for the acceptability.criteria records that need to be updated.
+        @return a list of the acceptability.criteria that need to be updated.
+        """
+        context = context or {}
+        us_obj = self.pool.get('user.story')
+        ac_obj = self.pool.get('acceptability.criteria')
+        ac_ids = ac_obj.search(
+            cr, uid, [('accep_crit_id', 'in', us_ids)], context=context)
+        return ac_ids
+
+    def _get_user_story_field(self, cr, uid, ids, fieldname, arg, context=None):
+        """
+        Method used as the function for extracting values for the user.story
+        model using functional fields. This method is used for various fields,
+        the fieldname it matters to extract the value, the field name need to
+        be the same from the user.story model.
+        """
+        context = context or {}
+        res = {}.fromkeys(ids)
+        for ac_brw in self.browse(cr, uid, ids, context=context):
+            copy_field = getattr(ac_brw.accep_crit_id, fieldname, False)
+            copy_field = copy_field and (isinstance(copy_field, (list)) and [
+                elem.id for elem in copy_field ] or copy_field.id) or False
+            res[ac_brw.id] = copy_field
+        return res
 
     _columns = {
-        'name': fields.char('Title', size=255, required=True, readonly=False),
-        'scenario': fields.text('Scenario', required=True),
+        'name': fields.char('Title', size=255, required=True, readonly=False,
+            translate=True),
+        'scenario': fields.text('Scenario', required=True, translate=True),
         'accep_crit_id': fields.many2one('user.story',
                                          'User Story',
                                          required=True),
         'accepted': fields.boolean('Accepted',
-                                   help='Chek if this criteria apply'),
+                                   help='Check if this criterion apply'),
+        'development': fields.boolean('Development'),
+        'difficulty': fields.selection(
+            [('low','Low'),
+             ('medium','Medium'),
+             ('high','High'),
+             ('na','Not Apply')],
+            string='Difficulty'),
+        'project_id': fields.function(
+            _get_user_story_field,
+            type="many2one",
+            relation='project.project',
+            string='Project',
+            help='User Story Project',
+            store={
+                'acceptability.criteria': (lambda s, c, u, i, ctx: i, ['accep_crit_id'], 16),
+                'user.story': (_get_ac_ids_by_us_ids, ['project_id'], 20),
+            }),
+        'sk_id': fields.function(
+            _get_user_story_field,
+            type="many2one",
+            relation="sprint.kanban",
+            string='Sprint',
+            help='Sprint Kanban',
+            store={
+                'acceptability.criteria': (lambda s, c, u, i, ctx: i, ['accep_crit_id'], 16),
+                'user.story': (_get_ac_ids_by_us_ids, ['sk_id'], 20),
+            }),
+        'categ_ids': fields.function(
+            _get_user_story_field,
+            type="many2one",
+            relation="project.category",
+            string='Tag',
+            help='Tag',
+            store={
+                'acceptability.criteria': (lambda s, c, u, i, ctx: i, ['accep_crit_id'], 16),
+                'user.story': (_get_ac_ids_by_us_ids, ['categ_ids'], 20),
+            }),
+        'user_id': fields.function(
+            _get_user_story_field,
+            type="many2one",
+            relation="res.users",
+            string='Responsible Supervisor',
+            help='Responsible Supervisor',
+            store={
+                'acceptability.criteria': (lambda s, c, u, i, ctx: i, ['accep_crit_id'], 16),
+                'user.story': (_get_ac_ids_by_us_ids, ['user_id'], 20),
+            }),
+        'user_execute_id': fields.function(
+            _get_user_story_field,
+            type="many2one",
+            relation="res.users",
+            string='Execution Responsible',
+            help='Execution Responsible',
+            store={
+                'acceptability.criteria': (lambda s, c, u, i, ctx: i, ['accep_crit_id'], 16),
+                'user.story': (_get_ac_ids_by_us_ids, ['user_execute_id'], 20),
+            }),
     }
     _defaults = {
         'name': lambda *a: None,
+        'difficulty': 'na',
     }
 
 
@@ -202,8 +311,7 @@ class project_task(osv.Model):
                                         #domain="[('sk_id', '=', sprint_id)]",
                                         help="Set here the User Story related with this task"),
         'branch_to_clone':fields.char('Branch to clone', 512,
-                                      help='Branch source for clone and'
-                                           ' make merge proposal'), 
+            help='Source branch to be clone and make merge proposal'), 
         
     }
 class inherit_project(osv.Model):
@@ -214,6 +322,5 @@ class inherit_project(osv.Model):
 
     _columns = {
             'descriptions':fields.text('Description',
-                                       help="reference on what the project "
-                                            "is about"),
+                help="Reference on what the project is about"),
             }

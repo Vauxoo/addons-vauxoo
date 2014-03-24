@@ -80,7 +80,7 @@
 <!--TABLA DE ITEMS-->   
     <section>
     <para>[[repeatIn(get_invoice_by_partner(objects),'o')]]</para>
-    <para>[[ setLang(o.lang) ]]</para>
+    <para>[[ setLang(user.lang) ]]</para>
         <blockTable colWidths="35mm,97mm,80mm,60mm" style="TERMSTABLEGREY">
             <tr>
                 <td><para style="ITEMSLEFT">[['%s-%s-%s'%(o.get('rp_brw').vat[2],o.get('rp_brw').vat[3:-1],o.get('rp_brw').vat[-1])]]</para></td>

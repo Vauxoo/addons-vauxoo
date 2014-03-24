@@ -46,19 +46,18 @@
 				<group>
 					<field name="planned_hours" />
 					<field name="sk_id" context="{'current_model3': 'sprint.kanban'}" />
-					<field name="priority_level" />
+					<field name="priority_level" widget="selection"/>
                     <field name="categ_ids" widget="many2many_tags" context="{'current_model1': 'project.category'}"/>
 				</group>
 			</group>
 			<h3>
-		        <label for="project_id" string="2.- Project related" class="oe_horizontal_separator oe_clear"/>
+		        <label for="project_id" string="2.- Related Project" class="oe_horizontal_separator oe_clear"/>
 			</h3>
             <div>
                 <p class="oe_grey">
 		            <field name="project_id" domain="[('child_ids','=',False)]" context="{'current_model': 'project.project'}" />
-		            the link to the project, all projects listed here
-                    are of the lower level available in the Master WBS. This
-                    represent thumbs in your wbs
+		            The link to the project, all projects listed here
+                    are of the lower level available in the Master WBS.
                 </p>
             </div>
           <notebook colspan="4">
@@ -70,7 +69,7 @@
                     Remember you can upload a Youtube video, and insert 
                     directly here, embeded as a webpage, you can use vimeo and 
                     other elements as images, diagrams (using some 
-                    online services) you just must copy and paste the embebed code,
+                    online services) you just must copy and paste the embeded code,
                     you can see an example about how to do that 
                     <a href="youtube">here</a>
                     </p>
@@ -83,22 +82,38 @@
                   <field name="name" colspan="4" nolabel="1"/>
                   <separator string="Scenario" colspan="4"/>
                   <field name="scenario" colspan="4" nolabel="1"/>
-                  <separator string="Accepted" colspan="4"/>
-                  <field name="accepted" colspan="4" nolabel="1"/>
+                  <group colspan="4" col="3">
+                      <group colspan="1" col="1">
+                          <separator string="Accepted"/>
+                          <field name="accepted" nolabel="1"/>
+                      </group>
+                      <group colspan="1" col="1">
+                          <separator string="Development"/>
+                          <field name="development" nolabel="1"/>
+                      </group>
+                      <group colspan="1" col="1">
+                          <separator string="Difficulty"/>
+                          <field name="difficulty" nolabel="1"/>
+                      </group>
+                  </group>
                 </form>
                 <tree string="Acceptability Criteria">
                   <field name="name"/>
                   <field name="scenario"/>
                   <field name="accepted"/>
+                  <field name="development"/>
+                  <field name="difficulty"/>
                 </tree>
               </field>
             </page>
           
             <page string="GAP analysis results">
-			  <label for="info" colspan="4" string="5.- Conclusion of analysis" class="oe_horizontal_separator oe_clear"/>
-              <field name="info" colspan="4" placeholder="Add a other info here ..."/> 
-              <label for="asumption" colspan="4" string="6.- Asumptions" class="oe_horizontal_separator oe_clear"/>
-              <field name="asumption" colspan="4" placeholder="Add a asumptions here ..."/>
+			  <label for="info" colspan="4" string="5.- Technical Conclusions" class="oe_horizontal_separator oe_clear"/>
+              <field name="info" colspan="4" placeholder="Add another info here ..."/> 
+              <label for="asumption" colspan="4" string="6.- Assumptions" class="oe_horizontal_separator oe_clear"/>
+              <field name="asumption" colspan="4" placeholder="Add assumptions here ..."/>
+              <label for="implementation" colspan="4" string="7.- Implementation Conclusions" class="oe_horizontal_separator oe_clear"/>
+              <field name="implementation" colspan="4" placeholder="Add Implementation Conclusions here ..."/>
             </page>
             
             <page string="Tasks">
@@ -136,6 +151,79 @@
       </field>
     </record>
     
+    <record model="ir.ui.view" id="view_acceptability_criteria_form">
+        <field name="name">acceptability.criteria.form</field>
+        <field name="model">acceptability.criteria</field>
+        <field name="arch" type="xml">
+            <form string="Acceptability Criterion" version="7.0">
+                <sheet string="Acceptability Criterion">
+                    <h1><label for="id" string="Acceptability Criterion" class="oe_horizontal_separator oe_clear"/>
+                        <field name="id" readonly="True"/>
+                        <field name="name" placeholder="Acceptability Criterion summary..."/>
+                    </h1>
+                    <group>
+                        <field name="scenario"/>
+                        <field name="accep_crit_id"/>
+                        <field name="accepted"/>
+                        <field name="development"/>
+                        <field name="difficulty"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <record model="ir.ui.view" id="view_acceptability_criteria_tree">
+        <field name="name">acceptability.criteria.tree</field>
+        <field name="model">acceptability.criteria</field>
+        <field name="arch" type="xml">
+            <tree string="Acceptability Criteria">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="scenario"/>
+                <field name="accep_crit_id"/>
+                <field name="project_id" invisible="True"/>
+                <field name="sk_id" invisible="True"/>
+                <field name="categ_ids" invisible="True"/>
+                <field name="user_id" invisible="True"/>
+                <field name="user_execute_id" invisible="True"/>
+                <field name="accepted"/>
+                <field name="development"/>
+                <field name="difficulty"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_acceptability_criteria_search" model="ir.ui.view">
+        <field name="name">acceptability.criteria.search</field>
+        <field name="model">acceptability.criteria</field>
+        <field name="arch" type="xml">
+            <search string="Acceptability Criteria">
+                <group string="Filter">
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="scenario"/>
+                    <field name="accep_crit_id"/>
+                    <field name="accepted"/>
+                    <field name="development"/>
+                    <field name="difficulty"/>
+                </group>
+                <filter name="accept_criteria_development" string="In Development" domain="[('development','=',True)]"/>
+                <filter name="accept_criteria_accepted" string="Accepted" domain="[('accepted','=',True)]"/>
+                <group expand="1" string="Group By...">
+                    <filter name="accept_criteria_user_story_id" string="User Story" context="{'group_by':'accep_crit_id'}"/>
+                    <filter name="accept_criteria_difficulty" string="Difficulty" context="{'group_by':'difficulty'}"/>
+                    <separator/>
+                    <filter name="accept_criteria_project_id" string="Project" context="{'group_by':'project_id'}"/>
+                    <filter name="accept_criteria_sk_id" string="Sprint" context="{'group_by':'sk_id'}"/>
+                    <filter name="accept_criteria_categ_ids" string="Tag" context="{'group_by':'categ_ids'}"/>
+                    <filter name="accept_criteria_user_id" string="Responsible Supervisor" context="{'group_by':'user_id'}"/>
+                    <filter name="accept_criteria_user_execute_id" string="Execution Responsible" context="{'group_by':'user_execute_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
      <record id="view_userstory_search" model="ir.ui.view">
       <field name="name">user.story.search</field>
       <field name="model">user.story</field>
@@ -173,8 +261,9 @@
       </field>
     </record>
     
+
     <record model="ir.actions.act_window" id="action_my_user_story">
-      <field name="name">My User Stories Exc</field>
+      <field name="name">My User Stories to Execute</field>
       <field name="res_model">user.story</field>
       <field name="view_type">form</field>
       <field name="view_mode">tree,form</field>
@@ -182,8 +271,23 @@
       <field name="view_id" ref="view_userstory_tree"/>
     </record>
  
+    <record model="ir.actions.act_window" id="action_acceptability_criteria">
+      <field name="name">Acceptability Criteria</field>
+      <field name="res_model">acceptability.criteria</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="view_acceptability_criteria_tree"/>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_user_story_priority">
+      <field name="name">Priority Level</field>
+      <field name="res_model">user.story.priority</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+ 
     <record model="ir.actions.act_window" id="action_user_story">
-      <field name="name">User Story</field>
+      <field name="name">User Stories</field>
       <field name="res_model">user.story</field>
       <field name="view_type">form</field>
       <field name="view_mode">tree,form</field>
@@ -200,8 +304,12 @@
       </p>
       </field>
     </record>
-    <menuitem parent="project.menu_project_management" id="menu_action_user_story" action="action_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user"/>
-    <menuitem parent="project.menu_project_management" id="menu_action_my_user_story" action="action_my_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user"/>
+    <menuitem parent="base.menu_main_pm" sequence="2" id="menu_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user" name="User Story"/>
+    <menuitem parent="menu_user_story" id="menu_action_user_story" action="action_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user"/>
+    <menuitem parent="menu_user_story" id="menu_action_my_user_story" action="action_my_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user"/>
+    <menuitem parent="menu_user_story" id="menu_acceptability_criteria" action="action_acceptability_criteria" groups="user_story.group_user_story_manager,user_story.group_user_story_user"/>
+    <menuitem parent="base.menu_definitions" id="menu_conf_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user" name="User Story"/>
+    <menuitem parent="menu_conf_user_story" id="menu_config_user_story_priority" action="action_user_story_priority" groups="user_story.group_user_story_manager,user_story.group_user_story_user"/>
   </data>
 </openerp>
 

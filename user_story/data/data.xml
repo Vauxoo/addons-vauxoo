@@ -2,6 +2,17 @@
 <openerp>
     <data>
     
+        <!-- User Story Priority -->
+        <record id="usp_urgent" model="user.story.priority">
+            <field name="name">Urgent</field>
+        </record>
+        <record id="usp_priority" model="user.story.priority">
+            <field name="name">Priority</field>
+        </record>
+        <record id="usp_secondary" model="user.story.priority">
+            <field name="name">Secondary</field>
+        </record>
+        
         <!-- Task-related subtypes for messaging / Chatter -->
         <record id="mt_task_new" model="mail.message.subtype">
             <field name="name">Task Created</field>
