@@ -43,17 +43,30 @@
                             <field name="file_xml_sign"/>
                             <field name="file_pdf"/>
                             <field name="identifier"/>
+                         </group>
+                    <notebook>
+                        <page string="General Information">
+                            <group colspan="4">
 <!--
-                            <field name="file_input_index"/>
+                                <field name="file_input_index"/>
 -->
-                            <field name="file_xml_sign_index"/>
-                            <field name="file_pdf_index"/>
-                        </group>
-                        <group colspan="4">
-                            <field name="msj" invisible="1"/>
-                            <field name="last_date" invisible="1"/>
-                            <field name="date_print_report" invisible="1"/>
-                        </group>
+                                <field name="file_xml_sign_index"/>
+                                <field name="file_pdf_index"/>
+                            </group>
+                            <group colspan="4">
+                                <field name="msj" invisible="1"/>
+                                <field name="last_date" invisible="1"/>
+                                <field name="date_print_report" invisible="1"/>
+                            </group>
+                        </page>
+                        <page string="Other info">
+                            <group colspan="4">
+                                <field name="cfdi_fecha_timbrado" readonly="1"/>
+                                <field name="cfdi_fecha_cancelacion" readonly="1"/>
+                                <field name="attachment_email"/>
+                            </group>
+                        </page>
+                    </notebook>
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>

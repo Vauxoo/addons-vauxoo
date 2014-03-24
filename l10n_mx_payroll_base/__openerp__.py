@@ -60,6 +60,7 @@ ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfdi/guianomina.pdf
     "category": "Addons Vauxoo",
     "data": [
         "view/l10n_mx_payroll_base_view.xml",
+        "view/ir_attachment_facturae_view.xml",
         'security/ir.model.access.csv',
     ],
     "demo" : [

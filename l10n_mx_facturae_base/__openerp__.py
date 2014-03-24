@@ -82,6 +82,7 @@ Requires the following programs:
         "l10n_mx_facturae_workflow.xml",
         "wizard/installer_view.xml",
         "invoice_view.xml",
+        "ir_attachment_facturae_view.xml",
     ],
     "test" : [
         #~ "test/account_invoice_cfd.yml",
