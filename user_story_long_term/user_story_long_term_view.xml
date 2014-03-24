@@ -337,7 +337,7 @@
 
 
         <menuitem action="act_user_story_phase"
-            id="menu_user_story_phase"  parent="project.menu_project_management"/>
+            id="menu_user_story_phase"  parent="user_story.menu_user_story"/>
 
 
 <!--
