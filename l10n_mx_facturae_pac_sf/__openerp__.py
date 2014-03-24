@@ -50,16 +50,14 @@ Ubuntu Package Depends:
     "demo" : [
         "demo/l10n_mx_facturae_pac_sf_demo.xml",
         "demo/l10n_mx_facturae_seq_demo.xml",
-        "demo/account_invoice_cfdi_pac_sf_demo.xml",
+        "demo/l10n_mx_payroll_seq_demo.xml",
     ],
     "data" : [
         #"security/l10n_mx_facturae_pac_sf_security.xml",
         #~ "wizard/wizard_cancel_invoice_pac_sf_view.xml",
         #~ "wizard/wizard_export_invoice_pac_sf_view_v6.xml",
     ],
-    "test" : [
-        "test/account_invoice_cfdi_pac_sf.yml",
-    ],
+    "test" : [],
     "installable" : True,
     "active" : False,
 }

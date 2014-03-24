@@ -4,7 +4,7 @@
         <record id="hr_payslip_al_cfdi0" model="hr.payslip">
             <field name="name">Payroll Test Alejandro Negrin</field>
             <field name="employee_id" ref="employee_payroll_a_negrin"/>
-            <field name="journal_id" ref="l10n_mx_cfdi_payroll_pac_finkok_journal_0"/>
+            <field name="journal_id" ref="account.bank_journal"/>
             <field name="contract_id" ref="hr_contract_a_negrin_cfdi0"/>
             <field name="partner_id" ref="l10n_mx_partner_address.res_partner_address_vauxoo_1"/>
             <field name="struct_id" ref="payroll_structure_demo_01"/>

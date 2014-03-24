@@ -32,7 +32,6 @@
                 "l10n_mx_payroll_concept",
                 "l10n_mx_payroll_regime_employee",
                 "l10n_mx_payroll_risk_rank_contract",
-                "l10n_mx_facturae_pac_finkok",
                 "l10n_mx_ir_attachment_facturae",
                 "l10n_mx_params_pac",
     ],
@@ -40,6 +39,19 @@
     "description": """
 Mexican Payroll
 ===============
+
+This module installs the necessary work to CFDI MX Payroll. 
+For example, data banks, catalogs required for SAT to generate payroll, 
+fields needed in view of employees and contracts.
+
+
+ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfdi/catalogoscomplementonomina.pdf
+
+
+ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfd/nomina11.pdf
+
+
+ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfdi/guianomina.pdf
     """,
     "website": "http://vauxoo.com",
     "category": "Addons Vauxoo",
@@ -48,13 +60,11 @@ Mexican Payroll
         'security/ir.model.access.csv',
     ],
     "demo" : [
-        "demo/l10n_mx_facturae_seq_demo.xml",
         "demo/l10n_mx_payroll_demo.xml",
         "demo/l10n_mx_payroll_contract.xml",
         "demo/l10n_mx_payroll_cfdi0.xml",
     ],
     "test": [
-        "test/hr_payroll_cfdi.yml",
     ],
     "active": False,
     "installable": True,

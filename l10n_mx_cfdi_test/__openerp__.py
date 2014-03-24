@@ -2,16 +2,15 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2014 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: Luis Ernesto Garcia Medina (ernesto_gm@vauxoo.com)
-#
+#    Coded by: Jorge Naranjo (jorge_nr@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
-#   it under the terms of the GNU Affero General Public License as
+#    it under the terms of the GNU Affero General Public License as
 #    published by the Free Software Foundation, either version 3 of the
 #    License, or (at your option) any later version.
 #
@@ -26,30 +25,26 @@
 ##############################################################################
 
 {
-    "name": "Risk Rank of Payrolls",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Generic Modules",
+    "name" : "Tests Invoice and Payroll CFDI Pacs SF and Finkok",
+    "version" : "1.0",
+    "author" : "Vauxoo",
+    "category" : "Localization/Mexico",
     "description" : """
-Risk Rank of Payrolls
-=====================
-
-    Add model and data of Risk Rank of employee requested by the SAT based upon the payrolls
-    
-    ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfdi/catalogoscomplementonomina.pdf
-    """,
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
-    "depends": [
-            "hr_contract",
-            "hr_payroll",
-                ],
-    "data": [
-        "data/payroll_risk_rank_data.xml",
-        "view/payroll_risk_rank_contract_view.xml",
-        "view/hr_contract_payroll_risk_rank_view.xml",
-        'security/ir.model.access.csv',
+This module execute all test yaml of invoice and payroll CFDI.
+""",
+    "website" : "http://www.vauxoo.com/",
+    "license" : "AGPL-3",
+    "depends" : [
+        "l10n_mx_facturae_pac_sf",
+        "l10n_mx_facturae_pac_finkok",
+        "l10n_mx_payroll_base",
+        ],
+    "demo" : [],
+    "data" : [],
+    "test" : [
+        "test/test_facturae_pac_all.yml",
+        "test/test_payrolle_pac_all.yml",
     ],
-    "installable": True,
-    "active": False,
+    "installable" : True,
+    "active" : False,
 }
