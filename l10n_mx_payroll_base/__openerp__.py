@@ -32,6 +32,8 @@
                 "l10n_mx_payroll_concept",
                 "l10n_mx_payroll_regime_employee",
                 "l10n_mx_payroll_risk_rank_contract",
+                "l10n_mx_payment_method",
+                "l10n_mx_facturae_cer",
                 "l10n_mx_ir_attachment_facturae",
                 "l10n_mx_params_pac",
                 "l10n_mx_facturae_groups",
