@@ -1,85 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <!--
-        <menuitem id="base.menu_project_long_term" name="Long Term Planning" parent="base.menu_main_pm" sequence="3"/>
-
-        <record id="view_project_user_allocation_gantt" model="ir.ui.view">
-            <field name="name">project.user.allocation.gantt</field>
-            <field name="model">project.user.allocation</field>
-            <field name="arch" type="xml">
-              <gantt date_start="date_start" date_stop="date_end" default_group_by="user_id">
-              </gantt>
-            </field>
-        </record>
-
-        <record id="view_project_user_allocation_calendar" model="ir.ui.view">
-            <field name="name">project.user.allocation.calendar</field>
-            <field name="model">project.user.allocation</field>
-            <field eval="2" name="priority"/>
-            <field name="arch" type="xml">
-                <calendar color="user_id" date_start="date_start" date_stop="date_end" day_length="12" string="Users">
-                    <field name="phase_id"/>
-                    <field name="project_id"/>
-                </calendar>
-            </field>
-        </record>
-
-
-        <record id="view_project_user_allocation_form" model="ir.ui.view">
-            <field name="name">project.user.allocation.form</field>
-            <field name="model">project.user.allocation</field>
-            <field name="arch" type="xml">
-                <form string="Project User Allocation" version="7.0">
-                    <group col="4">
-                        <field name="user_id"/>
-                        <field name="phase_id"/>
-                        <field name="project_id"/>
-                        <field name="date_start"/>
-                        <field name="date_end"/>
-                    </group>
-                </form>
-            </field>
-        </record>
-
-        <record id="view_project_user_allocation_list" model="ir.ui.view">
-            <field name="name">project.user.allocation.list</field>
-            <field name="model">project.user.allocation</field>
-            <field name="priority" eval="5"/>
-            <field name="arch" type="xml">
-                <tree editable="bottom" string="Project User Allocation">
-                    <field name="user_id"/>
-                    <field name="phase_id"/>
-                    <field name="project_id"/>
-                </tree>
-            </field>
-        </record>
-
-       <record id="view_project_user_allocation_search" model="ir.ui.view">
-            <field name="name">project.user.allocation.search</field>
-            <field name="model">project.user.allocation</field>
-            <field name="arch" type="xml">
-                <search string="Team Planning">
-                    <field name="user_id"/>
-                    <field name="phase_id"/>
-                    <field name="project_id"/>
-                    <group expand="0" string="Group By...">
-                        <filter name="user" string="User" icon="terp-personal" domain="[]" context="{'group_by':'user_id'}"/>
-                        <filter string="Project" icon="terp-folder-violet" domain="[]" context="{'group_by':'project_id'}"/>
-                        <filter string="Phase" icon="terp-project" domain="[]" context="{'group_by':'phase_id'}"/>
-                    </group>
-                </search>
-            </field>
-        </record>
-        <record id="act_resouce_allocation" model="ir.actions.act_window">
-            <field name="name">Team Planning</field>
-            <field name="res_model">project.user.allocation</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">gantt,tree,form,calendar</field>
-            <field name="context">{}</field>
-            <field name="search_view_id" ref="view_project_user_allocation_search"/>
-        </record>
--->
 
         <!-- Project Phase 
         -->
@@ -92,58 +13,6 @@
             <field name="context">{'search_default_user_story_id': [active_id], 'default_user_story_id': active_id}</field>
         </record>
         
-        <!--        
-        <record id="user_story_phase_form" model="ir.ui.view">
-            <field name="name">Inherit User Story Form : Phase</field>
-            <field name="model">user.story</field>
-            <field name="inherit_id" ref="user_story.view_userstory_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//h2" position='after'>
-                    <div class="oe_right oe_button_box" name="buttons" >
-                    <button name="%(act_user_story_phases)d"
-                      string="Phases" type="action"
-                      attrs="{'invisible':[('use_phases_user_story','=', 0)]}"
-                      class="oe_inline" />
-                    </div>
-                </xpath>
-                <xpath expr="//field[@name='code']" position='after'>
-                    <field name="use_phases_user_story" class="oe_inline"/>
-                </xpath>
-            </field>
-        </record>
-        -->
-
-        <!--
-        <record id="view_project_kanban_phase" model="ir.ui.view">
-            <field name="name">project.project.kanban.inherited</field>
-            <field name="model">project.project</field>
-            <field name="inherit_id" ref="project.view_project_kanban"/>
-            <field name="arch" type="xml">
-                <field name="use_tasks" position="after">
-                    <field name="use_phases_user_story"/>
-                    <field name="phase_count"/>
-                </field>
-                <xpath expr="//div[contains(@class, 'oe_kanban_project_list')]" position="inside">
-                    <a t-if="record.use_phases_user_story.raw_value"
-                        name="%(act_project_phases)d" type="action">
-                        <span t-if="record.phase_count.raw_value gt 1"><field name="phase_count"/> Phases</span>
-                        <span t-if="record.phase_count.raw_value lt 2"><field name="phase_count"/> Phase</span>
-                    </a>
-                </xpath>
-            </field>
-        </record>
-        -->
-
-        <!--
-        <record id="project_phase_task_list" model="ir.actions.act_window">
-            <field name="res_model">project.task</field>
-            <field name="view_type">form</field>
-            <field name="name">Tasks</field>
-            <field name="view_mode">tree,form</field>
-            <field name="context">{'search_default_phase_id': [active_id], 'default_phase_id' : active_id}</field>
-        </record>
--->
-
         <record id="view_user_story_phase_form" model="ir.ui.view">
             <field name="name">user.story.phase.form</field>
             <field name="model">user.story.phase</field>
@@ -194,24 +63,6 @@
                                   </form>
                              </field>
                         </page>
-                    <!--
-                        <page string="Tasks Details">
-                            <field name="task_ids" readonly="1" context="{'default_user_story_id' :user_story_id}">
-                                 <tree string="user_story's Tasks">
-                                    <field name="sequence"/>
-                                    <field name="name"/>
-                                    <field name="user_id"/>
-                                    <field name="date_start"/>
-                                    <field name="date_end"/>
-                                    <field name="planned_hours" widget="float_time"/>
-                                    <field name="user_story_id" invisible="1"/>
-                                    <field name="total_hours" sum='Total Hours'/>
-                                    <field name="remaining_hours" widget="float_time" sum="Remaining Hours"/>
-                                    <field name="state"/>
-                                  </tree>
-                             </field>
-                        </page>
-                    -->
                         <page string="Constraints">
                            <group>
                                <group>
@@ -270,91 +121,8 @@
             <field name="help">A user_story can be split into the different phases. For each phase, you can define your users allocation, describe different tasks and link your phase to previous and next phases, add date constraints for the automated scheduling. Use the long term planning in order to planify your available users, convert your phases into a series of tasks when you start working on the user_story.</field>
         </record>
 
-
-        <!-- Project Task -->
-        <!--
-        <record id="view_phase_task_form2" model="ir.ui.view">
-            <field name="name">phase.task.form2</field>
-            <field name="model">project.task</field>
-            <field name="inherit_id" ref="project.view_task_form2"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='user_id']" position="after">
-                    <field name="phase_id" context="{'default_project_id' : project_id}"/>
-                </xpath>
-            </field>
-        </record>
-        <record id="view_phase_task_search_form" model="ir.ui.view">
-            <field name="name">phase.task.search.form</field>
-            <field name="model">project.task</field>
-            <field name="inherit_id" ref="project.view_task_search_form"/>
-            <field name="arch" type="xml">
-                <field name="user_id" position="before">
-                    <field name="phase_id" domain="[]"/>
-                </field>
-            </field>
-        </record>
-
-         <record id="view_phase_task_search_form_group" model="ir.ui.view">
-            <field name="name">phase.task.search.form.group</field>
-            <field name="model">project.task</field>
-            <field name="inherit_id" ref="project.view_task_search_form"/>
-            <field name="arch" type="xml">
-            <filter string="Project" name="group_project_id" icon="terp-folder-violet" domain="[]" context="{'group_by':'project_id'}" position="after">
-                <filter string="Project Phase" name="group_project_id_phase" icon="terp-folder-violet" domain="[]" context="{'group_by':'phase_id'}"/>
-            </filter>
-            </field>
-        </record>
-
-         <record id="view_phase_task_search_form_tree" model="ir.ui.view">
-            <field name="name">phase.task.search.form.tree</field>
-            <field name="model">project.task</field>
-            <field name="inherit_id" ref="project.view_task_tree2"/>
-            <field name="arch" type="xml">
-                <field name="project_id" position="after">
-                    <field name="phase_id" invisible="1"/>
-                </field>
-            </field>
-        </record>
-
-        <record id="analytic_account_inherited_phase_form" model="ir.ui.view">
-            <field name="name">account.analytic.account.phase.form.inherit</field>
-            <field name="model">account.analytic.account</field>
-            <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
-            <field eval="18" name="priority"/>
-            <field name="arch" type="xml">
-                <xpath expr='//div[@name="project"]' position='inside'>
-                    <field name="use_phases_user_story"/>
-                    <label for="use_phases_user_story"/>
-                </xpath>
-            </field>
-        </record>
--->
-        <!-- Menu Items -->
-        <!--
-             <menuitem action="act_project_phase_list"
-            id="menu_project_phase_list" parent="project.menu_project_management" sequence="2"/>
--->
-
-
         <menuitem action="act_user_story_phase"
             id="menu_user_story_phase"  parent="user_story.menu_user_story"/>
-
-
-<!--
-        <menuitem id="menu_resouce_allocation" action="act_resouce_allocation"
-            icon="STOCK_INDENT"
-            parent="base.menu_project_long_term" sequence="2"/>
--->
-<!--
-        <menuitem id="menu_pm_users_project1"
-            name="Resources" parent="base.menu_definitions" sequence="3"/>
--->
-<!--
-        <menuitem id="menu_phase_schedule" name="Scheduling" parent="base.menu_main_pm" sequence="4" groups="project.group_project_user,project.group_project_manager"/>
-        <menuitem action="resource.action_resource_resource_tree" id="menu_view_resource" parent="menu_pm_users_project1" sequence="2"/>
-        <menuitem action="resource.action_resource_calendar_form" id="menu_view_resource_calendar" parent="menu_pm_users_project1" sequence="5"/>
-        <menuitem action="resource.action_resource_calendar_leave_tree" id="menu_view_resource_calendar_leaves" parent="menu_pm_users_project1" sequence="3"/>
--->
 
     </data>
 </openerp>

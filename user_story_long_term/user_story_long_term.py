@@ -227,7 +227,6 @@ class user_story_user_allocation(osv.Model):
         'date_start': fields.datetime('Start Date', help="Starting Date"),
         'date_end': fields.datetime('End Date', help="Ending Date"),
     }
-#project_user_allocation()
 
 class user_story(osv.Model):
     _inherit = 'user.story'
@@ -256,10 +255,6 @@ class user_story(osv.Model):
         body = self.body_criteria(cr, uid, ids, 'template_send_email_hu_progress', 'hu', context)
         hu_model = self.pool.get('user.story')
         hu = hu_model.browse(cr, uid, ids[0], context=context)
-
-        #import pdb; pdb.set_trace()
-        print ' ----- hu.name', hu.name
-        #pdb.set_trace()
 
         subject = 'The User Story ' + hu.name + ' is now in Progress'
         self.send_mail_hu(cr, uid, ids, subject, body, hu.id, context=context)
@@ -296,16 +291,6 @@ class user_story(osv.Model):
 
         context.update({
                         'default_body': body,
-       #                 'default_template_id': res_id,
-       #                 'default_use_template': True,
-       #                 'default_composition_mode': 'comment',
-       #                 'active_model': 'user.story',
-       #                 'default_partner_ids': followers,
-       #                 'mail_post_autofollow_partner_ids': followers,
-       #                 'active_id': ids and type(ids) is list and
-       #                 ids[0] or ids,
-       #                 'active_ids': ids and type(ids) is list and
-       #                 ids or [ids],
                         })
         user_id = self.pool.get('res.users').browse(cr,uid,[uid],context=context)[0]
 
