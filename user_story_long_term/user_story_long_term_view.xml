@@ -13,6 +13,23 @@
             <field name="context">{'search_default_user_story_id': [active_id], 'default_user_story_id': active_id}</field>
         </record>
         
+        <record id="user_story_phase_form" model="ir.ui.view">
+            <field name="name">Inherit User Story Form : Phase</field>
+            <field name="model">user.story</field>
+            <field name="inherit_id" ref="user_story.view_userstory_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//h2" position='after'>
+                    <div class="oe_right oe_button_box" name="buttons" >
+                    <button name="%(act_user_story_phases)d"
+                      string="Phases" type="action"
+                      attrs="{'invisible':[('use_phases_user_story','=', 0)]}"
+                      class="oe_inline" />
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+
         <record id="view_user_story_phase_form" model="ir.ui.view">
             <field name="name">user.story.phase.form</field>
             <field name="model">user.story.phase</field>
