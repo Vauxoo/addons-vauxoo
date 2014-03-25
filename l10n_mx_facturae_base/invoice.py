@@ -30,7 +30,6 @@ from openerp.tools.translate import _
 from openerp import pooler, tools
 from openerp import netsvc
 from openerp import release
-
 import time
 from xml.dom import minidom
 import os
@@ -54,7 +53,9 @@ try:
     from qrcode import *
 except:
     _logger.error('Execute "sudo pip install pil qrcode" to use l10n_mx_facturae_pac_finkok module.')
-
+import jinja2
+import xml
+import cgi
 
 def exec_command_pipe(name, *args):
     """
@@ -126,6 +127,10 @@ msg2 = "Contact you administrator &/or to info@vauxoo.com"
 
 class account_invoice(osv.Model):
     _inherit = 'account.invoice'
+
+    def string_to_xml_format(self, cr, uid, ids, text):
+        if text:
+            return cgi.escape(text, True).encode('ascii', 'xmlcharrefreplace').replace('\n\n', ' ')
 
     def action_cancel(self, cr, uid, ids, context=None):
         if context is None:
@@ -719,134 +724,217 @@ class account_invoice(osv.Model):
             key_item_sort.append([key_too, data_dict[key_too]])
         return key_item_sort
 
-    def dict2xml(self, data_dict, node=False, doc=False):
-        """
-        @param data_dict : Dictionary of attributes for add in the XML 
-                    that will be generated
-        @param node : Node from XML where will be added data from the dictionary
-        @param doc : Document XML generated, where will be working
-        """
-        parent = False
-        if node:
-            parent = True
-
-        for element, attribute in self._dict_iteritems_sort(data_dict):
-            if not parent:
-                doc = minidom.Document()
-            if isinstance(attribute, dict):
-                if not parent:
-                    node = doc.createElement(element)
-                    self.dict2xml(attribute, node, doc)
-                else:
-                    child = doc.createElement(element)
-                    self.dict2xml(attribute, child, doc)
-                    node.appendChild(child)
-            elif isinstance(attribute, list):
-                child = doc.createElement(element)
-                for attr in attribute:
-                    if isinstance(attr, dict):
-                        self.dict2xml(attr, child, doc)
-                node.appendChild(child)
-            else:
-                if isinstance(attribute, str) or isinstance(attribute, unicode):
-                    attribute = conv_ascii(attribute)
-                else:
-                        attribute = str(attribute)
-                node.setAttribute(element, attribute)
-                # print "attribute",unicode( attribute, 'UTF-8')
-        if not parent:
-            doc.appendChild(node)
-        return doc
+    #~def dict2xml(self, data_dict, node=False, doc=False):
+        #~"""
+        #~@param data_dict : Dictionary of attributes for add in the XML 
+                    #~that will be generated
+        #~@param node : Node from XML where will be added data from the dictionary
+        #~@param doc : Document XML generated, where will be working
+        #~"""
+        #~parent = False
+        #~if node:
+            #~parent = True
+#~
+        #~for element, attribute in self._dict_iteritems_sort(data_dict):
+            #~if not parent:
+                #~doc = minidom.Document()
+            #~if isinstance(attribute, dict):
+                #~if not parent:
+                    #~node = doc.createElement(element)
+                    #~self.dict2xml(attribute, node, doc)
+                #~else:
+                    #~child = doc.createElement(element)
+                    #~self.dict2xml(attribute, child, doc)
+                    #~node.appendChild(child)
+            #~elif isinstance(attribute, list):
+                #~child = doc.createElement(element)
+                #~for attr in attribute:
+                    #~if isinstance(attr, dict):
+                        #~self.dict2xml(attr, child, doc)
+                #~node.appendChild(child)
+            #~else:
+                #~if isinstance(attribute, str) or isinstance(attribute, unicode):
+                    #~attribute = conv_ascii(attribute)
+                #~else:
+                        #~attribute = str(attribute)
+                #~node.setAttribute(element, attribute)
+                #~# print "attribute",unicode( attribute, 'UTF-8')
+        #~if not parent:
+            #~doc.appendChild(node)
+        #~return doc
 
     def _get_facturae_invoice_xml_data(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        data_dict = self._get_facturae_invoice_dict_data(
-            cr, uid, ids, context=context)[0]
-        doc_xml = self.dict2xml({
-                                'cfdi:Comprobante': data_dict.get('cfdi:Comprobante')})
-        invoice_number = "sn"
-        (fileno_xml, fname_xml) = tempfile.mkstemp(
-            '.xml', 'openerp_' + (invoice_number or '') + '__facturae__')
-        fname_txt = fname_xml + '.txt'
-        f = codecs.open(fname_xml,'w','utf-8')
-        doc_xml.writexml(
-            f, indent='    ', addindent='    ', newl='\r\n', encoding='UTF-8')
-        f.close()
-        os.close(fileno_xml)
-
-        (fileno_sign, fname_sign) = tempfile.mkstemp('.txt', 'openerp_' + (
-            invoice_number or '') + '__facturae_txt_md5__')
-        os.close(fileno_sign)
-
-        context.update({
-            'fname_xml': fname_xml,
-            'fname_txt': fname_txt,
-            'fname_sign': fname_sign,
-        })
-        context.update(self._get_file_globals(cr, uid, ids, context=context))
-        fname_txt, txt_str = self._xml2cad_orig(
-            cr=False, uid=False, ids=False, context=context)
-        data_dict['cadena_original'] = txt_str
-
-        if not txt_str:
-            raise osv.except_osv(_('Error en Cadena original!'), _(
-                "Can't get the string original of the voucher.\nCkeck your configuration.\n%s" % (msg2)))
-
-        if not data_dict['cfdi:Comprobante'].get('folio', ''):
-            raise osv.except_osv(_('Error in Folio!'), _(
-                "Can't get the folio of the voucher.\nBefore generating the XML, click on the button, generate invoice.\nCkeck your configuration.\n%s" % (msg2)))
-
-        # time.strftime('%Y-%m-%dT%H:%M:%S',
-        # time.strptime(invoice.date_invoice, '%Y-%m-%d %H:%M:%S'))
-        context.update({'fecha': data_dict['cfdi:Comprobante']['fecha']})
-        sign_str = self._get_sello(
-            cr=False, uid=False, ids=False, context=context)
-        if not sign_str:
-            raise osv.except_osv(_('Error in Stamp !'), _(
-                "Can't generate the stamp of the voucher.\nCkeck your configuration.\ns%s") % (msg2))
-
-        nodeComprobante = doc_xml.getElementsByTagName("cfdi:Comprobante")[0]
-        nodeComprobante.setAttribute("sello", sign_str)
-        data_dict['cfdi:Comprobante']['sello'] = sign_str
-
-        noCertificado = self._get_noCertificado(cr, uid, ids, context['fname_cer'])
-        if not noCertificado:
-            raise osv.except_osv(_('Error in No. Certificate !'), _(
-                "Can't get the Certificate Number of the voucher.\nCkeck your configuration.\n%s") % (msg2))
-        nodeComprobante.setAttribute("noCertificado", noCertificado)
-        data_dict['cfdi:Comprobante']['noCertificado'] = noCertificado
-
-        cert_str = self._get_certificate_str(context['fname_cer'])
-        if not cert_str:
-            raise osv.except_osv(_('Error in Certificate!'), _(
-                "Can't generate the Certificate of the voucher.\nCkeck your configuration.\n%s") % (msg2))
-        cert_str = cert_str.replace(' ', '').replace('\n', '')
-        nodeComprobante.setAttribute("certificado", cert_str)
-        data_dict['cfdi:Comprobante']['certificado'] = cert_str
-
-        x = doc_xml.documentElement
-        nodeReceptor = doc_xml.getElementsByTagName('cfdi:Receptor')[0]
-        nodeConcepto = doc_xml.getElementsByTagName('cfdi:Conceptos')[0]
-        x.insertBefore(nodeReceptor, nodeConcepto)
-        self.write_cfd_data(cr, uid, ids, data_dict, context=context)
-
-        if context.get('type_data') == 'dict':
-            return data_dict
-        if context.get('type_data') == 'xml_obj':
-            return doc_xml
-        data_xml = doc_xml.toxml('UTF-8')
-        data_xml = codecs.BOM_UTF8 + data_xml
-        fname_xml = (data_dict['cfdi:Comprobante']['cfdi:Emisor']['rfc'] or '') + '_' + (
-            data_dict['cfdi:Comprobante'].get('serie', '') or '') + '_' + (
-            data_dict['cfdi:Comprobante'].get('folio', '') or '') + '.xml'
-        data_xml = data_xml.replace('<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
-        date_invoice = data_dict.get('cfdi:Comprobante',{}) and datetime.strptime( data_dict.get('cfdi:Comprobante',{}).get('fecha',{}), '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d') or False
+        data_xml=False
+        fname_xml=False
+        ir_seq_app_obj = self.pool.get('ir.sequence.approval')
+        invoices = self.browse(cr, uid, ids)
+        importe = 0.0
+        tasa = 0.0
+        impuesto=''
         facturae_version = '3.2'
-        try:
-            self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], facturae_version)
-        except Exception, e:
-            raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (e))
+        totalImpuestosTrasladados = 0.0
+        for invoice in invoices:
+            if invoice.type == 'out_invoice':
+                tipoComprobante = 'ingreso'
+            elif invoice.type == 'out_refund':
+                tipoComprobante = 'egreso'
+            else:
+                raise osv.except_osv(_('Warning !'), _(
+                    'Only can issue electronic invoice to customers.!'))
+            invoice_data_parent = {}
+            invoice_data = invoice_data_parent = {}
+            invoice_data['Impuestos'] = {}
+            invoice_data['Impuestos'].update({
+                #'totalImpuestosTrasladados': "%.2f"%( invoice.amount_tax or 0.0),
+            })
+            invoice_data['Impuestos'].update({
+                #'totalImpuestosRetenidos': "%.2f"%( invoice.amount_tax or 0.0 )
+            })
+            invoice_data_impuestos = invoice_data['Impuestos']
+            invoice_data_impuestos['Traslados'] = []
+            invoice_data_impuestos['Retenciones'] = []
+            tax_names = []
+            totalImpuestosTrasladados = 0
+            totalImpuestosRetenidos = 0
+            for line_tax_id in invoice.tax_line:
+                tax_name = line_tax_id.name2
+                tax_names.append(tax_name)
+                line_tax_id_amount = abs(line_tax_id.amount or 0.0)
+                if line_tax_id.amount >= 0:
+                    impuesto_list = invoice_data_impuestos['Traslados']
+                    impuesto_str = 'Traslado'
+                    totalImpuestosTrasladados += line_tax_id_amount
+                else:
+                    impuesto_list = invoice_data_impuestos['Retenciones']
+                    impuesto_list = invoice_data_impuestos.setdefault(
+                        'Retenciones', [])
+                    impuesto_str = 'Retencion'
+                    totalImpuestosRetenidos += line_tax_id_amount
+                impuesto_dict = {impuesto_str:
+                                {
+                                 'impuesto': self.string_to_xml_format(cr, uid, ids, tax_name),
+                                 'importe': "%.2f" % (line_tax_id_amount),
+                                 }
+                                 }
+                if line_tax_id.amount >= 0:
+                    impuesto_dict[impuesto_str].update({
+                            'tasa': "%.2f" % (abs(line_tax_id.tax_percent))})
+                impuesto_list.append(impuesto_dict)
+
+            invoice_data['Impuestos'].update({
+                'totalImpuestosTrasladados': "%.2f" % (totalImpuestosTrasladados),
+            })
+            if totalImpuestosRetenidos:
+                invoice_data['Impuestos'].update({
+                    'totalImpuestosRetenidos': "%.2f" % (totalImpuestosRetenidos)
+                })
+
+            tax_requireds = ['IVA', 'IEPS']
+            for tax_required in tax_requireds:
+                if tax_required in tax_names:
+                    continue
+                invoice_data_impuestos['Traslados'].append({'Traslado': {
+                    'impuesto': self.string_to_xml_format(cr, uid, ids, tax_required),
+                    'tasa': "%.2f" % (0.0),
+                    'importe': "%.2f" % (0.0),
+                }})
+            context.update(self._get_file_globals(cr, uid, ids, context=context))
+            htz = int(self._get_time_zone(cr, uid, ids, context=context))
+            now = time.strftime('%Y-%m-%d %H:%M:%S')
+            date_now = now and datetime.strptime(invoice.invoice_datetime, '%Y-%m-%d %H:%M:%S') + timedelta(hours=htz) or False
+            date_now = time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(str(date_now), '%Y-%m-%d %H:%M:%S')) or False
+            context.update({'fecha': date_now or ''})
+            noCertificado = self._get_noCertificado(cr, uid, ids, context['fname_cer'])
+            cert_str = self._get_certificate_str(context['fname_cer'])
+            cert_str = cert_str.replace('\n\r', '').replace('\r\n', '').replace('\n', '').replace('\r', '').replace(' ', '')
+            rfc_emisor = invoice.company_emitter_id.address_invoice_parent_company_id._columns.has_key('vat_split') and \
+                        invoice.company_emitter_id.address_invoice_parent_company_id.vat_split or invoice.company_emitter_id.address_invoice_parent_company_id.vat
+            rfc_receptor = invoice.partner_id.commercial_partner_id._columns.has_key('vat_split') and invoice.partner_id.commercial_partner_id.vat_split or invoice.partner_id.commercial_partner_id.vat
+            sequence_app_id = ir_seq_app_obj.search(cr, uid, [(
+                'sequence_id', '=', invoice.invoice_sequence_id.id)], context=context)
+            if sequence_app_id:
+                type_inv = ir_seq_app_obj.browse(cr, uid, sequence_app_id[0], context=context).type
+            all_paths = tools.config["addons_path"].split(",")
+            for my_path in all_paths:
+                if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae_base', 'template')):
+                    fname_jinja_tmpl = my_path and os.path.join(my_path, 'l10n_mx_facturae_base', 'template', 'cfdi' + '.xml') or ''
+            dictargs = {
+                'o': invoice,
+                'time': time,
+                'noCertificado': noCertificado,
+                'certificado': cert_str,
+                'rfc_emisor': rfc_emisor,
+                'rfc_receptor': rfc_receptor,
+                'tipoComprobante': tipoComprobante,
+                'data_impuestos': invoice_data_impuestos
+                }
+            invoice_number = "sn"
+            (fileno_xml, fname_xml) = tempfile.mkstemp('.xml', 'openerp_' + (invoice_number or '') + '__facturae__')
+            with open(fname_jinja_tmpl, 'r') as f_jinja_tmpl:
+                jinja_tmpl_str = f_jinja_tmpl.read().encode('utf-8')
+                tmpl = jinja2.Template( jinja_tmpl_str )
+                with open(fname_xml, 'w') as new_xml:
+                    new_xml.write( tmpl.render(**dictargs) )
+            with open(fname_xml,'rb') as b:
+                jinja2_xml = b.read().encode('UTF-8')
+            b.close()
+            (fileno_sign, fname_sign) = tempfile.mkstemp('.txt', 'openerp_' + '__facturae_txt_md5__')
+            os.close(fileno_sign)
+            try:
+                self.validate_scheme_facturae_xml(cr, uid, ids, [jinja2_xml], facturae_version)
+            except Exception, e:
+                raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (tools.ustr(e)))
+            doc_xml = xml.dom.minidom.parseString(jinja2_xml)
+            (fileno_xml, fname_xml) = tempfile.mkstemp('.xml', 'openerp_' + (invoice_number or '') + '__facturae__')
+            fname_txt = fname_xml + '.txt'
+            f = open(fname_xml, 'w')
+            doc_xml_full = doc_xml.toxml().encode('ascii', 'xmlcharrefreplace')
+            doc_xml = xml.dom.minidom.parseString(doc_xml_full)
+            f = codecs.open(fname_xml,'w','utf-8')
+            doc_xml.writexml(f, indent='    ', addindent='    ', newl='\r\n', encoding='UTF-8')
+            f.close()
+            os.close(fileno_xml)
+            context.update({
+                'fname_xml': fname_xml,
+                'fname_txt': fname_txt,
+                'fname_sign': fname_sign,
+            })
+            context.update(self._get_file_globals(cr, uid, ids, context=context))
+            fname_txt, txt_str = self._xml2cad_orig(cr=False, uid=False, ids=False, context=context)
+            if not txt_str:
+                raise osv.except_osv(_('Error en Cadena original!'), _(
+                    "Can't get the string original of the voucher.\nCkeck your configuration.\n%s" % (msg2)))
+            context.update({'fecha': invoice.date_invoice_tz and time.strftime('%Y-%m-%dT%H:%M:%S', 
+                    time.strptime(invoice.date_invoice_tz, '%Y-%m-%d %H:%M:%S')) or ''})
+            sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
+            if not sign_str:
+                raise osv.except_osv(_('Error in Stamp !'), _(
+                    "Can't generate the stamp of the voucher.\nCkeck your configuration.\ns%s") % (msg2))
+            nodeComprobante = doc_xml.getElementsByTagName("cfdi:Comprobante")[0]
+            nodeComprobante.setAttribute("sello", sign_str)
+            noCertificado = self._get_noCertificado(cr, uid, ids, context['fname_cer'])
+            if not noCertificado:
+                raise osv.except_osv(_('Error in No. Certificate !'), _(
+                    "Can't get the Certificate Number of the voucher.\nCkeck your configuration.\n%s") % (msg2))
+            nodeComprobante.setAttribute("noCertificado", noCertificado)
+            cert_str = self._get_certificate_str(context['fname_cer'])
+            if not cert_str:
+                raise osv.except_osv(_('Error in Certificate!'), _(
+                    "Can't generate the Certificate of the voucher.\nCkeck your configuration.\n%s") % (msg2))
+            cert_str = cert_str.replace(' ', '').replace('\n', '')
+            nodeComprobante.setAttribute("certificado", cert_str)
+            data_dict = {'cfdi_cadena_original':txt_str,
+                        'cfdi_no_certificado':noCertificado,
+                        'sello':sign_str,
+                        'certificado':cert_str,
+            }
+            self.write_cfd_data(cr, uid, ids, data_dict, context=context)
+            data_xml = doc_xml.toxml('UTF-8')
+            data_xml = codecs.BOM_UTF8 + data_xml
+            fname_xml = str(invoice.id) + '_XML_V3_2.xml'
+            data_xml = data_xml.replace('<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
         return fname_xml, data_xml
 
     def validate_scheme_facturae_xml(self, cr, uid, ids, datas_xmls=[], facturae_version = None, facturae_type="cfdv", scheme_type='xsd'):
