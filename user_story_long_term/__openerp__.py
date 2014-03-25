@@ -31,20 +31,15 @@
     'category': 'User Story Management',
     'depends': ['base', 'mail', 'user_story', 'project_conf'],
     'description': """
-Long Term User Story Management module that tracks planning, scheduling, resources allocation.
-==============================================================================================
+Long Term User Story Management module
+======================================
 
 Features:
 ---------
-    * Define various Phases of Project
-    * Compute Phase Scheduling: Compute start date and end date of the phases
-      which are in draft, open and pending state of the project given. If no
-      project given then all the draft, open and pending state phases will be taken.
-    * Compute Task Scheduling: This works same as the scheduler button on
-      project.phase. It takes the project as argument and computes all the open,
-      draft and pending tasks.
-    * Schedule Tasks: All the tasks which are in draft, pending and open state
-      are scheduled with taking the phase's start date.
+    * Define various Phases of User Story
+    * Send mail to the followers of the user story as an acceptance criteria is accepted.
+    * Send mail to the owner, responsible supervisor and execution responsible when the user story
+      pass from in progress to pending state.
     """,
     'demo': [
         #'user_story_long_term_demo.xml'
