@@ -27,6 +27,7 @@ from datetime import datetime
 from openerp.tools.translate import _
 from openerp.osv import fields, osv
 from openerp.addons.resource.faces import task as Task
+import unicodedata
 
 class user_story_phase(osv.Model):
     _name = "user.story.phase"
@@ -250,16 +251,16 @@ class user_story(osv.Model):
             return False
         
 
-    def do_progress(self, cr, uid, ids, context=None):
+    def do_pending(self, cr, uid, ids, context=None):
 
         body = self.body_criteria(cr, uid, ids, 'template_send_email_hu_progress', 'hu', context)
         hu_model = self.pool.get('user.story')
         hu = hu_model.browse(cr, uid, ids[0], context=context)
 
-        subject = 'The User Story ' + hu.name + ' is now in Progress'
-        self.send_mail_hu(cr, uid, ids, subject, body, hu.id, context=context)
+        subject = 'The User Story (' + hu.name + ') is now in Pending state'
+        self.send_mail_hu(cr, uid, ids, subject, body, hu.id, users=True, context=context)
 
-        return super(user_story, self).do_progress(cr, uid, ids, context=context)
+        return super(user_story, self).do_pending(cr, uid, ids, context=context)
 
     def body_criteria(self, cr, uid, ids, template, criteria, context=None):
         imd_obj = self.pool.get('ir.model.data')
@@ -284,10 +285,26 @@ class user_story(osv.Model):
             return False
             
 
-    def send_mail_hu(self, cr, uid, ids, subject, body, res_id, context=None):
-
-        followers = self.read(cr, uid, ids[0], [
+    def send_mail_hu(self, cr, uid, ids, subject, body, res_id, users=[], context=None):
+        if not users:
+            followers = self.read(cr, uid, ids[0], [
                               'message_follower_ids'])['message_follower_ids']
+        else:
+            followers = []
+            user_obj = self.pool.get('res.users')
+            hu = self.browse(cr, uid, res_id, context=context)
+            
+            owner_name = unicodedata.normalize('NFKD', hu.owner)
+            owner_name = owner_name.encode('ASCII','ignore')
+            owner_id = user_obj.search(cr, uid, [('name','=',owner_name)], context=context)
+            
+            if hu.user_id and hu.user_id.partner_id:
+                followers.append(hu.user_id.partner_id.id)
+            if hu.user_execute_id and hu.user_execute_id.partner_id:
+                followers.append(hu.user_execute_id.partner_id.id)
+            if owner_id and len(owner_id)==1:
+                user_o = user_obj.browse(cr,uid,owner_id,context=context)
+                followers.append( user_o[0].partner_id.id)
 
         context.update({
                         'default_body': body,
@@ -328,7 +345,7 @@ class user_story(osv.Model):
                     body = self.body_criteria(cr, uid, ids, 'template_send_email_hu', criteria[1], context)
                     subject = 'Accepted '+ ' Criteria '+ ' - '+  criteria[1]
                     hu = self.browse(cr, uid, ids[0], context=context)
-                    self.send_mail_hu(cr, uid, ids, subject, body, hu.id, context=context)
+                    self.send_mail_hu(cr, uid, ids, subject, body, hu.id, users=False, context=context)
         return res
     
     def _phase_count(self, cr, uid, ids, field_name, arg, context=None):
