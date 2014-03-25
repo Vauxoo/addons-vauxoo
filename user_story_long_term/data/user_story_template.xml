@@ -25,7 +25,7 @@
                     <title>*|MC:SUBJECT|*</title>
                 </head>
                 <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
-                    Has been accepted the NAME_CRI criteria.
+                    In the User Story "NAME_HU", the "NAME_CRI" criteria has been accepted by NAME_USER.
                 </body>
             </html>
 
@@ -47,7 +47,7 @@
                     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
                 </head>
                 <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
-                   The NAME_HU User Story is in Progress.
+                   Now the "NAME_HU" User Story is Pending, processed by NAME_USER.
                 </body>
             </html>
 

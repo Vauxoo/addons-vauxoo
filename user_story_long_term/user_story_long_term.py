@@ -256,8 +256,7 @@ class user_story(osv.Model):
         body = self.body_criteria(cr, uid, ids, 'template_send_email_hu_progress', 'hu', context)
         hu_model = self.pool.get('user.story')
         hu = hu_model.browse(cr, uid, ids[0], context=context)
-
-        subject = 'The User Story (' + hu.name + ') is now in Pending state'
+        subject = 'The User Story with ID %s, "%s...", is now in Pending state' % ( hu.id, hu.name[:30] )
         self.send_mail_hu(cr, uid, ids, subject, body, hu.id, users=True, context=context)
 
         return super(user_story, self).do_pending(cr, uid, ids, context=context)
@@ -275,9 +274,9 @@ class user_story(osv.Model):
             user_id = self.pool.get('res.users').browse(cr,uid,[uid],context=context)[0]
             hu = self.browse(cr, uid, ids[0], context=context)
 
-            body_html = body_html.replace('Has been accepted',user_id.name + ' has been accepted')
+            body_html = body_html.replace('NAME_USER', user_id.name)
             body_html = body_html.replace('NAME_CRI', criteria)
-            body_html = body_html.replace('NAME_HU',str(hu.id))
+            body_html = body_html.replace('NAME_HU', hu.name)
             
             return body_html
 
@@ -343,8 +342,8 @@ class user_story(osv.Model):
                         criteria[1] = ac[2].get('name', False)
                     
                     body = self.body_criteria(cr, uid, ids, 'template_send_email_hu', criteria[1], context)
-                    subject = 'Accepted '+ ' Criteria '+ ' - '+  criteria[1]
                     hu = self.browse(cr, uid, ids[0], context=context)
+                    subject = 'Accepted Criteria - "%s"... in User Story with ID %s' % (criteria[1][:30],hu.id)
                     self.send_mail_hu(cr, uid, ids, subject, body, hu.id, users=False, context=context)
         return res
     
@@ -364,7 +363,7 @@ class user_story(osv.Model):
         if context is None: context = {}
         # Prevent double project creation when 'use_tasks' is checked!
         context = dict(context, user_story_creation_in_progress=True)
-        context['name'] = "User Story / " + vals['name'] 
+        context['name'] = "User Story / %s" % (vals['name'])
         if vals.get('type', False) not in ('template','contract'):
             vals['type'] = 'contract'
         user_story_id = super(user_story, self).create(cr, uid, vals, context=context)
