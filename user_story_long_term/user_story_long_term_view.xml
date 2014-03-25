@@ -22,7 +22,6 @@
                     <div class="oe_right oe_button_box" name="buttons" >
                     <button name="%(act_user_story_phases)d"
                       string="Phases" type="action"
-                      attrs="{'invisible':[('use_phases_user_story','=', 0)]}"
                       class="oe_inline" />
                     </div>
                 </xpath>
