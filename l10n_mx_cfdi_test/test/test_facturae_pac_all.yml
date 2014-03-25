@@ -205,4 +205,4 @@
                         if res_id:
                             # This is because OpenERP module make an inspection of xml ids if not exist this one. try delete it.
                             ir_model_data.unlink(cr, uid, [res_id],context=context)
-                _logger.info( "Process complete in : %s" % (time_total))
+                _logger.info( "Process complete in : %s s" % (time_total))
