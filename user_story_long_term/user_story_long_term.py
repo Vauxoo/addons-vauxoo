@@ -230,8 +230,7 @@ class user_story_user_allocation(osv.Model):
 #project_user_allocation()
 
 class user_story(osv.Model):
-    _name = "user.story"
-    _inherit = "user.story"
+    _inherit = 'user.story'
 
     def body_progress(self, cr, uid, ids, template, hu, context=None):
         imd_obj = self.pool.get('ir.model.data')

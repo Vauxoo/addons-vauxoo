@@ -29,7 +29,7 @@
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com',
     'category': 'User Story Management',
-    'depends': ['user_story', 'project_conf'],
+    'depends': ['base', 'mail', 'user_story', 'project_conf'],
     'description': """
 Long Term User Story Management module that tracks planning, scheduling, resources allocation.
 ==============================================================================================
