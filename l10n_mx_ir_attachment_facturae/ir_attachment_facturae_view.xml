@@ -47,13 +47,6 @@
                     <notebook>
                         <page string="General Information">
                             <group colspan="4">
-<!--
-                                <field name="file_input_index"/>
--->
-                                <field name="file_xml_sign_index"/>
-                                <field name="file_pdf_index"/>
-                            </group>
-                            <group colspan="4">
                                 <field name="msj" invisible="1"/>
                                 <field name="last_date" invisible="1"/>
                                 <field name="date_print_report" invisible="1"/>

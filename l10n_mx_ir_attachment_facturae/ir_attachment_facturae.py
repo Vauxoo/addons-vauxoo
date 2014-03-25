@@ -122,8 +122,6 @@ class ir_attachment_facturae_mx(osv.Model):
         #~'file_input_index': fields.text('File input', help='File input index'),
         'file_xml_sign': fields.many2one('ir.attachment', 'File XML Sign',
                                          readonly=True, help='File XML signed'),
-        'file_xml_sign_index': fields.text('File XML Sign Index',
-                                           help='File XML sign index'),
         'file_pdf': fields.many2one('ir.attachment', 'File PDF', readonly=True,
                                     help='Report PDF generated for the electronic Invoice'),
         'file_pdf_index': fields.text('File PDF Index',
@@ -263,7 +261,6 @@ class ir_attachment_facturae_mx(osv.Model):
         attachment_obj = self.pool.get('ir.attachment')
         wf_service = netsvc.LocalService("workflow")
         attach = ''
-        index_xml = ''
         msj = ''
         status = False
         for data in self.browse(cr, uid, ids, context=context):
@@ -278,7 +275,6 @@ class ir_attachment_facturae_mx(osv.Model):
                 fdata = base64.encodestring(index_content)
                 res = type__fc[type](cr, uid, [data.id], fdata, context=context)
                 msj = tools.ustr(res.get('msg', False))
-                index_xml = res.get('cfdi_xml', False)
                 status = res.get('status', False)
                 if status:
                     data_attach = {
@@ -294,13 +290,10 @@ class ir_attachment_facturae_mx(osv.Model):
                         cr.execute("""UPDATE ir_attachment
                             SET res_id = Null
                             WHERE id = %s""", (attach_v3_2,))
-                    doc_xml = xml.dom.minidom.parseString(index_xml)
-                    index_xml = doc_xml.toprettyxml()
                     self.write(cr, uid, ids,
                            {'file_xml_sign': attach or False,
                                'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                               'msj': msj,
-                               'file_xml_sign_index': index_xml}, context=context)
+                               'msj': msj,}, context=context)
                     wf_service.trg_validate(uid, self._name, data.id, 'action_sign', cr)
                     status = True
             else:
@@ -315,7 +308,6 @@ class ir_attachment_facturae_mx(osv.Model):
         if context is None:
             context = {}
         msj = ''
-        index_pdf = ''
         attachment_obj = self.pool.get('ir.attachment')
         attachment_mx_data = self.browse(cr, uid, ids)
         type = self.browse(cr, uid, ids)[0].type
@@ -352,7 +344,6 @@ class ir_attachment_facturae_mx(osv.Model):
                 'file_pdf': aids,
                 'msj': msj,
                 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                'file_pdf_index': index_pdf,
                 'date_print_report': time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
             wf_service.trg_validate(uid, self._name, attachment_mx_data[0].id, 'action_printable', cr)
         else:
