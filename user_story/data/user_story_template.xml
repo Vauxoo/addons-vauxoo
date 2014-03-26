@@ -6,7 +6,7 @@
     SEND EMAIL TEMPLATE
     =====================================================
     -->        
-        <record id="template_send_email_hu" model="email.template">
+        <record id="template_send_email_hu" model="email.template" forcecreate="True">
             <field name="name">Accept Criteria</field>
             <field name="email_from"></field>
             <field name="model_id" ref="user_story.model_user_story" />
@@ -494,7 +494,7 @@ Ante cualquier duda estamos a su disposición.
             ]]></field>
         </record>
 
-        <record id="template_send_email_hu_progress" model="email.template">
+        <record id="template_send_email_hu_progress" model="email.template" forcecreate="True">
             <field name="name">User Story in Progress</field>
             <field name="email_from"></field>
             <field name="model_id" ref="user_story.model_user_story" />
