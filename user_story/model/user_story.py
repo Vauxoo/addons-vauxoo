@@ -132,6 +132,7 @@ class user_story(osv.Model):
             user_id = self.pool.get('res.users').browse(cr,uid,[uid],context=context)[0]
             hu = self.browse(cr, uid, ids[0], context=context)
 
+            body_html = body_html.replace('NAME_OWNER', hu.owner)
             body_html = body_html.replace('NAME_USER', user_id.name)
             body_html = body_html.replace('NAME_CRI', criteria)
             body_html = body_html.replace('NAME_HU', hu.name)
