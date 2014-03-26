@@ -6,30 +6,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-12 18:31+0000\n"
-"PO-Revision-Date: 2013-08-12 18:31+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:11+0000\n"
+"PO-Revision-Date: 2013-11-07 08:04+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-03-22 07:07+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
 
 #. module: expired_task_information
-#: help:task.expired.config,before_expiry:0
-msgid "Number days before to the expiry day to send an alert for email"
-msgstr "Numero de dias antes de expirar para enviar un correo alertando"
-
-#. module: expired_task_information
-#: view:task.expired.config:0
-msgid "Number of days that a task should have without activities to inform"
-msgstr "Numero de dias que una tarea debe tener sin actividad para enviar un correo alertando"
-
-#. module: expired_task_information
-#: code:addons/expired_task_information/model/task.py:89
-#, python-format
-msgid "<h2>Information about %s</h2>"
-msgstr "<h2>Información sobre %s</h2>"
+#: model:res.groups,name:expired_task_information.group_config_task_expiry
+msgid "Config Expired Task"
+msgstr "Config. Tarea Expirada"
 
 #. module: expired_task_information
 #: model:ir.actions.act_window,name:expired_task_information.task_expired_config_action
@@ -39,9 +30,11 @@ msgstr "Configurar Tarea"
 
 #. module: expired_task_information
 #: help:task.expired.config,without_change:0
-msgid "Days number that tasks may have without changes.\n"
+msgid ""
+"Days number that tasks may have without changes.\n"
 "When these days finish an email information is sent"
-msgstr "Numero de dias que las tareas pueden tener sin cambios.\n"
+msgstr ""
+"Numero de dias que las tareas pueden tener sin cambios.\n"
 "Cuando estos dias se cumplan un correo con esta informacion es enviado"
 
 #. module: expired_task_information
@@ -60,27 +53,16 @@ msgid "Config Expired Task Info"
 msgstr "Configurar informacion de tareas vencidas"
 
 #. module: expired_task_information
-#: code:addons/expired_task_information/model/task.py:91
-#, python-format
-msgid "<p>The task is expired</p>"
-msgstr "<p>La tarea ha expirado</p>"
+#: view:task.expired.config:0
+msgid "Number of days that a task should have without activities to inform"
+msgstr ""
+"Numero de dias que una tarea debe tener sin actividad para enviar un correo "
+"alertando"
 
 #. module: expired_task_information
-#: field:task.expired.config,without_change:0
-msgid "Without Changes Days"
-msgstr "Dias sin cambios"
-
-#. module: expired_task_information
-#: code:addons/expired_task_information/model/task.py:100
-#, python-format
-msgid "<p>The task has more than %s days without                                                                 changes</p>"
-msgstr "<p>La tarea tiene mas de %s dias sin                                                                 cambios</p>"
-
-#. module: expired_task_information
-#: code:addons/expired_task_information/model/task.py:111
-#, python-format
-msgid "Information                                                               about task %s"
-msgstr "Información                                                               sobre la tarea %s"
+#: help:task.expired.config,before_expiry:0
+msgid "Number days before to the expiry day to send an alert for email"
+msgstr "Numero de dias antes de expirar para enviar un correo alertando"
 
 #. module: expired_task_information
 #: view:task.expired.config:0
@@ -98,13 +80,6 @@ msgid "Number of days prior to the expiry date for inform"
 msgstr "Número de días antes de la fecha de caducidad para informar"
 
 #. module: expired_task_information
-#: model:res.groups,name:expired_task_information.group_config_task_expiry
-msgid "Config Expiry Task"
-msgstr "Configurar Tareas Vencidas"
-
-#. module: expired_task_information
-#: code:addons/expired_task_information/model/task.py:104
-#, python-format
-msgid "<p>The task will expire in %s days</p>"
-msgstr "<p>La tarea expirara en %s dias</p>"
-
+#: field:task.expired.config,without_change:0
+msgid "Without Changes Days"
+msgstr "Dias sin cambios"

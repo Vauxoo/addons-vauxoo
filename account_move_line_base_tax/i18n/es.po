@@ -6,14 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-29 21:54+0000\n"
-"PO-Revision-Date: 2013-08-29 21:54+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:13+0000\n"
+"PO-Revision-Date: 2013-11-07 04:16+0000\n"
+"Last-Translator: Nhomar - Vauxoo <nhomar@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-03-22 07:07+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
 
 #. module: account_move_line_base_tax
 #: field:account.move.line,amount_base:0
@@ -36,20 +37,22 @@ msgid "Amount base without amount tax"
 msgstr "Monto base sin el monto del impuesto"
 
 #. module: account_move_line_base_tax
-#: code:addons/account_move_line_base_tax/account.py:61
+#: code:addons/account_move_line_base_tax/account.py:72
 #, python-format
 msgid "The lines with tax of purchase, need have a value in the credit."
-msgstr "Las lineas con impuesto de compra, necesitan tener valor en el credito."
+msgstr ""
+"Las lineas con impuesto de compra, necesitan tener valor en el credito."
 
 #. module: account_move_line_base_tax
-#: code:addons/account_move_line_base_tax/account.py:59
+#: code:addons/account_move_line_base_tax/account.py:68
 #, python-format
 msgid "The lines with tax of purchase, need have a value in the amount base."
-msgstr "Las lineas con impuesto de compra, necesitan tener valor en el monto base."
+msgstr ""
+"Las lineas con impuesto de compra, necesitan tener valor en el monto base."
 
 #. module: account_move_line_base_tax
-#: code:addons/account_move_line_base_tax/account.py:59
-#: code:addons/account_move_line_base_tax/account.py:61
+#: code:addons/account_move_line_base_tax/account.py:68
+#: code:addons/account_move_line_base_tax/account.py:72
 #, python-format
 msgid "Warning!"
 msgstr "Warning!"
@@ -60,24 +63,23 @@ msgid "Invoice"
 msgstr "Factura"
 
 #. module: account_move_line_base_tax
-#: view:account.move.line:0
-msgid "Taxes Effective Payment"
-msgstr "Impuesto efectivamente pagado"
-
-#. module: account_move_line_base_tax
 #: model:ir.model,name:account_move_line_base_tax.model_account_move_line
 msgid "Journal Items"
 msgstr "Elementos diario"
 
 #. module: account_move_line_base_tax
-#: model:ir.model,name:account_move_line_base_tax.model_account_move
-msgid "Account Entry"
-msgstr "Asiento contable"
+#: view:account.move.line:0
+msgid "Taxes Effective Payment"
+msgstr "Impuesto efectivamente pagado"
 
 #. module: account_move_line_base_tax
 #: help:account.move.line,not_move_diot:0
-msgid "If this field is active, although of this item have data for DIOT, not be considered."
-msgstr "Si este campo esta activo, aunque el movimiento tenga datos del Diot, no será conciderado."
+msgid ""
+"If this field is active, although of this item have data for DIOT, not be "
+"considered."
+msgstr ""
+"Si este campo esta activo, aunque el movimiento tenga datos del Diot, no "
+"será conciderado."
 
 #. module: account_move_line_base_tax
 #: field:account.move.line,tax_id_secondary:0
@@ -88,4 +90,3 @@ msgstr "Impuesto Secundario"
 #: help:account.move.line,tax_id_secondary:0
 msgid "Tax used for this move"
 msgstr "Impuesto utilizado para este movimiento"
-

@@ -6,11 +6,70 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-12 17:58+0000\n"
-"PO-Revision-Date: 2012-10-12 13:02-0600\n"
+"POT-Creation-Date: 2013-11-07 01:08+0000\n"
+"PO-Revision-Date: 2013-11-07 05:30+0000\n"
 "Last-Translator: julio <julio@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Launchpad-Export-Date: 2014-03-22 07:07+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
+
+#. module: procurement_order_merge
+#: view:procurement.order.merge:0
+msgid "Are you sure you want to merge these procurements ?"
+msgstr ""
+
+#. module: procurement_order_merge
+#: view:procurement.order.merge:0
+msgid "Merge Procurement"
+msgstr ""
+
+#. module: procurement_order_merge
+#: model:ir.model,name:procurement_order_merge.model_procurement_order_merge
+msgid "procurement.order.merge"
+msgstr ""
+
+#. module: procurement_order_merge
+#: code:addons/procurement_order_merge/wizard/procurement_order_merge.py:43
+#, python-format
+msgid ""
+"Please select multiple order to merge                                    in "
+"the list view."
+msgstr ""
+
+#. module: procurement_order_merge
+#: model:ir.model,name:procurement_order_merge.model_procurement_order
+msgid "Procurement"
+msgstr ""
+
+#. module: procurement_order_merge
+#: code:addons/procurement_order_merge/wizard/procurement_order_merge.py:42
+#, python-format
+msgid "Warning"
+msgstr ""
+
+#. module: procurement_order_merge
+#: model:ir.actions.act_window,name:procurement_order_merge.create_procurement_merge_action
+#: model:ir.actions.act_window,name:procurement_order_merge.procurement_merge_wizard
+#: view:procurement.order.merge:0
+msgid "Procurement Merge"
+msgstr ""
+
+#. module: procurement_order_merge
+#: view:procurement.order.merge:0
+msgid "Cancel"
+msgstr ""
+
+#. module: procurement_order_merge
+#: view:procurement.order.merge:0
+msgid ""
+" Please note that: \n"
+" \n"
+" Orders will only be merged if: \n"
+" * Procurments Orders are in draft \n"
+" * Procurments Orders have same location \n"
+" * Procurments Orders have same procurement method \n"
+" * Procurments Orders have same product "
+msgstr ""

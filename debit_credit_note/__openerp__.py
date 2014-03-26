@@ -47,7 +47,8 @@ This module add:
     "depends": ["base", "account"],
     'data': [
         'wizard/account_invoice_debit_view.xml',
-        "account_invoice_view.xml",
+        'wizard/account_invoice_parent_view.xml',
+        'account_invoice_view.xml',
     ],
     'js': [
     ],

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-02 06:39+0000\n"
-"PO-Revision-Date: 2013-08-02 06:39+0000\n"
+"POT-Creation-Date: 2013-11-07 01:11+0000\n"
+"PO-Revision-Date: 2013-11-07 01:11+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,13 +16,8 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: hr_expense_replenishment_tax
-#: view:hr.expense.expense:0
-msgid "Apply Taxes over Payment"
-msgstr ""
-
-#. module: hr_expense_replenishment_tax
-#: model:ir.model,name:hr_expense_replenishment_tax.model_hr_expense_expense
-msgid "Expense"
+#: model:ir.model,name:hr_expense_replenishment_tax.model_account_voucher
+msgid "Accounting Voucher"
 msgstr ""
 
 #. module: hr_expense_replenishment_tax
@@ -33,5 +28,25 @@ msgstr ""
 #. module: hr_expense_replenishment_tax
 #: field:hr.expense.expense,fully_applied_vat:0
 msgid "Fully Applied VAT"
+msgstr ""
+
+#. module: hr_expense_replenishment_tax
+#: view:hr.expense.expense:0
+msgid "Apply Taxes over Payment"
+msgstr ""
+
+#. module: hr_expense_replenishment_tax
+#: model:ir.model,name:hr_expense_replenishment_tax.model_account_move_line
+msgid "Journal Items"
+msgstr ""
+
+#. module: hr_expense_replenishment_tax
+#: field:hr.expense.expense,amount_exp_pay:0
+msgid "Amount Tax Pay"
+msgstr ""
+
+#. module: hr_expense_replenishment_tax
+#: model:ir.model,name:hr_expense_replenishment_tax.model_hr_expense_expense
+msgid "Expense"
 msgstr ""
 

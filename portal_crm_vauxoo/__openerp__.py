@@ -46,19 +46,19 @@ the human recourses that is public.
                 'portal_news',
                 'web_captcha',
                 'portal_hr_employees',
+                'vauxoo_widgets',
                 ],
     'data': [
         'view/contact_view.xml',
     ],
     'test': [
-        'test/contact_form.yml',
+        #'test/contact_form.yml',
     ],
     'installable': True,
     'auto_install': False,
     'css': [
-        'static/src/css/portal_crm.css'
     ],
-    'js': [ 'static/src/js/portal_crm.js' ],
-    'qweb': [ 'static/src/xml/portal_crm.xml' ],
+    'js': [],
+    'qweb': [],
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -6,14 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-17 22:41+0000\n"
-"PO-Revision-Date: 2012-09-17 18:49-0600\n"
-"Last-Translator: juan <openerp1@hotmil.com>\n"
+"POT-Creation-Date: 2013-11-07 01:09+0000\n"
+"PO-Revision-Date: 2013-11-07 08:11+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Launchpad-Export-Date: 2014-03-22 07:07+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
 
 #. module: mrp_pt_planified
 #: field:mrp.pt.planified,product_id:0
@@ -26,7 +28,7 @@ msgid "mrp.pt.planified"
 msgstr "mrp.pt.planified"
 
 #. module: mrp_pt_planified
-#: code:addons/mrp_pt_planified/mrp.py:49
+#: code:addons/mrp_pt_planified/mrp.py:64
 #, python-format
 msgid "Couldn't find a bill of material for this product."
 msgstr "No se pudo encontrar una lista de materiales para este producto."
@@ -37,10 +39,10 @@ msgid "Manufacturing Order"
 msgstr "Orden de Producción"
 
 #. module: mrp_pt_planified
-#: code:addons/mrp_pt_planified/mrp.py:49
-#, python-format
-msgid "Error"
-msgstr "Error"
+#: view:mrp.production:0
+#: field:mrp.production,pt_planified_ids:0
+msgid "Products Finished Good Planified"
+msgstr "Productos planificados terminados"
 
 #. module: mrp_pt_planified
 #: field:mrp.pt.planified,production_id:0
@@ -48,20 +50,20 @@ msgid "production"
 msgstr "producción"
 
 #. module: mrp_pt_planified
-#: sql_constraint:mrp.production:0
-msgid "Reference must be unique per Company!"
-msgstr "Referencia deben ser única por Empresa!"
+#: code:addons/mrp_pt_planified/mrp.py:64
+#, python-format
+msgid "Error"
+msgstr "Error"
 
 #. module: mrp_pt_planified
-#: view:mrp.production:0
-#: field:mrp.production,pt_planified_ids:0
-msgid "Products Finished Good Planified"
-msgstr "Productos planificados terminados"
+#: model:res.groups,name:mrp_pt_planified.group_mrp_pt_planified_manager
+msgid "Mrp Planified / Manager"
+msgstr "Mrp Planificado / Manager"
 
 #. module: mrp_pt_planified
-#: constraint:mrp.production:0
-msgid "Order quantity cannot be negative or zero!"
-msgstr "Cantidad de pedido no puede ser negativo o cero!"
+#: field:mrp.pt.planified,quantity:0
+msgid "quantity"
+msgstr "Cantidad"
 
 #. module: mrp_pt_planified
 #: field:mrp.pt.planified,product_uom:0
@@ -69,7 +71,6 @@ msgid "UoM"
 msgstr "UdM"
 
 #. module: mrp_pt_planified
-#: field:mrp.pt.planified,quantity:0
-msgid "quantity"
-msgstr "Cantidad"
-
+#: model:res.groups,name:mrp_pt_planified.group_mrp_pt_planified_user
+msgid "Mrp Planified / User"
+msgstr "Mrp Planificado / Usuario"

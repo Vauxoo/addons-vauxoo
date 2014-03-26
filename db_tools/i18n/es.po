@@ -1,0 +1,92 @@
+# Spanish translation for addons-vauxoo
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the addons-vauxoo package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: addons-vauxoo\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-11-07 01:11+0000\n"
+"PO-Revision-Date: 2013-11-08 05:22+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
+"Language-Team: Spanish <es@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-03-22 07:07+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
+
+#. module: db_tools
+#: field:db.tools,name_db:0
+msgid "Name DB"
+msgstr "Nombre de BD"
+
+#. module: db_tools
+#: field:db.tools,list_db:0
+msgid "Data Base Restore"
+msgstr "Restaurar Base de Datos"
+
+#. module: db_tools
+#: view:db.tools:0
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: db_tools
+#: model:ir.ui.menu,name:db_tools.menu_action_db_tools
+msgid "DB tools"
+msgstr "Herramienta BD"
+
+#. module: db_tools
+#: view:db.tools:0
+#: model:ir.actions.act_window,name:db_tools.db_tools_wizard_action
+#: model:ir.ui.menu,name:db_tools.menu_action_db_tools_wizard_form
+msgid "DB Tools"
+msgstr "Herramienta BD"
+
+#. module: db_tools
+#: field:db.tools,filter:0
+msgid "Filter"
+msgstr "Filtro"
+
+#. module: db_tools
+#: selection:db.tools,filter:0
+msgid "Backup-Restore"
+msgstr "Respaldar-Restaurar"
+
+#. module: db_tools
+#: help:db.tools,filter:0
+msgid ""
+"Backup creates a backup of the database and stored                in the "
+"path indicated, Restore-Backup creates a backup                of the "
+"database, and in turn restores the new name"
+msgstr ""
+"Respaldar crea un respaldo de la base de datos y la almacena en la ruta "
+"indicada, Restaurar-Respaldar crea un respaldo de la base de datos, y en su "
+"lugar restaura el nuevo nombre"
+
+#. module: db_tools
+#: view:db.tools:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: db_tools
+#: field:db.tools,path_save_db:0
+msgid "Path save DB"
+msgstr "Ruta para salvar BD"
+
+#. module: db_tools
+#: field:db.tools,password:0
+msgid "Password"
+msgstr "Contraseña"
+
+#. module: db_tools
+#: selection:db.tools,filter:0
+msgid "Backup"
+msgstr "Respaldo"
+
+#. module: db_tools
+#: model:ir.model,name:db_tools.model_db_tools
+msgid "db.tools"
+msgstr "db.tools"

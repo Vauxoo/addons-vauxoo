@@ -27,6 +27,8 @@
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
 import logging
+import urlparse
+import urllib2
 _logger = logging.getLogger("SignYouTube")
 try:
     from gdata.youtube import service
@@ -64,6 +66,13 @@ class sign_youtube_conf(osv.Model):
         '''
         Return the video details
         '''
+        youtube_id = ''
+        if entry:
+            youtube_url = entry.GetHtmlLink().href
+            if youtube_url:
+                url_data = urlparse.urlparse(youtube_url)
+                query = urlparse.parse_qs(url_data.query)
+                youtube_id = query.get("v") and query.get("v")[0] or ''
         entry_data = {
             'name': entry and entry.media.title.text or '',
             'published': entry and entry.published.text or '',
@@ -75,6 +84,7 @@ class sign_youtube_conf(osv.Model):
             'favorites': entry and entry.statistics and entry.statistics.favorite_count or '',
             'views': entry and entry.statistics and entry.statistics.view_count or '',
             'private': entry.media.private and entry.media.private.text,
+            'public_information': entry and youtube_id or '',
         }
         return entry_data
 
@@ -144,6 +154,10 @@ class sign_youtube_conf(osv.Model):
                 if line_ids:
                     line_brw = line.browse(
                         cr, uid, line_ids[0], context=context)
+                    line.write(cr, uid, line_ids,
+                                   {
+                                    'public_information': item.get('public_information', ''), },
+                                   context=context)
                     if str(line_brw.duration_seconds) == str(item.get('duration_seconds', '')):
                         line.write(cr, uid, line_ids,
                                    {'update': 0,
@@ -191,6 +205,8 @@ class sign_youtube_conf_line(osv.Model):
                                 'YouTube'),
         'description': fields.text('Description', help='Description added for this video when was '
                                    'created'),
+        'public_information': fields.text('Public Information', help='This information accept html'
+                                   'and is the information that will be used in the portal page.'),
     }
     _defaults = {
         'update': 0,

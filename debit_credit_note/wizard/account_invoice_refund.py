@@ -92,11 +92,11 @@ class account_invoice_refund(osv.osv_memory):
             period_id = ids[0]
         return period_id
 
-    def _get_orig(self, cr, uid, inv, ref, context={}):
+    def _get_orig(self, cr, uid, inv, context={}):
         """
         Return  default origin value
         """
-        nro_ref = ref
+        nro_ref = ''
         if inv.type == 'out_invoice':
             nro_ref = inv.number
         orig = _('INV REFUND:') + (nro_ref or '') + _('- DATE:') + (
@@ -248,7 +248,7 @@ class account_invoice_refund(osv.osv_memory):
                             'tax_line': tax_lines,
                             'period_id': period,
                             'name': description,
-                            'origin': orig,
+                            'origin': self._get_orig(cr, uid, inv, context={}),
                         })
                         for field in (
                             'partner_id', 'account_id', 'currency_id',

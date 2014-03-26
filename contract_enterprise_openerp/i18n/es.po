@@ -6,21 +6,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-21 21:14+0000\n"
-"PO-Revision-Date: 2013-08-21 21:14+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:11+0000\n"
+"PO-Revision-Date: 2013-11-07 04:12+0000\n"
+"Last-Translator: Nhomar - Vauxoo <nhomar@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-03-22 07:07+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
 
 #. module: contract_enterprise_openerp
 #: help:account.warranty_oerp,start_date:0
-msgid "day when this contract\n"
+msgid ""
+"day when this contract\n"
 "            was enabled by OpenERP and is shown in the contract PDF\n"
 "            attached."
-msgstr "Dia este que este contrato\n"
+msgstr ""
+"Dia este que este contrato\n"
 "           fue habilitado por OpenERP y se muestra en el PDF del contrato\n"
 "           adjuntado."
 
@@ -41,9 +44,11 @@ msgstr "Key dado por OpenERP i.e: twa-1234355352ff"
 
 #. module: contract_enterprise_openerp
 #: help:account.warranty_oerp,end_date:0
-msgid "day when this contract will\n"
+msgid ""
+"day when this contract will\n"
 "            end  by OpenERP and is shown in the contract PDF attached."
-msgstr "Dia este que este contrato\n"
+msgstr ""
+"Dia este que este contrato\n"
 "           finalizará por OpenERP y se muestra en el PDF del contrato\n"
 "           adjuntado."
 
@@ -74,16 +79,20 @@ msgstr "Cuenta analítica"
 
 #. module: contract_enterprise_openerp
 #: help:account.analytic.account,warranty_oerp_ids:0
-msgid "List of Warranties\n"
+msgid ""
+"List of Warranties\n"
 "            Enterprise"
-msgstr "Lista de Garantias\n"
+msgstr ""
+"Lista de Garantias\n"
 "            Enterprise"
 
 #. module: contract_enterprise_openerp
 #: constraint:account.warranty_oerp:0
-msgid "Error!\n"
+msgid ""
+"Error!\n"
 " Date is/are invalid."
-msgstr "Error!\n"
+msgstr ""
+"Error!\n"
 " Fecha is invalida"
 
 #. module: contract_enterprise_openerp
@@ -93,10 +102,12 @@ msgstr "Contracto vinculado a la Garantia"
 
 #. module: contract_enterprise_openerp
 #: constraint:account.warranty_oerp:0
-msgid "Error!\n"
+msgid ""
+"Error!\n"
 " Enterprise Key exists in other\n"
 "             contract."
-msgstr "Error!\n"
+msgstr ""
+"Error!\n"
 " Key Enterprise existe en otro\n"
 "             contracto."
 
@@ -114,4 +125,3 @@ msgstr "Este check habilita el manejo de garantias"
 #: field:account.analytic.account,license_oerp:0
 msgid "This contract has Enterprise License"
 msgstr "Este contrato tiene Licencia Enterprise"
-

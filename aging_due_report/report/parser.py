@@ -186,6 +186,12 @@ class aging_parser(report_sxw.rml_parse):
 
     def _get_aged_lines(self, rp_brws, span=30, date_from=time.strftime('%Y-%m-%d')):
 
+        # span = 30
+        # spans = [0, 30, 60, 90, 120]
+        # span = 90
+        # spans = [0, 90, 180, 270, 360]
+        spans = [span * x for x in range(5)]
+
         if not rp_brws:
             return []
 
@@ -219,10 +225,25 @@ class aging_parser(report_sxw.rml_parse):
                 '120+'      : 0.00,
             }]
         '''
+
+        res_total = {
+            'type'      : 'total',
+            'not_due'   : 0.00, 
+            '1to30'     : 0.00, 
+            '31to60'    : 0.00, 
+            '61to90'    : 0.00, 
+            '91to120'   : 0.00, 
+            '120+'      : 0.00,
+            'total'      : 0.00,
+        }
+
+        res_prov = res_total.copy()
+        res_prov['type'] = 'provision'
+
         result = []
         for ixp in ixp_gen:
             res = {
-                'id': ixp['rp_brw'].id,
+                'type' : 'partner',
                 'rp_brw': ixp['rp_brw'],
                 'not_due': 0.00,
                 '1to30': 0.00,
@@ -235,26 +256,43 @@ class aging_parser(report_sxw.rml_parse):
 
             for inv in ixp['inv_ids']:
                 res['total'] += inv['residual']
+                res_total['total'] += inv['residual']
+                
                 if inv['due_days'] <= 0:
                     res['not_due'] += inv['residual']
+                    res_total['not_due'] += inv['residual']
 
-                elif inv['due_days'] > 0 and inv['due_days'] <= 30:
+                elif inv['due_days'] > 0 and inv['due_days'] <= spans[1]:
                     res['1to30'] += inv['residual']
+                    res_total['1to30'] += inv['residual']
 
-                elif inv['due_days'] > 30 and inv['due_days'] <= 60:
+                elif inv['due_days'] > spans[1] and inv['due_days'] <= spans[2]:
                     res['31to60'] += inv['residual']
+                    res_total['31to60'] += inv['residual']
+                    res_prov['31to60'] += inv['residual'] * 0.25
+                    res_prov['total'] += inv['residual'] * 0.25
 
-                elif inv['due_days'] > 60 and inv['due_days'] <= 90:
+                elif inv['due_days'] > spans[2] and inv['due_days'] <= spans[3]:
                     res['61to90'] += inv['residual']
+                    res_total['61to90'] += inv['residual']
+                    res_prov['61to90'] += inv['residual'] * 0.5
+                    res_prov['total'] += inv['residual'] * 0.5
 
-                elif inv['due_days'] > 90 and inv['due_days'] <= 120:
+                elif inv['due_days'] > spans[3] and inv['due_days'] <= spans[4]:
                     res['91to120'] += inv['residual']
-
+                    res_total['91to120'] += inv['residual']
+                    res_prov['91to120'] += inv['residual'] * 0.75
+                    res_prov['total'] += inv['residual'] * 0.75
                 else:
                     res['120+'] += inv['residual']
-
+                    res_total['120+'] += inv['residual']
+                    res_prov['120+'] += inv['residual']
+                    res_prov['total'] += inv['residual']
+            
             result.append(res)
-        print 'THIS IS THE RESULT ', result
+        result.append(res_total)
+        result.append(res_prov)
+        
         return result
 
 report_sxw.report_sxw(
@@ -275,6 +313,13 @@ report_sxw.report_sxw(
     'report.aging_due_report',
     'res.partner',
     'addons/aging_due_report/report/aging_due_report.rml',
+    parser=aging_parser,
+    header=False
+)
+report_sxw.report_sxw(
+    'report.provision_due_report',
+    'res.partner',
+    'addons/aging_due_report/report/provision_due_report.rml',
     parser=aging_parser,
     header=False
 )

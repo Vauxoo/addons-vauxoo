@@ -6,14 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-24 01:18+0000\n"
-"PO-Revision-Date: 2013-07-23 20:25-0600\n"
-"Last-Translator: Ulises <ulises@vauxoo.com>\n"
+"POT-Creation-Date: 2013-11-07 01:07+0000\n"
+"PO-Revision-Date: 2013-11-07 03:36+0000\n"
+"Last-Translator: Ulises <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Launchpad-Export-Date: 2014-03-22 07:08+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
 
 #. module: purchase_requisition_for_everybody
 #: view:purchase.requisition:0
@@ -63,8 +64,10 @@ msgstr "Solicitud - Administrador"
 
 #. module: purchase_requisition_for_everybody
 #: view:purchase.requisition:0
-msgid "purchase_requisition_for_everybody.purchase_requisition_manager_ev_groups"
-msgstr "purchase_requisition_for_everybody.purchase_requisition_manager_ev_groups"
+msgid ""
+"purchase_requisition_for_everybody.purchase_requisition_manager_ev_groups"
+msgstr ""
+"purchase_requisition_for_everybody.purchase_requisition_manager_ev_groups"
 
 #. module: purchase_requisition_for_everybody
 #: view:purchase.requisition:0
@@ -75,4 +78,3 @@ msgstr "Presupuestos"
 #: model:ir.ui.menu,name:purchase_requisition_for_everybody.menu_purchase_ev_requisition_act
 msgid "Purchase Requisitions"
 msgstr "Solicitudes de compra"
-

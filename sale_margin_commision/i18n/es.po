@@ -6,11 +6,32 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-12 00:09+0000\n"
-"PO-Revision-Date: 2012-07-11 19:16-0600\n"
-"Last-Translator: juan <juan@vauxoo.com>\n"
+"POT-Creation-Date: 2013-11-07 01:07+0000\n"
+"PO-Revision-Date: 2013-11-08 18:02+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Launchpad-Export-Date: 2014-03-22 07:08+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
+
+#. module: sale_margin_commision
+#: help:sale.order,commision:0
+msgid ""
+"It is the commision calculate\n"
+"                                              based on baremos"
+msgstr ""
+"Es la comisión calculada\n"
+"                                              basada en los baremos"
+
+#. module: sale_margin_commision
+#: model:ir.model,name:sale_margin_commision.model_sale_order
+msgid "Sales Order"
+msgstr "Pedidos de Venta"
+
+#. module: sale_margin_commision
+#: field:sale.order,commision:0
+msgid "Commision Rate"
+msgstr "Tasa de Comisión"

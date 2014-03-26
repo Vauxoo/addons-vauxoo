@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
         
@@ -7,7 +7,10 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/sheet[@string='Invoice']/h1/field[@name='number']" position="replace">
+                <xpath expr="/form/sheet[@string='Invoice']/h1/field[@name='number']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="/form/sheet[@string='Invoice']/h1/field[@name='number']" position="after">
                     <field name="internal_number"/>
                 </xpath>
             </field>
@@ -19,7 +22,10 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.view_account_invoice_filter"/>
             <field name="arch" type="xml">
-                <xpath expr="/search/field[@name='number']" position="replace">
+                <xpath expr="/search/field[@name='number']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="/search/field[@name='number']" position="after">
                     <field name="internal_number"/>
                 </xpath>
             </field>
@@ -30,11 +36,25 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_tree"/>
             <field name="arch" type="xml">
-                <xpath expr="/tree/field[@name='number']" position="replace">
+                <xpath expr="/tree/field[@name='number']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="/tree/field[@name='number']" position="after">
                     <field name="internal_number"/>
                 </xpath>
             </field>
         </record>
         
+        <record id="invoice_tree_supplier_number" model="ir.ui.view">                                                   
+            <field name="name">account.invoice.tree</field>                                                             
+            <field name="model">account.invoice</field>                                                                 
+            <field name="inherit_id" ref="account.invoice_tree" />                                                      
+            <field name="arch" type="xml">                                                                              
+                <xpath expr="/tree/field[@name='date_invoice']" position="after">
+                    <field name="supplier_invoice_number" invisible="context.get('type', False) in ('out_invoice','out_refund') or False"/>
+                </xpath>
+            </field>                                                                                                    
+        </record>
+
     </data>
 </openerp>

@@ -6,34 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.3\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-03-10 00:11+0000\n"
-"PO-Revision-Date: 2012-03-09 19:42-0400\n"
-"Last-Translator: Miguel <miguel.delgado07@gmail.com>\n"
+"POT-Creation-Date: 2013-11-07 01:10+0000\n"
+"PO-Revision-Date: 2013-11-07 08:17+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-
-#. module: m321_reports
-#: report:m321_reports.cm321_report:0
-msgid "Customer:"
-msgstr "Cliente:"
-
-#. module: m321_reports
-#: model:ir.module.module,shortdesc:m321_reports.module_meta_information
-msgid "M321 Reports Instalator"
-msgstr "Instalador de reportes M321"
-
-#. module: m321_reports
-#: model:payment.method,name:m321_reports.pm_transfer
-msgid "Transfer"
-msgstr "Transferencia"
-
-#. module: m321_reports
-#: model:ir.actions.report.xml,name:m321_reports.cm321_report
-msgid "Print Report Comercializadora M321"
-msgstr "Imprimir Reporte Comercializadora M321"
+"X-Launchpad-Export-Date: 2014-03-22 07:07+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
 
 #. module: m321_reports
 #: model:ir.actions.report.xml,name:m321_reports.m321_ca_report
@@ -41,54 +23,19 @@ msgid "Print Report Computacion Activa"
 msgstr "Imprimir Reporte Computacion Activa"
 
 #. module: m321_reports
-#: field:payment.method,name:0
-msgid "Payment method"
-msgstr "Forma de Pago"
+#: report:m321_reports.cm321_report:0
+msgid "Unit Price"
+msgstr "Precio Unitario"
 
 #. module: m321_reports
-#: report:m321_reports.cm321_report:0
-msgid "Issue Date"
-msgstr "Fecha de Emisión"
-
-#. module: m321_reports
-#: report:m321_reports.cm321_report:0
-
-msgid "% Discount:"
-msgstr "% Descuento:"
-
-#. module: m321_reports
-#: report:m321_reports.cm321_report:0
-msgid "Fax:"
-msgstr "Fax:"
-
-#. module: m321_reports
-#: report:m321_reports.cm321_report:0
-msgid "Phone:"
-msgstr "Telefono:"
-
-#. module: m321_reports
-#: report:m321_reports.cm321_report:0
-msgid "Invoice:"
-msgstr "Factura:"
+#: model:ir.actions.report.xml,name:m321_reports.cm321_report
+msgid "Print Report Comercializadora M321"
+msgstr "Imprimir Reporte Comercializadora M321"
 
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
 msgid "%Surcharge:"
 msgstr "%Recargo:"
-
-#. module: m321_reports
-#: field:account.invoice,payment_method_id:0
-#: view:base.new.model:0
-#: model:ir.actions.act_window,name:m321_reports.action_new_model
-#: model:ir.ui.menu,name:m321_reports.menu_payment_method
-#: model:ir.ui.menu,name:m321_reports.menu_payment_method1
-msgid "Payment Method"
-msgstr "Forma de Pago"
-
-#. module: m321_reports
-#: report:m321_reports.cm321_report:0
-msgid "%"
-msgstr "%"
 
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
@@ -122,8 +69,8 @@ msgstr "Imprimir Reporte AMD Computadoras"
 
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
-msgid "Total:"
-msgstr "Total:"
+msgid "FECHA DE VENCIMIENTO:"
+msgstr "FECHA DE VENCIMIENTO:"
 
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
@@ -132,28 +79,23 @@ msgstr "(mes)"
 
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
-msgid "Address:"
-msgstr "Dirección:"
-
-#. module: m321_reports
-#: report:m321_reports.cm321_report:0
 msgid "Sub-Total"
 msgstr "Sub-Total"
 
 #. module: m321_reports
-#: model:payment.method,name:m321_reports.pm_cash
-msgid "Cash"
-msgstr "Efectivo"
-
-#. module: m321_reports
-#: model:payment.method,name:m321_reports.pm_deposit
-msgid "Deposit"
-msgstr "Deposito"
+#: report:m321_reports.cm321_report:0
+msgid "DIRECCION FISCAL:"
+msgstr "DIRECCION FISCAL:"
 
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
-msgid "N.I.T:"
-msgstr "N.I.T:"
+msgid "FECHA DE EMISION:"
+msgstr "FECHA DE EMISION:"
+
+#. module: m321_reports
+#: report:m321_reports.cm321_report:0
+msgid "%Discount:"
+msgstr "%Discount:"
 
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
@@ -182,13 +124,18 @@ msgstr "Código"
 
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
+msgid "Total:"
+msgstr "Total:"
+
+#. module: m321_reports
+#: report:m321_reports.cm321_report:0
 msgid "Cheques a Nombre de:"
 msgstr "Cheques a Nombre de:"
 
 #. module: m321_reports
-#: help:account.invoice,payment_method_id:0
-msgid "In this field selects the payment method with which to cancel the invoice"
-msgstr "En este campo seleccione la forma de pago con el que desea cancelar la factura"
+#: report:m321_reports.cm321_report:0
+msgid "RAZON SOCIAL:"
+msgstr "RAZON SOCIAL:"
 
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
@@ -207,47 +154,5 @@ msgstr "Imprimir Reporte Computer Shop"
 
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
-msgid "Unit Price"
-msgstr "Precio Unitario"
-
-#. module: m321_reports
-#: report:m321_reports.cm321_report:0
-msgid "Page:"
-msgstr "Pagina:"
-
-#. module: m321_reports
-#: model:ir.model,name:m321_reports.model_account_invoice
-msgid "Invoice"
-msgstr "Factura"
-
-#. module: m321_reports
-#: model:ir.module.module,description:m321_reports.module_meta_information
-msgid ""
-"\n"
-"        This module installs the basic reports and formats for the M321 Companies\n"
-"                    "
-msgstr ""
-"\n"
-"        Este modulo instala los reportes basicos para las compañias de M321\n"
-"                    "
-
-#. module: m321_reports
-#: report:m321_reports.cm321_report:0
-msgid "Expiration Date:"
-msgstr "Fecha de Expiración:"
-
-#. module: m321_reports
-#: report:m321_reports.cm321_report:0
 msgid "Total"
 msgstr "Neto"
-
-#. module: m321_reports
-#: model:payment.method,name:m321_reports.pm_check
-msgid "Check"
-msgstr "Cheque"
-
-#. module: m321_reports
-#: model:ir.model,name:m321_reports.model_payment_method
-msgid "payment.method"
-msgstr "payment.method"
-

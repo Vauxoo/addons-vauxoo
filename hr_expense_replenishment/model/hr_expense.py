@@ -985,6 +985,28 @@ class hr_expense_expense(osv.Model):
             'view_id': False,
             'type': 'ir.actions.act_window'
         }
+        
+    def print_journal_entries(self, cr, uid, ids, context=None):
+        account_move_ids = []
+        for exp in self.browse(cr, uid, ids, context=context):
+            res_exp = [move.move_id.id for move in exp.account_move_id.line_id]
+            
+            res_adv = [line.move_id.id  for line in exp.advance_ids]
+                                
+            res_pay = [line2.move_id.id for pay in exp.payment_ids
+                                for line2 in pay.move_ids]
+                                
+            res_inv = [move2.move_id.id  for inv in exp.invoice_ids
+                                for move2 in inv.move_id.line_id]
+                                
+        account_move_ids = res_exp+res_adv+res_pay+res_inv
+        if account_move_ids:
+            datas = {'ids': list(set(account_move_ids))}
+        return {
+            'type': 'ir.actions.report.xml',
+            'report_name': 'account.move.report.webkit',
+            'datas': datas
+        }
 
 class account_voucher(osv.Model):
     _inherit = 'account.voucher'

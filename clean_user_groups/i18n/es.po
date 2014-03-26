@@ -7,15 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-07 01:43+0000\n"
-"PO-Revision-Date: 2013-06-06 21:15-0430\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:12+0000\n"
+"PO-Revision-Date: 2013-11-07 07:35+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
-"X-Generator: Gtranslator 2.91.6\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-03-22 07:07+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
 
 #. module: clean_user_groups
 #: field:clean.groups,sure:0
@@ -34,18 +35,25 @@ msgid "Clean Groups"
 msgstr "Remover Grupos"
 
 #. module: clean_user_groups
+#: code:addons/clean_user_groups/wizard/clean_group.py:62
+#, python-format
+msgid "You can\"t delete groups to admin user"
+msgstr "Vd. no puede borrar grupos al usuario admin"
+
+#. module: clean_user_groups
 #: model:ir.model,name:clean_user_groups.model_clean_groups
 msgid "clean.groups"
 msgstr "clean.groups"
 
 #. module: clean_user_groups
-#: code:addons/clean_user_groups/wizard/clean_group.py:60
+#: code:addons/clean_user_groups/wizard/clean_group.py:61
+#: code:addons/clean_user_groups/wizard/clean_group.py:65
 #, python-format
 msgid "Error"
 msgstr "Error"
 
 #. module: clean_user_groups
-#: code:addons/clean_user_groups/wizard/clean_group.py:61
+#: code:addons/clean_user_groups/wizard/clean_group.py:66
 #, python-format
 msgid "Please select the checkbox"
 msgstr "Por favor selecciona ambos casillas de confirmacion"
@@ -56,7 +64,8 @@ msgid "Close"
 msgstr "Cerrar"
 
 #. module: clean_user_groups
-#: help:clean.groups,confirm:0 help:clean.groups,sure:0
+#: help:clean.groups,confirm:0
+#: help:clean.groups,sure:0
 msgid "Are sure this operation"
 msgstr "Esta seguro que desea realizar la operación"
 

@@ -39,7 +39,9 @@
             "account_voucher",
         ],
     "demo" : [],
-    "data" : [],
+    "data" : [
+        "view/voucher_payment_receipt_view.xml"
+        ],
     'js': [],
     'qweb' : [],
     'css':[],

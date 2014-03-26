@@ -7,12 +7,58 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-22 05:00+0000\n"
-"PO-Revision-Date: 2013-05-22 00:34-0430\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:09+0000\n"
+"PO-Revision-Date: 2013-11-08 05:11+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
-"X-Generator: Gtranslator 2.91.6\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-03-22 07:07+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
+
+#. module: picking_from_invoice
+#: model:ir.model,name:picking_from_invoice.model_picking_from_invoice
+msgid "picking.from.invoice"
+msgstr "picking.from.invoice"
+
+#. module: picking_from_invoice
+#: code:addons/picking_from_invoice/wizard/picking_from_invoice.py:55
+#, python-format
+msgid ""
+"You cannot  create picking because you not                have a warehouse!"
+msgstr "No puede crear un Albarán porque Vd. no tiene un Almacén"
+
+#. module: picking_from_invoice
+#: field:picking.from.invoice,invoice_ids:0
+msgid "Invoices"
+msgstr "Facturas"
+
+#. module: picking_from_invoice
+#: help:picking.from.invoice,invoice_ids:0
+msgid "Select the invoices to account move cancel"
+msgstr "Seleccione las facturas para cancelar el Movimiento Contable"
+
+#. module: picking_from_invoice
+#: code:addons/picking_from_invoice/wizard/picking_from_invoice.py:55
+#, python-format
+msgid "Invalid action !"
+msgstr "¡ Acción invalida !"
+
+#. module: picking_from_invoice
+#: view:picking.from.invoice:0
+msgid "Exit"
+msgstr "Salir"
+
+#. module: picking_from_invoice
+#: model:ir.actions.act_window,name:picking_from_invoice.picking_from_invoice_action
+#: model:ir.ui.menu,name:picking_from_invoice.picking_from_invoice_wz
+#: view:picking.from.invoice:0
+msgid "Picking from Invoice"
+msgstr "Albarán de la Factura"
+
+#. module: picking_from_invoice
+#: view:picking.from.invoice:0
+msgid "Generate Picking"
+msgstr "Generar Albarán"

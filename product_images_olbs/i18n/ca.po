@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2011-03-23 09:49+0000\n"
+"POT-Creation-Date: 2013-11-07 01:08+0000\n"
 "PO-Revision-Date: 2013-06-03 07:38+0000\n"
 "Last-Translator: Jordi Esteve (www.zikzakmedia.com) "
 "<jesteve@zikzakmedia.com>\n"
@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-10-21 04:58+0000\n"
-"X-Generator: Launchpad (build 16807)\n"
+"X-Launchpad-Export-Date: 2014-03-22 07:06+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
 
 #. module: product_images_olbs
 #: model:ir.model,name:product_images_olbs.model_product_product
@@ -24,14 +24,9 @@ msgid "Product"
 msgstr "Producte"
 
 #. module: product_images_olbs
-#: model:ir.module.module,shortdesc:product_images_olbs.module_meta_information
-msgid "Product Image Gallery"
+#: model:ir.model,name:product_images_olbs.model_product_images
+msgid "Products Image gallery"
 msgstr "Galeria d'imatges"
-
-#. module: product_images_olbs
-#: constraint:product.product:0
-msgid "Several dimension values for the same dimension type"
-msgstr ""
 
 #. module: product_images_olbs
 #: field:product.images,preview:0
@@ -45,23 +40,11 @@ msgid "Image"
 msgstr "Imatge"
 
 #. module: product_images_olbs
-#: model:ir.module.module,description:product_images_olbs.module_meta_information
+#: help:product.images,link:0
 msgid ""
-"\n"
-"    This Module implements an Image Gallery for products.\n"
-"    You can add images against every product.\n"
-"    \n"
-"    This module is generic but built for Magento ERP connector and\n"
-"    the upcoming e-commerce system for Open ERP by Open Labs\n"
-"    "
+"Images can be linked from files on your\n"
+"                                       file system or remote (Preferred)"
 msgstr ""
-"\n"
-"    Gestió de galeria d'imatges del producte.\n"
-"    Es pot afegir imatges per a cada producte.\n"
-"    \n"
-"    Aquest mòdul es genèric però ha estat dissenyat pel connector Magento "
-"per a OpenERP\n"
-"    "
 
 #. module: product_images_olbs
 #: field:product.images,name:0
@@ -72,19 +55,6 @@ msgstr "Títol de la imatge"
 #: view:product.images:0
 msgid "Preview (Only when saved)"
 msgstr "Previsualitzar (disponible una  vegada desat)"
-
-#. module: product_images_olbs
-#: constraint:product.product:0
-msgid "Error: Invalid ean code"
-msgstr "Error: Codi EAN no vàlid"
-
-#. module: product_images_olbs
-#: help:product.images,link:0
-msgid ""
-"Images can be linked from files on your file system or remote (Preferred)"
-msgstr ""
-"Les imatges poden ser vinculades des del vostre sistema de fitxers o "
-"remotament (preferiblement)."
 
 #. module: product_images_olbs
 #: view:product.images:0
@@ -113,8 +83,3 @@ msgstr "Imatges del producte"
 #: field:product.images,link:0
 msgid "Link?"
 msgstr "Vincle?"
-
-#. module: product_images_olbs
-#: model:ir.model,name:product_images_olbs.model_product_images
-msgid "Products Image gallery"
-msgstr "Galeria d'imatges"

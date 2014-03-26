@@ -1,0 +1,259 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* afr_webkit
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-07 01:12+0000\n"
+"PO-Revision-Date: 2013-11-07 05:33+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-03-22 07:07+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_qtr.mako:44
+msgid "Q1"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_analytic_ledger.mako:40
+#: report:addons/afr_webkit/report/afr_report_webkit_cols1.mako:41
+#: report:addons/afr_webkit/report/afr_report_webkit_cols13.mako:39
+#: report:addons/afr_webkit/report/afr_report_webkit_cols2.mako:45
+#: report:addons/afr_webkit/report/afr_report_webkit_cols4.mako:45
+#: report:addons/afr_webkit/report/afr_report_webkit_cols5.mako:38
+#: report:addons/afr_webkit/report/afr_report_webkit_journal_ledger.mako:39
+#: report:addons/afr_webkit/report/afr_report_webkit_qtr.mako:43
+msgid "ACCOUNT"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_analytic_ledger.mako:39
+#: report:addons/afr_webkit/report/afr_report_webkit_cols1.mako:40
+#: report:addons/afr_webkit/report/afr_report_webkit_cols13.mako:38
+#: report:addons/afr_webkit/report/afr_report_webkit_cols2.mako:44
+#: report:addons/afr_webkit/report/afr_report_webkit_cols4.mako:44
+#: report:addons/afr_webkit/report/afr_report_webkit_journal_ledger.mako:38
+#: report:addons/afr_webkit/report/afr_report_webkit_qtr.mako:42
+msgid "CODE"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_qtr.mako:47
+msgid "Q4"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_qtr.mako:46
+msgid "Q3"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_qtr.mako:45
+msgid "Q2"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_analytic_ledger.mako:42
+#: report:addons/afr_webkit/report/afr_report_webkit_cols2.mako:47
+#: report:addons/afr_webkit/report/afr_report_webkit_cols4.mako:47
+#: report:addons/afr_webkit/report/afr_report_webkit_cols5.mako:40
+#: report:addons/afr_webkit/report/afr_report_webkit_journal_ledger.mako:41
+msgid "DEBIT"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_analytic_ledger.mako:51
+#: report:addons/afr_webkit/report/afr_report_webkit_journal_ledger.mako:50
+msgid "DATE"
+msgstr ""
+
+#. module: afr_webkit
+#: model:ir.model,name:afr_webkit.model_wizard_report
+msgid "wizard.report"
+msgstr "wizard.report"
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_cols13.mako:41
+msgid "02"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_cols13.mako:42
+msgid "03"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_cols13.mako:40
+msgid "01"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_cols13.mako:45
+msgid "06"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_cols13.mako:46
+msgid "07"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_cols13.mako:43
+msgid "04"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_cols13.mako:44
+msgid "05"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_cols13.mako:47
+msgid "08"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_cols13.mako:48
+msgid "09"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_analytic_ledger.mako:54
+#: report:addons/afr_webkit/report/afr_report_webkit_journal_ledger.mako:52
+msgid "JOURNAL ENTRY"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_analytic_ledger.mako:32
+#: report:addons/afr_webkit/report/afr_report_webkit_cols1.mako:33
+#: report:addons/afr_webkit/report/afr_report_webkit_cols13.mako:33
+#: report:addons/afr_webkit/report/afr_report_webkit_cols2.mako:37
+#: report:addons/afr_webkit/report/afr_report_webkit_cols4.mako:37
+#: report:addons/afr_webkit/report/afr_report_webkit_cols5.mako:31
+#: report:addons/afr_webkit/report/afr_report_webkit_journal_ledger.mako:31
+#: report:addons/afr_webkit/report/afr_report_webkit_qtr.mako:37
+msgid "Expressed in: %s"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_cols5.mako:39
+msgid "INIT. BAL."
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_analytic_ledger.mako:22
+#: report:addons/afr_webkit/report/afr_report_webkit_cols1.mako:22
+#: report:addons/afr_webkit/report/afr_report_webkit_cols2.mako:26
+msgid "form"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_analytic_ledger.mako:52
+#: report:addons/afr_webkit/report/afr_report_webkit_cols5.mako:42
+#: report:addons/afr_webkit/report/afr_report_webkit_journal_ledger.mako:51
+msgid "PERIOD"
+msgstr ""
+
+#. module: afr_webkit
+#: selection:wizard.report,report_format:0
+msgid "Spreadsheet"
+msgstr "Hoja de Calculo"
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_cols13.mako:51
+msgid "12"
+msgstr ""
+
+#. module: afr_webkit
+#: selection:wizard.report,report_format:0
+msgid "PDF"
+msgstr "PDF"
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_cols13.mako:52
+#: report:addons/afr_webkit/report/afr_report_webkit_cols5.mako:43
+#: report:addons/afr_webkit/report/afr_report_webkit_qtr.mako:48
+msgid "YTD"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_analytic_ledger.mako:44
+#: report:addons/afr_webkit/report/afr_report_webkit_cols1.mako:43
+#: report:addons/afr_webkit/report/afr_report_webkit_cols4.mako:49
+#: report:addons/afr_webkit/report/afr_report_webkit_journal_ledger.mako:43
+msgid "BALANCE"
+msgstr ""
+
+#. module: afr_webkit
+#: model:ir.actions.report.xml,name:afr_webkit.afr_report_analytic_ledger
+#: model:ir.actions.report.xml,name:afr_webkit.afr_report_analytic_ledger_html
+#: model:ir.actions.report.xml,name:afr_webkit.afr_report_col1
+#: model:ir.actions.report.xml,name:afr_webkit.afr_report_col13
+#: model:ir.actions.report.xml,name:afr_webkit.afr_report_col13_html
+#: model:ir.actions.report.xml,name:afr_webkit.afr_report_col1_html
+#: model:ir.actions.report.xml,name:afr_webkit.afr_report_col2
+#: model:ir.actions.report.xml,name:afr_webkit.afr_report_col2_html
+#: model:ir.actions.report.xml,name:afr_webkit.afr_report_col4
+#: model:ir.actions.report.xml,name:afr_webkit.afr_report_col4_html
+#: model:ir.actions.report.xml,name:afr_webkit.afr_report_col5
+#: model:ir.actions.report.xml,name:afr_webkit.afr_report_col5_html
+#: model:ir.actions.report.xml,name:afr_webkit.afr_report_journal_ledger
+#: model:ir.actions.report.xml,name:afr_webkit.afr_report_journal_ledger_html
+#: model:ir.actions.report.xml,name:afr_webkit.afr_report_qtr
+#: model:ir.actions.report.xml,name:afr_webkit.afr_report_qtr_html
+msgid "Print AFR"
+msgstr "Imprimir AFR"
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_cols13.mako:50
+msgid "11"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_cols13.mako:49
+msgid "10"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_cols5.mako:37
+msgid "Code"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_analytic_ledger.mako:53
+msgid "REFERENCE"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_analytic_ledger.mako:43
+#: report:addons/afr_webkit/report/afr_report_webkit_cols2.mako:48
+#: report:addons/afr_webkit/report/afr_report_webkit_cols4.mako:48
+#: report:addons/afr_webkit/report/afr_report_webkit_cols5.mako:41
+#: report:addons/afr_webkit/report/afr_report_webkit_journal_ledger.mako:42
+msgid "CREDIT"
+msgstr ""
+
+#. module: afr_webkit
+#: field:wizard.report,report_format:0
+msgid "Report Format"
+msgstr "Formato del Reporte"
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_analytic_ledger.mako:41
+#: report:addons/afr_webkit/report/afr_report_webkit_cols4.mako:46
+#: report:addons/afr_webkit/report/afr_report_webkit_journal_ledger.mako:40
+msgid "INICIAL"
+msgstr ""
+
+#. module: afr_webkit
+#: report:addons/afr_webkit/report/afr_report_webkit_analytic_ledger.mako:55
+msgid "PARTNER"
+msgstr ""

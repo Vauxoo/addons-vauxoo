@@ -1,0 +1,812 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* commission_payment
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-07 01:12+0000\n"
+"PO-Revision-Date: 2013-11-07 01:12+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "DCTO BRMO"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "INGELUB, C.A."
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "% ISLR"
+msgstr ""
+
+#. module: commission_payment
+#: model:ir.ui.menu,name:commission_payment.commission_all_mi
+msgid "Todas las comisiones"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "% RET IVA"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "FECHA FACT."
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,days:0
+msgid "Dias"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "EMPRESA"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,comm_invoice_id:0
+msgid "Factura Relacional Interna"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "CALCULO DE COMISIONES DESDE"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "DIAS BRMO"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,timespan:0
+msgid "Bar. Dias"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,inv_date:0
+msgid "Fecha Doc."
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.payment,total_comm:0
+msgid "Total a Pagar"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Trans. Afectadas"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "DESCUENTO"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.noprice,product_id:0
+msgid "Producto"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.invoice,comm_line_ids:0
+#: field:commission.payment,comm_line_ids:0
+msgid "Comision por productos"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,commission:0
+msgid "Comm. / Item"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.payment,comm_voucher_ids:0
+#: field:commission.saleman,comm_voucher_ids:0
+msgid "Vouchers afectados en esta comision"
+msgstr ""
+
+#. module: commission_payment
+#: model:ir.model,name:commission_payment.model_commission_lines
+msgid "commission.lines"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.retention,ret_im:0
+msgid "Ret. IM"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "COMISION"
+msgstr ""
+
+#. module: commission_payment
+#: model:ir.model,name:commission_payment.model_commission_uninvoiced
+msgid "commission.uninvoiced"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.payment,date_start:0
+msgid "Desde"
+msgstr ""
+
+#. module: commission_payment
+#: code:addons/commission_payment/commission.py:592
+#, python-format
+msgid "No Existen Lineas de Comision x Producto que procesar !!!"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.noprice,invoice_num:0
+msgid "Numero de Factura"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "DCTO PROD"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "MONTO"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,saleman_id:0
+#: field:commission.lines,saleman_name:0
+#: field:commission.saleman,saleman_id:0
+#: field:commission.saleman,saleman_name:0
+#: field:commission.voucher,comm_sale_id:0
+msgid "Vendedor"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.invoice,invoice_id:0
+#: field:commission.retention,invoice_id:0
+msgid "Factura"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,perc_iva:0
+msgid "IVA (%)"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.invoice,pay_inv:0
+#: field:commission.lines,pay_inv:0
+msgid "Abono Fact."
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,perc_ret_im:0
+msgid "Ret IM (%)"
+msgstr ""
+
+#. module: commission_payment
+#: model:ir.model,name:commission_payment.model_commission_invoice
+msgid "commission.invoice"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "DIAS"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,rate_item:0
+msgid "Dcto. (%)"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "En la lista se muestra cual posiblemente sea el problema. [Si]: posible problema [No]: No es el problema"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "PRECIO UNIT."
+msgstr ""
+
+#. module: commission_payment
+#: model:ir.actions.act_window,name:commission_payment.commission_payment_new_act
+#: model:ir.ui.menu,name:commission_payment.commission_payment_new_mi
+msgid "Crear Nueva Comision"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.payment,noprice_ids:0
+msgid "Productos sin precio de lista historico"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.saleman,comm_total:0
+msgid "Comision a pagar"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "NUM. FACT."
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.invoice,ret_im:0
+msgid "% Ret. IM"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,baremo_comm:0
+msgid "Baremo %Comm."
+msgstr ""
+
+#. module: commission_payment
+#: model:res.groups,name:commission_payment.group_comm_payment_manager
+msgid "Commision Payment / Manager"
+msgstr ""
+
+#. module: commission_payment
+#: selection:commission.payment,state:0
+msgid "Escribiendo"
+msgstr ""
+
+#. module: commission_payment
+#: model:res.groups,name:commission_payment.group_comm_payment_user
+msgid "Commision Payment / User"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "DIAS EMIT."
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.invoice,commission_id:0
+#: field:commission.lines,commission_id:0
+#: field:commission.noprice,commission_id:0
+#: field:commission.retention,commission_id:0
+#: field:commission.sale.noid,commission_id:0
+#: field:commission.saleman,commission_id:0
+#: field:commission.uninvoiced,commission_id:0
+#: field:commission.voucher,commission_id:0
+msgid "Comision"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "TOTAL COMISIONES PAGADAS"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,name:0
+msgid "Transaccion"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "PRODUCTO"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+#: field:commission.payment,voucher_ids:0
+msgid "Vouchers"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.retention,ret_iva:0
+msgid "Ret. IVA"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Baremo a Usar:"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Esta es una lista de las transacciones bancarias que se deben asociar a una factura para dar completo procesamiento al pago en cuestion"
+msgstr ""
+
+#. module: commission_payment
+#: model:ir.model,name:commission_payment.model_commission_voucher
+msgid "commission.voucher"
+msgstr ""
+
+#. module: commission_payment
+#: model:ir.model,name:commission_payment.model_commission_saleman
+msgid "commission.saleman"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,perc_ret_islr:0
+msgid "Ret ISLR (%)"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.lines:0
+msgid "Aqui se muestran todos los productos y sus respectivas comisiones"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Concepto de Comision:"
+msgstr ""
+
+#. module: commission_payment
+#: selection:commission.payment,state:0
+msgid "Inicial"
+msgstr ""
+
+#. module: commission_payment
+#: code:addons/commission_payment/commission.py:592
+#: code:addons/commission_payment/commission.py:600
+#, python-format
+msgid "Atencion !"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Prod. sin Lista de Precio"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "CUADRO GENERAL DE COMISIONES POR PRODUCTO  / DESDE"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Por favor, dirijase al producto en cuestion y en la seccion Precio Historico inserte una fecha y precio de venta"
+msgstr ""
+
+#. module: commission_payment
+#: model:ir.model,name:commission_payment.model_commission_noprice
+msgid "commission.noprice"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.lines:0
+#: view:commission.payment:0
+msgid "Comisiones x Producto"
+msgstr ""
+
+#. module: commission_payment
+#: model:ir.model,name:commission_payment.model_commission_sale_noid
+msgid "commission.sale.noid"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.payment,saleman_ids:0
+msgid "Total de Comisiones por Vendedor"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.invoice,ret_islr:0
+msgid "% Ret. ISLR"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,perc_ret_iva:0
+msgid "Ret IVA (%)"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,price_list:0
+msgid "Precio Lista"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.retention,ret_islr:0
+msgid "Ret. ISLR"
+msgstr ""
+
+#. module: commission_payment
+#: model:ir.model,name:commission_payment.model_account_voucher_line
+msgid "Voucher Lines"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Creo que esto es lo que quiero"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Asesor"
+msgstr ""
+
+#. module: commission_payment
+#: model:ir.ui.menu,name:commission_payment.commission
+msgid "Salesmen Commissions"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "COMISIONES"
+msgstr ""
+
+#. module: commission_payment
+#: code:addons/commission_payment/commission.py:600
+#, python-format
+msgid "Debe primero solucionar el asunto de los Productos sin Listas de Precio \n"
+"para las fechas especificadas antes de continuar"
+msgstr ""
+
+#. module: commission_payment
+#: model:ir.model,name:commission_payment.model_commission_retention
+msgid "commission.retention"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,pay_date:0
+#: field:commission.noprice,date:0
+#: field:commission.retention,date:0
+#: field:commission.voucher,date:0
+msgid "Fecha"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.sale.noid,inv_line_id:0
+msgid "Descripcion de Articulo"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Todavia No! Me falta algo"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Seleccione los vouchers sobre los cuales desea calcular comisiones. Deje en blanco para que se autorellene con los parametros introducidos en Datos. Si selecciona un Voucher solo se haran los calculos sobre este unicamente. Puede editarse mientras este en Estado: INICIAL y EN PROCESO"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Comenzar de Nuevo"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,price_unit:0
+msgid "Prec. Unit."
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "SUBTOTAL"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.payment,bar_id:0
+msgid "Baremo"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "SUBT. FACT."
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Total a Pagar:"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Este es un listado de todas las operaciones mercantiles involucradas en este calculo de comisiones"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.payment,comm_invoice_ids:0
+#: field:commission.voucher,comm_invoice_ids:0
+msgid "Facturas afectadas en esta comision"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "TOT. FACT."
+msgstr ""
+
+#. module: commission_payment
+#: selection:commission.payment,state:0
+msgid "Listo"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.payment,state:0
+msgid "Estado"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Preparar"
+msgstr ""
+
+#. module: commission_payment
+#: selection:commission.payment,state:0
+msgid "Decidir"
+msgstr ""
+
+#. module: commission_payment
+#: selection:commission.payment,state:0
+msgid "En Proceso"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Realmente esto es lo que deseo"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "TRANSACCION"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "HASTA"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Datos"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,price_date:0
+msgid "Fecha Lista"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "CALCULO DE COMISIONES - DESDE"
+msgstr ""
+
+#. module: commission_payment
+#: field:account.voucher.line,paid_comm:0
+msgid "Comision Pagada?"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "% COM BRMO"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.payment,comm_retention_ids:0
+msgid "Facturas con Problemas de Retencion"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.uninvoiced,payment_id:0
+msgid "Descripcion de Transaccion"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.invoice,comm_voucher_id:0
+#: field:commission.lines,voucher_id:0
+#: field:commission.voucher,voucher_id:0
+msgid "Voucher"
+msgstr ""
+
+#. module: commission_payment
+#: selection:commission.payment,state:0
+msgid "Cancelado"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.payment,uninvoiced_ids:0
+msgid "Transacciones sin Facturas"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.invoice,name:0
+#: field:commission.noprice,name:0
+#: field:commission.retention,name:0
+#: field:commission.sale.noid,name:0
+#: field:commission.saleman,name:0
+#: field:commission.uninvoiced,name:0
+#: field:commission.voucher,name:0
+msgid "Comentario"
+msgstr ""
+
+#. module: commission_payment
+#: model:ir.model,name:commission_payment.model_commission_payment
+msgid "\n"
+"    OpenERP Model : commission_payment\n"
+"    "
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.payment,user_ids:0
+msgid "Vendedores"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "COM. PROD."
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Este es un listado de todas las facturas afectadas en este calculo de comisiones"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,inv_subtotal:0
+msgid "SubTot. Doc."
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "FECHA"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "PRECIO LISTA"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "ABONO FACT."
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Comisiones x Vendedor"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "/ PAGINA:"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Aqui no deberia aparecer producto alguno, el problema presente aqui se ha suscitado al momento de facturar"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "% IM"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.lines:0
+#: view:commission.payment:0
+#: view:commission.saleman:0
+msgid "Pago de Comisiones"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Facturas Afectadas"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "RIF.: J308754102"
+msgstr ""
+
+#. module: commission_payment
+#: model:ir.actions.report.xml,name:commission_payment.report_commission_payment
+msgid "Reporte de Comisiones"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.retention,voucher_id:0
+msgid "Pagado con..."
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Articulos sin asociar"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Fact. con Ret. en Duda"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.payment,sale_noids:0
+msgid "Articulos sin asociacion"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "TOTAL COMISIÓN A PAGAR A"
+msgstr ""
+
+#. module: commission_payment
+#: model:ir.actions.act_window,name:commission_payment.commission_payment_all_act
+msgid "Comisiones"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,concept:0
+msgid "Concepto"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.payment,date_stop:0
+msgid "Hasta"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,item:0
+msgid "Item"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,price_subtotal:0
+msgid "SubTot. Item"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.invoice,ret_iva:0
+msgid "% Ret. IVA"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,pay_off:0
+msgid "Pago"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Transacciones sin Factura"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,rate_number:0
+msgid "Bar. Rate (%)"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,partner_id:0
+msgid "Empresa"
+msgstr ""
+
+#. module: commission_payment
+#: report:commission.payment:0
+msgid "% IVA"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.payment,ret_notes:0
+msgid "Notas para las Retenciones"
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Imprimir Borrador Comisiones"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.lines,invoice_id:0
+#: field:commission.lines,invoice_num:0
+msgid "Doc."
+msgstr ""
+
+#. module: commission_payment
+#: view:commission.payment:0
+msgid "Imprimir Comisiones"
+msgstr ""
+
+#. module: commission_payment
+#: field:commission.payment,name:0
+msgid "Concepto de Comisiones"
+msgstr ""
+

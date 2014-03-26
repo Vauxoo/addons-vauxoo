@@ -51,7 +51,17 @@ class account_invoice(osv.Model):
                                      'to this invoice'),
     }
 
-
+    def copy(self, cr, uid, id, default={}, context=None):
+        """ Allows you to duplicate a record,
+        child_ids, nro_ctrl and reference fields are
+        cleaned, because they must be unique
+        """
+        if context is None:
+            context = {}
+        default.update({
+            'child_ids':[],
+        })
+        return super(account_invoice, self).copy(cr, uid, id, default, context)
 
 
 

@@ -6,14 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-25 20:41+0000\n"
-"PO-Revision-Date: 2013-07-25 20:41+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2013-11-07 01:14+0000\n"
+"PO-Revision-Date: 2013-11-07 06:54+0000\n"
+"Last-Translator: Jose Antonio Morales Ponce(vauxoo) - - "
+"http://www.vauxoo.com <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-03-22 07:07+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
 
 #. module: account_advance_payment
 #: field:res.partner,property_account_customer_advance:0
@@ -72,9 +74,11 @@ msgstr "Pagos"
 
 #. module: account_advance_payment
 #: help:account.voucher,trans_type:0
-msgid "Payments.- Normal payment is made. \n"
+msgid ""
+"Payments.- Normal payment is made. \n"
 "Advance.- Advance payment of custom or supplier"
-msgstr "Pagos.- Se realiza el proceso normal de pagos. \n"
+msgstr ""
+"Pagos.- Se realiza el proceso normal de pagos. \n"
 "Anticipos.- Se realiza un pago de cliente o proveedor"
 
 #. module: account_advance_payment
@@ -86,4 +90,3 @@ msgstr "Empresa"
 #: help:res.partner,customer_advance:0
 msgid "Total amount of advance payment of custom."
 msgstr "Monto total de pagos de clientes."
-
