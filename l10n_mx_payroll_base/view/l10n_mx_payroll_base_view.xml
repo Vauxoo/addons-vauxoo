@@ -17,10 +17,10 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='number']" position="before">
                     <field name="date_payslip"/>
+<!--
                     <field name="journal_id" on_change="onchange_journal_id(journal_id, context)" widget="selection"/>
+-->
                     <field name="payslip_datetime"/>
-                    <field name="currency_id" groups="base.group_multi_currency" widget="selection"/>
-                    <field name="approval_id" invisible="True" widget="selection"/>
                 </xpath>
                 <xpath expr="//field[@name='name']" position="after">
                     <field name="pay_method_id"/>
@@ -39,7 +39,8 @@
                     <field name="partner_id"/>
                 </xpath>
                 <xpath expr="//field[@name='credit_note']" position="after">
-                    <field name="approval_id" invisible="True"/>
+                    <field name="currency_id" groups="base.group_multi_currency" widget="selection"/>
+                    <field name="approval_id" invisible="True"  widget="selection"/>
                 </xpath>
                     
             </field>

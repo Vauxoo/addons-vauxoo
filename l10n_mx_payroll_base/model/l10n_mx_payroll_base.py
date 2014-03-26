@@ -227,7 +227,6 @@ class hr_payslip(osv.Model):
         return res
 
     _columns = {
-        'journal_id': fields.many2one('account.journal', 'Journal', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'date_payslip': fields.date('Payslip Date'),
         'payslip_datetime': fields.datetime('Electronic Payslip Date'),
         'line_payslip_product_ids': fields.one2many('hr.payslip.product.line', 'payslip_id', 'Generic Product', required=True),
