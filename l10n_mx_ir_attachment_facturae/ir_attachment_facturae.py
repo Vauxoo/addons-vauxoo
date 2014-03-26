@@ -145,7 +145,7 @@ class ir_attachment_facturae_mx(osv.Model):
             ('done', 'Done'),
             ('cancel', 'Cancelled'), ],
             'State', readonly=True, required=True, help='State of attachments'),
-        'journal_id': fields.many2one('account.journal','Journal', required=True),
+        'journal_id': fields.many2one('account.journal','Journal'),
         'partner_id': fields.many2one('res.partner', 'Partner'),
         'user_pac': fields.char('User PAC', size=128, help='Name user for login to PAC'),
         'password_pac': fields.char('Password PAC', size=128, help='Password user for login to PAC'),
@@ -286,11 +286,14 @@ class ir_attachment_facturae_mx(osv.Model):
                         'res_id': id_source,
                     }
                     attach = attachment_obj.create(cr, uid, data_attach, context=None)
+                    '''
                     if attach_v3_2:
                         cr.execute("""UPDATE ir_attachment
                             SET res_id = Null
                             WHERE id = %s""", (attach_v3_2,))
                     self.write(cr, uid, ids,
+                    '''
+                    self.write(cr, uid, [data.id],
                            {'file_xml_sign': attach or False,
                                'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                                'msj': msj,}, context=context)
