@@ -39,6 +39,7 @@ import xml.dom.minidom
 from pytz import timezone
 import pytz
 import time
+import codecs
 from datetime import datetime, timedelta
 try:
     from qrcode import *
@@ -187,6 +188,26 @@ class ir_attachment_facturae_mx(osv.Model):
         'last_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
 
+    def _get_sello(self, cr=False, uid=False, ids=False, context=None):
+        # TODO: Put encrypt date dynamic
+        if context is None:
+            context = {}
+        fecha = context['fecha']
+        year = float(time.strftime('%Y', time.strptime(
+            fecha, '%Y-%m-%dT%H:%M:%S')))
+        if year >= 2011:
+            encrypt = "sha1"
+        if year <= 2010:
+            encrypt = "md5"
+        certificate_lib = self.pool.get('facturae.certificate.library')
+        fname_sign = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(
+            ''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + \
+            '__sign__')
+        result = certificate_lib._sign(cr, uid, ids, fname=context['fname_xml'],
+            fname_xslt=context['fname_xslt'], fname_key=context['fname_key'],
+            fname_out=fname_sign, encrypt=encrypt, type_key='PEM')
+        return result
+
     def create_ir_attachment_facturae(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
@@ -223,6 +244,7 @@ class ir_attachment_facturae_mx(osv.Model):
             context = {}
         from l10n_mx_facturae_lib import facturae_lib
         msj, app_xsltproc_fullpath, app_openssl_fullpath, app_xmlstarlet_fullpath = facturae_lib.library_openssl_xsltproc_xmlstarlet(cr, uid, ids, context)
+        attachment_obj = self.pool.get('ir.attachment')
         if msj:
             raise osv.except_osv(_('Warning'),_(msj))
         if context is None:
@@ -231,19 +253,37 @@ class ir_attachment_facturae_mx(osv.Model):
         wf_service = netsvc.LocalService("workflow")
         msj = ''
         for attach in self.browse(cr, uid, ids, context=context):
-            #~id_source = attach.id_source
-            #~model_source = attach.model_source
-            #~type = attach.type
-            #~fname = str(attach.id) + '_XML_V3_2.xml' or ''
             if attach.file_input:
-                msj = _("Attached Successfully XML CFD 3.2.")
-            #~xml_data = base64.decodestring(attach.file_input_index)
-            #~doc_xml = xml.dom.minidom.parseString(xml_data)
-            #~index_xml = doc_xml.toprettyxml()
+                doc_xml_full = base64.decodestring(attach.file_input.datas)
+                doc_xml = xml.dom.minidom.parseString(doc_xml_full)
+                nodeComprobante = doc_xml.getElementsByTagName("cfdi:Comprobante")[0]
+                for n in doc_xml.getElementsByTagName("cfdi:Comprobante"):
+                    sello = n.getAttribute("sello")
+                if not sello:
+                    (fileno_xml, fname_xml) = tempfile.mkstemp('.xml', 'openerp_' + '__facturae__')
+                    fname_txt = fname_xml + '.txt'
+                    (fileno_sign, fname_sign) = tempfile.mkstemp('.txt', 'openerp_' + '__facturae_txt_md5__')
+                    os.close(fileno_sign)
+                    f = codecs.open(fname_xml,'w','utf-8')
+                    doc_xml.writexml(f, indent='    ', addindent='    ', newl='\r\n', encoding='UTF-8')
+                    f.close()
+                    context.update({
+                        'fname_xml': fname_xml,
+                        'fname_txt': fname_txt,
+                        'fname_sign': fname_sign,
+                    })
+                    sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
+                    nodeComprobante = doc_xml.getElementsByTagName("cfdi:Comprobante")[0]
+                    nodeComprobante.setAttribute("sello", sign_str)
+                    data_xml = doc_xml.toxml('UTF-8')
+                    #~data_xml = codecs.BOM_UTF8 + data_xml
+                    attachment_obj.write(cr, uid, attach.file_input.id,{
+                               'datas': base64.encodestring(data_xml),
+                            }, context=context)
+                    msj = _("Attached Successfully XML CFDI 3.2.")
             self.write(cr, uid, ids,{
                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                           'msj': msj,
-                           #~'file_input_index': index_xml or ''
+                           'msj': msj
                         }, context=context)
             wf_service.trg_validate(uid, self._name, ids[0], 'action_confirm', cr)
             return True
