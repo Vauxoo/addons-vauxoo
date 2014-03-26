@@ -71,7 +71,7 @@ Requires the following programs:
             "l10n_mx_params_pac",
         ],
     "demo" : [
-        #~ "demo/l10n_mx_facturae_seq_demo.xml",
+         "demo/l10n_mx_facturae_users.xml",
         #~ "demo/account_invoice_cfd_demo.xml",
         "demo/account_invoice_cfdi_demo.xml",
     ],
@@ -82,6 +82,7 @@ Requires the following programs:
         "l10n_mx_facturae_workflow.xml",
         "wizard/installer_view.xml",
         "invoice_view.xml",
+        "ir_attachment_facturae_view.xml",
     ],
     "test" : [
         #~ "test/account_invoice_cfd.yml",

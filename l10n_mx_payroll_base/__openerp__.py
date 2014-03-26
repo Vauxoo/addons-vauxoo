@@ -32,8 +32,11 @@
                 "l10n_mx_payroll_concept",
                 "l10n_mx_payroll_regime_employee",
                 "l10n_mx_payroll_risk_rank_contract",
+                "l10n_mx_payment_method",
+                "l10n_mx_facturae_cer",
                 "l10n_mx_ir_attachment_facturae",
                 "l10n_mx_params_pac",
+                "l10n_mx_facturae_groups",
     ],
     "author": "Vauxoo",
     "description": """
@@ -57,12 +60,14 @@ ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfdi/guianomina.pdf
     "category": "Addons Vauxoo",
     "data": [
         "view/l10n_mx_payroll_base_view.xml",
+        "view/ir_attachment_facturae_view.xml",
         'security/ir.model.access.csv',
     ],
     "demo" : [
         "demo/l10n_mx_payroll_demo.xml",
         "demo/l10n_mx_payroll_contract.xml",
         "demo/l10n_mx_payroll_cfdi0.xml",
+        "demo/l10n_mx_payroll_users.xml",
     ],
     "test": [
     ],
