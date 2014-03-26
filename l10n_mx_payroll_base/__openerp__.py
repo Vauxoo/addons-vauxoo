@@ -27,6 +27,8 @@
                 "base",
                 "account",
                 "hr_payroll",
+                "l10n_mx_states",
+                "l10n_mx_regimen_fiscal",
                 "l10n_mx_hr_payroll",
                 "l10n_mx_data_bank",
                 "l10n_mx_partner_address",
@@ -66,11 +68,13 @@ ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfdi/guianomina.pdf
         'security/ir.model.access.csv',
     ],
     "demo" : [
+        "demo/l10n_mx_payroll_partner.xml",
         "demo/account_payroll_demo.xml",
         "demo/payroll_concept_account_demo.xml",
         "demo/l10n_mx_payroll_demo.xml",
         "demo/l10n_mx_payroll_contract.xml",
         "demo/l10n_mx_payroll_cfdi0.xml",
+        "demo/l10n_mx_payroll_partner.xml",
         "demo/l10n_mx_payroll_users.xml",
     ],
     "test": [
