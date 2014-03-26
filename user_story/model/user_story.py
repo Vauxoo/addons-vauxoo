@@ -24,6 +24,7 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 import time
+import unicodedata
 
 _US_STATE = [('draft', 'New'), ('open', 'In Progress'), (
     'pending', 'Pending'), ('done', 'Done'), ('cancelled', 'Cancelled')]
@@ -82,9 +83,117 @@ class user_story(osv.Model):
                                        ('userstory_id', '=', ids[0])])
             task_obj.write(cr, uid, task_ids, {
                            'sprint_id': vals.get('sk_id')}, context=context)
+
+        if 'accep_crit_ids' in vals:
+            ac_obj = self.pool.get('acceptability.criteria')
+            criteria = [False, False]
+            for ac in vals.get('accep_crit_ids'):
+                if ac[2] and ac[2].get('accepted', False):
+                    if ac[1]:
+                        ac_brw = ac_obj.browse(cr, uid, ac[1] , context=context)
+                        criteria[1] = ac_brw.name
+                    else:
+                        criteria[1] = ac[2].get('name', False)
+                    
+                    body = self.body_criteria(cr, uid, ids, 'template_send_email_hu', criteria[1], context)
+                    hu = self.browse(cr, uid, ids[0], context=context)
+                    subject = 'Accepted Criteria - "%s"... in User Story with ID %s' % (criteria[1][:30],hu.id)
+                    self.send_mail_hu(cr, uid, ids, subject, body, hu.id, users=False, context=context)
         return super(user_story, self).write(cr, uid, ids,
                                              vals, context=context)
         
+    def body_progress(self, cr, uid, ids, template, hu, context=None):
+        imd_obj = self.pool.get('ir.model.data')
+        template_ids = imd_obj.search(
+            cr, uid, [('model', '=', 'email.template'), ('name', '=', template)])
+        if template_ids:
+            res_id = imd_obj.read(
+                cr, uid, template_ids, ['res_id'])[0]['res_id']
+            body_html = self.pool.get('email.template').read(
+                cr, uid, res_id, ['body_html']).get('body_html')
+
+            user_id = self.pool.get('res.users').browse(cr,uid,[uid],context=context)[0]
+            hu = self.browse(cr, uid, ids[0], context=context)
+
+            return body_html
+        else:
+            return False
+        
+    def body_criteria(self, cr, uid, ids, template, criteria, context=None):
+        imd_obj = self.pool.get('ir.model.data')
+        template_ids = imd_obj.search(
+            cr, uid, [('model', '=', 'email.template'), ('name', '=', template)])
+        if template_ids:
+            res_id = imd_obj.read(
+                cr, uid, template_ids, ['res_id'])[0]['res_id']
+            body_html = self.pool.get('email.template').read(
+                cr, uid, res_id, ['body_html']).get('body_html')
+
+            user_id = self.pool.get('res.users').browse(cr,uid,[uid],context=context)[0]
+            hu = self.browse(cr, uid, ids[0], context=context)
+
+            body_html = body_html.replace('NAME_USER', user_id.name)
+            body_html = body_html.replace('NAME_CRI', criteria)
+            body_html = body_html.replace('NAME_HU', hu.name)
+            
+            return body_html
+
+        else:
+            return False
+            
+
+    def send_mail_hu(self, cr, uid, ids, subject, body, res_id, users=[], context=None):
+        if not users:
+            followers = self.read(cr, uid, ids[0], [
+                              'message_follower_ids'])['message_follower_ids']
+        else:
+            followers = []
+            user_obj = self.pool.get('res.users')
+            hu = self.browse(cr, uid, res_id, context=context)
+            
+            owner_name = unicodedata.normalize('NFKD', hu.owner)
+            owner_name = owner_name.encode('ASCII','ignore')
+            owner_id = user_obj.search(cr, uid, [('name','=',owner_name)], context=context)
+            
+            if hu.user_id and hu.user_id.partner_id:
+                followers.append(hu.user_id.partner_id.id)
+            if hu.user_execute_id and hu.user_execute_id.partner_id:
+                followers.append(hu.user_execute_id.partner_id.id)
+            if owner_id and len(owner_id)==1:
+                user_o = user_obj.browse(cr,uid,owner_id,context=context)
+                followers.append( user_o[0].partner_id.id)
+
+        context.update({
+                        'default_body': body,
+                        })
+        user_id = self.pool.get('res.users').browse(cr,uid,[uid],context=context)[0]
+
+        mail_mail = self.pool.get('mail.mail')
+        mail_id = mail_mail.create(cr, uid,
+                   {
+                       'model': 'user.story',
+                       'res_id': res_id,
+                       'subject': subject,
+                       'body_html': body,
+                       'auto_delete': False,
+                       'email_from': user_id.email,
+                   }, context=context)
+        mail_mail.send(cr, uid, [mail_id],
+                       recipient_ids=followers,
+                       context=context)
+
+
+        return False
+
+    def create(self, cr, uid, vals, context=None):
+        if context is None: context = {}
+        # Prevent double project creation when 'use_tasks' is checked!
+        context = dict(context, user_story_creation_in_progress=True)
+        context['name'] = "User Story / %s" % (vals['name'])
+        if vals.get('type', False) not in ('template','contract'):
+            vals['type'] = 'contract'
+        user_story_id = super(user_story, self).create(cr, uid, vals, context=context)
+        return user_story_id
      
     _columns = {
         'name': fields.char('Title', size=255, required=True, readonly=False,
@@ -144,6 +253,11 @@ class user_story(osv.Model):
         return self.write(cr, uid, ids, {'state': 'open'}, context=context)
 
     def do_pending(self, cr, uid, ids, context=None):
+        body = self.body_criteria(cr, uid, ids, 'template_send_email_hu_progress', 'hu', context)
+        hu_model = self.pool.get('user.story')
+        hu = hu_model.browse(cr, uid, ids[0], context=context)
+        subject = 'The User Story with ID %s, "%s...", is now in Pending state' % ( hu.id, hu.name[:30] )
+        self.send_mail_hu(cr, uid, ids, subject, body, hu.id, users=True, context=context)
         return self.write(cr, uid, ids, {'state': 'pending'}, context=context)
 
     def do_done(self, cr, uid, ids, context=None):
