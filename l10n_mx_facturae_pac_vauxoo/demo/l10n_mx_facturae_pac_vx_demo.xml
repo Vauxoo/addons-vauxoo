@@ -6,8 +6,8 @@
             <field name="method_type">pac_vx_cancelar</field>
             <field name="url_webservice">localhost:28069</field>
             <field name="namespace"></field>
-            <field name="user">admin</field>
-            <field name="password">admin</field>
+            <field name="user">facturae_mx_user</field>
+            <field name="password">1234</field>
             <field name="name">PAC VAUXOO - Cancelar - Test</field>
             <field name="certificate_link"></field>
         </record>
@@ -16,8 +16,8 @@
             <field name="method_type">pac_vx_firmar</field>
             <field name="url_webservice">localhost:28069</field>
             <field name="namespace"></field>
-            <field name="user">admin</field>
-            <field name="password">admin</field>
+            <field name="user">facturae_mx_user</field>
+            <field name="password">1234</field>
             <field name="name">PAC VAUXOO - Firmar - Test</field>
             <field name="certificate_link"></field>
         </record>
