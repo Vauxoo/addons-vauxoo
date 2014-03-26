@@ -129,8 +129,6 @@ class ir_attachment_facturae_mx(osv.Model):
             common_proxy = xmlrpclib.ServerProxy(url+'common')
             object_proxy = xmlrpclib.ServerProxy(url+'object')
             uid2 = common_proxy.login(DB,USER,PASS)
-            ir_model_data_id = object_proxy.execute(DB, uid2, PASS, 'ir.model.data', 'search', [('module','=','l10n_mx_facturae_pac_sf'),('model','=','account.journal')])
-            journal_id = object_proxy.execute(DB, uid2, PASS,'ir.model.data','read',ir_model_data_id,['res_id'])[0]['res_id']
             attachment_values = {
                                 'name': attachment.file_input.name,
                                 'datas': attachment.file_input.datas,
@@ -142,7 +140,6 @@ class ir_attachment_facturae_mx(osv.Model):
             attachment_face = { 'name': attachment.name, 
                                 'type': 'cfdi32_pac_sf',
                                 'company_id': attachment.company_id.id,
-                                'journal_id': journal_id,
                                 'id_source': False,
                                 'model_source': attachment.model_source,
                                 'attachment_email': '',
