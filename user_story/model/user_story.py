@@ -97,7 +97,7 @@ class user_story(osv.Model):
                     
                     body = self.body_criteria(cr, uid, ids, 'template_send_email_hu', criteria[1], context)
                     hu = self.browse(cr, uid, ids[0], context=context)
-                    subject = 'Accepted Criteria - "%s"... in User Story with ID %s' % (criteria[1][:30],hu.id)
+                    subject = 'Se acepta Criterio de Aceptación "%s"... en la Historia de Usuario %s' % (criteria[1][:30],hu.id)
                     self.send_mail_hu(cr, uid, ids, subject, body, hu.id, users=False, context=context)
         return super(user_story, self).write(cr, uid, ids,
                                              vals, context=context)
