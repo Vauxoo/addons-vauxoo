@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <openerp>
-    <data noupdate="1">
+    <data noupdate="0">
     <!-- 
     =====================================================
     SEND EMAIL TEMPLATE
@@ -434,7 +434,7 @@
                             </tr>
                             <tr>
                             <td align="center" style="margin: 0px; padding: 0px; width: 600px; background-color: #951510">
-                                <div style="font-size:1.3em; font-family:Arial"><b>
+                                <div style="font-size:1.3em; font-family:Arial; color:#FFFFFF;"><b>
                                         Criterio de Aceptación.
                                 </b></div>
                             </td>
@@ -919,7 +919,7 @@ Ante cualquier duda estamos a su disposición.
                             </tr>
                             <tr>
                             <td align="center" style="margin: 0px; padding: 0px; width: 600px; background-color: #951510">
-                                <div style="font-size:1.3em; font-family:Arial"><b>
+                                <div style="font-size:1.3em; font-family:Arial; color:#FFFFFF;"><b>
                                     Historia de Usuario
                                 </b></div>
                             </td>
@@ -954,10 +954,10 @@ Ante cualquier duda estamos a su disposición.
 El proceso a seguir es:
 
 1) Entrar en la base de datos de Vauxoo a través del link ubicado al final de este email.
-2) Seleccionar editar la Historia de Usuario.
+2) Seleccionar el botón "editar" en la Historia de Usuario.
 3) Revisar los Criterios de Aceptación.
 4) Verificar que los Criterios de Aceptación se cumplan.
-5) Una vez verificado caeptar cada criterio de aceptación seleccionando la casilla correspondiente.
+5) Una vez verificado cada criterio seleccionar la casilla "aceptar" lo que indica que se está conforme con el resultado revisado.
 
 Todos los criterios de aceptación serán re-validados junto a un consultor de Vauxoo al final del Sprint, de tal manera de cerrar formalmente el cumplimiento del requerimiento.
 
