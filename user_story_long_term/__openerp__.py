@@ -50,7 +50,7 @@ Features:
         #'security/ir.model.access.csv',
         'user_story_long_term_view.xml',
         'workflow/user_story_long_term_workflow.xml',
-        'data/user_story_template.xml',
+        #'data/user_story_template.xml',
         #'wizard/user_story_compute_phases_view.xml',
         #'wizard/user_story_compute_tasks_view.xml',
     ],

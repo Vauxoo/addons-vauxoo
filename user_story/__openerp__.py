@@ -61,6 +61,7 @@ siguientes:
         "view/userstory_view.xml",
         "view/project_view.xml",
         "data/data.xml",
+        "data/user_story_template.xml",
     ],
     "active": False,
     "images": [],

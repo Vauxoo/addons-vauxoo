@@ -101,8 +101,6 @@
                   <field name="name"/>
                   <field name="scenario"/>
                   <field name="accepted"/>
-                  <field name="development"/>
-                  <field name="difficulty"/>
                 </tree>
               </field>
             </page>
