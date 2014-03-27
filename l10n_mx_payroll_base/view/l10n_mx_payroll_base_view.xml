@@ -46,6 +46,7 @@
             </field>
         </record>
 
+<!--
         <record model="ir.ui.view" id="view_hr_payslip_form_salary_rule_id_inherit2">
             <field name="name">view.hr.payslip.form.salary.rule.id.inherit2</field>
             <field name="model">hr.payslip</field>
@@ -60,6 +61,7 @@
                 </xpath>
             </field>
         </record>
+-->
 
     </data>
 </openerp>
