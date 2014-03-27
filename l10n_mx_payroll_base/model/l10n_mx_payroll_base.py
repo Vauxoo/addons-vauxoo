@@ -581,27 +581,6 @@ class hr_payslip(osv.Model):
             fname_cer, fname_out=fname_serial, type='PEM')
         return result
 
-    def _get_sello(self, cr=False, uid=False, ids=False, context=None):
-        # TODO: Put encrypt date dynamic
-        if context is None:
-            context = {}
-        fecha = context['fecha']
-        year = float(ti.strftime('%Y', ti.strptime(
-            fecha, '%Y-%m-%dT%H:%M:%S')))
-        if year >= 2011:
-            encrypt = "sha1"
-        if year <= 2010:
-            encrypt = "md5"
-        certificate_lib = self.pool.get('facturae.certificate.library')
-        fname_sign = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(
-            ''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + \
-            '__sign__')
-        result = certificate_lib._sign(cr, uid, ids, fname=context['fname_xml'],
-            fname_xslt=context['fname_xslt'], fname_key=context['fname_key'],
-            fname_out=fname_sign, encrypt=encrypt, type_key='PEM')
-        
-        return result
-
     def _get_certificate_str(self, fname_cer_pem=""):
         """
         @param fname_cer_pem : Path and name the file .pem
