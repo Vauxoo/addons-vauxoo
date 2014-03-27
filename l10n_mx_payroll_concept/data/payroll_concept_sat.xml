@@ -26,7 +26,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_001" model="hr.salary.rule">
             <field name="name">Sueldos, Salarios Rayas y Jornales</field>
             <field name="sequence" eval="1000"/>
-            <field name="code">001p</field>
+            <field name="code">001P</field>
             <field name="clave">clave-001</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -43,7 +43,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_002" model="hr.salary.rule">
             <field name="name">Gratificación Anual (Aguinaldo)</field>
             <field name="sequence" eval="2000"/>
-            <field name="code">002p</field>
+            <field name="code">002P</field>
             <field name="clave">clave-002</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -61,7 +61,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_003" model="hr.salary.rule">
             <field name="name">Participación de los Trabajadores en las Utilidades PTU</field>
             <field name="sequence" eval="3000"/>
-            <field name="code">003p</field>
+            <field name="code">003P</field>
             <field name="clave">clave-003</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -79,7 +79,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_004" model="hr.salary.rule">
             <field name="name">Reembolso de Gastos Médicos Dentales y Hospitalarios</field>
             <field name="sequence" eval="4000"/>
-            <field name="code">004p</field>
+            <field name="code">004P</field>
             <field name="clave">clave-004</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -97,7 +97,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_005" model="hr.salary.rule">
             <field name="name">Fondo de Ahorro</field>
             <field name="sequence" eval="5000"/>
-            <field name="code">005p</field>
+            <field name="code">005P</field>
             <field name="clave">clave-005</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -115,7 +115,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_006" model="hr.salary.rule">
             <field name="name">Caja de ahorro</field>
             <field name="sequence" eval="6000"/>
-            <field name="code">006p</field>
+            <field name="code">006P</field>
             <field name="clave">clave-006</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -170,7 +170,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_009" model="hr.salary.rule">
             <field name="name">Contribuciones a Cargo del Trabajador Pagadas por el Patrón</field>
             <field name="sequence" eval="9000"/>
-            <field name="code">009p</field>
+            <field name="code">009P</field>
             <field name="clave">clave-009</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -188,7 +188,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_010" model="hr.salary.rule">
             <field name="name">Premios por puntualidad</field>
             <field name="sequence" eval="10000"/>
-            <field name="code">010p</field>
+            <field name="code">010P</field>
             <field name="clave">clave-010</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -206,7 +206,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_011" model="hr.salary.rule">
             <field name="name">Prima de Seguro de vida</field>
             <field name="sequence" eval="11000"/>
-            <field name="code">011p</field>
+            <field name="code">011P</field>
             <field name="clave">clave-011</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -224,7 +224,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_012" model="hr.salary.rule">
             <field name="name">Seguro de Gastos Medicos Mayores</field>
             <field name="sequence" eval="12000"/>
-            <field name="code">012p</field>
+            <field name="code">012P</field>
             <field name="clave">clave-012</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -242,7 +242,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_013" model="hr.salary.rule">
             <field name="name">Cuotas Sindicales Pagadas por el Patrón</field>
             <field name="sequence" eval="13000"/>
-            <field name="code">013p</field>
+            <field name="code">013P</field>
             <field name="clave">clave-013</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -260,7 +260,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_014" model="hr.salary.rule">
             <field name="name">Subsidios por incapacidad</field>
             <field name="sequence" eval="14000"/>
-            <field name="code">p014p</field>
+            <field name="code">p014P</field>
             <field name="clave">clave-014</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -278,7 +278,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_015" model="hr.salary.rule">
             <field name="name">Becas para trabajadores y/o hijos</field>
             <field name="sequence" eval="15000"/>
-            <field name="code">015p</field>
+            <field name="code">015P</field>
             <field name="clave">clave-015</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -296,7 +296,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_016" model="hr.salary.rule">
             <field name="name">Otros</field>
             <field name="sequence" eval="16000"/>
-            <field name="code">016p</field>
+            <field name="code">016P</field>
             <field name="clave">clave-016</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -314,7 +314,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_017" model="hr.salary.rule">
             <field name="name">Subsidio para el empleo</field>
             <field name="sequence" eval="17000"/>
-            <field name="code">017p</field>
+            <field name="code">017P</field>
             <field name="clave">clave-017</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -352,7 +352,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_019" model="hr.salary.rule">
             <field name="name">Horas extra</field>
             <field name="sequence" eval="19000"/>
-            <field name="code">019p</field>
+            <field name="code">019P</field>
             <field name="clave">clave-019</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -370,7 +370,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_020" model="hr.salary.rule">
             <field name="name">Prima dominical</field>
             <field name="sequence" eval="20000"/>
-            <field name="code">020p</field>
+            <field name="code">020P</field>
             <field name="clave">clave-020</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -388,7 +388,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_021" model="hr.salary.rule">
             <field name="name">Prima vacacional</field>
             <field name="sequence" eval="21000"/>
-            <field name="code">021p</field>
+            <field name="code">021P</field>
             <field name="clave">clave-021</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -406,7 +406,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_022" model="hr.salary.rule">
             <field name="name">Prima por antigüedad</field>
             <field name="sequence" eval="22000"/>
-            <field name="code">022p</field>
+            <field name="code">022P</field>
             <field name="clave">clave-022</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -424,7 +424,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_023" model="hr.salary.rule">
             <field name="name">Pagos por separación</field>
             <field name="sequence" eval="23000"/>
-            <field name="code">023p</field>
+            <field name="code">023P</field>
             <field name="clave">clave-023</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -442,7 +442,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_024" model="hr.salary.rule">
             <field name="name">Seguro de retiro</field>
             <field name="sequence" eval="24000"/>
-            <field name="code">024p</field>
+            <field name="code">024P</field>
             <field name="clave">clave-024</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -460,7 +460,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_025" model="hr.salary.rule">
             <field name="name">Indeminizaciones</field>
             <field name="sequence" eval="25000"/>
-            <field name="code">025p</field>
+            <field name="code">025P</field>
             <field name="clave">clave-025</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -478,7 +478,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_026" model="hr.salary.rule">
             <field name="name">Reembolso por funeral</field>
             <field name="sequence" eval="26000"/>
-            <field name="code">026p</field>
+            <field name="code">026P</field>
             <field name="clave">clave-026</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -496,7 +496,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_027" model="hr.salary.rule">
             <field name="name">Cuotas de seguridad social pagadas por el patrón</field>
             <field name="sequence" eval="27000"/>
-            <field name="code">027p</field>
+            <field name="code">027P</field>
             <field name="clave">clave-027</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -514,7 +514,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_028" model="hr.salary.rule">
             <field name="name">Comisiones</field>
             <field name="sequence" eval="28000"/>
-            <field name="code">028p</field>
+            <field name="code">028P</field>
             <field name="clave">clave-028</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -532,7 +532,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_029" model="hr.salary.rule">
             <field name="name">Vales de despensa</field>
             <field name="sequence" eval="29000"/>
-            <field name="code">029p</field>
+            <field name="code">029P</field>
             <field name="clave">clave-029</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -550,7 +550,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_030" model="hr.salary.rule">
             <field name="name">Vales de restaurante</field>
             <field name="sequence" eval="30000"/>
-            <field name="code">030p</field>
+            <field name="code">030P</field>
             <field name="clave">clave-030</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -568,7 +568,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_031" model="hr.salary.rule">
             <field name="name">Vales de gasolina</field>
             <field name="sequence" eval="31000"/>
-            <field name="code">031p</field>
+            <field name="code">031P</field>
             <field name="clave">clave-031</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -586,7 +586,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_032" model="hr.salary.rule">
             <field name="name">Vales de ropa</field>
             <field name="sequence" eval="32000"/>
-            <field name="code">032p</field>
+            <field name="code">032P</field>
             <field name="clave">clave-032</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -604,7 +604,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_033" model="hr.salary.rule">
             <field name="name">Ayuda para renta</field>
             <field name="sequence" eval="33000"/>
-            <field name="code">033p</field>
+            <field name="code">033P</field>
             <field name="clave">clave-033</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -622,7 +622,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_034" model="hr.salary.rule">
             <field name="name">Ayuda para artículos escolares</field>
             <field name="sequence" eval="34000"/>
-            <field name="code">034p</field>
+            <field name="code">034P</field>
             <field name="clave">clave-034</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -640,7 +640,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_035" model="hr.salary.rule">
             <field name="name"> Ayuda para anteojos</field>
             <field name="sequence" eval="35000"/>
-            <field name="code">035p</field>
+            <field name="code">035P</field>
             <field name="clave">clave-035</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -658,7 +658,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_036" model="hr.salary.rule">
             <field name="name">Ayuda para transporte</field>
             <field name="sequence" eval="36000"/>
-            <field name="code">036p</field>
+            <field name="code">036P</field>
             <field name="clave">clave-036</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -676,7 +676,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_037" model="hr.salary.rule">
             <field name="name">Ayuda para gastos de funeral</field>
             <field name="sequence" eval="37000"/>
-            <field name="code">037p</field>
+            <field name="code">037P</field>
             <field name="clave">clave-037</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -694,7 +694,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_038" model="hr.salary.rule">
             <field name="name">Otros ingresos por salarios</field>
             <field name="sequence" eval="38000"/>
-            <field name="code">038p</field>
+            <field name="code">038P</field>
             <field name="clave">clave-038</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -712,7 +712,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_039" model="hr.salary.rule">
             <field name="name">Jubilaciones, pensiones o haberes de retiro</field>
             <field name="sequence" eval="39000"/>
-            <field name="code">039p</field>
+            <field name="code">039P</field>
             <field name="clave">clave-039</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -730,7 +730,7 @@
         <record id="hr_rule_l10n_mx_payroll_deduction_001" model="hr.salary.rule">
             <field name="name">Seguridad social</field>
             <field name="sequence" eval="40000"/>
-            <field name="code">001d</field>
+            <field name="code">001D</field>
             <field name="clave">clave-001</field>
             <field name="category_id" ref="hr_salary_rule_category_deduction"/>
             <field name="type_concept">deduction</field>
@@ -748,7 +748,7 @@
         <record id="hr_rule_l10n_mx_payroll_deduction_002" model="hr.salary.rule">
             <field name="name">ISR</field>
             <field name="sequence" eval="41000"/>
-            <field name="code">002d</field>
+            <field name="code">002D</field>
             <field name="clave">clave-002</field>
             <field name="category_id" ref="hr_salary_rule_category_deduction"/>
             <field name="type_concept">deduction</field>
@@ -766,7 +766,7 @@
         <record id="hr_rule_l10n_mx_payroll_deduction_003" model="hr.salary.rule">
             <field name="name">Aportaciones a retiro, cesantía en edad avanzada y vejez.</field>
             <field name="sequence" eval="42000"/>
-            <field name="code">003d</field>
+            <field name="code">003D</field>
             <field name="clave">clave-003</field>
             <field name="category_id" ref="hr_salary_rule_category_deduction"/>
             <field name="type_concept">deduction</field>
@@ -784,7 +784,7 @@
         <record id="hr_rule_l10n_mx_payroll_deduction_004" model="hr.salary.rule">
             <field name="name">Otros</field>
             <field name="sequence" eval="43000"/>
-            <field name="code">004d</field>
+            <field name="code">004D</field>
             <field name="clave">clave-004</field>
             <field name="category_id" ref="hr_salary_rule_category_deduction"/>
             <field name="type_concept">deduction</field>
@@ -802,7 +802,7 @@
         <record id="hr_rule_l10n_mx_payroll_deduction_005" model="hr.salary.rule">
             <field name="name">Aportaciones a Fondo de vivienda</field>
             <field name="sequence" eval="44000"/>
-            <field name="code">005d</field>
+            <field name="code">005D</field>
             <field name="clave">clave-005</field>
             <field name="category_id" ref="hr_salary_rule_category_deduction"/>
             <field name="type_concept">deduction</field>
@@ -820,7 +820,7 @@
         <record id="hr_rule_l10n_mx_payroll_deduction_006" model="hr.salary.rule">
             <field name="name">Descuento por incapacidad</field>
             <field name="sequence" eval="45000"/>
-            <field name="code">006d</field>
+            <field name="code">006D</field>
             <field name="clave">clave-006</field>
             <field name="category_id" ref="hr_salary_rule_category_deduction"/>
             <field name="type_concept">deduction</field>
@@ -838,7 +838,7 @@
         <record id="hr_rule_l10n_mx_payroll_deduction_007" model="hr.salary.rule">
             <field name="name">Pensión alimenticia</field>
             <field name="sequence" eval="46000"/>
-            <field name="code">007d</field>
+            <field name="code">007D</field>
             <field name="clave">clave-007</field>
             <field name="category_id" ref="hr_salary_rule_category_deduction"/>
             <field name="type_concept">deduction</field>
@@ -856,7 +856,7 @@
         <record id="hr_rule_l10n_mx_payroll_deduction_008" model="hr.salary.rule">
             <field name="name">Renta</field>
             <field name="sequence" eval="47000"/>
-            <field name="code">008d</field>
+            <field name="code">008D</field>
             <field name="clave">clave-008</field>
             <field name="category_id" ref="hr_salary_rule_category_deduction"/>
             <field name="type_concept">deduction</field>
@@ -874,7 +874,7 @@
         <record id="hr_rule_l10n_mx_payroll_deduction_009" model="hr.salary.rule">
             <field name="name">Préstamos provenientes del Fondo Nacional de la Vivienda para los Trabajadores</field>
             <field name="sequence" eval="48000"/>
-            <field name="code">009d</field>
+            <field name="code">009D</field>
             <field name="clave">clave-009</field>
             <field name="category_id" ref="hr_salary_rule_category_deduction"/>
             <field name="type_concept">deduction</field>
@@ -892,7 +892,7 @@
         <record id="hr_rule_l10n_mx_payroll_deduction_010" model="hr.salary.rule">
             <field name="name">Pago por crédito de vivienda</field>
             <field name="sequence" eval="49000"/>
-            <field name="code">010d</field>
+            <field name="code">010D</field>
             <field name="clave">clave-010</field>
             <field name="category_id" ref="hr_salary_rule_category_deduction"/>
             <field name="type_concept">deduction</field>
@@ -910,7 +910,7 @@
         <record id="hr_rule_l10n_mx_payroll_deduction_011" model="hr.salary.rule">
             <field name="name">Pago de abonos INFONACOT</field>
             <field name="sequence" eval="50000"/>
-            <field name="code">011d</field>
+            <field name="code">011D</field>
             <field name="clave">clave-011</field>
             <field name="category_id" ref="hr_salary_rule_category_deduction"/>
             <field name="type_concept">deduction</field>
@@ -928,7 +928,7 @@
         <record id="hr_rule_l10n_mx_payroll_deduction_012" model="hr.salary.rule">
             <field name="name">Anticipo de salarios</field>
             <field name="sequence" eval="51000"/>
-            <field name="code">012d</field>
+            <field name="code">012D</field>
             <field name="clave">clave-012</field>
             <field name="category_id" ref="hr_salary_rule_category_deduction"/>
             <field name="type_concept">deduction</field>
@@ -946,7 +946,7 @@
         <record id="hr_rule_l10n_mx_payroll_deduction_013" model="hr.salary.rule">
             <field name="name">Pagos hechos con exceso al trabajador</field>
             <field name="sequence" eval="52000"/>
-            <field name="code">013d</field>
+            <field name="code">013D</field>
             <field name="clave">clave-013</field>
             <field name="category_id" ref="hr_salary_rule_category_deduction"/>
             <field name="type_concept">deduction</field>
@@ -964,7 +964,7 @@
         <record id="hr_rule_l10n_mx_payroll_deduction_014" model="hr.salary.rule">
             <field name="name">Errores</field>
             <field name="sequence" eval="53000"/>
-            <field name="code">014d</field>
+            <field name="code">014D</field>
             <field name="clave">clave-014</field>
             <field name="category_id" ref="hr_salary_rule_category_deduction"/>
             <field name="type_concept">deduction</field>
@@ -982,7 +982,7 @@
         <record id="hr_rule_l10n_mx_payroll_deduction_015" model="hr.salary.rule">
             <field name="name">Pérdidas</field>
             <field name="sequence" eval="54000"/>
-            <field name="code">015d</field>
+            <field name="code">015D</field>
             <field name="clave">clave-015</field>
             <field name="category_id" ref="hr_salary_rule_category_deduction"/>
             <field name="type_concept">deduction</field>
@@ -1000,7 +1000,7 @@
         <record id="hr_rule_l10n_mx_payroll_deduction_016" model="hr.salary.rule">
             <field name="name">Averías</field>
             <field name="sequence" eval="55000"/>
-            <field name="code">016d</field>
+            <field name="code">016D</field>
             <field name="clave">clave-016</field>
             <field name="category_id" ref="hr_salary_rule_category_deduction"/>
             <field name="type_concept">deduction</field>
@@ -1018,7 +1018,7 @@
         <record id="hr_rule_l10n_mx_payroll_deduction_017" model="hr.salary.rule">
             <field name="name">Adquisición de artículos producidos por la empresa o establecimiento</field>
             <field name="sequence" eval="56000"/>
-            <field name="code">017d</field>
+            <field name="code">017D</field>
             <field name="clave">clave-017</field>
             <field name="category_id" ref="hr_salary_rule_category_deduction"/>
             <field name="type_concept">deduction</field>
@@ -1036,7 +1036,7 @@
         <record id="hr_rule_l10n_mx_payroll_deduction_018" model="hr.salary.rule">
             <field name="name">Cuotas para la constitución y fomento de sociedades cooperativas y de cajas de ahorro</field>
             <field name="sequence" eval="57000"/>
-            <field name="code">018d</field>
+            <field name="code">018D</field>
             <field name="clave">clave-018</field>
             <field name="category_id" ref="hr_salary_rule_category_deduction"/>
             <field name="type_concept">deduction</field>
@@ -1054,7 +1054,7 @@
         <record id="hr_rule_l10n_mx_payroll_deduction_019" model="hr.salary.rule">
             <field name="name">Cuotas sindicales</field>
             <field name="sequence" eval="58000"/>
-            <field name="code">019d</field>
+            <field name="code">019D</field>
             <field name="clave">clave-019</field>
             <field name="category_id" ref="hr_salary_rule_category_deduction"/>
             <field name="type_concept">deduction</field>
@@ -1072,7 +1072,7 @@
         <record id="hr_rule_l10n_mx_payroll_deduction_020" model="hr.salary.rule">
             <field name="name">Ausencia (Ausentismo)</field>
             <field name="sequence" eval="59000"/>
-            <field name="code">020d</field>
+            <field name="code">020D</field>
             <field name="clave">clave-020</field>
             <field name="category_id" ref="hr_salary_rule_category_deduction"/>
             <field name="type_concept">deduction</field>
@@ -1090,7 +1090,7 @@
         <record id="hr_rule_l10n_mx_payroll_deduction_021" model="hr.salary.rule">
             <field name="name">Cuotas obrero patronales</field>
             <field name="sequence" eval="60000"/>
-            <field name="code">021d</field>
+            <field name="code">021D</field>
             <field name="clave">clave-021</field>
             <field name="category_id" ref="hr_salary_rule_category_deduction"/>
             <field name="type_concept">deduction</field>
