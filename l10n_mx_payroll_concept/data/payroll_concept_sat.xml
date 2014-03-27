@@ -37,7 +37,7 @@
         </record>
         <record id="hr_rule_input_perception_001" model="hr.rule.input">
             <field name="code">salarios_rayas</field>
-            <field name="name">salarios_rayas</field>
+            <field name="name">Sueldos, Salarios Rayas y Jornales</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_001"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_002" model="hr.salary.rule">
@@ -55,7 +55,7 @@
         </record>
         <record id="hr_rule_input_perception_002" model="hr.rule.input">
             <field name="code">aguinaldo</field>
-            <field name="name">aguinaldo</field>
+            <field name="name">Gratificación Anual (Aguinaldo)</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_002"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_003" model="hr.salary.rule">
@@ -73,7 +73,7 @@
         </record>
         <record id="hr_rule_input_perception_003" model="hr.rule.input">
             <field name="code">participacion_trabajadores_utilidades_ptu</field>
-            <field name="name">participacion_trabajadores_utilidades_ptu</field>
+            <field name="name">Participación de los Trabajadores en las Utilidades PTU</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_003"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_004" model="hr.salary.rule">
@@ -91,7 +91,7 @@
         </record>
         <record id="hr_rule_input_perception_004" model="hr.rule.input">
             <field name="code">gastos_medicos</field>
-            <field name="name">gastos_medicos</field>
+            <field name="name">Reembolso de Gastos Médicos Dentales y Hospitalarios</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_004"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_005" model="hr.salary.rule">
@@ -109,7 +109,7 @@
         </record>
         <record id="hr_rule_input_perception_005" model="hr.rule.input">
             <field name="code">fondo_ahorro</field>
-            <field name="name">fondo_ahorro</field>
+            <field name="name">Fondo de Ahorro</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_005"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_006" model="hr.salary.rule">
@@ -127,7 +127,7 @@
         </record>
         <record id="hr_rule_input_perception_006" model="hr.rule.input">
             <field name="code">caja_ahorro</field>
-            <field name="name">caja_ahorro</field>
+            <field name="name">Caja de ahorro</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_006"/>
         </record>
         <!--
@@ -182,7 +182,7 @@
         </record>
         <record id="hr_rule_input_perception_009" model="hr.rule.input">
             <field name="code">contribuciones_cargo_trabajador_pagadas_por_patron</field>
-            <field name="name">contribuciones_cargo_trabajador_pagadas_por_patron</field>
+            <field name="name">Contribuciones a Cargo del Trabajador Pagadas por el Patrón</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_009"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_010" model="hr.salary.rule">
@@ -200,7 +200,7 @@
         </record>
         <record id="hr_rule_input_perception_010" model="hr.rule.input">
             <field name="code">premio_puntualidad</field>
-            <field name="name">premio_puntualidad</field>
+            <field name="name">Premios por puntualidad</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_010"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_011" model="hr.salary.rule">
@@ -218,7 +218,7 @@
         </record>
         <record id="hr_rule_input_perception_011" model="hr.rule.input">
             <field name="code">prima_seguro_vida</field>
-            <field name="name">prima_seguro_vida</field>
+            <field name="name">Prima de Seguro de vida</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_011"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_012" model="hr.salary.rule">
@@ -236,7 +236,7 @@
         </record>
         <record id="hr_rule_input_perception_012" model="hr.rule.input">
             <field name="code">seguro_gastos_medicos_mayores</field>
-            <field name="name">seguro_gastos_medicos_mayores</field>
+            <field name="name">Seguro de Gastos Medicos Mayores</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_012"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_013" model="hr.salary.rule">
@@ -254,7 +254,7 @@
         </record>
         <record id="hr_rule_input_perception_013" model="hr.rule.input">
             <field name="code">cuotas_sindicales_pagadas_patron</field>
-            <field name="name">cuotas_sindicales_pagadas_patron</field>
+            <field name="name">Cuotas Sindicales Pagadas por el Patrón</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_013"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_014" model="hr.salary.rule">
@@ -272,7 +272,7 @@
         </record>
         <record id="hr_rule_input_perception_014" model="hr.rule.input">
             <field name="code">subsidios_incapacidad</field>
-            <field name="name">subsidios_incapacidad</field>
+            <field name="name">Subsidios por incapacidad</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_014"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_015" model="hr.salary.rule">
@@ -290,7 +290,7 @@
         </record>
         <record id="hr_rule_input_perception_015" model="hr.rule.input">
             <field name="code">becas_trabajadores_y_o_hijos</field>
-            <field name="name">becas_trabajadores_y_o_hijos</field>
+            <field name="name">Becas para trabajadores y/o hijos</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_015"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_016" model="hr.salary.rule">
@@ -308,7 +308,7 @@
         </record>
         <record id="hr_rule_input_perception_016" model="hr.rule.input">
             <field name="code">otros_perception</field>
-            <field name="name">otros_perception</field>
+            <field name="name">Otros Perception</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_016"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_017" model="hr.salary.rule">
@@ -326,7 +326,7 @@
         </record>
         <record id="hr_rule_input_perception_017" model="hr.rule.input">
             <field name="code">subsidios_empleo</field>
-            <field name="name">subsidios_empleo</field>
+            <field name="name">Subsidio para el empleo</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_017"/>
         </record>
         <!--
@@ -364,7 +364,7 @@
         </record>
         <record id="hr_rule_input_perception_019" model="hr.rule.input">
             <field name="code">horas_extras</field>
-            <field name="name">horas_extras</field>
+            <field name="name">Horas extra</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_019"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_020" model="hr.salary.rule">
@@ -382,7 +382,7 @@
         </record>
         <record id="hr_rule_input_perception_020" model="hr.rule.input">
             <field name="code">prima_dominica</field>
-            <field name="name">prima_dominica</field>
+            <field name="name">Prima dominical</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_020"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_021" model="hr.salary.rule">
@@ -400,7 +400,7 @@
         </record>
         <record id="hr_rule_input_perception_021" model="hr.rule.input">
             <field name="code">prima_vacacional</field>
-            <field name="name">prima_vacacional</field>
+            <field name="name">Prima vacacional</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_021"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_022" model="hr.salary.rule">
@@ -418,7 +418,7 @@
         </record>
         <record id="hr_rule_input_perception_022" model="hr.rule.input">
             <field name="code">prima_antiguedad</field>
-            <field name="name">prima_antiguedad</field>
+            <field name="name">Prima por antigüedad</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_022"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_023" model="hr.salary.rule">
@@ -436,7 +436,7 @@
         </record>
         <record id="hr_rule_input_perception_023" model="hr.rule.input">
             <field name="code">pagos_por_separacion</field>
-            <field name="name">pagos_por_separacion</field>
+            <field name="name">Pagos por separación</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_023"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_024" model="hr.salary.rule">
@@ -454,7 +454,7 @@
         </record>
         <record id="hr_rule_input_perception_024" model="hr.rule.input">
             <field name="code">seguro_retiro</field>
-            <field name="name">seguro_retiro</field>
+            <field name="name">Seguro de retiro</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_024"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_025" model="hr.salary.rule">
@@ -472,7 +472,7 @@
         </record>
         <record id="hr_rule_input_perception_025" model="hr.rule.input">
             <field name="code">indeminizaciones</field>
-            <field name="name">indeminizaciones</field>
+            <field name="name">Indeminizaciones</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_025"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_026" model="hr.salary.rule">
@@ -490,7 +490,7 @@
         </record>
         <record id="hr_rule_input_perception_026" model="hr.rule.input">
             <field name="code">reembolso_por_funeral</field>
-            <field name="name">reembolso_por_funeral</field>
+            <field name="name">Reembolso por funeral</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_026"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_027" model="hr.salary.rule">
@@ -508,7 +508,7 @@
         </record>
         <record id="hr_rule_input_perception_027" model="hr.rule.input">
             <field name="code">cuota_seguridad_pagada_patron</field>
-            <field name="name">cuota_seguridad_pagada_patron</field>
+            <field name="name">Cuotas de seguridad social pagadas por el patrón</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_027"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_028" model="hr.salary.rule">
@@ -526,7 +526,7 @@
         </record>
         <record id="hr_rule_input_perception_028" model="hr.rule.input">
             <field name="code">comisiones</field>
-            <field name="name">comisiones</field>
+            <field name="name">Comisiones</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_028"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_029" model="hr.salary.rule">
@@ -544,7 +544,7 @@
         </record>
         <record id="hr_rule_input_perception_029" model="hr.rule.input">
             <field name="code">vales_despensa</field>
-            <field name="name">vales_despensa</field>
+            <field name="name">Vales de despensa</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_029"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_030" model="hr.salary.rule">
@@ -562,7 +562,7 @@
         </record>
         <record id="hr_rule_input_perception_030" model="hr.rule.input">
             <field name="code">vales_restaurant</field>
-            <field name="name">vales_restaurant</field>
+            <field name="name">Vales de restaurante</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_030"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_031" model="hr.salary.rule">
@@ -580,7 +580,7 @@
         </record>
         <record id="hr_rule_input_perception_031" model="hr.rule.input">
             <field name="code">vales_gasolina</field>
-            <field name="name">vales_gasolina</field>
+            <field name="name">Vales de gasolina</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_031"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_032" model="hr.salary.rule">
@@ -598,7 +598,7 @@
         </record>
         <record id="hr_rule_input_perception_032" model="hr.rule.input">
             <field name="code">vales_ropa</field>
-            <field name="name">vales_ropa</field>
+            <field name="name">Vales de ropa</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_032"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_033" model="hr.salary.rule">
@@ -616,7 +616,7 @@
         </record>
         <record id="hr_rule_input_perception_033" model="hr.rule.input">
             <field name="code">ayuda_renta</field>
-            <field name="name">ayuda_renta</field>
+            <field name="name">Ayuda para renta</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_033"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_034" model="hr.salary.rule">
@@ -634,11 +634,11 @@
         </record>
         <record id="hr_rule_input_perception_034" model="hr.rule.input">
             <field name="code">ayuda_articulos_escolares</field>
-            <field name="name">ayuda_articulos_escolares</field>
+            <field name="name">Ayuda para artículos escolares</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_034"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_035" model="hr.salary.rule">
-            <field name="name"> Ayuda para anteojos</field>
+            <field name="name">Ayuda para anteojos</field>
             <field name="sequence" eval="35000"/>
             <field name="code">035</field>
             <field name="clave">clave-035</field>
@@ -652,7 +652,7 @@
         </record>
         <record id="hr_rule_input_perception_035" model="hr.rule.input">
             <field name="code">ayuda_anteojos</field>
-            <field name="name">ayuda_anteojos</field>
+            <field name="name">Ayuda para anteojos</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_035"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_036" model="hr.salary.rule">
@@ -670,7 +670,7 @@
         </record>
         <record id="hr_rule_input_perception_036" model="hr.rule.input">
             <field name="code">ayuda_transportes</field>
-            <field name="name">ayuda_transportes</field>
+            <field name="name">Ayuda para transporte</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_036"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_037" model="hr.salary.rule">
@@ -688,7 +688,7 @@
         </record>
         <record id="hr_rule_input_perception_037" model="hr.rule.input">
             <field name="code">ayuda_gastos_funeral</field>
-            <field name="name">ayuda_gastos_funeral</field>
+            <field name="name">Ayuda para gastos de funeral</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_037"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_038" model="hr.salary.rule">
@@ -706,7 +706,7 @@
         </record>
         <record id="hr_rule_input_perception_038" model="hr.rule.input">
             <field name="code">otros_ingresos_salarios</field>
-            <field name="name">otros_ingresos_salarios</field>
+            <field name="name">Otros ingresos por salarios</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_038"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_039" model="hr.salary.rule">
@@ -724,7 +724,7 @@
         </record>
         <record id="hr_rule_input_perception_039" model="hr.rule.input">
             <field name="code">jubilaciones_pensiones_haberes_retiro</field>
-            <field name="name">jubilaciones_pensiones_haberes_retiro</field>
+            <field name="name">Jubilaciones, pensiones o haberes de retiro</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_039"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_001" model="hr.salary.rule">
@@ -742,7 +742,7 @@
         </record>
         <record id="hr_rule_input_deduction_001" model="hr.rule.input">
             <field name="code">seguridad_social</field>
-            <field name="name">seguridad_social</field>
+            <field name="name">Seguridad social</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_001"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_002" model="hr.salary.rule">
@@ -760,7 +760,7 @@
         </record>
         <record id="hr_rule_input_deduction_002" model="hr.rule.input">
             <field name="code">isr</field>
-            <field name="name">isr</field>
+            <field name="name">ISR</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_002"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_003" model="hr.salary.rule">
@@ -778,7 +778,7 @@
         </record>
         <record id="hr_rule_input_deduction_003" model="hr.rule.input">
             <field name="code">cesantia_vejez</field>
-            <field name="name">cesantia_vejez</field>
+            <field name="name">Aportaciones a retiro, cesantía en edad avanzada y vejez</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_003"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_004" model="hr.salary.rule">
@@ -796,7 +796,7 @@
         </record>
         <record id="hr_rule_input_deduction_004" model="hr.rule.input">
             <field name="code">otros_deduction</field>
-            <field name="name">otros_deduction</field>
+            <field name="name">Otros Deduction</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_004"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_005" model="hr.salary.rule">
@@ -814,7 +814,7 @@
         </record>
         <record id="hr_rule_input_deduction_005" model="hr.rule.input">
             <field name="code">aportacion_fondo_vivienda</field>
-            <field name="name">aportacion_fondo_vivienda</field>
+            <field name="name">Aportaciones a Fondo de vivienda</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_005"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_006" model="hr.salary.rule">
@@ -832,7 +832,7 @@
         </record>
         <record id="hr_rule_input_deduction_006" model="hr.rule.input">
             <field name="code">descuento_incapacidad</field>
-            <field name="name">descuento_incapacidad</field>
+            <field name="name">Descuento por incapacidad</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_006"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_007" model="hr.salary.rule">
@@ -850,7 +850,7 @@
         </record>
         <record id="hr_rule_input_deduction_007" model="hr.rule.input">
             <field name="code">pension_alimenticia</field>
-            <field name="name">pension_alimenticia</field>
+            <field name="name">Pensión alimenticia</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_007"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_008" model="hr.salary.rule">
@@ -868,7 +868,7 @@
         </record>
         <record id="hr_rule_input_deduction_008" model="hr.rule.input">
             <field name="code">renta</field>
-            <field name="name">renta</field>
+            <field name="name">Renta</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_008"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_009" model="hr.salary.rule">
@@ -886,7 +886,7 @@
         </record>
         <record id="hr_rule_input_deduction_009" model="hr.rule.input">
             <field name="code">prestamo_fondo_nacional_vivienda_trabajadores</field>
-            <field name="name">prestamo_fondo_nacional_vivienda_trabajadores</field>
+            <field name="name">Préstamos provenientes del Fondo Nacional de la Vivienda para los Trabajadores</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_009"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_010" model="hr.salary.rule">
@@ -904,7 +904,7 @@
         </record>
         <record id="hr_rule_input_deduction_010" model="hr.rule.input">
             <field name="code">pago_credito_de_vivienda</field>
-            <field name="name">pago_credito_de_vivienda</field>
+            <field name="name">Pago por crédito de vivienda</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_010"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_011" model="hr.salary.rule">
@@ -922,7 +922,7 @@
         </record>
         <record id="hr_rule_input_deduction_011" model="hr.rule.input">
             <field name="code">pago_abonos_infonacot</field>
-            <field name="name">pago_abonos_infonacot</field>
+            <field name="name">Pago de abonos INFONACOT</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_011"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_012" model="hr.salary.rule">
@@ -940,7 +940,7 @@
         </record>
         <record id="hr_rule_input_deduction_012" model="hr.rule.input">
             <field name="code">anticipos_salarios</field>
-            <field name="name">anticipos_salarios</field>
+            <field name="name">Anticipo de salarios</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_012"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_013" model="hr.salary.rule">
@@ -958,7 +958,7 @@
         </record>
         <record id="hr_rule_input_deduction_013" model="hr.rule.input">
             <field name="code">pagos_exceso_trabajador</field>
-            <field name="name">pagos_exceso_trabajador</field>
+            <field name="name">Pagos hechos con exceso al trabajador</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_013"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_014" model="hr.salary.rule">
@@ -976,7 +976,7 @@
         </record>
         <record id="hr_rule_input_deduction_014" model="hr.rule.input">
             <field name="code">errores</field>
-            <field name="name">errores</field>
+            <field name="name">Errores</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_014"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_015" model="hr.salary.rule">
@@ -994,7 +994,7 @@
         </record>
         <record id="hr_rule_input_deduction_015" model="hr.rule.input">
             <field name="code">perdidas</field>
-            <field name="name">perdidas</field>
+            <field name="name">Pérdidas</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_015"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_016" model="hr.salary.rule">
@@ -1012,7 +1012,7 @@
         </record>
         <record id="hr_rule_input_deduction_016" model="hr.rule.input">
             <field name="code">averias</field>
-            <field name="name">averias</field>
+            <field name="name">Averías</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_016"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_017" model="hr.salary.rule">
@@ -1030,7 +1030,7 @@
         </record>
         <record id="hr_rule_input_deduction_017" model="hr.rule.input">
             <field name="code">adq_articulos_producidos_empresa_establecimiento</field>
-            <field name="name">adq_articulos_producidos_empresa_establecimiento</field>
+            <field name="name">Adquisición de artículos producidos por la empresa o establecimiento</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_017"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_018" model="hr.salary.rule">
@@ -1048,7 +1048,7 @@
         </record>
         <record id="hr_rule_input_deduction_018" model="hr.rule.input">
             <field name="code">sociedades_cooperativas_cajas_ahorro</field>
-            <field name="name">sociedades_cooperativas_cajas_ahorro</field>
+            <field name="name">Cuotas para la constitución y fomento de sociedades cooperativas y de cajas de ahorro</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_018"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_019" model="hr.salary.rule">
@@ -1066,7 +1066,7 @@
         </record>
         <record id="hr_rule_input_deduction_019" model="hr.rule.input">
             <field name="code">cuotas_sindicales</field>
-            <field name="name">cuotas_sindicales</field>
+            <field name="name">Cuotas sindicales</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_019"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_020" model="hr.salary.rule">
@@ -1084,7 +1084,7 @@
         </record>
         <record id="hr_rule_input_deduction_020" model="hr.rule.input">
             <field name="code">ausencia</field>
-            <field name="name">ausencia</field>
+            <field name="name">Ausencia (Ausentismo)</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_020"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_021" model="hr.salary.rule">
@@ -1102,7 +1102,7 @@
         </record>
         <record id="hr_rule_input_deduction_021" model="hr.rule.input">
             <field name="code">cuotas_obrero_patronales</field>
-            <field name="name">cuotas_obrero_patronales</field>
+            <field name="name">Cuotas obrero patronales</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_021"/>
         </record>
 

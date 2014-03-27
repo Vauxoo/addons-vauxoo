@@ -47,6 +47,5 @@ class hr_payslip_input(osv.osv):
                 result['name'] = read_salary_data.input_ids[0].name
                 result['code'] = read_salary_data.input_ids[0].code
                 result['contract_id'] = parent_id
-                return {'value': result} 
         return {'value': result} 
 

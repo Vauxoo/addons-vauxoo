@@ -6,18 +6,14 @@
             <field name="model">hr.payslip</field>
             <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='input_line_ids']/tree/field[@name='name']" position="before">
-                    <field name="salary_rule_id" on_change="onchange_salary_rule(salary_rule_id,parent.contract_id)"/>
-                </xpath>
                 <xpath expr="//field[@name='input_line_ids']/tree/field[@name='amount']" position="after">
                     <field name="exempt_amount"/>
                 </xpath>
-                <xpath expr="//field[@name='input_line_ids']/tree/field[@name='name']" position="replace">
-                    <field name="name" invisible="1" />
-                </xpath>
+<!--
                 <xpath expr="//field[@name='input_line_ids']/tree/field[@name='code']" position="replace">
                     <field name="code" invisible="1" />
                 </xpath>
+-->
                 <xpath expr="//field[@name='input_line_ids']/tree/field[@name='amount']" position="replace">
                     <field name="amount"/>
                 </xpath>
