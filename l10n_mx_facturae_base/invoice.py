@@ -800,16 +800,14 @@ class account_invoice(osv.Model):
         # time.strftime('%Y-%m-%dT%H:%M:%S',
         # time.strptime(invoice.date_invoice, '%Y-%m-%d %H:%M:%S'))
         context.update({'fecha': data_dict['cfdi:Comprobante']['fecha']})
-        sign_str = self._get_sello(
-            cr=False, uid=False, ids=False, context=context)
-        if not sign_str:
-            raise osv.except_osv(_('Error in Stamp !'), _(
-                "Can't generate the stamp of the voucher.\nCkeck your configuration.\ns%s") % (msg2))
-
+        #~sign_str = self._get_sello(
+            #~cr=False, uid=False, ids=False, context=context)
+        #~if not sign_str:
+            #~raise osv.except_osv(_('Error in Stamp !'), _(
+                #~"Can't generate the stamp of the voucher.\nCkeck your configuration.\ns%s") % (msg2))
         nodeComprobante = doc_xml.getElementsByTagName("cfdi:Comprobante")[0]
-        nodeComprobante.setAttribute("sello", sign_str)
-        data_dict['cfdi:Comprobante']['sello'] = sign_str
-
+        #~nodeComprobante.setAttribute("sello", sign_str)
+        #~data_dict['cfdi:Comprobante']['sello'] = sign_str
         noCertificado = self._get_noCertificado(cr, uid, ids, context['fname_cer'])
         if not noCertificado:
             raise osv.except_osv(_('Error in No. Certificate !'), _(
@@ -830,7 +828,6 @@ class account_invoice(osv.Model):
         nodeConcepto = doc_xml.getElementsByTagName('cfdi:Conceptos')[0]
         x.insertBefore(nodeReceptor, nodeConcepto)
         self.write_cfd_data(cr, uid, ids, data_dict, context=context)
-
         if context.get('type_data') == 'dict':
             return data_dict
         if context.get('type_data') == 'xml_obj':
@@ -842,36 +839,7 @@ class account_invoice(osv.Model):
             data_dict['cfdi:Comprobante'].get('folio', '') or '') + '.xml'
         data_xml = data_xml.replace('<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
         date_invoice = data_dict.get('cfdi:Comprobante',{}) and datetime.strptime( data_dict.get('cfdi:Comprobante',{}).get('fecha',{}), '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d') or False
-        facturae_version = '3.2'
-        try:
-            self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], facturae_version)
-        except Exception, e:
-            raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (e))
         return fname_xml, data_xml
-
-    def validate_scheme_facturae_xml(self, cr, uid, ids, datas_xmls=[], facturae_version = None, facturae_type="cfdv", scheme_type='xsd'):
-    #TODO: bzr add to file fname_schema
-        if not datas_xmls:
-            datas_xmls = []
-        certificate_lib = self.pool.get('facturae.certificate.library')
-        for data_xml in datas_xmls:
-            (fileno_data_xml, fname_data_xml) = tempfile.mkstemp('.xml', 'openerp_' + (False or '') + '__facturae__' )
-            f = open(fname_data_xml, 'wb')
-            data_xml = data_xml.replace("&amp;", "Y")#Replace temp for process with xmlstartle
-            f.write( data_xml )
-            f.close()
-            os.close(fileno_data_xml)
-            all_paths = tools.config["addons_path"].split(",")
-            for my_path in all_paths:
-                if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT')):
-                    # If dir is in path, save it on real_path
-                    fname_scheme = my_path and os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT', facturae_type + facturae_version +  '.' + scheme_type) or ''
-                    #fname_scheme = os.path.join(tools.config["addons_path"], u'l10n_mx_facturae_base', u'SAT', facturae_type + facturae_version +  '.' + scheme_type )
-                    fname_out = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__schema_validation_result__' )
-                    result = certificate_lib.check_xml_scheme(cr, uid, ids, fname_data_xml, fname_scheme, fname_out)
-                    if result: #Valida el xml mediante el archivo xsd
-                        raise osv.except_osv('Error al validar la estructura del xml!', 'Validación de XML versión %s:\n%s'%(facturae_version, result))
-        return True
 
     def write_cfd_data(self, cr, uid, ids, cfd_datas, context=None):
         """
@@ -913,26 +881,6 @@ class account_invoice(osv.Model):
             '__serial__')
         result = certificate_lib._get_param_serial(cr, uid, ids,
             fname_cer, fname_out=fname_serial, type='PEM')
-        return result
-
-    def _get_sello(self, cr=False, uid=False, ids=False, context=None):
-        if context is None:
-            context = {}
-        # TODO: Put encrypt date dynamic
-        fecha = context['fecha']
-        year = float(time.strftime('%Y', time.strptime(
-            fecha, '%Y-%m-%dT%H:%M:%S')))
-        if year >= 2011:
-            encrypt = "sha1"
-        if year <= 2010:
-            encrypt = "md5"
-        certificate_lib = self.pool.get('facturae.certificate.library')
-        fname_sign = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(
-            ''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + \
-            '__sign__')
-        result = certificate_lib._sign(cr, uid, ids, fname=context['fname_xml'],
-            fname_xslt=context['fname_xslt'], fname_key=context['fname_key'],
-            fname_out=fname_sign, encrypt=encrypt, type_key='PEM')
         return result
 
     def _xml2cad_orig(self, cr=False, uid=False, ids=False, context=None):
@@ -1012,7 +960,7 @@ class account_invoice(osv.Model):
                 'tipoDeComprobante': tipoComprobante,
                 'formaDePago': u'Pago en una sola exhibición',
                 'noCertificado': '@',
-                'sello': '@',
+                'sello': '',
                 'certificado': '@',
                 'subTotal': "%.2f" % (invoice.amount_untaxed or 0.0),
                 'descuento': "0",  # Add field general

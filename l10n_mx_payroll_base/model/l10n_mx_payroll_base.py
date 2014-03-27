@@ -598,30 +598,6 @@ class hr_payslip(osv.Model):
             if 'BEGIN CERTIFICATE' in line:
                 loading = True
         return cer_str
-
-    def validate_scheme_facturae_xml(self, cr, uid, ids, datas_xmls=[], payroll_version = None, payroll_type="cfdv", scheme_type='xsd'):
-    #TODO: bzr add to file fname_schema
-        if not datas_xmls:
-            datas_xmls = []
-        certificate_lib = self.pool.get('facturae.certificate.library')
-        for data_xml in datas_xmls:
-            (fileno_data_xml, fname_data_xml) = tempfile.mkstemp('.xml', 'openerp_' + (False or '') + '__facturae__' )
-            f = open(fname_data_xml, 'wb')
-            data_xml = data_xml.replace("&amp;", "Y")#Replace temp for process with xmlstartle
-            f.write( data_xml )
-            f.close()
-            os.close(fileno_data_xml)
-            all_paths = tools.config["addons_path"].split(",")
-            for my_path in all_paths:
-                if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT')):
-                    # If dir is in path, save it on real_path
-                    fname_scheme = my_path and os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT', payroll_type + payroll_version +  '.' + scheme_type) or ''
-                    #fname_scheme = os.path.join(tools.config["addons_path"], u'l10n_mx_facturae_base', u'SAT', facturae_type + facturae_version +  '.' + scheme_type )
-                    fname_out = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__schema_validation_result__' )
-                    result = certificate_lib.check_xml_scheme(cr, uid, ids, fname_data_xml, fname_scheme, fname_out)
-                    if result: #Valida el xml mediante el archivo xsd
-                        raise osv.except_osv('Error al validar la estructura del xml!', 'Validación de XML versión %s:\n%s'%(payroll_version, result))
-        return True
         
     def _get_taxes(self, cr, uid, ids, context=None):
         if context is None:
@@ -727,10 +703,7 @@ class hr_payslip(osv.Model):
             with open(fname_xml,'rb') as b:
                 data_xml = b.read().encode('UTF-8')
             b.close()
-            try:
-                self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], 'v3.2', 'cfd')
-            except Exception, e:
-                raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (tools.ustr(e)))
+
             for my_path in all_paths:
                 if os.path.isdir(os.path.join(my_path, 'l10n_mx_payroll_base', 'template')):
                     fname_jinja_tmpl = my_path and os.path.join(my_path, 'l10n_mx_payroll_base', 'template', 'nomina11' + '.xml') or ''
@@ -749,10 +722,7 @@ class hr_payslip(osv.Model):
                         new_xml.write( tmpl.render(**dictargs) )
             with open(fname_xml_payroll,'rb') as b:
                 data_xml_payroll = b.read().encode('UTF-8')
-            try:
-                self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml_payroll], payroll_version, payroll_type)
-            except Exception, e:
-                raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (tools.ustr(e)))
+            
             #Agregar nodo Nomina en nodo Complemento
             doc_xml = xml.dom.minidom.parseString(data_xml)
             doc_xml_payroll_2 = xml.dom.minidom.parseString(data_xml_payroll)
