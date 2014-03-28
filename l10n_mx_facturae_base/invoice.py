@@ -191,7 +191,7 @@ class account_invoice(osv.Model):
                                 }, context=context)
                     attach_ids = ir_attach_obj.create(cr, uid, {
                         'name': invoice.fname_invoice, 
-                        'type': invoice.invoice_sequence_id.approval_id.type,
+                        'type': invoice.invoice_sequence_id.approval_id and invoice.invoice_sequence_id.approval_id.type or False,
                         'journal_id': invoice.journal_id and invoice.journal_id.id or False,
                         'company_emitter_id': invoice.company_emitter_id.id,
                         'model_source': self._name or '',
