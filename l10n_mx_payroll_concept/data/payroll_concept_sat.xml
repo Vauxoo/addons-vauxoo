@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <openerp>
-    <data noupdate="1">
+    <data noupdate="0">
 
         <record id="hr_payroll.hr_rule_basic" model="hr.salary.rule">
             <field eval="0" name="active"/>
@@ -31,9 +31,14 @@
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.salarios_rayas and inputs.salarios_rayas.amount</field>
+            <field name="amount_python_compute">result = inputs.salarios_rayas_pe and inputs.salarios_rayas_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_001pe" model="hr.rule.input">
+            <field name="code">salarios_rayas_pe</field>
+            <field name="name">Sueldos, Salarios Rayas y Jornales - 001 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_001pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_001pg" model="hr.salary.rule">
             <field name="name">Sueldos, Salarios Rayas y Jornales</field>
@@ -43,14 +48,14 @@
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.salarios_rayas and inputs.salarios_rayas.amount</field>
+            <field name="amount_python_compute">result = inputs.salarios_rayas_pg and inputs.salarios_rayas_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_001" model="hr.rule.input">
-            <field name="code">salarios_rayas</field>
-            <field name="name">salarios_rayas</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_001"/>
+        <record id="hr_rule_input_perception_001pg" model="hr.rule.input">
+            <field name="code">salarios_rayas_pg</field>
+            <field name="name">Sueldos, Salarios Rayas y Jornales - 001 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_001pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_002pe" model="hr.salary.rule">
             <field name="name">Gratificación Anual (Aguinaldo)</field>
@@ -61,9 +66,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.aguinaldo and inputs.aguinaldo.amount</field>
+            <field name="amount_python_compute">result = inputs.aguinaldo_pe and inputs.aguinaldo_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_002pe" model="hr.rule.input">
+            <field name="code">aguinaldo_pe</field>
+            <field name="name">aguinaldo - 002 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_002pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_002pg" model="hr.salary.rule">
             <field name="name">Gratificación Anual (Aguinaldo)</field>
@@ -74,14 +84,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.aguinaldo and inputs.aguinaldo.amount+inputs.aguinaldo.exempt_amount</field>
+            <field name="amount_python_compute">result = inputs.aguinaldo_pg and inputs.aguinaldo_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_002" model="hr.rule.input">
-            <field name="code">aguinaldo</field>
-            <field name="name">aguinaldo</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_002"/>
+        <record id="hr_rule_input_perception_002pg" model="hr.rule.input">
+            <field name="code">aguinaldo_pg</field>
+            <field name="name">aguinaldo - 002 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_002pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_003pe" model="hr.salary.rule">
             <field name="name">Participación de los Trabajadores en las Utilidades PTU</field>
@@ -92,9 +102,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.participacion_trabajadores_utilidades_ptu and inputs.participacion_trabajadores_utilidades_ptu.amount</field>
+            <field name="amount_python_compute">result = inputs.participacion_trabajadores_utilidades_ptu_pe and inputs.participacion_trabajadores_utilidades_ptu_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_003pe" model="hr.rule.input">
+            <field name="code">participacion_trabajadores_utilidades_ptu_pe</field>
+            <field name="name">Participación de los Trabajadores en las Utilidades PTU - 003 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_003pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_003pg" model="hr.salary.rule">
             <field name="name">Participación de los Trabajadores en las Utilidades PTU</field>
@@ -105,14 +120,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.participacion_trabajadores_utilidades_ptu and inputs.participacion_trabajadores_utilidades_ptu.amount</field>
+            <field name="amount_python_compute">result = inputs.participacion_trabajadores_utilidades_ptu_pg and inputs.participacion_trabajadores_utilidades_ptu_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_003" model="hr.rule.input">
-            <field name="code">participacion_trabajadores_utilidades_ptu</field>
-            <field name="name">participacion_trabajadores_utilidades_ptu</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_003"/>
+        <record id="hr_rule_input_perception_003pg" model="hr.rule.input">
+            <field name="code">participacion_trabajadores_utilidades_ptu_pg</field>
+            <field name="name">Participación de los Trabajadores en las Utilidades PTU - 003 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_003pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_004pe" model="hr.salary.rule">
             <field name="name">Reembolso de Gastos Médicos Dentales y Hospitalarios</field>
@@ -123,9 +138,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.gastos_medicos and inputs.gastos_medicos.amount</field>
+            <field name="amount_python_compute">result = inputs.gastos_medicos_pe and inputs.gastos_medicos_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_004pe" model="hr.rule.input">
+            <field name="code">gastos_medicos_pe</field>
+            <field name="name">Reembolso de Gastos Médicos Dentales y Hospitalarios - 004 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_004pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_004pg" model="hr.salary.rule">
             <field name="name">Reembolso de Gastos Médicos Dentales y Hospitalarios</field>
@@ -136,14 +156,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.gastos_medicos and inputs.gastos_medicos.amount</field>
+            <field name="amount_python_compute">result = inputs.gastos_medicos_pg and inputs.gastos_medicos_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_004" model="hr.rule.input">
-            <field name="code">gastos_medicos</field>
-            <field name="name">gastos_medicos</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_004"/>
+        <record id="hr_rule_input_perception_004pg" model="hr.rule.input">
+            <field name="code">gastos_medicos_pg</field>
+            <field name="name">Reembolso de Gastos Médicos Dentales y Hospitalarios - 004 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_004pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_005pe" model="hr.salary.rule">
             <field name="name">Fondo de Ahorro</field>
@@ -154,9 +174,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.fondo_ahorro and inputs.fondo_ahorro.amount</field>
+            <field name="amount_python_compute">result = inputs.fondo_ahorro_pe and inputs.fondo_ahorro_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_005pe" model="hr.rule.input">
+            <field name="code">fondo_ahorro_pe</field>
+            <field name="name">Fondo de Ahorro - 005 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_005pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_005pg" model="hr.salary.rule">
             <field name="name">Fondo de Ahorro</field>
@@ -167,14 +192,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.fondo_ahorro and inputs.fondo_ahorro.amount</field>
+            <field name="amount_python_compute">result = inputs.fondo_ahorro_pg and inputs.fondo_ahorro_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_005" model="hr.rule.input">
-            <field name="code">fondo_ahorro</field>
-            <field name="name">fondo_ahorro</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_005"/>
+        <record id="hr_rule_input_perception_005pg" model="hr.rule.input">
+            <field name="code">fondo_ahorro_pg</field>
+            <field name="name">Fondo de Ahorro - 005 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_005pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_006pe" model="hr.salary.rule">
             <field name="name">Caja de ahorro</field>
@@ -185,9 +210,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.caja_ahorro and inputs.caja_ahorro.amount</field>
+            <field name="amount_python_compute">result = inputs.caja_ahorro_pe and inputs.caja_ahorro_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_006pe" model="hr.rule.input">
+            <field name="code">caja_ahorro_pe</field>
+            <field name="name">Caja de ahorro - 006 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_006pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_006pg" model="hr.salary.rule">
             <field name="name">Caja de ahorro</field>
@@ -198,14 +228,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.caja_ahorro and inputs.caja_ahorro.amount</field>
+            <field name="amount_python_compute">result = inputs.caja_ahorro_pg and inputs.caja_ahorro_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_006" model="hr.rule.input">
-            <field name="code">caja_ahorro</field>
-            <field name="name">caja_ahorro</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_006"/>
+        <record id="hr_rule_input_perception_006pg" model="hr.rule.input">
+            <field name="code">caja_ahorro_pg</field>
+            <field name="name">Caja de ahorro - 006 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_006pg"/>
         </record>
         <!--
         <record id="hr_rule_l10n_mx_payroll_perception_007" model="hr.salary.rule">
@@ -253,9 +283,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.contribuciones_cargo_trabajador_pagadas_por_patron and inputs.contribuciones_cargo_trabajador_pagadas_por_patron.amount</field>
+            <field name="amount_python_compute">result = inputs.contribuciones_cargo_trabajador_pagadas_por_patron_pe and inputs.contribuciones_cargo_trabajador_pagadas_por_patron_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_009pe" model="hr.rule.input">
+            <field name="code">contribuciones_cargo_trabajador_pagadas_por_patron_pe</field>
+            <field name="name">Contribuciones a Cargo del Trabajador Pagadas por el Patrón - 009 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_009pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_009pg" model="hr.salary.rule">
             <field name="name">Contribuciones a Cargo del Trabajador Pagadas por el Patrón</field>
@@ -266,14 +301,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.contribuciones_cargo_trabajador_pagadas_por_patron and inputs.contribuciones_cargo_trabajador_pagadas_por_patron.amount</field>
+            <field name="amount_python_compute">result = inputs.contribuciones_cargo_trabajador_pagadas_por_patron_pg and inputs.contribuciones_cargo_trabajador_pagadas_por_patron_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_009" model="hr.rule.input">
-            <field name="code">contribuciones_cargo_trabajador_pagadas_por_patron</field>
-            <field name="name">contribuciones_cargo_trabajador_pagadas_por_patron</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_009"/>
+        <record id="hr_rule_input_perception_009pg" model="hr.rule.input">
+            <field name="code">contribuciones_cargo_trabajador_pagadas_por_patron_pg</field>
+            <field name="name">Contribuciones a Cargo del Trabajador Pagadas por el Patrón - 009 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_009pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_010pe" model="hr.salary.rule">
             <field name="name">Premios por puntualidad</field>
@@ -284,9 +319,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.premio_puntualidad and inputs.premio_puntualidad.amount</field>
+            <field name="amount_python_compute">result = inputs.premio_puntualidad_pe and inputs.premio_puntualidad_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_010pe" model="hr.rule.input">
+            <field name="code">premio_puntualidad_pe</field>
+            <field name="name">Premios por puntualidad - 010 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_010pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_010pg" model="hr.salary.rule">
             <field name="name">Premios por puntualidad</field>
@@ -297,14 +337,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.premio_puntualidad and inputs.premio_puntualidad.amount</field>
+            <field name="amount_python_compute">result = inputs.premio_puntualidad_pg and inputs.premio_puntualidad_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_010" model="hr.rule.input">
-            <field name="code">premio_puntualidad</field>
-            <field name="name">premio_puntualidad</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_010"/>
+        <record id="hr_rule_input_perception_010pg" model="hr.rule.input">
+            <field name="code">premio_puntualidad_pg</field>
+            <field name="name">Premios por puntualidad - 010 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_010pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_011pe" model="hr.salary.rule">
             <field name="name">Prima de Seguro de vida</field>
@@ -315,9 +355,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.prima_seguro_vida and inputs.prima_seguro_vida.amount</field>
+            <field name="amount_python_compute">result = inputs.prima_seguro_vida_pe and inputs.prima_seguro_vida_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_011pe" model="hr.rule.input">
+            <field name="code">prima_seguro_vida_pe</field>
+            <field name="name">Prima de Seguro de vida - 011 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_011pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_011pg" model="hr.salary.rule">
             <field name="name">Prima de Seguro de vida</field>
@@ -328,14 +373,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.prima_seguro_vida and inputs.prima_seguro_vida.amount</field>
+            <field name="amount_python_compute">result = inputs.prima_seguro_vida_pg and inputs.prima_seguro_vida_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_011" model="hr.rule.input">
-            <field name="code">prima_seguro_vida</field>
-            <field name="name">prima_seguro_vida</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_011"/>
+        <record id="hr_rule_input_perception_011pg" model="hr.rule.input">
+            <field name="code">prima_seguro_vida_pg</field>
+            <field name="name">Prima de Seguro de vida - 011 GAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_011pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_012pe" model="hr.salary.rule">
             <field name="name">Seguro de Gastos Medicos Mayores</field>
@@ -346,9 +391,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.seguro_gastos_medicos_mayores and inputs.seguro_gastos_medicos_mayores.amount</field>
+            <field name="amount_python_compute">result = inputs.seguro_gastos_medicos_mayores_pe and inputs.seguro_gastos_medicos_mayores_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_012pe" model="hr.rule.input">
+            <field name="code">seguro_gastos_medicos_mayores_pe</field>
+            <field name="name">Seguro de Gastos Medicos Mayores - 012 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_012pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_012pg" model="hr.salary.rule">
             <field name="name">Seguro de Gastos Medicos Mayores</field>
@@ -359,14 +409,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.seguro_gastos_medicos_mayores and inputs.seguro_gastos_medicos_mayores.amount</field>
+            <field name="amount_python_compute">result = inputs.seguro_gastos_medicos_mayores_pg and inputs.seguro_gastos_medicos_mayores_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_012" model="hr.rule.input">
-            <field name="code">seguro_gastos_medicos_mayores</field>
-            <field name="name">seguro_gastos_medicos_mayores</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_012"/>
+        <record id="hr_rule_input_perception_012pg" model="hr.rule.input">
+            <field name="code">seguro_gastos_medicos_mayores_pg</field>
+            <field name="name">Seguro de Gastos Medicos Mayores - 012 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_012pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_013pe" model="hr.salary.rule">
             <field name="name">Cuotas Sindicales Pagadas por el Patrón</field>
@@ -377,9 +427,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.cuotas_sindicales_pagadas_patron and inputs.cuotas_sindicales_pagadas_patron.amount</field>
+            <field name="amount_python_compute">result = inputs.cuotas_sindicales_pagadas_patron_pe and inputs.cuotas_sindicales_pagadas_patron_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_013pe" model="hr.rule.input">
+            <field name="code">cuotas_sindicales_pagadas_patron_pe</field>
+            <field name="name">Cuotas Sindicales Pagadas por el Patrón - 013 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_013pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_013pg" model="hr.salary.rule">
             <field name="name">Cuotas Sindicales Pagadas por el Patrón</field>
@@ -390,14 +445,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.cuotas_sindicales_pagadas_patron and inputs.cuotas_sindicales_pagadas_patron.amount</field>
+            <field name="amount_python_compute">result = inputs.cuotas_sindicales_pagadas_patron_pg and inputs.cuotas_sindicales_pagadas_patron_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_013" model="hr.rule.input">
-            <field name="code">cuotas_sindicales_pagadas_patron</field>
-            <field name="name">cuotas_sindicales_pagadas_patron</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_013"/>
+        <record id="hr_rule_input_perception_013pg" model="hr.rule.input">
+            <field name="code">cuotas_sindicales_pagadas_patron_pg</field>
+            <field name="name">Cuotas Sindicales Pagadas por el Patrón - 013 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_013pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_014pe" model="hr.salary.rule">
             <field name="name">Subsidios por incapacidad</field>
@@ -408,9 +463,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.subsidios_incapacidad and inputs.subsidios_incapacidad.amount</field>
+            <field name="amount_python_compute">result = inputs.subsidios_incapacidad_pe and inputs.subsidios_incapacidad_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_014pe" model="hr.rule.input">
+            <field name="code">subsidios_incapacidad_pe</field>
+            <field name="name">Subsidios por incapacidad - 014 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_014pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_014pg" model="hr.salary.rule">
             <field name="name">Subsidios por incapacidad</field>
@@ -421,14 +481,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.subsidios_incapacidad and inputs.subsidios_incapacidad.amount</field>
+            <field name="amount_python_compute">result = inputs.subsidios_incapacidad_pg and inputs.subsidios_incapacidad_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_014" model="hr.rule.input">
-            <field name="code">subsidios_incapacidad</field>
-            <field name="name">subsidios_incapacidad</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_014"/>
+        <record id="hr_rule_input_perception_014pg" model="hr.rule.input">
+            <field name="code">subsidios_incapacidad_pg</field>
+            <field name="name">Subsidios por incapacidad - 014 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_014pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_015pe" model="hr.salary.rule">
             <field name="name">Becas para trabajadores y/o hijos</field>
@@ -439,9 +499,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.becas_trabajadores_y_o_hijos and inputs.becas_trabajadores_y_o_hijos.amount</field>
+            <field name="amount_python_compute">result = inputs.becas_trabajadores_y_o_hijos_pe and inputs.becas_trabajadores_y_o_hijos_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_015pe" model="hr.rule.input">
+            <field name="code">becas_trabajadores_y_o_hijos_pe</field>
+            <field name="name">Becas para trabajadores y/o hijos - 015 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_015pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_015pg" model="hr.salary.rule">
             <field name="name">Becas para trabajadores y/o hijos</field>
@@ -452,14 +517,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.becas_trabajadores_y_o_hijos and inputs.becas_trabajadores_y_o_hijos.amount</field>
+            <field name="amount_python_compute">result = inputs.becas_trabajadores_y_o_hijos_pg and inputs.becas_trabajadores_y_o_hijos_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_015" model="hr.rule.input">
-            <field name="code">becas_trabajadores_y_o_hijos</field>
-            <field name="name">becas_trabajadores_y_o_hijos</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_015"/>
+        <record id="hr_rule_input_perception_015pg" model="hr.rule.input">
+            <field name="code">becas_trabajadores_y_o_hijos_pg</field>
+            <field name="name">Becas para trabajadores y/o hijos - 015 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_015pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_016pe" model="hr.salary.rule">
             <field name="name">Otros</field>
@@ -470,9 +535,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.otros_perception and inputs.otros_perception.amount</field>
+            <field name="amount_python_compute">result = inputs.otros_perception_pe and inputs.otros_perception_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_016pe" model="hr.rule.input">
+            <field name="code">otros_perception_pe</field>
+            <field name="name">Otros - 016 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_016pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_016pg" model="hr.salary.rule">
             <field name="name">Otros</field>
@@ -483,14 +553,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.otros_perception and inputs.otros_perception.amount</field>
+            <field name="amount_python_compute">result = inputs.otros_perception_pg and inputs.otros_perception_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_016" model="hr.rule.input">
-            <field name="code">otros_perception</field>
-            <field name="name">otros_perception</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_016"/>
+        <record id="hr_rule_input_perception_016pg" model="hr.rule.input">
+            <field name="code">otros_perception_pg</field>
+            <field name="name">Otros - 016 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_016pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_017pe" model="hr.salary.rule">
             <field name="name">Subsidio para el empleo</field>
@@ -501,9 +571,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.subsidios_empleo and inputs.subsidios_empleo.amount</field>
+            <field name="amount_python_compute">result = inputs.subsidios_empleo_pe and inputs.subsidios_empleo_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_017pe" model="hr.rule.input">
+            <field name="code">subsidios_empleo_pe</field>
+            <field name="name">Subsidio para el empleo - 017 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_017pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_017pg" model="hr.salary.rule">
             <field name="name">Subsidio para el empleo</field>
@@ -514,14 +589,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.subsidios_empleo and inputs.subsidios_empleo.amount</field>
+            <field name="amount_python_compute">result = inputs.subsidios_empleo_pg and inputs.subsidios_empleo_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_017" model="hr.rule.input">
-            <field name="code">subsidios_empleo</field>
-            <field name="name">subsidios_empleo</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_017"/>
+        <record id="hr_rule_input_perception_017pg" model="hr.rule.input">
+            <field name="code">subsidios_empleo_pg</field>
+            <field name="name">Subsidio para el empleo - 017 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_017pg"/>
         </record>
         <!--
         <record id="hr_rule_l10n_mx_payroll_perception_018" model="hr.salary.rule">
@@ -552,9 +627,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.horas_extras and inputs.horas_extras.amount</field>
+            <field name="amount_python_compute">result = inputs.horas_extras_pe and inputs.horas_extras_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_019pe" model="hr.rule.input">
+            <field name="code">horas_extras_pe</field>
+            <field name="name">Horas extra - 019 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_019pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_019pg" model="hr.salary.rule">
             <field name="name">Horas extra</field>
@@ -565,14 +645,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.horas_extras and inputs.horas_extras.amount</field>
+            <field name="amount_python_compute">result = inputs.horas_extras_pg and inputs.horas_extras_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_019" model="hr.rule.input">
-            <field name="code">horas_extras</field>
-            <field name="name">horas_extras</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_019"/>
+        <record id="hr_rule_input_perception_019pg" model="hr.rule.input">
+            <field name="code">horas_extras_pg</field>
+            <field name="name">Horas extra - 019 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_019pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_020pe" model="hr.salary.rule">
             <field name="name">Prima dominical</field>
@@ -583,9 +663,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.prima_dominica and inputs.prima_dominica.amount</field>
+            <field name="amount_python_compute">result = inputs.prima_dominica_pe and inputs.prima_dominica_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_020pe" model="hr.rule.input">
+            <field name="code">prima_dominica_pe</field>
+            <field name="name">Prima dominical - 020 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_020pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_020pg" model="hr.salary.rule">
             <field name="name">Prima dominical</field>
@@ -596,14 +681,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.prima_dominica and inputs.prima_dominica.amount</field>
+            <field name="amount_python_compute">result = inputs.prima_dominica_pg and inputs.prima_dominica_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_020" model="hr.rule.input">
-            <field name="code">prima_dominica</field>
-            <field name="name">prima_dominica</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_020"/>
+        <record id="hr_rule_input_perception_020pg" model="hr.rule.input">
+            <field name="code">prima_dominica_pg</field>
+            <field name="name">Prima dominical - 020 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_020pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_021pe" model="hr.salary.rule">
             <field name="name">Prima vacacional</field>
@@ -614,9 +699,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.prima_vacacional and inputs.prima_vacacional.amount</field>
+            <field name="amount_python_compute">result = inputs.prima_vacacional_pe and inputs.prima_vacacional_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_021pe" model="hr.rule.input">
+            <field name="code">prima_vacacional_pe</field>
+            <field name="name">Prima vacacional - 021 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_021pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_021pg" model="hr.salary.rule">
             <field name="name">Prima vacacional</field>
@@ -627,14 +717,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.prima_vacacional and inputs.prima_vacacional.amount</field>
+            <field name="amount_python_compute">result = inputs.prima_vacacional_pg and inputs.prima_vacacional_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_021" model="hr.rule.input">
-            <field name="code">prima_vacacional</field>
-            <field name="name">prima_vacacional</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_021"/>
+        <record id="hr_rule_input_perception_021pg" model="hr.rule.input">
+            <field name="code">prima_vacacional_pg</field>
+            <field name="name">Prima vacacional - 021 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_021pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_022pe" model="hr.salary.rule">
             <field name="name">Prima por antigüedad</field>
@@ -645,9 +735,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.prima_antiguedad and inputs.prima_antiguedad.amount</field>
+            <field name="amount_python_compute">result = inputs.prima_antiguedad_pe and inputs.prima_antiguedad_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_022pe" model="hr.rule.input">
+            <field name="code">prima_antiguedad_pe</field>
+            <field name="name">Prima por antigüedad - 022 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_022pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_022pg" model="hr.salary.rule">
             <field name="name">Prima por antigüedad</field>
@@ -658,14 +753,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.prima_antiguedad and inputs.prima_antiguedad.amount</field>
+            <field name="amount_python_compute">result = inputs.prima_antiguedad_pg and inputs.prima_antiguedad_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_022" model="hr.rule.input">
-            <field name="code">prima_antiguedad</field>
-            <field name="name">prima_antiguedad</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_022"/>
+        <record id="hr_rule_input_perception_022pg" model="hr.rule.input">
+            <field name="code">prima_antiguedad_pg</field>
+            <field name="name">Prima por antigüedad - 022 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_022pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_023pe" model="hr.salary.rule">
             <field name="name">Pagos por separación</field>
@@ -676,9 +771,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.pagos_por_separacion and inputs.pagos_por_separacion.amount</field>
+            <field name="amount_python_compute">result = inputs.pagos_por_separacion_pe and inputs.pagos_por_separacion_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_023pe" model="hr.rule.input">
+            <field name="code">pagos_por_separacion_pe</field>
+            <field name="name">Pagos por separación - 023 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_023pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_023pg" model="hr.salary.rule">
             <field name="name">Pagos por separación</field>
@@ -689,14 +789,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.pagos_por_separacion and inputs.pagos_por_separacion.amount</field>
+            <field name="amount_python_compute">result = inputs.pagos_por_separacion_pg and inputs.pagos_por_separacion_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_023" model="hr.rule.input">
-            <field name="code">pagos_por_separacion</field>
-            <field name="name">pagos_por_separacion</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_023"/>
+        <record id="hr_rule_input_perception_023pg" model="hr.rule.input">
+            <field name="code">pagos_por_separacion_pg</field>
+            <field name="name">Pagos por separación - 023 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_023pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_024pe" model="hr.salary.rule">
             <field name="name">Seguro de retiro</field>
@@ -707,9 +807,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.seguro_retiro and inputs.seguro_retiro.amount</field>
+            <field name="amount_python_compute">result = inputs.seguro_retiro_pe and inputs.seguro_retiro_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_024pe" model="hr.rule.input">
+            <field name="code">seguro_retiro_pe</field>
+            <field name="name">Seguro de retiro - 024 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_024pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_024pg" model="hr.salary.rule">
             <field name="name">Seguro de retiro</field>
@@ -720,14 +825,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.seguro_retiro and inputs.seguro_retiro.amount</field>
+            <field name="amount_python_compute">result = inputs.seguro_retiro_pg and inputs.seguro_retiro_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_024" model="hr.rule.input">
-            <field name="code">seguro_retiro</field>
-            <field name="name">seguro_retiro</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_024"/>
+        <record id="hr_rule_input_perception_024pg" model="hr.rule.input">
+            <field name="code">seguro_retiro_pg</field>
+            <field name="name">Seguro de retiro - 024 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_024pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_025pe" model="hr.salary.rule">
             <field name="name">Indeminizaciones</field>
@@ -738,9 +843,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.indeminizaciones and inputs.indeminizaciones.amount</field>
+            <field name="amount_python_compute">result = inputs.indeminizaciones_pe and inputs.indeminizaciones_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_025pe" model="hr.rule.input">
+            <field name="code">indeminizaciones_pe</field>
+            <field name="name">Indeminizaciones - 025 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_025pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_025pg" model="hr.salary.rule">
             <field name="name">Indeminizaciones</field>
@@ -751,14 +861,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.indeminizaciones and inputs.indeminizaciones.amount</field>
+            <field name="amount_python_compute">result = inputs.indeminizaciones_pg and inputs.indeminizaciones_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_025" model="hr.rule.input">
-            <field name="code">indeminizaciones</field>
-            <field name="name">indeminizaciones</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_025"/>
+        <record id="hr_rule_input_perception_025pg" model="hr.rule.input">
+            <field name="code">indeminizaciones_pg</field>
+            <field name="name">Indeminizaciones - 025 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_025pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_026pe" model="hr.salary.rule">
             <field name="name">Reembolso por funeral</field>
@@ -769,9 +879,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.reembolso_por_funeral and inputs.reembolso_por_funeral.amount</field>
+            <field name="amount_python_compute">result = inputs.reembolso_por_funeral_pe and inputs.reembolso_por_funeral_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_026pe" model="hr.rule.input">
+            <field name="code">reembolso_por_funeral_pe</field>
+            <field name="name">Reembolso por funeral - 026 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_026pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_026pg" model="hr.salary.rule">
             <field name="name">Reembolso por funeral</field>
@@ -782,14 +897,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.reembolso_por_funeral and inputs.reembolso_por_funeral.amount</field>
+            <field name="amount_python_compute">result = inputs.reembolso_por_funeral_pg and inputs.reembolso_por_funeral_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_026" model="hr.rule.input">
-            <field name="code">reembolso_por_funeral</field>
-            <field name="name">reembolso_por_funeral</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_026"/>
+        <record id="hr_rule_input_perception_026pg" model="hr.rule.input">
+            <field name="code">reembolso_por_funeral_pg</field>
+            <field name="name">Reembolso por funeral - 026 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_026pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_027pe" model="hr.salary.rule">
             <field name="name">Cuotas de seguridad social pagadas por el patrón</field>
@@ -800,9 +915,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.cuota_seguridad_pagada_patron and inputs.cuota_seguridad_pagada_patron.amount</field>
+            <field name="amount_python_compute">result = inputs.cuota_seguridad_pagada_patron_pe and inputs.cuota_seguridad_pagada_patron_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_027pe" model="hr.rule.input">
+            <field name="code">cuota_seguridad_pagada_patron_pe</field>
+            <field name="name">Cuotas de seguridad social pagadas por el patrón - 027 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_027pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_027pg" model="hr.salary.rule">
             <field name="name">Cuotas de seguridad social pagadas por el patrón</field>
@@ -813,14 +933,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.cuota_seguridad_pagada_patron and inputs.cuota_seguridad_pagada_patron.amount</field>
+            <field name="amount_python_compute">result = inputs.cuota_seguridad_pagada_patron_pg and inputs.cuota_seguridad_pagada_patron_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_027" model="hr.rule.input">
-            <field name="code">cuota_seguridad_pagada_patron</field>
-            <field name="name">cuota_seguridad_pagada_patron</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_027"/>
+        <record id="hr_rule_input_perception_027pg" model="hr.rule.input">
+            <field name="code">cuota_seguridad_pagada_patron_pg</field>
+            <field name="name">Cuotas de seguridad social pagadas por el patrón - 027 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_027pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_028pe" model="hr.salary.rule">
             <field name="name">Comisiones</field>
@@ -831,9 +951,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.comisiones and inputs.comisiones.amount</field>
+            <field name="amount_python_compute">result = inputs.comisiones_pe and inputs.comisiones_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_028pe" model="hr.rule.input">
+            <field name="code">comisiones_pe</field>
+            <field name="name">Comisiones - 028 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_028pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_028pg" model="hr.salary.rule">
             <field name="name">Comisiones</field>
@@ -844,14 +969,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.comisiones and inputs.comisiones.amount</field>
+            <field name="amount_python_compute">result = inputs.comisiones_pg and inputs.comisiones_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_028" model="hr.rule.input">
-            <field name="code">comisiones</field>
-            <field name="name">comisiones</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_028"/>
+        <record id="hr_rule_input_perception_028pg" model="hr.rule.input">
+            <field name="code">comisiones_pg</field>
+            <field name="name">Comisiones - 028 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_028pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_029pe" model="hr.salary.rule">
             <field name="name">Vales de despensa</field>
@@ -862,9 +987,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.vales_despensa and inputs.vales_despensa.amount</field>
+            <field name="amount_python_compute">result = inputs.vales_despensa_pe and inputs.vales_despensa_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_029pe" model="hr.rule.input">
+            <field name="code">vales_despensa_pe</field>
+            <field name="name">Vales de despensa - 029 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_029pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_029pg" model="hr.salary.rule">
             <field name="name">Vales de despensa</field>
@@ -875,14 +1005,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.vales_despensa and inputs.vales_despensa.amount</field>
+            <field name="amount_python_compute">result = inputs.vales_despensa_pg and inputs.vales_despensa_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_029" model="hr.rule.input">
-            <field name="code">vales_despensa</field>
-            <field name="name">vales_despensa</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_029"/>
+        <record id="hr_rule_input_perception_029pg" model="hr.rule.input">
+            <field name="code">vales_despensa_pg</field>
+            <field name="name">Vales de despensa - 029 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_029pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_030pe" model="hr.salary.rule">
             <field name="name">Vales de restaurante</field>
@@ -893,9 +1023,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.vales_restaurant and inputs.vales_restaurant.amount</field>
+            <field name="amount_python_compute">result = inputs.vales_restaurant_pe and inputs.vales_restaurant_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_030pe" model="hr.rule.input">
+            <field name="code">vales_restaurant_pe</field>
+            <field name="name">Vales de restaurante - 030 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_030pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_030pg" model="hr.salary.rule">
             <field name="name">Vales de restaurante</field>
@@ -906,14 +1041,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.vales_restaurant and inputs.vales_restaurant.amount</field>
+            <field name="amount_python_compute">result = inputs.vales_restaurant_pg and inputs.vales_restaurant_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_030" model="hr.rule.input">
-            <field name="code">vales_restaurant</field>
-            <field name="name">vales_restaurant</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_030"/>
+        <record id="hr_rule_input_perception_030pg" model="hr.rule.input">
+            <field name="code">vales_restaurant_pg</field>
+            <field name="name">Vales de restaurante - 030 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_030pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_031pe" model="hr.salary.rule">
             <field name="name">Vales de gasolina</field>
@@ -924,9 +1059,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.vales_gasolina and inputs.vales_gasolina.amount</field>
+            <field name="amount_python_compute">result = inputs.vales_gasolina_pe and inputs.vales_gasolina_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_031pe" model="hr.rule.input">
+            <field name="code">vales_gasolina_pe</field>
+            <field name="name">Vales de gasolina - 031 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_031pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_031pg" model="hr.salary.rule">
             <field name="name">Vales de gasolina</field>
@@ -937,14 +1077,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.vales_gasolina and inputs.vales_gasolina.amount</field>
+            <field name="amount_python_compute">result = inputs.vales_gasolina_pg and inputs.vales_gasolina_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_031" model="hr.rule.input">
-            <field name="code">vales_gasolina</field>
-            <field name="name">vales_gasolina</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_031"/>
+        <record id="hr_rule_input_perception_031pg" model="hr.rule.input">
+            <field name="code">vales_gasolina_pg</field>
+            <field name="name">Vales de gasolina - 031 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_031pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_032pe" model="hr.salary.rule">
             <field name="name">Vales de ropa</field>
@@ -955,9 +1095,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.vales_ropa and inputs.vales_ropa.amount</field>
+            <field name="amount_python_compute">result = inputs.vales_ropa_pe and inputs.vales_ropa_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_032pe" model="hr.rule.input">
+            <field name="code">vales_ropa_pe</field>
+            <field name="name">Vales de ropa - 032 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_032pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_032pg" model="hr.salary.rule">
             <field name="name">Vales de ropa</field>
@@ -968,14 +1113,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.vales_ropa and inputs.vales_ropa.amount</field>
+            <field name="amount_python_compute">result = inputs.vales_ropa_pg and inputs.vales_ropa_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_032" model="hr.rule.input">
-            <field name="code">vales_ropa</field>
-            <field name="name">vales_ropa</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_032"/>
+        <record id="hr_rule_input_perception_032pg" model="hr.rule.input">
+            <field name="code">vales_ropa_pg</field>
+            <field name="name">Vales de ropa - 032 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_032pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_033pe" model="hr.salary.rule">
             <field name="name">Ayuda para renta</field>
@@ -986,9 +1131,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.ayuda_renta and inputs.ayuda_renta.amount</field>
+            <field name="amount_python_compute">result = inputs.ayuda_renta_pe and inputs.ayuda_renta_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_033pe" model="hr.rule.input">
+            <field name="code">ayuda_renta_pe</field>
+            <field name="name">Ayuda para renta - 033 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_033pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_033pg" model="hr.salary.rule">
             <field name="name">Ayuda para renta</field>
@@ -999,14 +1149,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.ayuda_renta and inputs.ayuda_renta.amount</field>
+            <field name="amount_python_compute">result = inputs.ayuda_renta_pg and inputs.ayuda_renta_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_033" model="hr.rule.input">
-            <field name="code">ayuda_renta</field>
-            <field name="name">ayuda_renta</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_033"/>
+        <record id="hr_rule_input_perception_033pg" model="hr.rule.input">
+            <field name="code">ayuda_renta_pg</field>
+            <field name="name">Ayuda para renta - 033 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_033pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_034pe" model="hr.salary.rule">
             <field name="name">Ayuda para artículos escolares</field>
@@ -1017,9 +1167,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.ayuda_articulos_escolares and inputs.ayuda_articulos_escolares.amount</field>
+            <field name="amount_python_compute">result = inputs.ayuda_articulos_escolares_pe and inputs.ayuda_articulos_escolares_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_034pe" model="hr.rule.input">
+            <field name="code">ayuda_articulos_escolares_pe</field>
+            <field name="name">Ayuda para artículos escolares - 34 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_034pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_034pg" model="hr.salary.rule">
             <field name="name">Ayuda para artículos escolares</field>
@@ -1030,14 +1185,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.ayuda_articulos_escolares and inputs.ayuda_articulos_escolares.amount</field>
+            <field name="amount_python_compute">result = inputs.ayuda_articulos_escolares_pg and inputs.ayuda_articulos_escolares_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_034" model="hr.rule.input">
-            <field name="code">ayuda_articulos_escolares</field>
-            <field name="name">ayuda_articulos_escolares</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_034"/>
+        <record id="hr_rule_input_perception_034pg" model="hr.rule.input">
+            <field name="code">ayuda_articulos_escolares_pg</field>
+            <field name="name">Ayuda para artículos escolares - 34 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_034pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_035pe" model="hr.salary.rule">
             <field name="name"> Ayuda para anteojos</field>
@@ -1048,9 +1203,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.ayuda_anteojos and inputs.ayuda_anteojos.amount</field>
+            <field name="amount_python_compute">result = inputs.ayuda_anteojos_pe and inputs.ayuda_anteojos_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_035pe" model="hr.rule.input">
+            <field name="code">ayuda_anteojos_pe</field>
+            <field name="name">ayuda_anteojos</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_035pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_035pg" model="hr.salary.rule">
             <field name="name"> Ayuda para anteojos</field>
@@ -1061,14 +1221,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.ayuda_anteojos and inputs.ayuda_anteojos.amount</field>
+            <field name="amount_python_compute">result = inputs.ayuda_anteojos_pg and inputs.ayuda_anteojos_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_035" model="hr.rule.input">
-            <field name="code">ayuda_anteojos</field>
+        <record id="hr_rule_input_perception_035pg" model="hr.rule.input">
+            <field name="code">ayuda_anteojos_pg</field>
             <field name="name">ayuda_anteojos</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_035"/>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_035pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_036pe" model="hr.salary.rule">
             <field name="name">Ayuda para transporte</field>
@@ -1079,9 +1239,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.ayuda_transportes and inputs.ayuda_transportes.amount</field>
+            <field name="amount_python_compute">result = inputs.ayuda_transportes_pe and inputs.ayuda_transportes_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_036pe" model="hr.rule.input">
+            <field name="code">ayuda_transportes_pe</field>
+            <field name="name">Ayuda para transporte - 036 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_036pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_036pg" model="hr.salary.rule">
             <field name="name">Ayuda para transporte</field>
@@ -1092,14 +1257,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.ayuda_transportes and inputs.ayuda_transportes.amount</field>
+            <field name="amount_python_compute">result = inputs.ayuda_transportes_pg and inputs.ayuda_transportes_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_036" model="hr.rule.input">
-            <field name="code">ayuda_transportes</field>
-            <field name="name">ayuda_transportes</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_036"/>
+        <record id="hr_rule_input_perception_036pg" model="hr.rule.input">
+            <field name="code">ayuda_transportes_pg</field>
+            <field name="name">Ayuda para transporte - 036 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_036pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_037pe" model="hr.salary.rule">
             <field name="name">Ayuda para gastos de funeral</field>
@@ -1110,9 +1275,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.ayuda_gastos_funeral and inputs.ayuda_gastos_funeral.amount</field>
+            <field name="amount_python_compute">result = inputs.ayuda_gastos_funeral_pe and inputs.ayuda_gastos_funeral_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_037pe" model="hr.rule.input">
+            <field name="code">ayuda_gastos_funeral_pe</field>
+            <field name="name">Ayuda para gastos de funeral - 037 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_037pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_037pg" model="hr.salary.rule">
             <field name="name">Ayuda para gastos de funeral</field>
@@ -1123,14 +1293,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.ayuda_gastos_funeral and inputs.ayuda_gastos_funeral.amount</field>
+            <field name="amount_python_compute">result = inputs.ayuda_gastos_funeral_pg and inputs.ayuda_gastos_funeral_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_037" model="hr.rule.input">
-            <field name="code">ayuda_gastos_funeral</field>
-            <field name="name">ayuda_gastos_funeral</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_037"/>
+        <record id="hr_rule_input_perception_037pg" model="hr.rule.input">
+            <field name="code">ayuda_gastos_funeral_pg</field>
+            <field name="name">Ayuda para gastos de funeral - 037 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_037pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_038pe" model="hr.salary.rule">
             <field name="name">Otros ingresos por salarios</field>
@@ -1141,9 +1311,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.otros_ingresos_salarios and inputs.otros_ingresos_salarios.amount</field>
+            <field name="amount_python_compute">result = inputs.otros_ingresos_salarios_pe and inputs.otros_ingresos_salarios_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_038pe" model="hr.rule.input">
+            <field name="code">otros_ingresos_salarios_pe</field>
+            <field name="name">Otros ingresos por salarios - 038 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_038pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_038pg" model="hr.salary.rule">
             <field name="name">Otros ingresos por salarios</field>
@@ -1154,14 +1329,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.otros_ingresos_salarios and inputs.otros_ingresos_salarios.amount</field>
+            <field name="amount_python_compute">result = inputs.otros_ingresos_salarios_pg and inputs.otros_ingresos_salarios_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_038" model="hr.rule.input">
-            <field name="code">otros_ingresos_salarios</field>
-            <field name="name">otros_ingresos_salarios</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_038"/>
+        <record id="hr_rule_input_perception_038pg" model="hr.rule.input">
+            <field name="code">otros_ingresos_salarios_pg</field>
+            <field name="name">Otros ingresos por salarios - 038 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_038pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_039pe" model="hr.salary.rule">
             <field name="name">Jubilaciones, pensiones o haberes de retiro</field>
@@ -1172,9 +1347,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.jubilaciones_pensiones_haberes_retiro and inputs.jubilaciones_pensiones_haberes_retiro.amount</field>
+            <field name="amount_python_compute">result = inputs.jubilaciones_pensiones_haberes_retiro_pe and inputs.jubilaciones_pensiones_haberes_retiro_pe.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_perception_039pe" model="hr.rule.input">
+            <field name="code">jubilaciones_pensiones_haberes_retiro_pe</field>
+            <field name="name">Jubilaciones, pensiones o haberes de retiro - 039 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_039pe"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_perception_039pg" model="hr.salary.rule">
             <field name="name">Jubilaciones, pensiones o haberes de retiro</field>
@@ -1185,14 +1365,14 @@
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = inputs.jubilaciones_pensiones_haberes_retiro and inputs.jubilaciones_pensiones_haberes_retiro.amount</field>
+            <field name="amount_python_compute">result = inputs.jubilaciones_pensiones_haberes_retiro_pg and inputs.jubilaciones_pensiones_haberes_retiro_pg.amount</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_perception_039" model="hr.rule.input">
-            <field name="code">jubilaciones_pensiones_haberes_retiro</field>
-            <field name="name">jubilaciones_pensiones_haberes_retiro</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_039"/>
+        <record id="hr_rule_input_perception_039pg" model="hr.rule.input">
+            <field name="code">jubilaciones_pensiones_haberes_retiro_pg</field>
+            <field name="name">Jubilaciones, pensiones o haberes de retiro - 039 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_039pg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_001de" model="hr.salary.rule">
             <field name="name">Seguridad social</field>
@@ -1203,9 +1383,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.seguridad_social and inputs.seguridad_social.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.seguridad_social_de and inputs.seguridad_social_de.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_deduction_001de" model="hr.rule.input">
+            <field name="code">seguridad_social_de</field>
+            <field name="name">Seguridad social - 001 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_001de"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_001dg" model="hr.salary.rule">
             <field name="name">Seguridad social</field>
@@ -1216,14 +1401,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.seguridad_social and inputs.seguridad_social.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.seguridad_social_dg and inputs.seguridad_social_dg.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_deduction_001" model="hr.rule.input">
-            <field name="code">seguridad_social</field>
-            <field name="name">seguridad_social</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_001"/>
+        <record id="hr_rule_input_deduction_001dg" model="hr.rule.input">
+            <field name="code">seguridad_social_dg</field>
+            <field name="name">Seguridad social - 001 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_001dg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_002de" model="hr.salary.rule">
             <field name="name">ISR</field>
@@ -1234,9 +1419,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.isr and inputs.isr.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.isr_de and inputs.isr_de.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_deduction_002de" model="hr.rule.input">
+            <field name="code">isr_de</field>
+            <field name="name">ISR - 002 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_002de"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_002dg" model="hr.salary.rule">
             <field name="name">ISR</field>
@@ -1247,14 +1437,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.isr and inputs.isr.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.isr_dg and inputs.isr_dg.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_deduction_002" model="hr.rule.input">
-            <field name="code">isr</field>
-            <field name="name">isr</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_002"/>
+        <record id="hr_rule_input_deduction_002dg" model="hr.rule.input">
+            <field name="code">isr_dg</field>
+            <field name="name">ISR - 002  GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_002dg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_003de" model="hr.salary.rule">
             <field name="name">Aportaciones a retiro, cesantía en edad avanzada y vejez.</field>
@@ -1265,9 +1455,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.cesantia_vejez and inputs.cesantia_vejez.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.cesantia_vejez_de and inputs.cesantia_vejez_de.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_deduction_003de" model="hr.rule.input">
+            <field name="code">cesantia_vejez_de</field>
+            <field name="name">Aportaciones a retiro, cesantía en edad avanzada y vejez. - 003 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_003de"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_003dg" model="hr.salary.rule">
             <field name="name">Aportaciones a retiro, cesantía en edad avanzada y vejez.</field>
@@ -1278,14 +1473,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.cesantia_vejez and inputs.cesantia_vejez.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.cesantia_vejez_dg and inputs.cesantia_vejez_dg.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_deduction_003" model="hr.rule.input">
-            <field name="code">cesantia_vejez</field>
-            <field name="name">cesantia_vejez</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_003"/>
+        <record id="hr_rule_input_deduction_003dg" model="hr.rule.input">
+            <field name="code">cesantia_vejez_dg</field>
+            <field name="name">Aportaciones a retiro, cesantía en edad avanzada y vejez. - 003 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_003dg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_004de" model="hr.salary.rule">
             <field name="name">Otros</field>
@@ -1296,9 +1491,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.otros_deduction and inputs.otros_deduction.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.otros_deduction_de and inputs.otros_deduction_de.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_deduction_004de" model="hr.rule.input">
+            <field name="code">otros_deduction_de</field>
+            <field name="name">Otros - 004 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_004de"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_004dg" model="hr.salary.rule">
             <field name="name">Otros</field>
@@ -1309,14 +1509,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.otros_deduction and inputs.otros_deduction.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.otros_deduction_dg and inputs.otros_deduction_dg.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_deduction_004" model="hr.rule.input">
-            <field name="code">otros_deduction</field>
-            <field name="name">otros_deduction</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_004"/>
+        <record id="hr_rule_input_deduction_004dg" model="hr.rule.input">
+            <field name="code">otros_deduction_dg</field>
+            <field name="name">Otros - 004 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_004dg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_005de" model="hr.salary.rule">
             <field name="name">Aportaciones a Fondo de vivienda</field>
@@ -1327,9 +1527,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.aportacion_fondo_vivienda and inputs.aportacion_fondo_vivienda.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.aportacion_fondo_vivienda_de and inputs.aportacion_fondo_vivienda_de.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_deduction_005de" model="hr.rule.input">
+            <field name="code">aportacion_fondo_vivienda_de</field>
+            <field name="name">Aportaciones a Fondo de vivienda - 005 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_005de"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_005dg" model="hr.salary.rule">
             <field name="name">Aportaciones a Fondo de vivienda</field>
@@ -1340,14 +1545,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.aportacion_fondo_vivienda and inputs.aportacion_fondo_vivienda.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.aportacion_fondo_vivienda_dg and inputs.aportacion_fondo_vivienda_dg.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_deduction_005" model="hr.rule.input">
-            <field name="code">aportacion_fondo_vivienda</field>
-            <field name="name">aportacion_fondo_vivienda</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_005"/>
+        <record id="hr_rule_input_deduction_005dg" model="hr.rule.input">
+            <field name="code">aportacion_fondo_vivienda_dg</field>
+            <field name="name">Aportaciones a Fondo de vivienda - 005 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_005dg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_006de" model="hr.salary.rule">
             <field name="name">Descuento por incapacidad</field>
@@ -1358,9 +1563,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.descuento_incapacidad and inputs.descuento_incapacidad.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.descuento_incapacidad_de and inputs.descuento_incapacidad_de.amount)*-1</field>
             <field name="note">Sumatoria de los valores de los atributos Descuento del nodo Incapacidad</field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_deduction_006de" model="hr.rule.input">
+            <field name="code">descuento_incapacidad_de</field>
+            <field name="name">Descuento por incapacidad - 006 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_006de"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_006dg" model="hr.salary.rule">
             <field name="name">Descuento por incapacidad</field>
@@ -1371,14 +1581,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.descuento_incapacidad and inputs.descuento_incapacidad.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.descuento_incapacidad_dg and inputs.descuento_incapacidad_dg.amount)*-1</field>
             <field name="note">Sumatoria de los valores de los atributos Descuento del nodo Incapacidad</field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_deduction_006" model="hr.rule.input">
-            <field name="code">descuento_incapacidad</field>
-            <field name="name">descuento_incapacidad</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_006"/>
+        <record id="hr_rule_input_deduction_006dg" model="hr.rule.input">
+            <field name="code">descuento_incapacidad_dg</field>
+            <field name="name">Descuento por incapacidad - 006 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_006dg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_007de" model="hr.salary.rule">
             <field name="name">Pensión alimenticia</field>
@@ -1389,9 +1599,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.pension_alimenticia and inputs.pension_alimenticia.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.pension_alimenticia_de and inputs.pension_alimenticia_de.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_deduction_007de" model="hr.rule.input">
+            <field name="code">pension_alimenticia_de</field>
+            <field name="name">Pensión alimenticia - 007 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_007de"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_007dg" model="hr.salary.rule">
             <field name="name">Pensión alimenticia</field>
@@ -1402,14 +1617,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.pension_alimenticia and inputs.pension_alimenticia.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.pension_alimenticia_dg and inputs.pension_alimenticia_dg.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_deduction_007" model="hr.rule.input">
-            <field name="code">pension_alimenticia</field>
-            <field name="name">pension_alimenticia</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_007"/>
+        <record id="hr_rule_input_deduction_007dg" model="hr.rule.input">
+            <field name="code">pension_alimenticia_dg</field>
+            <field name="name">Pensión alimenticia - 007 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_007dg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_008de" model="hr.salary.rule">
             <field name="name">Renta</field>
@@ -1420,9 +1635,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.renta and inputs.renta.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.renta_de and inputs.renta_de.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_deduction_008de" model="hr.rule.input">
+            <field name="code">renta_de</field>
+            <field name="name">Renta - 008 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_008de"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_008dg" model="hr.salary.rule">
             <field name="name">Renta</field>
@@ -1433,14 +1653,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.renta and inputs.renta.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.renta_dg and inputs.renta_dg.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_deduction_008" model="hr.rule.input">
-            <field name="code">renta</field>
-            <field name="name">renta</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_008"/>
+        <record id="hr_rule_input_deduction_008dg" model="hr.rule.input">
+            <field name="code">renta_dg</field>
+            <field name="name">Renta - 008 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_008dg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_009de" model="hr.salary.rule">
             <field name="name">Préstamos provenientes del Fondo Nacional de la Vivienda para los Trabajadores</field>
@@ -1451,9 +1671,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.prestamo_fondo_nacional_vivienda_trabajadores and inputs.prestamo_fondo_nacional_vivienda_trabajadores.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.prestamo_fondo_nacional_vivienda_trabajadores_de and inputs.prestamo_fondo_nacional_vivienda_trabajadores_de.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_deduction_009de" model="hr.rule.input">
+            <field name="code">prestamo_fondo_nacional_vivienda_trabajadores_de</field>
+            <field name="name">Préstamos provenientes del Fondo Nacional de la Vivienda para los Trabajadores - 009 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_009de"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_009dg" model="hr.salary.rule">
             <field name="name">Préstamos provenientes del Fondo Nacional de la Vivienda para los Trabajadores</field>
@@ -1464,14 +1689,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.prestamo_fondo_nacional_vivienda_trabajadores and inputs.prestamo_fondo_nacional_vivienda_trabajadores.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.prestamo_fondo_nacional_vivienda_trabajadores_dg and inputs.prestamo_fondo_nacional_vivienda_trabajadores_dg.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_deduction_009" model="hr.rule.input">
-            <field name="code">prestamo_fondo_nacional_vivienda_trabajadores</field>
-            <field name="name">prestamo_fondo_nacional_vivienda_trabajadores</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_009"/>
+        <record id="hr_rule_input_deduction_009dg" model="hr.rule.input">
+            <field name="code">prestamo_fondo_nacional_vivienda_trabajadores_dg</field>
+            <field name="name">Préstamos provenientes del Fondo Nacional de la Vivienda para los Trabajadores - 009  GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_009dg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_010de" model="hr.salary.rule">
             <field name="name">Pago por crédito de vivienda</field>
@@ -1482,9 +1707,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.pago_credito_de_vivienda and inputs.pago_credito_de_vivienda.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.pago_credito_de_vivienda_de and inputs.pago_credito_de_vivienda_de.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_deduction_010de" model="hr.rule.input">
+            <field name="code">pago_credito_de_vivienda_de</field>
+            <field name="name">Pago por crédito de vivienda - 010 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_010de"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_010dg" model="hr.salary.rule">
             <field name="name">Pago por crédito de vivienda</field>
@@ -1495,14 +1725,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.pago_credito_de_vivienda and inputs.pago_credito_de_vivienda.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.pago_credito_de_vivienda_dg and inputs.pago_credito_de_vivienda_dg.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_deduction_010" model="hr.rule.input">
-            <field name="code">pago_credito_de_vivienda</field>
-            <field name="name">pago_credito_de_vivienda</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_010"/>
+        <record id="hr_rule_input_deduction_010dg" model="hr.rule.input">
+            <field name="code">pago_credito_de_vivienda_dg</field>
+            <field name="name">Pago por crédito de vivienda - 010 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_010dg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_011de" model="hr.salary.rule">
             <field name="name">Pago de abonos INFONACOT</field>
@@ -1513,9 +1743,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.pago_abonos_infonacot and inputs.pago_abonos_infonacot.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.pago_abonos_infonacot_de and inputs.pago_abonos_infonacot_de.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_deduction_011de" model="hr.rule.input">
+            <field name="code">pago_abonos_infonacot_de</field>
+            <field name="name">Pago de abonos INFONACOT - 011 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_011de"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_011dg" model="hr.salary.rule">
             <field name="name">Pago de abonos INFONACOT</field>
@@ -1526,14 +1761,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.pago_abonos_infonacot and inputs.pago_abonos_infonacot.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.pago_abonos_infonacot_dg and inputs.pago_abonos_infonacot_dg.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_deduction_011" model="hr.rule.input">
-            <field name="code">pago_abonos_infonacot</field>
-            <field name="name">pago_abonos_infonacot</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_011"/>
+        <record id="hr_rule_input_deduction_011dg" model="hr.rule.input">
+            <field name="code">pago_abonos_infonacot_dg</field>
+            <field name="name">Pago de abonos INFONACOT - 011 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_011dg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_012de" model="hr.salary.rule">
             <field name="name">Anticipo de salarios</field>
@@ -1544,9 +1779,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.anticipos_salarios and inputs.anticipos_salarios.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.anticipos_salarios_de and inputs.anticipos_salarios_de.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_deduction_012de" model="hr.rule.input">
+            <field name="code">anticipos_salarios_de</field>
+            <field name="name">Anticipo de salarios - 012 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_012de"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_012dg" model="hr.salary.rule">
             <field name="name">Anticipo de salarios</field>
@@ -1557,14 +1797,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.anticipos_salarios and inputs.anticipos_salarios.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.anticipos_salarios_dg and inputs.anticipos_salarios_dg.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_deduction_012" model="hr.rule.input">
-            <field name="code">anticipos_salarios</field>
-            <field name="name">anticipos_salarios</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_012"/>
+        <record id="hr_rule_input_deduction_012dg" model="hr.rule.input">
+            <field name="code">anticipos_salarios_dg</field>
+            <field name="name">Anticipo de salarios - 012 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_012dg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_013de" model="hr.salary.rule">
             <field name="name">Pagos hechos con exceso al trabajador</field>
@@ -1575,9 +1815,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.pagos_exceso_trabajador and inputs.pagos_exceso_trabajador.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.pagos_exceso_trabajador_de and inputs.pagos_exceso_trabajador_de.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_deduction_013de" model="hr.rule.input">
+            <field name="code">pagos_exceso_trabajador_de</field>
+            <field name="name">Pagos hechos con exceso al trabajador - 013 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_013de"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_013dg" model="hr.salary.rule">
             <field name="name">Pagos hechos con exceso al trabajador</field>
@@ -1588,14 +1833,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.pagos_exceso_trabajador and inputs.pagos_exceso_trabajador.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.pagos_exceso_trabajador_dg and inputs.pagos_exceso_trabajador_dg.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_deduction_013" model="hr.rule.input">
-            <field name="code">pagos_exceso_trabajador</field>
-            <field name="name">pagos_exceso_trabajador</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_013"/>
+        <record id="hr_rule_input_deduction_013dg" model="hr.rule.input">
+            <field name="code">pagos_exceso_trabajador_dg</field>
+            <field name="name">Pagos hechos con exceso al trabajador - 013 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_013dg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_014de" model="hr.salary.rule">
             <field name="name">Errores</field>
@@ -1606,9 +1851,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.errores and inputs.errores.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.errores_de and inputs.errores_de.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_deduction_014de" model="hr.rule.input">
+            <field name="code">errores_de</field>
+            <field name="name">Errores - 014 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_014de"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_014dg" model="hr.salary.rule">
             <field name="name">Errores</field>
@@ -1619,14 +1869,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.errores and inputs.errores.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.errores_dg and inputs.errores_dg.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_deduction_014" model="hr.rule.input">
-            <field name="code">errores</field>
-            <field name="name">errores</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_014"/>
+        <record id="hr_rule_input_deduction_014dg" model="hr.rule.input">
+            <field name="code">errores_dg</field>
+            <field name="name">Errores - 014 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_014dg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_015de" model="hr.salary.rule">
             <field name="name">Pérdidas</field>
@@ -1637,14 +1887,32 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.perdidas and inputs.perdidas.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.perdidas_de and inputs.perdidas_de.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_deduction_015" model="hr.rule.input">
-            <field name="code">perdidas</field>
-            <field name="name">perdidas</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_015"/>
+        <record id="hr_rule_input_deduction_015de" model="hr.rule.input">
+            <field name="code">perdidas_de</field>
+            <field name="name">Pérdidas - 015 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_015de"/>
+        </record>
+        <record id="hr_rule_l10n_mx_payroll_deduction_015dg" model="hr.salary.rule">
+            <field name="name">Pérdidas</field>
+            <field name="sequence" eval="54000"/>
+            <field name="code">015DG</field>
+            <field name="clave">clave-015</field>
+            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="type_concept">deduction</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = (inputs.perdidas_dg and inputs.perdidas_dg.amount)*-1</field>
+            <field name="note"></field>
+            <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_deduction_015dg" model="hr.rule.input">
+            <field name="code">perdidas_dg</field>
+            <field name="name">Pérdidas - 015 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_015dg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_016de" model="hr.salary.rule">
             <field name="name">Averías</field>
@@ -1655,9 +1923,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.averias and inputs.averias.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.averias_de and inputs.averias_de.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_deduction_016de" model="hr.rule.input">
+            <field name="code">averias_de</field>
+            <field name="name">Averías - 016 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_016de"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_016dg" model="hr.salary.rule">
             <field name="name">Averías</field>
@@ -1668,14 +1941,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.averias and inputs.averias.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.averias_dg and inputs.averias_dg.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_deduction_016" model="hr.rule.input">
-            <field name="code">averias</field>
-            <field name="name">averias</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_016"/>
+        <record id="hr_rule_input_deduction_016dg" model="hr.rule.input">
+            <field name="code">averias_dg</field>
+            <field name="name">Averías - 016 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_016dg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_017de" model="hr.salary.rule">
             <field name="name">Adquisición de artículos producidos por la empresa o establecimiento</field>
@@ -1686,9 +1959,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.adq_articulos_producidos_empresa_establecimiento and inputs.adq_articulos_producidos_empresa_establecimiento.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.adq_articulos_producidos_empresa_establecimiento_de and inputs.adq_articulos_producidos_empresa_establecimiento_de.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_deduction_017de" model="hr.rule.input">
+            <field name="code">adq_articulos_producidos_empresa_establecimiento_de</field>
+            <field name="name">Adquisición de artículos producidos por la empresa o establecimiento - 017 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_017de"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_017dg" model="hr.salary.rule">
             <field name="name">Adquisición de artículos producidos por la empresa o establecimiento</field>
@@ -1699,14 +1977,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.adq_articulos_producidos_empresa_establecimiento and inputs.adq_articulos_producidos_empresa_establecimiento.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.adq_articulos_producidos_empresa_establecimiento_dg and inputs.adq_articulos_producidos_empresa_establecimiento_dg.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_deduction_017" model="hr.rule.input">
-            <field name="code">adq_articulos_producidos_empresa_establecimiento</field>
-            <field name="name">adq_articulos_producidos_empresa_establecimiento</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_017"/>
+        <record id="hr_rule_input_deduction_017dg" model="hr.rule.input">
+            <field name="code">adq_articulos_producidos_empresa_establecimiento_dg</field>
+            <field name="name">Adquisición de artículos producidos por la empresa o establecimiento - 017 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_017dg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_018de" model="hr.salary.rule">
             <field name="name">Cuotas para la constitución y fomento de sociedades cooperativas y de cajas de ahorro</field>
@@ -1717,9 +1995,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.sociedades_cooperativas_cajas_ahorro and inputs.sociedades_cooperativas_cajas_ahorro.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.sociedades_cooperativas_cajas_ahorro_de and inputs.sociedades_cooperativas_cajas_ahorro_de.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_deduction_018de" model="hr.rule.input">
+            <field name="code">sociedades_cooperativas_cajas_ahorro_de</field>
+            <field name="name">Cuotas para la constitución y fomento de sociedades cooperativas y de cajas de ahorro - 018 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_018de"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_018dg" model="hr.salary.rule">
             <field name="name">Cuotas para la constitución y fomento de sociedades cooperativas y de cajas de ahorro</field>
@@ -1730,14 +2013,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.sociedades_cooperativas_cajas_ahorro and inputs.sociedades_cooperativas_cajas_ahorro.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.sociedades_cooperativas_cajas_ahorro_dg and inputs.sociedades_cooperativas_cajas_ahorro_dg.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_deduction_018" model="hr.rule.input">
-            <field name="code">sociedades_cooperativas_cajas_ahorro</field>
-            <field name="name">sociedades_cooperativas_cajas_ahorro</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_018"/>
+        <record id="hr_rule_input_deduction_018dg" model="hr.rule.input">
+            <field name="code">sociedades_cooperativas_cajas_ahorro_dg</field>
+            <field name="name">Cuotas para la constitución y fomento de sociedades cooperativas y de cajas de ahorro - 018 GRAVADA</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_018dg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_019de" model="hr.salary.rule">
             <field name="name">Cuotas sindicales</field>
@@ -1748,9 +2031,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.cuotas_sindicales and inputs.cuotas_sindicales.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.cuotas_sindicales_de and inputs.cuotas_sindicales_de.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_deduction_019de" model="hr.rule.input">
+            <field name="code">cuotas_sindicales_de</field>
+            <field name="name">Cuotas sindicales - 019 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_019de"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_019dg" model="hr.salary.rule">
             <field name="name">Cuotas sindicales</field>
@@ -1761,14 +2049,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.cuotas_sindicales and inputs.cuotas_sindicales.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.cuotas_sindicales_dg and inputs.cuotas_sindicales_dg.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_deduction_019" model="hr.rule.input">
-            <field name="code">cuotas_sindicales</field>
-            <field name="name">cuotas_sindicales</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_019"/>
+        <record id="hr_rule_input_deduction_019dg" model="hr.rule.input">
+            <field name="code">cuotas_sindicales_dg</field>
+            <field name="name">Cuotas sindicales - 019 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_019dg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_020de" model="hr.salary.rule">
             <field name="name">Ausencia (Ausentismo)</field>
@@ -1779,9 +2067,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.ausencia and inputs.ausencia.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.ausencia_de and inputs.ausencia_de.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_deduction_020de" model="hr.rule.input">
+            <field name="code">ausencia_de</field>
+            <field name="name">Ausencia (Ausentismo) - 020 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_020de"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_020dg" model="hr.salary.rule">
             <field name="name">Ausencia (Ausentismo)</field>
@@ -1792,14 +2085,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.ausencia and inputs.ausencia.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.ausencia_dg and inputs.ausencia_dg.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_deduction_020" model="hr.rule.input">
-            <field name="code">ausencia</field>
-            <field name="name">ausencia</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_020"/>
+        <record id="hr_rule_input_deduction_020dg" model="hr.rule.input">
+            <field name="code">ausencia_dg</field>
+            <field name="name">Ausencia (Ausentismo) - 020 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_020dg"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_021de" model="hr.salary.rule">
             <field name="name">Cuotas obrero patronales</field>
@@ -1810,9 +2103,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.cuotas_obrero_patronales and inputs.cuotas_obrero_patronales.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.cuotas_obrero_patronales_de and inputs.cuotas_obrero_patronales_de.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
+        </record>
+        <record id="hr_rule_input_deduction_021de" model="hr.rule.input">
+            <field name="code">cuotas_obrero_patronales_de</field>
+            <field name="name">Cuotas obrero patronales - 021 EXENTO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_021de"/>
         </record>
         <record id="hr_rule_l10n_mx_payroll_deduction_021dg" model="hr.salary.rule">
             <field name="name">Cuotas obrero patronales</field>
@@ -1823,14 +2121,14 @@
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = (inputs.cuotas_obrero_patronales and inputs.cuotas_obrero_patronales.amount)*-1</field>
+            <field name="amount_python_compute">result = (inputs.cuotas_obrero_patronales_dg and inputs.cuotas_obrero_patronales_dg.amount)*-1</field>
             <field name="note"></field>
             <field name="company_id"></field>
         </record>
-        <record id="hr_rule_input_deduction_021" model="hr.rule.input">
-            <field name="code">cuotas_obrero_patronales</field>
-            <field name="name">cuotas_obrero_patronales</field>
-            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_021"/>
+        <record id="hr_rule_input_deduction_021dg" model="hr.rule.input">
+            <field name="code">cuotas_obrero_patronales_dg</field>
+            <field name="name">Cuotas obrero patronales - 021 GRAVADO</field>
+            <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_021dg"/>
         </record>
 
     </data>
