@@ -127,7 +127,7 @@ class ir_attachment_facturae_mx(osv.Model):
                                     help='Report PDF generated for the electronic Invoice'),
         'file_pdf_index': fields.text('File PDF Index',
                                       help='Report PDF with index'),
-        'identifier': fields.char('Identifier', size=128, ),
+        'identifier': fields.char('Identifier', size=36 ),
         'type': fields.selection(_get_type, 'Type', type='char', size=64,
                                  readonly=True, help="Type of Electronic Invoice"),
         'description': fields.text('Description'),
@@ -278,10 +278,8 @@ class ir_attachment_facturae_mx(osv.Model):
         msj = ''
         for attach in self.browse(cr, uid, ids, context=context):
             if attach.file_input:
-                payroll_version = '11'
-                payroll_type='nomina'
-                doc_xml_full = base64.decodestring(attach.file_input.datas)
-                doc_xml = xml.dom.minidom.parseString(doc_xml_full)
+                data_xml = base64.decodestring(attach.file_input.datas)
+                doc_xml = xml.dom.minidom.parseString(data_xml)
                 nodeComprobante = doc_xml.getElementsByTagName("cfdi:Comprobante")[0]
                 for n in doc_xml.getElementsByTagName("cfdi:Comprobante"):
                     sello = n.getAttribute("sello")
@@ -299,19 +297,19 @@ class ir_attachment_facturae_mx(osv.Model):
                         'fname_sign': fname_sign,
                     })
                     sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
-                    nodeComprobante = doc_xml.getElementsByTagName("cfdi:Comprobante")[0]
                     nodeComprobante.setAttribute("sello", sign_str)
                     data_xml = doc_xml.toxml('UTF-8')
-                    #~data_xml = codecs.BOM_UTF8 + data_xml
                     attachment_obj.write(cr, uid, attach.file_input.id,{
-                               'datas': base64.encodestring(data_xml),
+                                    'datas': base64.encodestring(data_xml),
                             }, context=context)
-                doc_xml = xml.dom.minidom.parseString(data_xml)
-                nodeComprobante = doc_xml.getElementsByTagName("cfdi:Comprobante")[0]
-                try:
-                    self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], 'v3.2', 'cfd')
-                except Exception, e:
-                    raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (tools.ustr(e)))
+                nodepayroll = doc_xml.getElementsByTagName("nomina:Nomina")
+                if nodepayroll:
+                    nodecomplemento = doc_xml.getElementsByTagName("cfdi:Complemento")[0]
+                    doc_xml.documentElement.removeChild(nodecomplemento)
+                    data_xml = doc_xml.toxml('UTF-8')
+                    data_xml_payroll = nodepayroll[0].toxml('UTF-8')
+                    self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml_payroll], '11', 'nomina')
+                self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], 'v3.2', 'cfd')
             self.write(cr, uid, ids,{
                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                            'msj': msj
