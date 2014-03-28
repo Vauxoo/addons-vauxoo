@@ -20,7 +20,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-from openerp.osv import fields, osv
+from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 from openerp import pooler, tools
 from openerp import netsvc
@@ -39,6 +39,7 @@ import xml.dom.minidom
 from pytz import timezone
 import pytz
 import time
+import codecs
 from datetime import datetime, timedelta
 try:
     from qrcode import *
@@ -187,6 +188,26 @@ class ir_attachment_facturae_mx(osv.Model):
         'last_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
 
+    def _get_sello(self, cr=False, uid=False, ids=False, context=None):
+        # TODO: Put encrypt date dynamic
+        if context is None:
+            context = {}
+        fecha = context['fecha']
+        year = float(time.strftime('%Y', time.strptime(
+            fecha, '%Y-%m-%dT%H:%M:%S')))
+        if year >= 2011:
+            encrypt = "sha1"
+        if year <= 2010:
+            encrypt = "md5"
+        certificate_lib = self.pool.get('facturae.certificate.library')
+        fname_sign = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(
+            ''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + \
+            '__sign__')
+        result = certificate_lib._sign(cr, uid, ids, fname=context['fname_xml'],
+            fname_xslt=context['fname_xslt'], fname_key=context['fname_key'],
+            fname_out=fname_sign, encrypt=encrypt, type_key='PEM')
+        return result
+
     def create_ir_attachment_facturae(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
@@ -218,11 +239,36 @@ class ir_attachment_facturae_mx(osv.Model):
             _logger.error(error)
         return status
 
+    def validate_scheme_facturae_xml(self, cr, uid, ids, datas_xmls=[], facturae_version = None, facturae_type="cfdv", scheme_type='xsd'):
+        #TODO: bzr add to file fname_schema
+        if not datas_xmls:
+            datas_xmls = []
+        certificate_lib = self.pool.get('facturae.certificate.library')
+        for data_xml in datas_xmls:
+            (fileno_data_xml, fname_data_xml) = tempfile.mkstemp('.xml', 'openerp_' + (False or '') + '__facturae__' )
+            f = open(fname_data_xml, 'wb')
+            data_xml = data_xml.replace("&amp;", "Y")#Replace temp for process with xmlstartle
+            f.write( data_xml )
+            f.close()
+            os.close(fileno_data_xml)
+            all_paths = tools.config["addons_path"].split(",")
+            for my_path in all_paths:
+                if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT')):
+                    # If dir is in path, save it on real_path
+                    fname_scheme = my_path and os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT', facturae_type + facturae_version +  '.' + scheme_type) or ''
+                    #fname_scheme = os.path.join(tools.config["addons_path"], u'l10n_mx_facturae_base', u'SAT', facturae_type + facturae_version +  '.' + scheme_type )
+                    fname_out = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__schema_validation_result__' )
+                    result = certificate_lib.check_xml_scheme(cr, uid, ids, fname_data_xml, fname_scheme, fname_out)
+                    if result: #Valida el xml mediante el archivo xsd
+                        raise osv.except_osv('Error al validar la estructura del xml!', 'Validación de XML versión %s:\n%s'%(facturae_version, result))
+            return True
+
     def signal_confirm(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
         from l10n_mx_facturae_lib import facturae_lib
         msj, app_xsltproc_fullpath, app_openssl_fullpath, app_xmlstarlet_fullpath = facturae_lib.library_openssl_xsltproc_xmlstarlet(cr, uid, ids, context)
+        attachment_obj = self.pool.get('ir.attachment')
         if msj:
             raise osv.except_osv(_('Warning'),_(msj))
         if context is None:
@@ -231,19 +277,42 @@ class ir_attachment_facturae_mx(osv.Model):
         wf_service = netsvc.LocalService("workflow")
         msj = ''
         for attach in self.browse(cr, uid, ids, context=context):
-            #~id_source = attach.id_source
-            #~model_source = attach.model_source
-            #~type = attach.type
-            #~fname = str(attach.id) + '_XML_V3_2.xml' or ''
             if attach.file_input:
-                msj = _("Attached Successfully XML CFD 3.2.")
-            #~xml_data = base64.decodestring(attach.file_input_index)
-            #~doc_xml = xml.dom.minidom.parseString(xml_data)
-            #~index_xml = doc_xml.toprettyxml()
+                data_xml = base64.decodestring(attach.file_input.datas)
+                doc_xml = xml.dom.minidom.parseString(data_xml)
+                nodeComprobante = doc_xml.getElementsByTagName("cfdi:Comprobante")[0]
+                for n in doc_xml.getElementsByTagName("cfdi:Comprobante"):
+                    sello = n.getAttribute("sello")
+                if not sello:
+                    (fileno_xml, fname_xml) = tempfile.mkstemp('.xml', 'openerp_' + '__facturae__')
+                    fname_txt = fname_xml + '.txt'
+                    (fileno_sign, fname_sign) = tempfile.mkstemp('.txt', 'openerp_' + '__facturae_txt_md5__')
+                    os.close(fileno_sign)
+                    f = codecs.open(fname_xml,'w','utf-8')
+                    doc_xml.writexml(f, indent='    ', addindent='    ', newl='\r\n', encoding='UTF-8')
+                    f.close()
+                    context.update({
+                        'fname_xml': fname_xml,
+                        'fname_txt': fname_txt,
+                        'fname_sign': fname_sign,
+                    })
+                    sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
+                    nodeComprobante.setAttribute("sello", sign_str)
+                    data_xml = doc_xml.toxml('UTF-8')
+                    attachment_obj.write(cr, uid, attach.file_input.id,{
+                                    'datas': base64.encodestring(data_xml),
+                            }, context=context)
+                nodepayroll = doc_xml.getElementsByTagName("nomina:Nomina")
+                if nodepayroll:
+                    nodecomplemento = doc_xml.getElementsByTagName("cfdi:Complemento")[0]
+                    doc_xml.documentElement.removeChild(nodecomplemento)
+                    data_xml = doc_xml.toxml('UTF-8')
+                    data_xml_payroll = nodepayroll[0].toxml('UTF-8')
+                    self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml_payroll], '11', 'nomina')
+                self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], 'v3.2', 'cfd')
             self.write(cr, uid, ids,{
                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                           'msj': msj,
-                           #~'file_input_index': index_xml or ''
+                           'msj': msj
                         }, context=context)
             wf_service.trg_validate(uid, self._name, ids[0], 'action_confirm', cr)
             return True
