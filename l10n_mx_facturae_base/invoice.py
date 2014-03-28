@@ -187,7 +187,7 @@ class account_invoice(osv.Model):
                                         'datas': base64.encodestring(xml_data),
                                         'datas_fname': fname,
                                         'res_model': self._name,
-                                        'res_id': invoice.id
+                                        #~ 'res_id': invoice.id
                                 }, context=context)
                     attach_ids = ir_attach_obj.create(cr, uid, {
                         'name': invoice.fname_invoice, 
