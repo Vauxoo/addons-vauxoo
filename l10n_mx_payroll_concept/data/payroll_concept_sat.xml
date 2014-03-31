@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <openerp>
-    <data noupdate="0">
+    <data noupdate="1">
 
         <record id="hr_payroll.hr_rule_basic" model="hr.salary.rule">
             <field eval="0" name="active"/>
