@@ -38,6 +38,7 @@ import cgi
 import urllib
 from markupsafe import Markup
 import time as ti
+import re
 
 from openerp import release
 
@@ -412,11 +413,71 @@ class hr_payslip(osv.Model):
             return result
         return True
     
-    def get_input_line_ids_type(self, cr, uid, ids, lines, type_line):
-        lines_get = []
+    _structure = r"(?P<code>[\d]{3,10})" \
+            r"[ \-_]?" \
+            r"(?P<pd>[p,P,d,D])" \
+            r"[ \-_]?" \
+            r"(?P<eg>[e,E,g,G])$"
+            
+    def get_lines_amount_exemptamount_dict(self, cr, uid, ids, lines, type_line):
+        lines_get = {}
+        __check_payslip_code_mx_re = re.compile( self._structure )
         for line in lines:
-            if line.salary_rule_id.type_concept == type_line:
-                lines_get.append(line)
+            code_sat = line.code
+            m = __check_payslip_code_mx_re.match( code_sat )
+            if m:
+                code = m.group('code')
+                pd = m.group('pd')
+                eg = m.group('eg')
+                if pd.upper() == type_line:
+                    if not lines_get.has_key(code):
+                        lines_get.update({code:{'amount':0, 'exempt_amount':0 }})
+                    if eg.lower() == 'e':
+                        lines_get[code].update({'exempt_amount': abs(line.amount) })
+                    elif eg.lower() == 'g':
+                        lines_get[code].update({'amount': abs(line.amount) })
+        return lines_get
+            
+    def get_input_line_ids_type(self, cr, uid, ids, lines, type_line, type_amount=False):
+        lines_get = []
+        __check_payslip_code_mx_re = re.compile( self._structure )
+        for line in lines:
+            code_sat = line.code
+            m = __check_payslip_code_mx_re.match( code_sat )
+            if m:
+                code = m.group('code')
+                pd = m.group('pd')
+                eg = m.group('eg')
+                if type_amount:
+                    if pd.upper() == type_line:
+                        if eg.upper() == type_amount:
+                            lines_get.append(line)
+                else:
+                    if pd.upper() == type_line:
+                        lines_get.append(line)
+        return lines_get
+        
+    def get_line_short_type(self, cr, uid, ids, lines, type_line):
+        lines_get = []
+        lines_code = []
+        __check_payslip_code_mx_re = re.compile( self._structure )
+        for line in lines:
+            code_sat = line.code
+            m = __check_payslip_code_mx_re.match( code_sat )
+            if m:
+                code = m.group('code')
+                pd = m.group('pd')
+                if pd.upper() == type_line:
+                        lines_code.append(code)
+        lines_code = list(set(lines_code))
+        for line in lines:
+            code_sat = line.code
+            m = __check_payslip_code_mx_re.match( code_sat )
+            if m:
+                code = m.group('code')
+                if code in lines_code:
+                    lines_get.append(line)
+                    lines_code.remove(code)
         return lines_get
 
     def onchange_journal_id(self, cr, uid, ids, journal_id, context=None):
@@ -663,14 +724,12 @@ class hr_payslip(osv.Model):
         totalImpuestosRetenidos = 0
         isr_amount = 0
         iva_amount = 0
-        for line in payroll.input_line_ids:
+        isr_found = False
+        for line in payroll.line_ids:
             rule = line.name.upper()
             if rule == 'ISR':
-                isr_amount = line.amount + line.exempt_amount
-                payroll_data_impuestos['Retenciones'].append({'Retencion': {
-                            'impuesto': 'ISR',
-                            'importe': "%.2f" % (isr_amount),
-                        }})
+                isr_amount += line.amount
+                isr_found = True
             elif rule == 'IVA':
                 iva_amount = line.amount
                 payroll_data_impuestos['Retenciones'].append({'Retencion': {
@@ -678,8 +737,13 @@ class hr_payslip(osv.Model):
                             'importe': "%.2f" % (iva_amount),
                         }})
         payroll_data['Impuestos'].update({
-            'totalImpuestosRetenidos': "%.2f"%( (iva_amount + isr_amount) or 0.0 )
+            'totalImpuestosRetenidos': "%.2f"%( (iva_amount + abs(isr_amount)) or 0.0 )
         })
+        if isr_found:
+            payroll_data_impuestos['Retenciones'].append({'Retencion': {
+                            'impuesto': 'ISR',
+                            'importe': "%.2f" % (abs(isr_amount)),
+                        }})
         tax_requireds = ['IVA', 'IEPS']
         for tax_required in tax_requireds:
             payroll_data_impuestos['Traslados'].append({'Traslado': {
@@ -698,12 +762,12 @@ class hr_payslip(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         payroll = self.browse(cr, uid, ids)[0]
         discount = 0
-        for line in payroll.input_line_ids:
+        for line in payroll.line_ids:
             rule = line.name.upper()
-            if line.salary_rule_id.type_concept == 'deduction':
+            if line.amount < 0:
                 if not rule == 'ISR':
-                    discount += line.amount + line.exempt_amount
-        return discount
+                    discount += line.amount
+        return abs(discount)
 
     def _get_facturae_payroll_xml_data(self, cr, uid, ids, context=None):
         if context is None:
@@ -731,7 +795,7 @@ class hr_payslip(osv.Model):
                 'formaDePago': formaDePago,
                 'certificado': cert_str,
                 'fecha': ti.strftime('%Y-%m-%dT%H:%M:%S', ti.strptime(str(payroll.date_payslip_tz), '%Y-%m-%d %H:%M:%S')) ,
-                'data_taxes':data_taxes
+                'data_taxes':data_taxes,
                 }
             context.update({'fecha': ti.strftime('%Y-%m-%dT%H:%M:%S', ti.strptime(str(payroll.date_payslip_tz), '%Y-%m-%d %H:%M:%S')) or ''})
             (fileno_xml, fname_xml) = tempfile.mkstemp('.xml', 'openerp_' + '__facturae__')
@@ -761,6 +825,8 @@ class hr_payslip(osv.Model):
                 'a': payroll,
                 'employee': payroll.employee_id,
                 'time': ti,
+                're': re,
+                'abs': abs,
                 }
             payroll2 = "payroll"
             (fileno_xml, fname_xml_payroll) = tempfile.mkstemp('.xml', 'openerp_' + (payroll2 or '') + '__facturae__')
@@ -776,7 +842,7 @@ class hr_payslip(osv.Model):
                 self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml_payroll], payroll_version, payroll_type)
             except Exception, e:
                 raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (tools.ustr(e)))
-            #Agregar nodo Nomina en nodo Complemento
+            #~ #Agregar nodo Nomina en nodo Complemento
             doc_xml = xml.dom.minidom.parseString(data_xml)
             doc_xml_payroll_2 = xml.dom.minidom.parseString(data_xml_payroll)
             complemento = """<cfdi:Complemento xmlns:cfdi="http://www.sat.gob.mx/cfd/3"></cfdi:Complemento>"""
