@@ -5,7 +5,7 @@
             <field name="name">Contract Moises López Calderón</field>
             <field name="type_id" ref="hr_contract.hr_contract_type_emp"/>
             <field name="date_start" eval="time.strftime('%Y-%m')+'-1'"/>
-            <field name="struct_id" ref="payroll_structure_demo_01"/>
+            <field name="struct_id" ref="l10n_mx_payroll_concept.payroll_structure_data_01"/>
             <field name="employee_id" ref="employee_payroll_mlc"/>
             <field eval="5000.0" name="wage"/>
             <field eval="1000.0" name="integrated_salary"/>

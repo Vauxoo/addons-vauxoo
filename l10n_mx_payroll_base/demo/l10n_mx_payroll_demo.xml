@@ -40,6 +40,7 @@
           <field name='address_home_id' ref="res_partner_address_vauxoo_moises"/>
           <field name='regime_id' ref="l10n_mx_payroll_regime_employee.hr_payroll_regime02"/>
         </record>
+<!--
         <record id="payroll_structure_demo_01" model="hr.payroll.structure">
             <field name='name'>Structure Demo CFDI</field>
             <field name='code'>Demo CFDI Payroll</field>
@@ -51,5 +52,6 @@
                                   ref('l10n_mx_payroll_concept.hr_rule_l10n_mx_payroll_deduction_002'),
                                   ref('l10n_mx_payroll_concept.hr_rule_l10n_mx_payroll_deduction_006')])]" name="rule_ids"/>
         </record>
+-->
     </data>
 </openerp>

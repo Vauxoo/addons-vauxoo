@@ -228,6 +228,7 @@ class hr_payslip(osv.Model):
         #~ return res
 
     _columns = {
+        'journal_id': fields.many2one('account.journal', 'Journal', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'date_payslip': fields.date('Payslip Date'),
         'payslip_datetime': fields.datetime('Electronic Payslip Date'),
         'line_payslip_product_ids': fields.one2many('hr.payslip.product.line', 'payslip_id', 'Generic Product', required=True),
@@ -275,9 +276,9 @@ class hr_payslip(osv.Model):
         'date_payslip_tz': fields.function(_get_date_payslip_tz, method=True,
             type='datetime', string='Date Payroll', store=True,
             help='Date of payroll with Time Zone'),
-        #~ 'deduction_total' : fields.function(_deductions, type='float', string='Deductions Total', store=True),
-        #~ 'perception_total' : fields.function(_perceptions, type='float', string='Perception Total', store=True),
-        #~ 'total' : fields.function(_total, type='float', string='Total', store=True),
+        'deduction_total' : fields.function(_deductions, type='float', string='Deductions Total', store=True),
+        'perception_total' : fields.function(_perceptions, type='float', string='Perception Total', store=True),
+        'total' : fields.function(_total, type='float', string='Total', store=True),
     }
 
     _defaults = {
