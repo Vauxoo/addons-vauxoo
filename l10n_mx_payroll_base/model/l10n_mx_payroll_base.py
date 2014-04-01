@@ -646,27 +646,6 @@ class hr_payslip(osv.Model):
             fname_cer, fname_out=fname_serial, type='PEM')
         return result
 
-    def _get_sello(self, cr=False, uid=False, ids=False, context=None):
-        # TODO: Put encrypt date dynamic
-        if context is None:
-            context = {}
-        fecha = context['fecha']
-        year = float(ti.strftime('%Y', ti.strptime(
-            fecha, '%Y-%m-%dT%H:%M:%S')))
-        if year >= 2011:
-            encrypt = "sha1"
-        if year <= 2010:
-            encrypt = "md5"
-        certificate_lib = self.pool.get('facturae.certificate.library')
-        fname_sign = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(
-            ''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + \
-            '__sign__')
-        result = certificate_lib._sign(cr, uid, ids, fname=context['fname_xml'],
-            fname_xslt=context['fname_xslt'], fname_key=context['fname_key'],
-            fname_out=fname_sign, encrypt=encrypt, type_key='PEM')
-        
-        return result
-
     def _get_certificate_str(self, fname_cer_pem=""):
         """
         @param fname_cer_pem : Path and name the file .pem
@@ -684,30 +663,6 @@ class hr_payslip(osv.Model):
             if 'BEGIN CERTIFICATE' in line:
                 loading = True
         return cer_str
-
-    def validate_scheme_facturae_xml(self, cr, uid, ids, datas_xmls=[], payroll_version = None, payroll_type="cfdv", scheme_type='xsd'):
-    #TODO: bzr add to file fname_schema
-        if not datas_xmls:
-            datas_xmls = []
-        certificate_lib = self.pool.get('facturae.certificate.library')
-        for data_xml in datas_xmls:
-            (fileno_data_xml, fname_data_xml) = tempfile.mkstemp('.xml', 'openerp_' + (False or '') + '__facturae__' )
-            f = open(fname_data_xml, 'wb')
-            data_xml = data_xml.replace("&amp;", "Y")#Replace temp for process with xmlstartle
-            f.write( data_xml )
-            f.close()
-            os.close(fileno_data_xml)
-            all_paths = tools.config["addons_path"].split(",")
-            for my_path in all_paths:
-                if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT')):
-                    # If dir is in path, save it on real_path
-                    fname_scheme = my_path and os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT', payroll_type + payroll_version +  '.' + scheme_type) or ''
-                    #fname_scheme = os.path.join(tools.config["addons_path"], u'l10n_mx_facturae_base', u'SAT', facturae_type + facturae_version +  '.' + scheme_type )
-                    fname_out = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__schema_validation_result__' )
-                    result = certificate_lib.check_xml_scheme(cr, uid, ids, fname_data_xml, fname_scheme, fname_out)
-                    if result: #Valida el xml mediante el archivo xsd
-                        raise osv.except_osv('Error al validar la estructura del xml!', 'Validación de XML versión %s:\n%s'%(payroll_version, result))
-        return True
         
     def _get_taxes(self, cr, uid, ids, context=None):
         if context is None:
