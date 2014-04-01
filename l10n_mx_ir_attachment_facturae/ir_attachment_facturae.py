@@ -381,8 +381,8 @@ class ir_attachment_facturae_mx(osv.Model):
             context = {}
         msj = ''
         attachment_obj = self.pool.get('ir.attachment')
-        attachment_mx_data = self.browse(cr, uid, ids)
-        type = self.browse(cr, uid, ids)[0].type
+        attachment_mx_data = self.browse(cr, uid, ids, context=context)
+        type = attachment_mx_data[0].type
         wf_service = netsvc.LocalService("workflow")
         status = False
         (fileno, fname) = tempfile.mkstemp(
