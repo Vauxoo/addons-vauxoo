@@ -1,34 +1,12 @@
 <?xml version="1.0" ?>
 <openerp>
     <data noupdate="1">
-
-        <record id="hr_payroll.hr_rule_basic" model="hr.salary.rule">
-            <field eval="0" name="active"/>
-        </record>
-
-        <record id="hr_payroll.hr_rule_taxable" model="hr.salary.rule">
-            <field eval="0" name="active"/>
-        </record>
-
-        <record id="hr_payroll.hr_rule_net" model="hr.salary.rule">
-            <field eval="0" name="active"/>
-        </record>
-
-        <record id="hr_salary_rule_category_perception" model="hr.salary.rule.category">
-            <field name="name">Perception</field>
-            <field name="code">PERCEP</field>
-        </record>
-        
-        <record id="hr_salary_rule_category_deduction" model="hr.salary.rule.category">
-            <field name="name">Deduction</field>
-            <field name="code">DEDUC</field>
-        </record>
         <record id="hr_rule_l10n_mx_payroll_perception_001pe" model="hr.salary.rule">
             <field name="name">Sueldos, Salarios Rayas y Jornales</field>
             <field name="sequence" eval="1000"/>
             <field name="code">001PE</field>
             <field name="clave">clave-001</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = inputs.salarios_rayas_pe and inputs.salarios_rayas_pe.amount</field>
@@ -45,7 +23,7 @@
             <field name="sequence" eval="1000"/>
             <field name="code">001PG</field>
             <field name="clave">clave-001</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = inputs.salarios_rayas_pg and inputs.salarios_rayas_pg.amount</field>
@@ -62,7 +40,7 @@
             <field name="sequence" eval="2000"/>
             <field name="code">002PE</field>
             <field name="clave">clave-002</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -80,7 +58,7 @@
             <field name="sequence" eval="2000"/>
             <field name="code">002PG</field>
             <field name="clave">clave-002</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -98,7 +76,7 @@
             <field name="sequence" eval="3000"/>
             <field name="code">003PE</field>
             <field name="clave">clave-003</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -116,7 +94,7 @@
             <field name="sequence" eval="3000"/>
             <field name="code">003PG</field>
             <field name="clave">clave-003</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -134,7 +112,7 @@
             <field name="sequence" eval="4000"/>
             <field name="code">004PE</field>
             <field name="clave">clave-004</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -152,7 +130,7 @@
             <field name="sequence" eval="4000"/>
             <field name="code">004PG</field>
             <field name="clave">clave-004</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -170,7 +148,7 @@
             <field name="sequence" eval="5000"/>
             <field name="code">005PE</field>
             <field name="clave">clave-005</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -188,7 +166,7 @@
             <field name="sequence" eval="5000"/>
             <field name="code">005PG</field>
             <field name="clave">clave-005</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -206,7 +184,7 @@
             <field name="sequence" eval="6000"/>
             <field name="code">006PE</field>
             <field name="clave">clave-006</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -224,7 +202,7 @@
             <field name="sequence" eval="6000"/>
             <field name="code">006PG</field>
             <field name="clave">clave-006</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -243,7 +221,7 @@
             <field name="sequence" eval="7000"/>
             <field name="code">007</field>
             <field name="clave">clave-007</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -260,7 +238,7 @@
             <field name="sequence" eval="8000"/>
             <field name="code">008</field>
             <field name="clave">clave-008</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -279,7 +257,7 @@
             <field name="sequence" eval="9000"/>
             <field name="code">009PE</field>
             <field name="clave">clave-009</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -297,7 +275,7 @@
             <field name="sequence" eval="9000"/>
             <field name="code">009PG</field>
             <field name="clave">clave-009</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -315,7 +293,7 @@
             <field name="sequence" eval="10000"/>
             <field name="code">010PE</field>
             <field name="clave">clave-010</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -333,7 +311,7 @@
             <field name="sequence" eval="10000"/>
             <field name="code">010PG</field>
             <field name="clave">clave-010</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -351,7 +329,7 @@
             <field name="sequence" eval="11000"/>
             <field name="code">011PE</field>
             <field name="clave">clave-011</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -369,7 +347,7 @@
             <field name="sequence" eval="11000"/>
             <field name="code">011PG</field>
             <field name="clave">clave-011</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -387,7 +365,7 @@
             <field name="sequence" eval="12000"/>
             <field name="code">012PE</field>
             <field name="clave">clave-012</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -405,7 +383,7 @@
             <field name="sequence" eval="12000"/>
             <field name="code">012PG</field>
             <field name="clave">clave-012</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -423,7 +401,7 @@
             <field name="sequence" eval="13000"/>
             <field name="code">013PE</field>
             <field name="clave">clave-013</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -441,7 +419,7 @@
             <field name="sequence" eval="13000"/>
             <field name="code">013PG</field>
             <field name="clave">clave-013</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -459,7 +437,7 @@
             <field name="sequence" eval="14000"/>
             <field name="code">014PE</field>
             <field name="clave">clave-014</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -477,7 +455,7 @@
             <field name="sequence" eval="14000"/>
             <field name="code">014PG</field>
             <field name="clave">clave-014</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -495,7 +473,7 @@
             <field name="sequence" eval="15000"/>
             <field name="code">015PE</field>
             <field name="clave">clave-015</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -513,7 +491,7 @@
             <field name="sequence" eval="15000"/>
             <field name="code">015PG</field>
             <field name="clave">clave-015</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -531,7 +509,7 @@
             <field name="sequence" eval="16000"/>
             <field name="code">016PE</field>
             <field name="clave">clave-016</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -549,7 +527,7 @@
             <field name="sequence" eval="16000"/>
             <field name="code">016PG</field>
             <field name="clave">clave-016</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -567,7 +545,7 @@
             <field name="sequence" eval="17000"/>
             <field name="code">017PE</field>
             <field name="clave">clave-017</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -585,7 +563,7 @@
             <field name="sequence" eval="17000"/>
             <field name="code">017PG</field>
             <field name="clave">clave-017</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -604,7 +582,7 @@
             <field name="sequence" eval="18000"/>
             <field name="code">018</field>
             <field name="clave">clave-018</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -623,7 +601,7 @@
             <field name="sequence" eval="19000"/>
             <field name="code">019PE</field>
             <field name="clave">clave-019</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -641,7 +619,7 @@
             <field name="sequence" eval="19000"/>
             <field name="code">019PG</field>
             <field name="clave">clave-019</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -659,7 +637,7 @@
             <field name="sequence" eval="20000"/>
             <field name="code">020PE</field>
             <field name="clave">clave-020</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -677,7 +655,7 @@
             <field name="sequence" eval="20000"/>
             <field name="code">020PG</field>
             <field name="clave">clave-020</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -695,7 +673,7 @@
             <field name="sequence" eval="21000"/>
             <field name="code">021PE</field>
             <field name="clave">clave-021</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -713,7 +691,7 @@
             <field name="sequence" eval="21000"/>
             <field name="code">021PG</field>
             <field name="clave">clave-021</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -731,7 +709,7 @@
             <field name="sequence" eval="22000"/>
             <field name="code">022PE</field>
             <field name="clave">clave-022</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -749,7 +727,7 @@
             <field name="sequence" eval="22000"/>
             <field name="code">022PG</field>
             <field name="clave">clave-022</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -767,7 +745,7 @@
             <field name="sequence" eval="23000"/>
             <field name="code">023PE</field>
             <field name="clave">clave-023</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -785,7 +763,7 @@
             <field name="sequence" eval="23000"/>
             <field name="code">023PG</field>
             <field name="clave">clave-023</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -803,7 +781,7 @@
             <field name="sequence" eval="24000"/>
             <field name="code">024PE</field>
             <field name="clave">clave-024</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -821,7 +799,7 @@
             <field name="sequence" eval="24000"/>
             <field name="code">024PG</field>
             <field name="clave">clave-024</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -839,7 +817,7 @@
             <field name="sequence" eval="25000"/>
             <field name="code">025PE</field>
             <field name="clave">clave-025</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -857,7 +835,7 @@
             <field name="sequence" eval="25000"/>
             <field name="code">025PG</field>
             <field name="clave">clave-025</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -875,7 +853,7 @@
             <field name="sequence" eval="26000"/>
             <field name="code">026PE</field>
             <field name="clave">clave-026</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -893,7 +871,7 @@
             <field name="sequence" eval="26000"/>
             <field name="code">026PG</field>
             <field name="clave">clave-026</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -911,7 +889,7 @@
             <field name="sequence" eval="27000"/>
             <field name="code">027PE</field>
             <field name="clave">clave-027</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -929,7 +907,7 @@
             <field name="sequence" eval="27000"/>
             <field name="code">027PG</field>
             <field name="clave">clave-027</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -947,7 +925,7 @@
             <field name="sequence" eval="28000"/>
             <field name="code">028PE</field>
             <field name="clave">clave-028</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -965,7 +943,7 @@
             <field name="sequence" eval="28000"/>
             <field name="code">028PG</field>
             <field name="clave">clave-028</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -983,7 +961,7 @@
             <field name="sequence" eval="29000"/>
             <field name="code">029PE</field>
             <field name="clave">clave-029</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1001,7 +979,7 @@
             <field name="sequence" eval="29000"/>
             <field name="code">029PG</field>
             <field name="clave">clave-029</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1019,7 +997,7 @@
             <field name="sequence" eval="30000"/>
             <field name="code">030PE</field>
             <field name="clave">clave-030</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1037,7 +1015,7 @@
             <field name="sequence" eval="30000"/>
             <field name="code">030PG</field>
             <field name="clave">clave-030</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1055,7 +1033,7 @@
             <field name="sequence" eval="31000"/>
             <field name="code">031PE</field>
             <field name="clave">clave-031</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1073,7 +1051,7 @@
             <field name="sequence" eval="31000"/>
             <field name="code">031PG</field>
             <field name="clave">clave-031</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1091,7 +1069,7 @@
             <field name="sequence" eval="32000"/>
             <field name="code">032PE</field>
             <field name="clave">clave-032</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1109,7 +1087,7 @@
             <field name="sequence" eval="32000"/>
             <field name="code">032PG</field>
             <field name="clave">clave-032</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1127,7 +1105,7 @@
             <field name="sequence" eval="33000"/>
             <field name="code">033PE</field>
             <field name="clave">clave-033</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1145,7 +1123,7 @@
             <field name="sequence" eval="33000"/>
             <field name="code">033PG</field>
             <field name="clave">clave-033</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1163,7 +1141,7 @@
             <field name="sequence" eval="34000"/>
             <field name="code">034PE</field>
             <field name="clave">clave-034</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1181,7 +1159,7 @@
             <field name="sequence" eval="34000"/>
             <field name="code">034PG</field>
             <field name="clave">clave-034</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1199,7 +1177,7 @@
             <field name="sequence" eval="35000"/>
             <field name="code">035PE</field>
             <field name="clave">clave-035</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1217,7 +1195,7 @@
             <field name="sequence" eval="35000"/>
             <field name="code">035PG</field>
             <field name="clave">clave-035</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1235,7 +1213,7 @@
             <field name="sequence" eval="36000"/>
             <field name="code">036PE</field>
             <field name="clave">clave-036</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1253,7 +1231,7 @@
             <field name="sequence" eval="36000"/>
             <field name="code">036PG</field>
             <field name="clave">clave-036</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1271,7 +1249,7 @@
             <field name="sequence" eval="37000"/>
             <field name="code">037PE</field>
             <field name="clave">clave-037</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1289,7 +1267,7 @@
             <field name="sequence" eval="37000"/>
             <field name="code">037PG</field>
             <field name="clave">clave-037</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1307,7 +1285,7 @@
             <field name="sequence" eval="38000"/>
             <field name="code">038PE</field>
             <field name="clave">clave-038</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1325,7 +1303,7 @@
             <field name="sequence" eval="38000"/>
             <field name="code">038PG</field>
             <field name="clave">clave-038</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1343,7 +1321,7 @@
             <field name="sequence" eval="39000"/>
             <field name="code">039PE</field>
             <field name="clave">clave-039</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1361,7 +1339,7 @@
             <field name="sequence" eval="39000"/>
             <field name="code">039PG</field>
             <field name="clave">clave-039</field>
-            <field name="category_id" ref="hr_salary_rule_category_perception"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
             <field name="type_concept">perception</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1379,7 +1357,7 @@
             <field name="sequence" eval="40000"/>
             <field name="code">001DE</field>
             <field name="clave">clave-001</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1397,7 +1375,7 @@
             <field name="sequence" eval="40000"/>
             <field name="code">001DG</field>
             <field name="clave">clave-001</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1415,7 +1393,7 @@
             <field name="sequence" eval="41000"/>
             <field name="code">002DE</field>
             <field name="clave">clave-002</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1433,7 +1411,7 @@
             <field name="sequence" eval="41000"/>
             <field name="code">002DG</field>
             <field name="clave">clave-002</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1451,7 +1429,7 @@
             <field name="sequence" eval="42000"/>
             <field name="code">003DE</field>
             <field name="clave">clave-003</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1469,7 +1447,7 @@
             <field name="sequence" eval="42000"/>
             <field name="code">003DG</field>
             <field name="clave">clave-003</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1487,7 +1465,7 @@
             <field name="sequence" eval="43000"/>
             <field name="code">004DE</field>
             <field name="clave">clave-004</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1505,7 +1483,7 @@
             <field name="sequence" eval="43000"/>
             <field name="code">004DG</field>
             <field name="clave">clave-004</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1523,7 +1501,7 @@
             <field name="sequence" eval="44000"/>
             <field name="code">005DE</field>
             <field name="clave">clave-005</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1541,7 +1519,7 @@
             <field name="sequence" eval="44000"/>
             <field name="code">005DG</field>
             <field name="clave">clave-005</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1559,7 +1537,7 @@
             <field name="sequence" eval="45000"/>
             <field name="code">006DE</field>
             <field name="clave">clave-006</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1577,7 +1555,7 @@
             <field name="sequence" eval="45000"/>
             <field name="code">006DG</field>
             <field name="clave">clave-006</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1595,7 +1573,7 @@
             <field name="sequence" eval="46000"/>
             <field name="code">007DE</field>
             <field name="clave">clave-007</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1613,7 +1591,7 @@
             <field name="sequence" eval="46000"/>
             <field name="code">007DG</field>
             <field name="clave">clave-007</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1631,7 +1609,7 @@
             <field name="sequence" eval="47000"/>
             <field name="code">008DE</field>
             <field name="clave">clave-008</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1649,7 +1627,7 @@
             <field name="sequence" eval="47000"/>
             <field name="code">008DG</field>
             <field name="clave">clave-008</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1667,7 +1645,7 @@
             <field name="sequence" eval="48000"/>
             <field name="code">009DE</field>
             <field name="clave">clave-009</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1685,7 +1663,7 @@
             <field name="sequence" eval="48000"/>
             <field name="code">009DG</field>
             <field name="clave">clave-009</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1703,7 +1681,7 @@
             <field name="sequence" eval="49000"/>
             <field name="code">010DE</field>
             <field name="clave">clave-010</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1721,7 +1699,7 @@
             <field name="sequence" eval="49000"/>
             <field name="code">010DG</field>
             <field name="clave">clave-010</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1739,7 +1717,7 @@
             <field name="sequence" eval="50000"/>
             <field name="code">011DE</field>
             <field name="clave">clave-011</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1757,7 +1735,7 @@
             <field name="sequence" eval="50000"/>
             <field name="code">011DG</field>
             <field name="clave">clave-011</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1775,7 +1753,7 @@
             <field name="sequence" eval="51000"/>
             <field name="code">012DE</field>
             <field name="clave">clave-012</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1793,7 +1771,7 @@
             <field name="sequence" eval="51000"/>
             <field name="code">012DG</field>
             <field name="clave">clave-012</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1811,7 +1789,7 @@
             <field name="sequence" eval="52000"/>
             <field name="code">013DE</field>
             <field name="clave">clave-013</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1829,7 +1807,7 @@
             <field name="sequence" eval="52000"/>
             <field name="code">013DG</field>
             <field name="clave">clave-013</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1847,7 +1825,7 @@
             <field name="sequence" eval="53000"/>
             <field name="code">014DE</field>
             <field name="clave">clave-014</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1865,7 +1843,7 @@
             <field name="sequence" eval="53000"/>
             <field name="code">014DG</field>
             <field name="clave">clave-014</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1883,7 +1861,7 @@
             <field name="sequence" eval="54000"/>
             <field name="code">015DE</field>
             <field name="clave">clave-015</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1901,7 +1879,7 @@
             <field name="sequence" eval="54000"/>
             <field name="code">015DG</field>
             <field name="clave">clave-015</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1919,7 +1897,7 @@
             <field name="sequence" eval="55000"/>
             <field name="code">016DE</field>
             <field name="clave">clave-016</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1937,7 +1915,7 @@
             <field name="sequence" eval="55000"/>
             <field name="code">016DG</field>
             <field name="clave">clave-016</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1955,7 +1933,7 @@
             <field name="sequence" eval="56000"/>
             <field name="code">017DE</field>
             <field name="clave">clave-017</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1973,7 +1951,7 @@
             <field name="sequence" eval="56000"/>
             <field name="code">017DG</field>
             <field name="clave">clave-017</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -1991,7 +1969,7 @@
             <field name="sequence" eval="57000"/>
             <field name="code">018DE</field>
             <field name="clave">clave-018</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -2009,7 +1987,7 @@
             <field name="sequence" eval="57000"/>
             <field name="code">018DG</field>
             <field name="clave">clave-018</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -2027,7 +2005,7 @@
             <field name="sequence" eval="58000"/>
             <field name="code">019DE</field>
             <field name="clave">clave-019</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -2045,7 +2023,7 @@
             <field name="sequence" eval="58000"/>
             <field name="code">019DG</field>
             <field name="clave">clave-019</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -2063,7 +2041,7 @@
             <field name="sequence" eval="59000"/>
             <field name="code">020DE</field>
             <field name="clave">clave-020</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -2081,7 +2059,7 @@
             <field name="sequence" eval="59000"/>
             <field name="code">020DG</field>
             <field name="clave">clave-020</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -2099,7 +2077,7 @@
             <field name="sequence" eval="60000"/>
             <field name="code">021DE</field>
             <field name="clave">clave-021</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -2117,7 +2095,7 @@
             <field name="sequence" eval="60000"/>
             <field name="code">021DG</field>
             <field name="clave">clave-021</field>
-            <field name="category_id" ref="hr_salary_rule_category_deduction"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
             <field name="type_concept">deduction</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -2130,6 +2108,29 @@
             <field name="name">Cuotas obrero patronales - 021 GRAVADO</field>
             <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_021dg"/>
         </record>
+<!--
+        Sueldo Neto
+-->
+        
+        <record id="hr_rule_net_salary_0" model="hr.salary.rule">
+            <field name="name">Net Salary</field>
+            <field name="sequence" eval="100000"/>
+            <field name="code">NetSalary</field>
+            <field name="clave">clave-021</field>
+            <field name="category_id" ref="hr_payroll.NET"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.ALW + categories.DED</field>
+            <field name="note"></field>
+            <field name="company_id"></field>
+        </record>
+<!--
+        <record id="hr_rule_input_net_salary_0" model="hr.rule.input">
+            <field name="code">net_salary</field>
+            <field name="name">Net Salary</field>
+            <field name="input_id" ref="hr_rule_net_salary_0"/>
+        </record>
+-->
 
     </data>
 </openerp>

@@ -4,32 +4,30 @@
         <record id="l10n_mx_payroll_concept.hr_rule_l10n_mx_payroll_perception_001pg" model="hr.salary.rule">
             <field name="name">Sueldos, Salarios Rayas y Jornales</field>
             <field name="account_debit" ref="l10n_mx_payroll_base.account_sueldo_salario_rayas_journal"/>
-            <field name="account_credit" ref="l10n_mx_payroll_base.account_general_employee"/>
         </record>
         <record id="l10n_mx_payroll_concept.hr_rule_l10n_mx_payroll_perception_005pg" model="hr.salary.rule">
             <field name="name">Fondo de Ahorro</field>
             <field name="account_debit" ref="l10n_mx_payroll_base.account_fondo_ahorro"/>
-            <field name="account_credit" ref="l10n_mx_payroll_base.account_general_employee"/>
         </record>
         <record id="l10n_mx_payroll_concept.hr_rule_l10n_mx_payroll_perception_019pg" model="hr.salary.rule">
             <field name="name">Horas extra</field>
             <field name="account_debit" ref="l10n_mx_payroll_base.account_horas_extras"/>
-            <field name="account_credit" ref="l10n_mx_payroll_base.account_general_employee"/>
         </record>
         <record id="l10n_mx_payroll_concept.hr_rule_l10n_mx_payroll_deduction_001dg" model="hr.salary.rule">
             <field name="name">Seguridad social</field>
-            <field name="account_credit" ref="l10n_mx_payroll_base.account_seguridad_social"/>
-            <field name="account_debit" ref="l10n_mx_payroll_base.account_general_employee"/>
+            <field name="account_debit" ref="l10n_mx_payroll_base.account_seguridad_social"/>
         </record>
         <record id="l10n_mx_payroll_concept.hr_rule_l10n_mx_payroll_deduction_002dg" model="hr.salary.rule">
             <field name="name">ISR</field>
-            <field name="account_credit" ref="l10n_mx_payroll_base.account_hr_isr"/>
-            <field name="account_debit" ref="l10n_mx_payroll_base.account_general_employee"/>
+            <field name="account_debit" ref="l10n_mx_payroll_base.account_hr_isr"/>
         </record>
         <record id="l10n_mx_payroll_concept.hr_rule_l10n_mx_payroll_deduction_006dg" model="hr.salary.rule">
             <field name="name">Descuento por incapacidad</field>
-            <field name="account_credit" ref="l10n_mx_payroll_base.account_descuento_x_incapacidad"/>
-            <field name="account_debit" ref="l10n_mx_payroll_base.account_general_employee"/>
+            <field name="account_debit" ref="l10n_mx_payroll_base.account_descuento_x_incapacidad"/>
+        </record>
+        <record id="l10n_mx_payroll_concept.hr_rule_net_salary_0" model="hr.salary.rule">
+            <field name="name">Net Salary</field>
+            <field name="account_credit" ref="l10n_mx_payroll_base.account_general_employee"/>
         </record>
     </data>
 </openerp>
