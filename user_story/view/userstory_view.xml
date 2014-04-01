@@ -136,7 +136,7 @@
         <tree string="User Story">
           <field name="id"/>
           <field name="name" />
-          <field name="owner" />
+          <field name="owner_id"/>
           <field name="code" />
           <field name="priority_level" />
           <field name="planned_hours" sum="Total hours"/>
