@@ -31,7 +31,7 @@ class hr_payslip_input(osv.osv):
 
     _inherit = 'hr.payslip.input'
     _columns = {
-       'salary_rule_id' : fields.many2one('hr.salary.rule', 'Salary Rule', required=True,),
+       #~ 'salary_rule_id' : fields.many2one('hr.salary.rule', 'Salary Rule', required=True,),
        #~ 'exempt_amount': fields.float('Exempt Amount', help='Required attribute represents the exempt amount of a concept of perception or deduction.'),
     }
 

@@ -276,9 +276,9 @@ class hr_payslip(osv.Model):
         'date_payslip_tz': fields.function(_get_date_payslip_tz, method=True,
             type='datetime', string='Date Payroll', store=True,
             help='Date of payroll with Time Zone'),
-        'deduction_total' : fields.function(_deductions, type='float', string='Deductions Total', store=True),
-        'perception_total' : fields.function(_perceptions, type='float', string='Perception Total', store=True),
-        'total' : fields.function(_total, type='float', string='Total', store=True),
+        #~ 'deduction_total' : fields.function(_deductions, type='float', string='Deductions Total', store=True),
+        #~ 'perception_total' : fields.function(_perceptions, type='float', string='Perception Total', store=True),
+        #~ 'total' : fields.function(_total, type='float', string='Total', store=True),
     }
 
     _defaults = {
@@ -461,6 +461,7 @@ class hr_payslip(osv.Model):
     def get_line_short_type(self, cr, uid, ids, lines, type_line):
         lines_get = []
         lines_code = []
+        lines_type = []
         __check_payslip_code_mx_re = re.compile( self._structure )
         for line in lines:
             code_sat = line.code
@@ -470,8 +471,10 @@ class hr_payslip(osv.Model):
                 pd = m.group('pd')
                 if pd.upper() == type_line:
                         lines_code.append(code)
+                        lines_type.append(line)
         lines_code = list(set(lines_code))
-        for line in lines:
+        #~ import pdb;pdb.set_trace()
+        for line in lines_type:
             code_sat = line.code
             m = __check_payslip_code_mx_re.match( code_sat )
             if m:
@@ -479,6 +482,7 @@ class hr_payslip(osv.Model):
                 if code in lines_code:
                     lines_get.append(line)
                     lines_code.remove(code)
+        #~ import pdb;pdb.set_trace()
         return lines_get
 
     def onchange_journal_id(self, cr, uid, ids, journal_id, context=None):

@@ -457,7 +457,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_014pe" model="hr.salary.rule">
             <field name="name">Subsidios por incapacidad</field>
             <field name="sequence" eval="14000"/>
-            <field name="code">p014PE</field>
+            <field name="code">014PE</field>
             <field name="clave">clave-014</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
@@ -475,7 +475,7 @@
         <record id="hr_rule_l10n_mx_payroll_perception_014pg" model="hr.salary.rule">
             <field name="name">Subsidios por incapacidad</field>
             <field name="sequence" eval="14000"/>
-            <field name="code">p014PG</field>
+            <field name="code">014PG</field>
             <field name="clave">clave-014</field>
             <field name="category_id" ref="hr_salary_rule_category_perception"/>
             <field name="type_concept">perception</field>
