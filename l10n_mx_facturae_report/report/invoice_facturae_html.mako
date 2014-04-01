@@ -1,4 +1,4 @@
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!DOCTYPE>
 <html>
 <head>
     <style type="text/css">
@@ -17,10 +17,10 @@
                 <td>
                     <table class="basic_table">
                         <tr>
-                            <td width='50%'>
+                            <td width="50%">
                                 <div class="title">${ dict_data['Emisor']['@nombre'] or ''|entity}</div>
                             </td>
-                            <td width='20%'>
+                            <td width="20%">
                                 <div class="invoice">${_("Documento:")}
                                 ${o.document_source or ''|entity}
                             </td>
