@@ -54,6 +54,7 @@
             <field name="name">Cuenta por pagar de empleados - TEST</field>
             <field ref="account.chart0" name="parent_id"/>
             <field name="type">payable</field>
+            <field name="reconcile">1</field>
             <field name="user_type" ref="account.data_account_type_payable"/>
         </record>
     </data>

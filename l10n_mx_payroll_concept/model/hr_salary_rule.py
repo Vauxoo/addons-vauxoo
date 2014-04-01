@@ -34,6 +34,5 @@ class hr_salary_rule(osv.osv):
 
     _inherit = 'hr.salary.rule'
     _columns = {
-        'type_concept': fields.selection([('perception', 'Perception'),('deduction', 'Deduction'), ], "Type", help='Type of concept(Perception and Deduction)'),
         'clave': fields.char('Clave', size=16),
     }
