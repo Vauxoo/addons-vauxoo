@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <openerp>
-    <data noupdate="0">
+    <data noupdate="1">
         <record id="payroll_structure_data_01" model="hr.payroll.structure">
             <field name='name'>Structure Data CFDI</field>
             <field name='code'>Data CFDI Payroll</field>
