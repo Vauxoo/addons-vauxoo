@@ -768,16 +768,7 @@ class hr_payslip(osv.Model):
             with open(fname_xml,'rb') as b:
                 data_xml = b.read().encode('UTF-8')
             b.close()
-            if not noCertificado:
-                raise osv.except_osv(_('Error in No. Certificate !'), _(
-                    "Can't get the Certificate Number of the voucher.\nCkeck your configuration.\n%s") % (msg2))
-            fname_txt = fname_xml + '.txt'
-            (fileno_sign, fname_sign) = tempfile.mkstemp('.txt', 'openerp_' + '__facturae_txt_md5__')
-            os.close(fileno_sign)
-            try:
-                self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], 'v3.2', 'cfd')
-            except Exception, e:
-                raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (tools.ustr(e)))
+            
             for my_path in all_paths:
                 if os.path.isdir(os.path.join(my_path, 'l10n_mx_payroll_base', 'template')):
                     fname_jinja_tmpl = my_path and os.path.join(my_path, 'l10n_mx_payroll_base', 'template', 'nomina11' + '.xml') or ''
@@ -798,11 +789,7 @@ class hr_payslip(osv.Model):
                         new_xml.write( tmpl.render(**dictargs) )
             with open(fname_xml_payroll,'rb') as b:
                 data_xml_payroll = b.read().encode('UTF-8')
-            try:
-                self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml_payroll], payroll_version, payroll_type)
-            except Exception, e:
-                raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (tools.ustr(e)))
-            #~ #Agregar nodo Nomina en nodo Complemento
+            #Agregar nodo Nomina en nodo Complemento
             doc_xml = xml.dom.minidom.parseString(data_xml)
             doc_xml_payroll_2 = xml.dom.minidom.parseString(data_xml_payroll)
             complemento = """<cfdi:Complemento xmlns:cfdi="http://www.sat.gob.mx/cfd/3"></cfdi:Complemento>"""
@@ -813,26 +800,10 @@ class hr_payslip(osv.Model):
             #Agregar nodo nodo Complemento en nodo Comprobante
             node_comprobante = doc_xml.getElementsByTagName('cfdi:Comprobante')[0]
             node_comprobante.appendChild(complemento)
-            
             doc_xml_full = doc_xml.toxml().encode('ascii', 'xmlcharrefreplace')
-            data_xml2 = xml.dom.minidom.parseString(doc_xml_full)
-            #~data_xml3 = data_xml2.toxml('UTF-8')
-            f = codecs.open(fname_xml,'w','utf-8')
-            data_xml2.writexml(f, indent='    ', addindent='    ', newl='\r\n', encoding='UTF-8')
-            f.close()
-            context.update({
-                'fname_xml': fname_xml,
-                'fname_txt': fname_txt,
-                'fname_sign': fname_sign,
-            })
-            #context.update({'fecha': date_now or ''})
-            sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
-            nodeComprobante = data_xml2.getElementsByTagName("cfdi:Comprobante")[0]
-            nodeComprobante.setAttribute("sello", sign_str)
-            data_xml = data_xml2.toxml('UTF-8')
-            #~data_xml = codecs.BOM_UTF8 + data_xml
-            data_xml = data_xml.replace('<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
-        return fname_xml, data_xml
+            doc_xml_full = doc_xml_full.replace('<?xml version="1.0" ?>', '<?xml version="1.0" encoding="UTF-8"?>')
+            doc_xml_full = doc_xml_full.replace('<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
+        return fname_xml, doc_xml_full
 
     def copy(self, cr, uid, id, default={}, context=None):
         if context is None:
