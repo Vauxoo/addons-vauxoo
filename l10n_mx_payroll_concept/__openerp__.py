@@ -47,7 +47,7 @@ ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfdi/catalogoscomple
     "website": "http://vauxoo.com",
     "category": "Addons Vauxoo",
     "data": ["view/hr_salary_rule_inherit.xml",
-             "view/hr_payslip_input_inherit.xml",
+             #~ "view/hr_payslip_input_inherit.xml",
              "data/payroll_concept_sat.xml",
              "data/payroll_structure_data.xml",
     ],

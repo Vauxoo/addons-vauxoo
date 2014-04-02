@@ -1,0 +1,61 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <record id="account_sueldo_salario_rayas_journal" model="account.account">
+            <field name="code">X01</field>
+            <field name="name">Sueldos, Salarios, Rayas y Jornales - TEST</field>
+            <field ref="account.chart0" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_liability"/>
+        </record>
+        
+        <record id="account_horas_extras" model="account.account">
+            <field name="code">X02</field>
+            <field name="name">Horas Extra - TEST</field>
+            <field ref="account.chart0" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_liability"/>
+        </record>
+        
+        <record id="account_fondo_ahorro" model="account.account">
+            <field name="code">X03</field>
+            <field name="name">Fondo de ahorro - TEST</field>
+            <field ref="account.chart0" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_liability"/>
+        </record>
+        
+        <record id="account_seguridad_social" model="account.account">
+            <field name="code">X04</field>
+            <field name="name">Seguridad Social -TEST</field>
+            <field ref="account.chart0" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_liability"/>
+        </record>
+        
+        <record id="account_hr_isr" model="account.account">
+            <field name="code">X05</field>
+            <field name="name">HR ISR - TEST</field>
+            <field ref="account.chart0" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_liability"/>
+        </record>
+        
+        <record id="account_descuento_x_incapacidad" model="account.account">
+            <field name="code">X06</field>
+            <field name="name">Descuento por incapacidad - TEST</field>
+            <field ref="account.chart0" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_liability"/>
+        </record>
+        
+        <record id="account_general_employee" model="account.account">
+            <field name="code">X07</field>
+            <field name="name">Cuenta por pagar de empleados - TEST</field>
+            <field ref="account.chart0" name="parent_id"/>
+            <field name="type">payable</field>
+            <field name="reconcile">1</field>
+            <field name="user_type" ref="account.data_account_type_payable"/>
+        </record>
+    </data>
+</openerp>

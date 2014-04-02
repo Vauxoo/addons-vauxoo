@@ -118,7 +118,8 @@
                                   ref('l10n_mx_payroll_concept.hr_rule_l10n_mx_payroll_deduction_018dg'),
                                   ref('l10n_mx_payroll_concept.hr_rule_l10n_mx_payroll_deduction_019dg'),
                                   ref('l10n_mx_payroll_concept.hr_rule_l10n_mx_payroll_deduction_020dg'),
-                                  ref('l10n_mx_payroll_concept.hr_rule_l10n_mx_payroll_deduction_021dg')])]" name="rule_ids"/>
+                                  ref('l10n_mx_payroll_concept.hr_rule_l10n_mx_payroll_deduction_021dg'),
+                                  ref('l10n_mx_payroll_concept.hr_rule_net_salary_0'),])]" name="rule_ids"/>
         </record>
     </data>
 </openerp>
