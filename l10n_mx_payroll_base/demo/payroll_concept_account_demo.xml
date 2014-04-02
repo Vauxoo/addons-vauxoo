@@ -28,6 +28,7 @@
         <record id="l10n_mx_payroll_concept.hr_rule_net_salary_0" model="hr.salary.rule">
             <field name="name">Net Salary</field>
             <field name="account_credit" ref="l10n_mx_payroll_base.account_general_employee"/>
+            <field name="analytic_account_id" ref="account.analytic_administratif"/>
         </record>
     </data>
 </openerp>
