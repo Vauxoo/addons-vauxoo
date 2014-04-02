@@ -9,7 +9,7 @@
                 string="Factura Electronica Report"
                 report_type="webkit"
                 attachment_use="1"
-                attachment="(object.state in ('signed')) and (object.name and (object.name + ''))"
+                attachment="(object.state in ('done')) and (object.name and (object.name + ''))"
                 menu="False"/>
         
         <record id="property_l10n_mx_facturae_report_webkit" model="ir.property">

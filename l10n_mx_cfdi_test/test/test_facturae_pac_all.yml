@@ -119,9 +119,9 @@
                         log("*** Signal invoice: %s s" % time_tmp)
                         
                         #################################################################################################
-                        #    8 I check that the state in l10n_mx attachment facturae cfdi_attachment_data is "Signed"   #
+                        #    8 I check that the state in l10n_mx attachment facturae cfdi_attachment_data is "Done"   #
                         #################################################################################################
-                        log("8 I check that the state in l10n_mx attachment facturae %s is Signed"% (xml_id_invoice))
+                        log("8 I check that the state in l10n_mx attachment facturae %s is Done"% (xml_id_invoice))
                         cfdi_attachment_data = ir_attachment_mx_obj.browse(cr, uid, cfdi_attachment_id, context=context)
                         ir_attach_facturae_mx = cfdi_attachment_data.file_xml_sign and cfdi_attachment_data.file_xml_sign or False
                         fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
@@ -133,7 +133,7 @@
                                   , 'wb+').write( base64.decodestring( fdata ) )
                         else:
                             state = 'no data in attach file'
-                        assert state=='signed', 'No signed state l10n_mx attachment facturae %s' % (pac_type)
+                        assert state=='done', 'No done state l10n_mx attachment facturae %s' % (pac_type)
                         
                         ################################################################################################################
                         #   9 I generate a printable l10n_mx attachment facturae cfdi_attachment_data by clicking on printable button  #
