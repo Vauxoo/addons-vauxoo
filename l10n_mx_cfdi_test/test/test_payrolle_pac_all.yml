@@ -34,7 +34,7 @@
                         #################################################################################################
                         log("1 Duplicate payroll of l10n_mx_payroll_base")
                         with ti.Timer() as t:
-                            payroll_id = self.copy(cr, uid, ref('l10n_mx_payroll_base.hr_payslip_al_cfdi0'), context=context)
+                            payroll_id = self.copy(cr, uid, ref('l10n_mx_payroll_base.hr_payslip_mlc_cfdi0'), context=context)
                             self.write(cr, uid, [payroll_id], {'journal_id':ref(journal_xml_id)},context=context)
                             xml_id_payroll = 'hr_payslip_pac_%s_%s'% (pac_type,payroll_id)
                             data_ids = ir_model_data.search(cr, uid, [('model', '=', self._name), ('name', 'like', xml_id_payroll)])
