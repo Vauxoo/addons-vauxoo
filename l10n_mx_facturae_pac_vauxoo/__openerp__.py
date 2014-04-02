@@ -54,7 +54,7 @@
     "data" : [
         ],
     "test" : [
-        "test/account_invoice_cfdi_pac_vauxoo.yml",
+        #~ "test/account_invoice_cfdi_pac_vauxoo.yml",
         ],
     "installable" : True,
     "active" : False,
