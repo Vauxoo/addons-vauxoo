@@ -8,7 +8,7 @@
             <field name="padding">0</field>
             <field name="number_next">1</field>
             <field name="number_increment">1</field>
-            <field name="implementation">no_gap</field>
+            <field name="implementation">standard</field>
         </record>
 
         <record id="l10n_mx_cfdi_pac_sf_approval_0" model="ir.sequence.approval">
