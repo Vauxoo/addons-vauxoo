@@ -2,12 +2,12 @@
 <openerp>
     <data noupdate="1">
         
-        <record id="hr_salary_rule_category_perception" model="hr.salary.rule.category">
+        <record id="hr_salary_rule_category_perception_mx" model="hr.salary.rule.category">
              <field name="name">Perception</field>
              <field name="code">PERCEP</field>
          </record>
          
-         <record id="hr_salary_rule_category_deduction" model="hr.salary.rule.category">
+         <record id="hr_salary_rule_category_deduction_mx" model="hr.salary.rule.category">
              <field name="name">Deduction</field>
              <field name="code">DEDUC</field>
          </record>
