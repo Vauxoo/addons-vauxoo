@@ -95,7 +95,8 @@ class ir_attachment_facturae_mx(osv.Model):
         for attachment in self.browse(cr, uid, ids, context=context):
             status = False
             pac_params_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'pac_sf_cancelar'),
+                ('method_type', '=', 'cancelar'),
+                ('pac_id', '=', attachment.pac_id.id)
                 ('company_id', '=', attachment.company_id.id),
                 ('active', '=', True),
             ], limit=1, context=context)
@@ -180,13 +181,14 @@ class ir_attachment_facturae_mx(osv.Model):
             cfdi_xml = False
             status = False
             pac_params_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'pac_sf_firmar'), (
+                ('method_type', '=', 'firmar'), (
                     'company_id', '=', attachment.company_id.id), (
-                        'active', '=', True)], limit=1, context=context)
+                    'pac_id', '=', attachment.pac_id.id), (
+                    'active', '=', True)], limit=1, context=context)
             if pac_params_ids:
                 pac_params = pac_params_obj.browse(
                     cr, uid, pac_params_ids, context)[0]
-                user = pac_params.user
+                user = pac_params.user or attachment.pac_id.user
                 password = pac_params.password
                 wsdl_url = pac_params.url_webservice
                 namespace = pac_params.namespace
