@@ -374,7 +374,7 @@ class hr_payslip(osv.Model):
                                         'datas': base64.encodestring(xml_data),
                                         'datas_fname': fname,
                                         'res_model': self._name,
-                                        'res_id': payroll.id
+                                        #~ 'res_id': payroll.id
                                 }, context=context)
                     attach_ids.append( ir_attach_obj.create(cr, uid, {
                         'name': payroll.number or '/',
