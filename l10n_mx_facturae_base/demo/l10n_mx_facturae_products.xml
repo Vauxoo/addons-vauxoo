@@ -1,55 +1,53 @@
 <?xml version="1.0" ?>
 <openerp>
-    <data noupdate="0">
+    <data noupdate="1">
 
-        <record id="product_template_demo" model="product.template">
-            <field name="name">product demo con ret</field>
+        <record id="product_template_consultoria_vauxoo_demo" model="product.template">
+            <field name="name">Consultoria Vauxoo</field>
             <field name="list_price">450.0</field>
             <field name="standard_price">300.0</field>
             <field name="type">service</field>
-            <field name="uom_id" ref="product.product_uom_unit"/>
-            <field name="uom_po_id" ref="product.product_uom_unit"/>
-            <field name="description_sale">product demo</field>
+            <field name="uom_id" ref="product.product_uom_hour"/>
+            <field name="uom_po_id" ref="product.product_uom_hour"/>
+            <field name="description_sale">Consultoria Vauxoo demo</field>
         </record>
         
-        <record id="product_product_demo" model="product.product">
-            <field name="product_tmpl_id" ref="product_template_demo"/>
-            <field name="taxes_id" eval="[(6,0,[ref('l10n_mx_facturae_base.account_demo_ret')])]"/>
+        <record id="product_product_consultoria_vauxoo_demo" model="product.product">
+            <field name="product_tmpl_id" ref="product_template_consultoria_vauxoo_demo"/>
+            <field name="taxes_id" eval="[(6,0,[ref('l10n_mx_facturae_base.account_tax_demo_ret_isr_honorario')])]"/>
             <field name="default_code">P1</field> 
             <field name="mes_type">fixed</field>
-            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field name="uom_id" ref="product.product_uom_hour"/>
             <field name="type">service</field>
             <field name="company_id" ref="base.main_company"/>
-            <field name="name">Product demo with ret</field>
-            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field name="name">Consultoria Vauxoo</field>
             <field name="cost_method">standard</field>
             <field eval="1" name="seller_delay"/>
-            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="categ_id" ref="product.product_category_5"/>
         </record>
 
-        <record id="product_template_demo2" model="product.template">
-            <field name="name">product demo con iva</field>
+        <record id="product_template_celular_demo" model="product.template">
+            <field name="name">Celular</field>
             <field name="list_price">450.0</field>
             <field name="standard_price">300.0</field>
-            <field name="type">service</field>
+            <field name="type">consu</field>
             <field name="uom_id" ref="product.product_uom_unit"/>
             <field name="uom_po_id" ref="product.product_uom_unit"/>
-            <field name="description_sale">product demo</field>
+            <field name="description_sale">Celular demo</field>
         </record>
         
-        <record id="product_product_demo2" model="product.product">
-            <field name="product_tmpl_id" ref="product_template_demo2"/>
-            <field name="taxes_id" eval="[(6,0,[ref('l10n_mx_facturae_base.account_demo_iva')])]"/>
+        <record id="product_product_celular_demo" model="product.product">
+            <field name="product_tmpl_id" ref="product_template_celular_demo"/>
+            <field name="taxes_id" eval="[(6,0,[ref('l10n_mx_facturae_base.account_tax_demo_iva_for_electronic_invoice')])]"/>
             <field name="default_code">P2</field> 
             <field name="mes_type">fixed</field>
             <field name="uom_id" ref="product.product_uom_unit"/>
-            <field name="type">service</field>
+            <field name="type">consu</field>
             <field name="company_id" ref="base.main_company"/>
-            <field name="name">Product demo with iva</field>
-            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field name="name">Celular</field>
             <field name="cost_method">standard</field>
             <field eval="1" name="seller_delay"/>
-            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="categ_id" ref="product.product_category_7"/>
         </record>
 
     </data>
