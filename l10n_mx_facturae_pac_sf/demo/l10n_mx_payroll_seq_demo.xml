@@ -29,6 +29,7 @@
             <field name="code">CFDIPAS</field>
             <field name="type">purchase</field>
             <field name="update_posted" eval="True"/>
+            <field name="analytic_journal_id" ref="account.exp"/>
         </record>
     </data>
 </openerp>
