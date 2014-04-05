@@ -2,14 +2,48 @@
 <openerp>
     <data noupdate="1">
 
-        <record id="account_tax_demo_ret_isr_honorario" model="account.tax">
-            <field name="name">RET ISR HONORARIOS 10% - Test</field>
-            <field model="account.tax.category" name="tax_category_id" search="[('name','like','ISR-RET')]"/>
+        <record id="l10n_mx_facturae_base_account_ova_voucher" model="account.account">
+            <field name="code">X11100_MX</field>
+            <field name="name">IVA 16% FOR ELECTRONIC INVOICES MX - (test)</field>
+            <field ref="account.cli" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_asset"/>
+        </record>
+        <record id="l10n_mx_facturae_base_ret_isr_honorario_0" model="account.tax">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="name">IVA 16% FOR ELECTRONIC INVOICES MX - Test</field>
+            <field name="tax_voucher_ok" eval="True"/>
+            <field name="type_tax_use">sale</field>
+            <field name="type">percent</field>
+            <field name="amount">0.1600</field>
+            <field name="description">IVA 16% with sale voucher account for Test</field>
+            <field name="account_collected_id" ref="account.ova"/>
+            <field name="account_paid_id" ref="account.ova"/>
+            <field name="account_collected_voucher_id" ref="l10n_mx_facturae_base_account_ova_voucher"/>
+            <field name="account_paid_voucher_id" ref="l10n_mx_facturae_base_account_ova_voucher"/>
+            <field model="account.tax.category" name="tax_category_id" search="[('name','like','IVA')]"/>
         </record>
 
-        <record id="account_tax_demo_iva_for_electronic_invoice" model="account.tax">
-            <field name="name">IVA 16% FOR ELECTRONIC INVOICES - Test</field>
-            <field model="account.tax.category" name="tax_category_id" search="[('name','like','IVA')]"/>
+        <record id="l10n_mx_facturae_base_account_iva_voucher10_rete_isr" model="account.account">
+            <field name="code">X11101_MX</field>
+            <field name="name">Input VAT 10 RETENIDO ISR Voucher MX - (test)</field>
+            <field ref="account.cli" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_liability"/>
+        </record>
+        <record id="l10n_mx_facturae_base_iva_for_electronic_invoice_0" model="account.tax">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="name">RET ISR HONORARIOS 10%  MX- Test</field>
+            <field name="tax_voucher_ok" eval="True"/>
+            <field name="type_tax_use">sale</field>
+            <field name="type">percent</field>
+            <field name="amount">-0.10000</field>
+            <field name="description">IVA 10% RETENIDO ISR MX Test</field>
+            <field name="account_collected_id" ref="account.iva"/>
+            <field name="account_paid_id" ref="account.iva"/>
+            <field name="account_collected_voucher_id" ref="l10n_mx_facturae_base_account_iva_voucher10_rete_isr"/>
+            <field name="account_paid_voucher_id" ref="l10n_mx_facturae_base_account_iva_voucher10_rete_isr"/>
+            <field model="account.tax.category" name="tax_category_id" search="[('name','like','ISR-RET')]"/>
         </record>
         
     </data>
