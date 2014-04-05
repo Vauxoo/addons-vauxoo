@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <openerp>
-    <data noupdate="0">
+    <data noupdate="1">
 
         <record id="l10n_mx_facturae_base_account_ova_voucher" model="account.account">
             <field name="code">X11100_MX</field>
