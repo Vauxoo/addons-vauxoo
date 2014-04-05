@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <openerp>
-    <data noupdate="1">
+    <data noupdate="0">
 
         <record id="product_template_consultoria_vauxoo_demo" model="product.template">
             <field name="name">Consultoria Vauxoo</field>
@@ -14,8 +14,8 @@
         
         <record id="product_product_consultoria_vauxoo_demo" model="product.product">
             <field name="product_tmpl_id" ref="product_template_consultoria_vauxoo_demo"/>
-            <field name="taxes_id" eval="[(6,0,[ref('l10n_mx_facturae_base.account_tax_demo_ret_isr_honorario')])]"/>
-            <field name="default_code">P1</field> 
+            <field name="taxes_id" eval="[(6,0,[ref('l10n_mx_facturae_base.l10n_mx_facturae_base_ret_isr_honorario_0')])]"/>
+            <field name="default_code">P1</field>
             <field name="mes_type">fixed</field>
             <field name="uom_id" ref="product.product_uom_hour"/>
             <field name="type">service</field>
@@ -38,7 +38,7 @@
         
         <record id="product_product_celular_demo" model="product.product">
             <field name="product_tmpl_id" ref="product_template_celular_demo"/>
-            <field name="taxes_id" eval="[(6,0,[ref('l10n_mx_facturae_base.account_tax_demo_iva_for_electronic_invoice')])]"/>
+            <field name="taxes_id" eval="[(6,0,[ref('l10n_mx_facturae_base.l10n_mx_facturae_base_iva_for_electronic_invoice_0')])]"/>
             <field name="default_code">P2</field> 
             <field name="mes_type">fixed</field>
             <field name="uom_id" ref="product.product_uom_unit"/>
