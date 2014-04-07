@@ -74,9 +74,9 @@ Requires the following programs:
     "demo" : [
         #~ "demo/l10n_mx_facturae_seq_demo.xml",
         #~ "demo/account_invoice_cfd_demo.xml",
-        "demo/account_invoice_cfdi_demo.xml",        
-        "demo/l10n_mx_facturae_products.xml",
+        "demo/account_invoice_cfdi_demo.xml",
         "demo/l10n_mx_facturae_taxes.xml",
+        "demo/l10n_mx_facturae_products.xml",
     ],
     "data" : [
         #'security/l10n_mx_facturae_security.xml',
