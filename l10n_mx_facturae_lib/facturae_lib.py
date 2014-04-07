@@ -65,9 +65,6 @@ else:
     app_openssl = 'openssl'
     app_xmlstarlet = 'xmlstarlet'
 
-if os.name == "posix":
-    app_xmlstarlet = 'xml'
-
 app_openssl_fullpath = os.path.join(openssl_path, app_openssl)
 if not os.path.isfile(app_openssl_fullpath):
     app_openssl_fullpath = tools.find_in_path(app_openssl)
