@@ -12,6 +12,7 @@
         <record id="l10n_mx_facturae_base_iva_for_electronic_invoice_0" model="account.tax">
             <field name="company_id" ref="base.main_company"/>
             <field name="name">IVA 16% FOR ELECTRONIC INVOICES MX - Test</field>
+            <field name="tax_voucher_ok" eval="True"/>
             <field name="type_tax_use">sale</field>
             <field name="type">percent</field>
             <field name="amount">0.1600</field>
@@ -33,6 +34,7 @@
         <record id="l10n_mx_facturae_base_ret_isr_honorario_0" model="account.tax">
             <field name="company_id" ref="base.main_company"/>
             <field name="name">RET ISR HONORARIOS 10%  MX- Test</field>
+            <field name="tax_voucher_ok" eval="True"/>
             <field name="type_tax_use">sale</field>
             <field name="type">percent</field>
             <field name="amount">-0.10000</field>

@@ -52,6 +52,7 @@ Requires the following programs:
             "l10n_mx_facturae_lib",
             "l10n_mx_facturae_cer",
             "l10n_mx_invoice_datetime",
+            "l10n_mx_account_invoice_tax",
             "l10n_mx_account_tax_category",
             "l10n_mx_facturae_seq",
             "l10n_mx_company_cif",
@@ -73,9 +74,9 @@ Requires the following programs:
     "demo" : [
         #~ "demo/l10n_mx_facturae_seq_demo.xml",
         #~ "demo/account_invoice_cfd_demo.xml",
-        "demo/account_invoice_cfdi_demo.xml",
-        "demo/l10n_mx_facturae_taxes.xml",
+        "demo/account_invoice_cfdi_demo.xml",        
         "demo/l10n_mx_facturae_products.xml",
+        "demo/l10n_mx_facturae_taxes.xml",
     ],
     "data" : [
         #'security/l10n_mx_facturae_security.xml',
