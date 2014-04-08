@@ -430,10 +430,10 @@ class ir_attachment_facturae_mx(osv.Model):
             context = {}
         attachments = []
         msj = ''
-        state = ''
         partner_mail = ''
         user_mail = ''
         status = False
+        mssg_id = False
         data = self.browse(cr, uid, ids)[0]
         company_id = data.company_id and data.company_id.id or False
         wf_service = netsvc.LocalService("workflow")
@@ -487,8 +487,6 @@ class ir_attachment_facturae_mx(osv.Model):
                                 (6, 0, attachments)]
                             mssg_id = self.pool.get(
                                 'mail.compose.message').create(cr, uid, mssg, context=None)
-                            state = self.pool.get('mail.compose.message').send_mail(
-                                cr, uid, [mssg_id], context=context)
                             asunto = mssg['subject']
                             id_mail = obj_mail_mail.search(
                                 cr, uid, [('subject', '=', asunto)])
@@ -527,7 +525,22 @@ class ir_attachment_facturae_mx(osv.Model):
         else:
             raise osv.except_osv(_('Warning'), _('Not Found\
             outgoing mail server.Configure the outgoing mail server named "FacturaE"'))
-        return status
+        if mssg_id:
+            return {
+                'name':_("Send Mail FacturaE Customer"),
+                'view_mode': 'form',
+                'view_id': False,
+                'view_type': 'form',
+                'res_model': 'mail.compose.message',
+                'res_id': mssg_id,
+                'type': 'ir.actions.act_window',
+                'nodestroy': True,
+                'target': 'new',
+                'domain': '[]',
+                'context': None,
+            }
+        else:
+            return status
 
     def action_send_customer(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'sent_customer'}, context=context)
