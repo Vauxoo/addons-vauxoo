@@ -170,6 +170,8 @@ class account_invoice(osv.Model):
             'out_refund': True,
             'in_invoice': False,
             'in_refund': False}
+        address_emitter = False
+        context_extra_data = {}
         file_globals = self._get_file_globals(cr, uid, ids, context=context)
         fname_cer_no_pem = file_globals['fname_cer']
         cerCSD = open(fname_cer_no_pem).read().encode('base64') #Mejor forma de hacerlo
@@ -189,6 +191,14 @@ class account_invoice(osv.Model):
                                         'res_model': self._name,
                                         #~ 'res_id': invoice.id
                                 }, context=context)
+                    if invoice.company_emitter_id.address_invoice_parent_company_id.use_parent_address:
+                        address_emitter = invoice.company_emitter_id.address_invoice_parent_company_id.parent_id
+                    else:
+                        address_emitter = invoice.company_emitter_id.address_invoice_parent_company_id
+                    if address_emitter:
+                        context_extra_data.update({'emisor':{'phone':address_emitter.phone,'fax':address_emitter.fax,'mobile':address_emitter.mobile,'web':address_emitter.website,'email':address_emitter.email}})
+                    context_extra_data.update({'receptor':{'phone':invoice.partner_id.phone,'fax':invoice.partner_id.fax,'mobile':invoice.partner_id.mobile}})
+                    context_extra_data.update({'comment': invoice.comment or '','payment_term':invoice.payment_term.note or invoice.payment_term.name or ''})
                     attach_ids = ir_attach_obj.create(cr, uid, {
                         'name': invoice.fname_invoice, 
                         'type': invoice.invoice_sequence_id.approval_id and invoice.invoice_sequence_id.approval_id.type or False,
@@ -206,6 +216,7 @@ class account_invoice(osv.Model):
                         #~'file_input_index': base64.encodestring(xml_data),
                         'document_source': invoice.number,
                         'file_input': attachment_id,
+                        'context_extra_data': context_extra_data,
                         },
                       context=context)#Context, because use a variable type of our code but we dont need it.
                     ir_attach_obj.signal_confirm(cr, uid, [attach_ids], context=context)
