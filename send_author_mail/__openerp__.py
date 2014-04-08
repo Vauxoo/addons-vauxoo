@@ -31,9 +31,10 @@ Check Field receive_my_emails in partner to receive your own copy of messages se
     """,
     'depends' : ['mail'],
     'data': [
-        'view/partner_view.xml',
-    'installable': True,
-    'auto_install': False,
+        #'view/partner_view.xml',
+        ],
+    "active": False,
+    "installable": True,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
