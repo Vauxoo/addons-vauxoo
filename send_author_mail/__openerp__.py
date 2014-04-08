@@ -31,7 +31,7 @@ Check Field receive_my_emails in partner to receive your own copy of messages se
     """,
     'depends' : ['mail'],
     'data': [
-        #'view/partner_view.xml',
+        'view/partner_view.xml',
         ],
     "active": False,
     "installable": True,
