@@ -32,7 +32,6 @@
         'hr_contract',
         'hr_holidays',
         'decimal_precision',
-        'l10n_mx_facturae_groups',
     ],
     "author": "Vauxoo",
     "description": """
