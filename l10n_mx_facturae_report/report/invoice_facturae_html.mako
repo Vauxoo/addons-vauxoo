@@ -37,7 +37,7 @@
                                     %endif
                                     </font>
                                     %if dict_context_extra_data['type'] in ['payroll']:
-                                        <font size="4">${_('Nómina: ') |entity} ${o.document_source or ''|entity}</font>
+                                        <font size="4">${_('Payroll: ') |entity} ${o.document_source or ''|entity}</font>
                                     %endif
                                 </div>
                             </td>
