@@ -9,7 +9,6 @@
                 <xpath expr="//field[@name='passport_id']" position="after">
                     <field name="curp" required="1"/>
                     <field name="nss"/>
-                    <field name="employer_registration"/>
                 </xpath>
             </field>
         </record>
