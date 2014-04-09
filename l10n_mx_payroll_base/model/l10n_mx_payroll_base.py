@@ -385,6 +385,7 @@ class hr_payslip(osv.Model):
                     if address_emitter:
                         context_extra_data.update({'emisor':{'phone':address_emitter.phone,'fax':address_emitter.fax,'mobile':address_emitter.mobile,'web':address_emitter.website,'email':address_emitter.email}})
                     context_extra_data.update({'receptor':{'phone':payroll.partner_id.phone,'fax':payroll.partner_id.fax,'mobile':payroll.partner_id.mobile}})
+                    context_extra_data.update({'type': 'payroll'})
                     attach_ids.append( ir_attach_obj.create(cr, uid, {
                         'name': payroll.number or '/',
                         'type': type,

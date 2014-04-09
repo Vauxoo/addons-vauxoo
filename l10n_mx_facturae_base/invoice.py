@@ -198,7 +198,7 @@ class account_invoice(osv.Model):
                     if address_emitter:
                         context_extra_data.update({'emisor':{'phone':address_emitter.phone,'fax':address_emitter.fax,'mobile':address_emitter.mobile,'web':address_emitter.website,'email':address_emitter.email}})
                     context_extra_data.update({'receptor':{'phone':invoice.partner_id.phone,'fax':invoice.partner_id.fax,'mobile':invoice.partner_id.mobile}})
-                    context_extra_data.update({'comment': invoice.comment or '','payment_term':invoice.payment_term.note or invoice.payment_term.name or ''})
+                    context_extra_data.update({'comment': invoice.comment or '','payment_term':invoice.payment_term.note or invoice.payment_term.name or '','origin': invoice.origin,'type': invoice.type})
                     attach_ids = ir_attach_obj.create(cr, uid, {
                         'name': invoice.fname_invoice, 
                         'type': invoice.invoice_sequence_id.approval_id and invoice.invoice_sequence_id.approval_id.type or False,
