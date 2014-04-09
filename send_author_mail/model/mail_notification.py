@@ -34,7 +34,9 @@ class mail_notification(osv.Model):
                                     message,
                                     partners_to_notify=partners_to_notify,
                                     context=context)
-        if message.author_id and message.author_id.receive_my_emails:
+        if message.author_id and\
+                (message.author_id.receive_my_emails and\
+                message.author_id.notification_email_send == "all"):
             res.append(message.author_id.id)
         return res
         
