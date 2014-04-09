@@ -1105,7 +1105,6 @@ class account_invoice(osv.Model):
             address_invoice = partner_obj.browse(cr, uid, \
                 invoice.partner_id.id, context=context)
             invoice_data['cfdi:Receptor'] = {}
-            print rfc.upper(),"ddddddddddddd"
             invoice_data['cfdi:Receptor'].update({
                 'rfc': rfc.upper(),
                 'nombre': (parent_obj.name or ''),
