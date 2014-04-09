@@ -49,7 +49,7 @@ class params_pac(osv.Model):
         'user': fields.char('User', size=128, help='Name user for login to PAC'),
         'password': fields.char('Password', size=128,
             help='Password user for login to PAC'),
-        'method_type': fields.selection('Process to perform', [('firmar','Firmar'),('cancelar','Cancelar')]),
+        'method_type': fields.selection([('firmar','Firmar'),('cancelar','Cancelar')], string='Process to perform'),
         'company_id': fields.many2one('res.company', 'Company',
             help='Company where will configurate this param'),
         'active': fields.boolean('Active', help='Indicate if this param is active'),
@@ -59,7 +59,7 @@ class params_pac(osv.Model):
             help='PAC have a public certificate that is necessary by customers to check the validity of the XML and PDF'),
         # 'link_type': fields.selection([('production','Produccion'),('test','Pruebas')],"Tipo de ligas"),
         'user_id': fields.many2one('res.users', 'User Params Pac', help="The user responsible for this params pac"),
-        'pac_id': fields.many2one('res.pac', 'Res Pac', help="The res pac configuration for this params pac"),
+        'res_pac': fields.many2one('res.pac', 'Res Pac', help="The res pac configuration for this params pac"),
     }
     
     _defaults = {

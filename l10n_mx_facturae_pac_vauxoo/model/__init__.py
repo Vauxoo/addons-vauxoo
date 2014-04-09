@@ -25,6 +25,5 @@
 #
 ##############################################################################
 
-import params_pac
-import ir_sequence_approval
+import res_pac
 import ir_attachment_facturae

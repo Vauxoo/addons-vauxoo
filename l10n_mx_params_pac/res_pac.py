@@ -32,14 +32,27 @@ from openerp import pooler, tools
 class res_pac(osv.Model):
     _name = 'res.pac'
 
+    def _get_driver_selection(self, cr, uid, context=None):
+        if context is None:
+            context = {}
+        types = []
+        return types
+
     _columns = {
         'name': fields.char('Name', size=128, required=True,
             help='Name for this res pac'),
+        'active': fields.boolean('Active', help='Indicate if this pac is active'),
         'code': fields.char('Code', size=128, help='Code for this res pac'),
-        'name_driver': fields.selection('Driver', [('pac_va','Multipac Vauxoo'),('pac_sf','Pac SF'),('pac_finkok','Pac Finkok')], required=True),
+        'name_driver': fields.selection(_get_driver_selection, "Pac Driver", type='char', size=64),
         'params_pac_id': fields.many2one('params.pac', 'Params Pac', help="The params pac configuration for this res pac"),
         'company_id': fields.many2one('res.company', 'Company', required=True,
             help='Company where will configurate this param'), 
+        'user': fields.char('User', size=128, help='Name user for login to PAC'),
+        'password': fields.char('Password', size=128, help='Password user for login to PAC'),      
+        'url_webservice': fields.char('URL WebService', size=256,
+            help='URL of WebService used for send to sign the XML to PAC'),
+        'namespace': fields.char('NameSpace', size=256,
+            help='NameSpace of XML of the page of WebService of the PAC'),
     }
     
     _defaults = {

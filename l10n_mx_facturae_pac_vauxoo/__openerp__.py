@@ -49,7 +49,8 @@
     "demo" : [
         "demo/l10n_mx_facturae_pac_vx_demo.xml",
         "demo/l10n_mx_facturae_seq_demo.xml",
-        "demo/account_invoice_cfdi_pac_vx_demo.xml",
+        "demo/l10n_mx_payroll_seq_demo.xml",
+        #~ "demo/account_invoice_cfdi_pac_vx_demo.xml",
         ],
     "data" : [
         ],

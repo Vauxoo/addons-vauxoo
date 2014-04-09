@@ -97,12 +97,6 @@ class ir_attachment_facturae_mx(osv.Model):
         os.close(fileno)
         return fname
 
-    def _get_type(self, cr, uid, ids=None, context=None):
-        if context is None:
-            context = {}
-        types = []
-        return types
-
     def get_driver_fc_sign(self):
         """function to inherit from module driver of pac and add particular function"""
         return {}
@@ -128,8 +122,6 @@ class ir_attachment_facturae_mx(osv.Model):
         'file_pdf_index': fields.text('File PDF Index',
                                       help='Report PDF with index'),
         'identifier': fields.char('Identifier', size=128, ),
-        'type': fields.selection(_get_type, 'Type', type='char', size=64,
-                                 readonly=True, help="Type of Electronic Invoice"),
         'description': fields.text('Description'),
         'msj': fields.text('Last Message', readonly=True,
                            track_visibility='onchange',
@@ -179,6 +171,7 @@ class ir_attachment_facturae_mx(osv.Model):
         'document_source': fields.char('Document Source', size=128, help='Number or reference of document source'),
         'date_print_report': fields.datetime('Date print', help='Saved the date of last print'),
         'date_send_mail': fields.datetime('Date send mail', help='Saved the date of last send mail'),
+        'res_pac': fields.many2one('res.pac', 'Pacs', help='Pac used in singned of the invoice'),
     }
 
     _defaults = {
@@ -333,16 +326,16 @@ class ir_attachment_facturae_mx(osv.Model):
         msj = ''
         status = False
         for data in self.browse(cr, uid, ids, context=context):
-            type = data.type
+            _type = data.res_pac.name_driver
             id_source = data.id_source
             model_source = data.model_source
             attach_v3_2 = data.file_input and data.file_input.id or False
             index_content = data.file_input and data.file_input.index_content.encode('utf-8') or False
             type__fc = self.get_driver_fc_sign()
-            if type in type__fc.keys():
+            if _type in type__fc.keys():
                 fname_invoice = data.name and data.name + '.xml' or ''
                 fdata = base64.encodestring(index_content)
-                res = type__fc[type](cr, uid, [data.id], fdata, context=context)
+                res = type__fc[_type](cr, uid, [data.id], fdata, context=context)
                 msj = tools.ustr(res.get('msg', False))
                 status = res.get('status', False)
                 if status:
@@ -369,7 +362,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     wf_service.trg_validate(uid, self._name, data.id, 'action_sign', cr)
                     status = True
             else:
-                msj += _("Unknow driver for %s" % (type))
+                msj += _("Unknow driver for %s" % (_type))
                 status = False
         return status
 
@@ -382,7 +375,7 @@ class ir_attachment_facturae_mx(osv.Model):
         msj = ''
         attachment_obj = self.pool.get('ir.attachment')
         attachment_mx_data = self.browse(cr, uid, ids, context=context)
-        type = attachment_mx_data[0].type
+        type = attachment_mx_data[0].res_pac.name_driver
         wf_service = netsvc.LocalService("workflow")
         status = False
         (fileno, fname) = tempfile.mkstemp(
@@ -578,8 +571,8 @@ class ir_attachment_facturae_mx(osv.Model):
             #~ if 'cfdi' in ir_attach_facturae_mx_id.type:
             if not ir_attach_facturae_mx_id.state in ['cancel', 'draft', 'confirmed']:
                 type__fc = self.get_driver_fc_cancel()
-                if ir_attach_facturae_mx_id.type in type__fc.keys():
-                    cfdi_cancel = res = type__fc[ir_attach_facturae_mx_id.type](
+                if ir_attach_facturae_mx_id.res_pac.name_driver in type__fc.keys():
+                    cfdi_cancel = res = type__fc[ir_attach_facturae_mx_id.res_pac.name_driver](
                         cr, uid, [
                             ir_attach_facturae_mx_id.id], context=context
                     )
@@ -594,7 +587,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     else:
                         status = False
                 else:
-                    msj = _("Unknow cfdi driver for %s" % (ir_attach_facturae_mx_id.type))
+                    msj = _("Unknow cfdi driver for %s" % (ir_attach_facturae_mx_id.res_pac.name_driver))
             else:
                 wf_service.trg_validate(
                     uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)

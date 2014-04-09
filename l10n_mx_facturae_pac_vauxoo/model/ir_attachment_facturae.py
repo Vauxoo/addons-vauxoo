@@ -62,16 +62,6 @@ except:
 class ir_attachment_facturae_mx(osv.Model):
     _inherit = 'ir.attachment.facturae.mx'
 
-    def _get_type(self, cr, uid, ids=None, context=None):
-        if context is None:
-            context = {}
-        types = super(ir_attachment_facturae_mx, self)._get_type(
-            cr, uid, ids, context=context)
-        types.extend([
-            ('cfdi32_pac_vx', 'CFDI 3.2 Vauxoo'),
-        ])
-        return types
-
     def get_driver_fc_sign(self):
         factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_sign()
         if factura_mx_type__fc == None:
@@ -86,11 +76,6 @@ class ir_attachment_facturae_mx(osv.Model):
         factura_mx_type__fc.update({'cfdi32_pac_vx': self._vauxoo_cancel})
         return factura_mx_type__fc
 
-    _columns = {
-        'type': fields.selection(_get_type, 'Type', type='char', size=64,
-                                 required=True, readonly=True, help="Type of Electronic Invoice"),
-    }
-
     def _vauxoo_cancel(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
@@ -99,16 +84,18 @@ class ir_attachment_facturae_mx(osv.Model):
         res_com_facte_certif_obj = self.pool.get('res.company.facturae.certificate')
         for attachment in self.browse(cr, uid, ids, context=context):
             pac_params_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'pac_vx_cancelar'), (
-                    'company_id', '=', attachment.company_id.id), (
-                        'active', '=', True)], limit=1, context=context)
+                ('method_type', '=', 'cancelar'),
+                ('res_pac', '=', attachment.res_pac.id),
+                ('company_id', '=', attachment.company_id.id),
+                ('active', '=', True)], limit=1, context=context)
             if pac_params_ids:
                 pac_params = pac_params_obj.browse(
                     cr, uid, pac_params_ids, context)[0]
             pac_params_server_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'pac_sf_cancelar'), (
-                    'company_id', '=', attachment.company_id.id), (
-                        'active', '=', True)], limit=1, context=context)
+                ('method_type', '=', 'cancelar'),
+                ('res_pac', '=', attachment.res_pac.id),
+                ('company_id', '=', attachment.company_id.id),
+                ('active', '=', True)], limit=1, context=context)
             if pac_params_server_ids:
                 pac_params_server = pac_params_obj.browse(
                     cr, uid, pac_params_server_ids, context)[0]
@@ -119,14 +106,14 @@ class ir_attachment_facturae_mx(osv.Model):
                 res_com_facte_certif = res_com_facte_certif_obj.browse(
                     cr, uid, res_com_facte_certif_ids, context)[0]
             DB = cr.dbname
-            wsdl_url = pac_params.url_webservice
-            USER = pac_params.user
-            PASS = pac_params.password
+            wsdl_url = pac_params.url_webservice or attachment.res_pac.url_webservice
+            USER = pac_params.user or attachment.res_pac.user
+            PASS = pac_params.password or attachment.res_pac.password
             url ='http://%s/xmlrpc/' % (wsdl_url)
             common_proxy = xmlrpclib.ServerProxy(url+'common')
             object_proxy = xmlrpclib.ServerProxy(url+'object')
             uid2 = common_proxy.login(DB,USER,PASS)
-            _args = [('cfdi_folio_fiscal', '=', attachment.cfdi_folio_fiscal),('type','!=',attachment.type)]
+            _args = [('cfdi_folio_fiscal', '=', attachment.cfdi_folio_fiscal),('res_pac','!=',attachment.res_pac.name_driver)]
             ids_new = object_proxy.execute(DB, uid2, PASS, 'ir.attachment.facturae.mx', 'search', _args)
             try:
                 res = object_proxy.execute(DB, uid2, PASS, 'ir.attachment.facturae.mx', 'signal_cancel', ids_new)
@@ -142,23 +129,25 @@ class ir_attachment_facturae_mx(osv.Model):
         pac_params_obj = self.pool.get('params.pac')
         for attachment in self.browse(cr, uid, ids, context=context):            
             pac_params_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'pac_vx_firmar'), (
-                    'company_id', '=', attachment.company_id.id), (
-                        'active', '=', True)], limit=1, context=context)
+                ('method_type', '=', 'firmar'),
+                ('res_pac', '=', attachment.res_pac.id),
+                ('company_id', '=', attachment.company_id.id),
+                ('active', '=', True)], limit=1, context=context)
             if pac_params_ids:
                 pac_params = pac_params_obj.browse(
                     cr, uid, pac_params_ids, context)[0]
             pac_params_server_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'pac_sf_cancelar'), (
-                    'company_id', '=', attachment.company_id.id), (
-                        'active', '=', True)], limit=1, context=context)
+                ('method_type', '=', 'firmar'),
+                ('res_pac', '=', attachment.res_pac.id),
+                ('company_id', '=', attachment.company_id.id),
+                ('active', '=', True)], limit=1, context=context)
             if pac_params_server_ids:
                 pac_params_server = pac_params_obj.browse(
                     cr, uid, pac_params_server_ids, context)[0]
             DB = cr.dbname
-            wsdl_url = pac_params.url_webservice
-            USER = pac_params.user
-            PASS = pac_params.password
+            wsdl_url = pac_params.url_webservice or attachment.res_pac.url_webservice
+            USER = pac_params.user or attachment.res_pac.user
+            PASS = pac_params.password or attachment.res_pac.password
             url ='http://%s/xmlrpc/' % (wsdl_url)
             common_proxy = xmlrpclib.ServerProxy(url+'common')
             object_proxy = xmlrpclib.ServerProxy(url+'object')

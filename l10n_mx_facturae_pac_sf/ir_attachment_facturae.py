@@ -57,16 +57,6 @@ except:
 
 class ir_attachment_facturae_mx(osv.Model):
     _inherit = 'ir.attachment.facturae.mx'
-
-    def _get_type(self, cr, uid, ids=None, context=None):
-        if context is None:
-            context = {}
-        types = super(ir_attachment_facturae_mx, self)._get_type(
-            cr, uid, ids, context=context)
-        types.extend([
-            ('cfdi32_pac_sf', 'CFDI 3.2 Solución Factible'),
-        ])
-        return types
     
     def get_driver_fc_sign(self):
         factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_sign()
@@ -81,11 +71,6 @@ class ir_attachment_facturae_mx(osv.Model):
             factura_mx_type__fc = {}
         factura_mx_type__fc.update({'cfdi32_pac_sf': self._sf_cancel})
         return factura_mx_type__fc
-        
-    _columns = {
-        'type': fields.selection(_get_type, 'Type', type='char', size=64,
-                                 required=True, readonly=True, help="Type of Electronic Invoice"),
-    }
     
     def _sf_cancel(self, cr, uid, ids, context=None):
         if context is None:
@@ -96,7 +81,7 @@ class ir_attachment_facturae_mx(osv.Model):
             status = False
             pac_params_ids = pac_params_obj.search(cr, uid, [
                 ('method_type', '=', 'cancelar'),
-                ('pac_id', '=', attachment.pac_id.id)
+                ('res_pac', '=', attachment.res_pac.id),
                 ('company_id', '=', attachment.company_id.id),
                 ('active', '=', True),
             ], limit=1, context=context)
@@ -104,10 +89,10 @@ class ir_attachment_facturae_mx(osv.Model):
             if pac_params_id:
                 pac_params_brw = pac_params_obj.browse(
                     cr, uid, [pac_params_id], context=context)[0]
-                user = pac_params_brw.user
-                password = pac_params_brw.password
-                wsdl_url = pac_params_brw.url_webservice
-                namespace = pac_params_brw.namespace
+                user = pac_params_brw.user or attachment.res_pac.user
+                password = pac_params_brw.password or attachment.res_pac.password
+                wsdl_url = pac_params_brw.url_webservice or attachment.res_pac.url_webservice
+                namespace = pac_params_brw.namespace or attachment.res_pac.namespace
                 wsdl_client = False
                 wsdl_client = WSDL.SOAPProxy(wsdl_url, namespace)
                 fname_cer_no_pem = self.binary2file(cr, uid, ids,
@@ -183,15 +168,15 @@ class ir_attachment_facturae_mx(osv.Model):
             pac_params_ids = pac_params_obj.search(cr, uid, [
                 ('method_type', '=', 'firmar'), (
                     'company_id', '=', attachment.company_id.id), (
-                    'pac_id', '=', attachment.pac_id.id), (
+                    'res_pac', '=', attachment.res_pac.id), (
                     'active', '=', True)], limit=1, context=context)
             if pac_params_ids:
                 pac_params = pac_params_obj.browse(
                     cr, uid, pac_params_ids, context)[0]
-                user = pac_params.user or attachment.pac_id.user
-                password = pac_params.password
-                wsdl_url = pac_params.url_webservice
-                namespace = pac_params.namespace
+                user = pac_params.user or attachment.res_pac.user
+                password = pac_params.password or attachment.res_pac.password
+                wsdl_url = pac_params.url_webservice or attachment.res_pac.url_webservice
+                namespace = pac_params.namespace or attachment.res_pac.namespace
                 certificate_link = pac_params.certificate_link
                 url = 'https://solucionfactible.com/ws/services/Timbrado'
                 testing_url = 'http://testing.solucionfactible.com/ws/services/Timbrado'
