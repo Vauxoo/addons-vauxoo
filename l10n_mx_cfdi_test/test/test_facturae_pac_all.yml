@@ -18,10 +18,11 @@
     res_id = False
     time_total = 0
     for journal_data in acc_jour_obj.browse(cr, uid, journal_ids, context=context):
-        if (journal_data.sequence_id and journal_data.sequence_id.approval_id and journal_data.sequence_id.approval_id.id) and journal_data.type in ('sale'):
+        if (journal_data.sequence_id and journal_data.sequence_id.approval_id and journal_data.sequence_id.approval_id.id) and journal_data.type in ('sale', 'sale_refund'):
             for type_test_cancel in ['cancel_from_invoce','cancel_from_attachment_facturae_mx']:
                 time_total = 0
                 all_ok = False
+                type_journal = False
                 pac_type = journal_data.sequence_id.approval_id and journal_data.sequence_id.approval_id.type or False
                 ir_model_id = ir_model_data.search(cr, uid, [('res_id','=',journal_data.id),('model','=','account.journal')])
                 if ir_model_id:
@@ -42,7 +43,11 @@
                                     # This write is because I need the invoice to be different and is added to the product description on the invoice id 
                                     new_name_product = '%s invoice: %s'%(aml_obj.read(cr, uid, line['invoice_line'][0],['name']).get('name') , invoice_id)
                                     aml_obj.write(cr, uid, line['invoice_line'],{'name': new_name_product})
-                            self.write(cr, uid, [invoice_id], {'journal_id':ref(journal_xml_id)},context=context)
+                            if journal_data.type == 'sale':
+                                type_journal = 'out_invoice'
+                            if journal_data.type == 'sale_refund':
+                                type_journal = 'out_refund'
+                            self.write(cr, uid, [invoice_id], {'journal_id':ref(journal_xml_id), 'type': type_journal },context=context)
                             xml_id_invoice = 'ai_pac_facturae_%s_%s'% (pac_type,invoice_id)
                             data_ids = ir_model_data.search(cr, uid, [('model', '=', self._name), ('name', 'like', xml_id_invoice)])
                             if not data_ids:
