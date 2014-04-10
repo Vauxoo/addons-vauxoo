@@ -998,7 +998,7 @@ class account_invoice(osv.Model):
 
                 'rfc': (('vat_split' in address_invoice_parent._columns and \
                 address_invoice_parent.vat_split or address_invoice_parent.vat) \
-                or '').replace('-', ' ').replace(' ', ''),
+                or '').replace('-', ' ').replace(' ', '').upper(),
                 'nombre': address_invoice_parent.name or '',
                 # Obtener domicilio dinamicamente
                 # virtual_invoice.append( (invoice.company_id and
@@ -1096,18 +1096,17 @@ class account_invoice(osv.Model):
                 raise osv.except_osv(_('Warning !'), _(
                     "Don't have defined RFC of the partner[%s].\n%s !") % (
                     parent_obj.name, msg2))
-            if parent_obj._columns.has_key('vat_split') and\
-                parent_obj.vat[0:2] <> 'MX':
+            if parent_obj._columns.has_key('vat_split') and parent_obj.vat[0:2].upper() <> 'MX':
                 rfc = 'XAXX010101000'
             else:
                 rfc = ((parent_obj._columns.has_key('vat_split')\
                     and parent_obj.vat_split or parent_obj.vat)\
-                    or '').replace('-', ' ').replace(' ','')
+                    or '').replace('-', ' ').replace(' ','').upper()
             address_invoice = partner_obj.browse(cr, uid, \
                 invoice.partner_id.id, context=context)
             invoice_data['cfdi:Receptor'] = {}
             invoice_data['cfdi:Receptor'].update({
-                'rfc': rfc,
+                'rfc': rfc.upper(),
                 'nombre': (parent_obj.name or ''),
                 'cfdi:Domicilio': {
                     'calle': address_invoice.street and address_invoice.\
