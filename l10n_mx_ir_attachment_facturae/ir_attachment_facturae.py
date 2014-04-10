@@ -428,12 +428,13 @@ class ir_attachment_facturae_mx(osv.Model):
     def signal_send_customer(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
+        context.update({'active_model': 'ir.attachment.facturae.mx', 'active_ids': ids, 'active_id': ids[0]})
         attachments = []
         msj = ''
-        state = ''
         partner_mail = ''
         user_mail = ''
         status = False
+        mssg_id = False
         data = self.browse(cr, uid, ids)[0]
         company_id = data.company_id and data.company_id.id or False
         wf_service = netsvc.LocalService("workflow")
@@ -485,15 +486,14 @@ class ir_attachment_facturae_mx(osv.Model):
                                 (6, 0, mssg['partner_ids'])]
                             mssg['attachment_ids'] = [
                                 (6, 0, attachments)]
+                            mssg['template_id'] = tmp_id[0]
                             mssg_id = self.pool.get(
-                                'mail.compose.message').create(cr, uid, mssg, context=None)
-                            state = self.pool.get('mail.compose.message').send_mail(
-                                cr, uid, [mssg_id], context=context)
+                                'mail.compose.message').create(cr, uid, mssg, context=context)
                             asunto = mssg['subject']
                             id_mail = obj_mail_mail.search(
                                 cr, uid, [('subject', '=', asunto)])
                             if id_mail:
-                                for mail in obj_mail_mail.browse(cr, uid, id_mail, context=None):
+                                for mail in obj_mail_mail.browse(cr, uid, id_mail, context=context):
                                     if mail.state == 'exception':
                                         msj = _(
                                             '\nNot correct email of the user or customer. Check in Menu Configuración\Tecnico\Email\Emails\n')
@@ -527,7 +527,22 @@ class ir_attachment_facturae_mx(osv.Model):
         else:
             raise osv.except_osv(_('Warning'), _('Not Found\
             outgoing mail server.Configure the outgoing mail server named "FacturaE"'))
-        return status
+        if mssg_id:
+            return {
+                'name':_("Send Mail FacturaE Customer"),
+                'view_mode': 'form',
+                'view_id': False,
+                'view_type': 'form',
+                'res_model': 'mail.compose.message',
+                'res_id': mssg_id,
+                'type': 'ir.actions.act_window',
+                'nodestroy': True,
+                'target': 'new',
+                'domain': '[]',
+                'context': context,
+            }
+        else:
+            return status
 
     def action_send_customer(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'sent_customer'}, context=context)
@@ -660,7 +675,6 @@ class ir_attachment_facturae_mx(osv.Model):
             a = timezone_original + ((
                 timezone_present + timezone_original)*-1)
         return a
-
 
 class ir_attachment(osv.Model):
     _inherit = 'ir.attachment'
