@@ -350,6 +350,8 @@ class hr_payslip(osv.Model):
         act_obj = self.pool.get('ir.actions.act_window')
         attachment_obj = self.pool.get('ir.attachment')
         attach_ids = []
+        address_emitter = False
+        context_extra_data = {}
         file_globals = self._get_file_globals(cr, uid, ids, context=context)
         fname_cer_no_pem = file_globals['fname_cer']
         cerCSD = open(fname_cer_no_pem).read().encode('base64') #Mejor forma de hacerlo
@@ -376,6 +378,14 @@ class hr_payslip(osv.Model):
                                         'res_model': self._name,
                                         #~ 'res_id': payroll.id
                                 }, context=context)
+                    if payroll.company_emitter_id.address_invoice_parent_company_id.use_parent_address:
+                        address_emitter = payroll.company_emitter_id.address_invoice_parent_company_id.parent_id
+                    else:
+                        address_emitter = payroll.company_emitter_id.address_invoice_parent_company_id
+                    if address_emitter:
+                        context_extra_data.update({'emisor':{'phone':address_emitter.phone,'fax':address_emitter.fax,'mobile':address_emitter.mobile,'web':address_emitter.website,'email':address_emitter.email}})
+                    context_extra_data.update({'receptor':{'phone':payroll.partner_id.phone,'fax':payroll.partner_id.fax,'mobile':payroll.partner_id.mobile}})
+                    context_extra_data.update({'type': 'payroll'})
                     attach_ids.append( ir_attach_obj.create(cr, uid, {
                         'name': payroll.number or '/',
                         'type': type,
@@ -394,6 +404,7 @@ class hr_payslip(osv.Model):
                         #~'file_input_index': base64.encodestring(xml_data),
                         'document_source': payroll.number,
                         'file_input': attachment_id,
+                        'context_extra_data': context_extra_data,
                             },
                           context=context)
                         )

@@ -9,20 +9,37 @@
     %for o in objects :
         ${set_global_data(o)}
         <% dict_data = set_dict_data(o) %>
+        <% dict_context_extra_data = eval(o.context_extra_data) %>
         <table class="basic_table">
             <tr>
                 <td style="vertical-align: top;">
                     ${helper.embed_image('jpeg',str(o.company_id.logo),180, 85)}
                 </td>
-                <td>
+                <td style="vertical-align: top;">
                     <table class="basic_table">
                         <tr>
                             <td width="50%">
                                 <div class="title">${ dict_data['Emisor']['@nombre'] or ''|entity}</div>
                             </td>
                             <td width="20%">
-                                <div class="invoice">${_("Documento:")}
-                                ${o.document_source or ''|entity}
+                                <div class="invoice">
+                                    %if dict_context_extra_data['type'] == 'out_invoice':
+                                        <font size="5">${_("Factura:")}
+                                    %elif dict_context_extra_data['type'] == 'out_refund':
+                                        <font size="4">${_("Nota de credito:")}
+                                    %endif
+                                    %if dict_context_extra_data['type'] in ['out_invoice', 'out_refund']:
+                                        %if o.state in ['done']:
+                                            ${o.document_source or ''|entity}
+                                        %else:
+                                            ${'SIN FOLIO O ESTATUS NO VALIDO'}
+                                        %endif
+                                    %endif
+                                    </font>
+                                    %if dict_context_extra_data['type'] in ['payroll']:
+                                        <font size="4">${_('Payroll: ') |entity} ${o.document_source or ''|entity}</font>
+                                    %endif
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -30,7 +47,7 @@
                                 <div class="emitter">
                                     <br/>${ dict_data['Emisor']['DomicilioFiscal']['@calle'] or ''|entity}
                                     ${ dict_data['Emisor']['DomicilioFiscal']['@noExterior'] or ''|entity}
-                                    ${ dict_data['Emisor']['DomicilioFiscal']['@noInterior'] or ''|entity}</br>
+                                    ${ dict_data['Emisor']['DomicilioFiscal']['@noInterior'] or ''|entity}
                                     ${ dict_data['Emisor']['DomicilioFiscal']['@colonia'] or ''|entity}
                                     ${ dict_data['Emisor']['DomicilioFiscal']['@codigoPostal'] or ''|entity}
                                     <br/>${ _("Localidad:")} ${ dict_data['Emisor']['DomicilioFiscal']['@localidad'] or ''|entity}                                    
@@ -39,7 +56,13 @@
                                     , ${ dict_data['Emisor']['DomicilioFiscal']['@pais'] or ''|entity}
                                     <br/><b>${_("RFC:")} ${dict_data['Emisor']['@rfc'] or ''|entity}</b>
                                     <br/>${ dict_data['Emisor']['RegimenFiscal']['@Regimen'] or ''|entity }
-                                 </div>
+                                    %if dict_context_extra_data['emisor']['phone'] or dict_context_extra_data['emisor']['fax']  or dict_context_extra_data['emisor']['mobile']:
+                                        <br/>${_("Tel&eacute;fono(s):")}
+                                        ${dict_context_extra_data['emisor']['phone'] or ''|entity}
+                                        ${dict_context_extra_data['emisor']['fax']  and ',' or ''|entity} ${dict_context_extra_data['emisor']['fax'] or ''|entity}
+                                        ${dict_context_extra_data['emisor']['mobile'] and ',' or ''|entity} ${dict_context_extra_data['emisor']['mobile'] or ''|entity}
+                                    %endif
+                                </div>
                             </td>
                             <td class="td_data_exp">
                                 <div class="fiscal_address">
@@ -103,13 +126,42 @@
                             </td>
                         </tr>
                     </table>
+                    <table class="basic_table" style="border-bottom:1px solid #002966;">
+                        <tr>
+                            %if dict_context_extra_data['receptor']['phone'] or dict_context_extra_data['receptor']['fax']  or dict_context_extra_data['receptor']['mobile']:
+                                <td width="13%" class="cliente"><b>Telefono(s):</b></td>
+                                <td width="55%" class="cliente">
+                                    ${dict_context_extra_data['receptor']['phone'] or ''|entity}
+                                    ${dict_context_extra_data['receptor']['fax'] and ',' or ''|entity}
+                                    ${dict_context_extra_data['receptor']['fax'] or ''|entity}
+                                    ${dict_context_extra_data['receptor']['mobile'] and ',' or ''|entity}
+                                    ${dict_context_extra_data['receptor']['mobile'] or ''|entity}</font>
+                            %endif
+                            %if dict_context_extra_data.has_key('origin'):
+                                %if dict_context_extra_data['origin']:
+                                    <td width="9%" class="cliente"><b>Origen:</b></td>
+                                    <td width="23%" class="cliente"><b>${dict_context_extra_data['origin'] or ''|entity}</b></td>
+                                %endif
+                            %endif
+                        </tr>
+                    </table>
                 </td>
-                <td width="1%"></td>
                 <td width="19%" align="center">
-                    ${ dict_data['@LugarExpedicion'] or ''|entity}
-                    <% from datetime import datetime %>
-                    <br/>${_("a")} ${datetime.strptime(dict_data['@fecha'].encode('ascii','replace'), '%Y-%m-%dT%H:%M:%S').strftime('%d/%m/%Y %H:%M:%S') or ''|entity}
-                    <br/>${_("Serie:")} ${ dict_data['@serie'] or _("Sin serie")|entity}
+                    <table class="basic_table" style="text-align:center;font-size: 8pt" border="0">
+                        <tr>
+                            <td>
+                                <b>Lugar, fecha y hora de emisión:</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                ${ dict_data['@LugarExpedicion'] or ''|entity}
+                                <% from datetime import datetime %>
+                                <br/>${_("a")} ${datetime.strptime(dict_data['@fecha'].encode('ascii','replace'), '%Y-%m-%dT%H:%M:%S').strftime('%d/%m/%Y %H:%M:%S') or ''|entity}
+                                <br/>${_("Serie:")} ${ dict_data['@serie'] or _("Sin serie")|entity}
+                            </td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
         </table>
@@ -441,8 +493,26 @@
             </tr>            
         </table>
         <br clear="all"/>
-        <font class="font">“Este documento es una representaci&oacute;n impresa de un CFDI”
-        <br/>CFDI, Comprobante Fiscal Digital por Internet</font>
+        %if dict_context_extra_data.has_key('payment_term') or dict_context_extra_data.has_key('comment'):
+            <table class="basic_table">
+                %if dict_context_extra_data.has_key('payment_term'):
+                    <tr>
+                        %if dict_context_extra_data['payment_term']:
+                            <td width="100%"><pre><font size="1"><b>Condición de pago:</b> ${dict_context_extra_data['payment_term'] or '' |entity}
+                            </font></pre></td>
+                        %endif
+                    </tr>
+                %endif
+                %if dict_context_extra_data.has_key('comment'):
+                    <tr>
+                        %if dict_context_extra_data['comment']:
+                            <td width="100%"><pre><font size="1"><b>Comentarios adicionales:</b> ${dict_context_extra_data['comment'] or '' |entity}</font></pre></td>
+                        %endif
+                    </tr>
+                %endif
+            </table>
+        %endif
+        </br>
         <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
                 <tr>
                     <th width="33%"> ${_('Certificado del SAT')}</th>
@@ -470,7 +540,7 @@
         <div style="page-break-inside:avoid; border:1.5px solid grey;">
             <table width="100%" class="datos_fiscales">
                 <tr>
-                    <td align="left">
+                    <td align="left" rowspan="2">
                         ${helper.embed_image('jpeg',str(o.company_id.cif_file), 140, 220)}
                     </td>
                     <td valign="top" align="left">
@@ -482,11 +552,18 @@
                         <b>${_('Cadena original:')} </b><br/>
                         ${o.cfdi_cadena_original or ''|entity}</br>
                         <b>${_('Enlace al certificado: ')}</b></br>
-                        ${o.certificate_link or ''|entity}</p>
+                        ${o.certificate_link or ''|entity}</br>
+                        </p>
                     </td>
-                    <td align="right">
+                    <td align="right" rowspan="2">
                         <% img = create_qrcode(dict_data['Emisor']['@rfc'], dict_data['Receptor']['@rfc'], float(dict_data['@total'].encode('ascii','replace')), dict_data['Complemento']['TimbreFiscalDigital']['@UUID']) %>
                         ${helper.embed_image('jpeg',str(img),180, 180)}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: center; text-align: center">
+                        <p><b><font size="1">"Este documento es una representación impresa de un CFDI”</br>
+                        CFDI, Comprobante Fiscal Digital por Internet</font></b></p>
                     </td>
                 </tr>
             </table>
