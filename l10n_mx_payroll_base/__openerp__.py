@@ -76,6 +76,7 @@ ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfdi/guianomina.pdf
         "demo/l10n_mx_payroll_cfdi0.xml",
         "demo/l10n_mx_payroll_partner.xml",
         "demo/l10n_mx_payroll_users.xml",
+        "demo/l10n_mx_payroll_res_company_demo.xml",
     ],
     "test": [
     ],
