@@ -17,7 +17,6 @@
             -->
             <field name="mail_server_id">1</field>
             <field name="email_to"></field>
-            <field name="sequence">5</field>
             <field name="body_html"><![CDATA[
 <html>
     <head>
@@ -502,7 +501,6 @@ Ante cualquier duda estamos a su disposición.
             <field name="auto_delete" eval="True"/>
             <field name="mail_server_id">1</field>
             <field name="email_to"></field>
-            <field name="sequence">5</field>
             <field name="body_html"><![CDATA[
 <html>
     <head>

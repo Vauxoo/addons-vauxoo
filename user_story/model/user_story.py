@@ -185,16 +185,6 @@ class user_story(osv.Model):
 
 
         return False
-
-    def create(self, cr, uid, vals, context=None):
-        if context is None: context = {}
-        # Prevent double project creation when 'use_tasks' is checked!
-        context = dict(context, user_story_creation_in_progress=True)
-        context['name'] = "User Story / %s" % (vals['name'])
-        if vals.get('type', False) not in ('template','contract'):
-            vals['type'] = 'contract'
-        user_story_id = super(user_story, self).create(cr, uid, vals, context=context)
-        return user_story_id
      
     _columns = {
         'name': fields.char('Title', size=255, required=True, readonly=False,
