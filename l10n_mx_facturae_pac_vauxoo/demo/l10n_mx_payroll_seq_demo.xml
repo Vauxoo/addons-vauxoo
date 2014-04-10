@@ -26,7 +26,7 @@
             <field name="company_id" ref="base.main_company"/>
             <field name="sequence_id" ref="l10n_mx_payroll_cfdi_pac_vx_seq_0"/>
             <field name="name">MX CFDI Journal Payroll Vauxoo</field>
-            <field name="code">CFDIPAV</field>
+            <field name="code">VXCFDI</field>
             <field name="type">purchase</field>
             <field name="update_posted" eval="True"/>
         </record>

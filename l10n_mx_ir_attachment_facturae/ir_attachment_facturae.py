@@ -326,16 +326,16 @@ class ir_attachment_facturae_mx(osv.Model):
         msj = ''
         status = False
         for data in self.browse(cr, uid, ids, context=context):
-            _type = data.res_pac.name_driver
+            t_type = data.res_pac.name_driver
             id_source = data.id_source
             model_source = data.model_source
             attach_v3_2 = data.file_input and data.file_input.id or False
             index_content = data.file_input and data.file_input.index_content.encode('utf-8') or False
             type__fc = self.get_driver_fc_sign()
-            if _type in type__fc.keys():
+            if t_type in type__fc.keys():
                 fname_invoice = data.name and data.name + '.xml' or ''
                 fdata = base64.encodestring(index_content)
-                res = type__fc[_type](cr, uid, [data.id], fdata, context=context)
+                res = type__fc[t_type](cr, uid, [data.id], fdata, context=context)
                 msj = tools.ustr(res.get('msg', False))
                 status = res.get('status', False)
                 if status:
@@ -362,7 +362,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     wf_service.trg_validate(uid, self._name, data.id, 'action_sign', cr)
                     status = True
             else:
-                msj += _("Unknow driver for %s" % (_type))
+                msj += _("Unknow driver for %s" % (t_type))
                 status = False
         return status
 

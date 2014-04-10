@@ -81,7 +81,6 @@ class ir_attachment_facturae_mx(osv.Model):
             context = {}
         msg = ''
         pac_params_obj = self.pool.get('params.pac')
-        res_com_facte_certif_obj = self.pool.get('res.company.facturae.certificate')
         for attachment in self.browse(cr, uid, ids, context=context):
             pac_params_ids = pac_params_obj.search(cr, uid, [
                 ('method_type', '=', 'cancelar'),
@@ -91,20 +90,6 @@ class ir_attachment_facturae_mx(osv.Model):
             if pac_params_ids:
                 pac_params = pac_params_obj.browse(
                     cr, uid, pac_params_ids, context)[0]
-            pac_params_server_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'cancelar'),
-                ('res_pac', '=', attachment.res_pac.id),
-                ('company_id', '=', attachment.company_id.id),
-                ('active', '=', True)], limit=1, context=context)
-            if pac_params_server_ids:
-                pac_params_server = pac_params_obj.browse(
-                    cr, uid, pac_params_server_ids, context)[0]
-            res_com_facte_certif_ids = res_com_facte_certif_obj.search(cr, uid, [
-                ('company_id', '=', attachment.company_id.id), (
-                        'active', '=', True)], limit=1, context=context)
-            if res_com_facte_certif_ids:
-                res_com_facte_certif = res_com_facte_certif_obj.browse(
-                    cr, uid, res_com_facte_certif_ids, context)[0]
             DB = cr.dbname
             wsdl_url = pac_params.url_webservice or attachment.res_pac.url_webservice
             USER = pac_params.user or attachment.res_pac.user
@@ -112,8 +97,12 @@ class ir_attachment_facturae_mx(osv.Model):
             url ='http://%s/xmlrpc/' % (wsdl_url)
             common_proxy = xmlrpclib.ServerProxy(url+'common')
             object_proxy = xmlrpclib.ServerProxy(url+'object')
-            uid2 = common_proxy.login(DB,USER,PASS)
-            _args = [('cfdi_folio_fiscal', '=', attachment.cfdi_folio_fiscal),('res_pac','!=',attachment.res_pac.name_driver)]
+            try:
+                uid2 = common_proxy.login(DB,USER,PASS)
+            except Exception, e:
+                error = tools.ustr(traceback.format_exc())
+                _logger.error(error)
+            _args = [('cfdi_folio_fiscal', '=', attachment.cfdi_folio_fiscal),('res_pac','!=',attachment.res_pac.id)]
             ids_new = object_proxy.execute(DB, uid2, PASS, 'ir.attachment.facturae.mx', 'search', _args)
             try:
                 res = object_proxy.execute(DB, uid2, PASS, 'ir.attachment.facturae.mx', 'signal_cancel', ids_new)
@@ -127,7 +116,7 @@ class ir_attachment_facturae_mx(osv.Model):
         if context is None:
             context = {}
         pac_params_obj = self.pool.get('params.pac')
-        for attachment in self.browse(cr, uid, ids, context=context):            
+        for attachment in self.browse(cr, uid, ids, context=context):
             pac_params_ids = pac_params_obj.search(cr, uid, [
                 ('method_type', '=', 'firmar'),
                 ('res_pac', '=', attachment.res_pac.id),
@@ -136,14 +125,6 @@ class ir_attachment_facturae_mx(osv.Model):
             if pac_params_ids:
                 pac_params = pac_params_obj.browse(
                     cr, uid, pac_params_ids, context)[0]
-            pac_params_server_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'firmar'),
-                ('res_pac', '=', attachment.res_pac.id),
-                ('company_id', '=', attachment.company_id.id),
-                ('active', '=', True)], limit=1, context=context)
-            if pac_params_server_ids:
-                pac_params_server = pac_params_obj.browse(
-                    cr, uid, pac_params_server_ids, context)[0]
             DB = cr.dbname
             wsdl_url = pac_params.url_webservice or attachment.res_pac.url_webservice
             USER = pac_params.user or attachment.res_pac.user
@@ -151,7 +132,11 @@ class ir_attachment_facturae_mx(osv.Model):
             url ='http://%s/xmlrpc/' % (wsdl_url)
             common_proxy = xmlrpclib.ServerProxy(url+'common')
             object_proxy = xmlrpclib.ServerProxy(url+'object')
-            uid2 = common_proxy.login(DB,USER,PASS)
+            try:
+                uid2 = common_proxy.login(DB,USER,PASS)
+            except Exception, e:
+                error = tools.ustr(traceback.format_exc())
+                _logger.error(error)
             fname_cer_no_pem = self.binary2file(cr, uid, ids,
                     attachment.certificate_file, 'openerp_' + '' + '__certificate__', '.cer')
             cerCSD = fname_cer_no_pem and base64.encodestring(
@@ -168,8 +153,7 @@ class ir_attachment_facturae_mx(osv.Model):
                                 'res_id': False,
                                 }
             attachment_id = object_proxy.execute(DB, uid2, PASS, 'ir.attachment', 'create', attachment_values)
-            attachment_face = { 'name': attachment.name, 
-                                'type': 'cfdi32_pac_sf',
+            attachment_face = { 'name': attachment.name,
                                 'company_id': attachment.company_id.id,
                                 'id_source': False,
                                 'model_source': attachment.model_source,
@@ -177,11 +161,12 @@ class ir_attachment_facturae_mx(osv.Model):
                                 'certificate_password': attachment.certificate_password,
                                 'certificate_file': cerCSD,
                                 'certificate_key_file': keyCSD,
-                                'user_pac': pac_params_server.user,
-                                'password_pac': pac_params_server.password,
-                                'url_webservice_pac': pac_params_server.url_webservice,
+                                'user_pac': '',
+                                'password_pac': '',
+                                'url_webservice_pac': '',
                                 'file_input': attachment.file_input.id,
                                 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                                'res_pac': 2, # This hardcore value must be changed
                                }
             attachment_face_id = object_proxy.execute(DB, uid2, PASS, 'ir.attachment.facturae.mx', 'create', attachment_face)
             object_proxy.execute(DB, uid2, PASS,'ir.attachment.facturae.mx','signal_confirm',[attachment_face_id])
