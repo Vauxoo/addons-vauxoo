@@ -428,6 +428,7 @@ class ir_attachment_facturae_mx(osv.Model):
     def signal_send_customer(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
+        context.update({'active_model': 'ir.attachment.facturae.mx', 'active_ids': ids, 'active_id': ids[0]})
         attachments = []
         msj = ''
         partner_mail = ''
@@ -485,13 +486,14 @@ class ir_attachment_facturae_mx(osv.Model):
                                 (6, 0, mssg['partner_ids'])]
                             mssg['attachment_ids'] = [
                                 (6, 0, attachments)]
+                            mssg['template_id'] = tmp_id[0]
                             mssg_id = self.pool.get(
-                                'mail.compose.message').create(cr, uid, mssg, context=None)
+                                'mail.compose.message').create(cr, uid, mssg, context=context)
                             asunto = mssg['subject']
                             id_mail = obj_mail_mail.search(
                                 cr, uid, [('subject', '=', asunto)])
                             if id_mail:
-                                for mail in obj_mail_mail.browse(cr, uid, id_mail, context=None):
+                                for mail in obj_mail_mail.browse(cr, uid, id_mail, context=context):
                                     if mail.state == 'exception':
                                         msj = _(
                                             '\nNot correct email of the user or customer. Check in Menu Configuración\Tecnico\Email\Emails\n')
@@ -537,7 +539,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 'nodestroy': True,
                 'target': 'new',
                 'domain': '[]',
-                'context': None,
+                'context': context,
             }
         else:
             return status
@@ -673,7 +675,6 @@ class ir_attachment_facturae_mx(osv.Model):
             a = timezone_original + ((
                 timezone_present + timezone_original)*-1)
         return a
-
 
 class ir_attachment(osv.Model):
     _inherit = 'ir.attachment'

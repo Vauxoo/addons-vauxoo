@@ -22,3 +22,4 @@
 ################################################################################
 import ir_attachment_facturae
 import res_config
+import email_template
