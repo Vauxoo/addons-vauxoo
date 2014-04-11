@@ -69,7 +69,6 @@ Requires the following programs:
             "l10n_mx_facturae_group_show_wizards",
             "l10n_mx_settings_facturae",
             "l10n_mx_params_pac",
-            "account_voucher_tax",
         ],
     "demo" : [
         #~ "demo/l10n_mx_facturae_seq_demo.xml",
