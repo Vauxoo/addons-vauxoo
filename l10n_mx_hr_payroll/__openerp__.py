@@ -57,6 +57,7 @@ to perform the process of Payroll CFDI MX.
              "view/hr_contract_inherit.xml",
              "view/hr_payslip_working_day.xml",
              "view/hr_inability_view.xml",
+             "view/res_company.xml",
              #~ "data/payroll_category_hext_inability.xml",
              "data/payroll_working_day.xml",
              "data/payroll_inability_data.xml",

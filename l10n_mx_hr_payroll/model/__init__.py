@@ -28,3 +28,4 @@ import payroll_hr_inability
 import hr_contract
 import hr_payroll
 import hr_payslip
+import res_company
