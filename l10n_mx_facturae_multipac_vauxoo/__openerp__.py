@@ -48,14 +48,14 @@
         "l10n_mx_settings_facturae"
         ],
     "demo" : [
-        "demo/l10n_mx_facturae_pac_vx_demo.xml",
+        "demo/l10n_mx_facturae_multipac_vx_demo.xml",
         "demo/l10n_mx_facturae_seq_demo.xml",
-        "demo/account_invoice_cfdi_pac_vx_demo.xml",
+        "demo/account_invoice_cfdi_multipac_vx_demo.xml",
         ],
     "data" : [
         ],
     "test" : [
-        #~ "test/account_invoice_cfdi_pac_vauxoo.yml",
+        #~ "test/account_invoice_cfdi_multipac_vauxoo.yml",
         ],
     "installable" : True,
     "active" : False,

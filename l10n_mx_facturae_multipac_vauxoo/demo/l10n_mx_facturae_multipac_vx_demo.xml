@@ -2,23 +2,23 @@
 <openerp>
     <data noupdate="1">
         
-        <record id="params_pac_vx_cancelar_test" model="params.pac">
-            <field name="method_type">pac_vx_cancelar</field>
+        <record id="params_multipac_vx_cancelar_test" model="params.pac">
+            <field name="method_type">multipac_vx_cancelar</field>
             <field name="url_webservice">localhost:28069</field>
             <field name="namespace"></field>
             <field name="user">facturae_mx_user</field>
             <field name="password">1234</field>
-            <field name="name">PAC VAUXOO - Cancelar - Test</field>
+            <field name="name">MULTIPAC VAUXOO - Cancelar - Test</field>
             <field name="certificate_link"></field>
         </record>
         
-        <record id="params_pac_vx_firmar_test" model="params.pac">
-            <field name="method_type">pac_vx_firmar</field>
+        <record id="params_multipac_vx_firmar_test" model="params.pac">
+            <field name="method_type">multipac_vx_firmar</field>
             <field name="url_webservice">localhost:28069</field>
             <field name="namespace"></field>
             <field name="user">facturae_mx_user</field>
             <field name="password">1234</field>
-            <field name="name">PAC VAUXOO - Firmar - Test</field>
+            <field name="name">MULTIPAC VAUXOO - Firmar - Test</field>
             <field name="certificate_link"></field>
         </record>
         
