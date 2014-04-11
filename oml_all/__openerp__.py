@@ -219,7 +219,7 @@
                 "l10n_pa",
                 "pad",
                 "project_long_term",
-                "web_shortcuts"
+                "web_shortcuts",
                 #End list of all oficial modules
                 ],
     "author" : "Vauxoo",

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="action_view_attachment_payslip" model="ir.actions.act_window">
+                <field name="name">Attachments Payslips</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">ir.attachment.facturae.mx</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[('model_source','=','hr.payslip')]</field>
+                <field eval="False" name="view_id"/>
+            </record>
+            <menuitem action="action_view_attachment_payslip"
+                name="Attachments Payslips"
+                id="menu_department_tree"
+                parent="hr_payroll.menu_hr_root_payroll"/>
+            
+    </data>
+</openerp>

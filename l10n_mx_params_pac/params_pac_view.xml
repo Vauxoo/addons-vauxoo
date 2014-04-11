@@ -74,6 +74,7 @@
                     <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                     <field name="active"/>
                     <field name="sequence"/>
+                    <field name="user_id"/>
                 </form>
             </field>
         </record>

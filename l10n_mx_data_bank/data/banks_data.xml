@@ -16,7 +16,7 @@
             <field name='code'>009</field>
             <field name='social_reason'>Banco Nacional de Obras y Servicios Públicos, Sociedad Nacional de Crédito, Institución de Banca de Desarrollo </field>
         </record>
-        <record id='acc_bank_012_BBVA BANCOMER' model='res.bank'>
+        <record id='acc_bank_012_BBVA_BANCOMER' model='res.bank'>
             <field name='name'>BBVA BANCOMER</field>
             <field name='code'>012</field>
             <field name='social_reason'>BBVA Bancomer, S.A., Institución de Banca Múltiple, Grupo Financiero BBVA Bancomer </field>

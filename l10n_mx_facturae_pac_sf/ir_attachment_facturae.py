@@ -72,14 +72,14 @@ class ir_attachment_facturae_mx(osv.Model):
         factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_sign()
         if factura_mx_type__fc == None:
             factura_mx_type__fc = {}
-        factura_mx_type__fc.update({'cfdi32_pac_sf': self._upload_ws_file})
+        factura_mx_type__fc.update({'cfdi32_pac_sf': self._sf_stamp})
         return factura_mx_type__fc
     
     def get_driver_fc_cancel(self):
         factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_cancel()
         if factura_mx_type__fc == None:
             factura_mx_type__fc = {}
-        factura_mx_type__fc.update({'cfdi32_pac_sf': self.sf_cancel})
+        factura_mx_type__fc.update({'cfdi32_pac_sf': self._sf_cancel})
         return factura_mx_type__fc
         
     _columns = {
@@ -87,7 +87,7 @@ class ir_attachment_facturae_mx(osv.Model):
                                  required=True, readonly=True, help="Type of Electronic Invoice"),
     }
     
-    def sf_cancel(self, cr, uid, ids, context=None):
+    def _sf_cancel(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
         msg = ''
@@ -149,7 +149,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 msg = _('Not found information of webservices of PAC, verify that the configuration of PAC is correct')
         return {'message': msg, 'status_uuid': status_uuid, 'status': status}
     
-    def _upload_ws_file(self, cr, uid, ids, fdata=None, context=None):
+    def _sf_stamp(self, cr, uid, ids, fdata=None, context=None):
         """
         @params fdata : File.xml codification in base64
         """

@@ -30,10 +30,6 @@ from openerp.osv import fields, osv
 class hr_payslip_input(osv.osv):
 
     _inherit = 'hr.payslip.input'
-    _columns = {
-       'salary_rule_id' : fields.many2one('hr.salary.rule', 'Salary Rule', required=True,),
-       'exempt_amount': fields.float('Exempt Amount', help='Required attribute represents the exempt amount of a concept of perception or deduction.'),
-    }
 
     def onchange_salary_rule(self, cr, uid, ids, salary_rule_id=False, parent_id=False, context=None):
         if context is None:
@@ -47,6 +43,5 @@ class hr_payslip_input(osv.osv):
                 result['name'] = read_salary_data.input_ids[0].name
                 result['code'] = read_salary_data.input_ids[0].code
                 result['contract_id'] = parent_id
-                return {'value': result} 
         return {'value': result} 
 

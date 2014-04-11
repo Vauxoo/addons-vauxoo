@@ -31,13 +31,13 @@ class hr_payslip(osv.osv):
 
     _inherit = 'hr.payslip'
 
-    def onchange_employee_id(self, cr, uid, ids, date_from, date_to, employee_id=False, contract_id=False, context=None):
-        rule_input_line_obj = self.pool.get('hr.rule.input')
-        data = super(hr_payslip, self).onchange_employee_id(cr, uid, ids, date_from, date_to, employee_id=employee_id, contract_id=contract_id, context=context)
-        data_input_line_ids = data.get('value').get('input_line_ids')
-        if data_input_line_ids:
-            for line in data_input_line_ids:
-                line_id = rule_input_line_obj.search(cr, uid, [('code','=',line.get('code')),('name','=',line.get('name'))],context=context)
-                line_data_id = rule_input_line_obj.browse(cr, uid, line_id[0], context=context).input_id.id
-                line.update({'salary_rule_id': line_data_id})
-        return data 
+    #~ def onchange_employee_id(self, cr, uid, ids, date_from, date_to, employee_id=False, contract_id=False, context=None):
+        #~ rule_input_line_obj = self.pool.get('hr.rule.input')
+        #~ data = super(hr_payslip, self).onchange_employee_id(cr, uid, ids, date_from, date_to, employee_id=employee_id, contract_id=contract_id, context=context)
+        #~ data_input_line_ids = data.get('value').get('input_line_ids')
+        #~ if data_input_line_ids:
+            #~ for line in data_input_line_ids:
+                #~ line_id = rule_input_line_obj.search(cr, uid, [('code','=',line.get('code')),('name','=',line.get('name'))],context=context)
+                #~ line_data_id = rule_input_line_obj.browse(cr, uid, line_id[0], context=context).input_id.id
+                #~ line.update({'salary_rule_id': line_data_id})
+        #~ return data 

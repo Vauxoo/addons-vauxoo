@@ -25,8 +25,8 @@
                     <header>
                         <button name="create_ir_attachment_facturae" states="draft" string="Validate Attachment" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <button name="signal_confirm" states="draft" string="Confirm" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
-                        <button name="signal_sign" states="confirmed" string="Sign" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
-                        <button name="signal_printable" states="signed, done" string="Generate Printable Format" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <button name="signal_sign" states="confirmed" string="Sign" type="object" class="oe_highlight" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <button name="signal_printable" states="done" string="Generate Printable Format" type="object" class="oe_highlight" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <button name="signal_send_customer" attrs="{'invisible':['|', ('date_print_report','=',False), ('state', 'not in', ('signed', 'done'))]}" string="Send to Customer" type="object" class="oe_highlight" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <button name="signal_done" states="sent_backup" string="Done" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <button name="signal_cancel" states="draft,confirmed,signed,printable,sent_backup,sent_customer,done" string="Cancel" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
@@ -43,17 +43,23 @@
                             <field name="file_xml_sign"/>
                             <field name="file_pdf"/>
                             <field name="identifier"/>
-<!--
-                            <field name="file_input_index"/>
--->
-                            <field name="file_xml_sign_index"/>
-                            <field name="file_pdf_index"/>
-                        </group>
-                        <group colspan="4">
-                            <field name="msj" invisible="1"/>
-                            <field name="last_date" invisible="1"/>
-                            <field name="date_print_report" invisible="1"/>
-                        </group>
+                         </group>
+                    <notebook>
+                        <page string="General Information">
+                            <group colspan="4">
+                                <field name="msj" invisible="1"/>
+                                <field name="last_date" invisible="1"/>
+                                <field name="date_print_report" invisible="1"/>
+                            </group>
+                        </page>
+                        <page string="Other info">
+                            <group colspan="4">
+                                <field name="cfdi_fecha_timbrado" readonly="1"/>
+                                <field name="cfdi_fecha_cancelacion" readonly="1"/>
+                                <field name="attachment_email"/>
+                            </group>
+                        </page>
+                    </notebook>
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>

@@ -61,6 +61,7 @@ class params_pac(osv.Model):
         'certificate_link': fields.char('Certificate link', size=256 , 
             help='PAC have a public certificate that is necessary by customers to check the validity of the XML and PDF'),
         # 'link_type': fields.selection([('production','Produccion'),('test','Pruebas')],"Tipo de ligas"),
+        'user_id': fields.many2one('res.users', 'User Params Pac', help="The user responsible for this params pac"),
     }
     _defaults = {
         'active': 1,

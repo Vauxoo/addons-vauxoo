@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="base.main_company" model="res.company">
+            <field name='employer_registration' eval="1203256"/>
+        </record>
+
+    </data>
+</openerp>

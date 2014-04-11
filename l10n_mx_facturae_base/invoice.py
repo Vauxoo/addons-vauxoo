@@ -170,6 +170,8 @@ class account_invoice(osv.Model):
             'out_refund': True,
             'in_invoice': False,
             'in_refund': False}
+        address_emitter = False
+        context_extra_data = {}
         file_globals = self._get_file_globals(cr, uid, ids, context=context)
         fname_cer_no_pem = file_globals['fname_cer']
         cerCSD = open(fname_cer_no_pem).read().encode('base64') #Mejor forma de hacerlo
@@ -187,11 +189,19 @@ class account_invoice(osv.Model):
                                         'datas': base64.encodestring(xml_data),
                                         'datas_fname': fname,
                                         'res_model': self._name,
-                                        'res_id': invoice.id
+                                        #~ 'res_id': invoice.id
                                 }, context=context)
+                    if invoice.company_emitter_id.address_invoice_parent_company_id.use_parent_address:
+                        address_emitter = invoice.company_emitter_id.address_invoice_parent_company_id.parent_id
+                    else:
+                        address_emitter = invoice.company_emitter_id.address_invoice_parent_company_id
+                    if address_emitter:
+                        context_extra_data.update({'emisor':{'phone':address_emitter.phone,'fax':address_emitter.fax,'mobile':address_emitter.mobile,'web':address_emitter.website,'email':address_emitter.email}})
+                    context_extra_data.update({'receptor':{'phone':invoice.partner_id.phone,'fax':invoice.partner_id.fax,'mobile':invoice.partner_id.mobile}})
+                    context_extra_data.update({'comment': invoice.comment or '','payment_term':invoice.payment_term.note or invoice.payment_term.name or '','origin': invoice.origin,'type': invoice.type})
                     attach_ids = ir_attach_obj.create(cr, uid, {
                         'name': invoice.fname_invoice, 
-                        'type': invoice.invoice_sequence_id.approval_id.type,
+                        'type': invoice.invoice_sequence_id.approval_id and invoice.invoice_sequence_id.approval_id.type or False,
                         'journal_id': invoice.journal_id and invoice.journal_id.id or False,
                         'company_emitter_id': invoice.company_emitter_id.id,
                         'model_source': self._name or '',
@@ -206,6 +216,7 @@ class account_invoice(osv.Model):
                         #~'file_input_index': base64.encodestring(xml_data),
                         'document_source': invoice.number,
                         'file_input': attachment_id,
+                        'context_extra_data': context_extra_data,
                         },
                       context=context)#Context, because use a variable type of our code but we dont need it.
                     ir_attach_obj.signal_confirm(cr, uid, [attach_ids], context=context)
@@ -800,16 +811,14 @@ class account_invoice(osv.Model):
         # time.strftime('%Y-%m-%dT%H:%M:%S',
         # time.strptime(invoice.date_invoice, '%Y-%m-%d %H:%M:%S'))
         context.update({'fecha': data_dict['cfdi:Comprobante']['fecha']})
-        sign_str = self._get_sello(
-            cr=False, uid=False, ids=False, context=context)
-        if not sign_str:
-            raise osv.except_osv(_('Error in Stamp !'), _(
-                "Can't generate the stamp of the voucher.\nCkeck your configuration.\ns%s") % (msg2))
-
+        #~sign_str = self._get_sello(
+            #~cr=False, uid=False, ids=False, context=context)
+        #~if not sign_str:
+            #~raise osv.except_osv(_('Error in Stamp !'), _(
+                #~"Can't generate the stamp of the voucher.\nCkeck your configuration.\ns%s") % (msg2))
         nodeComprobante = doc_xml.getElementsByTagName("cfdi:Comprobante")[0]
-        nodeComprobante.setAttribute("sello", sign_str)
-        data_dict['cfdi:Comprobante']['sello'] = sign_str
-
+        #~nodeComprobante.setAttribute("sello", sign_str)
+        #~data_dict['cfdi:Comprobante']['sello'] = sign_str
         noCertificado = self._get_noCertificado(cr, uid, ids, context['fname_cer'])
         if not noCertificado:
             raise osv.except_osv(_('Error in No. Certificate !'), _(
@@ -830,7 +839,6 @@ class account_invoice(osv.Model):
         nodeConcepto = doc_xml.getElementsByTagName('cfdi:Conceptos')[0]
         x.insertBefore(nodeReceptor, nodeConcepto)
         self.write_cfd_data(cr, uid, ids, data_dict, context=context)
-
         if context.get('type_data') == 'dict':
             return data_dict
         if context.get('type_data') == 'xml_obj':
@@ -842,36 +850,7 @@ class account_invoice(osv.Model):
             data_dict['cfdi:Comprobante'].get('folio', '') or '') + '.xml'
         data_xml = data_xml.replace('<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
         date_invoice = data_dict.get('cfdi:Comprobante',{}) and datetime.strptime( data_dict.get('cfdi:Comprobante',{}).get('fecha',{}), '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d') or False
-        facturae_version = '3.2'
-        try:
-            self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], facturae_version)
-        except Exception, e:
-            raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (e))
         return fname_xml, data_xml
-
-    def validate_scheme_facturae_xml(self, cr, uid, ids, datas_xmls=[], facturae_version = None, facturae_type="cfdv", scheme_type='xsd'):
-    #TODO: bzr add to file fname_schema
-        if not datas_xmls:
-            datas_xmls = []
-        certificate_lib = self.pool.get('facturae.certificate.library')
-        for data_xml in datas_xmls:
-            (fileno_data_xml, fname_data_xml) = tempfile.mkstemp('.xml', 'openerp_' + (False or '') + '__facturae__' )
-            f = open(fname_data_xml, 'wb')
-            data_xml = data_xml.replace("&amp;", "Y")#Replace temp for process with xmlstartle
-            f.write( data_xml )
-            f.close()
-            os.close(fileno_data_xml)
-            all_paths = tools.config["addons_path"].split(",")
-            for my_path in all_paths:
-                if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT')):
-                    # If dir is in path, save it on real_path
-                    fname_scheme = my_path and os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT', facturae_type + facturae_version +  '.' + scheme_type) or ''
-                    #fname_scheme = os.path.join(tools.config["addons_path"], u'l10n_mx_facturae_base', u'SAT', facturae_type + facturae_version +  '.' + scheme_type )
-                    fname_out = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__schema_validation_result__' )
-                    result = certificate_lib.check_xml_scheme(cr, uid, ids, fname_data_xml, fname_scheme, fname_out)
-                    if result: #Valida el xml mediante el archivo xsd
-                        raise osv.except_osv('Error al validar la estructura del xml!', 'Validación de XML versión %s:\n%s'%(facturae_version, result))
-        return True
 
     def write_cfd_data(self, cr, uid, ids, cfd_datas, context=None):
         """
@@ -913,26 +892,6 @@ class account_invoice(osv.Model):
             '__serial__')
         result = certificate_lib._get_param_serial(cr, uid, ids,
             fname_cer, fname_out=fname_serial, type='PEM')
-        return result
-
-    def _get_sello(self, cr=False, uid=False, ids=False, context=None):
-        if context is None:
-            context = {}
-        # TODO: Put encrypt date dynamic
-        fecha = context['fecha']
-        year = float(time.strftime('%Y', time.strptime(
-            fecha, '%Y-%m-%dT%H:%M:%S')))
-        if year >= 2011:
-            encrypt = "sha1"
-        if year <= 2010:
-            encrypt = "md5"
-        certificate_lib = self.pool.get('facturae.certificate.library')
-        fname_sign = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(
-            ''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + \
-            '__sign__')
-        result = certificate_lib._sign(cr, uid, ids, fname=context['fname_xml'],
-            fname_xslt=context['fname_xslt'], fname_key=context['fname_key'],
-            fname_out=fname_sign, encrypt=encrypt, type_key='PEM')
         return result
 
     def _xml2cad_orig(self, cr=False, uid=False, ids=False, context=None):
@@ -1012,7 +971,7 @@ class account_invoice(osv.Model):
                 'tipoDeComprobante': tipoComprobante,
                 'formaDePago': u'Pago en una sola exhibición',
                 'noCertificado': '@',
-                'sello': '@',
+                'sello': '',
                 'certificado': '@',
                 'subTotal': "%.2f" % (invoice.amount_untaxed or 0.0),
                 'descuento': "0",  # Add field general
@@ -1050,7 +1009,7 @@ class account_invoice(osv.Model):
 
                 'rfc': (('vat_split' in address_invoice_parent._columns and \
                 address_invoice_parent.vat_split or address_invoice_parent.vat) \
-                or '').replace('-', ' ').replace(' ', ''),
+                or '').replace('-', ' ').replace(' ', '').upper(),
                 'nombre': address_invoice_parent.name or '',
                 # Obtener domicilio dinamicamente
                 # virtual_invoice.append( (invoice.company_id and
@@ -1148,18 +1107,17 @@ class account_invoice(osv.Model):
                 raise osv.except_osv(_('Warning !'), _(
                     "Don't have defined RFC of the partner[%s].\n%s !") % (
                     parent_obj.name, msg2))
-            if parent_obj._columns.has_key('vat_split') and\
-                parent_obj.vat[0:2] <> 'MX':
+            if parent_obj._columns.has_key('vat_split') and parent_obj.vat[0:2].upper() <> 'MX':
                 rfc = 'XAXX010101000'
             else:
                 rfc = ((parent_obj._columns.has_key('vat_split')\
                     and parent_obj.vat_split or parent_obj.vat)\
-                    or '').replace('-', ' ').replace(' ','')
+                    or '').replace('-', ' ').replace(' ','').upper()
             address_invoice = partner_obj.browse(cr, uid, \
                 invoice.partner_id.id, context=context)
             invoice_data['cfdi:Receptor'] = {}
             invoice_data['cfdi:Receptor'].update({
-                'rfc': rfc,
+                'rfc': rfc.upper(),
                 'nombre': (parent_obj.name or ''),
                 'cfdi:Domicilio': {
                     'calle': address_invoice.street and address_invoice.\
