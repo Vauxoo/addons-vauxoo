@@ -364,9 +364,9 @@ class hr_payslip(osv.Model):
                         payroll.journal_id.sequence_id.approval_ids[0] or False
             if approval_id:
                 if payroll.employee_id.address_home_id:
-                    type = payroll.journal_id and payroll.journal_id.sequence_id and \
-                            payroll.journal_id.sequence_id.approval_ids[0] and \
-                                        payroll.journal_id.sequence_id.approval_ids[0].res_pac.name_driver
+                    #~ type = payroll.journal_id and payroll.journal_id.sequence_id and \
+                            #~ payroll.journal_id.sequence_id.approval_ids[0] and \
+                                        #~ payroll.journal_id.sequence_id.approval_ids[0].res_pac.name_driver
                     xml_fname, xml_data = self._get_facturae_payroll_xml_data(cr, uid, ids, context=context)
                     fname = str(payroll.id) + '_XML_V3_2.xml' or ''
                     attachment_id = attachment_obj.create(cr, uid, {
@@ -378,7 +378,7 @@ class hr_payslip(osv.Model):
                                 }, context=context)
                     attach_ids.append( ir_attach_obj.create(cr, uid, {
                         'name': payroll.number or '/',
-                        'type': type,
+                        #~ 'type': type,
                         'journal_id': payroll.journal_id and payroll.journal_id.id or False,
                         'company_emitter_id': payroll.company_emitter_id.id,
                         'model_source': self._name or '',
@@ -394,6 +394,7 @@ class hr_payslip(osv.Model):
                         #~'file_input_index': base64.encodestring(xml_data),
                         'document_source': payroll.number,
                         'file_input': attachment_id,
+                        'res_pac': payroll.journal_id.sequence_id.approval_ids[0].res_pac.id or False,
                             },
                           context=context)
                         )

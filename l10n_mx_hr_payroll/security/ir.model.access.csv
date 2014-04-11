@@ -5,3 +5,4 @@ payroll_hr_inability,payroll.hr.inability,model_payroll_hr_inability,,1,1,1,1
 payroll_hr_day,payroll.hr.day,model_payroll_working_day,,1,1,1,1
 hr_payslip_overtime,hr.payslip.overtime,model_hr_payslip_overtime,,1,1,1,1
 hr_payslip_inability,hr.payslip.inability,model_hr_payslip_inability,,1,1,1,1
+hr_payslip,hr.payslip,model_hr_payslip,,1,1,1,1
