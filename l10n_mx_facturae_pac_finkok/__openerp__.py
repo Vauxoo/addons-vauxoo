@@ -54,6 +54,7 @@ Ubuntu Package Depends:
         "demo/l10n_mx_facturae_pac_finkok_demo.xml",
         "demo/l10n_mx_facturae_seq_demo.xml",
         "demo/l10n_mx_payroll_seq_demo.xml",
+        "demo/l10n_mx_facturae_seq_demo_customer_refund.xml",
     ],
     "data" : [
     ],

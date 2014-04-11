@@ -17,11 +17,13 @@
     _logger = logging.getLogger("openerp.tools.yaml_import")
     res_id = False
     time_total = 0
+    type_document = False
     for journal_data in acc_jour_obj.browse(cr, uid, journal_ids, context=context):
-        if (journal_data.sequence_id and journal_data.sequence_id.approval_id and journal_data.sequence_id.approval_id.id) and journal_data.type in ('sale'):
+        if (journal_data.sequence_id and journal_data.sequence_id.approval_id and journal_data.sequence_id.approval_id.id) and journal_data.type in ('sale', 'sale_refund'):
             for type_test_cancel in ['cancel_from_invoce','cancel_from_attachment_facturae_mx']:
                 time_total = 0
                 all_ok = False
+                type_journal = False
                 pac_type = journal_data.sequence_id.approval_id and journal_data.sequence_id.approval_id.type or False
                 ir_model_id = ir_model_data.search(cr, uid, [('res_id','=',journal_data.id),('model','=','account.journal')])
                 if ir_model_id:
@@ -29,11 +31,17 @@
                     name_journal = ir_model_data.browse(cr, uid, ir_model_id[0], context=context).name.encode('UTF8')
                     journal_xml_id = '%s.%s' % (module_journal,name_journal)
                     try:
-                        log("To test the Mexican Electronic Invoice %s %s" % (pac_type,type_test_cancel))
+                        if journal_data.type == 'sale':
+                            type_journal = 'out_invoice'
+                            type_document = "Invoice"
+                        elif journal_data.type == 'sale_refund':
+                            type_journal = 'out_refund'
+                            type_document = "Refund Sale"
+                        log("To test the Mexican Electronic %s %s %s" % (type_document,pac_type,type_test_cancel))
                         #################################################################################################
                         #     1 Duplicate invoice of l10n_mx_facturae_base to xx                                        #
                         #################################################################################################
-                        log("1 Duplicate invoice of l10n_mx_facturae_base") 
+                        log("1 Duplicate %s of l10n_mx_facturae_base" % (type_document))
                         with ti.Timer() as t:
                             invoice_id = self.copy(cr, uid, ref('l10n_mx_facturae_base.ai_pac_facturae_0'), context=context)
                             invoice_lines = self.read(cr, uid, [invoice_id],['invoice_line'])
@@ -42,7 +50,7 @@
                                     # This write is because I need the invoice to be different and is added to the product description on the invoice id 
                                     new_name_product = '%s invoice: %s'%(aml_obj.read(cr, uid, line['invoice_line'][0],['name']).get('name') , invoice_id)
                                     aml_obj.write(cr, uid, line['invoice_line'],{'name': new_name_product})
-                            self.write(cr, uid, [invoice_id], {'journal_id':ref(journal_xml_id)},context=context)
+                            self.write(cr, uid, [invoice_id], {'journal_id':ref(journal_xml_id), 'type': type_journal },context=context)
                             xml_id_invoice = 'ai_pac_facturae_%s_%s'% (pac_type,invoice_id)
                             data_ids = ir_model_data.search(cr, uid, [('model', '=', self._name), ('name', 'like', xml_id_invoice)])
                             if not data_ids:
@@ -55,7 +63,7 @@
                         #~ print "Time duplicate invoice: %s s" % t.secs
                         time_tmp = t.secs
                         time_total += time_tmp
-                        log("*** Time duplicate invoice: %s s" % time_tmp)
+                        log("*** Time duplicate %s : %s s" % (type_document,time_tmp))
                         #################################################################################################
                         #                                Browse of invoice                                              #
                         #################################################################################################
@@ -70,18 +78,18 @@
                         #################################################################################################
                         #                       3 I check that Initially customer invoice state is "Draft"              #
                         #################################################################################################
-                        log("3 I check that Initially customer invoice %s state is Draft"% (xml_id_invoice))
+                        log("3 I check that Initially customer %s %s state is Draft"% (type_document,xml_id_invoice))
                         assert invoice_data.state == 'draft', 'This invoice has not state in draft'
                         
                         #################################################################################################
                         #                       4 I open invoice by clicking on Create button                           #
                         #################################################################################################
-                        log("4 I open invoice by clicking on Create button %s" % (xml_id_invoice))
+                        log("4 I open %s by clicking on Create button %s" % (type_document,xml_id_invoice))
                         with ti.Timer() as t:
                             wf_service.trg_validate(uid, 'account.invoice', ref(xml_id_invoice), 'invoice_open', cr)
                         time_tmp = t.secs
                         time_total += time_tmp
-                        log("*** Open invoice: %s s" % time_tmp)
+                        log("*** Open %s: %s s" % (type_document,time_tmp))
                         #################################################################################################
                         #                                Update browse of invoice                                       #
                         #################################################################################################
@@ -90,7 +98,7 @@
                         #################################################################################################
                         #                       5 I check that the invoice state is "Open"                              #
                         #################################################################################################
-                        log("5 I check that the invoice %s state is Open"% (xml_id_invoice))
+                        log("5 I check that the %s %s state is Open"% (type_document,xml_id_invoice))
                         assert invoice_data.state == 'open', 'This invoice has not state in open'
                         
                         #################################################################################################
@@ -123,7 +131,7 @@
                             ir_attachment_mx_obj.signal_sign(cr, uid, cfdi_attachment_ids, context=context)
                         time_tmp = t.secs
                         time_total += time_tmp
-                        log("*** Signal invoice: %s s" % time_tmp)
+                        log("*** Signal %s: %s s" % (type_document,time_tmp))
                         
                         #################################################################################################
                         #    8 I check that the state in l10n_mx attachment facturae cfdi_attachment_data is "Done"   #
@@ -151,7 +159,7 @@
                             ir_attachment_mx_obj.signal_printable(cr, uid , cfdi_attachment_ids ,context=context)
                         time_tmp = t.secs
                         time_total += time_tmp
-                        log("*** Printable invoice: %s s" % time_tmp)
+                        log("*** Printable %s: %s s" % (type_document,time_tmp))
                         
                         #######################################################################################################
                         #   10 I check that the file pdf in l10n_mx attachment facturae cfdi_attachment_data was created      #
@@ -171,12 +179,12 @@
                             #############################################################################################################
                             #   11 I cancel from invoice by clicking on cancel button                                                   #
                             #############################################################################################################
-                            log("11 I cancel from invoce %s by clicking on cancel button"% (xml_id_invoice))
+                            log("11 I cancel from %s %s by clicking on cancel button"% (type_document,xml_id_invoice))
                             with ti.Timer() as t:
                                 wf_service.trg_validate(uid, 'account.invoice', ref(xml_id_invoice), 'invoice_cancel', cr)
                             time_tmp = t.secs
                             time_total += time_tmp
-                            log("*** Cancel invoice from model source: %s s" % time_tmp)
+                            log("*** Cancel %s from model source: %s s" % (type_document,time_tmp))
                             
                         if type_test_cancel == 'cancel_from_attachment_facturae_mx':
                             ########################################################################################################
@@ -187,7 +195,7 @@
                                 ir_attachment_mx_obj.signal_cancel(cr, uid , cfdi_attachment_ids ,context=context)
                             time_tmp = t.secs
                             time_total += time_tmp
-                            log("*** Cancel invoice from attachment : %s s" % time_tmp)
+                            log("*** Cancel %s from attachment : %s s" % (type_document,time_tmp))
                             
                         #######################################################################################################
                         #    12 I check that the state in l10n_mx attachment and facturae cfdi_attachment_data are "Cancel"   #

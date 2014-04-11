@@ -51,6 +51,7 @@ Ubuntu Package Depends:
         "demo/l10n_mx_facturae_pac_sf_demo.xml",
         "demo/l10n_mx_facturae_seq_demo.xml",
         "demo/l10n_mx_payroll_seq_demo.xml",
+        "demo/l10n_mx_facturae_customer_refund_demo.xml",
     ],
     "data" : [
         #"security/l10n_mx_facturae_pac_sf_security.xml",
