@@ -29,7 +29,7 @@
             <field name="type">percent</field>
             <field name="amount">-0.10670</field>
             <field name="description">RET IVA 10.67% IVA RETENIDO MX Test</field>
-            <field model="account.tax.category" name="tax_category_id" search="[('name','like','ISR-RET')]"/>
+            <field model="account.tax.category" name="tax_category_id" search="[('name','like','IVA-RET')]"/>
         </record>
         
     </data>
