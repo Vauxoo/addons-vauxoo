@@ -6,8 +6,8 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by:
-#    Financed by:
+#    Coded by: Sabrina Romero <sabrina@vauxoo.com>  
+#    Financed by: Vauxoo Consultores <info@vauxoo.com>
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,6 +25,22 @@
 #
 ##############################################################################
 
-import params_pac
-import ir_sequence_approval
-import ir_attachment_facturae
+from openerp.osv import fields, osv
+
+class ir_sequence_approval(osv.Model):
+    _inherit = 'ir.sequence.approval'
+
+    def _get_type(self, cr, uid, ids=None, context=None):
+        types = super(ir_sequence_approval, self)._get_type(
+            cr, uid, ids, context=context)
+        types.extend([
+            ('cfdi32_multipac_vx', 'CFDI 3.2 Vauxoo'),
+        ])
+        return types
+
+    _columns = {
+        'type': fields.selection(_get_type, 'Type', type='char', size=64,
+                                 required=True, help="Type of Electronic Invoice"),
+    }
+    
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

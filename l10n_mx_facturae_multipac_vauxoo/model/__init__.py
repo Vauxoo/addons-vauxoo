@@ -6,8 +6,8 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by:
-#    Financed by:
+#    Coded by: Sabrina Romero <sabrina@vauxoo.com>  
+#    Financed by: Vauxoo Consultores <info@vauxoo.com>
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,4 +25,6 @@
 #
 ##############################################################################
 
-import model
+import params_pac
+import ir_sequence_approval
+import ir_attachment_facturae

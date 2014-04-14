@@ -6,8 +6,8 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by:
-#    Financed by:
+#    Coded by: Sabrina Romero <sabrina@vauxoo.com>  
+#    Financed by: Vauxoo Consultores <info@vauxoo.com>
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -30,7 +30,8 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module creates interface for e-invoice files from invoices with Vauxoo.
+    "description" : """ This module allows access interfaces for e-invoice
+    files from documents with any pac in MultipacVauxoo.
     Ubuntu Package Depends:
         sudo apt-get install python-soappy
     """,
@@ -47,14 +48,14 @@
         "l10n_mx_settings_facturae"
         ],
     "demo" : [
-        "demo/l10n_mx_facturae_pac_vx_demo.xml",
+        "demo/l10n_mx_facturae_multipac_vx_demo.xml",
         "demo/l10n_mx_facturae_seq_demo.xml",
-        "demo/account_invoice_cfdi_pac_vx_demo.xml",
+        "demo/account_invoice_cfdi_multipac_vx_demo.xml",
         ],
     "data" : [
         ],
     "test" : [
-        #~ "test/account_invoice_cfdi_pac_vauxoo.yml",
+        #~ "test/account_invoice_cfdi_multipac_vauxoo.yml",
         ],
     "installable" : True,
     "active" : False,

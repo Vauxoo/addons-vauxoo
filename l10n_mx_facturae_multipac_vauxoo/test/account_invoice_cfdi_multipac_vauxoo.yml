@@ -1,0 +1,80 @@
+-
+  To test the Mexican Electronic Invoice CFDI PAC VAUXOO
+-
+  1.1.- I check that Journal is cfdi_multipac_vx
+-
+  !assert {model: account.invoice, id: account_invoice_cfdi_multipac_vx0}:
+    - journal_id.id == ref("l10n_mx_facturae_multipac_vauxoo.l10n_mx_cfdi_multipac_vx_journal_0")
+-
+  1.2.- I check that Initially customer invoice state is "Draft"
+-
+  !assert {model: account.invoice, id: account_invoice_cfdi_multipac_vx0}:
+    - state == 'draft'
+-
+  1.3.- I open invoice by clicking on Create button
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: account_invoice_cfdi_multipac_vx0}
+-
+  1.4.-I check that the invoice state is "Open"
+-
+  !assert {model: account.invoice, id: account_invoice_cfdi_multipac_vx0}:
+    - state == 'open'
+-
+  1.5.- I check that the state in l10n_mx attachment facturae cfdi_multipac_vx is "Confirmed"
+-
+  !python {model: ir.attachment.facturae.mx}: |
+    import netsvc, tools, os, base64
+    cfdi_multipac_vx_ids = self.search(cr, uid, [('id_source', '=', ref("account_invoice_cfdi_multipac_vx0") ),('model_source','=','account.invoice'), ('state', '<>', 'cancel')], limit=1)
+    cfdi_multipac_vx_id = cfdi_multipac_vx_ids and cfdi_multipac_vx_ids[0] or False
+    state = 'no attach file'
+    if cfdi_multipac_vx_id:
+        cfdi_multipac_vx = self.browse(cr, uid, [cfdi_multipac_vx_id])[0]
+        state = cfdi_multipac_vx.state
+        ir_attach_facturae_mx = cfdi_multipac_vx.file_input and cfdi_multipac_vx.file_input or False
+        fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
+        if fdata:
+            if tools.config['test_report_directory']:
+                open(os.path.join(tools.config['test_report_directory'], 'l10n_mx_facturae_multipac_vauxoo' + '_' + \
+                  'account_invoice_cfdi_multipac_vx0' + '_' + 'confirmed' + '-' + ir_attach_facturae_mx.datas_fname)\
+                  , 'wb+').write( base64.decodestring( fdata ) )
+        else:
+            state = 'no data in attach file'
+    assert state=='confirmed', 'No confirmed state l10n_mx attachment facturae cfdi_multipac_vx'
+-
+  1.6.- I sign l10n_mx attachment facturae cfdi_multipac_vx by clicking on sign button upload pac
+-
+  !python {model: ir.attachment.facturae.mx}: |
+    import netsvc, tools, xmlrpclib
+    from openerp.osv import fields, osv
+    from openerp.tools.translate import _
+    wf_service = netsvc.LocalService("workflow")
+    cfdi_multipac_vx_ids = self.search(cr, uid, [('id_source', '=', ref("account_invoice_cfdi_multipac_vx0") ),('model_source','=','account.invoice'), ('state', '<>', 'cancel')], limit=1)
+    cfdi_multipac_vx_id = cfdi_multipac_vx_ids and cfdi_multipac_vx_ids[0] or False
+    if cfdi_multipac_vx_id:
+        cfdi_multipac_vx = self.browse(cr, uid, [cfdi_multipac_vx_id], context=context)[0]
+        try:
+            self.signal_sign(cr, uid, cfdi_multipac_vx_ids, context=context)
+        except Exception, e:
+            raise osv.except_osv(_('Warning'), _('Error!'))
+        state = cfdi_multipac_vx.state
+-
+  1.7.- I check that the state in l10n_mx attachment facturae cfdi_multipac_vx is "Signed"
+-
+  !python {model: ir.attachment.facturae.mx}: |
+    import netsvc, tools, os, base64
+    cfdi_multipac_vx_ids = self.search(cr, uid, [('id_source', '=', ref("account_invoice_cfdi_multipac_vx0") ),('model_source','=','account.invoice'), ('state', '<>', 'cancel')], limit=1)
+    cfdi_multipac_vx_id = len(cfdi_multipac_vx_ids) and cfdi_multipac_vx_ids[0] or False
+    state = 'no attach file'
+    if cfdi_multipac_vx_id:
+        cfdi_multipac_vx = self.browse(cr, uid, [cfdi_multipac_vx_id], context=context)[0]
+        ir_attach_facturae_mx = cfdi_multipac_vx.file_xml_sign and cfdi_multipac_vx.file_xml_sign or False
+        fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
+        if fdata:
+            state = cfdi_multipac_vx.state
+            if tools.config['test_report_directory']:
+                open(os.path.join(tools.config['test_report_directory'], 'l10n_mx_facturae_multipac_vauxoo' + '_' + \
+                  'account_invoice_cfdi_multipac_vx0' + '_' + 'signed' + '-' + ir_attach_facturae_mx.datas_fname),\
+                  'wb+').write( base64.decodestring( fdata ) )
+        else:
+            state = 'no data in attach file'
+    assert state=='signed', 'No signed state l10n_mx attachment facturae cfdi_multipac_vx'

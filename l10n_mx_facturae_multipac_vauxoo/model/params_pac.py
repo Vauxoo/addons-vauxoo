@@ -6,8 +6,8 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by:
-#    Financed by:
+#    Coded by: Sabrina Romero <sabrina@vauxoo.com>  
+#    Financed by: Vauxoo Consultores <info@vauxoo.com>
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -39,8 +39,8 @@ class params_pac(osv.Model):
         types = super(params_pac, self)._get_method_type_selection(
             cr, uid, context=context)
         types.extend([
-            ('pac_vx_cancelar', _('PAC VAUXOO - Cancel')),
-            ('pac_vx_firmar', _('PAC VAUXOO - Sign')),
+            ('multipac_vx_cancelar', _('PAC VAUXOO - Cancel')),
+            ('multipac_vx_firmar', _('PAC VAUXOO - Sign')),
         ])
         return types
 

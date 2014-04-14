@@ -6,8 +6,8 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by:
-#    Financed by:
+#    Coded by: Sabrina Romero <sabrina@vauxoo.com>  
+#    Financed by: Vauxoo Consultores <info@vauxoo.com>
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -68,7 +68,7 @@ class ir_attachment_facturae_mx(osv.Model):
         types = super(ir_attachment_facturae_mx, self)._get_type(
             cr, uid, ids, context=context)
         types.extend([
-            ('cfdi32_pac_vx', 'CFDI 3.2 Vauxoo'),
+            ('cfdi32_multipac_vx', 'CFDI 3.2 Vauxoo'),
         ])
         return types
 
@@ -76,14 +76,14 @@ class ir_attachment_facturae_mx(osv.Model):
         factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_sign()
         if factura_mx_type__fc == None:
             factura_mx_type__fc = {}
-        factura_mx_type__fc.update({'cfdi32_pac_vx': self._vauxoo_stamp})
+        factura_mx_type__fc.update({'cfdi32_multipac_vx': self._vauxoo_stamp})
         return factura_mx_type__fc
 
     def get_driver_fc_cancel(self):
         factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_cancel()
         if factura_mx_type__fc == None:
             factura_mx_type__fc = {}
-        factura_mx_type__fc.update({'cfdi32_pac_vx': self._vauxoo_cancel})
+        factura_mx_type__fc.update({'cfdi32_multipac_vx': self._vauxoo_cancel})
         return factura_mx_type__fc
 
     _columns = {
@@ -99,7 +99,7 @@ class ir_attachment_facturae_mx(osv.Model):
         res_com_facte_certif_obj = self.pool.get('res.company.facturae.certificate')
         for attachment in self.browse(cr, uid, ids, context=context):
             pac_params_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'pac_vx_cancelar'), (
+                ('method_type', '=', 'multipac_vx_cancelar'), (
                     'company_id', '=', attachment.company_id.id), (
                         'active', '=', True)], limit=1, context=context)
             if pac_params_ids:
@@ -142,7 +142,7 @@ class ir_attachment_facturae_mx(osv.Model):
         pac_params_obj = self.pool.get('params.pac')
         for attachment in self.browse(cr, uid, ids, context=context):            
             pac_params_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'pac_vx_firmar'), (
+                ('method_type', '=', 'multipac_vx_firmar'), (
                     'company_id', '=', attachment.company_id.id), (
                         'active', '=', True)], limit=1, context=context)
             if pac_params_ids:
