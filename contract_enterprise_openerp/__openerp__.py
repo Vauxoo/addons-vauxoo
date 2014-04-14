@@ -52,6 +52,7 @@ this contracts.
     "website": "http://vauxoo.com",
     "category": "Contracts",
     "data": [
+        'security/ir.model.access.csv',
         'view/account_analytic_analysis_view.xml',
     ],
     "active": False,
