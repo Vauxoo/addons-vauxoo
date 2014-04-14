@@ -72,15 +72,6 @@ def exec_command_pipe(*args):
 class ir_attachment_facturae_mx(osv.Model):
     _inherit = 'ir.attachment.facturae.mx'
 
-
-    def _get_type(self, cr, uid, ids=None, context=None):
-        types = super(ir_attachment_facturae_mx, self)._get_type(
-            cr, uid, ids, context=context)
-        types.extend([
-            ('cfdi32_pac_finkok', 'CFDI 3.2 FINKOK'),
-        ])
-        return types
-    
     def get_driver_fc_sign(self):
         factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_sign()
         if factura_mx_type__fc == None:
@@ -94,11 +85,6 @@ class ir_attachment_facturae_mx(osv.Model):
             factura_mx_type__fc = {}
         factura_mx_type__fc.update({'cfdi32_pac_finkok': self._finkok_cancel})
         return factura_mx_type__fc
-        
-    _columns = {
-        'type': fields.selection(_get_type, 'Type', type='char', size=64,
-                                 required=True, readonly=True, help="Type of Electronic Invoice"),
-    }
     
     def _finkok_cancel(self, cr, uid, ids, context=None):
         msg = ''
@@ -112,7 +98,8 @@ class ir_attachment_facturae_mx(osv.Model):
         for ir_attachment_facturae_mx_id in self.browse(cr, uid, ids, context=context):
             status = False
             pac_params_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'pac_fk_cancelar'),
+                ('method_type', '=', 'cancelar'),
+                ('res_pac', '=', ir_attachment_facturae_mx_id.res_pac.id),
                 #~ ('company_id', '=', invoice.company_emitter_id.id),
                 ('company_id', '=', ir_attachment_facturae_mx_id.company_id.id),
                 ('active', '=', True),
@@ -121,10 +108,10 @@ class ir_attachment_facturae_mx(osv.Model):
             taxpayer_id = ir_attachment_facturae_mx_id.company_id.vat[2::] or ir_attachment_facturae_mx_id.company_id.partner_id.vat[2::] or False
             if pac_params_id:
                 pac_params_brw = pac_params_obj.browse(cr, uid, [pac_params_id], context=context)[0]
-                username = pac_params_brw.user
-                password = pac_params_brw.password
-                wsdl_url = pac_params_brw.url_webservice
-                namespace = pac_params_brw.namespace
+                username = pac_params_brw.user or ir_attachment_facturae_mx_id.res_pac.user
+                password = pac_params_brw.password or ir_attachment_facturae_mx_id.res_pac.password
+                wsdl_url = pac_params_brw.url_webservice or ir_attachment_facturae_mx_id.res_pac.url_webservice
+                namespace = pac_params_brw.namespace or ir_attachment_facturae_mx_id.res_pac.namespace
                 if 'demo' in wsdl_url or 'testing' in wsdl_url:
                     msg += _(u'WARNING, CANCEL IN TEST!!!!')
                 cerCSD_file = self.binary2file(cr, uid, ids,
@@ -202,16 +189,17 @@ class ir_attachment_facturae_mx(osv.Model):
             cfdi_xml = False
             status = False
             pac_params_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'pac_fk_firmar'), (
-                    'company_id', '=', ir_attachment_facturae_mx_id.company_id.id), (
-                        'active', '=', True)], limit=1, context=context)
+                ('method_type', '=', 'firmar'), 
+                ('company_id', '=', ir_attachment_facturae_mx_id.company_id.id),
+                ('res_pac', '=', ir_attachment_facturae_mx_id.res_pac.id),
+                ('active', '=', True)], limit=1, context=context)
             if pac_params_ids:
                 pac_params = pac_params_obj.browse(
                     cr, uid, pac_params_ids, context)[0]
-                user = pac_params.user
-                password = pac_params.password
-                wsdl_url = pac_params.url_webservice
-                namespace = pac_params.namespace
+                user = pac_params.user or ir_attachment_facturae_mx_id.res_pac.user
+                password = pac_params.password or ir_attachment_facturae_mx_id.res_pac.password
+                wsdl_url = pac_params.url_webservice or ir_attachment_facturae_mx_id.res_pac.url_webservice
+                namespace = pac_params.namespace or ir_attachment_facturae_mx_id.res_pac.namespace
                 certificate_link = pac_params.certificate_link
                 #agregar otro campo para la URL de testing y poder validar sin cablear
                 url_finkok = 'http://facturacion.finkok.com/servicios/soap/stamp.wsdl'

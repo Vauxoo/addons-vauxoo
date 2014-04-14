@@ -20,6 +20,7 @@
             <field name="number_start">1</field>
             <field name="number_end">9999</field>
             <field name="type">cfdi32_multipac_vx</field>
+            <field name="res_pac" ref="l10n_mx_res_pac_vx"/>
         </record>
 
         <record id="l10n_mx_cfdi_multipac_vx_journal_0" model="account.journal">

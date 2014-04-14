@@ -35,12 +35,6 @@ class ir_sequence_approval(osv.Model):
 
     _rec_name = 'approval_number'
 
-    def _get_type(self, cr, uid, ids=None, context=None):
-        if context is None:
-            context = {}
-        types = []
-        return types
-
     _columns = {
         'company_id': fields.many2one('res.company', 'Company', required=True,
             help='Company where will add this approval'),
@@ -59,8 +53,7 @@ class ir_sequence_approval(osv.Model):
         'sequence_id': fields.many2one('ir.sequence', u'Sequence',
             required=True, ondelete='cascade', help='Sequence where will add \
             this approval'),
-        'type': fields.selection(_get_type, 'Type', type='char', size=64,
-            required=True, help="Type of Electronic Invoice"),
+        'res_pac': fields.many2one('res.pac', u'Pacs', required=True),
     }
 
     _defaults = {

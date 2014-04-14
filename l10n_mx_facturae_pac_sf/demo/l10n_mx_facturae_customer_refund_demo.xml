@@ -19,7 +19,7 @@
             <field name="approval_year" eval="time.strftime('%Y')"/>
             <field name="number_start">1</field>
             <field name="number_end">9999</field>
-            <field name="type">cfdi32_pac_sf</field>
+            <field name="res_pac" ref="l10n_mx_res_pac_sf"/>
         </record>
 
         <record id="l10n_mx_cfdi_pac_sf_journal_customer_refund_0" model="account.journal">

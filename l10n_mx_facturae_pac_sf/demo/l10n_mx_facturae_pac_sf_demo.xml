@@ -2,24 +2,34 @@
 <openerp>
     <data noupdate="1">
         
+        <record id="l10n_mx_res_pac_sf" model="res.pac">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="name">Pac Solución Factible</field>
+            <field name="active">True</field>
+            <field name="code">SF</field>
+            <field name="name_driver">cfdi32_pac_sf</field>
+        </record>
+        
         <record id="params_pac_sf_cancelar_test" model="params.pac">
-            <field name="method_type">pac_sf_cancelar</field>
+            <field name="method_type">cancelar</field>
             <field name="url_webservice">http://testing.solucionfactible.com/ws/services/Timbrado</field>
             <field name="namespace">http://timbrado.ws.cfdi.solucionfactible.com</field>
             <field name="user">testing@solucionfactible.com</field>
             <field name="password">timbrado.SF.16672</field>
             <field name="name">PAC SF - Cancelar - Test</field>
             <field name="certificate_link">http://solucionfactible.com/sfic/resources/files/csdSAT-SF/testing/20001000000100005761.zip</field>
+            <field name="res_pac" ref="l10n_mx_res_pac_sf"/>
         </record>
         
         <record id="params_pac_sf_firmar_test" model="params.pac">
-            <field name="method_type">pac_sf_firmar</field>
+            <field name="method_type">firmar</field>
             <field name="url_webservice">http://testing.solucionfactible.com/ws/services/Timbrado</field>
             <field name="namespace">http://timbrado.ws.cfdi.solucionfactible.com</field>
             <field name="user">testing@solucionfactible.com</field>
             <field name="password">timbrado.SF.16672</field>
             <field name="name">PAC SF - Firmar - Test</field>
             <field name="certificate_link">http://solucionfactible.com/sfic/resources/files/csdSAT-SF/testing/20001000000100005761.zip</field>
+            <field name="res_pac" ref="l10n_mx_res_pac_sf"/>
         </record>
         <!--
         <record id="params_pac_sf_cancelar_prod" model="params.pac">

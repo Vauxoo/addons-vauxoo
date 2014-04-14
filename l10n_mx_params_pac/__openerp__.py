@@ -39,6 +39,7 @@
     "data" : [
         "security/ir.model.access.csv",
         "params_pac_view.xml",
+        "res_pac_view.xml",
         "security/params_pac_security.xml"
     ],
     "installable" : True,

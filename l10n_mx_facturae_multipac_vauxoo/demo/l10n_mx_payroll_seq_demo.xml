@@ -1,9 +1,9 @@
 <?xml version="1.0" ?>
 <openerp>
     <data noupdate="1">
-        <record id="l10n_mx_payroll_cfdi_pac_finkok_seq_0" model="ir.sequence">
+        <record id="l10n_mx_payroll_cfdi_pac_vx_seq_0" model="ir.sequence">
             <field name="company_id" ref="base.main_company"/>
-            <field name="name">MX Sequence Payroll CFDI FINKOK</field>
+            <field name="name">MX Sequence Payroll CFDI Vauxoo</field>
             <field name="active" eval="True"/>
             <field name="padding">0</field>
             <field name="number_next">1</field>
@@ -11,25 +11,24 @@
             <field name="implementation">standard</field>
         </record>
 
-        <record id="l10n_mx_cfdi_payroll_pac_finkok_approval_0" model="ir.sequence.approval">
+        <record id="l10n_mx_cfdi_payroll_pac_vx_approval_0" model="ir.sequence.approval">
             <field name="company_id" ref="base.main_company"/>
-            <field name="sequence_id" ref="l10n_mx_payroll_cfdi_pac_finkok_seq_0"/>
+            <field name="sequence_id" ref="l10n_mx_payroll_cfdi_pac_vx_seq_0"/>
             <field name="approval_number">12345</field>
-            <field name="serie">CFDIPAFINKOK</field>
+            <field name="serie">MXCFDIPV</field>
             <field name="approval_year" eval="time.strftime('%Y')"/>
             <field name="number_start">1</field>
             <field name="number_end">9999</field>
-            <field name="res_pac" ref="l10n_mx_res_pac_finkok"/>
+            <field name="res_pac" ref="l10n_mx_res_pac_vx"/>
         </record>
 
-        <record id="l10n_mx_cfdi_payroll_pac_finkok_journal_0" model="account.journal">
+        <record id="l10n_mx_cfdi_payroll_pac_vx_journal_0" model="account.journal">
             <field name="company_id" ref="base.main_company"/>
-            <field name="sequence_id" ref="l10n_mx_payroll_cfdi_pac_finkok_seq_0"/>
-            <field name="name">MX CFDI Journal Payroll FINKOK</field>
-            <field name="code">FINKPACFDI</field>
+            <field name="sequence_id" ref="l10n_mx_payroll_cfdi_pac_vx_seq_0"/>
+            <field name="name">MX CFDI Journal Payroll Vauxoo</field>
+            <field name="code">VXCFDI</field>
             <field name="type">purchase</field>
             <field name="update_posted" eval="True"/>
-            <field name="analytic_journal_id" ref="account.exp"/>
         </record>
     </data>
 </openerp>

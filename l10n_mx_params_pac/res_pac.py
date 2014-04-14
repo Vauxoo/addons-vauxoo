@@ -25,27 +25,37 @@
 #
 ##############################################################################
 
-import time
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 from openerp import pooler, tools
-from openerp import netsvc
-from openerp import release
 
-class params_pac(osv.Model):
-    _inherit = 'params.pac'
+class res_pac(osv.Model):
+    _name = 'res.pac'
 
-    def _get_method_type_selection(self, cr, uid, context=None):
-        types = super(params_pac, self)._get_method_type_selection(
-            cr, uid, context=context)
-        types.extend([
-            ('multipac_vx_cancelar', _('PAC VAUXOO - Cancel')),
-            ('multipac_vx_firmar', _('PAC VAUXOO - Sign')),
-        ])
+    def _get_driver_selection(self, cr, uid, context=None):
+        if context is None:
+            context = {}
+        types = []
         return types
 
     _columns = {
-        'method_type': fields.selection(_get_method_type_selection,
-                                        "Process to perform", type='char', size=64, required=True,
-                                        help='Type of process to configure in this pac'),
+        'name': fields.char('Name', size=128, required=True,
+            help='Name for this res pac'),
+        'active': fields.boolean('Active', help='Indicate if this pac is active'),
+        'code': fields.char('Code', size=128, help='Code for this res pac'),
+        'name_driver': fields.selection(_get_driver_selection, "Pac Driver", type='char', size=64),
+        'params_pac_id': fields.many2one('params.pac', 'Params Pac', help="The params pac configuration for this res pac"),
+        'company_id': fields.many2one('res.company', 'Company', required=True,
+            help='Company where will configurate this param'), 
+        'user': fields.char('User', size=128, help='Name user for login to PAC'),
+        'password': fields.char('Password', size=128, help='Password user for login to PAC'),      
+        'url_webservice': fields.char('URL WebService', size=256,
+            help='URL of WebService used for send to sign the XML to PAC'),
+        'namespace': fields.char('NameSpace', size=256,
+            help='NameSpace of XML of the page of WebService of the PAC'),
+    }
+    
+    _defaults = {
+        'company_id': lambda s, cr, uid, c: s.pool.get(
+            'res.company')._company_default_get(cr, uid, 'res.pac', context=c),
     }

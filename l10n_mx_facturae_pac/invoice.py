@@ -57,7 +57,7 @@ class account_invoice(osv.Model):
         type_inv = 'cfd22'
         if sequence_app_id:
             type_inv = ir_seq_app_obj.browse(
-                cr, uid, sequence_app_id[0], context=context).type
+                cr, uid, sequence_app_id[0], context=context).res_pac.name_driver
         for data in datas:
             if 'cfdi' in type_inv:
                 comprobante = data['Comprobante']
@@ -117,7 +117,7 @@ class account_invoice(osv.Model):
         type_inv = 'cfd22'
         if sequence_app_id:
             type_inv = ir_seq_app_obj.browse(
-                cr, uid, sequence_app_id[0], context=context).type
+                cr, uid, sequence_app_id[0], context=context).res_pac.name_driver
         if 'cfdi' in type_inv:
             comprobante = 'cfdi:Comprobante'
             emisor = 'cfdi:Emisor'
