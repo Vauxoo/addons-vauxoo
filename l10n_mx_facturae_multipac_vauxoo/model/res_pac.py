@@ -6,8 +6,9 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: Sabrina Romero <sabrina@vauxoo.com>  
-#    Financed by: Vauxoo Consultores <info@vauxoo.com>
+#    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Coded by: Isaac Lopez (isaac@vauxoo.com)
+#    Financed by: http://www.sfsoluciones.com (aef@sfsoluciones.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,22 +26,26 @@
 #
 ##############################################################################
 
+import time
 from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
+from openerp import netsvc
+from openerp import release
 
-class ir_sequence_approval(osv.Model):
-    _inherit = 'ir.sequence.approval'
 
-    def _get_type(self, cr, uid, ids=None, context=None):
-        types = super(ir_sequence_approval, self)._get_type(
-            cr, uid, ids, context=context)
+class res_pac(osv.Model):
+    _inherit = 'res.pac'
+
+    def _get_driver_selection(self, cr, uid, context=None):
+        types = super(res_pac, self)._get_driver_selection(
+            cr, uid, context=context)
         types.extend([
             ('cfdi32_multipac_vx', 'CFDI 3.2 Vauxoo'),
         ])
         return types
 
     _columns = {
-        'type': fields.selection(_get_type, 'Type', type='char', size=64,
-                                 required=True, help="Type of Electronic Invoice"),
+        'name_driver': fields.selection(_get_driver_selection,
+                       'Pac Driver', type='char', size=64, required=True),
     }
-    
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
