@@ -2,7 +2,7 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
@@ -34,20 +34,18 @@ from openerp import netsvc
 from openerp import release
 
 
-class params_pac(osv.Model):
-    _inherit = 'params.pac'
+class res_pac(osv.Model):
+    _inherit = 'res.pac'
 
-    def _get_method_type_selection(self, cr, uid, context=None):
-        types = super(params_pac, self)._get_method_type_selection(
+    def _get_driver_selection(self, cr, uid, context=None):
+        types = super(res_pac, self)._get_driver_selection(
             cr, uid, context=context)
         types.extend([
-            ('pac_fk_cancelar', _('PAC - Cancel')),
-            ('pac_fk_firmar', _('PAC - Sign')),
+            ('cfdi32_pac_sf', 'CFDI 3.2 Solución Factible'),
         ])
         return types
 
     _columns = {
-        'method_type': fields.selection(_get_method_type_selection,
-                                        "Process to perform", type='char', size=64, required=True,
-                                        help='Type of process to configure in this pac'),
+        'name_driver': fields.selection(_get_driver_selection,
+                       'Pac Driver', type='char', size=64, required=True),
     }

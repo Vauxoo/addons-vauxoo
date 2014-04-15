@@ -201,7 +201,6 @@ class account_invoice(osv.Model):
                     context_extra_data.update({'comment': invoice.comment or '','payment_term':invoice.payment_term.note or invoice.payment_term.name or '','origin': invoice.origin,'type': invoice.type})
                     attach_ids = ir_attach_obj.create(cr, uid, {
                         'name': invoice.fname_invoice, 
-                        'type': invoice.invoice_sequence_id.approval_id and invoice.invoice_sequence_id.approval_id.type or False,
                         'journal_id': invoice.journal_id and invoice.journal_id.id or False,
                         'company_emitter_id': invoice.company_emitter_id.id,
                         'model_source': self._name or '',
@@ -217,8 +216,8 @@ class account_invoice(osv.Model):
                         'document_source': invoice.number,
                         'file_input': attachment_id,
                         'context_extra_data': context_extra_data,
-                        },
-                      context=context)#Context, because use a variable type of our code but we dont need it.
+                        'res_pac': approval_id.res_pac.id or False,
+                        }, context=context) #Context, because use a variable type of our code but we dont need it.
                     ir_attach_obj.signal_confirm(cr, uid, [attach_ids], context=context)
                     if attach_ids:
                         result = mod_obj.get_object_reference(cr, uid, 'l10n_mx_ir_attachment_facturae',
@@ -559,7 +558,7 @@ class account_invoice(osv.Model):
             'sequence_id', '=', invoice.invoice_sequence_id.id)], context=context)
         if sequence_app_id:
             type_inv = ir_seq_app_obj.browse(
-                cr, uid, sequence_app_id[0], context=context).type
+                cr, uid, sequence_app_id[0], context=context).res_pac.name_driver
         if invoice_datetime < '2012-07-01 00:00:00':
             return file_globals
         all_paths = tools.config["addons_path"].split(",")
@@ -1395,7 +1394,7 @@ class account_invoice(osv.Model):
         type_inv = 'cfd22'
         if sequence_app_id:
             type_inv = ir_seq_app_obj.browse(
-                cr, uid, sequence_app_id[0], context=context).type
+                cr, uid, sequence_app_id[0], context=context).res_pac.name_driver
         if 'cfdi' in type_inv:
             comprobante = 'cfdi:Comprobante'
         else:
