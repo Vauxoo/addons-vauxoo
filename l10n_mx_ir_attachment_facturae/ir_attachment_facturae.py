@@ -172,7 +172,7 @@ class ir_attachment_facturae_mx(osv.Model):
         'date_print_report': fields.datetime('Date print', help='Saved the date of last print'),
         'date_send_mail': fields.datetime('Date send mail', help='Saved the date of last send mail'),
         'context_extra_data': fields.text('Context Extra Data'),
-        'res_pac': fields.many2one('res.pac', 'Pacs', help='Pac used in singned of the invoice'),
+        'res_pac': fields.many2one('res.pac', 'Pac', help='Pac used in singned of the invoice'),
     }
 
     _defaults = {

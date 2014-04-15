@@ -65,6 +65,7 @@
             <field name="arch" type="xml">
                 <form string="Parameters PAC">
                     <field name="name"/>
+                    <field name="res_pac"/>
                     <field name="method_type"/>
                     <field name="url_webservice"/>
                     <field name="namespace"/>
@@ -84,6 +85,7 @@
             <field name="arch" type="xml">
                 <tree string="Parameters PAC">
                     <field name="name"/>
+                    <field name="res_pac"/>
                     <field name="method_type"/>
                     <field name="company_id"/>
                     <field name="active"/>
@@ -91,7 +93,6 @@
                     <field name="url_webservice"/>
                     <field name="namespace"/>
                     <field name="user"/>
-
                 </tree>
             </field>
         </record>

@@ -405,7 +405,7 @@ class hr_payslip(osv.Model):
                         'document_source': payroll.number,
                         'file_input': attachment_id,
                         'context_extra_data': context_extra_data,
-                        'res_pac': payroll.journal_id.sequence_id.approval_ids[0].res_pac.id or False,
+                        'res_pac': approval_id.res_pac.id or False,
                             },
                           context=context)
                         )

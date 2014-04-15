@@ -216,7 +216,7 @@ class account_invoice(osv.Model):
                         'document_source': invoice.number,
                         'file_input': attachment_id,
                         'context_extra_data': context_extra_data,
-                        'res_pac': invoice.invoice_sequence_id.approval_id.res_pac.id or False,
+                        'res_pac': approval_id.res_pac.id or False,
                         }, context=context) #Context, because use a variable type of our code but we dont need it.
                     ir_attach_obj.signal_confirm(cr, uid, [attach_ids], context=context)
                     if attach_ids:
