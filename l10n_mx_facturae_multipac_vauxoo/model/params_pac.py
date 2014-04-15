@@ -25,38 +25,27 @@
 #
 ##############################################################################
 
-{
-    "name" : "Creacion de Factura Electronica para Mexico (CFDI-2011) - PAC Vauxoo",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """ This module allows access interfaces for e-invoice
-    files from documents with any pac in MultipacVauxoo.
-    Ubuntu Package Depends:
-        sudo apt-get install python-soappy
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : ["l10n_mx_facturae_groups",
-        "l10n_mx_facturae_base",
-        "l10n_mx_params_pac", 
-        "l10n_mx_account_tax_category",
-        "l10n_mx_facturae_report",
-        "l10n_mx_facturae_seq", 
-        "l10n_mx_ir_attachment_facturae",
-        "l10n_mx_facturae_group_show_wizards",
-        "l10n_mx_settings_facturae"
-        ],
-    "demo" : [
-        "demo/l10n_mx_facturae_multipac_vx_demo.xml",
-        "demo/l10n_mx_facturae_seq_demo.xml",
-        "demo/account_invoice_cfdi_multipac_vx_demo.xml",
-        ],
-    "data" : [
-        ],
-    "test" : [
-        #~ "test/account_invoice_cfdi_multipac_vauxoo.yml",
-        ],
-    "installable" : True,
-    "active" : False,
-}
+import time
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
+from openerp import netsvc
+from openerp import release
+
+class params_pac(osv.Model):
+    _inherit = 'params.pac'
+
+    def _get_method_type_selection(self, cr, uid, context=None):
+        types = super(params_pac, self)._get_method_type_selection(
+            cr, uid, context=context)
+        types.extend([
+            ('multipac_vx_cancelar', _('PAC VAUXOO - Cancel')),
+            ('multipac_vx_firmar', _('PAC VAUXOO - Sign')),
+        ])
+        return types
+
+    _columns = {
+        'method_type': fields.selection(_get_method_type_selection,
+                                        "Process to perform", type='char', size=64, required=True,
+                                        help='Type of process to configure in this pac'),
+    }
