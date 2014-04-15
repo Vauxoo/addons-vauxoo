@@ -26,7 +26,6 @@
                     <field name="name"/>
                     <field name="code"/>
                     <field name="name_driver"/>
-                    <field name="params_pac_id"/>
                     <field name="url_webservice"/>
                     <field name="namespace"/>
                     <field name="user"/>

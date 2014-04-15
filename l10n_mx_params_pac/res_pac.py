@@ -44,7 +44,6 @@ class res_pac(osv.Model):
         'active': fields.boolean('Active', help='Indicate if this pac is active'),
         'code': fields.char('Code', size=128, help='Code for this res pac'),
         'name_driver': fields.selection(_get_driver_selection, "Pac Driver", type='char', size=64),
-        'params_pac_id': fields.many2one('params.pac', 'Params Pac', help="The params pac configuration for this res pac"),
         'company_id': fields.many2one('res.company', 'Company', required=True,
             help='Company where will configurate this param'), 
         'user': fields.char('User', size=128, help='Name user for login to PAC'),
@@ -53,6 +52,10 @@ class res_pac(osv.Model):
             help='URL of WebService used for send to sign the XML to PAC'),
         'namespace': fields.char('NameSpace', size=256,
             help='NameSpace of XML of the page of WebService of the PAC'),
+        'certificate_link': fields.char('Certificate link', size=256 , 
+            help='PAC have a public certificate that is necessary by customers to check the validity of the XML and PDF'),
+        'params_pac_ids': fields.one2many('params.pac', 'res_pac',
+            'Params Pac', help='Params pacs for this Pac'),
     }
     
     _defaults = {

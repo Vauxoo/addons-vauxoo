@@ -200,7 +200,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 password = pac_params.password or ir_attachment_facturae_mx_id.res_pac.password
                 wsdl_url = pac_params.url_webservice or ir_attachment_facturae_mx_id.res_pac.url_webservice
                 namespace = pac_params.namespace or ir_attachment_facturae_mx_id.res_pac.namespace
-                certificate_link = pac_params.certificate_link
+                certificate_link = pac_params.certificate_link or ir_attachment_facturae_mx_id.res_pac.certificate_link
                 #agregar otro campo para la URL de testing y poder validar sin cablear
                 url_finkok = 'http://facturacion.finkok.com/servicios/soap/stamp.wsdl'
                 testing_url_finkok = 'http://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl'

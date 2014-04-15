@@ -177,7 +177,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 password = pac_params.password or attachment.res_pac.password
                 wsdl_url = pac_params.url_webservice or attachment.res_pac.url_webservice
                 namespace = pac_params.namespace or attachment.res_pac.namespace
-                certificate_link = pac_params.certificate_link
+                certificate_link = pac_params.certificate_link or attachment.res_pac.certificate_link
                 url = 'https://solucionfactible.com/ws/services/Timbrado'
                 testing_url = 'http://testing.solucionfactible.com/ws/services/Timbrado'
                 if (wsdl_url == url) or (wsdl_url == testing_url):

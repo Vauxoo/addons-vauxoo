@@ -9,6 +9,7 @@
                 <search string="Attachment Factura-E">
                     <field name="name"/>
                     <field name="identifier"/>
+                    <field name="res_pac"/>
                     <field name="state"/>
                     <field name="id_source"/>
                     <field name="model_source"/>
@@ -41,6 +42,7 @@
                             <field name="file_xml_sign"/>
                             <field name="file_pdf"/>
                             <field name="identifier"/>
+                            <field name="res_pac"/>
                          </group>
                     <notebook>
                         <page string="General Information">
@@ -73,6 +75,7 @@
                 <tree string="Attachment Factura-E">
                     <field name="name"/>
                     <field name="identifier"/>
+                    <field name="res_pac"/>
                     <field name="state"/>
                 </tree>
             </field>
