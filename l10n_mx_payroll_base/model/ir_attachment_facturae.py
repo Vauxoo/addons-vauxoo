@@ -37,13 +37,13 @@ class ir_attachment_facturae_mx(osv.Model):
     _inherit = 'ir.attachment.facturae.mx'
 
     def signal_cancel(self, cr, uid, ids, context=None):
+        wf_service = netsvc.LocalService("workflow")
         ids = isinstance(ids, (int, long)) and [ids] or ids
         res = super(ir_attachment_facturae_mx, self).signal_cancel(cr, uid, ids)
         for att in self.browse(cr, uid, ids):
             if res and att.model_source == 'hr.payslip' and att.id_source:
                 if self.pool.get(att.model_source).browse(cr, uid, att.id_source).state != 'cancel':
-                    res = self.pool.get(att.model_source).cancel_sheet(
-                        cr, uid, [att.id_source], context=context)
+                    wf_service.trg_validate(uid, 'hr.payslip', att.id_source, 'cancel_sheet', cr)
         return res
 
 class hr_payslip(osv.Model):
