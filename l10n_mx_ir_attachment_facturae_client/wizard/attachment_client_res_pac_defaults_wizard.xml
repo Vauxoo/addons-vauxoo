@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        
+        <record model="ir.ui.view" id="view_wizard_attachment_client_res_pac_defaults">
+            <field name="name">wizard.attachment.client.res.pac.defaults</field>
+            <field name="model">attachment.client.res.pac.defaults</field>
+            <field name="arch" type="xml">
+                <form string="Res Pac Defaults" version="7.0">
+                    <label for="res_pac_id"/>
+                    <field name="res_pac_id"/>
+                    <label for="user_id"/>
+                    <field name="user_id"/>
+                    <label for="company_id" groups="base.group_multi_company"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <footer>
+                        <button name="create_defaults" type="object" string="Create" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_wizard_attachment_client_res_pac_defaults" model="ir.actions.act_window">
+            <field name="name">Res Pac Defaults</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">attachment.client.res.pac.defaults</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_wizard_attachment_client_res_pac_defaults"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="attachment_client_res_pac_defaults_menu" name="Res Pac Defaults" parent="base.next_id_6" action="action_wizard_attachment_client_res_pac_defaults" sequence="10" />        
+        <menuitem id="report_multicompany.report_multicompany_menu" name="Report Multicompany Settings"  parent="base.next_id_6"  action="report_multicompany.report_multicompany_list_action" sequence="11" />
+        
+    </data>
+</openerp>
