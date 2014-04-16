@@ -24,9 +24,7 @@
     "name": "Mexican Payroll",
     "version": "1.0",
     "depends": [
-                "base",
                 "account",
-                "hr_payroll",
                 "l10n_mx_states",
                 "l10n_mx_regimen_fiscal",
                 "l10n_mx_hr_payroll",
@@ -41,6 +39,7 @@
                 "l10n_mx_params_pac",
                 "l10n_mx_facturae_groups",
                 "hr_payroll_account",
+                "hr_payroll_cancel",
     ],
     "author": "Vauxoo",
     "description": """
@@ -59,6 +58,8 @@ ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfd/nomina11.pdf
 
 
 ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfdi/guianomina.pdf
+
+The module hr_payroll_cancel found in lp:addons-vauxoo/7.0 
     """,
     "website": "http://vauxoo.com",
     "category": "Addons Vauxoo",
