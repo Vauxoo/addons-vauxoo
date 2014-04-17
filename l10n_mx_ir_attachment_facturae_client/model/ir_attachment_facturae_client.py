@@ -81,5 +81,40 @@ class ir_attachment_facturae_client(osv.Model):
         'company_id': lambda self, cr, uid, c:
             self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
     }
-           
+
+    def stamp(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        ir_attch_obj = self.pool.get('ir.attachment')
+        ir_attch_facte_obj = self.pool.get('ir.attachment.facturae.mx')
+        for attachment_client in self.browse(cr, uid, ids, context=context):
+             ir_attachment_values = {'name': attachment_client.file_input.name,
+                                        'datas': attachment_client.file_input.datas,
+                                        'datas_fname': attachment_client.file_input.datas_fname,
+                                        'res_model': attachment_client.file_input.res_model,
+                                        'res_id': False,
+                                        }
+ 
+             atta_id = ir_attch_obj.create(cr, uid, ir_attachment_values, context=None)
+             ir_attachment_facte_values = { 'name': attachment_client.name,
+                                                'id_source': False,
+                                                'model_source': 'account.invoice', # This hardcore value must be changed
+                                                'attachment_email': '',
+                                                'certificate_password': attachment_client.certificate_password,
+                                                'certificate_file': attachment_client.certificate_file,
+                                                'certificate_key_file': attachment_client.certificate_key_file,
+                                                'user_pac': '',
+                                                'password_pac': '',
+                                                'url_webservice_pac': '',
+                                                'file_input': attachment_client.file_input.id,
+                                                'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                                                'res_pac': attachment_client.res_pac_id.id,
+                                                }
+             atta_facte_id = ir_attch_facte_obj.create(cr, uid, ir_attachment_facte_values, context=None)
+             print '-----------------atta_id---------------->',atta_id
+             print '------------------atta_facte_id--------------->',atta_facte_id
+            
+            
+            
+            
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
