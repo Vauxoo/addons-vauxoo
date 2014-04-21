@@ -1,6 +1,16 @@
 <?xml version="1.0" ?>
 <openerp>
     <data noupdate="1">
+        <!-- Impuesto IVA -->
+
+        <record id="account_ova_voucher_mx" model="account.account">
+            <field name="code">X11003_voucher</field>
+            <field name="name">Output VAT Voucher - (test)</field>
+            <field ref="account.cas" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_asset"/>
+        </record>
+
 
         <record id="l10n_mx_facturae_base_iva_for_electronic_invoice_0" model="account.tax">
             <field name="company_id" ref="base.main_company"/>
@@ -9,7 +19,18 @@
             <field name="type">percent</field>
             <field name="amount">0.1600</field>
             <field name="description">IVA 16% FOR ELECTRONIC INVOICES MX - Test</field>
-            <field model="account.tax.category" name="tax_category_id" search="[('name','like','IVA')]"/>
+            <field name="tax_category_id" ref="l10n_mx_account_tax_category.tax_category_iva"/>
+            <field name="account_collected_id" ref="account_ova_voucher_mx"/>
+        </record>
+
+<!-- Impuesto ISR RETENIDO -->
+
+        <record id="account_iva_voucher10_rete_isr_mx" model="account.account">
+            <field name="code">X1116_voucher</field>
+            <field name="name">Input VAT 10 RETENIDO ISR Voucher - (test)</field>
+            <field ref="account.cli" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_liability"/>
         </record>
 
         <record id="l10n_mx_facturae_base_ret_isr_honorario_0" model="account.tax">
@@ -20,6 +41,17 @@
             <field name="amount">-0.10000</field>
             <field name="description">RET ISR 10% ISR RETENIDO MX - Test</field>
             <field model="account.tax.category" name="tax_category_id" search="[('name','like','ISR-RET')]"/>
+            <field name="account_collected_id" ref="account_iva_voucher10_rete_isr_mx"/>
+        </record>
+        
+<!-- Impuesto IVA RETENIDO -->
+
+        <record id="account_iva_voucher1067_retencion_iva_mx" model="account.account">
+            <field name="code">X1117_voucher</field>
+            <field name="name">Input VAT RETENCION IVA 10.67 Voucher - (test)</field>
+            <field ref="account.cli" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_liability"/>
         </record>
 
         <record id="l10n_mx_facturae_base_ret_iva_10_67_arrendamiento_0" model="account.tax">
@@ -30,6 +62,7 @@
             <field name="amount">-0.10670</field>
             <field name="description">RET IVA 10.67% IVA RETENIDO MX Test</field>
             <field model="account.tax.category" name="tax_category_id" search="[('name','like','IVA-RET')]"/>
+            <field name="account_collected_id" ref="account_iva_voucher1067_retencion_iva_mx"/>
         </record>
         
     </data>
