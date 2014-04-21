@@ -373,12 +373,8 @@ class ir_attachment_facturae_mx(osv.Model):
     def signal_printable(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        msj = ''
         attachment_obj = self.pool.get('ir.attachment')
         attachment_mx_data = self.browse(cr, uid, ids, context=context)
-        type = attachment_mx_data[0].res_pac.name_driver
-        wf_service = netsvc.LocalService("workflow")
-        status = False
         (fileno, fname) = tempfile.mkstemp(
             '.pdf', 'openerp_pdfcfid_' + (str(attachment_mx_data[0].id) or '') + '__facturae__')
         os.close(fileno)
@@ -401,17 +397,15 @@ class ir_attachment_facturae_mx(osv.Model):
             'res_model': attachment_mx_data[0].model_source,
             'res_id': attachment_mx_data[0].id_source}, context=context)
             
-        status = True
         aids = attachment_ids and attachment_ids[0] or False
         
-        if status and aids:
+        if aids:
             msj = _("Attached Successfully PDF\n")
             self.write(cr, uid, ids, {
                 'file_pdf': aids,
                 'msj': msj,
                 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                 'date_print_report': time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
-            wf_service.trg_validate(uid, self._name, attachment_mx_data[0].id, 'action_printable', cr)
         else:
             raise osv.except_osv(_('Warning'), _('Not Attached PDF\n'))
         datas = {
@@ -420,9 +414,6 @@ class ir_attachment_facturae_mx(osv.Model):
                  'form': self.read(cr, uid, ids[0], context=context),
         }
         return {'type': 'ir.actions.report.xml', 'report_name': report_name, 'datas': datas, 'nodestroy': True, 'name': file_name_attachment}
-
-    def action_printable(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'printable'}, context=context)
 
     def signal_send_customer(self, cr, uid, ids, context=None):
         if context is None:
