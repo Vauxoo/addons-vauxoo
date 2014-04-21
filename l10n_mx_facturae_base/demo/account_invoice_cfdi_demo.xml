@@ -10,7 +10,9 @@
             <field name="partner_id" ref="l10n_mx_partner_address.res_partner_address_vauxoo_1"/>
             <field name="journal_id" ref="account.sales_journal"/>
             <field name="state">draft</field>
+<!--
             <field name="type">out_invoice</field>
+-->
         </record>
         
 <!-- Product without IVA -->

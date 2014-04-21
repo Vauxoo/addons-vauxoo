@@ -6,8 +6,9 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by:
-#    Financed by:
+#    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Coded by: Isaac Lopez (isaac@vauxoo.com)
+#    Financed by: http://www.sfsoluciones.com (aef@sfsoluciones.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,6 +26,26 @@
 #
 ##############################################################################
 
-import params_pac
-import ir_sequence_approval
-import ir_attachment_facturae
+import time
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
+from openerp import netsvc
+from openerp import release
+
+
+class res_pac(osv.Model):
+    _inherit = 'res.pac'
+
+    def _get_driver_selection(self, cr, uid, context=None):
+        types = super(res_pac, self)._get_driver_selection(
+            cr, uid, context=context)
+        types.extend([
+            ('cfdi32_multipac_vx', 'CFDI 3.2 Vauxoo'),
+        ])
+        return types
+
+    _columns = {
+        'name_driver': fields.selection(_get_driver_selection,
+                       'Pac Driver', type='char', size=64, required=True),
+    }

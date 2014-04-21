@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_res_pac_search" model="ir.ui.view">
+            <field name="name">view.res.pac.search</field>
+            <field name="model">res.pac</field>
+            <field name="arch" type="xml">
+                <search string="PACS">
+                    <filter string="Inactive" icon="terp-personal+" domain="[('active','=',False)]"/>
+                    <field name="company_id"/>
+                    <field name="active"/>
+                    <newline/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Company" icon="terp-partner" domain="[]" context="{'group_by':'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_res_pac_form" model="ir.ui.view">
+            <field name="name">view.res.pac.form</field>
+            <field name="model">res.pac</field>
+            <field name="arch" type="xml">
+                <form string="PACS">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="name_driver"/>
+                    <field name="url_webservice"/>
+                    <field name="namespace"/>
+                    <field name="user"/>
+                    <field name="password" password="True"/>
+                    <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                    <field name="active"/>
+                    <field name="params_pac_ids" nolabel="1" colspan="4"  widget="one2many_list">
+                        <tree string="Parameters Pac">
+                            <field name="name"/>
+                            <field name="method_type"/>
+                            <field name="url_webservice"/>
+                            <field name="namespace"/>
+                            <field name="user"/>
+                            <field name="password" password="True"/>
+                            <field name="active"/>
+                            <field name="sequence"/>
+                        </tree>
+                        <form string="Parameters Pac">
+                            <field name="name"/>
+                            <field name="method_type"/>
+                            <field name="url_webservice"/>
+                            <field name="namespace"/>
+                            <field name="user"/>
+                            <field name="password" password="True"/>
+                            <field name="active"/>
+                            <field name="sequence"/>
+                        </form>
+                    </field>
+                </form>
+            </field>
+        </record>
+        <record id="view_res_pac_tree" model="ir.ui.view">
+            <field name="name">view.res.pac.tree</field>
+            <field name="model">res.pac</field>
+            <field name="arch" type="xml">
+                <tree string="PACS">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="company_id"/>
+                    <field name="active"/>
+                    <field name="url_webservice"/>
+                    <field name="namespace"/>
+                    <field name="user"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_res_pac" model="ir.actions.act_window">
+            <field name="name">PACS</field>
+            <field name="res_model">res.pac</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem action="action_params_pac" id="menu_params_pac" parent="menu_pacs" sequence="2"/>
+        <menuitem action="action_res_pac" id="menu_res_pac" parent="menu_pacs" sequence="1"/>
+
+    </data>
+</openerp>

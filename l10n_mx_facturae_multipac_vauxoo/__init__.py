@@ -2,12 +2,12 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
+#    Coded by: Sabrina Romero <sabrina@vauxoo.com>  
+#    Financed by: Vauxoo Consultores <info@vauxoo.com>
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,22 +25,4 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, osv
-
-
-class ir_sequence_approval(osv.Model):
-    _inherit = 'ir.sequence.approval'
-
-    def _get_type(self, cr, uid, ids=None, context=None):
-        types = super(ir_sequence_approval, self)._get_type(
-            cr, uid, ids, context=context)
-        types.extend([
-            ('cfdi32_pac_sf', 'CFDI 3.2 Solución Factible'),
-        ])
-        return types
-
-    _columns = {
-        'type': fields.selection(_get_type, 'Type', type='char', size=64,
-                                 required=True, help="Type of Electronic Invoice"),
-    }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+import model

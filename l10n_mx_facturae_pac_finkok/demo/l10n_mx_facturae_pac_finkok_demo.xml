@@ -2,24 +2,29 @@
 <openerp>
     <data noupdate="1">
         
-        <record id="params_pac_finkok_cancelar_test2" model="params.pac">
-            <field name="method_type">pac_fk_cancelar</field>
-            <field name="url_webservice">http://demo-facturacion.finkok.com/servicios/soap/cancel.wsdl</field>
-            <field name="namespace"></field>
+        <record id="l10n_mx_res_pac_finkok" model="res.pac">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="name">Pac FINKOK</field>
+            <field name="active">True</field>
+            <field name="code">FINKOK</field>
+            <field name="name_driver">cfdi32_pac_finkok</field>
             <field name="user">isaac@vauxoo.com</field>
             <field name="password">1Q2W3E4R5t_</field>
-            <field name="name">Cancelar - Test</field>
             <field name="certificate_link">ftp://ftp2.sat.gob.mx/Certificados/FEA/000010/000002/03/22/05/00001000000203220518.cer</field>
         </record>
         
+        <record id="params_pac_finkok_cancelar_test2" model="params.pac">
+            <field name="method_type">cancelar</field>
+            <field name="url_webservice">http://demo-facturacion.finkok.com/servicios/soap/cancel.wsdl</field>
+            <field name="name">Cancelar - Test</field>
+            <field name="res_pac" ref="l10n_mx_res_pac_finkok"/>
+        </record>
+        
         <record id="params_pac_finkok_firmar_test2" model="params.pac">
-            <field name="method_type">pac_fk_firmar</field>
+            <field name="method_type">firmar</field>
             <field name="url_webservice">http://demo-facturacion.finkok.com/servicios/soap/stamp.wsdl</field>
-            <field name="namespace"></field>
-            <field name="user">isaac@vauxoo.com</field>
-            <field name="password">1Q2W3E4R5t_</field>
             <field name="name">Firmar - Test</field>
-            <field name="certificate_link">ftp://ftp2.sat.gob.mx/Certificados/FEA/000010/000002/03/22/05/00001000000203220518.cer</field>
+            <field name="res_pac" ref="l10n_mx_res_pac_finkok"/>
         </record>
     </data>
 </openerp>

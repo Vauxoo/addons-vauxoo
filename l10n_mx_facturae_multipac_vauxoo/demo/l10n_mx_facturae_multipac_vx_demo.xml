@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        
+        <record id="l10n_mx_res_multipac_vx" model="res.pac">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="name">Multipac Vauxoo</field>
+            <field name="active">True</field>
+            <field name="code">VX</field>
+            <field name="name_driver">cfdi32_multipac_vx</field>
+            <field name="url_webservice">localhost:8069</field>
+            <field name="user">facturae_mx_user</field>
+            <field name="password">1234</field>
+        </record>
+        
+        <record id="params_multipac_vx_cancelar_test" model="params.pac">
+            <field name="method_type">cancelar</field>
+            <field name="name">MULTIPAC VAUXOO - Cancelar - Test</field>
+            <field name="res_pac" ref="l10n_mx_res_multipac_vx"/>
+        </record>
+        
+        <record id="params_multipac_vx_firmar_test" model="params.pac">
+            <field name="method_type">firmar</field>
+            <field name="name">MULTIPAC VAUXOO - Firmar - Test</field>
+            <field name="res_pac" ref="l10n_mx_res_multipac_vx"/>
+        </record>
+        
+    </data>
+</openerp>
