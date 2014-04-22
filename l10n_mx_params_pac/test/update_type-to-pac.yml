@@ -7,8 +7,10 @@
         FROM pg_class c, pg_attribute a 
         WHERE a.attrelid = c.oid and a.attnum > 0 
         AND c.relname='ir_sequence_approval'
+        AND a.attname='type'
     """)
     dat = cr.dictfetchall()
+    print dat,'imprimo dat'
     if dat and dat[0].get('field', False) == 'type':
         cr.execute("""
             UPDATE ir_sequence_approval approval_factuare
@@ -23,7 +25,8 @@
         SELECT a.attname AS field 
         FROM pg_class c, pg_attribute a 
         WHERE a.attrelid = c.oid and a.attnum > 0 
-        AND c.relname='ir_attachment_factuare_mx'
+        AND c.relname='ir_attachment_facturae_mx'
+        AND a.attname='type'
     """)
     dat = cr.dictfetchall()
     if dat and dat[0].get('field', False) == 'type':
