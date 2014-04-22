@@ -23,7 +23,7 @@
         </record>
 
 		<record id="aaj_cfdi_payroll_finkok_0" model="account.analytic.journal">
-            <field name="code">FINKOK_AAJ</field>
+            <field name="code">FINKOKAA</field>
             <field name="name">General Payroll FINKOK</field>
             <field name="type">general</field>
         </record>

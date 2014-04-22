@@ -23,7 +23,7 @@
         </record>
 		
 		<record id="aaj_cfdi_payroll_sf_0" model="account.analytic.journal">
-            <field name="code">SF_AAJ</field>
+            <field name="code">SFAAJ</field>
             <field name="name">General Payroll SF</field>
             <field name="type">general</field>
         </record>
