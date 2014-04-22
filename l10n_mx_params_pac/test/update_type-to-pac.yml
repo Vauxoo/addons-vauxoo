@@ -2,7 +2,7 @@
   Set pac in approval
 -
   !python {model: res.pac}: |
-    cr. execute("""
+    cr.execute("""
         SELECT a.attname AS field 
         FROM pg_class c, pg_attribute a 
         WHERE a.attrelid = c.oid and a.attnum > 0 
@@ -21,7 +21,7 @@
   Set pac in attachment facturaE
 -
   !python {model: res.pac}: |
-    cr. execute("""
+    cr.execute("""
         SELECT a.attname AS field 
         FROM pg_class c, pg_attribute a 
         WHERE a.attrelid = c.oid and a.attnum > 0 
@@ -35,3 +35,31 @@
             SET res_pac = pac.id
             FROM res_pac pac
             WHERE atta_facturae.type = pac.name_driver """)
+
+-
+  Create Set res_pac params_pac
+-
+  !python {model: params.pac}: |
+    cr.execute("""
+      SELECT id,
+        REPLACE(
+          REPLACE(
+            REPLACE(('cfdi32'||'_'||method_type),
+            '_cancelar', ''),
+          '_firmar',''),
+        'fk','finkok') AS name_driver
+      FROM params_pac """)
+    dat = cr.dictfetchall()
+    print dat
+    pac_obj = self.pool.get('res.pac')
+    for data in dat:
+        pac_ids = pac_obj.search(cr, uid, [('name_driver', '=', data['name_driver'])])
+        print pac_ids,'pac_ids'
+        if pac_ids:
+            self.write(cr, uid, data['id'], {'res_pac': pac_ids[0]})
+            #~ pac_obj.create(cr, uid, {
+                #~ 'name': data['name_driver'],
+                #~ 'name_driver': data['name_driver']
+                #~ })
+            
+
