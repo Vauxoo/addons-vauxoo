@@ -53,7 +53,7 @@ class ir_sequence_approval(osv.Model):
         'sequence_id': fields.many2one('ir.sequence', u'Sequence',
             required=True, ondelete='cascade', help='Sequence where will add \
             this approval'),
-        'res_pac': fields.many2one('res.pac', 'Pac', required=True),
+        'res_pac': fields.many2one('res.pac', 'Pac', required=True, oldname="type"),
     }
 
     _defaults = {
