@@ -47,16 +47,18 @@
             REPLACE(('cfdi32'||'_'||method_type),
             '_cancelar', ''),
           '_firmar',''),
-        'fk','finkok') AS name_driver
+        'fk','finkok') AS name_driver, method_type
       FROM params_pac """)
     dat = cr.dictfetchall()
-    print dat
     pac_obj = self.pool.get('res.pac')
     for data in dat:
         pac_ids = pac_obj.search(cr, uid, [('name_driver', '=', data['name_driver'])])
-        print pac_ids,'pac_ids'
         if pac_ids:
-            self.write(cr, uid, data['id'], {'res_pac': pac_ids[0]})
+            type = 'cancel' in data['method_type'] and 'cancelar' or 'firmar'
+            self.write(cr, uid, data['id'],
+                            {'res_pac': pac_ids[0],
+                             'method_type': type
+                             })
             #~ pac_obj.create(cr, uid, {
                 #~ 'name': data['name_driver'],
                 #~ 'name_driver': data['name_driver']
