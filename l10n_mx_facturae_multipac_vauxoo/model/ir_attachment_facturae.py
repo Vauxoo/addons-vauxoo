@@ -107,6 +107,9 @@ class ir_attachment_facturae_mx(osv.Model):
             try:
                 res = object_proxy.execute(DB, uid2, PASS, 'ir.attachment.facturae.mx', 'signal_cancel', ids_new)
                 msg = object_proxy.execute(DB, uid2, PASS,'ir.attachment.facturae.mx','read',ids_new,['msj'])[0]['msj']
+                fecha_cancel = object_proxy.execute(DB, uid2, PASS,'ir.attachment.facturae.mx','read',ids_new,['cfdi_fecha_cancelacion'])[0]['cfdi_fecha_cancelacion']
+                if fecha_cancel:
+                    self.write(cr, uid, attachment.id, {'cfdi_fecha_cancelacion': fecha_cancel})
                 return {'message': msg, 'status': True}
             except Exception, e:
                 error = tools.ustr(traceback.format_exc())
@@ -130,7 +133,6 @@ class ir_attachment_facturae_mx(osv.Model):
             wsdl_url = pac_params.url_webservice or attachment.res_pac.url_webservice
             USER = pac_params.user or attachment.res_pac.user
             PASS = pac_params.password or attachment.res_pac.password
-            print '---USER---',USER
             url ='http://%s/xmlrpc/' % (wsdl_url)
             common_proxy = xmlrpclib.ServerProxy(url+'common')
             object_proxy = xmlrpclib.ServerProxy(url+'object')
@@ -149,6 +151,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 open(fname_key_no_pem, "r").read()) or ''
             attachment_client = { 'name': attachment.name,
                                     'file_input': attachment.file_input.id,
+                                    'model_source': attachment.model_source,
                                     'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                                     'state': 'draft',
                                     'certificate_file': cerCSD,
@@ -156,8 +159,12 @@ class ir_attachment_facturae_mx(osv.Model):
                                     'certificate_password': attachment.certificate_password,
                                     }
             attachment_client_id = object_proxy.execute(DB, uid2, PASS, 'ir.attachment.facturae.client', 'create', attachment_client)
-            print '--------------------------------->',attachment_client_id
             res = object_proxy.execute(DB, uid2, PASS,'ir.attachment.facturae.client','stamp',[attachment_client_id])
+            self.write(cr, uid, attachment.id, {'cfdi_fecha_timbrado': res.pop('cfdi_fecha_timbrado'),
+												'cfdi_folio_fiscal': res.pop('cfdi_folio_fiscal'),
+												'cfdi_no_certificado': res.pop('cfdi_no_certificado'),
+												'cfdi_sello': res.pop('cfdi_sello'),
+												'cfdi_cadena_original': res.pop('cfdi_cadena_original')})
         return res
-           
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

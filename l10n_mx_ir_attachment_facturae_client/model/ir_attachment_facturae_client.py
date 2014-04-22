@@ -51,6 +51,7 @@ class ir_attachment_facturae_client(osv.Model):
                             help='Name of attachment generated'),
         'file_input': fields.many2one('ir.attachment', 'File input',
                                       readonly=True, help='File input'),
+        'model_source': fields.char('Source Model', size=128, help='Source Model'),
         'last_date': fields.datetime('Last Modified', readonly=True,
                                      help='Date when is generated the attachment'),
         'state': fields.selection([
@@ -88,33 +89,45 @@ class ir_attachment_facturae_client(osv.Model):
         ir_attch_obj = self.pool.get('ir.attachment')
         ir_attch_facte_obj = self.pool.get('ir.attachment.facturae.mx')
         for attachment_client in self.browse(cr, uid, ids, context=context):
-             ir_attachment_values = {'name': attachment_client.file_input.name,
-                                        'datas': attachment_client.file_input.datas,
-                                        'datas_fname': attachment_client.file_input.datas_fname,
-                                        'res_model': attachment_client.file_input.res_model,
-                                        'res_id': False,
-                                        }
- 
-             atta_id = ir_attch_obj.create(cr, uid, ir_attachment_values, context=None)
-             ir_attachment_facte_values = { 'name': attachment_client.name,
-                                                'id_source': False,
-                                                'model_source': 'account.invoice', # This hardcore value must be changed
-                                                'attachment_email': '',
-                                                'certificate_password': attachment_client.certificate_password,
-                                                'certificate_file': attachment_client.certificate_file,
-                                                'certificate_key_file': attachment_client.certificate_key_file,
-                                                'user_pac': '',
-                                                'password_pac': '',
-                                                'url_webservice_pac': '',
-                                                'file_input': attachment_client.file_input.id,
-                                                'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                                                'res_pac': attachment_client.res_pac_id.id,
-                                                }
-             atta_facte_id = ir_attch_facte_obj.create(cr, uid, ir_attachment_facte_values, context=None)
-             print '-----------------atta_id---------------->',atta_id
-             print '------------------atta_facte_id--------------->',atta_facte_id
-            
-            
-            
-            
+			ir_attachment_values = {'name': attachment_client.file_input.name,
+									'datas': attachment_client.file_input.datas,
+									'datas_fname': attachment_client.file_input.datas_fname,
+									'res_model': attachment_client.file_input.res_model,
+									'res_id': False,
+									}
+
+			atta_id = ir_attch_obj.create(cr, uid, ir_attachment_values, context=None)
+			ir_attachment_facte_values = { 'name': attachment_client.name,
+											'id_source': False,
+											'model_source': attachment_client.model_source,
+											'attachment_email': '',
+											'certificate_password': attachment_client.certificate_password,
+											'certificate_file': attachment_client.certificate_file,
+											'certificate_key_file': attachment_client.certificate_key_file,
+											'user_pac': '',
+											'password_pac': '',
+											'url_webservice_pac': '',
+											'file_input': attachment_client.file_input.id,
+											'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+											'res_pac': attachment_client.res_pac_id.id,
+											}
+			atta_facte_id = ir_attch_facte_obj.create(cr, uid, ir_attachment_facte_values, context=None)
+			ir_attch_facte_obj.signal_confirm(cr, uid, [atta_facte_id], context=None)
+			ir_attch_facte_obj.signal_sign(cr, uid, [atta_facte_id], context=None)
+			atta_facte_brw = ir_attch_facte_obj.browse(cr, uid, [atta_facte_id], context=None)
+			xml_sign = base64.decodestring(atta_facte_brw[0].file_xml_sign.db_datas) or ''
+			arch = base64.encodestring(xml_sign or '')
+			res = {'file': arch, 
+					'msg': atta_facte_brw[0].msj, 
+					'cfdi_xml': xml_sign, 
+					'status': True, 
+					'cfdi_fecha_timbrado': atta_facte_brw[0].cfdi_fecha_timbrado,
+					'cfdi_folio_fiscal': atta_facte_brw[0].cfdi_folio_fiscal,
+					'cfdi_no_certificado': atta_facte_brw[0].cfdi_no_certificado,
+					'cfdi_sello': atta_facte_brw[0].cfdi_sello,
+					'cfdi_cadena_original': atta_facte_brw[0].cfdi_cadena_original,
+				}
+        return res
+
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
