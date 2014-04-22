@@ -4,7 +4,7 @@
         <!-- Impuesto IVA -->
 
         <record id="account_ova_voucher_mx" model="account.account">
-            <field name="code">X11003_voucher</field>
+            <field name="code">iva16</field>
             <field name="name">Output VAT Voucher - (test)</field>
             <field ref="account.cas" name="parent_id"/>
             <field name="type">other</field>
@@ -26,7 +26,7 @@
 <!-- Impuesto ISR RETENIDO -->
 
         <record id="account_iva_voucher10_rete_isr_mx" model="account.account">
-            <field name="code">X1116_voucher</field>
+            <field name="code">RETISR</field>
             <field name="name">Input VAT 10 RETENIDO ISR Voucher - (test)</field>
             <field ref="account.cli" name="parent_id"/>
             <field name="type">other</field>
@@ -47,7 +47,7 @@
 <!-- Impuesto IVA RETENIDO -->
 
         <record id="account_iva_voucher1067_retencion_iva_mx" model="account.account">
-            <field name="code">X1117_voucher</field>
+            <field name="code">RETIVA</field>
             <field name="name">Input VAT RETENCION IVA 10.67 Voucher - (test)</field>
             <field ref="account.cli" name="parent_id"/>
             <field name="type">other</field>
