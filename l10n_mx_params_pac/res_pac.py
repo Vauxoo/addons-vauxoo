@@ -63,4 +63,5 @@ class res_pac(osv.Model):
     _defaults = {
         'company_id': lambda s, cr, uid, c: s.pool.get(
             'res.company')._company_default_get(cr, uid, 'res.pac', context=c),
+        'active': 1
     }

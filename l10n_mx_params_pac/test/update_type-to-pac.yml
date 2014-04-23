@@ -1,42 +1,4 @@
 -
-  Set pac in approval
--
-  !python {model: res.pac}: |
-    cr.execute("""
-        SELECT a.attname AS field 
-        FROM pg_class c, pg_attribute a 
-        WHERE a.attrelid = c.oid and a.attnum > 0 
-        AND c.relname='ir_sequence_approval'
-        AND a.attname='type'
-    """)
-    dat = cr.dictfetchall()
-    print dat,'imprimo dat'
-    if dat and dat[0].get('field', False) == 'type':
-        cr.execute("""
-            UPDATE ir_sequence_approval approval_factuare
-            SET res_pac = pac.id
-            FROM res_pac pac
-            WHERE approval_factuare.type = pac.name_driver """)
--
-  Set pac in attachment facturaE
--
-  !python {model: res.pac}: |
-    cr.execute("""
-        SELECT a.attname AS field 
-        FROM pg_class c, pg_attribute a 
-        WHERE a.attrelid = c.oid and a.attnum > 0 
-        AND c.relname='ir_attachment_facturae_mx'
-        AND a.attname='type'
-    """)
-    dat = cr.dictfetchall()
-    if dat and dat[0].get('field', False) == 'type':
-        cr.execute("""
-            UPDATE ir_attachment_facturae_mx atta_facturae
-            SET res_pac = pac.id
-            FROM res_pac pac
-            WHERE atta_facturae.type = pac.name_driver """)
-
--
   Create Set res_pac params_pac
 -
   !python {model: params.pac}: |
@@ -47,21 +9,62 @@
             REPLACE(('cfdi32'||'_'||method_type),
             '_cancelar', ''),
           '_firmar',''),
-        'fk','finkok') AS name_driver, method_type
-      FROM params_pac """)
+        'fk','finkok') AS name_driver, method_type, company_id
+      FROM params_pac
+        WHERE method_type IS NOT NULL""")
     dat = cr.dictfetchall()
+    print dat,'imprimo dat'
     pac_obj = self.pool.get('res.pac')
     for data in dat:
-        pac_ids = pac_obj.search(cr, uid, [('name_driver', '=', data['name_driver'])])
-        if pac_ids:
+        print data['method_type'],'method_type'
+        if not data['method_type'] in ('cancelar', 'firmar'):
+            name_driver_pac = data['name_driver']
+            pac_ids = pac_obj.search(cr, uid, [('name_driver', '=', name_driver_pac)])
+            print pac_ids,'pac_ids'
+            print name_driver_pac,'name_driver_pac'
+            if pac_ids:
+                pac_id = pac_ids[0]
+            else:
+                val = {'name': name_driver_pac}
+                pac_id = pac_obj.create(cr, uid, val)
+                cr.execute('UPDATE res_pac SET name_driver=%s where id=%s',
+                            (name_driver_pac, pac_id))
             type = 'cancel' in data['method_type'] and 'cancelar' or 'firmar'
             self.write(cr, uid, data['id'],
-                            {'res_pac': pac_ids[0],
+                            {'res_pac': pac_id,
                              'method_type': type
                              })
-            #~ pac_obj.create(cr, uid, {
-                #~ 'name': data['name_driver'],
-                #~ 'name_driver': data['name_driver']
-                #~ })
-            
-
+#~ -
+  #~ Set pac in approval
+#~ -
+  #~ !python {model: res.pac}: |
+    #~ cr. execute("""
+        #~ SELECT a.attname AS field 
+        #~ FROM pg_class c, pg_attribute a 
+        #~ WHERE a.attrelid = c.oid and a.attnum > 0 
+        #~ AND c.relname='ir_sequence_approval'
+    #~ """)
+    #~ dat = cr.dictfetchall()
+    #~ if dat and dat[0].get('field', False) == 'type':
+        #~ cr.execute("""
+            #~ UPDATE ir_sequence_approval approval_factuare
+            #~ SET res_pac = pac.id
+            #~ FROM res_pac pac
+            #~ WHERE approval_factuare.type = pac.name_driver """)
+#~ -
+  #~ Set pac in attachment facturaE
+#~ -
+  #~ !python {model: res.pac}: |
+    #~ cr. execute("""
+        #~ SELECT a.attname AS field 
+        #~ FROM pg_class c, pg_attribute a 
+        #~ WHERE a.attrelid = c.oid and a.attnum > 0 
+        #~ AND c.relname='ir_attachment_facturae_mx'
+    #~ """)
+    #~ dat = cr.dictfetchall()
+    #~ if dat and dat[0].get('field', False) == 'type':
+        #~ cr.execute("""
+            #~ UPDATE ir_attachment_facturae_mx atta_facturae
+            #~ SET res_pac = pac.id
+            #~ FROM res_pac pac
+            #~ WHERE atta_facturae.type = pac.name_driver """)
