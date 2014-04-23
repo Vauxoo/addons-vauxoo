@@ -4,8 +4,8 @@
 <!-- Service with ISR RET -->
         <record id="product_template_consultoria_vauxoo_demo" model="product.template">
             <field name="name">Consultoria Vauxoo</field>
-            <field name="list_price">100.0</field>
-            <field name="standard_price">100.0</field>
+            <field name="list_price">200.0</field>
+            <field name="standard_price">200.0</field>
             <field name="type">service</field>
             <field name="uom_id" ref="product.product_uom_hour"/>
             <field name="uom_po_id" ref="product.product_uom_hour"/>
@@ -28,8 +28,8 @@
 <!-- Product with IVA -->
         <record id="product_template_celular_demo" model="product.template">
             <field name="name">Celular</field>
-            <field name="list_price">100.0</field>
-            <field name="standard_price">100.0</field>
+            <field name="list_price">300.0</field>
+            <field name="standard_price">300.0</field>
             <field name="type">consu</field>
             <field name="uom_id" ref="product.product_uom_unit"/>
             <field name="uom_po_id" ref="product.product_uom_unit"/>
@@ -52,8 +52,8 @@
 <!-- Renta with IVA, RET ISR, RET IVA -->
         <record id="product_template_renta_oficina_demo_0" model="product.template">
             <field name="name">Arrendamiento de oficina</field>
-            <field name="list_price">100.0</field>
-            <field name="standard_price">100.0</field>
+            <field name="list_price">400.0</field>
+            <field name="standard_price">400.0</field>
             <field name="type">service</field>
             <field name="uom_id" ref="product.product_uom_hour"/>
             <field name="uom_po_id" ref="product.product_uom_hour"/>

@@ -30,7 +30,7 @@
         <record id="ail_pac_facturae_1" model="account.invoice.line">
             <field name="name">Cellular</field>
             <field name="product_id" ref="l10n_mx_facturae_base.product_product_celular_demo"/>
-            <field name="price_unit" eval="100.0" />
+            <field name="price_unit" eval="300.0" />
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="invoice_id" ref="ai_pac_facturae_0"/>
             <field name="quantity">1</field>
@@ -42,7 +42,7 @@
         <record id="ail_pac_facturae_2" model="account.invoice.line">
             <field name="name">Consultoria Vauxoo</field>
             <field name="product_id" ref="l10n_mx_facturae_base.product_product_consultoria_vauxoo_demo"/>
-            <field name="price_unit" eval="100.0" />
+            <field name="price_unit" eval="200.0" />
             <field name="uos_id" ref="product.product_uom_hour"/>
             <field name="invoice_id" ref="ai_pac_facturae_0"/>
             <field name="quantity">1</field>
@@ -53,7 +53,7 @@
         <record id="ail_pac_facturae_3" model="account.invoice.line">
             <field name="name">Arrendamiento de oficina</field>
             <field name="product_id" ref="l10n_mx_facturae_base.product_product_renta_oficina_demo"/>
-            <field name="price_unit" eval="100.0" />
+            <field name="price_unit" eval="400.0" />
             <field name="uos_id" ref="product.product_uom_hour"/>
             <field name="invoice_id" ref="ai_pac_facturae_0"/>
             <field name="quantity">1</field>
