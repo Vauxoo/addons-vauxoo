@@ -12,7 +12,7 @@
     acc_jour_obj = self.pool.get('account.journal')
     ir_attachment_mx_obj = self.pool.get('ir.attachment.facturae.mx')
     aml_obj = self.pool.get('account.invoice.line')
-    #tax_obj = self.pool.get('account.invoice.tax.line')
+    tax_obj = self.pool.get('account.invoice.tax')
     wf_service = netsvc.LocalService("workflow")
     journal_ids = acc_jour_obj.search(cr, uid, [], context=context)
     # TODO: Get logger variable
@@ -47,7 +47,6 @@
                         with ti.Timer() as t:
                             invoice_id = self.copy(cr, uid, ref('l10n_mx_facturae_base.ai_pac_facturae_0'), context=context)
                             invoice_lines = self.read(cr, uid, [invoice_id],['invoice_line'])
-                            #tax_lines = self.read(cr, uid, [invoice_id],['tax_line'])
                             if invoice_lines:
                                 for line in invoice_lines[0]['invoice_line']:
                                     # This write is because I need the invoice to be different and is added to the product description on the invoice id 
@@ -120,22 +119,43 @@
                             data_xml = base64.decodestring( fdata )
                             doc_xml = xml.dom.minidom.parseString(data_xml)
                             data_invoice = self.read(cr, uid, invoice_id,[])
+                            tax_lines = self.read(cr, uid, [invoice_id],['tax_line'])
+                            list_price_subtotal = []
+                            list_price_unit = []
+                            list_importe_xml = []
+                            list_valorUnitario_xml = []
                             if invoice_lines:
+                                for n in doc_xml.getElementsByTagName("cfdi:Comprobante"):
+                                    xml_total = n.getAttribute("total")
+                                    xml_subTotal = n.getAttribute("subTotal")
+                                    assert data_invoice['amount_total'] == eval(xml_total), 'No matches Total'
+                                    assert data_invoice['amount_untaxed'] == eval(xml_subTotal), 'No matches Subtotal'
                                 for line in invoice_lines[0]['invoice_line']:
                                     for r in aml_obj.read(cr, uid, [line]):
-                                        price_subtotal = r['price_subtotal']
-                                        price_unit = r['price_unit']
-                                        print "Wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
-                            for n in doc_xml.getElementsByTagName("cfdi:Comprobante"):
-                                xml_total = n.getAttribute("total")
-                                xml_subTotal = n.getAttribute("subTotal")
-                                for conceptos in n.getElementsByTagName("cfdi:Conceptos"):
-                                    for concepto in conceptos.getElementsByTagName("cfdi:Concepto"):
-                                        importe = concepto.getAttribute("importe")
-                                        valorUnitario =  concepto.getAttribute("valorUnitario")
-                                        print "ooooooooooooooooooooooooooooooooooo"
-                            assert data_invoice['amount_total'] == eval(xml_total), 'No matches Total'
-                            assert data_invoice['amount_untaxed'] == eval(xml_subTotal), 'No matches Subtotal'
+                                        list_price_subtotal.append(r['price_subtotal'])
+                                        list_price_unit.append(r['price_unit'])
+                                for n in doc_xml.getElementsByTagName("cfdi:Comprobante"):
+                                    for conceptos in n.getElementsByTagName("cfdi:Conceptos"):
+                                        for concepto in conceptos.getElementsByTagName("cfdi:Concepto"):
+                                            importe = concepto.getAttribute("importe")
+                                            valorUnitario =  concepto.getAttribute("valorUnitario")
+                                            list_importe_xml.append(eval(importe))
+                                            list_valorUnitario_xml.append(eval(importe))
+                                assert list_price_subtotal == list_importe_xml, 'No matches Importe of product'
+                                assert list_price_unit == list_valorUnitario_xml, 'No matches Price Unit of product'
+                                for tax in tax_lines[0]['tax_line']:
+                                    for t in tax_obj.read(cr, uid, [tax]):
+                                        taxes = t['amount']
+                                        #print taxes
+                                totalImpuestosRetenidos = 0.0
+                                importe_ret = 0.0
+                                for taxes in n.getElementsByTagName("cfdi:Impuestos"):
+                                    totalImpuestosRetenidos = taxes.getAttribute("totalImpuestosRetenidos")
+                                    #print totalImpuestosRetenidos,"ttttttttttttttttttt"
+                                    for retenciones in taxes.getElementsByTagName("cfdi:Retenciones"):
+                                        for ret in retenciones.getElementsByTagName("cfdi:Retencion"):
+                                            importe_ret = ret.getAttribute("importe")
+                                            #print importe_ret,"ooooooooooooooooooooooooooooo"
                             if fdata:
                                 if tools.config['test_report_directory']:
                                     open(os.path.join(tools.config['test_report_directory'], 'l10n_mx_cfdi_test' + '_' + \
