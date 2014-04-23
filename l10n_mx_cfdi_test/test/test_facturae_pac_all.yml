@@ -24,7 +24,7 @@
                 time_total = 0
                 all_ok = False
                 type_journal = False
-                pac_type = journal_data.sequence_id.approval_id and journal_data.sequence_id.approval_id.type or False
+                pac_type = journal_data.sequence_id.approval_id and journal_data.sequence_id.approval_id.res_pac and journal_data.sequence_id.approval_id.res_pac.name or False
                 ir_model_id = ir_model_data.search(cr, uid, [('res_id','=',journal_data.id),('model','=','account.journal')])
                 if ir_model_id:
                     module_journal =  ir_model_data.browse(cr, uid, ir_model_id[0], context=context).module.encode('UTF8')
