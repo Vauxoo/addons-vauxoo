@@ -13,15 +13,11 @@
       FROM params_pac
         WHERE method_type IS NOT NULL""")
     dat = cr.dictfetchall()
-    print dat,'imprimo dat'
     pac_obj = self.pool.get('res.pac')
     for data in dat:
-        print data['method_type'],'method_type'
         if not data['method_type'] in ('cancelar', 'firmar'):
             name_driver_pac = data['name_driver']
             pac_ids = pac_obj.search(cr, uid, [('name_driver', '=', name_driver_pac)])
-            print pac_ids,'pac_ids'
-            print name_driver_pac,'name_driver_pac'
             if pac_ids:
                 pac_id = pac_ids[0]
             else:
