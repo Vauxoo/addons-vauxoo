@@ -1,5 +1,5 @@
 -
-  Create Set res_pac params_pac
+  Create and Set res_pac params_pac
 -
   !python {model: params.pac}: |
     cr.execute("""
@@ -34,37 +34,3 @@
                             {'res_pac': pac_id,
                              'method_type': type
                              })
-#~ -
-  #~ Set pac in approval
-#~ -
-  #~ !python {model: res.pac}: |
-    #~ cr. execute("""
-        #~ SELECT a.attname AS field 
-        #~ FROM pg_class c, pg_attribute a 
-        #~ WHERE a.attrelid = c.oid and a.attnum > 0 
-        #~ AND c.relname='ir_sequence_approval'
-    #~ """)
-    #~ dat = cr.dictfetchall()
-    #~ if dat and dat[0].get('field', False) == 'type':
-        #~ cr.execute("""
-            #~ UPDATE ir_sequence_approval approval_factuare
-            #~ SET res_pac = pac.id
-            #~ FROM res_pac pac
-            #~ WHERE approval_factuare.type = pac.name_driver """)
-#~ -
-  #~ Set pac in attachment facturaE
-#~ -
-  #~ !python {model: res.pac}: |
-    #~ cr. execute("""
-        #~ SELECT a.attname AS field 
-        #~ FROM pg_class c, pg_attribute a 
-        #~ WHERE a.attrelid = c.oid and a.attnum > 0 
-        #~ AND c.relname='ir_attachment_facturae_mx'
-    #~ """)
-    #~ dat = cr.dictfetchall()
-    #~ if dat and dat[0].get('field', False) == 'type':
-        #~ cr.execute("""
-            #~ UPDATE ir_attachment_facturae_mx atta_facturae
-            #~ SET res_pac = pac.id
-            #~ FROM res_pac pac
-            #~ WHERE atta_facturae.type = pac.name_driver """)
