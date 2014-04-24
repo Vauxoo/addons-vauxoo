@@ -45,6 +45,17 @@
                     
             </field>
         </record>
+        
+        <record model="ir.ui.view" id="view_hr_payslip_inherit_domain_journal_form">
+            <field name="name">hr.payslip.inherit.domain.journal.form</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll_account.view_hr_payslip_inherit_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='journal_id']" position="attributes">
+                    <attribute name="domain">[('type','=', 'general')]</attribute>
+                </xpath>
+            </field>
+        </record>
 
 <!--
         <record model="ir.ui.view" id="view_hr_payslip_form_salary_rule_id_inherit2">
