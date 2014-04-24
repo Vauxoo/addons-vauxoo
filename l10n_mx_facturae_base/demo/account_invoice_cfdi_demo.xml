@@ -26,38 +26,40 @@
             <field name="account_id" ref="account.a_expense"/>
         </record>
 
-<!-- Product with IVA -->
-        <record id="ail_pac_facturae_1" model="account.invoice.line">
-            <field name="name">Cellular</field>
-            <field name="product_id" ref="l10n_mx_facturae_base.product_product_celular_demo"/>
-            <field name="price_unit" eval="300.0" />
-            <field name="uos_id" ref="product.product_uom_unit"/>
-            <field name="invoice_id" ref="ai_pac_facturae_0"/>
-            <field name="quantity">1</field>
-            <field name="account_id" ref="account.a_expense"/>
-            <field name="invoice_line_tax_id" eval="[(6,0,[ref('l10n_mx_facturae_base.l10n_mx_facturae_base_iva_for_electronic_invoice_0')])]"/>
-        </record>
-        
-<!-- Service with ISR RET -->
-        <record id="ail_pac_facturae_2" model="account.invoice.line">
-            <field name="name">Consultoria Vauxoo</field>
-            <field name="product_id" ref="l10n_mx_facturae_base.product_product_consultoria_vauxoo_demo"/>
-            <field name="price_unit" eval="200.0" />
-            <field name="uos_id" ref="product.product_uom_hour"/>
-            <field name="invoice_id" ref="ai_pac_facturae_0"/>
-            <field name="quantity">1</field>
-            <field name="invoice_line_tax_id" eval="[(6,0,[ref('l10n_mx_facturae_base.l10n_mx_facturae_base_ret_isr_honorario_0')])]"/>
-        </record>
 
 <!-- Renta with IVA, RET ISR, RET IVA -->
         <record id="ail_pac_facturae_3" model="account.invoice.line">
             <field name="name">Arrendamiento de oficina</field>
             <field name="product_id" ref="l10n_mx_facturae_base.product_product_renta_oficina_demo"/>
-            <field name="price_unit" eval="400.0" />
+            <field name="price_unit" eval="5355.0" />
             <field name="uos_id" ref="product.product_uom_hour"/>
             <field name="invoice_id" ref="ai_pac_facturae_0"/>
             <field name="quantity">1</field>
             <field name="invoice_line_tax_id" eval="[(6,0,[ref('l10n_mx_facturae_base.l10n_mx_facturae_base_iva_for_electronic_invoice_0'),ref('l10n_mx_facturae_base.l10n_mx_facturae_base_ret_isr_honorario_0'),ref('l10n_mx_facturae_base.l10n_mx_facturae_base_ret_iva_10_67_arrendamiento_0')])]"/>
+        </record>
+
+<!-- Product with IVA 0 %-->
+        <record id="ail_pac_facturae_fertilizante_4" model="account.invoice.line">
+            <field name="name">Fertilizante (Kg)</field>
+            <field name="product_id" ref="l10n_mx_facturae_base.product_template_fertilizante_vauxoo_demo"/>
+            <field name="price_unit" eval="1000.0" />
+            <field name="uos_id" ref="product.product_uom_unit"/>
+            <field name="invoice_id" ref="ai_pac_facturae_0"/>
+            <field name="quantity">10</field>
+            <field name="account_id" ref="account.a_expense"/>
+            <field name="invoice_line_tax_id" eval="[(6,0,[ref('l10n_mx_facturae_base.l10n_mx_facturae_base_iva0_mx')])]"/>
+        </record>
+
+<!-- Product with IVA Excento 0 %-->
+        <record id="ail_pac_facturae_agua_5" model="account.invoice.line">
+            <field name="name">Agua (Lt)</field>
+            <field name="product_id" ref="l10n_mx_facturae_base.product_product_agua_vauxoo_demo"/>
+            <field name="price_unit" eval="5.0" />
+            <field name="uos_id" ref="product.product_uom_unit"/>
+            <field name="invoice_id" ref="ai_pac_facturae_0"/>
+            <field name="quantity">2</field>
+            <field name="account_id" ref="account.a_expense"/>
+            <field name="invoice_line_tax_id" eval="[(6,0,[ref('l10n_mx_facturae_base.l10n_mx_facturae_base_exento_iva0_mx')])]"/>
         </record>
        
     </data>
