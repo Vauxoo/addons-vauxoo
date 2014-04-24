@@ -32,7 +32,6 @@ from openerp import pooler, tools
 class res_pac(osv.Model):
     _name = 'res.pac'
     
-    _rec_name = "name_driver"
 
     def _get_driver_selection(self, cr, uid, context=None):
         if context is None:
