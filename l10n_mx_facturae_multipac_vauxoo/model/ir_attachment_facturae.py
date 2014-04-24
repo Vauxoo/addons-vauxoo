@@ -138,33 +138,32 @@ class ir_attachment_facturae_mx(osv.Model):
             object_proxy = xmlrpclib.ServerProxy(url+'object')
             try:
                 uid2 = common_proxy.login(DB,USER,PASS)
-            except Exception, e:
-                error = tools.ustr(traceback.format_exc())
-                _logger.error(error)                
-            fname_cer_no_pem = self.binary2file(cr, uid, ids,
-                    attachment.certificate_file, 'openerp_' + '' + '__certificate__', '.cer')
-            cerCSD = fname_cer_no_pem and base64.encodestring(
-                open(fname_cer_no_pem, "r").read()) or ''
-            fname_key_no_pem = self.binary2file(cr, uid, ids,
-                    attachment.certificate_key_file, 'openerp_' +'' + '__key__', '.key')
-            keyCSD = fname_key_no_pem and base64.encodestring(
-                open(fname_key_no_pem, "r").read()) or ''
-            attachment_client = { 'name': attachment.name,
-                                    'file_input': attachment.file_input.id,
-                                    'model_source': attachment.model_source,
-                                    'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                                    'state': 'draft',
-                                    'certificate_file': cerCSD,
-                                    'certificate_key_file': keyCSD,
-                                    'certificate_password': attachment.certificate_password,
-                                    }
-            attachment_client_id = object_proxy.execute(DB, uid2, PASS, 'ir.attachment.facturae.client', 'create', attachment_client)
-            res = object_proxy.execute(DB, uid2, PASS,'ir.attachment.facturae.client','stamp',[attachment_client_id])
-            self.write(cr, uid, attachment.id, {'cfdi_fecha_timbrado': res.pop('cfdi_fecha_timbrado'),
-												'cfdi_folio_fiscal': res.pop('cfdi_folio_fiscal'),
-												'cfdi_no_certificado': res.pop('cfdi_no_certificado'),
-												'cfdi_sello': res.pop('cfdi_sello'),
-												'cfdi_cadena_original': res.pop('cfdi_cadena_original')})
-        return res
+                fname_cer_no_pem = self.binary2file(cr, uid, ids,
+                        attachment.certificate_file, 'openerp_' + '' + '__certificate__', '.cer')
+                cerCSD = fname_cer_no_pem and base64.encodestring(
+                        open(fname_cer_no_pem, "r").read()) or ''
+                fname_key_no_pem = self.binary2file(cr, uid, ids,
+                        attachment.certificate_key_file, 'openerp_' +'' + '__key__', '.key')
+                keyCSD = fname_key_no_pem and base64.encodestring(
+                        open(fname_key_no_pem, "r").read()) or ''
+                attachment_client = { 'name': attachment.name,
+                                        'file_input': attachment.file_input.id,
+                                        'model_source': attachment.model_source,
+                                        'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                                        'state': 'draft',
+                                        'certificate_file': cerCSD,
+                                        'certificate_key_file': keyCSD,
+                                        'certificate_password': attachment.certificate_password,
+                                        }
+                attachment_client_id = object_proxy.execute(DB, uid2, PASS, 'ir.attachment.facturae.client', 'create', attachment_client)
+                res = object_proxy.execute(DB, uid2, PASS,'ir.attachment.facturae.client','stamp',[attachment_client_id])
+                self.write(cr, uid, attachment.id, {'cfdi_fecha_timbrado': res.pop('cfdi_fecha_timbrado'),
+                                                        'cfdi_folio_fiscal': res.pop('cfdi_folio_fiscal'),
+                                                        'cfdi_no_certificado': res.pop('cfdi_no_certificado'),
+                                                        'cfdi_sello': res.pop('cfdi_sello'),
+                                                        'cfdi_cadena_original': res.pop('cfdi_cadena_original')})
+                return res
+            except:
+                raise osv.except_osv(_('Error !'),_('Could not establish the connection, please check parameters.'))             
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

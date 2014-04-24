@@ -115,8 +115,9 @@ class ir_attachment_facturae_client(osv.Model):
 			ir_attch_facte_obj.signal_confirm(cr, uid, [atta_facte_id], context=None)
 			ir_attch_facte_obj.signal_sign(cr, uid, [atta_facte_id], context=None)
 			atta_facte_brw = ir_attch_facte_obj.browse(cr, uid, [atta_facte_id], context=None)
-			xml_sign = base64.decodestring(atta_facte_brw[0].file_xml_sign.db_datas) or ''
-			arch = base64.encodestring(xml_sign or '')
+			format_xml = xml.dom.minidom.parseString(base64.decodestring(atta_facte_brw[0].file_xml_sign.datas)) or ''
+			xml_sign = format_xml.toxml().encode('ascii', 'xmlcharrefreplace')
+			arch = base64.encodestring(xml_sign) or ''
 			res = {'file': arch, 
 					'msg': atta_facte_brw[0].msj, 
 					'cfdi_xml': xml_sign, 
