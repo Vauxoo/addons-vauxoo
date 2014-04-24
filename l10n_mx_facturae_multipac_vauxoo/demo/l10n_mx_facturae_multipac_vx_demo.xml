@@ -8,7 +8,7 @@
             <field name="active">True</field>
             <field name="code">VX</field>
             <field name="name_driver">cfdi32_multipac_vx</field>
-            <field name="url_webservice">localhost:8069</field>
+            <field name="url_webservice"></field>
             <field name="user">facturae_mx_user</field>
             <field name="password">1234</field>
         </record>
