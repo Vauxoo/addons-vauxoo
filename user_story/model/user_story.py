@@ -156,9 +156,9 @@ class user_story(osv.Model):
         return False
      
     _columns = {
-        'name': fields.char('Title', size=255, required=True, readonly=False,
-            translate=True),
-        'owner': fields.char('Owner', size=255, required=True, readonly=False),
+        'name': fields.char('Title', size=255, required=True, readonly=False, translate=True),
+        'owner': fields.char('Owner', size=255, readonly=False),
+        'owner_id': fields.many2one('res.users', 'Owner', required=True, help="User Story's Owner"),
         'code': fields.char('Code', size=64, readonly=False),
         'planned_hours': fields.float('Planned Hours'),
         'project_id': fields.many2one('project.project', 'Project',
