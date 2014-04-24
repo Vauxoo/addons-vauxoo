@@ -17,11 +17,11 @@
     res_id = False
     time_total = 0
     for journal_data in acc_jour_obj.browse(cr, uid, journal_ids, context=context):
-        if (journal_data.sequence_id and journal_data.sequence_id.approval_id and journal_data.sequence_id.approval_id.id) and journal_data.type in ('purchase'):
+        if (journal_data.sequence_id and journal_data.sequence_id.approval_id and journal_data.sequence_id.approval_id.id) and journal_data.type in ('general'):
             for type_test_cancel in ['cancel_from_payroll','cancel_from_attachment_facturae_mx']:
                 time_total = 0
                 all_ok = False
-                pac_type = journal_data.sequence_id.approval_id and journal_data.sequence_id.approval_id.type or False
+                pac_type = journal_data.sequence_id.approval_id and journal_data.sequence_id.approval_id.res_pac and journal_data.sequence_id.approval_id.res_pac.name or False
                 ir_model_id = ir_model_data.search(cr, uid, [('res_id','=',journal_data.id),('model','=','account.journal')])
                 if ir_model_id:
                     module_journal =  ir_model_data.browse(cr, uid, ir_model_id[0], context=context).module.encode('UTF8')
@@ -152,7 +152,7 @@
                             #############################################################################################################
                             log("11 I cancel from payroll %s by clicking on cancel button"% (xml_id_payroll))
                             with ti.Timer() as t:
-                                self.cancel_sheet(cr, uid, [ref(xml_id_payroll)], context=context)
+                                wf_service.trg_validate(uid, 'hr.payslip', ref(xml_id_payroll), 'cancel_sheet', cr)
                             time_tmp = t.secs
                             time_total += time_tmp
                             log("*** Cancel payroll from model source: %s s" % time_tmp)
