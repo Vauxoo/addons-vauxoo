@@ -192,6 +192,8 @@ class user_story(osv.Model):
                   " orderpoint")),
         'categ_ids': fields.many2many('project.category','project_category_user_story_rel','userstory_id','categ_id', string="Tags"),
         'implementation': fields.text('Implementation Conclusions', translate=True),
+        'help': fields.boolean('Show Help', help='Allows you to show the help in the form'),
+
     }
     _defaults = {
         'name': lambda *a: None,
@@ -201,7 +203,8 @@ class user_story(osv.Model):
         'state': 'draft',
         'priority_level': lambda self, cr, uid, ctx: self.pool.get(
             'user.story.priority').search(
-                cr, uid, [('name', 'like', 'Secondary')], context=ctx)[0]
+                cr, uid, [('name', 'like', 'Secondary')], context=ctx)[0],
+        'help' : True,
     }
 
     def do_draft(self, cr, uid, ids, context=None):

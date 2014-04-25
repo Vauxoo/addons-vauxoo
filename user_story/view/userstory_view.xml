@@ -14,10 +14,12 @@
 			 <button name="do_done" string="Done" type="object" states="draft,open,pending,cancelled"/>
 			 <button name="do_cancel" string="Cancel" type="object" states="draft,open,pending,done"/>
 			<field name="state" widget="statusbar"/>
+                <label for='help'/>
+                <field name='help'/>
 		  </header>
 		  <sheet string="User Story">
             <h1><label for="id" string="User Story Number: " class="oe_horizontal_separator oe_clear"/><field name="id"/></h1>
-            <div class="oe_form_sheet_width">
+            <div class="oe_form_sheet_width" attrs="{'invisible':[('help','=',False)]}">
                 <p class="oe_grey">
                 A deeper explanation about what an user story is can be 
                 found here.
@@ -54,16 +56,18 @@
 		        <label for="project_id" string="2.- Related Project" class="oe_horizontal_separator oe_clear"/>
 			</h3>
             <div>
-                <p class="oe_grey">
-		            <field name="project_id" domain="[('child_ids','=',False)]" context="{'current_model': 'project.project'}" />
-		            The link to the project, all projects listed here
-                    are of the lower level available in the Master WBS.
-                </p>
+                <field name="project_id" domain="[('child_ids','=',False)]" context="{'current_model': 'project.project'}" />
+                <div attrs="{'invisible':[('help','=',False)]}">
+                    <p class="oe_grey">
+                        The link to the project, all projects listed here
+                        are of the lower level available in the Master WBS.
+                    </p>
+                </div>
             </div>
           <notebook colspan="4">
             <page string="Details">
               <h1><label for="description" string="3.- Description" colspan="4" class="oe_horizontal_separator oe_clear"/></h1>
-                <div>
+                <div attrs="{'invisible':[('help','=',False)]}">
                    <p class="oe_grey">
                     Here in the description, you must be as explícit as you can,
                     Remember you can upload a Youtube video, and insert 
