@@ -328,7 +328,7 @@ class invoice_facturae_html(report_sxw.rml_parse):
                     except:
                         continue
                 if dict_text.get(model_source, False) and dict_var.get(model_source, False):
-                    text = dict_text.get(model_source) % dict_var.get(model_source)
+                    text = dict_text.get(model_source).decode('utf-8') % dict_var.get(model_source)
                 elif dict_text.get(model_source, False) and not dict_var.get(model_source, False):
                     text = dict_text.get(model_source)
             except:
