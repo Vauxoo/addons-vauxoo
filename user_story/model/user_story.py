@@ -39,37 +39,6 @@ class user_story(osv.Model):
     _description = 'User Story'
     _inherit = ['mail.thread']
 
-    def _get_tasks(self, cr, uid, ids, field_name, arg, context=None):
-        if context is None:
-            context = {}
-        result = {}
-        task_obj = self.pool.get('project.task')
-        for orderpoint in self.browse(cr, uid, ids, context=context):
-            task_ids = task_obj.search(cr, uid, [
-                                       ('userstory_id', '=', orderpoint.id)])
-            result[orderpoint.id] = task_ids
-        return result
-
-    def _set_task(self, cr, uid, id, name, value, arg, ctx=None):
-
-        task_ids = self.pool.get('project.task').search(
-            cr, uid, [("userstory_id", '=', id)])
-        task_id = list(set(value[0][2]) - set(task_ids))
-        if task_id:
-            for i in task_id:
-                sql_str = """UPDATE project_task set
-                            userstory_id='%s'
-                            WHERE id=%s """ % (id, i)
-                cr.execute(sql_str)
-        else:
-            task_id = list(set(task_ids) - set(value[0][2]))
-            for i in task_id:
-                    sql_str = """UPDATE project_task set
-                                userstory_id=Null
-                                WHERE id=%s """ % (i)
-                    cr.execute(sql_str)
-        return True
-
     def write(self, cr, uid, ids, vals, context=None):
         task_obj = self.pool.get('project.task')
         
@@ -185,16 +154,6 @@ class user_story(osv.Model):
 
 
         return False
-
-    def create(self, cr, uid, vals, context=None):
-        if context is None: context = {}
-        # Prevent double project creation when 'use_tasks' is checked!
-        context = dict(context, user_story_creation_in_progress=True)
-        context['name'] = "User Story / %s" % (vals['name'])
-        if vals.get('type', False) not in ('template','contract'):
-            vals['type'] = 'contract'
-        user_story_id = super(user_story, self).create(cr, uid, vals, context=context)
-        return user_story_id
      
     _columns = {
         'name': fields.char('Title', size=255, required=True, readonly=False, translate=True),
@@ -226,13 +185,11 @@ class user_story(osv.Model):
         'user_execute_id': fields.many2one('res.users', 'Execution Responsible',help="Person responsible for user story takes place, either by delegating work to other human resource or running it by itself. For delegate work should monitor the proper implementation of associated activities."),
         'sk_id': fields.many2one('sprint.kanban', 'Sprint Kanban'),
         'state': fields.selection(_US_STATE, 'State', readonly=True),
-        'task_ids': fields.function(_get_tasks, type='many2many',
-                                    relation="project.task",
-                                    fnct_inv=_set_task,
-                                    string="Tasks",
-                                    help="""Draft procurement of
-                                            the product and location
-                                            of that orderpoint"""),
+        'task_ids': fields.one2many(
+            'project.task', 'userstory_id',
+            string="Tasks",
+            help=("Draft procurement of the product and location of that"
+                  " orderpoint")),
         'categ_ids': fields.many2many('project.category','project_category_user_story_rel','userstory_id','categ_id', string="Tags"),
         'implementation': fields.text('Implementation Conclusions', translate=True),
     }
