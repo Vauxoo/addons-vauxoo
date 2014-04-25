@@ -585,7 +585,7 @@ class ir_attachment_facturae_mx(osv.Model):
             #~ else:
                 #wf_service.trg_validate(uid, 'account.invoice', invoice.id, 'invoice_cancel', cr)
             #~ if 'cfdi' in ir_attach_facturae_mx_id.type:
-            if not ir_attach_facturae_mx_id.state in ['cancel', 'draft', 'confirmed']:
+            if not ir_attach_facturae_mx_id.state in ['draft', 'confirmed']:
                 type__fc = self.get_driver_fc_cancel()
                 if ir_attach_facturae_mx_id.res_pac.name_driver in type__fc.keys():
                     cfdi_cancel = res = type__fc[ir_attach_facturae_mx_id.res_pac.name_driver](
