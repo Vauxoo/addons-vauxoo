@@ -685,7 +685,6 @@ class hr_payslip(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         payroll = self.browse(cr, uid, ids)[0]
         totalImpuestosTrasladados = 0.0
-        tax_requireds = ['IVA', 'IEPS']
         payroll_data_parent = {}
         payroll_data = payroll_data_parent = {}
         payroll_data['Impuestos'] = {}
@@ -716,7 +715,7 @@ class hr_payslip(osv.Model):
                             'impuesto': 'ISR',
                             'importe': "%.2f" % (abs(isr_amount)),
                         }})
-        tax_requireds = ['IVA', 'IEPS']
+        tax_requireds = []
         for tax_required in tax_requireds:
             payroll_data_impuestos['Traslados'].append({'Traslado': {
                 'impuesto': self.string_to_xml_format(cr, uid, ids, tax_required),
