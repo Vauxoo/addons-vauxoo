@@ -10,7 +10,7 @@
             <field name="arch" type="xml">
                 <form string="Add Followers" version="7.0">
                     <group>
-                        <field name="remove"/>
+                        <field name="remove" />
                         <field name="groups" attrs="{'invisible':['|',('partners','=', True),
                                                                       ('p_a_g','=',True)]}" on_change="load_partners(mail_groups,groups,p_a_g)"/>
                         <field name="partners" attrs="{'invisible':['|',('groups','=', True),
@@ -33,6 +33,11 @@
                         <field name="message" attrs="{'invisible':[('remove', '=', True)]}"/>
                     </group>
                     <footer>
+                        <button string="Bring Partners"
+                                name="bring_partner" 
+                                attrs="{'invisible':[('remove', '=', False)]}"
+                                type="object"
+                                class="oe_highlight"/>
                         <button string="Add Followers"
                                 name="add_followers"
                                 context="{'second':True}"
