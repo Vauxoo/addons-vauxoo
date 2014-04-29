@@ -242,7 +242,7 @@
                         <tr>
                             <td class="cliente"><b>${_('CLABE')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@CLABE'] or ''|entity }</td>
                             <td class="cliente"><b>${_('M&eacute;todo de pago')}</b></td><td class="cliente">${ dict_data['@metodoDePago'] or ''|entity }</td>
-                            <td class="cliente"><b>${_('Banco')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@NumSeguridadSocial'] or ''|entity } </td>
+                            <td class="cliente"><b>${_('Banco')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@Banco'] or ''|entity } </td>
                         </tr>
                     </table>
                 </tr>
