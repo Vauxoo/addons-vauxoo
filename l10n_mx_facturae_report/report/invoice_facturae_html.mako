@@ -123,11 +123,13 @@
                                 ${ dict_data['Receptor']['Domicilio']['@municipio'] or ''|entity},
                                 ${ dict_data['Receptor']['Domicilio']['@estado'] or ''|entity},
                                 ${ dict_data['Receptor']['Domicilio']['@pais'] or ''|entity}
-                            </td>
-                            <td width="12%" class="cliente"><b>Reg. Patronal:</b></td>
-                            <td class="cliente">
-                                ${ dict_data['Complemento']['Nomina']['@RegistroPatronal'] or ''|entity }
-                            </td>
+                            </td>       
+                            %if dict_data['Complemento'].has_key('Nomina'):
+                                <td width="12%" class="cliente"><b>Reg. Patronal:</b></td>
+                                <td class="cliente">
+                                    ${ dict_data['Complemento']['Nomina']['@RegistroPatronal'] or ''|entity }
+                                </td>
+                            %endif
                         </tr>
                     </table>
                     <table class="basic_table" style="border-bottom:1px solid #002966;">
