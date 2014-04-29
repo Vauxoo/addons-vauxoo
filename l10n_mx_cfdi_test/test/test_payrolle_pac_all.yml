@@ -17,7 +17,7 @@
     res_id = False
     time_total = 0
     for journal_data in acc_jour_obj.browse(cr, uid, journal_ids, context=context):
-        if (journal_data.sequence_id and journal_data.sequence_id.approval_id and journal_data.sequence_id.approval_id.id) and journal_data.type in ('purchase'):
+        if (journal_data.sequence_id and journal_data.sequence_id.approval_id and journal_data.sequence_id.approval_id.id) and journal_data.type in ('general'):
             for type_test_cancel in ['cancel_from_payroll','cancel_from_attachment_facturae_mx']:
                 time_total = 0
                 all_ok = False

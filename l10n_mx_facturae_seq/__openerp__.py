@@ -45,6 +45,7 @@
         "security/ir.model.access.csv",
         "ir_sequence_view.xml",
         "wizard/installer.xml",
+        "test/update_type-to-pac.yml"
     ],
     "installable" : True,
     "active" : False,
