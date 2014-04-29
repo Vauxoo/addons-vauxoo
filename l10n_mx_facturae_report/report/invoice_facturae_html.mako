@@ -124,6 +124,10 @@
                                 ${ dict_data['Receptor']['Domicilio']['@estado'] or ''|entity},
                                 ${ dict_data['Receptor']['Domicilio']['@pais'] or ''|entity}
                             </td>
+                            <td width="12%" class="cliente"><b>Reg. Patronal:</b></td>
+                            <td class="cliente">
+                                ${ dict_data['Complemento']['Nomina']['@RegistroPatronal'] or ''|entity }
+                            </td>
                         </tr>
                     </table>
                     <table class="basic_table" style="border-bottom:1px solid #002966;">
@@ -167,78 +171,66 @@
         </table>
         <br/><!-- Inicio Nodo Nomina -->
         %if dict_data['Complemento'].has_key('Nomina'):
-            <table width="100%" class="basic_table" style="font-size:12;">
-                <tr>
-                    <td width="50%" style="text-align:center;">
-                        <b>${_('DATOS DEL EMPLEADO')}</b>
-                    </td>
-                    <td width="50%" style="text-align:center;">
-                        <b>${_('INFORMACI&Oacute;N LABORAL')}</b>
-                    </td>
+            <table width="100%">
+                <table width="100%" class="basic_table" style="font-size:12;">
+                    <tr>
+                        <td style="text-align:center;">
+                            <b>${_('DATOS DEL EMPLEADO')}</b>
+                        </td>
+                    </tr>
+                </table>
                 </tr>
                 <tr>
-                    <td width="50%" valign="top">
-                        <table class="basic_table" style="font-size:9;">
-                            <tr>                                
-                                <td class="cliente" width="25%"><b>
-                                    ${_('No. Empleado')}</br>
-                                    ${_('Reg. Patronal')}</br>
-                                    ${_('Puesto')}</br>
-                                    ${_('CURP')}</br>
-                                    ${_('Riesgo de puesto')}</br>
-                                    ${_('Departamento')}</br>
-                                    ${_('N&uacute;m. seguridad social')}</br></b>
-                                </td>
-                                <td class="cliente" width="25%">
-                                    ${ dict_data['Complemento']['Nomina']['@NumEmpleado'] or ''|entity }</br>
-                                    ${ dict_data['Complemento']['Nomina']['@RegistroPatronal'] or ''|entity }</br>
-                                    ${ dict_data['Complemento']['Nomina']['@Puesto'] or ''|entity }</br>
-                                    ${ dict_data['Complemento']['Nomina']['@CURP'] or ''|entity }</br>
-                                    ${ dict_data['Complemento']['Nomina']['@RiesgoPuesto'] or ''|entity }</br>                                   
-                                    ${ dict_data['Complemento']['Nomina']['@Departamento'] or ''|entity }</br>
-                                    ${ dict_data['Complemento']['Nomina']['@NumSeguridadSocial'] or ''|entity }</br>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td width="50%" valign="top">
-                        <table class="basic_table" style="font-size:9;">
-                            <tr>
-                                <td class="cliente" width="25%"><b>
-                                    ${_('Contrato')}</br>
-                                    ${_('D&iacute;as Pagados')}</br>
-                                    ${_('Rel. Laboral')}</br>
-                                    ${_('Salario diario')}</br>                                    
-                                    ${_('Jornada')}</br>
-                                    ${_('Antiguedad')}</br>
-                                    ${_('Salario base')}</br>
-                                    ${_('Periodo')}</br></b>                                 
-                                </td>
-                                <td class="cliente" width="25%">
-                                    ${ dict_data['Complemento']['Nomina']['@TipoContrato'] or ''|entity }</br>
-                                    ${ dict_data['Complemento']['Nomina']['@NumDiasPagados'] or ''|entity }</br>
-                                    ${datetime.strptime(dict_data['Complemento']['Nomina']['@FechaInicioRelLaboral'].encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity}</br>
-                                    ${ dict_data['Complemento']['Nomina']['@SalarioDiarioIntegrado'] or ''|entity }</br>                                
-                                    ${ dict_data['Complemento']['Nomina']['@TipoJornada'] or ''|entity }</br>
-                                    ${ dict_data['Complemento']['Nomina']['@Antiguedad'] or ''|entity }</br>
-                                    ${ dict_data['Complemento']['Nomina']['@SalarioBaseCotApor'] or ''|entity }</br>
-                                    ${ dict_data['Complemento']['Nomina']['@PeriodicidadPago'] or ''|entity }</br>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
+                    <table width="100%" class="basic_table" style="font-size:9; border:1.5px solid grey;">
+                        <tr>                          
+                            <td class="cliente"><b>${_('No. Empleado')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@NumEmpleado'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('Puesto')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@Puesto'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('CURP')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@CURP'] or ''|entity }</td>
+                        </tr>
+                        <tr>
+                            <td class="cliente"><b>${_('Riesgo de puesto')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@RiesgoPuesto'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('Departamento')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@Departamento'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('N&uacute;m. seguridad social')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@NumSeguridadSocial'] or ''|entity } </td>
+                        </tr>
+                    </table>
                 </tr>
             </table>
             <br/>
             <table width="100%">
+                <table width="100%" class="basic_table" style="font-size:12;">
+                    <tr>
+                        <td style="text-align:center;">
+                            <b>${_('INFORMACI&Oacute;N LABORAL')}</b>
+                        </td>
+                    </tr>
+                </table>
+                </tr>
                 <tr>
-                    <table width="100%" class="basic_table" style="font-size:12;">
+                    <table width="100%" class="basic_table" style="font-size:9; border:1.5px solid grey;">
+                        <tr>                          
+                            <td class="cliente"><b>${_('Contrato')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@TipoContrato'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('D&iacute;as Pagados')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@NumDiasPagados'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('Rel. Laboral')}</b></td><td class="cliente">${ datetime.strptime(dict_data['Complemento']['Nomina']['@FechaInicioRelLaboral'].encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity }</td>
+                            <td class="cliente"><b>${_('Salario diario')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@SalarioDiarioIntegrado'] or ''|entity }</td>
+                        </tr>
                         <tr>
-                            <td style="text-align:center;">
-                                <b>${_('PAGO')}</b>
-                            </td>
+                            <td class="cliente"><b>${_('Jornada')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@TipoJornada'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('Antiguedad')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@Antiguedad'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('Salario base')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@SalarioBaseCotApor'] or ''|entity } </td>
+                            <td class="cliente"><b>${_('Periodo')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@PeriodicidadPago'] or ''|entity } </td>
                         </tr>
                     </table>
+                </tr>
+            </table>
+            <br/>
+            <table width="100%">
+                <table width="100%" class="basic_table" style="font-size:12;">
+                    <tr>
+                        <td style="text-align:center;">
+                            <b>${_('PAGO')}</b>
+                        </td>
+                    </tr>
+                </table>
                 </tr>
                 <tr>
                     <table width="100%" class="basic_table" style="font-size:9; border:1.5px solid grey;">
@@ -250,12 +242,12 @@
                         <tr>
                             <td class="cliente"><b>${_('CLABE')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@CLABE'] or ''|entity }</td>
                             <td class="cliente"><b>${_('M&eacute;todo de pago')}</b></td><td class="cliente">${ dict_data['@metodoDePago'] or ''|entity }</td>
-                            <td class="cliente"><b>${_('Banco')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@Banco'] or ''|entity } </td>
+                            <td class="cliente"><b>${_('Banco')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@NumSeguridadSocial'] or ''|entity } </td>
                         </tr>
                     </table>
                 </tr>
             </table>
-            <br/>   
+            <br/>
             <table width="100%" style="color:#121212">
                 <tr>
                     <td width="50%" valign="top">
@@ -383,7 +375,6 @@
             </tr>
         </table>
         </br>
-        </br>
         %endif
         <!-- Fin Nodo Nomina -->
         <table class="basic_table" style="color:#121212">
@@ -473,7 +464,6 @@
                 <td class="total_td" align="right"><b>$ ${ dict_data['@total'] or ''|entity}</b></td>
             </tr>
         </table>
-        <br clear="all" />
         <table class="basic_table">
             <tr>
                 <td class="tax_td">
@@ -492,7 +482,6 @@
                 </td>
             </tr>            
         </table>
-        <br clear="all"/>
         %if dict_context_extra_data.has_key('payment_term') or dict_context_extra_data.has_key('comment'):
             <table class="basic_table">
                 %if dict_context_extra_data.has_key('payment_term'):
