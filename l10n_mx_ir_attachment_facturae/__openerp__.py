@@ -47,6 +47,7 @@
         "l10n_mx_facturae_workflow.xml",
         "l10n_mx_facturae_mail_server_data.xml",
         "res_config.xml",
+        "test/update_type-to-pac.yml"
     ],
     "installable" : True,
     "active" : False,
