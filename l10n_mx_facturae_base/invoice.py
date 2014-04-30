@@ -1231,13 +1231,12 @@ class account_invoice(osv.Model):
                 impuesto_list.append(impuesto_dict)
 
             invoice_data['cfdi:Impuestos'].update({
-                'totalImpuestosTrasladados': "%.2f" % (totalImpuestosTrasladados),
-            })
-            if totalImpuestosRetenidos:
-                invoice_data['cfdi:Impuestos'].update({
                     'totalImpuestosRetenidos': "%.2f" % (totalImpuestosRetenidos)
                 })
 
+            invoice_data['cfdi:Impuestos'].update({
+                    'totalImpuestosTrasladados': "%.2f" % (totalImpuestosRetenidos)
+                })
             for tax_required in tax_names_traslado:
                 if tax_required in tax_names_traslado:
                     continue

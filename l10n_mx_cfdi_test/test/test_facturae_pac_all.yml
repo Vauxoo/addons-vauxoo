@@ -61,7 +61,7 @@
                                                 'name': xml_id_invoice,
                                                 'model': self._name,
                                                 'res_id': invoice_id,
-                                                'module': 'l10n_mx_cfdi_test',
+                                                'module': 'l10n_mx_cfdi_test'
                                             })
                         #~ print "Time duplicate invoice: %s s" % t.secs
                         time_tmp = t.secs
@@ -107,7 +107,7 @@
                         #################################################################################################
                         #    6 I check that the state in l10n_mx attachment facturae is "Confirmed"     #
                         #################################################################################################
-                        log("6 I check that the state in l10n_mx attachment facturae %s is Confirmed"% (xml_id_invoice))
+                        log("6 I check that the state in l10n_mx attachment facturae %s is Confirmed"%(xml_id_invoice))
                         cfdi_attachment_ids = ir_attachment_mx_obj.search(cr, uid, [('id_source', '=', ref(xml_id_invoice) ),('model_source','=','account.invoice'), ('state', '<>', 'cancel')], limit=1)
                         cfdi_attachment_id = cfdi_attachment_ids and cfdi_attachment_ids[0] or False
                         state = 'no attach file'
@@ -168,8 +168,8 @@
                                             list_retenciones.append(retencion)
                                             totalImpuestosRetenidos += retencion or 0.0
                                 for taxes in n.getElementsByTagName("cfdi:Impuestos"):
-                                    totalImpuestosRetenidos_xml = eval(taxes.getAttribute("totalImpuestosRetenidos"))
                                     totalImpuestosTrasladados_xml = eval(taxes.getAttribute("totalImpuestosTrasladados"))
+                                    totalImpuestosRetenidos_xml = eval(taxes.getAttribute("totalImpuestosRetenidos"))
                                     if taxes.getElementsByTagName("cfdi:Retenciones"):
                                         for retenciones in taxes.getElementsByTagName("cfdi:Retenciones"):
                                             for ret in retenciones.getElementsByTagName("cfdi:Retencion"):

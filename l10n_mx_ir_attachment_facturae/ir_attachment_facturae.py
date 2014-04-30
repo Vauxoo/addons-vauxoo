@@ -294,7 +294,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     nodeComprobante.setAttribute("sello", sign_str)
                     data_xml = doc_xml.toxml('UTF-8')
                     attachment_obj.write(cr, uid, [attach.file_input.id],{
-                                    'datas': base64.encodestring(data_xml),
+                                    'datas': base64.encodestring(data_xml)
                             }, context=context)
                 nodepayroll = doc_xml.getElementsByTagName("nomina:Nomina")
                 if nodepayroll:
