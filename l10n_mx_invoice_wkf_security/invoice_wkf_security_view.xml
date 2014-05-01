@@ -9,11 +9,11 @@
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='invoice_cancel']" position="replace">
                     <button name="invoice_cancel" states="draft,proforma2,sale,open" string="Cancel"
-                                icon="gtk-cancel" groups="invoice_wkf_security.group_invoice_cancel,l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                                icon="gtk-cancel" groups="l10n_mx_invoice_wkf_security.group_invoice_cancel,l10n_mx_facturae_groups.group_l10n_mx_facturae_manager"/>
                 </xpath>
                 <xpath expr="//button[@name='action_cancel_draft']" position="replace">
                     <button name="action_cancel_draft" states="cancel" string="Reset to Draft"
-                                type="object" icon="terp-stock_effects-object-colorize" groups="invoice_wkf_security.group_invoice_reset_draft, l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                                type="object" icon="terp-stock_effects-object-colorize" groups="l10n_mx_invoice_wkf_security.group_invoice_reset_draft, l10n_mx_facturae_groups.group_l10n_mx_facturae_manager"/>
                 </xpath>
             </field>
         </record>
