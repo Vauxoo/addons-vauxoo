@@ -25,4 +25,4 @@
 #
 ##############################################################################
 
-import attachment_client_res_pac_defaults
+import attachment_mx_res_pac_defaults

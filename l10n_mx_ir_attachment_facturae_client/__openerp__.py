@@ -42,7 +42,7 @@
         ],
     "data" : [
         "security/ir.model.access.csv",
-        "wizard/attachment_client_res_pac_defaults_wizard.xml",
+        "wizard/attachment_mx_res_pac_defaults_wizard.xml",
         ],
     "test" : [
         ],

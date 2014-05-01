@@ -46,89 +46,52 @@ from datetime import datetime, timedelta
 class ir_attachment_facturae_client(osv.Model):
     _name = 'ir.attachment.facturae.client'
 
-    _columns = {
-        'name': fields.char('Name', size=128, required=True, readonly=True,
-                            help='Name of attachment generated'),
-        'file_input': fields.many2one('ir.attachment', 'File input',
-                                      readonly=True, help='File input'),
-        'model_source': fields.char('Source Model', size=128, help='Source Model'),
-        'last_date': fields.datetime('Last Modified', readonly=True,
-                                     help='Date when is generated the attachment'),
-        'state': fields.selection([
-            ('draft', 'Draft'),
-            ('confirmed', 'Confirmed'),
-            ('signed', 'Signed'),
-            ('printable', 'Printable Format Generated'),
-            ('sent_customer', 'Sent Customer'),
-            ('sent_backup', 'Sent Backup'),
-            ('done', 'Done'),
-            ('cancel', 'Cancelled'), ],
-            'State', readonly=True, required=True, help='State of attachments'),
-        'res_pac_id': fields.many2one('res.pac', 'Res Pac',
-                                            help='Params Pac'),
-        'certificate_file': fields.binary('Certificate File',
-            filters='*.cer,*.certificate,*.cert', help='This file .cer is proportionate by the SAT'),
-        'certificate_key_file': fields.binary('Certificate Key File',
-            filters='*.key', help='This file .key is proportionate by the SAT'),
-        'certificate_password': fields.char('Certificate Password', size=64,
-            invisible=False, help='This password is proportionate by the SAT'),
-        'company_id': fields.many2one('res.company', 'Company',
-                                        help='Company to which it belongs this params pac user'),
-    }
-
-    _defaults = {
-        'state': 'draft',
-        'last_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
-        'company_id': lambda self, cr, uid, c:
-            self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
-    }
-
-    def stamp(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
+    def stamp(self, cr, uid, ids, name, cfdi, user, password):
         ir_attch_obj = self.pool.get('ir.attachment')
         ir_attch_facte_obj = self.pool.get('ir.attachment.facturae.mx')
-        for attachment_client in self.browse(cr, uid, ids, context=context):
-			ir_attachment_values = {'name': attachment_client.file_input.name,
-									'datas': attachment_client.file_input.datas,
-									'datas_fname': attachment_client.file_input.datas_fname,
-									'res_model': attachment_client.file_input.res_model,
-									'res_id': False,
-									}
-
-			atta_id = ir_attch_obj.create(cr, uid, ir_attachment_values, context=None)
-			ir_attachment_facte_values = { 'name': attachment_client.name,
-											'id_source': False,
-											'model_source': attachment_client.model_source,
-											'attachment_email': '',
-											'certificate_password': attachment_client.certificate_password,
-											'certificate_file': attachment_client.certificate_file,
-											'certificate_key_file': attachment_client.certificate_key_file,
-											'user_pac': '',
-											'password_pac': '',
-											'url_webservice_pac': '',
-											'file_input': attachment_client.file_input.id,
-											'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-											'res_pac': attachment_client.res_pac_id.id,
-											}
-			atta_facte_id = ir_attch_facte_obj.create(cr, uid, ir_attachment_facte_values, context=None)
-			ir_attch_facte_obj.signal_confirm(cr, uid, [atta_facte_id], context=None)
-			ir_attch_facte_obj.signal_sign(cr, uid, [atta_facte_id], context=None)
-			atta_facte_brw = ir_attch_facte_obj.browse(cr, uid, [atta_facte_id], context=None)
-			format_xml = xml.dom.minidom.parseString(base64.decodestring(atta_facte_brw[0].file_xml_sign.datas)) or ''
-			xml_sign = format_xml.toxml().encode('ascii', 'xmlcharrefreplace')
-			arch = base64.encodestring(xml_sign) or ''
-			res = {'file': arch, 
-					'msg': atta_facte_brw[0].msj, 
-					'cfdi_xml': xml_sign, 
-					'status': True, 
-					'cfdi_fecha_timbrado': atta_facte_brw[0].cfdi_fecha_timbrado,
-					'cfdi_folio_fiscal': atta_facte_brw[0].cfdi_folio_fiscal,
-					'cfdi_no_certificado': atta_facte_brw[0].cfdi_no_certificado,
-					'cfdi_sello': atta_facte_brw[0].cfdi_sello,
-					'cfdi_cadena_original': atta_facte_brw[0].cfdi_cadena_original,
-				}
+        ir_attachment_values = {'name': name + '.xml',
+                                'datas': base64.encodestring(cfdi),
+                                'datas_fname': name + '.xml',
+                                'res_id': False,
+                                }
+        atta_id = ir_attch_obj.create(cr, uid, ir_attachment_values, context=None)
+        ir_attachment_facte_values = { 'name': name,
+                                        'id_source': False,
+                                        #~ 'model_source': 'account.invoice', # This hardcode must change
+                                        'attachment_email': '',
+                                        'certificate_password': password,
+                                        'user_pac': '',
+                                        'password_pac': '',
+                                        'url_webservice_pac': '',
+                                        'file_input': atta_id,
+                                        'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                                        }
+        atta_facte_id = ir_attch_facte_obj.create(cr, uid, ir_attachment_facte_values, context=None)
+        ir_attch_facte_obj.signal_confirm(cr, uid, [atta_facte_id], context=None)
+        ir_attch_facte_obj.signal_sign(cr, uid, [atta_facte_id], context=None)
+        atta_facte_brw = ir_attch_facte_obj.browse(cr, uid, [atta_facte_id], context=None)
+        format_xml = xml.dom.minidom.parseString(base64.decodestring(atta_facte_brw[0].file_xml_sign.datas)) or ''
+        xml_sign = format_xml.toxml().encode('ascii', 'xmlcharrefreplace')
+        arch = base64.encodestring(xml_sign) or ''
+        res = {'file': arch, 
+                'msg': atta_facte_brw[0].msj, 
+                'cfdi_xml': xml_sign, 
+                'status': True, 
+                'cfdi_fecha_timbrado': atta_facte_brw[0].cfdi_fecha_timbrado,
+                'cfdi_folio_fiscal': atta_facte_brw[0].cfdi_folio_fiscal,
+                'cfdi_no_certificado': atta_facte_brw[0].cfdi_no_certificado,
+                'cfdi_sello': atta_facte_brw[0].cfdi_sello,
+                'cfdi_cadena_original': atta_facte_brw[0].cfdi_cadena_original,
+            }        
         return res
-
+        
+    def cancel(self, cr, uid, ids, uuid, password, cerCSD, keyCSD):
+        ir_attch_facte_obj = self.pool.get('ir.attachment.facturae.mx')
+        ids_new = ir_attch_facte_obj.search(cr, uid, [('cfdi_folio_fiscal','=',uuid),('create_uid','=',uid)])
+        ir_attch_facte_obj.write(cr, uid, ids_new, {'certificate_file': cerCSD, 'certificate_key_file': keyCSD,})
+        res = ir_attch_facte_obj.signal_cancel(cr, uid, ids_new, context=None)
+        msg = ir_attch_facte_obj.read(cr, uid, ids_new, ['msj'])[0]['msj']
+        fecha_cancel = ir_attch_facte_obj.read(cr, uid, ids_new, ['cfdi_fecha_cancelacion'])[0]['cfdi_fecha_cancelacion']
+        return {'message': msg, 'status': True, 'cfdi_fecha_cancelacion': fecha_cancel}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

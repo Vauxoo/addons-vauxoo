@@ -28,8 +28,8 @@
 import openerp.tools as tools
 from openerp.osv import osv, fields
 
-class attachment_client_res_pac_defaults(osv.osv_memory):
-    _name = 'attachment.client.res.pac.defaults'
+class attachment_mx_res_pac_defaults(osv.osv_memory):
+    _name = 'attachment.mx.res.pac.defaults'
 
     _columns = {
         'res_pac_id': fields.many2one('res.pac', 'Pac',
@@ -52,10 +52,10 @@ class attachment_client_res_pac_defaults(osv.osv_memory):
             context = {}
         ir_values_obj = self.pool.get('ir.values')
         for res_pac in self.browse(cr, uid, ids, context=None):
-            vals = {'name': 'res_pac_id',
+            vals = {'name': 'res_pac',
                         'key': 'default',
                         'key2': False,
-                        'model': 'ir.attachment.facturae.client',
+                        'model': 'ir.attachment.facturae.mx',
                         'value_unpickle': res_pac.res_pac_id.id,
                         'user_id': res_pac.user_id.id,
                         'company_id': res_pac.company_id.id, }

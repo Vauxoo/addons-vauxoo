@@ -99,21 +99,20 @@ class ir_attachment_facturae_mx(osv.Model):
             object_proxy = xmlrpclib.ServerProxy(url+'object')
             try:
                 uid2 = common_proxy.login(DB,USER,PASS)
-            except Exception, e:
-                error = tools.ustr(traceback.format_exc())
-                _logger.error(error)
-            _args = [('cfdi_folio_fiscal', '=', attachment.cfdi_folio_fiscal),('res_pac','!=',attachment.res_pac.id)]
-            ids_new = object_proxy.execute(DB, uid2, PASS, 'ir.attachment.facturae.mx', 'search', _args)
-            try:
-                res = object_proxy.execute(DB, uid2, PASS, 'ir.attachment.facturae.mx', 'signal_cancel', ids_new)
-                msg = object_proxy.execute(DB, uid2, PASS,'ir.attachment.facturae.mx','read',ids_new,['msj'])[0]['msj']
-                fecha_cancel = object_proxy.execute(DB, uid2, PASS,'ir.attachment.facturae.mx','read',ids_new,['cfdi_fecha_cancelacion'])[0]['cfdi_fecha_cancelacion']
-                if fecha_cancel:
-                    self.write(cr, uid, attachment.id, {'cfdi_fecha_cancelacion': fecha_cancel})
-                return {'message': msg, 'status': True}
-            except Exception, e:
-                error = tools.ustr(traceback.format_exc())
-                _logger.error(error)
+                fname_cer_no_pem = self.binary2file(cr, uid, ids,
+                        attachment.certificate_file, 'openerp_' + '' + '__certificate__', '.cer')
+                cerCSD = fname_cer_no_pem and base64.encodestring(
+                        open(fname_cer_no_pem, "r").read()) or ''
+                fname_key_no_pem = self.binary2file(cr, uid, ids,
+                        attachment.certificate_key_file, 'openerp_' +'' + '__key__', '.key')
+                keyCSD = fname_key_no_pem and base64.encodestring(
+                        open(fname_key_no_pem, "r").read()) or ''
+                params = [attachment.cfdi_folio_fiscal, attachment.certificate_password, cerCSD, keyCSD]
+                res = object_proxy.execute(DB, uid2, PASS,'ir.attachment.facturae.client','cancel', [], *params)
+                self.write(cr, uid, attachment.id, {'cfdi_fecha_cancelacion': res.pop('cfdi_fecha_cancelacion')})
+                return res
+            except:
+                raise osv.except_osv(_('Error !'),_('Could not establish the connection, please check parameters.'))
 
     def _vauxoo_stamp(self, cr, uid, ids, fdata=None, context=None):
         if context is None:
@@ -138,25 +137,8 @@ class ir_attachment_facturae_mx(osv.Model):
             object_proxy = xmlrpclib.ServerProxy(url+'object')
             try:
                 uid2 = common_proxy.login(DB,USER,PASS)
-                fname_cer_no_pem = self.binary2file(cr, uid, ids,
-                        attachment.certificate_file, 'openerp_' + '' + '__certificate__', '.cer')
-                cerCSD = fname_cer_no_pem and base64.encodestring(
-                        open(fname_cer_no_pem, "r").read()) or ''
-                fname_key_no_pem = self.binary2file(cr, uid, ids,
-                        attachment.certificate_key_file, 'openerp_' +'' + '__key__', '.key')
-                keyCSD = fname_key_no_pem and base64.encodestring(
-                        open(fname_key_no_pem, "r").read()) or ''
-                attachment_client = { 'name': attachment.name,
-                                        'file_input': attachment.file_input.id,
-                                        'model_source': attachment.model_source,
-                                        'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                                        'state': 'draft',
-                                        'certificate_file': cerCSD,
-                                        'certificate_key_file': keyCSD,
-                                        'certificate_password': attachment.certificate_password,
-                                        }
-                attachment_client_id = object_proxy.execute(DB, uid2, PASS, 'ir.attachment.facturae.client', 'create', attachment_client)
-                res = object_proxy.execute(DB, uid2, PASS,'ir.attachment.facturae.client','stamp',[attachment_client_id])
+                params = [attachment.name, base64.decodestring(attachment.file_input.datas), pac_params.user or attachment.res_pac.user, attachment.certificate_password]
+                res = object_proxy.execute(DB, uid2, PASS,'ir.attachment.facturae.client','stamp', [], *params)
                 self.write(cr, uid, attachment.id, {'cfdi_fecha_timbrado': res.pop('cfdi_fecha_timbrado'),
                                                         'cfdi_folio_fiscal': res.pop('cfdi_folio_fiscal'),
                                                         'cfdi_no_certificado': res.pop('cfdi_no_certificado'),
@@ -164,6 +146,6 @@ class ir_attachment_facturae_mx(osv.Model):
                                                         'cfdi_cadena_original': res.pop('cfdi_cadena_original')})
                 return res
             except:
-                raise osv.except_osv(_('Error !'),_('Could not establish the connection, please check parameters.'))             
+                raise osv.except_osv(_('Error !'),_('Could not establish the connection, please check parameters.'))
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

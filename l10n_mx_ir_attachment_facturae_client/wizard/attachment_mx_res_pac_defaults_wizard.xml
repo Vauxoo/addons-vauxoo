@@ -2,9 +2,9 @@
 <openerp>
     <data>
         
-        <record model="ir.ui.view" id="view_wizard_attachment_client_res_pac_defaults">
-            <field name="name">wizard.attachment.client.res.pac.defaults</field>
-            <field name="model">attachment.client.res.pac.defaults</field>
+        <record model="ir.ui.view" id="view_wizard_attachment_mx_res_pac_defaults">
+            <field name="name">wizard.attachment.mx.res.pac.defaults</field>
+            <field name="model">attachment.mx.res.pac.defaults</field>
             <field name="arch" type="xml">
                 <form string="Res Pac Defaults" version="7.0">
                     <label for="res_pac_id"/>
@@ -20,17 +20,17 @@
             </field>
         </record>
         
-        <record id="action_wizard_attachment_client_res_pac_defaults" model="ir.actions.act_window">
+        <record id="action_wizard_attachment_mx_res_pac_defaults" model="ir.actions.act_window">
             <field name="name">Res Pac Defaults</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">attachment.client.res.pac.defaults</field>
+            <field name="res_model">attachment.mx.res.pac.defaults</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
-            <field name="view_id" ref="view_wizard_attachment_client_res_pac_defaults"/>
+            <field name="view_id" ref="view_wizard_attachment_mx_res_pac_defaults"/>
             <field name="target">new</field>
         </record>
 
-        <menuitem id="attachment_client_res_pac_defaults_menu" name="Res Pac Defaults" parent="base.next_id_6" action="action_wizard_attachment_client_res_pac_defaults" sequence="10" />        
+        <menuitem id="attachment_mx_res_pac_defaults_menu" name="Res Pac Defaults" parent="base.next_id_6" action="action_wizard_attachment_mx_res_pac_defaults" sequence="10" />        
         <menuitem id="report_multicompany.report_multicompany_menu" name="Report Multicompany Settings"  parent="base.next_id_6"  action="report_multicompany.report_multicompany_list_action" sequence="11" />
         
     </data>
