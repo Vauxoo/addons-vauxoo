@@ -233,7 +233,7 @@ class lines_create(osv.osv_memory):
         for prod in contract.product_ids:
             lines_ids=[]
             for line in data.line_ids:
-                if not line.invoice_id and line.to_invoice and line.product_id.id==prod.product_id.id and prod.type=='rent':
+                if not line.invoice_id and line.to_invoice and line.product_id.id in [x.product_id.id for x in contract.product_ids] and prod.type=='rent':
                     lines_ids.append(line.id)
             if not lines_ids and prod.type=='rent':
                 raise osv.except_osv(_('Warning !'), _("Invoice is already linked to some of the analytic line(s)!"))
