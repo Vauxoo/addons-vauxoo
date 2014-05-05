@@ -155,6 +155,37 @@ class user_story(osv.Model):
 
         return False
      
+    def _hours_get(self, cr, uid, ids, field_names, args, context=None):
+        res = {}
+        cr.execute('''
+            SELECT us.id, COALESCE(SUM(ptw.hours))
+            FROM project_task_work ptw
+            INNER JOIN project_task pt ON pt.id = ptw.task_id
+            INNER JOIN user_story us ON us.id = pt.userstory_id
+            WHERE us.id IN %s 
+            GROUP BY us.id
+        ''',(tuple(ids),))
+        hours = dict(cr.fetchall())
+        for us_brw in self.browse(cr, uid, ids, context=context):
+            res[us_brw.id] = hours.get(us_brw.id, 0.0)
+        return res
+
+    def _get_user_story_from_ptw(self, cr, uid, ids, context=None):
+        result = {}
+        task_ids = {}
+        for work in self.pool.get('project.task.work').browse(cr, uid, ids, context=context):
+            if work.task_id: result[work.task_id.id] = True
+        task_ids = task_ids.keys()
+        for task in self.pool.get('project.task').browse(cr, uid, task_ids, context=context):
+            if task.userstory_id: result[task.userstory_id.id] = True
+        return result.keys()
+
+    def _get_user_story_from_pt(self, cr, uid, ids, context=None):
+        result = {}
+        for task in self.pool.get('project.task').browse(cr, uid, ids, context=context):
+            if task.userstory_id: result[task.userstory_id.id] = True
+        return result.keys()
+
     _columns = {
         'name': fields.char('Title', size=255, required=True, readonly=False, translate=True),
         'owner': fields.char('Owner', size=255, readonly=False),
@@ -193,7 +224,12 @@ class user_story(osv.Model):
         'categ_ids': fields.many2many('project.category','project_category_user_story_rel','userstory_id','categ_id', string="Tags"),
         'implementation': fields.text('Implementation Conclusions', translate=True),
         'help': fields.boolean('Show Help', help='Allows you to show the help in the form'),
-
+        'effective_hours': fields.function(_hours_get, string='Hours Spent', help="Computed using the sum of the task work done.",
+            store = {
+                _name: (lambda s, c, u, ids, cx={}: ids, ['task_ids'], 10),
+                'project.task': (_get_user_story_from_pt, ['work_ids'], 10),
+                'project.task.work': (_get_user_story_from_ptw, ['hours'], 10),
+            }),
     }
     _defaults = {
         'name': lambda *a: None,
