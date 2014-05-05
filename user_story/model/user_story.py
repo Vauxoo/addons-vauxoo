@@ -156,7 +156,6 @@ class user_story(osv.Model):
         return False
      
     def _hours_get(self, cr, uid, ids, field_names, args, context=None):
-        import pdb; pdb.set_trace()
         res = {}
         cr.execute('''
             SELECT us.id, COALESCE(SUM(ptw.hours))
