@@ -57,7 +57,6 @@ class ir_attachment_facturae_client(osv.Model):
         atta_id = ir_attch_obj.create(cr, uid, ir_attachment_values, context=None)
         ir_attachment_facte_values = { 'name': name,
                                         'id_source': False,
-                                        #~ 'model_source': 'account.invoice', # This hardcode must change
                                         'attachment_email': '',
                                         'certificate_password': password,
                                         'user_pac': '',
