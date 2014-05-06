@@ -13,7 +13,9 @@
 
         <record id="l10n_mx_cfdi_payroll_multipac_vx_approval_0" model="ir.sequence.approval">
             <field name="company_id" ref="base.main_company"/>
+<!--
             <field name="sequence_id" ref="l10n_mx_payroll_cfdi_multipac_vx_seq_0"/>
+-->
             <field name="approval_number">12345</field>
             <field name="serie">MXCFDIPV</field>
             <field name="approval_year" eval="time.strftime('%Y')"/>
