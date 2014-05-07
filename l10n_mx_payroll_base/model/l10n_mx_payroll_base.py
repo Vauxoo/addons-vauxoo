@@ -410,8 +410,6 @@ class hr_payslip(osv.Model):
                           context=context)
                         )
                     ir_attach_obj.signal_confirm(cr, uid, attach_ids, context=context)
-                else:
-                    raise orm.except_orm(_('Warning'), _('This employee does not have a home address'))
         if attach_ids:
             result = mod_obj.get_object_reference(cr, uid, 'l10n_mx_ir_attachment_facturae',
                                                             'action_ir_attachment_facturae_mx')
