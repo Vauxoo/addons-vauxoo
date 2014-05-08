@@ -41,7 +41,7 @@ class invite_wizard(osv.osv_memory):
         model_obj = self.pool.get(result.get('res_model', False) or
                                   context.get('active_model'))
 
-        if len(context.get('active_ids', [])) > 1:
+        if len(context.get('active_ids', [])) >= 1:
             result.update({'res_model': context.get('active_model')})
             message = _('<div>You have been invited to follow are '
                         'documents: </div>')
