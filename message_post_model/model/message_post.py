@@ -217,7 +217,8 @@ class message_post_show_all(osv.Model):
                 if self._columns[field]._type in ('one2many', 'many2many'):
                     MANY = self._columns[field]._type == 'many2many'
 
-                    LAST = MANY and self.get_last_value(cr, uid, id, n_obj,
+                    LAST = MANY and self.get_last_value(cr, uid, id,
+                                                        self._name,
                                                         field, 'many2many',
                                                         context)
                     ST = self._columns[field].string
@@ -241,7 +242,8 @@ class message_post_show_all(osv.Model):
 
             body = '%s\n</ul>' % body
             message and \
-                   self.message_post(cr, uid, [id], body, _('Fields Changes'))
+                   self.message_post(cr, uid, [id], body,
+                                     _('Changes in Fields'))
         res = super(message_post_show_all, self).write(cr, uid, ids, vals,
                                                  context=context)
         return res
