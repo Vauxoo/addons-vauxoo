@@ -1,0 +1,19 @@
+-
+  Set pac in attachment facturaE
+-
+  !python {model: res.pac}: |
+    cr. execute("""
+        SELECT a.attname AS field 
+        FROM pg_class c, pg_attribute a 
+        WHERE a.attrelid = c.oid and a.attnum > 0 
+        AND c.relname='ir_attachment_facturae_mx'
+        AND a.attname = 'type'
+    """)
+    dat = cr.dictfetchall()
+    if dat and dat[0].get('field', False) == 'type':
+        cr.execute("""
+            UPDATE ir_attachment_facturae_mx atta_facturae
+            SET res_pac = pac.id
+            FROM res_pac pac
+            WHERE atta_facturae.type = pac.name_driver
+            AND res_pac is null """)

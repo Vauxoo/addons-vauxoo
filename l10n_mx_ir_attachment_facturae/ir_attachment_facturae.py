@@ -172,7 +172,7 @@ class ir_attachment_facturae_mx(osv.Model):
         'date_print_report': fields.datetime('Date print', help='Saved the date of last print'),
         'date_send_mail': fields.datetime('Date send mail', help='Saved the date of last send mail'),
         'context_extra_data': fields.text('Context Extra Data'),
-        'res_pac': fields.many2one('res.pac', 'Pac', help='Pac used in singned of the invoice'),
+        'res_pac': fields.many2one('res.pac', 'Pac', required=True),
     }
 
     _defaults = {
@@ -414,7 +414,12 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service.trg_validate(uid, self._name, attachment_mx_data[0].id, 'action_printable', cr)
         else:
             raise osv.except_osv(_('Warning'), _('Not Attached PDF\n'))
-        return status
+        datas = {
+                 'model': 'ir.attachment.facturae.mx',
+                 'ids': ids,
+                 'form': self.read(cr, uid, ids[0], context=context),
+        }
+        return {'type': 'ir.actions.report.xml', 'report_name': report_name, 'datas': datas, 'nodestroy': True, 'name': file_name_attachment}
 
     def action_printable(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'printable'}, context=context)
