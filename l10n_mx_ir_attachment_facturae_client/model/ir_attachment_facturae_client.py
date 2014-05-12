@@ -89,7 +89,7 @@ class ir_attachment_facturae_client(osv.Model):
             context = {}
         ir_attch_facte_obj = self.pool.get('ir.attachment.facturae.mx')
         ids_new = ir_attch_facte_obj.search(cr, uid, [('cfdi_folio_fiscal','=',uuid),('create_uid','=',uid)])
-        ir_attch_facte_obj.write(cr, uid, ids_new, {'certificate_file': cerCSD, 'certificate_key_file': keyCSD,})
+        ir_attch_facte_obj.write(cr, uid, ids_new, {'certificate_file': cerCSD, 'certificate_key_file': keyCSD, 'certificate_password': password})
         res = ir_attch_facte_obj.signal_cancel(cr, uid, ids_new, context=context)
         msg = ir_attch_facte_obj.read(cr, uid, ids_new, ['msj'])[0]['msj']
         fecha_cancel = ir_attch_facte_obj.read(cr, uid, ids_new, ['cfdi_fecha_cancelacion'])[0]['cfdi_fecha_cancelacion']
