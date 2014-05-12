@@ -2,7 +2,7 @@
 <openerp>
     <data noupdate="1">
         <record id="ir_header_webkit_mrp_variation0" model="ir.header_webkit">
-            <field name="footer_html">&lt;html&gt;
+            <field name="footer_html"><!DOCTYPE>&lt;html&gt;
     &lt;head&gt;
         &lt;meta content="text/html; charset=UTF-8" http-equiv="content-type"/&gt;
         &lt;script&gt;
@@ -31,7 +31,7 @@
 &lt;/html&gt;</field>
             <field name="orientation">Portrait</field>
 			<field name="format">Letter</field>
-            <field name="html">&lt;html&gt;
+            <field name="html"><!DOCTYPE>&lt;html&gt;
     &lt;head&gt;
         &lt;meta content="text/html; charset=UTF-8" http-equiv="content-type"/&gt;
         &lt;script&gt;

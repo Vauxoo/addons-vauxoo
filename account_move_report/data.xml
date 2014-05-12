@@ -2,7 +2,7 @@
 <openerp>
     <data noupdate="1">
         <record id="ir_header_webkit_account_move" model="ir.header_webkit">
-            <field name="footer_html"><![CDATA[<html>
+            <field name="footer_html"><![CDATA[<!DOCTYPE><html>
     <head>
         <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
         <script>
@@ -29,7 +29,7 @@
 </html>]]></field>
             <field name="orientation">Portrait</field>
             <field name="format">Letter</field>
-            <field name="html"><![CDATA[<html>
+            <field name="html"><![CDATA[<!DOCTYPE><html>
     <head>
         <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
         <script>

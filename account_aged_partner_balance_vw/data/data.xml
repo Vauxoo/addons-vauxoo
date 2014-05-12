@@ -2,7 +2,7 @@
 <openerp>
     <data noupdate="0">
     <record id="ir_header_webkit_account_aged_partner_balance_report" model="ir.header_webkit">
-        <field name="footer_html"><![CDATA[<html>
+        <field name="footer_html"><![CDATA[<!DOCTYPE><html>
     <head>
         <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
         <script>
@@ -46,7 +46,7 @@
         <field name="orientation">Landscape</field>
         <field name="format">Letter</field>
         <field name="html">
-            <![CDATA[<html>
+            <![CDATA[<!DOCTYPE><html>
                 <head>
                     <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
                     <script>
