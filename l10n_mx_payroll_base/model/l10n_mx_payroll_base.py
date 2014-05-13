@@ -779,7 +779,7 @@ class hr_payslip(osv.Model):
                     with open(fname_xml, 'w') as new_xml:
                         new_xml.write( tmpl.render(**dictargs2) )
             with open(fname_xml,'rb') as b:
-                data_xml = b.read().encode('UTF-8')
+                data_xml = b.read()
             b.close()
             for my_path in all_paths:
                 if os.path.isdir(os.path.join(my_path, 'l10n_mx_payroll_base', 'template')):
@@ -804,7 +804,7 @@ class hr_payslip(osv.Model):
                     with open(fname_xml_payroll, 'w') as new_xml:
                         new_xml.write( tmpl.render(**dictargs) )
             with open(fname_xml_payroll,'rb') as b:
-                data_xml_payroll = b.read().encode('UTF-8')
+                data_xml_payroll = b.read()
             #Agregar nodo Nomina en nodo Complemento
             doc_xml = xml.dom.minidom.parseString(data_xml)
             doc_xml_payroll_2 = xml.dom.minidom.parseString(data_xml_payroll)
