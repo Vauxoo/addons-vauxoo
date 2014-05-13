@@ -365,51 +365,50 @@ class hr_payslip(osv.Model):
                 payroll.journal_id.sequence_id.approval_ids and \
                         payroll.journal_id.sequence_id.approval_ids[0] or False
             if approval_id:
-                if payroll.employee_id.address_home_id:
-                    #~ type = payroll.journal_id and payroll.journal_id.sequence_id and \
-                            #~ payroll.journal_id.sequence_id.approval_ids[0] and \
-                                        #~ payroll.journal_id.sequence_id.approval_ids[0].res_pac.name_driver
-                    xml_fname, xml_data = self._get_facturae_payroll_xml_data(cr, uid, ids, context=context)
-                    fname = str(payroll.id) + '_XML_V3_2.xml' or ''
-                    attachment_id = attachment_obj.create(cr, uid, {
-                                        'name': fname,
-                                        'datas': base64.encodestring(xml_data),
-                                        'datas_fname': fname,
-                                        'res_model': self._name,
-                                        #~ 'res_id': payroll.id
-                                }, context=context)
-                    if payroll.company_emitter_id.address_invoice_parent_company_id.use_parent_address:
-                        address_emitter = payroll.company_emitter_id.address_invoice_parent_company_id.parent_id
-                    else:
-                        address_emitter = payroll.company_emitter_id.address_invoice_parent_company_id
-                    if address_emitter:
-                        context_extra_data.update({'emisor':{'phone':address_emitter.phone,'fax':address_emitter.fax,'mobile':address_emitter.mobile,'web':address_emitter.website,'email':address_emitter.email}})
-                    context_extra_data.update({'receptor':{'phone':payroll.partner_id.phone,'fax':payroll.partner_id.fax,'mobile':payroll.partner_id.mobile}})
-                    context_extra_data.update({'type': 'payroll'})
-                    attach_ids.append( ir_attach_obj.create(cr, uid, {
-                        'name': payroll.number or '/',
-                        #~ 'type': type,
-                        'journal_id': payroll.journal_id and payroll.journal_id.id or False,
-                        'company_emitter_id': payroll.company_emitter_id.id,
-                        'model_source': self._name or '',
-                        'id_source': payroll.id,
-                        'attachment_email': payroll.employee_id.work_email or payroll.employee_id.address_home_id.email or  '',
-                        'certificate_id': cert_id,
-                        'certificate_password': file_globals.get('password', ''),
-                        'certificate_file': cerCSD or '',
-                        'certificate_key_file': keyCSD or '',
-                        'user_pac': '',
-                        'password_pac': '',
-                        'url_webservice_pac': '',
-                        #~'file_input_index': base64.encodestring(xml_data),
-                        'document_source': payroll.number,
-                        'file_input': attachment_id,
-                        'context_extra_data': context_extra_data,
-                        'res_pac': approval_id.res_pac.id or False,
-                            },
-                          context=context)
-                        )
-                    ir_attach_obj.signal_confirm(cr, uid, attach_ids, context=context)
+                #~ type = payroll.journal_id and payroll.journal_id.sequence_id and \
+                        #~ payroll.journal_id.sequence_id.approval_ids[0] and \
+                                    #~ payroll.journal_id.sequence_id.approval_ids[0].res_pac.name_driver
+                xml_fname, xml_data = self._get_facturae_payroll_xml_data(cr, uid, ids, context=context)
+                fname = str(payroll.id) + '_XML_V3_2.xml' or ''
+                attachment_id = attachment_obj.create(cr, uid, {
+                                    'name': fname,
+                                    'datas': base64.encodestring(xml_data),
+                                    'datas_fname': fname,
+                                    'res_model': self._name,
+                                    #~ 'res_id': payroll.id
+                            }, context=context)
+                if payroll.company_emitter_id.address_invoice_parent_company_id.use_parent_address:
+                    address_emitter = payroll.company_emitter_id.address_invoice_parent_company_id.parent_id
+                else:
+                    address_emitter = payroll.company_emitter_id.address_invoice_parent_company_id
+                if address_emitter:
+                    context_extra_data.update({'emisor':{'phone':address_emitter.phone,'fax':address_emitter.fax,'mobile':address_emitter.mobile,'web':address_emitter.website,'email':address_emitter.email}})
+                context_extra_data.update({'receptor':{'phone':payroll.partner_id.phone,'fax':payroll.partner_id.fax,'mobile':payroll.partner_id.mobile}})
+                context_extra_data.update({'type': 'payroll'})
+                attach_ids.append( ir_attach_obj.create(cr, uid, {
+                    'name': payroll.number or '/',
+                    #~ 'type': type,
+                    'journal_id': payroll.journal_id and payroll.journal_id.id or False,
+                    'company_emitter_id': payroll.company_emitter_id.id,
+                    'model_source': self._name or '',
+                    'id_source': payroll.id,
+                    'attachment_email': payroll.employee_id.work_email or payroll.employee_id.address_home_id.email or  '',
+                    'certificate_id': cert_id,
+                    'certificate_password': file_globals.get('password', ''),
+                    'certificate_file': cerCSD or '',
+                    'certificate_key_file': keyCSD or '',
+                    'user_pac': '',
+                    'password_pac': '',
+                    'url_webservice_pac': '',
+                    #~'file_input_index': base64.encodestring(xml_data),
+                    'document_source': payroll.number,
+                    'file_input': attachment_id,S
+                    'context_extra_data': context_extra_data,
+                    'res_pac': approval_id.res_pac.id or False,
+                        },
+                      context=context)
+                    )
+                ir_attach_obj.signal_confirm(cr, uid, attach_ids, context=context)
         if attach_ids:
             result = mod_obj.get_object_reference(cr, uid, 'l10n_mx_ir_attachment_facturae',
                                                             'action_ir_attachment_facturae_mx')
