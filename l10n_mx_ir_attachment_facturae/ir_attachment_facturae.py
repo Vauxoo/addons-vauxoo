@@ -154,7 +154,7 @@ class ir_attachment_facturae_mx(osv.Model):
         'attachment_email': fields.char('Email', size=128, help='Email receptor'),
         'cfdi_folio_fiscal': fields.char('Folio Fiscal(UUID)', size=256, help='UUID the XML'),
         'model_source': fields.char('Source Model', size=128, help='Source Model'),
-        'id_source': fields.integer('Source ID', help="Source ID"),
+        'id_source': fields.integer('Source ID', help="Source ID", oldname='invoice_id'),
         'company_emitter_id': fields.many2one('res.company', 'Company emmiter'),
         'certificate_id': fields.many2one('res.company.facturae.certificate'),
         #~'cfdi_cbb': fields.binary('CFD-I CBB'),depreciado porque se crea desde funcion
