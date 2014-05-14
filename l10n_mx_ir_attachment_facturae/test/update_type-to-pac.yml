@@ -22,51 +22,66 @@
     Set state 'done' in attachments that have state removed
 -
   !python {model: ir.attachment.facturae.mx}: |
-    cr. execute("""
-        UPDATE wkf_workitem
-        SET act_id = (SELECT id FROM wkf_activity
-            WHERE name = 'done'
-            AND wkf_id IN (SELECT id FROM wkf WHERE name = 'ir.attachment.facturae.mx.basic'))
-        WHERE act_id IN (SELECT id FROM wkf_activity
-            WHERE name IN ('printable', 'send_customer', 'send_backup')
-            AND wkf_id IN (SELECT id FROM wkf WHERE name = 'ir.attachment.facturae.mx.basic'))
-    """)
-    
-    cr. execute("""
-        UPDATE ir_attachment_facturae_mx
-        SET state = 'done'
+  
+    cr.execute("""
+        SELECT * FROM ir_attachment_facturae_mx
         WHERE state IN ('printable', 'sent_customer', 'sent_backup')
     """)
-
-    cr. execute("""
-        UPDATE ir_attachment_facturae_mx
-        SET model_source = 'account.invoice'
-        WHERE model_source IS NULL AND id_source IS NOT NULL
-    """)
+    att = cr.dictfetchall()
     
-    cr. execute("""
-        UPDATE ir_attachment_facturae_mx
-        SET cfdi_folio_fiscal = (SELECT cfdi_folio_fiscal FROM account_invoice WHERE account_invoice.id = id_source)
-        WHERE id_source IS NOT NULL AND cfdi_folio_fiscal IS NULL
+    cr.execute("""
+        SELECT id FROM wkf_activity
+        WHERE name IN ('printable', 'send_customer', 'send_backup')
+        AND wkf_id IN (SELECT id FROM wkf WHERE name = 'ir.attachment.facturae.mx.basic')
     """)
-
-    cr. execute("""
-        UPDATE ir_attachment_facturae_mx
-        SET cfdi_no_certificado = (SELECT no_certificado FROM account_invoice WHERE account_invoice.id = id_source)
-        WHERE id_source IS NOT NULL AND cfdi_folio_fiscal is NULL
-    """)
+    act = cr.dictfetchall()
     
-    invoice_obj = self.pool.get('account.invoice')
-    attachments = self.search(cr, uid, [('id_source', '!=', False), ('model_source', '=', 'account.invoice')], context=context)
-    for att in self.browse(cr, uid, attachments, context=context):
-        certificate_id = self.pool.get('res.company')._get_current_certificate(
-            cr, uid, [att.company_id.id], context=context)[att.company_id.id]
-        certificate_id = certificate_id and self.pool.get(
-            'res.company.facturae.certificate').browse(
-            cr, uid, [certificate_id], context=context)[0] or False
-        if certificate_id:
-            if certificate_id.certificate_file_pem and not att.certificate_file:
-                att.write({'certificate_file': certificate_id.certificate_file_pem})
-            if certificate_id.certificate_key_file_pem and not att.certificate_key_file:
-                att.write({'certificate_key_file': certificate_id.certificate_key_file_pem})
+    if act or att:
+        cr. execute("""
+            UPDATE wkf_workitem
+            SET act_id = (SELECT id FROM wkf_activity
+                WHERE name = 'done'
+                AND wkf_id IN (SELECT id FROM wkf WHERE name = 'ir.attachment.facturae.mx.basic'))
+            WHERE act_id IN (SELECT id FROM wkf_activity
+                WHERE name IN ('printable', 'send_customer', 'send_backup')
+                AND wkf_id IN (SELECT id FROM wkf WHERE name = 'ir.attachment.facturae.mx.basic'))
+        """)
+        
+        cr. execute("""
+            UPDATE ir_attachment_facturae_mx
+            SET state = 'done'
+            WHERE state IN ('printable', 'sent_customer', 'sent_backup')
+        """)
+
+        cr. execute("""
+            UPDATE ir_attachment_facturae_mx
+            SET model_source = 'account.invoice'
+            WHERE model_source IS NULL AND id_source IS NOT NULL
+        """)
+        
+        cr. execute("""
+            UPDATE ir_attachment_facturae_mx
+            SET cfdi_folio_fiscal = (SELECT cfdi_folio_fiscal FROM account_invoice WHERE account_invoice.id = id_source)
+            WHERE id_source IS NOT NULL AND cfdi_folio_fiscal IS NULL
+        """)
+
+        cr. execute("""
+            UPDATE ir_attachment_facturae_mx
+            SET cfdi_no_certificado = (SELECT no_certificado FROM account_invoice WHERE account_invoice.id = id_source)
+            WHERE id_source IS NOT NULL AND cfdi_folio_fiscal is NULL
+        """)
+        
+        invoice_obj = self.pool.get('account.invoice')
+        attachments = self.search(cr, uid, [('id_source', '!=', False), ('model_source', '=', 'account.invoice')], context=context)
+        for att in self.browse(cr, uid, attachments, context=context):
+            certificate_id = self.pool.get('res.company')._get_current_certificate(
+                cr, uid, [att.company_id.id], context=context)[att.company_id.id]
+            certificate_id = certificate_id and self.pool.get(
+                'res.company.facturae.certificate').browse(
+                cr, uid, [certificate_id], context=context)[0] or False
+            if certificate_id:
+                if certificate_id.certificate_file_pem and not att.certificate_file:
+                    att.write({'certificate_file': certificate_id.certificate_file_pem})
+                if certificate_id.certificate_key_file_pem and not att.certificate_key_file:
+                    att.write({'certificate_key_file': certificate_id.certificate_key_file_pem})
             
