@@ -402,7 +402,7 @@ class hr_payslip(osv.Model):
                     'url_webservice_pac': '',
                     #~'file_input_index': base64.encodestring(xml_data),
                     'document_source': payroll.number,
-                    'file_input': attachment_id,S
+                    'file_input': attachment_id,
                     'context_extra_data': context_extra_data,
                     'res_pac': approval_id.res_pac.id or False,
                         },
