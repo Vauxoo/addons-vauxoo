@@ -14,8 +14,7 @@
             <field name="type">out_invoice</field>
 -->
         </record>
-        
-<!-- Product without IVA -->
+<!--
         <record id="ail_pac_facturae_0" model="account.invoice.line">
             <field name="name">PC Assemble + Custom RAM (PC on Demand)</field>
             <field name="product_id" ref="product.product_product_5"/>
@@ -25,6 +24,7 @@
             <field name="quantity">1</field>
             <field name="account_id" ref="account.a_expense"/>
         </record>
+-->
 
 
 <!-- Renta with IVA, RET ISR, RET IVA -->
@@ -41,7 +41,7 @@
 <!-- Product with IVA 0 %-->
         <record id="ail_pac_facturae_fertilizante_4" model="account.invoice.line">
             <field name="name">Fertilizante (Kg)</field>
-            <field name="product_id" ref="l10n_mx_facturae_base.product_template_fertilizante_vauxoo_demo"/>
+            <field name="product_id" ref="l10n_mx_facturae_base.product_product_fertilizante_vauxoo_demo"/>
             <field name="price_unit" eval="1000.0" />
             <field name="uos_id" ref="product.product_uom_unit"/>
             <field name="invoice_id" ref="ai_pac_facturae_0"/>
