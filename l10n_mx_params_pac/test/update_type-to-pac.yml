@@ -1,0 +1,32 @@
+-
+  Create and Set res_pac params_pac
+-
+  !python {model: params.pac}: |
+    cr.execute("""
+      SELECT id,
+        REPLACE(
+          REPLACE(
+            REPLACE(('cfdi32'||'_'||method_type),
+            '_cancelar', ''),
+          '_firmar',''),
+        'fk','finkok') AS name_driver, method_type, company_id
+      FROM params_pac
+        WHERE method_type IS NOT NULL""")
+    dat = cr.dictfetchall()
+    pac_obj = self.pool.get('res.pac')
+    for data in dat:
+        if not data['method_type'] in ('cancelar', 'firmar'):
+            name_driver_pac = data['name_driver']
+            pac_ids = pac_obj.search(cr, uid, [('name_driver', '=', name_driver_pac)])
+            if pac_ids:
+                pac_id = pac_ids[0]
+            else:
+                val = {'name': name_driver_pac}
+                pac_id = pac_obj.create(cr, uid, val)
+                cr.execute('UPDATE res_pac SET name_driver=%s where id=%s',
+                            (name_driver_pac, pac_id))
+            type = 'cancel' in data['method_type'] and 'cancelar' or 'firmar'
+            self.write(cr, uid, data['id'],
+                            {'res_pac': pac_id,
+                             'method_type': type
+                             })

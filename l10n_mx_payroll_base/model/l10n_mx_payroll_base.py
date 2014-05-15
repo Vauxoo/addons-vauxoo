@@ -744,6 +744,7 @@ class hr_payslip(osv.Model):
     def _get_facturae_payroll_xml_data(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
+        contract_obj = self.pool.get('hr.contract')
         ids = isinstance(ids, (int, long)) and [ids] or ids
         payroll = self.browse(cr, uid, ids)[0]
         if payroll:
@@ -778,14 +779,17 @@ class hr_payslip(osv.Model):
                     with open(fname_xml, 'w') as new_xml:
                         new_xml.write( tmpl.render(**dictargs2) )
             with open(fname_xml,'rb') as b:
-                data_xml = b.read().encode('UTF-8')
+                data_xml = b.read()
             b.close()
-            
             for my_path in all_paths:
                 if os.path.isdir(os.path.join(my_path, 'l10n_mx_payroll_base', 'template')):
                     fname_jinja_tmpl = my_path and os.path.join(my_path, 'l10n_mx_payroll_base', 'template', 'nomina11' + '.xml') or ''
+            context.update({'lang' : self.pool.get('res.users').browse(cr, uid, uid, context=context).lang})
+            schedule_pay_values = contract_obj.fields_get(cr, uid, 'schedule_pay', context=context).get('schedule_pay').get('selection')
+            schedule_pay_values_dict = {lin[0]: lin[1] for lin in schedule_pay_values}
             dictargs = {
                 'a': payroll,
+                'schedule_pay': schedule_pay_values_dict,
                 'employee': payroll.employee_id,
                 'time': ti,
                 're': re,
@@ -800,7 +804,7 @@ class hr_payslip(osv.Model):
                     with open(fname_xml_payroll, 'w') as new_xml:
                         new_xml.write( tmpl.render(**dictargs) )
             with open(fname_xml_payroll,'rb') as b:
-                data_xml_payroll = b.read().encode('UTF-8')
+                data_xml_payroll = b.read()
             #Agregar nodo Nomina en nodo Complemento
             doc_xml = xml.dom.minidom.parseString(data_xml)
             doc_xml_payroll_2 = xml.dom.minidom.parseString(data_xml_payroll)
