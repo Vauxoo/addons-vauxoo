@@ -9,7 +9,7 @@
     %for o in objects :
         ${set_global_data(o)}
         <% dict_data = set_dict_data(o) %>
-        <% dict_context_extra_data = eval(o.context_extra_data) %>
+        <% dict_context_extra_data = o.context_extra_data and eval(o.context_extra_data) or {}%>
         <table class="basic_table">
             <tr>
                 <td style="vertical-align: top;">
@@ -23,12 +23,12 @@
                             </td>
                             <td width="20%">
                                 <div class="invoice">
-                                    %if dict_context_extra_data['type'] == 'out_invoice':
+                                    %if dict_context_extra_data.get('type', False) == 'out_invoice':
                                         <font size="5">${_("Factura:")}
-                                    %elif dict_context_extra_data['type'] == 'out_refund':
+                                    %elif dict_context_extra_data.get('type', False) == 'out_refund':
                                         <font size="4">${_("Nota de credito:")}
                                     %endif
-                                    %if dict_context_extra_data['type'] in ['out_invoice', 'out_refund']:
+                                    %if dict_context_extra_data.get('type', False) in ['out_invoice', 'out_refund']:
                                         %if o.state in ['done']:
                                             ${o.document_source or ''|entity}
                                         %else:
@@ -36,7 +36,7 @@
                                         %endif
                                     %endif
                                     </font>
-                                    %if dict_context_extra_data['type'] in ['payroll']:
+                                    %if dict_context_extra_data.get('type', False) in ['payroll']:
                                         <font size="4">${_('Payroll: ') |entity} ${o.document_source or ''|entity}</font>
                                     %endif
                                 </div>
@@ -56,11 +56,12 @@
                                     , ${ dict_data['Emisor']['DomicilioFiscal']['@pais'] or ''|entity}
                                     <br/><b>${_("RFC:")} ${dict_data['Emisor']['@rfc'] or ''|entity}</b>
                                     <br/>${ dict_data['Emisor']['RegimenFiscal']['@Regimen'] or ''|entity }
-                                    %if dict_context_extra_data['emisor']['phone'] or dict_context_extra_data['emisor']['fax']  or dict_context_extra_data['emisor']['mobile']:
+                                    <%emisor = dict_context_extra_data.get('emisor', False)%>
+                                    %if emisor and (emisor.get('phone', False) or emisor.get('fax', False) or emisor.get('mobile', False)):
                                         <br/>${_("Tel&eacute;fono(s):")}
-                                        ${dict_context_extra_data['emisor']['phone'] or ''|entity}
-                                        ${dict_context_extra_data['emisor']['fax']  and ',' or ''|entity} ${dict_context_extra_data['emisor']['fax'] or ''|entity}
-                                        ${dict_context_extra_data['emisor']['mobile'] and ',' or ''|entity} ${dict_context_extra_data['emisor']['mobile'] or ''|entity}
+                                        ${emisor.get('phone', '') or ''|entity}
+                                        ${emisor.get('fax', False)  and ',' or ''|entity} ${emisor.get('fax', '') or ''|entity}
+                                        ${emisor.get('mobile', False) and ',' or ''|entity} ${emisor.get('mobile', '') or ''|entity}
                                     %endif
                                 </div>
                             </td>
@@ -134,20 +135,19 @@
                     </table>
                     <table class="basic_table" style="border-bottom:1px solid #002966;">
                         <tr>
-                            %if dict_context_extra_data['receptor']['phone'] or dict_context_extra_data['receptor']['fax']  or dict_context_extra_data['receptor']['mobile']:
+                            <%receptor = dict_context_extra_data.get('receptor', False)%>
+                            %if receptor and (receptor.get('phone', False) or receptor.get('fax', False) or receptor.get('mobile', False)):
                                 <td width="13%" class="cliente"><b>Telefono(s):</b></td>
                                 <td width="55%" class="cliente">
-                                    ${dict_context_extra_data['receptor']['phone'] or ''|entity}
-                                    ${dict_context_extra_data['receptor']['fax'] and ',' or ''|entity}
-                                    ${dict_context_extra_data['receptor']['fax'] or ''|entity}
-                                    ${dict_context_extra_data['receptor']['mobile'] and ',' or ''|entity}
-                                    ${dict_context_extra_data['receptor']['mobile'] or ''|entity}</font>
+                                    ${receptor.get('phone', False) or ''|entity}
+                                    ${receptor.get('fax', False) and ',' or ''|entity}
+                                    ${receptor.get('fax', False) or ''|entity}
+                                    ${receptor.get('mobile', False) and ',' or ''|entity}
+                                    ${receptor.get('mobile', False) or ''|entity}</font>
                             %endif
-                            %if dict_context_extra_data.has_key('origin'):
-                                %if dict_context_extra_data['origin']:
-                                    <td width="9%" class="cliente"><b>Origen:</b></td>
-                                    <td width="23%" class="cliente"><b>${dict_context_extra_data['origin'] or ''|entity}</b></td>
-                                %endif
+                            %if dict_context_extra_data.get('origin', False ):
+                                <td width="9%" class="cliente"><b>Origen:</b></td>
+                                <td width="23%" class="cliente"><b>${dict_context_extra_data.get('origin', False) or ''|entity}</b></td>
                             %endif
                         </tr>
                     </table>
@@ -484,20 +484,20 @@
                 </td>
             </tr>            
         </table>
-        %if dict_context_extra_data.has_key('payment_term') or dict_context_extra_data.has_key('comment'):
+        %if dict_context_extra_data.get('payment_term', False) or dict_context_extra_data.get('comment', False):
             <table class="basic_table">
-                %if dict_context_extra_data.has_key('payment_term'):
+                %if dict_context_extra_data.get('payment_term', False):
                     <tr>
-                        %if dict_context_extra_data['payment_term']:
-                            <td width="100%"><pre><font size="1"><b>Condición de pago:</b> ${dict_context_extra_data['payment_term'] or '' |entity}
+                        %if dict_context_extra_data.get('payment_term', False):
+                            <td width="100%"><pre><font size="1"><b>Condición de pago:</b> ${dict_context_extra_data.get('payment_term', False) or '' |entity}
                             </font></pre></td>
                         %endif
                     </tr>
                 %endif
-                %if dict_context_extra_data.has_key('comment'):
+                %if dict_context_extra_data.get('comment', False):
                     <tr>
-                        %if dict_context_extra_data['comment']:
-                            <td width="100%"><pre><font size="1"><b>Comentarios adicionales:</b> ${dict_context_extra_data['comment'] or '' |entity}</font></pre></td>
+                        %if dict_context_extra_data.get('comment', False):
+                            <td width="100%"><pre><font size="1"><b>Comentarios adicionales:</b> ${dict_context_extra_data.get('comment', False) or '' |entity}</font></pre></td>
                         %endif
                     </tr>
                 %endif
