@@ -40,6 +40,7 @@
                 "l10n_mx_facturae_groups",
                 "hr_payroll_account",
                 "hr_payroll_cancel",
+                "hr_payslip_validation_home_address",
     ],
     "author": "Vauxoo",
     "description": """
