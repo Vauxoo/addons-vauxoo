@@ -1,0 +1,19 @@
+-
+  Set res_pac in approval
+-
+  !python {model: ir.sequence.approval}: |
+    cr. execute("""
+        SELECT a.attname AS field 
+        FROM pg_class c, pg_attribute a 
+        WHERE a.attrelid = c.oid and a.attnum > 0 
+        AND c.relname= 'ir_sequence_approval'
+        AND a.attname = 'type'
+    """)
+    dat = cr.dictfetchall()
+    if dat and dat[0].get('field', False) == 'type':
+        cr.execute("""
+            UPDATE ir_sequence_approval approval_facturae
+            SET res_pac = pac.id
+            FROM res_pac pac
+            WHERE approval_facturae.type = pac.name_driver
+            AND res_pac is null """)

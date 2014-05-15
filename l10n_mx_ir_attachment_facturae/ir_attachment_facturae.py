@@ -172,7 +172,7 @@ class ir_attachment_facturae_mx(osv.Model):
         'date_print_report': fields.datetime('Date print', help='Saved the date of last print'),
         'date_send_mail': fields.datetime('Date send mail', help='Saved the date of last send mail'),
         'context_extra_data': fields.text('Context Extra Data'),
-        'res_pac': fields.many2one('res.pac', 'Pac', help='Pac used in singned of the invoice'),
+        'res_pac': fields.many2one('res.pac', 'Pac', required=True),
     }
 
     _defaults = {
@@ -292,7 +292,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     })
                     sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
                     nodeComprobante.setAttribute("sello", sign_str)
-                    data_xml = doc_xml.toxml('UTF-8')
+                    data_xml = doc_xml.toxml().encode('ascii', 'xmlcharrefreplace')
                     attachment_obj.write(cr, uid, attach.file_input.id,{
                                     'datas': base64.encodestring(data_xml),
                             }, context=context)
@@ -581,7 +581,7 @@ class ir_attachment_facturae_mx(osv.Model):
             #~ else:
                 #wf_service.trg_validate(uid, 'account.invoice', invoice.id, 'invoice_cancel', cr)
             #~ if 'cfdi' in ir_attach_facturae_mx_id.type:
-            if not ir_attach_facturae_mx_id.state in ['cancel', 'draft', 'confirmed']:
+            if not ir_attach_facturae_mx_id.state in ['draft', 'confirmed']:
                 type__fc = self.get_driver_fc_cancel()
                 if ir_attach_facturae_mx_id.res_pac.name_driver in type__fc.keys():
                     cfdi_cancel = res = type__fc[ir_attach_facturae_mx_id.res_pac.name_driver](
