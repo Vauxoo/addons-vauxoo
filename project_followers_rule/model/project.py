@@ -32,19 +32,25 @@ class project(osv.Model):
     def _get_followers(self, cr, uid, ids, field_name, arg, context=None):
         result = {}
         for record in self.browse(cr, uid, ids, context=context):
-            task_ids = self.pool.get('project.task').search(cr, uid, [('project_id', '=', record.id)])
+            task_ids = self.pool.get('project.task').search(
+                cr, uid, [('project_id', '=', record.id)])
             for task in self.pool.get('project.task').browse(cr, uid, task_ids):
                 if task.message_follower_ids:
-                    result[record.id] = [x.id for x in task.message_follower_ids]
+                    result[record.id] = [
+                        x.id for x in task.message_follower_ids]
         return result
 
     def _search_project(self, cr, uid, obj, name, args, context):
         for cond in args:
             partner_ids = cond[2]
-            task_ids = self.pool.get('project.task').search(cr, uid, [('message_follower_ids', 'in', partner_ids), ('project_id.privacy_visibility', '=', 'followers')])
-        project_ids = set(task.project_id.id for task in self.pool.get('project.task').browse(cr, uid, task_ids))
+            task_ids = self.pool.get('project.task').search(
+                cr, uid, [('message_follower_ids', 'in', partner_ids), 
+                    ('project_id.privacy_visibility', '=', 'followers')])
+        project_ids = set(task.project_id.id for task in self.pool.get(
+            'project.task').browse(cr, uid, task_ids))
         return [('id', 'in', tuple(project_ids))]
     _columns = {
-        'followers_tasks_ids': fields.function(_get_followers, type='many2many', relation="res.partner", string="Followers Task", method=True, store=False, fnct_search=_search_project),
+        'followers_tasks_ids': fields.function(_get_followers, type='many2many', 
+            relation="res.partner", string="Followers Task", method=True, store=False, 
+                fnct_search=_search_project),
     }
-
