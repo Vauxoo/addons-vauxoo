@@ -49,54 +49,6 @@
             <field eval="1" name="seller_delay"/>
             <field name="categ_id" ref="product.product_category_7"/>
         </record>
-<!-- Service with ISR RET -->
-        <record id="product_template_consultoria_vauxoo_demo" model="product.template">
-            <field name="name">Consultoria Vauxoo</field>
-            <field name="list_price">200.0</field>
-            <field name="standard_price">200.0</field>
-            <field name="type">service</field>
-            <field name="uom_id" ref="product.product_uom_hour"/>
-            <field name="uom_po_id" ref="product.product_uom_hour"/>
-            <field name="description_sale">Consultoria Vauxoo DEMO</field>
-        </record>
-        
-        <record id="product_product_consultoria_vauxoo_demo" model="product.product">
-            <field name="product_tmpl_id" ref="product_template_consultoria_vauxoo_demo"/>
-            <field name="taxes_id" eval="[(6,0,[ref('l10n_mx_facturae_base.l10n_mx_facturae_base_ret_isr_honorario_0')])]"/>
-            <field name="default_code">consultoria</field>
-            <field name="mes_type">fixed</field>
-            <field name="uom_id" ref="product.product_uom_hour"/>
-            <field name="type">service</field>
-            <field name="company_id" ref="base.main_company"/>
-            <field name="name">Consultoria Vauxoo</field>
-            <field name="cost_method">standard</field>
-            <field eval="1" name="seller_delay"/>
-            <field name="categ_id" ref="product.product_category_5"/>
-        </record>
-<!-- Product with IVA16 -->
-        <record id="product_template_celular_demo" model="product.template">
-            <field name="name">Celular</field>
-            <field name="list_price">300.0</field>
-            <field name="standard_price">300.0</field>
-            <field name="type">consu</field>
-            <field name="uom_id" ref="product.product_uom_unit"/>
-            <field name="uom_po_id" ref="product.product_uom_unit"/>
-            <field name="description_sale">Cellular demo</field>
-        </record>
-        
-        <record id="product_product_celular_demo" model="product.product">
-            <field name="product_tmpl_id" ref="product_template_celular_demo"/>
-            <field name="taxes_id" eval="[(6,0,[ref('l10n_mx_facturae_base.l10n_mx_facturae_base_iva_for_electronic_invoice_0')])]"/>
-            <field name="default_code">cellular</field>
-            <field name="mes_type">fixed</field>
-            <field name="uom_id" ref="product.product_uom_unit"/>
-            <field name="type">consu</field>
-            <field name="company_id" ref="base.main_company"/>
-            <field name="name">Cellular</field>
-            <field name="cost_method">standard</field>
-            <field eval="1" name="seller_delay"/>
-            <field name="categ_id" ref="product.product_category_7"/>
-        </record>
 <!-- Renta with IVA, RET ISR, RET IVA -->
         <record id="product_template_renta_oficina_demo_0" model="product.template">
             <field name="name">Arrendamiento de oficina</field>
