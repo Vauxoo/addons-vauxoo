@@ -25,7 +25,7 @@
             <field eval="1" name="seller_delay"/>
             <field name="categ_id" ref="product.product_category_7"/>
         </record>
-<!-- Service with IVA 0% -->
+<!-- Product with IVA 0% -->
     <record id="product_template_fertilizante_vauxoo_demo" model="product.template">
             <field name="name">Fertilizante (Kg)</field>
             <field name="list_price">1000.0</field>
@@ -49,7 +49,7 @@
             <field eval="1" name="seller_delay"/>
             <field name="categ_id" ref="product.product_category_7"/>
         </record>
-<!-- Renta with IVA, RET ISR, RET IVA -->
+<!-- Product with IVA, RET ISR, RET IVA -->
         <record id="product_template_renta_oficina_demo_0" model="product.template">
             <field name="name">Arrendamiento de oficina</field>
             <field name="list_price">5355.0</field>
