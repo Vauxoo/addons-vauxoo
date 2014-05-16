@@ -14,18 +14,6 @@
             <field name="type">out_invoice</field>
 -->
         </record>
-<!--
-        <record id="ail_pac_facturae_0" model="account.invoice.line">
-            <field name="name">PC Assemble + Custom RAM (PC on Demand)</field>
-            <field name="product_id" ref="product.product_product_5"/>
-            <field name="price_unit" eval="100.0" />
-            <field name="uos_id" ref="product.product_uom_unit"/>
-            <field name="invoice_id" ref="ai_pac_facturae_0"/>
-            <field name="quantity">1</field>
-            <field name="account_id" ref="account.a_expense"/>
-        </record>
--->
-
 
 <!-- Renta with IVA, RET ISR, RET IVA -->
         <record id="ail_pac_facturae_3" model="account.invoice.line">
