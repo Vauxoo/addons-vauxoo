@@ -40,6 +40,7 @@
                 "l10n_mx_facturae_groups",
                 "hr_payroll_account",
                 "hr_payroll_cancel",
+                "hr_payslip_validation_home_address",
     ],
     "author": "Vauxoo",
     "description": """
@@ -60,6 +61,8 @@ ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfd/nomina11.pdf
 ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfdi/guianomina.pdf
 
 The module hr_payroll_cancel found in lp:addons-vauxoo/7.0 
+
+This module depends of module hr_payslip_validation_home_address found un lp:addons-vauxoo/7.0 
     """,
     "website": "http://vauxoo.com",
     "category": "Addons Vauxoo",
