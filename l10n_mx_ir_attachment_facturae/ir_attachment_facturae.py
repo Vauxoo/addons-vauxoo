@@ -292,7 +292,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     })
                     sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
                     nodeComprobante.setAttribute("sello", sign_str)
-                    data_xml = doc_xml.toxml('UTF-8')
+                    data_xml = doc_xml.toxml().encode('ascii', 'xmlcharrefreplace')
                     attachment_obj.write(cr, uid, [attach.file_input.id],{
                                     'datas': base64.encodestring(data_xml)
                             }, context=context)
@@ -404,7 +404,7 @@ class ir_attachment_facturae_mx(osv.Model):
         status = True
         aids = attachment_ids and attachment_ids[0] or False
         
-        if status and aids:
+        if aids:
             msj = _("Attached Successfully PDF\n")
             self.write(cr, uid, ids, {
                 'file_pdf': aids,
@@ -590,7 +590,7 @@ class ir_attachment_facturae_mx(osv.Model):
             #~ else:
                 #wf_service.trg_validate(uid, 'account.invoice', invoice.id, 'invoice_cancel', cr)
             #~ if 'cfdi' in ir_attach_facturae_mx_id.type:
-            if not ir_attach_facturae_mx_id.state in ['cancel', 'draft', 'confirmed']:
+            if not ir_attach_facturae_mx_id.state in ['draft', 'confirmed']:
                 type__fc = self.get_driver_fc_cancel()
                 if ir_attach_facturae_mx_id.res_pac.name_driver in type__fc.keys():
                     cfdi_cancel = res = type__fc[ir_attach_facturae_mx_id.res_pac.name_driver](
