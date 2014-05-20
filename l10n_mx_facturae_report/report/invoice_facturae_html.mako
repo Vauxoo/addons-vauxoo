@@ -45,39 +45,41 @@
                         <tr>
                             <td class="td_data_exp">
                                 <div class="emitter">
-                                    <br/>${ dict_data['Emisor']['DomicilioFiscal']['@calle'] or ''|entity}
-                                    ${ dict_data['Emisor']['DomicilioFiscal']['@noExterior'] or ''|entity}
-                                    ${ dict_data['Emisor']['DomicilioFiscal']['@noInterior'] or ''|entity}
-                                    ${ dict_data['Emisor']['DomicilioFiscal']['@colonia'] or ''|entity}
-                                    ${ dict_data['Emisor']['DomicilioFiscal']['@codigoPostal'] or ''|entity}
-                                    <br/>${ _("Localidad:")} ${ dict_data['Emisor']['DomicilioFiscal']['@localidad'] or ''|entity}                                    
-                                    <br/>${ dict_data['Emisor']['DomicilioFiscal']['@municipio'] or ''|entity}                                    
-                                    , ${ dict_data['Emisor']['DomicilioFiscal']['@estado'] or ''|entity}                                    
-                                    , ${ dict_data['Emisor']['DomicilioFiscal']['@pais'] or ''|entity}
-                                    <br/><b>${_("RFC:")} ${dict_data['Emisor']['@rfc'] or ''|entity}</b>
-                                    <br/>${ dict_data['Emisor']['RegimenFiscal']['@Regimen'] or ''|entity }
-                                    <%emisor = dict_context_extra_data.get('emisor', False)%>
-                                    %if emisor and (emisor.get('phone', False) or emisor.get('fax', False) or emisor.get('mobile', False)):
+                                    <%dom_fis = dict_data.get('Emisor', {}).get('DomicilioFiscal', {}) or False%>
+                                    <br/>${ dom_fis.get('@calle', False) or ''|entity}
+                                    ${ dom_fis.get('@noExterior', False) or ''|entity}
+                                    ${ dom_fis.get('@noInterior', False) or ''|entity}
+                                    ${ dom_fis.get('@colonia', False) or ''|entity}
+                                    ${ dom_fis.get('@codigoPostal', False) or ''|entity}
+                                    <br/>${ _("Localidad:")} ${ dom_fis.get('@localidad', False) or ''|entity}                                    
+                                    <br/>${ dom_fis.get('@municipio', False) or ''|entity}                                    
+                                    , ${ dom_fis.get('@estado', False) or ''|entity}                                    
+                                    , ${ dom_fis.get('@pais', False) or ''|entity}
+                                    <br/><b>${_("RFC:")} ${dict_data.get('Emisor', False) and dict_data.get('Emisor').get('@rfc', False) or ''|entity}</b>
+                                    <br/>${ dict_data.get('Emisor', False) and dict_data.get('Emisor').get('RegimenFiscal', False) and dict_data.get('Emisor').get('RegimenFiscal').get('@Regimen', False) or ''|entity }
+                                    <%emisor = dict_context_extra_data.get('emisor', {})%>
+                                    %if emisor.get('phone', False) or emisor.get('fax', False) or emisor.get('mobile', False):
                                         <br/>${_("Tel&eacute;fono(s):")}
-                                        ${emisor.get('phone', '') or ''|entity}
-                                        ${emisor.get('fax', False)  and ',' or ''|entity} ${emisor.get('fax', '') or ''|entity}
-                                        ${emisor.get('mobile', False) and ',' or ''|entity} ${emisor.get('mobile', '') or ''|entity}
+                                        ${emisor.get('phone', False) or ''|entity}
+                                        ${emisor.get('fax', False)  and ',' or ''|entity} ${emisor.get('fax', False) or ''|entity}
+                                        ${emisor.get('mobile', False) and ',' or ''|entity} ${emisor.get('mobile', False) or ''|entity}
                                     %endif
                                 </div>
                             </td>
                             <td class="td_data_exp">
                                 <div class="fiscal_address">
                                     <br/>Expedido en:
-                                        ${ dict_data['Emisor']['@nombre'] or ''|entity}
-                                        <br/>${ dict_data['Emisor']['ExpedidoEn']['@calle'] or ''|entity}
-                                        ${ dict_data['Emisor']['ExpedidoEn']['@noExterior'] or ''|entity}
-                                        ${ dict_data['Emisor']['ExpedidoEn']['@noInterior'] or ''|entity}
-                                        ${ dict_data['Emisor']['ExpedidoEn']['@colonia'] or ''|entity}
-                                        ${ dict_data['Emisor']['ExpedidoEn']['@codigoPostal'] or ''|entity}
-                                        <br/>Localidad: ${ dict_data['Emisor']['ExpedidoEn']['@localidad'] or ''|entity}
-                                        <br/>${ dict_data['Emisor']['ExpedidoEn']['@municipio'] or ''|entity}
-                                        ${ dict_data['Emisor']['ExpedidoEn']['@estado'] or ''|entity}
-                                        ${ dict_data['Emisor']['ExpedidoEn']['@pais'] or ''|entity}
+                                        ${ dict_data.get('Emisor', False) and dict_data.get('Emisor').get('@nombre', False) or ''|entity}
+                                        <%expedido = dict_data.get('Emisor', {}).get('ExpedidoEn', {}) or False%>
+                                        <br/>${ expedido.get('@calle', False) or ''|entity}
+                                        ${ expedido.get('@noExterior', False) or ''|entity}
+                                        ${ expedido.get('@noInterior', False) or ''|entity}
+                                        ${ expedido.get('@colonia', False) or ''|entity}
+                                        ${ expedido.get('@codigoPostal', False) or ''|entity}
+                                        <br/>Localidad: ${ expedido.get('@localidad', False) or ''|entity}
+                                        <br/>${ expedido.get('@municipio', False) or ''|entity}
+                                        ${ expedido.get('@estado', False) or ''|entity}
+                                        ${ expedido.get('@pais', False) or ''|entity}
                                 <div/>
                             </td>
                         </tr>
@@ -92,38 +94,39 @@
                     <table class="basic_table">
                         <tr>
                             <td class="cliente"><b>Receptor:</b></td>
-                            <td width="64%" class="cliente">${ dict_data['Receptor']['@nombre'] or ''|entity}</td>
+                            <td width="64%" class="cliente">${ dict_data.get('Receptor', False) and dict_data.get('Receptor').get('@nombre', False) or ''|entity}</td>
                             <td class="cliente"><b>R. F. C.:</b></td>
-                            <td width="16%" class="cliente"><b>${ dict_data['Receptor']['@rfc'] or ''|entity}</b></td>
+                            <td width="16%" class="cliente"><b>${ dict_data.get('Receptor', False) and dict_data.get('Receptor').get('@rfc', False) or ''|entity}</b></td>
                         </tr>
                     </table>
                     <table class="basic_table">
                         <tr>
                             <td width="7%" class="cliente"><b>Calle:</b></td>
-                            <td class="cliente">${ dict_data['Receptor']['Domicilio']['@calle'] or ''|entity}</td>
+                            <%add_receptor = dict_data.get('Receptor', {}).get('Domicilio', {}) or False%>
+                            <td class="cliente">${ add_receptor.get('@calle') or ''|entity}</td>
                             <td width="9%" class="cliente"><b>No. Ext:</b></td>
-                            <td width="9%" class="cliente">${ dict_data['Receptor']['Domicilio']['@noExterior'] or ''|entity}</td>
+                            <td width="9%" class="cliente">${ add_receptor.get('@noExterior', False) or ''|entity}</td>
                             <td width="9%" class="cliente"><b>No. Int:</b></td>
-                            <td width="9%" class="cliente">${ dict_data['Receptor']['Domicilio']['@noInterior'] or ''|entity}</td>
+                            <td width="9%" class="cliente">${ add_receptor.get('@noInterior', False) or ''|entity}</td>
                         </tr>
                     </table>
                     <table class="basic_table">
                         <tr>
                             <td width="10%" class="cliente"><b>Colonia:</b></td>
-                            <td class="cliente">${ dict_data['Receptor']['Domicilio']['@colonia'] or ''|entity}</td>
+                            <td class="cliente">${ add_receptor.get('@colonia', False) or ''|entity}</td>
                             <td width="7%" class="cliente"><b>C.P.:</b></td>
-                            <td class="cliente">${ dict_data['Receptor']['Domicilio']['@codigoPostal'] or ''|entity}</td>
+                            <td class="cliente">${ add_receptor.get('@codigoPostal', False) or ''|entity}</td>
                             <td width="12%" class="cliente"><b>Localidad:</b></td>
-                            <td class="cliente">${ dict_data['Receptor']['Domicilio']['@localidad'] or ''|entity}</td>
+                            <td class="cliente">${ add_receptor.get('@localidad', False) or ''|entity}</td>
                         </tr>
                     </table>
                     <table class="basic_table" style="border-bottom:1px solid #002966;">
                         <tr>
                             <td width="9%" class="cliente"><b>Lugar:</b></td>
                             <td class="cliente">
-                                ${ dict_data['Receptor']['Domicilio']['@municipio'] or ''|entity},
-                                ${ dict_data['Receptor']['Domicilio']['@estado'] or ''|entity},
-                                ${ dict_data['Receptor']['Domicilio']['@pais'] or ''|entity}
+                                ${ add_receptor.get('@municipio', False) or ''|entity},
+                                ${ add_receptor.get('@estado', False) or ''|entity},
+                                ${ add_receptor.get('@pais', False) or ''|entity}
                             </td>       
                             %if dict_data['Complemento'].has_key('Nomina'):
                                 <td width="12%" class="cliente"><b>Reg. Patronal:</b></td>
