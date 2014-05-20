@@ -19,7 +19,7 @@
                     <table class="basic_table">
                         <tr>
                             <td width="50%">
-                                <div class="title">${ dict_data['Emisor']['@nombre'] or ''|entity}</div>
+                                <div class="title">${ dict_data.get('Emisor', False) and dict_data.get('Emisor').get('@nombre', False) or ''|entity}</div>
                             </td>
                             <td width="20%">
                                 <div class="invoice">
@@ -45,7 +45,7 @@
                         <tr>
                             <td class="td_data_exp">
                                 <div class="emitter">
-                                    <%dom_fis = dict_data.get('Emisor', {}).get('DomicilioFiscal', {}) or False%>
+                                    <%dom_fis = dict_data.get('Emisor', {}).get('DomicilioFiscal', {}) or {}%>
                                     <br/>${ dom_fis.get('@calle', False) or ''|entity}
                                     ${ dom_fis.get('@noExterior', False) or ''|entity}
                                     ${ dom_fis.get('@noInterior', False) or ''|entity}
@@ -70,7 +70,7 @@
                                 <div class="fiscal_address">
                                     <br/>Expedido en:
                                         ${ dict_data.get('Emisor', False) and dict_data.get('Emisor').get('@nombre', False) or ''|entity}
-                                        <%expedido = dict_data.get('Emisor', {}).get('ExpedidoEn', {}) or False%>
+                                        <%expedido = dict_data.get('Emisor', {}).get('ExpedidoEn', {}) or {}%>
                                         <br/>${ expedido.get('@calle', False) or ''|entity}
                                         ${ expedido.get('@noExterior', False) or ''|entity}
                                         ${ expedido.get('@noInterior', False) or ''|entity}
@@ -102,7 +102,7 @@
                     <table class="basic_table">
                         <tr>
                             <td width="7%" class="cliente"><b>Calle:</b></td>
-                            <%add_receptor = dict_data.get('Receptor', {}).get('Domicilio', {}) or False%>
+                            <%add_receptor = dict_data.get('Receptor', {}).get('Domicilio', {}) or {}%>
                             <td class="cliente">${ add_receptor.get('@calle') or ''|entity}</td>
                             <td width="9%" class="cliente"><b>No. Ext:</b></td>
                             <td width="9%" class="cliente">${ add_receptor.get('@noExterior', False) or ''|entity}</td>

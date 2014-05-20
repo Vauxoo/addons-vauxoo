@@ -293,7 +293,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
                     nodeComprobante.setAttribute("sello", sign_str)
                     data_xml = doc_xml.toxml().encode('ascii', 'xmlcharrefreplace')
-                    attachment_obj.write(cr, uid, attach.file_input.id,{
+                    attachment_obj.write(cr, uid, [attach.file_input.id],{
                                     'datas': base64.encodestring(data_xml),
                             }, context=context)
                 nodepayroll = doc_xml.getElementsByTagName("nomina:Nomina")
