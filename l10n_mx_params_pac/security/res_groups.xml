@@ -2,7 +2,7 @@
 <openerp>
   <data noupdate="1">
         <record id="res_group_pacs" model="res.groups">
-          <field name="name">Show Parameters PAC Configuration</field>
+          <field name="name">Parameters PAC Configuration</field>
         </record>
   </data>
 </openerp>
