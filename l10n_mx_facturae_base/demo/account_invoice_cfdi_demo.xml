@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="1">
-        <!-- Invoices -->
+        
+<!-- Invoice -->
         <record id="ai_pac_facturae_0" model="account.invoice">
             <field name="payment_term" ref="account.account_payment_term"/>
             <field name="currency_id" ref="base.EUR"/>
@@ -10,12 +11,10 @@
             <field name="partner_id" ref="l10n_mx_partner_address.res_partner_address_vauxoo_1"/>
             <field name="journal_id" ref="account.sales_journal"/>
             <field name="state">draft</field>
-<!--
-            <field name="type">out_invoice</field>
--->
+            <!-- <field name="type">out_invoice</field> -->
         </record>
 
-<!-- Renta with IVA, RET ISR, RET IVA -->
+<!-- Rent with IVA, RET ISR, RET IVA -->
         <record id="ail_pac_facturae_3" model="account.invoice.line">
             <field name="name">Arrendamiento de oficina</field>
             <field name="product_id" ref="l10n_mx_facturae_base.product_product_renta_oficina_demo"/>

@@ -1,7 +1,8 @@
 <?xml version="1.0" ?>
 <openerp>
     <data noupdate="1">
-        <!-- Impuesto IVA -->
+
+<!-- TAX IVA -->
 
         <record id="account_ova_voucher_mx" model="account.account">
             <field name="code">iva16</field>
@@ -23,7 +24,7 @@
             <field name="account_collected_id" ref="account_ova_voucher_mx"/>
         </record>
 
-<!-- Impuesto ISR RETENIDO -->
+<!-- TAX ISR RETENIDO -->
 
         <record id="account_iva_voucher10_rete_isr_mx" model="account.account">
             <field name="code">RETISR</field>
@@ -44,7 +45,7 @@
             <field name="account_collected_id" ref="account_iva_voucher10_rete_isr_mx"/>
         </record>
         
-<!-- Impuesto IVA RETENIDO -->
+<!-- TAX IVA RETENIDO -->
 
         <record id="account_iva_voucher1067_retencion_iva_mx" model="account.account">
             <field name="code">RETIVA</field>
@@ -65,7 +66,7 @@
             <field name="account_collected_id" ref="account_iva_voucher1067_retencion_iva_mx"/>
         </record>
 
-<!-- Impuesto IVA 0 % -->
+<!-- TAX IVA 0 % -->
 
         <record id="account_iva_voucher_iva0_mx" model="account.account">
             <field name="code">IVA0</field>
@@ -86,7 +87,7 @@
             <field name="account_collected_id" ref="account_iva_voucher_iva0_mx"/>
         </record>
 
-<!-- Impuesto IVA EXCENTO 0 % -->
+<!-- TAX IVA EXCENTO 0 % -->
 
         <record id="account_iva_voucher_iva0_exento_mx" model="account.account">
             <field name="code">IVAEX</field>
