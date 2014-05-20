@@ -90,29 +90,29 @@ class ir_attachment_facturae_mx(osv.Model):
             if pac_params_ids:
                 pac_params = pac_params_obj.browse(
                     cr, uid, pac_params_ids, context)[0]
-            DB = cr.dbname
-            wsdl_url = pac_params.url_webservice or attachment.res_pac.url_webservice
-            USER = pac_params.user or attachment.res_pac.user
-            PASS = pac_params.password or attachment.res_pac.password
-            url ='http://%s/xmlrpc/' % (wsdl_url)
-            common_proxy = xmlrpclib.ServerProxy(url+'common')
-            object_proxy = xmlrpclib.ServerProxy(url+'object')
-            try:
-                uid2 = common_proxy.login(DB,USER,PASS)
-            except:
-                raise osv.except_osv(_('Error !'),_('Could not establish the connection, please check parameters.'))
-            fname_cer_no_pem = self.binary2file(cr, uid, ids,
-                    attachment.certificate_file, 'openerp_' + '' + '__certificate__', '.cer')
-            cerCSD = fname_cer_no_pem and base64.encodestring(
-                    open(fname_cer_no_pem, "r").read()) or ''
-            fname_key_no_pem = self.binary2file(cr, uid, ids,
-                    attachment.certificate_key_file, 'openerp_' +'' + '__key__', '.key')
-            keyCSD = fname_key_no_pem and base64.encodestring(
-                    open(fname_key_no_pem, "r").read()) or ''
-            params = [attachment.cfdi_folio_fiscal, attachment.certificate_password, cerCSD, keyCSD]
-            res = object_proxy.execute(DB, uid2, PASS,'ir.attachment.facturae.client','cancel', [], *params)
-            self.write(cr, uid, attachment.id, {'cfdi_fecha_cancelacion': res.pop('cfdi_fecha_cancelacion')})
-            return res  
+                DB = cr.dbname
+                wsdl_url = pac_params.url_webservice or attachment.res_pac.url_webservice
+                USER = pac_params.user or attachment.res_pac.user
+                PASS = pac_params.password or attachment.res_pac.password
+                url ='http://%s/xmlrpc/' % (wsdl_url)
+                common_proxy = xmlrpclib.ServerProxy(url+'common')
+                object_proxy = xmlrpclib.ServerProxy(url+'object')
+                try:
+                    uid2 = common_proxy.login(DB,USER,PASS)
+                except:
+                    raise osv.except_osv(_('Error !'),_('Could not establish the connection, please check parameters.'))
+                fname_cer_no_pem = self.binary2file(cr, uid, ids,
+                        attachment.certificate_file, 'openerp_' + '' + '__certificate__', '.cer')
+                cerCSD = fname_cer_no_pem and base64.encodestring(
+                        open(fname_cer_no_pem, "r").read()) or ''
+                fname_key_no_pem = self.binary2file(cr, uid, ids,
+                        attachment.certificate_key_file, 'openerp_' +'' + '__key__', '.key')
+                keyCSD = fname_key_no_pem and base64.encodestring(
+                        open(fname_key_no_pem, "r").read()) or ''
+                params = [attachment.cfdi_folio_fiscal, attachment.certificate_password, cerCSD, keyCSD]
+                res = object_proxy.execute(DB, uid2, PASS,'ir.attachment.facturae.client','cancel', [], *params)
+                self.write(cr, uid, attachment.id, {'cfdi_fecha_cancelacion': res.pop('cfdi_fecha_cancelacion')})
+                return res  
 
     def _vauxoo_stamp(self, cr, uid, ids, fdata=None, context=None):
         if context is None:
@@ -128,24 +128,24 @@ class ir_attachment_facturae_mx(osv.Model):
             if pac_params_ids:
                 pac_params = pac_params_obj.browse(
                     cr, uid, pac_params_ids, context)[0]
-            DB = cr.dbname
-            wsdl_url = pac_params.url_webservice or attachment.res_pac.url_webservice
-            USER = pac_params.user or attachment.res_pac.user
-            PASS = pac_params.password or attachment.res_pac.password
-            url ='http://%s/xmlrpc/' % (wsdl_url)
-            common_proxy = xmlrpclib.ServerProxy(url+'common')
-            object_proxy = xmlrpclib.ServerProxy(url+'object')
-            try:
-                uid2 = common_proxy.login(DB,USER,PASS)
-            except:
-                raise osv.except_osv(_('Error !'),_('Could not establish the connection, please check parameters.'))
-            params = [attachment.name, base64.decodestring(attachment.file_input.datas), pac_params.user or attachment.res_pac.user, attachment.certificate_password]
-            res = object_proxy.execute(DB, uid2, PASS,'ir.attachment.facturae.client','stamp', [], *params)
-            self.write(cr, uid, attachment.id, {'cfdi_fecha_timbrado': res.pop('cfdi_fecha_timbrado'),
-                                                    'cfdi_folio_fiscal': res.pop('cfdi_folio_fiscal'),
-                                                    'cfdi_no_certificado': res.pop('cfdi_no_certificado'),
-                                                    'cfdi_sello': res.pop('cfdi_sello'),
-                                                    'cfdi_cadena_original': res.pop('cfdi_cadena_original')})
-            return res
+                DB = cr.dbname
+                wsdl_url = pac_params.url_webservice or attachment.res_pac.url_webservice
+                USER = pac_params.user or attachment.res_pac.user
+                PASS = pac_params.password or attachment.res_pac.password
+                url ='http://%s/xmlrpc/' % (wsdl_url)
+                common_proxy = xmlrpclib.ServerProxy(url+'common')
+                object_proxy = xmlrpclib.ServerProxy(url+'object')
+                try:
+                    uid2 = common_proxy.login(DB,USER,PASS)
+                except:
+                    raise osv.except_osv(_('Error !'),_('Could not establish the connection, please check parameters.'))
+                params = [base64.decodestring(attachment.file_input.datas), pac_params.user or attachment.res_pac.user, attachment.certificate_password]
+                res = object_proxy.execute(DB, uid2, PASS,'ir.attachment.facturae.client','stamp', [], *params)
+                self.write(cr, uid, attachment.id, {'cfdi_fecha_timbrado': res.pop('cfdi_fecha_timbrado'),
+                                                        'cfdi_folio_fiscal': res.pop('cfdi_folio_fiscal'),
+                                                        'cfdi_no_certificado': res.pop('cfdi_no_certificado'),
+                                                        'cfdi_sello': res.pop('cfdi_sello'),
+                                                        'cfdi_cadena_original': res.pop('cfdi_cadena_original')})
+                return res
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

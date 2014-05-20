@@ -41,16 +41,20 @@ import xml.dom.minidom
 from pytz import timezone
 import pytz
 import time
+import re
 from datetime import datetime, timedelta
 
 class ir_attachment_facturae_client(osv.Model):
     _name = 'ir.attachment.facturae.client'
 
-    def stamp(self, cr, uid, ids, name, cfdi, user, password):
+    def stamp(self, cr, uid, ids, cfdi, user, password):
         ir_attch_obj = self.pool.get('ir.attachment')
         ir_attch_facte_obj = self.pool.get('ir.attachment.facturae.mx')
+        texto = user + str(time.strftime('%Y-%m-%d %H:%M:%S'))
+        regex = re.compile('(%s)' % '|'.join(map(re.escape, {' ':'', ':': '_'}.keys())))
+        name = regex.sub(lambda x: str({' ':'', ':': '_'}[x.string[x.start() :x.end()]]), texto)
         ir_attachment_values = {'name': name + '.xml',
-                                'datas': base64.encodestring(cfdi),
+                                'datas': base64.encodestring(cfdi.encode('utf-8')),
                                 'datas_fname': name + '.xml',
                                 'res_id': False,
                                 }
