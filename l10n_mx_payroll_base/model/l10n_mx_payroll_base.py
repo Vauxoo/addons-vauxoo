@@ -475,9 +475,9 @@ class hr_payslip(osv.Model):
                     if pd.upper() == type_line:
                         lines_get.append(line)
         if not perception:
-            raise osv.except_osv(_('Warning !'), _('Must have a perception greater than zero'))
+            raise osv.except_osv(_('Warning !'), _('At least there must be a perception'))
         if not deduction:
-            raise osv.except_osv(_('Warning !'), _('Must have a deduction different from zero'))
+            raise osv.except_osv(_('Warning !'), _('At least there must be a deduction'))
         return lines_get
         
     def get_line_short_type(self, cr, uid, ids, lines, type_line):
