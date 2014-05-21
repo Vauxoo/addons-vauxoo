@@ -450,6 +450,8 @@ class hr_payslip(osv.Model):
             
     def get_input_line_ids_type(self, cr, uid, ids, lines, type_line, type_amount=False):
         lines_get = []
+        deduction = False
+        perception = False
         __check_payslip_code_mx_re = re.compile( self._structure )
         for line in lines:
             code_sat = line.code
@@ -458,6 +460,10 @@ class hr_payslip(osv.Model):
                 code = m.group('code')
                 pd = m.group('pd')
                 eg = m.group('eg')
+                if line.amount <> 0 and pd=="P":
+                    perception = True
+                if abs(line.amount) <> 0 and pd=="D":
+                    deduction = True
                 if type_amount:
                     if pd.upper() == type_line:
                         if eg.upper() == type_amount:
@@ -465,6 +471,10 @@ class hr_payslip(osv.Model):
                 else:
                     if pd.upper() == type_line:
                         lines_get.append(line)
+        if not perception:
+            raise osv.except_osv(_('Warning !'), _('At least there must be a perception'))
+        if not deduction:
+            raise osv.except_osv(_('Warning !'), _('At least there must be a deduction'))
         return lines_get
         
     def get_line_short_type(self, cr, uid, ids, lines, type_line):
