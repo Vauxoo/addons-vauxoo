@@ -41,7 +41,7 @@ class invite_wizard(osv.osv_memory):
         model_obj = self.pool.get(result.get('res_model', False) or
                                   context.get('active_model'))
 
-        if len(context.get('active_ids', [])) > 1:
+        if len(context.get('active_ids', [])) >= 1:
             result.update({'res_model': context.get('active_model')})
             message = _('<div>You have been invited to follow are '
                         'documents: </div>')
@@ -68,8 +68,12 @@ class invite_wizard(osv.osv_memory):
                                  'group from mail group '
                                  'and not for Users '
                                  'directly'),
-        'partners': fields.boolean('Partners', help='Used to add a followers '
+        'partners': fields.boolean('Partners', help='Used to add a follower '
                                                     'group by users'),
+        'remove': fields.boolean('Remove Partners', help='Used to remove followers'),
+        'bring_partners': fields.boolean('Bring Partners',
+                                         help='This field brings all partners of the records '
+                                              'selected'),
         'p_a_g': fields.boolean('Group and Partner', help='Used to add a '
                                 'followers for partner '
                                 'and group at the same '
@@ -148,6 +152,31 @@ class invite_wizard(osv.osv_memory):
 
         return res
 
+    def remove_followers(self, cr, uid, ids, context=None):
+        '''
+        Overwrite the original model work with many documents at the same time
+        and add followers in eech.
+
+        Each id is get by context field
+        '''
+        res = {'type': 'ir.actions.act_window_close'}
+        for wizard in self.browse(cr, uid, ids, context=context):
+            for res_id in context.get('active_ids', []):
+                model_obj = self.pool.get(wizard.res_model)
+                document = model_obj.browse(cr, uid, res_id, context=context)
+                if not wizard.bring_partners:
+                    new_follower_ids = [p.id for p in wizard.partner_ids]
+                    follower_ids = [i.id for i in  document.message_follower_ids]
+                    remove_ids = list(set(follower_ids) -  set(new_follower_ids))
+                    document.write({'message_follower_ids':[(6, 0, remove_ids)]})
+                else:
+                    new_follower_ids = [p.id for p in wizard.partner_ids]
+                    remove_ids = [i.id for i in  document.message_follower_ids \
+                                       if i.id in new_follower_ids]
+                    document.write({'message_follower_ids':[(6, 0, remove_ids)]})
+                    
+        return res
+
     def load_partners(self, cr, uid, ids, mail_groups, check, check2,
                       context=None):
         ''' Used to add all partnes in mail.group selected in the view and
@@ -170,3 +199,43 @@ class invite_wizard(osv.osv_memory):
 
         partner_ids and res['value'].update({'partner_ids': partner_ids})
         return res
+    def bring_partner(self, cr, uid, ids, context=None):
+        ''' Used to add all partnes in mail.group selected in the view and
+            return it
+        '''
+        if context is None:
+            context = {}
+        res = {'value': {}}
+        context.update({'remove':True})
+        model = context.get('active_model')
+        model_obj = self.pool.get(model)
+        data_obj = self.pool.get('ir.model.data')
+        partner_ids = []
+        for res_id in context.get('active_ids'):
+            partner_ids+=[i.id for i in model_obj.browse(cr, uid, res_id,
+                                                         context=context).message_follower_ids \
+                               if i.id not in partner_ids]
+
+        partner_ids = list(set(partner_ids))
+
+        self.write(cr, uid, ids, {'partner_ids':[(6, 0, partner_ids)],
+                                  'partners': True,
+                                  'bring_partners': True},
+                       context=context)
+        
+
+        view_id = data_obj.get_object(cr, uid, 'add_followers',
+                                      'add_followers_wizard_invite_form')
+        partner_ids and res['value'].update({'partner_ids': partner_ids})
+        return {
+             'type': 'ir.actions.act_window',
+             'name': "Remove Partners",
+             'res_model': self._name,
+             'res_id': ids[0],
+             'view_type': 'form',
+             'view_mode': 'form',
+             'view_id': view_id.id,
+             'target': 'new',
+             'nodestroy': True,
+             'context':context,
+               }

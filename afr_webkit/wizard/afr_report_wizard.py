@@ -32,10 +32,12 @@ from openerp.tools.translate import _
 import logging
 _logger = logging.getLogger(__name__)
 
+parser_error = "Please download module account_financial_report for use afr_report_wizard"
 try:
     from account_financial_report.report import parser as Parser
 except ImportError:
-    _logger.warning("Please download module account_financial_report")
+    Parser = False
+    _logger.info(parser_error)
 
 
 
@@ -50,7 +52,8 @@ class wizard_report(osv.osv_memory):
     def get_parser_method(self, cr, uid, ids, method=None, args=None, param=None, context=None):
         if context is None:
             context = {}
-        
+        if not Parser:
+            raise osv.except_osv( _("Invalid action !"), _(parser_error))
         acc_bal_obj = Parser.account_balance(cr, uid, ids ,context=context)
         res = []
 

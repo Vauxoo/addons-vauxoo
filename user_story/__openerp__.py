@@ -52,6 +52,7 @@ siguientes:
     "init_xml" : [
     ],
     "demo_xml" : [
+        'demo/demo.xml',
     ],
     "update_xml" : [
         "report/ir_report.xml",
@@ -60,6 +61,7 @@ siguientes:
         "view/userstory_view.xml",
         "view/project_view.xml",
         "data/data.xml",
+        "data/user_story_template.xml",
     ],
     "active": False,
     "images": [],

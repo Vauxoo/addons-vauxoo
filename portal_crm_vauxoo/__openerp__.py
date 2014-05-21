@@ -44,6 +44,8 @@ the human recourses that is public.
                 'crm',
                 'website_crm',
                 'web_captcha',
+                'portal_hr_employees',
+                'vauxoo_widgets',
                 ],
     'data': [
         'view/contact_view.xml',
@@ -55,8 +57,7 @@ the human recourses that is public.
     'auto_install': False,
     'css': [
     ],
-    'js': [
-        ],
+    'js': [],
     'qweb': [],
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

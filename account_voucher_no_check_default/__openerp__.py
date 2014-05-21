@@ -40,7 +40,8 @@
         ],
     "demo" : [],
     "data" : [
-        "view/voucher_payment_receipt_view.xml"],
+        "view/voucher_payment_receipt_view.xml"
+        ],
     'js': [],
     'qweb' : [],
     'css':[],

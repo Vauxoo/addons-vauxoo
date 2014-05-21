@@ -37,11 +37,12 @@ class project_task(osv.osv):
         Send mail automatically to change task to Backlog and to Testing Leader.
         '''
         context = context or {}
-
+        #Dont send context to dont get language of user in read method
         if ids.get('stage_id'):
-            if ids['stage_id'][1] == 'Backlog':
+            type = self.pool.get('project.task.type').read(cr, uid, ids['stage_id'][0], ['name'])
+            if type.get('name', False) == 'Backlog':
                 self.send_mail_task(cr,uid,ids,'template_send_email_task_new',context)
-            elif ids['stage_id'][1] == 'Testing Leader':
+            elif type.get('name', False) == 'Testing Leader':
                 self.send_mail_task(cr,uid,ids,'template_send_email_task_end',context)
             
     def send_mail_task(self,cr,uid,ids,template,context=None):

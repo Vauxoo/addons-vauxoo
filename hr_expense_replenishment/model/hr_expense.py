@@ -34,14 +34,22 @@ class hr_expense_expense(osv.Model):
     def expense_canceled(self, cr, uid, ids, context=None):
         obj_move_line = self.pool.get('account.move.line')
         obj_move = self.pool.get('account.move')
+        obj_move_rec = self.pool.get('account.move.reconcile')
+        
         res = super(hr_expense_expense,
                         self).expense_canceled(cr, uid, ids, context=context)
         for expense in self.browse(cr, uid, ids, context=context):
             if expense.account_move_id:
-                obj_move_line._remove_move_reconcile(cr, uid,
-                    [move_line.id
-                        for move_line in expense.account_move_id.line_id],
-                    context=context)
+                reconcile_id = [move_line.reconcile_id.id
+                            for move_line in expense.account_move_id.line_id
+                                if move_line.reconcile_id]
+                reconcile_partial_id = [move_line.reconcile_partial_id.id
+                            for move_line in expense.account_move_id.line_id
+                                if move_line.reconcile_partial_id]
+                recs = reconcile_id + reconcile_partial_id
+                all_moves_recs = list( set(recs) )
+                if all_moves_recs:
+                    obj_move_rec.unlink(cr, uid, all_moves_recs)
                 obj_move.unlink(cr, uid, [expense.account_move_id.id],
                                 context=context)
         return res

@@ -33,7 +33,9 @@ class project_project(osv.Model):
     _columns = {
         'sprint_id': fields.many2one('sprint.kanban', 'Sprint',
                                      ondelete="cascade"),
-        'url_branch': fields.char('Url Branch', 264),
+        'url_branch': fields.char('Url Branch', 264, help="Here you must place"
+             " the bazar url without 's' in the protocol ie."
+             " http://bazaar.launchpad.net/~vauxoo/addons-vauxoo/7.0"),
         'merge_proposal': fields.char('Merge Proposal', 264),
         'blueprint': fields.char('Blueprint', 264),
         'res_id': fields.char('Revno', 64),
@@ -89,7 +91,10 @@ class sprint_kanban_tasks(osv.Model):
     _inherit = 'project.task'
     _columns = {
         'revno': fields.integer('Revno'),
-        'from_revno': fields.integer('From Revno')
+        'from_revno': fields.integer('From Revno'),
+        'url_branch': fields.char('Url Branch', 264, help="Here you must place"
+             " the bazar url without 's' in the protocol ie."
+             " http://bazaar.launchpad.net/~vauxoo/addons-vauxoo/7.0"),
     }
     _defaults = {
         'res_id': 0,
