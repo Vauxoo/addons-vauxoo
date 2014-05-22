@@ -292,7 +292,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     })
                     sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
                     nodeComprobante.setAttribute("sello", sign_str)
-                    data_xml = doc_xml.toxml('UTF-8')
+                    data_xml = doc_xml.toxml().encode('ascii', 'xmlcharrefreplace')
                     attachment_obj.write(cr, uid, attach.file_input.id,{
                                     'datas': base64.encodestring(data_xml),
                             }, context=context)
@@ -373,12 +373,8 @@ class ir_attachment_facturae_mx(osv.Model):
     def signal_printable(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        msj = ''
         attachment_obj = self.pool.get('ir.attachment')
         attachment_mx_data = self.browse(cr, uid, ids, context=context)
-        type = attachment_mx_data[0].res_pac.name_driver
-        wf_service = netsvc.LocalService("workflow")
-        status = False
         (fileno, fname) = tempfile.mkstemp(
             '.pdf', 'openerp_pdfcfid_' + (str(attachment_mx_data[0].id) or '') + '__facturae__')
         os.close(fileno)
@@ -401,17 +397,15 @@ class ir_attachment_facturae_mx(osv.Model):
             'res_model': attachment_mx_data[0].model_source,
             'res_id': attachment_mx_data[0].id_source}, context=context)
             
-        status = True
         aids = attachment_ids and attachment_ids[0] or False
         
-        if status and aids:
+        if aids:
             msj = _("Attached Successfully PDF\n")
             self.write(cr, uid, ids, {
                 'file_pdf': aids,
                 'msj': msj,
                 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                 'date_print_report': time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
-            wf_service.trg_validate(uid, self._name, attachment_mx_data[0].id, 'action_printable', cr)
         else:
             raise osv.except_osv(_('Warning'), _('Not Attached PDF\n'))
         datas = {
@@ -420,9 +414,6 @@ class ir_attachment_facturae_mx(osv.Model):
                  'form': self.read(cr, uid, ids[0], context=context),
         }
         return {'type': 'ir.actions.report.xml', 'report_name': report_name, 'datas': datas, 'nodestroy': True, 'name': file_name_attachment}
-
-    def action_printable(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'printable'}, context=context)
 
     def signal_send_customer(self, cr, uid, ids, context=None):
         if context is None:
@@ -592,7 +583,7 @@ class ir_attachment_facturae_mx(osv.Model):
             #~ else:
                 #wf_service.trg_validate(uid, 'account.invoice', invoice.id, 'invoice_cancel', cr)
             #~ if 'cfdi' in ir_attach_facturae_mx_id.type:
-            if not ir_attach_facturae_mx_id.state in ['cancel', 'draft', 'confirmed']:
+            if not ir_attach_facturae_mx_id.state in ['draft', 'confirmed']:
                 type__fc = self.get_driver_fc_cancel()
                 if ir_attach_facturae_mx_id.res_pac.name_driver in type__fc.keys():
                     cfdi_cancel = res = type__fc[ir_attach_facturae_mx_id.res_pac.name_driver](
