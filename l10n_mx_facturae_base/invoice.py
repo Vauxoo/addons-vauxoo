@@ -735,45 +735,6 @@ class account_invoice(osv.Model):
             key_item_sort.append([key_too, data_dict[key_too]])
         return key_item_sort
 
-    #~def dict2xml(self, data_dict, node=False, doc=False):
-        #~"""
-        #~@param data_dict : Dictionary of attributes for add in the XML 
-                    #~that will be generated
-        #~@param node : Node from XML where will be added data from the dictionary
-        #~@param doc : Document XML generated, where will be working
-        #~"""
-        #~parent = False
-        #~if node:
-            #~parent = True
-#~
-        #~for element, attribute in self._dict_iteritems_sort(data_dict):
-            #~if not parent:
-                #~doc = minidom.Document()
-            #~if isinstance(attribute, dict):
-                #~if not parent:
-                    #~node = doc.createElement(element)
-                    #~self.dict2xml(attribute, node, doc)
-                #~else:
-                    #~child = doc.createElement(element)
-                    #~self.dict2xml(attribute, child, doc)
-                    #~node.appendChild(child)
-            #~elif isinstance(attribute, list):
-                #~child = doc.createElement(element)
-                #~for attr in attribute:
-                    #~if isinstance(attr, dict):
-                        #~self.dict2xml(attr, child, doc)
-                #~node.appendChild(child)
-            #~else:
-                #~if isinstance(attribute, str) or isinstance(attribute, unicode):
-                    #~attribute = conv_ascii(attribute)
-                #~else:
-                        #~attribute = str(attribute)
-                #~node.setAttribute(element, attribute)
-                #~# print "attribute",unicode( attribute, 'UTF-8')
-        #~if not parent:
-            #~doc.appendChild(node)
-        #~return doc
-
     def _get_facturae_invoice_xml_data(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
