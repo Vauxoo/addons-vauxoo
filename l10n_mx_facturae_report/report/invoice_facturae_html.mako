@@ -124,7 +124,7 @@
                                 ${ dict_data['Receptor']['Domicilio']['@estado'] or ''|entity},
                                 ${ dict_data['Receptor']['Domicilio']['@pais'] or ''|entity}
                             </td>       
-                            %if dict_data['Complemento'].has_key('Nomina'):
+                            %if dict_data.get('Complemento',{}).get('Nomina', {}):
                                 <td width="12%" class="cliente"><b>Reg. Patronal:</b></td>
                                 <td class="cliente">
                                     ${ dict_data['Complemento']['Nomina']['@RegistroPatronal'] or ''|entity }
@@ -172,7 +172,7 @@
             </tr>
         </table>
         <br/><!-- Inicio Nodo Nomina -->
-        %if dict_data['Complemento'].has_key('Nomina'):
+        %if dict_data.get('Complemento',{}).get('Nomina', {}):
             <table width="100%">
                 <table width="100%" class="basic_table" style="font-size:12;">
                     <tr>
@@ -504,18 +504,20 @@
             </table>
         %endif
         </br>
-        <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
-                <tr>
-                    <th width="33%"> ${_('Certificado del SAT')}</th>
-                    <th> ${_('Fecha de Timbrado')}</th>
-                    <th width="33%"> ${_('Folio Fiscal')}</th>
-                </tr>
-                <tr>
-                    <td width="33%" class="center_td"> ${ dict_data['Complemento']['TimbreFiscalDigital']['@noCertificadoSAT'] or 'No identificado'|entity }</td>
-                    <td width="34%" class="center_td"> ${ datetime.strptime(dict_data['Complemento']['TimbreFiscalDigital']['@FechaTimbrado'].encode('ascii','replace'), '%Y-%m-%dT%H:%M:%S').strftime('%d/%m/%Y %H:%M:%S') or 'No identificado'|entity }</td>
-                    <td width="33%" class="center_td"> ${ dict_data['Complemento']['TimbreFiscalDigital']['@UUID'] or 'No identificado'|entity }</td>
-                </tr>
-        </table>
+        %if dict_data.get('Complemento', {}).get('TimbreFiscalDigital'):
+            <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
+                    <tr>
+                        <th width="33%"> ${_('Certificado del SAT')}</th>
+                        <th> ${_('Fecha de Timbrado')}</th>
+                        <th width="33%"> ${_('Folio Fiscal')}</th>
+                    </tr>
+                    <tr>
+                        <td width="33%" class="center_td"> ${ dict_data['Complemento']['TimbreFiscalDigital']['@noCertificadoSAT'] or 'No identificado'|entity }</td>
+                        <td width="34%" class="center_td"> ${ datetime.strptime(dict_data['Complemento']['TimbreFiscalDigital']['@FechaTimbrado'].encode('ascii','replace'), '%Y-%m-%dT%H:%M:%S').strftime('%d/%m/%Y %H:%M:%S') or 'No identificado'|entity }</td>
+                        <td width="33%" class="center_td"> ${ dict_data['Complemento']['TimbreFiscalDigital']['@UUID'] or 'No identificado'|entity }</td>
+                    </tr>
+            </table>
+        %endif
         <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
                 <tr>
                     <th width="33%">${_('Certificado del emisor')}</th>
@@ -528,37 +530,39 @@
                     <td class="center_td">${ dict_data['@NumCtaPago'] or 'No identificado'|entity }</td>
                 </tr>
         </table>
-        <div style="page-break-inside:avoid; border:1.5px solid grey;">
-            <table width="100%" class="datos_fiscales">
-                <tr>
-                    <td align="left" rowspan="2">
-                        ${helper.embed_image('jpeg',str(o.company_id.cif_file), 140, 220)}
-                    </td>
-                    <td valign="top" align="left">
-                        <p class="cadena_with_cbb_cfd">
-                        <b>${_('Sello Digital Emisor:')} </b><br/>
-                        ${ dict_data['@sello'] or ''|entity}<br/>
-                        <b>${_('Sello Digital SAT:')} </b><br/>
-                        ${ dict_data['Complemento']['TimbreFiscalDigital']['@selloSAT'] or ''|entity}<br/>
-                        <b>${_('Cadena original:')} </b><br/>
-                        ${o.cfdi_cadena_original or ''|entity}</br>
-                        <b>${_('Enlace al certificado: ')}</b></br>
-                        ${o.certificate_link or ''|entity}</br>
-                        </p>
-                    </td>
-                    <td align="right" rowspan="2">
-                        <% img = create_qrcode(dict_data['Emisor']['@rfc'], dict_data['Receptor']['@rfc'], float(dict_data['@total'].encode('ascii','replace')), dict_data['Complemento']['TimbreFiscalDigital']['@UUID']) %>
-                        ${helper.embed_image('jpeg',str(img),180, 180)}
-                    </td>
-                </tr>
-                <tr>
-                    <td style="vertical-align: center; text-align: center">
-                        <p><b><font size="1">"Este documento es una representación impresa de un CFDI”</br>
-                        CFDI, Comprobante Fiscal Digital por Internet</font></b></p>
-                    </td>
-                </tr>
-            </table>
-        </div>
+        %if dict_data.get('Complemento', {}).get('TimbreFiscalDigital'):
+            <div style="page-break-inside:avoid; border:1.5px solid grey;">
+                <table width="100%" class="datos_fiscales">
+                    <tr>
+                        <td align="left" rowspan="2">
+                            ${helper.embed_image('jpeg',str(o.company_id.cif_file), 140, 220)}
+                        </td>
+                        <td valign="top" align="left">
+                            <p class="cadena_with_cbb_cfd">
+                            <b>${_('Sello Digital Emisor:')} </b><br/>
+                            ${ dict_data['@sello'] or ''|entity}<br/>
+                            <b>${_('Sello Digital SAT:')} </b><br/>
+                            ${ dict_data['Complemento']['TimbreFiscalDigital']['@selloSAT'] or ''|entity}<br/>
+                            <b>${_('Cadena original:')} </b><br/>
+                            ${o.cfdi_cadena_original or ''|entity}</br>
+                            <b>${_('Enlace al certificado: ')}</b></br>
+                            ${o.certificate_link or ''|entity}</br>
+                            </p>
+                        </td>
+                        <td align="right" rowspan="2">
+                            <% img = create_qrcode(dict_data['Emisor']['@rfc'], dict_data['Receptor']['@rfc'], float(dict_data['@total'].encode('ascii','replace')), dict_data['Complemento']['TimbreFiscalDigital']['@UUID']) %>
+                            ${helper.embed_image('jpeg',str(img),180, 180)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: center; text-align: center">
+                            <p><b><font size="1">"Este documento es una representación impresa de un CFDI”</br>
+                            CFDI, Comprobante Fiscal Digital por Internet</font></b></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        %endif
         <p style="page-break-after:always"></p>
     %endfor
 </body>
