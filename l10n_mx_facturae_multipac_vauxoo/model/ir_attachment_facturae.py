@@ -79,6 +79,12 @@ class ir_attachment_facturae_mx(osv.Model):
     def _vauxoo_cancel(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
+            
+        # Actually only cancel attachment of pac vauxoo in testing mode!
+        if tools.config.options['test_enable']:
+            wf_service = netsvc.LocalService("workflow")
+            return {'message': {}, 'status': True}
+            
         msg = ''
         pac_params_obj = self.pool.get('params.pac')
         for attachment in self.browse(cr, uid, ids, context=context):
@@ -120,6 +126,14 @@ class ir_attachment_facturae_mx(osv.Model):
         ir_attach_client_obj = self.pool.get('ir.attachment.facturae.client')
         pac_params_obj = self.pool.get('params.pac')
         for attachment in self.browse(cr, uid, ids, context=context):
+            
+            # Actually not sing in testing mode!
+            if tools.config.options['test_enable']:
+                wf_service = netsvc.LocalService("workflow")
+                wf_service.trg_validate(uid, self._name, attachment.id, 'action_sign', cr)
+                self.write(cr, uid, ids, {'file_xml_sign': attachment.file_input.id})
+                return {'file': False, 'msg': {}, 'cfdi_xml': False, 'status': False}
+                
             pac_params_ids = pac_params_obj.search(cr, uid, [
                 ('method_type', '=', 'firmar'),
                 ('res_pac', '=', attachment.res_pac.id),
