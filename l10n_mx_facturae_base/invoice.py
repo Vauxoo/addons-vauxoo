@@ -207,7 +207,6 @@ class account_invoice(osv.Model):
                     context_extra_data.update({'comment': invoice.comment or '','payment_term':invoice.payment_term.note or invoice.payment_term.name or '','origin': invoice.origin,'type': invoice.type})
                     attach_ids = ir_attach_obj.create(cr, uid, {
                         'name': invoice.fname_invoice, 
-                        'type': invoice.invoice_sequence_id.approval_id.type,
                         'journal_id': invoice.journal_id and invoice.journal_id.id or False,
                         'company_emitter_id': invoice.company_emitter_id.id,
                         'model_source': self._name or '',
@@ -867,7 +866,8 @@ class account_invoice(osv.Model):
             sequence_app_id = ir_seq_app_obj.search(cr, uid, [(
                 'sequence_id', '=', invoice.invoice_sequence_id.id)], context=context)
             if sequence_app_id:
-                type_inv = ir_seq_app_obj.browse(cr, uid, sequence_app_id[0], context=context).type
+                type_inv = ir_seq_app_obj.browse(
+                    cr, uid, sequence_app_id[0], context=context).res_pac.name_driver
             all_paths = tools.config["addons_path"].split(",")
             for my_path in all_paths:
                 if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae_base', 'template')):
