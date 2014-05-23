@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="1">
-        <record id="hr_contract_a_negrin_cfdi0" model="hr.contract">
-            <field name="name">Contract Alejandro Negrin CFDI</field>
+        <record id="hr_contract_mlc_cfdi0" model="hr.contract">
+            <field name="name">Contract Moises López Calderón</field>
             <field name="type_id" ref="hr_contract.hr_contract_type_emp"/>
             <field name="date_start" eval="time.strftime('%Y-%m')+'-1'"/>
-            <field name="struct_id" ref="payroll_structure_demo_01"/>
-            <field name="employee_id" ref="employee_payroll_a_negrin"/>
+            <field name="struct_id" ref="l10n_mx_payroll_concept.payroll_structure_data_01"/>
+            <field name="employee_id" ref="employee_payroll_mlc"/>
             <field eval="5000.0" name="wage"/>
             <field eval="1000.0" name="integrated_salary"/>
             <field name="working_hours" ref="resource.timesheet_group1"/>
             <field name="working_day_id" ref="l10n_mx_hr_payroll.payroll_working_day0"/>
             <field name="risk_rank_id" ref="l10n_mx_payroll_risk_rank_contract.hr_payroll_risk_rank01"/>
             <field name="seniority" eval="10"/>
+            <field name="journal_id" ref="account.miscellaneous_journal"/>
         </record>
     </data>
 </openerp>

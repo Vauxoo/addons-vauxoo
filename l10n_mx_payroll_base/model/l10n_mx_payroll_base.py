@@ -38,6 +38,7 @@ import cgi
 import urllib
 from markupsafe import Markup
 import time as ti
+import re
 
 from openerp import release
 
@@ -183,48 +184,48 @@ class hr_payslip(osv.Model):
             res = journal.currency and journal.currency.id or journal.company_id.currency_id.id
         return res
 
-    def _deductions(self, cr, uid, ids, name, arg, context=None):
-        if context is None:
-            context = {}
-        res = {}
-        for id in ids:
-            res.setdefault(id, 0.0)
-        deduction = 0
-        payroll = self.browse(cr, uid, ids, context=context)[0]
-        for line in payroll.input_line_ids:
-            if line.salary_rule_id.type_concept == 'deduction':
-                deduction += line.amount + line.exempt_amount
-            res[id] =  deduction
-        return res
-
-    def _perceptions(self, cr, uid, ids, name, arg, context=None):
-        if context is None:
-            context = {}
-        res = {}
-        for id in ids:
-            res.setdefault(id, 0.0)
-        deduction = 0
-        payroll = self.browse(cr, uid, ids, context=context)[0]
-        for line in payroll.input_line_ids:
-            if line.salary_rule_id.type_concept == 'perception':
-                deduction += line.amount + line.exempt_amount
-            res[id] =  deduction
-        return res
+    #~ def _deductions(self, cr, uid, ids, name, arg, context=None):
+        #~ if context is None:
+            #~ context = {}
+        #~ res = {}
+        #~ for id in ids:
+            #~ res.setdefault(id, 0.0)
+        #~ deduction = 0
+        #~ payroll = self.browse(cr, uid, ids, context=context)[0]
+        #~ for line in payroll.input_line_ids:
+            #~ if line.salary_rule_id.type_concept == 'deduction':
+                #~ deduction += line.amount + line.exempt_amount
+            #~ res[id] =  deduction
+        #~ return res
+#~ 
+    #~ def _perceptions(self, cr, uid, ids, name, arg, context=None):
+        #~ if context is None:
+            #~ context = {}
+        #~ res = {}
+        #~ for id in ids:
+            #~ res.setdefault(id, 0.0)
+        #~ deduction = 0
+        #~ payroll = self.browse(cr, uid, ids, context=context)[0]
+        #~ for line in payroll.input_line_ids:
+            #~ if line.salary_rule_id.type_concept == 'perception':
+                #~ deduction += line.amount + line.exempt_amount
+            #~ res[id] =  deduction
+        #~ return res
         
-    def _total(self, cr, uid, ids, name, arg, context=None):
-        if context is None:
-            context = {}
-        res = {}
-        perception = 0
-        deduction = 0
-        total = 0
-        for id in ids:
-            res.setdefault(id, 0.0)
-        perception = self._perceptions(cr, uid, ids, name, arg, context=context)
-        deduction =  self._deductions(cr, uid, ids, name, arg, context=context)
-        total = perception.values()[0] - deduction.values()[0]
-        res[id] =  total
-        return res
+    #~ def _total(self, cr, uid, ids, name, arg, context=None):
+        #~ if context is None:
+            #~ context = {}
+        #~ res = {}
+        #~ perception = 0
+        #~ deduction = 0
+        #~ total = 0
+        #~ for id in ids:
+            #~ res.setdefault(id, 0.0)
+        #~ perception = self._perceptions(cr, uid, ids, name, arg, context=context)
+        #~ deduction =  self._deductions(cr, uid, ids, name, arg, context=context)
+        #~ total = perception.values()[0] - deduction.values()[0]
+        #~ res[id] =  total
+        #~ return res
 
     _columns = {
         'journal_id': fields.many2one('account.journal', 'Journal', required=True, readonly=True, states={'draft':[('readonly',False)]}),
@@ -275,9 +276,9 @@ class hr_payslip(osv.Model):
         'date_payslip_tz': fields.function(_get_date_payslip_tz, method=True,
             type='datetime', string='Date Payroll', store=True,
             help='Date of payroll with Time Zone'),
-        'deduction_total' : fields.function(_deductions, type='float', string='Deductions Total', store=True),
-        'perception_total' : fields.function(_perceptions, type='float', string='Perception Total', store=True),
-        'total' : fields.function(_total, type='float', string='Total', store=True),
+        #~ 'deduction_total' : fields.function(_deductions, type='float', string='Deductions Total', store=True),
+        #~ 'perception_total' : fields.function(_perceptions, type='float', string='Perception Total', store=True),
+        #~ 'total' : fields.function(_total, type='float', string='Total', store=True),
     }
 
     _defaults = {
@@ -349,6 +350,8 @@ class hr_payslip(osv.Model):
         act_obj = self.pool.get('ir.actions.act_window')
         attachment_obj = self.pool.get('ir.attachment')
         attach_ids = []
+        address_emitter = False
+        context_extra_data = {}
         file_globals = self._get_file_globals(cr, uid, ids, context=context)
         fname_cer_no_pem = file_globals['fname_cer']
         cerCSD = open(fname_cer_no_pem).read().encode('base64') #Mejor forma de hacerlo
@@ -362,43 +365,50 @@ class hr_payslip(osv.Model):
                 payroll.journal_id.sequence_id.approval_ids and \
                         payroll.journal_id.sequence_id.approval_ids[0] or False
             if approval_id:
-                if payroll.employee_id.address_home_id:
-                    type = payroll.journal_id and payroll.journal_id.sequence_id and \
-                            payroll.journal_id.sequence_id.approval_ids[0] and \
-                                        payroll.journal_id.sequence_id.approval_ids[0].type
-                    xml_fname, xml_data = self._get_facturae_payroll_xml_data(cr, uid, ids, context=context)
-                    fname = str(payroll.id) + '_XML_V3_2.xml' or ''
-                    attachment_id = attachment_obj.create(cr, uid, {
-                                        'name': fname,
-                                        'datas': base64.encodestring(xml_data),
-                                        'datas_fname': fname,
-                                        'res_model': self._name,
-                                        'res_id': payroll.id
-                                }, context=context)
-                    attach_ids.append( ir_attach_obj.create(cr, uid, {
-                        'name': payroll.number or '/',
-                        'type': type,
-                        'journal_id': payroll.journal_id and payroll.journal_id.id or False,
-                        'company_emitter_id': payroll.company_emitter_id.id,
-                        'model_source': self._name or '',
-                        'id_source': payroll.id,
-                        'attachment_email': payroll.employee_id.work_email or payroll.employee_id.address_home_id.email or  '',
-                        'certificate_id': cert_id,
-                        'certificate_password': file_globals.get('password', ''),
-                        'certificate_file': cerCSD or '',
-                        'certificate_key_file': keyCSD or '',
-                        'user_pac': '',
-                        'password_pac': '',
-                        'url_webservice_pac': '',
-                        #~'file_input_index': base64.encodestring(xml_data),
-                        'document_source': payroll.number,
-                        'file_input': attachment_id,
-                            },
-                          context=context)
-                        )
-                    ir_attach_obj.signal_confirm(cr, uid, attach_ids, context=context)
+                #~ type = payroll.journal_id and payroll.journal_id.sequence_id and \
+                        #~ payroll.journal_id.sequence_id.approval_ids[0] and \
+                                    #~ payroll.journal_id.sequence_id.approval_ids[0].res_pac.name_driver
+                xml_fname, xml_data = self._get_facturae_payroll_xml_data(cr, uid, ids, context=context)
+                fname = str(payroll.id) + '_XML_V3_2.xml' or ''
+                attachment_id = attachment_obj.create(cr, uid, {
+                                    'name': fname,
+                                    'datas': base64.encodestring(xml_data),
+                                    'datas_fname': fname,
+                                    'res_model': self._name,
+                                    #~ 'res_id': payroll.id
+                            }, context=context)
+                if payroll.company_emitter_id.address_invoice_parent_company_id.use_parent_address:
+                    address_emitter = payroll.company_emitter_id.address_invoice_parent_company_id.parent_id
                 else:
-                    raise orm.except_orm(_('Warning'), _('This employee does not have a home address'))
+                    address_emitter = payroll.company_emitter_id.address_invoice_parent_company_id
+                if address_emitter:
+                    context_extra_data.update({'emisor':{'phone':address_emitter.phone,'fax':address_emitter.fax,'mobile':address_emitter.mobile,'web':address_emitter.website,'email':address_emitter.email}})
+                context_extra_data.update({'receptor':{'phone':payroll.partner_id.phone,'fax':payroll.partner_id.fax,'mobile':payroll.partner_id.mobile}})
+                context_extra_data.update({'type': 'payroll'})
+                attach_ids.append( ir_attach_obj.create(cr, uid, {
+                    'name': payroll.number or '/',
+                    #~ 'type': type,
+                    'journal_id': payroll.journal_id and payroll.journal_id.id or False,
+                    'company_emitter_id': payroll.company_emitter_id.id,
+                    'model_source': self._name or '',
+                    'id_source': payroll.id,
+                    'attachment_email': payroll.employee_id.work_email or payroll.employee_id.address_home_id.email or  '',
+                    'certificate_id': cert_id,
+                    'certificate_password': file_globals.get('password', ''),
+                    'certificate_file': cerCSD or '',
+                    'certificate_key_file': keyCSD or '',
+                    'user_pac': '',
+                    'password_pac': '',
+                    'url_webservice_pac': '',
+                    #~'file_input_index': base64.encodestring(xml_data),
+                    'document_source': payroll.number,
+                    'file_input': attachment_id,
+                    'context_extra_data': context_extra_data,
+                    'res_pac': approval_id.res_pac.id or False,
+                        },
+                      context=context)
+                    )
+                ir_attach_obj.signal_confirm(cr, uid, attach_ids, context=context)
         if attach_ids:
             result = mod_obj.get_object_reference(cr, uid, 'l10n_mx_ir_attachment_facturae',
                                                             'action_ir_attachment_facturae_mx')
@@ -413,11 +423,85 @@ class hr_payslip(osv.Model):
             return result
         return True
     
-    def get_input_line_ids_type(self, cr, uid, ids, lines, type_line):
-        lines_get = []
+    _structure = r"(?P<code>[\d]{3,10})" \
+            r"[ \-_]?" \
+            r"(?P<pd>[p,P,d,D])" \
+            r"[ \-_]?" \
+            r"(?P<eg>[e,E,g,G])$"
+            
+    def get_lines_amount_exemptamount_dict(self, cr, uid, ids, lines, type_line):
+        lines_get = {}
+        __check_payslip_code_mx_re = re.compile( self._structure )
         for line in lines:
-            if line.salary_rule_id.type_concept == type_line:
-                lines_get.append(line)
+            code_sat = line.code
+            m = __check_payslip_code_mx_re.match( code_sat )
+            if m:
+                code = m.group('code')
+                pd = m.group('pd')
+                eg = m.group('eg')
+                if pd.upper() == type_line:
+                    if not lines_get.has_key(code):
+                        lines_get.update({code:{'amount':0, 'exempt_amount':0 }})
+                    if eg.lower() == 'e':
+                        lines_get[code].update({'exempt_amount': abs(line.amount) })
+                    elif eg.lower() == 'g':
+                        lines_get[code].update({'amount': abs(line.amount) })
+        return lines_get
+            
+    def get_input_line_ids_type(self, cr, uid, ids, lines, type_line, type_amount=False):
+        lines_get = []
+        deduction = False
+        perception = False
+        __check_payslip_code_mx_re = re.compile( self._structure )
+        for line in lines:
+            code_sat = line.code
+            m = __check_payslip_code_mx_re.match( code_sat )
+            if m:
+                code = m.group('code')
+                pd = m.group('pd')
+                eg = m.group('eg')
+                if line.amount <> 0 and pd=="P":
+                    perception = True
+                if abs(line.amount) <> 0 and pd=="D":
+                    deduction = True
+                if type_amount:
+                    if pd.upper() == type_line:
+                        if eg.upper() == type_amount:
+                            lines_get.append(line)
+                else:
+                    if pd.upper() == type_line:
+                        lines_get.append(line)
+        if not perception:
+            raise osv.except_osv(_('Warning !'), _('At least there must be a perception'))
+        if not deduction:
+            raise osv.except_osv(_('Warning !'), _('At least there must be a deduction'))
+        return lines_get
+        
+    def get_line_short_type(self, cr, uid, ids, lines, type_line):
+        lines_get = []
+        lines_code = []
+        lines_type = []
+        __check_payslip_code_mx_re = re.compile( self._structure )
+        for line in lines:
+            code_sat = line.code
+            m = __check_payslip_code_mx_re.match( code_sat )
+            if m:
+                code = m.group('code')
+                pd = m.group('pd')
+                if pd.upper() == type_line:
+                        lines_code.append(code)
+                        lines_type.append(line)
+        lines_code = list(set(lines_code))
+        #~ import pdb;pdb.set_trace()
+        for line in lines_type:
+            code_sat = line.code
+            m = __check_payslip_code_mx_re.match( code_sat )
+            if m:
+                code = m.group('code')
+                if code in lines_code:
+                    lines_get.append(line)
+                    lines_code.remove(code)
+        #~ import pdb;pdb.set_trace()
         return lines_get
 
     def onchange_journal_id(self, cr, uid, ids, journal_id, context=None):
@@ -581,27 +665,6 @@ class hr_payslip(osv.Model):
             fname_cer, fname_out=fname_serial, type='PEM')
         return result
 
-    def _get_sello(self, cr=False, uid=False, ids=False, context=None):
-        # TODO: Put encrypt date dynamic
-        if context is None:
-            context = {}
-        fecha = context['fecha']
-        year = float(ti.strftime('%Y', ti.strptime(
-            fecha, '%Y-%m-%dT%H:%M:%S')))
-        if year >= 2011:
-            encrypt = "sha1"
-        if year <= 2010:
-            encrypt = "md5"
-        certificate_lib = self.pool.get('facturae.certificate.library')
-        fname_sign = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(
-            ''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + \
-            '__sign__')
-        result = certificate_lib._sign(cr, uid, ids, fname=context['fname_xml'],
-            fname_xslt=context['fname_xslt'], fname_key=context['fname_key'],
-            fname_out=fname_sign, encrypt=encrypt, type_key='PEM')
-        
-        return result
-
     def _get_certificate_str(self, fname_cer_pem=""):
         """
         @param fname_cer_pem : Path and name the file .pem
@@ -619,30 +682,6 @@ class hr_payslip(osv.Model):
             if 'BEGIN CERTIFICATE' in line:
                 loading = True
         return cer_str
-
-    def validate_scheme_facturae_xml(self, cr, uid, ids, datas_xmls=[], payroll_version = None, payroll_type="cfdv", scheme_type='xsd'):
-    #TODO: bzr add to file fname_schema
-        if not datas_xmls:
-            datas_xmls = []
-        certificate_lib = self.pool.get('facturae.certificate.library')
-        for data_xml in datas_xmls:
-            (fileno_data_xml, fname_data_xml) = tempfile.mkstemp('.xml', 'openerp_' + (False or '') + '__facturae__' )
-            f = open(fname_data_xml, 'wb')
-            data_xml = data_xml.replace("&amp;", "Y")#Replace temp for process with xmlstartle
-            f.write( data_xml )
-            f.close()
-            os.close(fileno_data_xml)
-            all_paths = tools.config["addons_path"].split(",")
-            for my_path in all_paths:
-                if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT')):
-                    # If dir is in path, save it on real_path
-                    fname_scheme = my_path and os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT', payroll_type + payroll_version +  '.' + scheme_type) or ''
-                    #fname_scheme = os.path.join(tools.config["addons_path"], u'l10n_mx_facturae_base', u'SAT', facturae_type + facturae_version +  '.' + scheme_type )
-                    fname_out = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__schema_validation_result__' )
-                    result = certificate_lib.check_xml_scheme(cr, uid, ids, fname_data_xml, fname_scheme, fname_out)
-                    if result: #Valida el xml mediante el archivo xsd
-                        raise osv.except_osv('Error al validar la estructura del xml!', 'Validación de XML versión %s:\n%s'%(payroll_version, result))
-        return True
         
     def _get_taxes(self, cr, uid, ids, context=None):
         if context is None:
@@ -664,14 +703,12 @@ class hr_payslip(osv.Model):
         totalImpuestosRetenidos = 0
         isr_amount = 0
         iva_amount = 0
-        for line in payroll.input_line_ids:
+        isr_found = False
+        for line in payroll.line_ids:
             rule = line.name.upper()
             if rule == 'ISR':
-                isr_amount = line.amount + line.exempt_amount
-                payroll_data_impuestos['Retenciones'].append({'Retencion': {
-                            'impuesto': 'ISR',
-                            'importe': "%.2f" % (isr_amount),
-                        }})
+                isr_amount += line.amount
+                isr_found = True
             elif rule == 'IVA':
                 iva_amount = line.amount
                 payroll_data_impuestos['Retenciones'].append({'Retencion': {
@@ -679,8 +716,13 @@ class hr_payslip(osv.Model):
                             'importe': "%.2f" % (iva_amount),
                         }})
         payroll_data['Impuestos'].update({
-            'totalImpuestosRetenidos': "%.2f"%( (iva_amount + isr_amount) or 0.0 )
+            'totalImpuestosRetenidos': "%.2f"%( (iva_amount + abs(isr_amount)) or 0.0 )
         })
+        if isr_found:
+            payroll_data_impuestos['Retenciones'].append({'Retencion': {
+                            'impuesto': 'ISR',
+                            'importe': "%.2f" % (abs(isr_amount)),
+                        }})
         tax_requireds = ['IVA', 'IEPS']
         for tax_required in tax_requireds:
             payroll_data_impuestos['Traslados'].append({'Traslado': {
@@ -699,16 +741,17 @@ class hr_payslip(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         payroll = self.browse(cr, uid, ids)[0]
         discount = 0
-        for line in payroll.input_line_ids:
+        for line in payroll.line_ids:
             rule = line.name.upper()
-            if line.salary_rule_id.type_concept == 'deduction':
+            if line.amount < 0:
                 if not rule == 'ISR':
-                    discount += line.amount + line.exempt_amount
-        return discount
+                    discount += line.amount
+        return abs(discount)
 
     def _get_facturae_payroll_xml_data(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
+        contract_obj = self.pool.get('hr.contract')
         ids = isinstance(ids, (int, long)) and [ids] or ids
         payroll = self.browse(cr, uid, ids)[0]
         if payroll:
@@ -732,7 +775,7 @@ class hr_payslip(osv.Model):
                 'formaDePago': formaDePago,
                 'certificado': cert_str,
                 'fecha': ti.strftime('%Y-%m-%dT%H:%M:%S', ti.strptime(str(payroll.date_payslip_tz), '%Y-%m-%d %H:%M:%S')) ,
-                'data_taxes':data_taxes
+                'data_taxes':data_taxes,
                 }
             context.update({'fecha': ti.strftime('%Y-%m-%dT%H:%M:%S', ti.strptime(str(payroll.date_payslip_tz), '%Y-%m-%d %H:%M:%S')) or ''})
             (fileno_xml, fname_xml) = tempfile.mkstemp('.xml', 'openerp_' + '__facturae__')
@@ -743,25 +786,21 @@ class hr_payslip(osv.Model):
                     with open(fname_xml, 'w') as new_xml:
                         new_xml.write( tmpl.render(**dictargs2) )
             with open(fname_xml,'rb') as b:
-                data_xml = b.read().encode('UTF-8')
+                data_xml = b.read()
             b.close()
-            if not noCertificado:
-                raise osv.except_osv(_('Error in No. Certificate !'), _(
-                    "Can't get the Certificate Number of the voucher.\nCkeck your configuration.\n%s") % (msg2))
-            fname_txt = fname_xml + '.txt'
-            (fileno_sign, fname_sign) = tempfile.mkstemp('.txt', 'openerp_' + '__facturae_txt_md5__')
-            os.close(fileno_sign)
-            try:
-                self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], 'v3.2', 'cfd')
-            except Exception, e:
-                raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (tools.ustr(e)))
             for my_path in all_paths:
                 if os.path.isdir(os.path.join(my_path, 'l10n_mx_payroll_base', 'template')):
                     fname_jinja_tmpl = my_path and os.path.join(my_path, 'l10n_mx_payroll_base', 'template', 'nomina11' + '.xml') or ''
+            context.update({'lang' : self.pool.get('res.users').browse(cr, uid, uid, context=context).lang})
+            schedule_pay_values = contract_obj.fields_get(cr, uid, 'schedule_pay', context=context).get('schedule_pay').get('selection')
+            schedule_pay_values_dict = {lin[0]: lin[1] for lin in schedule_pay_values}
             dictargs = {
                 'a': payroll,
+                'schedule_pay': schedule_pay_values_dict,
                 'employee': payroll.employee_id,
                 'time': ti,
+                're': re,
+                'abs': abs,
                 }
             payroll2 = "payroll"
             (fileno_xml, fname_xml_payroll) = tempfile.mkstemp('.xml', 'openerp_' + (payroll2 or '') + '__facturae__')
@@ -772,11 +811,7 @@ class hr_payslip(osv.Model):
                     with open(fname_xml_payroll, 'w') as new_xml:
                         new_xml.write( tmpl.render(**dictargs) )
             with open(fname_xml_payroll,'rb') as b:
-                data_xml_payroll = b.read().encode('UTF-8')
-            try:
-                self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml_payroll], payroll_version, payroll_type)
-            except Exception, e:
-                raise orm.except_orm(_('Warning'), _('Parse Error XML: %s.') % (tools.ustr(e)))
+                data_xml_payroll = b.read()
             #Agregar nodo Nomina en nodo Complemento
             doc_xml = xml.dom.minidom.parseString(data_xml)
             doc_xml_payroll_2 = xml.dom.minidom.parseString(data_xml_payroll)
@@ -788,26 +823,10 @@ class hr_payslip(osv.Model):
             #Agregar nodo nodo Complemento en nodo Comprobante
             node_comprobante = doc_xml.getElementsByTagName('cfdi:Comprobante')[0]
             node_comprobante.appendChild(complemento)
-            
             doc_xml_full = doc_xml.toxml().encode('ascii', 'xmlcharrefreplace')
-            data_xml2 = xml.dom.minidom.parseString(doc_xml_full)
-            #~data_xml3 = data_xml2.toxml('UTF-8')
-            f = codecs.open(fname_xml,'w','utf-8')
-            data_xml2.writexml(f, indent='    ', addindent='    ', newl='\r\n', encoding='UTF-8')
-            f.close()
-            context.update({
-                'fname_xml': fname_xml,
-                'fname_txt': fname_txt,
-                'fname_sign': fname_sign,
-            })
-            #context.update({'fecha': date_now or ''})
-            sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
-            nodeComprobante = data_xml2.getElementsByTagName("cfdi:Comprobante")[0]
-            nodeComprobante.setAttribute("sello", sign_str)
-            data_xml = data_xml2.toxml('UTF-8')
-            #~data_xml = codecs.BOM_UTF8 + data_xml
-            data_xml = data_xml.replace('<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
-        return fname_xml, data_xml
+            doc_xml_full = doc_xml_full.replace('<?xml version="1.0" ?>', '<?xml version="1.0" encoding="UTF-8"?>')
+            doc_xml_full = doc_xml_full.replace('<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
+        return fname_xml, doc_xml_full
 
     def copy(self, cr, uid, id, default={}, context=None):
         if context is None:

@@ -6,9 +6,8 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Coded by: Isaac Lopez (isaac@vauxoo.com)
-#    Financed by: http://www.sfsoluciones.com (aef@sfsoluciones.com)
+#    Coded by: Sabrina Romero <sabrina@vauxoo.com>  
+#    Financed by: Vauxoo Consultores <info@vauxoo.com>
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -26,28 +25,27 @@
 #
 ##############################################################################
 
-import time
-from openerp.osv import fields, osv
-from openerp.tools.translate import _
-from openerp import pooler, tools
-from openerp import netsvc
-from openerp import release
-
-
-class params_pac(osv.Model):
-    _inherit = 'params.pac'
-
-    def _get_method_type_selection(self, cr, uid, context=None):
-        types = super(params_pac, self)._get_method_type_selection(
-            cr, uid, context=context)
-        types.extend([
-            ('pac_sf_cancelar', _('PAC SF - Cancel')),
-            ('pac_sf_firmar', _('PAC SF - Sign')),
-        ])
-        return types
-
-    _columns = {
-        'method_type': fields.selection(_get_method_type_selection,
-                                        "Process to perform", type='char', size=64, required=True,
-                                        help='Type of process to configure in this pac'),
-    }
+{
+    "name" : "Creacion de Adjunto de Factura Electronica para Mexico (CFDI-2011) - PAC Vauxoo",
+    "version" : "1.0",
+    "author" : "Vauxoo",
+    "category" : "Localization/Mexico",
+    "description" : """This module creates interface for e-invoice files from invoices with Vauxoo.
+    Ubuntu Package Depends:
+        sudo apt-get install python-soappy
+    """,
+    "website" : "http://www.vauxoo.com/",
+    "license" : "AGPL-3",
+    "depends" : ["base","l10n_mx_ir_attachment_facturae",
+        ],
+    "demo" : [
+        ],
+    "data" : [
+        "security/ir.model.access.csv",
+        "wizard/attachment_mx_res_pac_defaults_wizard.xml",
+        ],
+    "test" : [
+        ],
+    "installable" : True,
+    "active" : False,
+}

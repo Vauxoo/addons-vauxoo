@@ -27,5 +27,3 @@
 
 import invoice
 import wizard
-import ir_attachment_facturae
-import ir_sequence_approval

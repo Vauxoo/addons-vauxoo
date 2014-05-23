@@ -19,7 +19,13 @@
             <field name="approval_year" eval="time.strftime('%Y')"/>
             <field name="number_start">1</field>
             <field name="number_end">9999</field>
-            <field name="type">cfdi32_pac_finkok</field>
+            <field name="res_pac" ref="l10n_mx_res_pac_finkok"/>
+        </record>
+
+		<record id="aaj_cfdi_payroll_finkok_0" model="account.analytic.journal">
+            <field name="code">FINKOKAA</field>
+            <field name="name">General Payroll FINKOK</field>
+            <field name="type">general</field>
         </record>
 
         <record id="l10n_mx_cfdi_payroll_pac_finkok_journal_0" model="account.journal">
@@ -27,8 +33,9 @@
             <field name="sequence_id" ref="l10n_mx_payroll_cfdi_pac_finkok_seq_0"/>
             <field name="name">MX CFDI Journal Payroll FINKOK</field>
             <field name="code">FINKPACFDI</field>
-            <field name="type">purchase</field>
+            <field name="type">general</field>
             <field name="update_posted" eval="True"/>
+            <field name="analytic_journal_id" ref="aaj_cfdi_payroll_finkok_0"/>
         </record>
     </data>
 </openerp>

@@ -458,7 +458,7 @@ class account_invoice(osv.Model):
             'sequence_id', '=', invoice.invoice_sequence_id.id)], context=context)
         if sequence_app_id:
             type_inv = ir_seq_app_obj.browse(
-                cr, uid, sequence_app_id[0], context=context).type
+                cr, uid, sequence_app_id[0], context=context).res_pac.name_driver
         if invoice_datetime < '2012-07-01 00:00:00':
             return file_globals
         elif 'cfd' in type_inv and not 'cfdi' in type_inv:

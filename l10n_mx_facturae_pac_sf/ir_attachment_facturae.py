@@ -57,37 +57,22 @@ except:
 
 class ir_attachment_facturae_mx(osv.Model):
     _inherit = 'ir.attachment.facturae.mx'
-
-    def _get_type(self, cr, uid, ids=None, context=None):
-        if context is None:
-            context = {}
-        types = super(ir_attachment_facturae_mx, self)._get_type(
-            cr, uid, ids, context=context)
-        types.extend([
-            ('cfdi32_pac_sf', 'CFDI 3.2 Solución Factible'),
-        ])
-        return types
     
     def get_driver_fc_sign(self):
         factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_sign()
         if factura_mx_type__fc == None:
             factura_mx_type__fc = {}
-        factura_mx_type__fc.update({'cfdi32_pac_sf': self._upload_ws_file})
+        factura_mx_type__fc.update({'cfdi32_pac_sf': self._sf_stamp})
         return factura_mx_type__fc
     
     def get_driver_fc_cancel(self):
         factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_cancel()
         if factura_mx_type__fc == None:
             factura_mx_type__fc = {}
-        factura_mx_type__fc.update({'cfdi32_pac_sf': self.sf_cancel})
+        factura_mx_type__fc.update({'cfdi32_pac_sf': self._sf_cancel})
         return factura_mx_type__fc
-        
-    _columns = {
-        'type': fields.selection(_get_type, 'Type', type='char', size=64,
-                                 required=True, readonly=True, help="Type of Electronic Invoice"),
-    }
     
-    def sf_cancel(self, cr, uid, ids, context=None):
+    def _sf_cancel(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
         msg = ''
@@ -95,7 +80,8 @@ class ir_attachment_facturae_mx(osv.Model):
         for attachment in self.browse(cr, uid, ids, context=context):
             status = False
             pac_params_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'pac_sf_cancelar'),
+                ('method_type', '=', 'cancelar'),
+                ('res_pac', '=', attachment.res_pac.id),
                 ('company_id', '=', attachment.company_id.id),
                 ('active', '=', True),
             ], limit=1, context=context)
@@ -103,10 +89,10 @@ class ir_attachment_facturae_mx(osv.Model):
             if pac_params_id:
                 pac_params_brw = pac_params_obj.browse(
                     cr, uid, [pac_params_id], context=context)[0]
-                user = pac_params_brw.user
-                password = pac_params_brw.password
-                wsdl_url = pac_params_brw.url_webservice
-                namespace = pac_params_brw.namespace
+                user = pac_params_brw.user or attachment.res_pac.user
+                password = pac_params_brw.password or attachment.res_pac.password
+                wsdl_url = pac_params_brw.url_webservice or attachment.res_pac.url_webservice
+                namespace = pac_params_brw.namespace or attachment.res_pac.namespace
                 wsdl_client = False
                 wsdl_client = WSDL.SOAPProxy(wsdl_url, namespace)
                 fname_cer_no_pem = self.binary2file(cr, uid, ids,
@@ -149,7 +135,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 msg = _('Not found information of webservices of PAC, verify that the configuration of PAC is correct')
         return {'message': msg, 'status_uuid': status_uuid, 'status': status}
     
-    def _upload_ws_file(self, cr, uid, ids, fdata=None, context=None):
+    def _sf_stamp(self, cr, uid, ids, fdata=None, context=None):
         """
         @params fdata : File.xml codification in base64
         """
@@ -159,12 +145,12 @@ class ir_attachment_facturae_mx(osv.Model):
         for attachment in self.browse(cr, uid, ids, context=context):
             comprobante = 'cfdi:Comprobante'
             cfd_data = base64.decodestring(fdata or attachment.file_input.index_content)
-            #~cfd_data = attachment.file_input_index
             xml_res_str = xml.dom.minidom.parseString(cfd_data)
             #~xml_res_str = xml.dom.minidom.parseString(cfd_data.encode('ascii', 'xmlcharrefreplace'))
             xml_res_addenda = self.add_addenta_xml(
                 cr, uid, xml_res_str, comprobante, context=context)
-            xml_res_str_addenda = xml_res_addenda.toxml('UTF-8')
+            #~xml_res_str_addenda = xml_res_addenda.toxml('UTF-8')
+            xml_res_str_addenda = xml_res_addenda.toxml().encode('ascii', 'xmlcharrefreplace')
             xml_res_str_addenda = xml_res_str_addenda.replace(codecs.BOM_UTF8, '')
             if tools.config['test_report_directory']:#TODO: Add if test-enabled:
                 ir_attach_facturae_mx_file_input = attachment.file_input and attachment.file_input or False
@@ -180,17 +166,18 @@ class ir_attachment_facturae_mx(osv.Model):
             cfdi_xml = False
             status = False
             pac_params_ids = pac_params_obj.search(cr, uid, [
-                ('method_type', '=', 'pac_sf_firmar'), (
+                ('method_type', '=', 'firmar'), (
                     'company_id', '=', attachment.company_id.id), (
-                        'active', '=', True)], limit=1, context=context)
+                    'res_pac', '=', attachment.res_pac.id), (
+                    'active', '=', True)], limit=1, context=context)
             if pac_params_ids:
                 pac_params = pac_params_obj.browse(
                     cr, uid, pac_params_ids, context)[0]
-                user = pac_params.user
-                password = pac_params.password
-                wsdl_url = pac_params.url_webservice
-                namespace = pac_params.namespace
-                certificate_link = pac_params.certificate_link
+                user = pac_params.user or attachment.res_pac.user
+                password = pac_params.password or attachment.res_pac.password
+                wsdl_url = pac_params.url_webservice or attachment.res_pac.url_webservice
+                namespace = pac_params.namespace or attachment.res_pac.namespace
+                certificate_link = pac_params.certificate_link or attachment.res_pac.certificate_link
                 url = 'https://solucionfactible.com/ws/services/Timbrado'
                 testing_url = 'http://testing.solucionfactible.com/ws/services/Timbrado'
                 if (wsdl_url == url) or (wsdl_url == testing_url):

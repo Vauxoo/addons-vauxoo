@@ -37,9 +37,12 @@
                 "l10n_mx_facturae_groups"],
     "demo" : [],
     "data" : [
+        "security/params_pac_security.xml",
+        "security/res_groups.xml",
         "security/ir.model.access.csv",
         "params_pac_view.xml",
-        "security/params_pac_security.xml"
+        "res_pac_view.xml",
+        "test/update_type-to-pac.yml"
     ],
     "installable" : True,
     "active" : False,

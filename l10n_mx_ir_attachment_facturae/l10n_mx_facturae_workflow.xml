@@ -74,7 +74,7 @@
             <field name="condition">True</field>
         </record>
         <record id="workflow_transition_act_sign_to_act_done" model="workflow.transition">
-            <field name="signal">action_printable</field>
+            <field name="signal"></field>
             <field model="workflow.activity" name="act_from" ref="workflow_activity_sign"/>
             <field model="workflow.activity" name="act_to" ref="workflow_activity_done"/>
             <field name="condition">True</field>

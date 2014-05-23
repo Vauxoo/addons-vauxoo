@@ -30,30 +30,27 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 from openerp import pooler, tools
 
-
 class params_pac(osv.Model):
     _name = 'params.pac'
 
-    def _get_method_type_selection(self, cr, uid, context=None):
-        if context is None:
-            context = {}
-        # From module of PAC inherit this function and add new methods
-        types = []
-        return types
+    #~ def _get_method_type_selection(self, cr, uid, context=None):
+        #~ if context is None:
+            #~ context = {}
+        #~ # From module of PAC inherit this function and add new methods
+        #~ types = []
+        #~ return types
 
     _columns = {
-        'name': fields.char('Name', size=128, required=True,
-            help='Name for this param'),
-        'url_webservice': fields.char('URL WebService', size=256, required=True,
+        'name': fields.char('Name', size=128, help='Name for this param'),
+        'url_webservice': fields.char('URL WebService', size=256,
             help='URL of WebService used for send to sign the XML to PAC'),
         'namespace': fields.char('NameSpace', size=256,
             help='NameSpace of XML of the page of WebService of the PAC'),
         'user': fields.char('User', size=128, help='Name user for login to PAC'),
         'password': fields.char('Password', size=128,
             help='Password user for login to PAC'),
-        'method_type': fields.selection(_get_method_type_selection,
-            "Type of method", type='char', size=64, required=True),
-        'company_id': fields.many2one('res.company', 'Company', required=True,
+        'method_type': fields.selection([('firmar','Firmar'),('cancelar','Cancelar')], string='Process to perform'),
+        'company_id': fields.many2one('res.company', 'Company',
             help='Company where will configurate this param'),
         'active': fields.boolean('Active', help='Indicate if this param is active'),
         'sequence': fields.integer('Sequence',
@@ -61,11 +58,13 @@ class params_pac(osv.Model):
         'certificate_link': fields.char('Certificate link', size=256 , 
             help='PAC have a public certificate that is necessary by customers to check the validity of the XML and PDF'),
         # 'link_type': fields.selection([('production','Produccion'),('test','Pruebas')],"Tipo de ligas"),
+        'user_id': fields.many2one('res.users', 'User Params Pac', help="The user responsible for this params pac"),
+        'res_pac': fields.many2one('res.pac', 'Res Pac', help="The res pac configuration for this params pac"),
     }
+    
     _defaults = {
         'active': 1,
         'company_id': lambda s, cr, uid, c: s.pool.get(
             'res.company')._company_default_get(cr, uid, 'params.pac', context=c),
         'sequence': 10,
-
     }

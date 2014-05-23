@@ -68,6 +68,8 @@
                 "hr_expense_replenishment",
                 "hr_expense_replenishment_tax",
                 "report_multicompany",
+                "l10n_mx_facturae_pac_finkok",
+                "l10n_mx_cfdi_test",
                 ],
     "author" : "Vauxoo",
     "description" : """

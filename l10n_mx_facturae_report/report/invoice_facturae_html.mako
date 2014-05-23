@@ -1,4 +1,4 @@
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!DOCTYPE>
 <html>
 <head>
     <style type="text/css">
@@ -9,20 +9,37 @@
     %for o in objects :
         ${set_global_data(o)}
         <% dict_data = set_dict_data(o) %>
+        <% dict_context_extra_data = eval(o.context_extra_data) %>
         <table class="basic_table">
             <tr>
                 <td style="vertical-align: top;">
                     ${helper.embed_image('jpeg',str(o.company_id.logo),180, 85)}
                 </td>
-                <td>
+                <td style="vertical-align: top;">
                     <table class="basic_table">
                         <tr>
-                            <td width='50%'>
+                            <td width="50%">
                                 <div class="title">${ dict_data['Emisor']['@nombre'] or ''|entity}</div>
                             </td>
-                            <td width='20%'>
-                                <div class="invoice">${_("Documento:")}
-                                ${o.document_source or ''|entity}
+                            <td width="20%">
+                                <div class="invoice">
+                                    %if dict_context_extra_data['type'] == 'out_invoice':
+                                        <font size="5">${_("Factura:")}
+                                    %elif dict_context_extra_data['type'] == 'out_refund':
+                                        <font size="4">${_("Nota de credito:")}
+                                    %endif
+                                    %if dict_context_extra_data['type'] in ['out_invoice', 'out_refund']:
+                                        %if o.state in ['done']:
+                                            ${o.document_source or ''|entity}
+                                        %else:
+                                            ${'SIN FOLIO O ESTATUS NO VALIDO'}
+                                        %endif
+                                    %endif
+                                    </font>
+                                    %if dict_context_extra_data['type'] in ['payroll']:
+                                        <font size="4">${_('Payroll: ') |entity} ${o.document_source or ''|entity}</font>
+                                    %endif
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -30,7 +47,7 @@
                                 <div class="emitter">
                                     <br/>${ dict_data['Emisor']['DomicilioFiscal']['@calle'] or ''|entity}
                                     ${ dict_data['Emisor']['DomicilioFiscal']['@noExterior'] or ''|entity}
-                                    ${ dict_data['Emisor']['DomicilioFiscal']['@noInterior'] or ''|entity}</br>
+                                    ${ dict_data['Emisor']['DomicilioFiscal']['@noInterior'] or ''|entity}
                                     ${ dict_data['Emisor']['DomicilioFiscal']['@colonia'] or ''|entity}
                                     ${ dict_data['Emisor']['DomicilioFiscal']['@codigoPostal'] or ''|entity}
                                     <br/>${ _("Localidad:")} ${ dict_data['Emisor']['DomicilioFiscal']['@localidad'] or ''|entity}                                    
@@ -39,7 +56,13 @@
                                     , ${ dict_data['Emisor']['DomicilioFiscal']['@pais'] or ''|entity}
                                     <br/><b>${_("RFC:")} ${dict_data['Emisor']['@rfc'] or ''|entity}</b>
                                     <br/>${ dict_data['Emisor']['RegimenFiscal']['@Regimen'] or ''|entity }
-                                 </div>
+                                    %if dict_context_extra_data['emisor']['phone'] or dict_context_extra_data['emisor']['fax']  or dict_context_extra_data['emisor']['mobile']:
+                                        <br/>${_("Tel&eacute;fono(s):")}
+                                        ${dict_context_extra_data['emisor']['phone'] or ''|entity}
+                                        ${dict_context_extra_data['emisor']['fax']  and ',' or ''|entity} ${dict_context_extra_data['emisor']['fax'] or ''|entity}
+                                        ${dict_context_extra_data['emisor']['mobile'] and ',' or ''|entity} ${dict_context_extra_data['emisor']['mobile'] or ''|entity}
+                                    %endif
+                                </div>
                             </td>
                             <td class="td_data_exp">
                                 <div class="fiscal_address">
@@ -100,93 +123,116 @@
                                 ${ dict_data['Receptor']['Domicilio']['@municipio'] or ''|entity},
                                 ${ dict_data['Receptor']['Domicilio']['@estado'] or ''|entity},
                                 ${ dict_data['Receptor']['Domicilio']['@pais'] or ''|entity}
-                            </td>
+                            </td>       
+                            %if dict_data.get('Complemento',{}).get('Nomina', {}):
+                                <td width="12%" class="cliente"><b>Reg. Patronal:</b></td>
+                                <td class="cliente">
+                                    ${ dict_data['Complemento']['Nomina']['@RegistroPatronal'] or ''|entity }
+                                </td>
+                            %endif
+                        </tr>
+                    </table>
+                    <table class="basic_table" style="border-bottom:1px solid #002966;">
+                        <tr>
+                            %if dict_context_extra_data['receptor']['phone'] or dict_context_extra_data['receptor']['fax']  or dict_context_extra_data['receptor']['mobile']:
+                                <td width="13%" class="cliente"><b>Telefono(s):</b></td>
+                                <td width="55%" class="cliente">
+                                    ${dict_context_extra_data['receptor']['phone'] or ''|entity}
+                                    ${dict_context_extra_data['receptor']['fax'] and ',' or ''|entity}
+                                    ${dict_context_extra_data['receptor']['fax'] or ''|entity}
+                                    ${dict_context_extra_data['receptor']['mobile'] and ',' or ''|entity}
+                                    ${dict_context_extra_data['receptor']['mobile'] or ''|entity}</font>
+                            %endif
+                            %if dict_context_extra_data.has_key('origin'):
+                                %if dict_context_extra_data['origin']:
+                                    <td width="9%" class="cliente"><b>Origen:</b></td>
+                                    <td width="23%" class="cliente"><b>${dict_context_extra_data['origin'] or ''|entity}</b></td>
+                                %endif
+                            %endif
                         </tr>
                     </table>
                 </td>
-                <td width="1%"></td>
                 <td width="19%" align="center">
-                    ${ dict_data['@LugarExpedicion'] or ''|entity}
-                    <% from datetime import datetime %>
-                    <br/>${_("a")} ${datetime.strptime(dict_data['@fecha'].encode('ascii','replace'), '%Y-%m-%dT%H:%M:%S').strftime('%d/%m/%Y %H:%M:%S') or ''|entity}
-                    <br/>${_("Serie:")} ${ dict_data['@serie'] or _("Sin serie")|entity}
+                    <table class="basic_table" style="text-align:center;font-size: 8pt" border="0">
+                        <tr>
+                            <td>
+                                <b>Lugar, fecha y hora de emisión:</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                ${ dict_data['@LugarExpedicion'] or ''|entity}
+                                <% from datetime import datetime %>
+                                <br/>${_("a")} ${datetime.strptime(dict_data['@fecha'].encode('ascii','replace'), '%Y-%m-%dT%H:%M:%S').strftime('%d/%m/%Y %H:%M:%S') or ''|entity}
+                                <br/>${_("Serie:")} ${ dict_data['@serie'] or _("Sin serie")|entity}
+                            </td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
         </table>
         <br/><!-- Inicio Nodo Nomina -->
-        %if dict_data['Complemento'].has_key('Nomina'):
-            <table width="100%" class="basic_table" style="font-size:12;">
-                <tr>
-                    <td width="50%" style="text-align:center;">
-                        <b>${_('DATOS DEL EMPLEADO')}</b>
-                    </td>
-                    <td width="50%" style="text-align:center;">
-                        <b>${_('INFORMACI&Oacute;N LABORAL')}</b>
-                    </td>
+        %if dict_data.get('Complemento',{}).get('Nomina', {}):
+            <table width="100%">
+                <table width="100%" class="basic_table" style="font-size:12;">
+                    <tr>
+                        <td style="text-align:center;">
+                            <b>${_('DATOS DEL EMPLEADO')}</b>
+                        </td>
+                    </tr>
+                </table>
                 </tr>
                 <tr>
-                    <td width="50%" valign="top">
-                        <table class="basic_table" style="font-size:9;">
-                            <tr>                                
-                                <td class="cliente" width="25%"><b>
-                                    ${_('No. Empleado')}</br>
-                                    ${_('Reg. Patronal')}</br>
-                                    ${_('Puesto')}</br>
-                                    ${_('CURP')}</br>
-                                    ${_('Riesgo de puesto')}</br>
-                                    ${_('Departamento')}</br>
-                                    ${_('N&uacute;m. seguridad social')}</br></b>
-                                </td>
-                                <td class="cliente" width="25%">
-                                    ${ dict_data['Complemento']['Nomina']['@NumEmpleado'] or ''|entity }</br>
-                                    ${ dict_data['Complemento']['Nomina']['@RegistroPatronal'] or ''|entity }</br>
-                                    ${ dict_data['Complemento']['Nomina']['@Puesto'] or ''|entity }</br>
-                                    ${ dict_data['Complemento']['Nomina']['@CURP'] or ''|entity }</br>
-                                    ${ dict_data['Complemento']['Nomina']['@RiesgoPuesto'] or ''|entity }</br>                                   
-                                    ${ dict_data['Complemento']['Nomina']['@Departamento'] or ''|entity }</br>
-                                    ${ dict_data['Complemento']['Nomina']['@NumSeguridadSocial'] or ''|entity }</br>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td width="50%" valign="top">
-                        <table class="basic_table" style="font-size:9;">
-                            <tr>
-                                <td class="cliente" width="25%"><b>
-                                    ${_('Contrato')}</br>
-                                    ${_('D&iacute;as Pagados')}</br>
-                                    ${_('Rel. Laboral')}</br>
-                                    ${_('Salario diario')}</br>                                    
-                                    ${_('Jornada')}</br>
-                                    ${_('Antiguedad')}</br>
-                                    ${_('Salario base')}</br>
-                                    ${_('Periodo')}</br></b>                                 
-                                </td>
-                                <td class="cliente" width="25%">
-                                    ${ dict_data['Complemento']['Nomina']['@TipoContrato'] or ''|entity }</br>
-                                    ${ dict_data['Complemento']['Nomina']['@NumDiasPagados'] or ''|entity }</br>
-                                    ${datetime.strptime(dict_data['Complemento']['Nomina']['@FechaInicioRelLaboral'].encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity}</br>
-                                    ${ dict_data['Complemento']['Nomina']['@SalarioDiarioIntegrado'] or ''|entity }</br>                                
-                                    ${ dict_data['Complemento']['Nomina']['@TipoJornada'] or ''|entity }</br>
-                                    ${ dict_data['Complemento']['Nomina']['@Antiguedad'] or ''|entity }</br>
-                                    ${ dict_data['Complemento']['Nomina']['@SalarioBaseCotApor'] or ''|entity }</br>
-                                    ${ dict_data['Complemento']['Nomina']['@PeriodicidadPago'] or ''|entity }</br>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
+                    <table width="100%" class="basic_table" style="font-size:9; border:1.5px solid grey;">
+                        <tr>                          
+                            <td class="cliente"><b>${_('No. Empleado')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@NumEmpleado'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('Puesto')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@Puesto'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('CURP')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@CURP'] or ''|entity }</td>
+                        </tr>
+                        <tr>
+                            <td class="cliente"><b>${_('Riesgo de puesto')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@RiesgoPuesto'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('Departamento')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@Departamento'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('N&uacute;m. seguridad social')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@NumSeguridadSocial'] or ''|entity } </td>
+                        </tr>
+                    </table>
                 </tr>
             </table>
             <br/>
             <table width="100%">
+                <table width="100%" class="basic_table" style="font-size:12;">
+                    <tr>
+                        <td style="text-align:center;">
+                            <b>${_('INFORMACI&Oacute;N LABORAL')}</b>
+                        </td>
+                    </tr>
+                </table>
+                </tr>
                 <tr>
-                    <table width="100%" class="basic_table" style="font-size:12;">
+                    <table width="100%" class="basic_table" style="font-size:9; border:1.5px solid grey;">
+                        <tr>                          
+                            <td class="cliente"><b>${_('Contrato')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@TipoContrato'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('D&iacute;as Pagados')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@NumDiasPagados'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('Rel. Laboral')}</b></td><td class="cliente">${ datetime.strptime(dict_data['Complemento']['Nomina']['@FechaInicioRelLaboral'].encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity }</td>
+                            <td class="cliente"><b>${_('Salario diario')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@SalarioDiarioIntegrado'] or ''|entity }</td>
+                        </tr>
                         <tr>
-                            <td style="text-align:center;">
-                                <b>${_('PAGO')}</b>
-                            </td>
+                            <td class="cliente"><b>${_('Jornada')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@TipoJornada'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('Antiguedad')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@Antiguedad'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('Salario base')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@SalarioBaseCotApor'] or ''|entity } </td>
+                            <td class="cliente"><b>${_('Periodo')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@PeriodicidadPago'] or ''|entity } </td>
                         </tr>
                     </table>
+                </tr>
+            </table>
+            <br/>
+            <table width="100%">
+                <table width="100%" class="basic_table" style="font-size:12;">
+                    <tr>
+                        <td style="text-align:center;">
+                            <b>${_('PAGO')}</b>
+                        </td>
+                    </tr>
+                </table>
                 </tr>
                 <tr>
                     <table width="100%" class="basic_table" style="font-size:9; border:1.5px solid grey;">
@@ -203,7 +249,7 @@
                     </table>
                 </tr>
             </table>
-            <br/>   
+            <br/>
             <table width="100%" style="color:#121212">
                 <tr>
                     <td width="50%" valign="top">
@@ -331,7 +377,6 @@
             </tr>
         </table>
         </br>
-        </br>
         %endif
         <!-- Fin Nodo Nomina -->
         <table class="basic_table" style="color:#121212">
@@ -423,7 +468,6 @@
                 <td class="total_td" align="right"><b>$ ${ dict_data['@total'] or ''|entity}</b></td>
             </tr>
         </table>
-        <br clear="all" />
         <table class="basic_table">
             <tr>
                 <td class="tax_td">
@@ -442,21 +486,40 @@
                 </td>
             </tr>            
         </table>
-        <br clear="all"/>
-        <font class="font">“Este documento es una representaci&oacute;n impresa de un CFDI”
-        <br/>CFDI, Comprobante Fiscal Digital por Internet</font>
-        <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
-                <tr>
-                    <th width="33%"> ${_('Certificado del SAT')}</th>
-                    <th> ${_('Fecha de Timbrado')}</th>
-                    <th width="33%"> ${_('Folio Fiscal')}</th>
-                </tr>
-                <tr>
-                    <td width="33%" class="center_td"> ${ dict_data['Complemento']['TimbreFiscalDigital']['@noCertificadoSAT'] or 'No identificado'|entity }</td>
-                    <td width="34%" class="center_td"> ${ datetime.strptime(dict_data['Complemento']['TimbreFiscalDigital']['@FechaTimbrado'].encode('ascii','replace'), '%Y-%m-%dT%H:%M:%S').strftime('%d/%m/%Y %H:%M:%S') or 'No identificado'|entity }</td>
-                    <td width="33%" class="center_td"> ${ dict_data['Complemento']['TimbreFiscalDigital']['@UUID'] or 'No identificado'|entity }</td>
-                </tr>
-        </table>
+        %if dict_context_extra_data.has_key('payment_term') or dict_context_extra_data.has_key('comment'):
+            <table class="basic_table">
+                %if dict_context_extra_data.has_key('payment_term'):
+                    <tr>
+                        %if dict_context_extra_data['payment_term']:
+                            <td width="100%"><pre><font size="1"><b>Condición de pago:</b> ${dict_context_extra_data['payment_term'] or '' |entity}
+                            </font></pre></td>
+                        %endif
+                    </tr>
+                %endif
+                %if dict_context_extra_data.has_key('comment'):
+                    <tr>
+                        %if dict_context_extra_data['comment']:
+                            <td width="100%"><pre><font size="1"><b>Comentarios adicionales:</b> ${dict_context_extra_data['comment'] or '' |entity}</font></pre></td>
+                        %endif
+                    </tr>
+                %endif
+            </table>
+        %endif
+        </br>
+        %if dict_data.get('Complemento', {}).get('TimbreFiscalDigital'):
+            <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
+                    <tr>
+                        <th width="33%"> ${_('Certificado del SAT')}</th>
+                        <th> ${_('Fecha de Timbrado')}</th>
+                        <th width="33%"> ${_('Folio Fiscal')}</th>
+                    </tr>
+                    <tr>
+                        <td width="33%" class="center_td"> ${ dict_data['Complemento']['TimbreFiscalDigital']['@noCertificadoSAT'] or 'No identificado'|entity }</td>
+                        <td width="34%" class="center_td"> ${ datetime.strptime(dict_data['Complemento']['TimbreFiscalDigital']['@FechaTimbrado'].encode('ascii','replace'), '%Y-%m-%dT%H:%M:%S').strftime('%d/%m/%Y %H:%M:%S') or 'No identificado'|entity }</td>
+                        <td width="33%" class="center_td"> ${ dict_data['Complemento']['TimbreFiscalDigital']['@UUID'] or 'No identificado'|entity }</td>
+                    </tr>
+            </table>
+        %endif
         <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
                 <tr>
                     <th width="33%">${_('Certificado del emisor')}</th>
@@ -469,30 +532,39 @@
                     <td class="center_td">${ dict_data['@NumCtaPago'] or 'No identificado'|entity }</td>
                 </tr>
         </table>
-        <div style="page-break-inside:avoid; border:1.5px solid grey;">
-            <table width="100%" class="datos_fiscales">
-                <tr>
-                    <td align="left">
-                        ${helper.embed_image('jpeg',str(o.company_id.cif_file), 140, 220)}
-                    </td>
-                    <td valign="top" align="left">
-                        <p class="cadena_with_cbb_cfd">
-                        <b>${_('Sello Digital Emisor:')} </b><br/>
-                        ${ dict_data['@sello'] or ''|entity}<br/>
-                        <b>${_('Sello Digital SAT:')} </b><br/>
-                        ${ dict_data['Complemento']['TimbreFiscalDigital']['@selloSAT'] or ''|entity}<br/>
-                        <b>${_('Cadena original:')} </b><br/>
-                        ${o.cfdi_cadena_original or ''|entity}</br>
-                        <b>${_('Enlace al certificado: ')}</b></br>
-                        ${o.certificate_link or ''|entity}</p>
-                    </td>
-                    <td align="right">
-                        <% img = create_qrcode(dict_data['Emisor']['@rfc'], dict_data['Receptor']['@rfc'], float(dict_data['@total'].encode('ascii','replace')), dict_data['Complemento']['TimbreFiscalDigital']['@UUID']) %>
-                        ${helper.embed_image('jpeg',str(img),180, 180)}
-                    </td>
-                </tr>
-            </table>
-        </div>
+        %if dict_data.get('Complemento', {}).get('TimbreFiscalDigital'):
+            <div style="page-break-inside:avoid; border:1.5px solid grey;">
+                <table width="100%" class="datos_fiscales">
+                    <tr>
+                        <td align="left" rowspan="2">
+                            ${helper.embed_image('jpeg',str(o.company_id.cif_file), 140, 220)}
+                        </td>
+                        <td valign="top" align="left">
+                            <p class="cadena_with_cbb_cfd">
+                            <b>${_('Sello Digital Emisor:')} </b><br/>
+                            ${ dict_data['@sello'] or ''|entity}<br/>
+                            <b>${_('Sello Digital SAT:')} </b><br/>
+                            ${ dict_data['Complemento']['TimbreFiscalDigital']['@selloSAT'] or ''|entity}<br/>
+                            <b>${_('Cadena original:')} </b><br/>
+                            ${o.cfdi_cadena_original or ''|entity}</br>
+                            <b>${_('Enlace al certificado: ')}</b></br>
+                            ${o.certificate_link or ''|entity}</br>
+                            </p>
+                        </td>
+                        <td align="right" rowspan="2">
+                            <% img = create_qrcode(dict_data['Emisor']['@rfc'], dict_data['Receptor']['@rfc'], float(dict_data['@total'].encode('ascii','replace')), dict_data['Complemento']['TimbreFiscalDigital']['@UUID']) %>
+                            ${helper.embed_image('jpeg',str(img),180, 180)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: center; text-align: center">
+                            <p><b><font size="1">"Este documento es una representación impresa de un CFDI”</br>
+                            CFDI, Comprobante Fiscal Digital por Internet</font></b></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        %endif
         <p style="page-break-after:always"></p>
     %endfor
 </body>

@@ -35,6 +35,5 @@ class hr_employee(osv.Model):
     _columns = {
         'nss': fields.char('NSS', size=15, help="Optional attribute for the expression of Social Security Number applicable to the worker"),
         'curp': fields.char('CURP', size=18, help="Worker CURP"),
-        'employer_registration': fields.char('Employer Registration', size=20, help="Attribute to express the employer registration to 20 positions maximum"),
     }
 

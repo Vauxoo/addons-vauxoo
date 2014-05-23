@@ -30,6 +30,7 @@ from openerp.tools.translate import _
 from openerp import pooler, tools
 from openerp import netsvc
 from openerp import release
+
 import time
 from xml.dom import minidom
 import os
@@ -175,6 +176,8 @@ class account_invoice(osv.Model):
             'out_refund': True,
             'in_invoice': False,
             'in_refund': False}
+        address_emitter = False
+        context_extra_data = {}
         file_globals = self._get_file_globals(cr, uid, ids, context=context)
         fname_cer_no_pem = file_globals['fname_cer']
         cerCSD = open(fname_cer_no_pem).read().encode('base64') #Mejor forma de hacerlo
@@ -194,6 +197,14 @@ class account_invoice(osv.Model):
                                         'res_model': self._name,
                                         'res_id': invoice.id
                                 }, context=context)
+                    if invoice.company_emitter_id.address_invoice_parent_company_id.use_parent_address:
+                        address_emitter = invoice.company_emitter_id.address_invoice_parent_company_id.parent_id
+                    else:
+                        address_emitter = invoice.company_emitter_id.address_invoice_parent_company_id
+                    if address_emitter:
+                        context_extra_data.update({'emisor':{'phone':address_emitter.phone,'fax':address_emitter.fax,'mobile':address_emitter.mobile,'web':address_emitter.website,'email':address_emitter.email}})
+                    context_extra_data.update({'receptor':{'phone':invoice.partner_id.phone,'fax':invoice.partner_id.fax,'mobile':invoice.partner_id.mobile}})
+                    context_extra_data.update({'comment': invoice.comment or '','payment_term':invoice.payment_term.note or invoice.payment_term.name or '','origin': invoice.origin,'type': invoice.type})
                     attach_ids = ir_attach_obj.create(cr, uid, {
                         'name': invoice.fname_invoice, 
                         'type': invoice.invoice_sequence_id.approval_id.type,
@@ -211,8 +222,9 @@ class account_invoice(osv.Model):
                         #~'file_input_index': base64.encodestring(xml_data),
                         'document_source': invoice.number,
                         'file_input': attachment_id,
-                        },
-                      context=context)#Context, because use a variable type of our code but we dont need it.
+                        'context_extra_data': context_extra_data,
+                        'res_pac': approval_id.res_pac.id or False,
+                        }, context=context) #Context, because use a variable type of our code but we dont need it.
                     ir_attach_obj.signal_confirm(cr, uid, [attach_ids], context=context)
                     if attach_ids:
                         result = mod_obj.get_object_reference(cr, uid, 'l10n_mx_ir_attachment_facturae',
@@ -553,7 +565,7 @@ class account_invoice(osv.Model):
             'sequence_id', '=', invoice.invoice_sequence_id.id)], context=context)
         if sequence_app_id:
             type_inv = ir_seq_app_obj.browse(
-                cr, uid, sequence_app_id[0], context=context).type
+                cr, uid, sequence_app_id[0], context=context).res_pac.name_driver
         if invoice_datetime < '2012-07-01 00:00:00':
             return file_globals
         all_paths = tools.config["addons_path"].split(",")
@@ -1100,7 +1112,7 @@ class account_invoice(osv.Model):
                 'tipoDeComprobante': tipoComprobante,
                 'formaDePago': u'Pago en una sola exhibición',
                 'noCertificado': '@',
-                'sello': '@',
+                'sello': '',
                 'certificado': '@',
                 'subTotal': "%.2f" % (invoice.amount_untaxed or 0.0),
                 'descuento': "0",  # Add field general
@@ -1138,7 +1150,7 @@ class account_invoice(osv.Model):
 
                 'rfc': (('vat_split' in address_invoice_parent._columns and \
                 address_invoice_parent.vat_split or address_invoice_parent.vat) \
-                or '').replace('-', ' ').replace(' ', ''),
+                or '').replace('-', ' ').replace(' ', '').upper(),
                 'nombre': address_invoice_parent.name or '',
                 # Obtener domicilio dinamicamente
                 # virtual_invoice.append( (invoice.company_id and
@@ -1236,18 +1248,17 @@ class account_invoice(osv.Model):
                 raise osv.except_osv(_('Warning !'), _(
                     "Don't have defined RFC of the partner[%s].\n%s !") % (
                     parent_obj.name, msg2))
-            if parent_obj._columns.has_key('vat_split') and\
-                parent_obj.vat[0:2] <> 'MX':
+            if parent_obj._columns.has_key('vat_split') and parent_obj.vat[0:2].upper() <> 'MX':
                 rfc = 'XAXX010101000'
             else:
                 rfc = ((parent_obj._columns.has_key('vat_split')\
                     and parent_obj.vat_split or parent_obj.vat)\
-                    or '').replace('-', ' ').replace(' ','')
+                    or '').replace('-', ' ').replace(' ','').upper()
             address_invoice = partner_obj.browse(cr, uid, \
                 invoice.partner_id.id, context=context)
             invoice_data['cfdi:Receptor'] = {}
             invoice_data['cfdi:Receptor'].update({
-                'rfc': rfc,
+                'rfc': rfc.upper(),
                 'nombre': (parent_obj.name or ''),
                 'cfdi:Domicilio': {
                     'calle': address_invoice.street and address_invoice.\
@@ -1525,7 +1536,7 @@ class account_invoice(osv.Model):
         type_inv = 'cfd22'
         if sequence_app_id:
             type_inv = ir_seq_app_obj.browse(
-                cr, uid, sequence_app_id[0], context=context).type
+                cr, uid, sequence_app_id[0], context=context).res_pac.name_driver
         if 'cfdi' in type_inv:
             comprobante = 'cfdi:Comprobante'
         else:

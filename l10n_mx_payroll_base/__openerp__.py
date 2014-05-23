@@ -25,7 +25,8 @@
     "version": "1.0",
     "depends": [
                 "account",
-                "hr_payroll",
+                "l10n_mx_states",
+                "l10n_mx_regimen_fiscal",
                 "l10n_mx_hr_payroll",
                 "l10n_mx_data_bank",
                 "l10n_mx_partner_address",
@@ -37,6 +38,9 @@
                 "l10n_mx_ir_attachment_facturae",
                 "l10n_mx_params_pac",
                 "l10n_mx_facturae_groups",
+                "hr_payroll_account",
+                "hr_payroll_cancel",
+                "hr_payslip_validation_home_address",
     ],
     "author": "Vauxoo",
     "description": """
@@ -55,6 +59,10 @@ ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfd/nomina11.pdf
 
 
 ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfdi/guianomina.pdf
+
+The module hr_payroll_cancel found in lp:addons-vauxoo/7.0 
+
+This module depends of module hr_payslip_validation_home_address found un lp:addons-vauxoo/7.0 
     """,
     "website": "http://vauxoo.com",
     "category": "Addons Vauxoo",
@@ -64,10 +72,15 @@ ftp://ftp2.sat.gob.mx/asistencia_servicio_ftp/publicaciones/cfdi/guianomina.pdf
         'security/ir.model.access.csv',
     ],
     "demo" : [
+        "demo/l10n_mx_payroll_partner.xml",
+        "demo/account_payroll_demo.xml",
+        "demo/payroll_concept_account_demo.xml",
         "demo/l10n_mx_payroll_demo.xml",
         "demo/l10n_mx_payroll_contract.xml",
         "demo/l10n_mx_payroll_cfdi0.xml",
+        "demo/l10n_mx_payroll_partner.xml",
         "demo/l10n_mx_payroll_users.xml",
+        "demo/l10n_mx_payroll_res_company_demo.xml",
     ],
     "test": [
     ],

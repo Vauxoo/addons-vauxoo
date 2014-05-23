@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <record id="l10n_mx_cfdi_pac_finkok_seq_customer_refund_0" model="ir.sequence">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="name">Sequence Finkok Customer Refund</field>
+            <field name="active" eval="True"/>
+            <field name="padding">0</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">standard</field>
+        </record>
+
+        <record id="l10n_mx_cfdi_pac_finkok_approval_customer_refund_0" model="ir.sequence.approval">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="sequence_id" ref="l10n_mx_cfdi_pac_finkok_seq_customer_refund_0"/>
+            <field name="approval_number">12345</field>
+            <field name="serie">CFDIFINKOKCR</field>
+            <field name="approval_year" eval="time.strftime('%Y')"/>
+            <field name="number_start">1</field>
+            <field name="number_end">9999</field>
+            <field name="res_pac" ref="l10n_mx_res_pac_finkok"/>
+        </record>
+
+        <record id="l10n_mx_cfdi_pac_finkok_journal_customer_refund_0" model="account.journal">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="sequence_id" ref="l10n_mx_cfdi_pac_finkok_seq_customer_refund_0"/>
+            <field name="name">CFDI Finkok Journal Customer Refund</field>
+            <field name="code">FINCR</field>
+            <field name="type">sale_refund</field>
+            <field name="update_posted" eval="True"/>
+            <field name="analytic_journal_id" ref="account.exp"/>
+        </record>
+    </data>
+</openerp>

@@ -20,7 +20,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-from openerp.osv import fields, osv
+from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 from openerp import pooler, tools
 from openerp import netsvc
@@ -39,6 +39,7 @@ import xml.dom.minidom
 from pytz import timezone
 import pytz
 import time
+import codecs
 from datetime import datetime, timedelta
 try:
     from qrcode import *
@@ -96,12 +97,6 @@ class ir_attachment_facturae_mx(osv.Model):
         os.close(fileno)
         return fname
 
-    def _get_type(self, cr, uid, ids=None, context=None):
-        if context is None:
-            context = {}
-        types = []
-        return types
-
     def get_driver_fc_sign(self):
         """function to inherit from module driver of pac and add particular function"""
         return {}
@@ -122,15 +117,11 @@ class ir_attachment_facturae_mx(osv.Model):
         #~'file_input_index': fields.text('File input', help='File input index'),
         'file_xml_sign': fields.many2one('ir.attachment', 'File XML Sign',
                                          readonly=True, help='File XML signed'),
-        'file_xml_sign_index': fields.text('File XML Sign Index',
-                                           help='File XML sign index'),
         'file_pdf': fields.many2one('ir.attachment', 'File PDF', readonly=True,
                                     help='Report PDF generated for the electronic Invoice'),
         'file_pdf_index': fields.text('File PDF Index',
                                       help='Report PDF with index'),
         'identifier': fields.char('Identifier', size=128, ),
-        'type': fields.selection(_get_type, 'Type', type='char', size=64,
-                                 readonly=True, help="Type of Electronic Invoice"),
         'description': fields.text('Description'),
         'msj': fields.text('Last Message', readonly=True,
                            track_visibility='onchange',
@@ -147,7 +138,7 @@ class ir_attachment_facturae_mx(osv.Model):
             ('done', 'Done'),
             ('cancel', 'Cancelled'), ],
             'State', readonly=True, required=True, help='State of attachments'),
-        'journal_id': fields.many2one('account.journal','Journal', required=True),
+        'journal_id': fields.many2one('account.journal','Journal'),
         'partner_id': fields.many2one('res.partner', 'Partner'),
         'user_pac': fields.char('User PAC', size=128, help='Name user for login to PAC'),
         'password_pac': fields.char('Password PAC', size=128, help='Password user for login to PAC'),
@@ -180,6 +171,8 @@ class ir_attachment_facturae_mx(osv.Model):
         'document_source': fields.char('Document Source', size=128, help='Number or reference of document source'),
         'date_print_report': fields.datetime('Date print', help='Saved the date of last print'),
         'date_send_mail': fields.datetime('Date send mail', help='Saved the date of last send mail'),
+        'context_extra_data': fields.text('Context Extra Data'),
+        'res_pac': fields.many2one('res.pac', 'Pac', required=True),
     }
 
     _defaults = {
@@ -188,6 +181,26 @@ class ir_attachment_facturae_mx(osv.Model):
         self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
         'last_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
+
+    def _get_sello(self, cr=False, uid=False, ids=False, context=None):
+        # TODO: Put encrypt date dynamic
+        if context is None:
+            context = {}
+        fecha = context['fecha']
+        year = float(time.strftime('%Y', time.strptime(
+            fecha, '%Y-%m-%dT%H:%M:%S')))
+        if year >= 2011:
+            encrypt = "sha1"
+        if year <= 2010:
+            encrypt = "md5"
+        certificate_lib = self.pool.get('facturae.certificate.library')
+        fname_sign = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(
+            ''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + \
+            '__sign__')
+        result = certificate_lib._sign(cr, uid, ids, fname=context['fname_xml'],
+            fname_xslt=context['fname_xslt'], fname_key=context['fname_key'],
+            fname_out=fname_sign, encrypt=encrypt, type_key='PEM')
+        return result
 
     def create_ir_attachment_facturae(self, cr, uid, ids, context=None):
         if context is None:
@@ -220,11 +233,36 @@ class ir_attachment_facturae_mx(osv.Model):
             _logger.error(error)
         return status
 
+    def validate_scheme_facturae_xml(self, cr, uid, ids, datas_xmls=[], facturae_version = None, facturae_type="cfdv", scheme_type='xsd'):
+        #TODO: bzr add to file fname_schema
+        if not datas_xmls:
+            datas_xmls = []
+        certificate_lib = self.pool.get('facturae.certificate.library')
+        for data_xml in datas_xmls:
+            (fileno_data_xml, fname_data_xml) = tempfile.mkstemp('.xml', 'openerp_' + (False or '') + '__facturae__' )
+            f = open(fname_data_xml, 'wb')
+            data_xml = data_xml.replace("&amp;", "Y")#Replace temp for process with xmlstartle
+            f.write( data_xml )
+            f.close()
+            os.close(fileno_data_xml)
+            all_paths = tools.config["addons_path"].split(",")
+            for my_path in all_paths:
+                if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT')):
+                    # If dir is in path, save it on real_path
+                    fname_scheme = my_path and os.path.join(my_path, 'l10n_mx_facturae_base', 'SAT', facturae_type + facturae_version +  '.' + scheme_type) or ''
+                    #fname_scheme = os.path.join(tools.config["addons_path"], u'l10n_mx_facturae_base', u'SAT', facturae_type + facturae_version +  '.' + scheme_type )
+                    fname_out = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__schema_validation_result__' )
+                    result = certificate_lib.check_xml_scheme(cr, uid, ids, fname_data_xml, fname_scheme, fname_out)
+                    if result: #Valida el xml mediante el archivo xsd
+                        raise osv.except_osv('Error al validar la estructura del xml!', 'Validación de XML versión %s:\n%s'%(facturae_version, result))
+            return True
+
     def signal_confirm(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
         from l10n_mx_facturae_lib import facturae_lib
         msj, app_xsltproc_fullpath, app_openssl_fullpath, app_xmlstarlet_fullpath = facturae_lib.library_openssl_xsltproc_xmlstarlet(cr, uid, ids, context)
+        attachment_obj = self.pool.get('ir.attachment')
         if msj:
             raise osv.except_osv(_('Warning'),_(msj))
         if context is None:
@@ -233,19 +271,42 @@ class ir_attachment_facturae_mx(osv.Model):
         wf_service = netsvc.LocalService("workflow")
         msj = ''
         for attach in self.browse(cr, uid, ids, context=context):
-            #~id_source = attach.id_source
-            #~model_source = attach.model_source
-            #~type = attach.type
-            #~fname = str(attach.id) + '_XML_V3_2.xml' or ''
             if attach.file_input:
-                msj = _("Attached Successfully XML CFD 3.2.")
-            #~xml_data = base64.decodestring(attach.file_input_index)
-            #~doc_xml = xml.dom.minidom.parseString(xml_data)
-            #~index_xml = doc_xml.toprettyxml()
+                data_xml = base64.decodestring(attach.file_input.datas)
+                doc_xml = xml.dom.minidom.parseString(data_xml)
+                nodeComprobante = doc_xml.getElementsByTagName("cfdi:Comprobante")[0]
+                for n in doc_xml.getElementsByTagName("cfdi:Comprobante"):
+                    sello = n.getAttribute("sello")
+                if not sello:
+                    (fileno_xml, fname_xml) = tempfile.mkstemp('.xml', 'openerp_' + '__facturae__')
+                    fname_txt = fname_xml + '.txt'
+                    (fileno_sign, fname_sign) = tempfile.mkstemp('.txt', 'openerp_' + '__facturae_txt_md5__')
+                    os.close(fileno_sign)
+                    f = codecs.open(fname_xml,'w','utf-8')
+                    doc_xml.writexml(f, indent='    ', addindent='    ', newl='\r\n', encoding='UTF-8')
+                    f.close()
+                    context.update({
+                        'fname_xml': fname_xml,
+                        'fname_txt': fname_txt,
+                        'fname_sign': fname_sign,
+                    })
+                    sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
+                    nodeComprobante.setAttribute("sello", sign_str)
+                    data_xml = doc_xml.toxml().encode('ascii', 'xmlcharrefreplace')
+                    attachment_obj.write(cr, uid, attach.file_input.id,{
+                                    'datas': base64.encodestring(data_xml),
+                            }, context=context)
+                nodepayroll = doc_xml.getElementsByTagName("nomina:Nomina")
+                if nodepayroll:
+                    nodecomplemento = doc_xml.getElementsByTagName("cfdi:Complemento")[0]
+                    doc_xml.documentElement.removeChild(nodecomplemento)
+                    data_xml = doc_xml.toxml('UTF-8')
+                    data_xml_payroll = nodepayroll[0].toxml('UTF-8')
+                    self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml_payroll], '11', 'nomina')
+                self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], 'v3.2', 'cfd')
             self.write(cr, uid, ids,{
                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                           'msj': msj,
-                           #~'file_input_index': index_xml or ''
+                           'msj': msj
                         }, context=context)
             wf_service.trg_validate(uid, self._name, ids[0], 'action_confirm', cr)
             return True
@@ -263,22 +324,20 @@ class ir_attachment_facturae_mx(osv.Model):
         attachment_obj = self.pool.get('ir.attachment')
         wf_service = netsvc.LocalService("workflow")
         attach = ''
-        index_xml = ''
         msj = ''
         status = False
         for data in self.browse(cr, uid, ids, context=context):
-            type = data.type
+            t_type = data.res_pac.name_driver
             id_source = data.id_source
             model_source = data.model_source
             attach_v3_2 = data.file_input and data.file_input.id or False
             index_content = data.file_input and data.file_input.index_content.encode('utf-8') or False
             type__fc = self.get_driver_fc_sign()
-            if type in type__fc.keys():
+            if t_type in type__fc.keys():
                 fname_invoice = data.name and data.name + '.xml' or ''
                 fdata = base64.encodestring(index_content)
-                res = type__fc[type](cr, uid, [data.id], fdata, context=context)
+                res = type__fc[t_type](cr, uid, [data.id], fdata, context=context)
                 msj = tools.ustr(res.get('msg', False))
-                index_xml = res.get('cfdi_xml', False)
                 status = res.get('status', False)
                 if status:
                     data_attach = {
@@ -290,21 +349,21 @@ class ir_attachment_facturae_mx(osv.Model):
                         'res_id': id_source,
                     }
                     attach = attachment_obj.create(cr, uid, data_attach, context=None)
+                    '''
                     if attach_v3_2:
                         cr.execute("""UPDATE ir_attachment
                             SET res_id = Null
                             WHERE id = %s""", (attach_v3_2,))
-                    doc_xml = xml.dom.minidom.parseString(index_xml)
-                    index_xml = doc_xml.toprettyxml()
                     self.write(cr, uid, ids,
+                    '''
+                    self.write(cr, uid, [data.id],
                            {'file_xml_sign': attach or False,
                                'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                               'msj': msj,
-                               'file_xml_sign_index': index_xml}, context=context)
+                               'msj': msj,}, context=context)
                     wf_service.trg_validate(uid, self._name, data.id, 'action_sign', cr)
                     status = True
             else:
-                msj += _("Unknow driver for %s" % (type))
+                msj += _("Unknow driver for %s" % (t_type))
                 status = False
         return status
 
@@ -314,13 +373,8 @@ class ir_attachment_facturae_mx(osv.Model):
     def signal_printable(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        msj = ''
-        index_pdf = ''
         attachment_obj = self.pool.get('ir.attachment')
-        attachment_mx_data = self.browse(cr, uid, ids)
-        type = self.browse(cr, uid, ids)[0].type
-        wf_service = netsvc.LocalService("workflow")
-        status = False
+        attachment_mx_data = self.browse(cr, uid, ids, context=context)
         (fileno, fname) = tempfile.mkstemp(
             '.pdf', 'openerp_pdfcfid_' + (str(attachment_mx_data[0].id) or '') + '__facturae__')
         os.close(fileno)
@@ -343,34 +397,34 @@ class ir_attachment_facturae_mx(osv.Model):
             'res_model': attachment_mx_data[0].model_source,
             'res_id': attachment_mx_data[0].id_source}, context=context)
             
-        status = True
         aids = attachment_ids and attachment_ids[0] or False
         
-        if status and aids:
+        if aids:
             msj = _("Attached Successfully PDF\n")
             self.write(cr, uid, ids, {
                 'file_pdf': aids,
                 'msj': msj,
                 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                'file_pdf_index': index_pdf,
                 'date_print_report': time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
-            wf_service.trg_validate(uid, self._name, attachment_mx_data[0].id, 'action_printable', cr)
         else:
             raise osv.except_osv(_('Warning'), _('Not Attached PDF\n'))
-        return status
-
-    def action_printable(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'printable'}, context=context)
+        datas = {
+                 'model': 'ir.attachment.facturae.mx',
+                 'ids': ids,
+                 'form': self.read(cr, uid, ids[0], context=context),
+        }
+        return {'type': 'ir.actions.report.xml', 'report_name': report_name, 'datas': datas, 'nodestroy': True, 'name': file_name_attachment}
 
     def signal_send_customer(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
+        context.update({'active_model': 'ir.attachment.facturae.mx', 'active_ids': ids, 'active_id': ids[0]})
         attachments = []
         msj = ''
-        state = ''
         partner_mail = ''
         user_mail = ''
         status = False
+        mssg_id = False
         data = self.browse(cr, uid, ids)[0]
         company_id = data.company_id and data.company_id.id or False
         wf_service = netsvc.LocalService("workflow")
@@ -422,15 +476,14 @@ class ir_attachment_facturae_mx(osv.Model):
                                 (6, 0, mssg['partner_ids'])]
                             mssg['attachment_ids'] = [
                                 (6, 0, attachments)]
+                            mssg['template_id'] = tmp_id[0]
                             mssg_id = self.pool.get(
-                                'mail.compose.message').create(cr, uid, mssg, context=None)
-                            state = self.pool.get('mail.compose.message').send_mail(
-                                cr, uid, [mssg_id], context=context)
+                                'mail.compose.message').create(cr, uid, mssg, context=context)
                             asunto = mssg['subject']
                             id_mail = obj_mail_mail.search(
                                 cr, uid, [('subject', '=', asunto)])
                             if id_mail:
-                                for mail in obj_mail_mail.browse(cr, uid, id_mail, context=None):
+                                for mail in obj_mail_mail.browse(cr, uid, id_mail, context=context):
                                     if mail.state == 'exception':
                                         msj = _(
                                             '\nNot correct email of the user or customer. Check in Menu Configuración\Tecnico\Email\Emails\n')
@@ -464,7 +517,22 @@ class ir_attachment_facturae_mx(osv.Model):
         else:
             raise osv.except_osv(_('Warning'), _('Not Found\
             outgoing mail server.Configure the outgoing mail server named "FacturaE"'))
-        return status
+        if mssg_id:
+            return {
+                'name':_("Send Mail FacturaE Customer"),
+                'view_mode': 'form',
+                'view_id': False,
+                'view_type': 'form',
+                'res_model': 'mail.compose.message',
+                'res_id': mssg_id,
+                'type': 'ir.actions.act_window',
+                'nodestroy': True,
+                'target': 'new',
+                'domain': '[]',
+                'context': context,
+            }
+        else:
+            return status
 
     def action_send_customer(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'sent_customer'}, context=context)
@@ -501,6 +569,8 @@ class ir_attachment_facturae_mx(osv.Model):
         return self.write(cr, uid, ids, {'state': 'done'}, context=context)
 
     def signal_cancel(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
         attach_obj = self.pool.get('ir.attachment')
         wf_service = netsvc.LocalService("workflow")
         status = False
@@ -513,25 +583,26 @@ class ir_attachment_facturae_mx(osv.Model):
             #~ else:
                 #wf_service.trg_validate(uid, 'account.invoice', invoice.id, 'invoice_cancel', cr)
             #~ if 'cfdi' in ir_attach_facturae_mx_id.type:
-            if not ir_attach_facturae_mx_id.state in ['cancel', 'draft', 'confirmed']:
+            if not ir_attach_facturae_mx_id.state in ['draft', 'confirmed']:
                 type__fc = self.get_driver_fc_cancel()
-                if ir_attach_facturae_mx_id.type in type__fc.keys():
-                    cfdi_cancel = res = type__fc[ir_attach_facturae_mx_id.type](
+                if ir_attach_facturae_mx_id.res_pac.name_driver in type__fc.keys():
+                    cfdi_cancel = res = type__fc[ir_attach_facturae_mx_id.res_pac.name_driver](
                         cr, uid, [
                             ir_attach_facturae_mx_id.id], context=context
                     )
                     msj += tools.ustr(cfdi_cancel.get('message', False))
                     status_stamp = cfdi_cancel.get('status', False)
                     if status_stamp:
-                        cr.execute("""UPDATE ir_attachment SET res_id = Null
-                                WHERE res_id = %s and res_model=%s""", (ir_attach_facturae_mx_id.id_source, ir_attach_facturae_mx_id.model_source))
+                        if ir_attach_facturae_mx_id.model_source:
+                            cr.execute("""UPDATE ir_attachment SET res_id = Null
+                                    WHERE res_id = %s and res_model=%s""", (ir_attach_facturae_mx_id.id_source, ir_attach_facturae_mx_id.model_source))
                         wf_service.trg_validate(
                             uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
                         status = True
                     else:
                         status = False
                 else:
-                    msj = _("Unknow cfdi driver for %s" % (ir_attach_facturae_mx_id.type))
+                    msj = _("Unknow cfdi driver for %s" % (ir_attach_facturae_mx_id.res_pac.name_driver))
             else:
                 wf_service.trg_validate(
                     uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
@@ -597,7 +668,6 @@ class ir_attachment_facturae_mx(osv.Model):
             a = timezone_original + ((
                 timezone_present + timezone_original)*-1)
         return a
-
 
 class ir_attachment(osv.Model):
     _inherit = 'ir.attachment'
