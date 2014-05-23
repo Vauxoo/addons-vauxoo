@@ -569,6 +569,8 @@ class ir_attachment_facturae_mx(osv.Model):
         return self.write(cr, uid, ids, {'state': 'done'}, context=context)
 
     def signal_cancel(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
         attach_obj = self.pool.get('ir.attachment')
         wf_service = netsvc.LocalService("workflow")
         status = False
@@ -591,8 +593,9 @@ class ir_attachment_facturae_mx(osv.Model):
                     msj += tools.ustr(cfdi_cancel.get('message', False))
                     status_stamp = cfdi_cancel.get('status', False)
                     if status_stamp:
-                        cr.execute("""UPDATE ir_attachment SET res_id = Null
-                                WHERE res_id = %s and res_model=%s""", (ir_attach_facturae_mx_id.id_source, ir_attach_facturae_mx_id.model_source))
+                        if ir_attach_facturae_mx_id.model_source:
+                            cr.execute("""UPDATE ir_attachment SET res_id = Null
+                                    WHERE res_id = %s and res_model=%s""", (ir_attach_facturae_mx_id.id_source, ir_attach_facturae_mx_id.model_source))
                         wf_service.trg_validate(
                             uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
                         status = True

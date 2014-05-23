@@ -40,7 +40,6 @@
                             <field name="url_webservice"/>
                             <field name="namespace"/>
                             <field name="user"/>
-                            <field name="password" password="True"/>
                             <field name="active"/>
                             <field name="sequence"/>
                         </tree>
