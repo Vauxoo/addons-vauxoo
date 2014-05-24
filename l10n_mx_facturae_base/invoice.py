@@ -1474,6 +1474,6 @@ class ir_attachment_facturae_mx(osv.Model):
         for att in self.browse(cr, uid, ids):
             if res and att.model_source == 'account.invoice' and att.id_source:
                 if self.pool.get(att.model_source).browse(cr, uid, att.id_source).state != 'cancel':
-                    res = self.pool.get(att.model_source).action_cancel(
-                        cr, uid, [att.id_source], context=context)
+                    wf_service = netsvc.LocalService("workflow")
+                    wf_service.trg_validate(uid, att.model_source, att.id_source, 'invoice_cancel', cr)
         return res
