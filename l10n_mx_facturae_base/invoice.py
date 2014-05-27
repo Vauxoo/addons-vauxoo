@@ -1496,7 +1496,7 @@ class account_invoice(osv.Model):
         if sequence_app_id:
             type_inv = ir_seq_app_obj.browse(
                 cr, uid, sequence_app_id[0], context=context).res_pac.name_driver
-        if 'cfdi' in type_inv:
+        if type_inv and 'cfdi' in type_inv:
             comprobante = 'cfdi:Comprobante'
         else:
             comprobante = 'Comprobante'
@@ -1583,6 +1583,6 @@ class ir_attachment_facturae_mx(osv.Model):
         for att in self.browse(cr, uid, ids):
             if res and att.model_source == 'account.invoice' and att.id_source:
                 if self.pool.get(att.model_source).browse(cr, uid, att.id_source).state != 'cancel':
-                    res = self.pool.get(att.model_source).action_cancel(
-                        cr, uid, [att.id_source], context=context)
+                    wf_service = netsvc.LocalService("workflow")
+                    wf_service.trg_validate(uid, att.model_source, att.id_source, 'invoice_cancel', cr)
         return res
