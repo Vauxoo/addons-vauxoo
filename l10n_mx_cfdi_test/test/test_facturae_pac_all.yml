@@ -118,6 +118,7 @@
                             fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
                             data_invoice = self.read(cr, uid, invoice_id,[])
                             data_xml = base64.decodestring( fdata )
+                            print data_xml
                             doc_xml = xml.dom.minidom.parseString(data_xml)
                             tax_lines = self.read(cr, uid, [invoice_id],['tax_line'])
                             list_price_subtotal = []
@@ -173,15 +174,11 @@
                                     if taxes.getElementsByTagName("cfdi:Retenciones"):
                                         for retenciones in taxes.getElementsByTagName("cfdi:Retenciones"):
                                             for ret in retenciones.getElementsByTagName("cfdi:Retencion"):
-                                                importe_ret = eval(ret.getAttribute("importe"))
-                                                list_importe_ret_xml.append(importe_ret)
+                                                list_importe_ret_xml.append(eval(ret.getAttribute("importe")))
                                     if taxes.getElementsByTagName("cfdi:Traslados"):
                                         for traslados in taxes.getElementsByTagName("cfdi:Traslados"):
                                             for traslado in traslados.getElementsByTagName("cfdi:Traslado"):
-                                                importe_trasladado = eval(traslado.getAttribute("importe"))
-                                                impuesto_trasladado = traslado.getAttribute("impuesto")
-                                                list_importe_traslados_xml.append(importe_trasladado)
-                                                list_name_traslados_xml.append(impuesto_trasladado)
+                                                list_importe_traslados_xml.append(eval(traslado.getAttribute("importe")))
                                 assert totalImpuestosRetenidos == totalImpuestosRetenidos_xml, 'No matches Total Impuestos Retenidos of product'
                                 assert totalImpuestosTrasladados == totalImpuestosTrasladados_xml, 'No matches Total Impuestos Trasladados of product'
                                 assert list_retenciones == list_importe_ret_xml, 'No matches Importe Retenido of product'
