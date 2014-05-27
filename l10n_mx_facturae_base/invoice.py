@@ -758,16 +758,11 @@ class account_invoice(osv.Model):
             invoice_data_parent = {}
             invoice_data = invoice_data_parent = {}
             invoice_data['Impuestos'] = {}
-            invoice_data['Impuestos'].update({
-                #'totalImpuestosTrasladados': "%.2f"%( invoice.amount_tax or 0.0),
-            })
-            invoice_data['Impuestos'].update({
-                #'totalImpuestosRetenidos': "%.2f"%( invoice.amount_tax or 0.0 )
-            })
+            
             invoice_data_impuestos = invoice_data['Impuestos']
             invoice_data_impuestos['Traslados'] = []
-            invoice_data_impuestos['Retenciones'] = []
             tax_names = []
+            tax_names_traslado = []
             totalImpuestosTrasladados = 0
             totalImpuestosRetenidos = 0
             for line_tax_id in invoice.tax_line:
@@ -775,11 +770,13 @@ class account_invoice(osv.Model):
                 tax_names.append(tax_name)
                 line_tax_id_amount = abs(line_tax_id.amount or 0.0)
                 if line_tax_id.amount >= 0:
+                    tax_name_traslado = line_tax_id.name2
+                    tax_names_traslado.append(tax_name_traslado)
                     impuesto_list = invoice_data_impuestos['Traslados']
                     impuesto_str = 'Traslado'
                     totalImpuestosTrasladados += line_tax_id_amount
                 else:
-                    impuesto_list = invoice_data_impuestos['Retenciones']
+                    # impuesto_list = invoice_data_impuestos['Retenciones']
                     impuesto_list = invoice_data_impuestos.setdefault(
                         'Retenciones', [])
                     impuesto_str = 'Retencion'
@@ -794,24 +791,25 @@ class account_invoice(osv.Model):
                     impuesto_dict[impuesto_str].update({
                             'tasa': "%.2f" % (abs(line_tax_id.tax_percent))})
                 impuesto_list.append(impuesto_dict)
-
-            invoice_data['Impuestos'].update({
-                'totalImpuestosTrasladados': "%.2f" % (totalImpuestosTrasladados),
+            if totalImpuestosTrasladados:
+                invoice_data['Impuestos'].update({
+                    'totalImpuestosTrasladados': "%.2f" % (totalImpuestosTrasladados),
             })
             if totalImpuestosRetenidos:
                 invoice_data['Impuestos'].update({
                     'totalImpuestosRetenidos': "%.2f" % (totalImpuestosRetenidos)
                 })
 
-            tax_requireds = ['IVA', 'IEPS']
-            for tax_required in tax_requireds:
-                if tax_required in tax_names:
+            for tax_required in tax_names_traslado:
+                if tax_required in tax_names_traslado:
                     continue
                 invoice_data_impuestos['Traslados'].append({'Traslado': {
-                    'impuesto': self.string_to_xml_format(cr, uid, ids, tax_required),
+                    'impuesto': tax_required,
                     'tasa': "%.2f" % (0.0),
                     'importe': "%.2f" % (0.0),
                 }})
+            if not invoice_data_impuestos['Traslados']:
+                invoice_data_impuestos.pop('Traslados')
             context.update(self._get_file_globals(cr, uid, ids, context=context))
             htz = int(self._get_time_zone(cr, uid, ids, context=context))
             now = time.strftime('%Y-%m-%d %H:%M:%S')
