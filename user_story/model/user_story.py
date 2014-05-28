@@ -227,7 +227,7 @@ class user_story(osv.Model):
         'effective_hours': fields.function(_hours_get, string='Hours Spent', help="Computed using the sum of the task work done.",
             store = {
                 _name: (lambda s, c, u, ids, cx={}: ids, ['task_ids'], 10),
-                'project.task': (_get_user_story_from_pt, ['work_ids'], 10),
+                'project.task': (_get_user_story_from_pt, ['work_ids','userstory_id'], 10),
                 'project.task.work': (_get_user_story_from_ptw, ['hours'], 10),
             }),
     }
