@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-<!--
     <data noupdate="1">
--->
-    <data>
         
         <record model="ir.module.category" id="module_date_invoice_l10n_mx_facturae">
             <field name="name">Fecha FacturaE</field>
@@ -28,9 +25,5 @@
             <field name="implied_ids" eval="[(4, ref('group_datetime_invoice_l10n_mx_facturae'))]"/>
         </record>
         
-        <record id="l10n_mx_facturae_groups.group_l10n_mx_facturae_user" model="res.groups">
-            <field name="implied_ids" eval="[(4, ref('l10n_mx_invoice_datetime.group_datetime_invoice_l10n_mx_facturae'))]"/>
-        </record>
-
     </data>
 </openerp>
