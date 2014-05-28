@@ -167,7 +167,7 @@
                                 ${ dict_data['@LugarExpedicion'] or ''|entity}
                                 <% from datetime import datetime %>
                                 <br/>${_("a")} ${datetime.strptime(dict_data['@fecha'].encode('ascii','replace'), '%Y-%m-%dT%H:%M:%S').strftime('%d/%m/%Y %H:%M:%S') or ''|entity}
-                                <br/>${_("Serie:")} ${ dict_data['@serie'] or _("Sin serie")|entity}
+                                <br/>${_("Serie:")} ${ dict_data.get('@serie', {}) or _("Sin serie")|entity}
                             </td>
                         </tr>
                     </table>
