@@ -30,8 +30,11 @@
     'website': 'http://www.vauxoo.com/',
     'category': '',
     'description': '''
+    This module to add a form view and tree view for purchase requisition line model.
 ''',
-    'depends': [],
+    'depends': [
+        'purchase_requisition',
+        ],
     'data': [
         'view/purchase_requisition_line_view.xml',
         ],
