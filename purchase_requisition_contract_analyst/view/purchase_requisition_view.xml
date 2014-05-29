@@ -24,5 +24,22 @@
             </field>
         </record> 
 
+        <record id="purchase_requisition_ca_search" model="ir.ui.view">
+            <field name="name">purchase.requisition.contract.analyst.search</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_filter"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='exclusive']" position="after">
+                    <field name="purchaser_id"/>
+                </xpath>
+
+                <xpath expr="//group" position="inside">
+                    <filter string="Contract Analyst" icon="terp-personal" context="{'group_by':'purchaser_id'}"/>
+                </xpath>
+
+            </field>
+        </record> 
+
     </data>
 </openerp>
