@@ -879,12 +879,7 @@ class account_invoice(osv.Model):
                     "Can't get the string original of the voucher.\nCkeck your configuration.\n%s" % (msg2)))
             context.update({'fecha': invoice.date_invoice_tz and time.strftime('%Y-%m-%dT%H:%M:%S', 
                     time.strptime(invoice.date_invoice_tz, '%Y-%m-%d %H:%M:%S')) or ''})
-            sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
-            if not sign_str:
-                raise osv.except_osv(_('Error in Stamp !'), _(
-                    "Can't generate the stamp of the voucher.\nCkeck your configuration.\ns%s") % (msg2))
             nodeComprobante = doc_xml.getElementsByTagName("cfdi:Comprobante")[0]
-            nodeComprobante.setAttribute("sello", sign_str)
             noCertificado = self._get_noCertificado(cr, uid, ids, context['fname_cer'])
             if not noCertificado:
                 raise osv.except_osv(_('Error in No. Certificate !'), _(
@@ -898,7 +893,6 @@ class account_invoice(osv.Model):
             nodeComprobante.setAttribute("certificado", cert_str)
             data_dict = {'cfdi_cadena_original':txt_str,
                         'cfdi_no_certificado':noCertificado,
-                        'sello':sign_str,
                         'certificado':cert_str,
             }
             self.write_cfd_data(cr, uid, ids, data_dict, context=context)
@@ -972,26 +966,6 @@ class account_invoice(osv.Model):
             '__serial__')
         result = certificate_lib._get_param_serial(cr, uid, ids,
             fname_cer, fname_out=fname_serial, type='PEM')
-        return result
-
-    def _get_sello(self, cr=False, uid=False, ids=False, context=None):
-        if context is None:
-            context = {}
-        # TODO: Put encrypt date dynamic
-        fecha = context['fecha']
-        year = float(time.strftime('%Y', time.strptime(
-            fecha, '%Y-%m-%dT%H:%M:%S')))
-        if year >= 2011:
-            encrypt = "sha1"
-        if year <= 2010:
-            encrypt = "md5"
-        certificate_lib = self.pool.get('facturae.certificate.library')
-        fname_sign = certificate_lib.b64str_to_tempfile(cr, uid, ids, base64.encodestring(
-            ''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + \
-            '__sign__')
-        result = certificate_lib._sign(cr, uid, ids, fname=context['fname_xml'],
-            fname_xslt=context['fname_xslt'], fname_key=context['fname_key'],
-            fname_out=fname_sign, encrypt=encrypt, type_key='PEM')
         return result
 
     def _xml2cad_orig(self, cr=False, uid=False, ids=False, context=None):
