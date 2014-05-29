@@ -39,7 +39,9 @@ be responsible for evaluate the purchase requisition.
     'depends': [
         'purchase_requisition'
     ],
-    'data': [],
+    'data': [
+        'view/purchase_requisition_view.xml',
+    ],
     'demo': [],
     'test': [],
     'qweb': [],
