@@ -24,7 +24,7 @@
 ###############################################################################
 
 {
-    'name': 'purchase_requisition_line_view',
+    'name': 'Purchase Requisition Line View',
     'version': '1.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
@@ -32,7 +32,9 @@
     'description': '''
 ''',
     'depends': [],
-    'data': [],
+    'data': [
+        'view/purchase_requisition_line_view.xml',
+        ],
     'demo': [],
     'test': [],
     'qweb': [],
