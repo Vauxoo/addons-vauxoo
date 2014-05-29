@@ -13,5 +13,16 @@
             </field>
         </record> 
 
+        <record id="purchase_requisition_ca_tree" model="ir.ui.view">
+            <field name="name">purchase.requisition.contract.analyst.tree</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="before">
+                    <field name="purchaser_id"/>
+                </xpath>
+            </field>
+        </record> 
+
     </data>
 </openerp>
