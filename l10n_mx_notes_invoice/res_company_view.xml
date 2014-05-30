@@ -63,11 +63,11 @@
                         <separator/>
                         <i attrs="{'invisible':[('help','=',False)]}"><b><label string="Promissory note:"/></b></i><br/>
                         <i attrs="{'invisible':[('help','=',False)]}"><label string="'account.invoice': '''I %%(partner_name)s promissory note to the order of %%(company_name)s the amount of %%(invoice_amount)s''', 'hr.payslip'"/></i>
-                        <i attrs="{'invisible':[('help','=',False)]}"><label string=": '''I %%(employe_name)s received from the company %%(company_name)s the quantity of %%(amount_payslip)s by concept of payslip'''"/></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string=": '''I %%(employe_name)s received from the company %%(company_name)s the total of my payslip'''"/></i>
                         <separator/>
                         <i attrs="{'invisible':[('help','=',False)]}"><b><label string="Variables for note:"/></b></i><br/>
-                        <i attrs="{'invisible':[('help','=',False)]}"><label string="'account.invoice' : {'partner_name' : obj.partner_id.name, 'company_name' : obj.company_id.name, 'invoice_amount': obj.amount}|'hr.payslip': "/></i>
-                        <i attrs="{'invisible':[('help','=',False)]}"><label string="{'employe_name': obj.employee_id.name, 'company_name': obj.company_id.name, 'amount_payslip': obj.amount}"/></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string="'account.invoice' : {'partner_name' : obj.partner_id.name, 'company_name' : obj.company_id.name, 'invoice_amount': obj.amount_total}|'hr.payslip': "/></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string="{'employe_name': obj.employee_id.name, 'company_name': obj.company_id.name}"/></i>
                     </page>
                 </xpath>
             </field>
