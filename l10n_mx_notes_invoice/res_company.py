@@ -35,32 +35,42 @@ class res_company(osv.Model):
 
     _columns = {
         'dinamic_text' : fields.text('Promissory note', translate=True,
-            help='This text will put in the report of Invoice'),
-        'dict_var' : fields.text('Variables to use in text',
+            help='This text will put in the report of model that you declared in this configuration'),
+        'dict_var' : fields.text('Variables for text',
             help='Put te variables used in text'),
         'sample_text' : fields.text('Promissory note', readonly=True),
         'sample_dict' : fields.text('Variables to use in text', readonly=True),
         'details' : fields.text('Variables to use in text', readonly=True),
         'sample' : fields.text('Variables to use in text', readonly=True),
+        'help': fields.boolean('Show Help', help='Allows you to show the help in the form'),
     }
     
     _defaults = {
-        'details' : _("In the field 'Promissory note' you need put the text "\
-            "that you like that was colocate in the report as promissory, if "\
-            "you like take a data from the parner, company or the invoice "\
-            "you need create a new variable in the field 'Variables to use "\
-            "in text' as follows : \n'name_variable' : object.value of object, "\
-            "and when you need use an variable you put %(variable)s for use "\
-            "information from an object. \nWhen you need information from "\
-            "the partner, use partner.field that you need from the partner, "\
-            "for company use company.field an equal for an field from invoice."\
-            "\nNOTE: If you need use symbol '%', you need use %%."),
-        'sample' : _('If you like put the text \nI Partner pay to the order of '\
-            'My Company the amount of $500.00, you need put:'),
-        'sample_text' : _("'I %(partner_name)s pay to the order of %(company_"\
-            "name)s the amount of %(invoice_amount)s'"),
-        'sample_dict' : _("'partner_name' : partner.name, 'company_name' : "\
-            "company.name, 'invoice_amount' : invoice.amount_total"),
-    }
+        'details': _("The correct filling of these fields is as follow: \n In 'Promissory note' "\
+            "put the text that you like show in the reports that call this notes, with the next "\
+            "format: \n \t 'model': '''text''' \n \r Where: 'model' is the object where was"\
+            "take the data for the notes and the 'text' is the text that you like show, in the "\
+            "text you can add values of model, with the next code %(name_variable)s, and you "\
+            "must declare name_variable in the field 'Variables to use in text' as follows: "\
+            "'model': {'name_variable': iterations on model to reach the field to show}.\n"\
+            "For more of and model you need set the next format:\n In Promissory note: "\
+            "'model': '''text''', 'model': '''text''', \n In Variables to use in text: "\
+            "'model: {'name_variable': iteration, 'variable2': iteration}|'model': "\
+            "{'name_variable': iteration}, you can see that in Variables to use in text I was"\
+            "separated the models with an '|'. \n NOTE: If you need use symbol '%', you need "\
+            "use %%."),
+        'sample': _("If you like put the text in Facturae Report \n'I MyPartner promissory "\
+            "note to the order of My Company the amount of $500.00', and in the report of "\
+            "Paysliy 'I EmployeName received from the company YourCompany the quantity of "\
+            "$500.00 by concept of payslip', you need put:"),
+        'sample_text': _("'account.invoice': '''I %(partner_name)s promissory note to the order "\
+            "of %(company_name)s the amount of %(invoice_amount)s''', 'hr.payslip'"\
+            ": '''I %(employe_name)s received from the company %(company_name)s the "\
+            "quantity of %(amount_payslip)s by concept of payslip'''"),
+        'sample_dict': _("'account.invoice' : {'partner_name' : obj.partner_id.name, "\
+            "'company_name' : obj.company_id.name, 'invoice_amount': obj.amount}|'hr.payslip': "\
+            "{'employe_name': obj.employee_id.name, 'company_name': obj.company_id.name, "\
+            "'amount_payslip': obj.amount}"),
+        }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
