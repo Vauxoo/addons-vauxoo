@@ -512,8 +512,9 @@
                 %endif
             </table>
         %endif
-        </br>
-        ${get_text_promissory(o.model_source, o.id_source)}
+        <pre>
+            <p><font size="1">${ get_text_promissory(o.model_source, o.id_source) or '' |entity }</font></p>
+        </pre>
         <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
                 <tr>
                     <th width="33%"> ${_('Certificado del SAT')}</th>
