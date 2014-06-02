@@ -24,12 +24,13 @@
 ###############################################################################
 
 {
-    'name': 'purchase_requisition_line_description',
+    'name': 'Purchase Requisition Line Description',
     'version': '1.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
     'category': '',
     'description': '''
+        A description is added in purchase requisition lines
 ''',
     'depends': [
         'purchase_requisition',
