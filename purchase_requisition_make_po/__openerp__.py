@@ -42,6 +42,7 @@ this warning not be displayed more.
 """,
     'depends' : ['purchase_requisition',
                 'purchase_requisition_line_description',
+                'purchase_requisition_line_account_analytic',
                 ],
     'data': [ 'purchase_requisition_view.xml',
             ],
