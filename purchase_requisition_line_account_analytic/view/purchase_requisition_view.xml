@@ -6,10 +6,10 @@
             <field name="model">purchase.requisition</field>
             <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='line_ids']//form//field[@name='name']" position="after">
+                <xpath expr="//field[@name='line_ids']//form//field[@name='product_qty']" position="after">
                     <field name="account_analytic_id" groups="purchase.group_analytic_accounting"/>                                        
                 </xpath>
-                <xpath expr="//field[@name='line_ids']//tree//field[@name='name']" position="after">
+                <xpath expr="//field[@name='line_ids']//tree//field[@name='product_qty']" position="after">
                     <field name="account_analytic_id" groups="purchase.group_analytic_accounting"/>                                        
                 </xpath> 
             </field>
@@ -20,7 +20,7 @@
             <field name="model">purchase.requisition.line</field>
             <field name="inherit_id" ref="purchase_requisition_line_view.view_purchase_requisition_line_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='name']" position="after">
+                <xpath expr="//field[@name='product_qty']" position="after">
                     <field name="account_analytic_id" groups="purchase.group_analytic_accounting"/>                                        
                 </xpath>
             </field>
@@ -31,7 +31,7 @@
             <field name="model">purchase.requisition.line</field>
             <field name="inherit_id" ref="purchase_requisition_line_view.view_purchase_requisition_line_tree"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='name']" position="after">
+                <xpath expr="//field[@name='product_qty']" position="after">
                     <field name="account_analytic_id" groups="purchase.group_analytic_accounting"/>                                        
                 </xpath>
             </field>
