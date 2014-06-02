@@ -43,9 +43,9 @@ this warning not be displayed more.
     'depends' : ['purchase_requisition',
                 'purchase_requisition_line_description',
                 'purchase_requisition_line_account_analytic',
+                'purchase_requisition_requisitor',
                 ],
-    'data': [ 'purchase_requisition_view.xml',
-            ],
+    'data': [],
     'auto_install': False,
     'installable': True,
 }

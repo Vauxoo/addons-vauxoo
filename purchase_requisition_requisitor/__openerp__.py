@@ -24,12 +24,13 @@
 ###############################################################################
 
 {
-    'name': 'purchase_requisition_requisitor',
+    'name': 'Purchase Requisition Requisitor',
     'version': '1.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
     'category': '',
     'description': '''
+    Add a user field named Requisitor. 
 ''',
     'depends': [
         'purchase_requisition',
