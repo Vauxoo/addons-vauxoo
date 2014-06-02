@@ -16,7 +16,7 @@
         </record> 
 
 
-        <record id="view_purchase_requisition_form_description" model="ir.ui.view">
+        <record id="view_purchase_requisition_line_form_description" model="ir.ui.view">
             <field name="name">purchase.requisition.line.form.description</field>
             <field name="model">purchase.requisition.line</field>
             <field name="inherit_id" ref="purchase_requisition_line_view.view_purchase_requisition_line_form"/>
@@ -26,7 +26,7 @@
                 </xpath>
             </field>
         </record> 
-        <record id="view_purchase_requisition_tree_description" model="ir.ui.view">
+        <record id="view_purchase_requisition_line_tree_description" model="ir.ui.view">
             <field name="name">purchase.requisition.line.tree.description</field>
             <field name="model">purchase.requisition.line</field>
             <field name="inherit_id" ref="purchase_requisition_line_view.view_purchase_requisition_line_tree"/>
