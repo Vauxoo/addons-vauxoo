@@ -33,7 +33,7 @@
 ''',
     'depends': [],
     'data': [
-        'purchase_requisition_view.xml',
+        'view/purchase_requisition_view.xml',
         ],
     'demo': [],
     'test': [],
