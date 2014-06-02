@@ -40,9 +40,12 @@ When you install this module in the server show this warning:
 When you upgrade this module the field 'name' is set product name and 
 this warning not be displayed more.
 """,
-    'depends' : ['purchase_requisition'],
-    'data': [ 'purchase_requisition_view.xml',
-            ],
+    'depends' : ['purchase_requisition',
+                'purchase_requisition_line_description',
+                'purchase_requisition_line_analytic',
+                'purchase_order_requisitor',
+                ],
+    'data': [],
     'auto_install': False,
     'installable': True,
 }
