@@ -128,14 +128,5 @@ class purchase_requisition(osv.Model):
                     'price_unit': seller_price,
                     'date_planned': date_planned,
                     'taxes_id': [(6, 0, taxes)],
-                    'account_analytic_id': line.account_analytic_id\
-                            and line.account_analytic_id.id or False,
                 }, context=context)
-        if res:
-            requisition_user = self.browse(
-                cr, uid, res.keys()[0], context=context).user_id
-            purchase_order_obj = self.pool.get('purchase.order')
-            purchase_order_obj.write(
-                            cr, uid, res[res.keys()[0]],
-                            {'rfq_user_id': requisition_user.id})
         return res
