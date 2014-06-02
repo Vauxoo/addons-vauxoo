@@ -32,7 +32,7 @@ class purchase_order_line(osv.Model):
     _inherit = 'purchase.order.line'
 
     _columns = {
-            'purchase_requisition_line_id': fields.many2one('purchase.requisition.line', "Purchase
+            'purchase_requisition_line_id': fields.many2one('purchase.requisition.line',"Purchase \
                 Requisition Line"),
             }
 
