@@ -32,7 +32,8 @@
     'description': '''
 ''',
     'depends': [
-        'purchase_requisition'
+        'purchase_requisition',
+        'purchase_requisition_line_view',
         ],
     'data': [
         'view/purchase_requisition_view.xml',
