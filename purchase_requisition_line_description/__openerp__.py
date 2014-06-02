@@ -35,6 +35,7 @@
     'depends': [
         'purchase_requisition',
         'purchase_requisition_line_view',
+        'pr_line_related_po_line',
         ],
     'data': [
         'view/purchase_requisition_view.xml',

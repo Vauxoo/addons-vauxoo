@@ -68,65 +68,21 @@ class purchase_requisition(osv.Model):
     _inherit = "purchase.requisition"
 
     def make_purchase_order(self, cr, uid, ids, partner_id,
-                                    context=None):  # method override
-        """
-        Create New RFQ for Supplier
-        """
+                                    context=None):
         if context is None:
             context = {}
-        assert partner_id, 'Supplier should be specified'
-        purchase_order = self.pool.get('purchase.order')
-        purchase_order_line = self.pool.get('purchase.order.line')
-        res_partner = self.pool.get('res.partner')
-        fiscal_position = self.pool.get('account.fiscal.position')
-        supplier = res_partner.browse(cr, uid, partner_id,
-                                                        context=context)
-        supplier_pricelist =\
-                supplier.property_product_pricelist_purchase or False
-        res = {}
+        res = super(purchase_requisition, self).make_purchase_order(cr, uid, ids, partner_id, context=context)
+        
+        pol_obj = self.pool.get('purchase.order.line')
+        prl_obj = self.pool.get('purchase.requisition.line')
+        po_obj = self.pool.get('purchase.order') 
+
         for requisition in self.browse(cr, uid, ids, context=context):
-            if supplier.id in filter(lambda x: x,
-                [rfq.state <> 'cancel' and rfq.partner_id.id or None\
-                    for rfq in requisition.purchase_ids]):
-                raise osv.except_osv(
-                    _('Warning!'), _('You have already one %s purchase'\
-                    ' order for this partner, you must cancel this'\
-                    ' purchase order to create a new quotation.') %\
-                                                              rfq.state)
-            location_id = requisition.warehouse_id.lot_input_id.id
-            purchase_id = purchase_order.create(cr, uid, {
-                'origin': requisition.name,
-                'partner_id': supplier.id,
-                'pricelist_id': supplier_pricelist.id,
-                'location_id': location_id,
-                'company_id': requisition.company_id.id,
-                'fiscal_position': supplier.property_account_position\
-                    and supplier.property_account_position.id or False,
-                'requisition_id': requisition.id,
-                'notes': requisition.description,
-                'warehouse_id': requisition.warehouse_id.id,
-            })
-            res[requisition.id] = purchase_id
-            for line in requisition.line_ids:
-                product = line.product_id
-                seller_price, qty, default_uom_po_id, date_planned =\
-                    self._seller_details(cr, uid, line, supplier,
-                                                        context=context)
-                taxes_ids = product.supplier_taxes_id
-                taxes = fiscal_position.map_tax(
-                    cr, uid, supplier.property_account_position,
-                                                            taxes_ids)
-                purchase_order_line.create(cr, uid, {
-                    'order_id': purchase_id,
-                    # start custom change
-                    #'name': product.partner_ref,
-                    'name': line.name,
-                    # end custom change
-                    'product_qty': qty,
-                    'product_id': product.id,
-                    'product_uom': default_uom_po_id,
-                    'price_unit': seller_price,
-                    'date_planned': date_planned,
-                    'taxes_id': [(6, 0, taxes)],
-                }, context=context)
+            po_req = po_obj.search(cr, uid, [('requisition_id','=',requisition.id)], context=context)
+            for po_id in po_req:
+                pol_ids = pol_obj.search(cr, uid, [('order_id','=',po_id)])
+                for pol_id in pol_ids:
+                    pol_brw = pol_obj.browse(cr, uid, pol_id) 
+                    pol_obj.write(cr, uid, [pol_brw.id], {'name':
+                        pol_brw.purchase_requisition_line_id.name}, context=context)
         return res
