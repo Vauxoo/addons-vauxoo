@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="view_purchase_requisition_form_inherit_description" model="ir.ui.view">
+            <field name="name">purchase.requisition.form.inherit.description</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='line_ids']//tree//field[@name='product_qty']" position="before">
+                    <field name="name"/>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']//form//field[@name='product_qty']" position="before">
+                    <field name="name"/>
+                </xpath>
+            </field>
+        </record> 
+    </data>
+</openerp>
