@@ -32,7 +32,9 @@
     'description': '''
 ''',
     'depends': [],
-    'data': [],
+    'data': [
+        'purchase_requisition_view.xml',
+        ],
     'demo': [],
     'test': [],
     'qweb': [],
