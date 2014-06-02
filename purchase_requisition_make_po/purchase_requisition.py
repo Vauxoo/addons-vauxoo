@@ -29,19 +29,6 @@ from openerp.tools.translate import _
 import openerp.addons.decimal_precision as dp
 from openerp import tools
 
-
-class purchase_requisition_line(osv.Model):
-    _inherit = "purchase.requisition.line"
-
-    _columns = {
-        'account_analytic_id': fields.many2one(
-            'account.analytic.account', 'Analytic Account',
-                help='This field is used to assign the selected'\
-                ' analytic account to the line of the purchase order'),
-    }
-    
-purchase_requisition_line()
-
 class purchase_order(osv.Model):
     _inherit = "purchase.order"
 
