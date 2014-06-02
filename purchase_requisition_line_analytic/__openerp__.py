@@ -30,7 +30,10 @@
     'website': 'http://www.vauxoo.com/',
     'category': '',
     'description': '''
-    A account analytic is added in purchase requisition lines
+A account analytic is added in purchase requisition lines
+
+Add analytic account on purchase requisition line, so the purchase order takes
+the account analytic value from the purchase requisition.
 ''',
     'depends': [
         'purchase_requisition',
