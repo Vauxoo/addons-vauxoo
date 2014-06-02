@@ -23,23 +23,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-{
-    'name': 'pr_line_related_po_line',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': '',
-    'description': '''
-''',
-    'depends': [
-        'purchase',
-        ],
-    'data': [],
-    'demo': [],
-    'test': [],
-    'qweb': [],
-    'js': [],
-    'css': [],
-    'active': False,
-    'installable': True,
-}
+from openerp.osv import fields, osv
+from openerp import netsvc
+from openerp.tools.translate import _
+
+class purchase_order_line(osv.Model):
+
+    _inherit = 'purchase.order.line'
+
+    _columns = {
+            'purchase_requisition_line_id': fields.many2one('purchase.requisition.line', "Purchase
+                Requisition Line"),
+            }
