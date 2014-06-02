@@ -33,6 +33,7 @@
 ''',
     'depends': [
         'purchase',
+        'purchase_requisition',
         ],
     'data': [],
     'demo': [],
