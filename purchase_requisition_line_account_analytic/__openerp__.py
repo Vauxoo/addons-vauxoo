@@ -24,7 +24,7 @@
 ###############################################################################
 
 {
-    'name': 'Purchase Requisition Line Account Analytic',
+    'name': 'Purchase Requisition Line Analytic',
     'version': '1.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
