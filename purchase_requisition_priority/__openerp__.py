@@ -39,7 +39,9 @@ the purchase requisition by priority.
     'depends': [
         'purchase_requisition',
     ],
-    'data': [],
+    'data': [
+        'view/purchase_requisition_view.xml',
+    ],
     'demo': [],
     'test': [],
     'qweb': [],
