@@ -34,7 +34,7 @@ class purchase_requisition_line(osv.Model):
     _inherit = "purchase.requisition.line"
 
     _columns = {
-        'name': fields.text('Description', required=True),
+        'name': fields.text('Description'),
     }
     
     def init(self, cr ):
