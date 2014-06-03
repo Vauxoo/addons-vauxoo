@@ -572,38 +572,48 @@ class ir_attachment_facturae_mx(osv.Model):
         if context is None:
             context = {}
         attach_obj = self.pool.get('ir.attachment')
+        invoice_obj = self.pool.get('account.invoice')
         wf_service = netsvc.LocalService("workflow")
         status = False
         status_stamp = False
         res = False
         for ir_attach_facturae_mx_id in self.browse(cr, uid, ids, context=context):
             msj = ''
-            #~ if invoice.state != 'cancel':
-                #~ res = invoice_obj.action_cancel(cr, uid, [invoice.id])
             #~ else:
                 #wf_service.trg_validate(uid, 'account.invoice', invoice.id, 'invoice_cancel', cr)
             #~ if 'cfdi' in ir_attach_facturae_mx_id.type:
-            if not ir_attach_facturae_mx_id.state in ['draft', 'confirmed']:
-                type__fc = self.get_driver_fc_cancel()
-                if ir_attach_facturae_mx_id.res_pac.name_driver in type__fc.keys():
-                    cfdi_cancel = res = type__fc[ir_attach_facturae_mx_id.res_pac.name_driver](
-                        cr, uid, [
-                            ir_attach_facturae_mx_id.id], context=context
-                    )
-                    msj += tools.ustr(cfdi_cancel.get('message', False))
-                    status_stamp = cfdi_cancel.get('status', False)
-                    if status_stamp:
-                        if ir_attach_facturae_mx_id.model_source:
-                            cr.execute("""UPDATE ir_attachment SET res_id = Null
-                                    WHERE res_id = %s and res_model=%s""", (ir_attach_facturae_mx_id.id_source, ir_attach_facturae_mx_id.model_source))
-                        wf_service.trg_validate(
-                            uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
-                        status = True
+            state_invoice = invoice_obj.browse(cr, uid, [ir_attach_facturae_mx_id.id_source], context=context)[0].state
+            if not ir_attach_facturae_mx_id.state in ['draft', 'confirmed', 'cancel']:
+                if ir_attach_facturae_mx_id.model_source=='account.invoice':
+                    if state_invoice != 'cancel':
+                        res = invoice_obj.action_cancel(cr, uid, [ir_attach_facturae_mx_id.id_source], context=context)
                     else:
-                        status = False
-                else:
-                    msj = _("Unknow cfdi driver for %s" % (ir_attach_facturae_mx_id.res_pac.name_driver))
+                        type__fc = self.get_driver_fc_cancel()
+                        if ir_attach_facturae_mx_id.res_pac.name_driver in type__fc.keys():
+                            cfdi_cancel = res = type__fc[ir_attach_facturae_mx_id.res_pac.name_driver](
+                                cr, uid, [
+                                    ir_attach_facturae_mx_id.id], context=context
+                            )
+                            msj += tools.ustr(cfdi_cancel.get('message', False))
+                            status_stamp = cfdi_cancel.get('status', False)
+                            if str(status_stamp)=="True":
+                                if ir_attach_facturae_mx_id.model_source:
+                                    cr.execute("""UPDATE ir_attachment SET res_id = Null
+                                            WHERE res_id = %s and res_model=%s""", (ir_attach_facturae_mx_id.id_source, ir_attach_facturae_mx_id.model_source))
+                                wf_service.trg_validate(
+                                    uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
+                                status = True
+                                res = True
+                            else:
+                                status = False
+                        else:
+                            msj = _("Unknow cfdi driver for %s" % (ir_attach_facturae_mx_id.res_pac.name_driver))
             else:
+                if ir_attach_facturae_mx_id.model_source=='account.invoice':
+                    if state_invoice != 'cancel':
+                        res = invoice_obj.action_cancel(cr, uid, [ir_attach_facturae_mx_id.id_source], context=context)
+                    else:
+                        res = True
                 wf_service.trg_validate(
                     uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
                 cr.execute("""UPDATE ir_attachment SET res_id = Null
@@ -615,7 +625,7 @@ class ir_attachment_facturae_mx(osv.Model):
                        'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                        'msj': msj,
                        })
-        return status
+        return res
 
     def action_cancel(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'cancel'}, context=context)
