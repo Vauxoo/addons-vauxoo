@@ -27,12 +27,15 @@
                 </xpath>
                 <xpath expr="//separator[@string='Worked Days']" position="before">
                     <separator string="Generic Product"/>
+                        <field name="product_id" domain="[('type', '=', 'service')]"/>
+<!--
                     <field name="line_payslip_product_ids">
                         <tree string="Generic Product" editable="bottom">
-                            <field name="product_id"/>
+                            <field name="product_id" widget="selection" domain="[('type', '=', 'service')]"/>
                             <field name="amount"/>
                         </tree>
                     </field>
+-->
                 </xpath>
                 <xpath expr="//field[@name='credit_note']" position="before">
                     <field name="schedule_pay"/>
