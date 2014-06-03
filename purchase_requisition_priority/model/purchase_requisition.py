@@ -23,4 +23,21 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import purchase_requisition
+from openerp.osv import fields, osv, orm
+from openerp.tools.translate import _
+from openerp import tools
+
+priority_options = [
+    (05, 'emergency'),
+    (10, 'urgent'),
+    (15, 'normal')
+] 
+
+class purchase_requisition(osv.Model):
+    _inherit = 'purchase.requisition'
+    _columns = {
+        'priority': fields.selection(
+            priority_options,
+            'Priority',
+            help='The priority of the document.'),
+    }
