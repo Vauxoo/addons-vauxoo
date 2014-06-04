@@ -118,7 +118,6 @@
                             fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
                             data_invoice = self.read(cr, uid, invoice_id,[])
                             data_xml = base64.decodestring( fdata )
-                            print data_xml
                             doc_xml = xml.dom.minidom.parseString(data_xml)
                             tax_lines = self.read(cr, uid, [invoice_id],['tax_line'])
                             list_price_subtotal = []
