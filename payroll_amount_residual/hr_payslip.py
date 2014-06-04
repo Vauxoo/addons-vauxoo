@@ -81,7 +81,7 @@ class hr_payslip(osv.osv):
     _columns = {
         'residual': fields.function(_amount_residual, digits_compute=dp.get_precision('Account'), string='Balance',
             store={
-                'hr.payslip': (lambda self, cr, uid, ids, c={}: ids, ['move_id'], 50),
+                'hr.payslip': (lambda self, cr, uid, ids, c={}: ids, [], 50),
                 'account.move.line': (_get_payslip_from_line, None, 50),
                 'account.move.reconcile': (_get_payslip_from_reconcile, None, 50),
             },),
