@@ -7,10 +7,10 @@
             <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='line_ids']//tree//field[@name='product_qty']" position="before">
-                    <field name="name"/>
+                    <field name="name" required="1"/>
                 </xpath>
                 <xpath expr="//field[@name='line_ids']//form//field[@name='product_qty']" position="before">
-                    <field name="name"/>
+                    <field name="name" required="1"/>
                 </xpath>
             </field>
         </record> 
@@ -22,7 +22,7 @@
             <field name="inherit_id" ref="purchase_requisition_line_view.view_purchase_requisition_line_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='product_id']" position="after">
-                    <field name="name"/>
+                    <field name="name" required="1"/>
                 </xpath>
             </field>
         </record> 
@@ -32,7 +32,7 @@
             <field name="inherit_id" ref="purchase_requisition_line_view.view_purchase_requisition_line_tree"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='product_id']" position="after">
-                    <field name="name"/>
+                    <field name="name" required="1"/>
                 </xpath>
             </field>
         </record> 
