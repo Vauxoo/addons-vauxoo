@@ -12,12 +12,9 @@
             <field name="payslip_datetime" eval="time.strftime('%Y-%m-%d %H:%M:%S')"/>
             <field name="currency_id" ref="base.EUR"/>
             <field name="pay_method_id" ref="account.account_payment_term"/>
+             <field name="product_id" ref="product_product_payroll_cfdi_0"/>
         </record>
-        <record id="hr_payslip_mlc_cfdi0_product_line" model="hr.payslip.product.line">
-            <field name="product_id" ref="product_product_payroll_cfdi_0"/>
-            <field name="amount" eval="13000.0" />
-            <field name="payslip_id" ref="hr_payslip_mlc_cfdi0"/>
-        </record>
+
         <record id="hr_payslip_mlc_cfdi0_worked_days_line" model="hr.payslip.worked_days">
             <field name="name">Normal Working Days paid at 100%</field>
             <field name="code">WORK100</field>

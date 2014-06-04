@@ -48,17 +48,6 @@ except:
     _logger.error('Execute "sudo pip install pil qrcode" to use l10n_mx_facturae_pac_finkok module.')
 
 
-class hr_payslip_product_line(osv.Model):
-    
-    _name = 'hr.payslip.product.line'
-
-    _columns = {
-        'payslip_id': fields.many2one('hr.payslip'),
-        'product_id': fields.many2one('product.product', 'Product', required=True),
-        'amount': fields.float('Amount'),
-        
-    }
-
 class hr_payslip(osv.Model):
 
     def string_to_xml_format(self, cr, uid, ids, text):
@@ -231,7 +220,6 @@ class hr_payslip(osv.Model):
         'journal_id': fields.many2one('account.journal', 'Journal', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'date_payslip': fields.date('Payslip Date'),
         'payslip_datetime': fields.datetime('Electronic Payslip Date'),
-        'line_payslip_product_ids': fields.one2many('hr.payslip.product.line', 'payslip_id', 'Generic Product', required=True),
         'pay_method_id': fields.many2one('pay.method', 'Payment Method',
             readonly=True, states={'draft': [('readonly', False)]}),
         'company_emitter_id': fields.function(_get_company_emitter_payroll,
@@ -279,6 +267,8 @@ class hr_payslip(osv.Model):
         #~ 'deduction_total' : fields.function(_deductions, type='float', string='Deductions Total', store=True),
         #~ 'perception_total' : fields.function(_perceptions, type='float', string='Perception Total', store=True),
         #~ 'total' : fields.function(_total, type='float', string='Total', store=True),
+        'product_id': fields.many2one('product.product', 'Product', required=True),
+
     }
 
     _defaults = {
@@ -332,8 +322,6 @@ class hr_payslip(osv.Model):
                     'payslip_datetime': hr.payslip_datetime},
                     context=context)
             self.write(cr, uid, ids, vals_date, context=context)
-            if not hr.line_payslip_product_ids:
-                raise osv.except_osv(_('No Product Lines!'), _('Please create some product lines.'))
             super(hr_payslip, self).hr_verify_sheet(cr, uid, ids)
             if hr.journal_id.sequence_id and hr.journal_id.sequence_id.id:
                 obj_sequence.next_by_id(cr, uid, hr.journal_id.sequence_id.id, context=context)
