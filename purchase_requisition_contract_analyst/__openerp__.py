@@ -41,7 +41,6 @@ be responsible for evaluate the purchase requisition.
     ],
     'data': [
         'view/purchase_requisition_view.xml',
-        'security/purchase_requisition_security.xml',
     ],
     'demo': [],
     'test': [],
