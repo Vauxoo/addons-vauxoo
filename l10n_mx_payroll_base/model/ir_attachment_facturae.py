@@ -28,41 +28,27 @@ from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 from openerp import pooler, tools
 from openerp import netsvc
-from openerp import release
-import time
 
 
 class ir_attachment_facturae_mx(osv.Model):
-
     _inherit = 'ir.attachment.facturae.mx'
 
     def signal_cancel(self, cr, uid, ids, context=None):
         wf_service = netsvc.LocalService("workflow")
+        payslip_obj = self.pool.get('hr.payslip')
         ids = isinstance(ids, (int, long)) and [ids] or ids
-        res = super(ir_attachment_facturae_mx, self).signal_cancel(cr, uid, ids)
+        res = False
+        attach = False
         for att in self.browse(cr, uid, ids):
-            if res and att.model_source == 'hr.payslip' and att.id_source:
-                if self.pool.get(att.model_source).browse(cr, uid, att.id_source).state != 'cancel':
-                    wf_service.trg_validate(uid, 'hr.payslip', att.id_source, 'cancel_sheet', cr)
-        return res
-
-class hr_payslip(osv.Model):
-
-    _inherit = 'hr.payslip'
-    
-    def cancel_sheet(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        res = super(hr_payslip, self).cancel_sheet(cr, uid, ids, context=context)
-        ids = isinstance(ids, (int, long)) and [ids] or ids
-        ir_attach_facturae_mx_obj = self.pool.get('ir.attachment.facturae.mx')
-        for payslip in self.browse(cr, uid, ids, context=context):
-            ir_attach_facturae_mx_ids = ir_attach_facturae_mx_obj.search(
-                cr, uid, [('id_source', '=', payslip.id), ('model_source', '=', self._name)], context=context)
-            if ir_attach_facturae_mx_ids:
-                for attach in ir_attach_facturae_mx_obj.browse(cr, uid, ir_attach_facturae_mx_ids, context=context):
-                    if attach.state <> 'cancel':
-                        attach = ir_attach_facturae_mx_obj.signal_cancel(cr, uid, [attach.id], context=context)
-                        if attach:
-                            self.write(cr, uid, ids, {'date_payslip_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
-        return res
+            if att.model_source == 'hr.payslip':
+                state_payslip = payslip_obj.browse(cr, uid, [att.id_source], context=context)[0].state
+                if state_payslip != 'cancel':
+                    res = self.pool.get('hr.payslip').cancel_sheet(cr, uid, [att.id_source], context=context)
+                    if str(res)=="True":
+                        attach = super(ir_attachment_facturae_mx, self).signal_cancel(cr, uid, ids, context)
+                        return attach
+                else:
+                    attach = super(ir_attachment_facturae_mx, self).signal_cancel(cr, uid, ids, context)
+            else:
+                attach = super(ir_attachment_facturae_mx, self).signal_cancel(cr, uid, ids, context)
+        return attach 

@@ -60,13 +60,29 @@ class hr_payslip_product_line(osv.Model):
     }
 
 class hr_payslip(osv.Model):
+    _inherit = 'hr.payslip'
+
+    def cancel_sheet(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        wf_service = netsvc.LocalService("workflow")
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        ir_attach_facturae_mx_obj = self.pool.get('ir.attachment.facturae.mx')
+        res = super(hr_payslip, self).cancel_sheet(cr, uid, ids, context=context)
+        for payslip in self.browse(cr, uid, ids, context=context):
+            ir_attach_facturae_mx_ids = ir_attach_facturae_mx_obj.search(
+                cr, uid, [('id_source', '=', payslip.id), ('model_source', '=', self._name)], context=context)
+            state_payslip = self.browse(cr, uid, [payslip.id], context=context)[0].state
+            now = datetime.now()
+            self.write(cr, uid, ids, {'date_payslip_cancel': now})
+            for attach in ir_attach_facturae_mx_obj.browse(cr, uid, ir_attach_facturae_mx_ids, context=context):
+                attach = ir_attach_facturae_mx_obj.signal_cancel(cr, uid, [attach.id], context=context)
+        return res
 
     def string_to_xml_format(self, cr, uid, ids, text):
         #~ return text.encode('utf-8', 'xmlcharrefreplace')
         if text:
             return cgi.escape(text, True).encode('ascii', 'xmlcharrefreplace').replace('\n\n', ' ')
-
-    _inherit = 'hr.payslip'
 
     def _get_company_emitter_payroll(self, cr, uid, ids, name, args, context=None):
         if context is None:

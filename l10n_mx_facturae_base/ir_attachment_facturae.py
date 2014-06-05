@@ -25,22 +25,31 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, osv
+from openerp.osv import fields, osv, orm
+from openerp.tools.translate import _
+from openerp import pooler, tools
+from openerp import netsvc
 
 
 class ir_attachment_facturae_mx(osv.Model):
     _inherit = 'ir.attachment.facturae.mx'
 
-    def _get_type(self, cr, uid, ids=None, context=None):
-        types = super(ir_attachment_facturae_mx, self)._get_type(
-            cr, uid, ids, context=context)
-        types.extend([
-            ('cfd22', 'CFD 2.2'),
-        ])
-        return types
-
-    _columns = {
-        'type': fields.selection(_get_type, 'Type', type='char', size=64,
-            help="Type of Electronic Invoice"),
-    }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+    def signal_cancel(self, cr, uid, ids, context=None):
+        wf_service = netsvc.LocalService("workflow")
+        invoice_obj = self.pool.get('account.invoice')
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        res = False
+        attach = False
+        for att in self.browse(cr, uid, ids):
+            if att.model_source == 'account.invoice':
+                state_invoice = invoice_obj.browse(cr, uid, [att.id_source], context=context)[0].state
+                if state_invoice != 'cancel':
+                    res = self.pool.get('account.invoice').action_cancel(cr, uid, [att.id_source], context=context)
+                    if str(res)=="True":
+                        attach = super(ir_attachment_facturae_mx, self).signal_cancel(cr, uid, ids, context)
+                        return attach
+                else:
+                    attach = super(ir_attachment_facturae_mx, self).signal_cancel(cr, uid, ids, context)
+            else:
+                attach = super(ir_attachment_facturae_mx, self).signal_cancel(cr, uid, ids, context)
+        return attach
