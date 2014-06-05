@@ -10,7 +10,7 @@
             <field name="perm_create" eval="1"/>
             <field name="perm_unlink" eval="1"/>
             <field name="active" eval="1"/>
-            <field name="groups" eval="[(6,0,[ref('base.group_user'),])]"/>
+            <field name="groups" eval="[(6,0,[ref('group_followers_project'),])]"/>
         </record>
         
     </data>

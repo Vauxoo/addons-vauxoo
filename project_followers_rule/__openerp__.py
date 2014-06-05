@@ -2,7 +2,7 @@
 #
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2014 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 #
@@ -35,14 +35,20 @@ allowing read, write, delete and create tasks without being a follower of the pr
     """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
-    "depends": [
+    "depends": ["base",
         "project",
+        "hr",
     ],
     "demo": [
+        'demo/project_task_demo.xml',
     ],
     "data": [
+        'data/group_follower.xml',
         'data/ir_rule_project_data.xml',
         'view/project_project_view.xml',
+    ],
+    "test": [
+        "test/ir_rule_task_project.yml",
     ],
     "installable": True,
     "active": False,

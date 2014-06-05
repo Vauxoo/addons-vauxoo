@@ -1,0 +1,459 @@
+-
+  Create a user 'Demo Task Rule'
+-
+  !record {model: res.users, id: res_user_demo_task_rule0}:
+    company_id: base.main_company
+    name: Demo Task Rule
+    login: dtask
+    password: dtask
+    groups_id:
+      - base.group_user
+      - group_followers_project
+-
+  Permissions Testing Task
+-
+  !python {model: project.task}: |
+    import netsvc, tools, os, base64
+    import traceback
+    from openerp.osv.orm import except_orm
+    from tools.misc import mute_logger
+    obj_task = self.browse(cr, uid, ref("project_task_test_vauxoo"))
+    obj_user = self.pool.get('res.users')
+    user_partner_id = obj_user.browse(cr, uid, ref("res_user_demo_task_rule0")).partner_id.id
+    ###############################################################################################
+    #                             Project privacy_visibility: Followers                           #
+    #                         follower_project: False, follower_task: False                       #
+    ###############################################################################################
+    # HR-Employee, Lectura proyecto- siendo seguidor de tarea
+    try:
+        with mute_logger('openerp.osv.orm'):
+            self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_user"), ref("group_followers_project")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Employee, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Manager, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    ###############################################################################################
+    #                             Project privacy_visibility: Followers                           #
+    #                         follower_project: True, follower_task: False                        #
+    ###############################################################################################
+    # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
+    self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(4, user_partner_id)]})
+    self.pool.get('res.groups').write(cr, uid, [ref("base.group_hr_user")], {'implied_ids': [(6, 0, [])]})
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project"), ref("project.group_project_user")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Employee, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            with mute_logger('openerp.addons.base.ir.ir_model'):
+                self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Manager, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    ###############################################################################################
+    #                             Project privacy_visibility: Followers                           #
+    #                         follower_project: False, follower_task: True                        #
+    ###############################################################################################
+    self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(3, user_partner_id)]})
+    self.pool.get('project.task').write(cr, uid, ref("project_task_test_vauxoo"), {'message_follower_ids': [(4, user_partner_id)]})
+    # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            with mute_logger('openerp.addons.base.ir.ir_model'):
+                self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Employee, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            with mute_logger('openerp.addons.base.ir.ir_model'):
+                self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Manager, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    ###############################################################################################
+    #                             Project privacy_visibility: Followers                           #
+    #                         follower_project: True, follower_task: True                         #
+    ###############################################################################################
+    self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(4, user_partner_id)]})
+    # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            with mute_logger('openerp.addons.base.ir.ir_model'):
+                self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Employee, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            with mute_logger('openerp.addons.base.ir.ir_model'):
+                self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Manager, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    ###############################################################################################
+    #                             Project privacy_visibility: Employee                            #
+    #                         follower_project: False, follower_task: False                       #.................
+    ###############################################################################################
+    self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'privacy_visibility': 'employees'})
+    self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(3, user_partner_id)]})
+    self.pool.get('project.task').write(cr, uid, ref("project_task_test_vauxoo"), {'message_follower_ids': [(3, user_partner_id)]})
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
+    # HR-Employee, Lectura proyecto- siendo seguidor de tarea
+    try:
+        with mute_logger('openerp.osv.orm'):
+            with mute_logger('openerp.addons.base.ir.ir_model'):
+                self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Employee, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            with mute_logger('openerp.addons.base.ir.ir_model'):
+                self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    # HR-Manager, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    ###############################################################################################
+    #                             Project privacy_visibility: Followers                           #
+    #                         follower_project: True, follower_task: False                        #
+    ###############################################################################################
+    # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
+    self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(4, user_partner_id)]})
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            with mute_logger('openerp.addons.base.ir.ir_model'):
+                self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Employee, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            with mute_logger('openerp.addons.base.ir.ir_model'):
+                self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Manager, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    ###############################################################################################
+    #                             Project privacy_visibility: Followers                           #
+    #                         follower_project: False, follower_task: True                        #
+    ###############################################################################################
+    self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(3, user_partner_id)]})
+    self.pool.get('project.task').write(cr, uid, ref("project_task_test_vauxoo"), {'message_follower_ids': [(4, user_partner_id)]})
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
+    # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
+    try:
+        with mute_logger('openerp.osv.orm'):
+            with mute_logger('openerp.addons.base.ir.ir_model'):
+                self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Employee, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            with mute_logger('openerp.addons.base.ir.ir_model'):
+                self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Manager, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    ###############################################################################################
+    #                             Project privacy_visibility: Employees                           #
+    #                         follower_project: True, follower_task: True                         #
+    ###############################################################################################
+    self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(4, user_partner_id)]})
+    # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            with mute_logger('openerp.addons.base.ir.ir_model'):
+                self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Employee, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            with mute_logger('openerp.addons.base.ir.ir_model'):
+                self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Manager, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    
+    ###############################################################################################
+    #                             Project privacy_visibility: Portal                              #
+    #                         follower_project: False, follower_task: False                       #
+    ###############################################################################################
+    cr.execute("UPDATE project_project SET privacy_visibility='portal'")
+    self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(3, user_partner_id)]})
+    self.pool.get('project.task').write(cr, uid, ref("project_task_test_vauxoo"), {'message_follower_ids': [(3, user_partner_id)]})
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
+    # HR-Employee, Lectura proyecto- siendo seguidor de tarea
+    try:
+        with mute_logger('openerp.osv.orm'):
+            with mute_logger('openerp.addons.base.ir.ir_model'):
+                self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Employee, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            with mute_logger('openerp.addons.base.ir.ir_model'):
+                self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    # HR-Manager, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    ###############################################################################################
+    #                             Project privacy_visibility: Followers                           #
+    #                         follower_project: True, follower_task: False                        #
+    ###############################################################################################
+    # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
+    self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(4, user_partner_id)]})
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            with mute_logger('openerp.addons.base.ir.ir_model'):
+                self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Employee, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            with mute_logger('openerp.addons.base.ir.ir_model'):
+                self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Manager, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    ###############################################################################################
+    #                             Project privacy_visibility: Followers                           #
+    #                         follower_project: False, follower_task: True                        #
+    ###############################################################################################
+    self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(3, user_partner_id)]})
+    self.pool.get('project.task').write(cr, uid, ref("project_task_test_vauxoo"), {'message_follower_ids': [(4, user_partner_id)]})
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
+    # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
+    try:
+        with mute_logger('openerp.osv.orm'):
+            with mute_logger('openerp.addons.base.ir.ir_model'):
+                self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Employee, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            with mute_logger('openerp.addons.base.ir.ir_model'):
+                self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Manager, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    ###############################################################################################
+    #                             Project privacy_visibility: Employees                           #
+    #                         follower_project: True, follower_task: True                         #
+    ###############################################################################################
+    self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(4, user_partner_id)]})
+    # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            with mute_logger('openerp.addons.base.ir.ir_model'):
+                self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Employee, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_user"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    try:
+        with mute_logger('openerp.osv.orm'):
+            with mute_logger('openerp.addons.base.ir.ir_model'):
+                self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    except except_orm:
+        error = tools.ustr( traceback.format_exc() )
+        log( error )
+    # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
+    # HR-Manager, Project-Manager, Lectura proyecto- siendo seguidor de tarea
+    obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
