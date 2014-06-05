@@ -195,7 +195,6 @@ class account_invoice(osv.Model):
                                         'datas': base64.encodestring(xml_data),
                                         'datas_fname': fname,
                                         'res_model': self._name,
-                                        'res_id': invoice.id
                                 }, context=context)
                     if invoice.company_emitter_id.address_invoice_parent_company_id.use_parent_address:
                         address_emitter = invoice.company_emitter_id.address_invoice_parent_company_id.parent_id
@@ -677,14 +676,6 @@ class account_invoice(osv.Model):
                 # NO ES COMPATIBLE CON TINYERP approval_id =
                 # sequence.approval_id.id
                 number_work = invoice.number or invoice.internal_number
-                if invoice.type in ['out_invoice', 'out_refund']:
-                    try:
-                        if number_work:
-                            int(number_work)
-                    except(ValueError):
-                        raise osv.except_osv(_('Warning !'), _(
-                            'The folio [%s] must be integer number, without letters')\
-                                % (number_work))
                 context.update({'number_work': number_work or False})
                 approval_id = self.pool.get('ir.sequence')._get_current_approval(
                     cr, uid, [sequence_id], field_names=None, arg=False,

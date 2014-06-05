@@ -369,7 +369,6 @@ class hr_payslip(osv.Model):
                         #~ payroll.journal_id.sequence_id.approval_ids[0] and \
                                     #~ payroll.journal_id.sequence_id.approval_ids[0].res_pac.name_driver
                 xml_fname, xml_data = self._get_facturae_payroll_xml_data(cr, uid, ids, context=context)
-                print xml_data
                 fname = str(payroll.id) + '_XML_V3_2.xml' or ''
                 attachment_id = attachment_obj.create(cr, uid, {
                                     'name': fname,
