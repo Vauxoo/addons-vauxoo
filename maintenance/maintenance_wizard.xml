@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    <menuitem icon="terp-sale" id="menu_maintenance_root" name="Mantenimiento"/>
+    <menuitem icon="terp-sale" id="menu_maintenance_update" name="Actualizar mantenimiento" parent="menu_maintenance_root"/>
+
+    <wizard id="wizard_maintenance_cancel"
+        name="wizard.maintenance.cancel" 
+        string="Cancelar Mantenimiento" 
+        model="maintenance.order"
+        menu="False"/>
+    
+    <wizard id="wizard_check_maintenance"
+            name="wizard.check.maintenance"
+            string="Actualizar Mantenimientos"
+            model="maintenance.order"
+            menu="False"/>
+    <menuitem action="wizard_check_maintenance" id="menu_wizard_check_maintenance" parent="menu_maintenance_update" type="wizard"/>
+    
+    <wizard id="wizard_set_tire"
+            name="wizard.set.tire"
+            string="Establecer Llantas"
+            model="product.product"/>
+            
+    <wizard id="wizard_maintenance_start"
+        name="wizard.maintenance.start" 
+        string="Comenzar Mantenimiento" 
+        model="maintenance.order"
+        menu="False"/>
+
+    </data>
+</openerp>
