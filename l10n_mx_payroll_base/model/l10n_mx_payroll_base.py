@@ -819,7 +819,6 @@ class hr_payslip(osv.Model):
     def onchange_employee_id(self, cr, uid, ids, date_from, date_to, employee_id=False, contract_id=False, context=None):
         empolyee_obj = self.pool.get('hr.employee')
         res = super(hr_payslip, self).onchange_employee_id(cr, uid, ids, date_from, date_to, employee_id=employee_id, contract_id=contract_id, context=context)
-        empolyee_obj = self.pool.get('hr.employee')
         if employee_id:
             employee_id = empolyee_obj.browse(cr, uid, employee_id, context=context)
             res['value'].update({'pay_method_id': employee_id.address_home_id.pay_method_id.id})
