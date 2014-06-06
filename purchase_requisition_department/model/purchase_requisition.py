@@ -40,3 +40,30 @@ class purchase_requisition(osv.Model):
     _defaults = {
         'department_id': lambda self, cur, uid, cxt: self.pool.get('res.users').browse(cur, uid, uid, cxt).employee_ids[0].department_id.id,
     }
+
+    # TODO: This filter method is not working.
+    #def fields_view_get(self, cr, uid, view_id=None, view_type='form',
+    #                    context=None, toolbar=False, submenu=False):
+    #    """ 
+    #    Filter the department by the ones the user_id.employee_ids belongs.
+    #    """
+    #    context = context or {}
+    #    res = super(purchase_requisition,self).fields_view_get(
+    #        cr, uid, view_id=view_id, view_type=view_type, context=context,
+    #        toolbar=toolbar, submenu=submenu)
+
+    #    user_id = res['fields']['user_id'].get('selection', False) or uid
+    #    user_obj = self.pool.get('res.users')
+    #    emp_obj = self.pool.get('hr.employee')
+    #    dep_obj = self.pool.get('hr.department')
+    #    user_brw = user_obj.browse(cr, uid, user_id, context=context)
+    #    if 'department_id' in res['fields'].keys():
+    #        emp_ids = [emp_brw.id for emp_brw  in user_brw.employee_ids]
+    #        dep_ids = [emp_brw.department_id.id for emp_brw in user_brw.employee_ids]
+    #        dep_selected = dep_obj._name_search(cr, uid, '', [('member_ids', 'in',
+    #            emp_ids)], context=context, limit=None, name_get_uid=1)
+    #        res['fields']['department_id']['selection'] = dep_selected
+    #        res['fields']['department_id']['domain'] = [('id', 'in', dep_ids)]
+
+    #    return res
+
