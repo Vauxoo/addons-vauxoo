@@ -32,7 +32,7 @@ class purchase_requisition(osv.Model):
     _inherit = 'purchase.requisition'
     _columns = {
         'department_id': fields.related(
-            'user_id', 'department_id',
+            'user_id', 'employee_ids', 'department_id',
             type='many2one',
             relation='hr.department',
             string='Department',
