@@ -1,32 +1,67 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-    <menuitem icon="terp-sale" id="menu_maintenance_root" name="Mantenimiento"/>
-    <menuitem icon="terp-sale" id="menu_maintenance_update" name="Actualizar mantenimiento" parent="menu_maintenance_root"/>
+    <menuitem icon="terp-sale" id="menu_maintenance_root" name="Maintenance"
+        web_icon="images/knowledge.png"
+        web_icon_hover="images/knowledge-hover.png"/>/>
+    <menuitem id="menu_maintenance_update" name="Update Maintenances" parent="menu_maintenance_root"/>
 
     <wizard id="wizard_maintenance_cancel"
         name="wizard.maintenance.cancel" 
-        string="Cancelar Mantenimiento" 
+        string="Cancel Maintenance" 
         model="maintenance.order"
         menu="False"/>
     
+<!--
     <wizard id="wizard_check_maintenance"
             name="wizard.check.maintenance"
-            string="Actualizar Mantenimientos"
+            string="Update Maintenances"
             model="maintenance.order"
             menu="False"/>
+-->
+<!--
     <menuitem action="wizard_check_maintenance" id="menu_wizard_check_maintenance" parent="menu_maintenance_update" type="wizard"/>
+-->
+<!--
+    <menuitem action="view_maintenance_order_line_form" id="menu_wizard_check_maintenance" parent="menu_maintenance_update" type="action"/>
+-->
+    <menuitem action="action_wizard_update_maintenance" id="menu_wizard_check_maintenance" parent="menu_maintenance_update"/>
     
     <wizard id="wizard_set_tire"
             name="wizard.set.tire"
-            string="Establecer Llantas"
+            string="Set Tires"
             model="product.product"/>
             
     <wizard id="wizard_maintenance_start"
         name="wizard.maintenance.start" 
-        string="Comenzar Mantenimiento" 
+        string="Start Maintenance" 
         model="maintenance.order"
         menu="False"/>
+        
+        <record id="view_wizard_update_maintenance" model="ir.ui.view">
+            <field name="name">view.wizard.update.maintenance</field>
+            <field name="model">wizard.check.maintenance</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            <form string="Update Maintenances">
+                <separator string="Click on Update below to start the process..."/>
+                <newline/>
+                <separator colspan="4"/>
+                <group colspan="4">
+                    <button name="update_maintenances" string="Update" type="object" icon="gtk-apply"/>
+                    <button special="cancel" string="Cancel" icon="gtk-stop"/>
+                </group>
+            </form>
+            </field>
+        </record>
+        <record id="action_wizard_update_maintenance" model="ir.actions.act_window">
+            <field name="name">Update Maintenance</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.check.maintenance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
 
     </data>
 </openerp>

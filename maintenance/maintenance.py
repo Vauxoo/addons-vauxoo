@@ -239,42 +239,41 @@ class maintenance_order_line(osv.osv):
                         })
         return True
 
-    def _check_maintenance(self, cr, uid, ids):
+    def _check_maintenance(self, cr, uid, ids, context=None):
         product_obj = self.pool.get('product.product')
-        tracto_ids = product_obj.search(cr, uid, [])
+        tracto_ids = product_obj.search(cr, uid, [('modelo_id', '!=', False)])
         mol_ids = []
         for tracto in product_obj.browse(cr, uid, tracto_ids):
-            if tracto.modelo_id:
-                for bom in tracto.modelo_id.line_ids:
-                    crear = False
-                    res = self.search(cr, uid, [('product_id','=',tracto.id),('bom_id','=',bom.id)])
-                    if not res and bom.type != '' and ( (bom.type == 'km' and tracto.distance > bom.type_qty) or bom.type != 'km'):
-                        crear = True
-                    else:
-                        query = """SELECT CASE WHEN mb.type = 'km' THEN (pp.distance - MAX(mol.distance)) > type_qty
-                                        WHEN mb.type = 'mes' THEN now() > MAX(date_done)+(type_qty||'months')::interval
-                                        WHEN mb.type = 'mes' THEN now() > MAX(date_done)+(type_qty||'weeks')::interval
-                                        ELSE False END as diferencia
-                                    FROM maintenance_order_line mol
-                                    JOIN maintenance_bom mb ON mol.bom_id = mb.id
-                                    JOIN product_product pp ON pp.id = mol.product_id
-                                    JOIN product_template pt ON pt.id = pp.product_tmpl_id
-                                    WHERE product_id = %s AND mb.active = True AND mb.id = %s AND mol.state IN ('done', 'in_progress', 'draft')
-                                    GROUP BY bom_id, mb.type, mb.type_qty, pp.distance"""%(tracto.id, bom.id)
-                        cr.execute(query)
-                        res = cr.dictfetchall()
-                        for result in res:
-                            if result['diferencia']:
-                                crear = True
-                    if crear:
-                        mol_id = self.pool.get('maintenance.order.line').create(cr, uid, {
-                            'name': bom.name,
-                            'product_id':tracto.id,
-                            'bom_id':bom.id,
-                            'date': time.strftime('%Y-%m-%d'),
-                            'modelo_id': tracto.modelo_id.id,
-                            'distance': tracto.distance})
-                        mol_ids.append(mol_id)
+            for bom in tracto.modelo_id.line_ids:
+                crear = False
+                res = self.search(cr, uid, [('product_id','=',tracto.id),('bom_id','=',bom.id)])
+                if not res and bom.type != '' and ( (bom.type == 'km' and tracto.distance > bom.type_qty) or bom.type != 'km'):
+                    crear = True
+                else:
+                    query = """SELECT CASE WHEN mb.type = 'km' THEN (pp.distance - MAX(mol.distance)) > type_qty
+                                    WHEN mb.type = 'mes' THEN now() > MAX(date_done)+(type_qty||'months')::interval
+                                    WHEN mb.type = 'mes' THEN now() > MAX(date_done)+(type_qty||'weeks')::interval
+                                    ELSE False END as diferencia
+                                FROM maintenance_order_line mol
+                                JOIN maintenance_bom mb ON mol.bom_id = mb.id
+                                JOIN product_product pp ON pp.id = mol.product_id
+                                JOIN product_template pt ON pt.id = pp.product_tmpl_id
+                                WHERE product_id = %s AND mb.active = True AND mb.id = %s AND mol.state IN ('done', 'in_progress', 'draft')
+                                GROUP BY bom_id, mb.type, mb.type_qty, pp.distance"""%(tracto.id, bom.id)
+                    cr.execute(query)
+                    res = cr.dictfetchall()
+                    for result in res:
+                        if result['diferencia']:
+                            crear = True
+                if crear:
+                    mol_id = self.pool.get('maintenance.order.line').create(cr, uid, {
+                        'name': bom.name,
+                        'product_id':tracto.id,
+                        'bom_id':bom.id,
+                        'date': time.strftime('%Y-%m-%d'),
+                        'modelo_id': tracto.modelo_id.id,
+                        'distance': tracto.distance})
+                    mol_ids.append(mol_id)
         return mol_ids
 
 maintenance_order_line()

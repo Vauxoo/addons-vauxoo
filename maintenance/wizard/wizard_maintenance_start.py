@@ -34,40 +34,40 @@ from osv import osv
 
 _arch = '''<?xml version="1.0"?>
 <form string="Mantenimientos Pendientes">
-	<separator string="Indique la Fecha de Terminacion del Mantenimiento" colspan="4"/>
-	<field name="date"/>
+    <separator string="Indique la Fecha de Terminacion del Mantenimiento" colspan="4"/>
+    <field name="date"/>
 </form>'''
 _fields = {
-		'date': {'type':'datetime', 'required':True, 'string':'Fecha Termino'},
-	}
+        'date': {'type':'datetime', 'required':True, 'string':'Fecha Termino'},
+    }
 
 def _set_date(self, cr, uid, data, context):
-	mol_obj = pooler.get_pool(cr.dbname).get('maintenance.order.line')
-	for mol in mol_obj.browse(cr, uid, data['ids']):
-		mol_obj.write(cr, uid, mol.id, {'date_release':data['form']['date'], 'state':'in_progress'})
-	return {}
+    mol_obj = pooler.get_pool(cr.dbname).get('maintenance.order.line')
+    for mol in mol_obj.browse(cr, uid, data['ids']):
+        mol_obj.write(cr, uid, mol.id, {'date_release':data['form']['date'], 'state':'in_progress'})
+    return {}
 
 
 class maintenance_start(wizard.interface):
-	states = {
-		'init': {
-				'actions': [],
-				'result': {'type':'form', 'arch':_arch, 'fields':_fields,
-					'state': (
-							('set_date','_Comenzar'),
-							('end', '_Salir'),
-						)
-				}
-			},
+    states = {
+        'init': {
+                'actions': [],
+                'result': {'type':'form', 'arch':_arch, 'fields':_fields,
+                    'state': (
+                            ('set_date','_Comenzar'),
+                            ('end', '_Salir'),
+                        )
+                }
+            },
 
-		'set_date': {
-				'actions': [],
-				'result': {
-						'type': 'action',
-						'action': _set_date,
-						'state': 'end'
-					},
-			},
-	}
+        'set_date': {
+                'actions': [],
+                'result': {
+                        'type': 'action',
+                        'action': _set_date,
+                        'state': 'end'
+                    },
+            },
+    }
 
 maintenance_start('wizard.maintenance.start')

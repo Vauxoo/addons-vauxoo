@@ -10,7 +10,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Mantenimiento">
-                    <group col="4" colspan="3">
+                    <group col="4" colspan="4">
                         <field name="product_id" select="1" on_change="onchange_product(product_id)"/>
                         <field name="distance" select="1" on_change="onchange_product(product_id)"/>
                         <field name="bom_id" on_change="onchange_bom(bom_id)" domain="[('modelo_id', 'in', [False, modelo_id])]"/>
@@ -25,7 +25,7 @@
                         <field name="date_release" attrs="{'readonly':[('state','!=','in_progress')], 'required':[('state','=','in_progress')]}"/>
                         <field name="modelo_id" invisible="1"/>
                     </group>
-                    <notebook>
+                    <notebook colspan="4">
                         <page string="Materiales">
                             <field name="material_ids" colspan="4" nolabel="1">
                                 <tree string="Materiales">
@@ -321,6 +321,10 @@
                     <field name="modelo_id"/>
                     <field name="distance"/>
                 </page>
+                <page string="Mantenimientos">
+                    <field name="maintenance_ids" colspan="4" nolabel="1" readonly="1"/>
+                </page>
+<!--
                 <page string="Info. Llanta">
                     <field name="tire_state"/>
                     <field name="brand_id"/>
@@ -359,9 +363,11 @@
                     <field name="refaccion1"/>
                     <field name="refaccion2"/>
                 </page>
+                -->
                 <page string="Tire History">
                     <field name="history_ids" colspan="4" nolabel="1"/>
                 </page>
+
             </xpath>
         </field>
     </record>
