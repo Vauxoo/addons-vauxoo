@@ -37,7 +37,7 @@ class custom_timesheet(osv.Model):
                 readonly=True, select=True),
         'task_title':fields.char('Task Tittle', 128,
                                  help='Name of task related'),
-        'us_code':fields.char('U.S. Code', 64,
+        'us_code':fields.char('User Story Code', 64,
                               help='Code of User Story related to this '
                                    'analytic'),
         'name':fields.char('Description', 264, help='Description of the work'),
@@ -57,10 +57,10 @@ class custom_timesheet(osv.Model):
                       us.code AS us_code,
                       task.name AS task_title,
                       work.name AS name,
-                      work.unit_amount AS unit_amount
-                FROM project_project AS project
-                INNER JOIN account_analytic_account AS analytic ON analytic.id = project.analytic_account_id
-                INNER JOIN account_analytic_line AS work ON work.account_id = analytic.id
-                INNER JOIN project_task AS task ON task.project_id = project.id
+                      work.hours AS unit_amount
+                FROM project_task_work AS work
+                INNER JOIN project_task AS task ON task.id = work.task_id
                 INNER JOIN user_story AS us ON us.id = task.userstory_id
+                INNER JOIN project_project AS project ON project.id = task.project_id
+                INNER JOIN account_analytic_account AS analytic ON analytic.id = project.analytic_account_id
         )''')
