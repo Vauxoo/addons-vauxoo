@@ -7,7 +7,7 @@
             <field name="model">custom.timesheet</field>
             <field name="sequence">999</field>
             <field name="arch" type="xml">
-                <tree editable="top" string="Timesheet Activities">                  
+                <tree editable="top" create='false' edit='false' string="Timesheet Activities">                  
                     <field name="date" on_change="on_change_date(date)"/>
                     <field name="user_id" on_change="on_change_user_id(user_id)" required="1" options='{"no_open": True}'/>
                     <field name="us_code"/>
