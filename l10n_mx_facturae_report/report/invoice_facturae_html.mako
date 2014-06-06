@@ -423,26 +423,28 @@
                 <td align="right" class="total_td">$ ${ dict_data['@descuento'] or ''|entity}</td>
             </tr>
             %endif
-            %if not isinstance(dict_data['Impuestos']['Traslados']['Traslado'], list):
-                <% dict_imp =  [dict_data['Impuestos']['Traslados']['Traslado']]%>
-            %else:
-                <% dict_imp =  dict_data['Impuestos']['Traslados']['Traslado']%>
-            %endif
-            %for imp in range(0,len(dict_imp)):
-                <% imp_amount = float(dict_imp[imp]['@importe']) %>
-                %if imp_amount > 0:
-                    <tr>
-                        <td class="tax_td">
-                            <% imp_name = dict_imp[imp]['@impuesto'] %>
-                            <% tasa = dict_imp[imp]['@tasa'] %>
-                            <% text = imp_name+' ('+tasa+') %' %>${ text or '0.0'}
-                        </td>
-                        <td class="tax_td" align="right">
-                            $ ${imp_amount or '0.0'|entity}
-                        </td>
-                    </tr>
+            %if dict_data['Impuestos'].has_key('Traslados'):
+                %if not isinstance(dict_data['Impuestos']['Traslados']['Traslado'], list):
+                    <% dict_imp =  [dict_data['Impuestos']['Traslados']['Traslado']]%>
+                %else:
+                    <% dict_imp =  dict_data['Impuestos']['Traslados']['Traslado']%>
                 %endif
-            %endfor
+                %for imp in range(0,len(dict_imp)):
+                    <% imp_amount = float(dict_imp[imp]['@importe']) %>
+                    %if imp_amount > 0:
+                        <tr>
+                            <td class="tax_td">
+                                <% imp_name = dict_imp[imp]['@impuesto'] %>
+                                <% tasa = dict_imp[imp]['@tasa'] %>
+                                <% text = imp_name+' ('+tasa+') %' %>${ text or '0.0'}
+                            </td>
+                            <td class="tax_td" align="right">
+                                $ ${imp_amount or '0.0'|entity}
+                            </td>
+                        </tr>
+                    %endif
+                %endfor
+            %endif
             %if dict_data['Impuestos'].has_key('Retenciones'):
                 %if not isinstance(dict_data['Impuestos']['Retenciones']['Retencion'], list):
                     <% dict_ret =  [dict_data['Impuestos']['Retenciones']['Retencion']]%>
