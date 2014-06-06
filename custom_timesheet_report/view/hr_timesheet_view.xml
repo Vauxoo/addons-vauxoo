@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="hr_timesheet_line_tree_user_story" model="ir.ui.view">
+            <field name="name">custom.timesheet.tree</field>
+            <field name="model">custom.timesheet</field>
+            <field name="sequence">999</field>
+            <field name="arch" type="xml">
+                <tree editable="top" string="Timesheet Activities">                  
+                    <field name="date" on_change="on_change_date(date)"/>
+                    <field name="user_id" on_change="on_change_user_id(user_id)" required="1" options='{"no_open": True}'/>
+                    <field name="us_code"/>
+                    <field name="task_title"/>
+                    <field name="name"/>
+                    <field name="unit_amount" string="Duration" on_change="on_change_unit_amount(product_id, unit_amount, False, product_uom_id,journal_id)" sum="Total time" widget="float_time"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hr_timesheet_line_search_user_story" model="ir.ui.view">
+            <field name="name">custom.timesheet.search</field>
+            <field name="model">custom.timesheet</field>
+            <field name="sequence">999</field>
+            <field name="arch" type="xml">
+                <search string="Timesheet">
+                    <field name="date"/>
+                    <field name="user_id"/>
+                    <field name="task_title"/>
+                    <field name="us_code"/>
+                    <field name="name"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Users" icon="terp-personal" domain="[]" context="{'group_by':'user_id'}"/>
+                        <filter string="Task" icon="terp-personal" domain="[]" context="{'group_by':'task_title'}"/>
+                        <filter string="User Story" icon="terp-personal" domain="[]" context="{'group_by':'us_code'}"/>
+                        <filter string="Date" icon="terp-go-month" domain="[]" context="{'group_by':'date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+ 
+
+        <record id="act_hr_timesheet_line_evry1_all_form_user_story" model="ir.actions.act_window">
+            <field name="name">Timesheet Activities Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">custom.timesheet</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{"search_default_today":1}</field>
+            <field name="search_view_id" ref="hr_timesheet_line_search_user_story"/>
+            <field name="view_id" ref="hr_timesheet_line_tree_user_story"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to record activities.
+              </p><p>
+                You can register and track your workings hours by project every
+                day. Every time spent on a project will become a cost in the
+                analytic accounting/contract and can be re-invoiced to
+                customers if required.
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_hr_working_hour_user_storys" parent="hr_attendance.menu_hr_time_tracking" action="act_hr_timesheet_line_evry1_all_form_user_story"/>
+
+
+
+    </data>
+</openerp>
