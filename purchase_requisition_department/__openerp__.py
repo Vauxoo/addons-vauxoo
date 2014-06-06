@@ -40,7 +40,9 @@ requisition list view to discriminate the purchase requisition by department.
     'depends': [
         'purchase_requisition',
     ],
-    'data': [],
+    'data': [
+        'view/purchase_requisition_view.xml',
+        ],
     'demo': [],
     'test': [],
     'qweb': [],
