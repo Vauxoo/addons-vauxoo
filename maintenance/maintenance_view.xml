@@ -45,10 +45,10 @@
                             </field>
                             <field name="state" select="1"/>
                             <group col="10" colspan="2">
-                                <button name="action_calcular" states="draft" string="Calcular Materiales" type="object"/>
-                                <button name="%(wizard_maintenance_start)d" states="draft" string="Comenzar" type="action"/>
-                                <button name="action_done" states="in_progress" string="Terminado" type="object"/>
-                                <button name="%(wizard_maintenance_cancel)d" states="draft,in_progress" string="Cancelar" type="action"/>
+                                <button name="action_calcular" states="draft" string="Calculate Materials" type="object" icon="gtk-ok"/>
+                                <button name="%(action_wizard_update_maintenance)d" states="draft" string="Start" type="action"  icon="gtk-apply"/>
+                                <button name="action_done" states="in_progress" string="Finished" type="object"/>
+                                <button name="%(wizard_maintenance_cancel)d" states="draft,in_progress" string="Cancel" type="action" icon="gtk-stop"/>
                                 <!--button name="action_draft" states="done" string="Borrador" type="object"/-->
                             </group>
                         </page>

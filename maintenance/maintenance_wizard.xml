@@ -12,25 +12,14 @@
         model="maintenance.order"
         menu="False"/>
     
-<!--
-    <wizard id="wizard_check_maintenance"
-            name="wizard.check.maintenance"
-            string="Update Maintenances"
-            model="maintenance.order"
-            menu="False"/>
--->
-<!--
-    <menuitem action="wizard_check_maintenance" id="menu_wizard_check_maintenance" parent="menu_maintenance_update" type="wizard"/>
--->
-<!--
-    <menuitem action="view_maintenance_order_line_form" id="menu_wizard_check_maintenance" parent="menu_maintenance_update" type="action"/>
--->
     <menuitem action="action_wizard_update_maintenance" id="menu_wizard_check_maintenance" parent="menu_maintenance_update"/>
     
+<!--
     <wizard id="wizard_set_tire"
             name="wizard.set.tire"
             string="Set Tires"
             model="product.product"/>
+-->
             
     <wizard id="wizard_maintenance_start"
         name="wizard.maintenance.start" 
@@ -58,6 +47,34 @@
             <field name="name">Update Maintenance</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">wizard.check.maintenance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record id="view_wizard_start_maintenance" model="ir.ui.view">
+            <field name="name">view.wizard.start.maintenance</field>
+            <field name="model">wizard.maintenance.start</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            <form string="Start Maintenances">
+                <separator string="Indicate the date of completition of maintenance"/>
+                <newline/>
+                <separator colspan="4"/>
+                <group>
+                    <field name="date"/> 
+                </group>
+                <group colspan="4">
+                    <button name="start_maintenance" string="Start" type="object" icon="gtk-apply"/>
+                    <button special="cancel" string="Cancel" icon="gtk-stop"/>
+                </group>
+            </form>
+            </field>
+        </record>
+        <record id="action_wizard_update_maintenance" model="ir.actions.act_window">
+            <field name="name">Start Maintenance</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.maintenance.start</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>

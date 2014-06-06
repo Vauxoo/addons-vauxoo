@@ -23,51 +23,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from osv import osv, fields
 
-import time
-import netsvc
-from tools.misc import UpdateableStr, UpdateableDict
-import pooler
-
-import wizard
-from osv import osv
-
-_arch = '''<?xml version="1.0"?>
-<form string="Mantenimientos Pendientes">
-    <separator string="Indique la Fecha de Terminacion del Mantenimiento" colspan="4"/>
-    <field name="date"/>
-</form>'''
-_fields = {
-        'date': {'type':'datetime', 'required':True, 'string':'Fecha Termino'},
+class wizard_maintenance_start(osv.Model):
+    _name = 'wizard.maintenance.start'
+    
+    _columns = {
+        'date': fields.datetime('Date Finished', required=True,),
     }
-
-def _set_date(self, cr, uid, data, context):
-    mol_obj = pooler.get_pool(cr.dbname).get('maintenance.order.line')
-    for mol in mol_obj.browse(cr, uid, data['ids']):
-        mol_obj.write(cr, uid, mol.id, {'date_release':data['form']['date'], 'state':'in_progress'})
-    return {}
-
-
-class maintenance_start(wizard.interface):
-    states = {
-        'init': {
-                'actions': [],
-                'result': {'type':'form', 'arch':_arch, 'fields':_fields,
-                    'state': (
-                            ('set_date','_Comenzar'),
-                            ('end', '_Salir'),
-                        )
-                }
-            },
-
-        'set_date': {
-                'actions': [],
-                'result': {
-                        'type': 'action',
-                        'action': _set_date,
-                        'state': 'end'
-                    },
-            },
-    }
-
-maintenance_start('wizard.maintenance.start')
+    
+    def start_maintenance(self, cr, uid, ids, context=None):
+        mol_obj = self.pool.get('maintenance.order.line')
+        active_ids = context.get('active_ids', [])
+        data = self.browse(cr, uid, ids[0], context=context)
+        for mol in mol_obj.browse(cr, uid, active_ids, context=context):
+            mol_obj.write(cr, uid, mol.id, {'date_release': data.date, 'state': 'in_progress'})
+        return {}

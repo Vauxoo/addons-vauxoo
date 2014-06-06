@@ -29,6 +29,7 @@ import time
 import os
 from mx.DateTime import *
 import netsvc
+from tools.translate import _
 
 class tracto_modelo(osv.osv):
     _name = 'tracto.modelo'
@@ -188,11 +189,13 @@ class maintenance_order_line(osv.osv):
         product = self.pool.get('product.product').browse(cr, uid, product_id)
         return {'value':{'modelo_id':product.modelo_id and product.modelo_id.id or False, 'distance':product.distance}}
 
-    def action_done(self, cr, uid, ids, ctx={}):
+    def action_done(self, cr, uid, ids, context={}):
         self.write(cr, uid, ids, {'state':'done', 'date_done':time.strftime('%Y-%m-%d')})
         picking_obj = self.pool.get('stock.picking')
         picking_id = False
         for maintenance in self.browse(cr, uid, ids):
+            if not maintenance.warehouse_id:
+                raise osv.except_osv(_('Warning!'), _('The warehouse is required'))
             self.write(cr, uid, maintenance.id, {'distance':maintenance.product_id.distance})
             if maintenance.material_ids:
                 picking_id = picking_obj.create(cr, uid, {
@@ -210,11 +213,15 @@ class maintenance_order_line(osv.osv):
                         'product_qty': line.product_qty,
                         'product_uom': line.product_id.uom_id.id,
                         'date_planned': time.strftime('%Y-%m-%d %H:%M:%S'),
-                        'location_id': maintenance.warehouse_id.lot_stock_id.id,
-                        'location_dest_id': maintenance.warehouse_id.lot_output_id.id,
+                        'location_id': maintenance.warehouse_id and \
+                            maintenance.warehouse_id.lot_stock_id and \
+                            maintenance.warehouse_id.lot_stock_id.id or False,
+                        'location_dest_id': maintenance.warehouse_id and\
+                            maintenance.warehouse_id.lot_output_id and\
+                            maintenance.warehouse_id.lot_output_id.id or False,
                         'state': 'draft',})
         if picking_id:
-            picking_obj.draft_validate(cr, uid, [picking_id], ctx)
+            picking_obj.draft_validate(cr, uid, [picking_id], context=context)
         return True
 
     def action_cancel(self, cr, uid, ids, ctx={}):
