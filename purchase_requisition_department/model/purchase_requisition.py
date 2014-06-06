@@ -41,6 +41,23 @@ class purchase_requisition(osv.Model):
         'department_id': lambda self, cur, uid, cxt: self.pool.get('res.users').browse(cur, uid, uid, cxt).employee_ids[0].department_id.id,
     }
 
+    #def fields_view_get(self, cr, uid, view_id=None, view_type='form',
+    #                    context=None, toolbar=False, submenu=False):
+    #    """ 
+    #    Filter the department by the ones the current user belongs.
+    #    """
+    #    context = context or {}
+    #    res = super(purchase_requisition,self).fields_view_get(
+    #        cr, uid, view_id=view_id, view_type=view_type, context=context,
+    #        toolbar=toolbar, submenu=submenu)
+
+    #    user_obj = self.pool.get('res.users')
+    #    user_brw = user_obj.browse(cr, uid, uid, context=context)
+    #    if 'department_id' in res['fields'].keys():
+    #        dep_ids = [emp_brw.department_id.id for emp_brw in user_brw.employee_ids]
+    #        res['fields']['department_id']['domain'] = [('id', 'in', dep_ids)]
+    #    return res
+
     # TODO: This filter method is not working.
     #def fields_view_get(self, cr, uid, view_id=None, view_type='form',
     #                    context=None, toolbar=False, submenu=False):
