@@ -39,6 +39,7 @@ requisition list view to discriminate the purchase requisition by department.
 ''',
     'depends': [
         'purchase_requisition',
+        'hr',
     ],
     'data': [
         'view/purchase_requisition_view.xml',
