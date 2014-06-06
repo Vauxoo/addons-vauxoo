@@ -25,6 +25,7 @@
     #                         follower_project: False, follower_task: False                       #
     ###############################################################################################
     # HR-Employee, Lectura proyecto- siendo seguidor de tarea
+    print '----------------1---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -33,6 +34,7 @@
         log( error )
     # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_user"), ref("group_followers_project")])]} )
+    print '----------------2---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -44,6 +46,7 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    print '----------------3---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -52,6 +55,7 @@
         log( error )
     # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    print '----------------4---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -69,6 +73,7 @@
     self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(4, user_partner_id)]})
     self.pool.get('res.groups').write(cr, uid, [ref("base.group_hr_user")], {'implied_ids': [(6, 0, [])]})
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project"), ref("project.group_project_user")])]} )
+    print '----------------5---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -88,6 +93,7 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    print '----------------6---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
@@ -109,6 +115,7 @@
     self.pool.get('project.task').write(cr, uid, ref("project_task_test_vauxoo"), {'message_follower_ids': [(4, user_partner_id)]})
     # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
+    print '----------------7---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
@@ -124,6 +131,7 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    print '----------------8---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
@@ -144,6 +152,7 @@
     self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(4, user_partner_id)]})
     # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
+    print '----------------9---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
@@ -159,6 +168,7 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    print '----------------10---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
@@ -181,6 +191,7 @@
     self.pool.get('project.task').write(cr, uid, ref("project_task_test_vauxoo"), {'message_follower_ids': [(3, user_partner_id)]})
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
     # HR-Employee, Lectura proyecto- siendo seguidor de tarea
+    print '----------------11---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
@@ -196,6 +207,7 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    print '----------------12---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
@@ -215,6 +227,7 @@
     # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
     self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(4, user_partner_id)]})
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
+    print '----------------13---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
@@ -230,6 +243,7 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    print '----------------14---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
@@ -251,6 +265,7 @@
     self.pool.get('project.task').write(cr, uid, ref("project_task_test_vauxoo"), {'message_follower_ids': [(4, user_partner_id)]})
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
     # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
+    print '----------------15---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
@@ -266,6 +281,7 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    print '----------------16---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
@@ -286,6 +302,7 @@
     self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(4, user_partner_id)]})
     # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
+    print '----------------17---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
@@ -301,6 +318,7 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    print '----------------18---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
@@ -320,10 +338,12 @@
     #                         follower_project: False, follower_task: False                       #
     ###############################################################################################
     cr.execute("UPDATE project_project SET privacy_visibility='portal'")
+    print self.pool.get('project.project').browse(cr, uid, ref("project_vauxoo_test")).privacy_visibility, 'EEEEEEEEEEEEEEEEEEE'
     self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(3, user_partner_id)]})
     self.pool.get('project.task').write(cr, uid, ref("project_task_test_vauxoo"), {'message_follower_ids': [(3, user_partner_id)]})
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
     # HR-Employee, Lectura proyecto- siendo seguidor de tarea
+    print '----------------19---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
@@ -339,6 +359,7 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    print '----------------20---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
@@ -348,16 +369,18 @@
         log( error )
     # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Project-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     ###############################################################################################
-    #                             Project privacy_visibility: Followers                           #
+    #                             Project privacy_visibility: Portal                              #
     #                         follower_project: True, follower_task: False                        #
     ###############################################################################################
     # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
     self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(4, user_partner_id)]})
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
+    print '----------------21---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
@@ -373,6 +396,7 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    print '---------------22---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
@@ -387,13 +411,14 @@
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     ###############################################################################################
-    #                             Project privacy_visibility: Followers                           #
+    #                             Project privacy_visibility: Portal                              #
     #                         follower_project: False, follower_task: True                        #
     ###############################################################################################
     self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(3, user_partner_id)]})
     self.pool.get('project.task').write(cr, uid, ref("project_task_test_vauxoo"), {'message_follower_ids': [(4, user_partner_id)]})
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
     # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
+    print '----------------23---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
@@ -409,6 +434,7 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    print '----------------24---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
@@ -423,12 +449,13 @@
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     ###############################################################################################
-    #                             Project privacy_visibility: Employees                           #
+    #                             Project privacy_visibility: Portal                              #
     #                         follower_project: True, follower_task: True                         #
     ###############################################################################################
     self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(4, user_partner_id)]})
     # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
+    print '----------------25---------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
@@ -444,6 +471,7 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
+    print '-------------------------------------------'
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
