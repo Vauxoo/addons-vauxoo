@@ -31,10 +31,12 @@ class purchase_requisition(osv.Model):
 
     _inherit = 'purchase.requisition'
     _columns = {
-        'department_id': fields.related(
-            'user_id', 'employee_ids', 'department_id',
-            type='many2one',
-            relation='hr.department',
+        'department_id': fields.many2one(
+            'hr.department',
             string='Department',
             help='The department where this purchase requisition belongs'),
+    }
+
+    _defaults = {
+        'department_id': lambda self, cur, uid, cxt: self.pool.get('res.users').browse(cur, uid, uid, cxt).employee_ids[0].department_id.id,
     }
