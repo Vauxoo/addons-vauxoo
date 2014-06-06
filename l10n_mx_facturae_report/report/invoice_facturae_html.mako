@@ -174,33 +174,24 @@
                 </td>
             </tr>
         </table>
-        <br/><!-- Inicio Nodo Nomina -->
         %if dict_data.get('Complemento',{}).get('Nomina', {}):
             <table width="100%">
-                <table width="100%" class="basic_table" style="font-size:12;">
+                <table width="100%" class="basic_table" style="font-size:9; border:1.5px solid grey;">
+                    <tr>                          
+                        <td class="cliente"><b>${_('No. Identificaci&oacute;n')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@NumEmpleado'] or ''|entity }</td>
+                        <td class="cliente"><b>${_('Puesto')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@Puesto'] or ''|entity }</td>
+                        <td class="cliente"><b>${_('CURP')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@CURP'] or ''|entity }</td>
+                    </tr>
                     <tr>
-                        <td style="text-align:center;">
-                            <b>${_('DATOS DEL EMPLEADO')}</b>
-                        </td>
+                        <td class="cliente"><b>${_('Riesgo de puesto')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@RiesgoPuesto'] or ''|entity }</td>
+                        <td class="cliente"><b>${_('Departamento')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@Departamento'] or ''|entity }</td>
+                        <td class="cliente"><b>${_('N&uacute;m. seguridad social')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@NumSeguridadSocial'] or ''|entity } </td>
                     </tr>
                 </table>
-                </tr>
-                <tr>
-                    <table width="100%" class="basic_table" style="font-size:9; border:1.5px solid grey;">
-                        <tr>                          
-                            <td class="cliente"><b>${_('No. Empleado')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@NumEmpleado'] or ''|entity }</td>
-                            <td class="cliente"><b>${_('Puesto')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@Puesto'] or ''|entity }</td>
-                            <td class="cliente"><b>${_('CURP')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@CURP'] or ''|entity }</td>
-                        </tr>
-                        <tr>
-                            <td class="cliente"><b>${_('Riesgo de puesto')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@RiesgoPuesto'] or ''|entity }</td>
-                            <td class="cliente"><b>${_('Departamento')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@Departamento'] or ''|entity }</td>
-                            <td class="cliente"><b>${_('N&uacute;m. seguridad social')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@NumSeguridadSocial'] or ''|entity } </td>
-                        </tr>
-                    </table>
-                </tr>
             </table>
-            <br/>
+        %endif
+        <br/><!-- Inicio Nodo Nomina -->
+        %if dict_data.get('Complemento',{}).get('Nomina', {}):
             <table width="100%">
                 <table width="100%" class="basic_table" style="font-size:12;">
                     <tr>
