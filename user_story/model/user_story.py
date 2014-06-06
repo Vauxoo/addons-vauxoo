@@ -101,9 +101,18 @@ class user_story(osv.Model):
             user_id = self.pool.get('res.users').browse(cr,uid,[uid],context=context)[0]
             hu = self.browse(cr, uid, ids[0], context=context)
 
-            body_html = body_html.replace('NAME_OWNER', hu.owner)
+            if hu.owner_id and hu.owner_id.name:
+                body_html = body_html.replace('NAME_OWNER', hu.owner_id.name)
+            else:
+                body_html = body_html.replace('NAME_OWNER', '')
+            
             body_html = body_html.replace('NAME_USER', user_id.name)
-            body_html = body_html.replace('NAME_CRI', criteria)
+
+            if criteria:
+                body_html = body_html.replace('NAME_CRI', criteria)
+            else:
+                body_html = body_html.replace('NAME_CRI', 'None')
+
             body_html = body_html.replace('NAME_HU', hu.name)
             
             return body_html
@@ -121,9 +130,7 @@ class user_story(osv.Model):
             user_obj = self.pool.get('res.users')
             hu = self.browse(cr, uid, res_id, context=context)
             
-            owner_name = unicodedata.normalize('NFKD', hu.owner)
-            owner_name = owner_name.encode('ASCII','ignore')
-            owner_id = user_obj.search(cr, uid, [('name','=',owner_name)], context=context)
+            owner_id = hu.owner_id
             
             if hu.user_id and hu.user_id.partner_id:
                 followers.append(hu.user_id.partner_id.id)
@@ -188,7 +195,6 @@ class user_story(osv.Model):
 
     _columns = {
         'name': fields.char('Title', size=255, required=True, readonly=False, translate=True),
-        'owner': fields.char('Owner', size=255, readonly=False),
         'owner_id': fields.many2one('res.users', 'Owner', help="User Story's Owner"),
         'code': fields.char('Code', size=64, readonly=False),
         'planned_hours': fields.float('Planned Hours'),
