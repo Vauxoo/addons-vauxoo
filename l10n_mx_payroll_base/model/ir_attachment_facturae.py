@@ -44,7 +44,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 state_payslip = payslip_obj.browse(cr, uid, [att.id_source], context=context)[0].state
                 if state_payslip != 'cancel':
                     res = self.pool.get('hr.payslip').cancel_sheet(cr, uid, [att.id_source], context=context)
-                    if str(res)=="True":
+                    if res:
                         attach = super(ir_attachment_facturae_mx, self).signal_cancel(cr, uid, ids, context)
                         return attach
                 else:

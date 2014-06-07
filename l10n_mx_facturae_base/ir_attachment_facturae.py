@@ -45,7 +45,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 state_invoice = invoice_obj.browse(cr, uid, [att.id_source], context=context)[0].state
                 if state_invoice != 'cancel':
                     res = self.pool.get('account.invoice').action_cancel(cr, uid, [att.id_source], context=context)
-                    if str(res)=="True":
+                    if res:
                         attach = super(ir_attachment_facturae_mx, self).signal_cancel(cr, uid, ids, context)
                         return attach
                 else:
