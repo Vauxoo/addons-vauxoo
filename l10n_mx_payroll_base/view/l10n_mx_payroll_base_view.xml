@@ -37,6 +37,9 @@
                     <field name="currency_id" groups="base.group_multi_currency" widget="selection"/>
                     <field name="approval_id" invisible="True"  widget="selection"/>
                 </xpath>
+                <xpath expr="//field[@name='number']" position="replace">
+                    <field name="number" required="1"/>
+                </xpath>
                     
             </field>
         </record>
