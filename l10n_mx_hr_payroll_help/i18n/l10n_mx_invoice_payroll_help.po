@@ -96,3 +96,9 @@ msgstr ""
 msgid "Attribute to express the start date of the employment relationship between employer and employee"
 msgstr ""
 
+#. module: l10n_mx_hr_payroll_help
+#: code:addons/l10n_mx_hr_payroll_help/model/help_field.py:54
+#, python-format
+msgid "Fortnightly"
+msgstr "Quincenal"
+

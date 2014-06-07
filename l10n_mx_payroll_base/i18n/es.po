@@ -198,6 +198,12 @@ msgstr "At least there must be a deduction"
 msgid "Fortnightly"
 msgstr "Quincenal"
 
+#. module: l10n_mx_hr_payroll
+#: code:addons/l10n_mx_hr_payroll/model/hr_contract.py:55
+#, python-format
+msgid "Fortnightly"
+msgstr "Quincenal"
+
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,company_emitter_id:0
 msgid "Company Emitter             Payroll"
