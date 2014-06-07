@@ -821,7 +821,8 @@ class hr_payslip(osv.Model):
         res = super(hr_payslip, self).onchange_employee_id(cr, uid, ids, date_from, date_to, employee_id=employee_id, contract_id=contract_id, context=context)
         if employee_id:
             employee_id = empolyee_obj.browse(cr, uid, employee_id, context=context)
-            res['value'].update({'pay_method_id': employee_id.address_home_id.pay_method_id.id})
+            if employee_id and employee_id.address_home_id or employee_id.address_home_id.pay_method_id:
+                res['value'].update({'pay_method_id': employee_id.address_home_id.pay_method_id.id})
         else:
             res['value'].update({'pay_method_id': False})
         return res
