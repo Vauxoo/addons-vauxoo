@@ -35,9 +35,11 @@ class custom_timesheet(osv.Model):
         'date': fields.date('Date', readonly=True),
         'user_id': fields.many2one('res.users', 'User',
                 readonly=True, select=True),
+        'analytic_id': fields.many2one('account.analytic.account', 'Project',
+                readonly=True, select=True),
         'task_title':fields.char('Task Tittle', 128,
                                  help='Name of task related'),
-        'us_code':fields.char('User Story Code', 64,
+        'userstory_id':fields.many2one('user.story','User Story',
                               help='Code of User Story related to this '
                                    'analytic'),
         'name':fields.char('Description', 264, help='Description of the work'),
@@ -54,7 +56,8 @@ class custom_timesheet(osv.Model):
                       work.id AS id,
                       work.date AS date,
                       task.user_id AS user_id,
-                      us.code AS us_code,
+                      us.id AS userstory_id,
+                      analytic.id AS analytic_id,
                       task.name AS task_title,
                       work.name AS name,
                       work.hours AS unit_amount
