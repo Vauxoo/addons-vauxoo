@@ -276,7 +276,6 @@ class hr_payslip(osv.Model):
         'currency_id': _get_currency,
         'journal_id': _get_journal,
         'company_id': lambda self,cr,uid,c: self.pool.get('res.company')._company_default_get(cr, uid, 'hr.payslip', context=c),
-        'schedule_pay': 'fortnightly',
     }
 
 
