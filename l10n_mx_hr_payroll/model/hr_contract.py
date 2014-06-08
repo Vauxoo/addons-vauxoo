@@ -44,4 +44,14 @@ class hr_contract(osv.Model):
         'working_day_id': fields.many2one('payroll.working.day', 'Type of working day',help='Type working day that covers the worker: Day, night, mixed per hour, reduced, continued heading, by turns, etc..'),
         'integrated_salary': fields.float('Integrated Salary', help='Integrated Salary'),
         'seniority': fields.integer('Seniority', help="Number of weeks that the employee has maintained relationships employment with the employer"),
+        'schedule_pay': fields.selection([
+            ('monthly', _('Monthly')),
+            ('quarterly', _('Quarterly')),
+            ('semi-annually', _('Semi-annually')),
+            ('annually', _('Annually')),
+            ('weekly', _('Weekly')),
+            ('bi-weekly', _('Bi-weekly')),
+            ('bi-monthly', _('Bi-monthly')),
+            ('fortnightly', _('Fortnightly')),
+            ], 'Scheduled Pay', select=True),
     }
