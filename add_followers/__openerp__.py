@@ -61,7 +61,7 @@
     """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
-    "depends": ["project"],
+    "depends": ["project", 'user_story'],
     "data": [
         'security/security_groups.xml',
         'wizard/add_followers_view.xml',

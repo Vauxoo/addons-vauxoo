@@ -1,0 +1,25 @@
+.icon-3x {
+    padding:10px;
+}
+
+.btn.btn-large.btn-primary {
+    color:black;
+    height:28px;
+    width:140px;
+    position:relative;
+}
+.oe_e span{
+    height:32px;    
+    line-height:25px;
+    text-align:center; 
+    left:60px;
+    position:absolute;
+    top:0;
+    font-size: 34px;                                                                                  
+}
+button.answer_exit.btn.btn-large.btn-primary {
+    color:black;
+    background-color:red;
+    width:10em;
+    height:28px;
+}
