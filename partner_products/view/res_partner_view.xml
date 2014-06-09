@@ -16,5 +16,19 @@
             </field>
         </record> 
 
+
+        <record id="res_partner_product_search" model="ir.ui.view">
+            <field name="name">res.partner.product.search</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="product_ids"/>
+                </xpath>
+
+            </field>
+        </record> 
+
     </data>
 </openerp>
