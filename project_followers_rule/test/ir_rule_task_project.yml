@@ -17,6 +17,9 @@
     import traceback
     from openerp.osv.orm import except_orm
     from tools.misc import mute_logger
+    
+    test_ok = False
+    
     obj_task = self.browse(cr, uid, ref("project_task_test_vauxoo"))
     obj_user = self.pool.get('res.users')
     user_partner_id = obj_user.browse(cr, uid, ref("res_user_demo_task_rule0")).partner_id.id
@@ -24,44 +27,48 @@
     #                             Project privacy_visibility: Followers                           #
     #                         follower_project: False, follower_task: False                       #
     ###############################################################################################
+    log("Testing task permissions when visibility project is Followers Only")
     # HR-Employee, Lectura proyecto- siendo seguidor de tarea
-    print '----------------1---------------------------'
+    log( '----------------1---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_user"), ref("group_followers_project")])]} )
-    print '----------------2---------------------------'
+    log( '----------------2---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Employee, Project-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_user"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
-    print '----------------3---------------------------'
+    log( '----------------3---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
     # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
-    print '----------------4---------------------------'
+    log( '----------------4---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Manager, Project-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -73,13 +80,14 @@
     self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(4, user_partner_id)]})
     self.pool.get('res.groups').write(cr, uid, [ref("base.group_hr_user")], {'implied_ids': [(6, 0, [])]})
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project"), ref("project.group_project_user")])]} )
-    print '----------------5---------------------------'
+    log( '----------------5---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
     try:
@@ -87,20 +95,22 @@
             self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Employee, Project-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_user"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
-    print '----------------6---------------------------'
+    log( '----------------6---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
                 self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -115,14 +125,15 @@
     self.pool.get('project.task').write(cr, uid, ref("project_task_test_vauxoo"), {'message_follower_ids': [(4, user_partner_id)]})
     # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
-    print '----------------7---------------------------'
+    log( '----------------7---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
                 self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -131,14 +142,15 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
-    print '----------------8---------------------------'
+    log( '----------------8---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
                 self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -152,14 +164,15 @@
     self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(4, user_partner_id)]})
     # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
-    print '----------------9---------------------------'
+    log( '----------------9---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
                 self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -168,14 +181,15 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
-    print '----------------10---------------------------'
+    log( '----------------10---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
                 self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -183,22 +197,24 @@
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     ###############################################################################################
-    #                             Project privacy_visibility: Employee                            #
-    #                         follower_project: False, follower_task: False                       #.................
+    #                             Project privacy_visibility: Employees                           #
+    #                         follower_project: False, follower_task: False                       #
     ###############################################################################################
+    log("Testing task permissions when visibility project is Employees Only ")
     self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'privacy_visibility': 'employees'})
     self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(3, user_partner_id)]})
     self.pool.get('project.task').write(cr, uid, ref("project_task_test_vauxoo"), {'message_follower_ids': [(3, user_partner_id)]})
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
     # HR-Employee, Lectura proyecto- siendo seguidor de tarea
-    print '----------------11---------------------------'
+    log( '----------------11---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
                 self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -207,34 +223,36 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
-    print '----------------12---------------------------'
+    log( '----------------12---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
                 self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
     # HR-Manager, Project-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     ###############################################################################################
-    #                             Project privacy_visibility: Followers                           #
+    #                             Project privacy_visibility: Employees                           #
     #                         follower_project: True, follower_task: False                        #
     ###############################################################################################
     # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
     self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(4, user_partner_id)]})
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
-    print '----------------13---------------------------'
+    log( '----------------13---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
                 self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -243,14 +261,15 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
-    print '----------------14---------------------------'
+    log( '----------------14---------------------------')
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
                 self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -258,21 +277,22 @@
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_manager"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     ###############################################################################################
-    #                             Project privacy_visibility: Followers                           #
+    #                             Project privacy_visibility: Employees                           #
     #                         follower_project: False, follower_task: True                        #
     ###############################################################################################
     self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(3, user_partner_id)]})
     self.pool.get('project.task').write(cr, uid, ref("project_task_test_vauxoo"), {'message_follower_ids': [(4, user_partner_id)]})
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
     # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
-    print '----------------15---------------------------'
+    log( '----------------15---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
                 self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -281,14 +301,15 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
-    print '----------------16---------------------------'
+    log( '----------------16---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
                 self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -302,14 +323,15 @@
     self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(4, user_partner_id)]})
     # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
-    print '----------------17---------------------------'
+    log( '----------------17---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
                 self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -318,14 +340,15 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
-    print '----------------18---------------------------'
+    log( '----------------18---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
                 self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -337,20 +360,21 @@
     #                             Project privacy_visibility: Portal                              #
     #                         follower_project: False, follower_task: False                       #
     ###############################################################################################
-    cr.execute("UPDATE project_project SET privacy_visibility='portal'")
-    print self.pool.get('project.project').browse(cr, uid, ref("project_vauxoo_test")).privacy_visibility, 'EEEEEEEEEEEEEEEEEEE'
+    log("Testing task permissions when visibility project is Portal Users and Employees ")
+    self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'privacy_visibility': 'portal'})
     self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(3, user_partner_id)]})
     self.pool.get('project.task').write(cr, uid, ref("project_task_test_vauxoo"), {'message_follower_ids': [(3, user_partner_id)]})
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
     # HR-Employee, Lectura proyecto- siendo seguidor de tarea
-    print '----------------19---------------------------'
+    log( '----------------19---------------------------')
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
                 self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -359,14 +383,15 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
-    print '----------------20---------------------------'
+    log( '----------------20---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
                 self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -380,14 +405,15 @@
     # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
     self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(4, user_partner_id)]})
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
-    print '----------------21---------------------------'
+    log( '----------------21---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
                 self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -396,14 +422,15 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
-    print '---------------22---------------------------'
+    log( '----------------22---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
                 self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -418,14 +445,15 @@
     self.pool.get('project.task').write(cr, uid, ref("project_task_test_vauxoo"), {'message_follower_ids': [(4, user_partner_id)]})
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
     # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
-    print '----------------23---------------------------'
+    log( '----------------23---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
                 self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -434,14 +462,15 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
-    print '----------------24---------------------------'
+    log( '----------------24---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
                 self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -455,14 +484,15 @@
     self.pool.get('project.project').write(cr, uid, ref("project_vauxoo_test"), {'message_follower_ids': [(4, user_partner_id)]})
     # HR-Employee, Project-False, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("group_followers_project")])]} )
-    print '----------------25---------------------------'
+    log( '----------------25---------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
                 self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Employee, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_user"), ref("project.group_project_user"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
@@ -471,14 +501,15 @@
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     # HR-Manager, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("base.group_hr_manager"), ref("group_followers_project")])]} )
-    print '-------------------------------------------'
+    log( '----------------26--------------------------' )
     try:
         with mute_logger('openerp.osv.orm'):
             with mute_logger('openerp.addons.base.ir.ir_model'):
                 self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})
     except except_orm:
         error = tools.ustr( traceback.format_exc() )
-        log( error )
+        test_ok = True
+    assert test_ok, "Test failed."
     # HR-Manager, Project-User, Lectura proyecto- siendo seguidor de tarea
     obj_user.write(cr, uid, [ref("res_user_demo_task_rule0")], {'groups_id': [(6, 0, [ref("project.group_project_user"), ref("base.group_hr_manager"), ref("group_followers_project")])]} )
     self.write(cr, ref("res_user_demo_task_rule0"), ref("project_task_test_vauxoo"), {'name':'write task'})

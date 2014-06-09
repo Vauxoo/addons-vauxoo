@@ -36,7 +36,7 @@ allowing read, write, delete and create tasks without being a follower of the pr
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": ["base",
-        "project",
+        "portal_project",
         "hr",
     ],
     "demo": [
