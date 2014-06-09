@@ -63,6 +63,14 @@ class maintenance_bom(osv.osv):
             for line in bom.line_ids:
                 res[bom.id] += (line.costo*line.product_qty)
         return res
+        
+    def _type_maintenance_bom(self, cr, uid, ids=None, context=None):
+        if context is None:
+            context = {}
+        types = [('week','Semanas'),
+            ('mes', 'Meses'),
+            ('km', 'KM')]
+        return types
 
     _columns = {
             'name': fields.char('Description', size=128, required=True),
@@ -71,7 +79,7 @@ class maintenance_bom(osv.osv):
             'notes': fields.text('Notes'),
             'tiempo': fields.float('Estimated Hours'),
             'costo_total': fields.function(_get_costo, method=True, type='float', string='Total Cost'),
-            'type': fields.selection([('',''),('week','Semanas'),('mes', 'Meses'),('km', 'KM')], 'Type'),
+            'type': fields.selection(_type_maintenance_bom, 'Type'),
             'type_qty': fields.integer('Quantity'),
             'active': fields.boolean('Active')
         }
