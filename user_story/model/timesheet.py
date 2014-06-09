@@ -56,7 +56,7 @@ class custom_timesheet(osv.Model):
                 SELECT
                       work.id AS id,
                       work.date AS date,
-                      task.user_id AS user_id,
+                      work.user_id AS user_id,
                       us.id AS userstory_id,
                       us.id AS userstory,
                       analytic.id AS analytic_id,
