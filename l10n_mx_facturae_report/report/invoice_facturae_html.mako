@@ -9,7 +9,7 @@
     %for o in objects :
         ${set_global_data(o)}
         <% dict_data = set_dict_data(o) %>
-        <% dict_context_extra_data = eval(o.context_extra_data) %>
+        <% dict_context_extra_data = o.context_extra_data and eval(o.context_extra_data) or {}%>
         <table class="basic_table">
             <tr>
                 <td style="vertical-align: top;">
@@ -19,16 +19,16 @@
                     <table class="basic_table">
                         <tr>
                             <td width="50%">
-                                <div class="title">${ dict_data['Emisor']['@nombre'] or ''|entity}</div>
+                                <div class="title">${ dict_data.get('Emisor', False) and dict_data.get('Emisor').get('@nombre', False) or ''|entity}</div>
                             </td>
                             <td width="20%">
                                 <div class="invoice">
-                                    %if dict_context_extra_data['type'] == 'out_invoice':
+                                    %if dict_context_extra_data.get('type', False) == 'out_invoice':
                                         <font size="5">${_("Factura:")}
-                                    %elif dict_context_extra_data['type'] == 'out_refund':
+                                    %elif dict_context_extra_data.get('type', False) == 'out_refund':
                                         <font size="4">${_("Nota de credito:")}
                                     %endif
-                                    %if dict_context_extra_data['type'] in ['out_invoice', 'out_refund']:
+                                    %if dict_context_extra_data.get('type', False) in ['out_invoice', 'out_refund']:
                                         %if o.state in ['done']:
                                             ${o.document_source or ''|entity}
                                         %else:
@@ -36,7 +36,7 @@
                                         %endif
                                     %endif
                                     </font>
-                                    %if dict_context_extra_data['type'] in ['payroll']:
+                                    %if dict_context_extra_data.get('type', False) in ['payroll']:
                                         <font size="4">${_('Payroll: ') |entity} ${o.document_source or ''|entity}</font>
                                     %endif
                                 </div>
@@ -45,38 +45,41 @@
                         <tr>
                             <td class="td_data_exp">
                                 <div class="emitter">
-                                    <br/>${ dict_data['Emisor']['DomicilioFiscal']['@calle'] or ''|entity}
-                                    ${ dict_data['Emisor']['DomicilioFiscal']['@noExterior'] or ''|entity}
-                                    ${ dict_data['Emisor']['DomicilioFiscal']['@noInterior'] or ''|entity}
-                                    ${ dict_data['Emisor']['DomicilioFiscal']['@colonia'] or ''|entity}
-                                    ${ dict_data['Emisor']['DomicilioFiscal']['@codigoPostal'] or ''|entity}
-                                    <br/>${ _("Localidad:")} ${ dict_data['Emisor']['DomicilioFiscal']['@localidad'] or ''|entity}                                    
-                                    <br/>${ dict_data['Emisor']['DomicilioFiscal']['@municipio'] or ''|entity}                                    
-                                    , ${ dict_data['Emisor']['DomicilioFiscal']['@estado'] or ''|entity}                                    
-                                    , ${ dict_data['Emisor']['DomicilioFiscal']['@pais'] or ''|entity}
-                                    <br/><b>${_("RFC:")} ${dict_data['Emisor']['@rfc'] or ''|entity}</b>
-                                    <br/>${ dict_data['Emisor']['RegimenFiscal']['@Regimen'] or ''|entity }
-                                    %if dict_context_extra_data['emisor']['phone'] or dict_context_extra_data['emisor']['fax']  or dict_context_extra_data['emisor']['mobile']:
+                                    <%dom_fis = dict_data.get('Emisor', {}).get('DomicilioFiscal', {}) or {}%>
+                                    <br/>${ dom_fis.get('@calle', False) or ''|entity}
+                                    ${ dom_fis.get('@noExterior', False) or ''|entity}
+                                    ${ dom_fis.get('@noInterior', False) or ''|entity}
+                                    ${ dom_fis.get('@colonia', False) or ''|entity}
+                                    ${ dom_fis.get('@codigoPostal', False) or ''|entity}
+                                    <br/>${ _("Localidad:")} ${ dom_fis.get('@localidad', False) or ''|entity}                                    
+                                    <br/>${ dom_fis.get('@municipio', False) or ''|entity}                                    
+                                    , ${ dom_fis.get('@estado', False) or ''|entity}                                    
+                                    , ${ dom_fis.get('@pais', False) or ''|entity}
+                                    <br/><b>${_("RFC:")} ${dict_data.get('Emisor', False) and dict_data.get('Emisor').get('@rfc', False) or ''|entity}</b>
+                                    <br/>${ dict_data.get('Emisor', False) and dict_data.get('Emisor').get('RegimenFiscal', False) and dict_data.get('Emisor').get('RegimenFiscal').get('@Regimen', False) or ''|entity }
+                                    <%emisor = dict_context_extra_data.get('emisor', {})%>
+                                    %if emisor.get('phone', False) or emisor.get('fax', False) or emisor.get('mobile', False):
                                         <br/>${_("Tel&eacute;fono(s):")}
-                                        ${dict_context_extra_data['emisor']['phone'] or ''|entity}
-                                        ${dict_context_extra_data['emisor']['fax']  and ',' or ''|entity} ${dict_context_extra_data['emisor']['fax'] or ''|entity}
-                                        ${dict_context_extra_data['emisor']['mobile'] and ',' or ''|entity} ${dict_context_extra_data['emisor']['mobile'] or ''|entity}
+                                        ${emisor.get('phone', False) or ''|entity}
+                                        ${emisor.get('fax', False)  and ',' or ''|entity} ${emisor.get('fax', False) or ''|entity}
+                                        ${emisor.get('mobile', False) and ',' or ''|entity} ${emisor.get('mobile', False) or ''|entity}
                                     %endif
                                 </div>
                             </td>
                             <td class="td_data_exp">
                                 <div class="fiscal_address">
                                     <br/>Expedido en:
-                                        ${ dict_data['Emisor']['@nombre'] or ''|entity}
-                                        <br/>${ dict_data['Emisor']['ExpedidoEn']['@calle'] or ''|entity}
-                                        ${ dict_data['Emisor']['ExpedidoEn']['@noExterior'] or ''|entity}
-                                        ${ dict_data['Emisor']['ExpedidoEn']['@noInterior'] or ''|entity}
-                                        ${ dict_data['Emisor']['ExpedidoEn']['@colonia'] or ''|entity}
-                                        ${ dict_data['Emisor']['ExpedidoEn']['@codigoPostal'] or ''|entity}
-                                        <br/>Localidad: ${ dict_data['Emisor']['ExpedidoEn']['@localidad'] or ''|entity}
-                                        <br/>${ dict_data['Emisor']['ExpedidoEn']['@municipio'] or ''|entity}
-                                        ${ dict_data['Emisor']['ExpedidoEn']['@estado'] or ''|entity}
-                                        ${ dict_data['Emisor']['ExpedidoEn']['@pais'] or ''|entity}
+                                        ${ dict_data.get('Emisor', False) and dict_data.get('Emisor').get('@nombre', False) or ''|entity}
+                                        <%expedido = dict_data.get('Emisor', {}).get('ExpedidoEn', {}) or {}%>
+                                        <br/>${ expedido.get('@calle', False) or ''|entity}
+                                        ${ expedido.get('@noExterior', False) or ''|entity}
+                                        ${ expedido.get('@noInterior', False) or ''|entity}
+                                        ${ expedido.get('@colonia', False) or ''|entity}
+                                        ${ expedido.get('@codigoPostal', False) or ''|entity}
+                                        <br/>Localidad: ${ expedido.get('@localidad', False) or ''|entity}
+                                        <br/>${ expedido.get('@municipio', False) or ''|entity}
+                                        ${ expedido.get('@estado', False) or ''|entity}
+                                        ${ expedido.get('@pais', False) or ''|entity}
                                 <div/>
                             </td>
                         </tr>
@@ -91,40 +94,41 @@
                     <table class="basic_table">
                         <tr>
                             <td class="cliente"><b>Receptor:</b></td>
-                            <td width="64%" class="cliente">${ dict_data['Receptor']['@nombre'] or ''|entity}</td>
+                            <td width="64%" class="cliente">${ dict_data.get('Receptor', False) and dict_data.get('Receptor').get('@nombre', False) or ''|entity}</td>
                             <td class="cliente"><b>R. F. C.:</b></td>
-                            <td width="16%" class="cliente"><b>${ dict_data['Receptor']['@rfc'] or ''|entity}</b></td>
+                            <td width="16%" class="cliente"><b>${ dict_data.get('Receptor', False) and dict_data.get('Receptor').get('@rfc', False) or ''|entity}</b></td>
                         </tr>
                     </table>
                     <table class="basic_table">
                         <tr>
                             <td width="7%" class="cliente"><b>Calle:</b></td>
-                            <td class="cliente">${ dict_data['Receptor']['Domicilio']['@calle'] or ''|entity}</td>
+                            <%add_receptor = dict_data.get('Receptor', {}).get('Domicilio', {}) or {}%>
+                            <td class="cliente">${ add_receptor.get('@calle') or ''|entity}</td>
                             <td width="9%" class="cliente"><b>No. Ext:</b></td>
-                            <td width="9%" class="cliente">${ dict_data['Receptor']['Domicilio']['@noExterior'] or ''|entity}</td>
+                            <td width="9%" class="cliente">${ add_receptor.get('@noExterior', False) or ''|entity}</td>
                             <td width="9%" class="cliente"><b>No. Int:</b></td>
-                            <td width="9%" class="cliente">${ dict_data['Receptor']['Domicilio']['@noInterior'] or ''|entity}</td>
+                            <td width="9%" class="cliente">${ add_receptor.get('@noInterior', False) or ''|entity}</td>
                         </tr>
                     </table>
                     <table class="basic_table">
                         <tr>
                             <td width="10%" class="cliente"><b>Colonia:</b></td>
-                            <td class="cliente">${ dict_data['Receptor']['Domicilio']['@colonia'] or ''|entity}</td>
+                            <td class="cliente">${ add_receptor.get('@colonia', False) or ''|entity}</td>
                             <td width="7%" class="cliente"><b>C.P.:</b></td>
-                            <td class="cliente">${ dict_data['Receptor']['Domicilio']['@codigoPostal'] or ''|entity}</td>
+                            <td class="cliente">${ add_receptor.get('@codigoPostal', False) or ''|entity}</td>
                             <td width="12%" class="cliente"><b>Localidad:</b></td>
-                            <td class="cliente">${ dict_data['Receptor']['Domicilio']['@localidad'] or ''|entity}</td>
+                            <td class="cliente">${ add_receptor.get('@localidad', False) or ''|entity}</td>
                         </tr>
                     </table>
                     <table class="basic_table" style="border-bottom:1px solid #002966;">
                         <tr>
                             <td width="9%" class="cliente"><b>Lugar:</b></td>
                             <td class="cliente">
-                                ${ dict_data['Receptor']['Domicilio']['@municipio'] or ''|entity},
-                                ${ dict_data['Receptor']['Domicilio']['@estado'] or ''|entity},
-                                ${ dict_data['Receptor']['Domicilio']['@pais'] or ''|entity}
+                                ${ add_receptor.get('@municipio', False) or ''|entity},
+                                ${ add_receptor.get('@estado', False) or ''|entity},
+                                ${ add_receptor.get('@pais', False) or ''|entity}
                             </td>       
-                            %if dict_data['Complemento'].has_key('Nomina'):
+                            %if dict_data.get('Complemento',{}).get('Nomina', {}):
                                 <td width="12%" class="cliente"><b>Reg. Patronal:</b></td>
                                 <td class="cliente">
                                     ${ dict_data['Complemento']['Nomina']['@RegistroPatronal'] or ''|entity }
@@ -134,20 +138,19 @@
                     </table>
                     <table class="basic_table" style="border-bottom:1px solid #002966;">
                         <tr>
-                            %if dict_context_extra_data['receptor']['phone'] or dict_context_extra_data['receptor']['fax']  or dict_context_extra_data['receptor']['mobile']:
+                            <%receptor = dict_context_extra_data.get('receptor', False)%>
+                            %if receptor and (receptor.get('phone', False) or receptor.get('fax', False) or receptor.get('mobile', False)):
                                 <td width="13%" class="cliente"><b>Telefono(s):</b></td>
                                 <td width="55%" class="cliente">
-                                    ${dict_context_extra_data['receptor']['phone'] or ''|entity}
-                                    ${dict_context_extra_data['receptor']['fax'] and ',' or ''|entity}
-                                    ${dict_context_extra_data['receptor']['fax'] or ''|entity}
-                                    ${dict_context_extra_data['receptor']['mobile'] and ',' or ''|entity}
-                                    ${dict_context_extra_data['receptor']['mobile'] or ''|entity}</font>
+                                    ${receptor.get('phone', False) or ''|entity}
+                                    ${receptor.get('fax', False) and ',' or ''|entity}
+                                    ${receptor.get('fax', False) or ''|entity}
+                                    ${receptor.get('mobile', False) and ',' or ''|entity}
+                                    ${receptor.get('mobile', False) or ''|entity}</font>
                             %endif
-                            %if dict_context_extra_data.has_key('origin'):
-                                %if dict_context_extra_data['origin']:
-                                    <td width="9%" class="cliente"><b>Origen:</b></td>
-                                    <td width="23%" class="cliente"><b>${dict_context_extra_data['origin'] or ''|entity}</b></td>
-                                %endif
+                            %if dict_context_extra_data.get('origin', False ):
+                                <td width="9%" class="cliente"><b>Origen:</b></td>
+                                <td width="23%" class="cliente"><b>${dict_context_extra_data.get('origin', False) or ''|entity}</b></td>
                             %endif
                         </tr>
                     </table>
@@ -164,7 +167,7 @@
                                 ${ dict_data['@LugarExpedicion'] or ''|entity}
                                 <% from datetime import datetime %>
                                 <br/>${_("a")} ${datetime.strptime(dict_data['@fecha'].encode('ascii','replace'), '%Y-%m-%dT%H:%M:%S').strftime('%d/%m/%Y %H:%M:%S') or ''|entity}
-                                <br/>${_("Serie:")} ${ dict_data['@serie'] or _("Sin serie")|entity}
+                                <br/>${_("Serie:")} ${ dict_data.get('@serie', {}) or _("Sin serie")|entity}
                             </td>
                         </tr>
                     </table>
@@ -172,7 +175,7 @@
             </tr>
         </table>
         <br/><!-- Inicio Nodo Nomina -->
-        %if dict_data['Complemento'].has_key('Nomina'):
+        %if dict_data.get('Complemento',{}).get('Nomina', {}):
             <table width="100%">
                 <table width="100%" class="basic_table" style="font-size:12;">
                     <tr>
@@ -420,7 +423,7 @@
                 <td align="right" class="total_td">$ ${ dict_data['@descuento'] or ''|entity}</td>
             </tr>
             %endif
-            %if dict_data['Impuestos'].has_key('Traslados') :
+            %if dict_data['Impuestos'].has_key('Traslados'):
                 %if not isinstance(dict_data['Impuestos']['Traslados']['Traslado'], list):
                     <% dict_imp =  [dict_data['Impuestos']['Traslados']['Traslado']]%>
                 %else:
@@ -486,38 +489,40 @@
                 </td>
             </tr>            
         </table>
-        %if dict_context_extra_data.has_key('payment_term') or dict_context_extra_data.has_key('comment'):
+        %if dict_context_extra_data.get('payment_term', False) or dict_context_extra_data.get('comment', False):
             <table class="basic_table">
-                %if dict_context_extra_data.has_key('payment_term'):
+                %if dict_context_extra_data.get('payment_term', False):
                     <tr>
-                        %if dict_context_extra_data['payment_term']:
-                            <td width="100%"><pre><font size="1"><b>Condición de pago:</b> ${dict_context_extra_data['payment_term'] or '' |entity}
+                        %if dict_context_extra_data.get('payment_term', False):
+                            <td width="100%"><pre><font size="1"><b>Condición de pago:</b> ${dict_context_extra_data.get('payment_term', False) or '' |entity}
                             </font></pre></td>
                         %endif
                     </tr>
                 %endif
-                %if dict_context_extra_data.has_key('comment'):
+                %if dict_context_extra_data.get('comment', False):
                     <tr>
-                        %if dict_context_extra_data['comment']:
-                            <td width="100%"><pre><font size="1"><b>Comentarios adicionales:</b> ${dict_context_extra_data['comment'] or '' |entity}</font></pre></td>
+                        %if dict_context_extra_data.get('comment', False):
+                            <td width="100%"><pre><font size="1"><b>Comentarios adicionales:</b> ${dict_context_extra_data.get('comment', False) or '' |entity}</font></pre></td>
                         %endif
                     </tr>
                 %endif
             </table>
         %endif
         </br>
-        <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
-                <tr>
-                    <th width="33%"> ${_('Certificado del SAT')}</th>
-                    <th> ${_('Fecha de Timbrado')}</th>
-                    <th width="33%"> ${_('Folio Fiscal')}</th>
-                </tr>
-                <tr>
-                    <td width="33%" class="center_td"> ${ dict_data['Complemento']['TimbreFiscalDigital']['@noCertificadoSAT'] or 'No identificado'|entity }</td>
-                    <td width="34%" class="center_td"> ${ datetime.strptime(dict_data['Complemento']['TimbreFiscalDigital']['@FechaTimbrado'].encode('ascii','replace'), '%Y-%m-%dT%H:%M:%S').strftime('%d/%m/%Y %H:%M:%S') or 'No identificado'|entity }</td>
-                    <td width="33%" class="center_td"> ${ dict_data['Complemento']['TimbreFiscalDigital']['@UUID'] or 'No identificado'|entity }</td>
-                </tr>
-        </table>
+        %if dict_data.get('Complemento', {}).get('TimbreFiscalDigital'):
+            <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
+                    <tr>
+                        <th width="33%"> ${_('Certificado del SAT')}</th>
+                        <th> ${_('Fecha de Timbrado')}</th>
+                        <th width="33%"> ${_('Folio Fiscal')}</th>
+                    </tr>
+                    <tr>
+                        <td width="33%" class="center_td"> ${ dict_data['Complemento']['TimbreFiscalDigital']['@noCertificadoSAT'] or 'No identificado'|entity }</td>
+                        <td width="34%" class="center_td"> ${ datetime.strptime(dict_data['Complemento']['TimbreFiscalDigital']['@FechaTimbrado'].encode('ascii','replace'), '%Y-%m-%dT%H:%M:%S').strftime('%d/%m/%Y %H:%M:%S') or 'No identificado'|entity }</td>
+                        <td width="33%" class="center_td"> ${ dict_data['Complemento']['TimbreFiscalDigital']['@UUID'] or 'No identificado'|entity }</td>
+                    </tr>
+            </table>
+        %endif
         <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
                 <tr>
                     <th width="33%">${_('Certificado del emisor')}</th>
@@ -530,37 +535,39 @@
                     <td class="center_td">${ dict_data['@NumCtaPago'] or 'No identificado'|entity }</td>
                 </tr>
         </table>
-        <div style="page-break-inside:avoid; border:1.5px solid grey;">
-            <table width="100%" class="datos_fiscales">
-                <tr>
-                    <td align="left" rowspan="2">
-                        ${helper.embed_image('jpeg',str(o.company_id.cif_file), 140, 220)}
-                    </td>
-                    <td valign="top" align="left">
-                        <p class="cadena_with_cbb_cfd">
-                        <b>${_('Sello Digital Emisor:')} </b><br/>
-                        ${ dict_data['@sello'] or ''|entity}<br/>
-                        <b>${_('Sello Digital SAT:')} </b><br/>
-                        ${ dict_data['Complemento']['TimbreFiscalDigital']['@selloSAT'] or ''|entity}<br/>
-                        <b>${_('Cadena original:')} </b><br/>
-                        ${o.cfdi_cadena_original or ''|entity}</br>
-                        <b>${_('Enlace al certificado: ')}</b></br>
-                        ${o.certificate_link or ''|entity}</br>
-                        </p>
-                    </td>
-                    <td align="right" rowspan="2">
-                        <% img = create_qrcode(dict_data['Emisor']['@rfc'], dict_data['Receptor']['@rfc'], float(dict_data['@total'].encode('ascii','replace')), dict_data['Complemento']['TimbreFiscalDigital']['@UUID']) %>
-                        ${helper.embed_image('jpeg',str(img),180, 180)}
-                    </td>
-                </tr>
-                <tr>
-                    <td style="vertical-align: center; text-align: center">
-                        <p><b><font size="1">"Este documento es una representación impresa de un CFDI”</br>
-                        CFDI, Comprobante Fiscal Digital por Internet</font></b></p>
-                    </td>
-                </tr>
-            </table>
-        </div>
+        %if dict_data.get('Complemento', {}).get('TimbreFiscalDigital'):
+            <div style="page-break-inside:avoid; border:1.5px solid grey;">
+                <table width="100%" class="datos_fiscales">
+                    <tr>
+                        <td align="left" rowspan="2">
+                            ${helper.embed_image('jpeg',str(o.company_id.cif_file), 140, 220)}
+                        </td>
+                        <td valign="top" align="left">
+                            <p class="cadena_with_cbb_cfd">
+                            <b>${_('Sello Digital Emisor:')} </b><br/>
+                            ${ dict_data['@sello'] or ''|entity}<br/>
+                            <b>${_('Sello Digital SAT:')} </b><br/>
+                            ${ dict_data['Complemento']['TimbreFiscalDigital']['@selloSAT'] or ''|entity}<br/>
+                            <b>${_('Cadena original:')} </b><br/>
+                            ${o.cfdi_cadena_original or ''|entity}</br>
+                            <b>${_('Enlace al certificado: ')}</b></br>
+                            ${o.certificate_link or ''|entity}</br>
+                            </p>
+                        </td>
+                        <td align="right" rowspan="2">
+                            <% img = create_qrcode(dict_data['Emisor']['@rfc'], dict_data['Receptor']['@rfc'], float(dict_data['@total'].encode('ascii','replace')), dict_data['Complemento']['TimbreFiscalDigital']['@UUID']) %>
+                            ${helper.embed_image('jpeg',str(img),180, 180)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: center; text-align: center">
+                            <p><b><font size="1">"Este documento es una representación impresa de un CFDI”</br>
+                            CFDI, Comprobante Fiscal Digital por Internet</font></b></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        %endif
         <p style="page-break-after:always"></p>
     %endfor
 </body>

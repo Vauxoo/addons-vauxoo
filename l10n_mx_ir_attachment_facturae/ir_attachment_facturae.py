@@ -154,7 +154,7 @@ class ir_attachment_facturae_mx(osv.Model):
         'attachment_email': fields.char('Email', size=128, help='Email receptor'),
         'cfdi_folio_fiscal': fields.char('Folio Fiscal(UUID)', size=256, help='UUID the XML'),
         'model_source': fields.char('Source Model', size=128, help='Source Model'),
-        'id_source': fields.integer('Source ID', help="Source ID"),
+        'id_source': fields.integer('Source ID', required=False, help="Source ID"),
         'company_emitter_id': fields.many2one('res.company', 'Company emmiter'),
         'certificate_id': fields.many2one('res.company.facturae.certificate'),
         #~'cfdi_cbb': fields.binary('CFD-I CBB'),depreciado porque se crea desde funcion
@@ -294,7 +294,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     nodeComprobante.setAttribute("sello", sign_str)
                     data_xml = doc_xml.toxml().encode('ascii', 'xmlcharrefreplace')
                     attachment_obj.write(cr, uid, [attach.file_input.id],{
-                                    'datas': base64.encodestring(data_xml)
+                                    'datas': base64.encodestring(data_xml),
                             }, context=context)
                 nodepayroll = doc_xml.getElementsByTagName("nomina:Nomina")
                 if nodepayroll:
@@ -376,9 +376,6 @@ class ir_attachment_facturae_mx(osv.Model):
         msj = ''
         attachment_obj = self.pool.get('ir.attachment')
         attachment_mx_data = self.browse(cr, uid, ids, context=context)
-        type = attachment_mx_data[0].res_pac.name_driver
-        wf_service = netsvc.LocalService("workflow")
-        status = False
         (fileno, fname) = tempfile.mkstemp(
             '.pdf', 'openerp_pdfcfid_' + (str(attachment_mx_data[0].id) or '') + '__facturae__')
         os.close(fileno)
@@ -401,7 +398,6 @@ class ir_attachment_facturae_mx(osv.Model):
             'res_model': attachment_mx_data[0].model_source,
             'res_id': attachment_mx_data[0].id_source}, context=context)
             
-        status = True
         aids = attachment_ids and attachment_ids[0] or False
         
         if aids:
@@ -411,7 +407,6 @@ class ir_attachment_facturae_mx(osv.Model):
                 'msj': msj,
                 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                 'date_print_report': time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
-            wf_service.trg_validate(uid, self._name, attachment_mx_data[0].id, 'action_printable', cr)
         else:
             raise osv.except_osv(_('Warning'), _('Not Attached PDF\n'))
         datas = {
@@ -420,9 +415,6 @@ class ir_attachment_facturae_mx(osv.Model):
                  'form': self.read(cr, uid, ids[0], context=context),
         }
         return {'type': 'ir.actions.report.xml', 'report_name': report_name, 'datas': datas, 'nodestroy': True, 'name': file_name_attachment}
-
-    def action_printable(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'printable'}, context=context)
 
     def signal_send_customer(self, cr, uid, ids, context=None):
         if context is None:
@@ -578,6 +570,8 @@ class ir_attachment_facturae_mx(osv.Model):
         return self.write(cr, uid, ids, {'state': 'done'}, context=context)
 
     def signal_cancel(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
         attach_obj = self.pool.get('ir.attachment')
         wf_service = netsvc.LocalService("workflow")
         status = False
@@ -600,8 +594,9 @@ class ir_attachment_facturae_mx(osv.Model):
                     msj += tools.ustr(cfdi_cancel.get('message', False))
                     status_stamp = cfdi_cancel.get('status', False)
                     if status_stamp:
-                        cr.execute("""UPDATE ir_attachment SET res_id = Null
-                                WHERE res_id = %s and res_model=%s""", (ir_attach_facturae_mx_id.id_source, ir_attach_facturae_mx_id.model_source))
+                        if ir_attach_facturae_mx_id.model_source:
+                            cr.execute("""UPDATE ir_attachment SET res_id = Null
+                                    WHERE res_id = %s and res_model=%s""", (ir_attach_facturae_mx_id.id_source, ir_attach_facturae_mx_id.model_source))
                         wf_service.trg_validate(
                             uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
                         status = True

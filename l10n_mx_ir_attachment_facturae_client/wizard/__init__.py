@@ -25,38 +25,4 @@
 #
 ##############################################################################
 
-{
-    "name" : "Creacion de Factura Electronica para Mexico (CFDI-2011) - PAC Vauxoo",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """ This module allows access interfaces for e-invoice
-    files from documents with any pac in MultipacVauxoo.
-    Ubuntu Package Depends:
-        sudo apt-get install python-soappy
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : ["l10n_mx_facturae_groups",
-        "l10n_mx_facturae_base",
-        "l10n_mx_params_pac", 
-        "l10n_mx_account_tax_category",
-        "l10n_mx_facturae_report",
-        "l10n_mx_facturae_seq", 
-        "l10n_mx_ir_attachment_facturae",
-        "l10n_mx_ir_attachment_facturae_client",
-        "l10n_mx_facturae_group_show_wizards",
-        "l10n_mx_settings_facturae"
-        ],
-    "demo" : [
-        "demo/l10n_mx_facturae_multipac_vx_demo.xml",
-        "demo/l10n_mx_facturae_seq_demo.xml",
-        "demo/l10n_mx_payroll_seq_demo.xml",
-        ],
-    "data" : [
-        ],
-    "test" : [
-        ],
-    "installable" : True,
-    "active" : False,
-}
+import attachment_mx_res_pac_defaults
