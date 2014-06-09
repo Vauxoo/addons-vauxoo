@@ -1,27 +1,22 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-    <menuitem icon="terp-sale" id="menu_maintenance_root" name="Maintenance"
-        web_icon="images/knowledge.png"
-        web_icon_hover="images/knowledge-hover.png"/>/>
-    <menuitem id="menu_maintenance_update" name="Update Maintenances" parent="menu_maintenance_root"/>
+        <menuitem icon="terp-sale" id="menu_maintenance_root" name="Maintenance"
+            web_icon="images/knowledge.png"
+            web_icon_hover="images/knowledge-hover.png"/>/>
+        <menuitem id="menu_maintenance_update" name="Update Maintenances" parent="menu_maintenance_root"/>
 
-    <menuitem action="action_wizard_update_maintenance" id="menu_wizard_check_maintenance" parent="menu_maintenance_update"/>
+        <menuitem action="action_wizard_update_maintenance" id="menu_wizard_check_maintenance" parent="menu_maintenance_update"/>
     
-    <wizard id="wizard_maintenance_start"
-        name="wizard.maintenance.start" 
-        string="Start Maintenance" 
-        model="maintenance.order"
-        menu="False"/>
-        
         <record id="view_wizard_update_maintenance" model="ir.ui.view">
             <field name="name">view.wizard.update.maintenance</field>
             <field name="model">wizard.check.maintenance</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
             <form string="Update Maintenances">
-                <separator string="Click on Update below to start the process..."/>
+                <separator string="This wizard search the products that need an maintenance, and create the maintenance."/>
                 <newline/>
+                <separator string="Click on Update below to start the process..."/>
                 <separator colspan="4"/>
                 <group colspan="4">
                     <button name="update_maintenances" string="Update" type="object" icon="gtk-apply"/>

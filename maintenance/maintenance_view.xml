@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <menuitem icon="terp-sale" id="menu_maintenance_root" name="Mantenimiento"/>
+        <menuitem icon="terp-sale" id="menu_maintenance_root" name="Maintenance"/>
         <menuitem id="menu_maintenance_configuration" name="Configuration" parent="menu_maintenance_root" sequence="1"/>
 
         <record id="view_maintenance_order_line_form" model="ir.ui.view">
@@ -9,7 +9,7 @@
             <field name="model">maintenance.order.line</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Mantenimiento">
+                <form string="Maintenance">
                     <group col="4" colspan="4">
                         <field name="product_id" select="1" on_change="onchange_product(product_id)"/>
                         <field name="distance" select="1" on_change="onchange_product(product_id)"/>
@@ -26,16 +26,16 @@
                         <field name="modelo_id" invisible="1"/>
                     </group>
                     <notebook colspan="4">
-                        <page string="Materiales">
+                        <page string="Materials">
                             <field name="material_ids" colspan="4" nolabel="1">
-                                <tree string="Materiales">
+                                <tree string="Materials">
                                     <field name="product_id"/>
                                     <field name="product_qty"/>
                                     <field name="costo"/>
                                     <field name="total"/>
                                     <field name="product_uom"/>
                                 </tree>
-                                <form string="Materiales">
+                                <form string="Materials">
                                     <field name="product_id" on_change="onchange_product(product_id)"/>
                                     <field name="product_uom" invisible="1"/>
                                     <field name="product_qty"/>
@@ -52,12 +52,12 @@
                                 <!--button name="action_draft" states="done" string="Borrador" type="object"/-->
                             </group>
                         </page>
-                        <page string="Movimientos">
+                        <page string="Movements">
                             <field name="warehouse_id" attrs="{'required':[('state','in',['in_progress','done'])]}"/>
                             <field name="pendiente_id"/>
                             <field name="picking_ids" colspan="4" nolabel="1"/>
                         </page>
-                        <page string="Notas">
+                        <page string="Notes">
                             <field name="notes" colspan="4" nolabel="1"/>
                         </page>
                     </notebook>
@@ -70,7 +70,7 @@
             <field name="model">maintenance.order.line</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Mantenimiento">
+                <tree string="Maintenance">
                     <field name="product_id"/>
                     <field name="distance"/>
                     <field name="name"/>
@@ -89,7 +89,7 @@
 
         <!-- Todos -->
         <record id="action_maintenance_order_line_form" model="ir.actions.act_window">
-            <field name="name">Mantenimientos</field>
+            <field name="name">Maintenances</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">maintenance.order.line</field>
             <field name="view_type">form</field>
@@ -100,7 +100,7 @@
 
         <!-- Borrador -->
         <record id="action_maintenance_order_line_draft" model="ir.actions.act_window">
-            <field name="name">Borrador</field>
+            <field name="name">Draft</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">maintenance.order.line</field>
             <field name="view_type">form</field>
@@ -111,7 +111,7 @@
 
         <!-- Cancelados -->
         <record id="action_maintenance_order_line_cancel" model="ir.actions.act_window">
-            <field name="name">Cancelados</field>
+            <field name="name">Canceled</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">maintenance.order.line</field>
             <field name="view_type">form</field>
@@ -122,7 +122,7 @@
 
         <!-- Terminado -->
         <record id="action_maintenance_order_line_done" model="ir.actions.act_window">
-            <field name="name">Realizados</field>
+            <field name="name">Finished</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">maintenance.order.line</field>
             <field name="view_type">form</field>
@@ -133,7 +133,7 @@
 
         <!-- En Proceso -->
         <record id="action_maintenance_order_line_progrees" model="ir.actions.act_window">
-            <field name="name">En Proceso</field>
+            <field name="name">In Process</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">maintenance.order.line</field>
             <field name="view_type">form</field>
@@ -144,7 +144,7 @@
 
         <!-- Reasignados -->
         <record id="action_maintenance_order_line_reassigned" model="ir.actions.act_window">
-            <field name="name">Reasignados</field>
+            <field name="name">Reassigned</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">maintenance.order.line</field>
             <field name="view_type">form</field>
@@ -159,9 +159,9 @@
             <field name="model">maintenance.bom</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Ordenes de Mantenimiento">
+                <form string="Maintenance Orders">
                     <notebook>
-                        <page string="Informacion General">
+                        <page string="General Info.">
                             <field name="name" select="1"/>
                             <field name="modelo_id" select="1"/>
                             <field name="costo_total"/>
@@ -169,14 +169,14 @@
                             <field name="tiempo" select="2"/>
                             <newline/>
                             <field name="line_ids" colspan="4" nolabel="1">
-                                <tree string="Linea Orden de Matenimiento">
+                                <tree string="Order Line Maintenance">
                                     <field name="product_id"/>
                                     <field name="product_qty"/>
                                     <field name="costo"/>
                                     <field name="total"/>
                                     <field name="product_uom"/>
                                 </tree>
-                                <form string="Linea Orden de Matenimiento">
+                                <form string="Order Line Maintenance">
                                     <field name="product_id" on_change="onchange_product(product_id)"/>
                                     <field name="product_qty"/>
                                     <field name="costo"/>
@@ -185,11 +185,11 @@
                                 </form>
                             </field>
                         </page>
-                        <page string="Programa">
+                        <page string="Program">
                             <field name="type"/>
                             <field name="type_qty"/>
                         </page>
-                        <page string="Notas">
+                        <page string="Notes">
                             <field name="notes" colspan="4" nolabel="1"/>
                         </page>
                     </notebook>
@@ -201,7 +201,7 @@
             <field name="model">maintenance.bom</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Lista de Materiales">
+                <tree string="Bill of Materials">
                     <field name="name"/>
                     <field name="modelo_id"/>
                     <field name="costo_total"/>
@@ -211,7 +211,7 @@
             </field>
         </record>
         <record id="action_maintenance_bom_form" model="ir.actions.act_window">
-            <field name="name">Mantenimiento BoM</field>
+            <field name="name">Maintenance BoM</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">maintenance.bom</field>
             <field name="view_type">form</field>
@@ -224,7 +224,7 @@
             <field name="model">tracto.modelo</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Modelo">
+                <tree string="Model">
                     <field name="name" select="1"/>
                     <field name="description"/>
                 </tree>
@@ -235,7 +235,7 @@
             <field name="model">tracto.modelo</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Modelo">
+                <form string="Model">
                     <field name="name" select="1"/>
                     <field name="description"/>
                     <field name="line_ids" colspan="4" nolabel="1"/>
@@ -243,7 +243,7 @@
             </field>
         </record>
         <record id="action_tracto_modelo_form" model="ir.actions.act_window">
-            <field name="name">Modelo</field>
+            <field name="name">Model</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">tracto.modelo</field>
             <field name="view_type">form</field>
@@ -251,172 +251,23 @@
         </record>
         <menuitem action="action_tracto_modelo_form" id="menu_action_tracto_modelo_form" parent="menu_maintenance_configuration"/>
 
-        <record id="view_tire_size_tree" model="ir.ui.view">
-            <field name="name">tire.size.tree</field>
-            <field name="model">tire.size</field>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <tree string="Medida">
-                    <field name="name" select="1"/>
-                </tree>
-            </field>
-        </record>
-        <record id="view_tire_size_form" model="ir.ui.view">
-            <field name="name">tire.size.form</field>
-            <field name="model">tire.size</field>
+        <record model="ir.ui.view" id="view_product_normal_form_maintenance">
+            <field name="name">view.product.normal.form.maintenance</field>
+            <field name="model">product.product</field>
             <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
             <field name="arch" type="xml">
-                <form string="Medida">
-                    <field name="name" select="1"/>
-                </form>
+                <xpath expr="/form/notebook/page[@string='Information']" position="after">
+                    <page string="Maintenance">
+                        <field name="maintenance_id" colspan="4"/>
+                        <field name="modelo_id"/>
+                        <field name="distance"/>
+                        <field name="maintenance_ids" colspan="4" nolabel="1" readonly="1"/>
+                    </page>
+                </xpath>
             </field>
         </record>
-        <record id="action_tire_size_form" model="ir.actions.act_window">
-            <field name="name">Medida Llanta</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">tire.size</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-        <menuitem action="action_tire_size_form" id="menu_action_tire_size_form" parent="product.prod_config_main"/>
-
-        <record id="view_tire_brand_tree" model="ir.ui.view">
-            <field name="name">tire.brand.tree</field>
-            <field name="model">tire.brand</field>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <tree string="Marca">
-                    <field name="name" select="1"/>
-                </tree>
-            </field>
-        </record>
-        <record id="view_tire_brand_form" model="ir.ui.view">
-            <field name="name">tire.brand.form</field>
-            <field name="model">tire.brand</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="Marca">
-                    <field name="name" select="1"/>
-                </form>
-            </field>
-        </record>
-        <record id="action_tire_brand_form" model="ir.actions.act_window">
-            <field name="name">Marca Llanta</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">tire.brand</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-        <menuitem action="action_tire_brand_form" id="menu_action_tire_brand_form" parent="product.prod_config_main"/>
-
-    <record model="ir.ui.view" id="view_product_normal_form_maintenance">
-        <field name="name">view.product.normal.form.maintenance</field>
-        <field name="model">product.product</field>
-        <field name="type">form</field>
-        <field name="inherit_id" ref="product.product_normal_form_view"/>
-        <field name="arch" type="xml">
-            <xpath expr="/form/notebook/page[@string='Information']" position="after">
-                <page string="Vehicle Data">
-                    <field name="maintenance_id" colspan="4"/>
-                    <field name="modelo_id"/>
-                    <field name="distance"/>
-                </page>
-                <page string="Mantenimientos">
-                    <field name="maintenance_ids" colspan="4" nolabel="1" readonly="1"/>
-                </page>
-<!--
-                <page string="Info. Llanta">
-                    <field name="tire_state"/>
-                    <field name="brand_id"/>
-                    <field name="model"/>
-                    <field name="size"/>
-                    <field name="tire_type"/>
-                    <newline/>
-                    <field name="renew"/>
-                    <field name="talacha"/>
-                    <field name="recorrido"/>
-                    <field name="capas"/>
-                    <field name="profundidad"/>
-                    <field name="date_tire"/>
-                    <field name="current_pos"/>
-                </page>
-                <page string="Distribucion Llantas">
-                    <field name="axle_type" colspan="4"/>
-                    <separator string="EJE Delantero" colspan="4"/>
-                    <field name="front_left" attrs="{'readonly':[('axle_type', 'in', ['caja4', 'caja8'])]}"/>
-                    <field name="front_right" attrs="{'readonly':[('axle_type', 'in', ['caja4', 'caja8'])]}"/>
-                    <separator string="EJE Trasero" colspan="4"/>
-                    <group colspan="4" col="8">
-                        <field name="rear_left2"/>
-                        <field name="rear_left"/>
-                        <field name="rear_right"/>
-                        <field name="rear_right2"/>
-                    </group>
-                    <separator string="EJE Trasero 2" colspan="4"/>
-                    <group colspan="4" col="8">
-                        <field name="rear2_left2" attrs="{'readonly':[('axle_type', 'in', ['caja4', 'tracto6'])]}"/>
-                        <field name="rear2_left" attrs="{'readonly':[('axle_type', 'in', ['caja4', 'tracto6'])]}"/>
-                        <field name="rear2_right" attrs="{'readonly':[('axle_type', 'in', ['caja4', 'tracto6'])]}"/>
-                        <field name="rear2_right2" attrs="{'readonly':[('axle_type', 'in', ['caja4', 'tracto6'])]}"/>
-                    </group>
-                    <separator string="Refacciones" colspan="4"/>
-                    <field name="refaccion1"/>
-                    <field name="refaccion2"/>
-                </page>
-                -->
-                <page string="Tire History">
-                    <field name="history_ids" colspan="4" nolabel="1"/>
-                </page>
-
-            </xpath>
-        </field>
-    </record>
     
-        =================================
-        WAREHOUSE
-        =================================
-        <menuitem action="stock.action_warehouse_form" id="menu_action_maintenance_warehouse_form" parent="menu_maintenance_configuration"/>
-
-        =================================
-        HISTORIAL DE LLANTAS
-        =================================
-        <record id="view_tire_history_tree" model="ir.ui.view">
-            <field name="name">tire.history.tree</field>
-            <field name="model">tire.history</field>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <tree string="Historial">
-                    <field name="tracto_id" select="1"/>
-                    <field name="tire_id" select="1"/>
-                    <field name="date" select="1"/>
-                    <field name="distance" select="2"/>
-                    <field name="position" select="2"/>
-                </tree>
-            </field>
-        </record>
-        <record id="view_tire_history_form" model="ir.ui.view">
-            <field name="name">tire.history.form</field>
-            <field name="model">tire.history</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="Historial">
-                    <field name="tracto_id" select="1"/>
-                    <field name="tire_id" select="1"/>
-                    <field name="date" select="1"/>
-                    <field name="distance" select="2"/>
-                    <field name="position" select="2"/>
-                </form>
-            </field>
-        </record>
-        <record id="action_tire_history_form" model="ir.actions.act_window">
-            <field name="name">Historial</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">tire.history</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-        <menuitem action="action_tire_history_form" id="menu_action_tire_history_form" parent="product.prod_config_main"/>
-
         <record id="product_normal_form_view_image_inh" model="ir.ui.view">
             <field name="name">product.normal.form.view.image.inh</field>
             <field name="model">product.product</field>

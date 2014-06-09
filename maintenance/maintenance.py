@@ -35,9 +35,9 @@ class tracto_modelo(osv.osv):
     _name = 'tracto.modelo'
 
     _columns = {
-            'name': fields.char('Modelo', size=64, required=True),
-            'description': fields.char('Descripcion', size=64),
-            'line_ids': fields.one2many('maintenance.bom', 'modelo_id', 'Lista de Mantenimiento')
+            'name': fields.char('Model', size=64, required=True),
+            'description': fields.char('Description', size=64),
+            'line_ids': fields.one2many('maintenance.bom', 'modelo_id', 'Maintenance List')
         }
 
 tracto_modelo()
@@ -46,9 +46,9 @@ class product_product(osv.osv):
     _inherit = 'product.product'
 
     _columns = {
-            'modelo_id': fields.many2one('tracto.modelo', 'Modelo'),
-            'distance': fields.float('Kilometraje'),
-            'maintenance_ids': fields.one2many('maintenance.order.line', 'product_id', 'Programa de Mantenimientos')
+            'modelo_id': fields.many2one('tracto.modelo', 'Model'),
+            'distance': fields.float('Distance'),
+            'maintenance_ids': fields.one2many('maintenance.order.line', 'product_id', 'Maintenance Program')
         }
 
 product_product()
@@ -65,14 +65,14 @@ class maintenance_bom(osv.osv):
         return res
 
     _columns = {
-            'name': fields.char('Descripcion', size=128, required=True),
-            'modelo_id': fields.many2one('tracto.modelo', 'Modelo'),
-            'line_ids': fields.one2many('maintenance.bom.line', 'bom_id', 'Lineas'),
-            'notes': fields.text('Notas'),
-            'tiempo': fields.float('Horas Estimadas'),
-            'costo_total': fields.function(_get_costo, method=True, type='float', string='Costo total'),
-            'type': fields.selection([('',''),('week','Semanas'),('mes', 'Meses'),('km', 'KM')], 'Tipo'),
-            'type_qty': fields.integer('Cantidad'),
+            'name': fields.char('Description', size=128, required=True),
+            'modelo_id': fields.many2one('tracto.modelo', 'Model'),
+            'line_ids': fields.one2many('maintenance.bom.line', 'bom_id', 'Lines'),
+            'notes': fields.text('Notes'),
+            'tiempo': fields.float('Estimated Hours'),
+            'costo_total': fields.function(_get_costo, method=True, type='float', string='Total Cost'),
+            'type': fields.selection([('',''),('week','Semanas'),('mes', 'Meses'),('km', 'KM')], 'Type'),
+            'type_qty': fields.integer('Quantity'),
             'active': fields.boolean('Active')
         }
 
@@ -96,11 +96,11 @@ class maintenance_bom_line(osv.osv):
     _rec_name = 'product_id'
 
     _columns = {
-            'product_id': fields.many2one('product.product', 'Producto', required=True, domain = [('type','=','product')]),
-            'product_qty': fields.float('Cantidad', required=True),
-            'costo': fields.float('Costo'),
+            'product_id': fields.many2one('product.product', 'Product', required=True, domain = [('type','=','product')]),
+            'product_qty': fields.float('Quantity', required=True),
+            'costo': fields.float('Cost'),
             'total': fields.function(_get_total, method=True, type='float', string="Total"),
-            'bom_id': fields.many2one('maintenance.bom', 'Lista de Mantenimiento', ondelete='cascade', select=True),
+            'bom_id': fields.many2one('maintenance.bom', 'Maintenance List', ondelete='cascade', select=True),
             'product_uom': fields.many2one('product.uom', 'UoM', required=True),
         }
 
@@ -139,32 +139,32 @@ class maintenance_order_line(osv.osv):
         return res
 
     _columns = {
-            'name': fields.char('Descripcion', size=128, required=True, readonly=True, states={'draft':[('readonly', False)]}),
-            'orden': fields.integer('Orden del Dia', readonly=True),
-            'product_id': fields.many2one('product.product', 'Tracto', required=True, readonly=True, states={'draft':[('readonly', False)]}),
-            'bom_id': fields.many2one('maintenance.bom', 'Lista de Mantenimiento', readonly=True, states={'draft':[('readonly', False)]}),
-            'priority': fields.integer('Prioridad'),
-            'date':fields.date('Fecha Reporte', required=True, readonly=True, states={'draft':[('readonly', False)]}),
-            'date_done':fields.date('Fecha Realizado', readonly=True),
-            'date_due': fields.date('Fecha Compromiso', readonly=True),
-            'date_release': fields.datetime('Fecha Termino'),
+            'name': fields.char('Description', size=128, required=True, readonly=True, states={'draft':[('readonly', False)]}),
+            'orden': fields.integer('Order Day', readonly=True),
+            'product_id': fields.many2one('product.product', 'Product', required=True, readonly=True, states={'draft':[('readonly', False)]}),
+            'bom_id': fields.many2one('maintenance.bom', 'Maintenance List', readonly=True, states={'draft':[('readonly', False)]}),
+            'priority': fields.integer('Priority'),
+            'date':fields.date('Report Date', required=True, readonly=True, states={'draft':[('readonly', False)]}),
+            'date_done':fields.date('Date Finished', readonly=True),
+            'date_due': fields.date('Date Compromise', readonly=True),
+            'date_release': fields.datetime('Date End'),
             'notes': fields.text('Description'),
-            'costo': fields.function(_get_costo, method=True, type='float', string='Costo total'),
-            'warehouse_id': fields.many2one('stock.warehouse', 'Almacen'),
-            'picking_ids': fields.one2many('stock.picking', 'maintenance_id', 'Traspasos'),
+            'costo': fields.function(_get_costo, method=True, type='float', string='Total cost'),
+            'warehouse_id': fields.many2one('stock.warehouse', 'Warehouse'),
+            'picking_ids': fields.one2many('stock.picking', 'maintenance_id', 'Transfers'),
             'type':fields.selection([
-                ('correctivo','Correctivo'),
-                ('preventivo','Preventivo'), ], 'Tipo'),
+                ('correctivo','Corrective'),
+                ('preventivo','Preventive'), ], 'Type'),
             'state':fields.selection([
-                ('draft','Sin Realizar'),
-                ('done','Terminado'),
-                ('cancel', 'Cancelado'),
-                ('in_progress','En Proceso'),
-                ('reassigned','Reasignado')], 'State', readonly=True),
-            'material_ids': fields.one2many('maintenance.material.line', 'line_id', 'Materiales'),
-            'modelo_id': fields.many2one('tracto.modelo', 'Modelo'),
-            'pendiente_id': fields.many2one('maintenance.order.line', 'Pendiente', readonly=True),
-            'distance': fields.float('Kilometraje', required=True, readonly=False, states={'draft':[('readonly', False)]}),
+                ('draft','Draft'),
+                ('done','Finish'),
+                ('cancel', 'Canceled'),
+                ('in_progress','In Process'),
+                ('reassigned','Reassigned')], 'State', readonly=True),
+            'material_ids': fields.one2many('maintenance.material.line', 'line_id', 'Materials'),
+            'modelo_id': fields.many2one('tracto.modelo', 'Model'),
+            'pendiente_id': fields.many2one('maintenance.order.line', 'Pending', readonly=True),
+            'distance': fields.float('Distance', required=True, readonly=False, states={'draft':[('readonly', False)]}),
         }
 
     _defaults = {
@@ -253,7 +253,7 @@ class maintenance_order_line(osv.osv):
         for tracto in product_obj.browse(cr, uid, tracto_ids):
             for bom in tracto.modelo_id.line_ids:
                 crear = False
-                res = self.search(cr, uid, [('product_id','=',tracto.id),('bom_id','=',bom.id)])
+                res = self.search(cr, uid, [('product_id', '=', tracto.id), ('bom_id', '=', bom.id), ('state', '!=', 'cancel')])
                 if not res and bom.type != '' and ( (bom.type == 'km' and tracto.distance > bom.type_qty) or bom.type != 'km'):
                     crear = True
                 else:
@@ -289,7 +289,7 @@ class stock_picking(osv.osv):
     _inherit = 'stock.picking'
 
     _columns = {
-            'maintenance_id': fields.many2one('maintenance.order.line', 'Programa de Mantenimientos', readonly=True),
+            'maintenance_id': fields.many2one('maintenance.order.line', 'Maintenance Program', readonly=True),
         }
 
 stock_picking()
@@ -309,10 +309,10 @@ class maintenance_material_line(osv.osv):
     _rec_name = 'product_id'
 
     _columns = {
-            'product_id': fields.many2one('product.product', 'Producto', required=True, domain=[('type', '!=', 'service')]),
+            'product_id': fields.many2one('product.product', 'Product', required=True, domain=[('type', '!=', 'service')]),
             'line_id': fields.many2one('maintenance.order.line', 'Order Line'),
-            'product_qty': fields.float('Cantidad'),
-            'costo': fields.float('Costo'),
+            'product_qty': fields.float('Quantity'),
+            'costo': fields.float('Cost'),
             'total': fields.function(_get_total, method=True, type='float', string="Total"),
             'product_uom': fields.many2one('product.uom', 'UoM'),
         }
