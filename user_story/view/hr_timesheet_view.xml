@@ -9,7 +9,8 @@
                 <tree editable="top" create='false' edit='false' string="Timesheet Activities">                  
                     <field name="date" on_change="on_change_date(date)"/>
                     <field name="user_id" on_change="on_change_user_id(user_id)" required="1" options='{"no_open": True}'/>
-                    <field name="userstory_id"/>
+                    <field name="userstory_id" invisible='1'/>
+                    <field name="userstory"/>
                     <field name="task_title"/>
                     <field name="name"/>
                     <field name="unit_amount" string="Duration" on_change="on_change_unit_amount(product_id, unit_amount, False, product_uom_id,journal_id)" sum="Total time" widget="float_time"/>
@@ -27,12 +28,14 @@
                     <field name="user_id"/>
                     <field name="task_title"/>
                     <field name="userstory_id"/>
+                    <field name="userstory"/>
                     <field name="name"/>
                     <field name="analytic_id"/>
                     <group expand="0" string="Group By...">
                         <filter string="Users" icon="terp-personal" domain="[]" context="{'group_by':'user_id'}"/>
                         <filter string="Task" icon="terp-personal" domain="[]" context="{'group_by':'task_title'}"/>
-                        <filter string="User Story" icon="terp-personal" domain="[]" context="{'group_by':'userstory_id'}"/>
+                        <filter string="User Story Name" icon="terp-personal" domain="[]" context="{'group_by':'userstory_id'}"/>
+                        <filter string="User Story Code" icon="terp-personal" domain="[]" context="{'group_by':'userstory'}"/>
                         <filter string="Date" icon="terp-go-month" domain="[]" context="{'group_by':'date'}"/>
                         <filter string="Project" icon="terp-go-month" domain="[]" context="{'group_by':'analytic_id'}"/>
                     </group>
