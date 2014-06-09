@@ -257,6 +257,7 @@ class hr_payslip(osv.Model):
             ('weekly', _('Weekly')),
             ('bi-weekly', _('Bi-weekly')),
             ('bi-monthly', _('Bi-monthly')),
+            ('fortnightly', _('Fortnightly')),
             ]), string="Scheduled Pay", readonly=True),
         'sello': fields.text('Stamp', size=512, help='Digital Stamp'),
         'certificado': fields.text('Certificate', size=64,
@@ -276,6 +277,7 @@ class hr_payslip(osv.Model):
         'journal_id': _get_journal,
         'company_id': lambda self,cr,uid,c: self.pool.get('res.company')._company_default_get(cr, uid, 'hr.payslip', context=c),
     }
+
 
     def _create_original_str(self, cr, uid, ids, invoice_id, context=None):
         if context is None:
@@ -738,7 +740,7 @@ class hr_payslip(osv.Model):
     def _get_facturae_payroll_xml_data(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        contract_obj = self.pool.get('hr.contract')
+        payroll_obj = self.pool.get('hr.payslip')
         ids = isinstance(ids, (int, long)) and [ids] or ids
         payroll = self.browse(cr, uid, ids)[0]
         if payroll:
@@ -779,7 +781,7 @@ class hr_payslip(osv.Model):
                 if os.path.isdir(os.path.join(my_path, 'l10n_mx_payroll_base', 'template')):
                     fname_jinja_tmpl = my_path and os.path.join(my_path, 'l10n_mx_payroll_base', 'template', 'nomina11' + '.xml') or ''
             context.update({'lang' : self.pool.get('res.users').browse(cr, uid, uid, context=context).lang})
-            schedule_pay_values = contract_obj.fields_get(cr, uid, 'schedule_pay', context=context).get('schedule_pay').get('selection')
+            schedule_pay_values = payroll_obj.fields_get(cr, uid, 'schedule_pay', context=context).get('schedule_pay').get('selection')
             schedule_pay_values_dict = {lin[0]: lin[1] for lin in schedule_pay_values}
             dictargs = {
                 'a': payroll,
@@ -814,6 +816,17 @@ class hr_payslip(osv.Model):
             doc_xml_full = doc_xml_full.replace('<?xml version="1.0" ?>', '<?xml version="1.0" encoding="UTF-8"?>')
             doc_xml_full = doc_xml_full.replace('<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
         return fname_xml, doc_xml_full
+
+    def onchange_employee_id(self, cr, uid, ids, date_from, date_to, employee_id=False, contract_id=False, context=None):
+        empolyee_obj = self.pool.get('hr.employee')
+        res = super(hr_payslip, self).onchange_employee_id(cr, uid, ids, date_from, date_to, employee_id=employee_id, contract_id=contract_id, context=context)
+        if employee_id:
+            employee_id = empolyee_obj.browse(cr, uid, employee_id, context=context)
+            if employee_id and employee_id.address_home_id or employee_id.address_home_id.pay_method_id:
+                res['value'].update({'pay_method_id': employee_id.address_home_id.pay_method_id.id})
+        else:
+            res['value'].update({'pay_method_id': False})
+        return res
 
     def copy(self, cr, uid, id, default={}, context=None):
         if context is None:

@@ -138,6 +138,7 @@
                             totalImpuestosTrasladados_xml = 0.00
                             amount_total_tax = 0.00
                             importe_ret = 0.00
+                            print "entroooooooooooooo"
                             if invoice_lines:
                                 for n in doc_xml.getElementsByTagName("cfdi:Comprobante"):
                                     xml_total = n.getAttribute("total")

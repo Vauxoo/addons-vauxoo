@@ -51,6 +51,7 @@ class hr_contract(osv.Model):
             ('weekly', 'Weekly'),
             ('bi-weekly', 'Bi-weekly'),
             ('bi-monthly', 'Bi-monthly'),
+            ('fortnightly', _('Fortnightly')),
             ], 'Scheduled Pay', select=True, help=_('Way in which the payment of the wage is set: daily, weekly, biweekly, monthly, bimonthly, commission, etc.')),
         'wage': fields.float('Wage', digits=(16,2), required=True, help=_("Remuneration granted to the employee, which is composed by payments made in cash daily fee, gratuities, perceptions, food, housing, bonuses, commissions, benefits in kind and any other amount or benefit provided to the employee for their work.")),
     }
