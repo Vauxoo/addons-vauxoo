@@ -30,17 +30,15 @@ class wizard_check_maintenance(osv.Model):
     
     def update_maintenances(self, cr, uid, ids, context=None):
         mol_ids = self.pool.get('maintenance.order.line')._check_maintenance(cr, uid, ids, context=context)
-        if mol_ids:
-            return {
-                'domain': "[('id','in', [" + ','.join(map(str,mol_ids)) + "])]",
-                'name': 'Mantenimientos',
-                'view_type': 'form',
-                'view_mode': 'tree,form',
-                'res_model': 'maintenance.order.line',
-                'view_id': False,
-                'type': 'ir.actions.act_window'
-            }
-        return {}
+        return {
+            'domain': "[('id','in', [" + ','.join(map(str,mol_ids)) + "])]",
+            'name': 'Mantenimientos',
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'maintenance.order.line',
+            'view_id': False,
+            'type': 'ir.actions.act_window'
+        }
     
     
 

@@ -6,21 +6,8 @@
         web_icon_hover="images/knowledge-hover.png"/>/>
     <menuitem id="menu_maintenance_update" name="Update Maintenances" parent="menu_maintenance_root"/>
 
-    <wizard id="wizard_maintenance_cancel"
-        name="wizard.maintenance.cancel" 
-        string="Cancel Maintenance" 
-        model="maintenance.order"
-        menu="False"/>
-    
     <menuitem action="action_wizard_update_maintenance" id="menu_wizard_check_maintenance" parent="menu_maintenance_update"/>
     
-<!--
-    <wizard id="wizard_set_tire"
-            name="wizard.set.tire"
-            string="Set Tires"
-            model="product.product"/>
--->
-            
     <wizard id="wizard_maintenance_start"
         name="wizard.maintenance.start" 
         string="Start Maintenance" 
@@ -71,10 +58,38 @@
             </form>
             </field>
         </record>
-        <record id="action_wizard_update_maintenance" model="ir.actions.act_window">
+        <record id="action_wizard_start_maintenance" model="ir.actions.act_window">
             <field name="name">Start Maintenance</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">wizard.maintenance.start</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record id="view_wizard_cancel_maintenance" model="ir.ui.view">
+            <field name="name">view.wizard.cancel.maintenance</field>
+            <field name="model">wizard.maintenance.cancel</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            <form string="Cancel Maintenance">
+                <separator colspan="4" string="If you want reassign the maintenance, you must be indicate the date of compromise"/>
+                <group>
+                    <field name="date"/> 
+                </group>
+                <separator colspan="4"/>
+                <group colspan="3">
+                    <button name="reassign_maintenance" string="Reassign" type="object" icon="gtk-apply"/>
+                    <button name="cancel_maintenance" string="Cancel Maintenance" type="object" icon="gtk-stop"/>
+                    <button special="cancel" string="Close" icon="gtk-stop"/>
+                </group>
+            </form>
+            </field>
+        </record>
+        <record id="action_wizard_cancel_maintenance" model="ir.actions.act_window">
+            <field name="name">Cancel Maintenance</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.maintenance.cancel</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
