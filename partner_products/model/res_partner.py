@@ -38,3 +38,13 @@ class res_partner(osv.Model):
             'Offered Products',
             help='Supplier Offered Products'),
     }
+
+    def copy(self, cur, uid, id, default=None, context=None):
+        """
+        overwrite the copy orm method to clean the produc_ids list.
+        """
+        context = context or {}
+        default = default or {}
+        default.update({'product_ids': []})
+        return super(res_partner, self).copy(
+            cur, uid, id, default=default, context=context)
