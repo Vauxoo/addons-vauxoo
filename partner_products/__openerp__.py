@@ -37,6 +37,7 @@ The supplier can manage a list of products to offer.
 ''',
     'depends': [
         'base',
+        'product',
     ],
     'data': [],
     'demo': [],
