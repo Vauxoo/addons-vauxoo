@@ -5,7 +5,6 @@
         <record id="hr_timesheet_line_tree_user_story" model="ir.ui.view">
             <field name="name">custom.timesheet.tree</field>
             <field name="model">custom.timesheet</field>
-            <field name="sequence">999</field>
             <field name="arch" type="xml">
                 <tree editable="top" create='false' edit='false' string="Timesheet Activities">                  
                     <field name="date" on_change="on_change_date(date)"/>
@@ -22,7 +21,6 @@
         <record id="hr_timesheet_line_search_user_story" model="ir.ui.view">
             <field name="name">custom.timesheet.search</field>
             <field name="model">custom.timesheet</field>
-            <field name="sequence">999</field>
             <field name="arch" type="xml">
                 <search string="Timesheet">
                     <field name="date"/>
