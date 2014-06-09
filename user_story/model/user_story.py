@@ -136,8 +136,8 @@ class user_story(osv.Model):
                 followers.append(hu.user_id.partner_id.id)
             if hu.user_execute_id and hu.user_execute_id.partner_id:
                 followers.append(hu.user_execute_id.partner_id.id)
-            if owner_id and len(owner_id)==1:
-                user_o = user_obj.browse(cr,uid,owner_id,context=context)
+            if owner_id:
+                user_o = [owner_id] 
                 followers.append( user_o[0].partner_id.id)
 
         context.update({
