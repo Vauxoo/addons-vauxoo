@@ -39,7 +39,9 @@ The supplier can manage a list of products to offer.
         'base',
         'product',
     ],
-    'data': [],
+    'data': [
+        'view/res_partner_view.xml',
+        ],
     'demo': [],
     'test': [],
     'qweb': [],
