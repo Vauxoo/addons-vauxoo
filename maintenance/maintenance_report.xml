@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <report id="orden_dia"
+            name="orden.dia"
+            string="Orden del Dia"
+            model="maintenance.order.line"
+            rml="maintenance/report/orden_dia.rml"
+            auto="True"/>
+    </data>
+</openerp>
