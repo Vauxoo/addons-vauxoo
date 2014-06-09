@@ -23,4 +23,18 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import res_partner
+from openerp.osv import fields, osv, orm
+from openerp.tools.translate import _
+from openerp import tools
+
+class res_partner(osv.Model):
+
+    _inherit = 'res.partner'
+    _columns = {
+        'product_ids': fields.many2many(
+            'product.product',
+            'partner_product_rel',
+            'partner_id', 'product_id',
+            'Offered Products',
+            help='Supplier Offered Products'),
+    }
