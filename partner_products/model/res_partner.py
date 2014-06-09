@@ -35,8 +35,8 @@ class res_partner(osv.Model):
             'product.product',
             'partner_product_rel',
             'partner_id', 'product_id',
-            'Offered Products',
-            help='Supplier Offered Products'),
+            'Products',
+            help='Supplier List of Offered Products'),
     }
 
     def copy(self, cur, uid, id, default=None, context=None):
