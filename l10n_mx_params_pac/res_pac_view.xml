@@ -30,8 +30,9 @@
                     <field name="namespace"/>
                     <field name="user"/>
                     <field name="password" password="True"/>
-                    <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                    <field name="certificate_link"/>
                     <field name="active"/>
+                    <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                     <field name="params_pac_ids" nolabel="1" colspan="4"  widget="one2many_list">
                         <tree string="Parameters Pac">
                             <field name="name"/>
@@ -39,7 +40,6 @@
                             <field name="url_webservice"/>
                             <field name="namespace"/>
                             <field name="user"/>
-                            <field name="password" password="True"/>
                             <field name="active"/>
                             <field name="sequence"/>
                         </tree>

@@ -38,8 +38,7 @@
                 "account_cancel",
                 "l10n_mx_facturae_lib",
         ],
-    "demo" : ["demo/l10n_mx_facturae_email_demo.xml",
-    ],
+    "demo" : [],
     "data" : [
         "security/l10n_mx_ir_attachment_facturae_security.xml",
         "security/ir.model.access.csv",
@@ -47,6 +46,8 @@
         "l10n_mx_facturae_workflow.xml",
         "l10n_mx_facturae_mail_server_data.xml",
         "res_config.xml",
+        "test/update_type-to-pac.yml",
+        "data/l10n_mx_facturae_email_data.xml",
     ],
     "installable" : True,
     "active" : False,

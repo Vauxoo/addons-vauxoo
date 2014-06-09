@@ -48,17 +48,6 @@ except:
     _logger.error('Execute "sudo pip install pil qrcode" to use l10n_mx_facturae_pac_finkok module.')
 
 
-class hr_payslip_product_line(osv.Model):
-    
-    _name = 'hr.payslip.product.line'
-
-    _columns = {
-        'payslip_id': fields.many2one('hr.payslip'),
-        'product_id': fields.many2one('product.product', 'Product', required=True),
-        'amount': fields.float('Amount'),
-        
-    }
-
 class hr_payslip(osv.Model):
 
     def string_to_xml_format(self, cr, uid, ids, text):
@@ -231,7 +220,6 @@ class hr_payslip(osv.Model):
         'journal_id': fields.many2one('account.journal', 'Journal', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'date_payslip': fields.date('Payslip Date'),
         'payslip_datetime': fields.datetime('Electronic Payslip Date'),
-        'line_payslip_product_ids': fields.one2many('hr.payslip.product.line', 'payslip_id', 'Generic Product', required=True),
         'pay_method_id': fields.many2one('pay.method', 'Payment Method',
             readonly=True, states={'draft': [('readonly', False)]}),
         'company_emitter_id': fields.function(_get_company_emitter_payroll,
@@ -269,6 +257,7 @@ class hr_payslip(osv.Model):
             ('weekly', _('Weekly')),
             ('bi-weekly', _('Bi-weekly')),
             ('bi-monthly', _('Bi-monthly')),
+            ('fortnightly', _('Fortnightly')),
             ]), string="Scheduled Pay", readonly=True),
         'sello': fields.text('Stamp', size=512, help='Digital Stamp'),
         'certificado': fields.text('Certificate', size=64,
@@ -279,6 +268,8 @@ class hr_payslip(osv.Model):
         #~ 'deduction_total' : fields.function(_deductions, type='float', string='Deductions Total', store=True),
         #~ 'perception_total' : fields.function(_perceptions, type='float', string='Perception Total', store=True),
         #~ 'total' : fields.function(_total, type='float', string='Total', store=True),
+        'product_id': fields.many2one('product.product', 'Product', required=True),
+
     }
 
     _defaults = {
@@ -286,6 +277,7 @@ class hr_payslip(osv.Model):
         'journal_id': _get_journal,
         'company_id': lambda self,cr,uid,c: self.pool.get('res.company')._company_default_get(cr, uid, 'hr.payslip', context=c),
     }
+
 
     def _create_original_str(self, cr, uid, ids, invoice_id, context=None):
         if context is None:
@@ -332,8 +324,6 @@ class hr_payslip(osv.Model):
                     'payslip_datetime': hr.payslip_datetime},
                     context=context)
             self.write(cr, uid, ids, vals_date, context=context)
-            if not hr.line_payslip_product_ids:
-                raise osv.except_osv(_('No Product Lines!'), _('Please create some product lines.'))
             super(hr_payslip, self).hr_verify_sheet(cr, uid, ids)
             if hr.journal_id.sequence_id and hr.journal_id.sequence_id.id:
                 obj_sequence.next_by_id(cr, uid, hr.journal_id.sequence_id.id, context=context)
@@ -365,53 +355,50 @@ class hr_payslip(osv.Model):
                 payroll.journal_id.sequence_id.approval_ids and \
                         payroll.journal_id.sequence_id.approval_ids[0] or False
             if approval_id:
-                if payroll.employee_id.address_home_id:
-                    #~ type = payroll.journal_id and payroll.journal_id.sequence_id and \
-                            #~ payroll.journal_id.sequence_id.approval_ids[0] and \
-                                        #~ payroll.journal_id.sequence_id.approval_ids[0].res_pac.name_driver
-                    xml_fname, xml_data = self._get_facturae_payroll_xml_data(cr, uid, ids, context=context)
-                    fname = str(payroll.id) + '_XML_V3_2.xml' or ''
-                    attachment_id = attachment_obj.create(cr, uid, {
-                                        'name': fname,
-                                        'datas': base64.encodestring(xml_data),
-                                        'datas_fname': fname,
-                                        'res_model': self._name,
-                                        #~ 'res_id': payroll.id
-                                }, context=context)
-                    if payroll.company_emitter_id.address_invoice_parent_company_id.use_parent_address:
-                        address_emitter = payroll.company_emitter_id.address_invoice_parent_company_id.parent_id
-                    else:
-                        address_emitter = payroll.company_emitter_id.address_invoice_parent_company_id
-                    if address_emitter:
-                        context_extra_data.update({'emisor':{'phone':address_emitter.phone,'fax':address_emitter.fax,'mobile':address_emitter.mobile,'web':address_emitter.website,'email':address_emitter.email}})
-                    context_extra_data.update({'receptor':{'phone':payroll.partner_id.phone,'fax':payroll.partner_id.fax,'mobile':payroll.partner_id.mobile}})
-                    context_extra_data.update({'type': 'payroll'})
-                    attach_ids.append( ir_attach_obj.create(cr, uid, {
-                        'name': payroll.number or '/',
-                        #~ 'type': type,
-                        'journal_id': payroll.journal_id and payroll.journal_id.id or False,
-                        'company_emitter_id': payroll.company_emitter_id.id,
-                        'model_source': self._name or '',
-                        'id_source': payroll.id,
-                        'attachment_email': payroll.employee_id.work_email or payroll.employee_id.address_home_id.email or  '',
-                        'certificate_id': cert_id,
-                        'certificate_password': file_globals.get('password', ''),
-                        'certificate_file': cerCSD or '',
-                        'certificate_key_file': keyCSD or '',
-                        'user_pac': '',
-                        'password_pac': '',
-                        'url_webservice_pac': '',
-                        #~'file_input_index': base64.encodestring(xml_data),
-                        'document_source': payroll.number,
-                        'file_input': attachment_id,
-                        'context_extra_data': context_extra_data,
-                        'res_pac': approval_id.res_pac.id or False,
-                            },
-                          context=context)
-                        )
-                    ir_attach_obj.signal_confirm(cr, uid, attach_ids, context=context)
+                #~ type = payroll.journal_id and payroll.journal_id.sequence_id and \
+                        #~ payroll.journal_id.sequence_id.approval_ids[0] and \
+                                    #~ payroll.journal_id.sequence_id.approval_ids[0].res_pac.name_driver
+                xml_fname, xml_data = self._get_facturae_payroll_xml_data(cr, uid, ids, context=context)
+                fname = str(payroll.id) + '_XML_V3_2.xml' or ''
+                attachment_id = attachment_obj.create(cr, uid, {
+                                    'name': fname,
+                                    'datas': base64.encodestring(xml_data),
+                                    'datas_fname': fname,
+                                    'res_model': self._name,
+                                    #~ 'res_id': payroll.id
+                            }, context=context)
+                if payroll.company_emitter_id.address_invoice_parent_company_id.use_parent_address:
+                    address_emitter = payroll.company_emitter_id.address_invoice_parent_company_id.parent_id
                 else:
-                    raise orm.except_orm(_('Warning'), _('This employee does not have a home address'))
+                    address_emitter = payroll.company_emitter_id.address_invoice_parent_company_id
+                if address_emitter:
+                    context_extra_data.update({'emisor':{'phone':address_emitter.phone,'fax':address_emitter.fax,'mobile':address_emitter.mobile,'web':address_emitter.website,'email':address_emitter.email}})
+                context_extra_data.update({'receptor':{'phone':payroll.partner_id.phone,'fax':payroll.partner_id.fax,'mobile':payroll.partner_id.mobile}})
+                context_extra_data.update({'type': 'payroll'})
+                attach_ids.append( ir_attach_obj.create(cr, uid, {
+                    'name': payroll.number or '/',
+                    #~ 'type': type,
+                    'journal_id': payroll.journal_id and payroll.journal_id.id or False,
+                    'company_emitter_id': payroll.company_emitter_id.id,
+                    'model_source': self._name or '',
+                    'id_source': payroll.id,
+                    'attachment_email': payroll.employee_id.work_email or payroll.employee_id.address_home_id.email or  '',
+                    'certificate_id': cert_id,
+                    'certificate_password': file_globals.get('password', ''),
+                    'certificate_file': cerCSD or '',
+                    'certificate_key_file': keyCSD or '',
+                    'user_pac': '',
+                    'password_pac': '',
+                    'url_webservice_pac': '',
+                    #~'file_input_index': base64.encodestring(xml_data),
+                    'document_source': payroll.number,
+                    'file_input': attachment_id,
+                    'context_extra_data': context_extra_data,
+                    'res_pac': approval_id.res_pac.id or False,
+                        },
+                      context=context)
+                    )
+                ir_attach_obj.signal_confirm(cr, uid, attach_ids, context=context)
         if attach_ids:
             result = mod_obj.get_object_reference(cr, uid, 'l10n_mx_ir_attachment_facturae',
                                                             'action_ir_attachment_facturae_mx')
@@ -453,6 +440,8 @@ class hr_payslip(osv.Model):
             
     def get_input_line_ids_type(self, cr, uid, ids, lines, type_line, type_amount=False):
         lines_get = []
+        deduction = False
+        perception = False
         __check_payslip_code_mx_re = re.compile( self._structure )
         for line in lines:
             code_sat = line.code
@@ -461,6 +450,10 @@ class hr_payslip(osv.Model):
                 code = m.group('code')
                 pd = m.group('pd')
                 eg = m.group('eg')
+                if line.amount <> 0 and pd=="P":
+                    perception = True
+                if abs(line.amount) <> 0 and pd=="D":
+                    deduction = True
                 if type_amount:
                     if pd.upper() == type_line:
                         if eg.upper() == type_amount:
@@ -468,6 +461,10 @@ class hr_payslip(osv.Model):
                 else:
                     if pd.upper() == type_line:
                         lines_get.append(line)
+        if not perception:
+            raise osv.except_osv(_('Warning !'), _('At least there must be a perception'))
+        if not deduction:
+            raise osv.except_osv(_('Warning !'), _('At least there must be a deduction'))
         return lines_get
         
     def get_line_short_type(self, cr, uid, ids, lines, type_line):
@@ -744,6 +741,7 @@ class hr_payslip(osv.Model):
     def _get_facturae_payroll_xml_data(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
+        payroll_obj = self.pool.get('hr.payslip')
         ids = isinstance(ids, (int, long)) and [ids] or ids
         payroll = self.browse(cr, uid, ids)[0]
         if payroll:
@@ -778,14 +776,17 @@ class hr_payslip(osv.Model):
                     with open(fname_xml, 'w') as new_xml:
                         new_xml.write( tmpl.render(**dictargs2) )
             with open(fname_xml,'rb') as b:
-                data_xml = b.read().encode('UTF-8')
+                data_xml = b.read()
             b.close()
-            
             for my_path in all_paths:
                 if os.path.isdir(os.path.join(my_path, 'l10n_mx_payroll_base', 'template')):
                     fname_jinja_tmpl = my_path and os.path.join(my_path, 'l10n_mx_payroll_base', 'template', 'nomina11' + '.xml') or ''
+            context.update({'lang' : self.pool.get('res.users').browse(cr, uid, uid, context=context).lang})
+            schedule_pay_values = payroll_obj.fields_get(cr, uid, 'schedule_pay', context=context).get('schedule_pay').get('selection')
+            schedule_pay_values_dict = {lin[0]: lin[1] for lin in schedule_pay_values}
             dictargs = {
                 'a': payroll,
+                'schedule_pay': schedule_pay_values_dict,
                 'employee': payroll.employee_id,
                 'time': ti,
                 're': re,
@@ -800,7 +801,7 @@ class hr_payslip(osv.Model):
                     with open(fname_xml_payroll, 'w') as new_xml:
                         new_xml.write( tmpl.render(**dictargs) )
             with open(fname_xml_payroll,'rb') as b:
-                data_xml_payroll = b.read().encode('UTF-8')
+                data_xml_payroll = b.read()
             #Agregar nodo Nomina en nodo Complemento
             doc_xml = xml.dom.minidom.parseString(data_xml)
             doc_xml_payroll_2 = xml.dom.minidom.parseString(data_xml_payroll)
@@ -816,6 +817,17 @@ class hr_payslip(osv.Model):
             doc_xml_full = doc_xml_full.replace('<?xml version="1.0" ?>', '<?xml version="1.0" encoding="UTF-8"?>')
             doc_xml_full = doc_xml_full.replace('<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
         return fname_xml, doc_xml_full
+
+    def onchange_employee_id(self, cr, uid, ids, date_from, date_to, employee_id=False, contract_id=False, context=None):
+        empolyee_obj = self.pool.get('hr.employee')
+        res = super(hr_payslip, self).onchange_employee_id(cr, uid, ids, date_from, date_to, employee_id=employee_id, contract_id=contract_id, context=context)
+        if employee_id:
+            employee_id = empolyee_obj.browse(cr, uid, employee_id, context=context)
+            if employee_id and employee_id.address_home_id or employee_id.address_home_id.pay_method_id:
+                res['value'].update({'pay_method_id': employee_id.address_home_id.pay_method_id.id})
+        else:
+            res['value'].update({'pay_method_id': False})
+        return res
 
     def copy(self, cr, uid, id, default={}, context=None):
         if context is None:

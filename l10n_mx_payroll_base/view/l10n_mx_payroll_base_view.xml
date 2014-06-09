@@ -27,12 +27,7 @@
                 </xpath>
                 <xpath expr="//separator[@string='Worked Days']" position="before">
                     <separator string="Generic Product"/>
-                    <field name="line_payslip_product_ids">
-                        <tree string="Generic Product" editable="bottom">
-                            <field name="product_id"/>
-                            <field name="amount"/>
-                        </tree>
-                    </field>
+                        <field name="product_id" domain="[('type', '=', 'service')]"/>
                 </xpath>
                 <xpath expr="//field[@name='credit_note']" position="before">
                     <field name="schedule_pay"/>
@@ -42,7 +37,21 @@
                     <field name="currency_id" groups="base.group_multi_currency" widget="selection"/>
                     <field name="approval_id" invisible="True"  widget="selection"/>
                 </xpath>
+                <xpath expr="//field[@name='number']" position="replace">
+                    <field name="number" required="1"/>
+                </xpath>
                     
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_hr_payslip_inherit_domain_journal_form">
+            <field name="name">hr.payslip.inherit.domain.journal.form</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll_account.view_hr_payslip_inherit_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='journal_id']" position="attributes">
+                    <attribute name="domain">[('type','=', 'general')]</attribute>
+                </xpath>
             </field>
         </record>
 

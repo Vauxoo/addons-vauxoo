@@ -153,7 +153,10 @@ class invoice_facturae_html(report_sxw.rml_parse):
         attachment_obj = self.pool.get('ir.attachment')
         source_brw = source_obj.browse(self.cr, self.uid, [source_id])
         attachment_ids = o.file_xml_sign.id
-        db_data = attachment_obj.browse(self.cr, self.uid, [attachment_ids])[0].db_datas
+        db_data = attachment_obj.browse(self.cr, self.uid, [attachment_ids])[0].db_datas or \
+            attachment_obj.browse(self.cr, self.uid, [attachment_ids])[0].datas
+        if not db_data:
+            raise osv.except_osv(_('Warning'), _('Attachment was not found, verify your system parameters configuration.'))
         xml_data = base64.decodestring(db_data)
         dict_data = dict(xmltodict.parse(xml_data)['cfdi:Comprobante'])
         return self._modify_recursively_dict(dict_data)

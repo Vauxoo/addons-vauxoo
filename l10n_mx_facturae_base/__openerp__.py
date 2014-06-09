@@ -73,6 +73,8 @@ Requires the following programs:
     "demo" : [
          "demo/l10n_mx_facturae_users.xml",
         #~ "demo/account_invoice_cfd_demo.xml",
+        "demo/l10n_mx_facturae_taxes.xml",
+        "demo/l10n_mx_facturae_products.xml",
         "demo/account_invoice_cfdi_demo.xml",
     ],
     "data" : [

@@ -31,6 +31,7 @@ from openerp import pooler, tools
 
 class res_pac(osv.Model):
     _name = 'res.pac'
+    
 
     def _get_driver_selection(self, cr, uid, context=None):
         if context is None:
@@ -61,4 +62,5 @@ class res_pac(osv.Model):
     _defaults = {
         'company_id': lambda s, cr, uid, c: s.pool.get(
             'res.company')._company_default_get(cr, uid, 'res.pac', context=c),
+        'active': 1
     }

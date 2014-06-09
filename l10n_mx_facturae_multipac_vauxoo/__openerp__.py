@@ -44,6 +44,7 @@
         "l10n_mx_facturae_report",
         "l10n_mx_facturae_seq", 
         "l10n_mx_ir_attachment_facturae",
+        "l10n_mx_ir_attachment_facturae_client",
         "l10n_mx_facturae_group_show_wizards",
         "l10n_mx_settings_facturae"
         ],
@@ -51,12 +52,10 @@
         "demo/l10n_mx_facturae_multipac_vx_demo.xml",
         "demo/l10n_mx_facturae_seq_demo.xml",
         "demo/l10n_mx_payroll_seq_demo.xml",
-        #~ "demo/account_invoice_cfdi_multipac_vx_demo.xml",
         ],
     "data" : [
         ],
     "test" : [
-        #~ "test/account_invoice_cfdi_multipac_vauxoo.yml",
         ],
     "installable" : True,
     "active" : False,
