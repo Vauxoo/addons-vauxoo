@@ -40,7 +40,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
             <form string="Start Maintenances">
-                <separator string="Indicate the date of completition of maintenance"/>
+                <separator string="Indicate the date of completion of maintenance"/>
                 <newline/>
                 <separator colspan="4"/>
                 <group>

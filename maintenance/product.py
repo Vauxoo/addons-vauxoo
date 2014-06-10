@@ -147,7 +147,7 @@ class product_product(osv.osv):
         return res
 
     _columns = {
-            'routing_available':  fields.function(_get_routing_available, method=True, type="boolean", string="Disponible", fnct_search=_search_routing_available,),
+            'routing_available':  fields.function(_get_routing_available, method=True, type="boolean", string="Available", fnct_search=_search_routing_available,),
         }
 
 product_product()

@@ -70,7 +70,7 @@
             <field name="model">maintenance.order.line</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Maintenance">
+                <tree colors="grey:state == 'cancel';" string="Maintenance">
                     <field name="product_id"/>
                     <field name="distance"/>
                     <field name="name"/>
@@ -86,6 +86,26 @@
                 </tree>
             </field>
         </record>
+        
+        <record id="view_maintenance_order_line_search" model="ir.ui.view">
+            <field name="name">view.maintenance.order.line.search</field>
+            <field name="model">maintenance.order.line</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Mantenances">
+                    <group>
+                        <filter icon="terp-check" name="in_process" string="In Process" domain="[('state','=','in_progress')]" help="Maintenances in process"/>
+                    </group>
+                    <newline/>
+                    <group expand="0" string="Group By...">
+                        <filter string="State" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'state'}"/>
+                        <separator orientation="vertical" />
+                        <filter string="Product" icon="terp-accessories-archiver" domain="[]" context="{'group_by':'product_id'}"/>
+                    </group>
+                </search>
+
+            </field>
+        </record>
 
         <!-- Todos -->
         <record id="action_maintenance_order_line_form" model="ir.actions.act_window">
@@ -93,65 +113,11 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">maintenance.order.line</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,search</field>
             <field name="domain">[]</field>
         </record>
-        <menuitem action="action_maintenance_order_line_form" id="menu_maintenance_order_line" parent="menu_maintenance_root"/>
-
-        <!-- Borrador -->
-        <record id="action_maintenance_order_line_draft" model="ir.actions.act_window">
-            <field name="name">Draft</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">maintenance.order.line</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <field name="domain">[('state','=','draft')]</field>
-        </record>
-        <menuitem action="action_maintenance_order_line_draft" id="menu_maintenance_order_line_draft" parent="menu_maintenance_order_line"/>
-
-        <!-- Cancelados -->
-        <record id="action_maintenance_order_line_cancel" model="ir.actions.act_window">
-            <field name="name">Canceled</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">maintenance.order.line</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <field name="domain">[('state','=','cancel')]</field>
-        </record>
-        <menuitem action="action_maintenance_order_line_cancel" id="menu_maintenance_order_line_cancel" parent="menu_maintenance_order_line"/>
-
-        <!-- Terminado -->
-        <record id="action_maintenance_order_line_done" model="ir.actions.act_window">
-            <field name="name">Finished</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">maintenance.order.line</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <field name="domain">[('state','=','done')]</field>
-        </record>
-        <menuitem action="action_maintenance_order_line_done" id="menu_maintenance_order_line_done" parent="menu_maintenance_order_line"/>
-
-        <!-- En Proceso -->
-        <record id="action_maintenance_order_line_progrees" model="ir.actions.act_window">
-            <field name="name">In Process</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">maintenance.order.line</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <field name="domain">[('state','=','in_progress')]</field>
-        </record>
-        <menuitem action="action_maintenance_order_line_progrees" id="menu_maintenance_order_line_progrees" parent="menu_maintenance_order_line"/>
-
-        <!-- Reasignados -->
-        <record id="action_maintenance_order_line_reassigned" model="ir.actions.act_window">
-            <field name="name">Reassigned</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">maintenance.order.line</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <field name="domain">[('state','=','reassigned')]</field>
-        </record>
-        <menuitem action="action_maintenance_order_line_reassigned" id="menu_maintenance_order_line_reassigned" parent="menu_maintenance_order_line"/>
+        <menuitem id="menu_maintenance_order_line" parent="menu_maintenance_root"/>
+        <menuitem action="action_maintenance_order_line_form" id="menu_maintenance_order_line_all" parent="menu_maintenance_order_line"/>
 
         <!-- BoM's-->
         <record id="view_maintenance_bom_form" model="ir.ui.view">
