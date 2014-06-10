@@ -42,7 +42,7 @@ class ir_attachment_facturae_mx(osv.Model):
             if att.model_source == 'hr.payslip':
                 state_payslip = payslip_obj.browse(cr, uid, [att.id_source], context=context)[0].state
                 if state_payslip != 'cancel':
-                    payslip_obj.cancel_sheet(cr, uid, [att.id_source], context=context)
+                    wf_service.trg_validate(uid, att.model_source, att.id_source, 'cancel_sheet', cr)
                 else:
                     attach = super(ir_attachment_facturae_mx, self).signal_cancel(cr, uid, ids, context)
             else:
