@@ -29,7 +29,7 @@ from openerp import tools
 
 purchase_requisition_type = [
     ('materials', 'Materials'),
-    ('service', 'Service'),
+    ('service', 'Services'),
 ]
 
 class purchase_requisition(osv.Model):
