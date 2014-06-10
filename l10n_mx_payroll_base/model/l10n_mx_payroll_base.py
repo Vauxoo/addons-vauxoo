@@ -39,7 +39,7 @@ import urllib
 from markupsafe import Markup
 import time as ti
 import re
-
+import time
 from openerp import release
 
 try:
@@ -77,8 +77,7 @@ class hr_payslip(osv.Model):
                 for attach in ir_attach_facturae_mx_obj.browse(cr, uid, ir_attach_facturae_mx_ids, context=context):
                     attach = ir_attach_facturae_mx_obj.signal_cancel(cr, uid, [attach.id], context=context)
                     if attach:
-                        now = datetime.now()
-                        self.write(cr, uid, ids, {'date_payslip_cancel': now})
+                        self.write(cr, uid, ids, {'date_payslip_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
         return res
 
     def string_to_xml_format(self, cr, uid, ids, text):
