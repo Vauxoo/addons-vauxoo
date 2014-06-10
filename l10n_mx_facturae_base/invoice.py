@@ -139,21 +139,15 @@ class account_invoice(osv.Model):
             'in_invoice': False,
             'in_refund': False}
         for inv in self.browse(cr, uid, ids, context=context):
-            if inv_type_facturae.get(inv.type, False):
-                ir_attach_facturae_mx_ids = ir_attach_facturae_mx_obj.search(
-                    cr, uid, [('id_source', '=', inv.id), ('model_source', '=', self._name)], context=context)
-                if ir_attach_facturae_mx_ids:
+            res = super(account_invoice, self).action_cancel(cr, uid, ids, context=context)
+            if res:
+                if inv_type_facturae.get(inv.type, False):
+                    ir_attach_facturae_mx_ids = ir_attach_facturae_mx_obj.search(
+                        cr, uid, [('id_source', '=', inv.id), ('model_source', '=', self._name)], context=context)
                     for attach in ir_attach_facturae_mx_obj.browse(cr, uid, ir_attach_facturae_mx_ids, context=context):
-                        res = super(account_invoice, self).action_cancel(cr, uid, ids, context=context)
-                        if attach.state <> 'cancel':
-                            if res:
-                                attach = ir_attach_facturae_mx_obj.signal_cancel(cr, uid, [attach.id], context=context)
-                                if attach:
-                                    self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
-                        else:
-                            res = super(account_invoice, self).action_cancel(cr, uid, ids, context=context)
-                else:
-                    res = super(account_invoice, self).action_cancel(cr, uid, ids, context=context)
+                        attach = ir_attach_facturae_mx_obj.signal_cancel(cr, uid, [attach.id], context=context)
+                        if attach:
+                            self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
         return res
 
     def create_ir_attachment_facturae(self, cr, uid, ids, context=None):

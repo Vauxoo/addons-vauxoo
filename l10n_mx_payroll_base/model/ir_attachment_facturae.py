@@ -37,16 +37,12 @@ class ir_attachment_facturae_mx(osv.Model):
         wf_service = netsvc.LocalService("workflow")
         payslip_obj = self.pool.get('hr.payslip')
         ids = isinstance(ids, (int, long)) and [ids] or ids
-        res = False
         attach = False
-        for att in self.browse(cr, uid, ids):
+        for att in self.browse(cr, uid, ids, context):
             if att.model_source == 'hr.payslip':
                 state_payslip = payslip_obj.browse(cr, uid, [att.id_source], context=context)[0].state
                 if state_payslip != 'cancel':
-                    res = self.pool.get('hr.payslip').cancel_sheet(cr, uid, [att.id_source], context=context)
-                    if res:
-                        attach = super(ir_attachment_facturae_mx, self).signal_cancel(cr, uid, ids, context)
-                        return attach
+                    payslip_obj.cancel_sheet(cr, uid, [att.id_source], context=context)
                 else:
                     attach = super(ir_attachment_facturae_mx, self).signal_cancel(cr, uid, ids, context)
             else:
