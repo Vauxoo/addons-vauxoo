@@ -31,37 +31,37 @@ from mx.DateTime import *
 import netsvc
 import base64
 
-class tire_brand(osv.osv):
-    _name = 'tire.brand'
+#~ class tire_brand(osv.osv):
+    #~ _name = 'tire.brand'
+#~ 
+    #~ _columns = {
+            #~ 'name': fields.char('nombre', size=64)
+        #~ }
+#~ 
+#~ tire_brand()
 
-    _columns = {
-            'name': fields.char('nombre', size=64)
-        }
-
-tire_brand()
-
-class tire_size(osv.osv):
-    _name = 'tire.size'
-
-    _columns = {
-            'name': fields.char('nombre', size=64)
-        }
-
-tire_size()
+#~ class tire_size(osv.osv):
+    #~ _name = 'tire.size'
+#~ 
+    #~ _columns = {
+            #~ 'name': fields.char('nombre', size=64)
+        #~ }
+#~ 
+#~ tire_size()
 
 class product_template(osv.osv):
     _inherit = 'product.template'
 
-    def _get_current(self, cr, uid, ids, name, arg, context=None):
-        query = """SELECT th.id, MAX(th.date) FROM tire_history th WHERE th.tire_id in (%s) GROUP BY th.id"""%(",".join(map(str, ids)))
-        cr.execute(query)
-        hist_ids = cr.dictfetchall()
-        res = {}
-        for hist in self.pool.get('tire.history').browse(cr, uid, map(lambda x: x['id'], hist_ids)):
-            res[hist.tire_id.id] = "%s - %s - %s Km"%(hist.tracto_id.name, hist.position, hist.distance)
-        for id in ids:
-            res.setdefault(id, '')
-        return res
+    #~ def _get_current(self, cr, uid, ids, name, arg, context=None):
+        #~ query = """SELECT th.id, MAX(th.date) FROM tire_history th WHERE th.tire_id in (%s) GROUP BY th.id"""%(",".join(map(str, ids)))
+        #~ cr.execute(query)
+        #~ hist_ids = cr.dictfetchall()
+        #~ res = {}
+        #~ for hist in self.pool.get('tire.history').browse(cr, uid, map(lambda x: x['id'], hist_ids)):
+            #~ res[hist.tire_id.id] = "%s - %s - %s Km"%(hist.tracto_id.name, hist.position, hist.distance)
+        #~ for id in ids:
+            #~ res.setdefault(id, '')
+        #~ return res
 
     def _get_release(self, cr, uid, ids, name, arg, context=None):
         res = {}
@@ -78,95 +78,95 @@ class product_template(osv.osv):
             'modelo_id': fields.many2one('tracto.modelo', 'Modelo'),
             'distance': fields.float('Kilometraje'),
             'maintenance_ids': fields.one2many('maintenance.order.line', 'product_id', 'Mantenimientos'),
-            #Datos para las llantas
-            'tire_state': fields.selection([('nueva', 'Nueva'), ('usada', 'Usada'), ('renovada','Renovada'), ('original','Original')],'Estado'),
-            'brand_id': fields.many2one('tire.brand', 'Marca'),
-            'model': fields.char('Modelo', size=16),
-            'size': fields.many2one('tire.size', 'Medida'),
-            'tire_type': fields.selection([('convencional','Convencional'),('direccional','Direccional'),('radial','Radial'),('traccion','Traccion')], 'Tipo de Piso'),
-            'renew': fields.integer('Renovado'),
-            'talacha': fields.integer('Talachas'),
-            'recorrido': fields.integer('Recorrido'),
-            'capas': fields.integer('Numero de Capas'),
-            'profundidad': fields.float('Profundidad'),
-            'date_tire': fields.date('Fecha Revision'),
-            #Posicionamiento en ejes
-            #EJE 1
-            'front_left': fields.many2one('product.product', 'Frente Izquierdo', readonly=True),
-            'front_right': fields.many2one('product.product', 'Frente Derecho', readonly=True),
-            #EJE 2
-            'rear_left': fields.many2one('product.product', 'Izquierdo', readonly=True),
-            'rear_left2': fields.many2one('product.product', 'Izquierdo 2', readonly=True),
-            'rear_right': fields.many2one('product.product', 'Derecho', readonly=True),
-            'rear_right2': fields.many2one('product.product', 'Derecho 2', readonly=True),
-            #EJE 3
-            'rear2_left': fields.many2one('product.product', 'Izquierdo', readonly=True),
-            'rear2_left2': fields.many2one('product.product', 'Izquierdo 2', readonly=True),
-            'rear2_right': fields.many2one('product.product', 'Derecho', readonly=True),
-            'rear2_right2': fields.many2one('product.product', 'Derecho 2', readonly=True),
-            #Refacciones . . . duh!!!
-            'refaccion1': fields.many2one('product.product', 'Refaccion 1', readonly=True),
-            'refaccion2': fields.many2one('product.product', 'Refaccion 2', readonly=True),
-            'axle_type': fields.selection([('',''),
-                    ('tracto6','Tracto 6 Llantas'),
-                    ('tracto10','Tracto 10 Llantas'),
-                    ('caja4','Caja 4 Llantas'),
-                    ('caja8','Caja 8 Llantas')],'Type'),
-
-            'history_ids': fields.one2many('tire.history', 'tire_id', 'Historial'),
-            'current_pos': fields.function(_get_current, method=True, string="Posicion Actual",type="char", size="64"),
             'maintenance_id': fields.function(_get_release, method=True, string="Mantenimiento", type="many2one", relation="maintenance.order.line"),
             'product_image': fields.binary('Image'),
+            'model': fields.char('Modelo', size=16),
+            #Datos para las llantas
+            #~ 'tire_state': fields.selection([('nueva', 'Nueva'), ('usada', 'Usada'), ('renovada','Renovada'), ('original','Original')],'Estado'),
+            #~ 'brand_id': fields.many2one('tire.brand', 'Marca'),
+            #~ 'size': fields.many2one('tire.size', 'Medida'),
+            #~ 'tire_type': fields.selection([('convencional','Convencional'),('direccional','Direccional'),('radial','Radial'),('traccion','Traccion')], 'Tipo de Piso'),
+            #~ 'renew': fields.integer('Renovado'),
+            #~ 'talacha': fields.integer('Talachas'),
+            #~ 'recorrido': fields.integer('Recorrido'),
+            #~ 'capas': fields.integer('Numero de Capas'),
+            #~ 'profundidad': fields.float('Profundidad'),
+            #~ 'date_tire': fields.date('Fecha Revision'),
+            #Posicionamiento en ejes
+            #EJE 1
+            #~ 'front_left': fields.many2one('product.product', 'Frente Izquierdo', readonly=True),
+            #~ 'front_right': fields.many2one('product.product', 'Frente Derecho', readonly=True),
+            #EJE 2
+            #~ 'rear_left': fields.many2one('product.product', 'Izquierdo', readonly=True),
+            #~ 'rear_left2': fields.many2one('product.product', 'Izquierdo 2', readonly=True),
+            #~ 'rear_right': fields.many2one('product.product', 'Derecho', readonly=True),
+            #~ 'rear_right2': fields.many2one('product.product', 'Derecho 2', readonly=True),
+            #EJE 3
+            #~ 'rear2_left': fields.many2one('product.product', 'Izquierdo', readonly=True),
+            #~ 'rear2_left2': fields.many2one('product.product', 'Izquierdo 2', readonly=True),
+            #~ 'rear2_right': fields.many2one('product.product', 'Derecho', readonly=True),
+            #~ 'rear2_right2': fields.many2one('product.product', 'Derecho 2', readonly=True),
+            #Refacciones . . . duh!!!
+            #~ 'refaccion1': fields.many2one('product.product', 'Refaccion 1', readonly=True),
+            #~ 'refaccion2': fields.many2one('product.product', 'Refaccion 2', readonly=True),
+            #~ 'axle_type': fields.selection([('',''),
+                    #~ ('tracto6','Tracto 6 Llantas'),
+                    #~ ('tracto10','Tracto 10 Llantas'),
+                    #~ ('caja4','Caja 4 Llantas'),
+                    #~ ('caja8','Caja 8 Llantas')],'Type'),
+#~ 
+            #~ 'history_ids': fields.one2many('tire.history', 'tire_id', 'Historial'),
+            #~ 'current_pos': fields.function(_get_current, method=True, string="Posicion Actual",type="char", size="64"),
             
         }
 
 product_template()
 
-class product_product(osv.osv):
-    _inherit = 'product.product'
+#~ class product_product(osv.osv):
+    #~ _inherit = 'product.product'
+#~ 
+    #~ def _search_routing_available(self, cr, uid, obj, name, args, context={}):
+        #~ ids = []
+        #~ for product in self.browse(cr, uid, self.search(cr, uid, [('id','<>',0)], context=context), context=context):
+            #~ if args[0][2] and product.routing_available:
+                #~ ids.append( product.id )
+            #~ elif not args[0][2] and not product.routing_available:
+                #~ ids.append( product.id )
+        #~ #if not ids: return [('id', '=', 0)]
+        #~ return [('id', 'in', ids)]
+#~ 
+    #~ def _get_routing_available(self, cr, uid, ids, field_name, args, context={}):
+        #~ res = {}
+        #~ for product in self.browse(cr, uid, ids, context=context):
+            #~ available = False
+            #~ if (not product.routing_state or product.routing_state in ('draft', 'done', 'cancel')) and not product.maintenance_id:
+                #~ available = True
+            #~ if product.routing_state == 'downloading' and product.vehicle_type == 'principal':
+                #~ available = True
+            #~ res.update( {product.id: available} )
+        #~ return res
+#~ 
+    #~ _columns = {
+            #~ 'routing_available':  fields.function(_get_routing_available, method=True, type="boolean", string="Available", fnct_search=_search_routing_available,),
+        #~ }
+#~ 
+#~ product_product()
 
-    def _search_routing_available(self, cr, uid, obj, name, args, context={}):
-        ids = []
-        for product in self.browse(cr, uid, self.search(cr, uid, [('id','<>',0)], context=context), context=context):
-            if args[0][2] and product.routing_available:
-                ids.append( product.id )
-            elif not args[0][2] and not product.routing_available:
-                ids.append( product.id )
-        #if not ids: return [('id', '=', 0)]
-        return [('id', 'in', ids)]
 
-    def _get_routing_available(self, cr, uid, ids, field_name, args, context={}):
-        res = {}
-        for product in self.browse(cr, uid, ids, context=context):
-            available = False
-            if (not product.routing_state or product.routing_state in ('draft', 'done', 'cancel')) and not product.maintenance_id:
-                available = True
-            if product.routing_state == 'downloading' and product.vehicle_type == 'principal':
-                available = True
-            res.update( {product.id: available} )
-        return res
-
-    _columns = {
-            'routing_available':  fields.function(_get_routing_available, method=True, type="boolean", string="Available", fnct_search=_search_routing_available,),
-        }
-
-product_product()
-
-
-class tire_history(osv.osv):
-    _name = 'tire.history'
-
-    _rec_name = 'tracto_id'
-    _columns = {
-            'tracto_id': fields.many2one('product.product', 'Tracto/Caja', required=True),
-            'tire_id': fields.many2one('product.product', 'Tire', required=True),
-            'date': fields.date('Fecha', required=True),
-            'distance': fields.integer('Kilometraje'),
-            'position': fields.char('Posicion', size=64)
-        }
-
-    _defaults = {
-            'date': lambda *a: time.strftime('%Y-%m-%d'),
-        }
-
-tire_history()
+#~ class tire_history(osv.osv):
+    #~ _name = 'tire.history'
+#~ 
+    #~ _rec_name = 'tracto_id'
+    #~ _columns = {
+            #~ 'tracto_id': fields.many2one('product.product', 'Tracto/Caja', required=True),
+            #~ 'tire_id': fields.many2one('product.product', 'Tire', required=True),
+            #~ 'date': fields.date('Fecha', required=True),
+            #~ 'distance': fields.integer('Kilometraje'),
+            #~ 'position': fields.char('Posicion', size=64)
+        #~ }
+#~ 
+    #~ _defaults = {
+            #~ 'date': lambda *a: time.strftime('%Y-%m-%d'),
+        #~ }
+#~ 
+#~ tire_history()

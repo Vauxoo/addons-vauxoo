@@ -25,5 +25,5 @@
 ##############################################################################
 import wizard_maintenance_cancel
 import wizard_check_maintenance
-import set_tire
+#~ import set_tire
 import wizard_maintenance_start
