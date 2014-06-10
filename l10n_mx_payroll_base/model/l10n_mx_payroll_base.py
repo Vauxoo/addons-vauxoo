@@ -39,7 +39,7 @@ import urllib
 from markupsafe import Markup
 import time as ti
 import re
-
+import time
 from openerp import release
 
 try:
@@ -49,13 +49,30 @@ except:
 
 
 class hr_payslip(osv.Model):
+    _inherit = 'hr.payslip'
+
+    def cancel_sheet(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        res = False
+        wf_service = netsvc.LocalService("workflow")
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        ir_attach_facturae_mx_obj = self.pool.get('ir.attachment.facturae.mx')
+        for payslip in self.browse(cr, uid, ids, context=context):
+            res = super(hr_payslip, self).cancel_sheet(cr, uid, ids, context=context)
+            if res:
+                ir_attach_facturae_mx_ids = ir_attach_facturae_mx_obj.search(cr, uid, 
+                [('id_source', '=', payslip.id), ('model_source', '=', self._name)], context=context)
+                for attach in ir_attach_facturae_mx_obj.browse(cr, uid, ir_attach_facturae_mx_ids, context=context):
+                    attach = ir_attach_facturae_mx_obj.signal_cancel(cr, uid, [attach.id], context=context)
+                    if attach:
+                        self.write(cr, uid, ids, {'date_payslip_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
+        return res
 
     def string_to_xml_format(self, cr, uid, ids, text):
         #~ return text.encode('utf-8', 'xmlcharrefreplace')
         if text:
             return cgi.escape(text, True).encode('ascii', 'xmlcharrefreplace').replace('\n\n', ' ')
-
-    _inherit = 'hr.payslip'
 
     def _get_company_emitter_payroll(self, cr, uid, ids, name, args, context=None):
         if context is None:
