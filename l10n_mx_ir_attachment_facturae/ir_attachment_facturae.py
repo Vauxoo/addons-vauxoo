@@ -300,8 +300,14 @@ class ir_attachment_facturae_mx(osv.Model):
                     doc_xml.documentElement.removeChild(nodecomplemento)
                     data_xml = doc_xml.toxml('UTF-8')
                     data_xml_payroll = nodepayroll[0].toxml('UTF-8')
-                    self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml_payroll], '11', 'nomina')
-                self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], 'v3.2', 'cfd')
+                    try:
+                        self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml_payroll], '11', 'nomina')
+                    except Exception, e:
+                        raise osv.except_osv(_('Error !'), _(e))
+                try:
+                    self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], 'v3.2', 'cfd')
+                except Exception, e:
+                    raise osv.except_osv(_('Error !'), _(e))
             self.write(cr, uid, ids,{
                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                            'msj': msj
