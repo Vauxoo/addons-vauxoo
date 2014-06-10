@@ -309,26 +309,35 @@ class invoice_facturae_html(report_sxw.rml_parse):
             })
         return res
         
-    def _get_text_promissory(self, company, partner, address_emitter, invoice):
+    def _get_text_promissory(self, model_source, id_source):
         text = ''
+        dict_var = {}
         context = {}
-        lang = self.pool.get('res.partner').browse(self.cr, self.uid,\
-            partner.id).lang
-        if lang:
-            context.update({'lang' : lang})
-        company = self.pool.get('res.company').browse(self.cr, self.uid,\
-            company.id, context=context)
-        if company.dinamic_text:
+        if model_source and id_source:
+            obj = self.pool.get(model_source).browse(self.cr, self.uid, id_source, context=context)
+            lang = self.pool.get('res.partner').browse(self.cr, self.uid,\
+                obj.partner_id.id).lang
+            if lang:
+                context.update({'lang' : lang})
+            company = self.pool.get('res.company').browse(self.cr, self.uid,\
+                obj.company_id.id, context=context)
             try:
-                if company.dict_var:
-                    text = company.dinamic_text % eval("{" + company.dict_var + "}")
-                else:
-                    text = company.dinamic_text
+                dict_text = eval('{' + company.dinamic_text + '}')
+                str_variables = str(company.dict_var)
+                for model in str_variables.split('|'):
+                    try:
+                        if eval('{' + model + '}').get(model_source, False):
+                            dict_var = eval('{' + model + '}')
+                    except:
+                        continue
+                if dict_text.get(model_source, False) and dict_var.get(model_source, False):
+                    text = dict_text.get(model_source).decode('utf-8') % dict_var.get(model_source)
+                elif dict_text.get(model_source, False) and not dict_var.get(model_source, False):
+                    text = dict_text.get(model_source)
             except:
                 return text
         return text
         
-
 webkit_report.WebKitParser('report.account.invoice.facturae.webkit',
             'ir.attachment.facturae.mx',
             'addons/l10n_mx_facturae_report/report/invoice_facturae_html.mako',
