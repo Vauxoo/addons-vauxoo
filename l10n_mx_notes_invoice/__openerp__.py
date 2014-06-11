@@ -26,21 +26,26 @@
 ##############################################################################
 
 {
-    "name" : "FacturaE Notes Invoice",
+    "name" : "Electronic Invoice Notes",
     "name" : "l10n_mx_notes_invoice",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module add field for notes in company for electrinic invoice report
+    "description" : """
+Electronic Invoice Notes:
+=======================================
+
+When we install this module add the following
+
+    * Data demo for notes
+    * Add field dinamic_text and dict_var for notes in company for electrinic invoice report
+
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : ['base'],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        "res_company_view.xml",
-    ],
+    "data" : ["res_company_view.xml"],
+    "demo" : ["demo/l10n_mx_notes_invoice_demo.xml"],
     "installable" : True,
     "active" : False,
 }
