@@ -35,7 +35,7 @@ class purchase_requisition_line(osv.Model):
 
     _columns = {
         'account_analytic_id': fields.many2one(
-            'account.analytic.account', 'Analytic Account',
+            'account.analytic.plan.instance', 'Analytic Distribution',
                 help='This field is used to assign the selected'\
                 ' analytic account to the line of the purchase order'),
     }
