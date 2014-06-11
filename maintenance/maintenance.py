@@ -261,7 +261,7 @@ class maintenance_order_line(osv.osv):
             for bom in tracto.modelo_id.line_ids:
                 crear = False
                 res = self.search(cr, uid, [('product_id', '=', tracto.id), ('bom_id', '=', bom.id), ('state', '!=', 'cancel')])
-                if not res and bom.type != '' and ( (bom.type == 'km' and tracto.distance > bom.type_qty) or bom.type != 'km'):
+                if not res and bom.type != '' and ( (bom.type == 'km' and tracto.distance > bom.type_qty) or bom.type in ('week', 'mes')):
                     crear = True
                 else:
                     query = """SELECT CASE WHEN mb.type = 'km' THEN (pp.distance - MAX(mol.distance)) > type_qty
