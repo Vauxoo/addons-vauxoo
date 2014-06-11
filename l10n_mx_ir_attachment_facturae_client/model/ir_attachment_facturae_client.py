@@ -50,9 +50,9 @@ class ir_attachment_facturae_client(osv.Model):
     def stamp(self, cr, uid, ids, cfdi, user, password):
         ir_attch_obj = self.pool.get('ir.attachment')
         ir_attch_facte_obj = self.pool.get('ir.attachment.facturae.mx')
-        texto = user + str(time.strftime('%Y-%m-%d %H:%M:%S'))
+        texto = user + '_' + str(time.strftime('%Y-%m-%d_%H:%M:%S'))
         regex = re.compile('(%s)' % '|'.join(map(re.escape, {' ':'', ':': '_'}.keys())))
-        name = regex.sub(lambda x: str({' ':'', ':': '_'}[x.string[x.start() :x.end()]]), texto)
+        name = regex.sub(lambda x: str({' ':'', ':': '-'}[x.string[x.start() :x.end()]]), texto)
         ir_attachment_values = {'name': name + '.xml',
                                 'datas': base64.encodestring(cfdi.encode('utf-8')),
                                 'datas_fname': name + '.xml',

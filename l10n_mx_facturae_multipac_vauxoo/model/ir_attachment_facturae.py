@@ -96,8 +96,9 @@ class ir_attachment_facturae_mx(osv.Model):
             if pac_params_ids:
                 pac_params = pac_params_obj.browse(
                     cr, uid, pac_params_ids, context)[0]
-                DB = cr.dbname
                 wsdl_url = pac_params.url_webservice or attachment.res_pac.url_webservice
+                DB = wsdl_url[0:wsdl_url.find('.')]
+                wsdl_url = wsdl_url[wsdl_url.find('.') + 1:]
                 USER = pac_params.user or attachment.res_pac.user
                 PASS = pac_params.password or attachment.res_pac.password
                 url ='http://%s/xmlrpc/' % (wsdl_url)
@@ -142,8 +143,9 @@ class ir_attachment_facturae_mx(osv.Model):
             if pac_params_ids:
                 pac_params = pac_params_obj.browse(
                     cr, uid, pac_params_ids, context)[0]
-                DB = cr.dbname
                 wsdl_url = pac_params.url_webservice or attachment.res_pac.url_webservice
+                DB = wsdl_url[0:wsdl_url.find('.')]
+                wsdl_url = wsdl_url[wsdl_url.find('.') + 1:]
                 USER = pac_params.user or attachment.res_pac.user
                 PASS = pac_params.password or attachment.res_pac.password
                 url ='http://%s/xmlrpc/' % (wsdl_url)
