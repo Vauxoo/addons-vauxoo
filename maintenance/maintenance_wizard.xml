@@ -6,8 +6,6 @@
             web_icon_hover="images/knowledge-hover.png"/>/>
         <menuitem id="menu_maintenance_update" name="Update Maintenances" parent="menu_maintenance_root"/>
 
-        <menuitem action="action_wizard_update_maintenance" id="menu_wizard_check_maintenance" parent="menu_maintenance_update"/>
-    
         <record id="view_wizard_update_maintenance" model="ir.ui.view">
             <field name="name">view.wizard.update.maintenance</field>
             <field name="model">wizard.check.maintenance</field>
@@ -33,6 +31,7 @@
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
+        <menuitem action="action_wizard_update_maintenance" id="menu_wizard_check_maintenance" parent="menu_maintenance_update"/>
 
         <record id="view_wizard_start_maintenance" model="ir.ui.view">
             <field name="name">view.wizard.start.maintenance</field>
