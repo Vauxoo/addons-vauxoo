@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <menuitem icon="terp-sale" id="menu_maintenance_root" name="Maintenance"/>
+        <menuitem id="menu_maintenance_configuration" name="Configuration" parent="menu_maintenance_root" sequence="1"/>
+
+        <record id="view_maintenance_order_line_form" model="ir.ui.view">
+            <field name="name">maintenance.order.line.form</field>
+            <field name="model">maintenance.order.line</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Maintenance">
+                    <group col="4" colspan="4">
+                        <field name="product_id" select="1" on_change="onchange_product(product_id)"/>
+                        <field name="distance" select="1" on_change="onchange_product(product_id)"/>
+                        <field name="bom_id" on_change="onchange_bom(bom_id)" domain="[('modelo_id', 'in', [False, modelo_id])]"/>
+                        <field name="name" select="2"/>
+                        <field name="orden"/>
+                        <field name="priority"/>
+                        <field name="type" select="1"/>
+                        <field name="date" select="1"/>
+                        <field name="date_done" select="2"/>
+                        <field name="date_due"/>
+                        <field name="costo"/>
+                        <field name="date_release" attrs="{'readonly':[('state','!=','in_progress')], 'required':[('state','=','in_progress')]}"/>
+                        <field name="modelo_id" invisible="1"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Materials">
+                            <field name="material_ids" colspan="4" nolabel="1">
+                                <tree string="Materials">
+                                    <field name="product_id"/>
+                                    <field name="product_qty"/>
+                                    <field name="costo"/>
+                                    <field name="total"/>
+                                    <field name="product_uom"/>
+                                </tree>
+                                <form string="Materials">
+                                    <field name="product_id" on_change="onchange_product(product_id)"/>
+                                    <field name="product_uom" invisible="1"/>
+                                    <field name="product_qty"/>
+                                    <field name="costo" invisible="1"/>
+                                    <field name="total"/>
+                                </form>
+                            </field>
+                            <field name="state" select="1"/>
+                            <group col="10" colspan="2">
+                                <button name="action_calcular" states="draft" string="Calculate Materials" type="object" icon="gtk-ok"/>
+                                <button name="%(action_wizard_start_maintenance)d" states="draft" string="Start" type="action"  icon="gtk-apply"/>
+                                <button name="action_done" states="in_progress" string="Finished" type="object" icon="gtk-apply"/>
+                                <button name="%(action_wizard_cancel_maintenance)d" states="draft,in_progress" string="Cancel" type="action" icon="gtk-stop"/>
+                                <!--button name="action_draft" states="done" string="Borrador" type="object"/-->
+                            </group>
+                        </page>
+                        <page string="Movements">
+                            <field name="warehouse_id" attrs="{'required':[('state','in',['in_progress','done'])]}"/>
+                            <field name="pendiente_id"/>
+                            <field name="picking_ids" colspan="4" nolabel="1"/>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes" colspan="4" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_maintenance_order_line_tree" model="ir.ui.view">
+            <field name="name">maintenance.order.line.tree</field>
+            <field name="model">maintenance.order.line</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree colors="grey:state == 'cancel';" string="Maintenance">
+                    <field name="product_id"/>
+                    <field name="distance"/>
+                    <field name="name"/>
+                    <field name="orden"/>
+                    <field name="priority"/>
+                    <field name="type"/>
+                    <field name="state"/>
+                    <field name="date"/>
+                    <field name="date_done"/>
+                    <field name="date_due"/>
+                    <field name="date_release"/>
+                    <field name="costo"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="view_maintenance_order_line_search" model="ir.ui.view">
+            <field name="name">view.maintenance.order.line.search</field>
+            <field name="model">maintenance.order.line</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Mantenances">
+                    <group>
+                        <filter icon="terp-check" name="in_process" string="In Process" domain="[('state','=','in_progress')]" help="Maintenances in process"/>
+                    </group>
+                    <newline/>
+                    <group expand="0" string="Group By...">
+                        <filter string="State" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'state'}"/>
+                        <separator orientation="vertical" />
+                        <filter string="Product" icon="terp-accessories-archiver" domain="[]" context="{'group_by':'product_id'}"/>
+                    </group>
+                </search>
+
+            </field>
+        </record>
+
+        <!-- Todos -->
+        <record id="action_maintenance_order_line_form" model="ir.actions.act_window">
+            <field name="name">Maintenances</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">maintenance.order.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,search</field>
+            <field name="domain">[]</field>
+        </record>
+        <menuitem id="menu_maintenance_order_line" parent="menu_maintenance_root" name="Maintenance"/>
+        <menuitem action="action_maintenance_order_line_form" id="menu_maintenance_order_line_all" parent="menu_maintenance_order_line"/>
+
+        <!-- BoM's-->
+        <record id="view_maintenance_bom_form" model="ir.ui.view">
+            <field name="name">maintenance.bom.form</field>
+            <field name="model">maintenance.bom</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Maintenance Orders">
+                    <notebook>
+                        <page string="General Info.">
+                            <field name="name" select="1"/>
+                            <field name="modelo_id" select="1"/>
+                            <field name="costo_total"/>
+                            <field name="active" select="2"/>
+                            <field name="tiempo" select="2"/>
+                            <newline/>
+                            <field name="line_ids" colspan="4" nolabel="1">
+                                <tree string="Order Line Maintenance">
+                                    <field name="product_id"/>
+                                    <field name="product_qty"/>
+                                    <field name="costo"/>
+                                    <field name="total"/>
+                                    <field name="product_uom"/>
+                                </tree>
+                                <form string="Order Line Maintenance">
+                                    <field name="product_id" on_change="onchange_product(product_id)"/>
+                                    <field name="product_qty"/>
+                                    <field name="costo"/>
+                                    <field name="total"/>
+                                    <field name="product_uom"/>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Program">
+                            <field name="type"/>
+                            <field name="type_qty"/>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes" colspan="4" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+        <record id="view_maintenance_bom_tree" model="ir.ui.view">
+            <field name="name">maintenance.bom.tree</field>
+            <field name="model">maintenance.bom</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Bill of Materials">
+                    <field name="name"/>
+                    <field name="modelo_id"/>
+                    <field name="costo_total"/>
+                    <field name="type"/>
+                    <field name="type_qty"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_maintenance_bom_form" model="ir.actions.act_window">
+            <field name="name">Maintenance BoM</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">maintenance.bom</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem action="action_maintenance_bom_form" id="menu_action_maintenance_bom_form" parent="menu_maintenance_configuration"/>
+
+        <record id="view_tracto_modelo_tree" model="ir.ui.view">
+            <field name="name">tracto.modelo.tree</field>
+            <field name="model">tracto.modelo</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Model">
+                    <field name="name" select="1"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_tracto_modelo_form" model="ir.ui.view">
+            <field name="name">tracto.modelo.form</field>
+            <field name="model">tracto.modelo</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Model">
+                    <field name="name" select="1"/>
+                    <field name="description"/>
+                    <field name="line_ids" colspan="4" nolabel="1"/>
+                </form>
+            </field>
+        </record>
+        <record id="action_tracto_modelo_form" model="ir.actions.act_window">
+            <field name="name">Model</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">tracto.modelo</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem action="action_tracto_modelo_form" id="menu_action_tracto_modelo_form" parent="menu_maintenance_configuration"/>
+
+        <record model="ir.ui.view" id="view_product_normal_form_maintenance">
+            <field name="name">view.product.normal.form.maintenance</field>
+            <field name="model">product.product</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page[@string='Information']" position="after">
+                    <page string="Maintenance">
+                        <field name="maintenance_id" colspan="4"/>
+                        <field name="modelo_id"/>
+                        <field name="distance"/>
+                        <field name="maintenance_ids" colspan="4" nolabel="1" readonly="1"/>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    
+        <record id="product_normal_form_view_image_inh" model="ir.ui.view">
+            <field name="name">product.normal.form.view.image.inh</field>
+            <field name="model">product.product</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form[@string='Product']/group" position="replace">
+                    <group colspan="4" col="6">
+                    <group colspan="1" col="2">
+                        <separator string="Name" colspan="2"/>
+                        <field name="name"/>
+                        <field groups="product.group_product_variant" name="variants" />
+                    </group>
+                    <group colspan="1" col="2">
+                        <separator string="Codes" colspan="2"/>
+                        <field name="default_code"/>
+                        <field name="ean13" groups="base.group_extended"/>
+                    </group>
+                    <group colspan="1" col="2">
+                        <separator string="Characteristics" colspan="2"/>
+                        <field name="sale_ok"/>
+                        <field name="purchase_ok"/>
+                    </group>
+                    <group colspan="1" col="2">
+                        <separator string="Image" colspan="2"/>
+                        <field name="product_image" widget='image'/>
+                    </group>
+                   </group>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>
