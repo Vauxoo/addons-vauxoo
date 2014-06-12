@@ -75,7 +75,7 @@ class purchase_requisition(osv.Model):
                     pl_ids = pl_obj.search(cr, uid, domain, context=context)
                     if pl_ids:
                         po_obj.write(cr, uid, po_brw.id, {'pricelist_id':
-                            pl_ids[0]}
+                            pl_ids[0]})
                     else:
                         currency.update(
                             pl=currency['pl'].name, pr=currency['pr'].name)
