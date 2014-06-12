@@ -71,14 +71,18 @@ class purchase_requisition(osv.Model):
             for po_brw in po_obj.browse(cr, uid, po_ids, context=context):
                 currency.update(pl=po_brw.pricelist_id.currency_id)
                 if currency['pl'] != currency['pr']:
-                    currency.update(
-                        pl=currency['pl'].name, pr=currency['pr'].name)
-                    raise osv.except_osv(
-                        _('Invalid Procedure!'),
-                        _('This operation can be done because there\'s not'
-                          ' exist a pricelist with the same purchase'
-                          ' requisition currency. ({pl} != {pr})'.format(
-                            **currency)))
-                    #TODO: need to search the pricelist that can be use and
-                    # select the one with the same currency?. 
+                    domain = [('currency_id', '=', currency['pr'].id)]
+                    pl_ids = pl_obj.search(cr, uid, domain, context=context)
+                    if pl_ids:
+                        po_obj.write(cr, uid, po_brw.id, {'pricelist_id':
+                            pl_ids[0]}
+                    else:
+                        currency.update(
+                            pl=currency['pl'].name, pr=currency['pr'].name)
+                        raise osv.except_osv(
+                            _('Invalid Procedure!'),
+                            _('This operation can be done because there\'s not'
+                              ' exist a pricelist with the same purchase'
+                              ' requisition currency. ({pl} != {pr})'.format(
+                                **currency)))
         return res
