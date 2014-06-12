@@ -28,7 +28,7 @@
     'version': '1.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
-    'category': '',
+    'category': 'purchase',
     'description': '''
 Purchase Requisition Currency
 =============================
