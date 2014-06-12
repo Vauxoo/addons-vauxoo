@@ -38,7 +38,9 @@ This module add the currency field in the purchase requisition model.
     'depends': [
         'purchase_requisition',
         ],
-    'data': [],
+    'data': [
+        'view/purchase_requisition_view.xml',
+        ],
     'demo': [],
     'test': [],
     'qweb': [],
