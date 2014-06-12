@@ -40,6 +40,7 @@ functionality:
   - Purchase Pricelist.
 ''',
     'depends': [
+        'base',
         'purchase_requisition',
         ],
     'data': [
