@@ -24,7 +24,7 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 from report import report_sxw
-import html2text
+from lxml import html
 
 class story_user_html(report_sxw.rml_parse):
 
@@ -39,7 +39,11 @@ class story_user_html(report_sxw.rml_parse):
         self.context = context
 
     def _parse_html_field(self, data):
-        return html2text.html2text(data).replace("&nbsp_place_holder;", "\n").replace("&n\nbsp_place_holder;", "\n")
+        tree = html.fromstring(data)
+        text_data = tree.text_content()
+        tree_2 = html.fromstring(text_data)
+        text_data_2 = tree_2.text_content()
+        return text_data_2
 
 report_sxw.report_sxw('report.user.story.report',
             'user.story',
