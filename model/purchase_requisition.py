@@ -23,4 +23,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import purchase_requisition
+from openerp.osv import fields, osv, orm
+from openerp.tools.translate import _
+from openerp import tools
+
+class purchase_requisition(osv.Model):
+
+    _inherit = 'purchase.requisition'
+    _columns = {
+        'currency_id': fields.many2one(
+            'res.currency', 'Currency', help='Purchase Requisition Currency'),
+    }
+
+    _defaults = {
+        'currency_id': lambda s, c, u, ctx: 
+            s.pool.get('res.users').browse(c, u, u, context=ctx).company_id.currency_id.id,
+    }
+
