@@ -34,6 +34,10 @@ Purchase Requisition Currency
 =============================
 
 This module add the currency field in the purchase requisition model.
+You need to active some user technical settings to take advantage of this
+functionality:
+  - Multi Currencies.
+  - Purchase Pricelist.
 ''',
     'depends': [
         'purchase_requisition',
