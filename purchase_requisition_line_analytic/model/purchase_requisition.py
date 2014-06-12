@@ -63,5 +63,5 @@ class purchase_requisition(osv.Model):
                 for pol_id in pol_ids:
                     pol_brw = pol_obj.browse(cr, uid, pol_id) 
                     pol_obj.write(cr, uid, [pol_brw.id], {'account_analytic_id':
-                        pol_brw.purchase_requisition_line_id.account_analytic_id}, context=context)
+                        pol_brw.purchase_requisition_line_id.account_analytic_id.id}, context=context)
         return res
