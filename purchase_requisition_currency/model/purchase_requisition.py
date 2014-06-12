@@ -40,3 +40,45 @@ class purchase_requisition(osv.Model):
             s.pool.get('res.users').browse(c, u, u, context=ctx).company_id.currency_id.id,
     }
 
+    def make_purchase_order(self, cr, uid, ids, partner_id, context=None):
+        """
+        overwrithe method to check if the pricelist select by the created
+        purchase order have the same currency of the purchase requisition
+        currency. If not, it look for one pricelist that fits and change it.
+        If it do not find any pricelist that fit then it would raise an
+        exception.
+        @return True or raise and exception.
+        """
+        context = context or {}
+        po_obj = self.pool.get('purchase.order')
+        pl_obj = self.pool.get('product.pricelist')
+        res = super(purchase_requisition, self).make_purchase_order(
+            cr, uid, ids, partner_id, context=context)
+        for pr_brw in self.browse(cr, uid, res.keys(), context=context):
+            # extract the po_ids generated for the purchase requisition.
+            # One purchase order or multiple purchase orders can be created so
+            # we need to clean up this mange a list of the po_ids (not sublist
+            # of ids).
+            tmp_po_ids = list()
+            po_ids = res.values()
+            for po_id in po_ids:
+                if not isinstance(po_id, (int, long)):
+                    po_ids.remove(po_id)
+                    tmp_po_ids.extend(po_id)
+            po_ids.extend(tmp_po_ids)
+            currency = dict(pr=pr_brw.currency_id)
+            # check the pricelist currency
+            for po_brw in po_obj.browse(cr, uid, po_ids, context=context):
+                currency.update(pl=po_brw.pricelist_id.currency_id)
+                if currency['pl'] != currency['pr']:
+                    currency.update(
+                        pl=currency['pl'].name, pr=currency['pr'].name)
+                    raise osv.except_osv(
+                        _('Invalid Procedure!'),
+                        _('This operation can be done because there\'s not'
+                          ' exist a pricelist with the same purchase'
+                          ' requisition currency. ({pl} != {pr})'.format(
+                            **currency)))
+                    #TODO: need to search the pricelist that can be use and
+                    # select the one with the same currency?. 
+        return res
