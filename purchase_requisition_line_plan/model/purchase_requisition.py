@@ -29,25 +29,33 @@ from openerp.tools.translate import _
 import openerp.addons.decimal_precision as dp
 from openerp import tools
 
+class purchase_order_line(osv.Model):
+    _inherit = "purchase.order.line"
 
+    _columns = {
+        'account_analytic_plan_id': fields.many2one(
+            'account.analytic.plan.instance', 'Analytic Distribution',
+            help='This field is used to assign the selected'\
+                ' analytic account to the line of the purchase order'),
+            
+    }
+
+    
 class purchase_requisition_line(osv.Model):
     _inherit = "purchase.requisition.line"
 
     _columns = {
-        'account_analytic_id': fields.many2one(
-            'account.analytic.account', 'Analytic Account',
-                help='This field is used to assign the selected'\
+        'account_analytic_plan_id': fields.many2one(
+            'account.analytic.plan.instance', 'Analytic Distribution',
+            help='This field is used to assign the selected'\
                 ' analytic account to the line of the purchase order'),
     }
-    
-purchase_requisition_line()
 
 class purchase_requisition(osv.Model):
     _inherit = "purchase.requisition"
 
 
-    def make_purchase_order(self, cr, uid, ids, partner_id,
-                                    context=None):
+    def make_purchase_order(self, cr, uid, ids, partner_id, context=None):
         if context is None:
             context = {}
         res = super(purchase_requisition, self).make_purchase_order(cr, uid, ids, partner_id, context=context)
@@ -62,6 +70,6 @@ class purchase_requisition(osv.Model):
                 pol_ids = pol_obj.search(cr, uid, [('order_id','=',po_id)])
                 for pol_id in pol_ids:
                     pol_brw = pol_obj.browse(cr, uid, pol_id) 
-                    pol_obj.write(cr, uid, [pol_brw.id], {'account_analytic_id':
-                        pol_brw.purchase_requisition_line_id.account_analytic_id.id}, context=context)
+                    pol_obj.write(cr, uid, [pol_brw.id], {'account_analytic_plan_id':
+                        pol_brw.purchase_requisition_line_id.account_analytic_plan_id.id}, context=context)
         return res
