@@ -29,7 +29,18 @@ from openerp.tools.translate import _
 import openerp.addons.decimal_precision as dp
 from openerp import tools
 
+class purchase_order_line(osv.Model):
+    _inherit = "purchase.order.line"
 
+    _columns = {
+        'account_analytic_plan_id': fields.many2one(
+            'account.analytic.plan.instance', 'Analytic Distribution',
+            help='This field is used to assign the selected'\
+                ' analytic account to the line of the purchase order'),
+            
+    }
+
+    
 class purchase_requisition_line(osv.Model):
     _inherit = "purchase.requisition.line"
 
@@ -39,15 +50,12 @@ class purchase_requisition_line(osv.Model):
             help='This field is used to assign the selected'\
                 ' analytic account to the line of the purchase order'),
     }
-    
-purchase_requisition_line()
 
 class purchase_requisition(osv.Model):
     _inherit = "purchase.requisition"
 
 
-    def make_purchase_order(self, cr, uid, ids, partner_id,
-                                    context=None):
+    def make_purchase_order(self, cr, uid, ids, partner_id, context=None):
         if context is None:
             context = {}
         res = super(purchase_requisition, self).make_purchase_order(cr, uid, ids, partner_id, context=context)

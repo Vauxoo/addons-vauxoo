@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-        <record id="view_purchase_requisition_form_account_analytic" model="ir.ui.view">
-            <field name="name">purchase.requisition.form.account.analytic</field>
+        <record id="view_purchase_requisition_form_account_analytic_plan" model="ir.ui.view">
+            <field name="name">purchase.requisition.form.account.analytic.plan</field>
             <field name="model">purchase.requisition</field>
             <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
             <field name="arch" type="xml">
