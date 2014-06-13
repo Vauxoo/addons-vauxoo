@@ -526,7 +526,9 @@
                 <tr>
                     <td class="center_td">${ dict_data['@noCertificado'] or 'No identificado'|entity }</td>
                     <td class="center_td">${ dict_data['@metodoDePago'] or 'No identificado'|entity }</td>
-                    <td class="center_td">${ dict_data['@NumCtaPago'] or 'No identificado'|entity }</td>
+                    %if dict_data.has_key('@NumCtaPago'):
+                        <td class="center_td">${ dict_data['@NumCtaPago'] or 'No identificado'|entity }</td>
+                    %endif
                 </tr>
         </table>
         %if dict_data.get('Complemento', {}).get('TimbreFiscalDigital'):

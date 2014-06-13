@@ -192,7 +192,10 @@ class ir_attachment_facturae_mx(osv.Model):
                         'Namespace of PAC incorrect'))
                 if 'testing' in wsdl_url:
                     msg += _(u'WARNING, SIGNED IN TEST!!!!\n\n')
-                wsdl_client = WSDL.SOAPProxy(wsdl_url, namespace)
+                try:
+                    wsdl_client = WSDL.SOAPProxy(wsdl_url, namespace)
+                except:
+                    raise orm.except_orm(_('Warning'), _('Connection lost, verify your internet conection or verify your PAC SF'))
                 if True:  # if wsdl_client:
                     cfdi = base64.encodestring(xml_res_str_addenda)
                     zip = False  # Validar si es un comprimido zip, con la extension del archivo
