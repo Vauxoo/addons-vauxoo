@@ -26,7 +26,7 @@ from openerp.tools.translate import _
 from openerp import pooler, tools, netsvc
 import xml
 import codecs
-import datetime
+import datetime as dt
 from datetime import *
 import pytz
 from pytz import timezone
@@ -139,7 +139,7 @@ class hr_payslip(osv.Model):
                                     not values.get('payslip_datetime', False):
                                     
             user_hour = self._get_time_zone(cr, uid, [], context=context)
-            time_payslip = time(abs(user_hour), 0, 0)
+            time_payslip = dt.time(abs(user_hour), 0, 0)
 
             date_payslip = datetime.strptime(values['date_payslip'], '%Y-%m-%d').date()
                 
@@ -147,11 +147,10 @@ class hr_payslip(osv.Model):
 
             res['payslip_datetime'] = dt_payslip
             res['date_payslip'] = values['date_payslip']
-            
         if values.get('payslip_datetime', False) and not\
             values.get('date_payslip', False):
             date_payslip = fields.datetime.context_timestamp(cr, uid,
-                datetime.datetime.strptime(values['payslip_datetime'],
+                dt.datetime.strptime(values['payslip_datetime'],
                 tools.DEFAULT_SERVER_DATETIME_FORMAT), context=context)
             res['date_payslip'] = date_payslip
             res['payslip_datetime'] = values['payslip_datetime']
