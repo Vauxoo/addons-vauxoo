@@ -147,11 +147,10 @@ class hr_payslip(osv.Model):
 
             res['payslip_datetime'] = dt_payslip
             res['date_payslip'] = values['date_payslip']
-            
         if values.get('payslip_datetime', False) and not\
             values.get('date_payslip', False):
             date_payslip = fields.datetime.context_timestamp(cr, uid,
-                datetime.datetime.strptime(values['payslip_datetime'],
+                dt.datetime.strptime(values['payslip_datetime'],
                 tools.DEFAULT_SERVER_DATETIME_FORMAT), context=context)
             res['date_payslip'] = date_payslip
             res['payslip_datetime'] = values['payslip_datetime']
