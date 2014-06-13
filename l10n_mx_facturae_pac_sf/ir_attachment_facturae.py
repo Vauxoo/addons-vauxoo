@@ -76,6 +76,7 @@ class ir_attachment_facturae_mx(osv.Model):
         if context is None:
             context = {}
         msg = ''
+        status_uuid = ''
         pac_params_obj = self.pool.get('params.pac')
         for attachment in self.browse(cr, uid, ids, context=context):
             status = False
