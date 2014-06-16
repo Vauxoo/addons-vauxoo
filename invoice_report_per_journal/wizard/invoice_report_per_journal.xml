@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="wizard_invoice_report_per_journal_form">
+            <field name="name">invoice.report.per.journal.form</field>
+            <field name="model">invoice.report.per.journal</field>
+            <field name="arch" type="xml">
+                <form string="Print" version="7.0">
+                    <group col="4" colspan="4">
+                        <field name="journal"/>
+                        <newline/>
+                        <field name="report_format"/>
+                        <newline/>
+                        <group col="2" colspan="2">
+                            <button icon="gtk-cancel" special="cancel" string="Cancel"/>
+                            <button icon="gtk-ok" name="print_invoice" type="object" string="Print Invoice"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="invoice_report_per_journal" 
+            key2="client_action_per" name="Print" 
+            res_model="invoice.report.per.journal" 
+            view_id="wizard_invoice_report_per_journal_form" 
+            view_mode="form" target="new" view_type="form"/>
+
+    </data>
+</openerp>
