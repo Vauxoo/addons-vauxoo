@@ -35,7 +35,7 @@ class purchase_requisition_line(osv.Model):
 
     _columns = {
         'account_analytic_id': fields.many2one(
-            'account.analytic.plan.instance', 'Analytic Distribution',
+            'account.analytic.account', 'Analytic Account',
                 help='This field is used to assign the selected'\
                 ' analytic account to the line of the purchase order'),
     }
@@ -63,5 +63,5 @@ class purchase_requisition(osv.Model):
                 for pol_id in pol_ids:
                     pol_brw = pol_obj.browse(cr, uid, pol_id) 
                     pol_obj.write(cr, uid, [pol_brw.id], {'account_analytic_id':
-                        pol_brw.purchase_requisition_line_id.account_analytic_id}, context=context)
+                        pol_brw.purchase_requisition_line_id.account_analytic_id.id}, context=context)
         return res
