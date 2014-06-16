@@ -9,7 +9,7 @@
                 <xpath expr="//page[@string='HR Settings']" position="after">
                     <page string="HR Payroll">
                         <group>
-                            <field name="regime_id" required="1"/>
+                            <field name="regime_id"/>
                         </group>
                     </page>
                 </xpath>
