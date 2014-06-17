@@ -39,7 +39,9 @@ of the purchase requisition and a total of all lines is added.
     'depends': [
         'purchase_requisition',
         ],
-    'data': [],
+    'data': [
+        'view/purchase_requisition_view.xml'
+        ],
     'demo': [],
     'test': [],
     'qweb': [],
