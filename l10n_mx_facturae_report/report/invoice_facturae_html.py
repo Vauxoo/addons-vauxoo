@@ -324,10 +324,12 @@ class invoice_facturae_html(report_sxw.rml_parse):
             try:
                 dict_text = eval('{' + company.dinamic_text + '}')
                 str_variables = str(company.dict_var)
-                for model in str_variables.split('|'):
+                for sentence in str_variables.split('|'):
+                    model = sentence.split(':')[0]
+                    model_str = str(model).replace('"','').replace("'",'').replace(' ','')
                     try:
-                        if eval('{' + model + '}').get(model_source, False):
-                            dict_var = eval('{' + model + '}')
+                        if model_str==model_source and eval('{' + sentence + '}').get(model_source, False):
+                            dict_var = eval('{' + sentence + '}')
                     except:
                         continue
                 if dict_text.get(model_source, False) and dict_var.get(model_source, False):
