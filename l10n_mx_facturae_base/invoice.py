@@ -145,21 +145,15 @@ class account_invoice(osv.Model):
             'in_invoice': False,
             'in_refund': False}
         for inv in self.browse(cr, uid, ids, context=context):
-            if inv_type_facturae.get(inv.type, False):
-                ir_attach_facturae_mx_ids = ir_attach_facturae_mx_obj.search(
-                    cr, uid, [('id_source', '=', inv.id), ('model_source', '=', self._name)], context=context)
-                if ir_attach_facturae_mx_ids:
+            res = super(account_invoice, self).action_cancel(cr, uid, ids, context=context)
+            if res:
+                if inv_type_facturae.get(inv.type, False):
+                    ir_attach_facturae_mx_ids = ir_attach_facturae_mx_obj.search(
+                        cr, uid, [('id_source', '=', inv.id), ('model_source', '=', self._name)], context=context)
                     for attach in ir_attach_facturae_mx_obj.browse(cr, uid, ir_attach_facturae_mx_ids, context=context):
-                        if attach.state <> 'cancel':
-                            res = super(account_invoice, self).action_cancel(cr, uid, ids, context=context)
-                            if res:
-                                attach = ir_attach_facturae_mx_obj.signal_cancel(cr, uid, [attach.id], context=context)
-                                if attach:
-                                    self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
-                        else:
-                            res = super(account_invoice, self).action_cancel(cr, uid, ids, context=context)
-                else:
-                    res = super(account_invoice, self).action_cancel(cr, uid, ids, context=context)
+                        attach = ir_attach_facturae_mx_obj.signal_cancel(cr, uid, [attach.id], context=context)
+                        if attach:
+                            self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
         return res
 
     def create_ir_attachment_facturae(self, cr, uid, ids, context=None):
@@ -1512,17 +1506,3 @@ class account_invoice(osv.Model):
         cfdi_no_certificado = invoice.cfdi_no_certificado or ''
         original_string = '||1.0|'+cfdi_folio_fiscal+'|'+str(cfdi_fecha_timbrado)+'|'+sello+'|'+cfdi_no_certificado+'||'
         return original_string
-
-class ir_attachment_facturae_mx(osv.Model):
-
-    _inherit = 'ir.attachment.facturae.mx'
-
-    def signal_cancel(self, cr, uid, ids, context=None):
-        ids = isinstance(ids, (int, long)) and [ids] or ids
-        res = super(ir_attachment_facturae_mx, self).signal_cancel(cr, uid, ids)
-        for att in self.browse(cr, uid, ids):
-            if res and att.model_source == 'account.invoice' and att.id_source:
-                if self.pool.get(att.model_source).browse(cr, uid, att.id_source).state != 'cancel':
-                    wf_service = netsvc.LocalService("workflow")
-                    wf_service.trg_validate(uid, att.model_source, att.id_source, 'invoice_cancel', cr)
-        return res

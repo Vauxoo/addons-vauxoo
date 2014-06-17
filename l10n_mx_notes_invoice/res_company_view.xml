@@ -10,17 +10,64 @@
                  <xpath expr="//page[@string='Configuration']" position="after">
                     <page string="Notes Invoice">
                         <group>
+                            <field name="help"/>
+                        </group>
+                        <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                            <separator string='Why fill the information?'/>
+                        </group>
+                        <i attrs="{'invisible':[('help','=',False)]}"><b><label string='The correct filling of these fields is as follow:'/></b></i>
+                        <separator/>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string="'Promissory note': In this field put the text that you want to show in the reports that call this notes, as follow:"/></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><b><label string="  'model': '''text''' "/></b></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string="Where: "/></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><b><label string="'model'"/></b></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string=" is the object where was take the data for the notes and the "/></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><b><label string="'text'"/></b></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string=" is the text that you want to show, "/></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string="in the text you can add values of model, with the next code "/></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><b><label string="%%(name_variable)s"/></b></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string=" and you must declare "/></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><b><label string="name_variable"/></b></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string=" in the field 'Variables for text'."/></i>
+                        <group>
                             <field name="dinamic_text"/>
+                        </group>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string="'Variables for note': In this field you need put the variables used in 'Promisory Text' as follows:"/></i>
+                            <i attrs="{'invisible':[('help','=',False)]}"><b><label string="'model': {'name_variable': iterations on model to reach the field to show}"/></b></i>
+                        <group>
                             <field name="dict_var"/>
                         </group>
-                        <separator string='Why fill the information?'/>
-                        <field name="details"/>
-                        <separator string='Sample'/>
-                        <field name="sample"/>
-                        <group>
-                            <field name="sample_text"/>
-                            <field name="sample_dict"/>
+                        <i attrs="{'invisible':[('help','=',False)]}"><b><label string="Notes:"/></b></i>
+                        <separator/>
+                        <i attrs="{'invisible':[('help','=',False)]}"><b><label string=" - "/></b></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string="For more of and model you need set the next format: In Promissory note: "/></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><b><label string="'model': '''text''', 'model': '''text'''"/></b></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string=", In Variables for in text: "/></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><b><label string="'model: {'name_variable': iteration, 'variable2': iteration}|'model': {'name_variable': iteration}"/></b></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string=", you can see that in Variables for in text I was separated the models with an"/></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><b><label string="'|'."/></b></i>
+                        <separator/>
+                        <i attrs="{'invisible':[('help','=',False)]}"><b><label string=" - "/></b></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string="If you need use symbol "/></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><b><label string="'%%'"/></b></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string=", you need use "/></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><b><label string="%%%%"/></b></i>
+                        <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                            <separator string='Sample'/>
                         </group>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string="If you want to put the text in Facturae Report "/></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><b><label string="'I MyPartner promissory note to the order of My Company the amount of $500.00'"/></b></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string=" and in the report of "/></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><b><label string="'I EmployeName received from the company YourCompany the quantity of $500.00 by concept of payslip'"/></b></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string=" you need put:"/></i>
+                        <separator/>
+                        <i attrs="{'invisible':[('help','=',False)]}"><b><label string="Promissory note:"/></b></i><br/>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string="'account.invoice': '''I %%(partner_name)s promissory note to the order of %%(company_name)s the amount of %%(invoice_amount)s''', 'hr.payslip'"/></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string=": '''I %%(employe_name)s received from the company %%(company_name)s the total of my payslip'''"/></i>
+                        <separator/>
+                        <i attrs="{'invisible':[('help','=',False)]}"><b><label string="Variables for note:"/></b></i><br/>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string="'account.invoice' : {'partner_name' : obj.partner_id.name, 'company_name' : obj.company_id.name, 'invoice_amount': obj.amount_total}|'hr.payslip': "/></i>
+                        <i attrs="{'invisible':[('help','=',False)]}"><label string="{'employe_name': obj.employee_id.name, 'company_name': obj.company_id.name}"/></i>
                     </page>
                 </xpath>
             </field>

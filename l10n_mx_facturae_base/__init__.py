@@ -27,3 +27,4 @@
 
 import invoice
 import wizard
+import ir_attachment_facturae

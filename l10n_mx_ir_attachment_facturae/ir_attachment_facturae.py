@@ -302,8 +302,14 @@ class ir_attachment_facturae_mx(osv.Model):
                     doc_xml.documentElement.removeChild(nodecomplemento)
                     data_xml = doc_xml.toxml('UTF-8')
                     data_xml_payroll = nodepayroll[0].toxml('UTF-8')
-                    self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml_payroll], '11', 'nomina')
-                self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], 'v3.2', 'cfd')
+                    try:
+                        self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml_payroll], '11', 'nomina')
+                    except Exception, e:
+                        raise osv.except_osv(_('Error !'), _(e))
+                try:
+                    self.validate_scheme_facturae_xml(cr, uid, ids, [data_xml], 'v3.2', 'cfd')
+                except Exception, e:
+                    raise osv.except_osv(_('Error !'), _(e))
             self.write(cr, uid, ids,{
                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                            'msj': msj
@@ -576,21 +582,13 @@ class ir_attachment_facturae_mx(osv.Model):
         wf_service = netsvc.LocalService("workflow")
         status = False
         status_stamp = False
-        res = False
+        msj = ''
         for ir_attach_facturae_mx_id in self.browse(cr, uid, ids, context=context):
-            msj = ''
-            #~ if invoice.state != 'cancel':
-                #~ res = invoice_obj.action_cancel(cr, uid, [invoice.id])
-            #~ else:
-                #wf_service.trg_validate(uid, 'account.invoice', invoice.id, 'invoice_cancel', cr)
-            #~ if 'cfdi' in ir_attach_facturae_mx_id.type:
             if not ir_attach_facturae_mx_id.state in ['draft', 'confirmed']:
                 type__fc = self.get_driver_fc_cancel()
                 if ir_attach_facturae_mx_id.res_pac.name_driver in type__fc.keys():
                     cfdi_cancel = res = type__fc[ir_attach_facturae_mx_id.res_pac.name_driver](
-                        cr, uid, [
-                            ir_attach_facturae_mx_id.id], context=context
-                    )
+                        cr, uid, [ ir_attach_facturae_mx_id.id], context=context )
                     msj += tools.ustr(cfdi_cancel.get('message', False))
                     status_stamp = cfdi_cancel.get('status', False)
                     if status_stamp:
@@ -605,12 +603,12 @@ class ir_attachment_facturae_mx(osv.Model):
                 else:
                     msj = _("Unknow cfdi driver for %s" % (ir_attach_facturae_mx_id.res_pac.name_driver))
             else:
-                wf_service.trg_validate(
-                    uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
-                cr.execute("""UPDATE ir_attachment SET res_id = Null
+                if ir_attach_facturae_mx_id.model_source:
+                    wf_service.trg_validate(uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
+                    cr.execute("""UPDATE ir_attachment SET res_id = Null
                         WHERE res_id = %s and res_model=%s""", (ir_attach_facturae_mx_id.id_source, ir_attach_facturae_mx_id.model_source))
-                status = True
-                msj = 'cancelled'
+                    status = True
+                    msj = 'cancelled'
             if status:
                 self.write(cr, uid, ids, {
                        'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
