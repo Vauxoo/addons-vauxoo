@@ -38,7 +38,7 @@
                     <field name="approval_id" invisible="True"  widget="selection"/>
                 </xpath>
                 <xpath expr="//field[@name='number']" position="replace">
-                    <field name="number" required="1"/>
+                    <field name="number"/>
                 </xpath>
                     
             </field>

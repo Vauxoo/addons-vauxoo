@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        
+        <record id="base.main_company" model="res.company">
+            <field name="dinamic_text">'account.invoice': '''I %(partner_name)s promissory note to the order of %(company_name)s the amount of %(invoice_amount)s''', 'hr.payslip' : '''I %(employe_name)s received from the company %(company_name)s the total of my payslip'''</field>
+            <field name="dict_var">'account.invoice' : {'partner_name' : obj.partner_id.name, 'company_name' : obj.company_id.name, 'invoice_amount': obj.amount_total}|'hr.payslip': {'employe_name': obj.employee_id.name, 'company_name': obj.company_id.name}</field>
+        </record>
+
+    </data>
+</openerp>

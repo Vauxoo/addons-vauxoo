@@ -183,7 +183,10 @@
                         <td class="cliente"><b>${_('CURP')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@CURP'] or ''|entity }</td>
                     </tr>
                     <tr>
-                        <td class="cliente"><b>${_('Riesgo de puesto')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@RiesgoPuesto'] or ''|entity }</td>
+                        <td class="cliente"><b>${_('Riesgo de puesto')}</b></td><td class="cliente">
+                        %if dict_data['Complemento']['Nomina'].has_key('@RiesgoPuesto'):
+                            ${ dict_data['Complemento']['Nomina']['@RiesgoPuesto'] or ''|entity }</td>
+                        %endif
                         <td class="cliente"><b>${_('Departamento')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@Departamento'] or ''|entity }</td>
                         <td class="cliente"><b>${_('N&uacute;m. seguridad social')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@NumSeguridadSocial'] or ''|entity } </td>
                     </tr>
@@ -210,8 +213,14 @@
                             <td class="cliente"><b>${_('Salario diario')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@SalarioDiarioIntegrado'] or ''|entity }</td>
                         </tr>
                         <tr>
-                            <td class="cliente"><b>${_('Jornada')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@TipoJornada'] or ''|entity }</td>
-                            <td class="cliente"><b>${_('Antiguedad')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@Antiguedad'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('Jornada')}</b></td><td class="cliente">
+                            %if dict_data['Complemento']['Nomina'].has_key('@TipoJornada'):
+                                ${ dict_data['Complemento']['Nomina']['@TipoJornada'] or ''|entity }</td>
+                            %endif
+                            <td class="cliente"><b>${_('Antiguedad')}</b></td><td class="cliente">
+                            %if dict_data['Complemento']['Nomina'].has_key('@Antiguedad'):
+                                ${ dict_data['Complemento']['Nomina']['@Antiguedad'] or ''|entity }</td>
+                            %endif
                             <td class="cliente"><b>${_('Salario base')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@SalarioBaseCotApor'] or ''|entity } </td>
                             <td class="cliente"><b>${_('Periodo')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@PeriodicidadPago'] or ''|entity } </td>
                         </tr>
@@ -526,7 +535,9 @@
                 <tr>
                     <td class="center_td">${ dict_data['@noCertificado'] or 'No identificado'|entity }</td>
                     <td class="center_td">${ dict_data['@metodoDePago'] or 'No identificado'|entity }</td>
-                    <td class="center_td">${ dict_data['@NumCtaPago'] or 'No identificado'|entity }</td>
+                    %if dict_data.has_key('@NumCtaPago'):
+                        <td class="center_td">${ dict_data['@NumCtaPago'] or 'No identificado'|entity }</td>
+                    %endif
                 </tr>
         </table>
         %if dict_data.get('Complemento', {}).get('TimbreFiscalDigital'):
