@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        
+<!-- Invoice with RET IVA-->
+        <record id="facturae_mx_with_ret_iva_tax_demo" model="account.invoice">
+            <field name="payment_term" ref="account.account_payment_term"/>
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="account_id" ref="account.a_recv"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="partner_id" ref="l10n_mx_partner_address.res_partner_address_vauxoo_1"/>
+            <field name="journal_id" ref="account.sales_journal"/>
+            <field name="state">draft</field>
+        </record>
+
+<!-- Rent with RET IVA -->
+        <record id="ail_pac_facturae_with_ret_tax_demo" model="account.invoice.line">
+            <field name="name">Arrendamiento de oficina</field>
+            <field name="product_id" ref="l10n_mx_facturae_base.product_product_renta_oficina_demo"/>
+            <field name="price_unit" eval="5355.0" />
+            <field name="uos_id" ref="product.product_uom_hour"/>
+            <field name="invoice_id" ref="facturae_mx_with_ret_iva_tax_demo"/>
+            <field name="quantity">1</field>
+            <field name="invoice_line_tax_id" eval="[(6,0,[ref('l10n_mx_facturae_base.l10n_mx_facturae_base_ret_isr_honorario_0')])]"/>
+        </record>
+       
+    </data>
+</openerp>
