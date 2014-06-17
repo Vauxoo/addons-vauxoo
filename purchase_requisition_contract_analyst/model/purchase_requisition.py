@@ -33,7 +33,7 @@ class purchase_requisition(osv.Model):
     _columns = {
         'purchaser_id': fields.many2one(
             'res.users',
-            'Contract Analyst',
+            'P&C Analyst',
             help=('Contract Analyst responsible to evaluate the current'
                   ' purchase requisition.')),
     }
