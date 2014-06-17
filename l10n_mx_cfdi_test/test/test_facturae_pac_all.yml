@@ -42,7 +42,7 @@
                             elif journal_data.type == 'sale_refund':
                                 type_journal = 'out_refund'
                                 type_document = "Refund Sale"
-                            log("To test the Mexican Electronic %s %s %s" % (type_document,pac_type,type_test_cancel))
+                            log("To test the Mexican Electronic %s %s %s %s" % (type_document,pac_type,type_test_cancel,facturae_mx_name_id))
                             #################################################################################################
                             #     1 Duplicate invoice of l10n_mx_facturae_base to xx                                        #
                             #################################################################################################
