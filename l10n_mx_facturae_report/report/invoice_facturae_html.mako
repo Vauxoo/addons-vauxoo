@@ -34,11 +34,10 @@
                                         %else:
                                             ${'SIN FOLIO O ESTATUS NO VALIDO'}
                                         %endif
-                                    %endif
-                                    </font>
-                                    %if dict_context_extra_data.get('type', False) in ['payroll']:
+                                    %elif dict_context_extra_data.get('type', False) in ['payroll']:
                                         <font size="4">${_('Payroll: ') |entity} ${o.document_source or ''|entity}</font>
                                     %endif
+                                    </font>
                                 </div>
                             </td>
                         </tr>
@@ -129,9 +128,9 @@
                                 ${ add_receptor.get('@pais', False) or ''|entity}
                             </td>       
                             %if dict_data.get('Complemento',{}).get('Nomina', {}):
-                                <td width="12%" class="cliente"><b>Reg. Patronal:</b></td>
+                                <td width="13%" class="cliente"><b>Reg. Patronal:</b></td>
                                 <td class="cliente">
-                                    ${ dict_data['Complemento']['Nomina']['@RegistroPatronal'] or ''|entity }
+                                    <%reg_patr = dict_data.get('Complemento', {}).get('Nomina', {}).get('@RegistroPatronal', '')%>${ reg_patr |entity }
                                 </td>
                             %endif
                         </tr>
@@ -164,10 +163,10 @@
                         </tr>
                         <tr>
                             <td>
-                                ${ dict_data['@LugarExpedicion'] or ''|entity}
+                                ${ dict_data.get('@LugarExpedicion', '') |entity}
                                 <% from datetime import datetime %>
-                                <br/>${_("a")} ${datetime.strptime(dict_data['@fecha'].encode('ascii','replace'), '%Y-%m-%dT%H:%M:%S').strftime('%d/%m/%Y %H:%M:%S') or ''|entity}
-                                <br/>${_("Serie:")} ${ dict_data.get('@serie', {}) or _("Sin serie")|entity}
+                                <br/>${_("a")} ${dict_data.get('@fecha', False) and datetime.strptime(dict_data.get('@fecha').encode('ascii','replace'), '%Y-%m-%dT%H:%M:%S').strftime('%d/%m/%Y %H:%M:%S') or ''|entity}
+                                <br/>${_("Serie:")} ${ dict_data.get('@serie', False) or _("Sin serie")|entity}
                             </td>
                         </tr>
                     </table>
@@ -175,17 +174,18 @@
             </tr>
         </table>
         %if dict_data.get('Complemento',{}).get('Nomina', {}):
+            <%nomina = dict_data.get('Complemento',{}).get('Nomina', {})%>
             <table width="100%">
                 <table width="100%" class="basic_table" style="font-size:9; border:1.5px solid grey;">
                     <tr>                          
-                        <td class="cliente"><b>${_('No. Identificaci&oacute;n')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@NumEmpleado'] or ''|entity }</td>
-                        <td class="cliente"><b>${_('Puesto')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@Puesto'] or ''|entity }</td>
-                        <td class="cliente"><b>${_('CURP')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@CURP'] or ''|entity }</td>
+                        <td class="cliente"><b>${_('No. Identificaci&oacute;n')}</b></td><td class="cliente">${ nomina.get('@NumEmpleado', '') |entity }</td>
+                        <td class="cliente"><b>${_('Puesto')}</b></td><td class="cliente">${ nomina.get('@Puesto', '') |entity }</td>
+                        <td class="cliente"><b>${_('CURP')}</b></td><td class="cliente">${ nomina.get('@CURP', '') |entity }</td>
                     </tr>
                     <tr>
-                        <td class="cliente"><b>${_('Riesgo de puesto')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@RiesgoPuesto'] or ''|entity }</td>
-                        <td class="cliente"><b>${_('Departamento')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@Departamento'] or ''|entity }</td>
-                        <td class="cliente"><b>${_('N&uacute;m. seguridad social')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@NumSeguridadSocial'] or ''|entity } </td>
+                        <td class="cliente"><b>${_('Riesgo de puesto')}</b></td><td class="cliente">${ nomina.get('@RiesgoPuesto', '') |entity }</td>
+                        <td class="cliente"><b>${_('Departamento')}</b></td><td class="cliente">${ nomina.get('@Departamento', '') |entity }</td>
+                        <td class="cliente"><b>${_('N&uacute;m. seguridad social')}</b></td><td class="cliente">${ nomina.get('@NumSeguridadSocial', '') |entity } </td>
                     </tr>
                 </table>
             </table>
@@ -204,16 +204,16 @@
                 <tr>
                     <table width="100%" class="basic_table" style="font-size:9; border:1.5px solid grey;">
                         <tr>                          
-                            <td class="cliente"><b>${_('Contrato')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@TipoContrato'] or ''|entity }</td>
-                            <td class="cliente"><b>${_('D&iacute;as Pagados')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@NumDiasPagados'] or ''|entity }</td>
-                            <td class="cliente"><b>${_('Rel. Laboral')}</b></td><td class="cliente">${ datetime.strptime(dict_data['Complemento']['Nomina']['@FechaInicioRelLaboral'].encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity }</td>
-                            <td class="cliente"><b>${_('Salario diario')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@SalarioDiarioIntegrado'] or ''|entity }</td>
+                            <td class="cliente"><b>${_('Contrato')}</b></td><td class="cliente">${ nomina.get('@TipoContrato', '') |entity }</td>
+                            <td class="cliente"><b>${_('D&iacute;as Pagados')}</b></td><td class="cliente">${ nomina.get('@NumDiasPagados', '')|entity }</td>
+                            <td class="cliente"><b>${_('Rel. Laboral')}</b></td><td class="cliente">${ nomina.get('@FechaInicioRelLaboral', False) and datetime.strptime(nomina.get('@FechaInicioRelLaboral').encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity }</td>
+                            <td class="cliente"><b>${_('Salario diario')}</b></td><td class="cliente">${ nomina.get('@SalarioDiarioIntegrado', '') |entity }</td>
                         </tr>
                         <tr>
-                            <td class="cliente"><b>${_('Jornada')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@TipoJornada'] or ''|entity }</td>
-                            <td class="cliente"><b>${_('Antiguedad')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@Antiguedad'] or ''|entity }</td>
-                            <td class="cliente"><b>${_('Salario base')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@SalarioBaseCotApor'] or ''|entity } </td>
-                            <td class="cliente"><b>${_('Periodo')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@PeriodicidadPago'] or ''|entity } </td>
+                            <td class="cliente"><b>${_('Jornada')}</b></td><td class="cliente">${ nomina.get('@TipoJornada', '') |entity }</td>
+                            <td class="cliente"><b>${_('Antiguedad')}</b></td><td class="cliente">${ nomina.get('@Antiguedad', '') |entity }</td>
+                            <td class="cliente"><b>${_('Salario base')}</b></td><td class="cliente">${ nomina.get('@SalarioBaseCotApor', '') |entity } </td>
+                            <td class="cliente"><b>${_('Periodo')}</b></td><td class="cliente">${ nomina.get('@PeriodicidadPago', '') |entity } </td>
                         </tr>
                     </table>
                 </tr>
@@ -231,14 +231,14 @@
                 <tr>
                     <table width="100%" class="basic_table" style="font-size:9; border:1.5px solid grey;">
                         <tr>                          
-                            <td class="cliente"><b>${_('Fecha Pago')}</b></td><td class="cliente">${datetime.strptime(dict_data['Complemento']['Nomina']['@FechaPago'].encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity}</td>
-                            <td class="cliente"><b>${_('Fecha Inicio')}</b></td><td class="cliente">${datetime.strptime(dict_data['Complemento']['Nomina']['@FechaInicialPago'].encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity}</td>
-                            <td class="cliente"><b>${_('Fecha Fin')}</b></td><td class="cliente">${datetime.strptime(dict_data['Complemento']['Nomina']['@FechaFinalPago'].encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity}</td>
+                            <td class="cliente"><b>${_('Fecha Pago')}</b></td><td class="cliente">${nomina.get('@FechaPago', False) and datetime.strptime(nomina.get('@FechaPago').encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity}</td>
+                            <td class="cliente"><b>${_('Fecha Inicio')}</b></td><td class="cliente">${nomina.get('@FechaInicialPago', False) and datetime.strptime(nomina.get('@FechaInicialPago').encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity}</td>
+                            <td class="cliente"><b>${_('Fecha Fin')}</b></td><td class="cliente">${nomina.get('@FechaFinalPago', False) and datetime.strptime(nomina.get('@FechaFinalPago').encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity}</td>
                         </tr>
                         <tr>
-                            <td class="cliente"><b>${_('CLABE')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@CLABE'] or ''|entity }</td>
-                            <td class="cliente"><b>${_('M&eacute;todo de pago')}</b></td><td class="cliente">${ dict_data['@metodoDePago'] or ''|entity }</td>
-                            <td class="cliente"><b>${_('Banco')}</b></td><td class="cliente">${ dict_data['Complemento']['Nomina']['@Banco'] or ''|entity } </td>
+                            <td class="cliente"><b>${_('CLABE')}</b></td><td class="cliente">${ nomina.get('@CLABE', '') |entity }</td>
+                            <td class="cliente"><b>${_('M&eacute;todo de pago')}</b></td><td class="cliente">${ dict_data.get('@metodoDePago', '') |entity }</td>
+                            <td class="cliente"><b>${_('Banco')}</b></td><td class="cliente">${ nomina.get('@Banco', '') |entity } </td>
                         </tr>
                     </table>
                 </tr>
@@ -258,10 +258,9 @@
                                 <th width="11%" >${_('Importe Gravado')}</th>
                                 <th width="11%" >${_('Importe Exento')}</th>
                             </tr>
-                            %if not isinstance(dict_data['Complemento']['Nomina']['Percepciones']['Percepcion'], list):
-                                <% dict_perc =  [dict_data['Complemento']['Nomina']['Percepciones']['Percepcion']] %>
-                            %else:
-                                <% dict_perc =  dict_data['Complemento']['Nomina']['Percepciones']['Percepcion'] %>
+                            <% dict_perc =  nomina.get('Percepciones', {}).get('Percepcion', ()) %>
+                            %if not isinstance(dict_perc, list):
+                                <% dict_perc =  [dict_perc] %>
                             %endif
                             %for dict in range(0,len(dict_perc)):
                                 <tr style="font-size:9; border:1.5px solid grey;">
@@ -274,8 +273,8 @@
                              %endfor
                              <tr style="font-size:9; border:1.5px solid grey;">
                                 <td class="basic_td" colspan="3"><b>${_('Total Percepciones')}</b></td>
-                                <td width="9%" class="number_td">$ ${ dict_data['Complemento']['Nomina']['Percepciones']['@TotalGravado'] or '0.0'|entity}</td>
-                                <td width="15%" class="number_td">$ ${ dict_data['Complemento']['Nomina']['Percepciones']['@TotalExento'] or '0.0'|entity}</td>
+                                <td width="9%" class="number_td"><%tot_gra = nomina.get('Percepciones', {}).get('@TotalGravado', '0.0')%>$ ${ tot_gra |entity}</td>
+                                <td width="15%" class="number_td"><%tot_ex = nomina.get('Percepciones', {}).get('@TotalExento', '0.0')%>$ ${ tot_ex |entity}</td>
                             </tr>
                         </table>
                     </td>
@@ -291,10 +290,9 @@
                                 <th width="11%" >${_('Importe Gravado')}</th>
                                 <th width="11%" >${_('Importe Exento')}</th>
                             </tr>
-                            %if not isinstance(dict_data['Complemento']['Nomina']['Deducciones']['Deduccion'], list):
-                                <% dict_deduc =  [dict_data['Complemento']['Nomina']['Deducciones']['Deduccion']] %>
-                            %else:
-                                <% dict_deduc =  dict_data['Complemento']['Nomina']['Deducciones']['Deduccion'] %>
+                            <% dict_deduc =  nomina.get('Deducciones', {}).get('Deduccion', ()) %>
+                            %if not isinstance(dict_deduc, list):
+                                <% dict_deduc =  [dict_deduc] %>
                             %endif
                             %for dict in range(0,len(dict_deduc)):
                                 <tr style="font-size:9; border:1.5px solid grey;">
@@ -307,8 +305,8 @@
                             %endfor
                             <tr style="font-size:9; border:1.5px solid grey;">
                                 <td class="basic_td" colspan="3"><b>${_('Total Deducciones')}</b></td>
-                                <td width="9%" class="number_td">$ ${ dict_data['Complemento']['Nomina']['Deducciones']['@TotalGravado']or '0.0'|entity}</td>
-                                <td width="15%" class="number_td">$ ${ dict_data['Complemento']['Nomina']['Deducciones']['@TotalExento']or '0.0'|entity}</td>
+                                <td width="9%" class="number_td"><%tot_gra = nomina.get('Deducciones', {}).get('@TotalGravado', '0.0')%>$ ${ tot_gra|entity}</td>
+                                <td width="15%" class="number_td"><%tot_ex = nomina.get('Deducciones', {}).get('@TotalExento', '0.0')%>$ ${ tot_ex|entity}</td>
                             </tr>
                         </table>
                     </td>
@@ -325,11 +323,10 @@
                             <th width="9%" >${_('Cant. de hrs')}</th>
                             <th width="9%" >${_('Importe')}</th>
                         </tr>
-                        %if dict_data['Complemento']['Nomina'].has_key('HorasExtras'):
-                            %if not isinstance(dict_data['Complemento']['Nomina']['HorasExtras']['HorasExtra'], list):
-                                <% dict_he =  [dict_data['Complemento']['Nomina']['HorasExtras']['HorasExtra']] %>
-                            %else:
-                                <% dict_he =  dict_data['Complemento']['Nomina']['HorasExtras']['HorasExtra'] %>
+                        %if nomina.get('HorasExtras', False):
+                            <% dict_he =  nomina.get('HorasExtras', {}).get('HorasExtra', ())%>
+                            %if not isinstance(dict_he, list):
+                                <% dict_he =  [dict_he] %>
                             %endif
                             %for dict in range(0,len(dict_he)):
                                 <tr style="font-size:9; border:1.5px solid grey;">
@@ -352,11 +349,10 @@
                             <th width="10%">${_('Tipo')}</th>
                             <th width="9%">${_('Importe')}</th>
                         </tr>
-                        %if dict_data['Complemento']['Nomina'].has_key('Incapacidades'):
-                            %if not isinstance(dict_data['Complemento']['Nomina']['Incapacidades']['Incapacidad'], list):
-                                <% dict_inc =  [dict_data['Complemento']['Nomina']['Incapacidades']['Incapacidad']] %>
-                            %else:
-                                <% dict_inc =  dict_data['Complemento']['Nomina']['Incapacidades']['Incapacidad'] %>
+                        %if nomina.get('Incapacidades', False):
+                            <% dict_inc =  nomina.get('Incapacidades', {}).get('Incapacidad', ()) %>
+                            %if not isinstance(dict_inc, list):
+                                <% dict_inc =  [dict_inc] %>
                             %endif
                             %for dict in range(0,len(dict_inc)):
                                 <tr style="font-size:9; border:1.5px solid grey;">
@@ -382,10 +378,9 @@
                 <th width="15%">${_("Importe")}</th>
             </tr>
             <%row_count = 1%>
-            %if not isinstance(dict_data['Conceptos']['Concepto'], list):
-                <% dict_lines =  [dict_data['Conceptos']['Concepto']]%>
-            %else:
-                <% dict_lines =  dict_data['Conceptos']['Concepto']%>
+            <% dict_lines =  dict_data.get('Conceptos', {}).get('Concepto', ())%>
+            %if not isinstance(dict_lines, list):
+                <% dict_lines =  [dict_lines]%>
             %endif
             %for dict in range(0,len(dict_lines)):
                 %if (row_count%2==0):
@@ -405,20 +400,19 @@
         <table align="right" width="30%" style="border-collapse:collapse">
             <tr>
                 <td class="total_td">${_("Sub Total:")}</td>
-                <td align="right" class="total_td">$ ${ dict_data['@subTotal'] or ''|entity}</td>
+                <td align="right" class="total_td">$ ${ dict_data.get('@subTotal', '')|entity}</td>
             </tr>
-            <% desc_amount = float(dict_data['@descuento']) %>
+            <% desc_amount = float(dict_data.get('@descuento', 0.0)) %>
             %if desc_amount > 0:
             <tr>
                 <td class="total_td">${_("Descuento:")}</td>
-                <td align="right" class="total_td">$ ${ dict_data['@descuento'] or ''|entity}</td>
+                <td align="right" class="total_td">$ ${ dict_data.get('@descuento', '') |entity}</td>
             </tr>
             %endif
-            %if dict_data['Impuestos'].has_key('Traslados'):
-                %if not isinstance(dict_data['Impuestos']['Traslados']['Traslado'], list):
-                    <% dict_imp =  [dict_data['Impuestos']['Traslados']['Traslado']]%>
-                %else:
-                    <% dict_imp =  dict_data['Impuestos']['Traslados']['Traslado']%>
+            %if dict_data.get('Impuestos', {}).get('Traslados', False):
+                <% dict_imp =  dict_data.get('Impuestos', {}).get('Traslados', {}).get('Traslado', ())%>
+                %if not isinstance(dict_imp, list):
+                    <% dict_imp =  [dict_imp]%>
                 %endif
                 %for imp in range(0,len(dict_imp)):
                     <% imp_amount = float(dict_imp[imp]['@importe']) %>
@@ -436,11 +430,10 @@
                     %endif
                 %endfor
             %endif
-            %if dict_data['Impuestos'].has_key('Retenciones'):
-                %if not isinstance(dict_data['Impuestos']['Retenciones']['Retencion'], list):
-                    <% dict_ret =  [dict_data['Impuestos']['Retenciones']['Retencion']]%>
-                %else:
-                    <% dict_ret =  dict_data['Impuestos']['Retenciones']['Retencion']%>
+            %if dict_data.get('Impuestos', {}).get('Retenciones', False):
+                <% dict_ret =  dict_data.get('Impuestos', {}).get('Retenciones', {}).get('Retencion', ())%>
+                %if not isinstance(dict_ret, list):
+                    <% dict_ret =  [dict_ret]%>
                 %endif
                 %for ret in range(0,len(dict_ret)):
                     <% ret_amount = float(dict_ret[ret]['@importe']) %>
@@ -459,7 +452,7 @@
             %endif
             <tr align="left">
                 <td class="total_td"><b>${_("Total:")}</b></td>
-                <td class="total_td" align="right"><b>$ ${ dict_data['@total'] or ''|entity}</b></td>
+                <td class="total_td" align="right"><b>$ ${ dict_data.get('@total', '')|entity}</b></td>
             </tr>
         </table>
         <table class="basic_table">
@@ -470,7 +463,7 @@
             </tr>
             <tr>
                 <td class="center_td">
-                    <% amount_in_text = amount_to_text(float(dict_data['@total'].encode('ascii','replace')),dict_data['@Moneda']) %>
+                    <% amount_in_text = amount_to_text(float(dict_data.get('@total', 0.0).encode('ascii','replace')),dict_data.get('@Moneda', '')) %>
                     <i>${ amount_in_text or ''|entity}</i>
                 </td>
             </tr>
@@ -511,9 +504,9 @@
                         <th width="33%"> ${_('Folio Fiscal')}</th>
                     </tr>
                     <tr>
-                        <td width="33%" class="center_td"> ${ dict_data['Complemento']['TimbreFiscalDigital']['@noCertificadoSAT'] or 'No identificado'|entity }</td>
-                        <td width="34%" class="center_td"> ${ datetime.strptime(dict_data['Complemento']['TimbreFiscalDigital']['@FechaTimbrado'].encode('ascii','replace'), '%Y-%m-%dT%H:%M:%S').strftime('%d/%m/%Y %H:%M:%S') or 'No identificado'|entity }</td>
-                        <td width="33%" class="center_td"> ${ dict_data['Complemento']['TimbreFiscalDigital']['@UUID'] or 'No identificado'|entity }</td>
+                        <td width="33%" class="center_td"> <%tfd = dict_data.get('Complemento', {}).get('TimbreFiscalDigital', {})%>${ tfd.get('@noCertificadoSAT', 'No identificado') or 'No identificado'|entity }</td>
+                        <td width="34%" class="center_td"> ${ tfd.get('@FechaTimbrado', False) and datetime.strptime(tfd.get('@FechaTimbrado').encode('ascii','replace'), '%Y-%m-%dT%H:%M:%S').strftime('%d/%m/%Y %H:%M:%S') or 'No identificado'|entity }</td>
+                        <td width="33%" class="center_td"> ${ tfd.get('@UUID', 'No identificado')|entity }</td>
                     </tr>
             </table>
         %endif
@@ -524,9 +517,9 @@
                     <th width="33%">${_('&Uacute;ltimos 4 d&iacute;gitos de la cuenta bancaria')}</th>
                 </tr>
                 <tr>
-                    <td class="center_td">${ dict_data['@noCertificado'] or 'No identificado'|entity }</td>
-                    <td class="center_td">${ dict_data['@metodoDePago'] or 'No identificado'|entity }</td>
-                    <td class="center_td">${ dict_data['@NumCtaPago'] or 'No identificado'|entity }</td>
+                    <td class="center_td">${ dict_data.get('@noCertificado', 'No identificado')|entity }</td>
+                    <td class="center_td">${ dict_data.get('@metodoDePago', 'No identificado')|entity }</td>
+                    <td class="center_td">${ dict_data.get('@NumCtaPago', 'No identificado')|entity }</td>
                 </tr>
         </table>
         %if dict_data.get('Complemento', {}).get('TimbreFiscalDigital'):
@@ -539,9 +532,9 @@
                         <td valign="top" align="left">
                             <p class="cadena_with_cbb_cfd">
                             <b>${_('Sello Digital Emisor:')} </b><br/>
-                            ${ dict_data['@sello'] or ''|entity}<br/>
+                            ${ dict_data.get('@sello', '')|entity}<br/>
                             <b>${_('Sello Digital SAT:')} </b><br/>
-                            ${ dict_data['Complemento']['TimbreFiscalDigital']['@selloSAT'] or ''|entity}<br/>
+                            ${ dict_data.get('Complemento').get('TimbreFiscalDigital').get('@selloSAT', '')|entity}<br/>
                             <b>${_('Cadena original:')} </b><br/>
                             ${o.cfdi_cadena_original or ''|entity}</br>
                             <b>${_('Enlace al certificado: ')}</b></br>
@@ -549,7 +542,7 @@
                             </p>
                         </td>
                         <td align="right" rowspan="2">
-                            <% img = create_qrcode(dict_data['Emisor']['@rfc'], dict_data['Receptor']['@rfc'], float(dict_data['@total'].encode('ascii','replace')), dict_data['Complemento']['TimbreFiscalDigital']['@UUID']) %>
+                            <% img = create_qrcode(dict_data.get('Emisor', {}).get('@rfc', ''), dict_data.get('Receptor', {}).get('@rfc', ''), float(dict_data.get('@total', 0.0).encode('ascii','replace')), dict_data.get('Complemento', {}).get('TimbreFiscalDigital', {}).get('@UUID', '')) %>
                             ${helper.embed_image('jpeg',str(img),180, 180)}
                         </td>
                     </tr>
