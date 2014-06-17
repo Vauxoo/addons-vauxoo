@@ -108,8 +108,6 @@ class ir_attachment_facturae_mx(osv.Model):
     _columns = {
         'name': fields.char('Name', size=128, required=True, readonly=True,
                             help='Name of attachment generated'),
-        'invoice_id': fields.many2one('account.invoice', 'Invoice', readonly=True,
-                                      help='Invoice to which it belongs this attachment'),
         'company_id': fields.many2one('res.company', 'Company', readonly=True,
                                       help='Company to which it belongs this attachment'),
         'file_input': fields.many2one('ir.attachment', 'File input',
@@ -379,7 +377,6 @@ class ir_attachment_facturae_mx(osv.Model):
     def signal_printable(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        msj = ''
         attachment_obj = self.pool.get('ir.attachment')
         attachment_mx_data = self.browse(cr, uid, ids, context=context)
         (fileno, fname) = tempfile.mkstemp(

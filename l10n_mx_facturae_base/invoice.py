@@ -1240,7 +1240,6 @@ class account_invoice(osv.Model):
             # invoice_data_impuestos['Retenciones'] = []
 
             tax_names = []
-            tax_names_traslado = []
             totalImpuestosTrasladados = 0
             totalImpuestosRetenidos = 0
             for line_tax_id in invoice.tax_line:
@@ -1248,8 +1247,6 @@ class account_invoice(osv.Model):
                 tax_names.append(tax_name)
                 line_tax_id_amount = abs(line_tax_id.amount or 0.0)
                 if line_tax_id.amount >= 0:
-                    tax_name_traslado = line_tax_id.name2
-                    tax_names_traslado.append(tax_name_traslado)
                     impuesto_list = invoice_data_impuestos['cfdi:Traslados']
                     impuesto_str = 'cfdi:Traslado'
                     totalImpuestosTrasladados += line_tax_id_amount
@@ -1271,22 +1268,22 @@ class account_invoice(osv.Model):
                 impuesto_list.append(impuesto_dict)
 
             invoice_data['cfdi:Impuestos'].update({
+                'totalImpuestosTrasladados': "%.2f" % (totalImpuestosTrasladados),
+            })
+            if totalImpuestosRetenidos:
+                invoice_data['cfdi:Impuestos'].update({
                     'totalImpuestosRetenidos': "%.2f" % (totalImpuestosRetenidos)
                 })
 
-            invoice_data['cfdi:Impuestos'].update({
-                    'totalImpuestosTrasladados': "%.2f" % (totalImpuestosRetenidos)
-                })
-            for tax_required in tax_names_traslado:
-                if tax_required in tax_names_traslado:
+            tax_requireds = ['IVA', 'IEPS']
+            for tax_required in tax_requireds:
+                if tax_required in tax_names:
                     continue
                 invoice_data_impuestos['cfdi:Traslados'].append({'cfdi:Traslado': {
                     'impuesto': tax_required,
                     'tasa': "%.2f" % (0.0),
                     'importe': "%.2f" % (0.0),
                 }})
-            if not invoice_data_impuestos['cfdi:Traslados']:
-                invoice_data_impuestos.pop('cfdi:Traslados')
             # Termina seccion: impuestos
             invoice_data_parents.append(invoice_data_parent)
             invoice_data_parent['state'] = invoice.state
