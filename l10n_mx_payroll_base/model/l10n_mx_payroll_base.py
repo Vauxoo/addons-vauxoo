@@ -26,7 +26,7 @@ from openerp.tools.translate import _
 from openerp import pooler, tools, netsvc
 import xml
 import codecs
-import datetime
+import datetime as dt
 from datetime import *
 import pytz
 from pytz import timezone
@@ -39,7 +39,7 @@ import urllib
 from markupsafe import Markup
 import time as ti
 import re
-
+import time
 from openerp import release
 
 try:
@@ -49,13 +49,30 @@ except:
 
 
 class hr_payslip(osv.Model):
+    _inherit = 'hr.payslip'
+
+    def cancel_sheet(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        res = False
+        wf_service = netsvc.LocalService("workflow")
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        ir_attach_facturae_mx_obj = self.pool.get('ir.attachment.facturae.mx')
+        for payslip in self.browse(cr, uid, ids, context=context):
+            res = super(hr_payslip, self).cancel_sheet(cr, uid, ids, context=context)
+            if res:
+                ir_attach_facturae_mx_ids = ir_attach_facturae_mx_obj.search(cr, uid, 
+                [('id_source', '=', payslip.id), ('model_source', '=', self._name)], context=context)
+                for attach in ir_attach_facturae_mx_obj.browse(cr, uid, ir_attach_facturae_mx_ids, context=context):
+                    attach = ir_attach_facturae_mx_obj.signal_cancel(cr, uid, [attach.id], context=context)
+                    if attach:
+                        self.write(cr, uid, ids, {'date_payslip_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
+        return res
 
     def string_to_xml_format(self, cr, uid, ids, text):
         #~ return text.encode('utf-8', 'xmlcharrefreplace')
         if text:
             return cgi.escape(text, True).encode('ascii', 'xmlcharrefreplace').replace('\n\n', ' ')
-
-    _inherit = 'hr.payslip'
 
     def _get_company_emitter_payroll(self, cr, uid, ids, name, args, context=None):
         if context is None:
@@ -122,7 +139,7 @@ class hr_payslip(osv.Model):
                                     not values.get('payslip_datetime', False):
                                     
             user_hour = self._get_time_zone(cr, uid, [], context=context)
-            time_payslip = time(abs(user_hour), 0, 0)
+            time_payslip = dt.time(abs(user_hour), 0, 0)
 
             date_payslip = datetime.strptime(values['date_payslip'], '%Y-%m-%d').date()
                 
@@ -130,11 +147,10 @@ class hr_payslip(osv.Model):
 
             res['payslip_datetime'] = dt_payslip
             res['date_payslip'] = values['date_payslip']
-            
         if values.get('payslip_datetime', False) and not\
             values.get('date_payslip', False):
             date_payslip = fields.datetime.context_timestamp(cr, uid,
-                datetime.datetime.strptime(values['payslip_datetime'],
+                dt.datetime.strptime(values['payslip_datetime'],
                 tools.DEFAULT_SERVER_DATETIME_FORMAT), context=context)
             res['date_payslip'] = date_payslip
             res['payslip_datetime'] = values['payslip_datetime']
@@ -682,6 +698,7 @@ class hr_payslip(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         payroll = self.browse(cr, uid, ids)[0]
         totalImpuestosTrasladados = 0.0
+        tax_requireds = ['IVA', 'IEPS']
         payroll_data_parent = {}
         payroll_data = payroll_data_parent = {}
         payroll_data['Impuestos'] = {}
@@ -712,7 +729,7 @@ class hr_payslip(osv.Model):
                             'impuesto': 'ISR',
                             'importe': "%.2f" % (abs(isr_amount)),
                         }})
-        tax_requireds = []
+        tax_requireds = ['IVA', 'IEPS']
         for tax_required in tax_requireds:
             payroll_data_impuestos['Traslados'].append({'Traslado': {
                 'impuesto': self.string_to_xml_format(cr, uid, ids, tax_required),
