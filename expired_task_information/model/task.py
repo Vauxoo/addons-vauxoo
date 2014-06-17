@@ -83,8 +83,8 @@ class task_expired_config(osv.Model):
             before_expiry = before_expiry.strftime('%Y-%m-%d')
             last_change = last_change.strftime('%Y-%m-%d')
             task_ids = task_obj.search(cr, uid,
-                                       [('state', 'not in',
-                                        ('done', 'cancelled'))],
+                                       [('state', 'not in', ('done', 'cancelled')),
+                                        ('user_id', '!=', False)],
                                        context=context)
             for task in task_ids and task_obj.browse(cr, uid, task_ids):
                 msg_expired = ''
@@ -602,7 +602,7 @@ Si es por alguna de las 3 siguientes razones, o alguna ajena a estos puntos just
                                                    'body_html': html,
                                                    'auto_delete': True,
                                                }, context=context)
-                    mail_mail.send(cr, uid, [mail_id],
+                    task.user_id and mail_mail.send(cr, uid, [mail_id],
                                    recipient_ids=[task.user_id.partner_id.id],
                                    context=context)
         return True
