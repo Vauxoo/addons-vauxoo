@@ -35,7 +35,7 @@
                 </xpath>
 
                 <xpath expr="//group" position="inside">
-                    <filter string="P&C Analyst" icon="terp-personal" context="{'group_by':'purchaser_id'}"/>
+                    <filter string="P&amp;C Analyst" icon="terp-personal" context="{'group_by':'purchaser_id'}"/>
                 </xpath>
 
             </field>
