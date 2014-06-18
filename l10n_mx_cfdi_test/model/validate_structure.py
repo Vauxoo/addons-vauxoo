@@ -2,11 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2014 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info Vauxoo (info@vauxoo.com)
+#    info@vauxoo.com
 ############################################################################
-#    Coded by: Jorge Naranjo (jorge_nr@vauxoo.com)
+#    Coded by: vauxoo consultores (info@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,4 +23,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import model
+
+from openerp.tools.translate import _
+from openerp.osv import fields, osv
+
+
+class account_invoice(osv.Model):
+    _inherit = 'account.invoice'
+
+    def validate_amounts(self, cr, uid, ids, xml_data, invoice_id, context=None):
+        ir_model_data = self.pool.get('ir.model.data')
+        return True

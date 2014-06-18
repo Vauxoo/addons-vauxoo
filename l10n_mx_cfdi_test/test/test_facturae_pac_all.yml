@@ -122,6 +122,7 @@
                                 data_invoice = self.read(cr, uid, invoice_id,[])
                                 data_xml = base64.decodestring( fdata )
                                 doc_xml = xml.dom.minidom.parseString(data_xml)
+                                self.validate_amounts(cr, uid, invoice_id, fdata, data_invoice, context)
                                 tax_lines = self.read(cr, uid, [invoice_id],['tax_line'])
                                 list_price_subtotal = []
                                 list_price_unit = []
