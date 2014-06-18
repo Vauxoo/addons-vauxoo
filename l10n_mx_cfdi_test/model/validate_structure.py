@@ -49,9 +49,7 @@ class account_invoice(osv.Model):
         list_valorUnitario_xml = []
         list_tax_amount_line = []
         list_retenciones = []
-        list_retenciones_name = []
         list_traslados = []
-        list_traslados_name = []
         list_importe_ret_xml = []
         list_importe_traslados_xml = []
         list_name_traslados_xml = []
@@ -80,7 +78,6 @@ class account_invoice(osv.Model):
                         list_valorUnitario_xml.append(eval(valorUnitario))
             assert list_price_subtotal == list_importe_xml, 'No matches Importe of product'
             assert list_price_unit == list_valorUnitario_xml, 'No matches Price Unit of product'
-            print list_price_unit, list_valorUnitario_xml, 'No matches Price Unit of product'
             for tax in tax_lines[0]['tax_line']:
                 for t in tax_obj.read(cr, uid, [tax]):
                     if t['amount'] >= 0:

@@ -3,7 +3,6 @@
 -
   !python {model: account.invoice}: |
     from l10n_mx_cfdi_test import timer as ti
-    import xml
     import netsvc
     import tools, os, base64
     import logging
@@ -12,7 +11,6 @@
     acc_jour_obj = self.pool.get('account.journal')
     ir_attachment_mx_obj = self.pool.get('ir.attachment.facturae.mx')
     aml_obj = self.pool.get('account.invoice.line')
-    tax_obj = self.pool.get('account.invoice.tax')
     wf_service = netsvc.LocalService("workflow")
     journal_ids = acc_jour_obj.search(cr, uid, [], context=context)
     # TODO: Get logger variable
@@ -148,78 +146,8 @@
                             cfdi_attachment_data = ir_attachment_mx_obj.browse(cr, uid, cfdi_attachment_id, context=context)
                             ir_attach_facturae_mx = cfdi_attachment_data.file_xml_sign and cfdi_attachment_data.file_xml_sign or False
                             fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
-                            data_xml_sign = base64.decodestring( fdata )
                             data_invoice = self.read(cr, uid, invoice_id,[])
-                            doc_xml_sign = xml.dom.minidom.parseString(data_xml_sign)
-                            tax_lines = self.read(cr, uid, [invoice_id],['tax_line'])
-                            list_price_subtotal_invoice_data = []
-                            list_price_unit_invoice_data = []
-                            list_importe_xml_sign = []
-                            list_valorUnitario_xml_sign = []
-                            list_tax_amount_line_xml_sign = []
-                            list_retenciones_xml_sign = []
-                            list_retenciones_invoice_sign = []
-                            list_retenciones_name_xml_sign = []
-                            list_traslados_xml_sign = []
-                            list_traslados_invoice_sign = []
-                            list_traslados_name_xml_sign = []
-                            list_importe_ret_xml_sign = []
-                            list_importe_traslados_xml_sign = []
-                            list_name_traslados_xml_sign = []
-                            totalImpuestosRetenidos_xml_sign = 0.00
-                            totalImpuestosTrasladados_xml_sign = 0.00
-                            totalImpuestosRetenidos_invoice_sign = 0.00
-                            totalImpuestosTrasladados_invoice_sign = 0.00
-                            amount_total_tax_xml_sign = 0.00
-                            importe_ret_xml_sign = 0.00
-                            if invoice_lines:
-                                for n in doc_xml_sign.getElementsByTagName("cfdi:Comprobante"):
-                                    xml_total_xml_sign = n.getAttribute("total")
-                                    xml_subTotal_xml_sign = n.getAttribute("subTotal")
-                                    assert data_invoice['amount_total'] == eval(xml_total_xml_sign), 'No matches XML SIGN Total'
-                                    assert data_invoice['amount_untaxed'] == eval(xml_subTotal_xml_sign), 'No matches XML SIGN Subtotal'
-                                for line in invoice_lines[0]['invoice_line']:
-                                    for r in aml_obj.read(cr, uid, [line]):
-                                        list_price_subtotal_invoice_data.append(r['price_subtotal'])
-                                        list_price_unit_invoice_data.append(r['price_unit'])
-                                for n in doc_xml_sign.getElementsByTagName("cfdi:Comprobante"):
-                                    for conceptos in n.getElementsByTagName("cfdi:Conceptos"):
-                                        for concepto in conceptos.getElementsByTagName("cfdi:Concepto"):
-                                            importe_xml_sign = concepto.getAttribute("importe")
-                                            valorUnitario_xml_sign =  concepto.getAttribute("valorUnitario")
-                                            list_importe_xml_sign.append(eval(importe_xml_sign))
-                                            list_valorUnitario_xml_sign.append(eval(valorUnitario_xml_sign))
-                                assert list_price_subtotal_invoice_data == list_importe_xml_sign, 'No matches XML SIGN Importe of product'
-                                assert list_price_unit_invoice_data == list_valorUnitario_xml_sign, 'No matches XML SIGN Price Unit of product'
-                                for tax in tax_lines[0]['tax_line']:
-                                    for t in tax_obj.read(cr, uid, [tax]):
-                                        if t['amount'] >= 0:
-                                            traslado_invoice_sign = abs(t['amount']) or 0.0
-                                            list_traslados_invoice_sign.append(traslado_invoice_sign)
-                                            totalImpuestosTrasladados_invoice_sign += traslado_invoice_sign or 0.0
-                                        else:
-                                            retencion_invoice_sign = abs(t['amount']) or 0.0
-                                            list_retenciones_invoice_sign.append(retencion_invoice_sign)
-                                            totalImpuestosRetenidos_invoice_sign += retencion_invoice_sign or 0.0
-                                for taxes in n.getElementsByTagName("cfdi:Impuestos"):
-                                    totalImpuestosRetenidos_xml_sign = eval(taxes.getAttribute("totalImpuestosRetenidos"))
-                                    totalImpuestosTrasladados_xml_sign = eval(taxes.getAttribute("totalImpuestosTrasladados"))
-                                    if taxes.getElementsByTagName("cfdi:Retenciones"):
-                                        for retenciones in taxes.getElementsByTagName("cfdi:Retenciones"):
-                                            for ret in retenciones.getElementsByTagName("cfdi:Retencion"):
-                                                importe_ret_xml_sign = eval(ret.getAttribute("importe"))
-                                                list_importe_ret_xml_sign.append(importe_ret_xml_sign)
-                                    if taxes.getElementsByTagName("cfdi:Traslados"):
-                                        for traslados in taxes.getElementsByTagName("cfdi:Traslados"):
-                                            for traslado in traslados.getElementsByTagName("cfdi:Traslado"):
-                                                importe_trasladado_xml_sign = eval(traslado.getAttribute("importe"))
-                                                impuesto_trasladado_xml_sign = traslado.getAttribute("impuesto")
-                                                list_importe_traslados_xml_sign.append(importe_trasladado_xml_sign)
-                                                list_name_traslados_xml_sign.append(impuesto_trasladado_xml_sign)
-                                assert totalImpuestosRetenidos_invoice_sign == totalImpuestosRetenidos_xml_sign, 'No matches XML SIGN Total Impuestos Retenidos of product'
-                                assert totalImpuestosTrasladados_invoice_sign == totalImpuestosTrasladados_xml_sign, 'No matches XML SIGN Total Impuestos Trasladados of product'
-                                assert list_retenciones_invoice_sign == list_importe_ret_xml_sign, 'No matches  XML SIGN Importe Retenido of product'
-                                assert list_traslados_invoice_sign == list_importe_traslados_xml_sign, 'No matches XML SIGN Importe Traslado of product'
+                            self.validate_amounts(cr, uid, invoice_id, fdata, data_invoice, context)
                             if fdata:
                                 state = cfdi_attachment_data.state
                                 if tools.config['test_report_directory']:
