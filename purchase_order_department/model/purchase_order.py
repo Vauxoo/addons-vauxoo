@@ -46,7 +46,8 @@ class purchase_order(osv.Model):
         ru_obj = self.pool.get('res.users')
         if user_id:
             ru_brw = ru_obj.browse(cr, uid, user_id, context=context)
-            department_id = (ru_brw.employee_id.department_id
-                    and ru_brw.employee_id.department_id.id or False)
+            department_id = (ru_brw.employee_ids
+                and ru_brw.employee_ids[0].department_id
+                and ru_brw.employee_ids[0].department_id.id or False)
             res.update({'value': {'department_id': department_id}})
         return res
