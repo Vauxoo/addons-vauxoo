@@ -340,10 +340,14 @@ class hr_payslip(osv.Model):
                     'payslip_datetime': hr.payslip_datetime},
                     context=context)
             self.write(cr, uid, ids, vals_date, context=context)
-            super(hr_payslip, self).hr_verify_sheet(cr, uid, ids)
+            result = super(hr_payslip, self).hr_verify_sheet(cr, uid, ids)
             if hr.journal_id.sequence_id and hr.journal_id.sequence_id.id:
                 obj_sequence.next_by_id(cr, uid, hr.journal_id.sequence_id.id, context=context)
-            result = self.create_ir_attachment_payroll(cr, uid, ids, context=context)
+            approval_id = hr.journal_id and hr.journal_id.sequence_id and \
+                hr.journal_id.sequence_id.approval_ids and \
+                        hr.journal_id.sequence_id.approval_ids[0] or False
+            if approval_id:
+                result = self.create_ir_attachment_payroll(cr, uid, ids, context=context)
             return result
 
     def create_ir_attachment_payroll(self, cr, uid, ids, context=None):
