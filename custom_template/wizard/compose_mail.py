@@ -70,7 +70,7 @@ class mail_compose_message(osv.TransientModel):
             template_brw = temp_id and template_obj.browse(cr, uid, temp_id,
                                                            context=context)
 
-            if template_brw and template_brw.special:
+            if template_brw and template_brw.special and wizard.body_text:
                 attach_name = '%s.html' % template_brw.special_name
                 mass_mail_mode = wizard.composition_mode == 'mass_mail'
                 active_model_pool_name = wizard.model if wizard.model else 'mail.thread'
