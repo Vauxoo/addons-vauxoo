@@ -120,72 +120,7 @@
                                 ir_attach_facturae_mx = cfdi_attachment_data.file_input and cfdi_attachment_data.file_input or False
                                 fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
                                 data_invoice = self.read(cr, uid, invoice_id,[])
-                                data_xml = base64.decodestring( fdata )
-                                doc_xml = xml.dom.minidom.parseString(data_xml)
                                 self.validate_amounts(cr, uid, invoice_id, fdata, data_invoice, context)
-                                tax_lines = self.read(cr, uid, [invoice_id],['tax_line'])
-                                list_price_subtotal = []
-                                list_price_unit = []
-                                list_importe_xml = []
-                                list_valorUnitario_xml = []
-                                list_tax_amount_line = []
-                                list_retenciones = []
-                                list_retenciones_name = []
-                                list_traslados = []
-                                list_traslados_name = []
-                                list_importe_ret_xml = []
-                                list_importe_traslados_xml = []
-                                list_name_traslados_xml = []
-                                totalImpuestosRetenidos = 0.00
-                                totalImpuestosTrasladados = 0.00
-                                totalImpuestosRetenidos_xml = 0.00
-                                totalImpuestosTrasladados_xml = 0.00
-                                amount_total_tax = 0.00
-                                importe_ret = 0.00
-                                if invoice_lines:
-                                    for n in doc_xml.getElementsByTagName("cfdi:Comprobante"):
-                                        xml_total = n.getAttribute("total")
-                                        xml_subTotal = n.getAttribute("subTotal")
-                                        assert data_invoice['amount_total'] == eval(xml_total), 'No matches Total'
-                                        assert data_invoice['amount_untaxed'] == eval(xml_subTotal), 'No matches Subtotal'
-                                    for line in invoice_lines[0]['invoice_line']:
-                                        for r in aml_obj.read(cr, uid, [line]):
-                                            list_price_subtotal.append(r['price_subtotal'])
-                                            list_price_unit.append(r['price_unit'])
-                                    for n in doc_xml.getElementsByTagName("cfdi:Comprobante"):
-                                        for conceptos in n.getElementsByTagName("cfdi:Conceptos"):
-                                            for concepto in conceptos.getElementsByTagName("cfdi:Concepto"):
-                                                importe = concepto.getAttribute("importe")
-                                                valorUnitario =  concepto.getAttribute("valorUnitario")
-                                                list_importe_xml.append(eval(importe))
-                                                list_valorUnitario_xml.append(eval(valorUnitario))
-                                    assert list_price_subtotal == list_importe_xml, 'No matches Importe of product'
-                                    assert list_price_unit == list_valorUnitario_xml, 'No matches Price Unit of product'
-                                    for tax in tax_lines[0]['tax_line']:
-                                        for t in tax_obj.read(cr, uid, [tax]):
-                                            if t['amount'] >= 0:
-                                                traslado = abs(t['amount']) or 0.0
-                                                list_traslados.append(traslado)
-                                                totalImpuestosTrasladados += traslado or 0.0
-                                            else:
-                                                retencion = abs(t['amount']) or 0.0
-                                                list_retenciones.append(retencion)
-                                                totalImpuestosRetenidos += retencion or 0.0
-                                    for taxes in n.getElementsByTagName("cfdi:Impuestos"):
-                                        totalImpuestosTrasladados_xml = eval(taxes.getAttribute("totalImpuestosTrasladados"))
-                                        totalImpuestosRetenidos_xml = eval(taxes.getAttribute("totalImpuestosRetenidos"))
-                                        if taxes.getElementsByTagName("cfdi:Retenciones"):
-                                            for retenciones in taxes.getElementsByTagName("cfdi:Retenciones"):
-                                                for ret in retenciones.getElementsByTagName("cfdi:Retencion"):
-                                                    list_importe_ret_xml.append(eval(ret.getAttribute("importe")))
-                                        if taxes.getElementsByTagName("cfdi:Traslados"):
-                                            for traslados in taxes.getElementsByTagName("cfdi:Traslados"):
-                                                for traslado in traslados.getElementsByTagName("cfdi:Traslado"):
-                                                    list_importe_traslados_xml.append(eval(traslado.getAttribute("importe")))
-                                    assert totalImpuestosRetenidos == totalImpuestosRetenidos_xml, 'No matches Total Impuestos Retenidos of product'
-                                    assert totalImpuestosTrasladados == totalImpuestosTrasladados_xml, 'No matches Total Impuestos Trasladados of product'
-                                    assert list_retenciones == list_importe_ret_xml, 'No matches Importe Retenido of product'
-                                    assert list_traslados == list_importe_traslados_xml, 'No matches Importe Traslado of product'
                                 if fdata:
                                     if tools.config['test_report_directory']:
                                         open(os.path.join(tools.config['test_report_directory'], 'l10n_mx_cfdi_test' + '_' + \
