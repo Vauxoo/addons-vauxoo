@@ -19,12 +19,29 @@
 #
 ##############################################################################
 {
-    'name' : 'Ink Templates',
+    'name' : 'Custom Templates',
     'version' : '0.1',
     'author' : 'Vauxoo',
     'category' : '',
     'description' : """
 
+    Custom Templates
+    ================
+    - When you need to create a custom template with the email.template model
+    and add some cool features to your template at the moment that you try to
+    send it you see that the sanitize method of openerp changes all your
+    template and became to a different template. To avoid this problem we
+    created this module.
+
+    How to Use
+    ==========
+    - In the template view we add 2 new fields in the Advanced page.  The first
+    field is a boolean, used to define the template like important, this makes
+    that template's content will be not sanitize.
+
+    - The second field is a string, where you define the name of the attachment
+    generated when you send your custom template, because the custom template
+    will generate an attachment and puts it in the message post of the model
     """,
     'website': 'http://www.vauxoo.com',
     'images' : [],
