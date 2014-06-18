@@ -107,11 +107,11 @@ class ir_attachment_facturae_mx(osv.Model):
 
     _columns = {
         'name': fields.char('Name', size=128, required=True, readonly=True,
-                            help='Name of attachment generated'),
+            states={'draft': [('readonly', False)]}, help='Name of attachment generated'),
         'company_id': fields.many2one('res.company', 'Company', readonly=True,
                                       help='Company to which it belongs this attachment'),
-        'file_input': fields.many2one('ir.attachment', 'File input',
-                                      readonly=True, help='File input'),
+        'file_input': fields.many2one('ir.attachment', 'File input', readonly=True,
+            states={'confirmed': [('readonly', False)]}, help='File input'),
         #~'file_input_index': fields.text('File input', help='File input index'),
         'file_xml_sign': fields.many2one('ir.attachment', 'File XML Sign',
                                          readonly=True, help='File XML signed'),
@@ -170,7 +170,8 @@ class ir_attachment_facturae_mx(osv.Model):
         'date_print_report': fields.datetime('Date print', help='Saved the date of last print'),
         'date_send_mail': fields.datetime('Date send mail', help='Saved the date of last send mail'),
         'context_extra_data': fields.text('Context Extra Data'),
-        'res_pac': fields.many2one('res.pac', 'Pac', required=True),
+        'res_pac': fields.many2one('res.pac', 'Pac', required=True, readonly=True,
+            states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)]}),
     }
 
     _defaults = {
@@ -178,6 +179,7 @@ class ir_attachment_facturae_mx(osv.Model):
         'company_id': lambda self, cr, uid, c:
         self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
         'last_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+        'context_extra_data': {},
     }
 
     def _get_sello(self, cr=False, uid=False, ids=False, context=None):
