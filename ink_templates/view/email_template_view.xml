@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <xpath expr='//field[@name="auto_delete"]' position='before'>
                     <field name="special"/>
+                    <field name="special_name" attrs="{'invisible':[('special', '=', False)], 'required':[('special', '=', True)]}"/>
                 </xpath>
             </field>
         </record>

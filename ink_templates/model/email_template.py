@@ -35,5 +35,11 @@ class email_template(osv.Model):
                                      help='Used to define this template like '
                                           'special, and avoid sanitize its '
                                           'content'),
+            'special_name':fields.char('Name of file to send', 64,
+                                      help='The special templates generate an '
+                                           'attachment, with this field you '
+                                           'define the name of these '
+                                           'attachments'),
+
 
             }
