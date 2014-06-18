@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="purchase_order_requisitor.inherit_purchase_order_view2"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='rfq_user_id']" position="after">
-                    <field name="department_id"/>
+                    <field name="department_id" on_change="onchange_user_id(rfq_user_id)"/>
                 </xpath>
             </field>
         </record> 

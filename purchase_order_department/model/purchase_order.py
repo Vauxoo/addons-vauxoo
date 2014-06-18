@@ -36,3 +36,17 @@ class purchase_order(osv.Model):
             string='Department',
             help='The department where this purchase requisition belongs'),
     }
+
+    def onchange_user_id(self, cr, uid, ids, user_id, context=None):
+        """ Return the department depending of the user.
+        @param user_id: user id
+        """
+        context = context or {}
+        res = {}
+        ru_obj = self.pool.get('res.users')
+        if user_id:
+            ru_brw = ru_obj.browse(cr, uid, user_id, context=context)
+            department_id = (ru_brw.employee_id.department_id
+                    and ru_brw.employee_id.department_id.id or False)
+            res.update({'value': {'department_id': department_id}})
+        return res
