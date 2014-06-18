@@ -80,7 +80,7 @@ class purchase_requisition_line(osv.Model):
         return res
 
     _columns = {
-        'price_unit': fields.float('Unit Price', required=True, digits_compute= dp.get_precision('Product Price')),
+        'price_unit': fields.float('Unit Price', digits_compute= dp.get_precision('Product Price')),
         'price_subtotal': fields.function(_amount_line, string='Subtotal', digits_compute= dp.get_precision('Account')),
     }
     
