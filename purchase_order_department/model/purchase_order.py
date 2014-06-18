@@ -23,4 +23,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import purchase_order
+from openerp.osv import fields, osv, orm
+from openerp.tools.translate import _
+from openerp import tools
+
+class purchase_order(osv.Model):
+
+    _inherit = 'purchase.order'
+    _columns = {
+        'department_id': fields.many2one(
+            'hr.department',
+            string='Department',
+            help='The department where this purchase requisition belongs'),
+    }
