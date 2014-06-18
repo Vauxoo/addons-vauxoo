@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        
+        <record id="model_maintenance" model="tracto.modelo">
+            <field name="name">Distance</field>
+            <field name="description">All products that wheeling</field>
+        </record>
+        <record id="maintenance_bom_demo" model="maintenance.bom">
+            <field name="name">Distance</field>
+            <field name="type">km</field>
+            <field name="type_qty">500</field>
+            <field name="modelo_id" ref="model_maintenance"/>
+        </record>
+        <record id="product_template_maintenance_km" model="product.template">
+            <field name="name">Tire</field>
+            <field name="categ_id" ref="product.product_category_4"/>
+            <field name="standard_price">2000.0</field>
+            <field name="list_price">2000.0</field>
+            <field name="type">service</field>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field name="uom_po_id" ref="product.product_uom_unit"/>
+        </record>
+        <record id="product_product_maintenance_km" model="product.product">
+            <field name="product_tmpl_id" ref="product_template_maintenance_km"/>
+            <field name="distance">510</field>
+            <field name="modelo_id" ref="model_maintenance"/>
+        </record>
+        
+    </data>
+</openerp>
