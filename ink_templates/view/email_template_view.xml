@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="email_template_ink_template">
+            <field name="name">email.template</field>
+            <field name="model">email.template</field>
+            <field name="inherit_id" ref="email_template.email_template_form"/>
+            <field name="arch" type="xml">
+                <xpath expr='//field[@name="auto_delete"]' position='before'>
+                    <field name="special"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
