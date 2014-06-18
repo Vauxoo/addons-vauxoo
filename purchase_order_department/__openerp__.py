@@ -39,6 +39,7 @@ Add a department field to the purchase order model.
     'depends': [
         'purchase',
         'hr',
+        'purchase_order_requistior',
         ],
     'data': [
         'view/purchase_order_view.xml',
