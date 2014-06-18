@@ -34,7 +34,7 @@ class purchase_order(osv.Model):
         'department_id': fields.many2one(
             'hr.department',
             string='Department',
-            help='The department where this purchase requisition belongs'),
+            help='The department where this purchase order belongs'),
     }
 
     def onchange_user_id(self, cr, uid, ids, user_id, context=None):
