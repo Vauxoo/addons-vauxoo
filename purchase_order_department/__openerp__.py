@@ -36,7 +36,10 @@ Purchase Order Department
 Add a department field to the purchase order model.
 ''',
 
-    'depends': [],
+    'depends': [
+        'purchase',
+        'hr',
+        ],
     'data': [],
     'demo': [],
     'test': [],
