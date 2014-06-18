@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-16 06:48+0000\n"
-"X-Generator: Launchpad (build 17007)\n"
+"X-Launchpad-Export-Date: 2014-06-16 06:27+0000\n"
+"X-Generator: Launchpad (build 17045)\n"
 
 #. module: user_story
 #: view:user.story:0
@@ -738,91 +738,3 @@ msgstr "Administrador"
 #: view:user.story:0
 msgid "Sprint"
 msgstr "Sprint"
-
-#~ msgid "Add a asumptions here ..."
-#~ msgstr "Agregue un suposición aqui..."
-
-#~ msgid "5.- Conclusion of analysis"
-#~ msgstr "5.- Conclusión del análisis"
-
-#~ msgid ""
-#~ "Person responsible for user story takes place, either by delegating work to "
-#~ "other human capital or running it by itself. For delegate work should "
-#~ "monitor the proper implementation of associated activities."
-#~ msgstr ""
-#~ "La persona responsable de la historia del usuario toma lugar, bien delegando "
-#~ "trabajo a otro capital humano o ejecutandolo el mismo. Para delegar trabajo "
-#~ "se debe monitorear la implementación apropiada de las actividades asociadas."
-
-#~ msgid "Priority"
-#~ msgstr "Prioridad"
-
-#~ msgid "acceptability.criteria"
-#~ msgstr "acceptability.criteria"
-
-#~ msgid "Add Description .."
-#~ msgstr "Agregue descripción..."
-
-#~ msgid "2.- Project related"
-#~ msgstr "2.- Proyecto relacionado"
-
-#~ msgid "Urgent"
-#~ msgstr "Urgente"
-
-#~ msgid "Responsible Execution"
-#~ msgstr "Responsable de Ejecución"
-
-#~ msgid "Add a other info here ..."
-#~ msgstr "Agregue información adicional aquí"
-
-#~ msgid "Asumptions"
-#~ msgstr "Supuestos"
-
-#~ msgid "Tasksss"
-#~ msgstr "Tareas"
-
-#~ msgid ""
-#~ "Person responsible for interacting with the client to give details of the "
-#~ "progress or completion of the User History, in some cases also the "
-#~ "supervisor for the correct execution of the user story."
-#~ msgstr ""
-#~ "Persona responsable de la interacción con el cliente para dar detalles del "
-#~ "progreso o completación de la historia de usuario, en algunos casos, también "
-#~ "es el supervisor de la correcta ejecución de la historia de usuario."
-
-#~ msgid "Secondary"
-#~ msgstr "Secundario"
-
-#~ msgid "Branch source for clone and make merge proposal"
-#~ msgstr "Branch fuente para clonar y hacer propuesta de merge"
-
-#~ msgid ""
-#~ "Here in the description, you must be as explícit as you can,\n"
-#~ "                    Remember you can upload a Youtube video, and insert \n"
-#~ "                    directly here, embeded as a webpage, you can use vimeo "
-#~ "and \n"
-#~ "                    other elements as images, diagrams (using some \n"
-#~ "                    online services) you just must copy and paste the "
-#~ "embebed code,\n"
-#~ "                    you can see an example about how to do that"
-#~ msgstr ""
-#~ "En esta descripción debe ser tan explicito como pueda,  recuerde que puede "
-#~ "subir un video de youtube e insertarlo aquí directamente, incrustado como "
-#~ "una pagina web. También puede utilizar vimeo y otros elementos como imagenes "
-#~ "y diagramas (usando servicios en linea) copiando y pegandolos en el código. "
-#~ "Puede ver un ejemplo aquí."
-
-#~ msgid "reference on what the project is about"
-#~ msgstr "referente a de qué se trata el proyecto"
-
-#~ msgid "Email Thread"
-#~ msgstr "Hilo de Emails"
-
-#~ msgid "6.- Asumptions"
-#~ msgstr "6.- Supuestos"
-
-#~ msgid "Chek if this criteria apply"
-#~ msgstr "Verifique si este criterio aplica"
-
-#~ msgid "My User Stories Exc"
-#~ msgstr "Mis Historias de Usuario a Ejecutar"

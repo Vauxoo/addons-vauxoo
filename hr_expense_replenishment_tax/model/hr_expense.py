@@ -63,9 +63,10 @@ class hr_expense_expense(osv.Model):
             self.unlink_move_tax(cr, uid, exp, context=context)
             self.create_her_tax(cr, uid, exp.id, aml={}, context=context)
             for voucher_brw in exp.payment_ids:
-                context.update({'payment_amount': voucher_brw.amount,
-                                'date_voucher': voucher_brw.date})
-                self.create_her_tax(cr, uid, exp.id, aml={}, context=context)
+                if voucher_brw.state == 'posted':
+                    context.update({'payment_amount': voucher_brw.amount,
+                                    'date_voucher': voucher_brw.date})
+                    self.create_her_tax(cr, uid, exp.id, aml={}, context=context)
             self.apply_round_tax(cr, uid, exp.id, context=context)
         return True
     

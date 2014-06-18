@@ -79,5 +79,16 @@
             target="new"                                                           
             id="add_many_followers_project_id"/> 
 
+        <act_window name="Add Followers"
+            key2="client_action_multi"                                             
+            res_model="mail.wizard.invite"                                
+            src_model="user.story"                                            
+            view_type="form"                                                       
+            view_mode="form"                                                       
+            groups="add_followers.group_add_followers"
+            view_id="add_followers_wizard_invite_form"
+            target="new"                                                           
+            id="add_many_followers_story_id"/> 
+
     </data>
 </openerp>
