@@ -40,7 +40,9 @@ Add a department field to the purchase order model.
         'purchase',
         'hr',
         ],
-    'data': [],
+    'data': [
+        'view/purchase_order_view.xml',
+        ],
     'demo': [],
     'test': [],
     'qweb': [],
