@@ -1,0 +1,17 @@
+-
+  To test the module maintenances
+-
+  I search maintenances for product 'Tire', with wizard Update Maintenances
+-
+  !python {model: wizard.check.maintenance}: |
+    self.update_maintenances(cr, uid, context.get('active_id'), context=context)
+    maintenance_obj = self.pool.get('maintenance.order.line')
+    product_obj = self.pool.get('product.product')
+    maintenances_prod = maintenance_obj.search(cr, uid, [('product_id', '=', ref('product_product_maintenance_km'))], context=context)
+    if len(maintenances_prod) > 0:
+        assert False, "The product not must be have maintenances"
+    product_obj.write(cr, uid, ref('product_product_maintenance_km'), {'distance': 510}, context=context)
+    self.update_maintenances(cr, uid, context.get('active_id'), context=context)
+    maintenances_prod = maintenance_obj.search(cr, uid, [('product_id', '=', ref('product_product_maintenance_km'))], context=context)
+    if len(maintenances_prod) == 0:
+        assert False, "The maintenance not was created"

@@ -23,7 +23,7 @@
         </record>
         <record id="product_product_maintenance_km" model="product.product">
             <field name="product_tmpl_id" ref="product_template_maintenance_km"/>
-            <field name="distance">510</field>
+            <field name="distance">10</field>
             <field name="modelo_id" ref="model_maintenance"/>
         </record>
         

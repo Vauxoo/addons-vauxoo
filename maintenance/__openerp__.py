@@ -39,6 +39,9 @@
     "demo_xml" : [
         "demo/maintenance_demo.xml"
     ],
+    "test": [
+        "test/maintenance.yml",
+    ],
     "update_xml" : [
         "maintenance_wizard.xml",
         "maintenance_view.xml",
