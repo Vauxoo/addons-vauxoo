@@ -1,0 +1,48 @@
+-
+  To test the module maintenances
+-
+  I update maintenances for product 'Tire', with wizard Update Maintenances
+-
+  !python {model: wizard.check.maintenance}: |
+    self.update_maintenances(cr, uid, context.get('active_id'), context=context)
+    maintenance_obj = self.pool.get('maintenance.order.line')
+    product_obj = self.pool.get('product.product')
+    prod_name = product_obj.browse(cr, uid, ref('product_product_maintenance_km'), context=context)
+    prod_name = prod_name and prod_name.name or ''
+    log('I check that the product %s not have maintenances' % (prod_name))
+    maintenances_prod = maintenance_obj.search(cr, uid, [('product_id', '=', ref('product_product_maintenance_km'))], context=context)
+    if len(maintenances_prod) > 0:
+        assert False, "The product not must be have maintenances"
+    log('I update the distance of product %s to 510 km' % (prod_name))
+    product_obj.write(cr, uid, ref('product_product_maintenance_km'), {'distance': 510}, context=context)
+    log('I update maintenances for product %s, with wizard Update Maintenances' %(prod_name))
+    self.update_maintenances(cr, uid, context.get('active_id'), context=context)
+    log('I check that was created a maintenance for the product %s' % (prod_name))
+    maintenances_prod = maintenance_obj.search(cr, uid, [('product_id', '=', ref('product_product_maintenance_km'))], context=context)
+    if len(maintenances_prod) == 0:
+        assert False, "The maintenance not was created"
+-
+  I create the wizard to start maintenance
+-
+  !record {model: wizard.maintenance.start, id: wizard_start_maintenance_0 , view: view_wizard_start_maintenance}:
+    date: !eval time.strftime('%Y-%m-%d')
+-
+  I start the maintenance
+-
+  !python {model: wizard.maintenance.start}: |
+    maintenance_obj = self.pool.get('maintenance.order.line')
+    maintenances_prod = maintenance_obj.search(cr, uid, [('product_id', '=', ref('product_product_maintenance_km'))], context=context)
+    context.update({'active_ids': maintenances_prod})
+    self.start_maintenance(cr, uid, [ref('wizard_start_maintenance_0')], context=context)
+    state = maintenance_obj.browse(cr, uid, maintenances_prod[0], context=context).state
+    log('The state of the maintenance is %s' % (state))
+-
+  I finish the maintenance
+-
+  !python {model: wizard.check.maintenance}: |
+    maintenance_obj = self.pool.get('maintenance.order.line')
+    maintenances_prod = maintenance_obj.search(cr, uid, [('product_id', '=', ref('product_product_maintenance_km'))], context=context)
+    maintenance_obj.write(cr, uid, maintenances_prod[0], {'warehouse_id': ref('stock.stock_warehouse_shop1')}, context=context)
+    maintenance_obj.action_done(cr, uid, [maintenances_prod[0]], context=context)
+    state = maintenance_obj.browse(cr, uid, maintenances_prod[0], context=context).state
+    log('The state of the maintenance is %s' % (state))
