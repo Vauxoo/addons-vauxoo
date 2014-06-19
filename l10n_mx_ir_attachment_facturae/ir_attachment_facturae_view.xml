@@ -55,7 +55,7 @@
                             <group colspan="4">
                                 <field name="cfdi_fecha_timbrado" readonly="1"/>
                                 <field name="cfdi_fecha_cancelacion" readonly="1"/>
-                                <field name="attachment_email"/>
+                                <field name="attachment_email" attrs="{'readonly':[('state','==','cancel')]}"/>
                             </group>
                         </page>
                     </notebook>

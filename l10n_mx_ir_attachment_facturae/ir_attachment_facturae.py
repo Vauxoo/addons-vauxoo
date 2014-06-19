@@ -111,7 +111,7 @@ class ir_attachment_facturae_mx(osv.Model):
         'company_id': fields.many2one('res.company', 'Company', readonly=True,
                                       help='Company to which it belongs this attachment'),
         'file_input': fields.many2one('ir.attachment', 'File input', readonly=True,
-            states={'confirmed': [('readonly', False)]}, help='File input'),
+            states={'confirmed': [('readonly', False), ('required', True)],}, help='File input'),
         #~'file_input_index': fields.text('File input', help='File input index'),
         'file_xml_sign': fields.many2one('ir.attachment', 'File XML Sign',
                                          readonly=True, help='File XML signed'),
@@ -598,10 +598,9 @@ class ir_attachment_facturae_mx(osv.Model):
                 else:
                     msj = _("Unknow cfdi driver for %s" % (ir_attach_facturae_mx_id.res_pac.name_driver))
             else:
-                if ir_attach_facturae_mx_id.model_source:
-                    wf_service.trg_validate(uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
-                    status = True
-                    msj = 'cancelled'
+                wf_service.trg_validate(uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
+                status = True
+                msj = 'cancelled'
             if status:
                 self.write(cr, uid, ids, {
                        'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
