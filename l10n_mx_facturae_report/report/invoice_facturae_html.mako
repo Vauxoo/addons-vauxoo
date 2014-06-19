@@ -264,11 +264,11 @@
                             %endif
                             %for dict in range(0,len(dict_perc)):
                                 <tr style="font-size:9; border:1.5px solid grey;">
-                                    <td width="5%" class="basic_td"><% t_perc = dict_perc[dict]['@TipoPercepcion'] %>${ t_perc or ''}</td>
-                                    <td width="10%" class="basic_td"><% clave = dict_perc[dict]['@Clave'] %>${ clave or ''}</td>
-                                    <td class="basic_td"><% concep = dict_perc[dict]['@Concepto'] %>${ concep or ''}</td>
-                                    <td width="11%" class="number_td"><% i_grava = dict_perc[dict]['@ImporteGravado'] %>$ ${ i_grava or '0.0'}</td>
-                                    <td width="15%" class="number_td"><% i_exen = dict_perc[dict]['@ImporteExento'] %>$ ${ i_exen or '0.0'}</td>
+                                    <td width="5%" class="basic_td"><% t_perc = dict_perc[dict].get('@TipoPercepcion', '') %>${ t_perc }</td>
+                                    <td width="10%" class="basic_td"><% clave = dict_perc[dict].get('@Clave', '') %>${ clave }</td>
+                                    <td class="basic_td"><% concep = dict_perc[dict].get('@Concepto', '') %>${ concep }</td>
+                                    <td width="11%" class="number_td"><% i_grava = dict_perc[dict].get('@ImporteGravado', '0.0') %>$ ${ i_grava }</td>
+                                    <td width="15%" class="number_td"><% i_exen = dict_perc[dict].get('@ImporteExento',  '0.0') %>$ ${ i_exen }</td>
                                 </tr>
                              %endfor
                              <tr style="font-size:9; border:1.5px solid grey;">
@@ -296,11 +296,11 @@
                             %endif
                             %for dict in range(0,len(dict_deduc)):
                                 <tr style="font-size:9; border:1.5px solid grey;">
-                                    <td width="5%" class="basic_td"><% t_deduc = dict_deduc[dict]['@TipoDeduccion'] %>${ t_deduc or ''}</td>
-                                    <td width="10%" class="basic_td"><% clave = dict_deduc[dict]['@Clave'] %>${ clave or ''}</td>
-                                    <td class="basic_td"><% concep = dict_deduc[dict]['@Concepto'] %>${ concep or ''}</td>
-                                    <td width="11%" class="number_td"><% i_grava = dict_deduc[dict]['@ImporteGravado'] %>$ ${ i_grava or '0.0'}</td>
-                                    <td width="15%" class="number_td"><% i_exen = dict_deduc[dict]['@ImporteExento'] %>$ ${ i_exen or '0.0'}</td>
+                                    <td width="5%" class="basic_td"><% t_deduc = dict_deduc[dict].get('@TipoDeduccion', '') %>${ t_deduc }</td>
+                                    <td width="10%" class="basic_td"><% clave = dict_deduc[dict].get('@Clave', '') %>${ clave }</td>
+                                    <td class="basic_td"><% concep = dict_deduc[dict].get('@Concepto', '') %>${ concep }</td>
+                                    <td width="11%" class="number_td"><% i_grava = dict_deduc[dict].get('@ImporteGravado', '0.0') %>$ ${ i_grava }</td>
+                                    <td width="15%" class="number_td"><% i_exen = dict_deduc[dict].get('@ImporteExento', '0.0') %>$ ${ i_exen }</td>
                                 </tr>
                             %endfor
                             <tr style="font-size:9; border:1.5px solid grey;">
@@ -330,10 +330,10 @@
                             %endif
                             %for dict in range(0,len(dict_he)):
                                 <tr style="font-size:9; border:1.5px solid grey;">
-                                    <td width="10%" class="basic_td"><% dias = dict_he[dict]['@Dias'] %>${ dias or '' | entity}</td>
-                                    <td width="10%" class="basic_td"><% tipo = dict_he[dict]['@TipoHoras'] %>${ tipo or '' | entity}</td>
-                                    <td width="9%" class="basic_td"><% hrs = dict_he[dict]['@HorasExtra'] %>${ hrs or '' | entity}</td>
-                                    <td width="10%" class="number_td"><% imp = dict_he[dict]['@ImportePagado'] %>${ imp or '0.0' | entity}</td>
+                                    <td width="10%" class="basic_td"><% dias = dict_he[dict].get('@Dias', '') %>${ dias |entity}</td>
+                                    <td width="10%" class="basic_td"><% tipo = dict_he[dict].get('@TipoHoras', '') %>${ tipo |entity}</td>
+                                    <td width="9%" class="basic_td"><% hrs = dict_he[dict].get('@HorasExtra', '') %>${ hrs |entity}</td>
+                                    <td width="10%" class="number_td"><% imp = dict_he[dict].get('@ImportePagado', '0.0') %>${ imp |entity}</td>
                                 </tr>
                             %endfor
                         %endif
@@ -356,9 +356,9 @@
                             %endif
                             %for dict in range(0,len(dict_inc)):
                                 <tr style="font-size:9; border:1.5px solid grey;">
-                                    <td width="10%" class="basic_td"><% dias = dict_inc[dict]['@DiasIncapacidad'] %>${ dias or '' | entity}</td>
-                                    <td width="10%" class="basic_td"><% tipo = dict_inc[dict]['@TipoIncapacidad'] %>${ tipo or '' | entity}</td>
-                                    <td width="9%" class="number_td"><% desc = dict_inc[dict]['@Descuento'] %>${ desc or '0.0' | entity}</td>
+                                    <td width="10%" class="basic_td"><% dias = dict_inc[dict].get('@DiasIncapacidad', '') %>${ dias |entity}</td>
+                                    <td width="10%" class="basic_td"><% tipo = dict_inc[dict].get('@TipoIncapacidad', '') %>${ tipo |entity}</td>
+                                    <td width="9%" class="number_td"><% desc = dict_inc[dict].get('@Descuento', '0.0') %>${ desc |entity}</td>
                                 </tr>
                             %endfor
                         %endif
@@ -388,11 +388,11 @@
                 %else:
                     <tr>
                 %endif
-                    <td width="10%" class="number_td"><% qty = dict_lines[dict]['@cantidad'] %>${ qty or '0.0'}</td>
-                    <td width="10%" class="basic_td"><% uni = dict_lines[dict]['@unidad'] %>${ uni or '0.0'}</td>
-                    <td class="basic_td"><% desc = dict_lines[dict]['@descripcion'] %>${ desc or '0.0'}</td>
-                    <td width="9%" class="number_td"><% vuni = dict_lines[dict]['@valorUnitario'] %>${ vuni or '0.0'}</td>
-                    <td width="15%" class="number_td"><% imp = dict_lines[dict]['@importe'] %>${ imp or '0.0'}</td>
+                    <td width="10%" class="number_td"><% qty = dict_lines[dict].get('@cantidad', '0.0') %>${ qty |entity}</td>
+                    <td width="10%" class="basic_td"><% uni = dict_lines[dict].get('@unidad', '0.0') %>${ uni |entity}</td>
+                    <td class="basic_td"><% desc = dict_lines[dict].get('@descripcion', '0.0') %>${ desc |entity}</td>
+                    <td width="9%" class="number_td"><% vuni = dict_lines[dict].get('@valorUnitario', '0.0') %>${ vuni |entity}</td>
+                    <td width="15%" class="number_td"><% imp = dict_lines[dict].get('@importe', '0.0') %>${ imp |entity}</td>
                     </tr>
                 <%row_count+=1%>
             %endfor
