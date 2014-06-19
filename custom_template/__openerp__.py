@@ -59,6 +59,7 @@ will generate an attachment and puts it in the message post of the model
     'css':[
     ],
     'demo': [
+        'demo/custom_template_demo.xml',
     ],
     'test': [
     ],

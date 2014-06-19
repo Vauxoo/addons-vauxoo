@@ -1,0 +1,328 @@
+<?xml version="1.0"?>
+<openerp>
+    <!-- Mail template is done in a NOUPDATE block
+         so users can freely customize/delete them -->
+    <data noupdate="1">
+        <!--Email template Post training -->
+        <record id="email_template_custom" model="email.template">
+            <field name="name">Custom Template Demo</field>
+            <field name="email_to">${(object.user_id.email or '')|safe}</field>
+            <field name="email_from"></field>
+            <field name="reply_to"></field>
+            <field name="subject">Important Information</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="special" eval="True"/>
+            <field name="special_name">Partner</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">${object.lang}</field>
+            <field name="body_html">
+                <![CDATA[
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<title></title>
+
+<style type="text/css">
+
+@media only screen and (max-width: 500px) {
+  html { -webkit-text-size-adjust:none; -ms-text-size-adjust:none; }
+  .mobile-width{width:320px!important;}
+  .hide{display:none;}
+  .header-image{width:380px!important; height:137px!important;}
+  .float-left{float:left; border-top:none!important;}
+  .float-right{float:right;}
+  .banner-ad-top{padding-top:20px!important; padding-bottom:20px!important; padding-left:92px!important; padding-right:0!important;}
+  .banner-ad-middle{padding-top:0!important; padding-bottom:0!important; padding-left:92px!important; padding-right:0!important;}
+  .banner-ad-bottom{padding-top:20px!important; padding-bottom:20px!important; padding-left:92px!important; padding-right:0!important;}
+  .consultant-info{padding-right:0!important; border-right:none!important;}
+  .more-icons-top{padding:20px 20px 0 20px!important;}
+  .more-icons-bottom{border-top:none!important; padding:20px 20px 0 20px!important;}
+  .more-icons-title{padding:0 20px 20px 20px!important;}
+  .more-icons-text{padding:0 20px!important;}
+}
+
+</style>
+
+</head>
+
+<body style="margin:0;" rightmargin="0" leftmargin="0" topmargin="0" bottommargin="0" bgcolor="#ffffff">
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%" bgcolor="#ffffff" text="#373737">
+    <tbody>
+        <tr>
+            <td>
+                <!-- START Main Container -->
+                <table width="625" class="mobile-width" cellspacing="0" cellpadding="0" border="0" align="center">
+                    <thead>
+                        <tr>
+<h1>Hi ${object.name}</h1>
+                            <!-- START Subject Line -->
+                            <td colspan="2" style="padding:5px 10px;" bgcolor="#ffffff">
+                            <a href="#" alt="View in Browser" title="View in Browser" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#0083d2; text-decoration:none;">Save with Celebrity Cruises: Choose Your Offer!</a>
+                            </td>
+                            <td colspan="2" style="padding:5px 10px;" align="right" bgcolor="#ffffff" valign="middle" class="hide">
+                            <!--<p style="color:#0083d2; margin-top:0; margin-bottom:0; margin-left:0; margin-right:0; font-size:12px; line-height:18px; font-family:Arial, sans-serif;"><a style="color:#0083d2; margin-top:0; margin-bottom:0; margin-left:0; margin-right:0; font-size:12px; line-height:18px; font-family:Arial, sans-serif; text-decoration:none;" href="#" alt="View in Browser" title="View in Browser">Web Version &raquo;</a></p>-->
+                            <a href="#" alt="View in Browser" title="View in Browser" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#0083d2; text-decoration:none;">Web Version &raquo;</a>
+                            </td>
+                            <!-- END Subject Line -->
+                        </tr>
+                        <tr>
+                            <!-- START Header -->
+                            <td colspan="4" bgcolor="#f1f8fe" background="http://www.cruiseshipcenters.com/csflash/ECSC/img/header-bg-625.jpg" style="padding:0 10px;" height="80" class="mobile-width">
+                                <table cellspacing="0" cellpadding="0" border="0" width="605" class="mobile-width">
+                                    <tbody>
+                                        <tr>
+                                            <td align="right" style="padding:10px 0;" height="60" width="205" class="hide">
+                                                <table cellspacing="0" cellpadding="0" border="0" width="205">
+                                                    <tr>
+                                                        <td align="right" valign="top" style="padding-bottom:5px;" width="180" height="15"><a href="#" title="Follow Us on Facebook" alt="Follow Us on Facebook"><img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/facebook-icon.gif" width="15" height="15" style="display:block;" border="0"/></a></td>
+                                                        <td align="right" valign="top" style="padding-bottom:5px;" height="15"><a href="#" title="Follow Us on Twitter" alt="Follow Us on Twitter"><img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/twitter-icon.gif" width="15" height="15" style="display:block;" border="0"/></a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2" align="right">
+                                                        </td>   
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <!-- END Header -->         
+                        </tr>
+                        <tr class="hide">
+                            <!-- START Nav -->
+                            <td bgcolor="#0083d2" width="145" height="28"><center><a href="#" style="border-right:1px solid #339CDB; border-left:1px solid #339CDB; color:#ffffff; font-family:Arial, sans-serif; font-weight:bold; font-size:12px; line-height:18px; text-decoration:none; display:block; padding-top:5px; padding-bottom:5px; padding-left:5px; padding-right:5px; text-align:center; outline:none;"><span style="color:#ffffff; font-weight:bold; font-size:12px; line-height:18px; text-decoration:none; display:block; text-align:center; outline:none;">Destinations</span></a></center></td>
+                            <td bgcolor="#0083d2" width="145" height="28"><center><a href="#" style="border-right:1px solid #339CDB; color:#ffffff; font-family:Arial, sans-serif; font-weight:bold; font-size:12px; line-height:18px; text-decoration:none; display:block; padding-top:5px; padding-bottom:5px; padding-left:5px; padding-right:5px; text-align:center; outline:none;"><span style="color:#ffffff; font-weight:bold; font-size:12px; line-height:18px; text-decoration:none; display:block; text-align:center; outline:none;">Cruise Lines</span></a></center></td>
+                            <td bgcolor="#0083d2" width="145" height="28"><center><a href="#" style="border-right:1px solid #339CDB; color:#ffffff; font-family:Arial, sans-serif; font-weight:bold; font-size:12px; line-height:18px; text-decoration:none; display:block; padding-top:5px; padding-bottom:5px; padding-left:5px; padding-right:5px; text-align:center; outline:none;"><span style="color:#ffffff; font-weight:bold; font-size:12px; line-height:18px; text-decoration:none; display:block; text-align:center; outline:none;">Land Vacations</span></a></center></td>
+                            <td bgcolor="#0083d2" width="145" height="28"><center><a href="#" style="border-right:1px solid #339CDB; color:#ffffff; font-family:Arial, sans-serif; font-weight:bold; font-size:12px; line-height:18px; text-decoration:none; display:block; padding-top:5px; padding-bottom:5px; padding-left:5px; padding-right:5px; text-align:center; outline:none;"><span style="color:#ffffff; font-weight:bold; font-size:12px; line-height:18px; text-decoration:none; display:block; text-align:center; outline:none;">Deals</span></a></center></td>
+                            <!-- END Nav -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <!-- START Hero Image -->
+                            <td colspan="4" width="625"><a href="#" title="Save with Celebrity Cruises" alt="Save with Celebrity Cruises"><img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/email-header.jpg" class="header-image" title="Save with Celebrity Cruises" alt="Save with Celebrity Cruises" width="625" height="225" border="0" style="display:block;"/></a></td>
+                            <!-- END Hero Image -->
+                        </tr>
+                        <tr>
+                            <!-- START Main Copy -->
+                            <td colspan="4" bgcolor="#eeeeee" style="padding:20px; border-bottom:1px solid #cccccc;" class="mobile-width">
+                            <p class="mobile-width" style="margin-top:0; margin-bottom:18px; margin-left:0; margin-right:0; font-size:12px; line-height:18px; font-family:Arial, sans-serif;color:#373737;">Dear (first name),</p>
+                            <p class="mobile-width" style="margin-top:0; margin-bottom:18px; margin-left:0; margin-right:0; font-size:12px; line-height:18px; font-family:Arial, sans-serif;color:#373737;">As someone who loves to cruise, I want you to be the first to know about Celebrity Cruises' exciting new 2014 Alaska and Europe itineraries available during our exceptional One Week Sale! Book select 2013 or 2014 Alaska or Europe sailings between March 15-21, 2013, and enjoy one or more of our <span style="color:#004990; font-weight:bold;"></span> <span style="color:#c60000; font-weight:bold;">Extras</span>:</p>
+                            <table cellspacing="0" cellpadding="0" border="0" width="565" class="mobile-width">
+                                <tbody>
+                                    <tr>
+                                        <td valign="top" width="13" style="padding-left:20px;"><img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/arrow-bullet.gif" height="13" width="13" style="display:block;"/></td>
+                                        <td style="padding-bottom:10px; padding-left:10px;"><span style="font-size:12px; line-height:18px; font-family:Arial, sans-serif;color:#373737;">$650 worth of savings in two onboard coupon books. $650 worth of savings in two onboard coupon books</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top" width="13" style="padding-left:20px;"><img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/arrow-bullet.gif" height="13" width="13" style="display:block;"/></td>
+                                        <td style="padding-bottom:10px; padding-left:10px;"><span style="font-size:12px; line-height:18px; font-family:Arial, sans-serif;color:#373737;">Reduced deposit of only $100</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top" width="13" style="padding-left:20px;"><img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/arrow-bullet.gif" height="13" width="13" style="display:block;"/></td>
+                                        <td style="padding-bottom:10px; padding-left:10px;"><span style="font-size:12px; line-height:18px; font-family:Arial, sans-serif;color:#373737;">Plus, Captain's Circle members can enjoy an extra savings of $100!</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="mobile-width" style="margin-top:0; margin-bottom:18px; margin-left:0; margin-right:0; font-size:12px; line-height:18px; font-family:Arial, sans-serif;color:#373737;">These new itineraries fill up fast, so reserve your ideal cabin today with a deposit as little as $100 per person!</p>
+                            
+                            <div><!--[if mso]>
+  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="#" style="height:26px;v-text-anchor:middle;width:150px;" arcsize="12%" stroke="f" fill="t">
+    <v:fill type="tile" src="http://www.cruiseshipcenters.com/csflash/ECSC/img/red-button.gif" color="#c60000" />
+    <w:anchorlock/>
+    <center style="color:#ffffff;font-family:sans-serif;font-size:13px;font-weight:bold;">See Details</center>
+  </v:roundrect>
+<![endif]--><![if !mso]><a href="#" style="background-color:#c60000; background-image:url(http://www.cruiseshipcenters.com/csflash/ECSC/img/red-button.gif); border-radius:3px; color:#ffffff; display:inline-block; font-family:Arial,sans-serif; font-size:14px; font-weight:bold; line-height:26px; text-align:center; text-decoration:none; width:150px; -webkit-text-size-adjust:none;">See Details</a><![endif]></div></a>
+                            </td>
+                            <!-- END Main Copy -->
+                        </tr>                        
+                        <tr>
+                            <!-- START Consultant Info -->
+                            <td colspan="4" bgcolor="#eeeeee" style="border-bottom:1px solid #cccccc;" class="mobile-width">
+                                <table cellspacing="0" cellpadding="0" border="0" width="625" class="mobile-width">
+                                    <tbody>
+                                        <tr>                                            
+                                            <td style="background:#eeeeee; padding-top:20px; padding-bottom:20px; padding-left:20px; border-top:1px solid #ffffff;" width="116">
+                                            <img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/cruise-consultant-placeholder.jpg" width="100" height="113" alt="Consultant Name" title="Consultant Name" style="padding-top:8px; padding-bottom:8px; padding-left:8px; padding-right:8px; background:#ffffff; display:block;"/>
+                                            </td>
+                                            <td style="padding-top:20px; padding-bottom:20px; padding-left:10px; padding-right:20px; border-right:1px solid #cccccc; border-top:1px solid #ffffff;" width="234" valign="top" class="float-right consultant-info"><h4 style="font-family:Arial, sans-serif;  font-size:16px; line-height:24px; font-weight:bold; margin-top:0; margin-bottom:10px; margin-left:0; margin-right:0; color:#373737;"><span style="color:#373737; margin-bottom:5px;">Questions? I'm here to help</span></h4>
+                                            <p style="margin-top:0; margin-bottom:10px; margin-left:0; margin-right:0; font-size:12px; line-height:18px; font-family:Arial, sans-serif;color:#373737;">Ivanna Cruise<br/>Vacation Consultant<br/>1-800-767-7327 ext 1234</p>
+                                            
+                                            <div><!--[if mso]>
+  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="#" style="height:26px;v-text-anchor:middle;width:150px;" arcsize="12%" stroke="f" fill="t">
+    <v:fill type="tile" src="http://www.cruiseshipcenters.com/csflash/ECSC/img/blue-button.gif" color="#0083d2" />
+    <w:anchorlock/>
+    <center style="color:#ffffff;font-family:sans-serif;font-size:13px;font-weight:bold;">Get Assistance</center>
+  </v:roundrect>
+<![endif]--><![if !mso]><a href="#" style="background-color:#0083d2; background-image:url(http://www.cruiseshipcenters.com/csflash/ECSC/img/blue-button.gif); border-radius:3px; color:#ffffff; display:inline-block; font-family:Arial,sans-serif; font-size:14px; font-weight:bold; line-height:26px; text-align:center; text-decoration:none; width:150px; -webkit-text-size-adjust:none;">Get Assistance</a><![endif]></div></td>
+
+                                            <td width="185" valign="top" style="padding-top:20px; padding-bottom:20px; padding-left:20px; padding-right:20px; border-top:1px solid #ffffff;" class="hide">
+                                                <h4 style="font-family:Arial, sans-serif;  font-size:16px; line-height:24px; font-weight:bold; margin-top:0; margin-bottom:10px; margin-left:0; margin-right:0; color:#373737"><span style="color:#373737;">Our Promise</span></h4>
+                                                <table cellspacing="0" cellpadding="0" border="0" width="185">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td valign="top" width="13"><img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/arrow-bullet.gif" height="13" width="13" style="display:block;"/></td><td style="padding-bottom:5px; padding-left:10px;"><span style="font-size:12px; line-height:18px; font-family:Arial, sans-serif; color:#0083d2;">Advice you can trust.</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td valign="top" width="13"><img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/arrow-bullet.gif" height="13" width="13" style="display:block;"/></td><td style="padding-bottom:5px; padding-left:10px;"><span style="font-size:12px; line-height:18px; font-family:Arial, sans-serif; color:#0083d2;">The best choice and prices.</span></td>                                                        
+                                                        </tr>
+                                                        <tr>
+                                                            <td valign="top" width="13"><img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/arrow-bullet.gif" height="13" width="13" style="display:block;"/></td><td style="padding-bottom:5px; padding-left:10px;"><span style="font-size:12px; line-height:18px; font-family:Arial, sans-serif; color:#0083d2;"></span></td>                                                        
+                                                        </tr>
+                                                        <tr>
+                                                            <td valign="top" width="13"><img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/arrow-bullet.gif" height="13" width="13" style="display:block;"/></td><td style="padding-bottom:5px; padding-left:10px;"><span style="font-size:12px; line-height:18px; font-family:Arial, sans-serif; color:#0083d2;">More than cruises.</span></td>                                                        
+                                                        </tr>
+                                                        <tr>
+                                                            <td valign="top" width="13"><img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/arrow-bullet.gif" height="13" width="13" style="display:block;"/></td><td style="padding-bottom:5px; padding-left:10px;"><span style="font-size:12px; line-height:18px; font-family:Arial, sans-serif; color:#0083d2;">Always there.</span></td>                                                        
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <!-- END Consultant Info -->
+                        </tr>
+                        <tr>
+                            <!-- START Custom Promotion -->
+                            <td colspan="4" bgcolor="#eeeeee" style="border-bottom:1px solid #cccccc; border-top:1px solid #ffffff;" class="mobile-width">
+                                <table cellspacing="0" cellpadding="0" border="0" width="625" class="mobile-width">
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding:20px;" valign="top" width="400"><h4 style="font-family:Arial, sans-serif; font-size:16px; line-height:24px; font-weight:bold; margin-top:0; margin-bottom:10px; margin-left:0; margin-right:0; color:#373737"><span style="color:#373737;">Upcoming River Cruise Night!</span></h4>
+                            <p style="margin-top:0; margin-bottom:18px; margin-left:0; margin-right:0; font-size:12px; font-family:Arial, sans-serif;  line-height:18px; color:#373737;">Join us in Brantford and enjoy a glass of wine and learn all about cruising the rivers of Europe with AMA Waterways!</p>
+                            <div><!--[if mso]>
+  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="#" style="height:26px;v-text-anchor:middle;width:150px;" arcsize="12%" stroke="f" fill="t">
+    <v:fill type="tile" src="http://www.cruiseshipcenters.com/csflash/ECSC/img/red-button.gif" color="#c60000" />
+    <w:anchorlock/>
+    <center style="color:#ffffff;font-family:sans-serif;font-size:13px;font-weight:bold;">See Details</center>
+  </v:roundrect>
+<![endif]--><![if !mso]><a href="#" style="background-color:#c60000; background-image:url(http://www.cruiseshipcenters.com/csflash/ECSC/img/red-button.gif); border-radius:3px; color:#ffffff; display:inline-block; font-family:Arial,sans-serif; font-size:14px; font-weight:bold; line-height:26px; text-align:center; text-decoration:none; width:150px; -webkit-text-size-adjust:none;">See Details</a><![endif]></div></td><td style="padding:20px 20px 20px 0;" width="165" height="129"><img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/custom-promo-image.jpg" style="padding-top:8px; padding-bottom:8px; padding-left:8px; padding-right:8px; background:#ffffff;" alt="Custom Promo Title" title="Custom Promo Title" width="149" height="113" style="display:block;"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>                            
+                            </td>
+                            <!-- END Custom Promotion -->
+                        </tr>
+                        <tr>
+                            <!-- START Banner Ads -->
+                            <td colspan="4" style="border-bottom:1px solid #cccccc;" bgcolor="#C0D9E8" class="mobile-width">
+                                <table cellspacing="0" cellpadding="0" border="0" width="625" class="mobile-width">
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding:20px; border-top:1px solid #ffffff;" class="float-left banner-ad-top" align="center">
+                                            <a href="#" alt="Redeem Aeroplan Miles" title="Redeem Aeroplan Miles"><img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/aeroplan_enCA.jpg" alt="Redeem Aeroplan Miles" title="Redeem Aeroplan Miles" height="120" width="165" style="padding-top:8px; padding-bottom:8px; padding-left:8px; padding-right:8px; background:#ffffff; display:block;" border="0"/></a>
+                                            </td>
+                                            <td style="padding:20px 0; border-top:1px solid #ffffff;" class="float-left banner-ad-middle">
+                                            <a href="#" alt="Vacation Packages" title="Vacation Packages"><img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/vacation_enCA.jpg" alt="Vacation Packages" title="Vacation Packages" height="120" width="165" style="padding-top:8px; padding-bottom:8px; padding-left:8px; padding-right:8px; background:#ffffff; display:block;" border="0"/></a>
+                                            </td>
+                                            <td style="padding:20px; border-top:1px solid #ffffff;" class="float-left banner-ad-bottom">
+                                            <a href="#" alt="Travel Insurance" title="Travel Insurance"><img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/insurance_enCA.jpg" alt="Travel Insurance" title="Travel Insurance" height="120" width="165" style="padding-top:8px; padding-bottom:8px; padding-left:8px; padding-right:8px; background:#ffffff; display:block;" border="0"/></a>
+                                            </td>                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <!-- END Banner Ads -->
+                        </tr>
+                        <tr>
+                            <!-- START Banner Ad -->
+                            <td colspan="4" bgcolor="#eeeeee" class="mobile-width">
+                                <table cellspacing="0" cellpadding="0" border="0" width="625" class="mobile-width">
+                                    <tbody>
+                                        <tr>
+                                            <td class="float-left">
+                                                <table cellspacing="0" cellpadding="0" border="0" class="mobile-width">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="padding-top:20px; padding-left:20px; padding-right:10px; border-top:1px solid #ffffff;" class="more-icons-top"><a href="#" alt="Vacation Packages" title="Vacation Packages"><img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/icon-vacations.gif" style="display:block;" border="0" width="80"/></a></td>
+                                                            <td style="padding-top:20px; padding-left:10px; padding-right:10px; border-top:1px solid #ffffff;" class="more-icons-top"><a href="#" alt="Coach & Rail Tours" title="Coach & Rail Tours"><img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/icon-tours.gif" style="display:block;" border="0" width="80"/></a></td>
+                                                            <td style="padding-top:20px; padding-left:10px; padding-right:10px; border-top:1px solid #ffffff;" class="more-icons-top"><a href="#" alt="Travel Insurance" title="Travel Insurance"><img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/icon-insurance.gif" style="display:block;" border="0" width="80"/></a></td>
+                                                        </tr>
+                                                        <tr>
+                                                           <td style="padding-bottom:20px; padding-left:20px; padding-right:10px;" class="more-icons-title"><center><a href="#" alt="Vacation Packages" title="Vacation Packages" style="text-align:center; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#004990; text-decoration:none;">Vacation Packages</a></center></td>
+                                            <td style="padding-bottom:20px; padding-left:10px; padding-right:10px;" class="more-icons-title"><center><a href="#" alt="Coach & Rail Tours" title="Coach & Rail Tours" style="text-align:center; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#004990; text-decoration:none;">Coach & Rail Tours</a></center></td>
+                                            <td style="padding-bottom:20px; padding-left:10px; padding-right:10px;" class="more-icons-title"><center><a href="#" alt="Travel Insurance" title="Travel Insurance" style="text-align:center; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#004990; text-decoration:none;">Travel Insurance</a></center></td>                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                            <td valign="top" class="float-left">
+                                                <table cellspacing="0" cellpadding="0" border="0" class="mobile-width">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="padding-top:20px; padding-left:10px; padding-right:10px; border-top:1px solid #ffffff;" valign="top" class="more-icons-bottom"><a href="#" alt="Flights" title="Flights"><img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/icon-flights.gif" style="display:block;" border="0" width="80"/></a></td>
+                                            <td style="padding-top:20px; padding-left:10px; padding-right:10px; border-top:1px solid #ffffff;" valign="top" class="more-icons-bottom"><a href="#" alt="Hotels" title="Hotels"><img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/icon-hotels.gif" style="display:block;" border="0" width="80"/></a></td>
+                                            <td style="padding-top:20px; padding-left:10px; padding-right:20px; border-top:1px solid #ffffff;" valign="top" class="more-icons-bottom"><a href="#" alt="Car Rentals" title="Car Rentals"><img src="http://www.cruiseshipcenters.com/csflash/ECSC/img/icon-cars.gif" style="display:block;" border="0" width="80"/></a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-bottom:20px; padding-left:10px; padding-right:10px;" valign="top" class="more-icons-title"><center><a href="#" alt="Flights" title="Flights" style="text-align:center; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#004990; text-decoration:none;">Flights</a></center></td>
+                                            <td style="padding-bottom:20px; padding-left:10px; padding-right:10px;" valign="top" class="more-icons-title"><center><a href="#" alt="Hotels" title="Hotels" style="text-align:center; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#004990; text-decoration:none;">Hotels</a></center></td>
+                                            <td style="padding-bottom:20px; padding-left:10px; padding-right:20px;" valign="top" class="more-icons-title"><center><a href="#" alt="Car Rentals" title="Car Rentals" style="text-align:center; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#004990; text-decoration:none;">Car Rentals</a></center></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td colspan="6" style="padding-left:130px; padding-right:130px;" align="center" class="more-icons-text">
+                                                <p class="mobile-width" style="margin-top:0; margin-bottom:18px; margin-left:0; margin-right:0; font-size:12px; line-height:18px; font-family:Arial, sans-serif;color:#004990;"></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6" style="padding-bottom:20px;" align="center">
+                                            <div><!--[if mso]>
+  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="#" style="height:26px;v-text-anchor:middle;width:150px;" arcsize="12%" stroke="f" fill="t">
+    <v:fill type="tile" src="http://www.cruiseshipcenters.com/csflash/ECSC/img/blue-button.gif" color="#0083d2" />
+    <w:anchorlock/>
+    <center style="color:#ffffff;font-family:sans-serif;font-size:13px;font-weight:bold;">Get Assistance</center>
+  </v:roundrect>
+<![endif]--><![if !mso]><a href="#" style="background-color:#0083d2; background-image:url(http://www.cruiseshipcenters.com/csflash/ECSC/img/blue-button.gif); border-radius:3px; color:#ffffff; display:inline-block; font-family:Arial,sans-serif; font-size:14px; font-weight:bold; line-height:26px; text-align:center; text-decoration:none; width:150px; -webkit-text-size-adjust:none;">Get Assistance</a><![endif]></div></td>
+                                        </tr>
+                                    </tbody>
+                                </table>                                
+                            </td>
+                            <!-- END Banner Ad -->
+                        </tr>
+                        <tr>
+                            <!-- START Legal Info -->
+                            <td colspan="4" bgcolor="#ffffff" style="padding:20px;" class="mobile-width">
+                            <p class="mobile-width" style="font-size:12px; font-family: Arial, sans-serif; color:#999999; line-height:18px; margin-top:5px; margin-bottom:5px; margin-left:5px; margin-right:5px;"></p>
+                            </td>
+                            <!-- END Legal Info -->
+                        </tr>                        
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <!-- START Footer -->
+                            <td colspan="4" bgcolor="#ffffff" style="padding:20px; border-top:1px solid #ffffff; font-family: Arial, sans-serif; font-size:12px; color:#999999; line-height:18px;" class="mobile-width">
+                            <p class="mobile-width" style="font-family: Arial, sans-serif; font-size:12px; color:#999999; line-height:18px; margin-top:5px; margin-bottom:5px; margin-left:5px; margin-right:5px;">Dave Mossop – </p>
+                            <p class="mobile-width" style="font-family: Arial, sans-serif; font-size:12px; color:#999999; line-height:18px; margin-top:5px; margin-bottom:5px; margin-left:5px; margin-right:5px;"></p>            
+                            <p class="mobile-width" style="font-family: Arial, sans-serif; font-size:12px; color:#999999; line-height:18px; margin-top:5px; margin-bottom:5px; margin-left:5px; margin-right:5px;"><a style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#999999;" href="#" title="Unsubscribe" alt="Unsubscribe">Modify or Unsubscribe Your Email Subscriptions</a></p>
+                            <p class="mobile-width" style="font-family: Arial, sans-serif; font-size:12px; color:#999999; line-height:18px; margin-top:5px; margin-bottom:5px; margin-left:5px; margin-right:5px;"></p>
+                            </td>
+                            <!-- END Footer -->
+                        </tr>
+                    </tfoot>
+                </table><!-- END Main Container -->
+            </td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>]]>
+            </field>
+        </record>
+
+        <!-- Create Action to test at same time the method create_action -->
+
+        <function name="create_action" model="email.template">
+            <value eval="[ref('email_template_custom')]"/>
+        </function>
+    </data>
+</openerp>
