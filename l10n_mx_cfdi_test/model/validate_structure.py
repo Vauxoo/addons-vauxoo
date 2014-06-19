@@ -47,12 +47,10 @@ class account_invoice(osv.Model):
         list_price_unit = []
         list_importe_xml = []
         list_valorUnitario_xml = []
-        list_tax_amount_line = []
         list_retenciones = []
         list_traslados = []
         list_importe_ret_xml = []
         list_importe_traslados_xml = []
-        list_name_traslados_xml = []
         totalImpuestosRetenidos = 0.00
         totalImpuestosTrasladados = 0.00
         totalImpuestosRetenidos_xml = 0.00
