@@ -2,19 +2,17 @@
 {
     "name" : "OpenAcademy Module",
     "version" : "0.1",
-    "depends" :["base","board"],
+    "depends" :["base", "board"],
     "author" : "Vauxoo",
     "description" : """
     What it does!
                     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
-    "init_xml" : [
-    ],
-    "demo_xml" : [
+    "demo" : [
     "demo/demo_partners.xml"
     ],
-    "update_xml" : [
+    "data" : [
     "openacademy_view.xml",
     "res_partner_view.xml",
     "data/openacademy_data.xml",
