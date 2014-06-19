@@ -263,7 +263,6 @@ class ir_attachment_facturae_mx(osv.Model):
                         raise orm.except_orm(_('Warning'), _('Stamped Code: %s.-Validation code %s.-Folio Fiscal: %s.-Stamped Message: %s.-Validation Message: %s.') % (
                             codigo_timbrado, codigo_validacion, folio_fiscal, mensaje, resultados_mensaje))
             else:
-                msg += 'Not found information from web services of PAC, verify that the configuration of PAC is correct'
                 raise osv.except_osv(_('Warning'), _(
                     'Not found information from web services of PAC, verify that the configuration of PAC is correct'))
             return {'file': file, 'msg': msg, 'cfdi_xml': cfdi_xml, 'status': status}
