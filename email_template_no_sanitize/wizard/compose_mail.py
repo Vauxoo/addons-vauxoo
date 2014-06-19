@@ -103,7 +103,7 @@ class mail_compose_message(osv.TransientModel):
                     # post the message
                     subtype = 'mail.mt_comment'
                     post_values.update({'body': ''})
-                    msg_id = active_model_pool.message_post(cr, uid, [res_id], type='comment', subtype=subtype, context=context, **post_values)
+                    msg_id = active_model_pool.message_post(cr, uid, [res_id], type='notification', subtype=subtype, context=context, **post_values)
                     attach_ids = ir_attachment_obj.search(cr, uid,
                                              [('res_model', '=', wizard.model),
                                               ('res_id', '=', res_id),
