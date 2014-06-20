@@ -27,8 +27,7 @@ from openerp.osv import osv, fields
 from tools.translate import _
 import decimal_precision as dp
 import base64
-#~ from xml.dom import minidom
-#~ import xml.dom.minidom
+from suds.client import Client
 try:
     import xmltodict
 except:
@@ -47,6 +46,8 @@ class wizard_validate_uuid_sat(osv.osv_memory):
                 data_xml = base64.decodestring(att.file_xml_sign.datas)
                 dict_data = dict(xmltodict.parse(data_xml).get('cfdi:Comprobante', {}))
                 complemento = dict_data.get('cfdi:Complemento', {})
+                emitter = dict_data.get('cfdi:Emisor', {})
+                receiver = dict_data.get('cfdi:Receptor', {})
                 list_xml.append([0, False, {
                     'name': att.file_xml_sign.name,
                     'amount': float(dict_data.get('@total', 0.0)), 
@@ -54,7 +55,9 @@ class wizard_validate_uuid_sat(osv.osv_memory):
                     'type': dict_data.get('@tipoDeComprobante', ''), 
                     'uuid': complemento.get('tfd:TimbreFiscalDigital', {}).get('@UUID', ''), 
                     'date_time': dict_data.get('@fecha', ''), 
-                    'file_xml': att.file_xml_sign.id}])
+                    'file_xml': att.file_xml_sign.id,
+                    'vat_emitter': emitter.get('@rfc', ''), 
+                    'vat_receiver': receiver.get('@rfc', ''), }])
         res.update({'xml_ids': list_xml})
         return res
     
@@ -63,6 +66,31 @@ class wizard_validate_uuid_sat(osv.osv_memory):
         'xml_ids': fields.many2many('xml.to.validate.line', 'wizard_xml_to_validate', 'wizard_id',
             'xml_id', 'XMLs to validate', help='XMLs to validate the uuid in the SAT'),
     }
+    
+    def check_uuid_dat(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        data = self.browse(cr, uid, ids[0], context=context)
+        for xml in data.xml_ids:
+            url = 'https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl'
+            client = Client(url)
+            result = client.service.Consulta(""""?re=%s&rr=%s&tt=%s&id=%s""" % (xml.vat_emitter\
+                or '', xml.vat_receiver or '', xml.amount or 0.0, xml.uuid or ''))
+            result = result and result['Estado'] or ''
+            xml.write({'result': result})
+        return {
+            'name':_("Validate Invoice UUID SAT"),
+            'view_mode': 'form',
+            'view_id': False,
+            'view_type': 'form',
+            'res_model': 'wizard.validate.uuid.sat',
+            'res_id': ids[0],
+            'type': 'ir.actions.act_window',
+            'nodestroy': True,
+            'target': 'new',
+            'domain': '[]',
+            'context': context,
+        }
     
 class xml_to_validate_line(osv.osv_memory):
     _name = 'xml.to.validate.line'
@@ -95,6 +123,9 @@ class xml_to_validate_line(osv.osv_memory):
         'date_time': fields.datetime('DateTime', readonly=True, help='DateTime in that was '\
             'generated the XML'),
         'result': fields.char('Result', readonly=True, help='Result of the validation'),
+        'vat_emitter': fields.char('Vat Emitter', help='Vat of emitter'),
+        'vat_receiver': fields.char('Vat Receiver', help='Vat of receiver'),
+        'state_invoice': fields.char('State Invoice', help='State of invoice that was generated the XML'),
     }
 
     def onchange_xml_id(self, cr, uid, ids, xml_id, context=None):
@@ -104,13 +135,18 @@ class xml_to_validate_line(osv.osv_memory):
             att_brw = att_obj.browse(cr, uid, xml_id, context=context)
             data_xml = base64.decodestring(att_brw.datas or '')
             dict_data = dict(xmltodict.parse(data_xml).get('cfdi:Comprobante', {}))
+            #~ print 'dict_data', dict_data
             complemento = dict_data.get('cfdi:Complemento', {})
+            emitter = dict_data.get('cfdi:Emisor', {})
+            receiver = dict_data.get('cfdi:Receptor', {})
             result['value'].update({
                 'name': att_brw.name or '',
                 'amount': float(dict_data.get('@total', 0.0)), 
                 'number': dict_data.get('@folio', ''), 
                 'type': dict_data.get('@tipoDeComprobante', ''), 
                 'uuid': complemento.get('tfd:TimbreFiscalDigital', {}).get('@UUID', ''), 
-                'date_time': dict_data.get('@fecha', ''), 
+                'vat_emitter': emitter.get('@rfc', ''), 
+                'vat_receiver': receiver.get('@rfc', ''), 
                 })
+        print 'result', result
         return result

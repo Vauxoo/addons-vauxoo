@@ -31,6 +31,13 @@
     "category" : "Localization/Mexico",
     "description" : """
     This module add an wizard to validate if an XLM already was validateD in the SAT
+    
+    Added 
+    sudo apt-get install python-soappy 
+    sudo pip install pillow qrcode
+    wget http://security.ubuntu.com/ubuntu/pool/main/s/suds/python-suds_0.4.1-2ubuntu1_all.deb
+    sudo dpkg -i python-suds_0.4.1-2ubuntu1_all.deb
+    
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",

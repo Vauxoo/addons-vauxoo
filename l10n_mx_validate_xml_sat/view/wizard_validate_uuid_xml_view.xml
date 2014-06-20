@@ -11,9 +11,7 @@
             <field name="xml_ids" widget="one2many_list" context="{'active_id':ctx_active_id, 'active_ids':ctx_active_ids, 'active_model': ctx_active_model}"/>
             <footer>
                 <button icon='gtk-cancel' special="cancel"  string="Cancel" />
-<!--
-                    <button name="create_diot" string="Create file of DIOT" colspan="1" type="object" icon="gtk-ok"/>
--->
+                <button name="check_uuid_dat" string="Validate" colspan="1" type="object" icon="gtk-ok"/>
             </footer>
         </form>
         </field>
@@ -46,12 +44,15 @@
         <field name="model">xml.to.validate.line</field>
         <field name="arch" type="xml">
             <tree string="Validate Invoice UUID SAT" version="7.0" editable="bottom">
-                <field name="name"/>
+                <field name="name" invisible="1"/>
                 <field name="file_xml" on_change="onchange_xml_id(file_xml, context)"/>
+                <field name="vat_emitter"/>
+                <field name="vat_receiver"/>
                 <field name="amount"/>
                 <field name="number"/>
                 <field name="type"/>
                 <field name="uuid"/>
+                <field name="state_invoice"/>
                 <field name="result"/>
             </tree>
         </field>
