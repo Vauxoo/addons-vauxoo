@@ -45,7 +45,9 @@
     "update_xml" : [
         "maintenance_wizard.xml",
         "maintenance_view.xml",
-        "maintenance_report.xml"],
+        "maintenance_report.xml",
+        "security/ir.model.access.csv",
+        ],
     "active": False,
     "installable": True
    }
