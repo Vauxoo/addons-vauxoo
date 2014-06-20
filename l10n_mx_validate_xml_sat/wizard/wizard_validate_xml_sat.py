@@ -67,9 +67,26 @@ class wizard_validate_uuid_sat(osv.osv_memory):
 class xml_to_validate_line(osv.osv_memory):
     _name = 'xml.to.validate.line'
     
+    def fields_view_get(self, cr, uid, view_id=None, view_type=False, context=None, toolbar=False, submenu=False):
+        if context is None:
+            context = {}
+        res = super(xml_to_validate_line, self).fields_view_get(cr, uid, view_id=view_id,
+            view_type=view_type, context=context, toolbar=toolbar, submenu=submenu)
+        if context.get('active_ids'):
+            att_obj = self.pool.get('ir.attachment')
+            attachment_ids = att_obj.search(cr, uid, [('res_id', 'in', context.get('active_ids'))], context=context)
+            att_dom = []
+            for att in att_obj.browse(cr, uid, attachment_ids, context=context):
+                if '.xml' in att.name:
+                    att_dom.append(att.id)
+            for field in res['fields']:
+                if field == 'file_xml':
+                    res['fields'][field]['domain'] = [('id', 'in', att_dom)]
+        return res
+    
     _columns = {
         'name': fields.char('XML name', readonly=True, size=64),
-        'file_xml': fields.many2one('ir.attachment', 'File XML', help='File to validate UUID'),
+        'file_xml': fields.many2one('ir.attachment', 'File XML', help='File to validate UUID',),
         'amount': fields.float('Amount', digits_compute=dp.get_precision('Account'),
             readonly=True, help='Amount to the XML'),
         'number': fields.char('Number', readonly=True, help='Number of XML'),

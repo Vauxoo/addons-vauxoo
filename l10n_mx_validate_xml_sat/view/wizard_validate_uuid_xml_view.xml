@@ -8,17 +8,7 @@
         <field name="arch" type="xml">
         <form string="Validate Invoice UUID SAT" version="7.0">
             <field name="name"/>
-            <field name="xml_ids" widget="one2many_list">
-                <tree string="Documents" editable="bottom" >
-                    <field name="name"/>
-                    <field name="file_xml" on_change="onchange_xml_id(file_xml, context)"/>
-                    <field name="amount"/>
-                    <field name="number"/>
-                    <field name="type"/>
-                    <field name="uuid"/>
-                    <field name="result"/>
-                </tree>
-            </field>
+            <field name="xml_ids" widget="one2many_list" context="{'active_id':ctx_active_id, 'active_ids':ctx_active_ids, 'active_model': ctx_active_model}"/>
             <footer>
                 <button icon='gtk-cancel' special="cancel"  string="Cancel" />
 <!--
@@ -28,6 +18,7 @@
         </form>
         </field>
     </record>
+
 
     <record id="action_wizard_validate_invoice_uuid_sat" model="ir.actions.act_window">
         <field name="name">Validate Invoice UUID SAT</field>
@@ -46,8 +37,34 @@
             target="new"
             key2="client_action_multi"
             id="act_wizard_validate_invoice_uuid_sat"
-        />
-    
+            context="{'ctx_active_id':active_id, 'ctx_active_ids': active_ids, 'ctx_active_model':active_model}"
+            />
+        
+            
+    <record id="view_wizard_xml_to_validate_line_sat" model="ir.ui.view">
+        <field name="name">view.wizard.xml.to.validate.line.sat</field>
+        <field name="model">xml.to.validate.line</field>
+        <field name="arch" type="xml">
+            <tree string="Validate Invoice UUID SAT" version="7.0" editable="bottom">
+                <field name="name"/>
+                <field name="file_xml" on_change="onchange_xml_id(file_xml, context)"/>
+                <field name="amount"/>
+                <field name="number"/>
+                <field name="type"/>
+                <field name="uuid"/>
+                <field name="result"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_wizard_xml_to_validate_line_sat" model="ir.actions.act_window">
+        <field name="name">action.wizard.xml.to.validate.line.sat</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">xml.to.validate.line</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+        <field name="target">new</field>
+        <field name="help"></field>
+    </record>
 <!--
         <menuitem   name="Transactions with third parties [ DIOT ] "
                     parent="account.menu_finance_legal_statement"
