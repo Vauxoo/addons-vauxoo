@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    <record id="view_wizard_validate_invoice_uuid_sat" model="ir.ui.view">
+        <field name="name">Validate Invoice UUID SAT</field>
+        <field name="model">wizard.validate.uuid.sat</field>
+        <field name="arch" type="xml">
+        <form string="Validate Invoice UUID SAT" version="7.0">
+            <field name="name"/>
+            <field name="xml_ids" widget="one2many_list">
+                <tree string="Documents" editable="bottom" >
+                    <field name="name"/>
+                    <field name="file_xml" on_change="onchange_xml_id(file_xml, context)"/>
+                    <field name="amount"/>
+                    <field name="number"/>
+                    <field name="type"/>
+                    <field name="uuid"/>
+                    <field name="result"/>
+                </tree>
+            </field>
+            <footer>
+                <button icon='gtk-cancel' special="cancel"  string="Cancel" />
+<!--
+                    <button name="create_diot" string="Create file of DIOT" colspan="1" type="object" icon="gtk-ok"/>
+-->
+            </footer>
+        </form>
+        </field>
+    </record>
+
+    <record id="action_wizard_validate_invoice_uuid_sat" model="ir.actions.act_window">
+        <field name="name">Validate Invoice UUID SAT</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">wizard.validate.uuid.sat</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="help"></field>
+    </record>
+    
+    <act_window name="Validate Invoice UUID SAT"
+            res_model="wizard.validate.uuid.sat"
+            src_model="account.invoice"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+            id="act_wizard_validate_invoice_uuid_sat"
+        />
+    
+<!--
+        <menuitem   name="Transactions with third parties [ DIOT ] "
+                    parent="account.menu_finance_legal_statement"
+                    action="action_account_diot_report"
+                    id="menu_account_diot_declaration"
+            />
+-->
+
+
+    </data>
+</openerp>
