@@ -51,9 +51,15 @@ this contracts.
     """,
     "website": "http://vauxoo.com",
     "category": "Contracts",
+    "demo": [
+        'demo/demo_account_analytic_account.xml',
+    ],
     "data": [
         'security/ir.model.access.csv',
         'view/account_analytic_analysis_view.xml',
+    ],
+    "test": [
+        'test/contract_enterprise_license.yml'
     ],
     "active": False,
     "installable": True,
