@@ -73,6 +73,7 @@
                 <field name="arch" type="xml">
                         <xpath expr="//field[@name=&quot;stage_id&quot;]" position="after">
                                 <field name="userstory_id"/>
+                                <field name="effective_hours" sum="Hour(s) Spent"/>
                         </xpath>
                         <xpath expr='//field[@name="planned_hours"]' position='attributes'>
                         <attribute name="widget">float_time</attribute>
