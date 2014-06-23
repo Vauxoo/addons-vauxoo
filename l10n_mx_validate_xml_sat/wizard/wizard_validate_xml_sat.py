@@ -39,6 +39,7 @@ class wizard_validate_uuid_sat(osv.osv_memory):
     def default_get(self, cr, uid, fields, context=None):
         res = super(wizard_validate_uuid_sat, self).default_get(cr, uid, fields, context=context)
         ir_att_obj = self.pool.get('ir.attachment.facturae.mx')
+        acc_inv_obj = self.pool.get('account.invoice')
         attachments = ir_att_obj.search(cr, uid, [('id_source', 'in', context['active_ids'])], context=context)
         list_xml = []
         for att in ir_att_obj.browse(cr, uid, attachments, context):
@@ -48,6 +49,12 @@ class wizard_validate_uuid_sat(osv.osv_memory):
                 complemento = dict_data.get('cfdi:Complemento', {})
                 emitter = dict_data.get('cfdi:Emisor', {})
                 receiver = dict_data.get('cfdi:Receptor', {})
+                doc_or = acc_inv_obj.search(cr, uid, [('id', '=', att.id_source),], context=context)
+                state_inv = doc_or and acc_inv_obj.browse(cr, uid, doc_or[0], context=context).state or ''
+                if state_inv in ('open', 'paid'):
+                    state_inv = 'Vigente'
+                else:
+                    state_inv = 'Cancelado'
                 list_xml.append([0, False, {
                     'name': att.file_xml_sign.name,
                     'amount': float(dict_data.get('@total', 0.0)), 
@@ -57,7 +64,9 @@ class wizard_validate_uuid_sat(osv.osv_memory):
                     'date_time': dict_data.get('@fecha', ''), 
                     'file_xml': att.file_xml_sign.id,
                     'vat_emitter': emitter.get('@rfc', ''), 
-                    'vat_receiver': receiver.get('@rfc', ''), }])
+                    'vat_receiver': receiver.get('@rfc', ''),
+                    'state_invoice': state_inv, 
+                    }])
         res.update({'xml_ids': list_xml})
         return res
     
@@ -122,23 +131,30 @@ class xml_to_validate_line(osv.osv_memory):
         'uuid': fields.char('UUID', readonly=True, help='UUID of XML'),
         'date_time': fields.datetime('DateTime', readonly=True, help='DateTime in that was '\
             'generated the XML'),
-        'result': fields.char('Result', readonly=True, help='Result of the validation'),
-        'vat_emitter': fields.char('Vat Emitter', help='Vat of emitter'),
-        'vat_receiver': fields.char('Vat Receiver', help='Vat of receiver'),
-        'state_invoice': fields.char('State Invoice', help='State of invoice that was generated the XML'),
+        'result': fields.char('Result SAT', readonly=True, help='Result of the validation'),
+        'vat_emitter': fields.char('Vat Emitter', readonly=True, help='Vat of emitter'),
+        'vat_receiver': fields.char('Vat Receiver', readonly=True, help='Vat of receiver'),
+        'state_invoice': fields.char('State Invoice', readonly=True,
+            help='State of invoice that was generated the XML'),
     }
 
     def onchange_xml_id(self, cr, uid, ids, xml_id, context=None):
         result = {'value': {}}
         if xml_id:
             att_obj = self.pool.get('ir.attachment')
+            acc_inv_obj = self.pool.get('account.invoice')
             att_brw = att_obj.browse(cr, uid, xml_id, context=context)
             data_xml = base64.decodestring(att_brw.datas or '')
             dict_data = dict(xmltodict.parse(data_xml).get('cfdi:Comprobante', {}))
-            #~ print 'dict_data', dict_data
             complemento = dict_data.get('cfdi:Complemento', {})
             emitter = dict_data.get('cfdi:Emisor', {})
             receiver = dict_data.get('cfdi:Receptor', {})
+            doc_or = acc_inv_obj.search(cr, uid, [('id', '=', att_brw.res_id)], context=context)
+            state_inv = doc_or and acc_inv_obj.browse(cr, uid, doc_or[0], context=context).state or ''
+            if state_inv in ('open', 'paid'):
+                state_inv = 'Vigente'
+            else:
+                state_inv = 'Cancelado'
             result['value'].update({
                 'name': att_brw.name or '',
                 'amount': float(dict_data.get('@total', 0.0)), 
@@ -147,6 +163,15 @@ class xml_to_validate_line(osv.osv_memory):
                 'uuid': complemento.get('tfd:TimbreFiscalDigital', {}).get('@UUID', ''), 
                 'vat_emitter': emitter.get('@rfc', ''), 
                 'vat_receiver': receiver.get('@rfc', ''), 
+                'state_invoice': state_inv, 
                 })
-        print 'result', result
         return result
+
+    def show_cancel(self, cr, uid, ids, context=None):
+        return False
+        
+    def show_not_found(self, cr, uid, ids, context=None):
+        return False
+        
+    def show_done(self, cr, uid, ids, context=None):
+        return False
