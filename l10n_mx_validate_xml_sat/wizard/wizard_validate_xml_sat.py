@@ -28,6 +28,7 @@ from tools.translate import _
 import decimal_precision as dp
 import base64
 from suds.client import Client
+from datetime import datetime, timedelta
 try:
     import xmltodict
 except:
@@ -40,7 +41,7 @@ class wizard_validate_uuid_sat(osv.osv_memory):
         res = super(wizard_validate_uuid_sat, self).default_get(cr, uid, fields, context=context)
         ir_att_obj = self.pool.get('ir.attachment.facturae.mx')
         acc_inv_obj = self.pool.get('account.invoice')
-        attachments = ir_att_obj.search(cr, uid, [('id_source', 'in', context['active_ids'])], context=context)
+        attachments = ir_att_obj.search(cr, uid, [('id_source', 'in', context.get('active_ids', []))], context=context)
         list_xml = []
         for att in ir_att_obj.browse(cr, uid, attachments, context):
             if att.file_xml_sign:
@@ -61,7 +62,8 @@ class wizard_validate_uuid_sat(osv.osv_memory):
                     'number': dict_data.get('@folio', ''), 
                     'type': dict_data.get('@tipoDeComprobante', ''), 
                     'uuid': complemento.get('tfd:TimbreFiscalDigital', {}).get('@UUID', ''), 
-                    'date_time': dict_data.get('@fecha', ''), 
+                    'date_time': dict_data.get('@fecha', '') and str(datetime.strptime(\
+                        dict_data['@fecha'].encode('ascii','replace'), '%Y-%m-%dT%H:%M:%S')) or False, 
                     'file_xml': att.file_xml_sign.id,
                     'vat_emitter': emitter.get('@rfc', ''), 
                     'vat_receiver': receiver.get('@rfc', ''),
@@ -109,37 +111,22 @@ class xml_to_validate_line(osv.osv_memory):
             context = {}
         res = super(xml_to_validate_line, self).fields_view_get(cr, uid, view_id=view_id,
             view_type=view_type, context=context, toolbar=toolbar, submenu=submenu)
+        att_obj = self.pool.get('ir.attachment')
+        attrs = [('res_model', '=', 'account.invoice'),]
         if context.get('active_ids'):
-            att_obj = self.pool.get('ir.attachment')
-            attachment_ids = att_obj.search(cr, uid, [('res_id', 'in', context.get('active_ids'))], context=context)
-            att_dom = []
-            for att in att_obj.browse(cr, uid, attachment_ids, context=context):
-                if '.xml' in att.name:
-                    att_dom.append(att.id)
-            for field in res['fields']:
-                if field == 'file_xml':
-                    res['fields'][field]['domain'] = [('id', 'in', att_dom)]
+            attrs.append(('res_id', 'in', context.get('active_ids')))
+        attachment_ids = att_obj.search(cr, uid, attrs, context=context)
+        att_dom = []
+        for att in att_obj.browse(cr, uid, attachment_ids, context=context):
+            if '.xml' in att.name:
+                att_dom.append(att.id)
+        for field in res['fields']:
+            if field == 'file_xml':
+                res['fields'][field]['domain'] = [('id', 'in', att_dom)]
         return res
-    
-    _columns = {
-        'name': fields.char('XML name', readonly=True, size=64),
-        'file_xml': fields.many2one('ir.attachment', 'File XML', help='File to validate UUID',),
-        'amount': fields.float('Amount', digits_compute=dp.get_precision('Account'),
-            readonly=True, help='Amount to the XML'),
-        'number': fields.char('Number', readonly=True, help='Number of XML'),
-        'type': fields.char('Type', readonly=True, help='Type of document that generated the XML'),
-        'uuid': fields.char('UUID', readonly=True, help='UUID of XML'),
-        'date_time': fields.datetime('DateTime', readonly=True, help='DateTime in that was '\
-            'generated the XML'),
-        'result': fields.char('Result SAT', readonly=True, help='Result of the validation'),
-        'vat_emitter': fields.char('Vat Emitter', readonly=True, help='Vat of emitter'),
-        'vat_receiver': fields.char('Vat Receiver', readonly=True, help='Vat of receiver'),
-        'state_invoice': fields.char('State Invoice', readonly=True,
-            help='State of invoice that was generated the XML'),
-    }
-
-    def onchange_xml_id(self, cr, uid, ids, xml_id, context=None):
-        result = {'value': {}}
+        
+    def _get_data_to_lines(self, cr, uid, ids, xml_id=None, context=None):
+        dict_res = {}
         if xml_id:
             att_obj = self.pool.get('ir.attachment')
             acc_inv_obj = self.pool.get('account.invoice')
@@ -155,17 +142,52 @@ class xml_to_validate_line(osv.osv_memory):
                 state_inv = 'Vigente'
             else:
                 state_inv = 'Cancelado'
-            result['value'].update({
+            dict_res.update({
                 'name': att_brw.name or '',
                 'amount': float(dict_data.get('@total', 0.0)), 
                 'number': dict_data.get('@folio', ''), 
                 'type': dict_data.get('@tipoDeComprobante', ''), 
                 'uuid': complemento.get('tfd:TimbreFiscalDigital', {}).get('@UUID', ''), 
+                'date_time': dict_data.get('@fecha', '') and str(datetime.strptime(\
+                    dict_data['@fecha'].encode('ascii','replace'), '%Y-%m-%dT%H:%M:%S')) or False, 
                 'vat_emitter': emitter.get('@rfc', ''), 
                 'vat_receiver': receiver.get('@rfc', ''), 
                 'state_invoice': state_inv, 
+                'result': False, 
                 })
-        return result
+        return dict_res
+        
+    def _get_data_xml(self, cr, uid, ids, field_name, arg, context):
+        res = {}
+        xml_ids = self.browse(cr, uid, ids, context)
+        for xml in xml_ids:
+            res[xml.id] = self._get_data_to_lines(cr, uid, ids, xml.file_xml.id, context=context)
+        return res
+    
+    _columns = {
+        'name': fields.char('XML name', readonly=True, size=64),
+        'file_xml': fields.many2one('ir.attachment', 'File XML', help='File to validate UUID',),
+        'amount': fields.function(_get_data_xml, method=True, type='float', string='Amount',
+            digits_compute=dp.get_precision('Account'), help='Amount to the XML', multi=True),
+        'number': fields.function(_get_data_xml, method=True, type='char', string='Number',
+            help='Number of XML', multi=True),
+        'type': fields.function(_get_data_xml, method=True, type='char', string='UUID',
+            help='Type of document that generated the XML', multi=True),
+        'uuid': fields.function(_get_data_xml, method=True, type='char', string='Type',
+            help='UUID of XML', multi=True),
+        'date_time': fields.function(_get_data_xml, method=True, type='datetime', string='DateTime',
+            help='DateTime in that was generated the XML', multi=True),
+        'result': fields.char('Result SAT', readonly=True, help='Result of the validation'),
+        'vat_emitter': fields.function(_get_data_xml, method=True, type='char', string='Vat Emitter',
+            help='Vat of emitter', multi=True),
+        'vat_receiver': fields.function(_get_data_xml, method=True, type='char', string='Vat Receiver',
+            help='Vat of receiver', multi=True),
+        'state_invoice': fields.function(_get_data_xml, method=True, type='char', string='State Invoice',
+            help='State of invoice that was generated the XML', multi=True),
+    }
+
+    def onchange_xml_id(self, cr, uid, ids, xml_id, context=None):
+        return {'value': self._get_data_to_lines(cr, uid, ids, xml_id, context=context)}
 
     def show_cancel(self, cr, uid, ids, context=None):
         return False
