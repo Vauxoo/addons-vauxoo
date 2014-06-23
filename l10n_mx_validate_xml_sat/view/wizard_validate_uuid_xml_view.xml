@@ -71,16 +71,16 @@
                     <field name="uuid"/>
                     <field name="state_invoice"/>
                     <button name="show_done" attrs="{'invisible':[('state_invoice','!=','Vigente')]}"
-                        icon="gtk-apply" type="object" class="oe_highlight" disabled="1"/>
+                        icon="gtk-apply" type="object" class="oe_highlight" readonly="1"/>
                     <button name="show_cancel" attrs="{'invisible':[('state_invoice','!=','Cancelado')]}"
-                        icon="gtk-cancel" type="object" class="oe_highlight" disabled="1"/>
+                        icon="gtk-cancel" type="object" class="oe_highlight" readonly="1"/>
                     <field name="result"/>
                     <button name="show_done" attrs="{'invisible':[('result','!=','Vigente')]}"
-                        icon="gtk-apply" type="object" class="oe_highlight" disabled="1"/>
+                        icon="gtk-apply" type="object" class="oe_highlight" readonly="1"/>
                     <button name="show_cancel" attrs="{'invisible':[('result','!=','Cancelado')]}"
-                        icon="gtk-cancel" type="object" class="oe_highlight" disabled="1"/>
+                        icon="gtk-cancel" type="object" class="oe_highlight" readonly="1"/>
                     <button name="show_not_found" attrs="{'invisible':[('result','!=','No Encontrado')]}"
-                        icon="gtk-find" type="object" class="oe_highlight" help="Not found" disabled="1"/>
+                        icon="gtk-find" type="object" class="oe_highlight" help="Not found" readonly="1"/>
                 </tree>
             </field>
         </record>
