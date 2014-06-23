@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
+    <data noupdate="0">
         <report auto="False"
                 id="account_invoice_facturae_webkit"
                 model="ir.attachment.facturae.mx"
@@ -8,8 +8,8 @@
                 file="l10n_mx_facturae_report/report/invoice_facturae_html.mako"
                 string="Factura Electronica Report"
                 report_type="webkit"
-                attachment_use="1"
-                attachment="(object.state in ('done')) and (object.name and (object.name + ''))"
+                attachment=' '
+                attachment_use="0"
                 menu="False"/>
         
         <record id="property_l10n_mx_facturae_report_webkit" model="ir.property">
@@ -17,6 +17,11 @@
             <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
             <field eval="'ir.header_webkit,'+str(ref('l10n_mx_facturae_report.ir_header_webkit_facturae'))" model="ir.header_webkit" name="value"/>
             <field eval="'ir.actions.report.xml,'+str(ref('l10n_mx_facturae_report.account_invoice_facturae_webkit'))" model="ir.actions.report.xml" name="res_id"/>
+        </record>
+        
+        <record id="account_invoice_facturae_webkit" model="ir.actions.report.xml">
+            <field name="attachment"></field>
+            <field name="attachment_use" eval="False"/>
         </record>
     </data>
 </openerp>
