@@ -508,9 +508,7 @@
                 %endif
             </table>
         %endif
-        <pre>
-            <p><font size="1">${ get_text_promissory(o.model_source, o.id_source) or '' |entity }</font></p>
-        </pre>
+        <pre><p><font size="1">${ get_text_promissory(o.model_source, o.id_source) or '' |entity }</font></p></pre>
         </br>
         %if dict_data.get('Complemento', {}).get('TimbreFiscalDigital'):
             <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
