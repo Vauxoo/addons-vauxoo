@@ -44,11 +44,15 @@
     "depends" : [
         "l10n_mx_facturae_base",
         ],
+    "demo": [
+        "demo/attachment_validate_sat_demo.xml"
+        ],
+    "test" : [
+        "test/xml_validate_sat.yml",
+        ],
     "data" : [
         "view/wizard_validate_uuid_xml_view.xml",
-        #~ "hr_payslip_workflow.xml",
         ],
-    "test": [],
     "installable" : True,
     "active" : False,
 }
