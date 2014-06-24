@@ -8,7 +8,7 @@
             <field name="arch" type="xml">
             <form string="Validate Invoice UUID SAT" version="7.0">
                 <field name="name" invisible="1"/>
-                <field name="xml_ids" widget="one2many_list" context="{'active_id':ctx_active_id, 'active_ids':ctx_active_ids, 'active_model': ctx_active_model}" colspan="4"/>
+                <field name="xml_ids" widget="one2many_list" context="{'active_ids':ctx_active_ids, 'active_model': ctx_active_model}" colspan="4"/>
                 <footer>
                     <button icon='gtk-cancel' special="cancel"  string="Cancel" />
                     <button name="check_uuid_dat" string="Validate" colspan="1" type="object" icon="gtk-ok"/>
@@ -16,22 +16,6 @@
             </form>
             </field>
         </record>
-        
-        <record id="view_wizard_validate_invoice_uuid_sat_menu_form" model="ir.ui.view">
-            <field name="name">view.wizard.validate.invoice.uuid.sat.menu.form</field>
-            <field name="model">wizard.validate.uuid.sat</field>
-            <field name="arch" type="xml">
-            <form string="Validate Invoice UUID SAT" version="7.0">
-                <field name="name" invisible="1"/>
-                <field name="xml_ids" widget="one2many_list" colspan="4"/>
-                <footer>
-                    <button icon='gtk-cancel' special="cancel"  string="Cancel" />
-                    <button name="check_uuid_dat" string="Validate" colspan="1" type="object" icon="gtk-ok"/>
-                </footer>
-            </form>
-            </field>
-        </record>
-
 
         <record id="action_wizard_validate_invoice_uuid_sat" model="ir.actions.act_window">
             <field name="name">Validate Invoice UUID SAT</field>
@@ -39,9 +23,10 @@
             <field name="res_model">wizard.validate.uuid.sat</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
-            <field name="view_id" ref="view_wizard_validate_invoice_uuid_sat_menu_form"/>
+            <field name="view_id" ref="view_wizard_validate_invoice_uuid_sat"/>
             <field name="target">new</field>
             <field name="help"></field>
+            <field name="context">{'ctx_active_ids': [], 'ctx_active_model':''}</field>
         </record>
         
         <act_window name="Validate Invoice UUID SAT"
@@ -51,8 +36,14 @@
                 target="new"
                 key2="client_action_multi"
                 id="act_wizard_validate_invoice_uuid_sat"
-                context="{'ctx_active_id':active_id, 'ctx_active_ids': active_ids, 'ctx_active_model':active_model}"
+                context="{'ctx_active_ids': active_ids, 'ctx_active_model':active_model}"
                 />
+                
+        <menuitem   name="Validate Invoice UUID SAT"
+                    parent="account.menu_finance_receivables"
+                    action="action_wizard_validate_invoice_uuid_sat"
+                    id="menu_validate_invoice_uuid_sat"
+            />
             
                 
         <record id="view_wizard_xml_to_validate_line_sat" model="ir.ui.view">
@@ -84,22 +75,6 @@
                 </tree>
             </field>
         </record>
-        <record id="action_wizard_xml_to_validate_line_sat" model="ir.actions.act_window">
-            <field name="name">action.wizard.xml.to.validate.line.sat</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">xml.to.validate.line</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree</field>
-            <field name="target">new</field>
-            <field name="help"></field>
-        </record>
         
-        <menuitem   name="Validate Invoice UUID SAT"
-                    parent="account.menu_finance_receivables"
-                    action="action_wizard_validate_invoice_uuid_sat"
-                    id="menu_validate_invoice_uuid_sat"
-            />
-
-
     </data>
 </openerp>

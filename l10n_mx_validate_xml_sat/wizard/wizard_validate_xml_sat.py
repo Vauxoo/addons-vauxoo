@@ -157,10 +157,11 @@ class xml_to_validate_line(osv.osv_memory):
                 })
         return dict_res
         
-    def _get_data_xml(self, cr, uid, ids, field_name, arg, context):
+    def _get_data_xml(self, cr, uid, ids, field_name, arg, context=None):
+        if context is None:
+            context = {}
         res = {}
-        xml_ids = self.browse(cr, uid, ids, context)
-        for xml in xml_ids:
+        for xml in self.browse(cr, uid, ids, context=context):
             res[xml.id] = self._get_data_to_lines(cr, uid, ids, xml.file_xml.id, context=context)
         return res
     
