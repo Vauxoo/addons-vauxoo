@@ -207,13 +207,13 @@
                             <td class="cliente"><b>${_('Contrato')}</b></td><td class="cliente">${ nomina.get('@TipoContrato', '') |entity }</td>
                             <td class="cliente"><b>${_('D&iacute;as Pagados')}</b></td><td class="cliente">${ nomina.get('@NumDiasPagados', '')|entity }</td>
                             <td class="cliente"><b>${_('Rel. Laboral')}</b></td><td class="cliente">${ nomina.get('@FechaInicioRelLaboral', False) and datetime.strptime(nomina.get('@FechaInicioRelLaboral').encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity }</td>
-                            <td class="cliente"><b>${_('Salario diario')}</b></td><td class="cliente">$${ dict_context_extra_data.get('symbol_currency', '') } { nomina.get('@SalarioDiarioIntegrado', '') |entity }</td>
+                            <td class="cliente"><b>${_('Salario diario')}</b></td><td class="cliente">${ dict_context_extra_data.get('symbol_currency', '') } ${ nomina.get('@SalarioDiarioIntegrado', '') |entity }</td>
                         </tr>
                         <tr>
                             <td class="cliente"><b>${_('Jornada')}</b></td><td class="cliente">${ nomina.get('@TipoJornada', '') |entity }</td>
                             <td class="cliente"><b>${_('Antiguedad')}</b></td><td class="cliente">${ nomina.get('@Antiguedad', '') |entity }</td>
                             <td class="cliente"><b>${_('Salario base')}</b></td><td class="cliente">${ dict_context_extra_data.get('symbol_currency', '') } ${ nomina.get('@SalarioBaseCotApor', '') |entity } </td>
-                            <td class="cliente"><b>${_('Periodo')}</b></td><td class="cliente">${ dict_context_extra_data.get('symbol_currency', '') } ${ nomina.get('@PeriodicidadPago', '') |entity } </td>
+                            <td class="cliente"><b>${_('Periodo')}</b></td><td class="cliente">${ nomina.get('@PeriodicidadPago', '') |entity } </td>
                         </tr>
                     </table>
                 </tr>
