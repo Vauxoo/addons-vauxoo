@@ -43,7 +43,7 @@
                 "l10n_ca",
                 "l10n_pt",
                 "plugin_outlook",
-                "purchase",
+                #~"purchase",
                 "purchase_requisition",
                 "purchase_double_validation",
                 "account_analytic_default",
