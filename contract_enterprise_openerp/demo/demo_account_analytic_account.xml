@@ -14,7 +14,6 @@
 			<field name="type">contract</field>
 			<field name="date">2008-06-21</field>
 			<field name="name">Test Enterprise License For Contract</field>
-			<field name="vx_contract_code">R82ODY1K4XAF</field>
 		</record>
 		<record id="account_warranty_oerp_0" model="account.warranty_oerp">
 			<field name="enterprise_key">AKEY</field>
@@ -41,7 +40,6 @@
 			<field name="type">contract</field>
 			<field name="date">2008-06-21</field>
 			<field name="name">Test Enterprise License For Contract</field>
-			<field name="vx_contract_code">R82ODY1K4XAZ</field>
 		</record>
 		<record id="account_warranty_oerp_2" model="account.warranty_oerp">
 			<field name="enterprise_key">CKEY</field>
