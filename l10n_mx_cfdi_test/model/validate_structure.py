@@ -44,6 +44,7 @@ class account_invoice(osv.Model):
         tax_lines = self.read(cr, uid, [ids], ['tax_line'])
         invoice_lines = self.read(cr, uid, [ids], ['invoice_line'])
         data_invoice = self.read(cr, uid, ids, [])
+        data_invoice_type = self.read(cr, uid, ids, ['type'])['type']
         list_price_subtotal = []
         list_price_unit = []
         list_importe_xml = []
@@ -62,10 +63,18 @@ class account_invoice(osv.Model):
             for n in doc_xml.getElementsByTagName("cfdi:Comprobante"):
                 xml_total = n.getAttribute("total")
                 xml_subTotal = n.getAttribute("subTotal")
-                assert data_invoice['amount_total'] == eval(
-                    xml_total), 'No matches Total'
-                assert data_invoice['amount_untaxed'] == eval(
-                    xml_subTotal), 'No matches Subtotal'
+                currency_xml = n.getAttribute("Moneda") or ''
+                type_voucher_xml = n.getAttribute("tipoDeComprobante") or ''
+            if data_invoice_type=='out_invoice':
+                data_invoice_type_voucher = 'ingreso'
+            if data_invoice_type=='out_refund':
+                data_invoice_type_voucher = 'egreso'
+            assert data_invoice_type_voucher == type_voucher_xml, 'No matches type voucher'
+            assert data_invoice['currency_id'][1] == currency_xml, 'No matches currency'
+            assert data_invoice['amount_total'] == eval(
+                xml_total), 'No matches Total'
+            assert data_invoice['amount_untaxed'] == eval(
+                xml_subTotal), 'No matches Subtotal'
             for line in invoice_lines[0]['invoice_line']:
                 for r in aml_obj.read(cr, uid, [line]):
                     list_price_subtotal.append(r['price_subtotal'])
