@@ -165,7 +165,8 @@ class ir_attachment_facturae_mx(osv.Model):
                             else:
                                  msg += _('Mensaje %s %s Code: %s') % (msg, dict_error[EstatusUUID], EstatusUUID)
             else:
-                msg = _('Not found information of webservices of PAC, verify that the configuration of PAC is correct')
+                raise osv.except_osv(_('Warning'), _(
+                    'Not found information from web services of PAC, verify that the configuration of PAC is correct'))
         return {'message': msg, 'status': status}
     
     def _finkok_stamp(self, cr, uid, ids, fdata=None, context=None):
@@ -272,7 +273,6 @@ class ir_attachment_facturae_mx(osv.Model):
                     else:
                         raise orm.except_orm(_('Warning'), _('Error al timbrar XML: %s.') % (e))
             else:
-                msg += 'Not found information from web services of PAC, verify that the configuration of PAC is correct'
                 raise osv.except_osv(_('Warning'), _(
                     'Not found information from web services of PAC, verify that the configuration of PAC is correct'))
             return {'file': file, 'msg': msg, 'cfdi_xml': cfdi_xml, 'status': status, 'cfdi_data': cfdi_data}
