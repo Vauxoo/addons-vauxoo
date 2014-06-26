@@ -14,7 +14,7 @@
                     <field name="sign" colspan="2"/>
                     <field name="value_tax" colspan="2"/>
                     <newline/>
-                    <field name="company_id" widget="selection"/>
+                    <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                 </form>
             </field>
         </record>
