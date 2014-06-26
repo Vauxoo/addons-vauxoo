@@ -49,7 +49,10 @@ class wizard_validate_uuid_sat(osv.osv_memory):
         list_xml = []
         for att in ir_att_obj.browse(cr, uid, attachments, context):
             if att.file_xml_sign:
-                data_xml = base64.decodestring(att.file_xml_sign.datas)
+                bd_datas = att.file_xml_sign.db_datas or att.file_xml_sign.datas
+                if not bd_datas:
+                    continue
+                data_xml = base64.decodestring(bd_datas)
                 dict_data = dict(
                     xmltodict.parse(data_xml).get('cfdi:Comprobante', {}))
                 complemento = dict_data.get('cfdi:Complemento', {})
