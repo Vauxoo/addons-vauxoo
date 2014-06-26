@@ -94,7 +94,7 @@ class wizard_validate_uuid_sat(osv.osv_memory):
             url = 'https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl'
             client = Client(url)
             result = client.service.Consulta(""""?re=%s&rr=%s&tt=%s&id=%s""" % (xml.vat_emitter
-                                                                                or '', xml.vat_receiver or '', xml.amount or 0.0, xml.uuid or ''))
+                or '', xml.vat_receiver or '', xml.amount or 0.0, xml.uuid or ''))
             result = result and result['Estado'] or ''
             xml.write({'result': result})
         return {
@@ -171,36 +171,20 @@ class xml_to_validate_line(osv.osv_memory):
             })
         return dict_res
 
-    def _get_data_xml(self, cr, uid, ids, field_name, arg, context=None):
-        if context is None:
-            context = {}
-        res = {}
-        for xml in self.browse(cr, uid, ids, context=context):
-            res[xml.id] = self._get_data_to_lines(
-                cr, uid, ids, xml.file_xml.id, context=context)
-        return res
-
     _columns = {
         'name': fields.char('XML name', readonly=True, size=64),
         'file_xml': fields.many2one('ir.attachment', 'File XML', help='File to validate UUID',),
-        'amount': fields.function(_get_data_xml, method=True, type='float', string='Amount',
-                                  digits_compute=dp.get_precision(
-                                  'Account'), help='Amount to the XML', multi=True),
-        'number': fields.function(_get_data_xml, method=True, type='char', string='Number',
-                                  help='Number of XML', multi=True),
-        'type': fields.function(_get_data_xml, method=True, type='char', string='UUID',
-                                help='Type of document that generated the XML', multi=True),
-        'uuid': fields.function(_get_data_xml, method=True, type='char', string='Type',
-                                help='UUID of XML', multi=True),
-        'date_time': fields.function(_get_data_xml, method=True, type='datetime', string='DateTime',
-                                     help='DateTime in that was generated the XML', multi=True),
-        'result': fields.char('Result SAT', readonly=True, help='Result of the validation'),
-        'vat_emitter': fields.function(_get_data_xml, method=True, type='char', string='Vat Emitter',
-                                       help='Vat of emitter', multi=True),
-        'vat_receiver': fields.function(_get_data_xml, method=True, type='char', string='Vat Receiver',
-                                        help='Vat of receiver', multi=True),
-        'state_invoice': fields.function(_get_data_xml, method=True, type='char', string='State Invoice',
-                                         help='State of invoice that was generated the XML', multi=True),
+        'amount': fields.float('Amount', digits_compute=dp.get_precision('Account'),
+            help='Amount to the XML'),
+        'number': fields.char('Number', help='Number of XML'),
+        'type': fields.char('Type', help='Type of document that generated the XML'),
+        'uuid': fields.char('UUID', help='UUID of XML'),
+        'date_time': fields.datetime('DateTime', help='DateTime in that was generated the XML'),
+        'result': fields.char('Result SAT', help='Result of the validation'),
+        'vat_emitter': fields.char('Vat Emitter', help='Vat of emitter'),
+        'vat_receiver': fields.char('Vat Receiver', help='Vat of receiver'),
+        'state_invoice': fields.char('State Invoice', help='State of invoice that was '\
+            'generated the XML'),
     }
 
     def onchange_xml_id(self, cr, uid, ids, xml_id, context=None):
