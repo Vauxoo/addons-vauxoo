@@ -61,8 +61,10 @@ class wizard_validate_uuid_sat(osv.osv_memory):
                     cr, uid, doc_or[0], context=context).state or ''
                 if state_inv in ('open', 'paid'):
                     state_inv = 'Vigente'
-                else:
+                elif state_inv in ('cancel'):
                     state_inv = 'Cancelado'
+                else:
+                    state_inv = 'Invoice not found'
                 list_xml.append([0, False, {
                     'name': att.file_xml_sign.name,
                     'amount': float(dict_data.get('@total', 0.0)),
@@ -91,12 +93,16 @@ class wizard_validate_uuid_sat(osv.osv_memory):
             context = {}
         data = self.browse(cr, uid, ids[0], context=context)
         for xml in data.xml_ids:
+            # import pdb;pdb.set_trace()
             url = 'https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl'
             client = Client(url)
             result = client.service.Consulta(""""?re=%s&rr=%s&tt=%s&id=%s""" % (xml.vat_emitter
                 or '', xml.vat_receiver or '', xml.amount or 0.0, xml.uuid or ''))
-            result = result and result['Estado'] or ''
-            xml.write({'result': result})
+            result = result and result.Estado or ''
+            if xml.state_invoice:
+                xml.write({'result': result})
+            else:
+                xml.write({'result': result, 'state_invoice':'Invoice not found'})
         return {
             'name': _("Validate Invoice UUID SAT"),
             'view_mode': 'form',
@@ -153,8 +159,10 @@ class xml_to_validate_line(osv.osv_memory):
                 cr, uid, doc_or[0], context=context).state or ''
             if state_inv in ('open', 'paid'):
                 state_inv = 'Vigente'
+            elif state_inv in ('cancel'):
+                    state_inv = 'Cancelado'
             else:
-                state_inv = 'Cancelado'
+                state_inv = 'Invoice not found'
             dict_res.update({
                 'name': att_brw.name or '',
                 'amount': float(dict_data.get('@total', 0.0)),
