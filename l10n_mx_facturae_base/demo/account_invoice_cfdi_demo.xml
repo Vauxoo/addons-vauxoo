@@ -3,7 +3,7 @@
     <data noupdate="1">
         
 <!-- Invoice -->
-        <record id="ai_pac_facturae_0" model="account.invoice">
+        <record id="facturae_mx_ai_pac_facturae_0" model="account.invoice">
             <field name="payment_term" ref="account.account_payment_term"/>
             <field name="currency_id" ref="base.EUR"/>
             <field name="account_id" ref="account.a_recv"/>
@@ -20,7 +20,7 @@
             <field name="product_id" ref="l10n_mx_facturae_base.product_product_renta_oficina_demo"/>
             <field name="price_unit" eval="5355.0" />
             <field name="uos_id" ref="product.product_uom_hour"/>
-            <field name="invoice_id" ref="ai_pac_facturae_0"/>
+            <field name="invoice_id" ref="facturae_mx_ai_pac_facturae_0"/>
             <field name="quantity">1</field>
             <field name="invoice_line_tax_id" eval="[(6,0,[ref('l10n_mx_facturae_base.l10n_mx_facturae_base_iva_for_electronic_invoice_0'),ref('l10n_mx_facturae_base.l10n_mx_facturae_base_ret_isr_honorario_0'),ref('l10n_mx_facturae_base.l10n_mx_facturae_base_ret_iva_10_67_arrendamiento_0')])]"/>
         </record>
@@ -31,7 +31,7 @@
             <field name="product_id" ref="l10n_mx_facturae_base.product_product_fertilizante_vauxoo_demo"/>
             <field name="price_unit" eval="1000.0" />
             <field name="uos_id" ref="product.product_uom_unit"/>
-            <field name="invoice_id" ref="ai_pac_facturae_0"/>
+            <field name="invoice_id" ref="facturae_mx_ai_pac_facturae_0"/>
             <field name="quantity">10</field>
             <field name="account_id" ref="account.a_expense"/>
             <field name="invoice_line_tax_id" eval="[(6,0,[ref('l10n_mx_facturae_base.l10n_mx_facturae_base_iva0_mx')])]"/>
@@ -43,7 +43,7 @@
             <field name="product_id" ref="l10n_mx_facturae_base.product_product_agua_vauxoo_demo"/>
             <field name="price_unit" eval="5.0" />
             <field name="uos_id" ref="product.product_uom_unit"/>
-            <field name="invoice_id" ref="ai_pac_facturae_0"/>
+            <field name="invoice_id" ref="facturae_mx_ai_pac_facturae_0"/>
             <field name="quantity">2</field>
             <field name="account_id" ref="account.a_expense"/>
             <field name="invoice_line_tax_id" eval="[(6,0,[ref('l10n_mx_facturae_base.l10n_mx_facturae_base_exento_iva0_mx')])]"/>

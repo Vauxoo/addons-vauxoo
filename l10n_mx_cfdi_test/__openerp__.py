@@ -31,6 +31,11 @@
     "category" : "Localization/Mexico",
     "description" : """
 This module execute all test yaml of invoice and payroll CFDI.
+======================================================================
+If you want to add a new invoice as demo data.
+The id must bear the following nomenclature:
+
+<record id="facturae_mx_without_taxes_demo" model="account.invoice">
 """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
