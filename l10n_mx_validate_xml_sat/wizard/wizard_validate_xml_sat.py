@@ -49,10 +49,10 @@ class wizard_validate_uuid_sat(osv.osv_memory):
         list_xml = []
         for att in ir_att_obj.browse(cr, uid, attachments, context):
             if att.file_xml_sign:
-                bd_datas = att.file_xml_sign.db_datas or att.file_xml_sign.datas
-                if not bd_datas:
+                db_datas = att.file_xml_sign.db_datas or att.file_xml_sign.datas
+                if not db_datas:
                     continue
-                data_xml = base64.decodestring(bd_datas)
+                data_xml = base64.decodestring(db_datas)
                 dict_data = dict(
                     xmltodict.parse(data_xml).get('cfdi:Comprobante', {}))
                 complemento = dict_data.get('cfdi:Complemento', {})
@@ -149,36 +149,38 @@ class xml_to_validate_line(osv.osv_memory):
             att_obj = self.pool.get('ir.attachment')
             acc_inv_obj = self.pool.get('account.invoice')
             att_brw = att_obj.browse(cr, uid, xml_id, context=context)
-            data_xml = base64.decodestring(att_brw.datas or '')
-            dict_data = dict(
-                xmltodict.parse(data_xml).get('cfdi:Comprobante', {}))
-            complemento = dict_data.get('cfdi:Complemento', {})
-            emitter = dict_data.get('cfdi:Emisor', {})
-            receiver = dict_data.get('cfdi:Receptor', {})
-            doc_or = acc_inv_obj.search(
-                cr, uid, [('id', '=', att_brw.res_id)], context=context)
-            state_inv = doc_or and acc_inv_obj.browse(
-                cr, uid, doc_or[0], context=context).state or ''
-            if state_inv in ('open', 'paid'):
-                state_inv = 'Vigente'
-            elif state_inv in ('cancel'):
+            db_datas = att_brw.db_datas or att_brw.datas
+            if db_datas:
+                data_xml = base64.decodestring(db_datas)
+                dict_data = dict(
+                    xmltodict.parse(data_xml).get('cfdi:Comprobante', {}))
+                complemento = dict_data.get('cfdi:Complemento', {})
+                emitter = dict_data.get('cfdi:Emisor', {})
+                receiver = dict_data.get('cfdi:Receptor', {})
+                doc_or = acc_inv_obj.search(
+                    cr, uid, [('id', '=', att_brw.res_id)], context=context)
+                state_inv = doc_or and acc_inv_obj.browse(
+                    cr, uid, doc_or[0], context=context).state or ''
+                if state_inv in ('open', 'paid'):
+                    state_inv = 'Vigente'
+                elif state_inv in ('cancel'):
                     state_inv = 'Cancelado'
-            else:
-                state_inv = 'Invoice not found'
-            dict_res.update({
-                'name': att_brw.name or '',
-                'amount': float(dict_data.get('@total', 0.0)),
-                'number': dict_data.get('@folio', ''),
-                'type': dict_data.get('@tipoDeComprobante', ''),
-                'uuid': complemento.get('tfd:TimbreFiscalDigital', {}).get('@UUID', ''),
-                'date_time': dict_data.get('@fecha', '') and str(datetime.strptime(
-                    dict_data[
-                        '@fecha'].encode('ascii', 'replace'), '%Y-%m-%dT%H:%M:%S')) or False,
-                'vat_emitter': emitter.get('@rfc', ''),
-                'vat_receiver': receiver.get('@rfc', ''),
-                'state_invoice': state_inv,
-                'result': False,
-            })
+                if not state_inv:
+                    state_inv = 'No Encontrado'
+                dict_res.update({
+                    'name': att_brw.name or '',
+                    'amount': float(dict_data.get('@total', 0.0)),
+                    'number': dict_data.get('@folio', ''),
+                    'type': dict_data.get('@tipoDeComprobante', ''),
+                    'uuid': complemento.get('tfd:TimbreFiscalDigital', {}).get('@UUID', ''),
+                    'date_time': dict_data.get('@fecha', '') and str(datetime.strptime(
+                        dict_data[
+                            '@fecha'].encode('ascii', 'replace'), '%Y-%m-%dT%H:%M:%S')) or False,
+                    'vat_emitter': emitter.get('@rfc', ''),
+                    'vat_receiver': receiver.get('@rfc', ''),
+                    'state_invoice': state_inv,
+                    'result': False,
+                })
         return dict_res
 
     _columns = {
