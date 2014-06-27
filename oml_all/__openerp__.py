@@ -166,7 +166,7 @@
                 "analytic_user_function",
                 "decimal_precision",
                 "knowledge",
-                "l10n_in_hr_payroll",
+                #~ "l10n_in_hr_payroll",
                 "mrp_byproduct",
                 "product_manufacturer",
                 #"stock_location", #Error to fix
