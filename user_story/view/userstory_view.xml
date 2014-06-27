@@ -154,6 +154,7 @@
           <field name="id"/>
           <field name="name" />
           <field name="owner_id"/>
+          <field name="user_execute_id"/>
           <field name="code" />
           <field name="priority_level" />
           <field name="planned_hours" sum="Total hours"/>
@@ -262,6 +263,8 @@
             <filter name="user_story_project" icon="STOCK_INDEX" string="Project" context="{'group_by':'project_id'}" />
             <separator orientation="vertical" />
             <filter name="user_story_owner" icon="terp-personal" string="Owner" context="{'group_by':'owner_id'}" />
+            <separator orientation="vertical" />
+            <filter name="accept_criteria_user_execute_id" string="Executor" context="{'group_by':'user_execute_id'}"/>
             <separator orientation="vertical" />
             <filter name="user_story_user_id" icon="terp-personal" string="User" context="{'group_by':'user_id'}" />
             <separator orientation="vertical" />
