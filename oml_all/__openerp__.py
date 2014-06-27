@@ -25,7 +25,8 @@
                 #Start list of all oficial modules
                 "account",
                 "auth_openid",
-                "event",
+                #~ "event",
+                "event_sale",
                 "l10n_bo",
                 "l10n_pe",
                 "pad_project",
@@ -39,7 +40,6 @@
                 "project_timesheet",
                 "account_analytic_analysis",
                 "base_action_rule",
-                "event_sale",
                 "l10n_ca",
                 "l10n_pt",
                 "plugin_outlook",
