@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Katherine Zaoral <kathy@vauxoo.com
+#    Coded by: Katherine Zaoral <kathy@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -23,17 +23,37 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import fields, osv, orm
-from openerp.tools.translate import _
-from openerp import tools
+{
+    'name': 'Purchase Order Department',
+    'version': '1.0',
+    'author': 'Vauxoo',
+    'website': 'http://www.vauxoo.com/',
+    'category': 'purchase',
+    'description': '''
+Purchase Order Department
+=========================
 
-class purchase_requisition(osv.Model):
+Add a department field to the purchase order model. This check the purchase
+order requisitor (user) and fill the department field with the requisitor
+employee info. Also add a search filter by text to search the department name
+and a gruop by filter by department.
 
-    _inherit = 'purchase.requisition'
-    _columns = {
-        'purchaser_id': fields.many2one(
-            'res.users',
-            'P&C Analyst',
-            help=('Contract Analyst responsible to evaluate the current'
-                  ' purchase requisition.')),
-    }
+Note: this module do not work propertly for users with multiple employees.
+''',
+
+    'depends': [
+        'purchase',
+        'hr',
+        'purchase_order_requisitor',
+        ],
+    'data': [
+        'view/purchase_order_view.xml',
+        ],
+    'demo': [],
+    'test': [],
+    'qweb': [],
+    'js': [],
+    'css': [],
+    'active': False,
+    'installable': True,
+}

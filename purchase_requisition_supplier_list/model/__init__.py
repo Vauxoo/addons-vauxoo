@@ -5,8 +5,9 @@
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Katherine Zaoral <kathy@vauxoo.com
-#    Planified by: Humberto Arocha <hbto@vauxoo.com>
+#    Coded by: Katherine Zaoral <kathy@vauxoo.com>
+#    Planified by: Humberto Arocha <hbto@vauxoo.com>,
+#                  Katherine Zaoral <kathy@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
 #    This program is free software: you can redistribute it and/or modify
@@ -23,17 +24,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import fields, osv, orm
-from openerp.tools.translate import _
-from openerp import tools
-
-class purchase_requisition(osv.Model):
-
-    _inherit = 'purchase.requisition'
-    _columns = {
-        'purchaser_id': fields.many2one(
-            'res.users',
-            'P&C Analyst',
-            help=('Contract Analyst responsible to evaluate the current'
-                  ' purchase requisition.')),
-    }
+import purchase_requisition

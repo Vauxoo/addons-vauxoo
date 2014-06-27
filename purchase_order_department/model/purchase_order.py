@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Katherine Zaoral <kathy@vauxoo.com
+#    Coded by: Katherine Zaoral <kathy@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -27,13 +27,27 @@ from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 from openerp import tools
 
-class purchase_requisition(osv.Model):
+class purchase_order(osv.Model):
 
-    _inherit = 'purchase.requisition'
+    _inherit = 'purchase.order'
     _columns = {
-        'purchaser_id': fields.many2one(
-            'res.users',
-            'P&C Analyst',
-            help=('Contract Analyst responsible to evaluate the current'
-                  ' purchase requisition.')),
+        'department_id': fields.many2one(
+            'hr.department',
+            string='Department',
+            help='The department where this purchase order belongs'),
     }
+
+    def onchange_user_id(self, cr, uid, ids, user_id, context=None):
+        """ Return the department depending of the user.
+        @param user_id: user id
+        """
+        context = context or {}
+        res = {}
+        ru_obj = self.pool.get('res.users')
+        if user_id:
+            ru_brw = ru_obj.browse(cr, uid, user_id, context=context)
+            department_id = (ru_brw.employee_ids
+                and ru_brw.employee_ids[0].department_id
+                and ru_brw.employee_ids[0].department_id.id or False)
+            res.update({'value': {'department_id': department_id}})
+        return res

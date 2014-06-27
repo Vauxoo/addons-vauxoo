@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Katherine Zaoral <kathy@vauxoo.com
+#    Coded by: Yanina Aular <yani@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -23,17 +23,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import fields, osv, orm
-from openerp.tools.translate import _
-from openerp import tools
+{
+    'name': 'Purchase Requisition Line Price Unit',
+    'version': '1.0',
+    'author': 'Vauxoo',
+    'website': 'http://www.vauxoo.com/',
+    'category': '',
+    'description': '''
+Purchase Requisition Line Price Unit
+====================================
 
-class purchase_requisition(osv.Model):
-
-    _inherit = 'purchase.requisition'
-    _columns = {
-        'purchaser_id': fields.many2one(
-            'res.users',
-            'P&C Analyst',
-            help=('Contract Analyst responsible to evaluate the current'
-                  ' purchase requisition.')),
-    }
+An estimated unit price per line in the purchase requisition, a subtotal for each line
+of the purchase requisition and a total of all lines is added.
+''',
+    'depends': [
+        'purchase_requisition_currency',
+        'purchase_requisition',
+        ],
+    'data': [
+        'view/purchase_requisition_view.xml'
+        ],
+    'demo': [],
+    'test': [],
+    'qweb': [],
+    'js': [],
+    'css': [],
+    'active': False,
+    'installable': True,
+}
