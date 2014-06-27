@@ -50,7 +50,7 @@
             <field name="name">view.wizard.xml.to.validate.line.sat</field>
             <field name="model">xml.to.validate.line</field>
             <field name="arch" type="xml">
-                <tree string="Validate Invoice UUID SAT" version="7.0" editable="bottom" colors="blue:state_invoice=='Invoice not found' and result!='No Encontrado';green:state_invoice=='Vigente' and result=='Vigente';red:result!=False and state_invoice!=result and result!='No Encontrado'">
+                <tree string="Validate Invoice UUID SAT" version="7.0" editable="bottom" colors="blue:state_invoice=='No Encontrado' and result!='No Encontrado';red:result!=False and state_invoice!=result">
                     <field name="name" invisible="1"/>
                     <field name="file_xml" on_change="onchange_xml_id(file_xml, context)"/>
                     <field name="vat_emitter"/>

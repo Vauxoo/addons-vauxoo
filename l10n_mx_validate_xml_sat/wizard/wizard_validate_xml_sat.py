@@ -58,16 +58,15 @@ class wizard_validate_uuid_sat(osv.osv_memory):
                 complemento = dict_data.get('cfdi:Complemento', {})
                 emitter = dict_data.get('cfdi:Emisor', {})
                 receiver = dict_data.get('cfdi:Receptor', {})
-                doc_or = acc_inv_obj.search(
-                    cr, uid, [('id', '=', att.id_source), ], context=context)
+                doc_or = acc_inv_obj.search(cr, uid, [('id', '=', att.id_source)], context=context)
                 state_inv = doc_or and acc_inv_obj.browse(
                     cr, uid, doc_or[0], context=context).state or ''
                 if state_inv in ('open', 'paid'):
                     state_inv = 'Vigente'
                 elif state_inv in ('cancel'):
                     state_inv = 'Cancelado'
-                else:
-                    state_inv = 'Invoice not found'
+                if not state_inv:
+                    state_inv = 'No Encontrado'
                 list_xml.append([0, False, {
                     'name': att.file_xml_sign.name,
                     'amount': float(dict_data.get('@total', 0.0)),
