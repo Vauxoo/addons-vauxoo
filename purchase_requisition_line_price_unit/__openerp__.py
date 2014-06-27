@@ -37,6 +37,7 @@ An estimated unit price per line in the purchase requisition, a subtotal for eac
 of the purchase requisition and a total of all lines is added.
 ''',
     'depends': [
+        'purchase_requisition_currency',
         'purchase_requisition',
         ],
     'data': [
