@@ -92,7 +92,7 @@
                 "l10n_ec",
                 "l10n_us",
                 "portal_event",
-                "sale",
+                #~ "sale",
                 "account_chart",
                 "base_vat",
                 "hr_evaluation",
