@@ -61,12 +61,12 @@ class wizard_validate_uuid_sat(osv.osv_memory):
                 doc_or = acc_inv_obj.search(cr, uid, [('id', '=', att.id_source)], context=context)
                 state_inv = doc_or and acc_inv_obj.browse(
                     cr, uid, doc_or[0], context=context).state or ''
-                if state_inv in ('open', 'paid'):
+                if not state_inv:
+                    state_inv = 'No Encontrado'
+                elif state_inv in ('open', 'paid'):
                     state_inv = 'Vigente'
                 elif state_inv in ('cancel'):
                     state_inv = 'Cancelado'
-                if not state_inv:
-                    state_inv = 'No Encontrado'
                 list_xml.append([0, False, {
                     'name': att.file_xml_sign.name,
                     'amount': float(dict_data.get('@total', 0.0)),
@@ -95,16 +95,12 @@ class wizard_validate_uuid_sat(osv.osv_memory):
             context = {}
         data = self.browse(cr, uid, ids[0], context=context)
         for xml in data.xml_ids:
-            # import pdb;pdb.set_trace()
             url = 'https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl'
             client = Client(url)
             result = client.service.Consulta(""""?re=%s&rr=%s&tt=%s&id=%s""" % (xml.vat_emitter
                 or '', xml.vat_receiver or '', xml.amount or 0.0, xml.uuid or ''))
             result = result and result.Estado or ''
-            if xml.state_invoice:
-                xml.write({'result': result})
-            else:
-                xml.write({'result': result, 'state_invoice':'Invoice not found'})
+            xml.write({'result': result})
         return {
             'name': _("Validate Invoice UUID SAT"),
             'view_mode': 'form',
@@ -157,16 +153,15 @@ class xml_to_validate_line(osv.osv_memory):
                 complemento = dict_data.get('cfdi:Complemento', {})
                 emitter = dict_data.get('cfdi:Emisor', {})
                 receiver = dict_data.get('cfdi:Receptor', {})
-                doc_or = acc_inv_obj.search(
-                    cr, uid, [('id', '=', att_brw.res_id)], context=context)
+                doc_or = acc_inv_obj.search(cr, uid, [('id', '=', att_brw.res_id)], context=context)
                 state_inv = doc_or and acc_inv_obj.browse(
                     cr, uid, doc_or[0], context=context).state or ''
-                if state_inv in ('open', 'paid'):
+                if not state_inv:
+                    state_inv = 'No Encontrado'
+                elif state_inv in ('open', 'paid'):
                     state_inv = 'Vigente'
                 elif state_inv in ('cancel'):
                     state_inv = 'Cancelado'
-                if not state_inv:
-                    state_inv = 'No Encontrado'
                 dict_res.update({
                     'name': att_brw.name or '',
                     'amount': float(dict_data.get('@total', 0.0)),
