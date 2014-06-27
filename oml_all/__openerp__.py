@@ -23,10 +23,10 @@
     "version" : "",
     "depends" : [
                 #Start list of all oficial modules
+                "event_sale",
                 "account",
                 "auth_openid",
                 #~ "event",
-                "event_sale",
                 "l10n_bo",
                 "l10n_pe",
                 "pad_project",
