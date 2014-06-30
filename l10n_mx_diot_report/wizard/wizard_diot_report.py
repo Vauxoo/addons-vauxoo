@@ -56,7 +56,7 @@ class wizard_account_diot_mx(osv.osv_memory):
 
     _defaults = {
         'state': 'choose',
-        'entries_to_print' : 'all'
+        'entries_to_print' : 'all',
         'company_id': lambda self, cr, uid, ctx: self.pool['res.company']._company_default_get(
                                                     cr, uid, object = self._name, context = ctx),
     }
