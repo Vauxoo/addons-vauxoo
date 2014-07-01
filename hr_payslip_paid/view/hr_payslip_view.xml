@@ -12,7 +12,7 @@
                     </xpath>
                     <xpath expr="//page[@string='Other Information']" position="after">
                         <page string="Payments">
-                            <field name="reconciled"/>
+                            <field name="reconciled" invisible="1"/>
                             <field name="payment_ids">
                                 <tree string="Payments">
                                     <field name="date" string="Payment Date"/>
