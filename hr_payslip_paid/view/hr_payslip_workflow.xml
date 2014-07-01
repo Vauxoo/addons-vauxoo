@@ -12,7 +12,7 @@
          <record model="workflow.activity" id="act_open_test">
             <field name="wkf_id" ref="hr_payroll.wkf"/>
             <field name="name">re-open</field>
-            <field name="action">write({'state':'done'})</field>
+            <field name="action">action_done_paid()</field>
             <field name="kind">function</field>
         </record>
         

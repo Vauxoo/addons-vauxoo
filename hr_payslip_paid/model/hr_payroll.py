@@ -56,7 +56,10 @@ class hr_payslip(osv.osv):
             if not res[pay.id] and pay.state == 'paid':
                 wf_service.trg_validate(uid, 'hr.payslip', pay.id, 'open_test', cr)
         return res
-        
+    
+    def action_done_paid(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state': 'done'}, context=context)    
+            
     def _get_payslip_from_line(self, cr, uid, ids, context=None):
         move = {}
         for line in self.pool.get('account.move.line').browse(cr, uid, ids, context=context):
