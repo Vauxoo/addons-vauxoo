@@ -10,6 +10,10 @@
                 <xpath expr="//field[@name='user_id']" position="after">
                     <field name="department_id"/>
                 </xpath>
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="on_change">onchange_user_id(user_id)</attribute>
+                </xpath>
+
             </field>
         </record> 
 
