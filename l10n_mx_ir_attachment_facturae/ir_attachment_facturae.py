@@ -390,19 +390,15 @@ class ir_attachment_facturae_mx(osv.Model):
             report_name = report_multicompany_obj.browse(cr, uid, report_ids[0]).report_name
         service = netsvc.LocalService("report."+report_name)
         (result, format) = service.create(cr, SUPERUSER_ID, [attachment_mx_data[0].id], report_name, context=context)                
-        attachment_ids = attachment_obj.search(cr, uid, [('res_model', '=', self._name),('res_id', '=', attachment_mx_data[0].id)])
-        file_name_attachment = attachment_obj.browse(cr, uid, attachment_ids, context=context)[0].datas_fname
-        #for attachment in self.browse(cr, uid, attachment_ids, context=context):
-            # TODO: aids.append( attachment.id ) but without error in last
-            # write
-        
-        attachment_obj.write(cr, uid, attachment_ids, {
-            'name': file_name_attachment,
+        attachment_ids = attachment_obj.search(cr, uid, [('res_model', '=', attachment_mx_data[0].model_source),('res_id', '=', attachment_mx_data[0].id_source), ('name', '=', report_name )])
+        if not attachment_ids:
+            aids2 = attachment_obj.create(cr, uid, {
+            'name': report_name,
+            'datas_fname': report_name,
+            'datas': result and base64.encodestring(result) or None,
             'res_model': attachment_mx_data[0].model_source,
-            'res_id': attachment_mx_data[0].id_source}, context=context)
-            
-        aids = attachment_ids and attachment_ids[0] or False
-        
+            'res_id': attachment_mx_data[0].id_source})
+        aids = attachment_ids and attachment_ids[0] or aids2
         if aids:
             msj = _("Attached Successfully PDF\n")
             self.write(cr, uid, ids, {
@@ -417,7 +413,7 @@ class ir_attachment_facturae_mx(osv.Model):
                  'ids': ids,
                  'form': self.read(cr, uid, ids[0], context=context),
         }
-        return {'type': 'ir.actions.report.xml', 'report_name': report_name, 'datas': datas, 'nodestroy': True, 'name': file_name_attachment}
+        return {'type': 'ir.actions.report.xml', 'report_name': report_name, 'datas': datas, 'nodestroy': True, 'name': report_name}
 
     def signal_send_customer(self, cr, uid, ids, context=None):
         if context is None:

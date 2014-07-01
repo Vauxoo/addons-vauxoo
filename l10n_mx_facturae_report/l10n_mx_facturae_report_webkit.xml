@@ -18,5 +18,10 @@
             <field eval="'ir.header_webkit,'+str(ref('l10n_mx_facturae_report.ir_header_webkit_facturae'))" model="ir.header_webkit" name="value"/>
             <field eval="'ir.actions.report.xml,'+str(ref('l10n_mx_facturae_report.account_invoice_facturae_webkit'))" model="ir.actions.report.xml" name="res_id"/>
         </record>
+        
+        <record id="account_invoice_facturae_webkit" model="ir.actions.report.xml">
+            <field name="attachment"></field>
+            <field name="attachment_use" eval="False"/>
+        </record>
     </data>
 </openerp>
