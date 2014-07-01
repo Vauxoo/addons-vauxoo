@@ -397,7 +397,7 @@ class ir_attachment_facturae_mx(osv.Model):
             'datas_fname': report_name,
             'datas': result and base64.encodestring(result) or None,
             'res_model': attachment_mx_data[0].model_source,
-            'res_id': attachment_mx_data[0].id_source}, context=context)
+            'res_id': attachment_mx_data[0].id_source})
         aids = attachment_ids and attachment_ids[0] or aids2
         if aids:
             msj = _("Attached Successfully PDF\n")
