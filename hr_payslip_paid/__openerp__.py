@@ -35,7 +35,7 @@
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
-        "hr_payroll",
+        "hr_payroll_account",
     ],
     "demo": [
         #~ "demo/attachment_validate_sat_demo.xml"
