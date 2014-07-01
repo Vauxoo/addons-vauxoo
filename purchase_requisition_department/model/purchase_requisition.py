@@ -37,10 +37,6 @@ class purchase_requisition(osv.Model):
             help='The department where this purchase requisition belongs'),
     }
 
-    _defaults = {
-        'department_id': lambda self, cur, uid, cxt: self.pool.get('res.users').browse(cur, uid, uid, cxt).employee_ids[0].department_id.id,
-    }
-
     #def fields_view_get(self, cr, uid, view_id=None, view_type='form',
     #                    context=None, toolbar=False, submenu=False):
     #    """ 
