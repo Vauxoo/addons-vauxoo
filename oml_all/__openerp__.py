@@ -26,75 +26,72 @@
                 "portal_sale",
                 "point_of_sale",
                 #~ "event_sale",
-                #~ "account",
+                #~ "account",Repeated module
                 "auth_openid",
-                #~ "event",
+                #~ "event", Repeated module
                 #~ "l10n_bo",
                 #~ "l10n_pe",
                 "pad_project",
                 "project_mrp",
                 "account_accountant",
-                #~ "auth_signup",
+                #~ "auth_signup",Repeated module
                 "event_moodle",
                 #~ "l10n_br",
                 #~ "l10n_pl",
-                #~ "plugin",
+                #~ "plugin",Repeated module
                 "project_timesheet",
                 "account_analytic_analysis",
-                #~ "base_action_rule",
+                #~ "base_action_rule",Repeated module
                 #~ "l10n_ca",
                 #~ "l10n_pt",
-                #~ "plugin_outlook",
-                #~"purchase",
-                
-                #~ "base_calendar",
-                #~ "fetchmail",
+                #~ "plugin_outlook",Repeated module
+                #~"purchase",Repeated module
+                #~ "base_calendar",Repeated module
+                #~ "fetchmail",Repeated module
                 #~ "l10n_ch",
                 #~ "l10n_ro",
-                #~ "plugin_thunderbird",
+                #~ "plugin_thunderbird",Repeated module
                 #"purchase_analytic_plans",#Error to fix
                 #"account_analytic_plans",#Error to fix
-                #~ "base_gengo",
-                #~ "fleet",
+                #~ "base_gengo",Repeated module
+                #~ "fleet",Repeated module
                 #~ "l10n_cl",
                 #~ "l10n_si",
-                
                 "account_anglo_saxon",
-                #~ "base_iban",
-                #~ "google_base_account",
+                #~ "base_iban",Repeated module
+                #~ "google_base_account",Repeated module
                 #~ "l10n_cn",
                 #~ "l10n_syscohada",
-                #~ "portal",
+                #~ "portal",Repeated module
                 "account_asset",
-                #~ "base_import",
+                #~ "base_import",Repeated module
                 "google_docs",
                 #~ "l10n_co",
                 #~ "l10n_th",
                 "portal_anonymous",
                 "report_intrastat",
-                #~ "account_bank_statement_extensions", posiblemente esta 
-                #~ "base_report_designer",
-                #~ "hr",
+                #~ "base_report_designer",Repeated module
+                #~ "hr",Repeated module
                 #~ "l10n_cr",
                 #~ "l10n_tr",
                 "portal_claim",
-                #~ "report_webkit",
+                #~ "report_webkit",Repeated module
                 "account_budget",
-                #~ "base_setup",
+                #~ "base_setup",Repeated module
                 "hr_attendance",
                 #~ "l10n_de",
                 #~ "l10n_uk",
                 "portal_crm",
                 "resource",
                 "account_cancel",
-                #~ "base_status",
+                #~ "base_status",Repeated module
                 "hr_contract",
                 #~ "l10n_ec",
                 #~ "l10n_us",
                 "portal_event",
-                #~ "sale",
+                #~ "sale",Repeated module
                 "account_chart",
-                #~ "base_vat",
+                #~ "base_vat",Repeated module
                 "hr_evaluation",
                 #~ "l10n_es",
                 #~ "l10n_uy",
@@ -106,56 +103,55 @@
                 #~ "l10n_et",
                 #~ "l10n_ve",
                 "portal_project",
-                #~ "sale_crm",
+                #~ "sale_crm",Repeated module
                 "account_followup",
                 "claim_from_delivery",
                 "hr_holidays",
                 #~ "l10n_fr",
                 #~ "l10n_vn",
                 "portal_project_issue",
-                #~ "sale_journal",
+                #~ "sale_journal",Repeated module
                 "account_payment",
                 "contacts",
                 "hr_payroll",
                 #~ "l10n_fr_hr_payroll",
-                #~ "lunch",
+                #~ "lunch",Repeated module
                 "portal_project_long_term",
-                #~ "sale_margin",
+                #~ "sale_margin",Repeated module
                 "account_report_company",
                 #~ "crm",
                 "hr_payroll_account",
                 #~ "l10n_fr_rib",
-                #~ "mail",
-                
-                #~ "sale_mrp",
+                #~ "mail",Repeated module
+                #~ "sale_mrp",Repeated module
                 "account_sequence",
                 "crm_claim",
                 "hr_recruitment",
                 #~ "l10n_gr",
                 "marketing",
                 "portal_stock",
-                #~ "sale_order_dates",
+                #~ "sale_order_dates",Repeated module
                 "account_test",
                 "crm_helpdesk",
                 "hr_timesheet",
                 #~ "l10n_gt",
                 "marketing_campaign",
                 "process",
-                #~ "sale_stock",
+                #~ "sale_stock",Repeated module
                 "account_voucher",
                 "crm_partner_assign",
                 "hr_timesheet_invoice",
                 #~ "l10n_hn",
                 "marketing_campaign_crm_demo",
                 "procurement",
-                #~ "share",
-                #~ "analytic",
+                #~ "share",Repeated module
+                #~ "analytic",Repeated module
                 "crm_profiling",
                 "hr_timesheet_sheet",
                 #~ "l10n_hr",
                 "membership",
-                #~ "product",
-                #~ "stock",
+                #~ "product",Repeated module
+                #~ "stock",Repeated module
                 "analytic_contract_hr_expense",
                 "crm_todo",
                 "idea",
@@ -190,9 +186,9 @@
                 #~ "l10n_ma",
                 "mrp_repair",
                 "project",
-                #~ "survey",
+                #~ "survey",Repeated module
                 "auth_crypt",
-                #~ "document_page",
+                #~ "document_page",Repeated module
                 #~ "l10n_be_coda",
                 "l10n_multilang",
                 "multi_company",
@@ -206,14 +202,14 @@
                 "project_issue",
                 "web_analytics",
                 "auth_oauth",
-                #~ "edi",
+                #~ "edi",Repeated module
                 #~ "l10n_be_hr_payroll_account",
                 #~ "l10n_nl",
                 "note_pad",
                 "project_issue_sheet",
                 "web_linkedin",
                 "auth_oauth_signup",
-                #~ "email_template",
+                #~ "email_template",Repeated module
                 #~ "l10n_be_invoice_bba",
                 #~ "l10n_pa",
                 "pad",
