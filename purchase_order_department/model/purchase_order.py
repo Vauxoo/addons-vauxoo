@@ -69,6 +69,6 @@ class purchase_requisition(osv.Model):
             req_id = res.keys()[0]
             req_brw = self.browse(cur, uid, req_id, context=context)
             po_obj = self.pool.get('purchase.order')
-            po_obj.write(cur, uid, req_id, {'department_id':
-                req_brw.department_id.id})
+            po_obj.write(cur, uid, res[req_id], {'department_id':
+                req_brw.department_id.id}, context=context)
         return res
