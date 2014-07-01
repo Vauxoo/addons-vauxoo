@@ -153,6 +153,8 @@ class ir_attachment_facturae_mx(osv.Model):
             #~xml_res_str_addenda = xml_res_addenda.toxml('UTF-8')
             xml_res_str_addenda = xml_res_addenda.toxml().encode('ascii', 'xmlcharrefreplace')
             xml_res_str_addenda = xml_res_str_addenda.replace(codecs.BOM_UTF8, '')
+            xml_res_str_addenda = xml_res_str_addenda.replace('<?xml version="1.0" ?>',
+                                                        '<?xml version="1.0" encoding="UTF-8"?>\n')
             if tools.config['test_report_directory']:#TODO: Add if test-enabled:
                 ir_attach_facturae_mx_file_input = attachment.file_input and attachment.file_input or False
                 fname_suffix = ir_attach_facturae_mx_file_input and ir_attach_facturae_mx_file_input.datas_fname or ''
