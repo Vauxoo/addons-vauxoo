@@ -45,6 +45,7 @@ Note: this module do not work propertly for users with multiple employees.
         'purchase',
         'hr',
         'purchase_order_requisitor',
+        'purchase_requisition_department',
         ],
     'data': [
         'view/purchase_order_view.xml',
