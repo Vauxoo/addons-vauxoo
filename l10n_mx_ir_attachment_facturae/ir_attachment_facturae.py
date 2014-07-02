@@ -175,8 +175,8 @@ class ir_attachment_facturae_mx(osv.Model):
 
     _defaults = {
         'state': 'draft',
-        'company_id': lambda self, cr, uid, c:
-        self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
+        'company_id': lambda self, cr, uid, ctx: self.pool['res.company']._company_default_get(
+                                                    cr, uid, object = self._name, context = ctx),
         'last_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
 

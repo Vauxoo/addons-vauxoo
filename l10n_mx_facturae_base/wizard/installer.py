@@ -45,7 +45,6 @@ class facturae_config(osv.TransientModel):
         @param vat : VAT that will be set in the company
         @param company_id : Id from the company that the user works
         """
-        print 'company_id', company_id
         partner_id = self.pool.get('res.company').browse(
             cr, uid, company_id).partner_id.id
         partner_obj = self.pool.get('res.partner')

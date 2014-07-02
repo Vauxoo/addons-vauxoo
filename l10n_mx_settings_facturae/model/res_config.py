@@ -65,7 +65,8 @@ class facturae_config_settings(osv.osv_memory):
         return user.company_id.id
 
     _defaults = {
-        'company_id': _default_company,
+    'company_id': lambda self, cr, uid, ctx: self.pool['res.company']._company_default_get(
+                                                    cr, uid, object = self._name, context = ctx),
     }
 
     def get_default_email_tmp_id(self, cr, uid, fields, context=None):

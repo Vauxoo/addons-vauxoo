@@ -71,3 +71,8 @@ class facturae_config(osv.TransientModel):
         'company_id': fields.many2one('res.company', u'Company',
             help="Select company to assing vat and/or cif"),
     }
+    
+    _defaults = {
+        'company_id': lambda self, cr, uid, ctx: self.pool['res.company']._company_default_get(
+                                                    cr, uid, object = self._name, context = ctx),
+    }
