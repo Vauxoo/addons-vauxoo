@@ -106,8 +106,8 @@ class hr_payslip(osv.osv):
             store={
                 'hr.payslip': (lambda self, cr, uid, ids, c={}: ids, [], 50),
                 'account.move.line': (_get_payslip_from_line, None, 50),
-                'account.move.reconcile': (_get_payslip_from_reconcile, None, 50),
-            }, help="It indicates that the payslip has been paid and the journal entry of the payslip has been reconciled with one or several journal entries of payment."),
+                'account.move.reconcile': (_get_payslip_from_reconcile, None, 50),},
+            help="It indicates that the payslip has been paid and the journal entry of the payslip has been reconciled with one or several journal entries of payment."),
         }
         
     def move_line_id_payment_get(self, cr, uid, ids, *args):
@@ -144,3 +144,13 @@ class hr_payslip(osv.osv):
             cr.execute('select reconcile_id from account_move_line where id=%s', (id,))
             ok = ok and  bool(cr.fetchone()[0])
         return ok
+        
+    def done_paid(self, cr, uid, ids, context=None):
+        """
+        This function is called by a webservice for update the payslip that were created 
+        before to added the state paid.
+        """
+        wf_service = netsvc.LocalService("workflow")
+        for id_ in ids:
+            wf_service.trg_write(uid, 'hr.payslip', id_, cr)
+        return True

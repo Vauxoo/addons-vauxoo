@@ -35,14 +35,10 @@
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
-        "hr_payroll_account",
+        "hr_payroll_account", "hr_payroll_cancel"
     ],
-    "demo": [
-        #~ "demo/attachment_validate_sat_demo.xml"
-    ],
-    "test": [
-        #~ "test/xml_validate_sat.yml",
-    ],
+    "demo": [],
+    "test": [],
     "data": [
         "view/hr_payslip_workflow.xml",
         "view/hr_payslip_view.xml",
