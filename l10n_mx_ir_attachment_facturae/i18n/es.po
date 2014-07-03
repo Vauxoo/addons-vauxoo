@@ -1,104 +1,29 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* l10n_mx_ir_attachment_facturae
+#	* l10n_mx_ir_attachment_facturae
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-08 03:15+0000\n"
-"PO-Revision-Date: 2013-11-13 17:09+0000\n"
-"Last-Translator: Federico Manuel Echeverri Choux <echeverrifm@gmail.com>\n"
+"POT-Creation-Date: 2014-07-03 22:59+0000\n"
+"PO-Revision-Date: 2014-07-03 22:59+0000\n"
+"Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-02-14 07:51+0000\n"
-"X-Generator: Launchpad (build 16916)\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:133
-#: selection:ir.attachment.facturae.mx,state:0
-#, python-format
-msgid "Confirmed"
-msgstr "Confirmado"
+#: field:ir.attachment.facturae.mx,certificate_link:0
+msgid "Certificate link"
+msgstr "Link del certificado"
 
 #. module: l10n_mx_ir_attachment_facturae
-#: selection:ir.attachment.facturae.mx,state:0
-msgid "Sent Customer"
-msgstr "Enviado al cliente"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:164
-#, python-format
-msgid "Attached Successfully XML CFD 2.2"
-msgstr "XML CFD 2.2 adjuntado exitosamente"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: view:ir.attachment.facturae.mx:0
-msgid "Confirm"
-msgstr "Confirmar"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:487
-#, python-format
-msgid "Unknow cfdi driver for %s"
-msgstr ""
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:423
-#, python-format
-msgid "Send Backup\n"
-msgstr "Envia Backup\n"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: model:ir.ui.menu,name:l10n_mx_ir_attachment_facturae.menu_email_template_config
-msgid "l10n_mx Email Template"
-msgstr "l10n_mx Email Template"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: help:ir.attachment.facturae.mx,type:0
-msgid "Type of Electronic Invoice"
-msgstr "Tipo de factura electronica"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:401
-#, python-format
-msgid "The customer %s does not have mail"
-msgstr "El Cliente  %s no tiene email"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:557
-#, python-format
-msgid "You can not remove an attachment of an invoice"
-msgstr "Usted no puedo eliminar el adjunto de una factura"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: field:ir.attachment.facturae.mx,file_input:0
-#: help:ir.attachment.facturae.mx,file_input:0
-#: field:ir.attachment.facturae.mx,file_input_index:0
-msgid "File input"
-msgstr "Archivo de entrada"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: field:ir.attachment.facturae.mx,message_follower_ids:0
-msgid "Followers"
-msgstr "Seguidores"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: help:ir.attachment.facturae.mx,file_xml_sign_index:0
-msgid "File XML sign index"
-msgstr ""
-
-#. module: l10n_mx_ir_attachment_facturae
-#: selection:ir.attachment.facturae.mx,state:0
-msgid "Draft"
-msgstr "Borrador"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: help:ir.attachment.facturae.mx,file_pdf:0
-msgid "Report PDF generated for the electronic Invoice"
-msgstr "Reporte PDF generado por la factura electronica"
+#: field:ir.attachment.facturae.mx,msj:0
+msgid "Last Message"
+msgstr "Último mensaje"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: view:l10n.mx.email.config.settings:0
@@ -106,31 +31,9 @@ msgid "Email Template Settings"
 msgstr "Configuracion de plantillas de email"
 
 #. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:389
-#, python-format
-msgid ""
-"Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s"
-msgstr ""
-"El correo fue enviado con exito. Enviado con adjunto a %s para el servidor "
-"saliente de correo %s"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:167
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:510
-#, python-format
-msgid "Type Electronic Invoice Unknow!"
-msgstr "Tipo de factura electronica desconocida"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: field:ir.attachment.facturae.mx,description:0
-msgid "Description"
-msgstr "Descripción"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: model:ir.actions.act_window,name:l10n_mx_ir_attachment_facturae.action_email_template_configuration
-#: view:l10n.mx.email.config.settings:0
-msgid "Configure Email Template"
-msgstr "Configuracion de la plantilla de correo"
+#: help:ir.attachment.facturae.mx,cfdi_no_certificado:0
+msgid "Serial Number of the Certificate"
+msgstr "Número de serie del certificado"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: view:ir.attachment.facturae.mx:0
@@ -138,51 +41,9 @@ msgid "Send to Customer"
 msgstr "Enviado al cliente"
 
 #. module: l10n_mx_ir_attachment_facturae
-#: field:ir.attachment.facturae.mx,type:0
-msgid "Type"
-msgstr "Tipo"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:205
-#, python-format
-msgid "Attached Successfully XML CFD 2.2\n"
-msgstr "XML CFD 2.2 adjuntado correctamente\n"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:344
-#, python-format
-msgid ""
-"Configure outgoing mail server named FacturaE:\n"
-" %s"
-msgstr ""
-"Configuracion de servidor de correo saliente llamado FacturaE:\n"
-" %s"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: view:ir.attachment.facturae.mx:0
-msgid "Reset to Draft"
-msgstr "Volver a borrador"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:147
-#, python-format
-msgid "Attached Successfully XML CFDI 3.2\n"
-msgstr "XML CFDI 3.2 adjuntado correctamente\n"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: help:ir.attachment.facturae.mx,file_pdf_index:0
-msgid "Report PDF with index"
-msgstr ""
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:280
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:398
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:401
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:404
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:406
-#, python-format
-msgid "Warning"
-msgstr "Advertencia"
+#: field:ir.attachment.facturae.mx,cfdi_sello:0
+msgid "CFD-I Stamp"
+msgstr "CFD-I Sello"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: field:ir.attachment.facturae.mx,message_unread:0
@@ -195,9 +56,9 @@ msgid "Company"
 msgstr "Empresa"
 
 #. module: l10n_mx_ir_attachment_facturae
-#: selection:ir.attachment.facturae.mx,state:0
-msgid "Printable Format Generated"
-msgstr "Formato de impresion generado"
+#: help:ir.attachment.facturae.mx,password_pac:0
+msgid "Password user for login to PAC"
+msgstr "Contraseña para iniciar sesión en el PAC"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: help:ir.attachment.facturae.mx,message_unread:0
@@ -205,106 +66,27 @@ msgid "If checked new messages require your attention."
 msgstr "Si está marcado, hay nuevos mensajes que requieren su atención"
 
 #. module: l10n_mx_ir_attachment_facturae
-#: help:ir.attachment.facturae.mx,file_input_index:0
-msgid "File input index"
-msgstr ""
+#: model:ir.model,name:l10n_mx_ir_attachment_facturae.model_ir_attachment
+msgid "ir.attachment"
+msgstr "ir.adjunto"
 
 #. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:406
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:560
 #, python-format
-msgid ""
-"Not Found                    outgoing mail server.Configure the outgoing "
-"mail server named \"FacturaE\""
-msgstr ""
-"Servidor de correo saliente no encontrado. Configure el servidor de correo "
-"saliente llamado \"FacturaE\""
+msgid "Done\n"
+""
+msgstr "Terminado\n"
+""
 
 #. module: l10n_mx_ir_attachment_facturae
-#: field:ir.attachment.facturae.mx,message_is_follower:0
-msgid "Is a Follower"
-msgstr "Es seguidor"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: field:ir.attachment.facturae.mx,file_pdf:0
-msgid "File PDF"
-msgstr "Archivo PDF"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: model:ir.model,name:l10n_mx_ir_attachment_facturae.model_ir_attachment_facturae_mx
-msgid "Email Thread"
-msgstr "Hilo de mensajes"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: field:ir.attachment.facturae.mx,file_pdf_index:0
-msgid "File PDF Index"
-msgstr ""
-
-#. module: l10n_mx_ir_attachment_facturae
-#: help:ir.attachment.facturae.mx,name:0
-msgid "Name of attachment generated"
-msgstr "Nombre del adjunto generado"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:344
-#, python-format
-msgid "Connection test failed!"
-msgstr "¡Ha fallado el test de conexión!"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:168
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:511
-#, python-format
-msgid "The Type Electronic Invoice:"
-msgstr "El tipo de factura electronica"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: field:ir.attachment.facturae.mx,name:0
-msgid "Name"
-msgstr "Nombre"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: help:ir.attachment.facturae.mx,company_id:0
-msgid "Company to which it belongs this attachment"
-msgstr ""
-
-#. module: l10n_mx_ir_attachment_facturae
-#: view:l10n.mx.email.config.settings:0
-#: field:l10n.mx.email.config.settings,email_tmp_id:0
-msgid "Email Template"
-msgstr "Plantilla email"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: help:ir.attachment.facturae.mx,message_ids:0
-msgid "Messages and communication history"
-msgstr "Mensajes e historial de comunicación"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:278
-#, python-format
-msgid "Attached Successfully PDF\n"
-msgstr "PDF adjuntado exitosamente\n"
+#: help:ir.attachment.facturae.mx,certificate_password:0
+msgid "This password is proportionate by the SAT"
+msgstr "Esta contraseña es proporcionada por el SAT "
 
 #. module: l10n_mx_ir_attachment_facturae
 #: field:ir.attachment.facturae.mx,message_ids:0
 msgid "Messages"
 msgstr "Mensajes"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:200
-#: selection:ir.attachment.facturae.mx,state:0
-#, python-format
-msgid "Signed"
-msgstr "Firmado"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: field:ir.attachment.facturae.mx,message_summary:0
-msgid "Summary"
-msgstr "Resumen"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: field:ir.attachment.facturae.mx,file_xml_sign_index:0
-msgid "File XML Sign Index"
-msgstr ""
 
 #. module: l10n_mx_ir_attachment_facturae
 #: help:ir.attachment.facturae.mx,state:0
@@ -317,17 +99,6 @@ msgid "Attachment Factura-E"
 msgstr "Adjunto de Facturae"
 
 #. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:280
-#, python-format
-msgid "Not Attached PDF\n"
-msgstr "PDF No adjunto\n"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: field:ir.attachment.facturae.mx,file_xml_sign:0
-msgid "File XML Sign"
-msgstr ""
-
-#. module: l10n_mx_ir_attachment_facturae
 #: selection:ir.attachment.facturae.mx,state:0
 msgid "Cancelled"
 msgstr "Cancelado"
@@ -338,53 +109,20 @@ msgid "l10n.mx.email.config.settings"
 msgstr "l10n.mx.email.config.settings"
 
 #. module: l10n_mx_ir_attachment_facturae
-#: field:ir.attachment.facturae.mx,identifier:0
-msgid "Identifier"
-msgstr "Identificador"
+#: field:ir.attachment.facturae.mx,cfdi_fecha_cancelacion:0
+msgid "CFD-I Cancellation Date"
+msgstr "CFD-I Fecha Cancelacion"
 
 #. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:386
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:490
 #, python-format
-msgid ""
-"\n"
-"Not correct email of the user or customer. Check in Menu Configuración\\"
-"Tecnico\\Email\\Emails\n"
-msgstr ""
-"\n"
-"No es correcto el email del usuario o cliente. Revise en el Menu "
-"Configuración\\Tecnico\\Email\\Emails\n"
+msgid "Not correct email of the user or customer. Check in Menu Configuración\\Tecnico\\Email\\Emails"
+msgstr "No es correcto el correo del usuario o el cliente. Revise en Menú Configuración\\Técnico\\Email\\Emails"
 
 #. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:445
-#, python-format
-msgid "Done\n"
-msgstr "Terminado\n"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: help:ir.attachment.facturae.mx,file_xml_sign:0
-msgid "File XML signed"
-msgstr ""
-
-#. module: l10n_mx_ir_attachment_facturae
-#: model:ir.actions.act_window,name:l10n_mx_ir_attachment_facturae.action_ir_attachment_facturae_mx
-msgid "action.ir.attachment.facturae.mx"
-msgstr "action.ir.attachment.facturae.mx"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:557
-#, python-format
-msgid "Warning!"
-msgstr "¡Advertencia!"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: view:ir.attachment.facturae.mx:0
-msgid "Validate Attachment"
-msgstr ""
-
-#. module: l10n_mx_ir_attachment_facturae
-#: field:ir.attachment.facturae.mx,msj:0
-msgid "Last Message"
-msgstr "Ultimo mensaje"
+#: help:ir.attachment.facturae.mx,cfdi_fecha_cancelacion:0
+msgid "If the fiscal voucher is cancel, this field saved the date when is cancel"
+msgstr "Si el comprobante es cancelado, este campo guarda la fecha de cancelación"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: field:ir.attachment.facturae.mx,last_date:0
@@ -392,44 +130,20 @@ msgid "Last Modified"
 msgstr "Última Modificación"
 
 #. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:404
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:516
 #, python-format
-msgid ""
-"Check that your template is assigned outgoing mail server named %s.\n"
+msgid "Check that your template is assigned outgoing mail server named %s.\n"
 "Also the field has report_template = Factura Electronica Report.\n"
 "Template is associated with the same company"
-msgstr ""
-"Compruebe que la plantilla se le asigna el servidor de correo saliente "
-"llamada%s.\n"
-"Asimismo, el campo tiene report_template = Factura Electronica Informe.\n"
+msgstr "Compruebe que la plantilla se le asigna el servidor de correo saliente llamada%s.\n"
+"Asimismo, el campo tiene report_template = Informe Factura Electronica .\n"
 "Plantilla se asocia con la misma compañía"
 
 #. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:536
-#: view:ir.attachment.facturae.mx:0
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:518
 #, python-format
-msgid "Forward Email"
-msgstr "Reenviar correo"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: view:l10n.mx.email.config.settings:0
-msgid "or"
-msgstr "o"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: help:ir.attachment.facturae.mx,last_date:0
-msgid "Date when is generated the attachment"
-msgstr "Fecha cuando esta generado el adjunto"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: field:ir.attachment.facturae.mx,state:0
-msgid "State"
-msgstr "Estado"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: view:ir.attachment.facturae.mx:0
-msgid "Sign"
-msgstr "Firma"
+msgid "Not Found            outgoing mail server.Configure the outgoing mail server named \"FacturaE\""
+msgstr "Servidor de correo saliente no encontrado. Configure un servidor de correo saliente llamado \"FacturaE\""
 
 #. module: l10n_mx_ir_attachment_facturae
 #: view:ir.attachment.facturae.mx:0
@@ -438,35 +152,117 @@ msgstr "Generar un formato impreso"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: help:ir.attachment.facturae.mx,message_summary:0
-msgid ""
-"Holds the Chatter summary (number of messages, ...). This summary is "
-"directly in html format in order to be inserted in kanban views."
-msgstr ""
-"Mantiene el resumen de chat(numero de mensajes) Este resumen esta "
-"directamente en formato html in orden para ser insertado en la vista kanban"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: help:ir.attachment.facturae.mx,msj:0
-msgid "Message generated to upload XML to sign"
-msgstr ""
+msgid "Holds the Chatter summary (number of messages, ...). This summary is directly in html format in order to be inserted in kanban views."
+msgstr "Mantiene el resumen de chat(numero de mensajes) Este resumen esta directamente en formato html in orden para ser insertado en la vista kanban"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: view:ir.attachment.facturae.mx:0
-#: selection:ir.attachment.facturae.mx,state:0
-msgid "Done"
-msgstr "Realizado"
+msgid "Reset to Draft"
+msgstr "Volver a borrador"
 
 #. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:232
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:670
 #, python-format
-msgid "Unknow driver for %s"
-msgstr ""
+msgid "Warning!"
+msgstr "¡Advertencia!"
 
 #. module: l10n_mx_ir_attachment_facturae
-#: field:ir.attachment.facturae.mx,invoice_id:0
-#: model:ir.model,name:l10n_mx_ir_attachment_facturae.model_account_invoice
-msgid "Invoice"
-msgstr "Factura"
+#: help:ir.attachment.facturae.mx,user_pac:0
+msgid "Name user for login to PAC"
+msgstr "Usuario utilizado para iniciar sesión en el PAC"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:510
+#, python-format
+msgid "This user does not have mail"
+msgstr "Este usuario no tiene un email"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: selection:ir.attachment.facturae.mx,state:0
+msgid "Confirmed"
+msgstr "Confirmado"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: view:ir.attachment.facturae.mx:0
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,state:0
+msgid "State"
+msgstr "Estado"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,message_follower_ids:0
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,cfdi_cadena_original:0
+msgid "Original String used in the fiscal voucher"
+msgstr "Cadena original utilizada en el comprobante"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:491
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:499
+#, python-format
+msgid "Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s"
+msgstr "El correo fue enviado con exito. Enviado con adjunto a %s para el servidor saliente de correo %s"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,attachment_email:0
+msgid "Email"
+msgstr "Correo"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:306
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:310
+#, python-format
+msgid "Error !"
+msgstr "Error !"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,cfdi_folio_fiscal:0
+msgid "UUID the XML"
+msgstr "UUID del XML"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:265
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:410
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:490
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:510
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:513
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:516
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:518
+#, python-format
+msgid "Warning"
+msgstr "Advertencia"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,file_pdf:0
+msgid "File PDF"
+msgstr "Archivo PDF"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,certificate_password:0
+msgid "Certificate Password"
+msgstr "Contraseña del certificado"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:452
+#, python-format
+msgid "Connection test failed!"
+msgstr "¡Ha fallado el test de conexión!"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,company_id:0
+msgid "Company to which it belongs this attachment"
+msgstr "Compañia a la que pertenece el adjunto"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: selection:ir.attachment.facturae.mx,state:0
+msgid "Signed"
+msgstr "Firmado"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: view:ir.attachment.facturae.mx:0
@@ -475,37 +271,423 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,file_xml_sign:0
+msgid "File XML Sign"
+msgstr "Archivo XML firmado"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,identifier:0
+msgid "Identifier"
+msgstr "Identificador"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,certificate_file:0
+msgid "This file .cer is proportionate by the SAT"
+msgstr "Este archivo .cer es proporcionado por el SAT"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,file_xml_sign:0
+msgid "File XML signed"
+msgstr "Archivo XML firmado"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: model:ir.model,name:l10n_mx_ir_attachment_facturae.model_ir_mail_server
+msgid "ir.mail_server"
+msgstr "ir.mail_server"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: view:ir.attachment.facturae.mx:0
+msgid "Other info"
+msgstr "Otra información"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:627
+#: view:ir.attachment.facturae.mx:0
+#, python-format
+msgid "Forward Email"
+msgstr "Reenviar correo"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: view:ir.attachment.facturae.mx:0
+msgid "Sign"
+msgstr "Firma"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: model:ir.actions.act_window,name:l10n_mx_ir_attachment_facturae.action_ir_attachment_facturae_mx
+msgid "action.ir.attachment.facturae.mx"
+msgstr "action.ir.attachment.facturae.mx"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,certificate_id:0
+msgid "unknown"
+msgstr "Desconocido"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,msj:0
+msgid "Message generated to upload XML to sign"
+msgstr "Mensaje generado al subir el XML  a firmar"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:488
+#, python-format
+msgid "\n"
+"Not correct email of the user or customer. Check in Menu Configuración\\Tecnico\\Email\\Emails\n"
+""
+msgstr "\n"
+"No es correcto el email del usuario o cliente. Revise en el Menu Configuración\\Tecnico\\Email\\Emails\n"
+""
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,id_source:0
+#: help:ir.attachment.facturae.mx,id_source:0
+msgid "Source ID"
+msgstr "Id origen"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: selection:ir.attachment.facturae.mx,state:0
+msgid "Sent Customer"
+msgstr "Enviado al cliente"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: view:ir.attachment.facturae.mx:0
+msgid "Re-Cancel With Pac"
+msgstr "Re-Cancelar con el PAC"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:545
+#, python-format
+msgid "Send Backup\n"
+""
+msgstr "Envia Backup\n"
+""
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,certificate_key_file:0
+msgid "Certificate Key File"
+msgstr "Archivo key del certificado"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: selection:ir.attachment.facturae.mx,state:0
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,file_pdf:0
+msgid "Report PDF generated for the fiscal voucher"
+msgstr "Reporte PDF generado por el comprobante"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: model:ir.actions.act_window,name:l10n_mx_ir_attachment_facturae.action_email_template_configuration
+#: view:l10n.mx.email.config.settings:0
+msgid "Configure Email Template"
+msgstr "Configuracion de la plantilla de correo"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,password_pac:0
+msgid "Password PAC"
+msgstr "Contraseña PAC"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,cfdi_fecha_timbrado:0
+msgid "CFD-I Date Stamped"
+msgstr "CFD-I Fecha Timbrado"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,url_webservice_pac:0
+msgid "URL WebService"
+msgstr "URL WebService"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,date_send_mail:0
+msgid "Date send mail"
+msgstr "Fecha de envío de correo"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,message_ids:0
+msgid "Messages and communication history"
+msgstr "Mensajes e historial de comunicación"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,message_is_follower:0
+msgid "Is a Follower"
+msgstr "Es seguidor"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,file_pdf_index:0
+msgid "File PDF Index"
+msgstr "Archivo PDF Indexado"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:370
+#, python-format
+msgid "Unknow driver for %s"
+msgstr "Driver desconocido para %s"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:522
+#, python-format
+msgid "Send Mail FacturaE Customer"
+msgstr "Enviar correo de FacturaE al cliente"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,date_print_report:0
+msgid "Saved the date of last print"
+msgstr "Guarda la fecha de la última impresión"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,user_pac:0
+msgid "User PAC"
+msgstr "Usuario PAC"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,url_webservice_pac:0
+msgid "URL of WebService used for send to sign the XML to PAC"
+msgstr "URL del WebService utilizado para enviar a firmar el XML al PAC"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: view:l10n.mx.email.config.settings:0
+#: field:l10n.mx.email.config.settings,email_tmp_id:0
+msgid "Email Template"
+msgstr "Plantilla email"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,document_source:0
+msgid "Number or reference of document source"
+msgstr "Número de referencia del documento origen"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,message_summary:0
+msgid "Summary"
+msgstr "Resumen"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: model:ir.ui.menu,name:l10n_mx_ir_attachment_facturae.menu_email_template_config
+msgid "l10n_mx Email Template"
+msgstr "l10n_mx Plantilla de Correo"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,attachment_email:0
+msgid "Email receptor"
+msgstr "Correo receptor"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,file_pdf_index:0
+msgid "Report PDF with index"
+msgstr "Reporte PDF con indices"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,date_send_mail:0
+msgid "Saved the date of last send mail"
+msgstr "Guarda la fecha del último envio de correo"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: view:ir.attachment.facturae.mx:0
+msgid "Validate Attachment"
+msgstr "Validar Adjunto"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:513
+#, python-format
+msgid "The attachment does not have mail"
+msgstr "Este adjunto no tiene correo"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,company_emitter_id:0
+msgid "Company emmiter"
+msgstr "Compañia emisora"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: view:ir.attachment.facturae.mx:0
+msgid "General Information"
+msgstr "Información General"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,certificate_key_file:0
+msgid "This file .key is proportionate by the SAT"
+msgstr "Este archivo .key es proporcionado por el SAT"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: view:ir.attachment.facturae.mx:0
+#: selection:ir.attachment.facturae.mx,state:0
+msgid "Done"
+msgstr "Realizado"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: model:email.template,subject:l10n_mx_ir_attachment_facturae.email_template_attachment_facturae_mx
+msgid "Documento ${object.name}"
+msgstr "Documento ${object.name}"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,pac_id:0
+msgid "Pac used in singned of the invoice"
+msgstr "Pac utilizado para firmar la factura"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: selection:ir.attachment.facturae.mx,state:0
+msgid "Sent Backup"
+msgstr "Enviar Respaldo"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:410
+#, python-format
+msgid "Not Attached PDF\n"
+""
+msgstr "PDF No adjunto\n"
+""
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,cfdi_folio_fiscal:0
+msgid "Folio Fiscal(UUID)"
+msgstr "Folio Fiscal(UUID)"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,pac_id:0
+#: field:ir.attachment.facturae.mx,res_pac:0
+msgid "Pac"
+msgstr "Pac"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,certificate_link:0
+msgid "PAC have a public certificate that is necessary by customers to check the validity of the XML and PDF"
+msgstr "El PAC tiene un certificado público que es necesario que por cliente se revise la valides de su XML y PDF"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,certificate_file:0
+msgid "Certificate File"
+msgstr "Archivo del certificado"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:452
+#, python-format
+msgid "Configure outgoing mail server named FacturaE:\n"
+" %s"
+msgstr "Configure un servidor de correo saliente llamado FacturaE:\n"
+" %s"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,description:0
+msgid "Description"
+msgstr "Descripción"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,cfdi_sello:0
+msgid "Sign assigned by the SAT"
+msgstr "Sello asignado por el SAT"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,journal_id:0
+msgid "Journal"
+msgstr "Diario"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: selection:ir.attachment.facturae.mx,state:0
+msgid "Printable Format Generated"
+msgstr "Formato de impresion generado"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,date_print_report:0
+msgid "Date print"
+msgstr "Fecha de impresión"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,name:0
+msgid "Name of attachment generated"
+msgstr "Nombre del adjunto generado"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,context_extra_data:0
+msgid "Context Extra Data"
+msgstr "Context Adicional de datos"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,name:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:594
+#, python-format
+msgid "Unknow cfdi driver for %s"
+msgstr "Driver de CFDI desconocido %s"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:403
+#, python-format
+msgid "Attached Successfully PDF\n"
+""
+msgstr "PDF adjuntado exitosamente\n"
+""
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,file_input:0
+#: help:ir.attachment.facturae.mx,file_input:0
+msgid "File input"
+msgstr "Archivo de entrada"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:670
+#, python-format
+msgid "You can not remove an attachment of an invoice"
+msgstr "Usted no puedo eliminar el adjunto de una factura"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,cfdi_cadena_original:0
+msgid "CFD-I Original String"
+msgstr "CFD-I Cadena Original"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: model:ir.model,name:l10n_mx_ir_attachment_facturae.model_mail_compose_message
+msgid "Email composition wizard"
+msgstr "Asistente de redacción de correo electrónico."
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,model_source:0
+#: help:ir.attachment.facturae.mx,model_source:0
+msgid "Source Model"
+msgstr "Modelo Origen"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,last_date:0
+msgid "Date when is generated the attachment"
+msgstr "Fecha cuando esta generado el adjunto"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: model:email.template,body_html:l10n_mx_ir_attachment_facturae.email_template_attachment_facturae_mx
+msgid "Documento: \"${object.name}\". Favor de validarla ante el SAT, para corroborar su correcta creación."
+msgstr "Documento: \"${object.name}\". Favor de validarla ante el SAT, para corroborar su correcta creación."
+
+#. module: l10n_mx_ir_attachment_facturae
+#: view:l10n.mx.email.config.settings:0
+msgid "or"
+msgstr "o"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,cfdi_fecha_timbrado:0
+msgid "Date when is stamped the fiscal voucher"
+msgstr "Fecha en que fue firmado el comprobante fiscal"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: model:ir.model,name:l10n_mx_ir_attachment_facturae.model_ir_attachment_facturae_mx
+msgid "Email Thread"
+msgstr "Hilo de mensajes"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,document_source:0
+msgid "Document Source"
+msgstr "Document Source"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: field:ir.attachment.facturae.mx,partner_id:0
+msgid "Partner"
+msgstr "Cliente"
+
+#. module: l10n_mx_ir_attachment_facturae
 #: view:l10n.mx.email.config.settings:0
 msgid "Apply"
 msgstr "Aplicar"
 
 #. module: l10n_mx_ir_attachment_facturae
-#: view:ir.attachment.facturae.mx:0
-msgid "Send to Backup"
-msgstr "Enviar a respaldo"
+#: field:ir.attachment.facturae.mx,cfdi_no_certificado:0
+msgid "CFD-I Certificate"
+msgstr "CFD-I Certificado"
 
-#. module: l10n_mx_ir_attachment_facturae
-#: model:ir.model,name:l10n_mx_ir_attachment_facturae.model_ir_attachment
-msgid "ir.attachment"
-msgstr "ir.attachment"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:398
-#, python-format
-msgid "This user does not have mail"
-msgstr "Este usuario no tiene un email"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: help:ir.attachment.facturae.mx,invoice_id:0
-msgid "Invoice to which it belongs this attachment"
-msgstr ""
-
-#. module: l10n_mx_ir_attachment_facturae
-#: model:ir.actions.act_window,name:l10n_mx_ir_attachment_facturae.act_invoice_attachment
-msgid "Attachment Factura E MX"
-msgstr ""
-
-#. module: l10n_mx_ir_attachment_facturae
-#: selection:ir.attachment.facturae.mx,state:0
-msgid "Sent Backup"
-msgstr ""
