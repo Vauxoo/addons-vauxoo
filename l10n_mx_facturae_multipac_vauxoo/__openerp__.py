@@ -53,7 +53,7 @@
         "demo/l10n_mx_facturae_seq_demo.xml",
         "demo/l10n_mx_payroll_seq_demo.xml",
         ],
-    "data" : [
+    "data" : ["security/l10n_mx_facturae_multipac_security_groups.xml"
         ],
     "test" : [
         ],

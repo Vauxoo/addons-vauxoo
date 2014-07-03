@@ -2,25 +2,14 @@
 <openerp>
     <data noupdate="1">
         
-        <record model="ir.module.category" id="module_l10n_mx_facturae">
-            <field name="name">Facturación Electrónica de México</field>
-            <field name="description">User:This user has limitations to create or modify.Manager:The user will have an access to the Electronic Invoice data and configuration</field>
-            <field name="sequence">999</field>
+        <record id="group_l10n_mx_facturae_multipac_manager" model="res.groups">
+            <field name="name">FacturaE MX Multipac Vauxoo Manager</field>
+            <field name="comment">This user only has limitations to create or modify</field>
         </record>
         
-        <record id="group_l10n_mx_facturae_user" model="res.groups">
-            <field name="name">User</field>
-            <field name="comment">This user has limitations to create or modify</field>
-            <field name="category_id" ref="module_l10n_mx_facturae"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_document_user'))]"/>
-        </record>
-        
-        <record id="group_l10n_mx_facturae_manager" model="res.groups">
-            <field name="name">Manager</field>
-            <field name="comment">The user will have an access to the Electronic Invoice data and configuration</field>
-            <field name="category_id" ref="module_l10n_mx_facturae"/>
-            <field name="implied_ids" eval="[(4, ref('group_l10n_mx_facturae_user'))]"/>
-            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        <record id="group_l10n_mx_facturae_multipac_user" model="res.groups">
+            <field name="name">FacturaE MX Multipac Vauxoo User</field>
+            <field name="comment">This user has permission to read, create and write</field>
         </record>
 
     </data>
