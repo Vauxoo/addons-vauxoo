@@ -78,7 +78,7 @@ msgstr "Error en Cadena original!"
 #. module: l10n_mx_facturae_base
 #: model:ir.ui.menu,name:l10n_mx_facturae_base.menu_ir_attachment_facturae_mx_invoice
 msgid "Attacment FacturaE"
-msgstr "Adjunto FacturaE"
+msgstr "Adjuntos FacturaE"
 
 #. module: l10n_mx_facturae_base
 #: model:account.tax,name:l10n_mx_facturae_base.l10n_mx_facturae_base_exento_iva0_mx
