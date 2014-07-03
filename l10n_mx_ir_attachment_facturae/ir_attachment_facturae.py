@@ -171,6 +171,7 @@ class ir_attachment_facturae_mx(osv.Model):
         'date_send_mail': fields.datetime('Date send mail', help='Saved the date of last send mail'),
         'context_extra_data': fields.text('Context Extra Data'),
         'res_pac': fields.many2one('res.pac', 'Pac', required=True),
+        'user_id': fields.many2one('res.users', 'User Electronic Invoice', readonly=True),
     }
 
     _defaults = {
@@ -178,6 +179,7 @@ class ir_attachment_facturae_mx(osv.Model):
         'company_id': lambda self, cr, uid, ctx: self.pool['res.company']._company_default_get(
                                                     cr, uid, object = self._name, context = ctx),
         'last_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+        'user_id': lambda s, cr, u, c: u,
     }
 
     def _get_sello(self, cr=False, uid=False, ids=False, context=None):
