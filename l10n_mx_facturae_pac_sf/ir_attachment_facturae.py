@@ -226,6 +226,11 @@ class ir_attachment_facturae_mx(osv.Model):
                         fecha_timbrado = fecha_timbrado and datetime.strptime(
                             fecha_timbrado, '%Y-%m-%d %H:%M:%S') + timedelta(
                                 hours=htz) or False
+                        data_xml = base64.decodestring(resultado['resultados']['cfdiTimbrado'])
+                        doc_xml = xml.dom.minidom.parseString(data_xml)
+                        partner = doc_xml.getElementsByTagName("sf:Partner")[0]
+                        partner.parentNode.removeChild(partner);
+                        data_xml = doc_xml.toxml().encode('ascii', 'xmlcharrefreplace')
                         cfdi_data = {
                             #'cfdi_cbb': resultado['resultados']['qrCode'] or False,  # ya lo regresa en base64
                             'cfdi_sello': resultado['resultados'][
@@ -235,8 +240,7 @@ class ir_attachment_facturae_mx(osv.Model):
                             'cfdi_cadena_original': resultado['resultados'][
                             'cadenaOriginal'] or False,
                             'cfdi_fecha_timbrado': fecha_timbrado,
-                            'cfdi_xml': base64.decodestring(resultado[
-                            'resultados']['cfdiTimbrado'] or ''),  # este se necesita en uno que no es base64
+                            'cfdi_xml': data_xml or '',  # este se necesita en uno que no es base64
                             'cfdi_folio_fiscal': resultado['resultados']['uuid'] or '',
                             'pac_id': pac_params.id,
                             'certificate_link': certificate_link or False,
