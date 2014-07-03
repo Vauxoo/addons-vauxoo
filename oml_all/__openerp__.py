@@ -231,7 +231,7 @@ This module will install for you:
   
   -  oml module
   
-  - And all oficial modules (account, stock, mrp...)
+  - And all oficial modules (account, stock, mrp, purchase, sale...)
                     """,
     "website" : "http://www.vauxoo.com",
     "category" : "Localization/Application",

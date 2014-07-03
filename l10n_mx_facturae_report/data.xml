@@ -29,7 +29,7 @@
 </html>]]></field>
             <field name="orientation">Portrait</field>
             <field name="format">Letter</field>
-            <field name="html"><![CDATA[<html>
+            <field name="html"><![CDATA[<!DOCTYPE><html>
     <head>
         <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
         <script>
