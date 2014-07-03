@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_account_analytic_line_form_2" model="ir.ui.view">
+            <field name="name">account.analytic.line.form</field>
+            <field name="model">account.analytic.line</field>
+            <field name="inherit_id" ref="account.view_account_analytic_line_form"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//group/group[@string='General Accounting']" position="after">
+                        <group string="Analytic Group">
+                            <field name="partner_id"/>
+                            <field name="analytics_id"/>
+                            <field name="tax_code_id"/>
+                            <field name="analytic_group_id"/>
+                        </group>
+                    </xpath>
+            </field>
+        </record>
+
+        <record id="view_account_analytic_line_tree_2" model="ir.ui.view">
+            <field name="name">account.analytic.line.tree</field>
+            <field name="model">account.analytic.line</field>
+            <field name="inherit_id" ref="account.view_account_analytic_line_tree"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='date']" position="after">
+                        <field name="partner_id"/>
+                        <field name="analytics_id"/>
+                        <field name="tax_code_id"/>
+                    </xpath>
+            </field>
+        </record>
+
+        <record id="view_account_analytic_account_form_2" model="ir.ui.view">
+            <field name="name">account.analytic.account.form</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//field[@name='manager_id']" position="after">
+                        <field name="analytic_group_id"/>
+                    </xpath>
+            </field>
+        </record>
+
+        <record id="view_account_analytic_line_filter_2" model="ir.ui.view">
+            <field name="name">account.analytic.line.form</field>
+            <field name="model">account.analytic.line</field>
+            <field name="inherit_id" ref="account.view_account_analytic_line_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group" position="inside">
+                    <filter string="Analytic Group" context="{'group_by':'analytic_group_id'}"/>
+                    <filter string="Partner" context="{'group_by':'partner_id'}"/>
+                    <filter string="Analytic Distribution" context="{'group_by':'analytics_id'}"/>
+                    <filter string="Tax Code" context="{'group_by':'tax_code_id'}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
