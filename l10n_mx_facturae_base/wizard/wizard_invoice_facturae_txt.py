@@ -94,12 +94,12 @@ def _create_facturae_txt(self, cr, uid, data, context=None):
         if txt_data:
             txt_data = base64.encodestring(txt_data)
             return {'facturae': txt_data, 'facturae_fname': fname,
-                'note': _('Abra el archivo y verfique que la informacion, \
-                este correcta. Folios, RFC, montos y estatus reportados.\nAsegurese \
-                de que no este reportando folios, que no pertenecen a facturas \
-                electronicas (se pueden eliminar directamente en el archivo)\
-                .\nTIP: Recuerde que este archivo tambien contiene folios de \
-                nota de credito.')}
+                'note': _("Open the file & check that the information is \
+                    correct, folios, RFC, amounts & reported status. \nPlease \
+                    make sure that not this reporting folios that not belong \
+                    to electronic invoice's (you can delete in the file \
+                    directly).\nTIP: Remember that this file too contains \
+                    folios of credit note.")}
     return {}
 
 end_form = """<?xml version="1.0"?>
