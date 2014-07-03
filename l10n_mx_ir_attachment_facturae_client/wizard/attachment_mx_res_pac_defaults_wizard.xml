@@ -30,7 +30,7 @@
             <field name="target">new</field>
         </record>
 
-        <menuitem id="attachment_mx_res_pac_defaults_menu" name="Res Pac Defaults" parent="base.next_id_6" action="action_wizard_attachment_mx_res_pac_defaults" sequence="10" groups="l10n_mx_facturae_multipac_vauxoo.group_l10n_mx_facturae_multipac_manager"/>        
+        <menuitem id="attachment_mx_res_pac_defaults_menu" name="Res Pac Defaults" parent="base.next_id_6" action="action_wizard_attachment_mx_res_pac_defaults" sequence="10"/>        
         <menuitem id="report_multicompany.report_multicompany_menu" name="Report Multicompany Settings"  parent="base.next_id_6"  action="report_multicompany.report_multicompany_list_action" sequence="11" />
         
     </data>
