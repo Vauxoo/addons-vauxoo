@@ -24,7 +24,7 @@
 ###############################################################################
 
 {
-    'name': 'pr_line_related_po_line',
+    'name': 'PR Line related PO Line',
     'version': '1.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
