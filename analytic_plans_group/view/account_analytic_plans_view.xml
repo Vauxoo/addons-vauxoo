@@ -2,6 +2,20 @@
 <openerp>
     <data>
 
+
+        <record model="ir.actions.act_window" id="action_account_analytic_group">
+          <field name="name">Account Analytic Group</field>
+          <field name="res_model">account.analytic.group</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem parent="account.menu_analytic_accounting"
+            action="action_account_analytic_group"
+            sequence="30"
+            id="menu_analytic_group"
+            name="Analytic Group"/>
+
         <record id="view_account_analytic_line_form_2" model="ir.ui.view">
             <field name="name">account.analytic.line.form</field>
             <field name="model">account.analytic.line</field>
