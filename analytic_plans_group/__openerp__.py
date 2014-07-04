@@ -30,10 +30,11 @@
     'website': 'http://www.vauxoo.com/',
     'category': '',
     'description': '''
-Analytic Groups
----------------
+Analytic Plans Group
+--------------------
 
-This module add field related with a Group of analytics plans. 
+This module adds analytic_group_id field in analytic account for grouping of 
+analytics entry lines in future.
 
 ''',
     'depends': [

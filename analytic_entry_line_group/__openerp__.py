@@ -24,16 +24,16 @@
 ###############################################################################
 
 {
-    'name': 'Analytic Plans Group',
+    'name': 'Analytic Entry Line Group',
     'version': '1.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
     'category': '',
     'description': '''
-Analytic Groups
----------------
-
-This module add field related with a Group of analytics plans. 
+Analytic Entry Line Group
+-------------------------
+This module takes analytic_group_id field from analytic account for grouping of 
+analytics entry lines.
 
 ''',
     'depends': [
