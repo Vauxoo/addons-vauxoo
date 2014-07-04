@@ -37,7 +37,7 @@
         ],
     "demo" : [],
     "test": [],
-    "data" : ["security/l10n_mx_facturae_multipac_security_groups.xml",
+    "data" : ["security/l10n_mx_facturae_multipac_security_groups.xml"
             ],
     "images": [],
     'application': False,

@@ -46,14 +46,15 @@
         "l10n_mx_ir_attachment_facturae",
         "l10n_mx_ir_attachment_facturae_client",
         "l10n_mx_facturae_group_show_wizards",
-        "l10n_mx_settings_facturae"
+        "l10n_mx_settings_facturae",
+        "l10n_facturae_groups_multipac_vauxoo",
         ],
     "demo" : [
         "demo/l10n_mx_facturae_multipac_vx_demo.xml",
         "demo/l10n_mx_facturae_seq_demo.xml",
         "demo/l10n_mx_payroll_seq_demo.xml",
         ],
-    "data" : [
+    "data" : ["view/l10n_mx_facturae_multipac_vauxoo_view.xml",
         ],
     "test" : [
         ],
