@@ -30,35 +30,16 @@ from openerp.osv import fields, osv
 from openerp import tools
 from openerp.tools.translate import _
 
-class account_analytic_group(osv.Model):
-    _name = 'account.analytic.group'
-
-    _columns = {
-            'name' : fields.char('Name', required=True, size=128),
-            }
-
-class account_analytic_account(osv.Model):
-    _inherit = 'account.analytic.account'
-
-    _columns = {
-        'analytic_group_id': fields.many2one('account.analytic.group', 'Analytic Group'),
-            }
-
 class account_analytic_line(osv.Model):
 
     _inherit = 'account.analytic.line'
 
     _columns = {
-        'analytics_id': fields.many2one('account.analytic.plan.instance', 'Analytic Distribution'),
-        'partner_id': fields.many2one('res.partner', 'Partner', select=1, ondelete='restrict'),
         'tax_code_id': fields.many2one('account.tax.code', 'Tax Account', 
             help="The Account can either be a base tax code or a tax code account."),
-        'analytic_group_id': fields.related('account_id', 'analytic_group_id',
-            type='many2one', relation='account.analytic.group', string='Analytic Group',
-            store=True, readonly=True),
     }
 
-class account_move_line(osv.osv):
+class account_move_line(osv.Model):
 
     _inherit = "account.move.line"
 
@@ -74,8 +55,6 @@ class account_move_line(osv.osv):
            if move_line.analytics_id:
                for line in move_line.analytic_lines:
                    analytic_line_obj.write(cr, uid, line.id, {
-                       'partner_id': move_line.partner_id.id,
-                       'analytics_id': move_line.analytics_id.id,
                        'tax_code_id': move_line.tax_code_id.id,
                        }, context=context)
         return res
