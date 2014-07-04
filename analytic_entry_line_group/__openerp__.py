@@ -40,6 +40,7 @@ This module add field related with a Group of analytics plans.
         'analytic',
         'account_analytic_plans',
         'purchase_analytic_plans',
+        'analytic_plans_group',
         ],
     'data': [
         'view/account_analytic_plans_view.xml',

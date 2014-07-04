@@ -8,7 +8,9 @@
             <field name="inherit_id" ref="account.view_account_analytic_line_form"/>
             <field name="arch" type="xml">
                     <xpath expr="//field[@name='company_id']" position="after">
-                            <field name="analytic_group_id" readonly="1"/>
+                        <field name="analytic_group_id" 
+                            groups="analytic_plans_group.group_account_analytic_group"
+                            readonly="1"/>
                     </xpath>
             </field>
         </record>
@@ -19,7 +21,9 @@
             <field name="inherit_id" ref="account.view_account_analytic_line_tree"/>
             <field name="arch" type="xml">
                     <xpath expr="//field[@name='date']" position="after">
-                        <field name="analytic_group_id"/>
+                        <field name="analytic_group_id"
+                            groups="analytic_plans_group.group_account_analytic_group"
+                            />
                     </xpath>
             </field>
         </record>
@@ -31,7 +35,9 @@
             <field name="inherit_id" ref="account.view_account_analytic_line_filter"/>
             <field name="arch" type="xml">
                 <xpath expr="//group" position="inside">
-                    <filter string="Analytic Group" context="{'group_by':'analytic_group_id'}"/>
+                    <filter string="Analytic Group" 
+                        groups="analytic_plans_group.group_account_analytic_group"
+                        context="{'group_by':'analytic_group_id'}"/>
                 </xpath>
             </field>
         </record>

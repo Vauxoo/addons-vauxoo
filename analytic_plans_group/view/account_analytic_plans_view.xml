@@ -14,7 +14,9 @@
             action="action_account_analytic_group"
             sequence="30"
             id="menu_analytic_group"
-            name="Analytic Group"/>
+            name="Analytic Group"
+            groups="analytic_plans_group.group_account_analytic_group"
+            />
 
         <record id="view_account_analytic_account_form_group" model="ir.ui.view">
             <field name="name">account.analytic.account.form.group</field>
@@ -22,7 +24,9 @@
             <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
             <field name="arch" type="xml">
                     <xpath expr="//field[@name='manager_id']" position="after">
-                        <field name="analytic_group_id"/>
+                        <field name="analytic_group_id"
+                            groups="analytic_plans_group.group_account_analytic_group"
+                            />
                     </xpath>
             </field>
         </record>

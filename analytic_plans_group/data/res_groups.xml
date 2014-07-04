@@ -3,8 +3,6 @@
   <data noupdate="1">
     <record id="group_account_analytic_group" model="res.groups">
       <field name="name">Grouping Account Analytic</field>
-      <field name="menu_access" 
-          eval="[(6, 0, [ref('analytic_plans_group.menu_analytic_group')])]"/>
     </record>
     </data>
 </openerp>

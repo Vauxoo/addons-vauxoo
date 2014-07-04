@@ -42,6 +42,8 @@ This module add field related with a Group of analytics plans.
         'purchase_analytic_plans',
         ],
     'data': [
+        'data/res_groups.xml',
+        'security/ir.model.access.csv',
         'view/account_analytic_plans_view.xml',
         ],
     'demo': [],
