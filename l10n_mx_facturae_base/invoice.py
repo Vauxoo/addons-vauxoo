@@ -362,6 +362,14 @@ class account_invoice(osv.Model):
                 0] or False
         return res
 
+    def _get_cfdi_approval_invoice(self, cr, uid, ids, name, args, context=None):
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+        result = {}
+        for invoice in self.browse(cr, uid, ids):
+            result[invoice.id] = invoice.journal_id and invoice.journal_id.sequence_id and invoice.journal_id.sequence_id.approval_id and  invoice.journal_id.sequence_id.approval_id.id or False
+        return result
+
     _columns = {
         # Extract date_invoice from original, but add datetime
         #'date_invoice': fields.datetime('Date Invoiced', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
@@ -400,6 +408,7 @@ class account_invoice(osv.Model):
         'cfdi_folio_fiscal': fields.char('CFD-I Folio Fiscal', size=64,
                                          help='Folio used in the electronic invoice'),
         'pac_id': fields.many2one('params.pac', 'Pac', help='Pac used in singned of the invoice'),
+        'cfdi_check': fields.function(_get_cfdi_approval_invoice, type='boolean'),
     }
 
     _defaults = {
