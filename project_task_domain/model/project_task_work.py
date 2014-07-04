@@ -26,6 +26,7 @@
 #
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
+import time
 
 
 class project_task_work(osv.Model):
