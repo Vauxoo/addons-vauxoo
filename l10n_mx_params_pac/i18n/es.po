@@ -6,29 +6,39 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-08 03:15+0000\n"
-"PO-Revision-Date: 2013-11-08 04:48+0000\n"
-"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
-"<humbertoarocha@gmail.com>\n"
+"POT-Creation-Date: 2014-07-04 15:49+0000\n"
+"PO-Revision-Date: 2014-07-04 15:49+0000\n"
+"Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-02-14 07:51+0000\n"
-"X-Generator: Launchpad (build 16916)\n"
-
-#. module: l10n_mx_params_pac
-#: help:params.pac,method_type:0
-msgid "Type of process to configure in this pac"
-msgstr "Tipo de proceso a configurar en este PAC"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #. module: l10n_mx_params_pac
 #: field:params.pac,certificate_link:0
+#: field:res.pac,certificate_link:0
 msgid "Certificate link"
 msgstr "Vínculo de certificado"
 
 #. module: l10n_mx_params_pac
+#: model:ir.model,name:l10n_mx_params_pac.model_res_pac
+msgid "res.pac"
+msgstr "res.pac"
+
+#. module: l10n_mx_params_pac
+#: help:res.pac,params_pac_ids:0
+msgid "Params pacs for this Pac"
+msgstr "Parámetros del pac para este Pac"
+
+#. module: l10n_mx_params_pac
+#: field:res.pac,name_driver:0
+msgid "Pac Driver"
+msgstr "Controlador del Pac"
+
+#. module: l10n_mx_params_pac
 #: view:params.pac:0
+#: view:res.pac:0
 msgid "Group By..."
 msgstr "Agrupar por"
 
@@ -38,29 +48,61 @@ msgid "params.pac"
 msgstr "params.pac"
 
 #. module: l10n_mx_params_pac
+#: selection:params.pac,method_type:0
+msgid "Sign"
+msgstr "Firmar"
+
+#. module: l10n_mx_params_pac
+#: field:params.pac,user_id:0
+msgid "User Params Pac"
+msgstr "Usuario Pac"
+
+#. module: l10n_mx_params_pac
+#: help:res.pac,active:0
+msgid "Indicate if this pac is active"
+msgstr "Indica si este Pac esta activo"
+
+#. module: l10n_mx_params_pac
 #: help:params.pac,certificate_link:0
-msgid ""
-"PAC have a public certificate that is necessary by customers to check the "
-"validity of the XML and PDF"
-msgstr ""
-"El PAC tiene un certificado público que es necesario por los clientes para "
-"verificar la validez del XML y el PDF"
+#: help:res.pac,certificate_link:0
+msgid "PAC have a public certificate that is necessary by customers to check the validity of the XML and PDF"
+msgstr "El PAC tiene un certificado público que es necesario por los clientes para verificar la validez del XML y el PDF"
 
 #. module: l10n_mx_params_pac
 #: help:params.pac,namespace:0
+#: help:res.pac,namespace:0
 msgid "NameSpace of XML of the page of WebService of the PAC"
 msgstr "NameSpace del XML de la página del WebService del PAC"
 
 #. module: l10n_mx_params_pac
 #: field:params.pac,url_webservice:0
+#: field:res.pac,url_webservice:0
 msgid "URL WebService"
 msgstr "URL WebService"
 
 #. module: l10n_mx_params_pac
 #: view:params.pac:0
 #: field:params.pac,company_id:0
+#: view:res.pac:0
+#: field:res.pac,company_id:0
 msgid "Company"
 msgstr "Compañia"
+
+#. module: l10n_mx_params_pac
+#: view:params.pac:0
+#: field:params.pac,sequence:0
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: l10n_mx_params_pac
+#: field:res.pac,params_pac_ids:0
+msgid "Params Pac"
+msgstr "Parametro Pac"
+
+#. module: l10n_mx_params_pac
+#: view:res.pac:0
+msgid "Parameters Pac"
+msgstr "Parametros Pac"
 
 #. module: l10n_mx_params_pac
 #: field:params.pac,method_type:0
@@ -69,6 +111,7 @@ msgstr "Proceso a Realizar"
 
 #. module: l10n_mx_params_pac
 #: field:params.pac,user:0
+#: field:res.pac,user:0
 msgid "User"
 msgstr "Usuario"
 
@@ -79,23 +122,47 @@ msgstr "Indica si este Parametro es Activo"
 
 #. module: l10n_mx_params_pac
 #: field:params.pac,active:0
+#: field:res.pac,active:0
 msgid "Active"
 msgstr "Activo"
 
 #. module: l10n_mx_params_pac
+#: field:params.pac,res_pac:0
+msgid "Res Pac"
+msgstr "Res Pac"
+
+#. module: l10n_mx_params_pac
 #: field:params.pac,password:0
+#: field:res.pac,password:0
 msgid "Password"
 msgstr "Contraseña"
 
 #. module: l10n_mx_params_pac
+#: model:res.groups,name:l10n_mx_params_pac.res_group_pacs
+msgid "Parameters PAC Configuration"
+msgstr "Configuración de los parametros del PAC"
+
+#. module: l10n_mx_params_pac
 #: field:params.pac,name:0
+#: field:res.pac,name:0
 msgid "Name"
 msgstr "Nombre"
 
 #. module: l10n_mx_params_pac
 #: help:params.pac,url_webservice:0
+#: help:res.pac,url_webservice:0
 msgid "URL of WebService used for send to sign the XML to PAC"
 msgstr "URL del WebService para enviar a firmar el XML al Pac"
+
+#. module: l10n_mx_params_pac
+#: help:res.pac,name:0
+msgid "Name for this res pac"
+msgstr "Nombre para este PAC"
+
+#. module: l10n_mx_params_pac
+#: help:res.pac,code:0
+msgid "Code for this res pac"
+msgstr "Código para este PAC"
 
 #. module: l10n_mx_params_pac
 #: help:params.pac,name:0
@@ -104,33 +171,47 @@ msgstr "Nombre para este parametro"
 
 #. module: l10n_mx_params_pac
 #: help:params.pac,password:0
+#: help:res.pac,password:0
 msgid "Password user for login to PAC"
 msgstr "Contraseña utilizada para iniciar sesión en el PAC"
 
 #. module: l10n_mx_params_pac
+#: help:params.pac,user_id:0
+msgid "The user responsible for this params pac"
+msgstr "El usuario responsable para este PAC"
+
+#. module: l10n_mx_params_pac
+#: field:res.pac,code:0
+msgid "Code"
+msgstr "Código"
+
+#. module: l10n_mx_params_pac
+#: model:ir.actions.act_window,name:l10n_mx_params_pac.action_res_pac
 #: model:ir.ui.menu,name:l10n_mx_params_pac.menu_pacs
+#: model:ir.ui.menu,name:l10n_mx_params_pac.menu_res_pac
+#: view:res.pac:0
 msgid "PACS"
 msgstr "PACS"
 
 #. module: l10n_mx_params_pac
-#: view:params.pac:0
-#: field:params.pac,sequence:0
-msgid "Sequence"
-msgstr "Secuencia"
+#: selection:params.pac,method_type:0
+msgid "Cancel"
+msgstr "Cancelar"
 
 #. module: l10n_mx_params_pac
 #: field:params.pac,namespace:0
+#: field:res.pac,namespace:0
 msgid "NameSpace"
 msgstr "NameSpace"
 
 #. module: l10n_mx_params_pac
 #: help:params.pac,sequence:0
 msgid "If have more of a param, take the param with less sequence"
-msgstr ""
-"Si se tiene mas de un parametro, toma el parametro de menor secuencia"
+msgstr "Si se tiene mas de un parametro, toma el parametro de menor secuencia"
 
 #. module: l10n_mx_params_pac
 #: help:params.pac,company_id:0
+#: help:res.pac,company_id:0
 msgid "Company where will configurate this param"
 msgstr "Compañia donde se configurara este parametro"
 
@@ -143,10 +224,18 @@ msgstr "Parametros PAC"
 
 #. module: l10n_mx_params_pac
 #: view:params.pac:0
+#: view:res.pac:0
 msgid "Inactive"
 msgstr "Inactivo"
 
 #. module: l10n_mx_params_pac
+#: help:params.pac,res_pac:0
+msgid "The res pac configuration for this params pac"
+msgstr "La configuración de los parametros de este PAC"
+
+#. module: l10n_mx_params_pac
 #: help:params.pac,user:0
+#: help:res.pac,user:0
 msgid "Name user for login to PAC"
 msgstr "Nombre de usuario para iniciar sesión en el PAC"
+

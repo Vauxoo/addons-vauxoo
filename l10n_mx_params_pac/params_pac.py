@@ -49,7 +49,7 @@ class params_pac(osv.Model):
         'user': fields.char('User', size=128, help='Name user for login to PAC'),
         'password': fields.char('Password', size=128,
             help='Password user for login to PAC'),
-        'method_type': fields.selection([('firmar','Firmar'),('cancelar','Cancelar')], string='Process to perform'),
+        'method_type': fields.selection([('firmar','Sign'),('cancelar','Cancel')], string='Process to perform'),
         'company_id': fields.many2one('res.company', 'Company',
             help='Company where will configurate this param'),
         'active': fields.boolean('Active', help='Indicate if this param is active'),

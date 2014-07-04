@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-07 20:51+0000\n"
-"PO-Revision-Date: 2014-06-07 20:51+0000\n"
+"POT-Creation-Date: 2014-07-04 14:49+0000\n"
+"PO-Revision-Date: 2014-07-04 14:49+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -20,13 +20,13 @@ msgstr ""
 #: model:ir.ui.menu,name:l10n_mx_hr_payroll.hr_payroll_working_day
 #: view:payroll.working.day:0
 msgid "Working Day"
-msgstr "Working Day"
+msgstr "Jornada"
 
 #. module: l10n_mx_hr_payroll
 #: code:addons/l10n_mx_hr_payroll/model/hr_contract.py:54
 #, python-format
 msgid "Bi-monthly"
-msgstr "Bi-monthly"
+msgstr "Bimestral"
 
 #. module: l10n_mx_hr_payroll
 #: field:hr.employee,curp:0
@@ -37,33 +37,33 @@ msgstr "CURP"
 #: code:addons/l10n_mx_hr_payroll/model/hr_contract.py:48
 #, python-format
 msgid "Monthly"
-msgstr "Monthly"
+msgstr "Mensual"
 
 #. module: l10n_mx_hr_payroll
 #: field:res.company,employer_registration:0
 msgid "Employer Registration"
-msgstr "Employer Registration"
+msgstr "REgistro de empleado"
 
 #. module: l10n_mx_hr_payroll
 #: help:hr.payslip.overtime,number_of_hours:0
 msgid "Number of overtime hours worked in the period"
-msgstr "Number of overtime hours worked in the period"
+msgstr "Número de horas extras trabajadas en el periodo"
 
 #. module: l10n_mx_hr_payroll
 #: view:hr.payslip:0
 msgid "Overtime"
-msgstr "Overtime"
+msgstr "Horas extras"
 
 #. module: l10n_mx_hr_payroll
 #: help:hr.employee,curp:0
 msgid "Worker CURP"
-msgstr "Worker CURP"
+msgstr "CURP trabajador"
 
 #. module: l10n_mx_hr_payroll
 #: help:hr.contract,working_day_id:0
 #: help:payroll.working.day,name:0
 msgid "Type working day that covers the worker: Day, night, mixed per hour, reduced, continued heading, by turns, etc.."
-msgstr "Type working day that covers the worker: Day, night, mixed per hour, reduced, continued heading, by turns, etc.."
+msgstr "Tipo de trabajo diario que cubre el trabajador: Día, noche, mixto por hora, reducido, por turnos, etc.."
 
 #. module: l10n_mx_hr_payroll
 #: model:ir.model,name:l10n_mx_hr_payroll.model_hr_employee
@@ -73,40 +73,40 @@ msgstr "Empleado"
 #. module: l10n_mx_hr_payroll
 #: help:hr.payslip,inability_line_ids:0
 msgid "Optional node to express disabilities applicable"
-msgstr "Optional node to express disabilities applicable"
+msgstr "Nodo opcional para expresar discapacidades aplicables"
 
 #. module: l10n_mx_hr_payroll
 #: view:res.company:0
 msgid "Configuration RRHH"
-msgstr "Configuration RRHH"
+msgstr "Configuración RRHH"
 
 #. module: l10n_mx_hr_payroll
 #: code:addons/l10n_mx_hr_payroll/model/hr_contract.py:50
 #, python-format
 msgid "Semi-annually"
-msgstr "Semi-annually"
+msgstr "Semestral"
 
 #. module: l10n_mx_hr_payroll
 #: selection:hr.payslip.overtime,type_hours:0
 msgid "Triples"
-msgstr "Triples"
+msgstr "Triple"
 
 #. module: l10n_mx_hr_payroll
 #: view:hr.payslip:0
 msgid "Total Hours"
-msgstr "Total Hours"
+msgstr "Total de horas"
 
 #. module: l10n_mx_hr_payroll
 #: field:hr.payslip.overtime,name:0
 #: field:payroll.hr.inability,name:0
 #: field:payroll.working.day,name:0
 msgid "Description"
-msgstr "Description"
+msgstr "Descripción"
 
 #. module: l10n_mx_hr_payroll
 #: help:hr.payslip.overtime,number_of_days:0
 msgid "Number of days in which the employee performed overtime in the period"
-msgstr "Number of days in which the employee performed overtime in the period"
+msgstr "Número de días en que el empleado realiza horas extras en el periodo"
 
 #. module: l10n_mx_hr_payroll
 #: model:ir.model,name:l10n_mx_hr_payroll.model_payroll_working_day
@@ -117,28 +117,28 @@ msgstr "payroll.working.day"
 #: field:hr.payslip.inability,number_of_days:0
 #: field:hr.payslip.overtime,number_of_days:0
 msgid "Number of Days"
-msgstr "Number of Days"
+msgstr "Número de días"
 
 #. module: l10n_mx_hr_payroll
 #: field:hr.payslip,overtime_line_ids:0
 #: model:ir.model,name:l10n_mx_hr_payroll.model_hr_payslip_overtime
 msgid "Payslip Overtime"
-msgstr "Payslip Overtime"
+msgstr "Nómina horas extras"
 
 #. module: l10n_mx_hr_payroll
 #: help:hr.payslip.overtime,amount:0
 msgid "Amount paid for overtime"
-msgstr "Amount paid for overtime"
+msgstr "Monto pagado por horas extras"
 
 #. module: l10n_mx_hr_payroll
 #: view:hr.payslip:0
 msgid "Total Overtime"
-msgstr "Total Overtime"
+msgstr "Total horas extras"
 
 #. module: l10n_mx_hr_payroll
 #: help:hr.payslip.inability,number_of_days:0
 msgid "Number of days in which the employee performed inability in the period"
-msgstr "Number of days in which the employee performed inability in the period"
+msgstr "Número de dias en que el empleado tuvo incapacidad en el periodo"
 
 #. module: l10n_mx_hr_payroll
 #: field:hr.employee,nss:0
@@ -155,17 +155,10 @@ msgstr "Nómina"
 #. module: l10n_mx_hr_payroll
 #: help:hr.payslip.overtime,type_hours:0
 msgid "Type of payment of overtime: double or triple"
-msgstr "Type of payment of overtime: double or triple"
+msgstr "Tipo de pago de horas extras: doble o triple"
 
 #. module: l10n_mx_hr_payroll
 #: code:addons/l10n_mx_hr_payroll/model/hr_contract.py:55
-#, python-format
-msgid "Fortnightly"
-msgstr "Quincenal"
-
-#. module: l10n_mx_hr_payroll
-#: code:addons/l10n_mx_hr_payroll/model/hr_contract.py:55
-#: selection:hr.contract,schedule_pay:0
 #, python-format
 msgid "Fortnightly"
 msgstr "Quincenal"
@@ -173,18 +166,18 @@ msgstr "Quincenal"
 #. module: l10n_mx_hr_payroll
 #: help:res.company,employer_registration:0
 msgid "Attribute to express the employer registration to 20 positions maximum"
-msgstr "Attribute to express the employer registration to 20 positions maximum"
+msgstr "Atributo para expresar el registro patronal de 20 posiciones máximas"
 
 #. module: l10n_mx_hr_payroll
 #: field:hr.contract,integrated_salary:0
 #: help:hr.contract,integrated_salary:0
 msgid "Integrated Salary"
-msgstr "Integrated Salary"
+msgstr "Salario integrado"
 
 #. module: l10n_mx_hr_payroll
 #: selection:hr.payslip.overtime,type_hours:0
 msgid "Double"
-msgstr "Double"
+msgstr "Doble"
 
 #. module: l10n_mx_hr_payroll
 #: view:hr.payslip:0
@@ -204,24 +197,24 @@ msgstr "Contrato"
 #. module: l10n_mx_hr_payroll
 #: help:hr.payslip.inability,inability_id:0
 msgid "Reason for inability: Catalog published in the Internet portal of the SAT"
-msgstr "Reason for inability: Catalog published in the Internet portal of the SAT"
+msgstr "Motivo de incapacidad: Catálogo publicado en el portal del SAT"
 
 #. module: l10n_mx_hr_payroll
 #: code:addons/l10n_mx_hr_payroll/model/hr_contract.py:51
 #, python-format
 msgid "Annually"
-msgstr "Annually"
+msgstr "Anual"
 
 #. module: l10n_mx_hr_payroll
 #: field:hr.payslip.inability,amount:0
 #: field:hr.payslip.overtime,amount:0
 msgid "Amount"
-msgstr "Amount"
+msgstr "Monto"
 
 #. module: l10n_mx_hr_payroll
 #: field:hr.contract,working_day_id:0
 msgid "Type of working day"
-msgstr "Type of working day"
+msgstr "Tipo de trabajo diario"
 
 #. module: l10n_mx_hr_payroll
 #: view:hr.payslip:0
@@ -231,85 +224,85 @@ msgstr "Type of working day"
 #: model:ir.ui.menu,name:l10n_mx_hr_payroll.hr_payroll_inability0
 #: view:payroll.hr.inability:0
 msgid "Inability"
-msgstr "Inability"
+msgstr "Incapacidad"
 
 #. module: l10n_mx_hr_payroll
 #: help:hr.payslip.inability,amount:0
 msgid "Amount of discount for the inability"
-msgstr "Amount of discount for the inability"
+msgstr "Monto del descuento por la incapacidad"
 
 #. module: l10n_mx_hr_payroll
 #: help:hr.payslip,overtime_line_ids:0
 msgid "Optional node to express the applicable overtime"
-msgstr "Optional node to express the applicable overtime"
+msgstr "Nodo opcional para expresar el tiempo extra aplicable"
 
 #. module: l10n_mx_hr_payroll
 #: field:payroll.hr.inability,code:0
 msgid "Code"
-msgstr "Code"
+msgstr "Código"
 
 #. module: l10n_mx_hr_payroll
 #: field:hr.payslip.overtime,number_of_hours:0
 msgid "Number of Hours"
-msgstr "Number of Hours"
+msgstr "Número de horas"
 
 #. module: l10n_mx_hr_payroll
 #: help:hr.contract,seniority:0
 msgid "Number of weeks that the employee has maintained relationships employment with the employer"
-msgstr "Number of weeks that the employee has maintained relationships employment with the employer"
+msgstr "Semanas que el empleado a mantenido relación con el empleador"
 
 #. module: l10n_mx_hr_payroll
 #: field:hr.payslip.inability,sequence:0
 #: field:hr.payslip.overtime,sequence:0
 msgid "Sequence"
-msgstr "Sequence"
+msgstr "Secuencia"
 
 #. module: l10n_mx_hr_payroll
 #: field:hr.payslip,inability_line_ids:0
 #: model:ir.model,name:l10n_mx_hr_payroll.model_hr_payslip_inability
 msgid "Payslip Inability"
-msgstr "Payslip Inability"
+msgstr "Nómina incapacidad"
 
 #. module: l10n_mx_hr_payroll
 #: code:addons/l10n_mx_hr_payroll/model/hr_contract.py:49
 #, python-format
 msgid "Quarterly"
-msgstr "Quarterly"
+msgstr "Trimestral"
 
 #. module: l10n_mx_hr_payroll
 #: code:addons/l10n_mx_hr_payroll/model/hr_contract.py:53
 #, python-format
 msgid "Bi-weekly"
-msgstr "Bi-weekly"
+msgstr "Quincenal"
 
 #. module: l10n_mx_hr_payroll
 #: view:hr.payslip:0
 msgid "Total Days"
-msgstr "Total Days"
+msgstr "Días totales"
 
 #. module: l10n_mx_hr_payroll
 #: help:hr.employee,nss:0
 msgid "Optional attribute for the expression of Social Security Number applicable to the worker"
-msgstr "Optional attribute for the expression of Social Security Number applicable to the worker"
+msgstr "Atributo opcional para expresar el Número de Seguro Social aplicable al trabajador"
 
 #. module: l10n_mx_hr_payroll
 #: view:hr.payslip:0
 msgid "Total Inability"
-msgstr "Total Inability"
+msgstr "Total incapacidad"
 
 #. module: l10n_mx_hr_payroll
 #: field:hr.contract,seniority:0
 msgid "Seniority"
-msgstr "Seniority"
+msgstr "Antigüedad"
 
 #. module: l10n_mx_hr_payroll
 #: field:hr.payslip.overtime,type_hours:0
 msgid "Type of Hours"
-msgstr "Type of Hours"
+msgstr "Tipo de horas"
 
 #. module: l10n_mx_hr_payroll
 #: code:addons/l10n_mx_hr_payroll/model/hr_contract.py:52
 #, python-format
 msgid "Weekly"
-msgstr "Weekly"
+msgstr "Semanal"
 
