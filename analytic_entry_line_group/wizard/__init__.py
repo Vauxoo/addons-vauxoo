@@ -23,24 +23,3 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import time
-from lxml import etree
-
-from openerp.osv import fields, osv
-from openerp import tools
-from openerp.tools.translate import _
-
-class account_analytic_group(osv.Model):
-    _name = 'account.analytic.group'
-
-    _columns = {
-            'name' : fields.char('Name', required=True, size=128),
-            }
-
-class account_analytic_account(osv.Model):
-    _inherit = 'account.analytic.account'
-
-    _columns = {
-        'analytic_group_id': fields.many2one('account.analytic.group', 'Analytic Group'),
-            }
-

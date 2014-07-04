@@ -23,24 +23,32 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import time
-from lxml import etree
+{
+    'name': 'Analytic Plans Group',
+    'version': '1.0',
+    'author': 'Vauxoo',
+    'website': 'http://www.vauxoo.com/',
+    'category': '',
+    'description': '''
+Analytic Groups
+---------------
 
-from openerp.osv import fields, osv
-from openerp import tools
-from openerp.tools.translate import _
+This module add field related with a Group of analytics plans. 
 
-class account_analytic_group(osv.Model):
-    _name = 'account.analytic.group'
-
-    _columns = {
-            'name' : fields.char('Name', required=True, size=128),
-            }
-
-class account_analytic_account(osv.Model):
-    _inherit = 'account.analytic.account'
-
-    _columns = {
-        'analytic_group_id': fields.many2one('account.analytic.group', 'Analytic Group'),
-            }
-
+''',
+    'depends': [
+        'analytic',
+        'account_analytic_plans',
+        'purchase_analytic_plans',
+        ],
+    'data': [
+        'view/account_analytic_plans_view.xml',
+        ],
+    'demo': [],
+    'test': [],
+    'qweb': [],
+    'js': [],
+    'css': [],
+    'active': False,
+    'installable': True,
+}
