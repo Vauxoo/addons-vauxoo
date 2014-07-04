@@ -24,24 +24,27 @@
 ###############################################################################
 
 {
-    'name': 'PR Line related PO Line',
+    'name': 'Analytic Entry Line Group',
     'version': '1.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
     'category': '',
     'description': '''
-Add purchase_requisition_line_id field, it is id of purchase requisition line from where purchase
-order line is created, overwrite  the make_purchase_order method for add value of
-purchase_requisition_line_id to record purchase order line, it is help to make best inherit and
-modification of make_purchase_order method, as can be seen in
-purchase_requisition_line_description, purchase_requisition_line_analytic and
-purchase_requisition_requisitor modules.  
+Analytic Entry Line Group
+-------------------------
+This module takes analytic_group_id field from analytic account for grouping of 
+analytics entry lines.
+
 ''',
     'depends': [
-        'purchase',
-        'purchase_requisition',
+        'analytic',
+        'account_analytic_plans',
+        'purchase_analytic_plans',
+        'analytic_plans_group',
         ],
-    'data': [],
+    'data': [
+        'view/account_analytic_plans_view.xml',
+        ],
     'demo': [],
     'test': [],
     'qweb': [],

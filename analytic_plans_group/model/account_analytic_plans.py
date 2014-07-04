@@ -23,30 +23,24 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-{
-    'name': 'PR Line related PO Line',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': '',
-    'description': '''
-Add purchase_requisition_line_id field, it is id of purchase requisition line from where purchase
-order line is created, overwrite  the make_purchase_order method for add value of
-purchase_requisition_line_id to record purchase order line, it is help to make best inherit and
-modification of make_purchase_order method, as can be seen in
-purchase_requisition_line_description, purchase_requisition_line_analytic and
-purchase_requisition_requisitor modules.  
-''',
-    'depends': [
-        'purchase',
-        'purchase_requisition',
-        ],
-    'data': [],
-    'demo': [],
-    'test': [],
-    'qweb': [],
-    'js': [],
-    'css': [],
-    'active': False,
-    'installable': True,
-}
+import time
+from lxml import etree
+
+from openerp.osv import fields, osv
+from openerp import tools
+from openerp.tools.translate import _
+
+class account_analytic_group(osv.Model):
+    _name = 'account.analytic.group'
+
+    _columns = {
+            'name' : fields.char('Name', required=True, size=128),
+            }
+
+class account_analytic_account(osv.Model):
+    _inherit = 'account.analytic.account'
+
+    _columns = {
+        'analytic_group_id': fields.many2one('account.analytic.group', 'Analytic Group'),
+            }
+
