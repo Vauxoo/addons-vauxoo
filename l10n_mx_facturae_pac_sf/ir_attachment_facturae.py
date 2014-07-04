@@ -228,12 +228,14 @@ class ir_attachment_facturae_mx(osv.Model):
                                 hours=htz) or False
                         data_xml = base64.decodestring(resultado['resultados']['cfdiTimbrado'])
                         doc_xml = xml.dom.minidom.parseString(data_xml)
-                        partner = doc_xml.getElementsByTagName("sf:Partner")[0]
-                        partner.parentNode.removeChild(partner)
-                        addenda = doc_xml.getElementsByTagName("cfdi:Addenda")[0]
-                        if not addenda.childNodes:
-                            addenda = doc_xml.getElementsByTagName("cfdi:Addenda")[0]
-                            addenda.parentNode.removeChild(addenda)
+                        partner = doc_xml.getElementsByTagName("sf:Partner")
+                        if partner:
+                            partner[0].parentNode.removeChild(partner[0])
+                        addenda = doc_xml.getElementsByTagName("cfdi:Addenda")
+                        if addenda:
+                            if not addenda[0].childNodes:
+                                addenda = doc_xml.getElementsByTagName("cfdi:Addenda")[0]
+                                addenda.parentNode.removeChild(addenda)
                         data_xml = doc_xml.toxml().encode('ascii', 'xmlcharrefreplace')
                         cfdi_data = {
                             #'cfdi_cbb': resultado['resultados']['qrCode'] or False,  # ya lo regresa en base64
