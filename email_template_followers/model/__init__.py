@@ -22,3 +22,4 @@
 ################################################################################
 
 import mail_compose_message
+import email_template

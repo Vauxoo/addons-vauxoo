@@ -20,21 +20,14 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-{
-    'name' : 'Email template Followers',
-    'version' : '1.1',
-    "website": "http://vauxoo.com",
-    "category": "Addons Vauxoo",
-    'author' : 'Vauxoo',
-    'description' : """
-Added field boolean to allow send email all followers from template
-    """,
-    'depends' : ['mail','email_template'],
-    'data': [
-       'view/email_template_view.xml',
-        ],
-    "active": False,
-    "installable": True,
-}
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
+
+from openerp.osv import osv, fields
+
+class email_template(osv.Model):
+    
+    _inherit = "email.template"
+    
+    _columns = {
+        'add_followers': fields.boolean('Add Followers', "Choice to add followers in template")
+    }
