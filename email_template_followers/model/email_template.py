@@ -29,5 +29,5 @@ class email_template(osv.Model):
     _inherit = "email.template"
     
     _columns = {
-        'add_followers': fields.boolean('Add Followers', "Choice to add followers in template")
+        'add_followers': fields.boolean('Add Followers', help='Choice to add followers in template')
     }

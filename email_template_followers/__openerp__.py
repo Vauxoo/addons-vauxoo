@@ -32,6 +32,7 @@ Added field boolean to allow send email all followers from template
     'depends' : ['mail','email_template'],
     'data': [
        'view/email_template_view.xml',
+       'view/mail_compose_message_view.xml',
         ],
     "active": False,
     "installable": True,
