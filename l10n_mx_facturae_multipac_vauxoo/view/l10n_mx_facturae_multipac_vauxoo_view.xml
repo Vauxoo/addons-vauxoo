@@ -2,7 +2,7 @@
 <openerp>
     <data>
 
-        <menuitem name="FacturaE MX" id="ir_attachment_facturae_mx_menu" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_user" sequence="99"/>
+        <menuitem name="FacturaE MX" id="ir_attachment_facturae_mx_menu" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_user" sequence="999"/>
         
             <menuitem id="ir_attachment_facturae_mx_submenu" parent="l10n_mx_facturae_multipac_vauxoo.ir_attachment_facturae_mx_menu" name="Attachment Facturae" sequence="1" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_user"/>
         

@@ -11,7 +11,7 @@
                 <field eval="False" name="view_id"/>
             </record>
             <menuitem id="menu_ir_attachment_facturae_mx_invoice"
-                name="Attacment FacturaE"
+                name="Attachment Facturae"
                 parent="account.menu_finance_receivables"
                 action="action_ir_attachment_invoice"
             />
