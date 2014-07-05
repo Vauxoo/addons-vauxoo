@@ -4,12 +4,12 @@
         
         <record id="group_l10n_mx_facturae_multipac_manager" model="res.groups">
             <field name="name">FacturaE MX Multipac Vauxoo Manager</field>
-            <field name="comment">This user has permission to read, create and write to menu Res Pac Defaults</field>
+            <field name="comment">The user will have access to read, create, modify to menu of Res Pac Defaults</field>
         </record>
         
         <record id="group_l10n_mx_facturae_multipac_user" model="res.groups">
             <field name="name">FacturaE MX Multipac Vauxoo User</field>
-            <field name="comment">This user only has permission to read</field>
+            <field name="comment">The user will only have access to read the attached of the electronic invoice</field>
         </record>
 
     </data>
