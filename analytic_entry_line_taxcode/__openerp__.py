@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Katherine Zaoral <kathy@vauxoo.com>
+#    Coded by: Yanina Aular <yani@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -24,31 +24,25 @@
 ###############################################################################
 
 {
-    'name': 'Purchase Order Department',
+    'name': 'Analytic Entry Line Tax Code',
     'version': '1.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
-    'category': 'purchase',
+    'category': '',
     'description': '''
-Purchase Order Department
-=========================
+Analytic Entry Line Tax Code
+----------------------------
 
-Add a department field to the purchase order model. This check the purchase
-order requisitor (user) and fill the department field with the requisitor
-employee info. Also add a search filter by text to search the department name
-and a gruop by filter by department.
-
-Note: this module do not work propertly for users with multiple employees.
+This module takes tax_code_id field from move line for grouping of 
+analytics entry lines by tax_code_id.
 ''',
-
     'depends': [
-        'purchase',
-        'hr',
-        'purchase_order_requisitor',
-        'purchase_requisition_department',
+        'account',
+        'analytic',
+        'account_analytic_plans',
         ],
     'data': [
-        'view/purchase_order_view.xml',
+        'view/account_analytic_plans_view.xml',
         ],
     'demo': [],
     'test': [],

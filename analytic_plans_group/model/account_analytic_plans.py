@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Katherine Zaoral <kathy@vauxoo.com>
+#    Coded by: Yanina Aular <yani@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -23,38 +23,24 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-{
-    'name': 'Purchase Order Department',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': 'purchase',
-    'description': '''
-Purchase Order Department
-=========================
+import time
+from lxml import etree
 
-Add a department field to the purchase order model. This check the purchase
-order requisitor (user) and fill the department field with the requisitor
-employee info. Also add a search filter by text to search the department name
-and a gruop by filter by department.
+from openerp.osv import fields, osv
+from openerp import tools
+from openerp.tools.translate import _
 
-Note: this module do not work propertly for users with multiple employees.
-''',
+class account_analytic_group(osv.Model):
+    _name = 'account.analytic.group'
 
-    'depends': [
-        'purchase',
-        'hr',
-        'purchase_order_requisitor',
-        'purchase_requisition_department',
-        ],
-    'data': [
-        'view/purchase_order_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'qweb': [],
-    'js': [],
-    'css': [],
-    'active': False,
-    'installable': True,
-}
+    _columns = {
+            'name' : fields.char('Name', required=True, size=128),
+            }
+
+class account_analytic_account(osv.Model):
+    _inherit = 'account.analytic.account'
+
+    _columns = {
+        'analytic_group_id': fields.many2one('account.analytic.group', 'Analytic Group'),
+            }
+

@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Katherine Zaoral <kathy@vauxoo.com>
+#    Coded by: Yanina Aular <yani@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -23,38 +23,38 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-{
-    'name': 'Purchase Order Department',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': 'purchase',
-    'description': '''
-Purchase Order Department
-=========================
+import time
+from lxml import etree
 
-Add a department field to the purchase order model. This check the purchase
-order requisitor (user) and fill the department field with the requisitor
-employee info. Also add a search filter by text to search the department name
-and a gruop by filter by department.
+from openerp.osv import fields, osv
+from openerp import tools
+from openerp.tools.translate import _
 
-Note: this module do not work propertly for users with multiple employees.
-''',
+class account_analytic_line(osv.Model):
 
-    'depends': [
-        'purchase',
-        'hr',
-        'purchase_order_requisitor',
-        'purchase_requisition_department',
-        ],
-    'data': [
-        'view/purchase_order_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'qweb': [],
-    'js': [],
-    'css': [],
-    'active': False,
-    'installable': True,
-}
+    _inherit = 'account.analytic.line'
+
+    _columns = {
+        'tax_code_id': fields.many2one('account.tax.code', 'Tax Account', 
+            help="The Account can either be a base tax code or a tax code account."),
+    }
+
+class account_move_line(osv.Model):
+
+    _inherit = "account.move.line"
+
+    def create_analytic_lines(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+
+        res = super(account_move_line, self).create_analytic_lines(cr, uid, ids,context=context)
+
+        analytic_line_obj = self.pool.get('account.analytic.line')
+        for move_line in self.browse(cr, uid, ids, context=context):
+           if move_line.analytics_id:
+               for line in move_line.analytic_lines:
+                   analytic_line_obj.write(cr, uid, line.id, {
+                       'tax_code_id': move_line.tax_code_id.id,
+                       }, context=context)
+        return res
