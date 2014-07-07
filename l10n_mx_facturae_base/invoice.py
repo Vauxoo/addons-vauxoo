@@ -365,9 +365,21 @@ class account_invoice(osv.Model):
     def _get_cfdi_approval_invoice(self, cr, uid, ids, name, args, context=None):
         if isinstance(ids, (int, long)):
             ids = [ids]
+        if context is None:
+            context = {}
         result = {}
         for invoice in self.browse(cr, uid, ids):
             result[invoice.id] = invoice.journal_id and invoice.journal_id.sequence_id and invoice.journal_id.sequence_id.approval_id and  invoice.journal_id.sequence_id.approval_id.id or False
+        return result
+
+    def _get_cfdi_attch_invoice(self, cr, uid, ids, name, args, context=None):
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+        if context is None:
+            context = {}
+        result = {}
+        for invoice in self.browse(cr, uid, ids):
+            result[invoice.id] = self.pool.get('ir.attachment.facturae.mx').search(cr, uid, [('id_source', '=', invoice.id), ('model_source', '=', 'account.invoice')]) or False
         return result
 
     _columns = {
@@ -409,6 +421,7 @@ class account_invoice(osv.Model):
                                          help='Folio used in the electronic invoice'),
         'pac_id': fields.many2one('params.pac', 'Pac', help='Pac used in singned of the invoice'),
         'cfdi_check': fields.function(_get_cfdi_approval_invoice, type='boolean'),
+        'attachment_check': fields.function(_get_cfdi_attch_invoice, type='boolean'),
     }
 
     _defaults = {
@@ -1512,3 +1525,12 @@ class account_invoice(osv.Model):
         cfdi_no_certificado = invoice.cfdi_no_certificado or ''
         original_string = '||1.0|'+cfdi_folio_fiscal+'|'+str(cfdi_fecha_timbrado)+'|'+sello+'|'+cfdi_no_certificado+'||'
         return original_string
+
+    def invoice_attachment_view(self, cr, uid, ids, context=None):
+        return {
+            'res_model': 'ir.attachment.facturae.mx',
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'context': "{'search_default_id_source': active_id, 'default_id_source': active_id, 'search_default_model_source': 'account.invoice'}",
+            'type': 'ir.actions.act_window',
+        }
