@@ -23,4 +23,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import account_voucher
+from openerp.osv import fields, osv, orm
+from openerp.tools.translate import _
+from openerp import tools
+
+
+class account_voucher(osv.Model):
+
+    _inherit = 'account.voucher'
+    _columns = {
+        'employee_id': fields.many2one(
+            'hr.employee',
+            string='Requester',
+            help='Requester Employee'),
+    }
