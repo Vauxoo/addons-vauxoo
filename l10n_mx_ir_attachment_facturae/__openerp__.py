@@ -37,11 +37,13 @@
                 "l10n_mx_facturae_groups",
                 "account_cancel",
                 "l10n_mx_facturae_lib",
+                "l10n_facturae_groups_multipac_vauxoo"
         ],
     "demo" : [],
     "data" : [
         "security/l10n_mx_ir_attachment_facturae_security.xml",
         "security/ir.model.access.csv",
+        "security/l10n_mx_facturae_multipac_security_ir_rules.xml",
         "ir_attachment_facturae_view.xml",
         "l10n_mx_facturae_workflow.xml",
         "l10n_mx_facturae_mail_server_data.xml",
