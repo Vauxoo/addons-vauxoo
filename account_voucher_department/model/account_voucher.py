@@ -37,3 +37,17 @@ class account_voucher(osv.Model):
             string='Department',
             help='Department were the requester belongs.'),
     }
+
+    def onchange_employee_id(self, cr, uid, ids, employee_id, context=None):
+        """ Return the department depending of the employee.
+        @param employee_id: employee id
+        """
+        context = context or {}
+        res = {}
+        he_obj = self.pool.get('hr.employee')
+        if employee_id:
+            he_brw = he_obj.browse(cr, uid, employee_id, context=context)
+            department_id = (he_brw.department_id and he_brw.department_id.id
+                or False)
+            res.update({'value': {'department_id': department_id}})
+        return res
