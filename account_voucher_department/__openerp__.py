@@ -41,7 +41,9 @@ automactly fill by the account voucher requester.
         'account_voucher_requester',
         'hr',
         ],
-    'data': [],
+    'data': [
+        'view/account_voucher_view.xml',
+        ],
     'demo': [],
     'test': [],
     'qweb': [],
