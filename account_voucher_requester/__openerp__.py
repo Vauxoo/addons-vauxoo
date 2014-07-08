@@ -39,7 +39,9 @@ This module add an employee field to the account voucher model.
         'account_voucher',
         'hr',
         ],
-    'data': [],
+    'data': [
+        'view/account_voucher_view.xml',
+        ],
     'demo': [],
     'test': [],
     'qweb': [],
