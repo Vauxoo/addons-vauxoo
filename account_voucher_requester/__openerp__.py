@@ -37,6 +37,7 @@ This module add an employee field to the account voucher model.
 ''',
     'depends': [
         'account_voucher',
+        'hr',
         ],
     'data': [],
     'demo': [],
