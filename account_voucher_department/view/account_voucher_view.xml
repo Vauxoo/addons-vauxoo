@@ -7,6 +7,9 @@
             <field name="model">account.voucher</field>
             <field name="inherit_id" ref="account_voucher_requester.account_voucher_requester_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//field[@name='employee_id']" position="attributes">
+                    <attribute name="on_change">onchange_employee_id(employee_id)</attribute>
+                </xpath>
                 <xpath expr="//field[@name='employee_id']" position="after">
                     <field name="department_id"/>
                 </xpath>
