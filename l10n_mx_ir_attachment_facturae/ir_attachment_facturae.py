@@ -413,7 +413,12 @@ class ir_attachment_facturae_mx(osv.Model):
                  'ids': ids,
                  'form': self.read(cr, uid, ids[0], context=context),
         }
+        wf_service = netsvc.LocalService("workflow")
+        wf_service.trg_validate(uid, self._name, ids[0], 'action_printable', cr)
         return {'type': 'ir.actions.report.xml', 'report_name': report_name, 'datas': datas, 'nodestroy': True, 'name': report_name}
+    
+    def action_printable(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state': 'printable'}, context=context)
 
     def signal_send_customer(self, cr, uid, ids, context=None):
         if context is None:

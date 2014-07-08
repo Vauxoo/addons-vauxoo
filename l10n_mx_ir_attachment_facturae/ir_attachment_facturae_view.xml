@@ -26,14 +26,15 @@
                         <button name="create_ir_attachment_facturae" states="draft" string="Validate Attachment" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <button name="signal_confirm" states="draft" string="Confirm" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <button name="signal_sign" states="confirmed" string="Sign" type="object" class="oe_highlight" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
-                        <button name="signal_printable" states="done" string="Generate Printable Format" type="object" class="oe_highlight" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <button name="signal_printable" states="printable" string="Generate Printable Format" type="object" class="oe_highlight" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <button name="signal_send_customer" attrs="{'invisible':['|', ('date_print_report','=',False), ('state', 'not in', ('signed', 'done'))]}" string="Send to Customer" type="object" class="oe_highlight" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <button name="signal_done" states="sent_backup" string="Done" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <button name="signal_cancel" states="draft,confirmed,signed,printable,sent_backup,sent_customer,done" string="Cancel" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <button name="signal_printable" states="done" string="Re-generate PDF" type="object" class="oe_highlight" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <button name="signal_cancel" states="cancel" string="Re-Cancel With Pac" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <button name="reset_to_draft" states="cancel" string="Reset to Draft" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_manager" invisible="1"/>
                         <button name="forward_email" states="sent_customer,sent_backup,done" string="Forward Email" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user" invisible="1"/>
-                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,signed,done,cancel" statusbar_colors='{"invoice_except":"red","waiting_date":"blue"}'/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,signed,printable,done,cancel" statusbar_colors='{"invoice_except":"red","waiting_date":"blue"}'/>
                     </header>
                     <sheet string="Attachment Factura-E">
                         <group>

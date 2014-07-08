@@ -39,6 +39,18 @@
             <field name="action">action_sign()</field>
             <field eval="0" name="flow_start"/>
         </record>
+        
+        <record id="workflow_activity_printable" model="workflow.activity">
+            <field name="kind">function</field>
+            <field name="name">printable</field>
+            <field name="join_mode">XOR</field>
+            <field model="workflow" name="wkf_id" ref="workflow_ir_attachment_facturae_mx_basic"/>
+            <field eval="0" name="flow_stop"/>
+            <field name="split_mode">XOR</field>
+            <field name="action">action_printable()</field>
+            <field eval="0" name="flow_start"/>
+        </record>
+        
         <record id="workflow_activity_cancel" model="workflow.activity">
             <field name="kind">function</field>
             <field name="name">cancel</field>
@@ -73,9 +85,17 @@
             <field model="workflow.activity" name="act_to" ref="workflow_activity_sign"/>
             <field name="condition">True</field>
         </record>
-        <record id="workflow_transition_act_sign_to_act_done" model="workflow.transition">
+        
+        <record id="workflow_transition_act_sign_to_act_print" model="workflow.transition">
             <field name="signal"></field>
             <field model="workflow.activity" name="act_from" ref="workflow_activity_sign"/>
+            <field model="workflow.activity" name="act_to" ref="workflow_activity_printable"/>
+            <field name="condition">True</field>
+        </record>
+        
+        <record id="workflow_transition_act_sign_to_act_printable" model="workflow.transition">
+            <field name="signal">action_printable</field>
+            <field model="workflow.activity" name="act_from" ref="workflow_activity_printable"/>
             <field model="workflow.activity" name="act_to" ref="workflow_activity_done"/>
             <field name="condition">True</field>
         </record>
@@ -98,6 +118,14 @@
             <field model="workflow.activity" name="act_to" ref="workflow_activity_cancel"/>
             <field name="condition">True</field>
         </record>
+        
+        <record id="workflow_transition_act_printable_to_act_cancel" model="workflow.transition">
+            <field name="signal">action_cancel</field>
+            <field model="workflow.activity" name="act_from" ref="workflow_activity_printable"/>
+            <field model="workflow.activity" name="act_to" ref="workflow_activity_cancel"/>
+            <field name="condition">True</field>
+        </record>
+        
         <record id="workflow_transition_act_done_to_act_cancel" model="workflow.transition">
             <field name="signal">action_cancel</field>
             <field model="workflow.activity" name="act_from" ref="workflow_activity_done"/>

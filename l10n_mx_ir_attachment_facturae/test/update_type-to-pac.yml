@@ -64,13 +64,17 @@
             SET cfdi_folio_fiscal = (SELECT cfdi_folio_fiscal FROM account_invoice WHERE account_invoice.id = id_source)
             WHERE id_source IS NOT NULL AND cfdi_folio_fiscal IS NULL
         """)
-
-        cr. execute("""
-            UPDATE ir_attachment_facturae_mx
-            SET cfdi_no_certificado = (SELECT no_certificado FROM account_invoice WHERE account_invoice.id = id_source)
-            WHERE id_source IS NOT NULL AND cfdi_folio_fiscal is NULL
-        """)
-        
+        print "Lo que sea"
+        try:
+            with mute_logger('openerp.osv.orm'):
+                cr. execute("""
+                    UPDATE ir_attachment_facturae_mx
+                    SET cfdi_no_certificado = (SELECT no_certificado FROM account_invoice WHERE account_invoice.id = id_source)
+                    WHERE id_source IS NOT NULL AND cfdi_folio_fiscal is NULL
+                """)
+        except:
+            print "nada"
+            
         invoice_obj = self.pool.get('account.invoice')
         attachments = self.search(cr, uid, [('id_source', '!=', False), ('model_source', '=', 'account.invoice')], context=context)
         for att in self.browse(cr, uid, attachments, context=context):
