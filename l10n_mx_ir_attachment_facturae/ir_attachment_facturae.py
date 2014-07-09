@@ -379,22 +379,34 @@ class ir_attachment_facturae_mx(osv.Model):
             context = {}
         attachment_obj = self.pool.get('ir.attachment')
         attachment_mx_data = self.browse(cr, uid, ids, context=context)
-        (fileno, fname) = tempfile.mkstemp(
-            '.pdf', 'openerp_pdfcfid_' + (str(attachment_mx_data[0].id) or '') + '__facturae__')
-        os.close(fileno)
+        #~ (fileno, fname) = tempfile.mkstemp(
+            #~ '.pdf', 'openerp_pdfcfid_' + (str(attachment_mx_data[0].id) or '') + '__facturae__')
+        #~ os.close(fileno)
         report_multicompany_obj = self.pool.get('report.multicompany')
         report_ids = report_multicompany_obj.search(
             cr, uid, [('model', '=', 'ir.attachment.facturae.mx')], limit=1) or False
         report_name = 'account.invoice.facturae.webkit'
+        fname = attachment_mx_data[0].name+'.pdf'
         if report_ids:
             report_name = report_multicompany_obj.browse(cr, uid, report_ids[0]).report_name
         service = netsvc.LocalService("report."+report_name)
         (result, format) = service.create(cr, SUPERUSER_ID, [attachment_mx_data[0].id], report_name, context=context)                
-        attachment_ids = attachment_obj.search(cr, uid, [('res_model', '=', attachment_mx_data[0].model_source),('res_id', '=', attachment_mx_data[0].id_source), ('name', '=', report_name )])
+        attachment_ids = attachment_obj.search(cr, uid, [('res_model', '=', attachment_mx_data[0].model_source),('res_id', '=', attachment_mx_data[0].id_source), ('name', '=', fname )])
+        if attachment_mx_data[0].file_pdf and attachment_ids:
+            previous_pdf_id = attachment_mx_data[0].file_pdf.id
+            aids2 = attachment_obj.create(cr, uid, {
+            'name': fname,
+            'datas_fname': fname,
+            'datas': result and base64.encodestring(result) or None,
+            'res_model': attachment_mx_data[0].model_source,
+            'res_id': attachment_mx_data[0].id_source})
+            attachment_obj.write(cr, uid, attachment_ids, {'res_id': False})
+            attachment_obj.write(cr, uid, attachment_mx_data[0].file_pdf.id, {'res_model': 'ir.attachment.facturae.mx','res_id': attachment_mx_data[0].id})
+            self.pool.get('mail.message').create(cr, uid,{'attachment_ids': [(6,0,[previous_pdf_id])], 'type': 'comment', 'model': 'ir.attachment.facturae.mx', 'res_id': attachment_mx_data[0].id, 'body': "<div><b>Report format before regeneration PDF</b></div>"})
         if not attachment_ids:
             aids2 = attachment_obj.create(cr, uid, {
-            'name': report_name,
-            'datas_fname': report_name,
+            'name': fname,
+            'datas_fname': fname,
             'datas': result and base64.encodestring(result) or None,
             'res_model': attachment_mx_data[0].model_source,
             'res_id': attachment_mx_data[0].id_source})
@@ -415,7 +427,7 @@ class ir_attachment_facturae_mx(osv.Model):
         }
         wf_service = netsvc.LocalService("workflow")
         wf_service.trg_validate(uid, self._name, ids[0], 'action_printable', cr)
-        return {'type': 'ir.actions.report.xml', 'report_name': report_name, 'datas': datas, 'nodestroy': True, 'name': report_name}
+        return {'type': 'ir.actions.report.xml', 'report_name': report_name, 'datas': datas, 'nodestroy': True, 'name': fname}
     
     def action_printable(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'printable'}, context=context)
