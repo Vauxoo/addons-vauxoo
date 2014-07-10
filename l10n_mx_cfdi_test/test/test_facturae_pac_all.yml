@@ -18,9 +18,11 @@
     res_id = False
     time_total = 0
     type_document = False
+    list_invoice_demo = ir_model_data.search(cr, uid, [('name', 'ilike', '%'+'facturae_mx'+'%'),('model','=',self._name)], context=context)
     for journal_data in acc_jour_obj.browse(cr, uid, journal_ids, context=context):
         if (journal_data.sequence_id and journal_data.sequence_id.approval_id and journal_data.sequence_id.approval_id.id) and journal_data.type in ('sale', 'sale_refund'):
-            for type_test_cancel in ['cancel_from_invoce','cancel_from_attachment_facturae_mx']:
+            for invoice_demo in list_invoice_demo:
+                facturae_mx_name_id = ir_model_data.browse(cr, uid, invoice_demo).name
                 time_total = 0
                 all_ok = False
                 type_journal = False
@@ -37,19 +39,20 @@
                         elif journal_data.type == 'sale_refund':
                             type_journal = 'out_refund'
                             type_document = "Refund Sale"
-                        log("To test the Mexican Electronic %s %s %s" % (type_document,pac_type,type_test_cancel))
+                        log("To test the Mexican Electronic %s %s %s" % (type_document,pac_type,facturae_mx_name_id))
                         #################################################################################################
                         #     1 Duplicate invoice of l10n_mx_facturae_base to xx                                        #
                         #################################################################################################
                         log("1 Duplicate %s of l10n_mx_facturae_base" % (type_document))
                         with ti.Timer() as t:
-                            invoice_id = self.copy(cr, uid, ref('l10n_mx_facturae_base.ai_pac_facturae_0'), context=context)
+                            invoice_id = self.copy(cr, uid, ref('l10n_mx_facturae_base.'+facturae_mx_name_id), context=context)
                             invoice_lines = self.read(cr, uid, [invoice_id],['invoice_line'])
                             if invoice_lines:
-                                for line in invoice_lines:
+                                for line in invoice_lines[0]['invoice_line']:
                                     # This write is because I need the invoice to be different and is added to the product description on the invoice id 
-                                    new_name_product = '%s invoice: %s'%(aml_obj.read(cr, uid, line['invoice_line'][0],['name']).get('name') , invoice_id)
-                                    aml_obj.write(cr, uid, line['invoice_line'],{'name': new_name_product})
+                                    for r in aml_obj.read(cr, uid, [line]):
+                                        new_name_product = '%s invoice: %s'%(r['name'], invoice_id)
+                                    aml_obj.write(cr, uid, [line],{'name': new_name_product})
                             self.write(cr, uid, [invoice_id], {'journal_id':ref(journal_xml_id), 'type': type_journal },context=context)
                             xml_id_invoice = 'ai_pac_facturae_%s_%s'% (pac_type,invoice_id)
                             data_ids = ir_model_data.search(cr, uid, [('model', '=', self._name), ('name', 'like', xml_id_invoice)])
@@ -58,7 +61,7 @@
                                                 'name': xml_id_invoice,
                                                 'model': self._name,
                                                 'res_id': invoice_id,
-                                                'module': 'l10n_mx_cfdi_test',
+                                                'module': 'l10n_mx_cfdi_test'
                                             })
                         #~ print "Time duplicate invoice: %s s" % t.secs
                         time_tmp = t.secs
@@ -104,7 +107,7 @@
                         #################################################################################################
                         #    6 I check that the state in l10n_mx attachment facturae is "Confirmed"     #
                         #################################################################################################
-                        log("6 I check that the state in l10n_mx attachment facturae %s is Confirmed"% (xml_id_invoice))
+                        log("6 I check that the state in l10n_mx attachment facturae %s is Confirmed"%(xml_id_invoice))
                         cfdi_attachment_ids = ir_attachment_mx_obj.search(cr, uid, [('id_source', '=', ref(xml_id_invoice) ),('model_source','=','account.invoice'), ('state', '<>', 'cancel')], limit=1)
                         cfdi_attachment_id = cfdi_attachment_ids and cfdi_attachment_ids[0] or False
                         state = 'no attach file'
@@ -113,6 +116,8 @@
                             state = cfdi_attachment_data.state
                             ir_attach_facturae_mx = cfdi_attachment_data.file_input and cfdi_attachment_data.file_input or False
                             fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
+                            data_invoice = self.read(cr, uid, invoice_id,[])
+                            self.validate_amounts(cr, uid, invoice_id, fdata, data_invoice, context)
                             if fdata:
                                 if tools.config['test_report_directory']:
                                     open(os.path.join(tools.config['test_report_directory'], 'l10n_mx_cfdi_test' + '_' + \
@@ -140,6 +145,8 @@
                         cfdi_attachment_data = ir_attachment_mx_obj.browse(cr, uid, cfdi_attachment_id, context=context)
                         ir_attach_facturae_mx = cfdi_attachment_data.file_xml_sign and cfdi_attachment_data.file_xml_sign or False
                         fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
+                        data_invoice = self.read(cr, uid, invoice_id,[])
+                        self.validate_amounts(cr, uid, invoice_id, fdata, data_invoice, context)
                         if fdata:
                             state = cfdi_attachment_data.state
                             if tools.config['test_report_directory']:
@@ -175,7 +182,7 @@
                                   , 'wb+').write( base64.decodestring( fdata ) )
                         assert ir_attach_facturae_mx, 'No printable state l10n_mx attachment facturae %s'% (xml_id_invoice)
                         
-                        if type_test_cancel == 'cancel_from_invoce':
+                        if (journal_data.sequence_id and journal_data.sequence_id.approval_id and journal_data.sequence_id.approval_id.id) and journal_data.type == 'sale':
                             #############################################################################################################
                             #   11 I cancel from invoice by clicking on cancel button                                                   #
                             #############################################################################################################
@@ -186,7 +193,7 @@
                             time_total += time_tmp
                             log("*** Cancel %s from model source: %s s" % (type_document,time_tmp))
                             
-                        if type_test_cancel == 'cancel_from_attachment_facturae_mx':
+                        if (journal_data.sequence_id and journal_data.sequence_id.approval_id and journal_data.sequence_id.approval_id.id) and journal_data.type == 'sale_refund':
                             ########################################################################################################
                             #   11 I cancel from attachment                                                                        #
                             ########################################################################################################

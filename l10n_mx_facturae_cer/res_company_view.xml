@@ -43,7 +43,7 @@
                     <field name="date_start"/>
                     <field name="date_end"/>
                     <field name="active"/>
-                    <field name="company_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
                 </tree>
             </field>
         </record>
@@ -70,11 +70,11 @@
                 <search string="Certificates">
                     <filter string="Inactive" icon="terp-personal+" domain="[('active','=',False)]"/>
                     <field name="serial_number"/>
-                    <field name="company_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
                     <field name="active"/>
                     <newline/>
                     <group expand="0" string="Group By...">
-                        <filter string="Company" icon="terp-partner" domain="[]" context="{'group_by':'company_id'}"/>
+                        <filter string="Company" icon="terp-partner" domain="[]" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
                         <separator orientation="vertical"/>
                     </group>
                 </search>
@@ -129,7 +129,7 @@
                                 <field name="date_start"/>
                                 <field name="date_end"/>
                                 <field name="active"/>
-                                <field name="company_id"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
                             </tree>
                         </field>
                     </page>

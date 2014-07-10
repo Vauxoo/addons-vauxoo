@@ -3,7 +3,7 @@
     <data>
 
         <act_window
-            context="{'search_default_id_source': active_ids, 'default_id_source': active_ids, 'search_default_model_source': 'hr.payslip'}"
+            context="{'search_default_id_source': active_id, 'default_id_source': active_id, 'search_default_model_source': 'hr.payslip'}"
             id="act_payroll_attachment"
             name="Attachment Payroll"
             res_model="ir.attachment.facturae.mx"

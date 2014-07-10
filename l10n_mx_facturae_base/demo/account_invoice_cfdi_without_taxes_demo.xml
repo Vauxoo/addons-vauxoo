@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        
+<!-- Invoice without taxes -->
+        <record id="facturae_mx_without_taxes_demo" model="account.invoice">
+            <field name="payment_term" ref="account.account_payment_term"/>
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="account_id" ref="account.a_recv"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="partner_id" ref="l10n_mx_partner_address.res_partner_address_vauxoo_1"/>
+            <field name="journal_id" ref="account.sales_journal"/>
+            <field name="state">draft</field>
+        </record>
+
+<!-- Product without taxes-->
+        <record id="ail_pac_facturae_agua_without_taxes_demo" model="account.invoice.line">
+            <field name="name">Agua (Lt)</field>
+            <field name="product_id" ref="l10n_mx_facturae_base.product_product_agua_vauxoo_demo"/>
+            <field name="price_unit" eval="5.0" />
+            <field name="uos_id" ref="product.product_uom_unit"/>
+            <field name="invoice_id" ref="facturae_mx_without_taxes_demo"/>
+            <field name="quantity">2</field>
+            <field name="account_id" ref="account.a_expense"/>
+        </record>
+       
+    </data>
+</openerp>
