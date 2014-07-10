@@ -515,9 +515,9 @@ class ir_attachment_facturae_mx(osv.Model):
                         _('Warning'), _('The attachment does not have mail'))
             else:
                 raise osv.except_osv(
-                    _('Warning'), _('Assign a template with the outgoing mail server named "%s" and  assign report template') % (server_name))
+                    _('Warning'), _('Set up a template with a report template to send and Outgoing mail server named "%s" for your Company') % (server_name))
         else:
-            raise osv.except_osv(_('Warning'), _('Configure the outgoing mail server for your Company"'))
+            raise osv.except_osv(_('Warning'), _('Set up the outgoing mail server for your Company"'))
         if mssg_id:
             return {
                 'name':_("Send Mail FacturaE Customer"),
