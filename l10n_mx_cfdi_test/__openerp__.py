@@ -40,6 +40,7 @@ The id must bear the following nomenclature:
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : [
+        "lang_conf",
         "l10n_mx_facturae_pac_sf",
         "l10n_mx_facturae_pac_finkok",
         "l10n_mx_payroll_base",
