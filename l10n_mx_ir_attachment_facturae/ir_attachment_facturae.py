@@ -171,6 +171,10 @@ class ir_attachment_facturae_mx(osv.Model):
         'date_send_mail': fields.datetime('Date send mail', help='Saved the date of last send mail'),
         'context_extra_data': fields.text('Context Extra Data'),
         'res_pac': fields.many2one('res.pac', 'Pac', required=True),
+        'download_xml_sign': fields.related('file_xml_sign', 'datas', type='binary', help=''),
+        'download_xml_sign_name': fields.related('file_xml_sign', 'datas_fname', type='char', help=''),
+        'download_pdf': fields.related('file_pdf', 'datas', type='binary', help=''),
+        'download_pdf_name': fields.related('file_pdf', 'datas_fname', type='char', help=''),
     }
 
     _defaults = {

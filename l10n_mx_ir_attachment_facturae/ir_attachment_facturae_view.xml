@@ -42,8 +42,18 @@
                             <field name="res_pac"/>
                             <field name="company_id" groups="base.group_multi_company"/>
                             <field name="file_input"/>
-                            <field name="file_xml_sign"/>
-                            <field name="file_pdf"/>
+                            <label for="file_xml_sign"/>
+                            <div name="file_xml_sign_info">
+                                <field name="file_xml_sign" invisible="True"/>
+                                <field name="download_xml_sign_name" invisible="True"/>
+                                <field name="download_xml_sign" filename="download_xml_sign_name"/>
+                            </div>
+                            <label for="file_pdf"/>
+                            <div name="file_xml_sign_info">
+                                <field name="file_pdf" invisible="True"/>
+                                <field name="download_pdf_name" invisible="True"/>
+                                <field name="download_pdf" filename="download_pdf_name"/>
+                            </div>
                             <field name="identifier"/>
                          </group>
                     <notebook>
