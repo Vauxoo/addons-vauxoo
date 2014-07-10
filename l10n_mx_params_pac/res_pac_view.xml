@@ -8,11 +8,11 @@
             <field name="arch" type="xml">
                 <search string="PACS">
                     <filter string="Inactive" icon="terp-personal+" domain="[('active','=',False)]"/>
-                    <field name="company_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
                     <field name="active"/>
                     <newline/>
                     <group expand="0" string="Group By...">
-                        <filter string="Company" icon="terp-partner" domain="[]" context="{'group_by':'company_id'}"/>
+                        <filter string="Company" icon="terp-partner" domain="[]" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
                     </group>
                 </search>
             </field>
@@ -64,7 +64,7 @@
                 <tree string="PACS">
                     <field name="name"/>
                     <field name="code"/>
-                    <field name="company_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
                     <field name="active"/>
                     <field name="url_webservice"/>
                     <field name="namespace"/>

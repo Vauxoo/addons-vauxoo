@@ -1,0 +1,19 @@
+-
+  Test that validate XML in SAT
+-
+  I create a record to wizard to validate in SAT
+-
+  !record {model: xml.to.validate.line, id: wizard_validate_xml_sat_test_0 , view: l10n_mx_validate_xml_sat.view_wizard_xml_to_validate_line_sat}:
+    name: Validate XML in SAT (Test)
+-
+  Validate xml file that this registered with the sat
+-
+  !python {model: wizard.validate.uuid.sat}: |
+    xml_to_validate_line_obj = self.pool.get('xml.to.validate.line')
+    dict_data = {'file_xml': ref('l10n_mx_validate_xml_sat.attachment_uuid_to_validate') }
+    xml_to_validate_line_obj.write(cr, uid, [ref('wizard_validate_xml_sat_test_0')], dict_data )
+    wizard_create_id = self.create(cr, uid, {'name':'Test algo', 'xml_ids': [[6,0,[ref('wizard_validate_xml_sat_test_0')]]] })
+    # Execute wizard
+    result_of_lines = self.check_uuid_dat(cr, uid,[wizard_create_id], context=context )
+    dict_result = xml_to_validate_line_obj.read(cr, uid, [ref('wizard_validate_xml_sat_test_0')])
+    log("This XML with uuid %s is %s in the SAT" % (dict_result[0].get('uuid'),dict_result[0].get('result')))

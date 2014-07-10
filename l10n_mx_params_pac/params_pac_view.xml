@@ -47,7 +47,7 @@
                 <search string="Parameters PAC">
                     <filter string="Inactive" icon="terp-personal+" domain="[('active','=',False)]"/>
                     <field name="method_type"/>
-                    <field name="company_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
                     <field name="active"/>
                     <newline/>
                     <group expand="0" string="Group By...">
@@ -87,7 +87,7 @@
                     <field name="name"/>
                     <field name="res_pac"/>
                     <field name="method_type"/>
-                    <field name="company_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
                     <field name="active"/>
                     <field name="sequence"/>
                     <field name="url_webservice"/>

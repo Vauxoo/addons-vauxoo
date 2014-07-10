@@ -31,7 +31,7 @@
                     <field name="number_start"/>
                     <field name="number_end"/>
                     <field name="res_pac"/>
-                    <field name="company_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
                 </tree>
             </field>
         </record>
@@ -58,11 +58,11 @@
                     <field name="approval_number"/>
                     <field name="serie"/>
                     <field name="approval_year"/>
-                    <field name="company_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
                     <field name="res_pac"/>
                     <newline/>
                     <group expand="0" string="Group By...">
-                        <filter string="Company" icon="terp-partner" domain="[]" context="{'group_by':'company_id'}"/>
+                        <filter string="Company" icon="terp-partner" domain="[]" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
                         <filter string="Sequence" icon="terp-partner" domain="[]" context="{'group_by':'sequence_id'}"/>
                         <filter string="Serie" icon="terp-partner" domain="[]" context="{'group_by':'serie'}"/>
                         <separator orientation="vertical"/>

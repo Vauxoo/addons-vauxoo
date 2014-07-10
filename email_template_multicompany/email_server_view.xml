@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="base.ir_mail_server_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='sequence']" position="after">
-                    <field name="company_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
                 </xpath>
             </field>
         </record>
