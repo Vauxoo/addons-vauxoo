@@ -60,6 +60,8 @@ siguientes:
         "view/userstory_view.xml",
         "view/project_view.xml",
         "view/hr_timesheet_view.xml",
+        "view/hr_timesheet_all_view.xml",
+        "view/custom_project_task_view.xml",
         "data/data.xml",
         "data/user_story_template.xml",
     ],
