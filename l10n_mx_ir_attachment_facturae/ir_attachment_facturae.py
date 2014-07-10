@@ -459,7 +459,6 @@ class ir_attachment_facturae_mx(osv.Model):
                     'model_id.model', '=', self._name),
                     ('company_id', 'child_of', company_id),
                     ('mail_server_id', '=', smtp_server.id),
-                    ('report_template', '!=', False),
                     ], limit=1, context=context)
             if tmp_id:
                 message = mail_compose_message_pool.onchange_template_id(
