@@ -30,7 +30,7 @@
                         <button name="signal_send_customer" attrs="{'invisible':['|', ('date_print_report','=',False), ('state', 'not in', ('signed', 'done'))]}" string="Send to Customer" type="object" class="oe_highlight" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <button name="signal_done" states="sent_backup" string="Done" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <button name="signal_cancel" states="draft,confirmed,signed,printable,sent_backup,sent_customer,done" string="Cancel" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
-                        <button name="signal_printable" states="done" string="Re-generate PDF" type="object" class="oe_highlight" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <button name="signal_printable" states="done" string="Re-generate PDF" type="object" class="oe_highlight" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user" help="Regenerate the attached report in a new format. Is added to the messages the previous report."/>
                         <button name="signal_cancel" states="cancel" string="Re-Cancel With Pac" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <button name="reset_to_draft" states="cancel" string="Reset to Draft" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_manager" invisible="1"/>
                         <button name="forward_email" states="sent_customer,sent_backup,done" string="Forward Email" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user" invisible="1"/>

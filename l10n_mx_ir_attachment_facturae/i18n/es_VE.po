@@ -420,6 +420,22 @@ msgstr ""
 
 #. module: l10n_mx_ir_attachment_facturae
 #: view:ir.attachment.facturae.mx:0
+msgid "Regenerate the attached report in a new format. Is added to the messages the previous report."
+msgstr "Regenera el reporte del adjunto con un nuevo formato. Se agrega a los mensajes el reporte anterior."
+
+#. module: l10n_mx_ir_attachment_facturae
+#: view:ir.attachment.facturae.mx:0
+msgid "Re-generate PDF"
+msgstr "Regenerar PDF"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:403
+#, python-format
+msgid "<div><b>Report format before regeneration PDF</b></div>"
+msgstr "<div><b>Formato del reporte antes de la regeneración PDF</b></div>"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: view:ir.attachment.facturae.mx:0
 msgid "Generate Printable Format"
 msgstr ""
 
