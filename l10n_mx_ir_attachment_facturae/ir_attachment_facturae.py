@@ -111,8 +111,8 @@ class ir_attachment_facturae_mx(osv.Model):
             states={'draft': [('readonly', False)]}, help='Name of attachment generated'),
         'company_id': fields.many2one('res.company', 'Company', readonly=True,
                                       help='Company to which it belongs this attachment'),
-        'file_input': fields.many2one('ir.attachment', 'File input', readonly=True,
-            states={'confirmed': [('readonly', False), ('required', True)],}, help='File input'),
+        'file_input': fields.many2one('ir.attachment', 'File input', readonly=True, required=True,
+            states={'draft': [('readonly', False)]}, help='File input'),
         #~'file_input_index': fields.text('File input', help='File input index'),
         'file_xml_sign': fields.many2one('ir.attachment', 'File XML Sign',
                                          readonly=True, help='File XML signed'),
@@ -171,7 +171,7 @@ class ir_attachment_facturae_mx(osv.Model):
         'date_send_mail': fields.datetime('Date send mail', help='Saved the date of last send mail'),
         'context_extra_data': fields.text('Context Extra Data'),
         'res_pac': fields.many2one('res.pac', 'Pac', required=True, readonly=True,
-            states={'draft': [('readonly', False)], 'confirmed': [('readonly', False)]}),
+            states={'draft': [('readonly', False),]}),
     }
 
     _defaults = {
