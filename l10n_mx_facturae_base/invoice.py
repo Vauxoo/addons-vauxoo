@@ -1528,6 +1528,7 @@ class account_invoice(osv.Model):
 
     def invoice_attachment_view(self, cr, uid, ids, context=None):
         return {
+            'name': 'Attachment FacturaE MX',
             'res_model': 'ir.attachment.facturae.mx',
             'view_type': 'form',
             'view_mode': 'tree,form',
