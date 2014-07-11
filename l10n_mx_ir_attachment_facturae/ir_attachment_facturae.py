@@ -150,7 +150,8 @@ class ir_attachment_facturae_mx(osv.Model):
             filters='*.key', help='This file .key is proportionate by the SAT'),
         'certificate_password': fields.char('Certificate Password', size=64,
             invisible=False, help='This password is proportionate by the SAT'),
-        'attachment_email': fields.char('Email', size=128, help='Email receptor'),
+        'attachment_email': fields.char('Email', size=240, help='Email receptor, you can set '\
+            'more that a email separated by a comma(,)'),
         'cfdi_folio_fiscal': fields.char('Folio Fiscal(UUID)', size=256, help='UUID the XML'),
         'model_source': fields.char('Source Model', size=128, help='Source Model'),
         'id_source': fields.integer('Source ID', required=False, help="Source ID"),
