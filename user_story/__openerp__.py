@@ -53,6 +53,9 @@ siguientes:
     "demo" : [
         'demo/demo.xml',
     ],
+    "depends":[
+		"report_webkit",
+    ],
     "data" : [
         #~ "report/ir_report.xml",
         "data/data_us_report.xml",
