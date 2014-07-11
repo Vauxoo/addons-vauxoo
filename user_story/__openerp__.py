@@ -32,6 +32,7 @@
                  "project",
                  "sprint_kanban",
                  'project_timesheet',
+                 "report_webkit",
                  ],
     "author" : "Vauxoo",
     "description" : """
@@ -51,10 +52,7 @@ siguientes:
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
     "demo" : [
-        'demo/demo.xml',
-    ],
-    "depends":[
-		"report_webkit",
+		'demo/demo.xml',
     ],
     "data" : [
         #~ "report/ir_report.xml",
