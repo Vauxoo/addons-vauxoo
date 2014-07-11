@@ -76,6 +76,7 @@ class ir_attachment_facturae_mx(osv.Model):
         if context is None:
             context = {}
         msg = ''
+        status_uuid = ''
         pac_params_obj = self.pool.get('params.pac')
         for attachment in self.browse(cr, uid, ids, context=context):
             status = False
@@ -132,7 +133,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     raise orm.except_orm(_('Warning'), _('Cancel Code: %s.-Status code %s.-Status UUID: %s.-Folio Cancel: %s.-Cancel Message: %s.-Answer Message: %s.') % (
                         codigo_cancel, status_cancel, status_uuid, folio_cancel, mensaje_cancel, msg_nvo))
             else:
-                msg = _('Not found information of webservices of PAC, verify that the configuration of PAC is correct')
+                raise orm.except_orm(_('Warning'), _('Not found information of webservices of PAC, verify that the configuration of PAC is correct'))
         return {'message': msg, 'status_uuid': status_uuid, 'status': status}
     
     def _sf_stamp(self, cr, uid, ids, fdata=None, context=None):
@@ -152,6 +153,8 @@ class ir_attachment_facturae_mx(osv.Model):
             #~xml_res_str_addenda = xml_res_addenda.toxml('UTF-8')
             xml_res_str_addenda = xml_res_addenda.toxml().encode('ascii', 'xmlcharrefreplace')
             xml_res_str_addenda = xml_res_str_addenda.replace(codecs.BOM_UTF8, '')
+            xml_res_str_addenda = xml_res_str_addenda.replace('<?xml version="1.0" ?>',
+                                                        '<?xml version="1.0" encoding="UTF-8"?>\n')
             if tools.config['test_report_directory']:#TODO: Add if test-enabled:
                 ir_attach_facturae_mx_file_input = attachment.file_input and attachment.file_input or False
                 fname_suffix = ir_attach_facturae_mx_file_input and ir_attach_facturae_mx_file_input.datas_fname or ''
@@ -262,7 +265,6 @@ class ir_attachment_facturae_mx(osv.Model):
                         raise orm.except_orm(_('Warning'), _('Stamped Code: %s.-Validation code %s.-Folio Fiscal: %s.-Stamped Message: %s.-Validation Message: %s.') % (
                             codigo_timbrado, codigo_validacion, folio_fiscal, mensaje, resultados_mensaje))
             else:
-                msg += 'Not found information from web services of PAC, verify that the configuration of PAC is correct'
                 raise osv.except_osv(_('Warning'), _(
                     'Not found information from web services of PAC, verify that the configuration of PAC is correct'))
             return {'file': file, 'msg': msg, 'cfdi_xml': cfdi_xml, 'status': status}

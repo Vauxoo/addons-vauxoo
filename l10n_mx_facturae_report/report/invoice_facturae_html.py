@@ -312,7 +312,7 @@ class invoice_facturae_html(report_sxw.rml_parse):
         dict_var = {}
         context = {}
         if model_source and id_source:
-            obj = self.pool.get(model_source).browse(self.cr, self.uid, id_source, context=context)
+            obj = self.pool.get(model_source).browse(self.cr, self.uid, int(id_source), context=context)
             lang = self.pool.get('res.partner').browse(self.cr, self.uid,\
                 obj.partner_id.id).lang
             if lang:

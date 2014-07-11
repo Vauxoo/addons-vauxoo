@@ -40,6 +40,7 @@ from pytz import timezone
 import pytz
 import time
 import codecs
+import re
 from datetime import datetime, timedelta
 try:
     from qrcode import *
@@ -175,8 +176,8 @@ class ir_attachment_facturae_mx(osv.Model):
 
     _defaults = {
         'state': 'draft',
-        'company_id': lambda self, cr, uid, c:
-        self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
+        'company_id': lambda self, cr, uid, ctx: self.pool['res.company']._company_default_get(
+                                                    cr, uid, object = self._name, context = ctx),
         'last_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
         'context_extra_data': {},
     }
@@ -272,6 +273,8 @@ class ir_attachment_facturae_mx(osv.Model):
         for attach in self.browse(cr, uid, ids, context=context):
             if attach.file_input:
                 data_xml = base64.decodestring(attach.file_input.datas)
+                data_xml = re.sub('>[\s<]+', '><', data_xml)
+                data_xml = re.sub('\?>', '?>\n', data_xml)
                 doc_xml = xml.dom.minidom.parseString(data_xml)
                 nodeComprobante = doc_xml.getElementsByTagName("cfdi:Comprobante")[0]
                 for n in doc_xml.getElementsByTagName("cfdi:Comprobante"):
@@ -291,10 +294,11 @@ class ir_attachment_facturae_mx(osv.Model):
                     })
                     sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
                     nodeComprobante.setAttribute("sello", sign_str)
-                    data_xml = doc_xml.toxml().encode('ascii', 'xmlcharrefreplace')
-                    attachment_obj.write(cr, uid, [attach.file_input.id],{
-                                    'datas': base64.encodestring(data_xml),
-                            }, context=context)
+                data_xml = doc_xml.toxml().encode('ascii', 'xmlcharrefreplace')
+                data_xml = data_xml.replace('<?xml version="1.0" ?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
+                attachment_obj.write(cr, uid, [attach.file_input.id],{
+                                'datas': base64.encodestring(data_xml),
+                        }, context=context)
                 nodepayroll = doc_xml.getElementsByTagName("nomina:Nomina")
                 if nodepayroll:
                     nodecomplemento = doc_xml.getElementsByTagName("cfdi:Complemento")[0]
@@ -391,19 +395,15 @@ class ir_attachment_facturae_mx(osv.Model):
             report_name = report_multicompany_obj.browse(cr, uid, report_ids[0]).report_name
         service = netsvc.LocalService("report."+report_name)
         (result, format) = service.create(cr, SUPERUSER_ID, [attachment_mx_data[0].id], report_name, context=context)                
-        attachment_ids = attachment_obj.search(cr, uid, [('res_model', '=', self._name),('res_id', '=', attachment_mx_data[0].id)])
-        file_name_attachment = attachment_obj.browse(cr, uid, attachment_ids, context=context)[0].datas_fname
-        #for attachment in self.browse(cr, uid, attachment_ids, context=context):
-            # TODO: aids.append( attachment.id ) but without error in last
-            # write
-        
-        attachment_obj.write(cr, uid, attachment_ids, {
-            'name': file_name_attachment,
+        attachment_ids = attachment_obj.search(cr, uid, [('res_model', '=', attachment_mx_data[0].model_source),('res_id', '=', attachment_mx_data[0].id_source), ('name', '=', report_name )])
+        if not attachment_ids:
+            aids2 = attachment_obj.create(cr, uid, {
+            'name': report_name,
+            'datas_fname': report_name,
+            'datas': result and base64.encodestring(result) or None,
             'res_model': attachment_mx_data[0].model_source,
-            'res_id': attachment_mx_data[0].id_source}, context=context)
-            
-        aids = attachment_ids and attachment_ids[0] or False
-        
+            'res_id': attachment_mx_data[0].id_source})
+        aids = attachment_ids and attachment_ids[0] or aids2
         if aids:
             msj = _("Attached Successfully PDF\n")
             self.write(cr, uid, ids, {
@@ -418,7 +418,7 @@ class ir_attachment_facturae_mx(osv.Model):
                  'ids': ids,
                  'form': self.read(cr, uid, ids[0], context=context),
         }
-        return {'type': 'ir.actions.report.xml', 'report_name': report_name, 'datas': datas, 'nodestroy': True, 'name': file_name_attachment}
+        return {'type': 'ir.actions.report.xml', 'report_name': report_name, 'datas': datas, 'nodestroy': True, 'name': report_name}
 
     def signal_send_customer(self, cr, uid, ids, context=None):
         if context is None:
@@ -598,9 +598,10 @@ class ir_attachment_facturae_mx(osv.Model):
                 else:
                     msj = _("Unknow cfdi driver for %s" % (ir_attach_facturae_mx_id.res_pac.name_driver))
             else:
-                wf_service.trg_validate(uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
-                status = True
-                msj = 'cancelled'
+                if ir_attach_facturae_mx_id.model_source:
+                    wf_service.trg_validate(uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
+                    status = True
+                    msj = 'cancelled'
             if status:
                 self.write(cr, uid, ids, {
                        'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),

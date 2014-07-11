@@ -10,7 +10,6 @@
         ${set_global_data(o)}
         <% dict_data = set_dict_data(o) %>
         <% dict_context_extra_data = o.context_extra_data and eval(o.context_extra_data) or {}%>
-        <%print 'dict_context_extra_data', dict_context_extra_data%>
         <table class="basic_table">
             <tr>
                 <td style="vertical-align: top;">
@@ -208,11 +207,12 @@
                             <td class="cliente"><b>${_('Contrato')}</b></td><td class="cliente">${ nomina.get('@TipoContrato', '') |entity }</td>
                             <td class="cliente"><b>${_('D&iacute;as Pagados')}</b></td><td class="cliente">${ nomina.get('@NumDiasPagados', '')|entity }</td>
                             <td class="cliente"><b>${_('Rel. Laboral')}</b></td><td class="cliente">${ nomina.get('@FechaInicioRelLaboral', False) and datetime.strptime(nomina.get('@FechaInicioRelLaboral').encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity }</td>
-                            <td class="cliente"><b>${_('Salario diario')}</b></td><td class="cliente">${ nomina.get('@SalarioDiarioIntegrado', '') |entity }</td>
+                            <td class="cliente"><b>${_('Salario diario')}</b></td><td class="cliente">${ dict_context_extra_data.get('symbol_currency', '') } ${ nomina.get('@SalarioDiarioIntegrado', '') |entity }</td>
                         </tr>
+                        <tr>
                             <td class="cliente"><b>${_('Jornada')}</b></td><td class="cliente">${ nomina.get('@TipoJornada', '') |entity }</td>
                             <td class="cliente"><b>${_('Antiguedad')}</b></td><td class="cliente">${ nomina.get('@Antiguedad', '') |entity }</td>
-                            <td class="cliente"><b>${_('Salario base')}</b></td><td class="cliente">${ nomina.get('@SalarioBaseCotApor', '') |entity } </td>
+                            <td class="cliente"><b>${_('Salario base')}</b></td><td class="cliente">${ dict_context_extra_data.get('symbol_currency', '') } ${ nomina.get('@SalarioBaseCotApor', '') |entity } </td>
                             <td class="cliente"><b>${_('Periodo')}</b></td><td class="cliente">${ nomina.get('@PeriodicidadPago', '') |entity } </td>
                         </tr>
                     </table>
@@ -264,17 +264,17 @@
                             %endif
                             %for dict in range(0,len(dict_perc)):
                                 <tr style="font-size:9; border:1.5px solid grey;">
-                                    <td width="5%" class="basic_td"><% t_perc = dict_perc[dict]['@TipoPercepcion'] %>${ t_perc or ''}</td>
-                                    <td width="10%" class="basic_td"><% clave = dict_perc[dict]['@Clave'] %>${ clave or ''}</td>
-                                    <td class="basic_td"><% concep = dict_perc[dict]['@Concepto'] %>${ concep or ''}</td>
-                                    <td width="11%" class="number_td"><% i_grava = dict_perc[dict]['@ImporteGravado'] %>$ ${ i_grava or '0.0'}</td>
-                                    <td width="15%" class="number_td"><% i_exen = dict_perc[dict]['@ImporteExento'] %>$ ${ i_exen or '0.0'}</td>
+                                    <td width="5%" class="basic_td"><% t_perc = dict_perc[dict].get('@TipoPercepcion', '') %>${ t_perc }</td>
+                                    <td width="10%" class="basic_td"><% clave = dict_perc[dict].get('@Clave', '') %>${ clave }</td>
+                                    <td class="basic_td"><% concep = dict_perc[dict].get('@Concepto', '') %>${ concep }</td>
+                                    <td width="11%" class="number_td"><% i_grava = dict_perc[dict].get('@ImporteGravado', '0.0') %>${ dict_context_extra_data.get('symbol_currency', '') } ${ i_grava }</td>
+                                    <td width="15%" class="number_td"><% i_exen = dict_perc[dict].get('@ImporteExento',  '0.0') %>${ dict_context_extra_data.get('symbol_currency', '') } ${ i_exen }</td>
                                 </tr>
                              %endfor
                              <tr style="font-size:9; border:1.5px solid grey;">
                                 <td class="basic_td" colspan="3"><b>${_('Total Percepciones')}</b></td>
-                                <td width="9%" class="number_td"><%tot_gra = nomina.get('Percepciones', {}).get('@TotalGravado', '0.0')%>$ ${ tot_gra |entity}</td>
-                                <td width="15%" class="number_td"><%tot_ex = nomina.get('Percepciones', {}).get('@TotalExento', '0.0')%>$ ${ tot_ex |entity}</td>
+                                <td width="9%" class="number_td"><%tot_gra = nomina.get('Percepciones', {}).get('@TotalGravado', '0.0')%>${ dict_context_extra_data.get('symbol_currency', '') } ${ tot_gra |entity}</td>
+                                <td width="15%" class="number_td"><%tot_ex = nomina.get('Percepciones', {}).get('@TotalExento', '0.0')%>${ dict_context_extra_data.get('symbol_currency', '') } ${ tot_ex |entity}</td>
                             </tr>
                         </table>
                     </td>
@@ -296,17 +296,17 @@
                             %endif
                             %for dict in range(0,len(dict_deduc)):
                                 <tr style="font-size:9; border:1.5px solid grey;">
-                                    <td width="5%" class="basic_td"><% t_deduc = dict_deduc[dict]['@TipoDeduccion'] %>${ t_deduc or ''}</td>
-                                    <td width="10%" class="basic_td"><% clave = dict_deduc[dict]['@Clave'] %>${ clave or ''}</td>
-                                    <td class="basic_td"><% concep = dict_deduc[dict]['@Concepto'] %>${ concep or ''}</td>
-                                    <td width="11%" class="number_td"><% i_grava = dict_deduc[dict]['@ImporteGravado'] %>$ ${ i_grava or '0.0'}</td>
-                                    <td width="15%" class="number_td"><% i_exen = dict_deduc[dict]['@ImporteExento'] %>$ ${ i_exen or '0.0'}</td>
+                                    <td width="5%" class="basic_td"><% t_deduc = dict_deduc[dict].get('@TipoDeduccion', '') %>${ t_deduc }</td>
+                                    <td width="10%" class="basic_td"><% clave = dict_deduc[dict].get('@Clave', '') %>${ clave }</td>
+                                    <td class="basic_td"><% concep = dict_deduc[dict].get('@Concepto', '') %>${ concep }</td>
+                                    <td width="11%" class="number_td"><% i_grava = dict_deduc[dict].get('@ImporteGravado', '0.0') %>${ dict_context_extra_data.get('symbol_currency', '') } ${ i_grava }</td>
+                                    <td width="15%" class="number_td"><% i_exen = dict_deduc[dict].get('@ImporteExento', '0.0') %>${ dict_context_extra_data.get('symbol_currency', '') } ${ i_exen }</td>
                                 </tr>
                             %endfor
                             <tr style="font-size:9; border:1.5px solid grey;">
                                 <td class="basic_td" colspan="3"><b>${_('Total Deducciones')}</b></td>
-                                <td width="9%" class="number_td"><%tot_gra = nomina.get('Deducciones', {}).get('@TotalGravado', '0.0')%>$ ${ tot_gra|entity}</td>
-                                <td width="15%" class="number_td"><%tot_ex = nomina.get('Deducciones', {}).get('@TotalExento', '0.0')%>$ ${ tot_ex|entity}</td>
+                                <td width="9%" class="number_td"><%tot_gra = nomina.get('Deducciones', {}).get('@TotalGravado', '0.0')%>${ dict_context_extra_data.get('symbol_currency', '') } ${ tot_gra|entity}</td>
+                                <td width="15%" class="number_td"><%tot_ex = nomina.get('Deducciones', {}).get('@TotalExento', '0.0')%>${ dict_context_extra_data.get('symbol_currency', '') } ${ tot_ex|entity}</td>
                             </tr>
                         </table>
                     </td>
@@ -330,10 +330,10 @@
                             %endif
                             %for dict in range(0,len(dict_he)):
                                 <tr style="font-size:9; border:1.5px solid grey;">
-                                    <td width="10%" class="basic_td"><% dias = dict_he[dict]['@Dias'] %>${ dias or '' | entity}</td>
-                                    <td width="10%" class="basic_td"><% tipo = dict_he[dict]['@TipoHoras'] %>${ tipo or '' | entity}</td>
-                                    <td width="9%" class="basic_td"><% hrs = dict_he[dict]['@HorasExtra'] %>${ hrs or '' | entity}</td>
-                                    <td width="10%" class="number_td"><% imp = dict_he[dict]['@ImportePagado'] %>${ imp or '0.0' | entity}</td>
+                                    <td width="10%" class="basic_td"><% dias = dict_he[dict].get('@Dias', '') %>${ dias |entity}</td>
+                                    <td width="10%" class="basic_td"><% tipo = dict_he[dict].get('@TipoHoras', '') %>${ tipo |entity}</td>
+                                    <td width="9%" class="basic_td"><% hrs = dict_he[dict].get('@HorasExtra', '') %>${ hrs |entity}</td>
+                                    <td width="10%" class="number_td"><% imp = dict_he[dict].get('@ImportePagado', '0.0') %>${ dict_context_extra_data.get('symbol_currency', '') } ${ imp |entity}</td>
                                 </tr>
                             %endfor
                         %endif
@@ -356,9 +356,9 @@
                             %endif
                             %for dict in range(0,len(dict_inc)):
                                 <tr style="font-size:9; border:1.5px solid grey;">
-                                    <td width="10%" class="basic_td"><% dias = dict_inc[dict]['@DiasIncapacidad'] %>${ dias or '' | entity}</td>
-                                    <td width="10%" class="basic_td"><% tipo = dict_inc[dict]['@TipoIncapacidad'] %>${ tipo or '' | entity}</td>
-                                    <td width="9%" class="number_td"><% desc = dict_inc[dict]['@Descuento'] %>${ desc or '0.0' | entity}</td>
+                                    <td width="10%" class="basic_td"><% dias = dict_inc[dict].get('@DiasIncapacidad', '') %>${ dias |entity}</td>
+                                    <td width="10%" class="basic_td"><% tipo = dict_inc[dict].get('@TipoIncapacidad', '') %>${ tipo |entity}</td>
+                                    <td width="9%" class="number_td"><% desc = dict_inc[dict].get('@Descuento', '0.0') %>${ dict_context_extra_data.get('symbol_currency', '') } ${ desc |entity}</td>
                                 </tr>
                             %endfor
                         %endif
@@ -388,11 +388,11 @@
                 %else:
                     <tr>
                 %endif
-                    <td width="10%" class="number_td"><% qty = dict_lines[dict]['@cantidad'] %>${ qty or '0.0'}</td>
-                    <td width="10%" class="basic_td"><% uni = dict_lines[dict]['@unidad'] %>${ uni or '0.0'}</td>
-                    <td class="basic_td"><% desc = dict_lines[dict]['@descripcion'] %>${ desc or '0.0'}</td>
-                    <td width="9%" class="number_td"><% vuni = dict_lines[dict]['@valorUnitario'] %>${ vuni or '0.0'}</td>
-                    <td width="15%" class="number_td"><% imp = dict_lines[dict]['@importe'] %>${ imp or '0.0'}</td>
+                    <td width="10%" class="number_td"><% qty = dict_lines[dict].get('@cantidad', '0.0') %>${ qty |entity}</td>
+                    <td width="10%" class="basic_td"><% uni = dict_lines[dict].get('@unidad', '0.0') %>${ uni |entity}</td>
+                    <td class="basic_td"><% desc = dict_lines[dict].get('@descripcion', '0.0') %>${ desc |entity}</td>
+                    <td width="9%" class="number_td"><% vuni = dict_lines[dict].get('@valorUnitario', '0.0') %>${ dict_context_extra_data.get('symbol_currency', '') } ${ vuni |entity}</td>
+                    <td width="15%" class="number_td"><% imp = dict_lines[dict].get('@importe', '0.0') %>${ dict_context_extra_data.get('symbol_currency', '') } ${ imp |entity}</td>
                     </tr>
                 <%row_count+=1%>
             %endfor
@@ -400,13 +400,13 @@
         <table align="right" width="30%" style="border-collapse:collapse">
             <tr>
                 <td class="total_td">${_("Sub Total:")}</td>
-                <td align="right" class="total_td">$ ${ dict_data.get('@subTotal', '')|entity}</td>
+                <td align="right" class="total_td">${ dict_context_extra_data.get('symbol_currency', '') } ${ dict_data.get('@subTotal', '')|entity}</td>
             </tr>
             <% desc_amount = float(dict_data.get('@descuento', 0.0)) %>
             %if desc_amount > 0:
             <tr>
                 <td class="total_td">${_("Descuento:")}</td>
-                <td align="right" class="total_td">$ ${ dict_data.get('@descuento', '') |entity}</td>
+                <td align="right" class="total_td">${ dict_context_extra_data.get('symbol_currency', '') } ${ dict_data.get('@descuento', '') |entity}</td>
             </tr>
             %endif
             %if dict_data.get('Impuestos', {}).get('Traslados', False):
@@ -424,7 +424,7 @@
                                 <% text = imp_name+' ('+tasa+') %' %>${ text or '0.0'}
                             </td>
                             <td class="tax_td" align="right">
-                                $ ${imp_amount or '0.0'|entity}
+                                ${ dict_context_extra_data.get('symbol_currency', '') } ${imp_amount or '0.0'|entity}
                             </td>
                         </tr>
                     %endif
@@ -444,7 +444,7 @@
                                 ${_("Ret. ")} ${ ret_name or '' | entity }
                             </td>
                             <td class="tax_td" align="right">
-                                $ ${ ret_amount or '' | entity }
+                                ${ dict_context_extra_data.get('symbol_currency', '') } ${ ret_amount or '' | entity }
                             </td>
                         </tr>
                     %endif
@@ -452,7 +452,7 @@
             %endif
             <tr align="left">
                 <td class="total_td"><b>${_("Total:")}</b></td>
-                <td class="total_td" align="right"><b>$ ${ dict_data.get('@total', '')|entity}</b></td>
+                <td class="total_td" align="right"><b>${ dict_context_extra_data.get('symbol_currency', '') } ${ dict_data.get('@total', '')|entity}</b></td>
             </tr>
         </table>
         <table class="basic_table">
@@ -492,9 +492,7 @@
                 %endif
             </table>
         %endif
-        <pre>
-            <p><font size="1">${ get_text_promissory(o.model_source, o.id_source) or '' |entity }</font></p>
-        </pre>
+        <pre><p><font size="1">${ get_text_promissory(o.model_source, o.id_source) or '' |entity }</font></p></pre>
         </br>
         %if dict_data.get('Complemento', {}).get('TimbreFiscalDigital'):
             <table class="basic_table" rules="cols" style="border:1.5px solid grey;">

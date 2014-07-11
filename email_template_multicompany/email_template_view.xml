@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="email_template.email_template_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='model_id']" position="after">
-                    <field name="company_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
                 </xpath>
             </field>
         </record>

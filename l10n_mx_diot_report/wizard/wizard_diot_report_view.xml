@@ -10,7 +10,7 @@
                 <field invisible="1" name="state"/>
                 <field name="name" invisible="1"/>
                 <group  states="choose" string="DIOT Report - Statement of transactions with third parties [DIOT]" colspan="4">
-                    <field name="company_id" />
+                    <field name="company_id" groups="base.group_multi_company"/>
                     <field name="period_id" />
                     <field name="entries_to_print" />
                 </group>

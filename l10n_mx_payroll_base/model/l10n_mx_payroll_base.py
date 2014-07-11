@@ -340,10 +340,14 @@ class hr_payslip(osv.Model):
                     'payslip_datetime': hr.payslip_datetime},
                     context=context)
             self.write(cr, uid, ids, vals_date, context=context)
-            super(hr_payslip, self).hr_verify_sheet(cr, uid, ids)
+            result = super(hr_payslip, self).hr_verify_sheet(cr, uid, ids)
             if hr.journal_id.sequence_id and hr.journal_id.sequence_id.id:
                 obj_sequence.next_by_id(cr, uid, hr.journal_id.sequence_id.id, context=context)
-            result = self.create_ir_attachment_payroll(cr, uid, ids, context=context)
+            approval_id = hr.journal_id and hr.journal_id.sequence_id and \
+                hr.journal_id.sequence_id.approval_ids and \
+                        hr.journal_id.sequence_id.approval_ids[0] or False
+            if approval_id:
+                result = self.create_ir_attachment_payroll(cr, uid, ids, context=context)
             return result
 
     def create_ir_attachment_payroll(self, cr, uid, ids, context=None):
@@ -390,7 +394,7 @@ class hr_payslip(osv.Model):
                 if address_emitter:
                     context_extra_data.update({'emisor':{'phone':address_emitter.phone,'fax':address_emitter.fax,'mobile':address_emitter.mobile,'web':address_emitter.website,'email':address_emitter.email}})
                 context_extra_data.update({'receptor':{'phone':payroll.partner_id.phone,'fax':payroll.partner_id.fax,'mobile':payroll.partner_id.mobile}})
-                context_extra_data.update({'type': 'payroll'})
+                context_extra_data.update({'type': 'payroll', 'symbol_currency': payroll.currency_id and payroll.currency_id.symbol})
                 attach_ids.append( ir_attach_obj.create(cr, uid, {
                     'name': payroll.number or '/',
                     #~ 'type': type,
