@@ -9,7 +9,7 @@
         <field name="domain_force">['|',('company_id','child_of',[user.company_id.id]),('company_id','=',False)]</field>
     </record>
     
-    <record id="l10n_facturae_groups_multipac_vauxoo_user" model="ir.rule">
+    <record id="l10n_facturae_groups_multipac_vauxoo_user_ir_rule" model="ir.rule">
         <field name="name">Multipac Vauxoo User</field>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>
@@ -19,6 +19,18 @@
         <field ref="model_ir_attachment_facturae_mx" name="model_id"/>
         <field eval="False" name="global"/>
         <field name="domain_force">[('user_id','=',user.id),('company_id','=',user.company_id.id)]</field>
+    </record>
+    
+    <record id="l10n_facturae_groups_multipac_vauxoo_manager_ir_rule" model="ir.rule">
+        <field name="name">Multipac Vauxoo Manager</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="groups" eval="[(6,0,[ref('l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_manager')])]"/>
+        <field ref="model_ir_attachment_facturae_mx" name="model_id"/>
+        <field eval="False" name="global"/>
+        <field name="domain_force">['|',('company_id','child_of',[user.company_id.id]),('company_id','=',False)]</field>
     </record>
 
 </data>
