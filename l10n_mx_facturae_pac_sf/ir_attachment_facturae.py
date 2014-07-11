@@ -300,7 +300,11 @@ class ir_attachment_facturae_mx(osv.Model):
 
                 key_node.appendChild(text_node)
                 new_node.appendChild(key_node)
-        parent_node.appendChild(new_node)
+        type_parent_node = isinstance(parent_node, list)
+        if type_parent_node:
+            parent_node[0].appendChild(new_node)
+        else:
+            parent_node.appendChild(new_node)
         return new_node
 
     def add_addenta_xml(self, cr, ids, xml_res_str=None, comprobante=None, context=None):
