@@ -72,7 +72,10 @@ class purchase_requisition(osv.Model):
             res[requisition.id] = purchase_id
             for line in requisition.line_ids:
                 product = line.product_id
-                seller_price, qty, default_uom_po_id, date_planned = self._seller_details(cr, uid, line, supplier, context=context)
+                if product:
+                    seller_price, qty, default_uom_po_id, date_planned = self._seller_details(cr, uid, line, supplier, context=context)
+                else:
+                    seller_price, qty, default_uom_po_id, date_planned = self._seller_details_without_product(cr, uid, line, supplier, context=context)
                 taxes_ids = product.supplier_taxes_id
                 taxes = fiscal_position.map_tax(cr, uid, supplier.property_account_position, taxes_ids)
                 purchase_order_line.create(cr, uid, {
@@ -80,9 +83,9 @@ class purchase_requisition(osv.Model):
                     #change
                     'purchase_requisition_line_id': line.id,
                     #end change
-                    'name': product.partner_ref,
+                    'name': product and product.partner_ref or '',
                     'product_qty': qty,
-                    'product_id': product.id,
+                    'product_id': product and product.id or False,
                     'product_uom': default_uom_po_id,
                     'price_unit': seller_price,
                     'date_planned': date_planned,
@@ -90,3 +93,14 @@ class purchase_requisition(osv.Model):
                 }, context=context)
                 
         return res
+
+    def _seller_details_without_product(self, cr, uid, requisition_line, supplier, context=None):
+        product = requisition_line.product_id
+        default_uom_pol_id = self.pool.get('purchase.order.line')._get_uom_id(cr, uid, context=context)
+        default_uom_po_id = requisition_line.product_uom_id and requisition_line.product_uom_id.id or default_uom_pol_id
+        qty = requisition_line.product_qty
+        seller_delay = 0.0
+        seller_price = False
+        seller_qty = False
+        date_planned = self._planned_date(requisition_line.requisition_id, seller_delay)
+        return seller_price, qty, default_uom_po_id, date_planned
