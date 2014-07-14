@@ -17,5 +17,5 @@ msgstr ""
 #. module: project_issue_conf
 #: model:ir.filters,name:project_issue_conf.ir_filter_issue_1
 msgid "Project issue"
-msgstr "Problema proyecto"
+msgstr "Incidencia proyecto"
 
