@@ -31,3 +31,7 @@ class email_template(osv.Model):
     _columns = {
         'add_followers': fields.boolean('Add Followers', help='Choice to add followers in template')
     }
+    
+    _defaults = {
+        'add_followers': True
+    }
