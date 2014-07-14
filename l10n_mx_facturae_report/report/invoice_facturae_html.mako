@@ -29,7 +29,7 @@
                                         <font size="4">${_("Nota de credito:")}
                                     %endif
                                     %if dict_context_extra_data.get('type', False) in ['out_invoice', 'out_refund']:
-                                        %if o.state in ['done']:
+                                        %if o.state in ['done', 'printable']:
                                             ${o.document_source or ''|entity}
                                         %else:
                                             ${'SIN FOLIO O ESTATUS NO VALIDO'}
