@@ -37,6 +37,7 @@
                 "l10n_mx_facturae_groups",
                 "account_cancel",
                 "l10n_mx_facturae_lib",
+                "l10n_mx_facturae_cer",
         ],
     "demo" : [],
     "data" : [
