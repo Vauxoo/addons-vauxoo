@@ -40,6 +40,7 @@ from pytz import timezone
 import pytz
 import time
 import codecs
+import re
 from datetime import datetime, timedelta
 try:
     from qrcode import *
@@ -273,6 +274,8 @@ class ir_attachment_facturae_mx(osv.Model):
         for attach in self.browse(cr, uid, ids, context=context):
             if attach.file_input:
                 data_xml = base64.decodestring(attach.file_input.datas)
+                data_xml = re.sub('>[\s<]+', '><', data_xml)
+                data_xml = re.sub('\?>', '?>\n', data_xml)
                 doc_xml = xml.dom.minidom.parseString(data_xml)
                 nodeComprobante = doc_xml.getElementsByTagName("cfdi:Comprobante")[0]
                 for n in doc_xml.getElementsByTagName("cfdi:Comprobante"):
@@ -292,10 +295,11 @@ class ir_attachment_facturae_mx(osv.Model):
                     })
                     sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
                     nodeComprobante.setAttribute("sello", sign_str)
-                    data_xml = doc_xml.toxml().encode('ascii', 'xmlcharrefreplace')
-                    attachment_obj.write(cr, uid, [attach.file_input.id],{
-                                    'datas': base64.encodestring(data_xml),
-                            }, context=context)
+                data_xml = doc_xml.toxml().encode('ascii', 'xmlcharrefreplace')
+                data_xml = data_xml.replace('<?xml version="1.0" ?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
+                attachment_obj.write(cr, uid, [attach.file_input.id],{
+                                'datas': base64.encodestring(data_xml),
+                        }, context=context)
                 nodepayroll = doc_xml.getElementsByTagName("nomina:Nomina")
                 if nodepayroll:
                     nodecomplemento = doc_xml.getElementsByTagName("cfdi:Complemento")[0]
