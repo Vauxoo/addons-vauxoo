@@ -38,7 +38,6 @@ voucher requester.
 ''',
     'depends': [
         'account_voucher',
-        'hr',
         ],
     'data': [
         'view/account_voucher_view.xml',
