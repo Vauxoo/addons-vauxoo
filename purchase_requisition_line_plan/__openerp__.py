@@ -36,11 +36,10 @@ Add analytic account plan instance on purchase requisition line and purchase ord
 the account analytic value from the purchase requisition.
 ''',
     'depends': [
-        'account_analytic_plans',
         'purchase_requisition',
         'purchase_requisition_line_view',
-        'pr_line_related_po_line',
         'purchase_analytic_plans',
+        'pr_line_related_po_line',
         ],
     'data': [
         'view/purchase_requisition_view.xml',
