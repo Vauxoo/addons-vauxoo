@@ -21,12 +21,12 @@ msgid "Accounting Voucher"
 msgstr ""
 
 #. module: account_voucher_requester
-#: help:account.voucher,employee_id:0
+#: help:account.voucher,user_id:0
 msgid "Requester Employee"
 msgstr ""
 
 #. module: account_voucher_requester
-#: field:account.voucher,employee_id:0
+#: field:account.voucher,user_id:0
 msgid "Requester"
 msgstr ""
 
