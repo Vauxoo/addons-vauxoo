@@ -37,3 +37,7 @@ class account_voucher(osv.Model):
             string='Requester',
             help='Requester User'),
     }
+
+    _defaults = {
+        'user_id': lambda self, cur, uid, cxt: uid,
+    }
