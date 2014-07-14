@@ -8,7 +8,6 @@
             <field name="arch" type="xml">
                 <search string="Attachment Factura-E">
                     <field name="name"/>
-                    <field name="identifier"/>
                     <field name="res_pac"/>
                     <field name="state"/>
                     <field name="id_source"/>
@@ -43,7 +42,6 @@
                             <field name="file_input"/>
                             <field name="file_xml_sign"/>
                             <field name="file_pdf"/>
-                            <field name="identifier"/>
                          </group>
                     <notebook>
                         <page string="General Information">
@@ -89,7 +87,6 @@
             <field name="arch" type="xml">
                 <tree string="Attachment Factura-E">
                     <field name="name"/>
-                    <field name="identifier"/>
                     <field name="res_pac"/>
                     <field name="state"/>
                 </tree>

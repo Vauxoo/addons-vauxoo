@@ -38,6 +38,7 @@
         "account",
         "l10n_mx_company_multi_address",
         "l10n_mx_facturae_groups",
+        "l10n_mx_params_pac",
     ],
     "demo" : [],
     "data" : [
