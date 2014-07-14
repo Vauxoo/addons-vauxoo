@@ -432,7 +432,8 @@ class ir_attachment_facturae_mx(osv.Model):
         status = False
         mssg_id = False
         data = self.browse(cr, uid, ids)[0]
-        company_id = data.company_id and data.company_id.id or False
+        company_id = self.pool.get('res.users').browse(
+            cr, uid, uid, context=context).company_id.id
         wf_service = netsvc.LocalService("workflow")
         attachments = []
         data.file_pdf and attachments.append(data.file_pdf.id)
@@ -441,7 +442,7 @@ class ir_attachment_facturae_mx(osv.Model):
         obj_mail_mail = self.pool.get('mail.mail')
         obj_users = self.pool.get('res.users')
         mail_server_id = obj_ir_mail_server.search(cr, uid,
-                                                   ['|', ('company_id', '=', company_id), ('company_id', '=', False)], limit=1, order='sequence', context=None)
+                                                   ['|', ('company_id', '=', company_id), ('company_id', 'child_of', company_id)], limit=1, order='sequence', context=None)
         if mail_server_id:
             for smtp_server in obj_ir_mail_server.browse(cr, uid,
                                                          mail_server_id, context=context):
@@ -462,7 +463,7 @@ class ir_attachment_facturae_mx(osv.Model):
 
             tmp_id = email_pool.search(cr, uid, [(
                     'model_id.model', '=', self._name),
-                    ('company_id', '=', company_id),
+                    ('company_id', 'child_of', company_id),
                     ('mail_server_id', '=', smtp_server.id),
                     ], limit=1, context=context)
             if tmp_id:
@@ -519,10 +520,9 @@ class ir_attachment_facturae_mx(osv.Model):
                         _('Warning'), _('The attachment does not have mail'))
             else:
                 raise osv.except_osv(
-                    _('Warning'), _('Check that your template is assigned outgoing mail server named %s.\nAlso the field has report_template = Factura Electronica Report.\nTemplate is associated with the same company') % (server_name))
+                    _('Warning'), _('Set up a template with a outgoing mail server named "%s" for your Company') % (server_name))
         else:
-            raise osv.except_osv(_('Warning'), _('Not Found\
-            outgoing mail server.Configure the outgoing mail server named "FacturaE"'))
+            raise osv.except_osv(_('Warning'), _('Set up the outgoing mail server for your Company"'))
         if mssg_id:
             return {
                 'name':_("Send Mail FacturaE Customer"),
@@ -689,7 +689,7 @@ class ir_mail_server(osv.Model):
         company_id = self.pool.get('res.users').browse(
             cr, uid, uid, context=context).company_id.id
         mail_server_id = obj_ir_mail_server.search(cr, uid,
-                                                   ['|', ('company_id', '=', company_id), ('company_id', '=', False)], limit=1, order='sequence', context=None)[0]
+                                                   ['|', ('company_id', '=', company_id), ('company_id', 'child_of', company_id)], limit=1, order='sequence', context=None)[0]
         super(
             ir_mail_server, self).send_email(cr, uid, message, mail_server_id=mail_server_id, smtp_server=None, smtp_port=None,
                                              smtp_user=None, smtp_password=None, smtp_encryption=None, smtp_debug=False,
