@@ -27,11 +27,11 @@ msgstr "El usario tendrá acceso para leer, crear, modificar el menú Res Pac De
 
 #. module: l10n_facturae_groups_multipac_vauxoo
 #: model:res.groups,name:l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_user
-msgid "FacturaE MX Multipac Vauxoo User"
-msgstr "FacturaE MX Multipac Vauxoo Usuario"
+msgid "User"
+msgstr "Usuario"
 
 #. module: l10n_facturae_groups_multipac_vauxoo
 #: model:res.groups,name:l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_manager
-msgid "FacturaE MX Multipac Vauxoo Manager"
-msgstr "FacturaE MX Multipac Vauxoo Administrador"
+msgid "Manager"
+msgstr "Administrador"
 
