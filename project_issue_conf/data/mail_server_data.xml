@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+        <!--Incoming mail server-->
+        <record model="fetchmail.server" id="incoming_mail_server1">
+            <field name="name">Issues - Reception of Issues</field>
+            <field name="type">pop</field>
+            <field name="server">smtp.gmail.com</field>
+            <field name="port">995</field>
+            <field name="is_ssl">1</field>
+            <field name="user">soporte@vauxoo.com</field>
+            <field name="object_id" search="[('model','=','project.issue')]" model="ir.model"/>
+        </record>
+        
+        <!--Filter-->
+        <record model="ir.filters" id="ir_filter_issue_1">
+            <field name="name">Project issue</field>
+            <field name="model_id">project.issue</field>
+            <field name="domain">[('user_id', '=', False),('project_id','=',False)]</field>
+        </record>
+        
+        <!--Automated_action-->
+        <record model="base.action.rule" id="automated_action1">
+            <field name="name">Issues - Assigns followers and responsible</field>
+            <field name="model_id" search="[('model','=','project.issue')]" model="ir.model"/>
+            <field name="filter_id" ref="ir_filter_issue_1"/>
+            <field name="trg_date_id" search="[('name','=','create_date'),('model', '=', 'project.issue')]" model="ir.model.fields"/>
+            <field name="trg_date_range">1</field>
+            <field name="trg_date_range_type">minutes</field>
+        </record>
+        
+    </data>
+</openerp>
