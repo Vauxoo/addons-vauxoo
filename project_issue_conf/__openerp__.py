@@ -40,7 +40,9 @@
         "fetchmail",
         "project_issue",
         ],
-    "demo" : [],
+    "demo" : [
+        "demo/project_issue_conf_demo.xml",
+        ],
     "data" : [
         "data/mail_server_data.xml"
         ],
