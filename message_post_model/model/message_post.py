@@ -174,7 +174,7 @@ class message_post_show_all(osv.Model):
                               context=None):
         context = context or {}
         obj = self.pool.get(n_obj)
-        message = ''
+        message = '<p>'
 
         last_value = self.get_last_value(cr, uid, id,
                                          obj._name,
@@ -198,14 +198,14 @@ class message_post_show_all(osv.Model):
                             vals, context=None):
         context = context or {}
         obj =  self.pool.get(n_obj)
-        message = ''
+        message = '<p>'
         last_value = self.get_last_value(cr, uid, id,
                                          obj._name,
                                          field,
                                          obj._columns[field]._type,
                                          context)
 
-        if not last_value == vals[field]:
+        if not str(last_value) == str(vals[field]):
             message = u'<li><b>%s<b>: %s → %s</li>' % \
                                         (obj._columns[field].string,
                                          last_value,
