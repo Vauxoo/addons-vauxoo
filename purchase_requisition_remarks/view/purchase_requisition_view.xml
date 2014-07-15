@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id="purchase_requisition_remarks_form" model="ir.ui.view">
+            <field name="name">purchase.requisition.remarks.form</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='description']" position="before">
+                    <field name="remarks"/>
+                </xpath>
+            </field>
+        </record> 
+
+    </data>
+</openerp>
