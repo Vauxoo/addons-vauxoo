@@ -33,11 +33,14 @@
     """,
     "website" : "http://vauxoo.com",
     "license" : "AGPL-3",
-    "depends" : ["base"
+    "depends" : ["base",
+                "document",
+                "mail"
         ],
     "demo" : [],
     "test": [],
     "data" : ["security/l10n_mx_facturae_multipac_security_groups.xml",
+                "security/ir.model.access.csv"
             ],
     "images": [],
     'application': False,
