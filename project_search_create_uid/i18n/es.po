@@ -6,15 +6,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 01:07+0000\n"
-"PO-Revision-Date: 2013-11-07 04:16+0000\n"
-"Last-Translator: Nhomar - Vauxoo <nhomar@gmail.com>\n"
+"POT-Creation-Date: 2014-07-15 15:42+0000\n"
+"PO-Revision-Date: 2014-07-15 15:42+0000\n"
+"Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-07-11 06:13+0000\n"
-"X-Generator: Launchpad (build 17111)\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: project_search_create_uid
+#: view:project.task:0
+msgid "User Created"
+msgstr "Usuario que creó"
 
 #. module: project_search_create_uid
 #: model:ir.model,name:project_search_create_uid.model_project_task
@@ -40,15 +44,16 @@ msgstr "Modificadas antes de"
 #. module: project_search_create_uid
 #: field:project.task,date_from_create:0
 msgid "Create Date From"
-msgstr "Creadas despues del"
+msgstr "Creadas después del"
 
 #. module: project_search_create_uid
 #: field:project.task,date_from_write:0
 msgid "Write Date From"
-msgstr "Modificadas despues de"
+msgstr "Modificadas después de"
 
 #. module: project_search_create_uid
 #: view:project.task:0
 #: field:project.task,write_uid:0
 msgid "Last Modification User"
 msgstr "Última modificación del usuario"
+
