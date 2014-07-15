@@ -149,7 +149,8 @@ class ir_attachment_facturae_mx(osv.Model):
             filters='*.key', help='This file .key is proportionate by the SAT'),
         'certificate_password': fields.char('Certificate Password', size=64,
             invisible=False, help='This password is proportionate by the SAT'),
-        'attachment_email': fields.char('Email', size=128, help='Email receptor'),
+        'attachment_email': fields.char('Email', size=240, help='Email receptor, you can set '\
+            'more that a email separated by a comma(,)'),
         'cfdi_folio_fiscal': fields.char('Folio Fiscal(UUID)', size=256, help='UUID the XML'),
         'model_source': fields.char('Source Model', size=128, help='Source Model'),
         'id_source': fields.integer('Source ID', required=False, help="Source ID"),
@@ -426,14 +427,14 @@ class ir_attachment_facturae_mx(osv.Model):
         if context is None:
             context = {}
         context.update({'active_model': 'ir.attachment.facturae.mx', 'active_ids': ids, 'active_id': ids[0]})
-        attachments = []
         msj = ''
         partner_mail = ''
         user_mail = ''
         status = False
         mssg_id = False
-        data = self.browse(cr, uid, ids)[0]
-        company_id = data.company_id and data.company_id.id or False
+        data = self.browse(cr, uid, ids, context=context)[0]
+        company_id = self.pool.get('res.users').browse(
+            cr, uid, uid, context=context).company_id.id
         wf_service = netsvc.LocalService("workflow")
         attachments = []
         data.file_pdf and attachments.append(data.file_pdf.id)
@@ -442,7 +443,7 @@ class ir_attachment_facturae_mx(osv.Model):
         obj_mail_mail = self.pool.get('mail.mail')
         obj_users = self.pool.get('res.users')
         mail_server_id = obj_ir_mail_server.search(cr, uid,
-                                                   ['|', ('company_id', '=', company_id), ('company_id', '=', False)], limit=1, order='sequence', context=None)
+                                                   ['|', ('company_id', '=', company_id), ('company_id', 'child_of', company_id)], limit=1, order='sequence', context=None)
         if mail_server_id:
             for smtp_server in obj_ir_mail_server.browse(cr, uid,
                                                          mail_server_id, context=context):
@@ -463,7 +464,7 @@ class ir_attachment_facturae_mx(osv.Model):
 
             tmp_id = email_pool.search(cr, uid, [(
                     'model_id.model', '=', self._name),
-                    ('company_id', '=', company_id),
+                    ('company_id', 'child_of', company_id),
                     ('mail_server_id', '=', smtp_server.id),
                     ], limit=1, context=context)
             if tmp_id:
@@ -472,8 +473,7 @@ class ir_attachment_facturae_mx(osv.Model):
                         0], composition_mode=None,
                     model = self._name, res_id = data.id, context=context)
                 mssg = message.get('value', False)
-                user_mail = obj_users.browse(
-                    cr, uid, uid, context=None).email
+                user_mail = obj_users.browse(cr, uid, uid, context=None).email
                 partner_id = mssg.get('partner_ids', False)
                 partner_mail = data.attachment_email
                 if partner_mail:
@@ -484,11 +484,11 @@ class ir_attachment_facturae_mx(osv.Model):
                             mssg['attachment_ids'] = [
                                 (6, 0, attachments)]
                             mssg['template_id'] = tmp_id[0]
-                            mssg_id = self.pool.get(
-                                'mail.compose.message').create(cr, uid, mssg, context=context)
+                            mssg_id = mail_compose_message_pool.create(cr, uid, mssg, context=context)
                             asunto = mssg['subject']
                             id_mail = obj_mail_mail.search(
                                 cr, uid, [('subject', '=', asunto)])
+                            status = True
                             if id_mail:
                                 for mail in obj_mail_mail.browse(cr, uid, id_mail, context=context):
                                     if mail.state == 'exception':
@@ -497,21 +497,12 @@ class ir_attachment_facturae_mx(osv.Model):
                                         raise osv.except_osv(_('Warning'), _('Not correct email of the user or customer. Check in Menu Configuración\Tecnico\Email\Emails'))
                                 msj = _('Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s') % (
                                 partner_mail, server_name)
-                                self.write(cr, uid, ids, {
-                                        'msj': msj,
-                                        'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                                        'date_send_mail': time.strftime('%Y-%m-%d %H:%M:%S')})
-                                status = True
                             else:
                                 msj = _('Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s') % (
                                 partner_mail, server_name)
-                                self.write(cr, uid, ids, {
-                                        'msj': msj,
+                            context.update({'msj': msj,
                                         'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                                         'date_send_mail': time.strftime('%Y-%m-%d %H:%M:%S')})
-                                wf_service.trg_validate(
-                                        uid, self._name, ids[0], 'action_send_customer', cr)
-                                status = True
                     else:
                         raise osv.except_osv(
                             _('Warning'), _('This user does not have mail'))
@@ -520,10 +511,9 @@ class ir_attachment_facturae_mx(osv.Model):
                         _('Warning'), _('The attachment does not have mail'))
             else:
                 raise osv.except_osv(
-                    _('Warning'), _('Check that your template is assigned outgoing mail server named %s.\nAlso the field has report_template = Factura Electronica Report.\nTemplate is associated with the same company') % (server_name))
+                    _('Warning'), _('Set up a template with a outgoing mail server named "%s" for your Company') % (server_name))
         else:
-            raise osv.except_osv(_('Warning'), _('Not Found\
-            outgoing mail server.Configure the outgoing mail server named "FacturaE"'))
+            raise osv.except_osv(_('Warning'), _('Set up the outgoing mail server for your Company"'))
         if mssg_id:
             return {
                 'name':_("Send Mail FacturaE Customer"),
@@ -686,13 +676,29 @@ class ir_mail_server(osv.Model):
         self, cr, uid, message, mail_server_id=None, smtp_server=None, smtp_port=None,
         smtp_user=None, smtp_password=None, smtp_encryption=None, smtp_debug=False,
             context=None):
-        obj_ir_mail_server = self.pool.get('ir.mail_server')
+                
         company_id = self.pool.get('res.users').browse(
             cr, uid, uid, context=context).company_id.id
-        mail_server_id = obj_ir_mail_server.search(cr, uid,
-                                                   ['|', ('company_id', '=', company_id), ('company_id', '=', False)], limit=1, order='sequence', context=None)[0]
+            
+        mail_server_id = self.search(cr, uid,
+            ['|', ('company_id', '=', company_id),
+                    ('company_id', 'child_of', company_id)], limit=1, order='sequence', context=None)[0]
+                    
         super(
             ir_mail_server, self).send_email(cr, uid, message, mail_server_id=mail_server_id, smtp_server=None, smtp_port=None,
                                              smtp_user=None, smtp_password=None, smtp_encryption=None, smtp_debug=False,
                                              context=None)
         return True
+        
+class mail_compose_message(osv.Model):
+    _inherit = 'mail.compose.message'
+
+    def send_mail(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        if context.get('active_model', '') == 'ir.attachment.facturae.mx' and context.get('active_id', False):
+            self.pool.get('ir.attachment.facturae.mx').write(cr, uid, context.get('active_id'),
+                {'msj': context.get('msj', ''),
+                'last_date':context.get('last_date', False),
+                'date_send_mail': context.get('date_send_mail', False)}, context=context)
+        return super(mail_compose_message, self).send_mail(cr, uid, ids, context=context)
