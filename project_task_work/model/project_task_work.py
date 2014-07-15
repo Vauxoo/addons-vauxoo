@@ -31,12 +31,12 @@ from openerp.tools.translate import _
 class project_task(osv.Model):
     _inherit = 'project.task'
 
+
     def _get_issue(self, cr, uid, ids, fieldname, arg, context=None):
         if context is None:
             context = {}
         res = {}
         pi_obj = self.pool.get('project.issue')
-
         for id in ids:
             pi_ids = pi_obj.search(cr, uid, [('task_id', '=', id)]) or []
             res[id] = pi_ids and pi_ids[0] or None
@@ -74,7 +74,6 @@ class project_task_work(osv.Model):
         res = {}.fromkeys(ids,None)
         ids = self.exists(cr, uid, ids, context=context)
         for ptw_brw in self.browse(cr, uid, ids, context=context):
-
             res[ptw_brw.id] = \
                 ptw_brw.task_id and \
                 (ptw_brw.task_id.issue_id and

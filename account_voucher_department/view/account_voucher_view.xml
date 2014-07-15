@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="account_voucher_department_form">
+            <field name="name">account.voucher.department.form</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher_requester.account_voucher_requester_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='employee_id']" position="attributes">
+                    <attribute name="on_change">onchange_employee_id(employee_id)</attribute>
+                </xpath>
+                <xpath expr="//field[@name='employee_id']" position="after">
+                    <field name="department_id"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

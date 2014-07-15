@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#
+##############################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2012-Today OpenERP SA (<http://www.openerp.com>)
@@ -17,7 +17,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
-#
+##############################################################################
 
 from openerp import tools
 from openerp.osv import osv, fields
@@ -25,7 +25,6 @@ from openerp.tools.translate import _
 
 
 class search_duplicated_task(osv.TransientModel):
-
     """  """
 
     def search_task_method(self, cr, uid, operator, name, list_ids,
@@ -35,7 +34,7 @@ class search_duplicated_task(osv.TransientModel):
         task_obj = self.pool.get('project.task')
         task_ids = task_obj.search(cr, uid,
                                    [(operator, 'ilike', name),
-                                    ('id', 'not in', list(set(list_ids)))],
+                                   ('id', 'not in', list(set(list_ids)))],
                                    context=context)
 
         return task_ids
@@ -54,7 +53,7 @@ class search_duplicated_task(osv.TransientModel):
         list_task_ids = context.get('active_ids', [])
         for name in full_name.split(' '):
             if not count:
-                long_name = '%' + name + '%'
+                long_name = '%'+name+'%'
                 if len(long_name) > 5:
                     task_ids = self.search_task_method(cr, uid, 'name',
                                                        long_name,
@@ -68,7 +67,7 @@ class search_duplicated_task(osv.TransientModel):
             else:
                 if len(name) > 3:
                     task_ids = self.search_task_method(cr, uid, 'description',
-                                                       '%' + name + '%',
+                                                       '%'+name+'%',
                                                        list_task_ids,
                                                        context)
 
@@ -76,13 +75,13 @@ class search_duplicated_task(osv.TransientModel):
                         'parent': False, 'task_id': ids} for ids in task_ids]
                     list_task_ids += task_ids
                     task_ids = self.search_task_method(cr, uid, 'name',
-                                                       '%' + name + '%',
+                                                       '%'+name+'%',
                                                        list_task_ids,
                                                        context)
                     list_task_ids += task_ids
                     lines += [{
                         'parent': False, 'task_id': ids} for ids in task_ids]
-                long_name = '%' + long_name + '%' + name
+                long_name = '%'+long_name+'%'+name
                 task_ids = self.search_task_method(cr, uid, 'description',
                                                    long_name,
                                                    list_task_ids,
@@ -148,39 +147,29 @@ class search_duplicated_task(osv.TransientModel):
         if context is None:
             context = {}
         task_id = []
-        res = {}
         for wz in self.browse(cr, uid, ids, context=context):
             for line in wz.line_ids:
                 if line.parent:
-                    line.task_id and task_id.append(line.task_id.id)
+                    task_id = line.task_id and line.task_id.id
+                    break
 
         obj_model = self.pool.get('ir.model.data')
-        (model, resource_form_id) = obj_model.get_object_reference(cr, uid, 'project',
-                                                                   'view_task_form2')
-        (model, resource_tree_id) = obj_model.get_object_reference(cr, uid, 'project',
-                                                                   'view_task_tree2')
-        if len(task_id) > 1:
-            (model, resource_id) = obj_model.get_object_reference(cr, uid, 'project',
-                                                                  'view_task_tree2')
-            res = {
-                'domain': [('id', 'in', task_id)],
-                'views': [(resource_tree_id, 'tree'), (resource_form_id, 'form')],
-            }
-        else:
-            res = {
-                'views': [(resource_form_id, 'form')],
-            }
-
-        task_id = len(task_id) == 1 and task_id[0] or task_id
-        res.update({
+        model_data_ids = obj_model.search(cr, uid,
+                                          [('model', '=', 'ir.ui.view'),
+                                           ('name', '=', 'view_task_form2')])
+        resource_id = obj_model.read(cr, uid, model_data_ids,
+                                     fields=['res_id'])[0]['res_id']
+        res = {
             'view_type': 'form',
-            'view_mode': 'tree, form',
+            'view_mode': 'form',
             'res_model': 'project.task',
+            'views': [(resource_id, 'form')],
             'res_id': task_id,
             'type': 'ir.actions.act_window',
-        })
+            'context': {},
+        }
 
-        return task_id and res or True
+        return res
 
     def set_task(self, cr, uid, ids, context=None):
         if context is None:
@@ -191,15 +180,14 @@ class search_duplicated_task(osv.TransientModel):
                 for line in wz.line_ids:
                     if line.parent:
                         task_obj.write(cr, uid, context.get('active_ids'),
-                                       {
-                                           'parent_ids': [(4, line.task_id.id)]},
+                                       {'duplicated': True,
+                                        'duplicated_task_id': line.task_id.id},
                                        context=context)
 
         return True
 
 
 class search_duplicated_task_line(osv.TransientModel):
-
     """  """
     _name = 'search.duplicated.task.line'
 
