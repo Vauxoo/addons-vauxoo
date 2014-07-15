@@ -153,6 +153,8 @@ class ir_attachment_facturae_mx(osv.Model):
             #~xml_res_str_addenda = xml_res_addenda.toxml('UTF-8')
             xml_res_str_addenda = xml_res_addenda.toxml().encode('ascii', 'xmlcharrefreplace')
             xml_res_str_addenda = xml_res_str_addenda.replace(codecs.BOM_UTF8, '')
+            xml_res_str_addenda = xml_res_str_addenda.replace('<?xml version="1.0" ?>',
+                                                        '<?xml version="1.0" encoding="UTF-8"?>\n')
             if tools.config['test_report_directory']:#TODO: Add if test-enabled:
                 ir_attach_facturae_mx_file_input = attachment.file_input and attachment.file_input or False
                 fname_suffix = ir_attach_facturae_mx_file_input and ir_attach_facturae_mx_file_input.datas_fname or ''
@@ -226,6 +228,17 @@ class ir_attachment_facturae_mx(osv.Model):
                         fecha_timbrado = fecha_timbrado and datetime.strptime(
                             fecha_timbrado, '%Y-%m-%d %H:%M:%S') + timedelta(
                                 hours=htz) or False
+                        data_xml = base64.decodestring(resultado['resultados']['cfdiTimbrado'])
+                        doc_xml = xml.dom.minidom.parseString(data_xml)
+                        partner = doc_xml.getElementsByTagName("sf:Partner")
+                        if partner:
+                            partner[0].parentNode.removeChild(partner[0])
+                        addenda = doc_xml.getElementsByTagName("cfdi:Addenda")
+                        if addenda:
+                            if not addenda[0].childNodes:
+                                addenda = doc_xml.getElementsByTagName("cfdi:Addenda")[0]
+                                addenda.parentNode.removeChild(addenda)
+                        data_xml = doc_xml.toxml().encode('ascii', 'xmlcharrefreplace')
                         cfdi_data = {
                             #'cfdi_cbb': resultado['resultados']['qrCode'] or False,  # ya lo regresa en base64
                             'cfdi_sello': resultado['resultados'][
@@ -235,8 +248,7 @@ class ir_attachment_facturae_mx(osv.Model):
                             'cfdi_cadena_original': resultado['resultados'][
                             'cadenaOriginal'] or False,
                             'cfdi_fecha_timbrado': fecha_timbrado,
-                            'cfdi_xml': base64.decodestring(resultado[
-                            'resultados']['cfdiTimbrado'] or ''),  # este se necesita en uno que no es base64
+                            'cfdi_xml': data_xml or '',  # este se necesita en uno que no es base64
                             'cfdi_folio_fiscal': resultado['resultados']['uuid'] or '',
                             'pac_id': pac_params.id,
                             'certificate_link': certificate_link or False,
@@ -290,7 +302,11 @@ class ir_attachment_facturae_mx(osv.Model):
 
                 key_node.appendChild(text_node)
                 new_node.appendChild(key_node)
-        parent_node.appendChild(new_node)
+        type_parent_node = isinstance(parent_node, list)
+        if type_parent_node:
+            parent_node[0].appendChild(new_node)
+        else:
+            parent_node.appendChild(new_node)
         return new_node
 
     def add_addenta_xml(self, cr, ids, xml_res_str=None, comprobante=None, context=None):
