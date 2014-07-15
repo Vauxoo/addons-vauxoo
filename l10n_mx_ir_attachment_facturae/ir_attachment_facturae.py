@@ -120,7 +120,6 @@ class ir_attachment_facturae_mx(osv.Model):
                                     help='Report PDF generated for the electronic Invoice'),
         'file_pdf_index': fields.text('File PDF Index',
                                       help='Report PDF with index'),
-        'identifier': fields.char('Identifier', size=128, ),
         'description': fields.text('Description'),
         'msj': fields.text('Last Message', readonly=True,
                            track_visibility='onchange',
