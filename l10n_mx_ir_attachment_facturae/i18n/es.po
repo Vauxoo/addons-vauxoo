@@ -28,7 +28,7 @@ msgstr "Último mensaje"
 #. module: l10n_mx_ir_attachment_facturae
 #: view:l10n.mx.email.config.settings:0
 msgid "Email Template Settings"
-msgstr "Configuracion de plantillas de email"
+msgstr "Configuración de plantillas de email"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: help:ir.attachment.facturae.mx,cfdi_no_certificado:0
@@ -136,7 +136,7 @@ msgid "Check that your template is assigned outgoing mail server named %s.\n"
 "Also the field has report_template = Factura Electronica Report.\n"
 "Template is associated with the same company"
 msgstr "Compruebe que la plantilla se le asigna el servidor de correo saliente llamada%s.\n"
-"Asimismo, el campo tiene report_template = Informe Factura Electronica .\n"
+"Asimismo, el campo tiene report_template = Informe Factura Electrónica .\n"
 "Plantilla se asocia con la misma compañía"
 
 #. module: l10n_mx_ir_attachment_facturae
@@ -257,7 +257,7 @@ msgstr "¡Ha fallado el test de conexión!"
 #. module: l10n_mx_ir_attachment_facturae
 #: help:ir.attachment.facturae.mx,company_id:0
 msgid "Company to which it belongs this attachment"
-msgstr "Compañia a la que pertenece el adjunto"
+msgstr "Compañía a la que pertenece el adjunto"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: selection:ir.attachment.facturae.mx,state:0
@@ -380,7 +380,7 @@ msgstr "Reporte PDF generado por el comprobante"
 #: model:ir.actions.act_window,name:l10n_mx_ir_attachment_facturae.action_email_template_configuration
 #: view:l10n.mx.email.config.settings:0
 msgid "Configure Email Template"
-msgstr "Configuracion de la plantilla de correo"
+msgstr "Configuración de la plantilla de correo"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: field:ir.attachment.facturae.mx,password_pac:0
@@ -494,7 +494,7 @@ msgstr "Este adjunto no tiene correo"
 #. module: l10n_mx_ir_attachment_facturae
 #: field:ir.attachment.facturae.mx,company_emitter_id:0
 msgid "Company emmiter"
-msgstr "Compañia emisora"
+msgstr "Compañía emisora"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: view:ir.attachment.facturae.mx:0
@@ -582,7 +582,7 @@ msgstr "Diario"
 #. module: l10n_mx_ir_attachment_facturae
 #: selection:ir.attachment.facturae.mx,state:0
 msgid "Printable Format Generated"
-msgstr "Formato de impresion generado"
+msgstr "Formato de impresión generado"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: field:ir.attachment.facturae.mx,date_print_report:0

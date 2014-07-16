@@ -57,7 +57,7 @@ msgstr "Horas extras"
 #. module: l10n_mx_hr_payroll
 #: help:hr.employee,curp:0
 msgid "Worker CURP"
-msgstr "CURP trabajador"
+msgstr "CURP Trabajador"
 
 #. module: l10n_mx_hr_payroll
 #: help:hr.contract,working_day_id:0
@@ -138,7 +138,7 @@ msgstr "Total horas extras"
 #. module: l10n_mx_hr_payroll
 #: help:hr.payslip.inability,number_of_days:0
 msgid "Number of days in which the employee performed inability in the period"
-msgstr "Número de dias en que el empleado tuvo incapacidad en el periodo"
+msgstr "Número de días en que el empleado tuvo incapacidad en el periodo"
 
 #. module: l10n_mx_hr_payroll
 #: field:hr.employee,nss:0

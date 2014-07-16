@@ -30,7 +30,7 @@ msgstr "RET IVA 10.67%  MX- Prueba"
 #: code:addons/l10n_mx_facturae_base/invoice.py:1332
 #, python-format
 msgid "The Fiscal Regime of the company issuing of fiscal voucher is a data required"
-msgstr "El Régimen Fiscal de la compañia emisora es un dato requerido."
+msgstr "El Régimen Fiscal de la compañía emisora es un dato requerido."
 
 #. module: l10n_mx_facturae_base
 #: help:account.invoice,cfdi_folio_fiscal:0
@@ -46,7 +46,7 @@ msgstr "Número de serie del certificado"
 #: code:addons/l10n_mx_facturae_base/invoice.py:484
 #, python-format
 msgid "Not captured a CERTIFICATE file in format PEM, in                         the company!"
-msgstr "No se ha capturado el CERTIFICADO en .PEM en la compañia!"
+msgstr "No se ha capturado el CERTIFICADO en .PEM en la compañía!"
 
 #. module: l10n_mx_facturae_base
 #: view:facturae.config:0
@@ -67,7 +67,7 @@ msgstr "Marzo"
 #. module: l10n_mx_facturae_base
 #: field:facturae.config,company_id:0
 msgid "Company"
-msgstr "Compañia"
+msgstr "Compañía"
 
 #. module: l10n_mx_facturae_base
 #: code:addons/l10n_mx_facturae_base/invoice.py:859
@@ -109,7 +109,7 @@ msgstr "La secuencia no tiene datos de FacturaE\n"
 #. module: l10n_mx_facturae_base
 #: field:account.invoice,cfdi_fecha_cancelacion:0
 msgid "CFD-I Cancellation Date"
-msgstr "CFD-I Fecha Cancelacion"
+msgstr "CFD-I Fecha Cancelación"
 
 #. module: l10n_mx_facturae_base
 #: code:addons/l10n_mx_facturae_base/invoice.py:121
@@ -243,13 +243,13 @@ msgstr "Julio"
 #. module: l10n_mx_facturae_base
 #: help:facturae.config,company_id:0
 msgid "Select company to assing vat and/or cif"
-msgstr "Seleccione la compañia a asignar el iva y/o CIF"
+msgstr "Seleccione la compañía a asignar el iva y/o CIF"
 
 #. module: l10n_mx_facturae_base
 #: code:addons/l10n_mx_facturae_base/invoice.py:1328
 #, python-format
 msgid "Ckeck that the address of company issuing of fiscal voucher is complete (City - State - Country)"
-msgstr "Revise que la dirección de la compañia emisora del comprobante fiscal es completa (Ciudad - Estado - Pais)"
+msgstr "Revise que la dirección de la compañía emisora del comprobante fiscal es completa (Ciudad - Estado - Pais)"
 
 #. module: l10n_mx_facturae_base
 #: model:product.template,name:l10n_mx_facturae_base.product_product_agua_vauxoo_demo_product_template
@@ -358,7 +358,7 @@ msgstr "No se ha encontrado una secuencia de configuración. %s !"
 #: code:addons/l10n_mx_facturae_base/invoice.py:1034
 #, python-format
 msgid "Don't have defined RFC for the address of invoice to the company!"
-msgstr "No se ha definido un RFC para la dirección de factura de la compañia!"
+msgstr "No se ha definido un RFC para la dirección de factura de la compañía!"
 
 #. module: l10n_mx_facturae_base
 #: field:account.invoice,cfdi_fecha_timbrado:0
@@ -451,18 +451,18 @@ msgstr "Facturas"
 #: code:addons/l10n_mx_facturae_base/invoice.py:1030
 #, python-format
 msgid "Don't have defined an address of invoicing from the company!"
-msgstr "No se ha definido una dirección de factura para la compañia!"
+msgstr "No se ha definido una dirección de factura para la compañía!"
 
 #. module: l10n_mx_facturae_base
 #: model:account.tax,name:l10n_mx_facturae_base.l10n_mx_facturae_base_iva_for_electronic_invoice_0
 msgid "IVA 16% FOR ELECTRONIC INVOICES MX - Test"
-msgstr "IVA 16% PARA FACTURA ELECTRONICA MX - Prueba"
+msgstr "IVA 16% PARA FACTURA ELECTRÓNICA MX - Prueba"
 
 #. module: l10n_mx_facturae_base
 #: code:addons/l10n_mx_facturae_base/invoice.py:496
 #, python-format
 msgid "Not captured a KEY file in format PEM, in the company!"
-msgstr "No se ha capturado el archivo KEY .PEM en la compañia!"
+msgstr "No se ha capturado el archivo KEY .PEM en la compañía!"
 
 #. module: l10n_mx_facturae_base
 #: model:account.tax,name:l10n_mx_facturae_base.l10n_mx_facturae_base_iva0_mx
@@ -507,9 +507,9 @@ msgstr "Fecha de cancelación de la factura"
 msgid "Open the file & check that the information is                     correct, folios, RFC, amounts & reported status. \n"
 "Please                     make sure that not this reporting folios that not belong                     to electronic invoice's (you can delete in the file                     directly).\n"
 "TIP: Remember that this file too contains                     folios of credit note."
-msgstr "Abra el archivo y verfique que la informacion,                 este correcta. Folios, RFC, montos y estatus reportados.\n"
-"Asegurese                 de que no este reportando folios, que no pertenecen a facturas                 electronicas (se pueden eliminar directamente en el archivo)                .\n"
-"TIP: Recuerde que este archivo tambien contiene folios de                 nota de credito."
+msgstr "Abra el archivo y verfique que la información, este correcta. Folios, RFC, montos y estatus reportados.\n"
+"Asegurese de que no este reportando folios, que no pertenecen a facturas electrónicas (se pueden eliminar directamente en el archivo).\n"
+"TIP: Recuerde que este archivo también contiene folios de nota de crédito."
 
 #. module: l10n_mx_facturae_base
 #: field:account.invoice,fname_invoice:0
@@ -525,7 +525,7 @@ msgstr "Pac"
 #: code:addons/l10n_mx_facturae_base/invoice.py:1415
 #, python-format
 msgid "Press in the button  'Upload File'"
-msgstr "Presione el boton  'Subir Archivo'"
+msgstr "Presione el botón 'Subir Archivo'"
 
 #. module: l10n_mx_facturae_base
 #: help:wizard.invoice.facturae.txt.v6,date_end:0
@@ -606,7 +606,7 @@ msgstr "CFD-I Cadena Original"
 #. module: l10n_mx_facturae_base
 #: help:facturae.config,vat:0
 msgid "Federal Register of Causes"
-msgstr "REgistro Federal de Contribuyentes"
+msgstr "Registro Federal de Contribuyentes"
 
 #. module: l10n_mx_facturae_base
 #: help:account.invoice,cadena_original:0
@@ -643,7 +643,7 @@ msgstr "Arrendamiento de oficina"
 #. module: l10n_mx_facturae_base
 #: field:wizard.invoice.facturae.txt.v6,facturae:0
 msgid "File Electronic Invoice's"
-msgstr "Archivos de las Facturas Electronicas"
+msgstr "Archivos de las Facturas Electrónicas"
 
 #. module: l10n_mx_facturae_base
 #: field:wizard.invoice.facturae.txt.v6,year:0
@@ -655,7 +655,7 @@ msgstr "Año"
 #: code:addons/l10n_mx_facturae_base/invoice.py:982
 #, python-format
 msgid "Only can issue electronic invoice to customers.!"
-msgstr "Unicamente se pueden emitir Facturas Electronicas a clientes.!"
+msgstr "Únicamente se pueden emitir Facturas Electrónicas a clientes.!"
 
 #. module: l10n_mx_facturae_base
 #: help:wizard.invoice.facturae.txt.v6,date_start:0
@@ -671,5 +671,5 @@ msgstr "Dirección Incompleta!"
 #. module: l10n_mx_facturae_base
 #: model:ir.actions.act_window,name:l10n_mx_facturae_base.action_config_invoice_electronic
 msgid "Configure Electronic Invoice"
-msgstr "Configuración Factura Electronica"
+msgstr "Configuración Factura Electrónica"
 

@@ -72,7 +72,7 @@ msgstr "Fecha Nómina"
 #. module: l10n_mx_payroll_base
 #: help:hr.payslip,cfdi_cadena_original:0
 msgid "Original String used in the electronic payroll"
-msgstr "Cadena Original utilizada el la nómina electronica"
+msgstr "Cadena Original utilizada el la nómina electrónica"
 
 #. module: l10n_mx_payroll_base
 #: model:ir.actions.act_window,name:l10n_mx_payroll_base.action_view_attachment_payslip
@@ -96,7 +96,7 @@ msgstr "Pac utilizado para firmar la nómina"
 #: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:588
 #, python-format
 msgid "Not captured a CERTIFICATE file in format PEM, in                         the company!"
-msgstr "No se capturo el archivo del CERTIFICADO .PEM en la compañia!"
+msgstr "No se capturo el archivo del CERTIFICADO .PEM en la compañía!"
 
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,cfdi_fecha_timbrado:0
@@ -140,7 +140,7 @@ msgstr "PAGO NÓMINA"
 #: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:600
 #, python-format
 msgid "Not captured a KEY file in format PEM, in the company!"
-msgstr "No se ha capturado el archivo KEY .PEM en la compañia!"
+msgstr "No se ha capturado el archivo KEY .PEM en la compañía!"
 
 #. module: l10n_mx_payroll_base
 #: help:hr.payslip,cfdi_sello:0
@@ -178,7 +178,7 @@ msgstr "Revise la información de la nómina, la validez del certificado y que e
 #. module: l10n_mx_payroll_base
 #: help:hr.payslip,company_emitter_id:0
 msgid "This company will be used as emitter company in             the electronic payroll"
-msgstr "Esta compañia será utilizada como compañia emisora de la nómina electronica"
+msgstr "Esta compañía será utilizada como compañía emisora de la nómina electrónica"
 
 #. module: l10n_mx_payroll_base
 #: model:ir.model,name:l10n_mx_payroll_base.model_hr_payslip
@@ -201,7 +201,7 @@ msgstr "Quincenal"
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,company_emitter_id:0
 msgid "Company Emitter             Payroll"
-msgstr "Compañia emisora de la nómina"
+msgstr "Compañía emisora de la nómina"
 
 #. module: l10n_mx_payroll_base
 #: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:649
@@ -212,7 +212,7 @@ msgstr "No existe arhivo [%s]. !"
 #. module: l10n_mx_payroll_base
 #: help:hr.payslip,cfdi_folio_fiscal:0
 msgid "Folio used in the electronic payroll"
-msgstr "Folio utilizado en la nómina electronica"
+msgstr "Folio utilizado en la nómina electrónica"
 
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,schedule_pay:0
@@ -222,7 +222,7 @@ msgstr "Pago Planificado"
 #. module: l10n_mx_payroll_base
 #: view:hr.payslip:0
 msgid "Generic Product"
-msgstr "Producto Generico"
+msgstr "Producto Genérico"
 
 #. module: l10n_mx_payroll_base
 #: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:272
@@ -239,7 +239,7 @@ msgstr "Dirección emisora de la nómina"
 #. module: l10n_mx_payroll_base
 #: help:hr.payslip,cfdi_fecha_timbrado:0
 msgid "Date when is stamped the electronic payroll"
-msgstr "Fecha en que fue firmada la nómina electronica"
+msgstr "Fecha en que fue firmada la nómina electrónica"
 
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,approval_id:0
