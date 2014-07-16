@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+        
+        <!-- 
+        =====================================================
+        TASK STAGE: Testing Leader
+        =====================================================
+        -->
+            <record id="project_sent_customer_email" model="project.task.type">
+                <field name="sequence">2</field>
+                <field name="name">Sent Customer Mail</field>
+                <field name="state">draft</field>
+                <field name="case_default" eval="True"/>
+            </record>
+        
+    </data>
+</openerp>

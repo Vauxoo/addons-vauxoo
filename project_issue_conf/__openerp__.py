@@ -44,7 +44,10 @@
         "demo/project_issue_conf_demo.xml",
         ],
     "data" : [
-        "data/mail_server_data.xml"
+        "data/mail_server_data.xml",
+        "data/email_template_data.xml",
+        "data/issue_conf_data.xml",
+        "view/project_issue_send_mail_view.xml",
         ],
     "test": [],
     "installable" : True,

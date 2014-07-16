@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+        <!--Email template issue-->
+        <record model="email.template" id="email_template_notification">
+            <field name="name">Notification Issues</field>
+            <field name="model_id" search="[('model','=','project.issue')]" model="ir.model"/>
+            <field name="email_from">${object.company_id.name} &lt;${(object.company_id.email or user.email)|safe}&gt;</field>
+            <field name="email_to">${object.email_from|safe}</field>
+            <field name="body_html">Alguno de nuestros colaboradores atendera su incidencia</field>
+            <field name="subject">Automatic response from issue &lt;${object.name|safe}&gt;</field>
+        </record>
+        
+    </data>
+</openerp>

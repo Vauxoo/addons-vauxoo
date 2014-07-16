@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+  <data>
+    <!-- Vista -->
+    <record model="ir.ui.view" id="view_issue_send_ticket_customer_form">
+      <field name="name">view.issue.send.ticket.customer.form</field>
+      <field name="model">project.issue</field>
+      <field name="inherit_id" ref="project_issue.project_issue_form_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//button[@name='case_cancel']" position="after">
+            <button name="send_tickect_customer" string="Send ticket customer" type="object"
+            attrs="{'invisible':['|', '|', ('user_id','=',False), ('project_id','=',False)]}"/>
+        </xpath>
+      </field>
+   </record>
+
+  </data>
+</openerp>
