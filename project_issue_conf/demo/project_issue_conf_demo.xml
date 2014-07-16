@@ -17,7 +17,6 @@
             <field name="server">imap.googlemail.com</field>
             <field name="port">993</field>
             <field name="is_ssl">1</field>
-            <field name="user">callback@vauxoo.com</field>
         </record>
         
     </data>

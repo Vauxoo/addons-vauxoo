@@ -8,7 +8,6 @@
             <field name="server">imap.googlemail.com</field>
             <field name="port">993</field>
             <field name="is_ssl">1</field>
-            <field name="user">soporte@vauxoo.com</field>
             <field name="object_id" search="[('model','=','project.issue')]" model="ir.model"/>
         </record>
         
