@@ -29,39 +29,6 @@ from openerp.tools.translate import _
 class project_issue(osv.osv):
     _inherit = "project.issue"
     
-    def send_mail_notification(self, cr, uid, ids, context=None):
-        '''
-        Send mail automatically to change issue to Send Mail Customer.
-        '''
-        if context is None:
-            context = {}
-        ctx = {}
-        if ids.get('stage_id', False):
-            type = self.pool.get('project.task.type').read(cr, uid, ids['stage_id'][0], ['name'])
-            if type.get('name', False) == 'Sent Customer Mail':
-                self.send_mail_issue(cr, uid, [ids.get('id', [])], context=context)
-        
-    def send_mail_issue(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        context.update({'active_model': 'project_issue', 'active_ids': ids, 'active_id': ids[0]})
-        tmp_id = self.pool.get('email.template').search(cr, uid, [(
-                    'model_id.model', '=', self._name),
-                    ], limit=1, context=context)
-        if tmp_id:
-            mail_compose_message_pool = self.pool.get('mail.compose.message')
-            data = self.browse(cr, uid, ids[0], context=context)
-            message = mail_compose_message_pool.onchange_template_id(
-                cr, uid, [], template_id=tmp_id[0], composition_mode=None,
-                model = self._name, res_id = data.id, context=context)
-            mssg = message.get('value', False)
-            followers = [x.id for x in data.message_follower_ids]
-            mssg.get('partner_ids', {}).extend(followers)
-            mssg.update({'model': 'project.issue'})
-            mssg_id = mail_compose_message_pool.create(cr, uid, mssg, context=context)
-            state = mail_compose_message_pool.send_mail(cr, uid, [mssg_id], context=context)
-        return False
-    
     def send_tickect_customer(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
@@ -87,4 +54,16 @@ class project_issue(osv.osv):
             'context': ctx,
         }
         
-    _track = {'stage_id': {'project.mt_task_stage': send_mail_notification, }}
+class mail_compose_message(osv.Model):
+    _inherit = 'mail.compose.message'
+
+    def send_mail(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        if context.get('active_model', '') == 'project.issue' and context.get('active_id', False):
+            proj_type_obj = self.pool.get('project.task.type')
+            stage_ids = proj_type_obj.search(cr, uid, [('name', '=', 'Sent Customer Mail')], context=context)
+            if stage_ids:
+                self.pool.get('project.issue').write(cr, uid, context.get('active_id'),
+                    {'stage_id': stage_ids[0],}, context=context)
+        return super(mail_compose_message, self).send_mail(cr, uid, ids, context=context)
