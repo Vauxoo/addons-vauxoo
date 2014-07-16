@@ -26,7 +26,7 @@
 ##############################################################################
 
 {
-    "name" : "Journal Type",
+    "name" : "AccountingE Journal Type",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
