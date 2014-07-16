@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+        <record model="ir.ui.view" id="email_compose_message_wizard_form_inherit02">
+            <field name="name">email.compose.message.wizard.form.inherit02</field>
+            <field name="model">mail.compose.message</field>
+            <field name="inherit_id" ref="mail.email_compose_message_wizard_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@groups='base.group_user']" position="replace">
+                    <div groups="base.group_user" invisible="context.get('mail_compose_log', False)">
+                        <field name="partner_ids" widget="many2many_tags_email" placeholder="Add contacts to notify..."
+                                context="{'force_email':True, 'show_email':True}"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</openerp>

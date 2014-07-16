@@ -422,6 +422,15 @@ class project_task(osv.Model):
             if categs.categ_ids:
                 v['categ_ids'] = [cat.id for cat in categs.categ_ids]
         return {'value': v}
+        
+    def case_close(self, cr, uid, ids, context=None):
+        """ Closes Task inherit for write date now"""
+        res = super(project_task, self).case_close(cr, uid, ids, context=context)
+        if not isinstance(ids, list): ids = [ids]
+        for task in self.browse(cr, uid, ids, context=context):
+            date_end = fields.datetime.now()
+            self.write(cr, uid, [task.id], {'date_end': date_end}, context=context)
+        return res
 
     _columns = {
         'userstory_id': fields.many2one('user.story', 'User Story',
