@@ -24,7 +24,7 @@
             <field name="view_mode">form</field>
             <field name="view_id" ref="view_forward_mail"/>
             <field name="target">new</field>
-            <field name="multi">True</field>
+            <field name="multi"></field>
         </record>
 
         <record model="ir.values" id="forward_mail_mail">
