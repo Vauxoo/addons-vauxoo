@@ -12,7 +12,6 @@ msgstr ""
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-<<<<<<< TREE
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
@@ -25,95 +24,6 @@ msgstr "Link del certificado"
 #: field:ir.attachment.facturae.mx,msj:0
 msgid "Last Message"
 msgstr "Último mensaje"
-=======
-"Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-06-28 06:06+0000\n"
-"X-Generator: Launchpad (build 17077)\n"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:133
-#: selection:ir.attachment.facturae.mx,state:0
-#, python-format
-msgid "Confirmed"
-msgstr "Confirmado"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: selection:ir.attachment.facturae.mx,state:0
-msgid "Sent Customer"
-msgstr "Enviado al cliente"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:164
-#, python-format
-msgid "Attached Successfully XML CFD 2.2"
-msgstr "XML CFD 2.2 adjuntado exitosamente"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: view:ir.attachment.facturae.mx:0
-msgid "Confirm"
-msgstr "Confirmar"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:487
-#, python-format
-msgid "Unknow cfdi driver for %s"
-msgstr ""
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:423
-#, python-format
-msgid "Send Backup\n"
-msgstr "Envia Backup\n"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: model:ir.ui.menu,name:l10n_mx_ir_attachment_facturae.menu_email_template_config
-msgid "l10n_mx Email Template"
-msgstr "l10n_mx Email Template"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: help:ir.attachment.facturae.mx,type:0
-msgid "Type of Electronic Invoice"
-msgstr "Tipo de factura electronica"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:401
-#, python-format
-msgid "The customer %s does not have mail"
-msgstr "El Cliente  %s no tiene email"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:557
-#, python-format
-msgid "You can not remove an attachment of an invoice"
-msgstr "Usted no puedo eliminar el adjunto de una factura"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: field:ir.attachment.facturae.mx,file_input:0
-#: help:ir.attachment.facturae.mx,file_input:0
-#: field:ir.attachment.facturae.mx,file_input_index:0
-msgid "File input"
-msgstr "Archivo de entrada"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: field:ir.attachment.facturae.mx,message_follower_ids:0
-msgid "Followers"
-msgstr "Seguidores"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: help:ir.attachment.facturae.mx,file_xml_sign_index:0
-msgid "File XML sign index"
-msgstr ""
-
-#. module: l10n_mx_ir_attachment_facturae
-#: selection:ir.attachment.facturae.mx,state:0
-msgid "Draft"
-msgstr "Borrador"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: help:ir.attachment.facturae.mx,file_pdf:0
-msgid "Report PDF generated for the electronic Invoice"
-msgstr "Reporte PDF generado por la factura electronica"
->>>>>>> MERGE-SOURCE
 
 #. module: l10n_mx_ir_attachment_facturae
 #: view:l10n.mx.email.config.settings:0
@@ -777,44 +687,6 @@ msgid "Apply"
 msgstr "Aplicar"
 
 #. module: l10n_mx_ir_attachment_facturae
-<<<<<<< TREE
 #: field:ir.attachment.facturae.mx,cfdi_no_certificado:0
 msgid "CFD-I Certificate"
 msgstr "CFD-I Certificado"
-
-=======
-#: view:ir.attachment.facturae.mx:0
-msgid "Send to Backup"
-msgstr "Enviar a respaldo"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: model:ir.model,name:l10n_mx_ir_attachment_facturae.model_ir_attachment
-msgid "ir.attachment"
-msgstr "ir.attachment"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:398
-#, python-format
-msgid "This user does not have mail"
-msgstr "Este usuario no tiene un email"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: help:ir.attachment.facturae.mx,invoice_id:0
-msgid "Invoice to which it belongs this attachment"
-msgstr ""
-
-#. module: l10n_mx_ir_attachment_facturae
-#: model:ir.actions.act_window,name:l10n_mx_ir_attachment_facturae.act_invoice_attachment
-msgid "Attachment Factura E MX"
-msgstr ""
-
-#. module: l10n_mx_ir_attachment_facturae
-#: selection:ir.attachment.facturae.mx,state:0
-msgid "Sent Backup"
-msgstr ""
-
-#. module: l10n_mx_ir_attachment_facturae
-#: help:ir.attachment.facturae.mx,attachment_email:0
-msgid "Email receptor, you can set more that a email separated by a comma(,)"
-msgstr "Correo receptor, usted puede agregar varios correos separados por coma (,)"
->>>>>>> MERGE-SOURCE
