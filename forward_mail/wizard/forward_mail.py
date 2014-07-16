@@ -44,8 +44,8 @@ class forward_mail(osv.osv_memory):
                     ('res_id', '=', mail.res_id),
                     ], context=context)
                     
-                partners_to_notify |= set(fo.partner_id.id\
-                        for fo in partner_follower.browse(cr, SUPERUSER_ID, fol_ids, context=context))
+                partners_to_notify |= set( fo.partner_id.id\
+                        for fo in partner_follower.browse(cr, SUPERUSER_ID, fol_ids, context=context) if fo.partner_id.email )
                 mail_pool.send(cr, uid, [mail.id], recipient_ids=partners_to_notify, context=context)
                 
         return True
