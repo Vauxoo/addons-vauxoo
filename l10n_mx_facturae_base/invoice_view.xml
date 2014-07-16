@@ -7,8 +7,28 @@
             name="Attachment Facturae"
             res_model="ir.attachment.facturae.mx"
             src_model="account.invoice"
+		/>
 
-            />
-        
+        <record  model="ir.ui.view" id="account_invoice_print_sent_butt">
+            <field name="name">account.invoice.print.sent.butt</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="cfdi_check" invisible='True'></field>
+                    <field name="attachment_check" invisible='True'></field>
+                </xpath>
+                <xpath expr="//button[@name='action_invoice_sent']" position="attributes">
+                    <attribute name="attrs">{'invisible':['|',('sent','=',True), '|', ('state', '!=', 'open'),('cfdi_check','&lt;&gt;', False)]}</attribute>
+                </xpath>
+                <xpath expr="//button[@name='invoice_print']" position="attributes">
+                    <attribute name="attrs">{'invisible':['|',('sent','=',True), '|', ('state', '!=', 'open'),('cfdi_check','&lt;&gt;', False)]}</attribute>
+                </xpath>
+                <xpath expr="//button[@name='invoice_cancel']" position="after">
+                    <button name="invoice_attachment_view" type="object" attrs="{'invisible':['|', ('attachment_check', '=', False), ('cfdi_check', '=', False)]}" string="Electronic Invoice Attachment MX"/>
+                </xpath>
+            </field>
+        </record>
+
     </data>
 </openerp>

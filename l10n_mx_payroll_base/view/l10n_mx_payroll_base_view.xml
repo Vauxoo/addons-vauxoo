@@ -2,14 +2,6 @@
 <openerp>
     <data>
 
-        <act_window
-            context="{'search_default_id_source': active_id, 'default_id_source': active_id, 'search_default_model_source': 'hr.payslip'}"
-            id="act_payroll_attachment"
-            name="Attachment Payroll"
-            res_model="ir.attachment.facturae.mx"
-            src_model="hr.payslip"
-            />
-
         <record model="ir.ui.view" id="l10n_mx_hr_payslip_view">
             <field name="name">l10n.mx.hr.payslip.view</field>
             <field name="model">hr.payslip</field>
@@ -24,6 +16,8 @@
                 </xpath>
                 <xpath expr="//field[@name='name']" position="after">
                     <field name="pay_method_id"/>
+                    <field name="cfdi_check" invisible='True'></field>
+                    <field name="attachment_check" invisible='True'></field>
                 </xpath>
                 <xpath expr="//separator[@string='Worked Days']" position="before">
                     <separator string="Generic Product"/>
@@ -40,7 +34,9 @@
                 <xpath expr="//field[@name='number']" position="replace">
                     <field name="number"/>
                 </xpath>
-                    
+                <xpath expr="//button[@name='cancel_sheet']" position="after">
+                    <button name="payslip_attachment_view" type="object" attrs="{'invisible':['|', ('attachment_check', '=', False), ('cfdi_check', '=', False)]}" string="Payslip Attachment MX"/>
+                </xpath>
             </field>
         </record>
         
