@@ -232,6 +232,35 @@ class hr_payslip(osv.Model):
         #~ res[id] =  total
         #~ return res
 
+    def _get_cfdi_approval_payslip(self, cr, uid, ids, name, args, context=None):
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+        if context is None:
+            context = {}
+        result = {}
+        for payslip in self.browse(cr, uid, ids):
+            result[payslip.id] = payslip.journal_id and payslip.journal_id.sequence_id and payslip.journal_id.sequence_id.approval_id and  payslip.journal_id.sequence_id.approval_id.id or False
+        return result
+
+    def _get_cfdi_attch_payslip(self, cr, uid, ids, name, args, context=None):
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+        if context is None:
+            context = {}
+        result = {}
+        for payslip in self.browse(cr, uid, ids):
+            result[payslip.id] = self.pool.get('ir.attachment.facturae.mx').search(cr, uid, [('id_source', '=', payslip.id), ('model_source', '=', 'hr.payslip')]) or False
+        return result
+
+    def payslip_attachment_view(self, cr, uid, ids, context=None):
+        return {
+            'res_model': 'ir.attachment.facturae.mx',
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'context': "{'search_default_id_source': active_id, 'default_id_source': active_id, 'search_default_model_source': 'hr.payslip'}",
+            'type': 'ir.actions.act_window',
+        }
+
     _columns = {
         'journal_id': fields.many2one('account.journal', 'Journal', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'date_payslip': fields.date('Payslip Date'),
@@ -285,7 +314,8 @@ class hr_payslip(osv.Model):
         #~ 'perception_total' : fields.function(_perceptions, type='float', string='Perception Total', store=True),
         #~ 'total' : fields.function(_total, type='float', string='Total', store=True),
         'product_id': fields.many2one('product.product', 'Product', required=True),
-
+        'cfdi_check': fields.function(_get_cfdi_approval_payslip, type='boolean'),
+        'attachment_check': fields.function(_get_cfdi_attch_payslip, type='boolean'),
     }
 
     _defaults = {

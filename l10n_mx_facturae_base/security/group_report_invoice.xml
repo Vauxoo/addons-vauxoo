@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id="group_l10n_mx_facturae_print_inv_default" model="res.groups">
+            <field name="name">Account Invoice Report Default</field>
+        </record>
+
+        <record  model="ir.actions.report.xml" id="account.account_invoices">
+            <field name="groups_id" eval="[(6,0,[ref('group_l10n_mx_facturae_print_inv_default')])]"/>
+        </record>
+
+    </data>
+</openerp>
