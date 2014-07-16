@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_account_journal_view_form_inh_type">
+            <field name="name">view.account.journal.view.form.inh.type</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="l10n_mx_type"/>
+                </xpath>
+            </data>
+            </field>
+        </record>
+
+    </data>
+</openerp>
