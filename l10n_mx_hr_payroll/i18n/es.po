@@ -42,7 +42,7 @@ msgstr "Mensual"
 #. module: l10n_mx_hr_payroll
 #: field:res.company,employer_registration:0
 msgid "Employer Registration"
-msgstr "REgistro de empleado"
+msgstr "Registro de empleado"
 
 #. module: l10n_mx_hr_payroll
 #: help:hr.payslip.overtime,number_of_hours:0
