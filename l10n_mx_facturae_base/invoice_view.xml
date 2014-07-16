@@ -7,7 +7,7 @@
             name="Attachment Facturae"
             res_model="ir.attachment.facturae.mx"
             src_model="account.invoice"
-		/>
+        />
 
         <record  model="ir.ui.view" id="account_invoice_print_sent_butt">
             <field name="name">account.invoice.print.sent.butt</field>
