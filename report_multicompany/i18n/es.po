@@ -33,13 +33,13 @@ msgstr "Secuencia"
 #. module: report_multicompany
 #: view:report.multicompany:0
 msgid "Report Multicompany"
-msgstr "Reporte Multicompañia"
+msgstr "Reporte Multicompañía"
 
 #. module: report_multicompany
 #: view:report.multicompany:0
 #: field:report.multicompany,company_id:0
 msgid "Company"
-msgstr "Compañia"
+msgstr "Compañía"
 
 #. module: report_multicompany
 #: view:report.multicompany:0
@@ -49,13 +49,13 @@ msgstr "Agrupar por..."
 #. module: report_multicompany
 #: help:report.multicompany,report_id:0
 msgid "This report template will be assigned for electronic invoicing in your company"
-msgstr "Esta plantilla de reporte será asignada para el reporte de FacturaE de la compañia"
+msgstr "Esta plantilla de reporte será asignada para el reporte de FacturaE de la compañía"
 
 #. module: report_multicompany
 #: model:ir.actions.act_window,name:report_multicompany.report_multicompany_list_action
 #: model:ir.ui.menu,name:report_multicompany.report_multicompany_menu
 msgid "Report Multicompany Settings"
-msgstr "Configuración del reporte multicompañias"
+msgstr "Configuración del reporte multicompañías"
 
 #. module: report_multicompany
 #: view:report.multicompany:0
@@ -66,7 +66,7 @@ msgstr "Modelo"
 #. module: report_multicompany
 #: view:report.multicompany:0
 msgid "Search Report Multicompany"
-msgstr "Buscar reporte multicompañia"
+msgstr "Buscar reporte multicompañía"
 
 #. module: report_multicompany
 #: view:report.multicompany:0
