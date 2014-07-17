@@ -11,5 +11,19 @@
                 </xpath>
             </field>
         </record>
+        
+        <record model="ir.ui.view" id="view_project_task_form2_inherit_onchange">
+            <field name="name">view.project.task.form2.inherit_onchange</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@string='Description']/field[@name='work_ids']/tree[@string='Task Work']/field[@name='hours']" position="replace">
+                    <field name="hours" widget="float_time" sum="Spent Hours" on_change="onchange_hours(hours)"/>
+                </xpath>
+                <xpath expr="//notebook/page[@string='Description']/field[@name='work_ids']/tree[@string='Task Work']/field[@name='date']" position="replace">
+                    <field name="date" on_change="onchange_date(date)"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
