@@ -34,7 +34,7 @@ class account_journal(osv.Model):
     _columns = {
         'l10n_mx_type': fields.selection([
             ('receipts','Receipts'),
-            ('Expenses','Expenses'),
+            ('expenses','Expenses'),
             ('journal','Journal'),
             ],'AccountingE Type', required=False,
             help="This field corresponds to the attribute required by \

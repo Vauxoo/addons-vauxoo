@@ -18,6 +18,7 @@
             <field name="name">Receipts Journal Type</field>
             <field name="code">JTR</field>
             <field name="type">sale</field>
+            <field name="l10n_mx_type">receipts</field>
             <field name="update_posted" eval="True"/>
             <field name="analytic_journal_id" ref="account.cose_journal_sale"/>
         </record>
@@ -38,6 +39,7 @@
             <field name="name">Expenses Journal Type</field>
             <field name="code">JTE</field>
             <field name="type">purchase</field>
+            <field name="l10n_mx_type">expenses</field>
             <field name="update_posted" eval="True"/>
             <field name="analytic_journal_id" ref="account.exp"/>
         </record>
@@ -58,6 +60,7 @@
             <field name="name">General Journal Type</field>
             <field name="code">JTJ</field>
             <field name="type">general</field>
+            <field name="l10n_mx_type">journal</field>
             <field name="update_posted" eval="True"/>
             <field name="analytic_journal_id" ref="account.sit"/>
         </record>
