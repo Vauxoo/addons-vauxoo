@@ -38,7 +38,7 @@
                     <sheet string="PAC Vauxoo">
                         <group>
                             <field name="name"/>
-                            <field name="res_pac"/>
+                            <field name="res_pac" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_manager"/>
                             <field name="company_id" groups="base.group_multi_company"/>
                             <field name="file_input"/>
                             <field name="file_xml_sign"/>
@@ -63,7 +63,7 @@
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
-                        <field name="message_ids" widget="mail_thread"/>
+                        <field name="message_ids" widget="mail_thread" readonly="1"/>
                     </div>
                 </form>
             </field>
