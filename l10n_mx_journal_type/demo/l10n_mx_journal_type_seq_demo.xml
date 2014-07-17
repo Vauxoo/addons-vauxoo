@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        
+        <record id="l10n_mx_journal_type_seq_0" model="ir.sequence">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="name">Receipts Sequence Journal Type</field>
+            <field name="active" eval="True"/>
+            <field name="padding">0</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">no_gap</field>
+        </record>
+
+        <record id="l10n_mx_journal_type_0" model="account.journal">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="sequence_id" ref="l10n_mx_journal_type_seq_0"/>
+            <field name="name">Receipts Journal Type</field>
+            <field name="code">JTR</field>
+            <field name="type">sale</field>
+            <field name="update_posted" eval="True"/>
+            <field name="analytic_journal_id" ref="account.cose_journal_sale"/>
+        </record>
+        
+        <record id="l10n_mx_journal_type_seq_1" model="ir.sequence">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="name">Expenses Sequence Journal Type</field>
+            <field name="active" eval="True"/>
+            <field name="padding">0</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">no_gap</field>
+        </record>
+
+        <record id="l10n_mx_journal_type_1" model="account.journal">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="sequence_id" ref="l10n_mx_journal_type_seq_1"/>
+            <field name="name">Expenses Journal Type</field>
+            <field name="code">JTE</field>
+            <field name="type">purchase</field>
+            <field name="update_posted" eval="True"/>
+            <field name="analytic_journal_id" ref="account.exp"/>
+        </record>
+        
+        <record id="l10n_mx_journal_type_seq_2" model="ir.sequence">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="name">General Sequence Journal Type</field>
+            <field name="active" eval="True"/>
+            <field name="padding">0</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">no_gap</field>
+        </record>
+
+        <record id="l10n_mx_journal_type_2" model="account.journal">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="sequence_id" ref="l10n_mx_journal_type_seq_2"/>
+            <field name="name">General Journal Type</field>
+            <field name="code">JTJ</field>
+            <field name="type">general</field>
+            <field name="update_posted" eval="True"/>
+            <field name="analytic_journal_id" ref="account.sit"/>
+        </record>
+        
+    </data>
+</openerp>

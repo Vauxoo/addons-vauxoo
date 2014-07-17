@@ -40,6 +40,7 @@
     "depends" : ["account",
         ],
     "demo" : [
+        "demo/l10n_mx_journal_type_seq_demo.xml",
         ],
     "data" : [
         "view/account_journal_view.xml",
