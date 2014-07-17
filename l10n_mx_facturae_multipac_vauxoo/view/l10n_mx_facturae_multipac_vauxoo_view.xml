@@ -13,6 +13,7 @@
                     <field name="cfdi_fecha_timbrado"/>
                     <field name="cfdi_fecha_cancelacion"/>
                     <field name="attachment_email"/>
+                    <field name="user_id" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_manager"/>
                 </search>
             </field>
         </record>
@@ -57,6 +58,7 @@
                                 <field name="cfdi_fecha_timbrado" readonly="1"/>
                                 <field name="cfdi_fecha_cancelacion" readonly="1"/>
                                 <field name="attachment_email" attrs="{'readonly':[('state','==','cancel')]}"/>
+                                <field name="user_id" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_manager"/>
                             </group>
                         </page>
                     </notebook>
@@ -80,6 +82,7 @@
                     <field name="cfdi_fecha_cancelacion"/>
                     <field name="attachment_email"/>
                     <field name="state"/>
+                    <field name="user_id" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_manager"/>
                 </tree>
             </field>
         </record>
