@@ -165,7 +165,7 @@ class message_post_show_all(osv.Model):
                                                            n_obj, field,
                                                            vals, context)
                         if mes and mes != '<p>':
-                            message = id_line != val[1] and _('%s\n<h3>Line %s</h3>' % (message, val[1]))
+                            message = id_line != val[1] and _('%s\n<h3>Line %s</h3>' % (message, val[1])) or message
                             message = '%s\n%s' % (message, mes)
                             id_line = val[1]
 
