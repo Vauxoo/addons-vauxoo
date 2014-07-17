@@ -59,7 +59,7 @@ class message_post_show_all(osv.Model):
         model_obj = self.pool.get(model)
         model_brw = model_obj.browse(cr, uid, ids, context=context)
         if 'many2one' in type:
-            value = field and model_brw[field].name_get() or ''
+            value = field and model_brw[field] and model_brw[field].name_get() or ''
             value = value and value[0][1]
         elif 'many2many' in type:
             value = [i.id for i in model_brw[field]]
@@ -82,6 +82,7 @@ class message_post_show_all(osv.Model):
         message = '<ul>'
         obj = self.pool.get(n_obj)
         r_name = obj._rec_name
+        mes = False
         for val in records:
             if val and info.get(val[0], False):
                 if val[0] == 0:
@@ -131,6 +132,7 @@ class message_post_show_all(osv.Model):
 
                 elif val[0] == 1:
                     vals = val[2]
+                    id_line = 0
                     for field in vals:
                         if obj._columns[field]._type in ('one2many',
                                                          'many2many'):
@@ -150,7 +152,6 @@ class message_post_show_all(osv.Model):
                                                          N_OBJ,
                                                          LAST,
                                                          context)
-                            message = '%s\n%s' % (message, mes)
 
                         elif obj._columns[field]._type == 'many2one' :
                             mes = self.prepare_many2one_info(cr, uid, val[1],
@@ -158,13 +159,15 @@ class message_post_show_all(osv.Model):
                                                              field,
                                                              vals,
                                                              context)
-                            message = '%s\n%s' % (message, mes)
 
                         elif 'many' not in obj._columns[field]._type:
                             mes = self.prepare_simple_info(cr, uid, val[1],
                                                            n_obj, field,
                                                            vals, context)
+                        if mes and mes != '<p>':
+                            message = id_line != val[1] and _('%s\n<h3>Line %s</h3>' % (message, val[1]))
                             message = '%s\n%s' % (message, mes)
+                            id_line = val[1]
 
 
         message = '%s\n</ul>' % message
@@ -186,7 +189,7 @@ class message_post_show_all(osv.Model):
         new_value = model_brw.name_get()
         new_value = new_value and new_value[0][1]
 
-        if not last_value == new_value:
+        if not (last_value == new_value) and any((new_value, last_value)):
             message = u'<li><b>%s<b>: %s → %s</li>' % \
                                         (obj._columns[field].string,
                                          last_value,
@@ -205,7 +208,7 @@ class message_post_show_all(osv.Model):
                                          obj._columns[field]._type,
                                          context)
 
-        if not str(last_value) == str(vals[field]):
+        if not (unicode(last_value) == unicode(vals[field])) and any((last_value, vals[field])):
             message = u'<li><b>%s<b>: %s → %s</li>' % \
                                         (obj._columns[field].string,
                                          last_value,
@@ -231,7 +234,7 @@ class message_post_show_all(osv.Model):
                     N_OBJ = self._columns[field]._obj
                     message = self.prepare_many_info(cr, uid, id, vals[field],
                                                      ST, N_OBJ, LAST, context)
-                    body = '%s\n%s: %s' % (body, ST, message)
+                    body = len(message.split('\n'))  > 2 and '%s\n%s: %s' % (body, ST, message)
                 elif self._columns[field]._type == 'many2one' :
                     message = self.prepare_many2one_info(cr, uid, id,
                                                          self._name,
@@ -246,8 +249,8 @@ class message_post_show_all(osv.Model):
                                                        vals, context)
                     body = '%s\n%s' % (body, message)
 
-            body = '%s\n</ul>' % body
-            message and \
+            body = body and '%s\n</ul>' % body
+            body and message and \
                    self.message_post(cr, uid, [id], body,
                                      _('Changes in Fields'))
         res = super(message_post_show_all, self).write(cr, uid, ids, vals,
