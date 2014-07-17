@@ -232,6 +232,35 @@ class hr_payslip(osv.Model):
         #~ res[id] =  total
         #~ return res
 
+    def _get_cfdi_approval_payslip(self, cr, uid, ids, name, args, context=None):
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+        if context is None:
+            context = {}
+        result = {}
+        for payslip in self.browse(cr, uid, ids):
+            result[payslip.id] = payslip.journal_id and payslip.journal_id.sequence_id and payslip.journal_id.sequence_id.approval_id and  payslip.journal_id.sequence_id.approval_id.id or False
+        return result
+
+    def _get_cfdi_attch_payslip(self, cr, uid, ids, name, args, context=None):
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+        if context is None:
+            context = {}
+        result = {}
+        for payslip in self.browse(cr, uid, ids):
+            result[payslip.id] = self.pool.get('ir.attachment.facturae.mx').search(cr, uid, [('id_source', '=', payslip.id), ('model_source', '=', 'hr.payslip')]) or False
+        return result
+
+    def payslip_attachment_view(self, cr, uid, ids, context=None):
+        return {
+            'res_model': 'ir.attachment.facturae.mx',
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'context': "{'search_default_id_source': active_id, 'default_id_source': active_id, 'search_default_model_source': 'hr.payslip'}",
+            'type': 'ir.actions.act_window',
+        }
+
     _columns = {
         'journal_id': fields.many2one('account.journal', 'Journal', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'date_payslip': fields.date('Payslip Date'),
@@ -251,14 +280,14 @@ class hr_payslip(osv.Model):
             change_default=True, help='Currency used in the payroll'),
         'approval_id' : fields.many2one('ir.sequence.approval', 'Approval'),
         'cfdi_cbb': fields.binary('CFD-I CBB'),
-        'cfdi_sello': fields.text('CFD-I Sello', help='Sign assigned by the SAT'),
-        'cfdi_no_certificado': fields.char('CFD-I Certificado', size=32,
+        'cfdi_sello': fields.text('CFD-I Stamp', help='Sign assigned by the SAT'),
+        'cfdi_no_certificado': fields.char('CFD-I Certificate', size=32,
                                            help='Serial Number of the Certificate'),
-        'cfdi_cadena_original': fields.text('CFD-I Cadena Original',
+        'cfdi_cadena_original': fields.text('CFD-I Original String',
                                             help='Original String used in the electronic payroll'),
-        'cfdi_fecha_timbrado': fields.datetime('CFD-I Fecha Timbrado',
+        'cfdi_fecha_timbrado': fields.datetime('CFD-I Date stamped',
                                                help='Date when is stamped the electronic payroll'),
-        'cfdi_folio_fiscal': fields.char('CFD-I Folio Fiscal', size=64,
+        'cfdi_folio_fiscal': fields.char('CFD-I Fiscal Folio', size=64,
                                          help='Folio used in the electronic payroll'),
         'date_payslip_cancel': fields.datetime('Date Payroll Cancelled',
             readonly=True, help='If the payroll is cancelled, save the date when was cancel'),
@@ -285,7 +314,8 @@ class hr_payslip(osv.Model):
         #~ 'perception_total' : fields.function(_perceptions, type='float', string='Perception Total', store=True),
         #~ 'total' : fields.function(_total, type='float', string='Total', store=True),
         'product_id': fields.many2one('product.product', 'Product', required=True),
-
+        'cfdi_check': fields.function(_get_cfdi_approval_payslip, type='boolean'),
+        'attachment_check': fields.function(_get_cfdi_attch_payslip, type='boolean'),
     }
 
     _defaults = {

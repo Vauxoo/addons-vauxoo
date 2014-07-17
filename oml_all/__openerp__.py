@@ -197,7 +197,7 @@
                 #~ "purchase_analytic_plans",#Error to fix
                 "purchase_double_validation",
                 "purchase_requisition",
-                "report_intrastat",
+                #"report_intrastat",
                 "report_webkit",
                 "resource",
                 #~ "sale",

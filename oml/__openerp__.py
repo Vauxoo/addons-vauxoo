@@ -71,6 +71,7 @@
                 "l10n_mx_facturae_pac_finkok",
                 "l10n_mx_cfdi_test",
                 "l10n_mx_journal_type",
+                "l10n_mx_validate_xml_sat",
                 ],
     "author" : "Vauxoo",
     "description" : """
