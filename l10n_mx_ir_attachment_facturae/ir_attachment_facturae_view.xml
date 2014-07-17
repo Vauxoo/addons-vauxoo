@@ -8,7 +8,6 @@
             <field name="arch" type="xml">
                 <search string="Attachment Factura-E">
                     <field name="name"/>
-                    <field name="identifier"/>
                     <field name="res_pac"/>
                     <field name="state"/>
                     <field name="id_source"/>
@@ -43,22 +42,35 @@
                             <field name="file_input"/>
                             <field name="file_xml_sign"/>
                             <field name="file_pdf"/>
-                            <field name="identifier"/>
                          </group>
                     <notebook>
                         <page string="General Information">
                             <group colspan="4">
-                                <field name="msj" invisible="1"/>
-                                <field name="last_date" invisible="1"/>
-                                <field name="date_print_report" invisible="1"/>
+                                <field name="attachment_email"/>
+                                <field name="cfdi_fecha_timbrado" readonly="1"/>
+                                <field name="cfdi_fecha_cancelacion" readonly="1"/>
                             </group>
                         </page>
                         <page string="Other info">
                             <group colspan="4">
-                                <field name="cfdi_fecha_timbrado" readonly="1"/>
-                                <field name="cfdi_fecha_cancelacion" readonly="1"/>
-                                <field name="attachment_email"/>
+                                <field name="msj" invisible="1"/>
+                                <field name="last_date" invisible="1"/>
+                                <field name="date_print_report" readonly="1"/>
+                                <field name="date_send_mail" readonly="1"/>
+                                <field name="company_id" readonly="1" groups="base.group_multi_company"/>
+                                <field name="company_emitter_id" readonly="1" groups="base.group_multi_company"/>
+                                <field name="model_source" readonly="1"/>
+                                <field name="id_source" readonly="1"/>
+                                <field name="journal_id" readonly="1"/>
+                                <field name="certificate_link" readonly="1" widget="url"/>
+                                <field name="cfdi_folio_fiscal" readonly="1"/>
+                                <field name="cfdi_no_certificado" readonly="1"/>
+                                <field name="cfdi_sello" readonly="1" invisible="1"/>
+                                <field name="cfdi_cadena_original" readonly="1" invisible="1"/>
                             </group>
+                        </page>
+                        <page string="Description">
+                            <field name="description"/>
                         </page>
                     </notebook>
                     </sheet>
@@ -75,7 +87,6 @@
             <field name="arch" type="xml">
                 <tree string="Attachment Factura-E">
                     <field name="name"/>
-                    <field name="identifier"/>
                     <field name="res_pac"/>
                     <field name="state"/>
                 </tree>

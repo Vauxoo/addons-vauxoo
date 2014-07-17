@@ -135,7 +135,7 @@ msgstr "Configuracion de la plantilla de correo"
 #. module: l10n_mx_ir_attachment_facturae
 #: view:ir.attachment.facturae.mx:0
 msgid "Send to Customer"
-msgstr "Enviado al cliente"
+msgstr "Enviar al cliente"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: field:ir.attachment.facturae.mx,type:0
@@ -509,3 +509,8 @@ msgstr ""
 #: selection:ir.attachment.facturae.mx,state:0
 msgid "Sent Backup"
 msgstr ""
+
+#. module: l10n_mx_ir_attachment_facturae
+#: help:ir.attachment.facturae.mx,attachment_email:0
+msgid "Email receptor, you can set more that a email separated by a comma(,)"
+msgstr "Correo receptor, usted puede agregar varios correos separados por coma (,)"
