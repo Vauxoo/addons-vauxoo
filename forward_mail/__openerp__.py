@@ -2,12 +2,10 @@
 # -*- encoding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) Vauxoo (<http://vauxoo.com>).
+#    Copyright (C) 2013 Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A.
-#    Planified by: Nhomar Hernandez
-#    Audited by: Vauxoo C.A.
+#    Coded by: vauxoo consultores (info@vauxoo.com)
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -23,18 +21,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Message Post Log",
-    "version" : "0.1",
-    "depends" : ['mail'],
-    "author" : "Vauxoo",
-    "description" : """
+    'name' : 'Forward Mail',
+    'version' : '1.1',
+    "website": "http://vauxoo.com",
+    "category": "Addons Vauxoo",
+    'author' : 'Vauxoo',
+    'description' : """
+Add wizard to forward mail in exception state
     """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "data" : [
-       'security/ir.model.access.csv',
+    'depends' : ['mail'],
+    'data': [
+        'view/forward_mail_view.xml'
         ],
     "active": False,
     "installable": True,
-
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
