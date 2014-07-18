@@ -28,6 +28,7 @@
     "name": "Vauxoo Account Amortization",
     "version": "0.1",
     "depends": [
+                "decimal_precision",
                 "account_asset",
                 "account_asset_date",
                ],

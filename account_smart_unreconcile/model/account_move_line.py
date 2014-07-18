@@ -53,8 +53,6 @@ class account_move_line(osv.Model):
                     cr, uid, aml_ids, 'auto', context=context)
 
         if rec_ids:
-            if opening_reconciliation:
-                obj_move_rec.write(cr, uid, rec_ids, {'opening_reconciliation': False})
             obj_move_rec.unlink(cr, uid, rec_ids)
 
         for part_rec_brw in obj_move_rec.browse(cr, uid, part_rec_ids,
@@ -67,7 +65,5 @@ class account_move_line(osv.Model):
                     cr, uid, aml_ids, 'auto', context=context)
 
         if part_rec_ids:
-            if opening_reconciliation:
-                obj_move_rec.write(cr, uid, part_rec_ids, {'opening_reconciliation': False})
             obj_move_rec.unlink(cr, uid, part_rec_ids)
         return True

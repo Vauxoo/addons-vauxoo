@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -32,7 +32,7 @@
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
     "data" : [
-       'security/ir.model.access.csv', 
+       'security/ir.model.access.csv',
         ],
     "active": False,
     "installable": True,

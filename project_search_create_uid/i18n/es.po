@@ -13,8 +13,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-06-25 06:12+0000\n"
-"X-Generator: Launchpad (build 17065)\n"
+"X-Launchpad-Export-Date: 2014-07-11 06:13+0000\n"
+"X-Generator: Launchpad (build 17111)\n"
 
 #. module: project_search_create_uid
 #: model:ir.model,name:project_search_create_uid.model_project_task
