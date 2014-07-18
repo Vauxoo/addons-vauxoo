@@ -119,6 +119,11 @@ msgid "If the payroll is cancelled, save the date when was cancel"
 msgstr "If the payroll is cancelled, save the date when was cancel"
 
 #. module: l10n_mx_payroll_base
+#: view:hr.payslip:0
+msgid "Payslip Attachment MX"
+msgstr "Adjunto de nómina MX"
+
+#. module: l10n_mx_payroll_base
 #: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:569
 #: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:581
 #, python-format
