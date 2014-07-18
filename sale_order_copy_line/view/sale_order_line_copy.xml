@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='order_line']/tree[@string='Sales Order Lines']/field[@name='price_subtotal']" position="after">
-                    <button name="sale_order_line_copy" attrs="{'invisible':[('state','!=','draft')]}" type="object"/>
+                    <button name="sale_order_line_copy" attrs="{'invisible':[('state','!=','draft')]}" type="object" icon="STOCK_COPY"/>
                 </xpath>
             </field>
         </record>
