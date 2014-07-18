@@ -30,6 +30,10 @@
     "author": "Vauxoo",
     "category": "Sale Order",
     "description" : """
+Sale Order Line Copy
+====================
+
+This module add the button in the sale order line for copy data.
 
     """,
     "website": "http://www.vauxoo.com/",
