@@ -33,15 +33,20 @@ class sale_order_line(osv.Model):
     
     def sale_order_line_copy(self, cr, uid, ids, context=None):
         data = self.copy_data(cr,uid,ids[0],context=context)
-        sale_order_id = self.create(cr, uid ,data , context=context)
-        return {
-            'type': 'ir.actions.act_window',
-            'name': _('Sales Order'),
-            'res_model': 'sale.order',
-            'res_id': data.get('order_id'),
-            'view_type': 'form',
-            'view_mode': 'form',
-            'target': 'current',
-            'nodestroy': True,
-        }
+        sale_order_obj = self.pool.get('sale.order')
+        data_sale_order = sale_order_obj.browse(cr, uid, data.get('order_id'))
+
+        if data_sale_order.state == 'draft':
+            sale_order_id = self.create(cr, uid ,data , context=context)
+            return {
+                'type': 'ir.actions.act_window',
+                'name': _('Sales Order'),
+                'res_model': 'sale.order',
+                'res_id': data.get('order_id'),
+                'view_type': 'form',
+                'view_mode': 'form',
+                'target': 'current',
+                'nodestroy': True,}
+        else:
+            raise osv.except_osv(_('Error!'), _("This sale order is not in draft state"))
     

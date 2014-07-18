@@ -35,10 +35,13 @@
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": ["base",
-                "sale",],
-    "demo": [],
-    "test": [],
-    "data": ["view/sale_order_line_copy.xml"],
+                "sale",
+                "sale_stock",],
+    "demo": ["demo/sale_order_demo.xml"],
+    "test": ["test/sale_order_copy_line_test.yml"],
+    "data": [
+    "security/sale_order_line_copy_group.xml",
+    "view/sale_order_line_copy.xml"],
     "installable": True,
     "active": False,
 }
