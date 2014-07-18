@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+    
+        <record id="l10n_facturae_groups_multipac_vauxoo_user_ir_rule" model="ir.rule">
+            <field name="name">Multipac Vauxoo User</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="groups" eval="[(6,0,[ref('l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_user')])]"/>
+            <field name="model_id" search="[('model','=','ir.attachment.facturae.mx')]" model="ir.model"/>
+            <field eval="False" name="global"/>
+            <field name="domain_force">[('user_id','=',user.id)]</field>
+        </record>
+
+    </data>
+</openerp>

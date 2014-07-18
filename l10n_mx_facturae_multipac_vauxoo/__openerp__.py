@@ -55,7 +55,8 @@
         "demo/l10n_mx_payroll_seq_demo.xml",
         ],
     "data" : ["view/l10n_mx_facturae_multipac_vauxoo_view.xml",
-                "security/ir.model.access.csv"
+                "security/ir.model.access.csv",
+                "security/l10n_mx_facturae_multipac_vauxoo_security.xml"
         ],
     "test" : [
         ],
