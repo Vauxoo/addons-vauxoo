@@ -1,0 +1,60 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* l10n_mx_payroll_risk_rank_contract
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-04 16:36+0000\n"
+"PO-Revision-Date: 2014-07-04 16:36+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_payroll_risk_rank_contract
+#: field:payroll.risk.rank.contract,code:0
+msgid "Code"
+msgstr "Código"
+
+#. module: l10n_mx_payroll_risk_rank_contract
+#: field:payroll.risk.rank.contract,name:0
+msgid "Description"
+msgstr "Descripción"
+
+#. module: l10n_mx_payroll_risk_rank_contract
+#: model:ir.model,name:l10n_mx_payroll_risk_rank_contract.model_hr_contract
+msgid "Contract"
+msgstr "Contrato"
+
+#. module: l10n_mx_payroll_risk_rank_contract
+#: model:ir.model,name:l10n_mx_payroll_risk_rank_contract.model_payroll_risk_rank_contract
+msgid "payroll.risk.rank.contract"
+msgstr "payroll.risk.rank.contract"
+
+#. module: l10n_mx_payroll_risk_rank_contract
+#: help:payroll.risk.rank.contract,code:0
+msgid "Number with which the SAT identified the class of risk."
+msgstr "Número con el que el SAT identifica la clase de riesgo."
+
+#. module: l10n_mx_payroll_risk_rank_contract
+#: help:payroll.risk.rank.contract,name:0
+msgid "Name of risks based on the catalog issued by the sat."
+msgstr "Nombre del riesgo basado en el catálogo emitido por el SAT."
+
+#. module: l10n_mx_payroll_risk_rank_contract
+#: field:hr.contract,risk_rank_id:0
+#: model:ir.actions.act_window,name:l10n_mx_payroll_risk_rank_contract.action_view_hr_payroll_risk_rank_contract_form
+#: model:ir.ui.menu,name:l10n_mx_payroll_risk_rank_contract.hr_payroll_regime
+#: view:payroll.risk.rank.contract:0
+msgid "Payroll Risk Rank"
+msgstr "Riesgos de trabajo Nómina"
+
+#. module: l10n_mx_payroll_risk_rank_contract
+#: help:hr.contract,risk_rank_id:0
+msgid "key According class in which the patterns must be registered in accordance to the activities they perform their employees, as provided in Article 196 of Regulation in Respect of Membership Classification Companies, collection and fiscal requirement.Catalogue published in the Internet portal of the SAT"
+msgstr "Clase de acuerdo a la clave en que los patrones deben estar registrados de acuerdo a las actividades que realizan sus empleador, conforme a lo dispuesto en el artículo 196 del reglamento en Materia de Afiliación Clasificación de Empresas, recolección y requerimientos funcionales. Catálogo publicado en el portal del SAT"
+
