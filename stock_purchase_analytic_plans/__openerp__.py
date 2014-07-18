@@ -24,22 +24,21 @@
 ###############################################################################
 
 {
-    'name': 'Stock Analytic Plans',
+    'name': 'Stock Purchase Analytic Plans',
     'version': '1.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
     'category': '',
     'description': '''
-Stock Analytic Plans
---------------------
+Stock Purchase Analytic Plans
+-----------------------------
 
 This module sets Analytic Distribution on the Journal Entry Lines when the
-Journal Entries are created because of Real Time Inventory Valuation.
+Journal Entries are created because of Real Time Inventory Valuation from an
+Stock Move originated from Purchase Order
 
 ''',
     'depends': [
-        'analytic',
-        'account_analytic_plans',
         'purchase_analytic_plans',
         ],
     'data': [
