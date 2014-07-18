@@ -34,10 +34,11 @@
     """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
-    "depends": [],
+    "depends": ["base",
+                "sale",],
     "demo": [],
     "test": [],
-    "data": [],
+    "data": ["view/sale_order_line_copy.xml"],
     "installable": True,
     "active": False,
 }
