@@ -539,6 +539,12 @@ msgstr ""
 msgid "RFC :"
 msgstr ""
 
+#. module: l10n_mx_facturae_base
+#: view:account.invoice:0
+msgid "Electronic Invoice Attachment MX"
+msgstr "Adjunto de Factura Electrónica MX"
+
+
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
 msgid "%) $"

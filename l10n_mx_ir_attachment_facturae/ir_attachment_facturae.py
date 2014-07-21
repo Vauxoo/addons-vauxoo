@@ -40,6 +40,7 @@ from pytz import timezone
 import pytz
 import time
 import codecs
+import re
 from datetime import datetime, timedelta
 try:
     from qrcode import *
@@ -107,19 +108,18 @@ class ir_attachment_facturae_mx(osv.Model):
 
     _columns = {
         'name': fields.char('Name', size=128, required=True, readonly=True,
-                            help='Name of attachment generated'),
+            states={'draft': [('readonly', False)]}, help='Name of attachment generated'),
         'company_id': fields.many2one('res.company', 'Company', readonly=True,
                                       help='Company to which it belongs this attachment'),
-        'file_input': fields.many2one('ir.attachment', 'File input',
-                                      readonly=True, help='File input'),
+        'file_input': fields.many2one('ir.attachment', 'File input', readonly=True, required=True,
+            states={'draft': [('readonly', False)]}, help='File input'),
         #~'file_input_index': fields.text('File input', help='File input index'),
         'file_xml_sign': fields.many2one('ir.attachment', 'File XML Sign',
                                          readonly=True, help='File XML signed'),
         'file_pdf': fields.many2one('ir.attachment', 'File PDF', readonly=True,
-                                    help='Report PDF generated for the electronic Invoice'),
+                                    help='Report PDF generated for the fiscal voucher'),
         'file_pdf_index': fields.text('File PDF Index',
                                       help='Report PDF with index'),
-        'identifier': fields.char('Identifier', size=128, ),
         'description': fields.text('Description'),
         'msj': fields.text('Last Message', readonly=True,
                            track_visibility='onchange',
@@ -131,8 +131,6 @@ class ir_attachment_facturae_mx(osv.Model):
             ('confirmed', 'Confirmed'),
             ('signed', 'Signed'),
             ('printable', 'Printable Format Generated'),
-            ('sent_customer', 'Sent Customer'),
-            ('sent_backup', 'Sent Backup'),
             ('done', 'Done'),
             ('cancel', 'Cancelled'), ],
             'State', readonly=True, required=True, help='State of attachments'),
@@ -149,32 +147,34 @@ class ir_attachment_facturae_mx(osv.Model):
             filters='*.key', help='This file .key is proportionate by the SAT'),
         'certificate_password': fields.char('Certificate Password', size=64,
             invisible=False, help='This password is proportionate by the SAT'),
-        'attachment_email': fields.char('Email', size=128, help='Email receptor'),
+        'attachment_email': fields.char('Email', size=240, help='Email receptor, you can set '\
+            'more that a email separated by a comma(,)'),
         'cfdi_folio_fiscal': fields.char('Folio Fiscal(UUID)', size=256, help='UUID the XML'),
         'model_source': fields.char('Source Model', size=128, help='Source Model'),
         'id_source': fields.integer('Source ID', required=False, help="Source ID"),
         'company_emitter_id': fields.many2one('res.company', 'Company emmiter'),
         'certificate_id': fields.many2one('res.company.facturae.certificate'),
         #~'cfdi_cbb': fields.binary('CFD-I CBB'),depreciado porque se crea desde funcion
-        'cfdi_sello': fields.text('CFD-I Sello', help='Sign assigned by the SAT'),
-        'cfdi_no_certificado': fields.char('CFD-I Certificado', size=32,
+        'cfdi_sello': fields.text('CFD-I Stamp', help='Sign assigned by the SAT'),
+        'cfdi_no_certificado': fields.char('CFD-I Certificate', size=32,
                                            help='Serial Number of the Certificate'),
-        'cfdi_cadena_original': fields.text('CFD-I Cadena Original',
-                                            help='Original String used in the electronic invoice'),
-        'cfdi_fecha_timbrado': fields.datetime('CFD-I Fecha Timbrado',
-                                               help='Date when is stamped the electronic invoice'),
-        'cfdi_fecha_cancelacion': fields.datetime('CFD-I Fecha Cancelacion',
-                                                  help='If the invoice is cancel, this field saved the date when is cancel'),
+        'cfdi_cadena_original': fields.text('CFD-I Original String',
+                                            help='Original String used in the fiscal voucher'),
+        'cfdi_fecha_timbrado': fields.datetime('CFD-I Date Stamped',
+                                               help='Date when is stamped the fiscal voucher'),
+        'cfdi_fecha_cancelacion': fields.datetime('CFD-I Cancellation Date',
+                                                  help='If the fiscal voucher is cancel, this field saved the date when is cancelIf the fiscal voucher is cancel, this field saved the date when is cancel'),
         'pac_id': fields.many2one('params.pac', 'Pac', help='Pac used in singned of the invoice'),
         'document_source': fields.char('Document Source', size=128, help='Number or reference of document source'),
         'date_print_report': fields.datetime('Date print', help='Saved the date of last print'),
         'date_send_mail': fields.datetime('Date send mail', help='Saved the date of last send mail'),
         'context_extra_data': fields.text('Context Extra Data'),
-        'res_pac': fields.many2one('res.pac', 'Pac', required=True),
         'download_xml_sign': fields.related('file_xml_sign', 'datas', type='binary', help=''),
         'download_xml_sign_name': fields.related('file_xml_sign', 'datas_fname', type='char', help=''),
         'download_pdf': fields.related('file_pdf', 'datas', type='binary', help=''),
         'download_pdf_name': fields.related('file_pdf', 'datas_fname', type='char', help=''),
+        'res_pac': fields.many2one('res.pac', 'Pac', required=True, readonly=True,
+            states={'draft': [('readonly', False),]}),
     }
 
     _defaults = {
@@ -182,6 +182,7 @@ class ir_attachment_facturae_mx(osv.Model):
         'company_id': lambda self, cr, uid, ctx: self.pool['res.company']._company_default_get(
                                                     cr, uid, object = self._name, context = ctx),
         'last_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+        'context_extra_data': {},
     }
 
     def _get_sello(self, cr=False, uid=False, ids=False, context=None):
@@ -275,6 +276,8 @@ class ir_attachment_facturae_mx(osv.Model):
         for attach in self.browse(cr, uid, ids, context=context):
             if attach.file_input:
                 data_xml = base64.decodestring(attach.file_input.datas)
+                data_xml = re.sub('>[\s<]+', '><', data_xml)
+                data_xml = re.sub('\?>', '?>\n', data_xml)
                 doc_xml = xml.dom.minidom.parseString(data_xml)
                 nodeComprobante = doc_xml.getElementsByTagName("cfdi:Comprobante")[0]
                 for n in doc_xml.getElementsByTagName("cfdi:Comprobante"):
@@ -294,10 +297,11 @@ class ir_attachment_facturae_mx(osv.Model):
                     })
                     sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
                     nodeComprobante.setAttribute("sello", sign_str)
-                    data_xml = doc_xml.toxml().encode('ascii', 'xmlcharrefreplace')
-                    attachment_obj.write(cr, uid, [attach.file_input.id],{
-                                    'datas': base64.encodestring(data_xml),
-                            }, context=context)
+                data_xml = doc_xml.toxml().encode('ascii', 'xmlcharrefreplace')
+                data_xml = data_xml.replace('<?xml version="1.0" ?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
+                attachment_obj.write(cr, uid, [attach.file_input.id],{
+                                'datas': base64.encodestring(data_xml),
+                        }, context=context)
                 nodepayroll = doc_xml.getElementsByTagName("nomina:Nomina")
                 if nodepayroll:
                     nodecomplemento = doc_xml.getElementsByTagName("cfdi:Complemento")[0]
@@ -435,14 +439,14 @@ class ir_attachment_facturae_mx(osv.Model):
         if context is None:
             context = {}
         context.update({'active_model': 'ir.attachment.facturae.mx', 'active_ids': ids, 'active_id': ids[0]})
-        attachments = []
         msj = ''
         partner_mail = ''
         user_mail = ''
         status = False
         mssg_id = False
-        data = self.browse(cr, uid, ids)[0]
-        company_id = data.company_id and data.company_id.id or False
+        data = self.browse(cr, uid, ids, context=context)[0]
+        company_id = self.pool.get('res.users').browse(
+            cr, uid, uid, context=context).company_id.id
         wf_service = netsvc.LocalService("workflow")
         attachments = []
         data.file_pdf and attachments.append(data.file_pdf.id)
@@ -451,7 +455,7 @@ class ir_attachment_facturae_mx(osv.Model):
         obj_mail_mail = self.pool.get('mail.mail')
         obj_users = self.pool.get('res.users')
         mail_server_id = obj_ir_mail_server.search(cr, uid,
-                                                   ['|', ('company_id', '=', company_id), ('company_id', '=', False)], limit=1, order='sequence', context=None)
+                                                   ['|', ('company_id', '=', company_id), ('company_id', 'child_of', company_id)], limit=1, order='sequence', context=None)
         if mail_server_id:
             for smtp_server in obj_ir_mail_server.browse(cr, uid,
                                                          mail_server_id, context=context):
@@ -472,7 +476,7 @@ class ir_attachment_facturae_mx(osv.Model):
 
             tmp_id = email_pool.search(cr, uid, [(
                     'model_id.model', '=', self._name),
-                    ('company_id', '=', company_id),
+                    ('company_id', 'child_of', company_id),
                     ('mail_server_id', '=', smtp_server.id),
                     ], limit=1, context=context)
             if tmp_id:
@@ -481,8 +485,7 @@ class ir_attachment_facturae_mx(osv.Model):
                         0], composition_mode=None,
                     model = self._name, res_id = data.id, context=context)
                 mssg = message.get('value', False)
-                user_mail = obj_users.browse(
-                    cr, uid, uid, context=None).email
+                user_mail = obj_users.browse(cr, uid, uid, context=None).email
                 partner_id = mssg.get('partner_ids', False)
                 partner_mail = data.attachment_email
                 if partner_mail:
@@ -493,11 +496,11 @@ class ir_attachment_facturae_mx(osv.Model):
                             mssg['attachment_ids'] = [
                                 (6, 0, attachments)]
                             mssg['template_id'] = tmp_id[0]
-                            mssg_id = self.pool.get(
-                                'mail.compose.message').create(cr, uid, mssg, context=context)
+                            mssg_id = mail_compose_message_pool.create(cr, uid, mssg, context=context)
                             asunto = mssg['subject']
                             id_mail = obj_mail_mail.search(
                                 cr, uid, [('subject', '=', asunto)])
+                            status = True
                             if id_mail:
                                 for mail in obj_mail_mail.browse(cr, uid, id_mail, context=context):
                                     if mail.state == 'exception':
@@ -506,21 +509,12 @@ class ir_attachment_facturae_mx(osv.Model):
                                         raise osv.except_osv(_('Warning'), _('Not correct email of the user or customer. Check in Menu Configuración\Tecnico\Email\Emails'))
                                 msj = _('Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s') % (
                                 partner_mail, server_name)
-                                self.write(cr, uid, ids, {
-                                        'msj': msj,
-                                        'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                                        'date_send_mail': time.strftime('%Y-%m-%d %H:%M:%S')})
-                                status = True
                             else:
                                 msj = _('Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s') % (
                                 partner_mail, server_name)
-                                self.write(cr, uid, ids, {
-                                        'msj': msj,
+                            context.update({'msj': msj,
                                         'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                                         'date_send_mail': time.strftime('%Y-%m-%d %H:%M:%S')})
-                                wf_service.trg_validate(
-                                        uid, self._name, ids[0], 'action_send_customer', cr)
-                                status = True
                     else:
                         raise osv.except_osv(
                             _('Warning'), _('This user does not have mail'))
@@ -529,10 +523,9 @@ class ir_attachment_facturae_mx(osv.Model):
                         _('Warning'), _('The attachment does not have mail'))
             else:
                 raise osv.except_osv(
-                    _('Warning'), _('Check that your template is assigned outgoing mail server named %s.\nAlso the field has report_template = Factura Electronica Report.\nTemplate is associated with the same company') % (server_name))
+                    _('Warning'), _('Set up a template with a outgoing mail server named "%s" for your Company') % (server_name))
         else:
-            raise osv.except_osv(_('Warning'), _('Not Found\
-            outgoing mail server.Configure the outgoing mail server named "FacturaE"'))
+            raise osv.except_osv(_('Warning'), _('Set up the outgoing mail server for your Company"'))
         if mssg_id:
             return {
                 'name':_("Send Mail FacturaE Customer"),
@@ -695,13 +688,29 @@ class ir_mail_server(osv.Model):
         self, cr, uid, message, mail_server_id=None, smtp_server=None, smtp_port=None,
         smtp_user=None, smtp_password=None, smtp_encryption=None, smtp_debug=False,
             context=None):
-        obj_ir_mail_server = self.pool.get('ir.mail_server')
+                
         company_id = self.pool.get('res.users').browse(
             cr, uid, uid, context=context).company_id.id
-        mail_server_id = obj_ir_mail_server.search(cr, uid,
-                                                   ['|', ('company_id', '=', company_id), ('company_id', '=', False)], limit=1, order='sequence', context=None)[0]
+            
+        mail_server_id = self.search(cr, uid,
+            ['|', ('company_id', '=', company_id),
+                    ('company_id', 'child_of', company_id)], limit=1, order='sequence', context=None)[0]
+                    
         super(
             ir_mail_server, self).send_email(cr, uid, message, mail_server_id=mail_server_id, smtp_server=None, smtp_port=None,
                                              smtp_user=None, smtp_password=None, smtp_encryption=None, smtp_debug=False,
                                              context=None)
         return True
+        
+class mail_compose_message(osv.Model):
+    _inherit = 'mail.compose.message'
+
+    def send_mail(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        if context.get('active_model', '') == 'ir.attachment.facturae.mx' and context.get('active_id', False):
+            self.pool.get('ir.attachment.facturae.mx').write(cr, uid, context.get('active_id'),
+                {'msj': context.get('msj', ''),
+                'last_date':context.get('last_date', False),
+                'date_send_mail': context.get('date_send_mail', False)}, context=context)
+        return super(mail_compose_message, self).send_mail(cr, uid, ids, context=context)

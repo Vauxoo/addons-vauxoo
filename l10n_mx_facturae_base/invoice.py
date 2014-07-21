@@ -335,7 +335,7 @@ class account_invoice(osv.Model):
             cr, uid, [('name', '=', 'MXN')], limit=1, context=context)
         currency_mxn_id = currency_mxn_ids and currency_mxn_ids[0] or False
         if not currency_mxn_id:
-            raise osv.except_osv(_('Error !'), _('No hay moneda MXN.'))
+            raise osv.except_osv(_('Error !'), _('Not found currency MXN.'))
         for id in ids:
             invoice = self.browse(cr, uid, [id])[0]
             date_format = invoice.invoice_datetime or False
@@ -361,6 +361,26 @@ class account_invoice(osv.Model):
             res[invoice.id] = attachment_xml_id and attachment_xml_id[
                 0] or False
         return res
+
+    def _get_cfdi_approval_invoice(self, cr, uid, ids, name, args, context=None):
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+        if context is None:
+            context = {}
+        result = {}
+        for invoice in self.browse(cr, uid, ids):
+            result[invoice.id] = invoice.journal_id and invoice.journal_id.sequence_id and invoice.journal_id.sequence_id.approval_id and  invoice.journal_id.sequence_id.approval_id.id or False
+        return result
+
+    def _get_cfdi_attch_invoice(self, cr, uid, ids, name, args, context=None):
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+        if context is None:
+            context = {}
+        result = {}
+        for invoice in self.browse(cr, uid, ids):
+            result[invoice.id] = self.pool.get('ir.attachment.facturae.mx').search(cr, uid, [('id_source', '=', invoice.id), ('model_source', '=', 'account.invoice')]) or False
+        return result
 
     _columns = {
         # Extract date_invoice from original, but add datetime
@@ -389,17 +409,19 @@ class account_invoice(osv.Model):
             help='Rate used in the date of invoice'),
         'cfdi_cbb': fields.binary('CFD-I CBB'),
         'cfdi_sello': fields.text('CFD-I Sello', help='Sign assigned by the SAT'),
-        'cfdi_no_certificado': fields.char('CFD-I Certificado', size=32,
+        'cfdi_no_certificado': fields.char('CFD-I Certificate', size=32,
                                            help='Serial Number of the Certificate'),
-        'cfdi_cadena_original': fields.text('CFD-I Cadena Original',
+        'cfdi_cadena_original': fields.text('CFD-I Original String',
                                             help='Original String used in the electronic invoice'),
-        'cfdi_fecha_timbrado': fields.datetime('CFD-I Fecha Timbrado',
+        'cfdi_fecha_timbrado': fields.datetime('CFD-I Date Stamped',
                                                help='Date when is stamped the electronic invoice'),
-        'cfdi_fecha_cancelacion': fields.datetime('CFD-I Fecha Cancelacion',
+        'cfdi_fecha_cancelacion': fields.datetime('CFD-I Cancellation Date',
                                                   help='If the invoice is cancel, this field saved the date when is cancel'),
-        'cfdi_folio_fiscal': fields.char('CFD-I Folio Fiscal', size=64,
+        'cfdi_folio_fiscal': fields.char('CFD-I Fiscal Folio', size=64,
                                          help='Folio used in the electronic invoice'),
         'pac_id': fields.many2one('params.pac', 'Pac', help='Pac used in singned of the invoice'),
+        'cfdi_check': fields.function(_get_cfdi_approval_invoice, type='boolean'),
+        'attachment_check': fields.function(_get_cfdi_attch_invoice, type='boolean'),
     }
 
     _defaults = {
@@ -856,7 +878,7 @@ class account_invoice(osv.Model):
             context.update(self._get_file_globals(cr, uid, ids, context=context))
             fname_txt, txt_str = self._xml2cad_orig(cr=False, uid=False, ids=False, context=context)
             if not txt_str:
-                raise osv.except_osv(_('Error en Cadena original!'), _(
+                raise osv.except_osv(_('Error in the Original String!'), _(
                     "Can't get the string original of the voucher.\nCkeck your configuration.\n%s" % (msg2)))
             context.update({'fecha': invoice.date_invoice_tz and time.strftime('%Y-%m-%dT%H:%M:%S', 
                     time.strptime(invoice.date_invoice_tz, '%Y-%m-%d %H:%M:%S')) or ''})
@@ -1503,3 +1525,13 @@ class account_invoice(osv.Model):
         cfdi_no_certificado = invoice.cfdi_no_certificado or ''
         original_string = '||1.0|'+cfdi_folio_fiscal+'|'+str(cfdi_fecha_timbrado)+'|'+sello+'|'+cfdi_no_certificado+'||'
         return original_string
+
+    def invoice_attachment_view(self, cr, uid, ids, context=None):
+        return {
+            'name': 'Attachment FacturaE MX',
+            'res_model': 'ir.attachment.facturae.mx',
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'context': "{'search_default_id_source': active_id, 'default_id_source': active_id, 'search_default_model_source': 'account.invoice'}",
+            'type': 'ir.actions.act_window',
+        }

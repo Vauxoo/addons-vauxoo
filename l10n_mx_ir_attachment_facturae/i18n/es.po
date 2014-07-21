@@ -431,7 +431,6 @@ msgstr "Regenerar PDF"
 #, python-format
 msgid "<div><b>Report format before regeneration PDF</b></div>"
 msgstr "<div><b>Formato del reporte antes de la regeneración PDF</b></div>"
-
 #. module: l10n_mx_ir_attachment_facturae
 #: help:ir.attachment.facturae.mx,last_date:0
 msgid "Date when is generated the attachment"

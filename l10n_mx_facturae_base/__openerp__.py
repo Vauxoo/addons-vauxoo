@@ -87,6 +87,7 @@ Requires the following programs:
         "wizard/installer_view.xml",
         "invoice_view.xml",
         "ir_attachment_facturae_view.xml",
+        'security/group_report_invoice.xml'
     ],
     "test" : [
         #~ "test/account_invoice_cfd.yml",
