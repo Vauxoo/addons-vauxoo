@@ -398,13 +398,22 @@ class ir_attachment_facturae_mx(osv.Model):
         if report_ids:
             report_name = report_multicompany_obj.browse(cr, uid, report_ids[0]).report_name
         service = netsvc.LocalService("report."+report_name)
-        (result, format) = service.create(cr, SUPERUSER_ID, [attachment_mx_data[0].id], report_name, context=context)                
-        attachment_ids = attachment_obj.search(cr, uid, [('res_model', '=', attachment_mx_data[0].model_source),('res_id', '=', attachment_mx_data[0].id_source), ('name', '=', fname )])
+        (result, format) = service.create(cr, SUPERUSER_ID, [attachment_mx_data[0].id], report_name, context=context)
+                        
+        attachment_ids = attachment_obj.search(cr, uid,
+            [('res_model', '=', attachment_mx_data[0].model_source),
+            ('res_id', '=', attachment_mx_data[0].id_source),
+            ('name', '=', fname )])
+            
         if attachment_mx_data[0].file_pdf and attachment_ids:
             previous_pdf_id = attachment_mx_data[0].file_pdf.id
             attachment_obj.write(cr, uid, attachment_ids, {'res_id': False})
-            attachment_obj.write(cr, uid, attachment_mx_data[0].file_pdf.id, {'res_model': 'ir.attachment.facturae.mx','res_id': attachment_mx_data[0].id})
-            self.pool.get('mail.message').create(cr, uid,{'attachment_ids': [(6,0,[previous_pdf_id])], 'type': 'comment', 'model': 'ir.attachment.facturae.mx', 'res_id': attachment_mx_data[0].id, 'body': _("<div><b>Report format before regeneration PDF</b></div>")})
+            self.pool.get('mail.message').create(cr, uid,
+                {'attachment_ids': [(6, 0, [previous_pdf_id])],
+                    'type': 'comment',
+                    'model': 'ir.attachment.facturae.mx',
+                    'res_id': attachment_mx_data[0].id,
+                    'body': _("<div><b>Report format before regeneration PDF</b></div>")})
             attachment_ids = False
         if not attachment_ids:
             aids2 = attachment_obj.create(cr, uid, {
