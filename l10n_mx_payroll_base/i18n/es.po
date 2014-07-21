@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-07 20:12+0000\n"
-"PO-Revision-Date: 2014-06-07 20:12+0000\n"
+"POT-Creation-Date: 2014-07-03 22:26+0000\n"
+"PO-Revision-Date: 2014-07-03 22:26+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,11 +21,11 @@ msgid "Payment Method"
 msgstr "Método de Pago"
 
 #. module: l10n_mx_payroll_base
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:259
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:275
 #: selection:hr.payslip,schedule_pay:0
 #, python-format
 msgid "Bi-monthly"
-msgstr "Bi-monthly"
+msgstr "Bi-mensual"
 
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,certificado:0
@@ -33,7 +33,7 @@ msgid "Certificate"
 msgstr "Certificado"
 
 #. module: l10n_mx_payroll_base
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:253
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:269
 #: selection:hr.payslip,schedule_pay:0
 #, python-format
 msgid "Monthly"
@@ -41,7 +41,7 @@ msgstr "Mensual"
 
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,cfdi_folio_fiscal:0
-msgid "CFD-I Folio Fiscal"
+msgid "CFD-I Fiscal Folio"
 msgstr "CFD-I Folio Fiscal"
 
 #. module: l10n_mx_payroll_base
@@ -52,12 +52,12 @@ msgstr "CFD-I CBB"
 #. module: l10n_mx_payroll_base
 #: help:hr.payslip,sello:0
 msgid "Digital Stamp"
-msgstr "Digital Stamp"
+msgstr "Sello Digital"
 
 #. module: l10n_mx_payroll_base
 #: help:hr.payslip,partner_id:0
 msgid "Partner referenced to employee"
-msgstr "Partner referenced to employee"
+msgstr "Proveedor relacionado con el empleado"
 
 #. module: l10n_mx_payroll_base
 #: model:ir.actions.act_window,name:l10n_mx_payroll_base.act_payroll_attachment
@@ -72,41 +72,41 @@ msgstr "Fecha Nómina"
 #. module: l10n_mx_payroll_base
 #: help:hr.payslip,cfdi_cadena_original:0
 msgid "Original String used in the electronic payroll"
-msgstr "Original String used in the electronic payroll"
+msgstr "Cadena Original utilizada el la nómina electrónica"
 
 #. module: l10n_mx_payroll_base
 #: model:ir.actions.act_window,name:l10n_mx_payroll_base.action_view_attachment_payslip
 #: model:ir.ui.menu,name:l10n_mx_payroll_base.menu_department_tree
 msgid "Attachments Payslips"
-msgstr "Attachments Payslips"
+msgstr "Adjuntos nóminas"
 
 #. module: l10n_mx_payroll_base
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:255
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:271
 #: selection:hr.payslip,schedule_pay:0
 #, python-format
 msgid "Semi-annually"
-msgstr "Semi-annually"
+msgstr "Semestralmente"
 
 #. module: l10n_mx_payroll_base
 #: help:hr.payslip,pac_id:0
 msgid "Pac used in singned of the payrol"
-msgstr "Pac used in singned of the payrol"
+msgstr "Pac utilizado para firmar la nómina"
 
 #. module: l10n_mx_payroll_base
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:569
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:588
 #, python-format
 msgid "Not captured a CERTIFICATE file in format PEM, in                         the company!"
-msgstr "Not captured a CERTIFICATE file in format PEM, in                         the company!"
+msgstr "No se capturo el archivo del CERTIFICADO .PEM en la compañía!"
 
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,cfdi_fecha_timbrado:0
-msgid "CFD-I Fecha Timbrado"
+msgid "CFD-I Date stamped"
 msgstr "CFD-I Fecha Timbrado"
 
 #. module: l10n_mx_payroll_base
 #: help:hr.payslip,certificado:0
 msgid "Certificate used in the Payroll"
-msgstr "Certificado usado en Nómina"
+msgstr "Certificado utilizado en la Nómina"
 
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,product_id:0
@@ -116,7 +116,7 @@ msgstr "Producto"
 #. module: l10n_mx_payroll_base
 #: help:hr.payslip,date_payslip_cancel:0
 msgid "If the payroll is cancelled, save the date when was cancel"
-msgstr "If the payroll is cancelled, save the date when was cancel"
+msgstr "Si la nómina se cancela, guarda la fecha de cancelación"
 
 #. module: l10n_mx_payroll_base
 #: view:hr.payslip:0
@@ -142,48 +142,48 @@ msgid "PAGO NOMINA"
 msgstr "PAGO NÓMINA"
 
 #. module: l10n_mx_payroll_base
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:581
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:600
 #, python-format
 msgid "Not captured a KEY file in format PEM, in the company!"
-msgstr "Not captured a KEY file in format PEM, in the company!"
+msgstr "No se ha capturado el archivo KEY .PEM en la compañía!"
 
 #. module: l10n_mx_payroll_base
 #: help:hr.payslip,cfdi_sello:0
 msgid "Sign assigned by the SAT"
-msgstr "Sign assigned by the SAT"
+msgstr "Sello asignado por el SAT"
 
 #. module: l10n_mx_payroll_base
 #: help:hr.payslip,date_payslip_tz:0
 msgid "Date of payroll with Time Zone"
-msgstr "Date of payroll with Time Zone"
+msgstr "Fecha de nómina con Zona Horaria"
 
 #. module: l10n_mx_payroll_base
 #: help:hr.payslip,currency_id:0
 msgid "Currency used in the payroll"
-msgstr "Currency used in the payroll"
+msgstr "Moneda utilizada en la nómina"
 
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,sello:0
 msgid "Stamp"
-msgstr "Stamp"
+msgstr "Sello"
 
 #. module: l10n_mx_payroll_base
 #: help:hr.payslip,address_issued_id:0
 msgid "This address will be used as address that issued             for electronic payroll"
-msgstr "This address will be used as address that issued             for electronic payroll"
+msgstr "Esta dirección será utilizada como dirección de emision de la nómina"
 
 #. module: l10n_mx_payroll_base
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:635
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:654
 #, python-format
 msgid "Check date of payroll and the validity of certificate, & that the register of the certificate is active.\n"
 "!"
-msgstr "Check date of payroll and the validity of certificate, & that the register of the certificate is active.\n"
+msgstr "Revise la información de la nómina, la validez del certificado y que el registro del certificado esta activo.\n"
 "!"
 
 #. module: l10n_mx_payroll_base
 #: help:hr.payslip,company_emitter_id:0
 msgid "This company will be used as emitter company in             the electronic payroll"
-msgstr "This company will be used as emitter company in             the electronic payroll"
+msgstr "Esta compañía será utilizada como compañía emisora de la nómina electrónica"
 
 #. module: l10n_mx_payroll_base
 #: model:ir.model,name:l10n_mx_payroll_base.model_hr_payslip
@@ -191,20 +191,14 @@ msgid "Pay Slip"
 msgstr "Nómina"
 
 #. module: l10n_mx_payroll_base
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:468
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:487
 #, python-format
 msgid "At least there must be a deduction"
-msgstr "At least there must be a deduction"
+msgstr "Al menos debe haber una deducción"
 
 #. module: l10n_mx_payroll_base
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:260
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:276
 #: selection:hr.payslip,schedule_pay:0
-#, python-format
-msgid "Fortnightly"
-msgstr "Quincenal"
-
-#. module: l10n_mx_hr_payroll
-#: code:addons/l10n_mx_hr_payroll/model/hr_contract.py:55
 #, python-format
 msgid "Fortnightly"
 msgstr "Quincenal"
@@ -212,10 +206,10 @@ msgstr "Quincenal"
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,company_emitter_id:0
 msgid "Company Emitter             Payroll"
-msgstr "Company Emitter             Payroll"
+msgstr "Compañía emisora de la nómina"
 
 #. module: l10n_mx_payroll_base
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:630
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:649
 #, python-format
 msgid "No exist file [%s]. !"
 msgstr "No existe arhivo [%s]. !"
@@ -223,7 +217,7 @@ msgstr "No existe arhivo [%s]. !"
 #. module: l10n_mx_payroll_base
 #: help:hr.payslip,cfdi_folio_fiscal:0
 msgid "Folio used in the electronic payroll"
-msgstr "Folio used in the electronic payroll"
+msgstr "Folio utilizado en la nómina electrónica"
 
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,schedule_pay:0
@@ -233,48 +227,48 @@ msgstr "Pago Planificado"
 #. module: l10n_mx_payroll_base
 #: view:hr.payslip:0
 msgid "Generic Product"
-msgstr "Generic Product"
+msgstr "Producto Genérico"
 
 #. module: l10n_mx_payroll_base
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:256
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:272
 #: selection:hr.payslip,schedule_pay:0
 #, python-format
 msgid "Annually"
-msgstr "Annually"
+msgstr "Anual"
 
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,address_issued_id:0
 msgid "Address Issued             payroll"
-msgstr "Address Issued             payroll"
+msgstr "Dirección emisora de la nómina"
 
 #. module: l10n_mx_payroll_base
 #: help:hr.payslip,cfdi_fecha_timbrado:0
 msgid "Date when is stamped the electronic payroll"
-msgstr "Date when is stamped the electronic payroll"
+msgstr "Fecha en que fue firmada la nómina electrónica"
 
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,approval_id:0
 msgid "Approval"
-msgstr "Approval"
+msgstr "Aprovación"
 
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,cfdi_sello:0
-msgid "CFD-I Sello"
+msgid "CFD-I Stamp"
 msgstr "CFD-I Sello"
 
 #. module: l10n_mx_payroll_base
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:466
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:468
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:626
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:630
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:635
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:485
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:487
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:645
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:649
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:654
 #, python-format
 msgid "Warning !"
-msgstr "Warning !"
+msgstr "Advertencia !"
 
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,cfdi_cadena_original:0
-msgid "CFD-I Cadena Original"
+msgid "CFD-I Original String"
 msgstr "CFD-I Cadena Original"
 
 #. module: l10n_mx_payroll_base
@@ -285,49 +279,49 @@ msgstr "[('type','=', 'general')]"
 #. module: l10n_mx_payroll_base
 #: help:hr.payslip,cfdi_no_certificado:0
 msgid "Serial Number of the Certificate"
-msgstr "Serial Number of the Certificate"
+msgstr "Número de serie del certificado"
 
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,date_payslip_cancel:0
 msgid "Date Payroll Cancelled"
-msgstr "Date Payroll Cancelled"
+msgstr "Fecha de cancelación de la nómina"
 
 #. module: l10n_mx_payroll_base
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:466
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:485
 #, python-format
 msgid "At least there must be a perception"
-msgstr "At least there must be a perception"
+msgstr "Al menos debe haber una percepción"
 
 #. module: l10n_mx_payroll_base
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:149
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:165
 #, python-format
 msgid "Payslip dates should be equal"
-msgstr "Payslip dates should be equal"
+msgstr "Las fechas de la nómina deben ser iguales"
 
 #. module: l10n_mx_payroll_base
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:254
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:270
 #: selection:hr.payslip,schedule_pay:0
 #, python-format
 msgid "Quarterly"
-msgstr "Quarterly"
+msgstr "Trimestral"
 
 #. module: l10n_mx_payroll_base
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:626
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:645
 #, python-format
 msgid "Not defined fname_xslt. !"
-msgstr "Not defined fname_xslt. !"
+msgstr "No se definio el fname_xslt. !"
 
 #. module: l10n_mx_payroll_base
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:258
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:274
 #: selection:hr.payslip,schedule_pay:0
 #, python-format
 msgid "Bi-weekly"
-msgstr "Bi-weekly"
+msgstr "Quincenal"
 
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,currency_id:0
 msgid "Currency"
-msgstr "Currency"
+msgstr "Moneda"
 
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,pac_id:0
@@ -340,10 +334,10 @@ msgid "Email Thread"
 msgstr "Hilo de mensajes"
 
 #. module: l10n_mx_payroll_base
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:148
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:164
 #, python-format
 msgid "Warning!"
-msgstr "Warning!"
+msgstr "Advertencia!"
 
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,date_payslip:0
@@ -353,17 +347,17 @@ msgstr "Fecha Nómina"
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,partner_id:0
 msgid "Partner"
-msgstr "Partner"
+msgstr "Proveedor"
 
 #. module: l10n_mx_payroll_base
 #: field:hr.payslip,cfdi_no_certificado:0
-msgid "CFD-I Certificado"
+msgid "CFD-I Certificate"
 msgstr "CFD-I Certificado"
 
 #. module: l10n_mx_payroll_base
-#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:257
+#: code:addons/l10n_mx_payroll_base/model/l10n_mx_payroll_base.py:273
 #: selection:hr.payslip,schedule_pay:0
 #, python-format
 msgid "Weekly"
-msgstr "Weekly"
+msgstr "Semanal"
 
