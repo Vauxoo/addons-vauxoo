@@ -70,7 +70,8 @@
                 "report_multicompany",
                 "l10n_mx_facturae_pac_finkok",
                 "l10n_mx_cfdi_test",
-		"l10n_mx_validate_xml_sat",
+                "l10n_mx_journal_type",
+                "l10n_mx_validate_xml_sat",
                 ],
     "author" : "Vauxoo",
     "description" : """
@@ -152,6 +153,8 @@ This module will install for you:
   -  l10n_mx_states
   
   -  l10n_mx_upload_ftp
+  
+  -  l10n_mx_journal_type
 
 Additionally of lp:addons-vauxoo, will be installed:
 
