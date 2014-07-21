@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+        <act_window
+            context="{'search_default_id_source': active_id, 'default_id_source': active_id, 'search_default_model_source': 'account.invoice'}"
+            id="act_invoice_attachment"
+            name="Attachment Facturae"
+            res_model="ir.attachment.facturae.mx"
+            src_model="account.invoice"
+        />
 
         <record  model="ir.ui.view" id="account_invoice_print_sent_butt">
             <field name="name">account.invoice.print.sent.butt</field>

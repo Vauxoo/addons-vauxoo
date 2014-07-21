@@ -38,6 +38,7 @@
                 "account_cancel",
                 "l10n_mx_facturae_lib",
                 "l10n_mx_facturae_cer",
+                "l10n_facturae_groups_multipac_vauxoo",
         ],
     "demo" : [],
     "data" : [

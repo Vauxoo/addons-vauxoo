@@ -6,7 +6,7 @@
             <field name="name">view.ir.attachment.facturae.mx.filter</field>
             <field name="model">ir.attachment.facturae.mx</field>
             <field name="arch" type="xml">
-                <search string="Attachment Factura-E">
+                <search string="Attachment Facturae">
                     <field name="name"/>
                     <field name="res_pac"/>
                     <field name="state"/>
@@ -20,7 +20,7 @@
             <field name="name">view.ir.attachment.facturae.mx.form</field>
             <field name="model">ir.attachment.facturae.mx</field>
             <field name="arch" type="xml">
-                <form string="Attachment Factura-E" version="7.0">
+                <form string="Attachment Facturae" version="7.0">
                     <header>
                         <button name="create_ir_attachment_facturae" states="draft" string="Validate Attachment" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <button name="signal_confirm" states="draft" string="Confirm" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
@@ -34,7 +34,7 @@
                         <button name="forward_email" states="sent_customer,sent_backup,done" string="Forward Email" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user" invisible="1"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,signed,done,cancel" statusbar_colors='{"invoice_except":"red","waiting_date":"blue"}'/>
                     </header>
-                    <sheet string="Attachment Factura-E">
+                    <sheet string="Attachment Facturae">
                         <group>
                             <field name="name"/>
                             <field name="res_pac"/>
@@ -85,7 +85,7 @@
             <field name="name">view.ir.attachment.facturae.mx.tree</field>
             <field name="model">ir.attachment.facturae.mx</field>
             <field name="arch" type="xml">
-                <tree string="Attachment Factura-E">
+                <tree string="Attachment Facturae">
                     <field name="name"/>
                     <field name="res_pac"/>
                     <field name="state"/>
@@ -93,7 +93,7 @@
             </field>
         </record>
         <record id="action_ir_attachment_facturae_mx" model="ir.actions.act_window">
-            <field name="name">action.ir.attachment.facturae.mx</field>
+            <field name="name">Attachment Facturae</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">ir.attachment.facturae.mx</field>
             <field name="view_type">form</field>

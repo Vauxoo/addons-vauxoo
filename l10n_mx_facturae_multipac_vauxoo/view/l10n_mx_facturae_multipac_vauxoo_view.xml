@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        
+        <record id="view_ir_attachment_facturae_mx_multipac_filter" model="ir.ui.view">
+            <field name="name">view.ir.attachment.facturae.mx.multiupac.filter</field>
+            <field name="model">ir.attachment.facturae.mx</field>
+            <field name="arch" type="xml">
+                <search string="PAC Vauxoo">
+                    <field name="name"/>
+                    <field name="state"/>
+                    <field name="company_id"/>
+                    <field name="cfdi_fecha_timbrado"/>
+                    <field name="cfdi_fecha_cancelacion"/>
+                    <field name="attachment_email"/>
+                    <field name="user_id" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_manager"/>
+                </search>
+            </field>
+        </record>
+        
+        <record id="view_ir_attachment_facturae_mx_multipac_form" model="ir.ui.view">
+            <field name="name">view.ir.attachment.facturae.mx.multipac.form</field>
+            <field name="model">ir.attachment.facturae.mx</field>
+            <field name="arch" type="xml">
+                <form create="false" edit="false" string="PAC Vauxoo" version="7.0">
+                    <header>
+                        <button name="create_ir_attachment_facturae" states="draft" string="Validate Attachment" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <button name="signal_confirm" states="draft" string="Confirm" type="object" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_manager"/>
+                        <button name="signal_sign" states="confirmed" string="Sign" type="object" class="oe_highlight" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_manager"/>
+                        <button name="signal_printable" states="done" string="Generate Printable Format" type="object" class="oe_highlight" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_manager"/>
+                        <button name="signal_send_customer" attrs="{'invisible':['|', ('date_print_report','=',False), ('state', 'not in', ('signed', 'done'))]}" string="Send to Customer" type="object" class="oe_highlight" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_manager"/>
+                        <button name="signal_done" states="sent_backup" string="Done" type="object" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_manager"/>
+                        <button name="signal_cancel" states="draft,confirmed,signed,printable,sent_backup,sent_customer,done" string="Cancel" type="object" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_manager"/>
+                        <button name="signal_cancel" states="cancel" string="Re-Cancel With Pac" type="object" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_manager"/>
+                        <button name="reset_to_draft" states="cancel" string="Reset to Draft" type="object" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_manager" invisible="1"/>
+                        <button name="forward_email" states="sent_customer,sent_backup,done" string="Forward Email" type="object" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_manager" invisible="1"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,signed,done,cancel" statusbar_colors='{"invoice_except":"red","waiting_date":"blue"}'/>
+                    </header>
+                    <sheet string="PAC Vauxoo">
+                        <group>
+                            <field name="name"/>
+                            <field name="res_pac" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_manager"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="file_input"/>
+                            <field name="file_xml_sign"/>
+                            <field name="file_pdf"/>
+                         </group>
+                    <notebook>
+                        <page string="General Information">
+                            <group colspan="4">
+                                <field name="msj" invisible="1"/>
+                                <field name="last_date" invisible="1"/>
+                                <field name="date_print_report" invisible="1"/>
+                            </group>
+                        </page>
+                        <page string="Other info">
+                            <group colspan="4">
+                                <field name="cfdi_fecha_timbrado" readonly="1"/>
+                                <field name="cfdi_fecha_cancelacion" readonly="1"/>
+                                <field name="attachment_email" attrs="{'readonly':[('state','==','cancel')]}"/>
+                                <field name="user_id" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_manager"/>
+                            </group>
+                        </page>
+                    </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread" readonly="1"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        
+        <record id="view_ir_attachment_facturae_mx_multipac_tree" model="ir.ui.view">
+            <field name="name">view.ir.attachment.facturae.mx.multipac.tree</field>
+            <field name="model">ir.attachment.facturae.mx</field>
+            <field name="arch" type="xml">
+                <tree colors="red:state=='cancel';green:state=='done'" create="false" string="Vauxoo">
+                    <field name="name"/>
+                    <field name="company_id"/>
+                    <field name="cfdi_fecha_timbrado"/>
+                    <field name="cfdi_fecha_cancelacion"/>
+                    <field name="attachment_email"/>
+                    <field name="state"/>
+                    <field name="user_id" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_manager"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="action_ir_attachment_invoice_multipac_vauxoo" model="ir.actions.act_window">
+            <field name="name">PAC Vauxoo</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ir.attachment.facturae.mx</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field eval="False" name="view_id"/>
+            <field name="search_view_id" ref="view_ir_attachment_facturae_mx_multipac_filter"/>
+        </record>
+        
+        <record id="action_ir_attachment_invoice_multipac_vauxoo_view" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_ir_attachment_facturae_mx_multipac_tree"/>
+            <field name="act_window_id" ref="action_ir_attachment_invoice_multipac_vauxoo"/>
+        </record>
+        
+        <record id="action_ir_attachment_invoice_multipac_vauxoo_view1" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_ir_attachment_facturae_mx_multipac_form"/>
+            <field name="act_window_id" ref="action_ir_attachment_invoice_multipac_vauxoo"/>
+        </record>
+
+        <menuitem name="FacturaE MX" id="ir_attachment_facturae_mx_menu" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_user" sequence="999"/>
+        
+            <menuitem id="ir_attachment_facturae_mx_submenu" parent="l10n_mx_facturae_multipac_vauxoo.ir_attachment_facturae_mx_menu" name="Attachment Facturae" sequence="1" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_user"/>
+        
+                <menuitem action="action_ir_attachment_invoice_multipac_vauxoo" id="ir_attachment_facturae_mx_submenu_action" parent="l10n_mx_facturae_multipac_vauxoo.ir_attachment_facturae_mx_submenu" name="Attachment Facturae" sequence="1" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_user"/>
+        
+                <menuitem action="l10n_mx_ir_attachment_facturae_client.action_wizard_attachment_mx_res_pac_defaults" id="attachment_mx_res_pac_defaults_menu_on_submenu_facturae_mx" name="Res Pac Defaults" parent="l10n_mx_facturae_multipac_vauxoo.ir_attachment_facturae_mx_submenu" sequence="2" groups="l10n_facturae_groups_multipac_vauxoo.group_l10n_mx_facturae_multipac_manager"/>
+
+    </data>
+</openerp>
