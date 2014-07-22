@@ -56,8 +56,6 @@ class purchase_requisition(osv.Model):
         pol_obj = self.pool.get('purchase.order.line')
         prl_obj = self.pool.get('purchase.requisition.line')
         po_obj = self.pool.get('purchase.order') 
-        import pdb
-        pdb.set_trace()
         for requisition in self.browse(cr, uid, ids, context=context):
             po_req = po_obj.search(cr, uid, [('requisition_id','=',requisition.id)], context=context)
             for po_id in po_req:
