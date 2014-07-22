@@ -158,8 +158,38 @@ class account_invoice(osv.Model):
                     values['invoice_datetime'],
                     '%Y-%m-%d %H:%M:%S').date().strftime('%Y-%m-%d')
                 if date_invoice != values['date_invoice']:
-                    raise osv.except_osv(_('Warning!'),
-                            _('Invoice dates should be equal'))
+                    groups_obj = self.pool.get('res.groups')
+                    group_datetime = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'l10n_mx_invoice_datetime', 'group_datetime_invoice_l10n_mx_facturae')
+                    group_date = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'l10n_mx_invoice_datetime', 'group_date_invoice_l10n_mx_facturae')
+                    if group_datetime and group_date:
+                        users_datetime = []
+                        users_date = []
+                        for user in groups_obj.browse(cr, uid, [group_datetime[1]], context=context)[0].users:
+                            users_datetime.append(user.id)
+                        for user in groups_obj.browse(cr, uid, [group_date[1]], context=context)[0].users:
+                            users_date.append(user.id)
+                        if uid in users_datetime:
+                            date_invoice = fields.datetime.context_timestamp(cr, uid,
+                                datetime.datetime.strptime(values['invoice_datetime'],
+                                tools.DEFAULT_SERVER_DATETIME_FORMAT), context=context)
+                            res['date_invoice'] = date_invoice
+                            res['invoice_datetime'] = values['invoice_datetime']
+                        elif uid in users_date:
+                            user_hour = self._get_time_zone(cr, uid, [], context=context)
+                            time_invoice = datetime.time(abs(user_hour), 0, 0)
+
+                            date_invoice = datetime.datetime.strptime(
+                                values['date_invoice'], '%Y-%m-%d').date()
+                                
+                            dt_invoice = datetime.datetime.combine(
+                                date_invoice, time_invoice).strftime('%Y-%m-%d %H:%M:%S')
+
+                            res['invoice_datetime'] = dt_invoice
+                            res['date_invoice'] = values['date_invoice']
+                        else:
+                            raise osv.except_osv(_('Warning!'), _('Invoice dates should be equal'))
+                    else:
+                        raise osv.except_osv(_('Warning!'), _('Invoice dates should be equal'))
                             
         if  not values.get('invoice_datetime', False) and\
                                         not values.get('date_invoice', False):
@@ -170,10 +200,11 @@ class account_invoice(osv.Model):
 
     def action_move_create(self, cr, uid, ids, context=None):
         for inv in self.browse(cr, uid, ids, context=context):
-            vals_date = self.assigned_datetime(cr, uid,
-                {'invoice_datetime': inv.invoice_datetime,
-                    'date_invoice': inv.date_invoice},
-                    context=context)
-            self.write(cr, uid, ids, vals_date, context=context)
+            if inv.type in ('out_invoice', 'out_refund'):
+                vals_date = self.assigned_datetime(cr, uid,
+                    {'invoice_datetime': inv.invoice_datetime,
+                        'date_invoice': inv.date_invoice},
+                        context=context)
+                self.write(cr, uid, ids, vals_date, context=context)
         return super(account_invoice,
                         self).action_move_create(cr, uid, ids, context=context)
