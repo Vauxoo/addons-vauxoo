@@ -26,7 +26,7 @@
 from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 from openerp import tools
-
+import time
 
 class stock_picking(osv.Model):
     _inherit = 'stock.picking'
@@ -35,3 +35,21 @@ class stock_picking(osv.Model):
             'Expiration of Contract Date',
             help='Expiration of Contract Date'),
     }
+
+    def action_process(self, cur, uid, ids, context=none):
+        """
+        overwrite the method to add a verification of the contract Expiration
+        date before process the stock picking.
+        """
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        cr_date = time.strftime('%Y-%m-%d')
+        sp_brw = self.browse(cur, uid, ids[0], context=context)
+        if cr_date <= sp_brw.date_contract_expiry:
+            res = super(stock_picking, self).action_process(
+                cur, uid, [sp_brw.id], context=context)
+        else:
+            raise osv.except_osv(_('Invalid Procedure'),
+                _('The Contract Expiration Date already pass. You cannot'
+                  ' process the stock picking.'))
+        return res
