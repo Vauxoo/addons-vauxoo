@@ -23,4 +23,38 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import stock
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+import decimal_precision as dp
+import time
+
+
+class stock_invoice_onshipping(osv.TransientModel):
+
+    _inherit = 'stock.invoice.onshipping'
+
+    def open_invoice(self, cur, uid, ids, context=None):
+        """
+        Overwrite the wizard to first check that the stock picking elements
+        have not expired contract date, if one of then is expired then will
+        raise an exception. If not one is expire will peform the create invoice
+        action propertly.
+        """
+        context = context or {}
+        active_ids = context.get('active_ids', False)
+        active_model = context.get('active_model', False)
+        res = {}
+        cr_date = time.strftime('%Y-%m-%d')
+        if not active_ids:
+            return res
+        expire_dates = [
+            bool(picking_brw.date_contract_expiry < cr_date)
+            for picking_brw in self.pool.get(active_model).browse(cur, uid,
+                active_ids, context=context)
+            if picking_brw.date_contract_expiry]
+        if any(expire_dates):
+            raise osv.except_osv(_('Invalid Procedure'),
+                _('Some pickings are expired, The action can be peform.'))
+        res = super(stock_invoice_onshipping, self).open_invoice(
+            cur, uid, ids, context=context)
+        return res 
