@@ -53,3 +53,15 @@ class stock_picking(osv.Model):
                 _('The Contract Expiration Date already pass. You cannot'
                   ' process the stock picking.'))
         return res
+
+    def copy(self, cur, uid, id, default=None, context=None):
+        """
+        Ovwerwrite the copy method to also copy the date_contract_expiry value.
+        """
+        default = default or {}
+        context = context or {}
+        picking_brw = self.browse(cur, uid, id, context=context)
+        default['date_contract_expiry'] = picking_brw.date_contract_expiry
+        res = super(stock_picking, self).copy(
+            cur, uid, id, default=default, context=context)
+        return res
