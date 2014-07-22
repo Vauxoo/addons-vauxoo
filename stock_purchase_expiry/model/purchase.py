@@ -36,3 +36,14 @@ class purchase_order(osv.Model):
             help='Expiration of Contract Date'),
     }
 
+    def _prepare_order_picking(self, cur, uid, order, context=None):
+        """
+        Overwirthe the method that create the values for the picking creation
+        and add the purchase order date_contract_expiry field to the stock
+        picking element.
+        """
+        context = context or {}
+        res = super(purchase_order, self)._prepare_order_picking(
+            cur, uid, order, context=context)
+        res['date_contract_expiry'] = order.date_contract_expiry
+        return res
