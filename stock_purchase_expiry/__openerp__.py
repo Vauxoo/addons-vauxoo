@@ -41,7 +41,9 @@ and invoice loads of a supplier.
         'purchase',
         'stock',
         ],
-    'data': [],
+    'data': [
+        'view/purchase_order_view.xml',
+        ],
     'demo': [],
     'test': [],
     'qweb': [],

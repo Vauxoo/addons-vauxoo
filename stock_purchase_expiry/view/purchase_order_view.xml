@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="purchase_order_stock_purchase_expiry_form">
+            <field name="name">purchase.order.stock.purchase.expiry.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="date_contract_expiry"/>
+                </xpath>
+            </field>
+        </record>     
+    </data>
+</openerp>
