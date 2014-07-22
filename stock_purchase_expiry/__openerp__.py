@@ -37,7 +37,10 @@ Add a contract expiry date to the purchase order that will control the payment
 and invoice loads of a supplier.
 
 ''',
-    'depends': [],
+    'depends': [
+        'purchase',
+        'stock',
+        ],
     'data': [],
     'demo': [],
     'test': [],
