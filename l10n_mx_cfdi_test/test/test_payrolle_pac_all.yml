@@ -105,10 +105,10 @@
                         time_tmp = t.secs
                         time_total += time_tmp
                         log("*** Signal payroll: %s s" % time_tmp)
-                        #################################################################################################
-                        #    7 I check that the state in l10n_mx attachment payroll cfdi_attachment_data is "Done"   #
-                        #################################################################################################
-                        log("7 I check that the state in l10n_mx attachment payroll %s is Done"% (xml_id_payroll))
+                        ####################################################################################################################
+                        #    7 I check that the state in l10n_mx attachment payroll cfdi_attachment_data is "Signed"   #
+                        ####################################################################################################################
+                        log("7 I check that the state in l10n_mx attachment payroll %s is Signed"% (xml_id_payroll))
                         cfdi_attachment_data = ir_attachment_mx_obj.browse(cr, uid, cfdi_attachment_id, context=context)
                         ir_attach_payroll_mx = cfdi_attachment_data.file_xml_sign and cfdi_attachment_data.file_xml_sign or False
                         fdata = ir_attach_payroll_mx and ir_attach_payroll_mx.db_datas or False
@@ -120,7 +120,7 @@
                                   , 'wb+').write( base64.decodestring( fdata ) )
                         else:
                             state = 'no data in attach file'
-                        assert state=='done', 'No signed state l10n_mx attachment payroll %s' % (pac_type)
+                        assert state=='signed', 'No signed state l10n_mx attachment payroll %s' % (pac_type)
                         
                         ################################################################################################################
                         #   8 I generate a printable l10n_mx attachment payroll cfdi_attachment_data by clicking on printable button  #
@@ -132,19 +132,21 @@
                         time_tmp = t.secs
                         time_total += time_tmp
                         log("*** Printable payroll: %s s" % time_tmp)
-                        #######################################################################################################
-                        #   9 I check that the file pdf in l10n_mx attachment payroll cfdi_attachment_data was created      #
-                        #######################################################################################################
-                        log("9 I check that the file pdf in l10n_mx attachment payroll %s was created"% (xml_id_payroll))
+                        ####################################################################################################################################
+                        #   9 I check that the file pdf in l10n_mx attachment payroll cfdi_attachment_data was created and check that the state is Done   #
+                        ####################################################################################################################################
+                        log("9 I check that the file pdf in l10n_mx attachment payroll %s was created and check that the state is Done"% (xml_id_payroll))
                         cfdi_attachment_data = ir_attachment_mx_obj.browse(cr, uid, cfdi_attachment_id, context=context)
                         ir_attach_payroll_mx = cfdi_attachment_data.file_pdf and cfdi_attachment_data.file_pdf or False
                         fdata = ir_attach_payroll_mx and ir_attach_payroll_mx.db_datas or False
                         if fdata:
+                            state = cfdi_attachment_data.state
                             if tools.config['test_report_directory']:
                                 open(os.path.join(tools.config['test_report_directory'], 'l10n_mx_cfdi_test' + '_' + \
                                   xml_id_payroll + '_' + 'printable' + '-' + ir_attach_payroll_mx.datas_fname)\
                                   , 'wb+').write( base64.decodestring( fdata ) )
                         assert ir_attach_payroll_mx, 'No printable state l10n_mx attachment payroll %s'% (xml_id_payroll)
+                        assert state=='done', 'No done state l10n_mx attachment payroll %s' % (pac_type)
                         
                         if type_test_cancel == 'cancel_from_payroll':
                             #############################################################################################################

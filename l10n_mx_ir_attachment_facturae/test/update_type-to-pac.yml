@@ -31,7 +31,7 @@
     
     cr.execute("""
         SELECT id FROM wkf_activity
-        WHERE name IN ('printable', 'send_customer', 'send_backup')
+        WHERE name IN ('send_customer', 'send_backup')
         AND wkf_id IN (SELECT id FROM wkf WHERE name = 'ir.attachment.facturae.mx.basic')
     """)
     act = cr.dictfetchall()
@@ -64,13 +64,11 @@
             SET cfdi_folio_fiscal = (SELECT cfdi_folio_fiscal FROM account_invoice WHERE account_invoice.id = id_source)
             WHERE id_source IS NOT NULL AND cfdi_folio_fiscal IS NULL
         """)
-
         cr. execute("""
             UPDATE ir_attachment_facturae_mx
             SET cfdi_no_certificado = (SELECT no_certificado FROM account_invoice WHERE account_invoice.id = id_source)
             WHERE id_source IS NOT NULL AND cfdi_folio_fiscal is NULL
         """)
-        
         invoice_obj = self.pool.get('account.invoice')
         attachments = self.search(cr, uid, [('id_source', '!=', False), ('model_source', '=', 'account.invoice')], context=context)
         for att in self.browse(cr, uid, attachments, context=context):

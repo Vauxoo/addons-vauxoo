@@ -130,6 +130,7 @@ class ir_attachment_facturae_mx(osv.Model):
             ('draft', 'Draft'),
             ('confirmed', 'Confirmed'),
             ('signed', 'Signed'),
+            ('printable', 'Printable Format Generated'),
             ('done', 'Done'),
             ('cancel', 'Cancelled'), ],
             'State', readonly=True, required=True, help='State of attachments'),
@@ -168,6 +169,10 @@ class ir_attachment_facturae_mx(osv.Model):
         'date_print_report': fields.datetime('Date print', help='Saved the date of last print'),
         'date_send_mail': fields.datetime('Date send mail', help='Saved the date of last send mail'),
         'context_extra_data': fields.text('Context Extra Data'),
+        'download_xml_sign': fields.related('file_xml_sign', 'datas', type='binary', help=''),
+        'download_xml_sign_name': fields.related('file_xml_sign', 'datas_fname', type='char', help=''),
+        'download_pdf': fields.related('file_pdf', 'datas', type='binary', help=''),
+        'download_pdf_name': fields.related('file_pdf', 'datas_fname', type='char', help=''),
         'res_pac': fields.many2one('res.pac', 'Pac', required=True, readonly=True,
             states={'draft': [('readonly', False),]}),
         'user_id': fields.many2one('res.users', 'User Electronic Invoice', readonly=True),
@@ -384,22 +389,38 @@ class ir_attachment_facturae_mx(osv.Model):
             context = {}
         attachment_obj = self.pool.get('ir.attachment')
         attachment_mx_data = self.browse(cr, uid, ids, context=context)
-        (fileno, fname) = tempfile.mkstemp(
-            '.pdf', 'openerp_pdfcfid_' + (str(attachment_mx_data[0].id) or '') + '__facturae__')
-        os.close(fileno)
+        #~ (fileno, fname) = tempfile.mkstemp(
+            #~ '.pdf', 'openerp_pdfcfid_' + (str(attachment_mx_data[0].id) or '') + '__facturae__')
+        #~ os.close(fileno)
         report_multicompany_obj = self.pool.get('report.multicompany')
         report_ids = report_multicompany_obj.search(
             cr, uid, [('model', '=', 'ir.attachment.facturae.mx')], limit=1) or False
         report_name = 'account.invoice.facturae.webkit'
+        fname = attachment_mx_data[0].name+'.pdf'
         if report_ids:
             report_name = report_multicompany_obj.browse(cr, uid, report_ids[0]).report_name
         service = netsvc.LocalService("report."+report_name)
-        (result, format) = service.create(cr, SUPERUSER_ID, [attachment_mx_data[0].id], report_name, context=context)                
-        attachment_ids = attachment_obj.search(cr, uid, [('res_model', '=', attachment_mx_data[0].model_source),('res_id', '=', attachment_mx_data[0].id_source), ('name', '=', report_name )])
+        (result, format) = service.create(cr, SUPERUSER_ID, [attachment_mx_data[0].id], report_name, context=context)
+                        
+        attachment_ids = attachment_obj.search(cr, uid,
+            [('res_model', '=', attachment_mx_data[0].model_source),
+            ('res_id', '=', attachment_mx_data[0].id_source),
+            ('name', '=', fname )])
+            
+        if attachment_mx_data[0].file_pdf and attachment_ids:
+            previous_pdf_id = attachment_mx_data[0].file_pdf.id
+            attachment_obj.write(cr, uid, attachment_ids, {'res_id': False})
+            self.pool.get('mail.message').create(cr, uid,
+                {'attachment_ids': [(6, 0, [previous_pdf_id])],
+                    'type': 'comment',
+                    'model': 'ir.attachment.facturae.mx',
+                    'res_id': attachment_mx_data[0].id,
+                    'body': _("<div><b>Report format before regeneration PDF</b></div>")})
+            attachment_ids = False
         if not attachment_ids:
             aids2 = attachment_obj.create(cr, uid, {
-            'name': report_name,
-            'datas_fname': report_name,
+            'name': fname,
+            'datas_fname': fname,
             'datas': result and base64.encodestring(result) or None,
             'res_model': attachment_mx_data[0].model_source,
             'res_id': attachment_mx_data[0].id_source})
@@ -418,7 +439,12 @@ class ir_attachment_facturae_mx(osv.Model):
                  'ids': ids,
                  'form': self.read(cr, uid, ids[0], context=context),
         }
-        return {'type': 'ir.actions.report.xml', 'report_name': report_name, 'datas': datas, 'nodestroy': True, 'name': report_name}
+        wf_service = netsvc.LocalService("workflow")
+        wf_service.trg_validate(uid, self._name, ids[0], 'action_printable', cr)
+        return True
+    
+    def action_printable(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state': 'printable'}, context=context)
 
     def signal_send_customer(self, cr, uid, ids, context=None):
         if context is None:
