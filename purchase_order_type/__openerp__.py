@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Katherine Zaoral <kathy@vauxoo.com>
+#    Coded by: Yanina Aular <yanina.aular@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -24,24 +24,24 @@
 ###############################################################################
 
 {
-    'name': 'Purchase Requisition Type',
+    'name': 'Purchase Order Type',
     'version': '1.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
     'category': 'purchase',
     'description': '''
-Purchase Requisition Type
+Purchase Order Type
 =========================
 
-Add a new field name type that can discriminate a matarials and service
-purchase requisition. Also add to the purchase requisition search view the
+Add a new field name type that can discriminate a materials and service
+purchase order. Also add to the purchase order search view the
 filters need to visually make the discrimination.
 ''',
     'depends': [
-        'purchase_requisition',
+        'purchase',
         ],
     'data': [
-        'view/purchase_requisition_view.xml',
+        'view/purchase_order_view.xml',
         ],
     'demo': [],
     'test': [],

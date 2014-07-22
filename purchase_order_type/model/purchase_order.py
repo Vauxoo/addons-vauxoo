@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Katherine Zaoral <kathy@vauxoo.com>
+#    Coded by: Yanina Aular <yanina.aular@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -27,18 +27,18 @@ from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 from openerp import tools
 
-purchase_requisition_type = [
+purchase_order_type = [
     ('materials', 'Materials'),
     ('service', 'Services'),
 ]
 
-class purchase_requisition(osv.Model):
+class purchase_order(osv.Model):
 
-    _inherit = 'purchase.requisition'
+    _inherit = 'purchase.order'
     _columns = {
         'type': fields.selection(
-            purchase_requisition_type,
+            purchase_order_type,
             'Type',
-            help=('Indicate the type of the purchase requisition: materials or'
+            help=('Indicate the type of the purchase order: materials or'
                   ' service')),
     }
