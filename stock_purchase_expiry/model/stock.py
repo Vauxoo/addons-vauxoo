@@ -36,7 +36,7 @@ class stock_picking(osv.Model):
             help='Expiration of Contract Date'),
     }
 
-    def action_process(self, cur, uid, ids, context=none):
+    def action_process(self, cur, uid, ids, context=None):
         """
         overwrite the method to add a verification of the contract Expiration
         date before process the stock picking.
