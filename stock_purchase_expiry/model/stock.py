@@ -23,5 +23,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import purchase
-import stock
+from openerp.osv import fields, osv, orm
+from openerp.tools.translate import _
+from openerp import tools
+
+
+class stock_picking(osv.Model):
+    _inherit = 'stock.picking'
+    _columns = {
+        'date_contract_expiry': fields.date(
+            'Expiration of Contract Date',
+            help='Expiration of Contract Date'),
+    }
