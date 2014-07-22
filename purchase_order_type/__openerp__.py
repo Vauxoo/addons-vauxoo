@@ -39,6 +39,8 @@ filters need to visually make the discrimination.
 ''',
     'depends': [
         'purchase',
+        'purchase_requisition_type',
+        'pr_line_related_po_line',
         ],
     'data': [
         'view/purchase_order_view.xml',
