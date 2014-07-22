@@ -5,4 +5,7 @@
 "access_acceptability_criteria_manager","acceptability.criteria.manager","model_acceptability_criteria","user_story.group_user_story_manager",1,1,1,1
 "access_user_story_priority_manager","user.story.priority.manager","model_user_story_priority","user_story.group_user_story_manager",1,1,1,1
 "access_user_story_priority_user","user.story.priority.user","model_user_story_priority","user_story.group_user_story_user",1,0,0,0
-access_hr_custom_timesheet,custom.timesheet,model_custom_timesheet,base.group_hr_user,1,1,1,1
+"access_user_story_priority_user","user.story.priority.user","model_user_story_priority","user_story.group_user_story_user",1,0,0,0
+"access_hr_custom_timesheet","custom.timesheet","model_custom_timesheet","base.group_hr_user",1,1,1,1
+"access_hr_custom_timesheet_all","custom.timesheet.all","model_custom_timesheet_all","base.group_hr_user",1,1,1,1
+"access_management_reports","management.reports","model_custom_project_task","user_story.group_management_reports",1,0,0,0
