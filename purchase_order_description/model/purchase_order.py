@@ -27,37 +27,11 @@ from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 from openerp import tools
 
-purchase_order_type = [
-    ('materials', 'Materials'),
-    ('service', 'Services'),
-]
-
 class purchase_order(osv.Model):
 
     _inherit = 'purchase.order'
     _columns = {
-        'type': fields.selection(
-            purchase_order_type,
-            'Type',
-            help=('Indicate the type of the purchase order: materials or'
-                  ' service')),
+        'description': fields.text('Description',
+            help=_('Description of Purchase Order')),
     }
 
-class purchase_requisition(osv.Model):
-
-    _inherit = 'purchase.requisition'
-
-    def make_purchase_order(self, cr, uid, ids, partner_id,
-                                    context=None):
-        if context is None:
-            context = {}
-        res = super(purchase_requisition, self).make_purchase_order(cr, uid, ids, partner_id, context=context)
-        
-        pol_obj = self.pool.get('purchase.order.line')
-        prl_obj = self.pool.get('purchase.requisition.line')
-        po_obj = self.pool.get('purchase.order') 
-        for requisition in self.browse(cr, uid, ids, context=context):
-            po_req = po_obj.search(cr, uid, [('requisition_id','=',requisition.id)], context=context)
-            for po_id in po_req:
-                po_obj.write(cr, uid, [po_id], {'type': requisition.type }, context=context)
-        return res

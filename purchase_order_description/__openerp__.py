@@ -24,23 +24,20 @@
 ###############################################################################
 
 {
-    'name': 'Purchase Order Type',
+    'name': 'Purchase Order Description',
     'version': '1.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
     'category': 'purchase',
     'description': '''
-Purchase Order Type
-===================
+Purchase Order Description
+==========================
 
-Add a new field name type that can discriminate a materials and service
-purchase order. Also add to the purchase order search view the
-filters need to visually make the discrimination.
+Add a new field for description of PO 
+
 ''',
     'depends': [
         'purchase',
-        'purchase_requisition_type',
-        'pr_line_related_po_line',
         ],
     'data': [
         'view/purchase_order_view.xml',
