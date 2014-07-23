@@ -9,6 +9,7 @@
             <field name="arch" type="xml">
 
                 <xpath expr="//field[@name='notes']" position="before">
+                    <separator string="Description"/>
                     <field name="description"/>
                 </xpath>
 
