@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Katherine Zaoral <kathy@vauxoo.com>
+#    Coded by: Yanina Aular <yanina.aular@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -24,23 +24,26 @@
 ###############################################################################
 
 {
-    'name': 'Account Voucher Requester',
+    'name': 'Purchase Order Type',
     'version': '1.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
-    'category': '',
+    'category': 'purchase',
     'description': '''
-Account Voucher Requester
-=========================
+Purchase Order Type
+===================
 
-This module add an user field to the account voucher model to be the account
-voucher requester. 
+Add a new field name type that can discriminate a materials and service
+purchase order. Also add to the purchase order search view the
+filters need to visually make the discrimination.
 ''',
     'depends': [
-        'account_voucher',
+        'purchase',
+        'purchase_requisition_type',
+        'pr_line_related_po_line',
         ],
     'data': [
-        'view/account_voucher_view.xml',
+        'view/purchase_order_view.xml',
         ],
     'demo': [],
     'test': [],

@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Katherine Zaoral <kathy@vauxoo.com>
+#    Coded by: Humberto Arocha <hbto@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -24,23 +24,24 @@
 ###############################################################################
 
 {
-    'name': 'Account Voucher Requester',
+    'name': 'Stock Purchase Analytic Plans',
     'version': '1.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
     'category': '',
     'description': '''
-Account Voucher Requester
-=========================
+Stock Purchase Analytic Plans
+-----------------------------
 
-This module add an user field to the account voucher model to be the account
-voucher requester. 
+This module sets Analytic Distribution on the Journal Entry Lines when the
+Journal Entries are created because of Real Time Inventory Valuation from an
+Stock Move originated from Purchase Order
+
 ''',
     'depends': [
-        'account_voucher',
+        'purchase_analytic_plans',
         ],
     'data': [
-        'view/account_voucher_view.xml',
         ],
     'demo': [],
     'test': [],

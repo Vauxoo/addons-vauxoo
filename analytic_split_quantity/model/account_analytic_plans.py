@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Katherine Zaoral <kathy@vauxoo.com>
+#    Coded by: Humberto Arocha <hbto@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -23,30 +23,30 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-{
-    'name': 'Account Voucher Requester',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': '',
-    'description': '''
-Account Voucher Requester
-=========================
 
-This module add an user field to the account voucher model to be the account
-voucher requester. 
-''',
-    'depends': [
-        'account_voucher',
-        ],
-    'data': [
-        'view/account_voucher_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'qweb': [],
-    'js': [],
-    'css': [],
-    'active': False,
-    'installable': True,
-}
+from openerp.osv import fields, osv
+
+class account_analytic_line(osv.Model):
+
+    _inherit = 'account.analytic.line'
+
+    _columns = {
+        'split_unit_amount': fields.float('Distributed Quantity', help='This Quantity is equal to percentage times unit_amount'),
+    }
+
+class account_move_line(osv.osv):
+
+    _inherit = "account.move.line"
+
+    def create_analytic_lines(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        res = super(account_move_line, self).create_analytic_lines(cr, uid, ids,context=context)
+
+        for move_line in self.browse(cr, uid, ids, context=context):
+           if move_line.analytics_id:
+               for al in move_line.analytic_lines:
+                   al.write({
+                       'split_unit_amount': al.unit_amount * al.percentage / 100,
+                       })
+        return res

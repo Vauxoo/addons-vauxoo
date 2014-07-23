@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Katherine Zaoral <kathy@vauxoo.com>
+#    Coded by: Humberto Arocha <hbto@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -23,30 +23,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-{
-    'name': 'Account Voucher Requester',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': '',
-    'description': '''
-Account Voucher Requester
-=========================
+from openerp.osv import osv
 
-This module add an user field to the account voucher model to be the account
-voucher requester. 
-''',
-    'depends': [
-        'account_voucher',
-        ],
-    'data': [
-        'view/account_voucher_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'qweb': [],
-    'js': [],
-    'css': [],
-    'active': False,
-    'installable': True,
-}
+class stock_move(osv.osv):
+    _inherit = "stock.move"
+    def _create_account_move_line(self, cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None):
+        res = super(stock_move, self)._create_account_move_line(cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=context)
+        if move.purchase_line_id and move.purchase_line_id.analytics_id:
+            debit_line_vals, credit_line_vals = res[0][2],res[1][2]
+            debit_line_vals['analytics_id'] = move.purchase_line_id.analytics_id.id
+            credit_line_vals['analytics_id'] = move.purchase_line_id.analytics_id.id
+            res = [(0, 0, debit_line_vals), (0, 0, credit_line_vals)]
+        return res
+

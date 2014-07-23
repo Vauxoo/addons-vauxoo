@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Katherine Zaoral <kathy@vauxoo.com>
+#    Coded by: Yanina Aular <yanina.aular@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -24,24 +24,24 @@
 ###############################################################################
 
 {
-    'name': 'Account Voucher Requester',
+    'name': 'Purchase Requisition Remarks',
     'version': '1.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
-    'category': '',
+    'category': 'purchase',
     'description': '''
-Account Voucher Requester
-=========================
+Purchase Requisition Remarks
+============================
 
-This module add an user field to the account voucher model to be the account
-voucher requester. 
+Add a new field 'remarks' over the purchase requisition that allows to write
+remarks about the purchase requisition.
 ''',
     'depends': [
-        'account_voucher',
-        ],
+        'purchase_requisition',
+    ],
     'data': [
-        'view/account_voucher_view.xml',
-        ],
+        'view/purchase_requisition_view.xml',
+    ],
     'demo': [],
     'test': [],
     'qweb': [],
