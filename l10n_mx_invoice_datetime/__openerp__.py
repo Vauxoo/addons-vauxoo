@@ -42,7 +42,7 @@
     ],
     "demo" : [],
     "data" : [
-        #"security/dateinvoice_security.xml",
+        "security/l10n_mx_facturae_security_groups_date.xml",
         "account_invoice_view.xml"
     ],
     "installable" : True,
