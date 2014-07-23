@@ -30,7 +30,7 @@
     "author": "Vauxoo",
     "category": "Localization/Mexico",
     "description" : """
-    This module add an wizard to validate if an XLM already was validateD in the SAT
+    This module add an wizard to validate if an XML already was validated in the SAT
 
     Added
     sudo apt-get install python-soappy
