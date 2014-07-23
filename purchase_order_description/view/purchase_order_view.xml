@@ -11,6 +11,7 @@
                 <xpath expr="//field[@name='notes']" position="before">
                     <separator string="Description"/>
                     <field name="description"/>
+                    <separator string="Terms and Conditions"/>
                 </xpath>
 
             </field>

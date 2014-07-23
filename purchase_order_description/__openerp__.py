@@ -33,7 +33,7 @@
 Purchase Order Description
 ==========================
 
-Add a new field for description of PO 
+Add a new field for description of PO and separator for terms and condition os PO 
 
 ''',
     'depends': [
