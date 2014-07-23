@@ -37,7 +37,6 @@
     "license" : "AGPL-3",
     "depends" : [
         "account",
-        "l10n_mx_facturae_groups",
         
     ],
     "demo" : [],
