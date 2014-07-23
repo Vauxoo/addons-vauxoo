@@ -85,7 +85,8 @@ class stock_picking_in(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         cr_date = time.strftime('%Y-%m-%d')
         sp_brw = self.browse(cur, uid, ids[0], context=context)
-        if cr_date <= sp_brw.date_contract_expiry:
+        if (cr_date <= sp_brw.date_contract_expiry or
+            context.get('force_expiry_pickings', False)):
             res = super(stock_picking_in, self).action_process(
                 cur, uid, [sp_brw.id], context=context)
         else:
@@ -123,7 +124,8 @@ class stock_picking_out(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         cr_date = time.strftime('%Y-%m-%d')
         sp_brw = self.browse(cur, uid, ids[0], context=context)
-        if cr_date <= sp_brw.date_contract_expiry:
+        if (cr_date <= sp_brw.date_contract_expiry or
+            context.get('force_expiry_pickings', False)):
             res = super(stock_picking_out, self).action_process(
                 cur, uid, [sp_brw.id], context=context)
         else:
