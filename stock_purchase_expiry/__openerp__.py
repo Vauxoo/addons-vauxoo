@@ -44,6 +44,7 @@ and invoice loads of a supplier.
     'data': [
         'view/purchase_order_view.xml',
         'view/stock_picking_view.xml',
+        'wizard/stock_invoice_onshipping_view.xml',
         ],
     'demo': [],
     'test': [],
