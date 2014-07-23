@@ -10,6 +10,9 @@
             <xpath expr="//button[@string='Receive']" position="after" >
                 <button name="action_process" states="assigned" string="Force Receive" type="object" attrs="{'invisible': [('state','not in',['assigned'])]}" context="{'force_expiry_pickings': True}"/>
             </xpath>
+            <xpath expr="//field[@name='min_date']" position="after" >
+                <field name="date_contract_expiry"/>
+            </xpath>
         </field>
     </record>
     
@@ -20,6 +23,9 @@
         <field name="arch" type="xml">
             <xpath expr="//button[@string='Deliver']" position="after" >
                 <button name="action_process" states="assigned" string="Force Deliver" type="object" context="{'force_expiry_pickings': True}"/>
+            </xpath>
+            <xpath expr="//field[@name='date']" position="after" >
+                <field name="date_contract_expiry"/>
             </xpath>
         </field>
     </record>
