@@ -159,8 +159,8 @@ class account_invoice(osv.Model):
                     '%Y-%m-%d %H:%M:%S').date().strftime('%Y-%m-%d')
                 if date_invoice != values['date_invoice']:
                     groups_obj = self.pool.get('res.groups')
-                    group_datetime = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'l10n_mx_invoice_datetime', 'group_datetime_invoice_l10n_mx_facturae')
-                    group_date = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'l10n_mx_invoice_datetime', 'group_date_invoice_l10n_mx_facturae')
+                    group_datetime = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'invoice_datetime', 'group_datetime_invoice')
+                    group_date = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'invoice_datetime', 'group_date_invoice')
                     if group_datetime and group_date:
                         users_datetime = []
                         users_date = []

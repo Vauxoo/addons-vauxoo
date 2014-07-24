@@ -26,7 +26,7 @@
 ##############################################################################
 
 {
-    "name" : "l10n_mx_invoice_datetime",
+    "name" : "invoice_datetime",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
@@ -41,7 +41,7 @@
     ],
     "demo" : [],
     "data" : [
-        "security/l10n_mx_facturae_security_groups_date.xml",
+        "security/security_groups_date_invoice.xml",
         "account_invoice_view.xml"
     ],
     "installable" : True,
