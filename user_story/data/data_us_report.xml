@@ -60,25 +60,25 @@
 .table_all_border {
   border-collapse: collapse;
   width: 100%;
-  border: 1px solid #bfbfbf; }
+  border: 1px solid #f2f2f2; }
   .table_all_border > thead > tr > th,
   .table_all_border > thead > tr > td,
   .table_all_border > tbody > tr > th,
   .table_all_border > tbody > tr > td,
   .table_all_border > tfoot > tr > th,
   .table_all_border > tfoot > tr > td {
-    border: 1px solid #bfbfbf; }
+    border: 1px solid #f2f2f2; }
   .table_all_border > thead > tr > th,
   .table_all_border > thead > tr > td {
-    border-bottom-width: 1px solid #bfbfbf; }
+    border-bottom-width: 1px solid #f2f2f2; }
 
 .table_title_bg_color {
   border-collapse: collapse; }
   .table_title_bg_color > thead > tr > th,
   .table_title_bg_color > tbody > tr > th,
   .table_title_bg_color > tfoot > tr > th {
-    border-bottom: 1px solid #bfbfbf;
-    border-top: 1px solid #bfbfbf;
+    border-bottom: 1px solid #f2f2f2;
+    border-top: 1px solid #f2f2f2;
     background-color: #A41D35;
     font-size: 7;
     color: white; }
@@ -89,7 +89,7 @@
   .table_title > thead > tr > th,
   .table_title > tbody > tr > th,
   .table_title > tfoot > tr > th {
-    border-bottom: 2px solid #bfbfbf;
+    border-bottom: 2px solid #f2f2f2;
     font-size: 7;
     color: white; }
 
@@ -102,7 +102,7 @@
   .table_row_border > tbody > tr > td,
   .table_row_border > tfoot > tr > th,
   .table_row_border > tfoot > tr > td {
-    border-bottom: 1px solid #bfbfbf; }
+    border-bottom: 1px solid #f2f2f2; }
   .table_row_border > thead > tr > th,
   .table_row_border > thead > tr > td {
     border-bottom-width: 1px; }
@@ -113,7 +113,7 @@
   .table_column_border > thead > tr > td,
   .table_column_border > tbody > tr > td,
   .table_column_border > tfoot > tr > td {
-    border: 1px solid #bfbfbf;
+    border: 1px solid #f2f2f2;
     border-width: 0 1px; }
   .table_column_border > thead > tr > td:first-child, .table_column_border > thead > tr td + td,
   .table_column_border > tbody > tr > td:first-child,
@@ -151,14 +151,14 @@
   width: 100%; }
   .table_only_border_top > tbody
   > tr {
-    border-top: 1px solid #bfbfbf; }
+    border-top: 1px solid #f2f2f2; }
 
 .table_only_border_bottom {
   border-collapse: collapse;
   width: 100%; }
   .table_only_border_bottom > tbody
   > tr {
-    border-bottom: 1px solid #bfbfbf; }
+    border-bottom: 1px solid #f2f2f2; }
 
 .panel {
   padding: 8px 8px;
@@ -176,7 +176,7 @@
 
 .panel_bg_color {
   padding: 5px 5px;
-  background: #DFDFDF;
+  background: #f2f2f2;
   font-size: 6pt; }
 
 .panel_bg_color_title {
@@ -304,7 +304,7 @@ pre {
   white-space: -pre-wrap;
   white-space: -o-pre-wrap;
   word-wrap: break-word;
-  background: #DFDFDF; }
+  background: #f2f2f2; }
 
 hr{
   width:95%;
@@ -363,7 +363,9 @@ color: black; }
 
 .td_vertical_middle {
   vertical-align: middle; }
-
+p.td_margin_botton {
+margin-bottom:20px;
+}
 
 ]]> </field>
             <field name="name">User Story Report Vauxoo Webkit</field>

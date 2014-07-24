@@ -54,7 +54,7 @@ Se requiere instalar la siguiente librería:
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
     "demo" : [
-		'demo/demo.xml',
+        'demo/demo.xml',
     ],
     "data" : [
         #~ "report/ir_report.xml",
