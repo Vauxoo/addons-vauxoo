@@ -65,13 +65,12 @@ class account_invoice(osv.Model):
         res = {}
         if release.version >= '6':
             dt_format = tools.DEFAULT_SERVER_DATETIME_FORMAT
-            tz = context.get('tz_invoice_mx', 'America/Mexico_City')
+            tz = self.pool.get('res.users').browse(cr, uid, uid).tz
             for invoice in self.browse(cr, uid, ids, context=context):
                 res[invoice.id] = invoice.invoice_datetime and tools.\
                     server_to_local_timestamp(invoice.invoice_datetime,
                     tools.DEFAULT_SERVER_DATETIME_FORMAT,
-                    tools.DEFAULT_SERVER_DATETIME_FORMAT, context.get(
-                    'tz_invoice_mx', 'America/Mexico_City')) or False
+                    tools.DEFAULT_SERVER_DATETIME_FORMAT, tz) or False
         elif release.version < '6':
             # TODO: tz change for openerp5
             for invoice in self.browse(cr, uid, ids, context=context):
