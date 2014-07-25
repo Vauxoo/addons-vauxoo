@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* l10n_mx_invoice_datetime
+#	* invoice_datetime
 #
 msgid ""
 msgstr ""
@@ -16,44 +16,44 @@ msgstr ""
 "X-Launchpad-Export-Date: 2014-07-11 06:15+0000\n"
 "X-Generator: Launchpad (build 17111)\n"
 
-#. module: l10n_mx_invoice_datetime
+#. module: invoice_datetime
 #: help:account.invoice,date_invoice_tz:0
 msgid "Date of Invoice with Time Zone"
 msgstr ""
 
-#. module: l10n_mx_invoice_datetime
+#. module: invoice_datetime
 #: field:account.invoice,date_invoice_tz:0
 msgid "Date Invoiced with TZ"
 msgstr ""
 
-#. module: l10n_mx_invoice_datetime
-#: model:ir.model,name:l10n_mx_invoice_datetime.model_account_payment_term
+#. module: invoice_datetime
+#: model:ir.model,name:invoice_datetime.model_account_payment_term
 msgid "Payment Term"
 msgstr ""
 
-#. module: l10n_mx_invoice_datetime
+#. module: invoice_datetime
 #: help:account.invoice,invoice_datetime:0
 msgid "Keep empty to use the current date"
 msgstr ""
 
-#. module: l10n_mx_invoice_datetime
+#. module: invoice_datetime
 #: field:account.invoice,invoice_datetime:0
-msgid "Date Electronic Invoiced "
-msgstr ""
+msgid "Fiscal Date"
+msgstr "Fecha Fiscal"
 
-#. module: l10n_mx_invoice_datetime
-#: model:ir.model,name:l10n_mx_invoice_datetime.model_account_invoice
+#. module: invoice_datetime
+#: model:ir.model,name:invoice_datetime.model_account_invoice
 msgid "Invoice"
 msgstr ""
 
-#. module: l10n_mx_invoice_datetime
-#: code:addons/l10n_mx_invoice_datetime/invoice.py:180
+#. module: invoice_datetime
+#: code:addons/invoice_datetime/invoice.py:180
 #, python-format
 msgid "Invoice dates should be equal"
 msgstr ""
 
-#. module: l10n_mx_invoice_datetime
-#: code:addons/l10n_mx_invoice_datetime/invoice.py:179
+#. module: invoice_datetime
+#: code:addons/invoice_datetime/invoice.py:179
 #, python-format
 msgid "Warning!"
 msgstr ""

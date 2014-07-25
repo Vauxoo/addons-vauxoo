@@ -82,7 +82,7 @@ class account_invoice(osv.Model):
         #'date_invoice': fields.datetime('Date Invoiced', states={'open':[
         #('readonly',True)],'close':[('readonly',True)]},
         #help="Keep empty to use the current date"),
-        'invoice_datetime': fields.datetime('Date Electronic Invoiced ',
+        'invoice_datetime': fields.datetime('Fiscal Date',
             states={'open': [('readonly', True)], 'close': [('readonly', True)]},
             help="Keep empty to use the current date"),
         'date_invoice_tz':  fields.function(_get_date_invoice_tz, method=True,
