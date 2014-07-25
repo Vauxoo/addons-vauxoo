@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+<data>
+    <record id="account_move_comp_rule" model="ir.rule">
+        <field name="name">Portal: User Story</field>
+        <field name="model_id" ref="user_story.model_user_story"/>
+        <field name="global" eval="False"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="groups" eval="[(4, ref('portal.group_portal'))]"/>
+        <field name="domain_force">['|',
+            ('project_id.partner_id', 'in', [user.partner_id.id, user.partner_id.parent_id.id]),
+            ('user_id', 'in', [user.id])
+            ]</field>
+    </record>
+    <!--Action An Menu to test User Stories on Portal
+         -->
+    <record id="open_view_user_stories" model="ir.actions.act_window">
+        <field name="name">user Stories</field>
+        <field name="res_model">user.story</field>
+        <field name="view_type">form</field>
+        <field name="domain">[]</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+              Create your User Stories and set the deal
+            </p>
+        </field>
+    </record>
+
+    <menuitem name="User Stories" id="portal_services_userstories" parent="portal.portal_projects"
+        action="open_view_user_stories" sequence="15"/>
+</data>
+</openerp>
