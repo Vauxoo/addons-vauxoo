@@ -111,11 +111,11 @@
             </page>
 
             <page string="GAP analysis results">
-			  <label for="info" colspan="4" string="5.- Technical Conclusions" class="oe_horizontal_separator oe_clear"/>
+			  <separator colspan="4" string="5.- Technical Conclusions" class="oe_horizontal_separator oe_clear"/>
               <field name="info" colspan="4" placeholder="Add another info here ..." widget="html"/>
-              <label for="asumption" colspan="4" string="6.- Assumptions" class="oe_horizontal_separator oe_clear"/>
+              <separator colspan="4" string="6.- Assumptions" class="oe_horizontal_separator oe_clear"/>
               <field name="asumption" colspan="4" placeholder="Add assumptions here ..." widget="html"/>
-              <label for="implementation" colspan="4" string="7.- Implementation Conclusions" class="oe_horizontal_separator oe_clear"/>
+              <separator colspan="4" string="7.- Implementation Conclusions" class="oe_horizontal_separator oe_clear"/>
               <field name="implementation" colspan="4" placeholder="Add Implementation Conclusions here ..." widget="html"/>
             </page>
 
