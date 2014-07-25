@@ -35,19 +35,14 @@ class hr_payslip(osv.osv):
             context = {}
         ctx = context.copy()
         result = {}
-        currency_obj = self.pool.get('res.currency')
         for payslip in self.browse(cr, uid, ids, context=context):
             nb_inv_in_partial_rec = max_invoice_id = 0
             result[payslip.id] = 0.0
             if payslip.move_id:
                 for aml in payslip.move_id.line_id:
                     if aml.account_id.type in ('receivable','payable'):
-                        if aml.currency_id and aml.currency_id.id == payslip.currency_id.id:
-                            result[payslip.id] += aml.amount_residual_currency
-                        else:
-                            ctx['date'] = aml.date
-                            result[payslip.id] += currency_obj.compute(cr, uid, aml.company_id.currency_id.id, payslip.currency_id.id, aml.amount_residual, context=ctx)
-            #prevent the residual amount on the invoice to be less than 0
+                        result[payslip.id] += aml.amount_residual_currency
+            #prevent the residual amount on the payslip to be less than 0
             result[payslip.id] = max(result[payslip.id], 0.0)            
         return result
     
