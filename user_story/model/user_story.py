@@ -65,7 +65,7 @@ class user_story(osv.Model):
                     body = self.body_criteria(
                         cr, uid, ids, 'template_send_email_hu', criteria[1], context)
                     hu = self.browse(cr, uid, ids[0], context=context)
-                    subject = _('Acceptance criteria accepted {criteria}\n on User Story {hu}'.format(
+                    subject = _('Acceptance criteria accepted {criteria} on User Story {hu}'.format(
                         criteria=criteria[1][:30], hu=hu.id))
                     self.send_mail_hu(
                         cr, uid, ids, subject, body, hu.id, users=False, context=context)
