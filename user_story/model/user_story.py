@@ -20,6 +20,7 @@
 
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
+from openerp import SUPERUSER_ID
 
 import time
 
@@ -34,20 +35,23 @@ class user_story(osv.Model):
 
     def write(self, cr, uid, ids, vals, context=None):
         task_obj = self.pool.get('project.task')
-        # In order to be sync correctly tasks related with tags on this user story
-        # Tasks Must belong to same category, but in portal usage, this feature is not necesary
-        # and incorrect if we allow with SUPERUSERID, then we will check_permision and
-        # then make the sync process, if not it will pass silently.
-        if vals.get('categ_ids'):
-            for tag_id in self.browse(cr, uid, ids, context=context):
-                for task in tag_id.task_ids:
-                    task_obj.write(
-                        cr, uid, [task.id], {'categ_ids': vals['categ_ids']})
-        if vals.get('sk_id'):
-            task_ids = task_obj.search(cr, uid, [
-                                       ('userstory_id', '=', ids[0])])
-            task_obj.write(cr, uid, task_ids, {
-                           'sprint_id': vals.get('sk_id')}, context=context)
+        context.update({'force_send': True})
+        if task_obj.check_access_rights( cr, uid, 'write', False):
+            # In order to be sync correctly tasks related with tags on this user story
+            # Tasks Must belong to same category, but in portal usage, this feature is not necesary
+            # and incorrect if we allow with SUPERUSERID, then we will check_permision and
+            # then make the sync process, if not it will pass silently.
+            if vals.get('categ_ids'):
+                for tag_id in self.browse(cr, uid, ids, context=context):
+                    for task in tag_id.task_ids:
+                        task_obj.write(
+                            cr, uid, [task.id], {'categ_ids': vals['categ_ids']})
+            if vals.get('sk_id'):
+                task_ids = task_obj.search(cr, uid, [
+                                        ('userstory_id', '=', ids[0])])
+                task_obj.write(cr, uid, task_ids, {
+                            'sprint_id': vals.get('sk_id')}, context=context)
+            context.pop('force_send')
         if 'accep_crit_ids' in vals:
             ac_obj = self.pool.get('acceptability.criteria')
             criteria = [False, False]
@@ -82,18 +86,23 @@ class user_story(osv.Model):
             return False
 
     def body_criteria(self, cr, uid, ids, template, criteria, context=None):
+        '''
+        TODO: This method is incorrect, change for the original method which render
+        the template with the original engine.
+        '''
+        if context is None:
+            context = {}
         imd_obj = self.pool.get('ir.model.data')
         template_ids = imd_obj.search(
-            cr, uid, [('model', '=', 'email.template'), ('name', '=', template)])
+            cr, SUPERUSER_ID, [('model', '=', 'email.template'), ('name', '=', template)])
         if template_ids:
             res_id = imd_obj.read(
-                cr, uid, template_ids, ['res_id'])[0]['res_id']
+                cr, SUPERUSER_ID, template_ids, ['res_id'])[0]['res_id']
             body_html = self.pool.get('email.template').read(
                 cr, uid, res_id, ['body_html']).get('body_html')
-
             user_id = self.pool.get('res.users').browse(
-                cr, uid, [uid], context=context)[0]
-            hu = self.browse(cr, uid, ids[0], context=context)
+                cr, SUPERUSER_ID, [uid], context=context)[0]
+            hu = self.browse(cr, SUPERUSER_ID, ids[0], context=context)
 
             if hu.owner_id and hu.owner_id.name:
                 body_html = body_html.replace('NAME_OWNER', hu.owner_id.name)
@@ -115,6 +124,10 @@ class user_story(osv.Model):
             return False
 
     def send_mail_hu(self, cr, uid, ids, subject, body, res_id, users=[], context=None):
+        if context is None:
+            context = {}
+        if context.get('force_send', False):
+            uid = SUPERUSER_ID
         if not users:
             followers = self.read(cr, uid, ids[0], [
                 'message_follower_ids'])['message_follower_ids']
