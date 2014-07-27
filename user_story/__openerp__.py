@@ -51,6 +51,9 @@ siguientes:
                     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
+    "css" : [
+        'static/src/css/*.css',
+    ],
     "demo" : [
         'demo/demo.xml',
     ],
