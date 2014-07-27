@@ -83,7 +83,11 @@
                     <a href="http://youtu.be/_LviGlYCMx8" target="_NEW">here</a>
                     </p>
                 </div>
-              <field name="description" colspan="4" nolabel="1" placeholder="Add a description here ..." widget="html"/>
+                <div class="no_print oe_right">
+                    <button name="do_approval" type="object" help="Approve this User Story to start to work with it" string="I approve start to work with this Story"/>
+                    <h3><field name="approval_user_id" readonly="True"/></h3>
+                </div>
+              <field name="description" colspan="4" nolabel="1" attrs="{'readonly':[('approved','=',True)]}" placeholder="Add a description here ..." widget="html"/>
 		      <h1><label for="accep_crit_ids" string="4.- Aceptability Criteria" class="oe_horizontal_separator oe_clear"/></h1>
               <field name="accep_crit_ids" colspan="4" nolabel="1">
                 <form string="Acceptability Criteria" version="7.0">

@@ -200,7 +200,8 @@ class user_story(osv.Model):
 
     _columns = {
         'name': fields.char('Title', size=255, required=True, readonly=False, translate=True),
-        'owner_id': fields.many2one('res.users', 'Owner', help="User Story's Owner"),
+        'owner_id': fields.many2one('res.users', 'Owner', help="User Story's Owner, generally the person which asked to develop this feature"),
+        'approval_user_id': fields.many2one('res.users', 'Approver', help="User which approve this USer Story"),
         'code': fields.char('Code', size=64, readonly=False),
         'planned_hours': fields.float('Planned Hours'),
         'project_id': fields.many2one('project.project', 'Project',
@@ -261,6 +262,72 @@ class user_story(osv.Model):
     def do_progress(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'open'}, context=context)
 
+    def get_body_disapproval(self, cr, uid, i, context=None):
+        '''
+        TODO: This body must be verified to give the information regarding the answers in
+        the do_disaproval method.
+        '''
+        usname = self.browse(cr, uid, i).name
+        username = self.pool.get('res.users').browse(cr, uid, uid).name
+        urlbase = self.pool.get('ir.config_parameter').get_param(cr, uid, 'web.base.url')
+        link = '#id={i}&view_type=form&model=user.story'.format(i=i, urlbase=urlbase)
+        return _(u'''<html><div>
+                 <h2>{usname}</h2>
+                 <p>The user {user} has approved the user Story
+                 <a href="{link}">See what we are talking about here</a>
+                 </div></html>'''.format(usname=usname, user=username, link=link))
+
+    def do_disapproval(self, cr, uid, ids, context=None):
+        '''
+        TODO: Think about this project this is the reverse.
+        Questions:
+            Can be done IF?
+            What are the actions if We desapprove, (Cancel it too)?
+            What Happen with tasks already done?
+            What is the actions that must be take by, Project Manager, Product Owner and
+            the rest of the team?
+        '''
+        return self.write(cr, uid, ids, {'approved': False}, context=context)
+
+    def get_body_approval(self, cr, uid, i, context=None):
+        usname = self.browse(cr, uid, i).name
+        username = self.pool.get('res.users').browse(cr, uid, uid).name
+        urlbase = self.pool.get('ir.config_parameter').get_param(cr, uid, 'web.base.url')
+        link = '#id={i}&view_type=form&model=user.story'.format(i=i, urlbase=urlbase)
+        return _(u'''<html><div>
+                 <h2>{usname}</h2>
+                 <p>The user {user} has approved the user Story
+                 <a href="{link}">See what we are talking about here</a>
+                 </div></html>'''.format(usname=usname, user=username, link=link))
+
+    def do_approval(self, cr, uid, ids, context=None):
+        mail_mail = self.pool.get('mail.mail')
+        user_obj = self.pool.get('res.users')
+        user = user_obj.pool['res.users'].browse(cr, uid, uid, context)
+        followers = self.read(cr, uid, ids[0], [
+            'message_follower_ids'])['message_follower_ids']
+        #TODO: Re-do when correctly rendered is done using email template
+        for i in ids:
+            print self.get_body_approval(cr, uid, i, context)
+            body = self.get_body_approval(cr, uid, i, context)
+            context.update({
+                'default_body': body,
+            })
+            mail_id = mail_mail.create(cr, uid,
+                                    {
+                                        'model': 'user.story',
+                                        'res_id': i,
+                                        'subject': (u'{name} Approved the User Story with id {number}'.format(
+                                        number=i, name=user.name)),
+                                        'body_html': body,
+                                        'auto_delete': True,
+                                        'email_from': user.email,
+                                    }, context=context)
+            mail_mail.send(cr, uid, [mail_id],
+                        recipient_ids=followers,
+                        context=context)
+        return self.write(cr, uid, ids, {'approval_user_id': uid}, context=context)
+
     def do_pending(self, cr, uid, ids, context=None):
         body = self.body_criteria(
             cr, uid, ids, 'template_send_email_hu_progress', 'hu', context)
@@ -279,14 +346,12 @@ class user_story(osv.Model):
         return self.write(cr, uid, ids, {'state': 'cancelled'},
                           context=context)
 
-
 class user_story_priority(osv.Model):
     _name = 'user.story.priority'
     _description = "User Story Priority Level"
     _columns = {
         'name': fields.char('Name', size=255, required=True),
     }
-
 
 class acceptability_criteria(osv.Model):
     _name = 'acceptability.criteria'
