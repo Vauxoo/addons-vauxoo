@@ -18,7 +18,11 @@
                 <field name='help'/>
 		  </header>
 		  <sheet string="User Story">
-            <h1><label for="id" string="User Story Number: " class="oe_horizontal_separator oe_clear"/><field name="id"/></h1>
+            <h1><label for="id" string="User Story Number: " class="oe_horizontal_separator"/><field name="id" class="oe_inline"/></h1>
+            <!--
+                 TODO: In v8 replace this for a pretty button
+                 -->
+            <h2><label for="approved" string="0.- Is this User Story Approved to work with?"/><field name="approved"/></h2>
             <div class="oe_form_sheet_width" attrs="{'invisible':[('help','=',False)]}">
                 <p class="oe_grey">
                 A deeper explanation about what an user story is can be
@@ -259,6 +263,20 @@
             <field name="categ_ids"/>
           </group>
           <newline/>
+          <group expand="1" string="Group By...">
+              <filter name="pending" string="Pending to Accept Criterias"
+                  domain="[('state','in',['pending'])]"
+                  help="User Story Pending to approve Acceptability criteria It means: They are ready developed/configured and should have the neccesary information to be tested by the 'Owner' Story', If a User Story is on this state and don't have all the neccesary information to be approved/tested please ask your contact in the project for this information, (you can do that sending a message using the chatter)"/>
+              <filter name="approved" string="Approved"
+                  domain="[('approved','=',True)]"
+                  help="User Stories approved by customer"/>
+              <filter name="open" string="In Progress"
+                  domain="[('state','=','open')]"
+                  help="User Stories Opened it means, somebody is working on it and will have tasks in the future that can load time and materials on it User Story"/>
+              <filter name="done" string="Done"
+                  domain="[('state','=','done')]"
+                  help="User Stories already validated and done by customer"/>
+          </group>
           <group expand="1" string="Group By...">
             <filter name="user_story_project" icon="STOCK_INDEX" string="Project" context="{'group_by':'project_id'}" />
             <separator orientation="vertical" />
