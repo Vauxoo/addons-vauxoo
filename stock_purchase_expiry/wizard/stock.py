@@ -52,11 +52,17 @@ class stock_invoice_onshipping(osv.TransientModel):
             for picking_brw in self.pool.get(active_model).browse(cur, uid,
                 active_ids, context=context)
             if picking_brw.date_contract_expiry]
+        done_picking = [
+            bool(picking_brw.state == 'done')
+            for picking_brw in self.pool.get(active_model).browse(cur, uid,
+                active_ids, context=context) ]
         if context.get('force_expiry_pickings', False):
             pass
-        elif any(expire_dates):
+        elif any(expire_dates) or any(done_picking):
             raise osv.except_osv(_('Invalid Procedure'),
-                _('Some pickings are expired, The action can be peform.'))
+                _('This action can only be peform over not expire contract'
+                 ' date pickings which also are not in done state.'))
+        raise osv.except_osv('hola', 'chao')
         res = super(stock_invoice_onshipping, self).open_invoice(
             cur, uid, ids, context=context)
         return res 
