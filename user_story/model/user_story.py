@@ -217,13 +217,6 @@ class user_story(osv.Model):
             'Priority Level',
             help=('User story level priority, used to define priority for'
                   ' each user story')),
-        'difficulty_level': fields.many2one(
-            'user.story.difficulty',
-            'Difficulty',
-            help=('User story level estimated level, Estimated level is the one which will be used'
-                  ' to propose a number of hours based on the expirience of supervisors to estimate'
-                  ' how many hours it can take.'
-                  ' you can set a different number of hours if you think the estimation is wrong')),
         'asumption': fields.text('Assumptions', translate=True),
         'date': fields.date('Date'),
         'user_id': fields.many2one(
@@ -366,10 +359,11 @@ class user_story_priority(osv.Model):
 class user_story_difficulty(osv.Model):
     _name = 'user.story.difficulty'
     _description = "User Story Difficulty Level"
+    _order = "points asc"
     _columns = {
         'name': fields.char('Name', size=32, required=True, help="Set a Name for this Estimation."),
         'estimated': fields.float('Estimated Hours', size=32, required=True, help="How many hour do you think it can take."),
-        'sequence': fields.integer('Sequence', required=True, help="Just a number to give a logical order"),
+        'points': fields.integer('Points', required=True, help="Just to give another value to criterias and User Stories. With it you can set an order and a value in terms of effort."),
         'help': fields.text('Help', required=True, help="Explain what kind of User Stories can be on this level, tell your experience give examples and so on."),
     }
 
@@ -417,6 +411,13 @@ class acceptability_criteria(osv.Model):
         'accepted': fields.boolean('Accepted',
                                    help='Check if this criterion apply'),
         'development': fields.boolean('Development'),
+        'difficulty_level': fields.many2one(
+            'user.story.difficulty',
+            'Difficulty',
+            help=('User story level estimated level, Estimated level is the one which will be used'
+                  ' to propose a number of hours based on the experience of supervisors to estimate'
+                  ' how many hours it can take. you can set a different'
+                  ' number of hours if you think the estimation is wrong')),
         'difficulty': fields.selection(
             [('low', 'Low'),
              ('medium', 'Medium'),
