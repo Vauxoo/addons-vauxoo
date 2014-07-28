@@ -63,7 +63,7 @@ class stock_picking(osv.Model):
         default = default or {}
         context = context or {}
         picking_brw = self.browse(cur, uid, id, context=context)
-        default['date_contract_expiry'] = picking_brw.date_contract_expiry
+        default['date_contract_expiry'] = False
         res = super(stock_picking, self).copy(
             cur, uid, id, default=default, context=context)
         return res
@@ -102,7 +102,7 @@ class stock_picking_in(osv.Model):
         default = default or {}
         context = context or {}
         picking_brw = self.browse(cur, uid, id, context=context)
-        default['date_contract_expiry'] = picking_brw.date_contract_expiry
+        default['date_contract_expiry'] = False
         res = super(stock_picking_in, self).copy(
             cur, uid, id, default=default, context=context)
         return res
@@ -141,7 +141,7 @@ class stock_picking_out(osv.Model):
         default = default or {}
         context = context or {}
         picking_brw = self.browse(cur, uid, id, context=context)
-        default['date_contract_expiry'] = picking_brw.date_contract_expiry
+        default['date_contract_expiry'] = False
         res = super(stock_picking_out, self).copy(
             cur, uid, id, default=default, context=context)
         return res
