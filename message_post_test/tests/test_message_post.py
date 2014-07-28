@@ -15,7 +15,6 @@ class TestMessagePost(TransactionCase):
 
     def test_log_git_flow_message_test(self):
         cr, uid = self.cr, self.uid
-        name_field = self.message_test._columns.get('name').string
         user_id_field = self.message_test._columns.get('user_id').string
         number_field = self.message_test._columns.get('number').string
         line_ids_field = self.message_test._columns.get('line_ids').string
@@ -51,7 +50,13 @@ class TestMessagePost(TransactionCase):
                                   ('body', 'ilike', '%'+check_field+'%'),
                                   ('body', 'ilike', '%'+number_field+'%'),
                                   ('body', 'ilike', '%'+user_id_field+'%'),
-                                  ('body', 'ilike', '%'+line_ids_field+'%Created New Line%')])
+                                  ('body', 'ilike', '%'+line_ids_field+'%Created New Line%'),
+                                  ('body', 'ilike', '%'+'False'+'%'),
+                                  ('body', 'ilike', '%'+'78'+'%'),
+                                  ('body', 'ilike', '%'+'Test 1'+'%'),
+                                  ('body', 'ilike', '%'+'Test 5'+'%'),
+                                  ('body', 'ilike', '%'+'Test 6'+'%'),
+                                  ])
 
         self.assertGreaterEqual(len(message_ids),
                                 1,
@@ -68,24 +73,27 @@ class TestMessagePost(TransactionCase):
                                  [('res_id', '=', message_test_id),
                                   ('model', '=', 'message.post.test'),
                                   ('body', 'ilike', '%'+line_ids_field+'%'),
+                                  ('body', 'ilike', '%'+'Test Update'+'%'),
                                ])
 
         self.assertGreaterEqual(len(message_ids),
-                                2,
+                                1,
                                 "The last changes were not registred")
 
         #Removing an element of a many2many field
 
         self.message_test.write(cr, uid, [message_test_id], {
                                              'user_ids': [
-                                                 (6, 0, [user_1, user_2] ),
+                                                 (6, 0, [SUPERUSER_ID, user_2] ),
                                                  ]})
 
         message_ids = self.message.search(cr, uid,
                                  [('res_id', '=', message_test_id),
                                   ('model', '=', 'message.post.test'),
-                                  ('body', 'ilike', '%'+user_ids_field+'%Deleted%')])
+                                  ('body', 'ilike', '%'+user_ids_field+'%Deleted%'),
+                                  ('body', 'ilike', '%'+'Test 1'+'%'),
+                                  ])
 
         self.assertGreaterEqual(len(message_ids),
-                                3,
+                                1,
                                 "The last changes were not registred")
