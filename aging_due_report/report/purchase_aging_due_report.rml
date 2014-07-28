@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(280.0mm,220.0mm)" title="Test" author="Humberto Arocha" allowSplitting="20" showBoundary="0">
+    <pageTemplate id="first">
+        <pageGraphics>
+            <setFont name="Helvetica-Oblique" size="8.0"/>
+            <image x="10.0mm" y="195.0mm"  width="89.994mm" height="24.342mm">[[company.logo and company.logo or removeParentNode('image')]]</image>
+            <drawString x="10mm" y="5mm">Reporte Impreso en OpenERP con ReportLab</drawString> 
+            <drawRightString x="270mm" y="5mm">Fecha de Impresion:  [[formatLang(time.strftime('%Y-%m-%d'),date=True)]] [[time.strftime('%H:%m')]] / Pagina:<pageNumber/> </drawRightString> 
+        </pageGraphics>
+      <frame id="first"     x1="10.0mm"     y1="10mm"    width="260mm"  height="185.0mm"/>
+    </pageTemplate>
+  </template>
+
+  <stylesheet>
+		<blockTableStyle id="TITLE">
+            <blockBackground colorName="black" start="1,0" stop="-1,-1"/>
+            <blockValign value="TOP"/>
+		</blockTableStyle>     
+
+		<blockTableStyle id="TERMS">
+            <blockBackground colorName="#a41d35ff" start="0,0" stop="-1,0"/>
+            <blockValign value="TOP"/>
+			<lineStyle kind="GRID" colorName="white" start="0,0" stop="-1,0" thickness="0.5"/>
+			<lineStyle kind="GRID" colorName="#a41d35ff" start="0,1" stop="-1,-1" thickness="0.5"/>
+			<lineStyle kind="OUTLINE" colorName="#a41d35ff" thickness="0.5"/>
+		</blockTableStyle>
+        
+		<blockTableStyle id="TERMSTABLEGREY">
+            <blockBackground colorName="#a3a5a8ff" start="0,0" stop="-1,0"/>
+            <blockValign value="TOP"/>
+			<lineStyle kind="GRID" colorName="white" start="0,0" stop="-1,0" thickness="0.5"/>
+			<lineStyle kind="GRID" colorName="white" start="0,1" stop="-1,-1" thickness="0.5"/>
+			<lineStyle kind="OUTLINE" colorName="white" thickness="0.5"/>
+		</blockTableStyle>  
+
+		<blockTableStyle id="ITEMSTITLE">
+            <blockBackground colorName="black" start="0,0" stop="5,0"/>
+            <blockValign value="TOP"/>
+			<lineStyle kind="GRID" colorName="white" start="0,0" stop="5,0" thickness="0.5"/>
+			<lineStyle kind="OUTLINE" colorName="black" thickness="0.5"/>
+		</blockTableStyle>          
+
+		<blockTableStyle id="ITEMS">
+            <blockValign value="TOP"/>
+			<lineStyle kind="GRID" colorName="#4bacc6ff" start="0,0" stop="5,-1" thickness="0.5" />
+			<lineStyle kind="OUTLINE" colorName="black" thickness="0.5"/>
+		</blockTableStyle>           
+
+		<blockTableStyle id="TOTAL">
+            <blockValign value="TOP"/>
+            <blockBackground colorName="#d5eff9ff" start="0,0" stop="-1,-1"/>
+			<lineStyle kind="GRID" colorName="#4bacc6ff" start="0,0" stop="-1,-1" thickness="0.5" />
+		</blockTableStyle>          
+
+    <initialize>
+      <paraStyle name="all" alignment="JUSTIFY" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="3.0" textColor="blue"/>
+    </initialize>
+    
+    <paraStyle name="COMPANYNAME" alignment="LEFT" fontName="Helvetica-Bold" fontSize="16.0" leading="10" spaceBefore="3.0" textColor="black"/>    
+    <paraStyle name="TITLE" alignment="CENTER" fontName="Helvetica" fontSize="10.0" leading="8" spaceBefore="3.0" textColor="white"/>
+    <paraStyle name="CUSTOMERNAME" alignment="RIGHT" fontName="Helvetica-Oblique" fontSize="10.0" leading="12" spaceBefore="3.0" textColor="black"/>    
+    <paraStyle name="CUSTOMERCENTER" alignment="CENTER" fontName="Times-BoldItalic" fontSize="10.0" leading="12" spaceBefore="3.0" textColor="black"/>    
+    <paraStyle name="CUSTOMERTEXT" alignment="JUSTIFY" fontName="Times-BoldItalic" fontSize="10.0" leading="12" spaceBefore="3.0" textColor="black"/>    
+    <paraStyle name="NOTEANDNUMBER" alignment="JUSTIFY" fontName="Helvetica" fontSize="10.0" leading="12" spaceBefore="3.0" textColor="darkblue"/>    
+    <paraStyle name="BILLTO" alignment="LEFT" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="white"/>    
+    <paraStyle name="TERMS" alignment="CENTER" fontName="Helvetica-Bold" fontSize="8.0" leading="12" spaceBefore="3.0" textColor="white"/>
+    <paraStyle name="ITEMSTITLELEFT" alignment="LEFT" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="3.0" textColor="white"/>    
+    <paraStyle name="ITEMSTITLE" alignment="CENTER" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="3.0" textColor="white"/>    
+    <paraStyle name="ITEMSTITLERIGHT" alignment="RIGHT" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="3.0" textColor="white"/>    
+    <paraStyle name="ITEMSLEFT" alignment="LEFT" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="3.0" textColor="black"/>    
+    <paraStyle name="ITEMSCENTER" alignment="CENTER" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="3.0" textColor="black"/>    
+    <paraStyle name="ITEMSRIGHT" alignment="RIGHT" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="3.0" textColor="black"/>    
+
+
+  </stylesheet>
+
+  <images/>
+  <story>
+<!--TABLA DE ITEMS-->   
+    <section>
+    <para></para>
+    <para>[[ setLang(user.lang) ]]</para>
+        <blockTable colWidths="20mm,100mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm" repeatRows="1" style="TERMS">
+            <tr noRowsplits="1">
+                <td><para style="ITEMSTITLELEFT">RIF</para></td>
+                <td><para style="ITEMSTITLELEFT">EMPRESA</para></td>
+                <td><para style="ITEMSTITLERIGHT">NO VENCIDO</para></td>
+                <td><para style="ITEMSTITLERIGHT">01-30 DIAS</para></td>
+                <td><para style="ITEMSTITLERIGHT">31-60 DIAS</para></td>
+                <td><para style="ITEMSTITLERIGHT">61-90 DIAS</para></td>
+                <td><para style="ITEMSTITLERIGHT">91-120 DIAS</para></td>
+                <td><para style="ITEMSTITLERIGHT">+ 120 DIAS</para></td>
+                <td><para style="ITEMSTITLERIGHT">TOT./COBRAR</para></td>
+            </tr>
+            <tr>
+                <td><para style="ITEMSLEFT">[[repeatIn(get_aged_lines(objects, inv_type='in_invoice'),'o')]][[o.get('type')=='partner' and o.get('rp_brw').vat and '%s-%s-%s'%(o.get('rp_brw').vat[2],o.get('rp_brw').vat[3:-1],o.get('rp_brw').vat[-1])]]</para></td>
+                <td><para style="ITEMSLEFT">[[ o.get('type')=='partner' and o.get('rp_brw').name or o.get('type')=='total' and 'TOTAL' or o.get('type')=='provision' and removeParentNode('tr') ]]</para></td>
+                <td><para style="ITEMSRIGHT">[[  formatLang(o.get('not_due'), digits=2, grouping=True) ]]</para></td>
+                <td><para style="ITEMSRIGHT">[[  formatLang(o.get('1to30'), digits=2, grouping=True) ]]</para></td>
+                <td><para style="ITEMSRIGHT">[[  formatLang(o.get('31to60'), digits=2, grouping=True) ]]</para></td>
+                <td><para style="ITEMSRIGHT">[[  formatLang(o.get('61to90'), digits=2, grouping=True) ]]</para></td>
+                <td><para style="ITEMSRIGHT">[[  formatLang(o.get('91to120'), digits=2, grouping=True) ]]</para></td>
+                <td><para style="ITEMSRIGHT">[[  formatLang(o.get('120+'), digits=2, grouping=True) ]]</para></td>
+                <td><para style="ITEMSRIGHT">[[  formatLang(o.get('total'), digits=2, grouping=True) ]]</para></td>
+            </tr>
+        </blockTable>
+    </section>
+  </story>
+</document>

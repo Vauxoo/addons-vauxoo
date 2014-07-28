@@ -27,6 +27,8 @@
 import time
 from report import report_sxw
 import mx.DateTime
+import pdb
+import pprint
 
 
 class aging_parser(report_sxw.rml_parse):
@@ -72,6 +74,8 @@ class aging_parser(report_sxw.rml_parse):
         return [{'total': total, 'vendor': (usr_dict[i] for i in usr_dict)}]
 
     def _get_invoice_by_partner(self, rp_brws, inv_type='out_invoice'):
+
+        pdb.set_trace()
         res = {}
         rp_obj = self.pool.get('res.partner')
         inv_obj = self.pool.get('account.invoice')
@@ -174,6 +178,9 @@ class aging_parser(report_sxw.rml_parse):
             #~ Si no tiene saldo, sacarlo del reporte
             not res[rp_brw.id]['due_total'] and res.pop(rp_brw.id)
 
+        # TODO: review this method were the totals amount are sume.
+        pdb.set_trace()
+
         #~ ordenando los registros en orden alfabetico
         #~ si llegaran a existir
         res2 = []
@@ -187,6 +194,7 @@ class aging_parser(report_sxw.rml_parse):
     def _get_aged_lines(self, rp_brws, span=30,
             date_from=time.strftime('%Y-%m-%d'), inv_type='out_invoice'):
 
+        pdb.set_trace()
         # span = 30
         # spans = [0, 30, 60, 90, 120]
         # span = 90
@@ -314,6 +322,13 @@ report_sxw.report_sxw(
     'report.aging_due_report',
     'res.partner',
     'addons/aging_due_report/report/aging_due_report.rml',
+    parser=aging_parser,
+    header=False
+)
+report_sxw.report_sxw(
+    'report.purchase_aging_due_report',
+    'res.partner',
+    'addons/aging_due_report/report/purchase_aging_due_report.rml',
     parser=aging_parser,
     header=False
 )
