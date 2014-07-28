@@ -217,6 +217,13 @@ class user_story(osv.Model):
             'Priority Level',
             help=('User story level priority, used to define priority for'
                   ' each user story')),
+        'difficulty_level': fields.many2one(
+            'user.story.difficulty',
+            'Difficulty',
+            help=('User story level estimated level, Estimated level is the one which will be used'
+                  ' to propose a number of hours based on the expirience of supervisors to estimate'
+                  ' how many hours it can take.'
+                  ' you can set a different number of hours if you think the estimation is wrong')),
         'asumption': fields.text('Assumptions', translate=True),
         'date': fields.date('Date'),
         'user_id': fields.many2one(
@@ -244,6 +251,7 @@ class user_story(osv.Model):
                                                'project.task.work': (_get_user_story_from_ptw, ['hours'], 10),
                                            }),
     }
+
     _defaults = {
         'name': lambda *a: None,
         'date': lambda *a: time.strftime('%Y-%m-%d'),
@@ -326,7 +334,9 @@ class user_story(osv.Model):
             mail_mail.send(cr, uid, [mail_id],
                         recipient_ids=followers,
                         context=context)
-        return self.write(cr, uid, ids, {'approval_user_id': uid}, context=context)
+        return self.write(cr, uid, ids,
+                          {'approval_user_id': uid,
+                           'approved': True}, context=context)
 
     def do_pending(self, cr, uid, ids, context=None):
         body = self.body_criteria(
@@ -351,6 +361,16 @@ class user_story_priority(osv.Model):
     _description = "User Story Priority Level"
     _columns = {
         'name': fields.char('Name', size=255, required=True),
+    }
+
+class user_story_difficulty(osv.Model):
+    _name = 'user.story.difficulty'
+    _description = "User Story Difficulty Level"
+    _columns = {
+        'name': fields.char('Name', size=32, required=True, help="Set a Name for this Estimation."),
+        'estimated': fields.float('Estimated Hours', size=32, required=True, help="How many hour do you think it can take."),
+        'sequence': fields.integer('Sequence', required=True, help="Just a number to give a logical order"),
+        'help': fields.text('Help', required=True, help="Explain what kind of User Stories can be on this level, tell your experience give examples and so on."),
     }
 
 class acceptability_criteria(osv.Model):

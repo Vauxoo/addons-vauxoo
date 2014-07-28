@@ -5,4 +5,7 @@
       .openerp iframe {
           display: none !important;
         }
+      .openerp .page-brake {
+          page-break-after: always;
+        }
     }
