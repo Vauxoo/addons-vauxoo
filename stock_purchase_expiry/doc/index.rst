@@ -2,6 +2,8 @@
 MODULE HELP
 ===========
 
+.. contents:: Table of Content
+
 New features
 ------------
 
