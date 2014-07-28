@@ -13,52 +13,28 @@
 			 <button name="do_pending" string="Pending" type="object" states="draft,open,done,cancelled"/>
 			 <button name="do_done" string="Done" type="object" states="draft,open,pending,cancelled"/>
 			 <button name="do_cancel" string="Cancel" type="object" states="draft,open,pending,done"/>
-			<field name="state" widget="statusbar"/>
+			 <field name="state" widget="statusbar"/>
                 <label for='help'/>
                 <field name='help'/>
 		  </header>
 		  <sheet string="User Story">
-            <h1><label for="id" string="User Story Number: " class="oe_horizontal_separator oe_clear"/><field name="id"/></h1>
-            <div class="oe_form_sheet_width" attrs="{'invisible':[('help','=',False)]}">
-                <p class="oe_grey">
-                A deeper explanation about what an user story is can be
-                found here.
-                <a href="http://dannorth.net/whats-in-a-story/" target="_NEW">Here more information</a>
-                </p>
-                <p class="oe_grey">
-                Please load as attachment, all documents that support
-                your explanations
-                here on xmind or other formats with the explanations
-                that you need to fill here.
-                An example with all reference about topics you must consider
-                is available
-                <a href="/user_story/static/src/demo/TestUS.xmind" target="_NEW">here</a>
-                </p>
+            <div class="oe_right">
+                        <field name="date" select="1"
+                            string="Created at"/>
             </div>
-		  <h1><label for="name" string="1.- Title of the Story" class="oe_horizontal_separator oe_clear"/></h1>
+            <h1><label for="id" string="User Story Number: " class="oe_horizontal_separator"/><field name="id" class="oe_inline"/></h1>
+            <!--
+                 TODO: In v8 replace this for a pretty button
+                 -->
+            <h2 class="no_print"><label for="approved" string="0.- Is this User Story Approved to work with?"/><field name="approved"/></h2>
+            <h1><label for="name" string="1.- Name of what will be done/configured/developed: Title of the Story" class="oe_horizontal_separator oe_clear"/></h1>
 			<h2><field name="name"/></h2>
-			<group>
-				<group>
-					<field name="owner_id" select="1" required="1"/>
-					<field name="date" select="1"/>
-					<field name="user_id"/>
-					<field name="user_execute_id"/>
-					<field name="code"/>
-				</group>
-				<group>
-					<field name="planned_hours" />
-					<field name="effective_hours" />
-					<field name="sk_id" context="{'current_model3': 'sprint.kanban'}" />
-					<field name="priority_level" widget="selection"/>
-                    <field name="categ_ids" widget="many2many_tags" context="{'current_model1': 'project.category'}"/>
-				</group>
-			</group>
 			<h3>
 		        <label for="project_id" string="2.- Related Project" class="oe_horizontal_separator oe_clear"/>
 			</h3>
             <div>
                 <field name="project_id" domain="[('child_ids','=',False)]" context="{'current_model': 'project.project'}" />
-                <div attrs="{'invisible':[('help','=',False)]}">
+                <div class="no_print" attrs="{'invisible':[('help','=',False)]}">
                     <p class="oe_grey">
                         The link to the project, all projects listed here
                         are of the lower level available in the Master WBS.
@@ -67,19 +43,43 @@
             </div>
           <notebook colspan="4">
             <page string="Details">
+                <group>
+                    <group>
+                        <field name="owner_id" select="1" required="1" string="Who ask for this feature on customer side?"/>
+                        <field name="user_id" string="Who fill this Story?"/>
+                        <field name="user_execute_id"
+                            string="Who is in chanrge to make things done?"/>
+                        <field name="code" invisible="True"/>
+                        <field name="planned_hours"
+                            string="How many hours do I 'Think' it can take?"/>
+                        <field name="effective_hours"
+                            string="How many hour has been used on this Story?"/>
+                        <field name="sk_id" context="{'current_model3': 'sprint.kanban'}" />
+                        <field name="priority_level" widget="selection"
+                            string="How Important is This for you?"/>
+                        <field name="difficulty_level" widget="selection"/>
+                        <field name="categ_ids" widget="many2many_tags"
+                            string="Extra Clasification (For Internal Use)"
+                            context="{'current_model1': 'project.category'}"/>
+                    </group>
+                </group>
               <h1><label for="description" string="3.- Description" colspan="4" class="oe_horizontal_separator oe_clear"/></h1>
-                <div attrs="{'invisible':[('help','=',False)]}">
+                <div class="no_print" attrs="{'invisible':[('help','=',False)]}">
                    <p class="oe_grey">
-                    Here in the description, you must be as explícit as you can,
+                    Here in the description, you will be as explícit as you can,
                     Remember you can upload a Youtube video, and insert
                     directly here, embeded as a webpage, you can use vimeo and
                     other elements as images, diagrams (using some
                     online services) you just must copy and paste the embeded code,
                     you can see an example about how to do that
-                    <a href="youtube">here</a>
+                    <a href="http://youtu.be/_LviGlYCMx8" target="_NEW">here</a>
                     </p>
                 </div>
-              <field name="description" colspan="4" nolabel="1" placeholder="Add a description here ..." widget="html"/>
+                <div class="no_print oe_right">
+                    <button name="do_approval" type="object" states="draft" help="Please, Approve this User Story to start to work with it take care about if you are not the Owner of this User Story you will not be able to approve it." string="I approve start to work with this Story"/>
+                    <h3>This User Story was approved by: <field name="approval_user_id" readonly="True"/></h3>
+                </div>
+              <field name="description" colspan="4" nolabel="1" attrs="{'readonly':[('approved','=',True)]}" placeholder="Add a description here ..." widget="html"/>
 		      <h1><label for="accep_crit_ids" string="4.- Aceptability Criteria" class="oe_horizontal_separator oe_clear"/></h1>
               <field name="accep_crit_ids" colspan="4" nolabel="1">
                 <form string="Acceptability Criteria" version="7.0">
@@ -111,11 +111,62 @@
             </page>
 
             <page string="GAP analysis results">
+                <div class="oe_form_sheet_width no_print" attrs="{'invisible':[('help','=',False)]}">
+                    <p class="oe_grey">
+                    A deeper explanation about what an user story is can be
+                    found here.
+                    <a href="http://dannorth.net/whats-in-a-story/" target="_NEW">Here more information</a>
+                    </p>
+                    <p class="oe_grey">
+                    Please load as attachment, all documents that support
+                    your explanations
+                    here on xmind or other formats with the explanations
+                    that you need to fill here.
+                    An example with all reference about topics you must consider
+                    is available
+                    <a href="/user_story/static/src/demo/TestUS.xmind" target="_NEW">here</a>
+                    </p>
+                </div>
 			  <separator colspan="4" string="5.- Technical Conclusions" class="oe_horizontal_separator oe_clear"/>
+                <div class="no_print" attrs="{'invisible':[('help','=',False)]}">
+                    <p class="oe_grey">
+                        Here you need to declare technically how will be
+                        solved this User Story. The technically conclusions
+                        can have link to modules to be based on, link gists
+                        or directly algorithms, link to files to change and
+                        so on. In this place you can say where will you put
+                        the code related to it, or documentation bnecesary
+                        to be used to solve this case.
+                    </p>
+                </div>
               <field name="info" colspan="4" placeholder="Add another info here ..." widget="html"/>
               <separator colspan="4" string="6.- Assumptions" class="oe_horizontal_separator oe_clear"/>
               <field name="asumption" colspan="4" placeholder="Add assumptions here ..." widget="html"/>
+                <div class="no_print" attrs="{'invisible':[('help','=',False)]}">
+                    <p class="oe_grey">
+                        On this place please set all the features that
+                        explicitlly are outside (inside of the scope are the
+                        acceptability criteria), Thisng that you considere are
+                        part of other user story, and you will not or will
+                        considere as part of this Story and need to be declared
+                        explicitaly. It is important to set the scope and not
+                        end doing things that needs to be part of other
+                        Story or the end user is not complete agreed with it
+                        and can be easily mixed.
+                    </p>
+                </div>
               <separator colspan="4" string="7.- Implementation Conclusions" class="oe_horizontal_separator oe_clear"/>
+                <div class="no_print" attrs="{'invisible':[('help','=',False)]}">
+                    <p class="oe_grey">
+                        One time you finish the story, here you need to say
+                        considerations, learned lessons, things that you think
+                        are important to know before implement, oportunities to
+                        improve in the future and so on.
+                        Some set of information can be great here are link to
+                        manuals, videos, bugs information and some other
+                        external things that you think are important.
+                    </p>
+                </div>
               <field name="implementation" colspan="4" placeholder="Add Implementation Conclusions here ..." widget="html"/>
             </page>
 
@@ -259,6 +310,20 @@
             <field name="categ_ids"/>
           </group>
           <newline/>
+          <group expand="1" string="Group By...">
+              <filter name="pending" string="Pending to Accept Criterias"
+                  domain="[('state','in',['pending'])]"
+                  help="User Story Pending to approve Acceptability criteria It means: They are ready developed/configured and should have the neccesary information to be tested by the 'Owner' Story', If a User Story is on this state and don't have all the neccesary information to be approved/tested please ask your contact in the project for this information, (you can do that sending a message using the chatter)"/>
+              <filter name="approved" string="Approved"
+                  domain="[('approved','=',True)]"
+                  help="User Stories approved by customer"/>
+              <filter name="open" string="In Progress"
+                  domain="[('state','=','open')]"
+                  help="User Stories Opened it means, somebody is working on it and will have tasks in the future that can load time and materials on it User Story"/>
+              <filter name="done" string="Done"
+                  domain="[('state','=','done')]"
+                  help="User Stories already validated and done by customer"/>
+          </group>
           <group expand="1" string="Group By...">
             <filter name="user_story_project" icon="STOCK_INDEX" string="Project" context="{'group_by':'project_id'}" />
             <separator orientation="vertical" />

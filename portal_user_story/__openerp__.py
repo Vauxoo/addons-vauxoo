@@ -5,7 +5,7 @@
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    d$
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A. (Yanina Aular & Miguel Delgado)
+#    Coded by: Vauxoo C.A. "Nhomar Hernández <nhomar@vauxoo.com>"
 #    Planified by: Rafael Silva
 #    Audited by: Vauxoo C.A.
 ##############################################################################
@@ -25,49 +25,32 @@
 ##############################################################################
 
 {
-    "name" : "User Story",
+    "name" : "Portal Acess for User Story",
     "version" : "0.1",
     "depends" : [
-                 "base",
-                 "project",
-                 "sprint_kanban",
-                 "project_timesheet",
-                 "project_conf",
+                 "user_story",
+                 "portal",
                  ],
     "author" : "Vauxoo",
     "description" : """
-Este módulo registra requerimientos funcionales y técnicos de software a
-través de Historias de Usuarios.
+This Module only offer Portal Access to customers.
 
-Las historias se redactan siguiendo preceptos de las prácticas ágiles, y mas
-específicamente de una recomendación de Dan North.
+    - List User Stories per Project.
+    - Allow Mark Acceptability Criteria as "Accepted".
+    - See historical communication on User Story.
 
-En su artículo 'What's in a `Story`_ ?'. Este artículo representa la documentación
-funcionalde este módulo. Las `fuentes`_  en inglés y español el artículo son las
-siguientes:
-
-.. Story: http://dannorth.net/whats-in-a-story/
-.. fuentes: http://adrianmoya.com/2012/08/que-hay-en-una-historia/
+The only objective is, easily with add Portal Access to Contacts on a Customer
+be able to let them accept user stories.
                     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
-    "css" : [
-        'static/src/css/*.css',
-    ],
     "demo" : [
         'demo/demo.xml',
     ],
     "data" : [
-        "report/ir_report.xml",
-        "security/userstory_security.xml",
+        "security/ir_rules.xml",
         "security/ir.model.access.csv",
-        "view/userstory_view.xml",
-        "view/project_view.xml",
-        "view/hr_timesheet_view.xml",
-        "view/hr_timesheet_all_view.xml",
-        "view/custom_project_task_view.xml",
-        "data/data.xml",
-        "data/user_story_template.xml",
+        'view/portal_view.xml',
     ],
     "active": False,
     "images": [],
