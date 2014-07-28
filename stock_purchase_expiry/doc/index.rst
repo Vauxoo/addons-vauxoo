@@ -112,3 +112,18 @@ New features
        :align: center
 
        https://docs.google.com/a/vauxoo.com/file/d/0B1UUUA6bRx8-S3gwOW93ajNkY2c/edit?usp=drivesdk
+
+#. After a picking is received a button 'Create Invoice/Refund' is shown to
+   create the invoice of the current picking
+
+    .. figure:: images/figure-9.png
+       :scale: 50 %
+       :align: center
+
+       https://docs.google.com/a/vauxoo.com/file/d/0B1UUUA6bRx8-YVAyWnBoN0NxUkE/edit?usp=drivesdk
+
+    .. figure:: images/figure-10.png
+       :scale: 50 %
+       :align: center
+
+       https://docs.google.com/a/vauxoo.com/file/d/0B1UUUA6bRx8-N3VSQ2VTX3VubzQ/edit?usp=drivesdk
