@@ -16,14 +16,19 @@ New features
 
        https://docs.google.com/a/vauxoo.com/file/d/0B1UUUA6bRx8-YTlNT1NqM0ZPQnc/edit?usp=drivesdk
 
-#. When a purchase order is duplicated then will copy the contract expiration
-   date fields too.
+#. When a stock picking is duplicated will cleare the expiration contract date.
 
     .. figure:: images/figure-2.png
        :scale: 50 %
        :align: center
        
-       https://docs.google.com/a/vauxoo.com/file/d/0B1UUUA6bRx8-UkVfUXJJMXl3SDg/edit?usp=drivesdk
+       https://docs.google.com/a/vauxoo.com/file/d/0B1UUUA6bRx8-UGNQNDBkV2hKUUE/edit?usp=drivesdk
+
+    .. figure:: images/figure-2b.png
+       :scale: 50 %
+       :align: center
+       
+       https://docs.google.com/a/vauxoo.com/file/d/0B1UUUA6bRx8-NW9PVGxaZ2NSUTg/edit?usp=drivesdk
 
 #. I create a purchase order and I assing a past contract expire date. Then I
    confirm the purchase order.
