@@ -5,6 +5,7 @@
             <field name="name">view.seq.sale.order.line.form</field>
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="priority">10</field>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='sequence']" position="after">
                    <field name="sequence2" string='Seq'/>
