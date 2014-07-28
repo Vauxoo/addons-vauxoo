@@ -51,7 +51,7 @@ class aging_parser(report_sxw.rml_parse):
             res += i
         return res
 
-    def _get_total_by_comercial(self, rp_brws):
+    def _get_total_by_comercial(self, rp_brws, inv_type='out_invoice'):
         ixp_gen = self._get_invoice_by_partner(rp_brws)
         total = 0.0
         usr_dict = {}
@@ -184,7 +184,8 @@ class aging_parser(report_sxw.rml_parse):
                 res2.append(res[rp_id])
         return res2
 
-    def _get_aged_lines(self, rp_brws, span=30, date_from=time.strftime('%Y-%m-%d')):
+    def _get_aged_lines(self, rp_brws, span=30,
+            date_from=time.strftime('%Y-%m-%d'), inv_type='out_invoice'):
 
         # span = 30
         # spans = [0, 30, 60, 90, 120]
@@ -195,7 +196,7 @@ class aging_parser(report_sxw.rml_parse):
         if not rp_brws:
             return []
 
-        ixp_gen = self._get_invoice_by_partner(rp_brws)
+        ixp_gen = self._get_invoice_by_partner(rp_brws, inv_type)
 
         if not ixp_gen:
             return []
