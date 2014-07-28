@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <openerp>
     <data>
-    
+
         <!-- User Story Priority -->
         <record id="usp_urgent" model="user.story.priority">
             <field name="name">Urgent</field>
@@ -12,7 +12,7 @@
         <record id="usp_secondary" model="user.story.priority">
             <field name="name">Secondary</field>
         </record>
-        
+
         <!-- Task-related subtypes for messaging / Chatter -->
         <record id="mt_task_new" model="mail.message.subtype">
             <field name="name">Task Created</field>
@@ -44,12 +44,12 @@
             <field name="default" eval="False"/>
             <field name="description">Stage changed</field>
         </record>
-        
+
         <!-- Discussion subtype for messaging / Chatter -->
         <record id="mt_comment" model="mail.message.subtype">
             <field name="name">Discussions</field>
         </record>
 
-      
+
     </data>
 </openerp>
