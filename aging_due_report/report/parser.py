@@ -71,7 +71,7 @@ class aging_parser(report_sxw.rml_parse):
             return []
         return [{'total': total, 'vendor': (usr_dict[i] for i in usr_dict)}]
 
-    def _get_invoice_by_partner(self, rp_brws):
+    def _get_invoice_by_partner(self, rp_brws, inv_type='out_invoice'):
         res = {}
         rp_obj = self.pool.get('res.partner')
         inv_obj = self.pool.get('account.invoice')
@@ -79,7 +79,7 @@ class aging_parser(report_sxw.rml_parse):
         for rp_brw in rp_brws:
             inv_ids = inv_obj.search(
                 self.cr, self.uid, [('partner_id', '=', rp_brw.id),
-                                    ('type', '=', 'out_invoice'), ('residual', '!=', 0), ('state', 'not in', ('cancel', 'draft'))])
+                                    ('type', '=', inv_type), ('residual', '!=', 0), ('state', 'not in', ('cancel', 'draft'))])
             if not inv_ids:
                 continue
             res[rp_brw.id] = {
