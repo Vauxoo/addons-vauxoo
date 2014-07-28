@@ -34,6 +34,7 @@ class user_story(osv.Model):
     _inherit = ['mail.thread']
 
     def write(self, cr, uid, ids, vals, context=None):
+        context = context or {}
         task_obj = self.pool.get('project.task')
         context.update({'force_send': True})
         if task_obj.check_access_rights( cr, uid, 'write', False):
@@ -309,6 +310,7 @@ class user_story(osv.Model):
                  </div></html>'''.format(usname=usname, user=username, link=link))
 
     def do_approval(self, cr, uid, ids, context=None):
+        context = context or {}
         mail_mail = self.pool.get('mail.mail')
         user_obj = self.pool.get('res.users')
         user = user_obj.pool['res.users'].browse(cr, uid, uid, context)
