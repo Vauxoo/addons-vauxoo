@@ -1,0 +1,24 @@
+-
+  To test contract enterprise module constraint.
+- 
+  I check that Initially contract state is "Open".
+-
+  !assert {model: account.analytic.account, id: account_analytic_account_enterprise_license_0}:
+    - state == 'open'
+-
+  I add to the contract a new warranty.
+-
+  !python {model: account.warranty_oerp}: |
+    import netsvc, tools, os, base64
+    import traceback
+    from openerp.osv.orm import except_orm
+    from tools.misc import mute_logger
+    
+    log('Error controlled, constraint limits allowed date range.')
+    try:
+        with mute_logger('openerp.tools.yaml_import'):
+            self.create(cr, uid, {'start_date':'2008-06-20','end_date':'2009-06-20','enterprise_key': 'Test-key-error','contract_id': ref("account_analytic_account_enterprise_license_0")})
+    except except_orm:
+        error = tools.ustr(traceback.format_exc())
+        test_ok = True
+    assert test_ok, "Test failed."

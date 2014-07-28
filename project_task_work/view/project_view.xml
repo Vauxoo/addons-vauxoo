@@ -1,8 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <openerp>
     <data>
-
-
         <record id="view_project_task_work_ext_tree" model="ir.ui.view">
             <field name="name">project.task.work.ext.tree</field>
             <field name="model">project.task.work</field>

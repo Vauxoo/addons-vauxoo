@@ -21,16 +21,16 @@
             <h1><label for="id" string="User Story Number: " class="oe_horizontal_separator oe_clear"/><field name="id"/></h1>
             <div class="oe_form_sheet_width" attrs="{'invisible':[('help','=',False)]}">
                 <p class="oe_grey">
-                A deeper explanation about what an user story is can be 
+                A deeper explanation about what an user story is can be
                 found here.
                 <a href="http://dannorth.net/whats-in-a-story/" target="_NEW">Here more information</a>
                 </p>
                 <p class="oe_grey">
-                Please load as attachment, all documents that support 
-                your explanations 
-                here on xmind or other formats with the explanations 
+                Please load as attachment, all documents that support
+                your explanations
+                here on xmind or other formats with the explanations
                 that you need to fill here.
-                An example with all reference about topics you must consider 
+                An example with all reference about topics you must consider
                 is available
                 <a href="/user_story/static/src/demo/TestUS.xmind" target="_NEW">here</a>
                 </p>
@@ -71,11 +71,11 @@
                 <div attrs="{'invisible':[('help','=',False)]}">
                    <p class="oe_grey">
                     Here in the description, you must be as explícit as you can,
-                    Remember you can upload a Youtube video, and insert 
-                    directly here, embeded as a webpage, you can use vimeo and 
-                    other elements as images, diagrams (using some 
+                    Remember you can upload a Youtube video, and insert
+                    directly here, embeded as a webpage, you can use vimeo and
+                    other elements as images, diagrams (using some
                     online services) you just must copy and paste the embeded code,
-                    you can see an example about how to do that 
+                    you can see an example about how to do that
                     <a href="youtube">here</a>
                     </p>
                 </div>
@@ -109,16 +109,16 @@
                 </tree>
               </field>
             </page>
-          
+
             <page string="GAP analysis results">
-			  <label for="info" colspan="4" string="5.- Technical Conclusions" class="oe_horizontal_separator oe_clear"/>
-              <field name="info" colspan="4" placeholder="Add another info here ..."/> 
-              <label for="asumption" colspan="4" string="6.- Assumptions" class="oe_horizontal_separator oe_clear"/>
-              <field name="asumption" colspan="4" placeholder="Add assumptions here ..."/>
-              <label for="implementation" colspan="4" string="7.- Implementation Conclusions" class="oe_horizontal_separator oe_clear"/>
-              <field name="implementation" colspan="4" placeholder="Add Implementation Conclusions here ..."/>
+			  <separator colspan="4" string="5.- Technical Conclusions" class="oe_horizontal_separator oe_clear"/>
+              <field name="info" colspan="4" placeholder="Add another info here ..." widget="html"/>
+              <separator colspan="4" string="6.- Assumptions" class="oe_horizontal_separator oe_clear"/>
+              <field name="asumption" colspan="4" placeholder="Add assumptions here ..." widget="html"/>
+              <separator colspan="4" string="7.- Implementation Conclusions" class="oe_horizontal_separator oe_clear"/>
+              <field name="implementation" colspan="4" placeholder="Add Implementation Conclusions here ..." widget="html"/>
             </page>
-            
+
             <page string="Tasks">
               <separator string="Tasks" colspan='4' />
               <field name="task_ids" context="{'project_task':project_id,'categ_task':categ_ids,'sprint_task':sk_id,'userstory_task':active_id}" colspan="4" nolabel="1" widget="many2many">
@@ -141,11 +141,11 @@
                     <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
                     <field name="message_ids" widget="mail_thread"/>
                 </div>
-          
+
         </form>
       </field>
     </record>
-    
+
     <record model="ir.ui.view" id="view_userstory_tree">
       <field name="name">user.story.tree</field>
       <field name="model">user.story</field>
@@ -154,6 +154,7 @@
           <field name="id"/>
           <field name="name" />
           <field name="owner_id"/>
+          <field name="user_execute_id"/>
           <field name="code" />
           <field name="priority_level" />
           <field name="planned_hours" sum="Total hours"/>
@@ -166,7 +167,7 @@
         </tree>
       </field>
     </record>
-    
+
     <record model="ir.ui.view" id="view_acceptability_criteria_form">
         <field name="name">acceptability.criteria.form</field>
         <field name="model">acceptability.criteria</field>
@@ -188,7 +189,7 @@
             </form>
         </field>
     </record>
-    
+
     <record model="ir.ui.view" id="view_acceptability_criteria_tree">
         <field name="name">acceptability.criteria.tree</field>
         <field name="model">acceptability.criteria</field>
@@ -263,6 +264,8 @@
             <separator orientation="vertical" />
             <filter name="user_story_owner" icon="terp-personal" string="Owner" context="{'group_by':'owner_id'}" />
             <separator orientation="vertical" />
+            <filter name="accept_criteria_user_execute_id" string="Executor" context="{'group_by':'user_execute_id'}"/>
+            <separator orientation="vertical" />
             <filter name="user_story_user_id" icon="terp-personal" string="User" context="{'group_by':'user_id'}" />
             <separator orientation="vertical" />
             <filter name="user_story_sk_id" icon="terp-personal" string="Sprint" context="{'group_by':'sk_id'}" />
@@ -274,7 +277,7 @@
         </search>
       </field>
     </record>
-    
+
 
     <record model="ir.actions.act_window" id="action_my_user_story">
       <field name="name">My User Stories to Execute</field>
@@ -284,7 +287,7 @@
       <field name="domain">[('user_id','=',uid),('state','not in',('cancel','done'))]</field>
       <field name="view_id" ref="view_userstory_tree"/>
     </record>
- 
+
     <record model="ir.actions.act_window" id="action_acceptability_criteria">
       <field name="name">Acceptability Criteria</field>
       <field name="res_model">acceptability.criteria</field>
@@ -299,7 +302,7 @@
       <field name="view_type">form</field>
       <field name="view_mode">tree,form</field>
     </record>
- 
+
     <record model="ir.actions.act_window" id="action_user_story">
       <field name="name">User Stories</field>
       <field name="res_model">user.story</field>
@@ -307,12 +310,12 @@
       <field name="view_mode">tree,form</field>
       <field name="search_view_id" ref="view_userstory_search"/>
       <field name="help" type="html">
-      <p class="oe_view_nocontent_create">Behaviour-driven development is an 
-      “outside-in” methodology. It starts at the outside by identifying business 
-      outcomes, and then drills down into the feature set that will achieve 
-      those outcomes. Each feature is captured as a “story”, which defines the 
-      scope of the feature along with its acceptance criteria. 
-      This article introduces the BDD approach to defining and identifying 
+      <p class="oe_view_nocontent_create">Behaviour-driven development is an
+      “outside-in” methodology. It starts at the outside by identifying business
+      outcomes, and then drills down into the feature set that will achieve
+      those outcomes. Each feature is captured as a “story”, which defines the
+      scope of the feature along with its acceptance criteria.
+      This article introduces the BDD approach to defining and identifying
       stories and their acceptance criteria.</p><p>
       <a href="http://dannorth.net/whats-in-a-story/" target="_NEW">Here more information</a>
       </p>
