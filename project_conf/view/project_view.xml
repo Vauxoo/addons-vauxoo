@@ -26,6 +26,10 @@
        <field name="arch" type="xml">
          <xpath expr="//filter[@string='My Tasks']" position="after">
              <filter string="My Task to Review" domain="[('project_leader_id','=',uid)]" help="Task Review"/>
+             <field string="Project Leader" name="project_leader_id"/>
+         </xpath>
+         <xpath expr="//filter[@string='End Date']" position="after">
+             <filter string="Project Leader" icon="terp-personal" domain="[]" context="{'group_by':'project_leader_id'}"/>
          </xpath>
        </field>
    </record>
