@@ -16,7 +16,29 @@ New features
 
        https://docs.google.com/a/vauxoo.com/file/d/0B1UUUA6bRx8-YTlNT1NqM0ZPQnc/edit?usp=drivesdk
 
-#. When a stock picking is duplicated will cleare the expiration contract date.
+#. When a purchase order is confirm will create stock pikings, This pickings
+   will have a expired contract date too, the date pull from the purchase
+   order data.
+
+    .. figure:: images/figure-1-1.png
+       :scale: 50 %
+       :align: center
+       
+       https://docs.google.com/a/vauxoo.com/file/d/0B1UUUA6bRx8-VFgxV0ZzTHhmYTA/edit?usp=drivesdk
+
+    .. figure:: images/figure-1-2.png
+       :scale: 50 %
+       :align: center
+       
+       https://docs.google.com/a/vauxoo.com/file/d/0B1UUUA6bRx8-T2Fnamx0OUNYMkk/edit?usp=drivesdk
+
+    .. figure:: images/figure-1-3.png
+       :scale: 50 %
+       :align: center
+       
+       https://docs.google.com/a/vauxoo.com/file/d/0B1UUUA6bRx8-UTNNZGVBajVQamc/edit?usp=drivesdk
+
+#. When a stock picking is duplicated will clear the expiration contract date.
 
     .. figure:: images/figure-2.png
        :scale: 50 %
