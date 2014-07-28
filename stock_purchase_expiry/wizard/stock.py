@@ -62,7 +62,6 @@ class stock_invoice_onshipping(osv.TransientModel):
             raise osv.except_osv(_('Invalid Procedure'),
                 _('This action can only be peform over not expire contract'
                  ' date pickings which also are not in done state.'))
-        raise osv.except_osv('hola', 'chao')
         res = super(stock_invoice_onshipping, self).open_invoice(
             cur, uid, ids, context=context)
         return res 
