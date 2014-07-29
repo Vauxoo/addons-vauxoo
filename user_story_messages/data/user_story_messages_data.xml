@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+
+        <!-- Project-related subtypes for messaging / Chatter -->
+<!--
+        <record id="mt_user_story_new" model="mail.message.subtype">
+            <field name="name">User Story Created</field>
+            <field name="res_model">user.story</field>
+            <field name="default" eval="False"/>
+            <field name="description">User story created</field>
+        </record>
+-->
+        <record id="mt_user_story_started" model="mail.message.subtype">
+            <field name="name">User Story Started</field>
+            <field name="res_model">user.story</field>
+            <field name="default" eval="False"/>
+            <field name="description">User story started</field>
+        </record>
+        <record id="mt_user_story_pending" model="mail.message.subtype">
+            <field name="name">User Story Pending</field>
+            <field name="res_model">user.story</field>
+            <field name="default" eval="False"/>
+            <field name="description">User story pending</field>
+        </record>
+        <record id="mt_user_story_ready" model="mail.message.subtype">
+            <field name="name">User Story Ready</field>
+            <field name="res_model">user.story</field>
+            <field name="default" eval="False"/>
+            <field name="description">User story ready</field>
+        </record>
+        <record id="mt_user_story_approved" model="mail.message.subtype">
+            <field name="name">User Story Approved</field>
+            <field name="res_model">user.story</field>
+            <field name="default" eval="False"/>
+            <field name="description">User story approved</field>
+        </record>
+        <record id="mt_user_story_cancelled" model="mail.message.subtype">
+            <field name="name">User Story Cancelled</field>
+            <field name="res_model">user.story</field>
+            <field name="default" eval="False"/>
+            <field name="description">User story cancelled</field>
+        </record>
+
+    </data>
+</openerp>

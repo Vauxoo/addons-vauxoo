@@ -23,21 +23,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
 
-{
-    "name" : "User Stroy Messages",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Generic Modules",
-    "description" : 
-    """
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [],
-    "demo" : [],
-    "data" : [
-        "data/user_story_messages_data.xml",
-    ],
-    "installable" : True,
-    "active" : False,
-}
+import user_story_messages

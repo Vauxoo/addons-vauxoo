@@ -23,21 +23,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
 
-{
-    "name" : "User Stroy Messages",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Generic Modules",
-    "description" : 
-    """
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [],
-    "demo" : [],
-    "data" : [
-        "data/user_story_messages_data.xml",
-    ],
-    "installable" : True,
-    "active" : False,
-}
+from openerp.osv import fields, osv
+from openerp.addons.base_status.base_stage import base_stage
+
+class user_story(base_stage, osv.osv):
+    _name = "project.user.story"
+    _description = "User Story"
+    _date_name = "date_start"
+    _inherit = ['mail.thread', 'ir.needaction_mixin']
+
+    _track = {
+        'state': {
+            'user_story_messages.mt_user_story_started': lambda self, cr, uid, obj, ctx=None: obj['state'] in ['new', 'draft'],
+            'user_story_messages.mt_user_story_pending': lambda self, cr, uid, obj, ctx=None: obj['state'] == 'open',
+            'user_story_messages.mt_user_story_ready': lambda self, cr, uid, obj, ctx=None: obj['state'] == 'done',
+        },
+    }
