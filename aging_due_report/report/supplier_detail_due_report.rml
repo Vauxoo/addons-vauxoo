@@ -83,7 +83,7 @@
     <para>[[ setLang(user.lang) ]]</para>
         <blockTable colWidths="35mm,97mm,80mm,60mm" style="TERMSTABLEGREY">
             <tr>
-                <td><para style="ITEMSLEFT">[['%s-%s-%s'%(o.get('rp_brw').vat[2],o.get('rp_brw').vat[3:-1],o.get('rp_brw').vat[-1])]]</para></td>
+                <td><para style="ITEMSLEFT">[[(o.get('rp_brw').vat and '%s-%s-%s'%( o.get('rp_brw').vat [2], o.get('rp_brw').vat[3:-1], o.get('rp_brw').vat[-1]) or '')]]</para></td>
                 <td><para style="ITEMSLEFT">[[o.get('rp_brw').name]]</para></td>
                 <td><para style="ITEMSLEFT">[[o.get('rp_brw').ref]]</para></td>
                 <td><para style="ITEMSLEFT">[[o.get('rp_brw').user_id.name]]</para></td>

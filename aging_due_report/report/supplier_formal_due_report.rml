@@ -91,7 +91,7 @@
 <!--TABLA DE ITEMS-->   
     <section>
         <para style="CUSTOMERNAME">[[o.get('rp_brw').name]]</para>
-        <para style="CUSTOMERNAME">[['%s-%s-%s'%(o.get('rp_brw').vat[2],o.get('rp_brw').vat[3:-1],o.get('rp_brw').vat[-1])]]</para>
+        <para style="CUSTOMERNAME">[[(o.get('rp_brw').vat and '%s-%s-%s'%( o.get('rp_brw').vat [2], o.get('rp_brw').vat[3:-1], o.get('rp_brw').vat[-1]) or '')]]</para>
         <para style="CUSTOMERNAME">[[o.get('rp_brw').street and o.get('rp_brw').street.title() or removeParentNode('para')]]</para>
         <para style="CUSTOMERNAME">[[o.get('rp_brw').street2 and o.get('rp_brw').street2.title() or removeParentNode('para')]]</para>
         <para style="CUSTOMERNAME">[[o.get('rp_brw').state_id and o.get('rp_brw').state_id.name.title() or removeParentNode('para')]]</para>
