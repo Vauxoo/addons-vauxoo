@@ -42,16 +42,19 @@ class aging_parser(report_sxw.rml_parse):
             'get_aged_lines': self._get_aged_lines,
         })
 
-    def _get_aml(self, ids, inv_type='out_invoice'):
+    def _get_aml(self, ids, inv_type='out_invoice', currency_id=None):
         aml_obj = self.pool.get('account.move.line')
         res = 0.0
         sign = 1 if inv_type == 'out_invoice' else -1
         if not ids:
             return res
-        aml_gen = (aml_brw.debit and (aml_brw.debit * sign) or aml_brw.credit *
-                   (-1 * sign) for aml_brw in aml_obj.browse(self.cr, self.uid, ids))
-        for i in aml_gen:
-            res += i
+        if currency_id:
+            pass
+        else:
+            aml_gen = (aml_brw.debit and (aml_brw.debit * sign) or aml_brw.credit *
+                       (-1 * sign) for aml_brw in aml_obj.browse(self.cr, self.uid, ids))
+            for i in aml_gen:
+                res += i
         return res
 
     def _get_total_by_comercial(self, rp_brws, inv_type='out_invoice'):
