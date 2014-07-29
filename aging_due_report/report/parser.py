@@ -42,13 +42,14 @@ class aging_parser(report_sxw.rml_parse):
             'get_aged_lines': self._get_aged_lines,
         })
 
-    def _get_aml(self, ids):
+    def _get_aml(self, ids, inv_type='out_invoice'):
         aml_obj = self.pool.get('account.move.line')
         res = 0.0
+        sign = 1 if inv_type == 'out_invoice' else -1
         if not ids:
             return res
-        aml_gen = (aml_brw.debit and aml_brw.debit or aml_brw.credit *
-                   -1 for aml_brw in aml_obj.browse(self.cr, self.uid, ids))
+        aml_gen = (aml_brw.debit and (aml_brw.debit * sign) or aml_brw.credit *
+                   (-1 * sign) for aml_brw in aml_obj.browse(self.cr, self.uid, ids))
         for i in aml_gen:
             res += i
         return res
@@ -129,13 +130,13 @@ class aging_parser(report_sxw.rml_parse):
                     pay_islr_ids +
                     pay_muni_ids +
                     pay_refund_ids))
-                wh_vat = self._get_aml(pay_vat_ids)
-                wh_islr = self._get_aml(pay_islr_ids)
-                wh_muni = self._get_aml(pay_muni_ids)
-                wh_src = self._get_aml([])
-                debit_note = self._get_aml([])
-                credit_note = self._get_aml(pay_refund_ids)
-                payment_left = self._get_aml(pay_left_ids)
+                wh_vat = self._get_aml(pay_vat_ids, inv_type)
+                wh_islr = self._get_aml(pay_islr_ids, inv_type)
+                wh_muni = self._get_aml(pay_muni_ids, inv_type)
+                wh_src = self._get_aml([], inv_type)
+                debit_note = self._get_aml([], inv_type)
+                credit_note = self._get_aml(pay_refund_ids, inv_type)
+                payment_left = self._get_aml(pay_left_ids, inv_type)
                 payment = wh_vat + wh_islr + wh_muni + \
                     wh_src + debit_note + credit_note + payment_left
                 residual = inv_brw.amount_total + payment
