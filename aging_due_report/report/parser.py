@@ -40,6 +40,7 @@ class aging_parser(report_sxw.rml_parse):
             'get_invoice_by_partner': self._get_invoice_by_partner,
             'get_total_by_comercial': self._get_total_by_comercial,
             'get_aged_lines': self._get_aged_lines,
+            'get_invoice_by_currency': self._get_invoice_by_currency,
         })
 
     def _get_aml(self, ids, inv_type='out_invoice', currency_id=None):
@@ -82,7 +83,10 @@ class aging_parser(report_sxw.rml_parse):
         return [{'total': total, 'vendor': (usr_dict[i] for i in usr_dict)}]
 
     def _get_invoice_by_partner(self, rp_brws, inv_type='out_invoice'):
-
+        """
+        return a dictionary of dictionaries.
+            { partner_id: { values and invoice list } }
+        """
         res = {}
         rp_obj = self.pool.get('res.partner')
         inv_obj = self.pool.get('account.invoice')
@@ -93,104 +97,112 @@ class aging_parser(report_sxw.rml_parse):
                                     ('type', '=', inv_type), ('residual', '!=', 0), ('state', 'not in', ('cancel', 'draft'))])
             if not inv_ids:
                 continue
-            res[rp_brw.id] = {
-                'rp_brw': rp_brw,
-                'inv_ids': [],
-                'inv_total': 0.0,
-                'wh_vat': 0.0,
-                'wh_islr': 0.0,
-                'wh_muni': 0.0,
-                'credit_note': 0.0,
-                'pay_left_total': 0.0,
-                'pay_total': 0.0,
-                'due_total': 0.0,
-            }
-            for inv_brw in inv_obj.browse(self.cr, self.uid, inv_ids):
 
-                currency_id = dict(
-                    invoice=inv_brw.currency_id.id,
-                    company=inv_brw.company_id.currency_id.id)
-                currency_id.update(
-                    transaction=None if len(set(currency_id.values())) == 1
-                    else currency_id['invoice'])
+            inv_by_currency = self._get_invoice_by_currency(inv_ids)
+            res[rp_brw.id] = {}.fromkeys(inv_by_currency.keys())
 
-                pay_ids = [aml.id for aml in inv_brw.payment_ids]
-                #~ VAT
-                wh_lines = []
-                pay_vat_ids = []
-                #~ ISLR
-                wh_lines = []
-                pay_islr_ids = []
-               #~  MUNI
-                wh_lines = []
-                pay_muni_ids = []
-                #~  TODO: SRC
+            for currency_id in res[rp_brw.id].keys():
+                res[rp_brw.id][currency_id] = {
+                    'rp_brw': rp_brw,
+                    'inv_ids': [],
+                    'inv_total': 0.0,
+                    'wh_vat': 0.0,
+                    'wh_islr': 0.0,
+                    'wh_muni': 0.0,
+                    'credit_note': 0.0,
+                    'pay_left_total': 0.0,
+                    'pay_total': 0.0,
+                    'due_total': 0.0,
+                }
 
-                #~ N/C
-                #~ refund_ids = inv_obj.search(self.cr,self.uid,[('parent_id','=',inv_brw.id),('type','=','out_refund'),('state','not in',('draft','cancel')),('move_id','!=',False)])
-                #~ refund_ids = inv_obj.search(self.cr,self.uid,[('parent_id','=',inv_brw.id),('type','=','out_refund'),('state','not in',('draft','cancel')),('move_id','!=',False)])
-                refund_brws = []
-                #~ refund_brws = refund_ids and inv_obj.browse(self.cr,self.uid,refund_ids) or []
-                #~ aml_gen = (refund_brw.move_id.line_id for refund_brw in refund_brws)
-                pay_refund_ids = []
-                #~ for aml_brws in aml_gen:
-                    #~ pay_refund_ids += [aml.id for aml in aml_brws if aml.account_id.id == inv_brw.account_id.id]
+                for inv_brw in inv_obj.browse(self.cr, self.uid,
+                        inv_by_currency[currency_id]):
 
-                #~  TODO: N/D
-                #~  ACUMULACION DE LOS NOPAGOS, OBTENCION DEL PAGO
-                pay_left_ids = list(set(pay_ids).difference(
-                    pay_vat_ids +
-                    pay_islr_ids +
-                    pay_muni_ids +
-                    pay_refund_ids))
-                wh_vat = self._get_aml(pay_vat_ids, inv_type, currency_id['transaction'])
-                wh_islr = self._get_aml(pay_islr_ids, inv_type, currency_id['transaction'])
-                wh_muni = self._get_aml(pay_muni_ids, inv_type, currency_id['transaction'])
-                wh_src = self._get_aml([], inv_type, currency_id['transaction'])
-                debit_note = self._get_aml([], inv_type, currency_id['transaction'])
-                credit_note = self._get_aml(pay_refund_ids, inv_type, currency_id['transaction'])
-                payment_left = self._get_aml(pay_left_ids, inv_type, currency_id['transaction'])
-                payment = wh_vat + wh_islr + wh_muni + \
-                    wh_src + debit_note + credit_note + payment_left
-                residual = inv_brw.amount_total + payment
-                date_due = mx.DateTime.strptime(
-                    inv_brw.date_due or inv_brw.date_invoice, '%Y-%m-%d')
-                today = mx.DateTime.now()
-                due_days = (today - date_due).day
+                    currency_data = dict(
+                        invoice=inv_brw.currency_id.id,
+                        company=inv_brw.company_id.currency_id.id)
+                    currency_data.update(
+                        transaction=None if len(set(currency_data.values())) == 1
+                        else currency_data['invoice'])
 
-                #~ TODO: Si se incluye un reporte de revisiones
-                #~ no se eliminara la factura
-                #~ si la factura no tiene saldo entonces
-                #~ no incluirla en el reporte
-                if not residual:
-                    continue
+                    pay_ids = [aml.id for aml in inv_brw.payment_ids]
+                    #~ VAT
+                    wh_lines = []
+                    pay_vat_ids = []
+                    #~ ISLR
+                    wh_lines = []
+                    pay_islr_ids = []
+                   #~  MUNI
+                    wh_lines = []
+                    pay_muni_ids = []
+                    #~  TODO: SRC
 
-                res[rp_brw.id]['inv_ids'].append({
-                    'inv_brw': inv_brw,
-                    'wh_vat': wh_vat,
-                    'wh_islr': wh_islr,
-                    'wh_muni': wh_muni,
-                    'wh_src': wh_src,
-                    'debit_note': debit_note,
-                    'credit_note': credit_note,
-                    'refund_brws': refund_brws,
-                    'payment': payment,
-                    'payment_left': payment_left,
-                    'residual': residual,
-                    'due_days': due_days
-                })
-                res[rp_brw.id]['inv_total'] += inv_brw.amount_total
-                res[rp_brw.id]['wh_vat'] += wh_vat
-                res[rp_brw.id]['wh_islr'] += wh_islr
-                res[rp_brw.id]['wh_muni'] += wh_muni
-                res[rp_brw.id]['credit_note'] += credit_note
-                res[rp_brw.id]['pay_left_total'] += payment_left
-                res[rp_brw.id]['pay_total'] += payment
-                res[rp_brw.id]['due_total'] += residual
+                    #~ N/C
+                    #~ refund_ids = inv_obj.search(self.cr,self.uid,[('parent_id','=',inv_brw.id),('type','=','out_refund'),('state','not in',('draft','cancel')),('move_id','!=',False)])
+                    #~ refund_ids = inv_obj.search(self.cr,self.uid,[('parent_id','=',inv_brw.id),('type','=','out_refund'),('state','not in',('draft','cancel')),('move_id','!=',False)])
+                    refund_brws = []
+                    #~ refund_brws = refund_ids and inv_obj.browse(self.cr,self.uid,refund_ids) or []
+                    #~ aml_gen = (refund_brw.move_id.line_id for refund_brw in refund_brws)
+                    pay_refund_ids = []
+                    #~ for aml_brws in aml_gen:
+                        #~ pay_refund_ids += [aml.id for aml in aml_brws if aml.account_id.id == inv_brw.account_id.id]
+
+                    #~  TODO: N/D
+                    #~  ACUMULACION DE LOS NOPAGOS, OBTENCION DEL PAGO
+                    pay_left_ids = list(set(pay_ids).difference(
+                        pay_vat_ids +
+                        pay_islr_ids +
+                        pay_muni_ids +
+                        pay_refund_ids))
+                    wh_vat = self._get_aml(pay_vat_ids, inv_type, currency_data['transaction'])
+                    wh_islr = self._get_aml(pay_islr_ids, inv_type, currency_data['transaction'])
+                    wh_muni = self._get_aml(pay_muni_ids, inv_type, currency_data['transaction'])
+                    wh_src = self._get_aml([], inv_type, currency_data['transaction'])
+                    debit_note = self._get_aml([], inv_type, currency_data['transaction'])
+                    credit_note = self._get_aml(pay_refund_ids, inv_type, currency_data['transaction'])
+                    payment_left = self._get_aml(pay_left_ids, inv_type, currency_data['transaction'])
+                    payment = wh_vat + wh_islr + wh_muni + \
+                        wh_src + debit_note + credit_note + payment_left
+                    residual = inv_brw.amount_total + payment
+                    date_due = mx.DateTime.strptime(
+                        inv_brw.date_due or inv_brw.date_invoice, '%Y-%m-%d')
+                    today = mx.DateTime.now()
+                    due_days = (today - date_due).day
+
+                    #~ TODO: Si se incluye un reporte de revisiones
+                    #~ no se eliminara la factura
+                    #~ si la factura no tiene saldo entonces
+                    #~ no incluirla en el reporte
+                    if not residual:
+                        continue
+
+                    res[rp_brw.id][currency_id]['inv_ids'].append({
+                        'inv_brw': inv_brw,
+                        'wh_vat': wh_vat,
+                        'wh_islr': wh_islr,
+                        'wh_muni': wh_muni,
+                        'wh_src': wh_src,
+                        'debit_note': debit_note,
+                        'credit_note': credit_note,
+                        'refund_brws': refund_brws,
+                        'payment': payment,
+                        'payment_left': payment_left,
+                        'residual': residual,
+                        'due_days': due_days
+                    })
+                    res[rp_brw.id][currency_id]['inv_total'] += inv_brw.amount_total
+                    res[rp_brw.id][currency_id]['wh_vat'] += wh_vat
+                    res[rp_brw.id][currency_id]['wh_islr'] += wh_islr
+                    res[rp_brw.id][currency_id]['wh_muni'] += wh_muni
+                    res[rp_brw.id][currency_id]['credit_note'] += credit_note
+                    res[rp_brw.id][currency_id]['pay_left_total'] += payment_left
+                    res[rp_brw.id][currency_id]['pay_total'] += payment
+                    res[rp_brw.id][currency_id]['due_total'] += residual
+
             #~ TODO: Report donde no se elimine esta clave del diccionario
             #~ y se use para revisiones internas
             #~ Si no tiene saldo, sacarlo del reporte
-            not res[rp_brw.id]['due_total'] and res.pop(rp_brw.id)
+            not res[rp_brw.id][currency_id]['due_total'] and res.pop(rp_brw.id)
 
         #~ ordenando los registros en orden alfabetico
         #~ si llegaran a existir
@@ -201,6 +213,19 @@ class aging_parser(report_sxw.rml_parse):
             for rp_id in rp_ids:
                 res2.append(res[rp_id])
         return res2
+
+    def _get_invoice_by_currency(self, inv_ids):
+        """
+        a dictioary with subgroups of the given invoices grouped by currency.
+        """
+        res = {}
+        inv_obj = self.pool.get('account.invoice')
+        for inv_brw in inv_obj.browse(self.cr, self.uid, inv_ids):
+            if res.get(inv_brw.currency_id.id, False):
+                res[inv_brw.currency_id.id] += [inv_brw.id]
+            else: 
+                res[inv_brw.currency_id.id] = [inv_brw.id]
+        return res
 
     def _get_aged_lines(self, rp_brws, span=30,
             date_from=time.strftime('%Y-%m-%d'), inv_type='out_invoice'):
