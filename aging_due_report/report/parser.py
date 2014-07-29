@@ -55,7 +55,7 @@ class aging_parser(report_sxw.rml_parse):
         return res
 
     def _get_total_by_comercial(self, rp_brws, inv_type='out_invoice'):
-        ixp_gen = self._get_invoice_by_partner(rp_brws)
+        ixp_gen = self._get_invoice_by_partner(rp_brws, inv_type)
         total = 0.0
         usr_dict = {}
         for ixp in ixp_gen:
