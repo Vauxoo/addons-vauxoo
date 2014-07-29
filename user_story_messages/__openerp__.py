@@ -24,7 +24,7 @@
 ############################################################################
 
 {
-    "name" : "User Stroy Messages",
+    "name" : "User Story Messages",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Generic Modules",
@@ -33,10 +33,12 @@
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : [],
+    "depends" : [
+        'user_story',
+    ],
     "demo" : [],
     "data" : [
-        "data/user_story_messages_data.xml",
+        "data/data.xml",
     ],
     "installable" : True,
     "active" : False,

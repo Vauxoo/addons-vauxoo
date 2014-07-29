@@ -24,18 +24,17 @@
 ############################################################################
 
 from openerp.osv import fields, osv
-from openerp.addons.base_status.base_stage import base_stage
 
-class user_story(base_stage, osv.osv):
-    _name = "project.user.story"
-    _description = "User Story"
-    _date_name = "date_start"
-    _inherit = ['mail.thread', 'ir.needaction_mixin']
+class user_story(osv.osv):
+    _description = "User Story Messages"
+    _inherit = 'user.story'
 
     _track = {
         'state': {
-            'user_story_messages.mt_user_story_started': lambda self, cr, uid, obj, ctx=None: obj['state'] in ['new', 'draft'],
-            'user_story_messages.mt_user_story_pending': lambda self, cr, uid, obj, ctx=None: obj['state'] == 'open',
-            'user_story_messages.mt_user_story_ready': lambda self, cr, uid, obj, ctx=None: obj['state'] == 'done',
+            'user_story_messages.mt_us_new': lambda self, cr, uid, obj, ctx=None: obj['state'] == 'draft',
+            'user_story_messages.mt_us_open': lambda self, cr, uid, obj, ctx=None: obj['state'] == 'open',
+            'user_story_messages.mt_us_pending': lambda self, cr, uid, obj, ctx=None: obj['state'] == 'pending',
+            'user_story_messages.mt_us_done': lambda self, cr, uid, obj, ctx=None: obj['state'] == 'done',
+            'user_story_messages.mt_us_cancelled': lambda self, cr, uid, obj, ctx=None: obj['state'] == 'cancelled',
         },
     }

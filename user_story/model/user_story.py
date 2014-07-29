@@ -201,7 +201,9 @@ class user_story(osv.Model):
 
     _columns = {
         'name': fields.char('Title', size=255, required=True, readonly=False, translate=True),
-        'owner_id': fields.many2one('res.users', 'Owner', help="User Story's Owner, generally the person which asked to develop this feature"),
+        'owner_id': fields.many2one('res.users', 'Owner',
+                                    help="User Story's Owner, generally the person which asked to develop this feature",
+                                    track_visibility='onchange'),
         'approval_user_id': fields.many2one('res.users', 'Approver', help="User which approve this USer Story"),
         'code': fields.char('Code', size=64, readonly=False),
         'planned_hours': fields.float('Planned Hours'),
@@ -225,10 +227,12 @@ class user_story(osv.Model):
             help=("Person responsible for interacting with the client to give"
                   " details of the progress or completion of the User Story,"
                   " in some cases also the supervisor for the correct"
-                  " execution of the user story.")),
-        'user_execute_id': fields.many2one('res.users', 'Execution Responsible', help="Person responsible for user story takes place, either by delegating work to other human resource or running it by itself. For delegate work should monitor the proper implementation of associated activities."),
+                  " execution of the user story."), track_visibility='onchange'),
+        'user_execute_id': fields.many2one('res.users', 'Execution Responsible', 
+                                            help="Person responsible for user story takes place, either by delegating work to other human resource or running it by itself. For delegate work should monitor the proper implementation of associated activities.", 
+                                            track_visibility='onchange'),
         'sk_id': fields.many2one('sprint.kanban', 'Sprint Kanban'),
-        'state': fields.selection(_US_STATE, 'State', readonly=True),
+        'state': fields.selection(_US_STATE, 'State', readonly=True, track_visibility='onchange'),
         'task_ids': fields.one2many(
             'project.task', 'userstory_id',
             string="Tasks",
