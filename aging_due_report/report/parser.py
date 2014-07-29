@@ -313,6 +313,13 @@ report_sxw.report_sxw(
     header=False
 )
 report_sxw.report_sxw(
+    'report.supplier_formal_due_report',
+    'res.partner',
+    'addons/aging_due_report/report/supplier_formal_due_report.rml',
+    parser=aging_parser,
+    header=False
+)
+report_sxw.report_sxw(
     'report.detail_due_report',
     'res.partner',
     'addons/aging_due_report/report/detail_due_report.rml',
