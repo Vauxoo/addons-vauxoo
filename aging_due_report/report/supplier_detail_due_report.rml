@@ -140,7 +140,7 @@
     <spacer length="5mm"/>
     </section>
     <section>
-        <para>[[repeatIn(get_total_by_comercial(objects),'p')]]</para>
+        <para>[[repeatIn(get_total_by_comercial(objects, inv_type='in_invoice'),'p')]]</para>
         <blockTable colWidths="252mm,20mm" style="TERMSTABLEGREY">
             <tr noRowsplits="1">
                 <td><para style="ITEMSRIGHT">TOTAL ESTE REPORTE</para></td>
