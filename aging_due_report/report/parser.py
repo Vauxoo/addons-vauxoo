@@ -103,6 +103,13 @@ class aging_parser(report_sxw.rml_parse):
             }
             for inv_brw in inv_obj.browse(self.cr, self.uid, inv_ids):
 
+                currency_id = dict(
+                    invoice=inv_brw.currency_id.id,
+                    company=inv_brw.company_id.currency_id.id)
+                currency_id.update(
+                    transaction=None if len(set(currency_id.values())) == 1
+                    else currency_id['invoice'])
+
                 pay_ids = [aml.id for aml in inv_brw.payment_ids]
                 #~ VAT
                 wh_lines = []
@@ -132,13 +139,13 @@ class aging_parser(report_sxw.rml_parse):
                     pay_islr_ids +
                     pay_muni_ids +
                     pay_refund_ids))
-                wh_vat = self._get_aml(pay_vat_ids, inv_type)
-                wh_islr = self._get_aml(pay_islr_ids, inv_type)
-                wh_muni = self._get_aml(pay_muni_ids, inv_type)
-                wh_src = self._get_aml([], inv_type)
-                debit_note = self._get_aml([], inv_type)
-                credit_note = self._get_aml(pay_refund_ids, inv_type)
-                payment_left = self._get_aml(pay_left_ids, inv_type)
+                wh_vat = self._get_aml(pay_vat_ids, inv_type, currency_id['transaction'])
+                wh_islr = self._get_aml(pay_islr_ids, inv_type, currency_id['transaction'])
+                wh_muni = self._get_aml(pay_muni_ids, inv_type, currency_id['transaction'])
+                wh_src = self._get_aml([], inv_type, currency_id['transaction'])
+                debit_note = self._get_aml([], inv_type, currency_id['transaction'])
+                credit_note = self._get_aml(pay_refund_ids, inv_type, currency_id['transaction'])
+                payment_left = self._get_aml(pay_left_ids, inv_type, currency_id['transaction'])
                 payment = wh_vat + wh_islr + wh_muni + \
                     wh_src + debit_note + credit_note + payment_left
                 residual = inv_brw.amount_total + payment
