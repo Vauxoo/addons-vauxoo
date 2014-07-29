@@ -76,7 +76,6 @@ class aging_parser(report_sxw.rml_parse):
 
     def _get_invoice_by_partner(self, rp_brws, inv_type='out_invoice'):
 
-        pdb.set_trace()
         res = {}
         rp_obj = self.pool.get('res.partner')
         inv_obj = self.pool.get('account.invoice')
@@ -179,9 +178,6 @@ class aging_parser(report_sxw.rml_parse):
             #~ Si no tiene saldo, sacarlo del reporte
             not res[rp_brw.id]['due_total'] and res.pop(rp_brw.id)
 
-        # TODO: review this method were the totals amount are sume.
-        pdb.set_trace()
-
         #~ ordenando los registros en orden alfabetico
         #~ si llegaran a existir
         res2 = []
@@ -195,7 +191,6 @@ class aging_parser(report_sxw.rml_parse):
     def _get_aged_lines(self, rp_brws, span=30,
             date_from=time.strftime('%Y-%m-%d'), inv_type='out_invoice'):
 
-        pdb.set_trace()
         # span = 30
         # spans = [0, 30, 60, 90, 120]
         # span = 90
