@@ -49,7 +49,11 @@ class aging_parser(report_sxw.rml_parse):
         if not ids:
             return res
         if currency_id:
-            pass
+            aml_gen = (
+                aml_brw.amount_currency * sign 
+                for aml_brw in aml_obj.browse(self.cr, self.uid, ids))
+            for i in aml_gen:
+                res += i
         else:
             aml_gen = (aml_brw.debit and (aml_brw.debit * sign) or aml_brw.credit *
                        (-1 * sign) for aml_brw in aml_obj.browse(self.cr, self.uid, ids))
