@@ -30,6 +30,7 @@
     "depends" : [
                  "user_story",
                  "portal",
+                 "portal_project",
                  ],
     "author" : "Vauxoo",
     "description" : """
