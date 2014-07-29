@@ -241,7 +241,7 @@ class user_story(osv.Model):
         'categ_ids': fields.many2many('project.category', 'project_category_user_story_rel', 'userstory_id', 'categ_id', string="Tags"),
         'implementation': fields.text('Implementation Conclusions', translate=True),
         'help': fields.boolean('Show Help', help='Allows you to show the help in the form'),
-        'approved': fields.boolean('Approved', help='Has been this user story approved by customer'),
+        'approved': fields.boolean('Approved', help='Has been this user story approved by customer', track_visibility='onchange'),
         'effective_hours': fields.function(_hours_get, string='Hours Spent', help="Computed using the sum of the task work done.",
                                            store = {
                                                _name: (lambda s, c, u, ids, cx={}: ids, ['task_ids'], 10),

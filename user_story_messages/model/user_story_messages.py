@@ -37,4 +37,7 @@ class user_story(osv.osv):
             'user_story_messages.mt_us_done': lambda self, cr, uid, obj, ctx=None: obj['state'] == 'done',
             'user_story_messages.mt_us_cancelled': lambda self, cr, uid, obj, ctx=None: obj['state'] == 'cancelled',
         },
+        'approved': {
+            'user_story_messages.mt_us_approved': lambda self, cr, uid, obj, ctx=None: obj['approved'] == True,
+        },
     }

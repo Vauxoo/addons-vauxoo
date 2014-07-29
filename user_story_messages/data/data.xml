@@ -33,6 +33,12 @@
             <field name="default" eval="False"/>
             <field name="description">User story cancelled</field>
         </record>
+        <record id="mt_us_approved" model="mail.message.subtype">
+            <field name="name">User Story Approved</field>
+            <field name="res_model">user.story</field>
+            <field name="default" eval="True"/>
+            <field name="description">User story approved</field>
+        </record>
 
     </data>
 </openerp>
