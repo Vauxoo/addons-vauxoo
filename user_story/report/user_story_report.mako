@@ -34,7 +34,7 @@
                 <% import html2text %>
                 <% text = html2text.html2text(user.story.description or '') %>
                 <tr>
-                    <td class="pre_description">${text or '' | entity}</td>
+                    <td class="pre_description">${parse_html_field(user.story.description)}</td>
                 </tr>
             </table>
             <table width="100%">
