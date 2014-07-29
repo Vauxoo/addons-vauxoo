@@ -79,7 +79,7 @@
   <story>
 <!--TABLA DE ITEMS-->   
     <section>
-    <para>[[repeatIn(get_invoice_by_partner(objects, inv_invoice='in_invoice'),'o')]]</para>
+    <para>[[repeatIn(get_invoice_by_partner(objects, inv_type='in_invoice'),'o')]]</para>
     <para>[[ setLang(user.lang) ]]</para>
         <blockTable colWidths="35mm,97mm,80mm,60mm" style="TERMSTABLEGREY">
             <tr>
