@@ -402,12 +402,19 @@ class aging_parser(report_sxw.rml_parse):
                 result.append(res)
 
         result.extend(res_total_by_currency.values())
-        result.append(res_prov)
+        # TODO: this item need to be divided by currency to be shown.
+        # result.append(res_prov)
 
-        pprint.pprint(result)
-        pdb.set_trace()
-        
-        return result
+        result2 = dict()
+        for item in result:
+            currency_id = item.get('cur_brw', False)
+            currency_id = currency_id and currency_id.id
+            if result2.get(currency_id, False):
+                result2[currency_id] += [item]
+            else:
+                result2[currency_id] = [item]
+
+        return result2.values()
 
 report_sxw.report_sxw(
     'report.formal_due_report',

@@ -79,7 +79,7 @@
   <story>
 <!--TABLA DE ITEMS-->   
     <section>
-    <para></para>
+    <para>[[ repeatIn(get_aged_lines(objects, inv_type='in_invoice'),'cur_group')]]</para>
     <para>[[ setLang(user.lang) ]]</para>
         <blockTable colWidths="20mm,80mm,20mm,20mm,20mm,20mm,20mm,20mm,40mm" repeatRows="1" style="TERMS">
             <tr noRowsplits="1">
@@ -91,10 +91,10 @@
                 <td><para style="ITEMSTITLERIGHT">61-90 DIAS</para></td>
                 <td><para style="ITEMSTITLERIGHT">91-120 DIAS</para></td>
                 <td><para style="ITEMSTITLERIGHT">+ 120 DIAS</para></td>
-                <td><para style="ITEMSTITLERIGHT">TOT./COBRAR</para></td>
+                <td><para style="ITEMSTITLERIGHT">TOT./COBRAR ([[ cur_group[0].get('cur_brw').name ]])</para></td>
             </tr>
             <tr>
-                <td><para style="ITEMSLEFT">[[repeatIn(get_aged_lines(objects, inv_type='in_invoice'),'o')]][[o.get('type')=='partner' and o.get('rp_brw').vat and '%s-%s-%s'%(o.get('rp_brw').vat[2],o.get('rp_brw').vat[3:-1],o.get('rp_brw').vat[-1])]]</para></td>
+                <td><para style="ITEMSLEFT">[[ repeatIn(cur_group,'o') ]][[ o.get('type')=='partner' and o.get('rp_brw').vat and '%s-%s-%s'%(o.get('rp_brw').vat[2],o.get('rp_brw').vat[3:-1],o.get('rp_brw').vat[-1]) ]]</para></td>
                 <td><para style="ITEMSLEFT">[[ o.get('type')=='partner' and o.get('rp_brw').name or o.get('type')=='total' and 'TOTAL EN ' + o.get('cur_brw').name or o.get('type')=='provision' and removeParentNode('tr') ]]</para></td>
                 <td><para style="ITEMSRIGHT">[[  formatLang(o.get('not_due'), digits=2, grouping=True) ]]</para></td>
                 <td><para style="ITEMSRIGHT">[[  formatLang(o.get('1to30'), digits=2, grouping=True) ]]</para></td>
@@ -102,9 +102,10 @@
                 <td><para style="ITEMSRIGHT">[[  formatLang(o.get('61to90'), digits=2, grouping=True) ]]</para></td>
                 <td><para style="ITEMSRIGHT">[[  formatLang(o.get('91to120'), digits=2, grouping=True) ]]</para></td>
                 <td><para style="ITEMSRIGHT">[[  formatLang(o.get('120+'), digits=2, grouping=True) ]]</para></td>
-                <td><para style="ITEMSRIGHT">[[  formatLang(o.get('total'), digits=2, grouping=True) ]] [[ o.get('cur_brw').name ]]</para></td>
+                <td><para style="ITEMSRIGHT">[[  formatLang(o.get('total'), digits=2, grouping=True) ]]</para></td>
             </tr>
         </blockTable>
+        <spacer length="5mm"/>
     </section>
   </story>
 </document>
