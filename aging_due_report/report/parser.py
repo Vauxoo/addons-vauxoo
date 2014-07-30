@@ -91,6 +91,7 @@ class aging_parser(report_sxw.rml_parse):
         rp_obj = self.pool.get('res.partner')
         inv_obj = self.pool.get('account.invoice')
         mun_obj = self.pool.get('account.wh.munici.line')
+        cur_obj = self.pool.get('res.currency')
         for rp_brw in rp_brws:
             inv_ids = inv_obj.search(
                 self.cr, self.uid, [('partner_id', '=', rp_brw.id),
@@ -104,6 +105,7 @@ class aging_parser(report_sxw.rml_parse):
             for currency_id in res[rp_brw.id].keys():
                 res[rp_brw.id][currency_id] = {
                     'rp_brw': rp_brw,
+                    'cur_brw': cur_obj.browse(self.cr, self,uid, currency_id),
                     'inv_ids': [],
                     'inv_total': 0.0,
                     'wh_vat': 0.0,
