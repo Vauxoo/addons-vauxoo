@@ -81,7 +81,7 @@
     <section>
     <para></para>
     <para>[[ setLang(user.lang) ]]</para>
-        <blockTable colWidths="20mm,100mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm" repeatRows="1" style="TERMS">
+        <blockTable colWidths="20mm,80mm,20mm,20mm,20mm,20mm,20mm,20mm,40mm" repeatRows="1" style="TERMS">
             <tr noRowsplits="1">
                 <td><para style="ITEMSTITLELEFT">RIF</para></td>
                 <td><para style="ITEMSTITLELEFT">EMPRESA</para></td>
@@ -102,7 +102,7 @@
                 <td><para style="ITEMSRIGHT">[[  formatLang(o.get('61to90'), digits=2, grouping=True) ]]</para></td>
                 <td><para style="ITEMSRIGHT">[[  formatLang(o.get('91to120'), digits=2, grouping=True) ]]</para></td>
                 <td><para style="ITEMSRIGHT">[[  formatLang(o.get('120+'), digits=2, grouping=True) ]]</para></td>
-                <td><para style="ITEMSRIGHT">[[  formatLang(o.get('total'), digits=2, grouping=True) ]]</para></td>
+                <td><para style="ITEMSRIGHT">[[  formatLang(o.get('total'), digits=2, grouping=True) ]] [[ o.get('cur_brw').name ]]</para></td>
             </tr>
         </blockTable>
     </section>
