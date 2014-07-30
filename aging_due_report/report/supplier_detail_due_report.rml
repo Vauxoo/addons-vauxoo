@@ -147,12 +147,14 @@
                 <td><para style="ITEMSRIGHT">[[ formatLang(p['total']) or '0.00']]</para></td>
             </tr>
         </blockTable>
+<!-- 
         <blockTable colWidths="252mm,20mm" style="TERMSTABLEGREY">
             <tr>
                 <td><para style="ITEMSRIGHT">[[repeatIn(p.get('vendor'),'vnd')]][[ vnd.get('usr_brw') and vnd.get('usr_brw').name or 'SIN ASESOR' ]]</para></td>
                 <td><para style="ITEMSRIGHT">[[ formatLang(vnd.get('total')) or '0.00' ]]</para></td>
             </tr>
         </blockTable>
+-->
     </section>
   </story>
 </document>
