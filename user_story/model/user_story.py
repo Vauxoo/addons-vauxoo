@@ -199,11 +199,20 @@ class user_story(osv.Model):
                 result[task.userstory_id.id] = True
         return result.keys()
 
+    def _message_get_auto_subscribe_fields(self, cr, uid, updated_fields, auto_follow_fields=['user_id'], context=None):
+        if auto_follow_fields is None:
+            auto_follow_fields = ['user_id']
+
+        auto_follow_fields.append('user_execute_id')
+        auto_follow_fields.append('approval_user_id')
+        res = super(user_story, self)._message_get_auto_subscribe_fields(cr, uid, updated_fields, auto_follow_fields=auto_follow_fields, context=context)
+        return res
+
     _columns = {
-        'name': fields.char('Title', size=255, required=True, readonly=False, translate=True),
+        'name': fields.char('Title', size=255, required=True, readonly=False, translate=True,track_visibility='onchange'),
         'owner_id': fields.many2one('res.users', 'Owner',
                                     help="User Story's Owner, generally the person which asked to develop this feature",
-                                    track_visibility='onchange'),
+                                    track_visibility='always'),
         'approval_user_id': fields.many2one('res.users', 'Approver', help="User which approve this USer Story"),
         'code': fields.char('Code', size=64, readonly=False),
         'planned_hours': fields.float('Planned Hours'),
@@ -227,10 +236,10 @@ class user_story(osv.Model):
             help=("Person responsible for interacting with the client to give"
                   " details of the progress or completion of the User Story,"
                   " in some cases also the supervisor for the correct"
-                  " execution of the user story."), track_visibility='onchange'),
+                  " execution of the user story."), track_visibility='always'),
         'user_execute_id': fields.many2one('res.users', 'Execution Responsible', 
                                             help="Person responsible for user story takes place, either by delegating work to other human resource or running it by itself. For delegate work should monitor the proper implementation of associated activities.", 
-                                            track_visibility='onchange'),
+                                            track_visibility='always'),
         'sk_id': fields.many2one('sprint.kanban', 'Sprint Kanban'),
         'state': fields.selection(_US_STATE, 'State', readonly=True, track_visibility='onchange'),
         'task_ids': fields.one2many(
