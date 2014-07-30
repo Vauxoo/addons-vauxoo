@@ -253,7 +253,6 @@ class aging_parser(report_sxw.rml_parse):
                 res2[item['rp_brw'].id] = [item]
 
         res3 = res2.values()
-        pdb.set_trace()
         return res3
 
     def _get_invoice_by_currency(self, inv_ids):
