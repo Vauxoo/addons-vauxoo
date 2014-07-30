@@ -211,7 +211,8 @@ class aging_parser(report_sxw.rml_parse):
             rp_ids = rp_obj.search(self.cr, self.uid, [(
                 'id', 'in', res.keys())], order='name asc')
             for rp_id in rp_ids:
-                res2.append(res[rp_id])
+                for currency_id in res[rp_id].keys():
+                    res2.append(res[rp_id][currency_id])
         return res2
 
     def _get_invoice_by_currency(self, inv_ids):
