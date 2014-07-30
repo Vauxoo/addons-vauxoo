@@ -270,6 +270,9 @@ class aging_parser(report_sxw.rml_parse):
 
     def _get_aged_lines(self, rp_brws, span=30,
             date_from=time.strftime('%Y-%m-%d'), inv_type='out_invoice'):
+        """
+        @return 
+        """
 
         # span = 30
         # spans = [0, 30, 60, 90, 120]
@@ -330,6 +333,7 @@ class aging_parser(report_sxw.rml_parse):
             res = {
                 'type' : 'partner',
                 'rp_brw': ixp['rp_brw'],
+                'cur_brw': ixp['cur_brw'],
                 'not_due': 0.00,
                 '1to30': 0.00,
                 '31to60': 0.00,
@@ -377,6 +381,9 @@ class aging_parser(report_sxw.rml_parse):
             result.append(res)
         result.append(res_total)
         result.append(res_prov)
+
+        pprint.pprint(result)
+        pdb.set_trace()
         
         return result
 
