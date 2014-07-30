@@ -455,11 +455,4 @@ report_sxw.report_sxw(
     parser=aging_parser,
     header=False
 )
-report_sxw.report_sxw(
-    'report.provision_due_report',
-    'res.partner',
-    'addons/aging_due_report/report/provision_due_report.rml',
-    parser=aging_parser,
-    header=False
-)
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
