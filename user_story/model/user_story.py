@@ -199,15 +199,26 @@ class user_story(osv.Model):
                 result[task.userstory_id.id] = True
         return result.keys()
 
+    def _message_get_auto_subscribe_fields(self, cr, uid, updated_fields, auto_follow_fields=['user_id'], context=None):
+        if auto_follow_fields is None:
+            auto_follow_fields = ['user_id']
+
+        auto_follow_fields.append('user_execute_id')
+        auto_follow_fields.append('approval_user_id')
+        res = super(user_story, self)._message_get_auto_subscribe_fields(cr, uid, updated_fields, auto_follow_fields=auto_follow_fields, context=context)
+        return res
+
     _columns = {
-        'name': fields.char('Title', size=255, required=True, readonly=False, translate=True),
-        'owner_id': fields.many2one('res.users', 'Owner', help="User Story's Owner, generally the person which asked to develop this feature"),
+        'name': fields.char('Title', size=255, required=True, readonly=False, translate=True,track_visibility='onchange'),
+        'owner_id': fields.many2one('res.users', 'Owner',
+                                    help="User Story's Owner, generally the person which asked to develop this feature",
+                                    track_visibility='always'),
         'approval_user_id': fields.many2one('res.users', 'Approver', help="User which approve this USer Story"),
         'code': fields.char('Code', size=64, readonly=False),
         'planned_hours': fields.float('Planned Hours'),
         'project_id': fields.many2one('project.project', 'Project',
                                       required=True),
-        'description': fields.text('Description', translate=True),
+        'description': fields.text('Description', translate=True, track_visibility='onchange'),
         'accep_crit_ids': fields.one2many('acceptability.criteria',
                                           'accep_crit_id',
                                           'Acceptability Criteria',
@@ -225,10 +236,12 @@ class user_story(osv.Model):
             help=("Person responsible for interacting with the client to give"
                   " details of the progress or completion of the User Story,"
                   " in some cases also the supervisor for the correct"
-                  " execution of the user story.")),
-        'user_execute_id': fields.many2one('res.users', 'Execution Responsible', help="Person responsible for user story takes place, either by delegating work to other human resource or running it by itself. For delegate work should monitor the proper implementation of associated activities."),
+                  " execution of the user story."), track_visibility='always'),
+        'user_execute_id': fields.many2one('res.users', 'Execution Responsible', 
+                                            help="Person responsible for user story takes place, either by delegating work to other human resource or running it by itself. For delegate work should monitor the proper implementation of associated activities.", 
+                                            track_visibility='always'),
         'sk_id': fields.many2one('sprint.kanban', 'Sprint Kanban'),
-        'state': fields.selection(_US_STATE, 'State', readonly=True),
+        'state': fields.selection(_US_STATE, 'State', readonly=True, track_visibility='onchange'),
         'task_ids': fields.one2many(
             'project.task', 'userstory_id',
             string="Tasks",
@@ -237,7 +250,7 @@ class user_story(osv.Model):
         'categ_ids': fields.many2many('project.category', 'project_category_user_story_rel', 'userstory_id', 'categ_id', string="Tags"),
         'implementation': fields.text('Implementation Conclusions', translate=True),
         'help': fields.boolean('Show Help', help='Allows you to show the help in the form'),
-        'approved': fields.boolean('Approved', help='Has been this user story approved by customer'),
+        'approved': fields.boolean('Approved', help='Has been this user story approved by customer', track_visibility='onchange'),
         'effective_hours': fields.function(_hours_get, string='Hours Spent', help="Computed using the sum of the task work done.",
                                            store = {
                                                _name: (lambda s, c, u, ids, cx={}: ids, ['task_ids'], 10),

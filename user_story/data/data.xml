@@ -45,43 +45,5 @@
             <field name="name">Secondary</field>
         </record>
 
-        <!-- Task-related subtypes for messaging / Chatter -->
-        <record id="mt_task_new" model="mail.message.subtype">
-            <field name="name">Task Created</field>
-            <field name="res_model">user.story</field>
-            <field name="default" eval="False"/>
-            <field name="description">Task created</field>
-        </record>
-        <record id="mt_task_started" model="mail.message.subtype">
-            <field name="name">Task Started</field>
-            <field name="res_model">user.story</field>
-            <field name="default" eval="False"/>
-            <field name="description">Task started</field>
-        </record>
-        <record id="mt_task_blocked" model="mail.message.subtype">
-            <field name="name">Task Blocked</field>
-            <field name="res_model">user.story</field>
-            <field name="default" eval="False"/>
-            <field name="description">Task blocked</field>
-        </record>
-        <record id="mt_task_closed" model="mail.message.subtype">
-            <field name="name">Task Done</field>
-            <field name="res_model">user.story</field>
-            <field name="default" eval="False"/>
-            <field name="description">Task closed</field>
-        </record>
-        <record id="mt_task_stage" model="mail.message.subtype">
-            <field name="name">Stage Changed</field>
-            <field name="res_model">user.story</field>
-            <field name="default" eval="False"/>
-            <field name="description">Stage changed</field>
-        </record>
-
-        <!-- Discussion subtype for messaging / Chatter -->
-        <record id="mt_comment" model="mail.message.subtype">
-            <field name="name">Discussions</field>
-        </record>
-
-
     </data>
 </openerp>
