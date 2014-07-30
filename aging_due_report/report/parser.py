@@ -41,6 +41,7 @@ class aging_parser(report_sxw.rml_parse):
             'get_total_by_comercial': self._get_total_by_comercial,
             'get_aged_lines': self._get_aged_lines,
             'get_invoice_by_currency': self._get_invoice_by_currency,
+            'get_invoice_by_partner_group': self._get_invoice_by_partner_group,
         })
 
     def _get_aml(self, ids, inv_type='out_invoice', currency_id=None):
@@ -238,6 +239,22 @@ class aging_parser(report_sxw.rml_parse):
                 for currency_id in res[rp_id].keys():
                     res2.append(res[rp_id][currency_id])
         return res2
+
+    def _get_invoice_by_partner_group(self, rp_brws, inv_type='out_invoice'):
+        """
+        process the invoice data generate and groupebd in list by partner.
+        """
+        res = self._get_invoice_by_partner(rp_brws, inv_type)
+        res2 = dict()
+        for item in res:
+            if res2.get(item['rp_brw'].id, False):
+                res2[item['rp_brw'].id] += [item]
+            else: 
+                res2[item['rp_brw'].id] = [item]
+
+        res3 = res2.values()
+        pdb.set_trace()
+        return res3
 
     def _get_invoice_by_currency(self, inv_ids):
         """
