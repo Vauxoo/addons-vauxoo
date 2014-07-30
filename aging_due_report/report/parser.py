@@ -63,24 +63,46 @@ class aging_parser(report_sxw.rml_parse):
         return res
 
     def _get_total_by_comercial(self, rp_brws, inv_type='out_invoice'):
+        """
+        return a list of dictionarios with the total and without vendor
+        amounts, one item for every currency find.
+        """
         ixp_gen = self._get_invoice_by_partner(rp_brws, inv_type)
         total = 0.0
         usr_dict = {}
+        res = dict()
+
         for ixp in ixp_gen:
             usr_id = ixp['rp_brw'].user_id and ixp[
                 'rp_brw'].user_id.id or False
 
-            if usr_dict.get(usr_id):
-                usr_dict[usr_id]['total'] += ixp['due_total']
+            if usr_dict.get( (usr_id, ixp['cur_brw'].id), False):
+                usr_dict[(usr_id, ixp['cur_brw'].id)]['total'] += ixp['due_total']
             else:
-                usr_dict[usr_id] = {
+                usr_dict[(usr_id, ixp['cur_brw'].id)] = {
+                    'cur_brw': ixp['cur_brw'],
                     'usr_brw': ixp['rp_brw'].user_id,
                     'total': ixp['due_total']
                 }
-            total += ixp['due_total']
-        if not total:
+
+            if res.get(ixp['cur_brw'].id, False):
+                res[ixp['cur_brw'].id]['total'] += ixp['due_total']
+            else:
+                res[ixp['cur_brw'].id] = dict() 
+                res[ixp['cur_brw'].id]['currency'] = ixp['cur_brw'].name
+                res[ixp['cur_brw'].id]['total'] = ixp['due_total']
+                res[ixp['cur_brw'].id]['vendor'] = []
+
+        for user_cur in usr_dict:
+            if res.get(user_cur[1], False):
+                res[user_cur[1]]['vendor'] += [usr_dict[user_cur]['total']]
+            else:
+                res[user_cur[1]]['vendor'] = [usr_dict[user_cur]['total']]
+                # {'total': total, 'vendor': (usr_dict[i] for i in usr_dict)},
+
+        if not res:
             return []
-        return [{'total': total, 'vendor': (usr_dict[i] for i in usr_dict)}]
+        return res.values()
 
     def _get_invoice_by_partner(self, rp_brws, inv_type='out_invoice'):
         """

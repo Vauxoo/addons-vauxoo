@@ -143,7 +143,7 @@
         <para>[[repeatIn(get_total_by_comercial(objects, inv_type='in_invoice'),'p')]]</para>
         <blockTable colWidths="252mm,20mm" style="TERMSTABLEGREY">
             <tr noRowsplits="1">
-                <td><para style="ITEMSRIGHT">TOTAL ESTE REPORTE</para></td>
+                <td><para style="ITEMSRIGHT">TOTAL EN [[ p['currency'] ]] </para></td>
                 <td><para style="ITEMSRIGHT">[[ formatLang(p['total']) or '0.00']]</para></td>
             </tr>
         </blockTable>
