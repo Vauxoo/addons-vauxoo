@@ -340,9 +340,6 @@ class aging_parser(report_sxw.rml_parse):
             'total'      : 0.00,
         }
 
-        res_prov = res_total.copy()
-        res_prov['type'] = 'provision'
-
         result = []
         for currency_group in ixp_gen:
             for ixp in currency_group:
@@ -371,39 +368,39 @@ class aging_parser(report_sxw.rml_parse):
                     if inv['due_days'] <= 0:
                         res['not_due'] += inv['residual']
                         res_total_by_currency[currency_id]['not_due'] += inv['residual']
-
                     elif inv['due_days'] > 0 and inv['due_days'] <= spans[1]:
                         res['1to30'] += inv['residual']
                         res_total_by_currency[currency_id]['1to30'] += inv['residual']
-
                     elif inv['due_days'] > spans[1] and inv['due_days'] <= spans[2]:
                         res['31to60'] += inv['residual']
                         res_total_by_currency[currency_id]['31to60'] += inv['residual']
-                        res_prov['31to60'] += inv['residual'] * 0.25
-                        res_prov['total'] += inv['residual'] * 0.25
-
                     elif inv['due_days'] > spans[2] and inv['due_days'] <= spans[3]:
                         res['61to90'] += inv['residual']
                         res_total_by_currency[currency_id]['61to90'] += inv['residual']
-                        res_prov['61to90'] += inv['residual'] * 0.5
-                        res_prov['total'] += inv['residual'] * 0.5
-
                     elif inv['due_days'] > spans[3] and inv['due_days'] <= spans[4]:
                         res['91to120'] += inv['residual']
                         res_total_by_currency[currency_id]['91to120'] += inv['residual']
-                        res_prov['91to120'] += inv['residual'] * 0.75
-                        res_prov['total'] += inv['residual'] * 0.75
                     else:
                         res['120+'] += inv['residual']
                         res_total_by_currency[currency_id]['120+'] += inv['residual']
-                        res_prov['120+'] += inv['residual']
-                        res_prov['total'] += inv['residual']
-                
                 result.append(res)
 
         result.extend(res_total_by_currency.values())
-        # TODO: this item need to be divided by currency to be shown.
-        # result.append(res_prov)
+
+        # calculate the provisions totals over the totals rows
+        res_prov = dict()
+        total_col_sum = ['not_due', '1to30', '31to60', '61to90',  '91to120', '120+']
+        for (key, value) in res_total_by_currency.iteritems():
+            res_prov[key]=value.copy()
+
+        for (currency_id, value) in res_prov.iteritems():
+            res_prov[currency_id]['type'] = 'provision'
+            res_prov[currency_id]['31to60'] *= 0.25
+            res_prov[currency_id]['61to90'] *= 0.5
+            res_prov[currency_id]['91to120'] *= 0.75
+            res_prov[currency_id]['total'] = sum([
+                res_prov[currency_id][col] for col in total_col_sum])
+        result.extend(res_prov.values())
 
         result2 = dict()
         for item in result:
