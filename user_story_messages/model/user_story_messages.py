@@ -41,3 +41,9 @@ class user_story(osv.osv):
             'user_story_messages.mt_us_approved': lambda self, cr, uid, obj, ctx=None: obj['approved'] == True,
         },
     }
+    
+    def message_track(self, cr, uid, ids, tracked_fields, initial_values, context=None):
+        for proc in self.browse(cr, uid, ids, context=context):
+           if tracked_fields.get("description", False) and proc.state == 'draft':
+               return True
+        return super(user_story, self).message_track(cr, uid, [proc.id], tracked_fields, initial_values, context=context)

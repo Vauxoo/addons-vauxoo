@@ -209,7 +209,7 @@ class user_story(osv.Model):
         'planned_hours': fields.float('Planned Hours'),
         'project_id': fields.many2one('project.project', 'Project',
                                       required=True),
-        'description': fields.text('Description', translate=True),
+        'description': fields.text('Description', translate=True, track_visibility='onchange'),
         'accep_crit_ids': fields.one2many('acceptability.criteria',
                                           'accep_crit_id',
                                           'Acceptability Criteria',
