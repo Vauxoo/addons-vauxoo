@@ -299,9 +299,6 @@ class aging_parser(report_sxw.rml_parse):
 
         ixp_gen = self._get_invoice_by_currency_group(rp_brws, inv_type)
 
-        pprint.pprint(ixp_gen)
-        pdb.set_trace()
-
         if not ixp_gen:
             return []
 
