@@ -168,7 +168,7 @@
                         <td><para style="ITEMSLEFT">F: FACTURA</para></td>
                         <td><para style="ITEMSLEFT">C: N/CRED.</para></td>
                         <td><para style="ITEMSLEFT">D: N/DEB.</para></td>
-                        <td><para style="ITEMSRIGHT">TOTAL</para></td>
+                        <td><para style="ITEMSRIGHT">TOTAL EN [[ o.get('cur_brw').name ]] </para></td>
                         <td><para style="ITEMSRIGHT">[[ formatLang(o.get('inv_total')) or '0.00']]</para></td>
                         <td><para style="ITEMSRIGHT">[[ formatLang(o.get('pay_total')) or '0.00']]</para></td>
                         <td><para style="ITEMSRIGHT">[[ formatLang(o.get('due_total')) or '0.00']]</para></td>
