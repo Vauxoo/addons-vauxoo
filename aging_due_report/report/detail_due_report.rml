@@ -81,12 +81,13 @@
     <section>
     <para>[[repeatIn(get_invoice_by_partner(objects),'o')]]</para>
     <para>[[ setLang(user.lang) ]]</para>
-        <blockTable colWidths="35mm,97mm,80mm,60mm" style="TERMSTABLEGREY">
+        <blockTable colWidths="35mm,97mm,80mm,20mm,40mm" style="TERMSTABLEGREY">
             <tr>
                 <td><para style="ITEMSLEFT">[[(o.get('rp_brw').vat and '%s-%s-%s'%( o.get('rp_brw').vat [2], o.get('rp_brw').vat[3:-1], o.get('rp_brw').vat[-1]) or '')]]</para></td>
                 <td><para style="ITEMSLEFT">[[o.get('rp_brw').name]] ([[ o.get('cur_brw').name ]])</para></td>
                 <td><para style="ITEMSLEFT">[[o.get('rp_brw').ref]]</para></td>
                 <td><para style="ITEMSLEFT">[[o.get('rp_brw').user_id.name]]</para></td>
+                <td><para style="ITEMSLEFT">[['Amounts expressed in {}'.format(o.get('cur_brw').name)]]</para></td>
             </tr>
         </blockTable>
         <blockTable colWidths="35mm,20mm,20mm,17mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm" repeatRows="1" style="TERMS">
