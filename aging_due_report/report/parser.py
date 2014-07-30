@@ -42,6 +42,7 @@ class aging_parser(report_sxw.rml_parse):
             'get_aged_lines': self._get_aged_lines,
             'get_invoice_by_currency': self._get_invoice_by_currency,
             'get_invoice_by_partner_group': self._get_invoice_by_partner_group,
+            'get_invoice_by_currency_group': self._get_invoice_by_currency_group,
         })
 
     def _get_aml(self, ids, inv_type='out_invoice', currency_id=None):
@@ -255,6 +256,19 @@ class aging_parser(report_sxw.rml_parse):
         res3 = res2.values()
         return res3
 
+    def _get_invoice_by_currency_group(self, rp_brws, inv_type='out_invoice'):
+        """
+        process the invoice data generate and groupebd in list by currency.
+        """
+        res = self._get_invoice_by_partner(rp_brws, inv_type)
+        res2 = dict()
+        for item in res:
+            if res2.get(item['cur_brw'].id, False):
+                res2[item['cur_brw'].id] += [item]
+            else: 
+                res2[item['cur_brw'].id] = [item]
+        return res2.values()
+
     def _get_invoice_by_currency(self, inv_ids):
         """
         a dictioary with subgroups of the given invoices grouped by currency.
@@ -283,7 +297,10 @@ class aging_parser(report_sxw.rml_parse):
         if not rp_brws:
             return []
 
-        ixp_gen = self._get_invoice_by_partner(rp_brws, inv_type)
+        ixp_gen = self._get_invoice_by_currency_group(rp_brws, inv_type)
+
+        pprint.pprint(ixp_gen)
+        pdb.set_trace()
 
         if not ixp_gen:
             return []
@@ -314,6 +331,7 @@ class aging_parser(report_sxw.rml_parse):
             }]
         '''
 
+        res_total_by_currency = dict()
         res_total = {
             'type'      : 'total',
             'not_due'   : 0.00, 
@@ -329,57 +347,64 @@ class aging_parser(report_sxw.rml_parse):
         res_prov['type'] = 'provision'
 
         result = []
-        for ixp in ixp_gen:
-            res = {
-                'type' : 'partner',
-                'rp_brw': ixp['rp_brw'],
-                'cur_brw': ixp['cur_brw'],
-                'not_due': 0.00,
-                '1to30': 0.00,
-                '31to60': 0.00,
-                '61to90': 0.00,
-                '91to120': 0.00,
-                '120+': 0.00,
-                'total': 0.00,
-            }
+        for currency_group in ixp_gen:
+            for ixp in currency_group:
+                res = {
+                    'type' : 'partner',
+                    'rp_brw': ixp['rp_brw'],
+                    'cur_brw': ixp['cur_brw'],
+                    'not_due': 0.00,
+                    '1to30': 0.00,
+                    '31to60': 0.00,
+                    '61to90': 0.00,
+                    '91to120': 0.00,
+                    '120+': 0.00,
+                    'total': 0.00,
+                }
 
-            for inv in ixp['inv_ids']:
-                res['total'] += inv['residual']
-                res_total['total'] += inv['residual']
+                for inv in ixp['inv_ids']:
+                    currency_id = ixp['cur_brw'].id
+                    if not res_total_by_currency.get(currency_id, False): 
+                        res_total_by_currency[currency_id] = res_total.copy()
+                        res_total_by_currency[currency_id]['cur_brw'] = ixp['cur_brw']
+
+                    res['total'] += inv['residual']
+                    res_total_by_currency[currency_id]['total'] += inv['residual']
+                    
+                    if inv['due_days'] <= 0:
+                        res['not_due'] += inv['residual']
+                        res_total_by_currency[currency_id]['not_due'] += inv['residual']
+
+                    elif inv['due_days'] > 0 and inv['due_days'] <= spans[1]:
+                        res['1to30'] += inv['residual']
+                        res_total_by_currency[currency_id]['1to30'] += inv['residual']
+
+                    elif inv['due_days'] > spans[1] and inv['due_days'] <= spans[2]:
+                        res['31to60'] += inv['residual']
+                        res_total_by_currency[currency_id]['31to60'] += inv['residual']
+                        res_prov['31to60'] += inv['residual'] * 0.25
+                        res_prov['total'] += inv['residual'] * 0.25
+
+                    elif inv['due_days'] > spans[2] and inv['due_days'] <= spans[3]:
+                        res['61to90'] += inv['residual']
+                        res_total_by_currency[currency_id]['61to90'] += inv['residual']
+                        res_prov['61to90'] += inv['residual'] * 0.5
+                        res_prov['total'] += inv['residual'] * 0.5
+
+                    elif inv['due_days'] > spans[3] and inv['due_days'] <= spans[4]:
+                        res['91to120'] += inv['residual']
+                        res_total_by_currency[currency_id]['91to120'] += inv['residual']
+                        res_prov['91to120'] += inv['residual'] * 0.75
+                        res_prov['total'] += inv['residual'] * 0.75
+                    else:
+                        res['120+'] += inv['residual']
+                        res_total_by_currency[currency_id]['120+'] += inv['residual']
+                        res_prov['120+'] += inv['residual']
+                        res_prov['total'] += inv['residual']
                 
-                if inv['due_days'] <= 0:
-                    res['not_due'] += inv['residual']
-                    res_total['not_due'] += inv['residual']
+                result.append(res)
 
-                elif inv['due_days'] > 0 and inv['due_days'] <= spans[1]:
-                    res['1to30'] += inv['residual']
-                    res_total['1to30'] += inv['residual']
-
-                elif inv['due_days'] > spans[1] and inv['due_days'] <= spans[2]:
-                    res['31to60'] += inv['residual']
-                    res_total['31to60'] += inv['residual']
-                    res_prov['31to60'] += inv['residual'] * 0.25
-                    res_prov['total'] += inv['residual'] * 0.25
-
-                elif inv['due_days'] > spans[2] and inv['due_days'] <= spans[3]:
-                    res['61to90'] += inv['residual']
-                    res_total['61to90'] += inv['residual']
-                    res_prov['61to90'] += inv['residual'] * 0.5
-                    res_prov['total'] += inv['residual'] * 0.5
-
-                elif inv['due_days'] > spans[3] and inv['due_days'] <= spans[4]:
-                    res['91to120'] += inv['residual']
-                    res_total['91to120'] += inv['residual']
-                    res_prov['91to120'] += inv['residual'] * 0.75
-                    res_prov['total'] += inv['residual'] * 0.75
-                else:
-                    res['120+'] += inv['residual']
-                    res_total['120+'] += inv['residual']
-                    res_prov['120+'] += inv['residual']
-                    res_prov['total'] += inv['residual']
-            
-            result.append(res)
-        result.append(res_total)
+        result.extend(res_total_by_currency.values())
         result.append(res_prov)
 
         pprint.pprint(result)
