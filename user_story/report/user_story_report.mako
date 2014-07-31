@@ -9,7 +9,7 @@
                     <th class="panel_bg_color_title">${_("USER STORY NAME")}</th>
                 </tr>
                 <tr>
-                    <td class="td_center"><p class="td_margin">${user and user.story and user.story.name}</p></td>
+                    <td class="td_center"><h5><p class="td_margin">${user and user.story and user.story.name}</p></h5></td>
                 </tr>
             </table>
             <table width="100%">
