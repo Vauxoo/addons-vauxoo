@@ -449,9 +449,9 @@ report_sxw.report_sxw(
     header=False
 )
 report_sxw.report_sxw(
-    'report.purchase_aging_due_report',
+    'report.supplier_aging_due_report',
     'res.partner',
-    'addons/aging_due_report/report/purchase_aging_due_report.rml',
+    'addons/aging_due_report/report/supplier_aging_due_report.rml',
     parser=aging_parser,
     header=False
 )
