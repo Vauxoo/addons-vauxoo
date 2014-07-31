@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data>
+        <report auto="False"
+                id="aging_due_report_webkit"
+                model="res.partner"
+                name="aging_due_report_webkit"
+                file="aging_due_report/report/aging_due_report_html.mako"
+                string="Customer Aging Report of Debts Webkit"
+                report_type="webkit"
+                attachment_use="0"
+                attachment=""
+                menu="True"/>
+        
+
+        <record id="property_aging_due_report_webkit" model="ir.property">
+            <field name="name">aging_due_report_webkit_header</field>
+            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
+            <field eval="'ir.header_webkit,'+str(ref('aging_due_report.ir_header_webkit_aging_due_report'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.actions.report.xml,'+str(ref('aging_due_report.aging_due_report_webkit'))" model="ir.actions.report.xml" name="res_id"/>
+        </record>
+
+    </data>
+</openerp>
