@@ -31,8 +31,6 @@
                 <tr>
                     <th class="panel_bg_color_title">${_("DESCRIPTION")}</th>
                 </tr>
-                <% import html2text %>
-                <% text = html2text.html2text(user.story.description or '') %>
                 <tr>
                     <td class="pre_description">${parse_html_field(user.story.description)}</td>
                 </tr>

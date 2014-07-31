@@ -22,10 +22,9 @@
 
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-
+from report_webkit import webkit_report
 from report import report_sxw
 from lxml import html
-import html2text
 import xml
 
 class user_story_report(report_sxw.rml_parse):
@@ -39,13 +38,16 @@ class user_story_report(report_sxw.rml_parse):
             'parse_html_field' : self._parse_html_field,
         })
         self.context = context
-
+        
     def _parse_html_field(self, data):
-        tree = html.fromstring(data)
-        text_data = tree.text_content()
+        data_str = data.encode('ascii', 'xmlcharrefreplace')
+        data_str = data_str.replace('<br>', '\n')
+        root = html.fromstring(data_str)
+        text_data = html.tostring(root, encoding='unicode', method='text')
+        text_data = text_data.encode('ascii', 'xmlcharrefreplace')
         return text_data
 
-report_sxw.report_sxw('report.user.story.report',
+webkit_report.WebKitParser('report.user.story.report',
             'user.story',
             'addons/user_story/report/user_story_report.mako',
             parser=user_story_report)
