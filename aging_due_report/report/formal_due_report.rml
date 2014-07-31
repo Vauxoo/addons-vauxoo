@@ -116,7 +116,7 @@
                     <td><para style="ITEMSTITLERIGHT">BASE</para></td>
                     <td><para style="ITEMSTITLERIGHT">TAX</para></td>
                     <td><para style="ITEMSTITLERIGHT">TOTAL/DOC.</para></td>
-                    <td><para style="ITEMSTITLERIGHT">RECEIVABLE</para></td>
+                    <td><para style="ITEMSTITLERIGHT">COLLECTS</para></td>
                     <td><para style="ITEMSTITLERIGHT">BALANCE</para></td>
                 </tr>
             </blockTable>
