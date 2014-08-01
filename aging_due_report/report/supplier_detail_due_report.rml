@@ -5,8 +5,8 @@
         <pageGraphics>
             <setFont name="Helvetica-Oblique" size="8.0"/>
             <image x="10.0mm" y="195.0mm"  width="89.994mm" height="24.342mm">[[company.logo and company.logo or removeParentNode('image')]]</image>
-            <drawString x="10mm" y="5mm">Reporte Impreso en OpenERP con ReportLab</drawString> 
-            <drawRightString x="270mm" y="5mm">Fecha de Impresion:  [[formatLang(time.strftime('%Y-%m-%d'),date=True)]] [[time.strftime('%H:%m')]] / Pagina:<pageNumber/> </drawRightString> 
+            <drawString x="10mm" y="5mm">This report was printed in OpenERP with ReportLab</drawString> 
+            <drawRightString x="270mm" y="5mm">Print Date:  [[formatLang(time.strftime('%Y-%m-%d'),date=True)]] [[time.strftime('%H:%m')]] / Page:<pageNumber/> </drawRightString> 
         </pageGraphics>
       <frame id="first"     x1="10.0mm"     y1="10mm"    width="260mm"  height="185.0mm"/>
     </pageTemplate>
@@ -81,29 +81,30 @@
     <section>
     <para>[[repeatIn(get_invoice_by_partner(objects, inv_type='in_invoice'),'o')]]</para>
     <para>[[ setLang(user.lang) ]]</para>
-        <blockTable colWidths="35mm,97mm,80mm,60mm" style="TERMSTABLEGREY">
+        <blockTable colWidths="35mm,97mm,80mm,20mm,40mm" style="TERMSTABLEGREY">
             <tr>
                 <td><para style="ITEMSLEFT">[[(o.get('rp_brw').vat and '%s-%s-%s'%( o.get('rp_brw').vat [2], o.get('rp_brw').vat[3:-1], o.get('rp_brw').vat[-1]) or '')]]</para></td>
-                <td><para style="ITEMSLEFT">[[o.get('rp_brw').name]]</para></td>
+                <td><para style="ITEMSLEFT">[[o.get('rp_brw').name]] ([[ o.get('cur_brw').name ]])</para></td>
                 <td><para style="ITEMSLEFT">[[o.get('rp_brw').ref]]</para></td>
                 <td><para style="ITEMSLEFT">[[o.get('rp_brw').user_id.name]]</para></td>
+                <td><para style="ITEMSLEFT">[['Amounts expressed in {}'.format(o.get('cur_brw').name)]]</para></td>
             </tr>
         </blockTable>
         <blockTable colWidths="35mm,20mm,20mm,17mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm" repeatRows="1" style="TERMS">
             <tr noRowsplits="1">
-                <td><para style="ITEMSTITLELEFT">FACTURA</para></td>
-                <td><para style="ITEMSTITLELEFT">F/EMISION</para></td>
-                <td><para style="ITEMSTITLELEFT">F/VENC.</para></td>
-                <td><para style="ITEMSTITLERIGHT">DIAS/VENC.</para></td>
-                <td><para style="ITEMSTITLERIGHT">BASE IMP.</para></td>
-                <td><para style="ITEMSTITLERIGHT">IMP.</para></td>
-                <td><para style="ITEMSTITLERIGHT">TOT/FACT.</para></td>
-                <td><para style="ITEMSTITLERIGHT">RET.IVA.</para></td>
-                <td><para style="ITEMSTITLERIGHT">RET.ISLR.</para></td>
-                <td><para style="ITEMSTITLERIGHT">RET.MUN.</para></td>
-                <td><para style="ITEMSTITLERIGHT">N/C</para></td>
-                <td><para style="ITEMSTITLERIGHT">ABONO</para></td>
-                <td><para style="ITEMSTITLERIGHT">SALDO</para></td>
+                <td><para style="ITEMSTITLELEFT">INVOICE</para></td>
+                <td><para style="ITEMSTITLELEFT">EMIS DATE</para></td>
+                <td><para style="ITEMSTITLELEFT">DUE DATE</para></td>
+                <td><para style="ITEMSTITLERIGHT">DUE DAYS</para></td>
+                <td><para style="ITEMSTITLERIGHT">BASE</para></td>
+                <td><para style="ITEMSTITLERIGHT">TAX</para></td>
+                <td><para style="ITEMSTITLERIGHT">TOT/INV.</para></td>
+                <td><para style="ITEMSTITLERIGHT">VAT WH</para></td>
+                <td><para style="ITEMSTITLERIGHT">INCOME WH</para></td>
+                <td><para style="ITEMSTITLERIGHT">MUNI. WH</para></td>
+                <td><para style="ITEMSTITLERIGHT">C/N</para></td>
+                <td><para style="ITEMSTITLERIGHT">PAYMENTS</para></td>
+                <td><para style="ITEMSTITLERIGHT">BALANCE</para></td>
             </tr>
         
             <tr>
@@ -143,16 +144,18 @@
         <para>[[repeatIn(get_total_by_comercial(objects, inv_type='in_invoice'),'p')]]</para>
         <blockTable colWidths="252mm,20mm" style="TERMSTABLEGREY">
             <tr noRowsplits="1">
-                <td><para style="ITEMSRIGHT">TOTAL ESTE REPORTE</para></td>
+                <td><para style="ITEMSRIGHT">TOTAL IN [[ p['currency'] ]] </para></td>
                 <td><para style="ITEMSRIGHT">[[ formatLang(p['total']) or '0.00']]</para></td>
             </tr>
         </blockTable>
+<!-- 
         <blockTable colWidths="252mm,20mm" style="TERMSTABLEGREY">
             <tr>
                 <td><para style="ITEMSRIGHT">[[repeatIn(p.get('vendor'),'vnd')]][[ vnd.get('usr_brw') and vnd.get('usr_brw').name or 'SIN ASESOR' ]]</para></td>
                 <td><para style="ITEMSRIGHT">[[ formatLang(vnd.get('total')) or '0.00' ]]</para></td>
             </tr>
         </blockTable>
+-->
     </section>
   </story>
 </document>
