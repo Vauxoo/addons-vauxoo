@@ -32,8 +32,12 @@ class account_voucher(osv.Model):
 
     _inherit = 'account.voucher'
     _columns = {
-        'employee_id': fields.many2one(
-            'hr.employee',
+        'user_id': fields.many2one(
+            'res.users',
             string='Requester',
-            help='Requester Employee'),
+            help='Requester User'),
+    }
+
+    _defaults = {
+        'user_id': lambda self, cur, uid, cxt: uid,
     }

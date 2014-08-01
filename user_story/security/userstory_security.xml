@@ -20,5 +20,10 @@
         eval="[(6,0,[ref('user_story.group_user_story_user')])]"/>
     </record>
 
+    <record id="group_management_reports" model="res.groups">
+        <field name="name">Management Reports</field>
+        <field name="category_id" ref="module_user_story"/>
+    </record>
+
 </data>
 </openerp>
