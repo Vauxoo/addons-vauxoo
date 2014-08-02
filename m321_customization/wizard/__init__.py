@@ -1,2 +1,0 @@
-import cancel_order
-import supplier_asigner
