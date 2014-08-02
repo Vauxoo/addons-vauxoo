@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    Financed and Planified by Vauxoo
 #    developed by: nhomar@vauxoo.com
@@ -29,7 +29,7 @@
     Some customizations for OpenERP web client made by Vauxoo
     """,
     'version': "1.0",
-    'depends': ['web', 
+    'depends': ['web',
     ],
     'js': [
     ],
@@ -39,7 +39,7 @@
     'qweb': [
         'static/src/xml/web_vauxoo_cust.xml',
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'web_preload': False,
 }
