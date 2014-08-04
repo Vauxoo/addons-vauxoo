@@ -362,14 +362,14 @@ color: black; }
  color: white;
  }
  
- .ITEMSLEFT {
+.ITEMSLEFT {
  text-align: LEFT;
  font-family: Helvetica-Bold;
  font-size: 10;
  color: black;
  }
  
-  .ITEMSRIGHT {
+.ITEMSRIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
  font-size: 10;
