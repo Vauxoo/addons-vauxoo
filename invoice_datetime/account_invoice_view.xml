@@ -7,10 +7,11 @@
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='date_invoice']" position="after">
-                    <field name="invoice_datetime" groups="invoice_datetime.group_datetime_invoice"/>
+                    <field name="date_type" invisible="False"/>
+                    <field name="invoice_datetime" attrs="{'invisible': ['|', ('date_type', '=', 'date'), ('date_type', '=', False)]}"/>
                 </xpath>
                 <xpath expr="//field[@name='date_invoice']" position="replace">
-                    <field name="date_invoice" groups="invoice_datetime.group_date_invoice"/>
+                    <field name="date_invoice" attrs="{'invisible': [('date_type', '=', 'datetime')]}"/>
                 </xpath>
             </field>
         </record>

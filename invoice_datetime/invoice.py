@@ -77,17 +77,27 @@ class account_invoice(osv.Model):
                 res[invoice.id] = invoice.date_invoice
         return res
 
+    def _get_field_params(self, cr, uid, ids, name, unknow_none, context=None):
+        if context is None:
+            context = {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        res = {}
+        key_by_company_id = "acc_invoice.date_invoice_type_" + str(self.pool.get("account.config.settings")._default_company(cr, uid))
+        res[ids[0]] = self.pool.get("ir.config_parameter").get_param(cr, uid, key_by_company_id, default='date', context=context)
+        return res
+
     _columns = {
         # Extract date_invoice from original, but add datetime
         #'date_invoice': fields.datetime('Date Invoiced', states={'open':[
         #('readonly',True)],'close':[('readonly',True)]},
         #help="Keep empty to use the current date"),
-        'invoice_datetime': fields.datetime('Fiscal Date',
+        'invoice_datetime': fields.datetime('Date with time',
             states={'open': [('readonly', True)], 'close': [('readonly', True)]},
             help="Keep empty to use the current date"),
         'date_invoice_tz':  fields.function(_get_date_invoice_tz, method=True,
             type='datetime', string='Date Invoiced with TZ', store=True,
             help='Date of Invoice with Time Zone'),
+        'date_type': fields.function(_get_field_params, storage=False, type='char', string="Date type")
     }
 
     _defaults = {
@@ -128,6 +138,7 @@ class account_invoice(osv.Model):
         if context is None:
             context = {}
         res = {}
+        print values
         if values.get('date_invoice', False) and\
                                     not values.get('invoice_datetime', False):
                                     
@@ -157,38 +168,28 @@ class account_invoice(osv.Model):
                     values['invoice_datetime'],
                     '%Y-%m-%d %H:%M:%S').date().strftime('%Y-%m-%d')
                 if date_invoice != values['date_invoice']:
-                    groups_obj = self.pool.get('res.groups')
-                    group_datetime = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'invoice_datetime', 'group_datetime_invoice')
-                    group_date = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'invoice_datetime', 'group_date_invoice')
-                    if group_datetime and group_date:
-                        users_datetime = []
-                        users_date = []
-                        for user in groups_obj.browse(cr, uid, [group_datetime[1]], context=context)[0].users:
-                            users_datetime.append(user.id)
-                        for user in groups_obj.browse(cr, uid, [group_date[1]], context=context)[0].users:
-                            users_date.append(user.id)
-                        if uid in users_datetime:
-                            date_invoice = fields.datetime.context_timestamp(cr, uid,
-                                datetime.datetime.strptime(values['invoice_datetime'],
-                                tools.DEFAULT_SERVER_DATETIME_FORMAT), context=context)
-                            res['date_invoice'] = date_invoice
-                            res['invoice_datetime'] = values['invoice_datetime']
-                        elif uid in users_date:
-                            user_hour = self._get_time_zone(cr, uid, [], context=context)
-                            time_invoice = datetime.time(abs(user_hour), 0, 0)
+                    if self.browse(cr, uid, ids)[0].date_type == 'datetime':
+                        date_invoice = fields.datetime.context_timestamp(cr, uid,
+                            datetime.datetime.strptime(values['invoice_datetime'],
+                            tools.DEFAULT_SERVER_DATETIME_FORMAT), context=context)
+                        res['date_invoice'] = date_invoice
+                        res['invoice_datetime'] = values['invoice_datetime']
+                    elif self.browse(cr, uid, ids)[0].date_type == 'date':
+                        user_hour = self._get_time_zone(cr, uid, [], context=context)
+                        time_invoice = datetime.time(abs(user_hour), 0, 0)
 
-                            date_invoice = datetime.datetime.strptime(
-                                values['date_invoice'], '%Y-%m-%d').date()
-                                
-                            dt_invoice = datetime.datetime.combine(
-                                date_invoice, time_invoice).strftime('%Y-%m-%d %H:%M:%S')
+                        date_invoice = datetime.datetime.strptime(
+                            values['date_invoice'], '%Y-%m-%d').date()
+                            
+                        dt_invoice = datetime.datetime.combine(
+                            date_invoice, time_invoice).strftime('%Y-%m-%d %H:%M:%S')
 
-                            res['invoice_datetime'] = dt_invoice
-                            res['date_invoice'] = values['date_invoice']
-                        else:
-                            raise osv.except_osv(_('Warning!'), _('Invoice dates should be equal'))
+                        res['invoice_datetime'] = dt_invoice
+                        res['date_invoice'] = values['date_invoice']
                     else:
                         raise osv.except_osv(_('Warning!'), _('Invoice dates should be equal'))
+                    #~ else:
+                        #~ raise osv.except_osv(_('Warning!'), _('Invoice dates should be equal'))
                             
         if  not values.get('invoice_datetime', False) and\
                                         not values.get('date_invoice', False):
