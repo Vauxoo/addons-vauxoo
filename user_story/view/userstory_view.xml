@@ -57,7 +57,6 @@
                         <field name="sk_id" context="{'current_model3': 'sprint.kanban'}" />
                         <field name="priority_level" widget="selection"
                             string="How Important is This for you?"/>
-                        <field name="difficulty_level" widget="selection"/>
                         <field name="categ_ids" widget="many2many_tags"
                             string="Extra Clasification (For Internal Use)"
                             context="{'current_model1': 'project.category'}"/>
@@ -82,30 +81,15 @@
               <field name="description" colspan="4" nolabel="1" attrs="{'readonly':[('approved','=',True)]}" placeholder="Add a description here ..." widget="html"/>
 		      <h1><label for="accep_crit_ids" string="4.- Aceptability Criteria" class="oe_horizontal_separator oe_clear"/></h1>
               <field name="accep_crit_ids" colspan="4" nolabel="1">
-                <form string="Acceptability Criteria" version="7.0">
-                  <separator string="3.- Description" colspan="4"/>
-                  <field name="name" colspan="4" nolabel="1"/>
-                  <separator string="Scenario" colspan="4"/>
-                  <field name="scenario" colspan="4" nolabel="1"/>
-                  <group colspan="4" col="3">
-                      <group colspan="1" col="1">
-                          <separator string="Accepted"/>
-                          <field name="accepted" nolabel="1"/>
-                      </group>
-                      <group colspan="1" col="1">
-                          <separator string="Development"/>
-                          <field name="development" nolabel="1"/>
-                      </group>
-                      <group colspan="1" col="1">
-                          <separator string="Difficulty"/>
-                          <field name="difficulty" nolabel="1"/>
-                      </group>
-                  </group>
-                </form>
                 <tree string="Acceptability Criteria">
                   <field name="name"/>
                   <field name="scenario"/>
                   <field name="accepted"/>
+                  <field name="difficulty" invisible="1"/>
+                  <field name="difficulty_level"/>
+                  <button icon="gtk-info" name="ask_review" string="Ask For Review by Product Owner" type="object" help="Remember, when you ask for review this Acceptance criteria you should say where and How it must be done"/>
+                  <button icon="gtk-apply" name="approve" string="Approve" type="object" help="Click here if you are sure it works, it will mark this as 'ready'"/>
+                  <button icon="gtk-cancel" name="disapprove" string="Disaprove" type="object" help="Click here if it doesn't work, remember communicate the reason why it doesn't works"/>
                 </tree>
               </field>
             </page>
@@ -219,28 +203,38 @@
       </field>
     </record>
 
+    <!--TODO: Remove this field: difficulty to be replace, to not change data structure just invisible.
+         -->
     <record model="ir.ui.view" id="view_acceptability_criteria_form">
         <field name="name">acceptability.criteria.form</field>
         <field name="model">acceptability.criteria</field>
         <field name="arch" type="xml">
             <form string="Acceptability Criterion" version="7.0">
+                <header>
+                  <button icon="gtk-info" name="ask_review" string="Ask For Review by Product Owner" type="object" help="Remember, when you ask for review this Acceptance criteria you should say where and How it must be done"/>
+                  <button icon="gtk-apply" name="approve" string="Approve" type="object" help="Click here if you are sure it works, it will mark this as 'ready'"/>
+                  <button icon="gtk-cancel" name="disapprove" string="Disaprove" type="object" help="Click here if it doesn't work, remember communicate the reason why it doesn't works"/>
+                </header>
                 <sheet string="Acceptability Criterion">
                     <h1><label for="id" string="Acceptability Criterion" class="oe_horizontal_separator oe_clear"/>
                         <field name="id" readonly="True"/>
                         <field name="name" placeholder="Acceptability Criterion summary..."/>
+                        <field name="difficulty_level"/>
                     </h1>
                     <group>
                         <field name="scenario"/>
                         <field name="accep_crit_id"/>
                         <field name="accepted"/>
                         <field name="development"/>
-                        <field name="difficulty"/>
+                        <field name="difficulty" invisible="1"/>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
 
+    <!--TODO: Remove this field: difficulty_level to be replace, to not change data structure just invisible.
+         -->
     <record model="ir.ui.view" id="view_acceptability_criteria_tree">
         <field name="name">acceptability.criteria.tree</field>
         <field name="model">acceptability.criteria</field>
@@ -257,7 +251,11 @@
                 <field name="user_execute_id" invisible="True"/>
                 <field name="accepted"/>
                 <field name="development"/>
-                <field name="difficulty"/>
+                <field name="difficulty" invisible="1"/>
+                <field name="difficulty_level"/>
+                <button icon="gtk-info" name="ask_review" string="Ask For Review by Product Owner" type="object" help="Remember, when you ask for review this Acceptance criteria you should say where and How it must be done"/>
+                <button icon="gtk-apply" name="approve" string="Approve" type="object" help="Click here if you are sure it works, it will mark this as 'ready'"/>
+                <button icon="gtk-cancel" name="disapprove" string="Disaprove" type="object" help="Click here if it doesn't work, remember communicate the reason why it doesn't works"/>
             </tree>
         </field>
     </record>
@@ -368,6 +366,13 @@
       <field name="view_mode">tree,form</field>
     </record>
 
+    <record model="ir.actions.act_window" id="action_user_story_difficulty">
+      <field name="name">difficulty Level</field>
+      <field name="res_model">user.story.difficulty</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
     <record model="ir.actions.act_window" id="action_user_story">
       <field name="name">User Stories</field>
       <field name="res_model">user.story</field>
@@ -392,6 +397,7 @@
     <menuitem parent="menu_user_story" id="menu_acceptability_criteria" action="action_acceptability_criteria" groups="user_story.group_user_story_manager,user_story.group_user_story_user"/>
     <menuitem parent="base.menu_definitions" id="menu_conf_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user" name="User Story"/>
     <menuitem parent="menu_conf_user_story" id="menu_config_user_story_priority" action="action_user_story_priority" groups="user_story.group_user_story_manager,user_story.group_user_story_user"/>
+    <menuitem parent="menu_conf_user_story" id="menu_config_user_story_difficulty" action="action_user_story_difficulty" groups="user_story.group_user_story_manager"/>
   </data>
 </openerp>
 
