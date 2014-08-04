@@ -38,9 +38,19 @@ msgid "Keep empty to use the current date"
 msgstr "Mantener vacio para usar la fecha actual"
 
 #. module: invoice_datetime
+#: field:account.config.settings,select_date:0
+msgid "Default date of invoices"
+msgstr "Fecha por defecto de las facturas"
+
+#. module: invoice_datetime
+#: help:account.config.settings,select_date:0
+msgid "Select the field you want to displayed in the invoice for the selected company."
+msgstr "Selecciona el campo que deseas mostrar en la factura para la compañía seleccionada."
+
+#. module: invoice_datetime
 #: field:account.invoice,invoice_datetime:0
-msgid "Fiscal Date"
-msgstr "Fecha Fiscal "
+msgid "Date of invoice with time"
+msgstr "Fecha de factura con tiempo"
 
 #. module: invoice_datetime
 #: model:ir.model,name:invoice_datetime.model_account_invoice

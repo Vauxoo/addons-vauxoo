@@ -91,7 +91,7 @@ class account_invoice(osv.Model):
         #'date_invoice': fields.datetime('Date Invoiced', states={'open':[
         #('readonly',True)],'close':[('readonly',True)]},
         #help="Keep empty to use the current date"),
-        'invoice_datetime': fields.datetime('Date with time',
+        'invoice_datetime': fields.datetime('Date of invoice with time',
             states={'open': [('readonly', True)], 'close': [('readonly', True)]},
             help="Keep empty to use the current date"),
         'date_invoice_tz':  fields.function(_get_date_invoice_tz, method=True,
@@ -138,10 +138,8 @@ class account_invoice(osv.Model):
         if context is None:
             context = {}
         res = {}
-        print values
         if values.get('date_invoice', False) and\
                                     not values.get('invoice_datetime', False):
-                                    
             user_hour = self._get_time_zone(cr, uid, [], context=context)
             time_invoice = datetime.time(abs(user_hour), 0, 0)
 

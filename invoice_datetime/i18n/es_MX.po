@@ -36,6 +36,8 @@ msgstr ""
 msgid "Keep empty to use the current date"
 msgstr ""
 
+
+
 #. module: invoice_datetime
 #: field:account.invoice,invoice_datetime:0
 msgid "Fiscal Date"
