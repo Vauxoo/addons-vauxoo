@@ -41,7 +41,6 @@
     ],
     "demo" : [],
     "data" : [
-        "security/security_groups_date_invoice.xml",
         "account_invoice_view.xml",
         "res_config_acc_view.xml"
     ],
