@@ -39,11 +39,11 @@ A Supplier's Detail Due Report,
 A Supplier's Aging Due Report.
 """,
     "depends" : ["account", "report_webkit",
-],
-    "init_xml" : [],
-    "update_xml" : [
+                ],
+    "data" : [
         "report/ing_due_report.xml",
-        "data/data.xml",
+        "data/aging_due_webkit_header.xml",
+        "data/formal_due_webkit_header.xml",
         "report/aging_due_report_webkit.xml",
 
     ],

@@ -288,7 +288,6 @@ class aging_parser(report_sxw.rml_parse):
         """
         @return 
         """
-
         # span = 30
         # spans = [0, 30, 60, 90, 120]
         # span = 90
@@ -461,6 +460,14 @@ webkit_report.WebKitParser(
     'report.aging_due_report_webkit',
     'res.partner',
     'addons/aging_due_report/report/aging_due_report_html.mako',
+    parser=aging_parser,
+    header=True
+)
+
+webkit_report.WebKitParser(
+    'report.formal_due_report_webkit',
+    'res.partner',
+    'addons/aging_due_report/report/formal_due_report_html.mako',
     parser=aging_parser,
     header=True
 )
