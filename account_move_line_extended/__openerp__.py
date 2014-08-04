@@ -38,7 +38,9 @@ Add a new view for the account move lines.
     'depends': [
         'account',
         ],
-    'data': [],
+    'data': [
+        'view/account_move_line_view.xml',
+        ],
     'demo': [],
     'test': [],
     'qweb': [],
