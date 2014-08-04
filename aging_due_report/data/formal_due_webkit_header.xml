@@ -80,7 +80,7 @@
     border-bottom: 1px solid #DFDFDE;
     border-top: 1px solid #DFDFDE;
     background-color: #A41D35;
-    font-size: 12;
+    font-size: 11;
     color: white; }
 
 .table_title {
@@ -232,7 +232,7 @@
 
 body {
   color: black;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans_serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans_serif, Times-BoldItalic, Helvetica-Bold, Helvetica-Oblique;
   font-size: 7;
   margin: 0;
   padding: 0;
@@ -376,6 +376,21 @@ color: black; }
  color: black;
  }
  
+.CUSTOMERNAME {
+ text-align: right;
+ font-family: Helvetica-Oblique;
+ font-size: 12;
+ color: black;
+ leading: 12;
+ spaceBefore: 3;
+ }
+
+.CUSTOMERTEXT {
+ text-align: left;
+ font-family: Times-BoldItalic;
+ font-size: 12;
+ color: black;
+ }
 
 
 ]]> </field>
