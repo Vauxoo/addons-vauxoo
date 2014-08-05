@@ -45,6 +45,7 @@ A Supplier's Aging Due Report.
         "data/aging_due_webkit_header.xml",
         "data/formal_due_webkit_header.xml",
         "data/supplier_aging_due_webkit_header.xml",
+        "data/supplier_formal_due_webkit_header.xml",
         "report/aging_due_report_webkit.xml",
 
     ],
