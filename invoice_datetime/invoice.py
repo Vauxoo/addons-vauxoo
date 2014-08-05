@@ -100,8 +100,14 @@ class account_invoice(osv.Model):
         'date_type': fields.function(_get_field_params, storage=False, type='char', string="Date type")
     }
 
+    def _get_default_type(self, cr, uid, ids):
+        key_by_company_id = "acc_invoice.date_invoice_type_" + str(self.pool.get("account.config.settings")._default_company(cr, uid))
+        type_show_date = self.pool.get("ir.config_parameter").get_param(cr, uid, key_by_company_id, default='date')
+        return type_show_date
+
     _defaults = {
         #'date_invoice': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+        "date_type": _get_default_type
     }
         
     def copy(self, cr, uid, id, default=None, context=None):
