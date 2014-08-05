@@ -18,7 +18,7 @@
                 <strong>${_('Customer Detail Report of Debts') |entity}</strong>
             </td>
        </tr>
-    <% cur_group = get_aged_lines( objects, inv_type='out_invoice') %>
+    <% cur_group = get_invoice_by_partner( objects, inv_type='out_invoice') %>
     %for table in cur_group:
     </table>
         </br>
