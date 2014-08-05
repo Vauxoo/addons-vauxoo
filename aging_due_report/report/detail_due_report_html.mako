@@ -22,7 +22,6 @@
     </table>
     </br>
     <% cur_group = get_invoice_by_partner(objects) %>
-    <% print cur_group %>
     %for o in cur_group:
         <table class="table_column_border table_alter_color_row table_title_bg_color" width="100%">
             <tr style="border-top: 1px solid #000000;">
