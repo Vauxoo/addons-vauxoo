@@ -40,8 +40,8 @@ msgstr ""
 
 #. module: invoice_datetime
 #: field:account.invoice,invoice_datetime:0
-msgid "Fiscal Date"
-msgstr "Fecha Fiscal"
+msgid "Date time of invoice"
+msgstr ""
 
 #. module: invoice_datetime
 #: model:ir.model,name:invoice_datetime.model_account_invoice

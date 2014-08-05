@@ -49,8 +49,8 @@ msgstr "Selecciona el campo que deseas mostrar en la factura para la compañía 
 
 #. module: invoice_datetime
 #: field:account.invoice,invoice_datetime:0
-msgid "Date of invoice with time"
-msgstr "Fecha de factura con tiempo"
+msgid "Date time of invoice"
+msgstr "Fecha y hora de la factura"
 
 #. module: invoice_datetime
 #: model:ir.model,name:invoice_datetime.model_account_invoice
