@@ -471,4 +471,12 @@ webkit_report.WebKitParser(
     parser=aging_parser,
     header=True
 )
+
+webkit_report.WebKitParser(
+    'report.supplier_aging_due_report_html',
+    'res.partner',
+    'addons/aging_due_report/report/supplier_aging_due_report_html.mako',
+    parser=aging_parser,
+    header=True
+)
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
