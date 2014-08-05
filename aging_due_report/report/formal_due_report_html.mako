@@ -16,21 +16,21 @@
                     ${helper.embed_image('jpeg',str(company.logo),180, auto)}
                 </div>
             </td>
+            <td style="text-align: center;">
+                <strong>${_('Customer Financial Statement') |entity}</strong>
+            </td>
+            <td style="text-align: right;">${ formatLang(time.strftime('%Y-%m-%d'), date=True)}</td>
        </tr>
     </table>
     
     <em>
         <div class="CUSTOMERNAME">${data[0].get('rp_brw').name}</div>
-        <div class="CUSTOMERNAME">${ (data[0].get('rp_brw').vat and '%s-%s-%s'%( data[0].get('rp_brw').vat [2], data[0].get('rp_brw').vat[3:-1], data[0].get('rp_brw').vat[-1]) or '').upper() }</div>
-        <div class="CUSTOMERNAME">${data[0].get('rp_brw').street and data[0].get('rp_brw').street.title() or ''}</div>
-        <div class="CUSTOMERNAME">${data[0].get('rp_brw').street2 and data[0].get('rp_brw').street2.title() or ''}</div>
-        <div class="CUSTOMERNAME">${data[0].get('rp_brw').state_id and data[0].get('rp_brw').state_id.name.title() or ''}</div>
+        <div class="CUSTOMEROTHER">${ (data[0].get('rp_brw').vat and '%s-%s-%s'%( data[0].get('rp_brw').vat [2], data[0].get('rp_brw').vat[3:-1], data[0].get('rp_brw').vat[-1]) or '').upper() }</div>
+        <div class="CUSTOMEROTHER">${data[0].get('rp_brw').street and data[0].get('rp_brw').street.title() or ''}</div>
+        <div class="CUSTOMEROTHER">${data[0].get('rp_brw').street2 and data[0].get('rp_brw').street2.title() or ''}</div>
+        <div class="CUSTOMEROTHER">${data[0].get('rp_brw').state_id and data[0].get('rp_brw').state_id.name.title() or ''}</div>
         </br>
-        <div class="CUSTOMERTEXT">${_('DOCUMENT: Customer Financial Statement')}</div>
-        </br>
-        <div class="CUSTOMERTEXT">${_('DATE:')} ${ formatLang(time.strftime('%Y-%m-%d'), date=True)}</div>
-        </br>
-        <div class="CUSTOMERTEXT">${company.overdue_msg}</div>
+        <div class="CUSTOMERTEXT"><pre>${company.overdue_msg}</pre></div>
     </em>
     </br>
         <!-- TABLA DE CABECERA -->
@@ -76,7 +76,7 @@
                         </tr>
                         %endfor
                 %endfor
-                <tr>
+                <tr style=" border-top: 1px solid #000000;">
                     <td class="ITEMSLEFT" style="background-color: lightgrey;">${_('F: INVOICE')}</td>
                     <td class="ITEMSLEFT" style="background-color: lightgrey;">${_('C: C/N')}</td>
                     <td class="ITEMSLEFT" style="background-color: lightgrey;">${_('D: D/N')}</td>

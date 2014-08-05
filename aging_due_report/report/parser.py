@@ -473,6 +473,14 @@ webkit_report.WebKitParser(
 )
 
 webkit_report.WebKitParser(
+    'report.detail_due_report_webkit',
+    'res.partner',
+    'addons/aging_due_report/report/detail_due_report_html.mako',
+    parser=aging_parser,
+    header=True
+)
+
+webkit_report.WebKitParser(
     'report.supplier_aging_due_report_html',
     'res.partner',
     'addons/aging_due_report/report/supplier_aging_due_report_html.mako',

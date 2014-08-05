@@ -14,10 +14,13 @@
                     ${helper.embed_image('jpeg',str(company.logo),180, auto)}
                 </div>
             </td>
+            <td style="text-align: right;">
+                <strong>${_('Customer Aging Report of Debts') |entity}</strong>
+            </td>
        </tr>
+    </table>
     <% cur_group = get_aged_lines( objects, inv_type='out_invoice') %>
     %for table in cur_group:
-    </table>
         </br>
             <table class="table_column_border table_alter_color_row table_title_bg_color" width="100%">
                 <tr>

@@ -381,21 +381,29 @@ color: black; }
 .CUSTOMERNAME {
  text-align: right;
  font-family: Helvetica-Oblique;
- font-size: 12;
+ font-size: 7pt;
  color: black;
+ font-weight: bold;
  }
 
 .CUSTOMERTEXT {
  text-align: left;
  font-family: Times-BoldItalic;
- font-size: 12;
+ font-size: 6pt;
  color: black;
  }
  
 .CUSTOMERCENTER {
  text-align: center;
  font-family: Times-BoldItalic;
- font-size: 10;
+ font-size: 6pt;
+ color: black;
+ }
+ 
+ .CUSTOMEROTHER {
+ text-align: right;
+ font-family: Helvetica-Oblique;
+ font-size: 6pt;
  color: black;
  }
 ]]> </field>
