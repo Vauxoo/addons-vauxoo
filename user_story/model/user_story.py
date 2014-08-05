@@ -53,6 +53,18 @@ class user_story(osv.Model):
                 task_obj.write(cr, uid, task_ids, {
                             'sprint_id': vals.get('sk_id')}, context=context)
             context.pop('force_send')
+
+        if vals.get('categ_ids'):
+            for tag_id in self.browse(cr, uid, ids, context=context):
+                for task in tag_id.task_ids:
+                    task_obj.write(cr, uid, [task.id], {'categ_ids': vals['categ_ids']})
+
+        if vals.get('sk_id'):
+            task_ids = task_obj.search(cr, uid, [
+                                       ('userstory_id', '=', ids[0])])
+            task_obj.write(cr, uid, task_ids, {
+                           'sprint_id': vals.get('sk_id')}, context=context)
+
         if 'accep_crit_ids' in vals:
             ac_obj = self.pool.get('acceptability.criteria')
             criteria = [False, False]
@@ -65,6 +77,8 @@ class user_story(osv.Model):
                         criteria[1] = ac[2].get('name', False)
                     body = self.body_criteria(
                         cr, uid, ids, 'template_send_email_hu', criteria[1], context)
+
+                    body = self.body_criteria(cr, uid, ids, 'template_send_email_hu', criteria[1], context)
                     hu = self.browse(cr, uid, ids[0], context=context)
                     subject = _(u'Acceptance criteria accepted {criteria} on User Story {hu}'.format(
                         criteria=criteria[1][:30], hu=hu.id))
@@ -143,6 +157,8 @@ class user_story(osv.Model):
             if owner_id:
                 user_o = [owner_id]
                 followers.append(user_o[0].partner_id.id)
+                followers.append( user_o[0].partner_id.id)
+
         context.update({
             'default_body': body,
         })
@@ -237,8 +253,8 @@ class user_story(osv.Model):
                   " details of the progress or completion of the User Story,"
                   " in some cases also the supervisor for the correct"
                   " execution of the user story."), track_visibility='always'),
-        'user_execute_id': fields.many2one('res.users', 'Execution Responsible', 
-                                            help="Person responsible for user story takes place, either by delegating work to other human resource or running it by itself. For delegate work should monitor the proper implementation of associated activities.", 
+        'user_execute_id': fields.many2one('res.users', 'Execution Responsible',
+                                            help="Person responsible for user story takes place, either by delegating work to other human resource or running it by itself. For delegate work should monitor the proper implementation of associated activities.",
                                             track_visibility='always'),
         'sk_id': fields.many2one('sprint.kanban', 'Sprint Kanban'),
         'state': fields.selection(_US_STATE, 'State', readonly=True, track_visibility='onchange'),
@@ -422,6 +438,7 @@ class acceptability_criteria(osv.Model):
         'scenario': fields.text('Scenario', required=True, translate=True),
         'accep_crit_id': fields.many2one('user.story',
                                          'User Story',
+                                         ondelete='cascade',
                                          required=True),
         'accepted': fields.boolean('Accepted',
                                    help='Check if this criterion apply'),
@@ -545,6 +562,9 @@ class project_task(osv.Model):
 
 
 class inherit_project(osv.Model):
+
+    '''Inheirt project model to a new Descripcion field'''
+
     _inherit = 'project.project'
     _columns = {
         'descriptions': fields.text('Description',
