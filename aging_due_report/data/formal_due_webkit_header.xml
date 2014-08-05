@@ -60,27 +60,27 @@
 .table_all_border {
   border-collapse: collapse;
   width: 100%;
-  border: 1px solid #DFDFDE; }
+  border: 1px solid #1A1A1A; }
   .table_all_border > thead > tr > th,
   .table_all_border > thead > tr > td,
   .table_all_border > tbody > tr > th,
   .table_all_border > tbody > tr > td,
   .table_all_border > tfoot > tr > th,
   .table_all_border > tfoot > tr > td {
-    border: 1px solid #DFDFDE; }
+    border: 1px solid #1A1A1A; }
   .table_all_border > thead > tr > th,
   .table_all_border > thead > tr > td {
-    border-bottom-width: 1px solid #DFDFDE; }
+    border-bottom-width: 1px solid #1A1A1A; }
 
 .table_title_bg_color {
   border-collapse: collapse; }
   .table_title_bg_color > thead > tr > th,
   .table_title_bg_color > tbody > tr > th,
   .table_title_bg_color > tfoot > tr > th {
-    border-bottom: 1px solid #DFDFDE;
-    border-top: 1px solid #DFDFDE;
+    border-bottom: 1px solid #1A1A1A;
+    border-top: 1px solid #1A1A1A;
     background-color: #A41D35;
-    font-size: 11;
+    font-size: 8;
     color: white; }
 
 .table_title {
@@ -89,7 +89,7 @@
   .table_title > thead > tr > th,
   .table_title > tbody > tr > th,
   .table_title > tfoot > tr > th {
-    border-bottom: 2px solid #DFDFDE;
+    border-bottom: 2px solid #1A1A1A;
     font-size: 7;
     color: white; }
 
@@ -102,7 +102,7 @@
   .table_row_border > tbody > tr > td,
   .table_row_border > tfoot > tr > th,
   .table_row_border > tfoot > tr > td {
-    border-bottom: 1px solid #DFDFDE; }
+    border-bottom: 1px solid #1A1A1A; }
   .table_row_border > thead > tr > th,
   .table_row_border > thead > tr > td {
     border-bottom-width: 1px; }
@@ -113,7 +113,7 @@
   .table_column_border > thead > tr > td,
   .table_column_border > tbody > tr > td,
   .table_column_border > tfoot > tr > td {
-    border: 1px solid #DFDFDE;
+    border: 1px solid #1A1A1A;
     border-width: 0 1px; }
   .table_column_border > thead > tr > td:first-child, .table_column_border > thead > tr td + td,
   .table_column_border > tbody > tr > td:first-child,
@@ -130,9 +130,9 @@
 .table_alter_color_row {
   border-collapse: collapse; }
   .table_alter_color_row > tbody > tr:nth-child(2n+1) > td {
-    background-color: gainsboro ; }
+    background-color: white ; }
   .table_alter_color_row > tbody > tr:nth-child(2n+2) > td {
-    background-color: whitesmoke; }
+    background-color: white; }
 
 .table_alter_color_column {
   border-collapse: collapse;
@@ -151,21 +151,21 @@
   width: 100%; }
   .table_only_border_top > tbody
   > tr {
-    border-top: 1px solid #DFDFDE; }
+    border-top: 1px solid #1A1A1A; }
 
 .table_only_border_bottom {
   border-collapse: collapse;
   width: 100%; }
   .table_only_border_bottom > tbody
   > tr {
-    border-bottom: 1px solid #DFDFDE; }
+    border-bottom: 1px solid #1A1A1A; }
 
 .panel {
   padding: 8px 8px;
   background-color: #5bc0de; }
 
 .panel_radius_color {
-  border: 2px solid #ee8f9e;
+  border: 2px solid #1A1A1A;
   border-radius: 15px;
   padding: 8px 8px; }
 
@@ -176,22 +176,22 @@
 
 .panel_bg_color {
   padding: 8px 8px;
-  background: #f2f2f2; }
+  background: #1A1A1A; }
 
 .panel_bg_color_title {
   padding: 8px 8px;
-  background: #A41D35;
+  background: #1A1A1A;
   color: white;
   font-size: 10;
   font-family: "Helvetica Neue", Helvetica, Arial, sans_serif; }
 
 .panel_box_shadow {
-  box-shadow: 5px 5px 10px #222222; }
+  box-shadow: 5px 5px 10px #1A1A1A; }
 
 .panel_border_radius_top {
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
-  border: 2px solid #ee8f9e;
+  border: 2px solid #1A1A1A;
   padding: 5px; }
 
 .panel_radius_top {
@@ -201,18 +201,18 @@
 
 .panel_border_radius_top_right {
   border-top-right-radius: 15px;
-  border: 2px solid #ee8f9e;
+  border: 2px solid #1A1A1A;
   padding: 5px; }
 
 .panel_border_radius_top_left {
   border-top-left-radius: 15px;
-  border: 2px solid #ee8f9e;
+  border: 2px solid #1A1A1A;
   padding: 5px; }
 
 .panel_border_radius_bottom {
   border-bottom-right-radius: 15px;
   border-bottom-left-radius: 15px;
-  border: 2px solid #ee8f9e;
+  border: 2px solid #1A1A1A;
   padding: 5px; }
 
 .panel_radius_bottom {
@@ -222,12 +222,12 @@
 
 .panel_border_radius_bottom_right {
   border-bottom-right-radius: 15px;
-  border: 2px solid #ee8f9e;
+  border: 2px solid #1A1A1A;
   padding: 5px; }
 
 .panel_border_radius_bottom_left {
   border-bottom-left-radius: 15px;
-  border: 2px solid #ee8f9e;
+  border: 2px solid #1A1A1A;
   padding: 5px; }
 
 body {
@@ -351,29 +351,31 @@ color: black; }
 .ITEMSTITLELEFT {
  text-align: left;
  font-family: Helvetica-Bold;
- font-size: 12;
+ font-size: 6;
  color: white;
  }
  
 .ITEMSTITLERIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
- font-size: 12;
+ font-size: 6;
  color: white;
  }
  
 .ITEMSLEFT {
  text-align: LEFT;
  font-family: Helvetica-Bold;
- font-size: 10;
+ font-size: 6;
  color: black;
+ border-color: white;
  }
  
 .ITEMSRIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
- font-size: 10;
+ font-size: 6;
  color: black;
+ border-color: white;
  }
  
 .CUSTOMERNAME {
@@ -381,8 +383,6 @@ color: black; }
  font-family: Helvetica-Oblique;
  font-size: 12;
  color: black;
- leading: 12;
- spaceBefore: 3;
  }
 
 .CUSTOMERTEXT {
@@ -391,8 +391,13 @@ color: black; }
  font-size: 12;
  color: black;
  }
-
-
+ 
+.CUSTOMERCENTER {
+ text-align: center;
+ font-family: Times-BoldItalic;
+ font-size: 10;
+ color: black;
+ }
 ]]> </field>
             <field name="name">Aging Formal Report Webkit</field>
         </record>

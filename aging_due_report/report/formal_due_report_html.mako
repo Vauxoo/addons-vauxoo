@@ -7,18 +7,18 @@
 </head>
 <body>
     <% setLang(user.lang) %>
-    %for o in objects:
+    <% datas = get_invoice_by_partner_group(objects, inv_type='out_invoice') %>
+    %for data in datas:
     <table class="basic_table" width="100%">
         <tr>
             <td width="30%">
                 <div  style="float:left;">
-                    ${helper.embed_image('jpeg',str(o.company_id.logo),180, auto)}
+                    ${helper.embed_image('jpeg',str(company.logo),180, auto)}
                 </div>
             </td>
        </tr>
     </table>
-    <% datas = get_invoice_by_partner_group(objects, inv_type='out_invoice') %>
-    %for data in datas:
+    
     <em>
         <div class="CUSTOMERNAME">${data[0].get('rp_brw').name}</div>
         <div class="CUSTOMERNAME">${ (data[0].get('rp_brw').vat and '%s-%s-%s'%( data[0].get('rp_brw').vat [2], data[0].get('rp_brw').vat[3:-1], data[0].get('rp_brw').vat[-1]) or '').upper() }</div>
@@ -63,7 +63,6 @@
             </tr>
             <!-- TABLE DE REFUNDS -->
             %for ref_brw in inv['refund_brws']:
-            <% print ref_brw %>
             <tr>
                 <td class="ITEMSLEFT">${_('C:')} ${int(ref_brw.number or 0)}</td>
                 <td class="ITEMSLEFT">${ formatLang(ref_brw.date_invoice,date=True) }</td>
@@ -76,30 +75,35 @@
                 <td class="ITEMSRIGHT"></td>
             </tr>
             %endfor
-            %endfor
+        %endfor
         </table>
         <!--TABLA DE TOTALES-->
-        <table class="basic_table" width="100%">
+        <table class="table_column_border table_alter_color_row table_title_bg_color" width="100%">
             <tr>
-                <td>${_('F: INVOICE')}</td>
-                <td>${_('C: C/N')}</td>
-                <td>${_('D: D/N')}</td>
-                <td>${_('TOTAL IN')} ${line.get('cur_brw').name }</td>
-                <td>${formatLang(line.get('inv_total')) or '0.00'}</td>
-                <td>${formatLang(line.get('pay_total')) or '0.00'}</td>
-                <td>${formatLang(line.get('due_total')) or '0.00'}</td>
+                <td class="ITEMSLEFT">${_('F: INVOICE')}</td>
+                <td class="ITEMSLEFT">${_('C: C/N')}</td>
+                <td class="ITEMSLEFT">${_('D: D/N')}</td>
+                <td class="ITEMSRIGHT" colspan="3">${_('TOTAL IN')} ${line.get('cur_brw').name }</td>
+                <td class="ITEMSRIGHT">${formatLang(line.get('inv_total')) or '0.00'}</td>
+                <td class="ITEMSRIGHT">${formatLang(line.get('pay_total')) or '0.00'}</td>
+                <td class="ITEMSRIGHT">${formatLang(line.get('due_total')) or '0.00'}</td>
             </tr>
         </table>
         </br>
         %endfor
-    %endfor
+
     </br>
+    <em>
+    <div class="CUSTOMERTEXT">${_('Without any further reference,')}</div>
+    </br>
+    <div class="CUSTOMERCENTER">${_('Best Regards,')}</div>
+    </br>
+    <div class="CUSTOMERCENTER">${ user.signature }</div>
+    </em>
     <p style="word-wrap:break-word;"></p>
 
     </br>
     <p style="page-break-before: always;"></p>
-
     %endfor
-
 </body>
 </html>

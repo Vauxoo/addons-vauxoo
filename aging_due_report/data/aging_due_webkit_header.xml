@@ -80,7 +80,7 @@
     border-bottom: 1px solid #DFDFDE;
     border-top: 1px solid #DFDFDE;
     background-color: #A41D35;
-    font-size: 12;
+    font-size: 8;
     color: white; }
 
 .table_title {
@@ -351,28 +351,28 @@ color: black; }
 .ITEMSTITLELEFT {
  text-align: left;
  font-family: Helvetica-Bold;
- font-size: 12;
+ font-size: 6;
  color: white;
  }
  
 .ITEMSTITLERIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
- font-size: 12;
+ font-size: 6;
  color: white;
  }
  
 .ITEMSLEFT {
  text-align: LEFT;
  font-family: Helvetica-Bold;
- font-size: 10;
+ font-size: 6;
  color: black;
  }
  
 .ITEMSRIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
- font-size: 10;
+ font-size: 6;
  color: black;
  }
  
