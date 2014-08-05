@@ -16,6 +16,9 @@
                     ${helper.embed_image('jpeg',str(company.logo),180, auto)}
                 </div>
             </td>
+            <td style="text-align: right;">
+                <strong>${_('Customer Formal Aging Report of Debts') |entity}</strong>
+            </td>
        </tr>
     </table>
     
