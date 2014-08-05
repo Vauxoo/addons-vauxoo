@@ -36,7 +36,27 @@
             <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
             <field eval="'ir.header_webkit,'+str(ref('aging_due_report.ir_header_webkit_formal_due_report'))" model="ir.header_webkit" name="value"/>
             <field eval="'ir.actions.report.xml,'+str(ref('aging_due_report.formal_due_report_webkit'))" model="ir.actions.report.xml" name="res_id"/>
-        </record>        
+        </record>
+        
+        
+        <report auto="False"
+                id="detail_due_report_webkit"
+                model="res.partner"
+                name="detail_due_report_webkit"
+                file="aging_due_report/report/detail_due_report_html.mako"
+                string="Customer Detail Report of Debts Webkit"
+                report_type="webkit"
+                attachment_use="0"
+                attachment=""
+                menu="True"/>
+        
+        <record id="property_detail_due_report_webkit" model="ir.property">
+            <field name="name">detail_due_report_webkit_header</field>
+            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
+            <field eval="'ir.header_webkit,'+str(ref('aging_due_report.ir_header_webkit_detail_due_report'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.actions.report.xml,'+str(ref('aging_due_report.detail_due_report_webkit'))" model="ir.actions.report.xml" name="res_id"/>
+        </record>
+        
 
         <report auto="False"
                 id="supplier_aging_due_report_html"
@@ -55,6 +75,7 @@
             <field eval="'ir.header_webkit,'+str(ref('aging_due_report.ir_header_webkit_supplier_aging_due_report'))" model="ir.header_webkit" name="value"/>
             <field eval="'ir.actions.report.xml,'+str(ref('aging_due_report.supplier_aging_due_report_html'))" model="ir.actions.report.xml" name="res_id"/>
         </record>
+        
 
         <report auto="False"
                 id="supplier_formal_due_report_html"
@@ -74,23 +95,6 @@
             <field eval="'ir.actions.report.xml,'+str(ref('aging_due_report.supplier_formal_due_report_html'))" model="ir.actions.report.xml" name="res_id"/>
         </record>
         
-        <report auto="False"
-                id="detail_due_report_webkit"
-                model="res.partner"
-                name="detail_due_report_webkit"
-                file="aging_due_report/report/detail_due_report_html.mako"
-                string="Customer Detail Report of Debts Webkit"
-                report_type="webkit"
-                attachment_use="0"
-                attachment=""
-                menu="True"/>
-        
-        <record id="property_detail_due_report_webkit" model="ir.property">
-            <field name="name">detail_due_report_webkit_header</field>
-            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
-            <field eval="'ir.header_webkit,'+str(ref('aging_due_report.ir_header_webkit_detail_due_report'))" model="ir.header_webkit" name="value"/>
-            <field eval="'ir.actions.report.xml,'+str(ref('aging_due_report.detail_due_report_webkit'))" model="ir.actions.report.xml" name="res_id"/>
-        </record>
 
         <report auto="False"
                 id="supplier_detail_due_report_html"
