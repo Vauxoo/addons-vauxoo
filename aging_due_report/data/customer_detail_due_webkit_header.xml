@@ -77,8 +77,9 @@
   .table_title_bg_color > thead > tr > th,
   .table_title_bg_color > tbody > tr > th,
   .table_title_bg_color > tfoot > tr > th {
-    border-bottom: 1px solid #1A1A1A;
-    border-top: 1px solid #1A1A1A;
+    /*border-bottom: 1px solid #1A1A1A;
+    border-top: 1px solid #1A1A1A;*/
+    border: 0.5px solid #FFFFFF;
     background-color: #A41D35;
     font-size: 8;
     color: white; }
