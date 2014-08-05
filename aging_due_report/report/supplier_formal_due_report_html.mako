@@ -82,7 +82,7 @@
                     <td class="ITEMSLEFT" style="background-color: lightgrey;">${_('F: INVOICE')}</td>
                     <td class="ITEMSLEFT" style="background-color: lightgrey;">${_('C: C/N')}</td>
                     <td class="ITEMSLEFT" style="background-color: lightgrey;">${_('D: D/N')}</td>
-                    <td class="ITEMSRIGHT" colspan="3" style="background-color: lightgrey;">${_('TOTAL IN')} ${line.get('cur_brw').name }</td>
+                    <td class="ITEMSRIGHT" colspan="3" style="background-color: lightgrey;">${_('TOTAL IN ')} ${line.get('cur_brw').name }</td>
                     <td class="ITEMSRIGHT" style="background-color: lightgrey;">${formatLang(line.get('inv_total')) or '0.00'}</td>
                     <td class="ITEMSRIGHT" style="background-color: lightgrey;">${formatLang(line.get('pay_total')) or '0.00'}</td>
                     <td class="ITEMSRIGHT" style="background-color: lightgrey;">${formatLang(line.get('due_total')) or '0.00'}</td>
