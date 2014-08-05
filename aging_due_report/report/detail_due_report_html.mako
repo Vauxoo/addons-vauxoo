@@ -30,7 +30,7 @@
                 <td colspan="5" class="ITEMSLEFT" style="background-color: lightgrey;">${ o.get('rp_brw').name or ''} ${o.get('cur_brw').name or ''}</td>
                 <td colspan="4" class="ITEMSLEFT" style="background-color: lightgrey;">${ o.get('rp_brw').ref or ''}</td>
                 <td class="ITEMSLEFT" style="background-color: lightgrey;">${ o.get('rp_brw').user_id.name or '' }</td>
-                <td colspan="2" class="ITEMSLEFT" style="background-color: lightgrey;">${ 'Amounts expressed in {}'.format(o.get('cur_brw').name) }</td>
+                <td colspan="2" class="ITEMSLEFT" style="background-color: lightgrey;">${_('Amounts expressed in {}').format(o.get('cur_brw').name) }</td>
             </tr>
             <tr>
                 <th width="14%" class="ITEMSTITLELEFT">${_('INVOICE') |entity}</th>
@@ -52,7 +52,7 @@
                     <td class="ITEMSLEFT">${inv['inv_brw'].number}</td>
                     <td class="ITEMSLEFT">${ formatLang(inv['inv_brw'].date_invoice,date=True)}</td>
                     <td class="ITEMSLEFT">${ formatLang(inv['inv_brw'].date_due,date=True)}</td>
-                    <td class="ITEMSLEFT">${ inv.get('due_days') and '%s DIAS'%inv.get('due_days') or '0 DIAS' }</td>
+                    <td class="ITEMSLEFT">${ inv.get('due_days') and _('%s DAYS')%inv.get('due_days') or _('0 DAYS') }</td>
                     <td class="ITEMSRIGHT">${formatLang(inv['inv_brw'].amount_untaxed) or '0.00' }</td>
                     <td class="ITEMSRIGHT">${formatLang(inv['inv_brw'].amount_tax) or '0.00'}</td>
                     <td class="ITEMSRIGHT">${formatLang(inv['inv_brw'].amount_total) or '0.00'}</td>
