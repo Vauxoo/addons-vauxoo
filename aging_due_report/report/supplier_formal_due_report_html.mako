@@ -17,7 +17,7 @@
                 </div>
             </td>
             <td style="text-align: center;">
-                <strong>${_('Supplier Financial Statement') |entity}</strong>
+                <strong>${_('Supplier Formal Report of Debts') |entity}</strong>
             </td>
             <td style="text-align: right;">
                 ${ formatLang(time.strftime('%Y-%m-%d'), date=True)}
