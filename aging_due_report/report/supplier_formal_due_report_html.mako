@@ -17,7 +17,7 @@
                 </div>
             </td>
             <td style="text-align: center;">
-                <strong>${_('Customer Financial Statement') |entity}</strong>
+                <strong>${_('Supplier Financial Statement') |entity}</strong>
             </td>
             <td style="text-align: right;">
                 ${ formatLang(time.strftime('%Y-%m-%d'), date=True)}
@@ -46,7 +46,7 @@
                     <th width="10%" class="ITEMSTITLERIGHT">${_('BASE') |entity}</th>
                     <th width="10%" class="ITEMSTITLERIGHT">${_('TAX') |entity}</th>
                     <th width="10%" class="ITEMSTITLERIGHT">${_('TOTAL/DOC.') |entity}</th>
-                    <th width="10%" class="ITEMSTITLERIGHT">${_('COLLECTS') |entity}</th>
+                    <th width="10%" class="ITEMSTITLERIGHT">${_('PAYMENTS') |entity}</th>
                     <th width="10%" class="ITEMSTITLERIGHT">${_('BALANCE') |entity}</th>
                 </tr>
 

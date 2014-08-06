@@ -15,7 +15,7 @@
                 </div>
             </td>
             <td style="text-align: center;">
-                <strong>${_('Customer Detail Report of Debts') |entity}</strong>
+                <strong>${_('Supplier Detail Report of Debts') |entity}</strong>
             </td>
              <td style="text-align: right;">
                 ${ formatLang(time.strftime('%Y-%m-%d'), date=True)}
@@ -45,7 +45,7 @@
                 <th width="7%" class="ITEMSTITLERIGHT">${_('INCOME WH') |entity}</th>
                 <th width="7%" class="ITEMSTITLERIGHT">${_('MUNI. WH') |entity}</th>
                 <th width="7%" class="ITEMSTITLERIGHT">${_('C/N') |entity}</th>
-                <th width="7%" class="ITEMSTITLERIGHT">${_('COLLECTS') |entity}</th>
+                <th width="7%" class="ITEMSTITLERIGHT">${_('PAYMENTS') |entity}</th>
                 <th width="7%" class="ITEMSTITLERIGHT">${_('BALANCE') |entity}</th>
             </tr>
             %for inv in o['inv_ids']:

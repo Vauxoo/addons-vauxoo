@@ -31,7 +31,7 @@
                     <th width="10%" class="ITEMSTITLERIGHT">61-90 ${_('DAYS') |entity}</th>
                     <th width="10%" class="ITEMSTITLERIGHT">91-120 ${_('DAYS') |entity}</th>
                     <th width="10%" class="ITEMSTITLERIGHT">+ 120 ${_('DAYS') |entity}</th>
-                    <th width="10%" class="ITEMSTITLERIGHT">${_('TOT./AR')}${"(" + table[0].get('cur_brw', False).name+ ")" |entity}</th>
+                    <th width="10%" class="ITEMSTITLERIGHT">${_('TOT./AP')}${"(" + table[0].get('cur_brw', False).name+ ")" |entity}</th>
                 </tr>
                 %for line in table:
                     %if (line.get('type')=='partner' and line.get('rp_brw').name or line.get('type')=='total' and 'TOTAL IN ' + line.get('cur_brw').name or line.get('type')=='provision') != True :
