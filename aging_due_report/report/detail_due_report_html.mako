@@ -17,7 +17,7 @@
             <td style="text-align: center;">
                 <strong>${_('Customer Detail Report of Debts') |entity}</strong>
             </td>
-            <td style="text-align: right;">${ formatLang(time.strftime('%Y-%m-%d'), date=True)}</td>
+            <td class="CUSTOMERNAME style="text-align: right;">${ formatLang(time.strftime('%Y-%m-%d'), date=True)}</td>
        </tr>
     </table>
     </br>
@@ -25,11 +25,11 @@
     %for o in cur_group:
         <table class="table_column_border table_alter_color_row table_title_bg_color" width="100%">
             <tr style="border-top: 1px solid #000000;">
-                <td class="ITEMSLEFT" style="background-color: lightgrey;">${ (o.get('rp_brw').vat and '%s-%s-%s'%( o.get('rp_brw').vat [2], o.get('rp_brw').vat[3:-1], o.get('rp_brw').vat[-1]) or '').upper() }</td>
-                <td colspan="5" class="ITEMSLEFT" style="background-color: lightgrey;">${ o.get('rp_brw').name or ''} (${ o.get('cur_brw').name or '' })</td>
-                <td colspan="4" class="ITEMSLEFT" style="background-color: lightgrey;">${ o.get('rp_brw').ref or ''}</td>
-                <td class="ITEMSLEFT" style="background-color: lightgrey;">${ o.get('rp_brw').user_id.name or '' }</td>
-                <td colspan="2" class="ITEMSLEFT" style="background-color: lightgrey;">${_('Amounts expressed in {}').format(o.get('cur_brw').name) }</td>
+                <td class="ITEMSLEFT" style="background-color: lightgrey; font-size: 10;">${ (o.get('rp_brw').vat and '%s-%s-%s'%( o.get('rp_brw').vat [2], o.get('rp_brw').vat[3:-1], o.get('rp_brw').vat[-1]) or '').upper() }</td>
+                <td colspan="5" class="ITEMSLEFT" style="background-color: lightgrey; font-size: 10;">${ o.get('rp_brw').name or ''} (${ o.get('cur_brw').name or '' })</td>
+                <td colspan="3" class="ITEMSLEFT" style="background-color: lightgrey; font-size: 10;">${ o.get('rp_brw').ref or ''}</td>
+                <td class="ITEMSLEFT" style="background-color: lightgrey; font-size: 10;">${ o.get('rp_brw').user_id.name or '' }</td>
+                <td colspan="3" class="ITEMSLEFT" style="background-color: lightgrey; font-size: 10;">${ _('Amounts expressed in') + ' ('+o.get('cur_brw').name+')' }</td>
             </tr>
             <tr>
                 <th width="14%" class="ITEMSTITLELEFT">${_('INVOICE') |entity}</th>
@@ -80,8 +80,8 @@
         <table style="border: 1px solid #A41D35; border-collapse: collapse;" width="100%">
             %for p in list:
             <tr>
-                <td width="90%" class="ITEMSRIGHT" style="background-color: lightgrey;border: 1px solid #A41D35;">${_('TOTAL')} ${ p['currency']}</td>
-                <td width="10%" class="ITEMSRIGHT" style="background-color: lightgrey;border: 1px solid #A41D35;">${ formatLang(p['total']) or '0.00' }</td>
+                <td width="92%" class="ITEMSRIGHT" style="background-color: lightgrey;border: 1px solid #A41D35; font-size: 8;">${_('TOTAL')} ${ p['currency']}</td>
+                <td width="8%" class="ITEMSRIGHT" style="background-color: lightgrey;border: 1px solid #A41D35; font-size: 8;">${ formatLang(p['total']) or '0.00' }</td>
             </tr>
             %endfor
         </table>

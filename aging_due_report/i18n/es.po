@@ -349,8 +349,8 @@ msgstr "BASE"
 #. module: aging_due_report
 #: report:addons/aging_due_report/report/detail_due_report_html.mako:32
 #: report:addons/aging_due_report/report/supplier_detail_due_report_html.mako:34
-msgid "Amounts expressed in {}"
-msgstr "Montos expresados en {}"
+msgid "Amounts expressed in"
+msgstr "Montos expresados en"
 
 #. module: aging_due_report
 #: report:addons/aging_due_report/report/detail_due_report_html.mako:47

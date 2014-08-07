@@ -80,7 +80,7 @@
     border-bottom: 1px solid #1A1A1A;
     border-top: 1px solid #1A1A1A;
     background-color: #A41D35;
-    font-size: 8;
+    font-size: 10;
     color: white; }
 
 .table_title {
@@ -90,7 +90,7 @@
   .table_title > tbody > tr > th,
   .table_title > tfoot > tr > th {
     border-bottom: 2px solid #1A1A1A;
-    font-size: 7;
+    font-size: 10;
     color: white; }
 
 .table_row_border {
@@ -183,7 +183,7 @@
   background: #1A1A1A;
   color: white;
   font-size: 10;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans_serif; }
+  font-family: "Helvetica Neue", Helvetica, Arial, sans_serif, Times-BoldItalic, Helvetica-Oblique; }
 
 .panel_box_shadow {
   box-shadow: 5px 5px 10px #1A1A1A; }
@@ -233,7 +233,7 @@
 body {
   color: black;
   font-family: "Helvetica Neue", Helvetica, Arial, sans_serif, Times-BoldItalic, Helvetica-Bold, Helvetica-Oblique;
-  font-size: 7;
+  font-size: 8;
   margin: 0;
   padding: 0;
   height: 100%;
@@ -283,7 +283,6 @@ pre {
   white-space: -pre-wrap;
   white-space: -o-pre-wrap;
   word-wrap: break-word; }
-
 
 
 .pre_description {
@@ -352,21 +351,21 @@ color: black; }
 .ITEMSTITLELEFT {
  text-align: left;
  font-family: Helvetica-Bold;
- font-size: 6;
+ font-size: 8;
  color: white;
  }
  
 .ITEMSTITLERIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
- font-size: 6;
+ font-size: 8;
  color: white;
  }
  
 .ITEMSLEFT {
  text-align: LEFT;
  font-family: Helvetica-Bold;
- font-size: 6;
+ font-size: 8;
  color: black;
  border-color: white;
  }
@@ -374,7 +373,7 @@ color: black; }
 .ITEMSRIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
- font-size: 6;
+ font-size: 8;
  color: black;
  border-color: white;
  }
@@ -382,29 +381,29 @@ color: black; }
 .CUSTOMERNAME {
  text-align: right;
  font-family: Helvetica-Oblique;
- font-size: 7pt;
+ font-size: 8pt;
  color: black;
  font-weight: bold;
- }
-
- .CUSTOMEROTHER {
- text-align: right;
- font-family: Helvetica-Oblique;
- font-size: 6pt;
- color: black;
  }
 
 .CUSTOMERTEXT {
  text-align: left;
  font-family: Times-BoldItalic;
- font-size: 6pt;
+ font-size: 10;
  color: black;
  }
  
 .CUSTOMERCENTER {
  text-align: center;
  font-family: Times-BoldItalic;
- font-size: 6pt;
+ font-size: 8pt;
+ color: black;
+ }
+ 
+ .CUSTOMEROTHER {
+ text-align: right;
+ font-family: Helvetica-Oblique;
+ font-size: 8pt;
  color: black;
  }
 ]]> </field>

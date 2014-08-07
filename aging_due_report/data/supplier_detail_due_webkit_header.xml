@@ -91,7 +91,7 @@
   .table_title > tbody > tr > th,
   .table_title > tfoot > tr > th {
     border-bottom: 2px solid #1A1A1A;
-    font-size: 7;
+    font-size: 8;
     color: white; }
 
 .table_row_border {
@@ -183,7 +183,7 @@
   padding: 8px 8px;
   background: #1A1A1A;
   color: white;
-  font-size: 10;
+  font-size: 9;
   font-family: "Helvetica Neue", Helvetica, Arial, sans_serif; }
 
 .panel_box_shadow {
@@ -234,7 +234,7 @@
 body {
   color: black;
   font-family: "Helvetica Neue", Helvetica, Arial, sans_serif, Times-BoldItalic, Helvetica-Bold, Helvetica-Oblique;
-  font-size: 7;
+  font-size: 8;
   margin: 0;
   padding: 0;
   height: 100%;
@@ -352,21 +352,21 @@ color: black; }
 .ITEMSTITLELEFT {
  text-align: left;
  font-family: Helvetica-Bold;
- font-size: 6;
+ font-size: 9;
  color: white;
  }
  
 .ITEMSTITLERIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
- font-size: 6;
+ font-size: 9;
  color: white;
  }
  
 .ITEMSLEFT {
  text-align: LEFT;
  font-family: Helvetica-Bold;
- font-size: 6;
+ font-size: 8;
  color: black;
  border-color: white;
  }
@@ -374,7 +374,7 @@ color: black; }
 .ITEMSRIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
- font-size: 6;
+ font-size: 8;
  color: black;
  border-color: white;
  }

@@ -19,7 +19,7 @@
             <td style="text-align: center;">
                 <strong>${_('Supplier Formal Report of Debts') |entity}</strong>
             </td>
-            <td style="text-align: right;">
+            <td class="CUSTOMERNAME style="text-align: right;">
                 ${ formatLang(time.strftime('%Y-%m-%d'), date=True)}
             </td>
        </tr>
@@ -32,7 +32,7 @@
         <div class="CUSTOMEROTHER">${data[0].get('rp_brw').street2 and data[0].get('rp_brw').street2.title() or ''}</div>
         <div class="CUSTOMEROTHER">${data[0].get('rp_brw').state_id and data[0].get('rp_brw').state_id.name.title() or ''}</div>
         </br>
-        <div class="CUSTOMERTEXT"><pre>${company.overdue_msg}</pre></div>
+        <div><pre class="CUSTOMERTEXT">${company.overdue_msg}</pre></div>
     </em>
     </br>
         <!-- TABLA DE CABECERA -->
@@ -82,7 +82,7 @@
                     <td class="ITEMSLEFT" style="background-color: lightgrey;">${_('I: INVOICE')}</td>
                     <td class="ITEMSLEFT" style="background-color: lightgrey;">${_('C: C/N')}</td>
                     <td class="ITEMSLEFT" style="background-color: lightgrey;">${_('D: D/N')}</td>
-                    <td class="ITEMSRIGHT" colspan="3" style="background-color: lightgrey;">${_('TOTAL IN ')} ${line.get('cur_brw').name }</td>
+                    <td class="ITEMSRIGHT" colspan="3" style="background-color: lightgrey;">${_('TOTAL IN ')} ${'('+line.get('cur_brw').name +')' }</td>
                     <td class="ITEMSRIGHT" style="background-color: lightgrey;">${formatLang(line.get('inv_total')) or '0.00'}</td>
                     <td class="ITEMSRIGHT" style="background-color: lightgrey;">${formatLang(line.get('pay_total')) or '0.00'}</td>
                     <td class="ITEMSRIGHT" style="background-color: lightgrey;">${formatLang(line.get('due_total')) or '0.00'}</td>

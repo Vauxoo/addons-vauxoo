@@ -52,7 +52,6 @@
                 </tr>
                 %endfor
             </table>
-        </br>
     </br>
     %endfor
     <p style="word-wrap:break-word;"></p>
