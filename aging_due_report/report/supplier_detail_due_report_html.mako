@@ -28,7 +28,7 @@
         <table class="table_column_border table_alter_color_row table_title_bg_color" width="100%">
             <tr style=" border-top: 1px solid #000000;">
                 <td class="ITEMSLEFT" style="background-color: lightgrey;">${ (o.get('rp_brw').vat and '%s-%s-%s'%( o.get('rp_brw').vat [2], o.get('rp_brw').vat[3:-1], o.get('rp_brw').vat[-1]) or '').upper() }</td>
-                <td colspan="5" class="ITEMSLEFT" style="background-color: lightgrey;">${ o.get('rp_brw').name or ''} ${o.get('cur_brw').name or ''}</td>
+                <td colspan="5" class="ITEMSLEFT" style="background-color: lightgrey;">${ o.get('rp_brw').name or ''} (${o.get('cur_brw').name or ''})</td>
                 <td colspan="4" class="ITEMSLEFT" style="background-color: lightgrey;">${ o.get('rp_brw').ref or ''}</td>
                 <td class="ITEMSLEFT" style="background-color: lightgrey;">${ o.get('rp_brw').user_id.name or '' }</td>
                 <td colspan="2" class="ITEMSLEFT" style="background-color: lightgrey;">${ _('Amounts expressed in {}').format(o.get('cur_brw').name) }</td>
