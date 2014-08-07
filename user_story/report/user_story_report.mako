@@ -3,6 +3,7 @@
         <style type="text/css">${css}</style>
     </head>
     <body>
+        <% setLang(user.lang) %>
         % for user.story in objects:
             <table width="100%">
                 <tr>
