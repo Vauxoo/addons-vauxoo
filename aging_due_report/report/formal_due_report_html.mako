@@ -51,7 +51,7 @@
                 <!-- TABLA CENTRAL DEL REPORTE -->
                 %for inv in line['inv_ids']:
                     <tr>
-                        <td class="ITEMSLEFT">${_('F:')} ${inv['inv_brw'].number or 0}</td>
+                        <td class="ITEMSLEFT">${_('I:')} ${inv['inv_brw'].number or 0}</td>
                         <td class="ITEMSLEFT">${ formatLang(inv['inv_brw'].date_invoice, date=True) }</td>
                         <td class="ITEMSLEFT">${ formatLang(inv['inv_brw'].date_due, date=True) }</td>
                         <td class="ITEMSLEFT">${ inv.get('due_days') and '%s DAYS'%inv.get('due_days') or '0 DIAS' }</td>
@@ -77,7 +77,7 @@
                         %endfor
                 %endfor
                 <tr style=" border-top: 1px solid #000000;">
-                    <td class="ITEMSLEFT" style="background-color: lightgrey;">${_('F: INVOICE')}</td>
+                    <td class="ITEMSLEFT" style="background-color: lightgrey;">${_('I: INVOICE')}</td>
                     <td class="ITEMSLEFT" style="background-color: lightgrey;">${_('C: C/N')}</td>
                     <td class="ITEMSLEFT" style="background-color: lightgrey;">${_('D: D/N')}</td>
                     <td class="ITEMSRIGHT" colspan="3" style="background-color: lightgrey;">${_('TOTAL IN')} ${line.get('cur_brw').name }</td>
