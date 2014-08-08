@@ -32,7 +32,7 @@
                  "project",
                  "sprint_kanban",
                  "project_timesheet",
-				 "project_conf",
+                 "project_conf",
                  "report_webkit",
                  ],
     "author" : "Vauxoo",
