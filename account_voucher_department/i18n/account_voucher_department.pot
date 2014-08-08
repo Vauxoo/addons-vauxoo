@@ -30,8 +30,3 @@ msgstr ""
 msgid "Accounting Voucher"
 msgstr ""
 
-#. module: account_voucher_department
-#: view:account.voucher:0
-msgid "onchange_employee_id(employee_id)"
-msgstr ""
-

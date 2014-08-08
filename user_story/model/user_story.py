@@ -24,7 +24,6 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 import time
-import unicodedata
 
 _US_STATE = [('draft', 'New'), ('open', 'In Progress'), (
     'pending', 'Pending'), ('done', 'Done'), ('cancelled', 'Cancelled')]
@@ -41,12 +40,12 @@ class user_story(osv.Model):
 
     def write(self, cr, uid, ids, vals, context=None):
         task_obj = self.pool.get('project.task')
-        
+
         if vals.get('categ_ids'):
             for tag_id in self.browse(cr, uid, ids, context=context):
                 for task in tag_id.task_ids:
                     task_obj.write(cr, uid, [task.id], {'categ_ids': vals['categ_ids']})
-                   
+
         if vals.get('sk_id'):
             task_ids = task_obj.search(cr, uid, [
                                        ('userstory_id', '=', ids[0])])
@@ -63,14 +62,14 @@ class user_story(osv.Model):
                         criteria[1] = ac_brw.name
                     else:
                         criteria[1] = ac[2].get('name', False)
-                    
+
                     body = self.body_criteria(cr, uid, ids, 'template_send_email_hu', criteria[1], context)
                     hu = self.browse(cr, uid, ids[0], context=context)
                     subject = 'Se acepta Criterio de Aceptacion "%s"... en la Historia de Usuario %s' % (criteria[1][:30],hu.id)
                     self.send_mail_hu(cr, uid, ids, subject, body, hu.id, users=False, context=context)
         return super(user_story, self).write(cr, uid, ids,
                                              vals, context=context)
-        
+
     def body_progress(self, cr, uid, ids, template, hu, context=None):
         imd_obj = self.pool.get('ir.model.data')
         template_ids = imd_obj.search(
@@ -87,7 +86,7 @@ class user_story(osv.Model):
             return body_html
         else:
             return False
-        
+
     def body_criteria(self, cr, uid, ids, template, criteria, context=None):
         imd_obj = self.pool.get('ir.model.data')
         template_ids = imd_obj.search(
@@ -105,7 +104,7 @@ class user_story(osv.Model):
                 body_html = body_html.replace('NAME_OWNER', hu.owner_id.name)
             else:
                 body_html = body_html.replace('NAME_OWNER', '')
-            
+
             body_html = body_html.replace('NAME_USER', user_id.name)
 
             if criteria:
@@ -114,12 +113,12 @@ class user_story(osv.Model):
                 body_html = body_html.replace('NAME_CRI', 'None')
 
             body_html = body_html.replace('NAME_HU', hu.name)
-            
+
             return body_html
 
         else:
             return False
-            
+
 
     def send_mail_hu(self, cr, uid, ids, subject, body, res_id, users=[], context=None):
         if not users:
@@ -129,15 +128,15 @@ class user_story(osv.Model):
             followers = []
             user_obj = self.pool.get('res.users')
             hu = self.browse(cr, uid, res_id, context=context)
-            
+
             owner_id = hu.owner_id
-            
+
             if hu.user_id and hu.user_id.partner_id:
                 followers.append(hu.user_id.partner_id.id)
             if hu.user_execute_id and hu.user_execute_id.partner_id:
                 followers.append(hu.user_execute_id.partner_id.id)
             if owner_id:
-                user_o = [owner_id] 
+                user_o = [owner_id]
                 followers.append( user_o[0].partner_id.id)
 
         context.update({
@@ -161,7 +160,7 @@ class user_story(osv.Model):
 
 
         return False
-     
+
     def _hours_get(self, cr, uid, ids, field_names, args, context=None):
         res = {}
         cr.execute('''
@@ -169,7 +168,7 @@ class user_story(osv.Model):
             FROM project_task_work ptw
             INNER JOIN project_task pt ON pt.id = ptw.task_id
             INNER JOIN user_story us ON us.id = pt.userstory_id
-            WHERE us.id IN %s 
+            WHERE us.id IN %s
             GROUP BY us.id
         ''',(tuple(ids),))
         hours = dict(cr.fetchall())
@@ -210,7 +209,7 @@ class user_story(osv.Model):
             'user.story.priority',
             'Priority Level',
             help=('User story level priority, used to define priority for'
-                  ' each user story')), 
+                  ' each user story')),
         'asumption': fields.text('Assumptions', translate=True),
         'date': fields.date('Date'),
         'user_id': fields.many2one(
@@ -327,6 +326,7 @@ class acceptability_criteria(osv.Model):
         'scenario': fields.text('Scenario', required=True, translate=True),
         'accep_crit_id': fields.many2one('user.story',
                                          'User Story',
+                                         ondelete='cascade',
                                          required=True),
         'accepted': fields.boolean('Accepted',
                                    help='Check if this criterion apply'),
@@ -409,7 +409,7 @@ class project_task(osv.Model):
                 res.update({'project_id':context.get('project_task'),'categ_ids':context.get('categ_task'),
                             'sprint_id':context.get('sprint_task'),'userstory_id':context.get('userstory_task')})
         return res
-    
+
 
     def onchange_user_story_task(self, cr, uid, ids, us_id, context=None):
         v = {}
@@ -423,18 +423,27 @@ class project_task(osv.Model):
                 v['categ_ids'] = [cat.id for cat in categs.categ_ids]
         return {'value': v}
 
+    def case_close(self, cr, uid, ids, context=None):
+        """ Closes Task inherit for write date now"""
+        res = super(project_task, self).case_close(cr, uid, ids, context=context)
+        if not isinstance(ids, list): ids = [ids]
+        for task in self.browse(cr, uid, ids, context=context):
+            date_end = fields.datetime.now()
+            self.write(cr, uid, [task.id], {'date_end': date_end}, context=context)
+        return res
+
     _columns = {
         'userstory_id': fields.many2one('user.story', 'User Story',
                                         #domain="[('sk_id', '=', sprint_id)]",
                                         help="Set here the User Story related with this task"),
         'branch_to_clone':fields.char('Branch to clone', 512,
-            help='Source branch to be clone and make merge proposal'), 
-        
+            help='Source branch to be clone and make merge proposal'),
+
     }
 class inherit_project(osv.Model):
-    
+
     '''Inheirt project model to a new Descripcion field'''
-    
+
     _inherit = 'project.project'
 
     _columns = {

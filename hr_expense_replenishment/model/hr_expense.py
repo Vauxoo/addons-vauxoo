@@ -692,7 +692,7 @@ class hr_expense_expense(osv.Model):
         exp = self.browse(cr, uid, ids, context=context)
         vals = {
             'move_id': am_id,
-            'journal_id': exp.journal_id,
+            'journal_id': exp.journal_id and exp.journal_id.id or False,
             'date' : fields.date.today(),
             'period_id' : self.pool.get('account.period').find(
                 cr, uid, context=context)[0],
@@ -1015,6 +1015,23 @@ class hr_expense_expense(osv.Model):
             'report_name': 'account.move.report.webkit',
             'datas': datas
         }
+
+    def action_receipt_create(self, cr, uid, ids, context=None):
+        '''
+        main function that is called when trying to create the accounting entries related to an expense
+        then this super tries to get rid of the Journal Entry Lines in zero
+        '''
+        super(hr_expense_expense, self).action_receipt_create(cr, uid, ids, context=context)
+        aml_obj = self.pool.get('account.move.line')
+        res = []
+        for exp in self.browse(cr, uid, ids, context=context):
+            if not exp.account_move_id.journal_id.entry_posted:
+                for aml_brw in exp.account_move_id.line_id:
+                    if not aml_brw.debit and not aml_brw.credit:
+                        res.append(aml_brw.id)
+        if res:
+            aml_obj.unlink(cr, uid, res, context=context)
+        return True
 
 class account_voucher(osv.Model):
     _inherit = 'account.voucher'
