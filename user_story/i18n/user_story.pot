@@ -104,6 +104,7 @@ msgstr ""
 
 #. module: user_story
 #: field:acceptability.criteria,scenario:0
+#: report:addons/user_story/report/user_story_report.mako:47
 #: view:user.story:0
 msgid "Scenario"
 msgstr ""
@@ -514,6 +515,8 @@ msgstr ""
 msgid "sc 1.2"
 msgstr ""
 
+
+
 #. module: user_story
 #: model:acceptability.criteria,scenario:user_story.ac_11
 msgid "sc 1.1"
@@ -608,6 +611,7 @@ msgstr ""
 
 #. module: user_story
 #: field:user.story.priority,name:0
+#: report:addons/user_story/report/user_story_report.mako:46
 msgid "Name"
 msgstr ""
 
@@ -673,5 +677,35 @@ msgstr ""
 #: field:acceptability.criteria,sk_id:0
 #: view:user.story:0
 msgid "Sprint"
+msgstr ""
+
+#. module: user_story
+#: report:addons/user_story/report/user_story_report.mako:10
+msgid "USER STORY NAME"
+msgstr ""
+
+#. module: user_story
+#: report:addons/user_story/report/user_story_report.mako:18
+msgid "PROJECT NAME:"
+msgstr ""
+
+#. module: user_story
+#: report:addons/user_story/report/user_story_report.mako:22
+msgid "OWNER:"
+msgstr ""
+
+#. module: user_story
+#: report:addons/user_story/report/user_story_report.mako:26
+msgid "PLANNED HOURS:"
+msgstr ""
+
+#. module: user_story
+#: report:addons/user_story/report/user_story_report.mako:33
+msgid "DESCRIPTION"
+msgstr ""
+
+#. module: user_story
+#: report:addons/user_story/report/user_story_report.mako:41
+msgid "ACCEPTABILITY CRITERIA"
 msgstr ""
 
