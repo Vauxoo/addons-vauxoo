@@ -51,7 +51,7 @@
                     <td class="ITEMSLEFT">${ inv['inv_brw'].number }</td>
                     <td class="ITEMSLEFT">${ formatLang(inv['inv_brw'].date_invoice,date=True) }</td>
                     <td class="ITEMSLEFT">${ formatLang(inv['inv_brw'].date_due,date=True) }</td>
-                    <td class="ITEMSRIGHT">${ inv.get('due_days') and '%s DIAS'%inv.get('due_days') or '0 DIAS' }</td>
+                    <td class="ITEMSLEFT">${ inv.get('due_days') and '%s DIAS'%inv.get('due_days') or '0 DIAS' }</td>
                     <td class="ITEMSRIGHT">${ formatLang(inv['inv_brw'].amount_untaxed) or '0.00'}</td>
                     <td class="ITEMSRIGHT">${ formatLang(inv['inv_brw'].amount_tax) or '0.00'}</td>
                     <td class="ITEMSRIGHT">${formatLang(inv['inv_brw'].amount_total) or '0.00'}</td>
@@ -75,16 +75,16 @@
                 </tr>
         </table>
         </br>
-    %endfor
-    <table class="table_column_border table_alter_color_row table_title_bg_color" style="float:right" width="14%">
-    %for p in get_total_by_comercial(objects, inv_type='in_invoice'):
-        <tr style="border-top: 1px solid #000000;">
-            <td class="ITEMSRIGHT ITEMBOLD" width="50%" style="background-color: lightgrey;" >${ _('TOTAL IN ') }${ p['currency'] }</td>
-            <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;" width="50%">${ formatLang(p['total']) or '0.00'}</td>
-        </tr>
-    %endfor
-    </table>
-    </br>
+        %endfor
+        <% list = get_total_by_comercial(objects) %>
+        <table style="border: 1px solid #A41D35; border-collapse: collapse;" width="100%">
+            %for p in list:
+            <tr>
+                <td width="92%" class="ITEMSRIGHT" style="background-color: lightgrey;border: 1px solid #A41D35; font-size: 8;">${_('TOTAL IN')} ${ p['currency']}</td>
+                <td width="8%" class="ITEMSRIGHT" style="background-color: lightgrey;border: 1px solid #A41D35; font-size: 8;">${ formatLang(p['total']) or '0.00' }</td>
+            </tr>
+            %endfor
+        </table>
     <p style="word-wrap:break-word;"></p>
 
     </br>

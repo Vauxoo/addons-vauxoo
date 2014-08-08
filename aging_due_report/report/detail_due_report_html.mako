@@ -64,14 +64,14 @@
                 </tr>
             %endfor
                 <tr>
-                    <td class="ITEMSRIGHT" colspan="6" style="background-color: lightgrey;font-size: 8;">${ _('TOTAL') }</td>
-                    <td class="ITEMSRIGHT" style="background-color: lightgrey;font-size: 8;">${ formatLang(o.get('inv_total')) or '0.00' }</td>
-                    <td class="ITEMSRIGHT" style="background-color: lightgrey;font-size: 8;">${ formatLang(o.get('wh_vat')) or '0.00'}</td>
-                    <td class="ITEMSRIGHT" style="background-color: lightgrey;font-size: 8;">${ formatLang(o.get('wh_islr')) or '0.00' }</td>
-                    <td class="ITEMSRIGHT" style="background-color: lightgrey;font-size: 8;">${ formatLang(o.get('wh_muni')) or '0.00'}</td>
-                    <td class="ITEMSRIGHT" style="background-color: lightgrey;font-size: 8;">${ formatLang(o.get('credit_note')) or '0.00'}</td>
-                    <td class="ITEMSRIGHT" style="background-color: lightgrey;font-size: 8;">${ formatLang(o.get('pay_left_total')) or '0.00'}</td>
-                    <td class="ITEMSRIGHT" style="background-color: lightgrey;font-size: 8;">${ formatLang(o.get('due_total')) or '0.00'}</td>
+                    <td class="ITEMSRIGHT ITEMBOLD" colspan="6" style="background-color: lightgrey;font-size: 8;">${ _('TOTAL') }</td>
+                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;font-size: 8;">${ formatLang(o.get('inv_total')) or '0.00' }</td>
+                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;font-size: 8;">${ formatLang(o.get('wh_vat')) or '0.00'}</td>
+                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;font-size: 8;">${ formatLang(o.get('wh_islr')) or '0.00' }</td>
+                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;font-size: 8;">${ formatLang(o.get('wh_muni')) or '0.00'}</td>
+                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;font-size: 8;">${ formatLang(o.get('credit_note')) or '0.00'}</td>
+                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;font-size: 8;">${ formatLang(o.get('pay_left_total')) or '0.00'}</td>
+                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;font-size: 8;">${ formatLang(o.get('due_total')) or '0.00'}</td>
                 </tr>
         </table>
         </br>
@@ -80,7 +80,7 @@
         <table style="border: 1px solid #A41D35; border-collapse: collapse;" width="100%">
             %for p in list:
             <tr>
-                <td width="92%" class="ITEMSRIGHT" style="background-color: lightgrey;border: 1px solid #A41D35; font-size: 8;">${_('TOTAL')} ${ p['currency']}</td>
+                <td width="92%" class="ITEMSRIGHT" style="background-color: lightgrey;border: 1px solid #A41D35; font-size: 8;">${_('TOTAL IN')} ${ p['currency']}</td>
                 <td width="8%" class="ITEMSRIGHT" style="background-color: lightgrey;border: 1px solid #A41D35; font-size: 8;">${ formatLang(p['total']) or '0.00' }</td>
             </tr>
             %endfor

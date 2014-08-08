@@ -32,6 +32,7 @@
         <div class="CUSTOMEROTHER">${data[0].get('rp_brw').street2 and data[0].get('rp_brw').street2.title() or ''}</div>
         <div class="CUSTOMEROTHER">${data[0].get('rp_brw').state_id and data[0].get('rp_brw').state_id.name.title() or ''}</div>
         </br>
+        <div><pre class="CUSTOMERTEXT">${_('Supplier Financial Statement')}</pre></div>
         <div><pre class="CUSTOMERTEXT">${company.overdue_msg}</pre></div>
     </em>
     </br>
@@ -56,7 +57,7 @@
                         <td class="ITEMSLEFT">${_('I:')} ${inv['inv_brw'].number or 0}</td>
                         <td class="ITEMSLEFT">${ formatLang(inv['inv_brw'].date_invoice, date=True) }</td>
                         <td class="ITEMSLEFT">${ formatLang(inv['inv_brw'].date_due, date=True) }</td>
-                        <td class="ITEMSLEFT">${ inv.get('due_days') and '%s DAYS'%inv.get('due_days') or '0 DIAS' }</td>
+                        <td class="ITEMSLEFT">${ inv.get('due_days') and '%s DAYS'%inv.get('due_days') or _('0 DAYS') }</td>
                         <td class="ITEMSRIGHT">${ formatLang(inv['inv_brw'].amount_untaxed) or '0.00' }</td>
                         <td class="ITEMSRIGHT">${ formatLang(inv['inv_brw'].amount_tax) or '0.00' }</td>
                         <td class="ITEMSRIGHT">${ formatLang(inv['inv_brw'].amount_total) or '0.00' }</td>
@@ -82,7 +83,7 @@
                     <td class="ITEMSLEFT" style="background-color: lightgrey;">${_('I: INVOICE')}</td>
                     <td class="ITEMSLEFT" style="background-color: lightgrey;">${_('C: C/N')}</td>
                     <td class="ITEMSLEFT" style="background-color: lightgrey;">${_('D: D/N')}</td>
-                    <td class="ITEMSRIGHT" colspan="3" style="background-color: lightgrey;">${_('TOTAL IN ')} ${'('+line.get('cur_brw').name +')' }</td>
+                    <td class="ITEMSRIGHT" colspan="3" style="background-color: lightgrey;">${_('TOTAL IN ')} ${line.get('cur_brw').name}</td>
                     <td class="ITEMSRIGHT" style="background-color: lightgrey;">${formatLang(line.get('inv_total')) or '0.00'}</td>
                     <td class="ITEMSRIGHT" style="background-color: lightgrey;">${formatLang(line.get('pay_total')) or '0.00'}</td>
                     <td class="ITEMSRIGHT" style="background-color: lightgrey;">${formatLang(line.get('due_total')) or '0.00'}</td>
