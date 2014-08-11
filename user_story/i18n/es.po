@@ -750,3 +750,8 @@ msgstr "Sprint"
 #: report:addons/user_story/report/user_story_report.mako:18
 msgid "Related Project"
 msgstr "Proyecto Relacionado"
+
+#. module: user_story
+#: model:ir.actions.report.xml,name:user_story.user_story_report_webkit
+msgid "User Story Report"
+msgstr "Reporte de Historia de Usuario"
