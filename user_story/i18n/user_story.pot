@@ -678,34 +678,3 @@ msgstr ""
 #: view:user.story:0
 msgid "Sprint"
 msgstr ""
-
-#. module: user_story
-#: report:addons/user_story/report/user_story_report.mako:10
-msgid "USER STORY NAME"
-msgstr ""
-
-#. module: user_story
-#: report:addons/user_story/report/user_story_report.mako:18
-msgid "PROJECT NAME:"
-msgstr ""
-
-#. module: user_story
-#: report:addons/user_story/report/user_story_report.mako:22
-msgid "OWNER:"
-msgstr ""
-
-#. module: user_story
-#: report:addons/user_story/report/user_story_report.mako:26
-msgid "PLANNED HOURS:"
-msgstr ""
-
-#. module: user_story
-#: report:addons/user_story/report/user_story_report.mako:33
-msgid "DESCRIPTION"
-msgstr ""
-
-#. module: user_story
-#: report:addons/user_story/report/user_story_report.mako:41
-msgid "ACCEPTABILITY CRITERIA"
-msgstr ""
-

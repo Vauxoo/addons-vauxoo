@@ -110,6 +110,7 @@ msgstr "Tarea"
 #. module: user_story
 #: field:acceptability.criteria,scenario:0
 #: view:user.story:0
+#: report:addons/user_story/report/user_story_report.mako:47
 msgid "Scenario"
 msgstr "Escenario"
 
@@ -352,6 +353,7 @@ msgstr "Más información aquí"
 #. module: user_story
 #: view:user.story:0
 #: field:user.story,owner:0
+#: report:addons/user_story/report/user_story_report.mako:22
 msgid "Owner"
 msgstr "Dueño"
 
@@ -416,6 +418,7 @@ msgstr "Pendiente"
 #: view:project.task:0
 #: field:project.task,userstory_id:0
 #: view:user.story:0
+#: report:addons/user_story/report/user_story_report.mako:10
 msgid "User Story"
 msgstr "Historia de Usuario"
 
@@ -616,6 +619,7 @@ msgstr "Sprint Kanban"
 #: view:project.project:0
 #: field:project.project,descriptions:0
 #: field:user.story,description:0
+#: report:addons/user_story/report/user_story_report.mako:33
 msgid "Description"
 msgstr "Descripción"
 
@@ -670,6 +674,7 @@ msgstr ""
 
 #. module: user_story
 #: field:user.story.priority,name:0
+#: report:addons/user_story/report/user_story_report.mako:46
 msgid "Name"
 msgstr "Nombre"
 
@@ -680,6 +685,7 @@ msgstr "Tarea bloqueada"
 
 #. module: user_story
 #: view:acceptability.criteria:0
+#: report:addons/user_story/report/user_story_report.mako:41
 msgid "Acceptability Criterion"
 msgstr "Criterio de Aceptación"
 
@@ -738,3 +744,9 @@ msgstr "Administrador"
 #: view:user.story:0
 msgid "Sprint"
 msgstr "Sprint"
+
+#. module: user_story
+#: view:user.story:0
+#: report:addons/user_story/report/user_story_report.mako:18
+msgid "Related Project"
+msgstr "Proyecto Relacionado"

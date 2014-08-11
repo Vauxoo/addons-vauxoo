@@ -7,7 +7,7 @@
         % for user.story in objects:
             <table width="100%">
                 <tr>
-                    <th class="panel_bg_color_title">${_("USER STORY NAME")}</th>
+                    <th class="panel_bg_color_title">${_("User Story")}</th>
                 </tr>
                 <tr>
                     <td class="td_center"><h5><p class="td_margin">${user and user.story and user.story.name}</p></h5></td>
@@ -15,22 +15,22 @@
             </table>
             <table width="100%">
                 <tr>
-                    <th class="th_center panel_bg_color_title">${_("PROJECT NAME:")}</th>
+                    <th class="th_center panel_bg_color_title">${_("Related Project")}</th>
                     <td class="panel_bg_color">${user and user.story and user.story.project_id and user.story.project_id.name}</td>
                 </tr>
                 <tr>
-                    <th class="th_center panel_bg_color_title">${_("OWNER:")}</th>
+                    <th class="th_center panel_bg_color_title">${_("Owner")}</th>
                     <td class="panel_bg_color">${user and user.story and user.story.owner_id and user.story.owner_id.name}</td>
                 </tr>
                 <tr>
-                    <th class="th_center panel_bg_color_title">${_("PLANNED HOURS:")}</th>
+                    <th class="th_center panel_bg_color_title">${_("Planned Hours")}</th>
                     <td class="panel_bg_color">${user and user.story and user.story.planned_hours}</td>
                 </tr>
             </table>
             <p class="td_margin"></br></p>
             <table width="100%">
                 <tr>
-                    <th class="panel_bg_color_title">${_("DESCRIPTION")}</th>
+                    <th class="panel_bg_color_title">${_("Description")}</th>
                 </tr>
                 <tr>
                     <td class="pre_description">${parse_html_field(user.story.description)}</td>
@@ -38,7 +38,7 @@
             </table>
             <table width="100%">
                 <tr>
-                    <th class="panel_bg_color_title">${_("ACCEPTABILITY CRITERIA")}</th>
+                    <th class="panel_bg_color_title">${_("Acceptability Criterion")}</th>
                 </tr>
             </table>
             <table width="100%">
