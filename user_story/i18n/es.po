@@ -191,6 +191,7 @@ msgstr "Categoría"
 #. module: user_story
 #: view:project.task:0
 #: field:user.story,planned_hours:0
+#: report:addons/user_story/report/user_story_report.mako:26
 msgid "Planned Hours"
 msgstr "Horas Estimadas"
 
