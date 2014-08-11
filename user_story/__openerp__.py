@@ -48,10 +48,7 @@ funcionalde este módulo. Las `fuentes`_  en inglés y español el artículo son
 siguientes:
 
 .. Story: http://dannorth.net/whats-in-a-story/
-.. fuentes: http://adrianmoya.com/2012/08/que-hay-en-una-historia/
-                    
-Se requiere instalar la siguiente librería:
-    sudo apt-get install python-html2text""",
+.. fuentes: http://adrianmoya.com/2012/08/que-hay-en-una-historia/""",
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
     "demo" : [
