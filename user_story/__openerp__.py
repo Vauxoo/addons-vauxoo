@@ -58,7 +58,6 @@ Se requiere instalar la siguiente librería:
         'demo/demo.xml',
     ],
     "data" : [
-        #~ "report/ir_report.xml",
         "data/data_us_report.xml",
         "report/user_story_report_view.xml",
         "security/userstory_security.xml",
