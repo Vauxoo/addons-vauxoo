@@ -20,10 +20,7 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, osv
-from openerp.tools.translate import _
-
-from report import report_sxw
+from openerp.report import report_sxw
 from lxml import html
 
 class story_user_html(report_sxw.rml_parse):

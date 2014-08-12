@@ -1,0 +1,70 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* invoice_datetime
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-08 03:15+0000\n"
+"PO-Revision-Date: 2013-11-08 04:47+0000\n"
+"Last-Translator: hbto [Vauxoo] http://www.vauxoo.com "
+"<humbertoarocha@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-07-11 06:15+0000\n"
+"X-Generator: Launchpad (build 17111)\n"
+
+#. module: invoice_datetime
+#: help:account.invoice,date_invoice_tz:0
+msgid "Date of Invoice with Time Zone"
+msgstr "Fecha de Factura con Zona Horaria"
+
+#. module: invoice_datetime
+#: field:account.invoice,date_invoice_tz:0
+msgid "Date Invoiced with TZ"
+msgstr "Fecha facturado con TZ"
+
+#. module: invoice_datetime
+#: model:ir.model,name:invoice_datetime.model_account_payment_term
+msgid "Payment Term"
+msgstr "Plazo de pago"
+
+#. module: invoice_datetime
+#: help:account.invoice,invoice_datetime:0
+msgid "Keep empty to use the current date"
+msgstr "Mantener vacio para usar la fecha actual"
+
+#. module: invoice_datetime
+#: field:account.config.settings,select_date:0
+msgid "Default date of invoices"
+msgstr "Fecha por defecto de las facturas"
+
+#. module: invoice_datetime
+#: help:account.config.settings,select_date:0
+msgid "Select the field you want to displayed in the invoice for the selected company."
+msgstr "Selecciona el campo que deseas mostrar en la factura para la compañía seleccionada."
+
+#. module: invoice_datetime
+#: field:account.invoice,invoice_datetime:0
+msgid "Date time of invoice"
+msgstr "Fecha y hora de la factura"
+
+#. module: invoice_datetime
+#: model:ir.model,name:invoice_datetime.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: invoice_datetime
+#: code:addons/invoice_datetime/invoice.py:180
+#, python-format
+msgid "Invoice dates should be equal"
+msgstr "Las fechas de las facturas  deben ser iguales"
+
+#. module: invoice_datetime
+#: code:addons/invoice_datetime/invoice.py:179
+#, python-format
+msgid "Warning!"
+msgstr "¡Advertencia!"

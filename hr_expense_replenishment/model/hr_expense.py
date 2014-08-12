@@ -692,7 +692,7 @@ class hr_expense_expense(osv.Model):
         exp = self.browse(cr, uid, ids, context=context)
         vals = {
             'move_id': am_id,
-            'journal_id': exp.journal_id,
+            'journal_id': exp.journal_id and exp.journal_id.id or False,
             'date' : fields.date.today(),
             'period_id' : self.pool.get('account.period').find(
                 cr, uid, context=context)[0],
