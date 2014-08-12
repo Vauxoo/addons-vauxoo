@@ -31,7 +31,8 @@
                  "base",
                  "project",
                  "sprint_kanban",
-                 'project_timesheet',
+                 "project_timesheet",
+                 "project_conf",
                  ],
     "author" : "Vauxoo",
     "description" : """
