@@ -21,5 +21,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-import email_template
-import mail_compose_message
+
+from openerp.osv import osv, fields
+from openerp import tools, SUPERUSER_ID
+
+class email_template(osv.Model):
+    
+    _inherit = 'email.template'
+    
+    _columns = {
+        'composition_mode_comment': fields.boolean('Comment a document',
+            help='Create Composition mode like comment'),
+    }

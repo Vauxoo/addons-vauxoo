@@ -31,6 +31,7 @@ Allow create mail.composse.message from email_template like composition_model=co
     """,
     'depends' : ['mail','email_template'],
     'data': [
+        'view/email_template_view.xml'
         ],
     "active": False,
     "installable": True,
