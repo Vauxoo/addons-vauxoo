@@ -27,8 +27,10 @@
     "category": "Addons Vauxoo",
     'author' : 'Vauxoo',
     'description' : """
-Allow create mail.composse.message from email_template like composition_model=comment
-    """,
+Composition mode in email_template
+==================================
+This module Allow to create mail.composse.message from email_template like composition_model=comment
+""",
     'depends' : ['mail','email_template'],
     'data': [
         'view/email_template_view.xml'
