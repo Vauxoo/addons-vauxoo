@@ -55,7 +55,7 @@
                         <td class="ITEMSLEFT">${_('I:')} ${inv['inv_brw'].number or 0}</td>
                         <td class="ITEMSLEFT">${ formatLang(inv['inv_brw'].date_invoice, date=True) }</td>
                         <td class="ITEMSLEFT">${ formatLang(inv['inv_brw'].date_due, date=True) }</td>
-                        <td class="ITEMSLEFT">${ inv.get('due_days') and '%s DAYS'%inv.get('due_days') or _('0 DAYS') }</td>
+                        <td class="ITEMSLEFT">${ inv.get('due_days') and _('%s DAYS')%inv.get('due_days') or _('0 DAYS') }</td>
                         <td class="ITEMSRIGHT">${ formatLang(inv['inv_brw'].amount_untaxed) or '0.00' }</td>
                         <td class="ITEMSRIGHT">${ formatLang(inv['inv_brw'].amount_tax) or '0.00' }</td>
                         <td class="ITEMSRIGHT">${ formatLang(inv['inv_brw'].amount_total) or '0.00' }</td>

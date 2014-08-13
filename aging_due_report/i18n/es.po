@@ -82,6 +82,8 @@ msgstr "DÍAS"
 
 #. module: aging_due_report
 #: report:addons/aging_due_report/report/detail_due_report_html.mako:54
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:58
+#: report:addons/aging_due_report/report/supplier_detail_due_report_html.mako:54
 msgid "%s DAYS"
 msgstr "%s DÍAS"
 
