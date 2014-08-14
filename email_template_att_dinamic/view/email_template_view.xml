@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+        <record model="ir.ui.view" id="att_dinamic_email_template_form">
+            <field name="name">att.dinamic.email.template</field>
+            <field name="model">email.template</field>
+            <field name="inherit_id" ref="email_template.email_template_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lang']" position="after">
+                    <field name="att_default"/>
+                    <field name="att_other_field"/>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</openerp>
