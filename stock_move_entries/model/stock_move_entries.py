@@ -35,10 +35,10 @@ class account_move_line(osv.Model):
 
     _columns = {
         'sm_id': fields.many2one('stock.move', 'Stock move ID'),
-        'location_id':fields.related('sm_id', 'location_id', 'Source Location',
-            relation='stock.location', store=True, help='Location Move Source'), 
+        'location_id':fields.related('sm_id', 'location_id', string='Source Location',
+            relation='stock.location', store=True, help='Location Move Source'),
         'location_dest_id':fields.related('sm_id', 'location_dest_id',
-            'Destination Location', relation='stock.location', store=True,
+            string='Destination Location', relation='stock.location', store=True,
             help="Location Move Destination")
     }
 
