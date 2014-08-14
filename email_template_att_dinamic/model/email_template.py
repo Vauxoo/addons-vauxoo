@@ -48,19 +48,20 @@ class mail_compose_message(osv.TransientModel):
         res = super(mail_compose_message,
                         self).onchange_template_id(cr, uid, ids, template_id,
                             composition_mode, model, res_id, context=context)
-                            
-        template = template_obj.browse(cr, uid, template_id, context)
-        
         attach = []
-        if template.att_default:
-            attach = self.pool.get('ir.attachment').search(cr, uid,
-                [('res_id', '=', res_id), ('res_model', '=', model)])
-        
-        if template.att_other_field:
-            att_field_render = template_obj.render_template(cr, uid,
-                template.att_other_field, template.model, res_id, context=context)
-            attach += [ id_att for id_att in eval("["+att_field_render+"]") if att_field_render ]
+        if template_id:
             
+            template = template_obj.browse(cr, uid, template_id, context)
+            
+            if template and template.att_default:
+                attach = self.pool.get('ir.attachment').search(cr, uid,
+                    [('res_id', '=', res_id), ('res_model', '=', model)])
+            
+            if template and template.att_other_field:
+                att_field_render = template_obj.render_template(cr, uid,
+                    template.att_other_field, template.model, res_id, context=context)
+                attach += [ id_att for id_att in eval("["+att_field_render+"]") if att_field_render ]
+                
         attach += res.get('value',{}).pop('attachment_ids', [])
         res.get('value', {}).update({'attachment_ids': [(6, 0, attach)]})
         
