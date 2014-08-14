@@ -43,8 +43,8 @@
             </table>
             <table width="100%">
                 <tr>
-                    <th class="th_center panel_bg_color_title">${_("Name")}</th>
-                    <th class="th_center panel_bg_color_title">${_("Scenario")}</th>
+                    <th width="40%" class="th_center panel_bg_color_title">${_("Name")}</th>
+                    <th width="60%" class="th_center panel_bg_color_title">${_("Scenario")}</th>
                 </tr>
                 % for criteria in (user and user.story and user.story.accep_crit_ids):
                     <tr>
