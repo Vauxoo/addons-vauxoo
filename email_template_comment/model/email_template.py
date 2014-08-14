@@ -30,6 +30,6 @@ class email_template(osv.Model):
     _inherit = 'email.template'
     
     _columns = {
-        'composition_mode_comment': fields.boolean('Comment a document',
+        'composition_mode_comment': fields.boolean('Composition Mode',
             help='Create Composition mode like comment'),
     }
