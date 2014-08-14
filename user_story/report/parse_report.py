@@ -36,9 +36,14 @@ class story_user_html(report_sxw.rml_parse):
         self.context = context
 
     def _parse_html_field(self, data):
-        tree = html.fromstring(data)
-        text_data = tree.text_content()
-        return text_data
+        if data:
+            data_str = data.encode('ascii', 'xmlcharrefreplace')
+            data_str = data_str.replace('<br>', '\n')
+            root = html.fromstring(data_str)
+            text_data = html.tostring(root, encoding='unicode', method='text')
+            text_data = text_data.encode('ascii', 'xmlcharrefreplace')
+            return text_data
+        return ''
 
 report_sxw.report_sxw('report.user.story.report',
             'user.story',
