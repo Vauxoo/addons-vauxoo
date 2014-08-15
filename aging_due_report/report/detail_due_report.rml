@@ -81,16 +81,15 @@
     <section>
     <para>[[repeatIn(get_invoice_by_partner(objects),'o')]]</para>
     <para>[[ setLang(user.lang) ]]</para>
-        <blockTable colWidths="35mm,97mm,80mm,20mm,40mm" style="TERMSTABLEGREY">
+        <blockTable colWidths="35mm,97mm,20mm,40mm" style="TERMSTABLEGREY">
             <tr>
                 <td><para style="ITEMSLEFT">[[(o.get('rp_brw').vat and '%s-%s-%s'%( o.get('rp_brw').vat [2], o.get('rp_brw').vat[3:-1], o.get('rp_brw').vat[-1]) or '')]]</para></td>
-                <td><para style="ITEMSLEFT">[[o.get('rp_brw').name]] ([[ o.get('cur_brw').name ]])</para></td>
-                <td><para style="ITEMSLEFT">[[o.get('rp_brw').ref]]</para></td>
+                <td><para style="ITEMSLEFT">[[o.get('rp_brw').name]] ([[ o.get('cur_brw').name ]]) [[o.get('rp_brw').ref]]</para></td>
                 <td><para style="ITEMSLEFT">[[o.get('rp_brw').user_id.name]]</para></td>
                 <td><para style="ITEMSLEFT">[['Amounts expressed in {}'.format(o.get('cur_brw').name)]]</para></td>
             </tr>
         </blockTable>
-        <blockTable colWidths="35mm,20mm,20mm,17mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm" repeatRows="1" style="TERMS">
+        <blockTable colWidths="35mm,20mm,20mm,17mm,20mm,20mm,20mm,20mm,20mm" repeatRows="1" style="TERMS">
             <tr noRowsplits="1">
                 <td><para style="ITEMSTITLELEFT">INVOICE</para></td>
                 <td><para style="ITEMSTITLELEFT">EMIS DATE</para></td>
@@ -99,10 +98,6 @@
                 <td><para style="ITEMSTITLERIGHT">BASE</para></td>
                 <td><para style="ITEMSTITLERIGHT">TAX</para></td>
                 <td><para style="ITEMSTITLERIGHT">TOT/INV.</para></td>
-                <td><para style="ITEMSTITLERIGHT">VAT WH</para></td>
-                <td><para style="ITEMSTITLERIGHT">INCOME WH</para></td>
-                <td><para style="ITEMSTITLERIGHT">MUNI. WH</para></td>
-                <td><para style="ITEMSTITLERIGHT">C/N</para></td>
                 <td><para style="ITEMSTITLERIGHT">COLLECTS</para></td>
                 <td><para style="ITEMSTITLERIGHT">BALANCE</para></td>
             </tr>
@@ -117,23 +112,15 @@
                 <td><para style="ITEMSRIGHT">[[ formatLang(inv['inv_brw'].amount_untaxed) or '0.00']]</para></td>
                 <td><para style="ITEMSRIGHT">[[ formatLang(inv['inv_brw'].amount_tax) or '0.00']]</para></td>
                 <td><para style="ITEMSRIGHT">[[ formatLang(inv['inv_brw'].amount_total) or '0.00']]</para></td>
-                <td><para style="ITEMSRIGHT">[[ formatLang(inv.get('wh_vat')) or '0.00']]</para></td>
-                <td><para style="ITEMSRIGHT">[[ formatLang(inv.get('wh_islr')) or '0.00']]</para></td>
-                <td><para style="ITEMSRIGHT">[[ formatLang(inv.get('wh_muni')) or '0.00']]</para></td>
-                <td><para style="ITEMSRIGHT">[[ formatLang(inv.get('credit_note')) or '0.00']]</para></td>
                 <td><para style="ITEMSRIGHT">[[ formatLang(inv.get('payment_left')) or '0.00']]</para></td>
                 <td><para style="ITEMSRIGHT">[[ formatLang(inv.get('residual')) or '0.00']]</para></td>
             </tr>
         </blockTable>
 <!--TABLA DE TOTALES-->       
-        <blockTable colWidths="132mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm"  style="TERMSTABLEGREY">
+        <blockTable colWidths="132mm,20mm,20mm,20mm"  style="TERMSTABLEGREY">
                 <tr>
                     <td><para style="ITEMSRIGHT">TOTAL</para></td>
                     <td><para style="ITEMSRIGHT">[[ formatLang(o.get('inv_total')) or '0.00']]</para></td>
-                    <td><para style="ITEMSRIGHT">[[ formatLang(o.get('wh_vat')) or '0.00']]</para></td>
-                    <td><para style="ITEMSRIGHT">[[ formatLang(o.get('wh_islr')) or '0.00']]</para></td>
-                    <td><para style="ITEMSRIGHT">[[ formatLang(o.get('wh_muni')) or '0.00']]</para></td>
-                    <td><para style="ITEMSRIGHT">[[ formatLang(o.get('credit_note')) or '0.00']]</para></td>
                     <td><para style="ITEMSRIGHT">[[ formatLang(o.get('pay_left_total')) or '0.00']]</para></td>
                     <td><para style="ITEMSRIGHT">[[ formatLang(o.get('due_total')) or '0.00']]</para></td>
                 </tr>
@@ -142,7 +129,7 @@
     </section>
     <section>
         <para>[[repeatIn(get_total_by_comercial(objects),'p')]]</para>
-        <blockTable colWidths="252mm,20mm" style="TERMSTABLEGREY">
+        <blockTable colWidths="172mm,20mm" style="TERMSTABLEGREY">
             <tr noRowsplits="1">
                 <td><para style="ITEMSRIGHT">TOTAL IN [[ p['currency'] ]] </para></td>
                 <td><para style="ITEMSRIGHT">[[ formatLang(p['total']) or '0.00']]</para></td>
