@@ -29,6 +29,7 @@ from report import report_sxw
 import mx.DateTime
 import pdb
 import pprint
+from report_webkit import webkit_report
 
 
 class aging_parser(report_sxw.rml_parse):
@@ -287,7 +288,6 @@ class aging_parser(report_sxw.rml_parse):
         """
         @return 
         """
-
         # span = 30
         # spans = [0, 30, 60, 90, 120]
         # span = 90
@@ -454,5 +454,53 @@ report_sxw.report_sxw(
     'addons/aging_due_report/report/supplier_aging_due_report.rml',
     parser=aging_parser,
     header=False
+)
+
+webkit_report.WebKitParser(
+    'report.aging_due_report_webkit',
+    'res.partner',
+    'addons/aging_due_report/report/aging_due_report_html.mako',
+    parser=aging_parser,
+    header=True
+)
+
+webkit_report.WebKitParser(
+    'report.formal_due_report_webkit',
+    'res.partner',
+    'addons/aging_due_report/report/formal_due_report_html.mako',
+    parser=aging_parser,
+    header=True
+)
+
+webkit_report.WebKitParser(
+    'report.detail_due_report_webkit',
+    'res.partner',
+    'addons/aging_due_report/report/detail_due_report_html.mako',
+    parser=aging_parser,
+    header=True
+)
+
+webkit_report.WebKitParser(
+    'report.supplier_aging_due_report_html',
+    'res.partner',
+    'addons/aging_due_report/report/supplier_aging_due_report_html.mako',
+    parser=aging_parser,
+    header=True
+)
+
+webkit_report.WebKitParser(
+    'report.supplier_formal_due_report_html',
+    'res.partner',
+    'addons/aging_due_report/report/supplier_formal_due_report_html.mako',
+    parser=aging_parser,
+    header=True
+)
+
+webkit_report.WebKitParser(
+    'report.supplier_detail_due_report_html',
+    'res.partner',
+    'addons/aging_due_report/report/supplier_detail_due_report_html.mako',
+    parser=aging_parser,
+    header=True
 )
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
