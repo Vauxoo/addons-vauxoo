@@ -1,0 +1,378 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="0">
+        <record id="ir_header_webkit_user_story_report" model="ir.header_webkit">
+            <field name="footer_html"><![CDATA[<!DOCTYPE>
+                <html>
+                    <head>
+                        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+                        <script>
+                            function subst() {
+                            var vars={};
+                            var x=document.location.search.substring(1).split('&');
+                            for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+                            var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+                            for(var i in x) {
+                            var y = document.getElementsByClassName(x[i]);
+                            for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+                                }
+                            }
+                        </script>
+                    </head>
+                    <body style="border:0; margin: 0;" onload="subst()">
+                        <table style="border-top: 1px solid black; width: 100%">
+                            <tr >
+                                <td style="text-align:left;font-size:7;" width="50%">Generado con software libre en OpenERP y Webkit por http://www.vauxoo.com</td>
+                                <td style="text-align:right;font-size:11;" width="45%">Page <span class="page"/></td><td style="text-align:left;font-size:11;" width="5%">  of <span class="topage"/></td>
+                            </tr>
+                        </table>
+                    </body>
+                </html>]]>
+            </field>
+            <field name="orientation">Portrait</field>
+            <field name="format">Letter</field>
+            <field name="html"><![CDATA[<!DOCTYPE>
+                <html>
+                    <head>
+                        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+                        <script>
+                            function subst() {
+                            var vars={};
+                            var x=document.location.search.substring(1).split('&');
+                            for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+                            var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+                            for(var i in x) {
+                            var y = document.getElementsByClassName(x[i]);
+                            for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+                                }
+                            }
+                        </script>
+                        <style type="text/css">
+                            ${css}
+                        </style>
+                    </head>
+                    <body style="border:0; margin: 0;" onload="subst()">
+                        ${_debug or ''|n} </body>
+                </html>]]>
+            </field>
+            <field eval="0.0" name="margin_top"/>
+            <field name="css" ><![CDATA[
+.table_all_border {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #f2f2f2; }
+  .table_all_border > thead > tr > th,
+  .table_all_border > thead > tr > td,
+  .table_all_border > tbody > tr > th,
+  .table_all_border > tbody > tr > td,
+  .table_all_border > tfoot > tr > th,
+  .table_all_border > tfoot > tr > td {
+    border: 1px solid #f2f2f2; }
+  .table_all_border > thead > tr > th,
+  .table_all_border > thead > tr > td {
+    border-bottom-width: 1px solid #f2f2f2; }
+
+.table_title_bg_color {
+  border-collapse: collapse; }
+  .table_title_bg_color > thead > tr > th,
+  .table_title_bg_color > tbody > tr > th,
+  .table_title_bg_color > tfoot > tr > th {
+    border-bottom: 1px solid #f2f2f2;
+    border-top: 1px solid #f2f2f2;
+    background-color: #A41D35;
+    font-size: 7;
+    color: white; }
+
+.table_title {
+  border-collapse: collapse;
+  width: 100%; }
+  .table_title > thead > tr > th,
+  .table_title > tbody > tr > th,
+  .table_title > tfoot > tr > th {
+    border-bottom: 2px solid #f2f2f2;
+    font-size: 7;
+    color: white; }
+
+.table_row_border {
+  border-collapse: collapse;
+  width: 100%; }
+  .table_row_border > thead > tr > th,
+  .table_row_border > thead > tr > td,
+  .table_row_border > tbody > tr > th,
+  .table_row_border > tbody > tr > td,
+  .table_row_border > tfoot > tr > th,
+  .table_row_border > tfoot > tr > td {
+    border-bottom: 1px solid #f2f2f2; }
+  .table_row_border > thead > tr > th,
+  .table_row_border > thead > tr > td {
+    border-bottom-width: 1px; }
+
+.table_column_border {
+  border-collapse: collapse;
+  }
+  .table_column_border > thead > tr > td,
+  .table_column_border > tbody > tr > td,
+  .table_column_border > tfoot > tr > td {
+    border: 1px solid #f2f2f2;
+    border-width: 0 1px; }
+  .table_column_border > thead > tr > td:first-child, .table_column_border > thead > tr td + td,
+  .table_column_border > tbody > tr > td:first-child,
+  .table_column_border > tbody > tr td + td,
+  .table_column_border > tfoot > tr > td:first-child,
+  .table_column_border > tfoot > tr td + td {
+    border-left: 0; }
+  .table_column_border > thead > tr > td:last-child,
+  .table_column_border > tbody > tr > td:last-child,
+  .table_column_border > tfoot > tr > td:last-child {
+    padding-right: 0;
+    border-right: 0; }
+
+.table_alter_color_row {
+  border-collapse: collapse; }
+  .table_alter_color_row > tbody > tr:nth-child(2n+1) > td {
+    background-color: gainsboro ; }
+  .table_alter_color_row > tbody > tr:nth-child(2n+2) > td {
+    background-color: whitesmoke; }
+
+.table_alter_color_column {
+  border-collapse: collapse;
+  width: 100%; }
+  .table_alter_color_column > tbody
+  > tr
+  > td:nth-child(2n+1) {
+    background-color: gainsboro; }
+  .table_alter_color_column > tbody
+  > tr
+  > td:nth-child(2n+2) {
+    background-color: whitesmoke; }
+
+.table_only_border_top {
+  border-collapse: collapse;
+  width: 100%; }
+  .table_only_border_top > tbody
+  > tr {
+    border-top: 1px solid #f2f2f2; }
+
+.table_only_border_bottom {
+  border-collapse: collapse;
+  width: 100%; }
+  .table_only_border_bottom > tbody
+  > tr {
+    border-bottom: 1px solid #f2f2f2; }
+
+.panel {
+  padding: 8px 8px;
+  background-color: #5bc0de; }
+
+.panel_radius_color {
+  border: 2px solid #ee8f9e;
+  border-radius: 15px;
+  padding: 8px 8px; }
+
+.panel_radius_trans {
+  border: 2px solid transparent;
+  border-radius: 15px;
+  padding: 8px 8px; }
+
+.panel_bg_color {
+  padding: 5px 5px;
+  background: #f2f2f2;
+  font-size: 6pt; }
+
+.panel_bg_color_title {
+  padding: 5px 5px;
+  background: #A41D35;
+  color: white;
+  font-size: 6pt;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans_serif; }
+
+.panel_box_shadow {
+  box-shadow: 5px 5px 10px #222222; }
+
+.panel_bg_color_gradient {
+  background: -webkit-linear-gradient(#333333, gainsboro);
+  /* For Safari */
+  background: -o-linear-gradient(#333333, gainsboro);
+  /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#333333, gainsboro);
+  /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#333333, gainsboro);
+  /* Standard syntax (must be last) */ }
+
+.panel_border_radius_top {
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  border: 2px solid #ee8f9e;
+  padding: 5px; }
+
+.panel_radius_top {
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  padding: 5px; }
+
+.panel_border_radius_top_right {
+  border-top-right-radius: 15px;
+  border: 2px solid #ee8f9e;
+  padding: 5px; }
+
+.panel_border_radius_top_left {
+  border-top-left-radius: 15px;
+  border: 2px solid #ee8f9e;
+  padding: 5px; }
+
+.panel_border_radius_bottom {
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border: 2px solid #ee8f9e;
+  padding: 5px; }
+
+.panel_radius_bottom {
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  padding: 5px; }
+
+.panel_border_radius_bottom_right {
+  border-bottom-right-radius: 15px;
+  border: 2px solid #ee8f9e;
+  padding: 5px; }
+
+.panel_border_radius_bottom_left {
+  border-bottom-left-radius: 15px;
+  border: 2px solid #ee8f9e;
+  padding: 5px; }
+
+body {
+  color: black;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans_serif;
+  font-size: 7;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  line-height: 12px; }
+
+table.basic_table {
+  border-collapse: collapse;
+  width: 100%; }
+
+.imagen_company {
+  vertical-align: top;
+  width: 35%; }
+
+.data_emitter {
+  vertical-align: top;
+  color: black;
+  text-align: right;
+  font-size: 7; }
+
+.data_customer {
+  vertical-align: top;
+  color: black;
+  text-align: left;
+  font-size: 7; }
+
+th {
+  padding-right: 2px;
+  padding-left: 2px;
+  text-align: center;
+  font-size: 7; }
+
+strong{
+  font-size: 18; 
+  font-weight: bold;
+}
+
+.data_company{
+  font-size: 10;
+}
+
+
+pre {
+  font-size: 12pt;
+  font-family: helvetica;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap !important;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word; }
+
+
+.pre_description {
+  font-size: 6pt;
+  font-family: helvetica;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap !important;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+  background: #f2f2f2; }
+
+hr{
+  width:95%;
+  color:lightgrey;
+}
+
+td{
+  font-size:7;
+}
+
+.td_without_bottom{
+  border-bottom: 1px solid #FFFFFF;
+}
+
+.td_amount{
+  text-align:right
+}
+
+.td_center {
+text-align: center; }
+
+.th_center {
+text-align: center; }
+
+.td_bold {
+font-weight: bold; }
+
+.th_widht {
+  width: 33%; }
+
+.td_condiciones{
+  font-size:6;
+}
+
+table.fixed { 
+table-layout:fixed;
+width:33%;
+word-break:break-all;
+}
+
+td.total_td {
+border-top: solid 1.5px #A41D35;
+font-size: 8;
+padding-right: 2px;
+padding-left: 2px;
+font-weight: bold;
+color: black; }
+
+td.sub_total_td {
+border-top: solid 1.5px #A41D35;
+font-size: 8;
+padding-right: 2px;
+padding-left: 2px;
+color: black; }
+
+
+.td_vertical_middle {
+  vertical-align: middle; }
+p.td_margin_botton {
+margin-bottom:20px;
+}
+
+]]> </field>
+            <field name="name">User Story Report Vauxoo Webkit</field>
+        </record>
+        <record id="ir_header_img_companylogo0" model="ir.header_img">
+            <field eval="&quot;&quot;&quot;jpg&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;company_logo&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+</openerp>
