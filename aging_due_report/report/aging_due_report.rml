@@ -5,8 +5,8 @@
         <pageGraphics>
             <setFont name="Helvetica-Oblique" size="8.0"/>
             <image x="10.0mm" y="195.0mm"  width="89.994mm" height="24.342mm">[[company.logo and company.logo or removeParentNode('image')]]</image>
-            <drawString x="10mm" y="5mm">Reporte Impreso en OpenERP con ReportLab</drawString> 
-            <drawRightString x="270mm" y="5mm">Fecha de Impresion:  [[formatLang(time.strftime('%Y-%m-%d'),date=True)]] [[time.strftime('%H:%m')]] / Pagina:<pageNumber/> </drawRightString> 
+            <drawString x="10mm" y="5mm">This report was printed in OpenERP with ReportLab</drawString> 
+            <drawRightString x="270mm" y="5mm">Print Date:  [[formatLang(time.strftime('%Y-%m-%d'),date=True)]] [[time.strftime('%H:%m')]] / Page:<pageNumber/> </drawRightString> 
         </pageGraphics>
       <frame id="first"     x1="10.0mm"     y1="10mm"    width="260mm"  height="185.0mm"/>
     </pageTemplate>
@@ -79,23 +79,23 @@
   <story>
 <!--TABLA DE ITEMS-->   
     <section>
-    <para></para>
+    <para>[[ repeatIn(get_aged_lines(objects, inv_type='out_invoice'),'cur_group')]]</para>
     <para>[[ setLang(user.lang) ]]</para>
-        <blockTable colWidths="20mm,100mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm" repeatRows="1" style="TERMS">
+        <blockTable colWidths="20mm,80mm,20mm,20mm,20mm,20mm,20mm,20mm,40mm" repeatRows="1" style="TERMS">
             <tr noRowsplits="1">
-                <td><para style="ITEMSTITLELEFT">RIF</para></td>
-                <td><para style="ITEMSTITLELEFT">EMPRESA</para></td>
-                <td><para style="ITEMSTITLERIGHT">NO VENCIDO</para></td>
-                <td><para style="ITEMSTITLERIGHT">01-30 DIAS</para></td>
-                <td><para style="ITEMSTITLERIGHT">31-60 DIAS</para></td>
-                <td><para style="ITEMSTITLERIGHT">61-90 DIAS</para></td>
-                <td><para style="ITEMSTITLERIGHT">91-120 DIAS</para></td>
-                <td><para style="ITEMSTITLERIGHT">+ 120 DIAS</para></td>
-                <td><para style="ITEMSTITLERIGHT">TOT./COBRAR</para></td>
+                <td><para style="ITEMSTITLELEFT">TIN</para></td>
+                <td><para style="ITEMSTITLELEFT">PARTNER</para></td>
+                <td><para style="ITEMSTITLERIGHT">NOT DUE</para></td>
+                <td><para style="ITEMSTITLERIGHT">01-30 DAYS</para></td>
+                <td><para style="ITEMSTITLERIGHT">31-60 DAYS</para></td>
+                <td><para style="ITEMSTITLERIGHT">61-90 DAYS</para></td>
+                <td><para style="ITEMSTITLERIGHT">91-120 DAYS</para></td>
+                <td><para style="ITEMSTITLERIGHT">+ 120 DAYS</para></td>
+                <td><para style="ITEMSTITLERIGHT">TOT./AR ([[ cur_group[0].get('cur_brw').name ]])</para></td>
             </tr>
             <tr>
-                <td><para style="ITEMSLEFT">[[repeatIn(get_aged_lines(objects),'o')]][[o.get('type')=='partner' and o.get('rp_brw').vat and '%s-%s-%s'%(o.get('rp_brw').vat[2],o.get('rp_brw').vat[3:-1],o.get('rp_brw').vat[-1])]]</para></td>
-                <td><para style="ITEMSLEFT">[[ o.get('type')=='partner' and o.get('rp_brw').name or o.get('type')=='total' and 'TOTAL' or o.get('type')=='provision' and removeParentNode('tr') ]]</para></td>
+                <td><para style="ITEMSLEFT">[[ repeatIn(cur_group,'o') ]][[ o.get('type')=='partner' and o.get('rp_brw').vat and '%s-%s-%s'%(o.get('rp_brw').vat[2],o.get('rp_brw').vat[3:-1],o.get('rp_brw').vat[-1]) ]]</para></td>
+                <td><para style="ITEMSLEFT">[[ o.get('type')=='partner' and o.get('rp_brw').name or o.get('type')=='total' and 'TOTAL IN ' + o.get('cur_brw').name or o.get('type')=='provision' and 'PROVISION IN ' + o.get('cur_brw').name ]]</para></td>
                 <td><para style="ITEMSRIGHT">[[  formatLang(o.get('not_due'), digits=2, grouping=True) ]]</para></td>
                 <td><para style="ITEMSRIGHT">[[  formatLang(o.get('1to30'), digits=2, grouping=True) ]]</para></td>
                 <td><para style="ITEMSRIGHT">[[  formatLang(o.get('31to60'), digits=2, grouping=True) ]]</para></td>
@@ -105,6 +105,7 @@
                 <td><para style="ITEMSRIGHT">[[  formatLang(o.get('total'), digits=2, grouping=True) ]]</para></td>
             </tr>
         </blockTable>
+        <spacer length="5mm"/>
     </section>
   </story>
 </document>
