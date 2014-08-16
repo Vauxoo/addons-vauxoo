@@ -63,7 +63,7 @@
         </table>
         </br>
         %endfor
-        <% list = get_total_by_comercial(objects) %>
+        <% list = get_total_by_comercial(objects, inv_type='in_invoice') %>
         <table style="border: 1px solid #A41D35; border-collapse: collapse;" width="100%">
             %for p in list:
             <tr>
