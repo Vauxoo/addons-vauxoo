@@ -87,7 +87,7 @@
 
   <images/>
   <story>
-    <para>[[repeatIn(get_invoice_by_partner_group(objects, inv_type='out_invoice'),'data')]]</para>
+    <para>[[repeatIn(get_invoice_by_partner_group(objects, inv_type='in_invoice'),'data')]]</para>
 <!--TABLA DE ITEMS-->   
     <section>
         <para style="CUSTOMERNAME">[[data[0].get('rp_brw').name]]</para>
@@ -96,7 +96,7 @@
         <para style="CUSTOMERNAME">[[data[0].get('rp_brw').street2 and data[0].get('rp_brw').street2.title() or removeParentNode('para')]]</para>
         <para style="CUSTOMERNAME">[[data[0].get('rp_brw').state_id and data[0].get('rp_brw').state_id.name.title() or removeParentNode('para')]]</para>
         <spacer length="5mm"/>
-        <para style="CUSTOMERTEXT">DOCUMENT: Customer Financial Statement</para>
+        <para style="CUSTOMERTEXT">DOCUMENT: Supplier Financial Statement</para>
         <spacer length="5mm"/>
         <para style="CUSTOMERTEXT">DATE: [[formatLang(time.strftime('%Y-%m-%d'),date=True)]]</para>
         <spacer length="5mm"/>
@@ -116,7 +116,7 @@
                     <td><para style="ITEMSTITLERIGHT">BASE</para></td>
                     <td><para style="ITEMSTITLERIGHT">TAX</para></td>
                     <td><para style="ITEMSTITLERIGHT">TOTAL/DOC.</para></td>
-                    <td><para style="ITEMSTITLERIGHT">COLLECTS</para></td>
+                    <td><para style="ITEMSTITLERIGHT">PAYMENTS</para></td>
                     <td><para style="ITEMSTITLERIGHT">BALANCE</para></td>
                 </tr>
             </blockTable>

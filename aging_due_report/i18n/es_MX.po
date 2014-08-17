@@ -6,11 +6,488 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-18 02:53+0000\n"
-"PO-Revision-Date: 2013-05-18 02:53+0000\n"
+"POT-Creation-Date: 2014-08-08 23:51+0000\n"
+"PO-Revision-Date: 2014-08-08 23:51+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/supplier_aging_due_report_html.mako:34
+msgid "TOT./AP"
+msgstr "TOT./AP"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/detail_due_report_html.mako:67
+#: report:addons/aging_due_report/report/detail_due_report_html.mako:83
+#: report:detail_due_report:0
+#: report:supplier_detail_due_report:0
+msgid "TOTAL"
+msgstr "TOTAL"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/aging_due_report_html.mako:35
+msgid "TOT./AR"
+msgstr "TOT./AR"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:98
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:100
+#: report:formal_due_report:0
+#: report:supplier_formal_due_report:0
+msgid "Best Regards,"
+msgstr "Atentamente,"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/detail_due_report_html.mako:41
+#: report:addons/aging_due_report/report/supplier_detail_due_report_html.mako:41
+#: report:detail_due_report:0
+#: report:supplier_detail_due_report:0
+msgid "TOT/INV."
+msgstr "TOT/INV."
+
+#. module: aging_due_report
+#: report:aging_due_report:0
+msgid "TOT./AR ("
+msgstr "TOT./AR ("
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/supplier_detail_due_report_html.mako:18
+#: model:ir.actions.report.xml,name:aging_due_report.supplier_detail_due_report
+msgid "Supplier Detail Report of Debts"
+msgstr "Reporte Detallado de Deudas de Proveedores"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:81
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:83
+msgid "I: INVOICE"
+msgstr "F: FACTURA"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/aging_due_report_html.mako:30
+#: report:addons/aging_due_report/report/aging_due_report_html.mako:31
+#: report:addons/aging_due_report/report/aging_due_report_html.mako:32
+#: report:addons/aging_due_report/report/aging_due_report_html.mako:33
+#: report:addons/aging_due_report/report/aging_due_report_html.mako:34
+#: report:addons/aging_due_report/report/supplier_aging_due_report_html.mako:29
+#: report:addons/aging_due_report/report/supplier_aging_due_report_html.mako:30
+#: report:addons/aging_due_report/report/supplier_aging_due_report_html.mako:31
+#: report:addons/aging_due_report/report/supplier_aging_due_report_html.mako:32
+#: report:addons/aging_due_report/report/supplier_aging_due_report_html.mako:33
+msgid "DAYS"
+msgstr "DÍAS"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/detail_due_report_html.mako:54
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:58
+#: report:addons/aging_due_report/report/supplier_detail_due_report_html.mako:54
+msgid "%s DAYS"
+msgstr "%s DÍAS"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/detail_due_report_html.mako:43
+#: report:addons/aging_due_report/report/supplier_detail_due_report_html.mako:43
+#: report:detail_due_report:0
+#: report:supplier_detail_due_report:0
+msgid "INCOME WH"
+msgstr "INGRESOS WH"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:47
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:49
+#: report:formal_due_report:0
+#: report:supplier_formal_due_report:0
+msgid "TOTAL/DOC."
+msgstr "TOTAL/DOC."
+
+#. module: aging_due_report
+#: report:aging_due_report:0
+#: report:supplier_aging_due_report:0
+msgid "31-60 DAYS"
+msgstr "31-60 DÍAS"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/detail_due_report_html.mako:36
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:42
+#: report:addons/aging_due_report/report/supplier_detail_due_report_html.mako:36
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:44
+#: report:detail_due_report:0
+#: report:formal_due_report:0
+#: report:supplier_detail_due_report:0
+#: report:supplier_formal_due_report:0
+msgid "EMIS DATE"
+msgstr "F/EMISION"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/detail_due_report_html.mako:42
+#: report:addons/aging_due_report/report/supplier_detail_due_report_html.mako:42
+#: report:detail_due_report:0
+#: report:supplier_detail_due_report:0
+msgid "VAT WH"
+msgstr "VAT WH"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/detail_due_report_html.mako:46
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:48
+#: report:detail_due_report:0
+#: report:formal_due_report:0
+msgid "COLLECTS"
+msgstr "ABONOS"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:35
+msgid "Supplier Financial Statement"
+msgstr "Supplier Financial Statement"
+
+#. module: aging_due_report
+#: model:ir.actions.report.xml,name:aging_due_report.supplier_formal_due_report_html
+msgid "Supplier Formal Report of Debts Webkit"
+msgstr "Reporte Formal de Deudas de Proveedores en Webkit"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:55
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:57
+msgid "I:"
+msgstr "F:"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/supplier_aging_due_report_html.mako:18
+#: model:ir.actions.report.xml,name:aging_due_report.supplier_aging_due_report
+msgid "Supplier Aging Report of Debts"
+msgstr "Reporte Antiguedad de Deudas de Proveedores"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/detail_due_report_html.mako:37
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:43
+#: report:addons/aging_due_report/report/supplier_detail_due_report_html.mako:37
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:45
+#: report:detail_due_report:0
+#: report:formal_due_report:0
+#: report:supplier_detail_due_report:0
+#: report:supplier_formal_due_report:0
+msgid "DUE DATE"
+msgstr "F/VENC."
+
+#. module: aging_due_report
+#: report:aging_due_report:0
+#: report:detail_due_report:0
+#: report:supplier_aging_due_report:0
+#: report:supplier_detail_due_report:0
+msgid "/ Page:"
+msgstr "/ Página:"
+
+#. module: aging_due_report
+#: report:aging_due_report:0
+#: report:detail_due_report:0
+#: report:supplier_aging_due_report:0
+#: report:supplier_detail_due_report:0
+msgid "Print Date:"
+msgstr "Fecha Impresión:"
+
+#. module: aging_due_report
+#: model:ir.actions.report.xml,name:aging_due_report.formal_due_report_webkit
+msgid "Customer Formal Report of Debts Webkit"
+msgstr "Reporte Formal de Deudas de Clientes en Webkit"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/detail_due_report_html.mako:40
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:46
+#: report:addons/aging_due_report/report/supplier_detail_due_report_html.mako:40
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:48
+#: report:detail_due_report:0
+#: report:formal_due_report:0
+#: report:supplier_detail_due_report:0
+#: report:supplier_formal_due_report:0
+msgid "TAX"
+msgstr "IMP."
+
+#. module: aging_due_report
+#: report:supplier_formal_due_report:0
+msgid "DOCUMENT: Supplier Financial Statement"
+msgstr "DOCUMENTO: Estado Financiero del Proveedor"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:68
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:70
+#: report:formal_due_report:0
+#: report:supplier_formal_due_report:0
+msgid "C:"
+msgstr "C:"
+
+#. module: aging_due_report
+#: model:ir.actions.report.xml,name:aging_due_report.aging_due_report_webkit
+msgid "Customer Aging Report of Debts Webkit"
+msgstr "Reporte Antiguedad de Deudas de Clientes en Webkit"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:80
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:82
+#: report:formal_due_report:0
+#: report:supplier_formal_due_report:0
+msgid "F: INVOICE"
+msgstr "F: INVOICE"
+
+#. module: aging_due_report
+#: model:ir.actions.report.xml,name:aging_due_report.supplier_detail_due_report_html
+msgid "Supplier Detail Report of Debts Webkit"
+msgstr "Reporte Detallado de Deudas de Proveedores en Webkit"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/supplier_detail_due_report_html.mako:46
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:50
+#: report:supplier_detail_due_report:0
+#: report:supplier_formal_due_report:0
+msgid "PAYMENTS"
+msgstr "PAGOS"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:33
+msgid "Customer Financial Statement"
+msgstr "Estado Financiero del Cliente"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:84
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:86
+msgid "TOTAL IN "
+msgstr "TOTAL EN "
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/aging_due_report_html.mako:27
+#: report:addons/aging_due_report/report/supplier_aging_due_report_html.mako:26
+#: report:aging_due_report:0
+#: report:supplier_aging_due_report:0
+msgid "TIN"
+msgstr "VAT"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:41
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:43
+#: report:formal_due_report:0
+#: report:supplier_formal_due_report:0
+msgid "DOCUMENT"
+msgstr "DOCUMENTO"
+
+#. module: aging_due_report
+#: report:supplier_aging_due_report:0
+msgid "TOT./AP ("
+msgstr "TOT./AP ("
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/detail_due_report_html.mako:45
+#: report:addons/aging_due_report/report/supplier_detail_due_report_html.mako:45
+#: report:detail_due_report:0
+#: report:supplier_detail_due_report:0
+msgid "C/N"
+msgstr "N/C"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/detail_due_report_html.mako:32
+#: report:addons/aging_due_report/report/supplier_detail_due_report_html.mako:32
+msgid "Amounts expressed in"
+msgstr "Montos expresados en"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:96
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:98
+#: report:formal_due_report:0
+#: report:supplier_formal_due_report:0
+msgid "Without any further reference,"
+msgstr "Sin ningún tipo de referencia,"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/detail_due_report_html.mako:35
+#: report:addons/aging_due_report/report/supplier_detail_due_report_html.mako:35
+#: report:detail_due_report:0
+#: report:supplier_detail_due_report:0
+msgid "INVOICE"
+msgstr "FACTURA"
+
+#. module: aging_due_report
+#: report:aging_due_report:0
+#: report:supplier_aging_due_report:0
+msgid "01-30 DAYS"
+msgstr "01-30 DÍAS"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/detail_due_report_html.mako:38
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:44
+#: report:addons/aging_due_report/report/supplier_detail_due_report_html.mako:38
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:46
+#: report:detail_due_report:0
+#: report:formal_due_report:0
+#: report:supplier_detail_due_report:0
+#: report:supplier_formal_due_report:0
+msgid "DUE DAYS"
+msgstr "DIAS/VENC."
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/detail_due_report_html.mako:83
+#: report:addons/aging_due_report/report/supplier_detail_due_report_html.mako:83
+#: report:detail_due_report:0
+#: report:formal_due_report:0
+#: report:supplier_detail_due_report:0
+#: report:supplier_formal_due_report:0
+msgid "TOTAL IN"
+msgstr "TOTAL EN"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:20
+#: model:ir.actions.report.xml,name:aging_due_report.formal_due_report
+msgid "Customer Formal Report of Debts"
+msgstr "Reporte Formal de Deudas de Clientes"
+
+#. module: aging_due_report
+#: report:aging_due_report:0
+#: report:supplier_aging_due_report:0
+msgid "61-90 DAYS"
+msgstr "61-90 DÍAS"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:82
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:84
+#: report:formal_due_report:0
+#: report:supplier_formal_due_report:0
+msgid "C: C/N"
+msgstr "C: N/C"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/aging_due_report_html.mako:29
+#: report:addons/aging_due_report/report/supplier_aging_due_report_html.mako:28
+#: report:aging_due_report:0
+#: report:supplier_aging_due_report:0
+msgid "NOT DUE"
+msgstr "NO VENCIDO"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/detail_due_report_html.mako:39
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:45
+#: report:addons/aging_due_report/report/supplier_detail_due_report_html.mako:39
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:47
+#: report:detail_due_report:0
+#: report:formal_due_report:0
+#: report:supplier_detail_due_report:0
+#: report:supplier_formal_due_report:0
+msgid "BASE"
+msgstr "BASE"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/detail_due_report_html.mako:32
+#: report:addons/aging_due_report/report/supplier_detail_due_report_html.mako:34
+msgid "Amounts expressed in"
+msgstr "Montos expresados en"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/detail_due_report_html.mako:47
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:49
+#: report:addons/aging_due_report/report/supplier_detail_due_report_html.mako:47
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:51
+#: report:detail_due_report:0
+#: report:formal_due_report:0
+#: report:supplier_detail_due_report:0
+#: report:supplier_formal_due_report:0
+msgid "BALANCE"
+msgstr "BALANCE"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/detail_due_report_html.mako:54
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:58
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:60
+msgid "0 DAYS"
+msgstr "0 DÍAS"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:20
+#: model:ir.actions.report.xml,name:aging_due_report.supplier_formal_due_report
+msgid "Supplier Formal Report of Debts"
+msgstr "Reporte Formal de Deudas de Proveedores"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/detail_due_report_html.mako:18
+#: model:ir.actions.report.xml,name:aging_due_report.detail_due_report
+msgid "Customer Detail Report of Debts"
+msgstr "Reporte Detallado de Deudas de Clientes"
+
+#. module: aging_due_report
+#: report:formal_due_report:0
+msgid "DOCUMENT: Customer Financial Statement"
+msgstr "DOCUMENTO: Estado Fianciero del Cliente"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/detail_due_report_html.mako:44
+#: report:addons/aging_due_report/report/supplier_detail_due_report_html.mako:44
+#: report:detail_due_report:0
+#: report:supplier_detail_due_report:0
+msgid "MUNI. WH"
+msgstr "MUNI. WH"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:54
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:56
+#: report:formal_due_report:0
+#: report:supplier_formal_due_report:0
+msgid "F:"
+msgstr "F:"
+
+#. module: aging_due_report
+#: report:formal_due_report:0
+#: report:supplier_formal_due_report:0
+msgid "DATE:"
+msgstr "FECHA:"
+
+#. module: aging_due_report
+#: model:ir.actions.report.xml,name:aging_due_report.detail_due_report_webkit
+msgid "Customer Detail Report of Debts Webkit"
+msgstr "Reporte Detallado de Deudas de Clientes en Webkit"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/aging_due_report_html.mako:18
+#: model:ir.actions.report.xml,name:aging_due_report.aging_due_report
+msgid "Customer Aging Report of Debts"
+msgstr "Reporte Antiguedad de Deudas de Clientes"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/formal_due_report_html.mako:83
+#: report:addons/aging_due_report/report/supplier_formal_due_report_html.mako:85
+#: report:formal_due_report:0
+#: report:supplier_formal_due_report:0
+msgid "D: D/N"
+msgstr "D: D/N"
+
+#. module: aging_due_report
+#: report:aging_due_report:0
+#: report:supplier_aging_due_report:0
+msgid "91-120 DAYS"
+msgstr "91-120 DÍAS"
+
+#. module: aging_due_report
+#: report:aging_due_report:0
+#: report:detail_due_report:0
+#: report:formal_due_report:0
+#: report:supplier_aging_due_report:0
+#: report:supplier_detail_due_report:0
+#: report:supplier_formal_due_report:0
+msgid "This report was printed in OpenERP with ReportLab"
+msgstr "Este informe fue impreso en OpenERP con ReportLab"
+
+#. module: aging_due_report
+#: report:addons/aging_due_report/report/aging_due_report_html.mako:28
+#: report:addons/aging_due_report/report/supplier_aging_due_report_html.mako:27
+#: report:aging_due_report:0
+#: report:supplier_aging_due_report:0
+msgid "PARTNER"
+msgstr "EMPRESA"
+
+#. module: aging_due_report
+#: report:aging_due_report:0
+#: report:supplier_aging_due_report:0
+msgid "+ 120 DAYS"
+msgstr "+ 120 DÍAS"
+
+#. module: aging_due_report
+#: model:ir.actions.report.xml,name:aging_due_report.supplier_aging_due_report_html
+msgid "Supplier Aging Report of Debts Webkit"
+msgstr "Reporte Antiguedad de Deudas de Proveedores en Webkit"
+
