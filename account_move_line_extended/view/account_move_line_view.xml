@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+
+        <record id="aml_extended_search" model="ir.ui.view">
+            <field name="name">Journal Entries Extended Search</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_account_move_line_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <field name="currency_id"/>
+                </xpath>
+                <xpath expr="//group" position="inside">
+                    <filter string="Currency" icon="terp-folder-orange" domain="[]" context="{'group_by':'currency_id'}"/>
+                </xpath>
+            </field>
+        </record>
+
         <record id="aml_extended_tree" model="ir.ui.view">
             <field name="name">Journal Entries Extended</field>
             <field name="model">account.move.line</field>
