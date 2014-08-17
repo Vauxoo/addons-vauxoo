@@ -79,7 +79,7 @@
   <story>
 <!--TABLA DE ITEMS-->   
     <section>
-    <para>[[repeatIn(get_invoice_by_partner(objects),'o')]]</para>
+    <para>[[repeatIn(get_invoice_by_partner(objects, inv_type='in_invoice'),'o')]]</para>
     <para>[[ setLang(user.lang) ]]</para>
         <blockTable colWidths="35mm,97mm,20mm,40mm" style="TERMSTABLEGREY">
             <tr>
@@ -98,7 +98,7 @@
                 <td><para style="ITEMSTITLERIGHT">BASE</para></td>
                 <td><para style="ITEMSTITLERIGHT">TAX</para></td>
                 <td><para style="ITEMSTITLERIGHT">TOT/INV.</para></td>
-                <td><para style="ITEMSTITLERIGHT">COLLECTS</para></td>
+                <td><para style="ITEMSTITLERIGHT">PAYMENTS</para></td>
                 <td><para style="ITEMSTITLERIGHT">BALANCE</para></td>
             </tr>
         
@@ -128,7 +128,7 @@
     <spacer length="5mm"/>
     </section>
     <section>
-        <para>[[repeatIn(get_total_by_comercial(objects),'p')]]</para>
+        <para>[[repeatIn(get_total_by_comercial(objects, inv_type='in_invoice'),'p')]]</para>
         <blockTable colWidths="172mm,20mm" style="TERMSTABLEGREY">
             <tr noRowsplits="1">
                 <td><para style="ITEMSRIGHT">TOTAL IN [[ p['currency'] ]] </para></td>
