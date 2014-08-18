@@ -31,6 +31,7 @@ from openerp import pooler, tools
 from openerp import netsvc
 from openerp import release
 import datetime
+from datetime import timedelta
 from pytz import timezone
 import pytz
 from dateutil.relativedelta import relativedelta
@@ -59,24 +60,6 @@ class account_invoice(osv.Model):
     _inherit = 'account.invoice'
     #_order = 'invoice_datetime asc'
 
-    def _get_date_invoice_tz(self, cr, uid, ids, field_names=None, arg=False, context=None):
-        if context is None:
-            context = {}
-        res = {}
-        if release.version >= '6':
-            dt_format = tools.DEFAULT_SERVER_DATETIME_FORMAT
-            tz = self.pool.get('res.users').browse(cr, uid, uid).tz
-            for invoice in self.browse(cr, uid, ids, context=context):
-                res[invoice.id] = invoice.invoice_datetime and tools.\
-                    server_to_local_timestamp(invoice.invoice_datetime,
-                    tools.DEFAULT_SERVER_DATETIME_FORMAT,
-                    tools.DEFAULT_SERVER_DATETIME_FORMAT, tz) or False
-        elif release.version < '6':
-            # TODO: tz change for openerp5
-            for invoice in self.browse(cr, uid, ids, context=context):
-                res[invoice.id] = invoice.date_invoice
-        return res
-
     def _get_field_params(self, cr, uid, ids, name, unknow_none, context=None):
         if context is None:
             context = {}
@@ -94,11 +77,30 @@ class account_invoice(osv.Model):
         'invoice_datetime': fields.datetime('Date time of invoice',
             states={'open': [('readonly', True)], 'close': [('readonly', True)]},
             help="Keep empty to use the current date"),
-        'date_invoice_tz':  fields.function(_get_date_invoice_tz, method=True,
-            type='datetime', string='Date Invoiced with TZ', store=True,
+        'date_invoice_tz':  fields.datetime(string='Date Invoiced with TZ',
             help='Date of Invoice with Time Zone'),
         'date_type': fields.function(_get_field_params, storage=False, type='char', string="Date type")
     }
+
+    def create(self, cr, uid, vals, context=None):
+        if 'invoice_datetime' in vals.keys():
+            datetime_inv = vals.get("invoice_datetime") and datetime.datetime.strptime(vals.get("invoice_datetime"), "%Y-%m-%d %H:%M:%S") or False
+            if datetime_inv:
+                hours_tz = self.pool.get("res.users").read(cr, uid, uid, ["tz_offset"], context=context).get("tz_offset")
+                hours_tz = int(hours_tz[:-2])
+                datetime_inv_tz = (datetime_inv + timedelta(hours=hours_tz)).strftime('%Y-%m-%d %H:%M:%S')
+                vals.update({'date_invoice_tz': datetime_inv_tz})
+        return super(account_invoice, self).create(cr, uid, vals, context=context)
+
+    def write(self, cr, uid, ids, vals, context=None):
+        for invoice in self.browse(cr, uid, ids, context=context):
+            datetime_inv = invoice.invoice_datetime and datetime.datetime.strptime(invoice.invoice_datetime, "%Y-%m-%d %H:%M:%S") or False
+            if datetime_inv:
+                hours_tz = self.pool.get("res.users").read(cr, uid, uid, ["tz_offset"], context=context).get("tz_offset")
+                hours_tz = int(hours_tz[:-2])
+                datetime_inv_tz = (datetime_inv + timedelta(hours=hours_tz)).strftime('%Y-%m-%d %H:%M:%S')
+                vals.update({'date_invoice_tz': datetime_inv_tz})
+        return super(account_invoice, self).write(cr, uid, ids, vals, context=context)
 
     def _get_default_type(self, cr, uid, ids):
         key_by_company_id = "acc_invoice.date_invoice_type_" + str(self.pool.get("account.config.settings")._default_company(cr, uid))
@@ -199,7 +201,6 @@ class account_invoice(osv.Model):
                                         not values.get('date_invoice', False):
             res['date_invoice'] = fields.date.context_today(self,cr,uid,context=context)
             res['invoice_datetime'] = fields.datetime.now()
-            
         return res
 
     def action_move_create(self, cr, uid, ids, context=None):
