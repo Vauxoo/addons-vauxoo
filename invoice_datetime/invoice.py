@@ -86,9 +86,12 @@ class account_invoice(osv.Model):
         if 'invoice_datetime' in vals.keys():
             datetime_inv = vals.get("invoice_datetime") and datetime.datetime.strptime(vals.get("invoice_datetime"), "%Y-%m-%d %H:%M:%S") or False
             if datetime_inv:
-                hours_tz = self.pool.get("res.users").read(cr, uid, uid, ["tz_offset"], context=context).get("tz_offset")
-                hours_tz = int(hours_tz[:-2])
-                datetime_inv_tz = (datetime_inv + timedelta(hours=hours_tz)).strftime('%Y-%m-%d %H:%M:%S')
+                time_tz = self.pool.get("res.users").read(cr, uid, uid, ["tz_offset"], context=context).get("tz_offset")
+                hours_tz = int(time_tz[:-2])
+                minut_tz = int(time_tz[-2:])
+                if time_tz[0] == '-':
+                    minut_tz = minut_tz * -1
+                datetime_inv_tz = (datetime_inv + timedelta(hours=hours_tz, minutes=minut_tz)).strftime('%Y-%m-%d %H:%M:%S')
                 vals.update({'date_invoice_tz': datetime_inv_tz})
         return super(account_invoice, self).create(cr, uid, vals, context=context)
 
@@ -96,9 +99,12 @@ class account_invoice(osv.Model):
         for invoice in self.browse(cr, uid, ids, context=context):
             datetime_inv = invoice.invoice_datetime and datetime.datetime.strptime(invoice.invoice_datetime, "%Y-%m-%d %H:%M:%S") or False
             if datetime_inv:
-                hours_tz = self.pool.get("res.users").read(cr, uid, uid, ["tz_offset"], context=context).get("tz_offset")
-                hours_tz = int(hours_tz[:-2])
-                datetime_inv_tz = (datetime_inv + timedelta(hours=hours_tz)).strftime('%Y-%m-%d %H:%M:%S')
+                time_tz = self.pool.get("res.users").read(cr, uid, uid, ["tz_offset"], context=context).get("tz_offset")
+                hours_tz = int(time_tz[:-2])
+                minut_tz = int(time_tz[-2:])
+                if time_tz[0] == '-':
+                    minut_tz = minut_tz * -1
+                datetime_inv_tz = (datetime_inv + timedelta(hours=hours_tz, minutes=minut_tz)).strftime('%Y-%m-%d %H:%M:%S')
                 vals.update({'date_invoice_tz': datetime_inv_tz})
         return super(account_invoice, self).write(cr, uid, ids, vals, context=context)
 
