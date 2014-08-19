@@ -49,8 +49,9 @@
             <field name="model">project.task</field>
             <field name="inherit_id" ref="project.view_task_tree2"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='effective_hours']" position="replace">
-                    <field name="effective_hours" widget="float_time" sum="Spent Hours" invisible="0"/>
+                <xpath expr="//field[@name='effective_hours']" position="attributes">
+                    <attribute name="widget">float_time</attribute>
+                    <attribute name="invisible">False</attribute>
                 </xpath>
             </field>
         </record> 

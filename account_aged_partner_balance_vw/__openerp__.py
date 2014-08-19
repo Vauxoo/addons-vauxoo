@@ -48,5 +48,5 @@
         'report/report.xml',
     ],
     "installable" : True,
-    "active" : True,
+    'auto_install': False,
 }

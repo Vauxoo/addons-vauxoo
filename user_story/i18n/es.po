@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-07-30 07:01+0000\n"
-"X-Generator: Launchpad (build 17131)\n"
+"X-Launchpad-Export-Date: 2014-08-13 06:51+0000\n"
+"X-Generator: Launchpad (build 17156)\n"
 
 #. module: user_story
 #: view:user.story:0
@@ -109,6 +109,7 @@ msgstr "Tarea"
 
 #. module: user_story
 #: field:acceptability.criteria,scenario:0
+#: report:addons/user_story/report/user_story_report.mako:47
 #: view:user.story:0
 msgid "Scenario"
 msgstr "Escenario"
@@ -670,6 +671,7 @@ msgstr ""
 
 #. module: user_story
 #: field:user.story.priority,name:0
+#: report:addons/user_story/report/user_story_report.mako:46
 msgid "Name"
 msgstr "Nombre"
 
