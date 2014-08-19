@@ -38,8 +38,8 @@ class mail_compose_message(osv.TransientModel):
         
         template_id = context.get('default_template_id', False)
         
-        if template_id and\
-            email_template_obj.browse(cr, uid, template_id,
-                        context=context).composition_mode_comment:
-            result['composition_mode'] = 'comment'
+        for template in  email_template_obj.browse(cr, uid, template_id, context=context):
+            if template.composition_mode_comment:
+                result['composition_mode'] = 'comment'
+                
         return result
