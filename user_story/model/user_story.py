@@ -340,7 +340,6 @@ class user_story(osv.Model):
             'message_follower_ids'])['message_follower_ids']
         #TODO: Re-do when correctly rendered is done using email template
         for i in ids:
-            print self.get_body_approval(cr, uid, i, context)
             body = self.get_body_approval(cr, uid, i, context)
             context.update({
                 'default_body': body,
