@@ -109,9 +109,7 @@ class message_post_show_all(osv.Model):
                     delete = _('Deleted')
                     if lastv and not new:
 
-                        F_TYPE = obj._columns[r_name]._type
-                        dele = [self.get_last_value(cr, uid, i, n_obj, r_name,
-                                                    F_TYPE) for i in lastv]
+                        dele = [obj.name_get(cr, uid, [i])[0][1] for i in lastv]
                         mes = ' - '.join(dele)
                         message = u'%s\n<li><b>%s %s<b>: %s</li>' % \
                                                     (message,
@@ -120,9 +118,7 @@ class message_post_show_all(osv.Model):
                                                      mes)
                     if not lastv and new:
 
-                        F_TYPE = obj._columns[r_name]._type
-                        dele = [self.get_last_value(cr, uid, i, n_obj, r_name,
-                                                    F_TYPE) for i in new]
+                        dele = [obj.name_get(cr, uid, [i])[0][1] for i in new]
                         mes = '-'.join(dele)
                         message = u'%s\n<li><b>%s %s<b>: %s</li>' % \
                                                     (message,
@@ -222,7 +218,6 @@ class message_post_show_all(osv.Model):
             message = False
             for field in vals:
 
-                track = 'track_visibility' in  dir(self._columns[field])
                 if self._columns[field]._type in ('one2many', 'many2many'):
                     MANY = self._columns[field]._type == 'many2many'
 
