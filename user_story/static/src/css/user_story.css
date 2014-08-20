@@ -1,0 +1,11 @@
+@media print {
+      .openerp .no_print {
+          display: none !important;
+        }
+      .openerp iframe {
+          display: none !important;
+        }
+      .openerp .page-brake {
+          page-break-after: always;
+        }
+    }

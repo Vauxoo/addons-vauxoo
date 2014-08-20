@@ -104,6 +104,7 @@ msgstr ""
 
 #. module: user_story
 #: field:acceptability.criteria,scenario:0
+#: report:addons/user_story/report/user_story_report.mako:47
 #: view:user.story:0
 msgid "Scenario"
 msgstr ""
@@ -514,6 +515,8 @@ msgstr ""
 msgid "sc 1.2"
 msgstr ""
 
+
+
 #. module: user_story
 #: model:acceptability.criteria,scenario:user_story.ac_11
 msgid "sc 1.1"
@@ -608,6 +611,7 @@ msgstr ""
 
 #. module: user_story
 #: field:user.story.priority,name:0
+#: report:addons/user_story/report/user_story_report.mako:46
 msgid "Name"
 msgstr ""
 
@@ -674,4 +678,3 @@ msgstr ""
 #: view:user.story:0
 msgid "Sprint"
 msgstr ""
-

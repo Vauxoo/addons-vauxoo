@@ -34,12 +34,21 @@ This module will allow you to get:
 A Customer's Formal Due Report,
 A Customer's Detail Due Report,
 A Customer's Aging Due Report.
+A Supplier's Formal Due Report,
+A Supplier's Detail Due Report,
+A Supplier's Aging Due Report.
 """,
-    "depends" : ["account",
-],
-    "init_xml" : [],
-    "update_xml" : [
+    "depends" : ["account", "report_webkit",
+                ],
+    "data" : [
         "report/ing_due_report.xml",
+        "data/aging_due_webkit_header.xml",
+        "data/customer_formal_due_webkit_header.xml",
+        "data/customer_detail_due_webkit_header.xml",
+        "data/supplier_aging_due_webkit_header.xml",
+        "data/supplier_formal_due_webkit_header.xml",
+        "data/supplier_detail_due_webkit_header.xml",
+        "report/aging_due_report_webkit.xml",
 
     ],
     "active": False,
