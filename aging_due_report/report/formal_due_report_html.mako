@@ -6,6 +6,7 @@
     </style>
 </head>
 <body>
+    <% from datetime import datetime %>
     <% setLang(user.lang) %>
     <% datas = get_invoice_by_partner_group(objects, inv_type='out_invoice') %>
     %for data in datas:
@@ -53,8 +54,8 @@
                 %for inv in line['inv_ids']:
                     <tr>
                         <td class="ITEMSLEFT">${_('I:')} ${inv['inv_brw'].number or 0}</td>
-                        <td class="ITEMSLEFT">${ formatLang(inv['inv_brw'].date_invoice, date=True) }</td>
-                        <td class="ITEMSLEFT">${ formatLang(inv['inv_brw'].date_due, date=True) }</td>
+                        <td class="ITEMSLEFT">${ inv.get('inv_brw', False).date_invoice and datetime.strptime(inv.get('inv_brw', False).date_invoice.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity }</td>
+                        <td class="ITEMSLEFT">${ inv.get('inv_brw', False).date_due and datetime.strptime(inv.get('inv_brw', False).date_due.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity }</td>
                         <td class="ITEMSLEFT">${ inv.get('due_days') and _('%s DAYS')%inv.get('due_days') or _('0 DAYS') }</td>
                         <td class="ITEMSRIGHT">${ formatLang(inv['inv_brw'].amount_untaxed) or '0.00' }</td>
                         <td class="ITEMSRIGHT">${ formatLang(inv['inv_brw'].amount_tax) or '0.00' }</td>
