@@ -3,20 +3,21 @@
     <data noupdate="1">
 
         <record id="us_1" model="user.story">
-            <field name="name">us 1</field>
-            <field name="owner_id" ref="base.user_root"/>
+            <field name="name">As demo user I need demo data that contains me.</field>
+            <field name="owner_id" ref="base.user_demo"/>
             <field name="project_id" ref="project.project_project_1"/>
         </record>
 
         <record id="us_2" model="user.story">
-            <field name="name">us 2</field>
+            <field name="name">I as admin user need that a demo record contains me.</field>
             <field name="owner_id" ref="base.user_root"/>
+            <field name="user_execute_id" ref="base.user_demo"/>
             <field name="project_id" ref="project.project_project_1"/>
         </record>
 
         <record id="us_3" model="user.story">
-            <field name="name">us 3</field>
-            <field name="owner_id" ref="base.user_root"/>
+            <field name="name">As project manager I need a document to fill User Story.</field>
+            <field name="owner_id" ref="base.user_demo"/>
             <field name="project_id" ref="project.project_project_2"/>
         </record>
 
@@ -47,7 +48,7 @@
             <field name="name">criterion 2.2</field>
             <field name="scenario">sc 2.2</field>
             <field name="accep_crit_id" ref="us_2"/>
-            <field name="difficulty">low</field>
+            <field name="difficulty">medium</field>
         </record>
 
         <record id="ac_31" model="acceptability.criteria">

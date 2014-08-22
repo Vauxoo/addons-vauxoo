@@ -51,6 +51,9 @@ siguientes:
 .. fuentes: http://adrianmoya.com/2012/08/que-hay-en-una-historia/""",
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
+    "css" : [
+        'static/src/css/*.css',
+    ],
     "demo" : [
         'demo/demo.xml',
     ],
