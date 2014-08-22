@@ -41,7 +41,7 @@ This module allows you to group your journal items by reconciliation with a new 
     "license": "AGPL-3",
     "depends": [
         "account",
-        "acount_move_line_grouping",
+        "account_move_line_grouping",
                 ],
     "demo": [
     ],
