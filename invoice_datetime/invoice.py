@@ -82,7 +82,7 @@ class account_invoice(osv.Model):
         'date_type': fields.function(_get_field_params, storage=False, type='char', string="Date type")
     }
 
-    def _get_datetime_with_user_tz(self, cr, uid, ids, datetime, context=None):
+    def _get_datetime_with_user_tz(self, cr, uid, datetime, context=None):
         time_tz = self.pool.get("res.users").read(cr, uid, uid, ["tz_offset"], context=context).get("tz_offset")
         hours_tz = int(time_tz[:-2])
         minut_tz = int(time_tz[-2:])
@@ -95,14 +95,14 @@ class account_invoice(osv.Model):
         if 'invoice_datetime' in vals.keys():
             datetime_inv = vals.get("invoice_datetime") and datetime.datetime.strptime(vals.get("invoice_datetime"), "%Y-%m-%d %H:%M:%S") or False
             if datetime_inv:
-                vals.update({'date_invoice_tz': self._get_datetime_with_user_tz(cr, uid, ids, datetime_inv)})
+                vals.update({'date_invoice_tz': self._get_datetime_with_user_tz(cr, uid, datetime_inv)})
         return super(account_invoice, self).create(cr, uid, vals, context=context)
 
     def write(self, cr, uid, ids, vals, context=None):
         for invoice in self.browse(cr, uid, ids, context=context):
             datetime_inv = invoice.invoice_datetime and datetime.datetime.strptime(invoice.invoice_datetime, "%Y-%m-%d %H:%M:%S") or False
             if datetime_inv:
-                vals.update({'date_invoice_tz': self._get_datetime_with_user_tz(cr, uid, ids, datetime_inv)})
+                vals.update({'date_invoice_tz': self._get_datetime_with_user_tz(cr, uid, datetime_inv)})
         return super(account_invoice, self).write(cr, uid, ids, vals, context=context)
 
     def _get_default_type(self, cr, uid, ids):
