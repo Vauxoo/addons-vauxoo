@@ -25,7 +25,7 @@
 #
 
 {
-    "name": "Account Reconcile Grouping",
+    "name": "Account Move Line Grouping",
     "version": "1.0",
     "author": "Vauxoo",
     "category": "Accounting",
@@ -33,15 +33,14 @@
 Account Reconcile Grouping
 ==========================
 
-This module allows you to group your journal items by reconciliation with a new filter in the search view.
+This module allows you to group your journal items by Journal Entry with a new filter in the search view.
 
 
     """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
-        "account",
-        "account_move_line_grouping",
+            "account",
                 ],
     "demo": [
     ],
