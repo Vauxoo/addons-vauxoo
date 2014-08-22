@@ -6,6 +6,7 @@
     </style>
 </head>
 <body>
+    <% from datetime import datetime %>
     <% setLang(user.lang) %>
     <% datas = get_invoice_by_partner_group(objects, inv_type='in_invoice') %>
     %for data in datas:
@@ -40,23 +41,23 @@
         %for line in data:
             <table class="table_column_border table_alter_color_row table_title_bg_color" width="100%">
                 <tr>
-                    <th width="15%" class="ITEMSTITLELEFT">${_('DOCUMENT') |entity}</th>
-                    <th width="15%" class="ITEMSTITLELEFT">${_('EMIS DATE') |entity}</th>
+                    <th width="21%" class="ITEMSTITLELEFT">${_('DOCUMENT') |entity}</th>
+                    <th width="10%" class="ITEMSTITLELEFT">${_('EMIS DATE') |entity}</th>
                     <th width="10%" class="ITEMSTITLELEFT">${_('DUE DATE') |entity}</th>
-                    <th width="10%" class="ITEMSTITLELEFT">${_('DUE DAYS') |entity}</th>
+                    <th width="4%" class="ITEMSTITLELEFT">${_('DUE DAYS') |entity}</th>
                     <th width="10%" class="ITEMSTITLERIGHT">${_('BASE') |entity}</th>
                     <th width="10%" class="ITEMSTITLERIGHT">${_('TAX') |entity}</th>
-                    <th width="10%" class="ITEMSTITLERIGHT">${_('TOTAL/DOC.') |entity}</th>
+                    <th width="12%" class="ITEMSTITLERIGHT">${_('TOTAL/DOC.') |entity}</th>
                     <th width="10%" class="ITEMSTITLERIGHT">${_('PAYMENTS') |entity}</th>
-                    <th width="10%" class="ITEMSTITLERIGHT">${_('BALANCE') |entity}</th>
+                    <th width="12%" class="ITEMSTITLERIGHT">${_('BALANCE') |entity}</th>
                 </tr>
 
                 <!-- TABLA CENTRAL DEL REPORTE -->
                 %for inv in line['inv_ids']:
                     <tr>
                         <td class="ITEMSLEFT">${_('I:')} ${inv['inv_brw'].number or 0}</td>
-                        <td class="ITEMSLEFT">${ formatLang(inv['inv_brw'].date_invoice, date=True) }</td>
-                        <td class="ITEMSLEFT">${ formatLang(inv['inv_brw'].date_due, date=True) }</td>
+                        <td class="ITEMSLEFT">${ inv.get('inv_brw', False).date_invoice and datetime.strptime(inv.get('inv_brw', False).date_invoice.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity }</td>
+                        <td class="ITEMSLEFT">${ inv.get('inv_brw', False).date_due and datetime.strptime(inv.get('inv_brw', False).date_due.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''|entity }</td>
                         <td class="ITEMSLEFT">${ inv.get('due_days') and '%s DAYS'%inv.get('due_days') or _('0 DAYS') }</td>
                         <td class="ITEMSRIGHT">${ formatLang(inv['inv_brw'].amount_untaxed) or '0.00' }</td>
                         <td class="ITEMSRIGHT">${ formatLang(inv['inv_brw'].amount_tax) or '0.00' }</td>
