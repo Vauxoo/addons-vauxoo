@@ -14,8 +14,6 @@
                 <td class='dir_font'>
                     <div class='company_font'>${o.company_id.name or ''|entity}</div>
                     <br>${o.company_id.partner_id.street or ''|entity} No. 
-                                                ${o.company_id.partner_id.l10n_mx_street4 or ''|entity}
-                                                ${o.company_id.partner_id.l10n_mx_street3 or ''|entity}
                                                 ${o.company_id.partner_id.street2 or ''|entity}
                                                 ${o.company_id.partner_id.zip or ''|entity}
                                                 <br/>${o.company_id.partner_id.city or ''|entity}
