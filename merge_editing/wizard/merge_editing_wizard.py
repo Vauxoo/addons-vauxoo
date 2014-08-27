@@ -26,11 +26,11 @@ from openerp import tools
 
 class merge_fuse_wizard(osv.TransientModel):
     _name = 'merge.fuse.wizard'
-    
+
     def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
         result = super(merge_fuse_wizard, self).fields_view_get(cr, uid, view_id, view_type, context, toolbar,submenu)
         if context.get('merge_fuse_object'):
-            merge_object = self.pool.get('merge.object') 
+            merge_object = self.pool.get('merge.object')
             fuse_data = merge_object.browse(cr, uid, context.get('merge_fuse_object'), context)
             all_fields = {}
             xml_form = etree.Element('form', {'string': tools.ustr(fuse_data.name)})
@@ -55,7 +55,7 @@ class merge_fuse_wizard(osv.TransientModel):
             property_obj = self.pool.get('ir.property')
             related_ids = models_obj.search(cr,uid,[('ttype', 'in', ('many2one', 'one2many',
                 'many2many')),
-                                                    ('relation','=',str(context.get('active_model')))]) #get the models related to the one to fuse        
+                                                    ('relation','=',str(context.get('active_model')))]) #get the models related to the one to fuse
             can = True
             for related in models_obj.browse(cr,uid,related_ids):
                 cr.commit()
@@ -71,30 +71,34 @@ class merge_fuse_wizard(osv.TransientModel):
                                                           [('fields_id', '=', related.id),
                                                            ('value_reference', '=', v_reference)],
                                                           context=context)
-                        
+
 
                     if property_ids:
-                        v_ref = '%s,%s' % (context.get('active_model'), base_id) 
+                        v_ref = '%s,%s' % (context.get('active_model'), base_id)
                         property_obj.write(cr, uid, property_ids,
                                            {
                                             'value_reference': v_ref
                                              },
                                            context=context)
                         continue
-                    
+
                 elif isinstance(field_obj, fields.function):
                     if field_obj.store or field_obj._fnct_search:
                         target_ids = target_model.search(cr,uid,[(related.name,'in',active_ids)])
                     else:
                         continue
 
+
                 else:
                     target_ids = target_model and  \
-                                         target_model.search(cr, uid, 
+                                         target_model.search(cr, uid,
                                                             [(related.name,'in',active_ids)])
                     if target_ids:
                         try:
-                            target_model.write(cr,uid,target_ids,{str(related.name):base_id})
+                            if isinstance(field_obj, (fields.many2many, fields.one2many)):
+                                target_model.write(cr,uid,target_ids,{str(related.name):[(4, base_id)]})
+                            else:
+                                target_model.write(cr,uid,target_ids,{str(related.name):base_id})
                         except Exception,e:
                             if 'cannot update view' in e.message:
                                 continue
@@ -102,7 +106,7 @@ class merge_fuse_wizard(osv.TransientModel):
                                 can = False
                 cr.commit()
             if can:
-                to_unlink = list(set(active_ids) - set([base_id])) 
+                to_unlink = list(set(active_ids) - set([base_id]))
                 model_obj.unlink(cr,uid,to_unlink)
                 cr.commit()
         result = super(merge_fuse_wizard, self).create(cr, uid, {}, context)
@@ -126,7 +130,7 @@ class merge_editing_wizard(osv.TransientModel):
     def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
         result = super(merge_editing_wizard, self).fields_view_get(cr, uid, view_id, view_type, context, toolbar,submenu)
         if context.get('merge_editing_object'):
-            merge_object = self.pool.get('merge.object') 
+            merge_object = self.pool.get('merge.object')
             editing_data = merge_object.browse(cr, uid, context.get('merge_editing_object'), context)
             all_fields = {}
             xml_form = etree.Element('form', {'string': tools.ustr(editing_data.name)})
