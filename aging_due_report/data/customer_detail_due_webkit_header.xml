@@ -81,7 +81,7 @@
     border-top: 1px solid #1A1A1A;*/
     border: 0.5px solid #FFFFFF;
     background-color: #A41D35;
-    font-size: 8;
+    font-size: 12;
     color: white; }
 
 .table_title {
@@ -91,7 +91,7 @@
   .table_title > tbody > tr > th,
   .table_title > tfoot > tr > th {
     border-bottom: 2px solid #1A1A1A;
-    font-size: 8;
+    font-size: 12;
     color: white; }
 
 .table_row_border {
@@ -234,7 +234,7 @@
 body {
   color: black;
   font-family: "Helvetica Neue", Helvetica, Arial, sans_serif, Times-BoldItalic, Helvetica-Bold, Helvetica-Oblique;
-  font-size: 8;
+  font-size: 11;
   margin: 0;
   padding: 0;
   height: 100%;
@@ -264,10 +264,10 @@ th {
   padding-right: 2px;
   padding-left: 2px;
   text-align: center;
-  font-size: 7; }
+  font-size: 10; }
 
 strong{
-  font-size: 12; 
+  font-size: 14; 
   font-weight: bold;
 }
 
@@ -301,7 +301,7 @@ hr{
 }
 
 td{
-  font-size:7;
+  font-size:11;
 }
 
 .td_without_bottom{
@@ -352,21 +352,21 @@ color: black; }
 .ITEMSTITLELEFT {
  text-align: left;
  font-family: Helvetica-Bold;
- font-size: 9;
+ font-size: 14;
  color: white;
  }
  
 .ITEMSTITLERIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
- font-size: 9;
+ font-size: 14;
  color: white;
  }
  
 .ITEMSLEFT {
  text-align: LEFT;
  font-family: Helvetica-Bold;
- font-size: 8;
+ font-size: 11;
  color: black;
  border-color: white;
  }
@@ -374,7 +374,7 @@ color: black; }
 .ITEMSRIGHT {
  text-align: right;
  font-family: Helvetica-Bold;
- font-size: 8;
+ font-size: 11;
  color: black;
  border-color: white;
  }
@@ -396,13 +396,14 @@ color: black; }
 .CUSTOMERCENTER {
  text-align: center;
  font-family: Times-BoldItalic;
- font-size: 10;
+ font-size: 12;
  color: black;
  }
  
  .ITEMBOLD{
   background-color: lightgrey;
   font-weight: bold;
+  font-size: 12;
 }
 ]]> </field>
             <field name="name">Aging Detail Report Webkit</field>

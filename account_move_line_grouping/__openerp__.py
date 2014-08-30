@@ -1,13 +1,13 @@
 # -*- encoding: utf-8 -*-
-###########################################################################
+#
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info@vauxoo.com
-############################################################################
-#    Coded by: julio (julio@vauxoo.com)
-############################################################################
+#    info Vauxoo (info@vauxoo.com)
+#
+#    Coded by: Jorge Angel Naranjo (jorge_nr@vauxoo.com)
+#
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,5 +22,31 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
-import res_address
+#
+
+{
+    "name": "Account Move Line Grouping",
+    "version": "1.0",
+    "author": "Vauxoo",
+    "category": "Accounting",
+    "description" : """
+Account Reconcile Grouping
+==========================
+
+This module allows you to group your journal items by Journal Entry with a new filter in the search view.
+
+
+    """,
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
+    "depends": [
+            "account",
+                ],
+    "demo": [
+    ],
+    "data": [
+        'view/account_move_view.xml',
+    ],
+    "installable": True,
+    "active": False,
+}
