@@ -52,5 +52,5 @@ and invoice loads of a supplier.
     'js': [],
     'css': [],
     'active': False,
-    'installable': True,
+    'installable': False,
 }

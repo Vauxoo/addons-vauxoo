@@ -26,11 +26,18 @@
 
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-from report_webkit import webkit_report
-from report import report_sxw
 from lxml import html
 import xml
+import logging
+_logger = logging.getLogger(__name__)
 
+try:
+    from report_webkit import webkit_report
+    from report import report_sxw
+except ImportError, e:
+    _logger.warning('You should declare branch with webkit or migrate this module %s' % __name__)
+
+''' TODO: Migrate to new report system
 class user_story_report(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context=None):
@@ -58,4 +65,5 @@ webkit_report.WebKitParser('report.user.story.report',
             'addons/user_story/report/user_story_report.mako',
             parser=user_story_report)
 
+'''
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
