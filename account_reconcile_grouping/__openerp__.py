@@ -40,7 +40,8 @@ This module allows you to group your journal items by reconciliation with a new 
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
-            "account",
+        "account",
+        "account_move_line_grouping",
                 ],
     "demo": [
     ],
