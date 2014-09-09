@@ -51,7 +51,7 @@
             multi='True'
             res_model="invoice.report.per.journal"
             src_model="account.invoice"
-            view_id="wizard_invoice_report_per_journal_form2" 
+            view_id="wizard_invoice_report_per_journal_view_tree" 
             view_mode="tree,form" target="new" view_type="form"/>
 
     </data>
