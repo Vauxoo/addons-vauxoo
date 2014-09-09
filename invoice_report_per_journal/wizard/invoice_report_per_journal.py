@@ -87,7 +87,9 @@ class invoice_report_per_journal(osv.TransientModel):
                     act_brw = self.pool.get('ir.actions.act_window').browse(
                         cr, uid, act_id, context=context)
                     wiz_obj = self.pool.get(act_brw.res_model)
-                    wiz_id = wiz_obj.create(cr, uid, {}, context=context)
+                    ctx_cpy = context.copy()
+                    ctx_cpy.update({'active_ids': [inv_id]})
+                    wiz_id = wiz_obj.create(cr, uid, {}, context=ctx_cpy)
                     wiz_brw = wiz_obj.browse(cr, uid, wiz_id, context=context)
                     result = base64.decodestring(wiz_brw.fname_txt)
             except:
@@ -97,7 +99,10 @@ class invoice_report_per_journal(osv.TransientModel):
         return base64.encodestring(res)
 
     def _get_report_name(self, cr, uid, context=None):
-        report = self.get_journal_object(cr, uid,
+        if context is None:
+            context = {}
+        ids = context.get('active_ids', [])
+        report = self.get_journal_object(cr, uid, ids[0],
                                     context=context).invoice_report_id
         try:
             (result, format) = self._prepare_service(cr, uid, report, context=context)
@@ -112,6 +117,8 @@ class invoice_report_per_journal(osv.TransientModel):
         return report.report_name
 
     def print_invoice(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
         return {'type': 'ir.actions.report.xml',
             'report_name': self._get_report_name(cr, uid, context=context),
             'datas': {'ids': context['active_ids']}}
