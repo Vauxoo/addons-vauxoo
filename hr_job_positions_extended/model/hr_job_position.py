@@ -34,7 +34,10 @@ class hr_job(osv.Model):
     _inherit = "hr.job"
 
     _columns = {
-        'reports_to': fields.many2one('hr.job', _('Reports To') ),
-        'activities': fields.text( _('Frequent Activities and Tasks') ),
-        'responsibilities': fields.text( _('Responsibilities') ),
+        'reports_to': fields.many2one('hr.job', 'Reports To' , help="Who
+            reports"),
+        'activities': fields.text( 'Frequent Activities and Tasks',
+            help="Frequent Activities and Tasks"),
+        'responsibilities': fields.text( 'Responsibilities',
+            help="Responsibilities of Job Position" ),
     }
