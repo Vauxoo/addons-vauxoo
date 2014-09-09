@@ -23,33 +23,18 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-{
-    'name': 'HR Job Positions Extended',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': '',
-    'description': '''
-HR Job Positions Extended
-=========================
+from openerp import addons
+import logging
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import tools
 
-This module adds three fields
+class hr_job(osv.Model):
 
-- Reports to.
-- Responsibilities.
-- Frequent Activities and Tasks
-''',
-    'depends': [
-        'hr',
-        ],
-    'data': [
-        'view/hr_job_positions_view.xml'
-        ],
-    'demo': [],
-    'test': [],
-    'qweb': [],
-    'js': [],
-    'css': [],
-    'active': False,
-    'installable': True,
-}
+    _inherit = "hr.job"
+
+    _columns = {
+        'reports_to': fields.many2one('hr.job', _('Reports To') ),
+        'activities': fields.text( _('Frequent Activities and Tasks') ),
+        'responsibilities': fields.text( _('Responsibilities') ),
+    }
