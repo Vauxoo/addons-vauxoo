@@ -29,15 +29,16 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 from openerp import tools
 
+
 class hr_job(osv.Model):
 
     _inherit = "hr.job"
 
     _columns = {
-        'reports_to': fields.many2one('hr.job', 'Reports To' , help="Who
-            reports"),
-        'activities': fields.text( 'Frequent Activities and Tasks',
-            help="Frequent Activities and Tasks"),
-        'responsibilities': fields.text( 'Responsibilities',
-            help="Responsibilities of Job Position" ),
+        'reports_to': fields.many2one('hr.job', 'Reports To',
+                                      help="Who reports"),
+        'activities': fields.text('Frequent Activities and Tasks',
+                                  help="Frequent Activities and Tasks"),
+        'responsibilities': fields.text('Responsibilities',
+                                        help="Responsibilities of Job Position"),
     }
