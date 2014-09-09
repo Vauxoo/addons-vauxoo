@@ -9,6 +9,7 @@
                 <field name="arch" type="xml">
                     <xpath expr="//field[@name='department_id']" position="after">
                         <field name="reports_to" />
+                        <field name="level" />
                     </xpath>
 
                     <xpath expr="//label[@for='requirements']" position="before">

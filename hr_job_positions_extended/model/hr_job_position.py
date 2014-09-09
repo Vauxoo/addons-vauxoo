@@ -29,12 +29,27 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 from openerp import tools
 
+level_job = [
+   ('p1','P1'),
+   ('p2','P2'),
+   ('p3','P3'),
+   ('p4','P4'),
+   ('p5','P5'),
+   ('p6','P6'),
+   ('p7','P7'),
+   ('p8','P8'),
+   ('p9','P9'),
+   ('p10','P10'),
+]
 
 class hr_job(osv.Model):
 
     _inherit = "hr.job"
 
     _columns = {
+        'level': fields.selection( level_job,
+                                   'Level',
+                                   help="level of job position."),
         'reports_to': fields.many2one('hr.job', 'Reports To',
                                       help="Who reports"),
         'activities': fields.text('Frequent Activities and Tasks',
