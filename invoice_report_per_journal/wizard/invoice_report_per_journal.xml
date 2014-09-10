@@ -12,10 +12,11 @@
                         <newline/>
                         <field name="report_format"/>
                         <newline/>
-                        <group col="2" colspan="2">
-                            <button icon="gtk-cancel" special="cancel" string="Cancel"/>
-                            <button icon="gtk-ok" name="print_invoice" type="object" string="Print Invoice"/>
-                        </group>
+                        <footer>
+                            <button string="Cancel" special="cancel" icon="gtk-cancel" class="oe_highlight"/>
+                            or
+                            <button name="print_invoice" string="Print Invoice" type="object" class="oe_link" icon="gtk-ok"/>
+                        </footer>
                     </group>
                 </form>
             </field>

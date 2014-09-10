@@ -119,6 +119,8 @@ class invoice_report_per_journal(osv.TransientModel):
     def print_invoice(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
+        if len(context.get('active_ids', [])) > 1:
+            return {}
         return {'type': 'ir.actions.report.xml',
             'report_name': self._get_report_name(cr, uid, context=context),
             'datas': {'ids': context['active_ids']}}
