@@ -24,20 +24,13 @@
 #
 
 from openerp.osv import osv, fields
+from openerp.tools.translate import _
 
 
 class account_voucher(osv.Model):
     _inherit = 'account.voucher'
     _columns = {
-        'trans_type': fields.selection([
-            ('normal', 'Payments'),
-            ('advance', 'Advance'),
-        ], 'Transaction Type', select=True, track_visibility='always',
-            help="""Payments.- Normal payment is made. \nAdvance.- Advance payment of custom or supplier"""),
-    }
-
-    _defaults = {
-        'trans_type': 'normal',
+        'advance_account_id':fields.many2one('account.account', 'Advance Account', required=False, readonly=True, states={'draft':[('readonly',False)]}),
     }
 
     def writeoff_move_line_get(self, cr, uid, voucher_id, line_total, move_id, name, company_currency, current_currency, context=None):
@@ -45,11 +38,29 @@ class account_voucher(osv.Model):
         voucher = self.pool.get('account.voucher').browse(cr,uid,voucher_id,context)
         if move_line and not voucher.payment_option == 'with_writeoff' and voucher.partner_id:
             if voucher.type in ('sale', 'receipt'):
-                account_id = voucher.partner_id.property_account_supplier_advance.id
+                account_id = voucher.advance_account_id and voucher.advance_account_id.id or voucher.partner_id.property_account_customer_advance.id
             else:
-                account_id = voucher.partner_id.property_account_customer_advance.id
+                account_id = voucher.advance_account_id and voucher.advance_account_id.id or voucher.partner_id.property_account_supplier_advance.id
+            if not account_id:
+                raise osv.except_osv(_('Missing Configuration on Partner !'),
+                    _('Please Fill Advance Accounts on Partner !'))
             move_line['account_id'] = account_id
         return move_line
 
-    def onchange_account_advance_payment(self, cr, uid, ids, trans_type, context=None):
-        return True
+    def onchange_partner_id(self, cr, uid, ids, partner_id, journal_id, amount, currency_id, ttype, date, context=None):
+        res = super(account_voucher, self).onchange_partner_id(cr, uid, ids, partner_id, journal_id, amount, currency_id, ttype, date, context=context)
+        if not res:
+            return {}
+        context = context or {}
+
+        partner_pool = self.pool.get('res.partner')
+
+        partner = partner_pool.browse(cr, uid, partner_id, context=context)
+        advance_account_id = False
+        if ttype in ('sale', 'receipt'):
+            advance_account_id = partner.property_account_customer_advance.id
+        else:
+            advance_account_id = partner.property_account_supplier_advance.id
+        res['value']['advance_account_id'] = advance_account_id
+
+        return res

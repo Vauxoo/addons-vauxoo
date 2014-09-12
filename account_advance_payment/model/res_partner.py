@@ -52,16 +52,16 @@ class res_partner(osv.Model):
             view_load=True,
             domain="[('type','=','receivable')]",
             help="This account will be used for advance payment of custom"),
-        'customer_advance': fields.function(
-            _supplier_customer_advance_get,
-            type='float',
-            string='Total Customer Advance',
-            multi='sc',
-            help="Total amount of advance payment of custom."),
-        'supplier_advance': fields.function(
-            _supplier_customer_advance_get,
-            type='float',
-            string='Total Supplier Advance',
-            multi='sc',
-            help="Total amount of advance payment of suppliers."),
+#        'customer_advance': fields.function(
+#            _supplier_customer_advance_get,
+#            type='float',
+#            string='Total Customer Advance',
+#            multi='sc',
+#            help="Total amount of advance payment of custom."),
+#        'supplier_advance': fields.function(
+#            _supplier_customer_advance_get,
+#            type='float',
+#            string='Total Supplier Advance',
+#            multi='sc',
+#            help="Total amount of advance payment of suppliers."),
     }
