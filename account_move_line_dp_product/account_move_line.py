@@ -23,7 +23,7 @@
 from openerp.tools.translate import _
 
 from openerp.osv import osv, fields
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class account_move_line(osv.Model):

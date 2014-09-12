@@ -23,8 +23,8 @@
 ################################################################################
 
 import time
-from osv import fields, osv
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 class Partner(osv.osv):
     _inherit = 'res.partner'

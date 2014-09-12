@@ -30,7 +30,7 @@ import sys
 from openerp.tools.translate import _
 
 import time
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class inherit_purchase(osv.Model):

@@ -25,7 +25,7 @@
 
 import time
 from openerp.osv import osv, fields
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 from openerp.tools.translate import _
 
 import openerp.netsvc as netsvc

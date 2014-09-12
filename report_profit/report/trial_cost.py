@@ -33,8 +33,7 @@ Fiscal Report For Venezuela
 '''
 
 import time
-from report import report_sxw
-import pooler
+from openerp.report import report_sxw
 
 
 class trial_c(report_sxw.rml_parse):

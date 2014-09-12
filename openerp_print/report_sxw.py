@@ -24,7 +24,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 import report
-from report import report_sxw
+from openerp.report import report_sxw
 from report.report_sxw import *
 from report.report_sxw import _format
 from report.report_sxw import _float_format
@@ -33,7 +33,6 @@ from report.report_sxw import _date_format
 from report.report_sxw import _dttime_format
 from report.report_sxw import browse_record_list
 from report.report_sxw import rml_parse
-import pooler
 from lxml import etree
 import subprocess
 import os
@@ -47,7 +46,7 @@ import re
 import time
 
 import openerp.netsvc as netsvc
-import osv
+from openerp.osv import osv
 import openerp.tools as tools
 import warnings
 import zipfile

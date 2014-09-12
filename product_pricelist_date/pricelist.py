@@ -25,7 +25,6 @@
 ##############################################################################
 import time
 import openerp.netsvc as netsvc
-import pooler
 from openerp.osv import osv, fields
 
 

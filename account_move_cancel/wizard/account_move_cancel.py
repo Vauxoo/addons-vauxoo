@@ -29,7 +29,7 @@ from openerp.tools.translate import _
 
 from tools import config
 import openerp.netsvc as netsvc
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 #~ from DateTime import DateTime
 import time
 

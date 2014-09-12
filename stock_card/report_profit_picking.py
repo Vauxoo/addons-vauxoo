@@ -34,7 +34,7 @@ from openerp.tools.sql import drop_view_if_exists
 import time
 import datetime
 from mx.DateTime import *
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class report_profit_picking(osv.Model):

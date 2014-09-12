@@ -27,7 +27,7 @@
 
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-from openerp import pooler, tools
+from openerp import tools
 from openerp import netsvc
 from openerp import release
 import datetime

@@ -26,8 +26,8 @@
 
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-from report_webkit import webkit_report
-from report import report_sxw
+from openerp.addons.report_webkit import webkit_report
+from openerp.report import report_sxw
 from lxml import html
 import xml
 
