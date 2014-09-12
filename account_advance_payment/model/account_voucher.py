@@ -40,5 +40,16 @@ class account_voucher(osv.Model):
         'trans_type': 'normal',
     }
 
+    def writeoff_move_line_get(self, cr, uid, voucher_id, line_total, move_id, name, company_currency, current_currency, context=None):
+        move_line = super(account_voucher, self).writeoff_move_line_get(cr, uid, voucher_id, line_total, move_id, name, company_currency, current_currency, context=context)
+        voucher = self.pool.get('account.voucher').browse(cr,uid,voucher_id,context)
+        if move_line and not voucher.payment_option == 'with_writeoff' and voucher.partner_id:
+            if voucher.type in ('sale', 'receipt'):
+                account_id = voucher.partner_id.property_account_supplier_advance.id
+            else:
+                account_id = voucher.partner_id.property_account_customer_advance.id
+            move_line['account_id'] = account_id
+        return move_line
+
     def onchange_account_advance_payment(self, cr, uid, ids, trans_type, context=None):
         return True
