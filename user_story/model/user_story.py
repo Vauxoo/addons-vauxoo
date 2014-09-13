@@ -415,6 +415,32 @@ class acceptability_criteria(osv.Model):
             cr, uid, [('accep_crit_id', 'in', us_ids)], context=context)
         return ac_ids
 
+    def approve(self, cr, uid, ids, context=None):
+        context = context or {}
+        return True
+
+    def disapprove(self, cr, uid, ids, context=None):
+        context = context or {}
+        return True
+
+    def ask_review(self, cr, uid, ids, context=None):
+        context = context or {}
+        ction = {
+                'type': 'ir.actions.act_window',
+                'res_model': 'mail.compose.message',
+                'view_mode': 'form',
+                'view_type': 'form',
+                'views': [[False, 'form']],
+                'target': 'new',
+                'context': {
+                        'default_res_model': self._name,
+                        'default_res_id': ids and ids[0],
+                        'default_partner_ids': [(6, 0, [5, 6, 7])],
+                        'default_partner_ids': [(6, 0, [5, 6, 7])],
+                                    }
+                            }
+        return ction
+
     def _get_user_story_field(self, cr, uid, ids, fieldname, arg, context=None):
         """
         Method used as the function for extracting values for the user.story
