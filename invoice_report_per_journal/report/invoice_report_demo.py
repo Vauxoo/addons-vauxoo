@@ -39,9 +39,9 @@ import datetime
 
 
 class invoice_report_demo_html(report_sxw.rml_parse):
-'''
-Define methods that need the report
-'''
+    '''
+    Define methods that need the report
+    '''
 
     def __init__(self, cr, uid, name, context=None):
         '''
