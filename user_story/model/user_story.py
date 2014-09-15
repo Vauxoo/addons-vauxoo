@@ -417,6 +417,7 @@ class acceptability_criteria(osv.Model):
 
     def approve(self, cr, uid, ids, context=None):
         context = context or {}
+        criterial_brw2 = self.browse(cr, uid, ids[0])
         criterial_brw = self.browse(cr, SUPERUSER_ID, ids[0])
         data_obj = self.pool.get('ir.model.data')
         compose_obj = self.pool.get('mail.compose.message')
@@ -436,7 +437,7 @@ class acceptability_criteria(osv.Model):
                         'partner_id':0,
                         'body': mail.get('body'),
         })
-        criterial_brw.write({'accepted': True})
+        criterial_brw2.write({'accepted': True})
         compose_obj.send_mail(cr, uid, [compose_id])
         return True
 
@@ -471,7 +472,6 @@ class acceptability_criteria(osv.Model):
                                     }
                             }
         return ction
-        return True
 
     def ask_review(self, cr, uid, ids, context=None):
         context = context or {}
