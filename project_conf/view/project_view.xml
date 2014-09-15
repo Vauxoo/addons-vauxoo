@@ -28,7 +28,7 @@
              <filter string="My Task to Review" domain="[('project_leader_id','=',uid)]" help="Task Review"/>
              <field string="Project Leader" name="project_leader_id"/>
          </xpath>
-         <xpath expr="//filter[@string='End Date']" position="after">
+         <xpath expr="//filter[@string='Assignation Month']" position="after">
              <filter string="Project Leader" icon="terp-personal" domain="[]" context="{'group_by':'project_leader_id'}"/>
          </xpath>
        </field>
