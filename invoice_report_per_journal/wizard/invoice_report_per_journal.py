@@ -57,7 +57,7 @@ class invoice_report_per_journal(osv.TransientModel):
         record_brw = self.pool.get(context['active_model']).browse(
             cr, uid, ids, context=context)
         if not record_brw.journal_id:
-            raise except_osv(_('ERROR !'), _(
+            raise osv.except_osv(_('ERROR !'), _(
                 'There is no journal configured for this invoice.'))
         return record_brw.journal_id
 
@@ -88,9 +88,9 @@ class invoice_report_per_journal(osv.TransientModel):
         @return : result of creation of report
         '''
         service = netsvc.LocalService('report.' + report.report_name)
-        (result, format) = service.create(cr, uid, context[
+        (result, formato) = service.create(cr, uid, context[
             'active_ids'], {'model': context['active_model']}, {})
-        return (result, format)
+        return (result, formato)
 
     def _get_report(self, cr, uid, context=None):
         '''
@@ -109,9 +109,9 @@ class invoice_report_per_journal(osv.TransientModel):
             report = self.get_journal_object(
                 cr, uid, inv_id, context=context).invoice_report_id
             try:
-                (result, format) = self._prepare_service(cr, uid, report,
+                (result, _) = self._prepare_service(cr, uid, report,
                                                          context=context)
-            except:
+            except Exception as e:
                 if report:
                     _logger.warning("Error occurred in the report, the "
                                     "report set to the journal will be "
@@ -122,7 +122,7 @@ class invoice_report_per_journal(osv.TransientModel):
                 report_ = self.pool.get(
                     "ir.actions.report.xml").browse(cr, uid, rep_id,
                                                     context=context)
-                (result, format) = self._prepare_service(cr, uid, report_,
+                (result, _) = self._prepare_service(cr, uid, report_,
                                                          context=context)
             try:
                 act_id = self.pool.get('ir.actions.act_window').search(cr, uid,
@@ -136,7 +136,7 @@ class invoice_report_per_journal(osv.TransientModel):
                     wiz_id = wiz_obj.create(cr, uid, {}, context=ctx_cpy)
                     wiz_brw = wiz_obj.browse(cr, uid, wiz_id, context=context)
                     result = base64.decodestring(wiz_brw.fname_txt)
-            except:
+            except Exception as e:
                 if report:
                     _logger.info(
                         "txt report not defined for the report assigned to "
@@ -161,9 +161,9 @@ class invoice_report_per_journal(osv.TransientModel):
         report = self.get_journal_object(cr, uid, ids[0],
                                          context=context).invoice_report_id
         try:
-            (result, format) = self._prepare_service(
+            (_, _) = self._prepare_service(
                 cr, uid, report, context=context)
-        except:
+        except Exception as e:
             if report:
                 _logger.warning(
                     "Error occurred in the report, the report set to the "
