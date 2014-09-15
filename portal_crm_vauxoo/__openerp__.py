@@ -43,9 +43,9 @@ the human recourses that is public.
     'depends': [
                 'crm',
                 'portal',
-                'portal_news',
+                #~ 'portal_news', #deprecated by odoo
                 'web_captcha',
-                'portal_hr_employees',
+                #~ 'portal_hr_employees', deprecated by odoo
                 'vauxoo_widgets',
                 ],
     'data': [
