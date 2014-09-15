@@ -62,24 +62,24 @@
             <field eval="[(6,0,[])]" name="transition_ids"/>
             <field eval="&quot;&quot;&quot;Delegate&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;Delegates sprints to the other user&quot;&quot;&quot;" name="note"/>
-            <field model="workflow.node" name="target_node_id" ref="workflow_node_draftsprint0"/>
-            <field model="workflow.node" name="source_node_id" ref="workflow_node_sprintbydelegate0"/>
+            <field name="target_node_id" ref="workflow_node_draftsprint0"/>
+            <field name="source_node_id" ref="workflow_node_sprintbydelegate0"/>
         </record>
 
         <record id="workflow_transition_draftopensprint0" model="workflow.transition">
             <field eval="[(6,0,[])]" name="transition_ids"/>
             <field eval="&quot;&quot;&quot;Draft Open sprint&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;From draft state, it will come into the open state.&quot;&quot;&quot;" name="note"/>
-            <field model="workflow.node" name="target_node_id" ref="workflow_node_opensprint0"/>
-            <field model="workflow.node" name="source_node_id" ref="workflow_node_draftsprint0"/>
+            <field name="target_node_id" ref="workflow_node_opensprint0"/>
+            <field name="source_node_id" ref="workflow_node_draftsprint0"/>
         </record>
 
         <record id="workflow_transition_opendonesprint0" model="workflow.transition">
             <field eval="[(6,0,[])]" name="transition_ids"/>
             <field eval="&quot;&quot;&quot;Open Done sprint&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;When sprint is completed, it will come into the done state.&quot;&quot;&quot;" name="note"/>
-            <field model="workflow.node" name="target_node_id" ref="workflow_node_donesprint0"/>
-            <field model="workflow.node" name="source_node_id" ref="workflow_node_opensprint0"/>
+            <field name="target_node_id" ref="workflow_node_donesprint0"/>
+            <field name="source_node_id" ref="workflow_node_opensprint0"/>
         </record>
 
 
