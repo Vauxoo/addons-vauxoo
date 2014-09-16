@@ -33,14 +33,20 @@
 Account Voucher Draft
 =====================
 
-This module modify the button Pay inside the wizard used to pay a supplier
-payment (account voucher). This change is made to do not immediately change the
-account voucher to done state. 
+This module modify the button Pay inside the wizard used to pay an HR Expense
+(using an account voucher). This change is made to do not immediately change
+the HR Expene to done state. 
 
-**Note**: the Pay window is not really a wizard, is just a pop up window.
+**Notes**:
+
+- the ``Pay`` window is not really a wizard, is just a pop up window to create
+  a account voucher related to the current hr expense document.
+- the ``hr_expense_replenishment`` module can be found at lp:addons-vauxoo.
+
 ''',
     'depends': [
         'account_voucher',
+        'hr_expense_replenishment',
         ],
     'data': [],
     'demo': [],
