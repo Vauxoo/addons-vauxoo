@@ -36,6 +36,8 @@ Account Voucher Draft
 This module modify the button Pay inside the wizard used to pay a supplier
 payment (account voucher). This change is made to do not immediately change the
 account voucher to done state. 
+
+**Note**: the Pay window is not really a wizard, is just a pop up window.
 ''',
     'depends': [
         'account_voucher',
