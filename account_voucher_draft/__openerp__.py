@@ -49,7 +49,9 @@ Notes
         'account_voucher',
         'hr_expense_replenishment',
         ],
-    'data': [],
+    'data': [
+        'view/hr_expense_expense_view.xml',
+        ],
     'demo': [],
     'test': [],
     'qweb': [],
