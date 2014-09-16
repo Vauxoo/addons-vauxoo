@@ -10,7 +10,7 @@
                 <xpath expr="//button[@name='button_proforma_voucher']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
-                <xpath expr="//button[@name='button_proforma_voucher']" position="after">
+                <xpath expr="//button[@name='button_proforma_voucher']" position="before">
                     <button name="button_draft_voucher" string="Continue" class="oe_highlight" type="object"/>
                 </xpath>
             </field>
