@@ -37,7 +37,7 @@ class account_voucher(osv.Model):
         @return close the pop up window.
         """
         context = context or {}
-        ids = isinstance(ids, (long, int) and [ids] or ids
+        ids = isinstance(ids, (long, int)) and [ids] or ids
         for av_id in ids:
             self.write(cr, uid, av_id, {'state': 'draft'}, context=context)
         return {'type': 'ir.actions.act_window_close'}
