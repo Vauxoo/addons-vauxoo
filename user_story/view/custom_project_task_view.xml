@@ -14,6 +14,7 @@
                     <field name="userstory"/>
                     <field name="task_id" options='{"no_open": True}'/>
                     <field name="state"/>
+                    <field name="date_end"/>
                     <field name="period_end"/>
                 </tree>
             </field>
@@ -31,6 +32,7 @@
                     <field name="userstory"/>
                     <field name="task_id"/>
                     <field name="state"/>
+                    <field name="date_end"/>
                     <field name="period_end"/>
                     <group expand="0" string="Filters">
                         <filter name="analytic_id" string="Unassigned Project" domain="[('analytic_id','=',False)]"/>

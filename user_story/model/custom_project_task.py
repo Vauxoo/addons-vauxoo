@@ -63,7 +63,7 @@ class custom_project_task(osv.Model):
                     task.date_deadline AS deadline,
                     task.user_id AS task_user_id,
                     task.project_leader_id AS project_leader_id,
-                    task.date_end AS date_end,
+                    date(task.date_end) AS date_end,
                     to_char(task.date_end,'MM/YYYY') AS period_end,
                     analytic.id AS analytic_id,
                     us.id AS userstory,
