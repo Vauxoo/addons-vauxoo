@@ -33,7 +33,7 @@ import time
 class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
-    def check_tax_lines(self, cr, uid, inv, compute_taxes, ait_obj):#method overriding
+    def __check_tax_lines(self, cr, uid, inv, compute_taxes, ait_obj):#method overriding
         company_currency = self.pool['res.company'].browse(cr, uid, inv.company_id.id).currency_id
         if not inv.tax_line:
             for tax in compute_taxes.values():
@@ -65,7 +65,7 @@ class account_invoice_tax(osv.Model):
             help="Tax relation to original tax, to be able to take off all data from invoices."),
     }
     
-    def compute(self, cr, uid, invoice_id, context=None):#method overriding
+    def __compute(self, cr, uid, invoice_id, context=None):#method overriding
         tax_grouped = {}
         tax_obj = self.pool.get('account.tax')
         cur_obj = self.pool.get('res.currency')
