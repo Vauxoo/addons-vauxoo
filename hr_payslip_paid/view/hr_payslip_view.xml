@@ -10,7 +10,7 @@
                     <xpath expr="//field[@name='state']" position="attributes">
                         <attribute name="statusbar_visible">draft,confirm,paid</attribute>
                     </xpath>
-                    <xpath expr="//page[@string='Other Information']" position="after">
+                    <xpath expr="//page[@string='Accounting Information']" position="after">
                         <page string="Payments">
                             <field name="reconciled" invisible="1"/>
                             <field name="payment_ids">
