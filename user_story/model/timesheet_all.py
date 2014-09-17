@@ -18,41 +18,50 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import time
-import datetime
-
+'''
+This file loads the necessary information for the custom timesheet view.
+'''
 from openerp.osv import fields, osv
-from openerp import pooler
-from openerp import tools
-from openerp.tools.translate import _
-
 from openerp.tools.sql import drop_view_if_exists
 
 class custom_timesheet_all(osv.Model):
+    '''
+    Class that contains the methods needed to return the data to the view.
+    '''
     _name = "custom.timesheet.all"
     _order = "date desc"
     _auto = False
-    
+
     _columns = {
-        'period': fields.char('Period', 128, 
-                    help='Period for the date of summary work.'),
-        'date': fields.date('Date', readonly=True, 
-                    help='Date of summary work.'),
+        'period': fields.char('Period', 128,
+                              help='Period for the date of summary work.'),
+        'date': fields.date('Date', readonly=True,
+                            help='Date of summary work.'),
         'analytic_id': fields.many2one('account.analytic.account', 'Project',
-                    readonly=True, select=True),
-        'userstory': fields.integer('User Story', readonly=True, 
-                    help='User history id of user history assigned on task.'),
+                                       readonly=True, select=True),
+        'userstory': fields.integer('User Story', readonly=True,
+                                    help='User history id of user history\
+                                     assigned on task.'),
         'task_id': fields.many2one('project.task', 'Task title',
-                    readonly=True, select=True, help='Project task title.'),
+                                   readonly=True, select=True, help='Project\
+                                    task title.'),
         'user_id': fields.many2one('res.users', 'User',
-                    readonly=True, select=True, help='User of summary work.'),
-        'name': fields.char('Description', 264, help='Description of the summary work.'),
-        'unit_amount': fields.float('Duration', readonly=True, help='Time spent on work.'),
-        'invoiceable': fields.many2one('hr_timesheet_invoice.factor', 'Invoiceable',
-                    readonly=True, help='Definition of invoicing status of the line.'),
+                                   readonly=True, select=True, help='User of\
+                                    summary work.'),
+        'name': fields.char('Description', 264, help='Description of the\
+                            summary work.'),
+        'unit_amount': fields.float('Duration', readonly=True, help='Time\
+                                    spent on work.'),
+        'invoiceable': fields.many2one('hr_timesheet_invoice.factor',
+                                       'Invoiceable', readonly=True,
+                                       help='Definition of invoicing status of\
+                                        the line.'),
     }
 
     def init(self, cr):
+        '''
+        Search method that executes query.
+        '''
         drop_view_if_exists(cr, 'custom_timesheet_all')
         cr.execute('''
             create or replace view custom_timesheet_all as (
