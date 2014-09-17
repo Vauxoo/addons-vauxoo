@@ -14,7 +14,7 @@
                     <field name="task_id" options='{"no_open": True}'/>
                     <field name="name"/>
                     <field name="period"/>
-                    <field name="unit_amount" widget="float_time"/>
+                    <field name="unit_amount" sum="Total time" widget="float_time"/>
                     <field name="invoiceable"/>
                 </tree>
             </field>
@@ -24,20 +24,25 @@
             <field name="name">custom.timesheet.all.search</field>
             <field name="model">custom.timesheet.all</field>
             <field name="arch" type="xml">
-                <search string="Timesheet All">                 
+                <search string="Timesheet All">
                     <field name="date"/>
                     <field name="user_id"/>
                     <field name="analytic_id"/>
-                    <field name="userstory"/>                  
+                    <field name="userstory"/>
                     <field name="task_id"/>
                     <field name="name"/>
                     <field name="period"/>
                     <field name="invoiceable"/>
+                    <group expand="0" string="Filters">
+                        <filter name="analytic_id" string="Unassigned Project" domain="[('analytic_id','=',False)]"/>
+                        <filter name="userstory" string="Unassigned User Story" domain="[('userstory','=',False)]"/>
+                        <filter name="invoiceable" string="Unassigned Invoiceable Factor" domain="[('invoiceable','=',False)]"/>
+                    </group>
                     <group expand="0" string="Group By...">
                         <filter string="Date" icon="terp-go-month" domain="[]" context="{'group_by':'date'}"/>
                         <filter string="Summary Work User" icon="terp-personal" domain="[]" context="{'group_by':'user_id'}"/>
                         <filter string="Project" icon="terp-go-month" domain="[]" context="{'group_by':'analytic_id'}"/>
-                        <filter string="User Story" icon="terp-personal" domain="[]" context="{'group_by':'userstory'}"/>          
+                        <filter string="User Story" icon="terp-personal" domain="[]" context="{'group_by':'userstory'}"/>
                         <filter string="Task" icon="terp-personal" domain="[]" context="{'group_by':'task_id'}"/>
                         <filter string="Period" icon="terp-go-month" domain="[]" context="{'group_by':'period'}"/>
                         <filter string="Invoiceable" icon="terp-go-month" domain="[]" context="{'group_by':'invoiceable'}"/>

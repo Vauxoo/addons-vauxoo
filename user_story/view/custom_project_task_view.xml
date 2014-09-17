@@ -14,6 +14,7 @@
                     <field name="userstory"/>
                     <field name="task_id" options='{"no_open": True}'/>
                     <field name="state"/>
+                    <field name="period_end"/>
                 </tree>
             </field>
         </record>
@@ -22,22 +23,29 @@
             <field name="name">custom.project.task.search</field>
             <field name="model">custom.project.task</field>
             <field name="arch" type="xml">
-                <search string="Project Task">                 
+                <search string="Project Task">
                     <field name="deadline"/>
                     <field name="task_user_id"/>
                     <field name="project_leader_id"/>
                     <field name="analytic_id"/>
-                    <field name="userstory"/>                  
+                    <field name="userstory"/>
                     <field name="task_id"/>
                     <field name="state"/>
+                    <field name="period_end"/>
+                    <group expand="0" string="Filters">
+                        <filter name="analytic_id" string="Unassigned Project" domain="[('analytic_id','=',False)]"/>
+                        <filter name="userstory" string="Unassigned User Story" domain="[('userstory','=',False)]"/>
+                        <filter name="invoiceable" string="Unassigned Invoiceable" domain="[('invoiceable','=',False)]"/>
+                    </group>
                     <group expand="0" string="Group By...">
-                        <filter string="Deadline" icon="terp-go-month" domain="[]" context="{'group_by':'deadline'}"/>
+                        <filter string="Deadline" icon="terp-gnome-cpu-frequency-applet+" domain="[]" context="{'group_by':'deadline'}"/>
                         <filter string="Task User" icon="terp-personal" domain="[]" context="{'group_by':'task_user_id'}"/>          
                         <filter string="Leader User" icon="terp-personal" domain="[]" context="{'group_by':'project_leader_id'}"/>  
-                        <filter string="Project" icon="terp-go-month" domain="[]" context="{'group_by':'analytic_id'}"/>
+                        <filter string="Project" icon="terp-folder-violet" domain="[]" context="{'group_by':'analytic_id'}"/>
                         <filter string="User Story" icon="terp-personal" domain="[]" context="{'group_by':'userstory'}"/>          
                         <filter string="Task" icon="terp-personal" domain="[]" context="{'group_by':'task_id'}"/>
-                        <filter string="State" icon="terp-go-month" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="State" icon="terp-personal" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Period End" icon="terp-go-month" domain="[]" context="{'group_by':'period_end'}"/>
                     </group>
                 </search>
             </field>

@@ -59,7 +59,7 @@ class custom_timesheet_all(osv.Model):
                 SELECT
                     work.id AS id,
                     to_char(work.date,'MM/YYYY') AS period,
-                    work.date AS date,
+                    date(work.date) AS date,
                     analytic.id AS analytic_id,
                     us.id AS userstory,
                     task.id AS task_id,
