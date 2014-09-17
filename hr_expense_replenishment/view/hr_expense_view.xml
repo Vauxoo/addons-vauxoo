@@ -24,7 +24,7 @@
                     </field>
                 </xpath>
 
-                <xpath expr="//separator[@string='Notes']" position="before">
+                <xpath expr="//separator[@string='Description']" position="before">
                     <separator string="Deductible Taxes"/>
                     <field name="ait_ids" readonly="1"/>
                 </xpath>
@@ -104,7 +104,7 @@
                     </page>
                 </xpath>
 
-                <xpath expr="//page[@string='Accounting']" position="after">
+                <xpath expr="//page[@string='Expense Lines']" position="after">
                     <page string="Invoices" >
                         <group>
                             <field name="invoice_ids" 
