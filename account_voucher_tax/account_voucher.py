@@ -27,7 +27,6 @@
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
-import release
 from openerp.addons.decimal_precision import decimal_precision as dp
 
 import time
