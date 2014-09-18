@@ -294,6 +294,32 @@
             </search>
         </field>
     </record>
+     <record model="ir.ui.view" id="email_compose_message_wizard_inherit_form_without_partner">
+            <field name="name">mail.compose.message.form</field>
+            <field name="model">mail.compose.message</field>
+            <field name="priority">9999</field>
+            <field name="groups_id" eval="[(3,ref('base.group_user'))]"/>
+            <field name="arch" type="xml">
+                <form string="Compose Email" version="7.0">
+                    <group>
+                        <!-- truly invisible fields for control and options -->
+                        <field name="composition_mode" invisible="1"/>
+                        <field name="model" invisible="1"/>
+                        <field name="res_id" invisible="1"/>
+                        <field name="parent_id" invisible="1"/>
+                        <!-- visible wizard -->
+                        <field name="subject" placeholder="Subject..."/>
+                    </group>
+                    <field name="body"/>
+                    <field name="attachment_ids" widget="many2many_binary"/>
+                    <footer>
+                        <button string="Send" name="send_mail" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+     </record>
 
      <record id="view_userstory_search" model="ir.ui.view">
       <field name="name">user.story.search</field>
