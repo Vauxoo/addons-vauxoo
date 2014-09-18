@@ -48,12 +48,12 @@ msgstr "P4"
 #. module: hr_job_positions_extended
 #: field:hr.job,level:0
 msgid "Level"
-msgstr "Level"
+msgstr "Nivel"
 
 #. module: hr_job_positions_extended
 #: field:hr.job,reports_to:0
 msgid "Reports To"
-msgstr "Reports To"
+msgstr "Reporta A"
 
 #. module: hr_job_positions_extended
 #: selection:hr.job,level:0
@@ -69,7 +69,7 @@ msgstr "P5"
 #: field:hr.job,activities:0
 #: help:hr.job,activities:0
 msgid "Frequent Activities and Tasks"
-msgstr "Frequent Activities and Tasks"
+msgstr "Actividades y tareas frecuentes"
 
 #. module: hr_job_positions_extended
 #: model:ir.model,name:hr_job_positions_extended.model_hr_job
@@ -79,12 +79,12 @@ msgstr "Descripción del trabajo"
 #. module: hr_job_positions_extended
 #: help:hr.job,responsibilities:0
 msgid "Responsibilities of Job Position"
-msgstr "Responsibilities of Job Position"
+msgstr "Responsabilidades del Puesto de Trabajo"
 
 #. module: hr_job_positions_extended
 #: field:hr.job,responsibilities:0
 msgid "Responsibilities"
-msgstr "Responsibilities"
+msgstr "Responsabilidades"
 
 #. module: hr_job_positions_extended
 #: selection:hr.job,level:0
@@ -94,7 +94,7 @@ msgstr "P9"
 #. module: hr_job_positions_extended
 #: help:hr.job,reports_to:0
 msgid "Who reports"
-msgstr "Who reports"
+msgstr "A quien informa"
 
 #. module: hr_job_positions_extended
 #: selection:hr.job,level:0
@@ -104,5 +104,5 @@ msgstr "P8"
 #. module: hr_job_positions_extended
 #: help:hr.job,level:0
 msgid "level of job position."
-msgstr "level of job position."
+msgstr "Nivel del Puesto de Trabajo."
 
