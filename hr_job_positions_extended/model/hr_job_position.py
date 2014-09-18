@@ -47,6 +47,8 @@ class hr_job(osv.Model):
     _inherit = "hr.job"
 
     _columns = {
+        'name': fields.char('Job Name', size=128, required=True, select=True,
+            translate=True),
         'level': fields.selection( LEVEL_JOB,
                                    'Level',
                                    help="level of job position."),
