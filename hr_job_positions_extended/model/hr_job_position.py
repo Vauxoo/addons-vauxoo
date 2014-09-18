@@ -29,7 +29,7 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 from openerp import tools
 
-level_job = [
+LEVEL_JOB = [
    ('p1','P1'),
    ('p2','P2'),
    ('p3','P3'),
@@ -47,7 +47,7 @@ class hr_job(osv.Model):
     _inherit = "hr.job"
 
     _columns = {
-        'level': fields.selection( level_job,
+        'level': fields.selection( LEVEL_JOB,
                                    'Level',
                                    help="level of job position."),
         'reports_to': fields.many2one('hr.job', 'Reports To',
