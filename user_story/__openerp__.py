@@ -29,6 +29,7 @@
     "version" : "0.1",
     "depends" : [
                  "base",
+                 "email_template",
                  "project",
                  "sprint_kanban",
                  "project_timesheet",

@@ -419,6 +419,8 @@ class acceptability_criteria(osv.Model):
         context = context or {}
         criterial_brw2 = self.browse(cr, uid, ids[0])
         criterial_brw = self.browse(cr, SUPERUSER_ID, ids[0])
+        if criterial_brw.accepted:
+            return True
         data_obj = self.pool.get('ir.model.data')
         compose_obj = self.pool.get('mail.compose.message')
         user_story_brw = criterial_brw.accep_crit_id
@@ -432,7 +434,7 @@ class acceptability_criteria(osv.Model):
         compose_id = compose_obj.create(cr, uid, {
                         'res_model': 'user.story',
                         'model': 'user.story',
-                        'res_id': ids and ids[0],
+                        'res_id': user_story_brw.id,
                         'partner_ids': [(6, 0, partner_ids)],
                         'partner_id':0,
                         'body': mail.get('body'),
@@ -444,6 +446,8 @@ class acceptability_criteria(osv.Model):
     def disapprove(self, cr, uid, ids, context=None):
         context = context or {}
         criterial_brw = self.browse(cr, SUPERUSER_ID, ids[0])
+        if criterial_brw.accepted:
+            return True
         data_obj = self.pool.get('ir.model.data')
         user_story_brw = criterial_brw.accep_crit_id
         partner_ids = [i.id for i in user_story_brw.message_follower_ids]
@@ -451,7 +455,7 @@ class acceptability_criteria(osv.Model):
         user_story_brw.user_id and partner_ids.append(user_story_brw.user_id.partner_id.id)
         user_story_brw.user_execute_id and partner_ids.append(user_story_brw.user_execute_id.partner_id.id)
         partner_ids = list(set(partner_ids))
-        model_data_id = data_obj._get_id(cr, uid, 'mail', 'email_compose_message_wizard_form')
+        model_data_id = data_obj._get_id(cr, uid, 'user_story', 'email_compose_message_wizard_inherit_form_without_partner')
         res_id = data_obj.browse(cr, uid, model_data_id, context=context).res_id
         ction = {
                 'type': 'ir.actions.act_window',
@@ -465,17 +469,20 @@ class acceptability_criteria(osv.Model):
                 'target': 'new',
                 'context': {
                         'default_res_model': 'user.story',
+                        'default_mail_compose_log': True,
                         'default_model': 'user.story',
-                        'default_res_id': ids and ids[0],
+                        'default_res_id': user_story_brw.id,
                         'default_partner_ids': [(6, 0, partner_ids)],
                         'default_body': _('<b>Description the cause of disapproval</b>'),
-                                    }
+                                   }
                             }
         return ction
 
     def ask_review(self, cr, uid, ids, context=None):
         context = context or {}
         criterial_brw = self.browse(cr, SUPERUSER_ID, ids[0])
+        if criterial_brw.accepted:
+            return True
         data_obj = self.pool.get('ir.model.data')
         compose_obj = self.pool.get('mail.compose.message')
         user_story_brw = criterial_brw.accep_crit_id
@@ -489,7 +496,7 @@ class acceptability_criteria(osv.Model):
         compose_id = compose_obj.create(cr, uid, {
                         'res_model': 'user.story',
                         'model': 'user.story',
-                        'res_id': ids and ids[0],
+                        'res_id': user_story_brw.id,
                         'partner_ids': [(6, 0, partner_ids)],
                         'partner_id':0,
                         'body': mail.get('body'),
