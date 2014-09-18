@@ -52,8 +52,11 @@ class hr_job(osv.Model):
                                    help="level of job position."),
         'reports_to': fields.many2one('hr.job', 'Reports To',
                                       help="Who reports"),
-        'activities': fields.text('Frequent Activities and Tasks',
+        'activities': fields.text('Frequent Activities and Tasks', translate=True,
                                   help="Frequent Activities and Tasks"),
-        'responsibilities': fields.text('Responsibilities',
+        'responsibilities': fields.text('Responsibilities', translate=True,
                                         help="Responsibilities of Job Position"),
+
+        'description': fields.text('Job Description', translate=True),
+        'requirements': fields.text('Requirements', translate=True),
     }

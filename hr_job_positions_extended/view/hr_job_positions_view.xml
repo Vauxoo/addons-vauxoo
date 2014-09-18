@@ -9,8 +9,8 @@
                 <field name="arch" type="xml">
                     <xpath expr="//field[@name='job_id']" position="attributes">
                         <attribute name="options"></attribute>
+                        <attribute name="context"></attribute>
                     </xpath>
-
                 </field>
         </record>
 
