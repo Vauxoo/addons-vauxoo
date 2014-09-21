@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="account.view_account_analytic_line_form"/>
             <field name="arch" type="xml">
                     <xpath expr="//field[@name='company_id']" position="after">
-                            <field name="journal_id" readonly="1"/>
+                            <field name="general_journal_id" readonly="1"/>
                     </xpath>
             </field>
         </record>
@@ -19,7 +19,7 @@
             <field name="inherit_id" ref="account.view_account_analytic_line_tree"/>
             <field name="arch" type="xml">
                     <xpath expr="//field[@name='date']" position="after">
-                        <field name="journal_id"/>
+                        <field name="general_journal_id"/>
                     </xpath>
             </field>
         </record>
@@ -30,7 +30,7 @@
             <field name="inherit_id" ref="account.view_account_analytic_line_filter"/>
             <field name="arch" type="xml">
                 <xpath expr="//group" position="inside">
-                    <filter string="Journal" context="{'group_by':'journal_id'}"/>
+                    <filter string="General Journal" context="{'group_by':'general_journal_id'}"/>
                 </xpath>
             </field>
         </record>

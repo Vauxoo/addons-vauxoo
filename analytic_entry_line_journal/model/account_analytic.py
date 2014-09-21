@@ -31,7 +31,7 @@ class account_analytic_line(osv.Model):
     _inherit = 'account.analytic.line'
 
     _columns = {
-        'journal_id':fields.related('move_id', 'journal_id', string='Journal',
+        'general_journal_id':fields.related('move_id', 'journal_id', string='General Journal',
             type='many2one', relation='account.journal', store=True),
     }
 
