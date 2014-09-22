@@ -300,7 +300,7 @@ class user_story(osv.Model):
         '''
         usname = self.browse(cr, uid, i).name
         username = self.pool.get('res.users').browse(cr, uid, uid).name
-        urlbase = self.pool.get('ir.config_parameter').get_param(cr, uid, 'web.base.url')
+        urlbase = self.pool.get('ir.config_parameter').get_param(cr, SUPERUSER_ID, 'web.base.url')
         link = '#id={i}&view_type=form&model=user.story'.format(i=i, urlbase=urlbase)
         return _(u'''<html><div>
                  <h2>{usname}</h2>
@@ -323,7 +323,7 @@ class user_story(osv.Model):
     def get_body_approval(self, cr, uid, i, context=None):
         usname = self.browse(cr, uid, i).name
         username = self.pool.get('res.users').browse(cr, uid, uid).name
-        urlbase = self.pool.get('ir.config_parameter').get_param(cr, uid, 'web.base.url')
+        urlbase = self.pool.get('ir.config_parameter').get_param(cr, SUPERUSER_ID, 'web.base.url')
         link = '#id={i}&view_type=form&model=user.story'.format(i=i, urlbase=urlbase)
         return _(u'''<html><div>
                  <h2>{usname}</h2>
@@ -414,6 +414,16 @@ class acceptability_criteria(osv.Model):
         ac_ids = ac_obj.search(
             cr, uid, [('accep_crit_id', 'in', us_ids)], context=context)
         return ac_ids
+
+    def get_body_disapproval(self, cr, uid, i, context=None):
+        '''
+        TODO: This body must be verified to give the information regarding the answers in
+        the do_disaproval method.
+        '''
+        model_brw = self.browse(cr, uid, i[0])
+        urlbase = self.pool.get('ir.config_parameter').get_param(cr, SUPERUSER_ID, 'web.base.url')
+        link = '#id={i}&view_type=form&model=user.story'.format(i=model_brw.accep_crit_id and model_brw.accep_crit_id.id, urlbase=urlbase)
+        return link
 
     def approve(self, cr, uid, ids, context=None):
         context = context or {}
@@ -527,7 +537,7 @@ class acceptability_criteria(osv.Model):
         'accep_crit_id': fields.many2one('user.story',
                                          'User Story',
                                          ondelete='cascade',
-                                         required=True),
+                                         ),
         'accepted': fields.boolean('Accepted',
                                    help='Check if this criterion apply'),
         'development': fields.boolean('Development'),
