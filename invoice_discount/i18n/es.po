@@ -1,0 +1,39 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* invoice_discount
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-09-22 23:12+0000\n"
+"PO-Revision-Date: 2014-09-22 23:12+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: invoice_discount
+#: field:account.invoice,discount_amount:0
+#: field:account.invoice.line,discount_amount:0
+msgid "Discount"
+msgstr "Descuento"
+
+#. module: invoice_discount
+#: field:account.invoice,subtotal_wo_discount:0
+#: field:account.invoice.line,subtotal_wo_discount:0
+msgid "SubTotal"
+msgstr "SubTotal"
+
+#. module: invoice_discount
+#: model:ir.model,name:invoice_discount.model_account_invoice_line
+msgid "Invoice Line"
+msgstr "Línea de factura"
+
+#. module: invoice_discount
+#: model:ir.model,name:invoice_discount.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
