@@ -31,13 +31,14 @@ from openerp.osv import osv, fields
 
 
 class account_invoice_line(osv.osv):
+
     '''
     Inherit from account.invoice.line to get by line the amount without
     discount and the amount of this
     '''
     _inherit = 'account.invoice.line'
 
-    def _get_subtotal_without_discount(self, cr, uid, ids, args, fields,
+    def _get_subtotal_without_discount(self, cr, uid, ids, args, field_name,
                                        context=None):
         '''
         Method to get the subtotal of the amount without discount
@@ -56,7 +57,7 @@ class account_invoice_line(osv.osv):
             res[line.id] = (line.quantity * line.price_unit)
         return res
 
-    def _get_discount(self, cr, uid, ids, args, fields, context=None):
+    def _get_discount(self, cr, uid, ids, args, field_name, context=None):
         '''
         Method to get the amount of discount, is used subtraction by rounding
         @param self: The object pointer.
@@ -74,10 +75,10 @@ class account_invoice_line(osv.osv):
             res[line.id] = line.discount * line.subtotal_wo_discount / 100
         return res
 
-    _columns= {
+    _columns = {
         'subtotal_wo_discount': fields.function(_get_subtotal_without_discount,
                                                 string='SubTotal',
                                                 store=True, type='float'),
-        'discount_amount':fields.function(_get_discount, string='Discount',
-                                          store=False, type='float'),
-        }
+        'discount_amount': fields.function(_get_discount, string='Discount',
+                                           store=False, type='float'),
+    }
