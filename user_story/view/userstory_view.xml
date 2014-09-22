@@ -228,7 +228,6 @@
                     </h1>
                     <group>
                         <field name="scenario"/>
-                        <field name="accep_crit_id"/>
                         <field name="accepted"/>
                         <field name="development"/>
                         <field name="difficulty" invisible="1"/>
