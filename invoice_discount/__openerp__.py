@@ -25,24 +25,24 @@
 ##############################################################################
 
 {
-    "name" : "Invoice Discount",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Generic Modules",
-    "description" : """
-        Add field discount to a partner and discount fields on invoice. It's
-        apply discount in all lines when you press compute taxes button.
+    "name": "Invoice Discount",
+    "version": "1.0",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "description": """
+        Fields to get the amount without discount and discount in lines to
+        invoice.
     """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
+    "depends": [
         "account",
-        ],
-    "demo" : [],
-    "data" : [
+    ],
+    "demo": [],
+    "data": [
         "view/invoice_view.xml",
     ],
-    "test" : [],
-    "installable" : True,
-    "active" : False,
+    "test": [],
+    "installable": True,
+    "active": False,
 }
