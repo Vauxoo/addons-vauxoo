@@ -82,3 +82,64 @@ class account_invoice_line(osv.osv):
         'discount_amount': fields.function(_get_discount, string='Discount',
                                            store=False, type='float'),
     }
+
+class account_invoice(osv.osv):
+    
+    '''
+    Inherit from account.invoice to get the amount total without discount and
+    the amount total of this, of all invoice lines.
+    '''
+    _inherit = 'account.invoice'
+
+    def _get_subtotal_without_discount(self, cr, uid, ids, args, field_name,
+                                       context=None):
+        '''
+        Method to get the subtotal of the amount without discount of the sum of
+        invoice lines.
+        @param self: The object pointer.
+        @param cr: A database cursor
+        @param uid: ID of the user currently logged in
+        @param ids: list of ids for which name should be read
+        @param field_name: field that call the method
+        @param arg: Extra arguments
+        @param context: A standard dictionary
+        @return : Dict with values
+        '''
+        context = context or {}
+        total = 0.0
+        res = {}
+        for inv in self.browse(cr, uid, ids, context=context):
+            for line in inv.invoice_line:
+                total += line.subtotal_wo_discount
+            res[inv.id] = total
+        return res
+
+    def _get_discount(self, cr, uid, ids, args, field_name, context=None):
+        '''
+        Method to get the amount total of discount in the invoice lines.
+        @param self: The object pointer.
+        @param cr: A database cursor
+        @param uid: ID of the user currently logged in
+        @param ids: list of ids for which name should be read
+        @param field_name: field that call the method
+        @param arg: Extra arguments
+        @param context: A standard dictionary
+        @return : Dict with values
+        '''
+        context = context or {}
+        total = 0.0
+        res = {}
+        for inv in self.browse(cr, uid, ids, context=context):
+            for line in inv.invoice_line:
+                total += line.discount_amount
+            res[inv.id] = total
+        return res
+
+    _columns = {
+        'subtotal_wo_discount': fields.function(_get_subtotal_without_discount,
+                                                string='SubTotal',
+                                                store=True, type='float'),
+        'discount_amount': fields.function(_get_discount, string='Discount',
+                                           store=False, type='float'),
+    }
+    
