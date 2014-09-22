@@ -140,7 +140,7 @@ class account_invoice(osv.Model):
                 timezone_present + timezone_original)*-1)
         return a
     
-    def assigned_datetime(self, cr, uid, values, context=None):
+    def assigned_datetime(self, cr, uid, ids, values, context=None):
         if context is None:
             context = {}
         res = {}
@@ -205,7 +205,7 @@ class account_invoice(osv.Model):
     def action_move_create(self, cr, uid, ids, context=None):
         for inv in self.browse(cr, uid, ids, context=context):
             if inv.type in ('out_invoice', 'out_refund'):
-                vals_date = self.assigned_datetime(cr, uid,
+                vals_date = self.assigned_datetime(cr, uid, ids,
                     {'invoice_datetime': inv.invoice_datetime,
                         'date_invoice': inv.date_invoice},
                         context=context)
