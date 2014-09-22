@@ -469,6 +469,7 @@
 Agradeciendo su atención.
 
 Ante cualquier duda estamos a su disposición.
+<a href="${object.get_body_disapproval()}">Acceso directo al Documento</a>
                                                                 </pre>
                                                                 <br />
                                                         </div>
@@ -955,6 +956,7 @@ Ante cualquier duda estamos a su disposición.
 Agradeciendo su atención.
 
 Ante cualquier duda estamos a su disposición.
+<a href="${object.get_body_disapproval()}">Acceso directo al Documento</a>
                                                                 </pre>
                                                                 <br />
                                                         </div>
