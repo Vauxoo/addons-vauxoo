@@ -22,30 +22,33 @@
 #    You should have received a copy of the GNU General Public License     #
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
-
 {
-    "name" : "Account Invoice Per Journal Report",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Generic Modules",
-    "description" : 
+    "name": "Account Invoice Per Journal Report",
+    "version": "1.0",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
+    "description":
     """
-Adds a "Report" field on the journal model and a "Print Invoice" button on the customer invoices view which calls
-a wizard to print an invoice on a report per journal enviroment.
+Adds a "Report" field on the journal model and a "Print Invoice" button on the
+customer invoices view which calls a wizard to print an invoice on a report per
+journal enviroment.
 
-This module allows the generation of txt reports using the following convention:
+This module allows the generation of txt reports using the following
+convention:
 
 * Must be a report wizard type to return the txt report.
-* The report wizard type must have the same name as his counterpart in pdf format concatenating the following string ' txt' in the report name.
-    
-In this way the module generates both reports, making available for download the report txt.
+* The report wizard type must have the same name as his counterpart in pdf
+format concatenating the following string ' txt' in the report name.
+
+In this way the module generates both reports, making available for download
+the report txt.
     """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : ["account", "report_webkit"
-        ],
-    "demo" : [],
-    "data" : [
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
+    "depends": ["account", "report_webkit"
+                ],
+    "demo": [],
+    "data": [
         "data/data.xml",
         "view/account_journal_view.xml",
         "wizard/invoice_report_per_journal.xml",
@@ -55,6 +58,6 @@ In this way the module generates both reports, making available for download the
     'test': [
         'test/invoice_report_per_journal.yml'
     ],
-    "installable" : True,
-    "active" : False,
+    "installable": True,
+    "active": False,
 }
