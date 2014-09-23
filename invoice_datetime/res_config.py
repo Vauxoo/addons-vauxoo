@@ -21,6 +21,7 @@
 
 import time
 import datetime
+import openerp
 from dateutil.relativedelta import relativedelta
 from operator import itemgetter
 from os.path import join as opj
@@ -40,7 +41,7 @@ class account_config_settings(osv.osv_memory):
         'select_date' : fields.selection([('date', 'Date'), ('datetime', 'Datetime')], string="Default date of invoices", help="Select the field you want to displayed in the invoice for the selected company."),
     }
     
-    def get_default_select_date(self, cr, uid, fields, context=None):
+    def get_default_select_date(self, cr, uid, fields_name, context=None):
         key_by_company_id = "acc_invoice.date_invoice_type_" + str(self._default_company(cr, uid))
         type_show_date = self.pool.get("ir.config_parameter").get_param(cr, uid, key_by_company_id, default='date', context=context)
         return {'select_date': type_show_date}
