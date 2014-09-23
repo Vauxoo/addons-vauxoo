@@ -23,28 +23,21 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+'''
+File to add functionalitity in account.invoice.line to get the amount without
+discount and the value of the discount
+'''
+from openerp.osv import osv
 
-{
-    "name": "Invoice Discount",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Generic Modules",
-    "description": """
-        Fields to get the amount without discount and discount in lines to
-        invoice.
-    """,
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
-    "depends": [
-        "account",
-        "sale",
-    ],
-    "demo": [],
-    "data": [
-        "view/invoice_view.xml",
-        'view/config_settings_action.xml',
-    ],
-    "test": [],
-    "installable": True,
-    "active": False,
-}
+
+class sale_config_settings(osv.TransientModel):
+    _inherit = 'sale.config.settings'
+
+    def get_default_sale_config_settings(self, cr, uid, fields, context=None):
+        return {'group_discount_per_so_line': True,}
+
+    def action_sale_config_settings(self, cr, uid, context=None):
+        res = self.create(cr, uid, {'group_discount_per_so_line': True,},
+                          context=context)
+        self.execute(cr, uid, [res], context=context)
+        return True
