@@ -25,78 +25,75 @@
 #
 ##############################################################################
 
-from openerp.osv import osv, fields
-from openerp.tools.translate import _
-
+from openerp import models, fields, api, _
 import time
 
-class account_invoice(osv.Model):
+class account_invoice(models.Model):
     _inherit = 'account.invoice'
-
-    def __check_tax_lines(self, cr, uid, inv, compute_taxes, ait_obj):#method overriding
-        company_currency = self.pool['res.company'].browse(cr, uid, inv.company_id.id).currency_id
-        if not inv.tax_line:
+    
+    @api.multi
+    def check_tax_lines(self, compute_taxes):
+        account_invoice_tax = self.env['account.invoice.tax']
+        company_currency = self.company_id.currency_id
+        if not self.tax_line:
             for tax in compute_taxes.values():
-                ait_obj.create(cr, uid, tax)
+                account_invoice_tax.create(tax)
         else:
             tax_key = []
-            for tax in inv.tax_line:
+            for tax in self.tax_line:
                 if tax.manual:
                     continue
-                #start custom  change
-                #key = (tax.tax_code_id.id, tax.base_code_id.id, tax.account_id.id, tax.account_analytic_id.id)
+                # start custom change
+                #~ key = (tax.tax_code_id.id, tax.base_code_id.id, tax.account_id.icd, tax.account_analytic_id.id)
                 key = (tax.tax_id and tax.tax_id.id or False)
                 #end custom change
                 tax_key.append(key)
-                if not key in compute_taxes:
-                    raise osv.except_osv(_('Warning!'), _('Global taxes defined, but they are not in invoice lines !'))
+                if key not in compute_taxes:
+                    raise except_orm(_('Warning!'), _('Global taxes defined, but they are not in invoice lines !'))
                 base = compute_taxes[key]['base']
                 if abs(base - tax.base) > company_currency.rounding:
-                    raise osv.except_osv(_('Warning!'), _('Tax base different!\nClick on compute to update the tax base.'))
+                    raise except_orm(_('Warning!'), _('Tax base different!\nClick on compute to update the tax base.'))
             for key in compute_taxes:
-                if not key in tax_key:
-                    raise osv.except_osv(_('Warning!'), _('Taxes are missing!\nClick on compute button.'))
+                if key not in tax_key:
+                    raise except_orm(_('Warning!'), _('Taxes are missing!\nClick on compute button.'))
                     
-class account_invoice_tax(osv.Model):
+class account_invoice_tax(models.Model):
     _inherit = 'account.invoice.tax'
     
-    _columns = {
-        'tax_id': fields.many2one('account.tax', 'Tax', required=False, ondelete='set null',
-            help="Tax relation to original tax, to be able to take off all data from invoices."),
-    }
-    
-    def __compute(self, cr, uid, invoice_id, context=None):#method overriding
-        tax_grouped = {}
-        tax_obj = self.pool.get('account.tax')
-        cur_obj = self.pool.get('res.currency')
-        inv = self.pool.get('account.invoice').browse(cr, uid, invoice_id, context=context)
-        cur = inv.currency_id
-        company_currency = self.pool['res.company'].browse(cr, uid, inv.company_id.id).currency_id.id
-        for line in inv.invoice_line:
-            for tax in tax_obj.compute_all(cr, uid, line.invoice_line_tax_id, (line.price_unit* (1-(line.discount or 0.0)/100.0)), line.quantity, line.product_id, inv.partner_id)['taxes']:
-                val={}
-                val['invoice_id'] = inv.id
-                val['name'] = tax['name']
-                val['amount'] = tax['amount']
-                val['manual'] = False
-                val['sequence'] = tax['sequence']
-                val['base'] = cur_obj.round(cr, uid, cur, tax['price_unit'] * line['quantity'])
-                #start custom change
-                val['tax_id'] = tax['id']
-                #end custom change
+    tax_id = fields.Many2one('account.tax', string='Tax', required=False, ondelete='set null', index=True,
+        help="Tax relation to original tax, to be able to take off all data from invoices.")
 
-                if inv.type in ('out_invoice','in_invoice'):
+    @api.v8
+    def compute(self, invoice):
+        tax_grouped = {}
+        currency = invoice.currency_id.with_context(date=invoice.date_invoice or fields.Date.context_today(invoice))
+        company_currency = invoice.company_id.currency_id
+        for line in invoice.invoice_line:
+            taxes = line.invoice_line_tax_id.compute_all(
+                (line.price_unit * (1 - (line.discount or 0.0) / 100.0)),
+                line.quantity, line.product_id, invoice.partner_id)['taxes']
+            for tax in taxes:
+                val = {
+                    'invoice_id': invoice.id,
+                    'name': tax['name'],
+                    'amount': tax['amount'],
+                    'manual': False,
+                    'sequence': tax['sequence'],
+                    'base': currency.round(tax['price_unit'] * line['quantity']),
+                    'tax_id': tax['id']
+                }
+                if invoice.type in ('out_invoice','in_invoice'):
                     val['base_code_id'] = tax['base_code_id']
                     val['tax_code_id'] = tax['tax_code_id']
-                    val['base_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['base'] * tax['base_sign'], context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')}, round=False)
-                    val['tax_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['amount'] * tax['tax_sign'], context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')}, round=False)
+                    val['base_amount'] = currency.compute(val['base'] * tax['base_sign'], company_currency, round=False)
+                    val['tax_amount'] = currency.compute(val['amount'] * tax['tax_sign'], company_currency, round=False)
                     val['account_id'] = tax['account_collected_id'] or line.account_id.id
                     val['account_analytic_id'] = tax['account_analytic_collected_id']
                 else:
                     val['base_code_id'] = tax['ref_base_code_id']
                     val['tax_code_id'] = tax['ref_tax_code_id']
-                    val['base_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['base'] * tax['ref_base_sign'], context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')}, round=False)
-                    val['tax_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['amount'] * tax['ref_tax_sign'], context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')}, round=False)
+                    val['base_amount'] = currency.compute(val['base'] * tax['ref_base_sign'], company_currency, round=False)
+                    val['tax_amount'] = currency.compute(val['amount'] * tax['ref_tax_sign'], company_currency, round=False)
                     val['account_id'] = tax['account_paid_id'] or line.account_id.id
                     val['account_analytic_id'] = tax['account_analytic_paid_id']
                 #start custom change
@@ -106,14 +103,15 @@ class account_invoice_tax(osv.Model):
                 if not key in tax_grouped:
                     tax_grouped[key] = val
                 else:
-                    tax_grouped[key]['amount'] += val['amount']
                     tax_grouped[key]['base'] += val['base']
+                    tax_grouped[key]['amount'] += val['amount']
                     tax_grouped[key]['base_amount'] += val['base_amount']
                     tax_grouped[key]['tax_amount'] += val['tax_amount']
 
         for t in tax_grouped.values():
-            t['base'] = cur_obj.round(cr, uid, cur, t['base'])
-            t['amount'] = cur_obj.round(cr, uid, cur, t['amount'])
-            t['base_amount'] = cur_obj.round(cr, uid, cur, t['base_amount'])
-            t['tax_amount'] = cur_obj.round(cr, uid, cur, t['tax_amount'])
+            t['base'] = currency.round(t['base'])
+            t['amount'] = currency.round(t['amount'])
+            t['base_amount'] = currency.round(t['base_amount'])
+            t['tax_amount'] = currency.round(t['tax_amount'])
+
         return tax_grouped
