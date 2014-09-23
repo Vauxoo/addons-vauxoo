@@ -66,6 +66,11 @@
     currency_id: base.USD
     name: !eval time.strftime('%Y-02-02')
 -
+  I set the context that will be used for the encoding of all the vouchers of this file
+-
+  !context
+    'type': 'payment'
+-
   I create the voucher of payment01 with values 3.34
 -
   !record {model: account.voucher, id: account_voucher_tax_currency_diff_1, view: account_voucher.view_vendor_payment_form}:

@@ -34,6 +34,11 @@
   !assert {model: account.invoice, id: account_invoice_supplier_tax0}:
     - state == 'open'
 -
+  I set the context that will be used for the encoding of all the vouchers of this file
+-
+  !context
+    'type': 'payment'
+-
   I create the first voucher of payment with values 6182.80
 -
   !record {model: account.voucher, id: account_voucher_tax1, view: account_voucher.view_vendor_payment_form}:
