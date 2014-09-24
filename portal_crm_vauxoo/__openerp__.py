@@ -42,8 +42,7 @@ the human recourses that is public.
     'website': 'http://www.vauxoo.com',
     'depends': [
                 'crm',
-                'portal',
-                #~ 'portal_news', #deprecated by odoo
+                'website_crm',
                 'web_captcha',
                 #~ 'portal_hr_employees', deprecated by odoo
                 'vauxoo_widgets',

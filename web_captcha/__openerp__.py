@@ -56,7 +56,7 @@ set the "Public Key" as the key for you.
     'qweb': [
         'static/src/xml/template.xml',
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'web_preload': False,
 }
