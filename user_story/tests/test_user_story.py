@@ -13,6 +13,7 @@ class TestUserStory(TransactionCase):
         self.user = self.registry('res.users')
         self.data = self.registry('ir.model.data')
         self.message = self.registry('mail.message')
+        self.context = {'tracking_disable': True}
 
 
     @mute_logger('openerp.addons.base.ir.ir_model', 'openerp.osv.orm')
@@ -55,7 +56,7 @@ class TestUserStory(TransactionCase):
                                                  (0, 0, {'name': 'Criterial Test 2', 'scenario': 'Test 2'}),
                                                          ]
 
-        }), "An user with user story group manager cannot create an user story")
+        }, self.context), "An user with user story group manager cannot create an user story")
 
     @mute_logger('openerp.addons.base.ir.ir_model', 'openerp.osv.orm')
     def test_write_method(self):
@@ -95,7 +96,7 @@ class TestUserStory(TransactionCase):
         #Try that a user with user story group can write a user story,  this group must allow create user story without problems
         self.assertTrue(self.story.write(cr, user_test_id, [story_id], {
                               'name': 'User Story Test Changed',
-        }), "An user with user story group manager cannot write an user story")
+        }, self.context), "An user with user story group manager cannot write an user story")
 
     @mute_logger('openerp.addons.base.ir.ir_model', 'openerp.osv.orm')
     def test_unlink_method(self):
@@ -165,5 +166,5 @@ class TestUserStory(TransactionCase):
             'groups_id':[(4, us_manager_group.id)]
         })
         #Try that a user with user story group can copy a user story,  this group must allow create user story without problems
-        self.assertTrue(self.story.copy(cr, user_test_id, story_id ),
+        self.assertTrue(self.story.copy(cr, user_test_id, story_id, context=self.context),
                         "An user with user story group manager cannot remove an user story")
