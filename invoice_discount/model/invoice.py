@@ -77,10 +77,18 @@ class account_invoice_line(osv.osv):
 
     _columns = {
         'subtotal_wo_discount': fields.function(_get_subtotal_without_discount,
-                                                string='SubTotal',
-                                                store=True, type='float'),
-        'discount_amount': fields.function(_get_discount, string='Discount',
-                                           store=False, type='float'),
+                                                string='SubTotal w/o Discount',
+                                                store=True, type='float',
+                                                help='Amount without apply \
+                                                the discount of the line, is \
+                                                calculated as Qty * Price Unit'
+                                                ),
+        'discount_amount': fields.function(_get_discount,
+                                           string='Discount Amount',
+                                           store=False, type='float',
+                                           help='Amount total of the discount,\
+                                           is calculated as Discount * \
+                                           SubTotal w/o Discount / 100.'),
     }
 
 class account_invoice(osv.osv):
@@ -137,9 +145,14 @@ class account_invoice(osv.osv):
 
     _columns = {
         'subtotal_wo_discount': fields.function(_get_subtotal_without_discount,
-                                                string='SubTotal',
-                                                store=True, type='float'),
+                                                string='SubTotal w/o Discount',
+                                                store=True, type='float',
+                                                help='Amount without apply the\
+                                                 discount of the lines of the \
+                                                invoice.'),
         'discount_amount': fields.function(_get_discount, string='Discount',
-                                           store=False, type='float'),
+                                           store=False, type='float',
+                                           help='Total of discount apply in \
+                                           each line of the invoice.'),
     }
     
