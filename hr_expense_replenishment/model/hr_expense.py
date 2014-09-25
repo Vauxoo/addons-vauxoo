@@ -118,7 +118,7 @@ class hr_expense_expense(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         res = {}.fromkeys(ids,[])
         for exp in self.browse(cr, uid, ids, context=context):
-            res[exp.id] += [move.id for move in exp.account_move_id.line_id]
+            res[exp.id] += exp.account_move_id and [move.id for move in exp.account_move_id.line_id] or []
             res[exp.id] += [line.id for line in exp.advance_ids]
             res[exp.id] += [line2.id for pay in exp.payment_ids
                                 for line2 in pay.move_ids]
@@ -129,6 +129,32 @@ class hr_expense_expense(osv.Model):
     def _her_entries(self, cr, uid, ids, field_name, arg, context=None):
         context = context or {}
         return self.her_entries(cr, uid, ids, context=context)
+
+    def _get_payment_status(self, cr, uid, ids, field_name, arg, context=None):
+        context = context or {}
+        res = {}.fromkeys(ids, False)
+        rex = {}.fromkeys(ids, [])
+        aml_obj = self.pool.get('account.move.line')
+        import pdb; pdb.set_trace()
+        for id, aml_ids in self.her_entries(cr, uid, ids, context=context).iteritems():
+            if not aml_ids:
+                continue
+            for aml_brw in aml_obj.browse(cr, uid, aml_ids, context=context):
+                if not aml_brw.account_id.type in ('payable', 'receivable'):
+                    continue
+                if aml_brw.reconcile_id:
+                    continue
+                res[id] += [aml_brw.id]
+        for id, aml_ids in rex.iteritems():
+            exp_brw = self.browse(cr, uid, id, context=context)
+            if exp_brw.state == 'paid' and not aml_ids:
+                res[id] = True
+            elif exp_brw.state == 'paid' and aml_ids:
+                exp_brw.write({'state':'process'})
+            elif exp_brw.state == 'process' and not aml_ids:
+                res[id] = True
+                exp_brw.write({'state':'paid'})
+        return res
 
     _columns = {
         'partner_id':fields.related('employee_id', 'address_home_id',
@@ -157,6 +183,14 @@ class hr_expense_expense(osv.Model):
             'account.move.line', 'expense_advance_rel',
             'expense_id', 'aml_id', string='Employee Advances',
             help="Advances associated to the expense employee."),
+        'payment_status': fields.function(_get_payment_status, type='boolean',
+            string='Expense Payment Status',
+            store = {
+                _inherit : (lambda c, u, ids, cx: ids, ['aml_ids'], 50)
+            },),
+
+
+
         'aml_ids': fields.function(_her_entries, type='one2many',
             obj='account.move.line', string='Expense Journal Entry Lines'),
         'payment_ids': fields.many2many('account.voucher','expense_pay_rel',

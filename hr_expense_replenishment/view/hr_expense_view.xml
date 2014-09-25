@@ -32,7 +32,7 @@
                 <xpath expr="//field[@name='line_ids']" position="before">
                     <separator string="No Deductible Lines"/>
                 </xpath>
-                
+
                 <xpath expr="//field[@name='date']" position="after">
                     <field name="date_post" attrs="{'readonly':[('state','not in',('accepted','done'))],'required':[('state','=','accepted')]}"/>
                 </xpath>
@@ -60,15 +60,15 @@
                         <field name="name"/>
                     </h1>
                 </xpath>
-                
+
                 <xpath expr="//field[@name='department_id']" position="replace">
                     <field name="department_id" on_change="onchange_department_id(employee_id, department_id)"/>
                 </xpath>
-                
+
                 <xpath expr="//field[@name='employee_id']" position="after">
                     <field name="partner_id"/>
                 </xpath>
-                
+
                 <xpath expr="//field[@name='department_id']" position="after">
                     <field name="account_analytic_id" domain="[('type','!=','view')]"/>
                 </xpath>
@@ -100,16 +100,22 @@
 
                 <xpath expr="//notebook[last()]" position="inside">
                     <page string="Payments" attrs="{'invisible':[('state','not in',('paid','process'))]}">
+                        <group colspan="4" col="2">
+                            <field name="payment_status" nolabel="0" readonly="1"/>
+                        </group>
+                        <separator string="Payment Orders"/>
                         <field name="payment_ids" nolabel="1" readonly="1"/>
+                        <separator string="Journal Entry Lines"/>
+                        <field name="aml_ids" nolabel="1" readonly="1"/>
                     </page>
                 </xpath>
 
                 <xpath expr="//page[@string='Accounting']" position="after">
                     <page string="Invoices" >
                         <group>
-                            <field name="invoice_ids" 
-                                widget="many2many" 
-                                nolabel="1" 
+                            <field name="invoice_ids"
+                                widget="many2many"
+                                nolabel="1"
                                 attrs="{'readonly':[('state','in',['cancelled','done','paid'])]}"
                                 domain="[('state','=','draft'),('expense_id','=',False)]"
                                 >
@@ -154,7 +160,7 @@
                 </xpath>
             </field>
         </record>
-        
+
         <record model="ir.ui.view" id="view_vendor_receipt_dialog_form">
             <field name="name">account.voucher.receipt.dialog.form</field>
             <field name="model">account.voucher</field>
@@ -178,7 +184,7 @@
                                 on_change="onchange_journal(journal_id, line_cr_ids, False, partner_id, date, amount, type, company_id, context)"
                                 string="Payment Method"/>
                         </group>
-                        
+
                         <group>
                             <field name="date" invisible="context.get('line_type', False)" on_change="onchange_date(date, currency_id, payment_rate_currency_id, amount, company_id, context)"/>
                             <field name="period_id"/>
