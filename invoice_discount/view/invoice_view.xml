@@ -26,5 +26,17 @@
             </field>
         </record>
         
+        <record model="ir.ui.view" id="view_account_invoice_tree_inh_discount">
+            <field name="name">view.account.invoice.tree.inh.discount</field>
+            <field name="model">account.invoice.line</field>
+            <field name="inherit_id" ref="account.view_invoice_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='price_subtotal']" position="after">
+                    <field name="subtotal_wo_discount" invisible='1'/>
+                    <field name="discount_amount" invisible='1'/>
+                </xpath>
+            </field>
+        </record>
+        
     </data>
 </openerp>
