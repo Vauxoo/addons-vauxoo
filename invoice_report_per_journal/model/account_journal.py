@@ -22,12 +22,14 @@
 #    You should have received a copy of the GNU General Public License     #
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
-
+'''
+Method to added field report_id in the journal
+'''
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
 
 
 class invoice_report_per_journal(osv.Model):
+
     """
     invoice_report_per_journal
     """
