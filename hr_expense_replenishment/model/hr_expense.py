@@ -122,8 +122,11 @@ class hr_expense_expense(osv.Model):
             res[exp.id] += [line.id for line in exp.advance_ids]
             res[exp.id] += [line2.id for pay in exp.payment_ids
                                 for line2 in pay.move_ids]
-            res[exp.id] += [move2.id for inv in exp.invoice_ids
-                                for move2 in inv.move_id.line_id]
+            for inv in exp.invoice_ids:
+                if not inv.move_id:
+                    continue
+                for move2 in inv.move_id.line_id:
+                    res[exp.id] += [move2.id]
         return res
 
     def _her_entries(self, cr, uid, ids, field_name, arg, context=None):
@@ -135,7 +138,6 @@ class hr_expense_expense(osv.Model):
         res = {}.fromkeys(ids, False)
         rex = {}.fromkeys(ids, [])
         aml_obj = self.pool.get('account.move.line')
-        import pdb; pdb.set_trace()
         for id, aml_ids in self.her_entries(cr, uid, ids, context=context).iteritems():
             if not aml_ids:
                 continue
