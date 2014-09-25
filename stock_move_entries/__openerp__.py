@@ -25,17 +25,18 @@
 ##############################################################################
 
 {
-    "name": "stock_move_entries",
+    "name": "Stock Move Entries",
     "version": "1.1",
     "author" : "Vauxoo",
     "category": "Generic Modules/Account",
     "website" : "http://www.vauxoo.com/",
     "description": """
-Relacion Movimientos con Polizas.
-========================
-
-    * Crea campos m2o para relacionar la poliza con su 
-    movimiento de inventario.
+Stock Move Entries
+==================
+Creates a relationship between stock.move model records
+    and the regarding account.move record that is created
+    when using realtime valuation and the stock.move is coming
+    from / going to an external stock.location
     """,
     'depends': ['stock','account'],
     'init_xml': [],
