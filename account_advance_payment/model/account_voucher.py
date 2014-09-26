@@ -49,18 +49,16 @@ class account_voucher(osv.Model):
 
     def onchange_partner_id(self, cr, uid, ids, partner_id, journal_id, amount, currency_id, ttype, date, context=None):
         res = super(account_voucher, self).onchange_partner_id(cr, uid, ids, partner_id, journal_id, amount, currency_id, ttype, date, context=context)
-        if not res:
-            return {}
         context = context or {}
         if not partner_id:
-            return {}
+            return res
         partner_pool = self.pool.get('res.partner')
         partner = partner_pool.browse(cr, uid, partner_id, context=context)
         advance_account_id = False
         if ttype in ('sale', 'receipt'):
-            advance_account_id = partner.property_account_customer_advance and partner.property_account_customer_advance.id
+            advance_account_id = partner.property_account_customer_advance and partner.property_account_customer_advance.id or False
         else:
-            advance_account_id = partner.property_account_supplier_advance and partner.property_account_supplier_advance.id
+            advance_account_id = partner.property_account_supplier_advance and partner.property_account_supplier_advance.id or False
         res['value']['advance_account_id'] = advance_account_id
 
         return res
