@@ -52,15 +52,17 @@ class account_voucher(osv.Model):
         if not res:
             return {}
         context = context or {}
+        if not ids:
+            return {}
 
         partner_pool = self.pool.get('res.partner')
 
         partner = partner_pool.browse(cr, uid, partner_id, context=context)
         advance_account_id = False
         if ttype in ('sale', 'receipt'):
-            advance_account_id = partner.property_account_customer_advance.id
+            advance_account_id = partner.property_account_customer_advance and partner.property_account_customer_advance.id
         else:
-            advance_account_id = partner.property_account_supplier_advance.id
+            advance_account_id = partner.property_account_supplier_advance and partner.property_account_supplier_advance.id
         res['value']['advance_account_id'] = advance_account_id
 
         return res
