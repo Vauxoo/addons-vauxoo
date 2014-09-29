@@ -25,9 +25,7 @@
 ##############################################################################
 
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
 
-import time
 
 class account_asset_depreciation_line(osv.Model):
     _inherit = 'account.asset.depreciation.line'
