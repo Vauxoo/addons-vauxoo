@@ -21,9 +21,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-from openerp.osv import osv, fields, orm
+from openerp.osv import osv, fields
 import decimal_precision as dp
-from openerp.tools.translate import _
 
 from datetime import datetime
 from dateutil.relativedelta import relativedelta

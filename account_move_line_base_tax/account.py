@@ -24,7 +24,6 @@
 #
 ##############################################################################
 from openerp.osv import osv, fields
-from lxml import etree
 from openerp.tools.translate import _
 
 class account_move_line(osv.Model):

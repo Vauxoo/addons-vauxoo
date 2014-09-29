@@ -25,7 +25,6 @@
 ##############################################################################
 
 from openerp.osv import osv
-from openerp.tools.translate import _
 
 class invoice(osv.osv):
     _inherit = 'account.invoice'

@@ -23,12 +23,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-import time
 from openerp.osv import osv, fields
-import decimal_precision as dp
-from openerp.tools.translate import _
 
-import openerp.netsvc as netsvc
 
 
 class islr_wh_doc(osv.Model):

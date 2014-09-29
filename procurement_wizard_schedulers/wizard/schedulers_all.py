@@ -21,10 +21,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-import threading
-import pooler
-import openerp.netsvc as netsvc
-import os
 from openerp.osv import osv, fields
 
 

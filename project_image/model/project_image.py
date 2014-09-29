@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from openerp.osv import fields
-from openerp.osv import osv
+from openerp.osv import osv, fields
 
 
 class project_project_inherit_image(osv.Model):

@@ -23,10 +23,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import osv, orm, fields
+from openerp.osv import osv, fields
 from openerp import tools
-from openerp.tools.translate import _
-from openerp import netsvc
 
 
 class portal_project(osv.Model):

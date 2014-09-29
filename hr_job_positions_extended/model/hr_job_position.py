@@ -23,11 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp import addons
-import logging
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
-from openerp import tools
 
 LEVEL_JOB = [
    ('p1','P1'),

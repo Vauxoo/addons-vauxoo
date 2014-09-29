@@ -25,13 +25,9 @@
 #
 ##############################################################################
 from openerp.osv import osv, fields
-import xmlrpclib
-import sys
 import os
 import time
 import base64
-import socket
-from openerp.tools.translate import _
 
 import service
 import tempfile

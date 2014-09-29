@@ -23,10 +23,8 @@
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
-import openerp.netsvc as netsvc
 
 from ftplib import FTP
-import os
 
 
 class product_icecat(osv.Model):

@@ -24,9 +24,7 @@
 #
 #
 
-from openerp.tools.translate import _
 from openerp.osv import fields, osv
-from openerp import pooler, tools
 
 
 class employee_user_wizard(osv.TransientModel):

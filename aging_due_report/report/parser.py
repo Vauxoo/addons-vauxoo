@@ -27,8 +27,6 @@
 import time
 from report import report_sxw
 import mx.DateTime
-import pdb
-import pprint
 from report_webkit import webkit_report
 
 

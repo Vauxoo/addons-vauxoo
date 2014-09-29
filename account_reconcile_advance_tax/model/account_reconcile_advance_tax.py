@@ -22,7 +22,6 @@
 ################################################################################
 
 from openerp.osv import osv
-from openerp.osv import fields 
 
 class account_reconcile_advance(osv.Model):
     _inherit = 'account.reconcile.advance'

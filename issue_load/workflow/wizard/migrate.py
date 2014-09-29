@@ -4,7 +4,6 @@ Created on Tue Jun 12 09:56:42 2012
 
 @author: truiz
 """
-from sys import argv
 import xlrd
 import xmlrpclib
 from datetime import datetime

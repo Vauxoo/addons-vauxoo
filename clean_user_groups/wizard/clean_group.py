@@ -24,16 +24,9 @@
 ##########################################################################
 
 from openerp.osv import osv, fields
-import openerp.tools as tools
 from openerp.tools.translate import _
 from openerp import SUPERUSER_ID
 
-from tools import config
-import openerp.netsvc as netsvc
-import decimal_precision as dp
-import time
-import datetime
-import re
 
 
 class clean_groups(osv.TransientModel):

@@ -24,9 +24,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
 
-from tools import config
 
 
 class res_company(osv.Model):

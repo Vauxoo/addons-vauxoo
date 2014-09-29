@@ -20,11 +20,9 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, osv
+from openerp.osv import osv
 from openerp.tools.translate import _
 
-import time
-import unicodedata
 
 
 class sale_order_line(osv.Model):

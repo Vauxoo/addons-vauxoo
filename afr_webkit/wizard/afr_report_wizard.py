@@ -26,8 +26,6 @@
 
 
 from osv import osv, fields
-import pooler
-import time
 from tools.translate import _
 
 import logging

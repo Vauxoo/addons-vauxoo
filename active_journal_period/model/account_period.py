@@ -23,7 +23,6 @@
 ##########################################################################
 
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
 
 class account_period(osv.Model):
     _inherit = 'account.period'

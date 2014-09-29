@@ -23,7 +23,6 @@
 ###############################################################################    
 
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
 
 class convert_note_task(osv.TransientModel):
     

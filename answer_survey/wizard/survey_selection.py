@@ -21,10 +21,10 @@
 
 from lxml import etree
 import os
-from openerp import addons, netsvc, tools
+from openerp import addons
+from openerp import tools
 from openerp.tools import to_xml
-from openerp.tools.safe_eval import safe_eval
-from openerp.osv import fields, osv
+from openerp.osv import osv
 from openerp.tools.translate import _
 
 class survey_name_wiz(osv.TransientModel):

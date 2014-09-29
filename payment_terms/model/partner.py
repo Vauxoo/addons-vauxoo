@@ -19,8 +19,6 @@
 #
 ##############################################################################
 
-from operator import itemgetter
-import time
 
 from openerp.osv import fields, osv
 

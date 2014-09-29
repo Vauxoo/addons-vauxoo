@@ -21,9 +21,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from openerp.osv import osv, fields, orm
+from openerp.osv import osv
 from lxml import etree
-import openerp.tools as tools
 
 
 class account_move_line(osv.Model):

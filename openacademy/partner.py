@@ -1,7 +1,6 @@
 # -*- encoding: utf-8 -*-
 from osv import osv
 from osv import fields
-from tools.translate import _
 
 class res_partner(osv.osv):
     """

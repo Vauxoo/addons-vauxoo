@@ -22,7 +22,7 @@
 ################################################################################
 
 
-from openerp.osv import osv, fields
+from openerp.osv import osv
 
 class mail_notification(osv.Model):
     

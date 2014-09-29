@@ -23,8 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import osv, fields
-import decimal_precision as dp
+from openerp.osv import osv
 
 
 class mrp_production(osv.Model):

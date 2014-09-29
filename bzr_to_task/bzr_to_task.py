@@ -21,9 +21,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-from openerp import pooler, tools
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
 from bzrlib import branch
 import datetime
 

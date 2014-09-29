@@ -24,7 +24,6 @@
 ##########################################################################
 
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
 
 class message_post_test_line(osv.Model):
 

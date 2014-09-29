@@ -1,0 +1,4742 @@
+=== modified file 'account_aged_partner_balance_vw/model/account_aged_partner_balance_vw.py'
+--- account_aged_partner_balance_vw/model/account_aged_partner_balance_vw.py	2014-05-09 21:51:34 +0000
++++ account_aged_partner_balance_vw/model/account_aged_partner_balance_vw.py	2014-09-29 16:50:39 +0000
+@@ -25,12 +25,8 @@
+ #
+ 
+ from openerp.osv import fields, osv
+-import openerp.tools as tools
+-from openerp.tools.translate import _
+ 
+-import openerp.netsvc as netsvc
+ import time
+-import os
+ import mx.DateTime
+ 
+ 
+
+=== modified file 'account_amortization/model/account_amortization.py'
+--- account_amortization/model/account_amortization.py	2014-05-09 21:51:34 +0000
++++ account_amortization/model/account_amortization.py	2014-09-29 16:50:39 +0000
+@@ -25,8 +25,6 @@
+ ##############################################################################
+ 
+ from openerp.osv import fields,osv
+-from openerp.tools.translate import _
+-import openerp.addons.decimal_precision as dp
+ 
+ class account_asset_asset(osv.Model):
+     
+
+=== modified file 'account_analytic_active_field/account_analytic_account.py'
+--- account_analytic_active_field/account_analytic_account.py	2014-05-09 21:51:34 +0000
++++ account_analytic_active_field/account_analytic_account.py	2014-09-29 16:50:39 +0000
+@@ -24,7 +24,6 @@
+ #
+ ##############################################################################
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+ class account_analytic_account(osv.Model):
+     _name = "account.analytic.account"
+
+=== modified file 'account_anglo_saxon_cost_structure/model/invoice.py'
+--- account_anglo_saxon_cost_structure/model/invoice.py	2014-05-09 21:51:34 +0000
++++ account_anglo_saxon_cost_structure/model/invoice.py	2014-09-29 16:50:39 +0000
+@@ -21,8 +21,7 @@
+ #
+ ##############################################################################
+ 
+-from openerp.tools.translate import _
+-from openerp.osv import fields, osv
++from openerp.osv import osv
+ 
+ 
+ class account_invoice_line(osv.Model):
+
+=== modified file 'account_asset_date/account_asset.py'
+--- account_asset_date/account_asset.py	2014-05-09 21:51:34 +0000
++++ account_asset_date/account_asset.py	2014-09-29 16:50:39 +0000
+@@ -27,10 +27,7 @@
+ from openerp.osv import osv, fields
+ from openerp.tools.translate import _
+ 
+-import release
+-import decimal_precision as dp
+ 
+-import time
+ 
+ class account_asset_asset(osv.Model):
+     _inherit = 'account.asset.asset'
+
+=== modified file 'account_asset_move_check/model/account_asset.py'
+--- account_asset_move_check/model/account_asset.py	2014-05-09 21:51:34 +0000
++++ account_asset_move_check/model/account_asset.py	2014-09-29 16:50:39 +0000
+@@ -25,9 +25,7 @@
+ ##############################################################################
+ 
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+-import time
+ 
+ class account_asset_depreciation_line(osv.Model):
+     _inherit = 'account.asset.depreciation.line'
+
+=== modified file 'account_bank_statement_vauxoo/model/account_bank_statement.py'
+--- account_bank_statement_vauxoo/model/account_bank_statement.py	2014-05-09 21:51:34 +0000
++++ account_bank_statement_vauxoo/model/account_bank_statement.py	2014-09-29 16:50:39 +0000
+@@ -22,14 +22,11 @@
+ 
+ from openerp.osv import fields, osv
+ import decimal_precision as dp
+-import openerp.netsvc as netsvc
+ from openerp.tools.translate import _
+ 
+ # Excel Stuff
+ import xlrd
+-import xlwt
+ import base64
+-from tempfile import NamedTemporaryFile
+ from datetime import date, datetime, timedelta
+ 
+ 
+
+=== modified file 'account_bank_statement_vauxoo/model/account_journal.py'
+--- account_bank_statement_vauxoo/model/account_journal.py	2014-05-09 21:51:34 +0000
++++ account_bank_statement_vauxoo/model/account_journal.py	2014-09-29 16:50:39 +0000
+@@ -21,10 +21,8 @@
+ ##############################################################################
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ import openerp.netsvc as netsvc
+-import logging
+ 
+ 
+ class account_journal(osv.Model):
+
+=== modified file 'account_budget_imp/model/account_budget.py'
+--- account_budget_imp/model/account_budget.py	2014-05-09 21:51:34 +0000
++++ account_budget_imp/model/account_budget.py	2014-09-29 16:50:39 +0000
+@@ -24,9 +24,7 @@
+ #
+ ##############################################################################
+ 
+-import datetime
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ import openerp.addons.decimal_precision as dp
+ 
+ class crossovered_budget(osv.osv):
+
+=== modified file 'account_invoice_line_currency/model/res_currency.py'
+--- account_invoice_line_currency/model/res_currency.py	2014-05-09 21:51:34 +0000
++++ account_invoice_line_currency/model/res_currency.py	2014-09-29 16:50:39 +0000
+@@ -23,7 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ 
+ 
+ class res_currency(osv.Model):
+
+=== modified file 'account_invoice_regular_validation/account_invoice.py'
+--- account_invoice_regular_validation/account_invoice.py	2014-05-09 21:51:34 +0000
++++ account_invoice_regular_validation/account_invoice.py	2014-09-29 16:50:39 +0000
+@@ -23,7 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ from openerp.tools.translate import _
+ 
+ 
+
+=== modified file 'account_move_cancel/model/invoice.py'
+--- account_move_cancel/model/invoice.py	2014-05-09 21:51:34 +0000
++++ account_move_cancel/model/invoice.py	2014-09-29 16:50:39 +0000
+@@ -23,12 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##########################################################################
+ 
+-import time
+ from openerp.osv import osv, fields
+-import decimal_precision as dp
+-from openerp.tools.translate import _
+ 
+-import openerp.netsvc as netsvc
+ 
+ 
+ class account_invoice(osv.Model):
+
+=== modified file 'account_move_cancel/wizard/account_move_cancel.py'
+--- account_move_cancel/wizard/account_move_cancel.py	2014-05-09 21:51:34 +0000
++++ account_move_cancel/wizard/account_move_cancel.py	2014-09-29 16:50:39 +0000
+@@ -24,14 +24,10 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+ from openerp.tools.translate import _
+ 
+-from tools import config
+ import openerp.netsvc as netsvc
+-import decimal_precision as dp
+ #~ from DateTime import DateTime
+-import time
+ 
+ 
+ class account_move_cancel(osv.TransientModel):
+
+=== modified file 'account_move_group/account_move_line.py'
+--- account_move_group/account_move_line.py	2014-05-09 21:51:34 +0000
++++ account_move_group/account_move_line.py	2014-09-29 16:50:39 +0000
+@@ -23,11 +23,9 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ from openerp.tools.translate import _
+ 
+-import openerp.netsvc as netsvc
+-import time
+ 
+ 
+ class account_move_line(osv.Model):
+
+=== modified file 'account_move_group/wizard/account_move_group.py'
+--- account_move_group/wizard/account_move_group.py	2014-05-09 21:51:34 +0000
++++ account_move_group/wizard/account_move_group.py	2014-09-29 16:50:39 +0000
+@@ -23,10 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-import time
+-from openerp.osv import osv, fields
+-import decimal_precision as dp
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+ 
+ class account_move_group(osv.TransientModel):
+
+=== modified file 'account_move_line_address/account_move_line.py'
+--- account_move_line_address/account_move_line.py	2014-05-09 21:51:34 +0000
++++ account_move_line_address/account_move_line.py	2014-09-29 17:04:59 +0000
+@@ -24,7 +24,7 @@
+ #
+ ##############################################################################
+ 
+-from openerp.osv import osv, fields, orm
++from openerp.osv import osv, fields
+ from lxml import etree
+ import openerp.tools as tools
+ 
+
+=== modified file 'account_move_line_base_tax/account.py'
+--- account_move_line_base_tax/account.py	2014-05-09 21:51:34 +0000
++++ account_move_line_base_tax/account.py	2014-09-29 16:50:39 +0000
+@@ -24,7 +24,6 @@
+ #
+ ##############################################################################
+ from openerp.osv import osv, fields
+-from lxml import etree
+ from openerp.tools.translate import _
+ 
+ class account_move_line(osv.Model):
+
+=== modified file 'account_move_line_dp_product/account_move_line.py'
+--- account_move_line_dp_product/account_move_line.py	2014-05-09 21:51:34 +0000
++++ account_move_line_dp_product/account_move_line.py	2014-09-29 16:50:39 +0000
+@@ -20,7 +20,6 @@
+ #    You should have received a copy of the GNU Affero General Public License
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##########################################################################
+-from openerp.tools.translate import _
+ 
+ from openerp.osv import osv, fields
+ import decimal_precision as dp
+
+=== modified file 'account_move_line_group_analytic/account_move_line.py'
+--- account_move_line_group_analytic/account_move_line.py	2014-05-09 21:51:34 +0000
++++ account_move_line_group_analytic/account_move_line.py	2014-09-29 16:50:39 +0000
+@@ -21,9 +21,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##########################################################################
+ 
+-from openerp.osv import osv, fields, orm
++from openerp.osv import osv
+ from lxml import etree
+-import openerp.tools as tools
+ 
+ 
+ class account_move_line(osv.Model):
+
+=== modified file 'account_move_line_group_by_extend/account_move_line.py'
+--- account_move_line_group_by_extend/account_move_line.py	2014-05-09 21:51:34 +0000
++++ account_move_line_group_by_extend/account_move_line.py	2014-09-29 16:50:39 +0000
+@@ -21,9 +21,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##########################################################################
+ 
+-from openerp.osv import osv, fields, orm
++from openerp.osv import osv
+ from lxml import etree
+-import openerp.tools as tools
+ 
+ 
+ class account_move_line(osv.Model):
+
+=== modified file 'account_move_nonzero/account_move_line.py'
+--- account_move_nonzero/account_move_line.py	2014-05-09 21:51:34 +0000
++++ account_move_nonzero/account_move_line.py	2014-09-29 16:50:39 +0000
+@@ -22,7 +22,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##########################################################################
+ 
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ 
+ 
+ class account_move_line(osv.Model):
+
+=== modified file 'account_move_report/report/account_move_html.py'
+--- account_move_report/report/account_move_html.py	2014-05-09 21:51:34 +0000
++++ account_move_report/report/account_move_html.py	2014-09-29 16:50:39 +0000
+@@ -21,9 +21,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ################################################################################
+ from openerp.report import report_sxw
+-from openerp.tools.translate import _
+ import time
+-from report_webkit import report_helper
+ from report_webkit import webkit_report
+ 
+ class account_move_report_html(report_sxw.rml_parse):
+
+=== modified file 'account_move_sum_all_credits_debits/account.py'
+--- account_move_sum_all_credits_debits/account.py	2014-05-09 21:51:34 +0000
++++ account_move_sum_all_credits_debits/account.py	2014-09-29 16:50:39 +0000
+@@ -24,7 +24,6 @@
+ #
+ ##############################################################################
+ 
+-from openerp.tools.translate import _
+ 
+ from openerp.osv import osv, fields
+ import decimal_precision as dp
+
+=== modified file 'account_move_validate_multi_wizard/wizard/wizard.py'
+--- account_move_validate_multi_wizard/wizard/wizard.py	2014-05-09 21:51:34 +0000
++++ account_move_validate_multi_wizard/wizard/wizard.py	2014-09-29 16:50:39 +0000
+@@ -23,7 +23,6 @@
+ 
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ 
+ class account_move_multi_wizard(osv.TransientModel):
+@@ -58,7 +57,6 @@
+                 except:
+                     lista.append(move.id)
+         if lista:
+-            pass
+             __, xml_id = self.pool.get('ir.model.data').get_object_reference(
+                 cr, uid, 'account_move_validate_multi_wizard', 'account_move_validate_multi_wizard_unbalance')
+             context.update(
+
+=== modified file 'account_order_wizard/wizard/wizard.py'
+--- account_order_wizard/wizard/wizard.py	2014-05-09 21:51:34 +0000
++++ account_order_wizard/wizard/wizard.py	2014-09-29 16:50:39 +0000
+@@ -25,10 +25,7 @@
+ 
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+-from tools import config
+-from operator import itemgetter
+ 
+ __HELP__ = '''
+ Escriba el Patron de las cuentas, su estructura, por ejemplo:
+
+=== modified file 'account_periods_initial/account.py'
+--- account_periods_initial/account.py	2014-05-09 21:51:34 +0000
++++ account_periods_initial/account.py	2014-09-29 16:50:39 +0000
+@@ -21,8 +21,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##########################################################################
+ 
+-from openerp.osv import osv, fields, orm
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+ 
+ class account_period(osv.Model):
+
+=== modified file 'account_reconcile_advance/model/account_reconcile_advance.py'
+--- account_reconcile_advance/model/account_reconcile_advance.py	2014-05-09 21:51:34 +0000
++++ account_reconcile_advance/model/account_reconcile_advance.py	2014-09-29 16:50:39 +0000
+@@ -2,7 +2,6 @@
+ from openerp.osv import osv
+ from openerp.osv import fields 
+ from openerp.tools.translate import _
+-import pprint
+ 
+ class account_move_line(osv.Model):
+     _inherit = 'account.move.line'
+
+=== modified file 'account_reconcile_advance_tax/model/account_reconcile_advance_tax.py'
+--- account_reconcile_advance_tax/model/account_reconcile_advance_tax.py	2014-05-09 21:51:34 +0000
++++ account_reconcile_advance_tax/model/account_reconcile_advance_tax.py	2014-09-29 16:50:39 +0000
+@@ -22,7 +22,6 @@
+ ################################################################################
+ 
+ from openerp.osv import osv
+-from openerp.osv import fields 
+ 
+ class account_reconcile_advance(osv.Model):
+     _inherit = 'account.reconcile.advance'
+
+=== modified file 'account_reconcile_search/model/account_reconcile_search.py'
+--- account_reconcile_search/model/account_reconcile_search.py	2014-05-09 21:51:34 +0000
++++ account_reconcile_search/model/account_reconcile_search.py	2014-09-29 16:50:39 +0000
+@@ -19,9 +19,7 @@
+ #
+ ##############################################################################
+ 
+-import time
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+ class account_move_line(osv.Model):
+     _inherit = "account.move.line"
+
+=== modified file 'account_relation_move/account.py'
+--- account_relation_move/account.py	2014-05-09 21:51:34 +0000
++++ account_relation_move/account.py	2014-09-29 16:50:40 +0000
+@@ -24,10 +24,8 @@
+ #
+ ##############################################################################
+ 
+-from openerp.tools.translate import _
+ 
+ from openerp.osv import osv, fields
+-import decimal_precision as dp
+ 
+ 
+ class account_move_line(osv.Model):
+
+=== modified file 'account_report_general_ledger_no_journal/wizard/account_reporte_general_ledger_no_journal.py'
+--- account_report_general_ledger_no_journal/wizard/account_reporte_general_ledger_no_journal.py	2014-05-09 21:51:34 +0000
++++ account_report_general_ledger_no_journal/wizard/account_reporte_general_ledger_no_journal.py	2014-09-29 16:50:40 +0000
+@@ -24,13 +24,7 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+-from openerp.tools.translate import _
+ 
+-from tools import config
+-import openerp.netsvc as netsvc
+-import decimal_precision as dp
+-import time
+ 
+ 
+ class account_ledger_report(osv.TransientModel):
+
+=== modified file 'account_return_allowance/model/res_company.py'
+--- account_return_allowance/model/res_company.py	2014-05-09 21:51:34 +0000
++++ account_return_allowance/model/res_company.py	2014-09-29 16:50:40 +0000
+@@ -22,7 +22,6 @@
+ #
+ ##############################################################################
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ 
+ 
+
+=== modified file 'account_smart_unreconcile/model/account_move_line.py'
+--- account_smart_unreconcile/model/account_move_line.py	2014-07-03 00:29:24 +0000
++++ account_smart_unreconcile/model/account_move_line.py	2014-09-29 16:50:40 +0000
+@@ -23,7 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##########################################################################
+ 
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ 
+ 
+ class account_move_line(osv.Model):
+
+=== modified file 'account_voucher_department/model/account_voucher.py'
+--- account_voucher_department/model/account_voucher.py	2014-07-14 20:18:10 +0000
++++ account_voucher_department/model/account_voucher.py	2014-09-29 17:05:33 +0000
+@@ -23,10 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
+-from openerp import tools
+-
++from openerp.osv import osv, fields
+ 
+ class account_voucher(osv.Model):
+ 
+
+=== modified file 'account_voucher_draft/model/account_voucher.py'
+--- account_voucher_draft/model/account_voucher.py	2014-09-16 14:55:14 +0000
++++ account_voucher_draft/model/account_voucher.py	2014-09-29 16:50:40 +0000
+@@ -23,9 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
+-from openerp import tools
++from openerp.osv import osv
+ 
+ class account_voucher(osv.Model):
+ 
+
+=== modified file 'account_voucher_requester/model/account_voucher.py'
+--- account_voucher_requester/model/account_voucher.py	2014-07-14 21:12:17 +0000
++++ account_voucher_requester/model/account_voucher.py	2014-09-29 17:05:53 +0000
+@@ -23,10 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
+-from openerp import tools
+-
++from openerp.osv import osv, fields
+ 
+ class account_voucher(osv.Model):
+ 
+
+=== modified file 'account_voucher_tax/account_voucher.py'
+--- account_voucher_tax/account_voucher.py	2014-05-09 21:51:34 +0000
++++ account_voucher_tax/account_voucher.py	2014-09-29 16:50:40 +0000
+@@ -25,12 +25,9 @@
+ ##############################################################################
+ 
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+-import release
+ import decimal_precision as dp
+ 
+-import time
+ 
+ 
+ class account_voucher(osv.Model):
+
+=== modified file 'account_voucher_tax/invoice.py'
+--- account_voucher_tax/invoice.py	2014-05-09 21:51:34 +0000
++++ account_voucher_tax/invoice.py	2014-09-29 16:50:40 +0000
+@@ -25,7 +25,6 @@
+ ##############################################################################
+ 
+ from openerp.osv import osv
+-from openerp.tools.translate import _
+ 
+ class invoice(osv.osv):
+     _inherit = 'account.invoice'
+
+=== modified file 'account_voucher_tax_sat/model/account_voucher_tax_sat.py'
+--- account_voucher_tax_sat/model/account_voucher_tax_sat.py	2014-05-09 21:51:34 +0000
++++ account_voucher_tax_sat/model/account_voucher_tax_sat.py	2014-09-29 16:50:40 +0000
+@@ -20,10 +20,7 @@
+ #    You should have received a copy of the GNU Affero General Public License
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ################################################################################
+-import time
+ from openerp.osv import fields, osv
+-from openerp import netsvc
+-import openerp.addons.decimal_precision as dp
+ from openerp.tools.translate import _
+ 
+ 
+
+=== modified file 'account_voucher_tax_sat/model/partner.py'
+--- account_voucher_tax_sat/model/partner.py	2014-05-09 21:51:34 +0000
++++ account_voucher_tax_sat/model/partner.py	2014-09-29 16:50:40 +0000
+@@ -20,11 +20,7 @@
+ #    You should have received a copy of the GNU Affero General Public License
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ################################################################################
+-import time
+ from openerp.osv import fields, osv
+-from openerp import netsvc
+-import openerp.addons.decimal_precision as dp
+-from openerp.tools.translate import _
+ 
+ 
+ class res_partner(osv.Model):
+
+=== modified file 'account_voucher_tax_sat/wizard/account_tax_sat.py'
+--- account_voucher_tax_sat/wizard/account_tax_sat.py	2014-05-09 21:51:34 +0000
++++ account_voucher_tax_sat/wizard/account_tax_sat.py	2014-09-29 16:50:40 +0000
+@@ -22,11 +22,7 @@
+ ################################################################################
+ 
+ 
+-import time
+ from openerp.osv import fields, osv
+-from openerp import netsvc
+-import openerp.addons.decimal_precision as dp
+-from openerp.tools.translate import _
+ 
+ 
+ class account_voucher_tax_assigned(osv.TransientModel):
+
+=== modified file 'active_journal_period/model/account_journal.py'
+--- active_journal_period/model/account_journal.py	2014-05-09 21:51:34 +0000
++++ active_journal_period/model/account_journal.py	2014-09-29 16:50:40 +0000
+@@ -23,7 +23,6 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+ class account_journal(osv.Model):
+     _inherit = 'account.journal'
+
+=== modified file 'active_journal_period/model/account_period.py'
+--- active_journal_period/model/account_period.py	2014-05-09 21:51:34 +0000
++++ active_journal_period/model/account_period.py	2014-09-29 16:50:40 +0000
+@@ -23,7 +23,6 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+ class account_period(osv.Model):
+     _inherit = 'account.period'
+
+=== modified file 'admin_message/model/mail_message.py'
+--- admin_message/model/mail_message.py	2014-05-09 21:51:34 +0000
++++ admin_message/model/mail_message.py	2014-09-29 16:50:40 +0000
+@@ -20,8 +20,6 @@
+ ##############################################################################
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+-from ast import literal_eval
+ 
+ _TASK_STATE = [('new', 'New'), (
+     'publish', 'Publish'), ('unpublish', 'Cancel Publish')]
+
+=== modified file 'afr_webkit/wizard/afr_report_wizard.py'
+--- afr_webkit/wizard/afr_report_wizard.py	2014-05-09 21:51:34 +0000
++++ afr_webkit/wizard/afr_report_wizard.py	2014-09-29 16:50:40 +0000
+@@ -26,8 +26,6 @@
+ 
+ 
+ from osv import osv, fields
+-import pooler
+-import time
+ from tools.translate import _
+ 
+ import logging
+
+=== modified file 'aging_due_report/report/parser.py'
+--- aging_due_report/report/parser.py	2014-08-05 23:29:19 +0000
++++ aging_due_report/report/parser.py	2014-09-29 16:50:40 +0000
+@@ -27,8 +27,6 @@
+ import time
+ from report import report_sxw
+ import mx.DateTime
+-import pdb
+-import pprint
+ from report_webkit import webkit_report
+ 
+ 
+
+=== modified file 'analytic_entry_line_group/model/account_analytic_plans.py'
+--- analytic_entry_line_group/model/account_analytic_plans.py	2014-07-04 15:37:33 +0000
++++ analytic_entry_line_group/model/account_analytic_plans.py	2014-09-29 16:50:40 +0000
+@@ -23,12 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-import time
+-from lxml import etree
+ 
+ from openerp.osv import fields, osv
+-from openerp import tools
+-from openerp.tools.translate import _
+ 
+ class account_analytic_line(osv.Model):
+ 
+
+=== modified file 'analytic_entry_line_partner/model/account_analytic_plans.py'
+--- analytic_entry_line_partner/model/account_analytic_plans.py	2014-07-04 14:08:46 +0000
++++ analytic_entry_line_partner/model/account_analytic_plans.py	2014-09-29 16:50:40 +0000
+@@ -23,12 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-import time
+-from lxml import etree
+ 
+ from openerp.osv import fields, osv
+-from openerp import tools
+-from openerp.tools.translate import _
+ 
+ class account_analytic_line(osv.Model):
+ 
+
+=== modified file 'analytic_entry_line_plans/model/account_analytic_plans.py'
+--- analytic_entry_line_plans/model/account_analytic_plans.py	2014-07-04 14:18:26 +0000
++++ analytic_entry_line_plans/model/account_analytic_plans.py	2014-09-29 16:50:40 +0000
+@@ -23,12 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-import time
+-from lxml import etree
+ 
+ from openerp.osv import fields, osv
+-from openerp import tools
+-from openerp.tools.translate import _
+ 
+ class account_analytic_line(osv.Model):
+ 
+
+=== modified file 'analytic_entry_line_taxcode/model/account_analytic_plans.py'
+--- analytic_entry_line_taxcode/model/account_analytic_plans.py	2014-07-04 14:09:29 +0000
++++ analytic_entry_line_taxcode/model/account_analytic_plans.py	2014-09-29 16:50:40 +0000
+@@ -23,12 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-import time
+-from lxml import etree
+ 
+ from openerp.osv import fields, osv
+-from openerp import tools
+-from openerp.tools.translate import _
+ 
+ class account_analytic_line(osv.Model):
+ 
+
+=== modified file 'analytic_plans_group/model/account_analytic_plans.py'
+--- analytic_plans_group/model/account_analytic_plans.py	2014-07-04 15:37:33 +0000
++++ analytic_plans_group/model/account_analytic_plans.py	2014-09-29 16:50:40 +0000
+@@ -23,12 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-import time
+-from lxml import etree
+ 
+ from openerp.osv import fields, osv
+-from openerp import tools
+-from openerp.tools.translate import _
+ 
+ class account_analytic_group(osv.Model):
+     _name = 'account.analytic.group'
+
+=== modified file 'answer_survey/model/survey.py'
+--- answer_survey/model/survey.py	2013-09-24 15:55:06 +0000
++++ answer_survey/model/survey.py	2014-09-29 16:50:40 +0000
+@@ -19,15 +19,8 @@
+ #
+ ##############################################################################
+ 
+-import copy
+-from datetime import datetime
+-from dateutil.relativedelta import relativedelta
+-from time import strftime
+-import os
+ 
+-from openerp import netsvc, tools
+-from openerp.osv import fields, osv
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+ 
+ class survey(osv.Model):
+
+=== modified file 'answer_survey/wizard/survey_selection.py'
+--- answer_survey/wizard/survey_selection.py	2013-09-27 18:55:19 +0000
++++ answer_survey/wizard/survey_selection.py	2014-09-29 16:50:40 +0000
+@@ -21,10 +21,10 @@
+ 
+ from lxml import etree
+ import os
+-from openerp import addons, netsvc, tools
++from openerp import addons
++from openerp import tools
+ from openerp.tools import to_xml
+-from openerp.tools.safe_eval import safe_eval
+-from openerp.osv import fields, osv
++from openerp.osv import osv
+ from openerp.tools.translate import _
+ 
+ class survey_name_wiz(osv.TransientModel):
+
+=== modified file 'answer_survey/wizard/survey_send_invitation.py'
+--- answer_survey/wizard/survey_send_invitation.py	2013-09-27 18:55:19 +0000
++++ answer_survey/wizard/survey_send_invitation.py	2014-09-29 16:50:41 +0000
+@@ -19,15 +19,10 @@
+ #
+ ##############################################################################
+ 
+-import time
+-from random import choice
+-import string
+ import os
+-import datetime
+-import socket
+ 
+-from openerp import addons, netsvc, tools
+-from openerp.osv import fields, osv
++from openerp import addons
++from openerp.osv import osv
+ from openerp.tools.translate import _
+ 
+ 
+
+=== modified file 'bank_print_report/report/check.py'
+--- bank_print_report/report/check.py	2014-05-09 21:51:34 +0000
++++ bank_print_report/report/check.py	2014-09-29 16:50:41 +0000
+@@ -31,9 +31,7 @@
+ from openerp_print import report_sxw_ext  # nuevo
+ #~ from report_sxw_ext import report_sxw_ext #nuevo
+ # from report import report_sxw #original
+-from tools import amount_to_text_en
+ from numero_a_texto import Numero_a_Texto
+-import codecs
+ 
+ 
+ class report_check_voucher_pay(report_sxw_ext.rml_parse):  # nuevo
+
+=== modified file 'baremo/baremo.py'
+--- baremo/baremo.py	2014-05-09 21:51:34 +0000
++++ baremo/baremo.py	2014-09-29 16:50:41 +0000
+@@ -20,9 +20,7 @@
+ #
+ ##############################################################################
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+-from tools import config
+ import decimal_precision as dp
+ 
+ 
+
+=== modified file 'bzr_to_task/bzr_to_task.py'
+--- bzr_to_task/bzr_to_task.py	2014-05-09 21:51:34 +0000
++++ bzr_to_task/bzr_to_task.py	2014-09-29 16:50:41 +0000
+@@ -21,9 +21,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ #
+-from openerp import pooler, tools
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ from bzrlib import branch
+ import datetime
+ 
+
+=== modified file 'change_invoice_number/wizard/change_number.py'
+--- change_invoice_number/wizard/change_number.py	2014-05-09 21:51:34 +0000
++++ change_invoice_number/wizard/change_number.py	2014-09-29 16:50:41 +0000
+@@ -24,13 +24,8 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+ from openerp.tools.translate import _
+ 
+-from tools import config
+-import openerp.netsvc as netsvc
+-import decimal_precision as dp
+-import time
+ 
+ 
+ class change_number(osv.TransientModel):
+
+=== modified file 'check_unit_measure/model/invoice.py'
+--- check_unit_measure/model/invoice.py	2014-05-09 21:51:34 +0000
++++ check_unit_measure/model/invoice.py	2014-09-29 16:50:41 +0000
+@@ -26,10 +26,8 @@
+ # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ ###############################################################################
+ from openerp.osv import osv
+-from openerp.osv import fields
+ from openerp.tools.translate import _
+ 
+-import math
+ 
+ 
+ class inherit_account_invocie_line(osv.Model):
+
+=== modified file 'check_unit_measure/model/purchase.py'
+--- check_unit_measure/model/purchase.py	2014-05-09 21:51:34 +0000
++++ check_unit_measure/model/purchase.py	2014-09-29 16:50:41 +0000
+@@ -26,10 +26,8 @@
+ # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ ###############################################################################
+ from openerp.osv import osv
+-from openerp.osv import fields
+ from openerp.tools.translate import _
+ 
+-import math
+ 
+ 
+ class inherit_purchase_order_line(osv.Model):
+
+=== modified file 'check_unit_measure/model/sale.py'
+--- check_unit_measure/model/sale.py	2014-05-09 21:51:34 +0000
++++ check_unit_measure/model/sale.py	2014-09-29 16:50:41 +0000
+@@ -26,7 +26,6 @@
+ # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ ###############################################################################
+ from openerp.osv import osv
+-from openerp.osv import fields
+ from openerp.tools.translate import _
+ 
+ 
+
+=== modified file 'check_unit_measure/model/stock.py'
+--- check_unit_measure/model/stock.py	2014-05-09 21:51:34 +0000
++++ check_unit_measure/model/stock.py	2014-09-29 16:50:41 +0000
+@@ -26,10 +26,8 @@
+ # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ ###############################################################################
+ from openerp.osv import osv
+-from openerp.osv import fields
+ from openerp.tools.translate import _
+ 
+-import math
+ 
+ 
+ class inherit_move(osv.Model):
+
+=== modified file 'check_unit_measure/wizard/stock_return_picking.py'
+--- check_unit_measure/wizard/stock_return_picking.py	2014-05-09 21:51:34 +0000
++++ check_unit_measure/wizard/stock_return_picking.py	2014-09-29 16:50:41 +0000
+@@ -24,7 +24,6 @@
+ 
+ from openerp.osv import osv, fields
+ from openerp.tools.translate import _
+-import openerp.addons.decimal_precision as dp
+ 
+ 
+ class stock_return_picking_memory(osv.TransientModel):
+
+=== modified file 'clean_user_groups/wizard/clean_group.py'
+--- clean_user_groups/wizard/clean_group.py	2014-05-09 21:51:34 +0000
++++ clean_user_groups/wizard/clean_group.py	2014-09-29 16:50:41 +0000
+@@ -24,16 +24,9 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+ from openerp.tools.translate import _
+ from openerp import SUPERUSER_ID
+ 
+-from tools import config
+-import openerp.netsvc as netsvc
+-import decimal_precision as dp
+-import time
+-import datetime
+-import re
+ 
+ 
+ class clean_groups(osv.TransientModel):
+
+=== modified file 'commission_payment/commission.py'
+--- commission_payment/commission.py	2014-05-09 21:51:34 +0000
++++ commission_payment/commission.py	2014-09-29 16:50:41 +0000
+@@ -1,10 +1,6 @@
+ from openerp.osv import osv, fields
+-import pooler
+-import time
+-import math
+ import mx.DateTime
+ 
+-from tools import config
+ from openerp.tools.translate import _
+ 
+ import decimal_precision as dp
+@@ -453,7 +449,6 @@
+                                             # sobre esta parte no llego a un acuerdo de si se podria permitir al operador cambiar las lineas
+                                             # de la factura puesto que es un
+                                             # asunto muy delicado.
+-                                            pass
+                                             sale_noids.create(cr, user, {
+                                                 'commission_id':   commission.id,
+                                                 'inv_line_id':   inv_lin.id,
+
+=== modified file 'configure_account_partner/wizard/conf_account_partner.py'
+--- configure_account_partner/wizard/conf_account_partner.py	2014-05-09 21:51:34 +0000
++++ configure_account_partner/wizard/conf_account_partner.py	2014-09-29 17:06:08 +0000
+@@ -25,7 +25,7 @@
+ ##############################################################################
+ 
+ 
+-from openerp.osv import fields, osv, orm
++from openerp.osv import osv, fields
+ 
+ class configure_account_partner(osv.TransientModel):
+     _name = 'configure.account.partner'
+
+=== modified file 'contract_enterprise_openerp/model/account_analytic_analysis.py'
+--- contract_enterprise_openerp/model/account_analytic_analysis.py	2014-06-20 18:30:59 +0000
++++ contract_enterprise_openerp/model/account_analytic_analysis.py	2014-09-29 16:50:41 +0000
+@@ -21,15 +21,10 @@
+ #    You should have received a copy of the GNU Affero General Public License
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+-import datetime
+ import logging
+-import time
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools
+-from openerp.tools.translate import _
+ 
+-from openerp.addons.decimal_precision import decimal_precision as dp
+ 
+ _logger = logging.getLogger(__name__)
+ 
+
+=== modified file 'contract_log_term_condition/model/analytic.py'
+--- contract_log_term_condition/model/analytic.py	2014-06-25 01:51:24 +0000
++++ contract_log_term_condition/model/analytic.py	2014-09-29 16:50:41 +0000
+@@ -23,7 +23,6 @@
+ ###############################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools
+ 
+ class account_analytic_account(osv.Model):
+     _inherit = 'account.analytic.account'
+
+=== modified file 'contract_log_term_condition/tests/test_contract.py'
+--- contract_log_term_condition/tests/test_contract.py	2014-06-25 01:51:24 +0000
++++ contract_log_term_condition/tests/test_contract.py	2014-09-29 16:50:41 +0000
+@@ -1,7 +1,4 @@
+ from openerp.tests.common import TransactionCase
+-from openerp.exceptions import AccessError
+-from openerp.osv.orm import except_orm
+-from openerp import SUPERUSER_ID
+ 
+ class TestAnalytic(TransactionCase):
+ 
+
+=== modified file 'cost_imex/model/percent_imex.py'
+--- cost_imex/model/percent_imex.py	2014-05-09 21:51:34 +0000
++++ cost_imex/model/percent_imex.py	2014-09-29 16:50:41 +0000
+@@ -26,8 +26,6 @@
+ # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ ###############################################################################
+ from openerp.osv import fields, osv
+-import sys
+-from openerp.tools.translate import _
+ 
+ import time
+ import decimal_precision as dp
+
+=== modified file 'cost_imex/model/purchase.py'
+--- cost_imex/model/purchase.py	2014-05-09 21:51:34 +0000
++++ cost_imex/model/purchase.py	2014-09-29 16:50:41 +0000
+@@ -26,10 +26,7 @@
+ # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ ###############################################################################
+ from openerp.osv import fields, osv
+-import sys
+-from openerp.tools.translate import _
+ 
+-import time
+ import decimal_precision as dp
+ 
+ 
+
+=== modified file 'cost_structure/model/cost_structure.py'
+--- cost_structure/model/cost_structure.py	2014-05-09 21:51:34 +0000
++++ cost_structure/model/cost_structure.py	2014-09-29 16:50:41 +0000
+@@ -24,11 +24,7 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+-from openerp.tools.translate import _
+ 
+-from tools import config
+-import openerp.netsvc as netsvc
+ import decimal_precision as dp
+ 
+ 
+
+=== modified file 'cost_structure/model/invoice.py'
+--- cost_structure/model/invoice.py	2014-05-09 21:51:34 +0000
++++ cost_structure/model/invoice.py	2014-09-29 16:50:41 +0000
+@@ -24,11 +24,7 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+-from datetime import datetime
+-from DateTime import DateTime
+-import time
+ 
+ 
+ class account_invoice(osv.Model):
+
+=== modified file 'cost_structure/model/product_product.py'
+--- cost_structure/model/product_product.py	2014-05-09 21:51:34 +0000
++++ cost_structure/model/product_product.py	2014-09-29 16:50:41 +0000
+@@ -24,11 +24,8 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+ from openerp.tools.translate import _
+ 
+-from tools import config
+-import openerp.netsvc as netsvc
+ import decimal_precision as dp
+ from openerp.tools.sql import drop_view_if_exists
+ 
+
+=== modified file 'cost_structure/wizard/account_invoice_refund.py'
+--- cost_structure/wizard/account_invoice_refund.py	2014-05-09 21:51:34 +0000
++++ cost_structure/wizard/account_invoice_refund.py	2014-09-29 16:50:41 +0000
+@@ -23,13 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##########################################################################
+ 
+-from openerp.osv import osv, fields
+-import openerp.tools as tools
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+-from tools import config
+-import openerp.netsvc as netsvc
+-import decimal_precision as dp
+ import time
+ import datetime
+ invo_cost = {}
+
+=== modified file 'cost_structure/wizard/compute_cost.py'
+--- cost_structure/wizard/compute_cost.py	2014-05-09 21:51:34 +0000
++++ cost_structure/wizard/compute_cost.py	2014-09-29 16:50:41 +0000
+@@ -24,14 +24,9 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+ from openerp.tools.translate import _
+ 
+-from tools import config
+-import openerp.netsvc as netsvc
+-import decimal_precision as dp
+ from DateTime import DateTime
+-import time
+ import datetime
+ invo_cost = {}
+ 
+
+=== modified file 'cost_structure/wizard/default_cost_to_report.py'
+--- cost_structure/wizard/default_cost_to_report.py	2014-05-09 21:51:34 +0000
++++ cost_structure/wizard/default_cost_to_report.py	2014-09-29 16:50:41 +0000
+@@ -24,15 +24,8 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+ from openerp.tools.translate import _
+ 
+-from tools import config
+-import openerp.netsvc as netsvc
+-import decimal_precision as dp
+-import time
+-import datetime
+-import re
+ 
+ 
+ class default_price_to_report(osv.TransientModel):
+
+=== modified file 'cost_structure/wizard/update_price_list.py'
+--- cost_structure/wizard/update_price_list.py	2014-05-09 21:51:34 +0000
++++ cost_structure/wizard/update_price_list.py	2014-09-29 16:50:41 +0000
+@@ -24,14 +24,7 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+-from openerp.tools.translate import _
+ 
+-from tools import config
+-import openerp.netsvc as netsvc
+-import decimal_precision as dp
+-import time
+-import datetime
+ import re
+ 
+ 
+
+=== modified file 'crm_cost_issue/project.py'
+--- crm_cost_issue/project.py	2014-05-09 21:51:34 +0000
++++ crm_cost_issue/project.py	2014-09-29 16:50:41 +0000
+@@ -27,7 +27,6 @@
+ 
+ 
+ from openerp.osv import osv, fields
+-import decimal_precision as dp
+ 
+ 
+ class project_task(osv.Model):
+
+=== modified file 'crm_profile_reporting/report/crm_profile_report.py'
+--- crm_profile_reporting/report/crm_profile_report.py	2014-05-09 21:51:34 +0000
++++ crm_profile_reporting/report/crm_profile_report.py	2014-09-29 16:50:41 +0000
+@@ -1,14 +1,7 @@
+ # -*- encoding: utf-8 -*-
+ import time
+-import pooler
+ from report import report_sxw
+-from openerp.tools.translate import _
+ 
+-import smtplib
+-import mimetypes
+-import base64
+-from email.MIMEText import MIMEText
+-from email.Encoders import encode_base64
+ 
+ 
+ class crm_report_profile(report_sxw.rml_parse):
+
+=== modified file 'db_tools/wizard/db_tools.py'
+--- db_tools/wizard/db_tools.py	2014-05-09 21:51:34 +0000
++++ db_tools/wizard/db_tools.py	2014-09-29 16:50:41 +0000
+@@ -25,13 +25,9 @@
+ #
+ ##############################################################################
+ from openerp.osv import osv, fields
+-import xmlrpclib
+-import sys
+ import os
+ import time
+ import base64
+-import socket
+-from openerp.tools.translate import _
+ 
+ import service
+ import tempfile
+
+=== modified file 'debit_credit_note/invoice.py'
+--- debit_credit_note/invoice.py	2014-05-09 21:51:34 +0000
++++ debit_credit_note/invoice.py	2014-09-29 16:50:41 +0000
+@@ -29,7 +29,6 @@
+ #
+ ##############################################################################
+ 
+-import time
+ from openerp.osv import fields, osv
+ 
+ 
+
+=== modified file 'debit_credit_note/wizard/account_invoice_parent.py'
+--- debit_credit_note/wizard/account_invoice_parent.py	2014-05-09 21:51:34 +0000
++++ debit_credit_note/wizard/account_invoice_parent.py	2014-09-29 16:50:42 +0000
+@@ -21,11 +21,9 @@
+ #
+ ##############################################################################
+ 
+-import time
+ 
+ from openerp.osv import fields, osv
+ from openerp.tools.translate import _
+-from openerp import netsvc
+ from lxml import etree
+ 
+ class account_invoice_parent(osv.osv_memory):
+
+=== modified file 'debit_credit_note/wizard/account_invoice_refund.py'
+--- debit_credit_note/wizard/account_invoice_refund.py	2014-05-09 21:51:34 +0000
++++ debit_credit_note/wizard/account_invoice_refund.py	2014-09-29 16:50:42 +0000
+@@ -19,9 +19,8 @@
+ #
+ ##############################################################################
+ 
+-import time
+ 
+-from osv import fields, osv
++from osv import osv
+ from tools.translate import _
+ import netsvc
+ 
+
+=== modified file 'decimal_precision_currency/decimal_pre_currency.py'
+--- decimal_precision_currency/decimal_pre_currency.py	2014-05-09 21:51:34 +0000
++++ decimal_precision_currency/decimal_pre_currency.py	2014-09-29 16:50:42 +0000
+@@ -23,11 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##############################################################################
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+-from tools import config
+ import time
+-import datetime
+ import decimal_precision as dp
+ 
+ 
+
+=== modified file 'decimal_precision_tax/decimal_pre_tax.py'
+--- decimal_precision_tax/decimal_pre_tax.py	2014-05-09 21:51:34 +0000
++++ decimal_precision_tax/decimal_pre_tax.py	2014-09-29 16:50:42 +0000
+@@ -24,11 +24,7 @@
+ #
+ ##############################################################################
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+-from tools import config
+-import time
+-import datetime
+ import decimal_precision as dp
+ 
+ 
+
+=== modified file 'deliver_project/model/module.py'
+--- deliver_project/model/module.py	2014-05-09 21:51:34 +0000
++++ deliver_project/model/module.py	2014-09-29 17:06:35 +0000
+@@ -19,28 +19,12 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-import base64
+-import cStringIO
+-import imp
+-import logging
+-import os
+-import re
+-import StringIO
+-import urllib
+-import zipfile
+-import zipimport
+-
+-import addons
+-import pooler
+-import release
+-import openerp.tools as tools
+-
+-from openerp.tools.parse_version import parse_version
+-
+-from openerp.tools.translate import _
+-
+-
+-from openerp.osv import osv, fields, orm
++
++
++
++
++
++from openerp.osv import osv, fields
+ 
+ 
+ class module(osv.Model):
+@@ -160,12 +144,10 @@
+                 self.__logger.warning(
+                     'Data not found for reference %s[%s:%s.%s]', data_id.model,
+                     data_id.res_id, data_id.model, data_id.name, exc_info=True)
+-                pass
+             except Exception, e:
+                 self.__logger.warning('Unknown error while browsing %s[%s]',
+                                         data_id.model, data_id.res_id,
+                                         exc_info=True)
+-                pass
+         # res_mod_dic['doc_on_module']=list(set(res_mod_dic['doc_on_module']))
+         for key, value in res.iteritems():
+             for k, v in res[key].iteritems():
+
+=== modified file 'document_page_comments/model/document.py'
+--- document_page_comments/model/document.py	2014-05-09 21:51:34 +0000
++++ document_page_comments/model/document.py	2014-09-29 16:50:42 +0000
+@@ -24,8 +24,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-from openerp.osv import osv, fields
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+ 
+ class document_page(osv.Model):
+
+=== modified file 'duplicated_tasks/model/task.py'
+--- duplicated_tasks/model/task.py	2014-06-06 18:19:13 +0000
++++ duplicated_tasks/model/task.py	2014-09-29 16:50:42 +0000
+@@ -24,9 +24,6 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+-from openerp.tools.translate import _
+-from openerp import SUPERUSER_ID
+ 
+ 
+ class inherit_task(osv.Model):
+
+=== modified file 'duplicated_tasks/wizard/search_duplicated_task.py'
+--- duplicated_tasks/wizard/search_duplicated_task.py	2014-06-06 18:19:13 +0000
++++ duplicated_tasks/wizard/search_duplicated_task.py	2014-09-29 16:50:42 +0000
+@@ -19,9 +19,7 @@
+ #
+ ##############################################################################
+ 
+-from openerp import tools
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+ 
+ class search_duplicated_task(osv.TransientModel):
+
+=== modified file 'email_template_comment/model/email_template.py'
+--- email_template_comment/model/email_template.py	2014-08-14 15:56:08 +0000
++++ email_template_comment/model/email_template.py	2014-09-29 16:50:42 +0000
+@@ -23,7 +23,6 @@
+ 
+ 
+ from openerp.osv import osv, fields
+-from openerp import tools, SUPERUSER_ID
+ 
+ class email_template(osv.Model):
+     
+
+=== modified file 'email_template_comment/model/mail_compose_message.py'
+--- email_template_comment/model/mail_compose_message.py	2014-08-19 16:38:30 +0000
++++ email_template_comment/model/mail_compose_message.py	2014-09-29 16:50:42 +0000
+@@ -22,8 +22,7 @@
+ ################################################################################
+ 
+ 
+-from openerp.osv import osv, fields
+-from openerp import tools, SUPERUSER_ID
++from openerp.osv import osv
+ 
+ class mail_compose_message(osv.TransientModel):
+     
+
+=== modified file 'email_template_followers/model/mail_compose_message.py'
+--- email_template_followers/model/mail_compose_message.py	2014-07-04 00:24:52 +0000
++++ email_template_followers/model/mail_compose_message.py	2014-09-29 16:50:42 +0000
+@@ -22,8 +22,8 @@
+ ################################################################################
+ 
+ 
+-from openerp.osv import osv, fields
+-from openerp import tools, SUPERUSER_ID
++from openerp.osv import osv
++from openerp import SUPERUSER_ID
+ 
+ class mail_compose_message(osv.TransientModel):
+     
+
+=== modified file 'expired_task_information/model/task.py'
+--- expired_task_information/model/task.py	2014-05-09 21:51:34 +0000
++++ expired_task_information/model/task.py	2014-09-29 16:50:42 +0000
+@@ -20,9 +20,6 @@
+ #
+ 
+ from openerp.osv import fields, osv
+-from openerp import tools
+-from openerp.tools.translate import _
+-import time
+ from datetime import *
+ 
+ 
+
+=== modified file 'fetchmail_document/crm_claim.py'
+--- fetchmail_document/crm_claim.py	2014-05-09 21:51:34 +0000
++++ fetchmail_document/crm_claim.py	2014-09-29 16:50:42 +0000
+@@ -1,6 +1,5 @@
+ # -*- encoding: utf-8 -*-
+-from openerp.osv import fields, osv
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+ 
+ class crm_claim(osv.Model):
+
+=== modified file 'fetchmail_document/document.py'
+--- fetchmail_document/document.py	2014-05-09 21:51:34 +0000
++++ fetchmail_document/document.py	2014-09-29 16:50:42 +0000
+@@ -1,6 +1,5 @@
+ # -*- encoding: utf-8 -*-
+-from openerp.osv import fields, osv
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+ 
+ class document(osv.Model):
+
+=== modified file 'forward_mail/wizard/forward_mail.py'
+--- forward_mail/wizard/forward_mail.py	2014-07-16 23:04:42 +0000
++++ forward_mail/wizard/forward_mail.py	2014-09-29 16:50:42 +0000
+@@ -21,8 +21,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ################################################################################
+ 
+-from openerp.osv import fields, osv
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ from openerp import SUPERUSER_ID
+ 
+ class forward_mail(osv.osv_memory):
+
+=== modified file 'group_xml_id/groups.py'
+--- group_xml_id/groups.py	2014-05-09 21:51:34 +0000
++++ group_xml_id/groups.py	2014-09-29 16:50:42 +0000
+@@ -22,12 +22,7 @@
+ ##########################################################################
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+-from openerp import pooler, tools
+-from openerp import netsvc
+-from openerp import SUPERUSER_ID
+ 
+-import time
+ 
+ 
+ class res_groups(osv.Model):
+
+=== modified file 'hr_expense_replenishment_cancel/model/hr_expense_replenishment_cancel.py'
+--- hr_expense_replenishment_cancel/model/hr_expense_replenishment_cancel.py	2014-05-09 21:51:34 +0000
++++ hr_expense_replenishment_cancel/model/hr_expense_replenishment_cancel.py	2014-09-29 16:50:42 +0000
+@@ -22,11 +22,7 @@
+ #    You should have received a copy of the GNU Affero General Public License
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+-import time
+-from openerp.osv import fields, osv
+-from openerp import netsvc
+-import openerp.addons.decimal_precision as dp
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+ class hr_expense_expense(osv.Model):
+     _inherit = "hr.expense.expense"
+
+=== modified file 'hr_expense_replenishment_tax/model/hr_expense.py'
+--- hr_expense_replenishment_tax/model/hr_expense.py	2014-05-27 14:45:38 +0000
++++ hr_expense_replenishment_tax/model/hr_expense.py	2014-09-29 16:50:42 +0000
+@@ -22,11 +22,8 @@
+ #    You should have received a copy of the GNU Affero General Public License
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+-import time
+ from openerp.osv import fields, osv
+-from openerp import netsvc
+ import openerp.addons.decimal_precision as dp
+-from openerp.tools.translate import _
+ 
+ class hr_expense_expense(osv.Model):
+     _inherit = "hr.expense.expense"
+
+=== modified file 'hr_job_positions_extended/model/hr_job_position.py'
+--- hr_job_positions_extended/model/hr_job_position.py	2014-09-18 14:35:28 +0000
++++ hr_job_positions_extended/model/hr_job_position.py	2014-09-29 16:50:42 +0000
+@@ -23,11 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp import addons
+-import logging
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+-from openerp import tools
+ 
+ LEVEL_JOB = [
+    ('p1','P1'),
+
+=== modified file 'hr_salesman_commission/hr_salesman_commission.py'
+--- hr_salesman_commission/hr_salesman_commission.py	2014-05-09 21:51:34 +0000
++++ hr_salesman_commission/hr_salesman_commission.py	2014-09-29 16:50:42 +0000
+@@ -1,15 +1,7 @@
+-import time
+-import openerp.netsvc as netsvc
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+ import decimal_precision as dp
+ 
+-import mx.DateTime
+-from mx.DateTime import RelativeDateTime, now, DateTime, localtime
+-import openerp.tools as tools
+-from tools import config
+-from openerp.tools.misc import currency
+ 
+ 
+ class salesman_commission_payment(osv.Model):
+
+=== modified file 'icecat_product_uniqueness/product.py'
+--- icecat_product_uniqueness/product.py	2014-05-09 21:51:34 +0000
++++ icecat_product_uniqueness/product.py	2014-09-29 16:50:42 +0000
+@@ -25,8 +25,7 @@
+ # along with this program; if not, write to the Free Software
+ # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ ###############################################################################
+-from openerp.osv import fields, osv
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+ 
+ class product_inherited(osv.Model):
+
+=== modified file 'ifrs_report/model/account.py'
+--- ifrs_report/model/account.py	2013-07-18 19:28:23 +0000
++++ ifrs_report/model/account.py	2014-09-29 16:50:42 +0000
+@@ -25,7 +25,6 @@
+ ##########################################################################
+ 
+ from osv import osv
+-from osv import fields
+ import mx.DateTime
+ import time
+ 
+
+=== modified file 'ifrs_report/model/ifrs.py'
+--- ifrs_report/model/ifrs.py	2013-10-02 04:41:04 +0000
++++ ifrs_report/model/ifrs.py	2014-09-29 16:50:42 +0000
+@@ -27,7 +27,6 @@
+ from osv import osv
+ from osv import fields
+ from tools.translate import _
+-import time
+ #~ import pdb
+ 
+ class ifrs_ifrs(osv.osv):
+
+=== modified file 'ifrs_report/wizard/ifrs_report_wizard.py'
+--- ifrs_report/wizard/ifrs_report_wizard.py	2014-05-09 21:51:34 +0000
++++ ifrs_report/wizard/ifrs_report_wizard.py	2014-09-29 16:50:42 +0000
+@@ -22,8 +22,6 @@
+ import time
+ 
+ from osv import fields, osv
+-from tools.translate import _
+-import netsvc
+ 
+ 
+ class ifrs_report_wizard(osv.osv_memory):
+
+=== modified file 'incoterm_delivery_type/model/incoterm_delivery_type.py'
+--- incoterm_delivery_type/model/incoterm_delivery_type.py	2014-05-09 21:51:34 +0000
++++ incoterm_delivery_type/model/incoterm_delivery_type.py	2014-09-29 16:50:42 +0000
+@@ -23,9 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
+-from openerp import tools
++from openerp.osv import fields
++from openerp.osv import osv
+ 
+ 
+ class stock_incoterms(osv.Model):
+
+=== modified file 'incoterm_ext/incoterm.py'
+--- incoterm_ext/incoterm.py	2014-05-09 21:51:34 +0000
++++ incoterm_ext/incoterm.py	2014-09-29 16:50:42 +0000
+@@ -20,7 +20,6 @@
+ #
+ ##############################################################################
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ 
+ class stock_incoterms(osv.Model):
+
+=== modified file 'inventory_stock_report/report/reporte_stock.py'
+--- inventory_stock_report/report/reporte_stock.py	2014-05-09 21:51:34 +0000
++++ inventory_stock_report/report/reporte_stock.py	2014-09-29 16:50:43 +0000
+@@ -25,7 +25,6 @@
+ 
+ import time
+ from report import report_sxw
+-import pooler
+ 
+ 
+ class rep_conteo_stock(report_sxw.rml_parse):
+
+=== modified file 'inventory_stock_report/report/reporte_stock2.py'
+--- inventory_stock_report/report/reporte_stock2.py	2014-05-09 21:51:34 +0000
++++ inventory_stock_report/report/reporte_stock2.py	2014-09-29 16:50:43 +0000
+@@ -25,7 +25,6 @@
+ 
+ import time
+ from report import report_sxw
+-import pooler
+ 
+ 
+ class rep_conteo_stock2(report_sxw.rml_parse):
+
+=== modified file 'inventory_stock_report/wizard/stock_count.py'
+--- inventory_stock_report/wizard/stock_count.py	2014-05-09 21:51:34 +0000
++++ inventory_stock_report/wizard/stock_count.py	2014-09-29 16:50:43 +0000
+@@ -24,8 +24,6 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+-from openerp.tools.translate import _
+ 
+ 
+ ESTADO = [('desarrollo', 'En Desarrollo'),
+
+=== modified file 'inventory_stock_report/wizard/stock_total.py'
+--- inventory_stock_report/wizard/stock_total.py	2014-05-09 21:51:34 +0000
++++ inventory_stock_report/wizard/stock_total.py	2014-09-29 16:50:43 +0000
+@@ -24,8 +24,6 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+-from openerp.tools.translate import _
+ 
+ 
+ ESTADO = [('desarrollo', 'En Desarrollo'),
+
+=== modified file 'invoice_cancel_islr/model/invoice.py'
+--- invoice_cancel_islr/model/invoice.py	2014-05-09 21:51:34 +0000
++++ invoice_cancel_islr/model/invoice.py	2014-09-29 16:50:43 +0000
+@@ -23,10 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##########################################################################
+ 
+-import time
+-from openerp.osv import osv, fields
+-import decimal_precision as dp
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+ import openerp.netsvc as netsvc
+ 
+
+=== modified file 'invoice_cancel_islr/model/islr_wh_doc.py'
+--- invoice_cancel_islr/model/islr_wh_doc.py	2014-05-09 21:51:34 +0000
++++ invoice_cancel_islr/model/islr_wh_doc.py	2014-09-29 16:50:43 +0000
+@@ -23,12 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##########################################################################
+ 
+-import time
+ from openerp.osv import osv, fields
+-import decimal_precision as dp
+-from openerp.tools.translate import _
+ 
+-import openerp.netsvc as netsvc
+ 
+ 
+ class islr_wh_doc(osv.Model):
+
+=== modified file 'invoice_cancel_iva/model/invoice.py'
+--- invoice_cancel_iva/model/invoice.py	2014-05-09 21:51:34 +0000
++++ invoice_cancel_iva/model/invoice.py	2014-09-29 16:50:43 +0000
+@@ -23,9 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##########################################################################
+ 
+-import time
+-from openerp.osv import osv, fields
+-import decimal_precision as dp
++from openerp.osv import osv
+ from openerp.tools.translate import _
+ 
+ import openerp.netsvc as netsvc
+
+=== modified file 'invoice_cancel_iva/model/wh_iva_doc.py'
+--- invoice_cancel_iva/model/wh_iva_doc.py	2014-05-09 21:51:34 +0000
++++ invoice_cancel_iva/model/wh_iva_doc.py	2014-09-29 16:50:43 +0000
+@@ -23,12 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##########################################################################
+ 
+-import time
+ from openerp.osv import osv, fields
+-import decimal_precision as dp
+-from openerp.tools.translate import _
+ 
+-import openerp.netsvc as netsvc
+ 
+ 
+ class wh_iva_doc(osv.Model):
+
+=== modified file 'invoice_date_time/model/invoice.py'
+--- invoice_date_time/model/invoice.py	2014-05-09 21:51:34 +0000
++++ invoice_date_time/model/invoice.py	2014-09-29 16:50:43 +0000
+@@ -27,11 +27,8 @@
+ 
+ from openerp.osv import fields, osv
+ import openerp.tools as tools
+-from openerp.tools.translate import _
+ 
+-import openerp.netsvc as netsvc
+ import time
+-import os
+ 
+ 
+ class account_payment_term(osv.Model):
+
+=== modified file 'invoice_datetime/invoice.py'
+--- invoice_datetime/invoice.py	2014-09-22 22:45:18 +0000
++++ invoice_datetime/invoice.py	2014-09-29 16:50:43 +0000
+@@ -27,16 +27,13 @@
+ 
+ from openerp.osv import fields, osv
+ from openerp.tools.translate import _
+-from openerp import pooler, tools
+-from openerp import netsvc
++from openerp import tools
+ from openerp import release
+ import datetime
+ from pytz import timezone
+ import pytz
+-from dateutil.relativedelta import relativedelta
+ 
+ import time
+-import os
+ 
+ 
+ class account_payment_term(osv.Model):
+
+=== modified file 'invoice_datetime/res_config.py'
+--- invoice_datetime/res_config.py	2014-09-22 22:45:18 +0000
++++ invoice_datetime/res_config.py	2014-09-29 16:50:43 +0000
+@@ -19,17 +19,10 @@
+ #
+ #
+ 
+-import time
+-import datetime
+ import openerp
+-from dateutil.relativedelta import relativedelta
+-from operator import itemgetter
+-from os.path import join as opj
+ 
+-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT as DF
+ from openerp.tools.translate import _
+ from openerp.osv import fields, osv
+-from openerp import tools
+ from openerp import SUPERUSER_ID
+ 
+ 
+
+=== modified file 'invoice_multicompany_report/res_company.py'
+--- invoice_multicompany_report/res_company.py	2014-05-09 21:51:34 +0000
++++ invoice_multicompany_report/res_company.py	2014-09-29 16:50:43 +0000
+@@ -24,7 +24,6 @@
+ ############################################################################
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ 
+ 
+
+=== modified file 'invoice_print_multicompany/res_company.py'
+--- invoice_print_multicompany/res_company.py	2014-05-09 21:51:34 +0000
++++ invoice_print_multicompany/res_company.py	2014-09-29 16:50:43 +0000
+@@ -24,7 +24,6 @@
+ ############################################################################
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ 
+ class invoice_multicompany_report(osv.Model):
+
+=== modified file 'invoice_report_multicompany/invoice.py'
+--- invoice_report_multicompany/invoice.py	2014-05-09 21:51:34 +0000
++++ invoice_report_multicompany/invoice.py	2014-09-29 16:50:43 +0000
+@@ -1,5 +1,4 @@
+-from openerp.osv import fields, osv
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+ 
+ 
+
+=== modified file 'invoice_report_multicompany/order.py'
+--- invoice_report_multicompany/order.py	2014-05-09 21:51:34 +0000
++++ invoice_report_multicompany/order.py	2014-09-29 16:50:43 +0000
+@@ -1,6 +1,5 @@
+ # -*- encoding: utf-8 -*-
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ 
+ 
+
+=== modified file 'invoice_report_per_journal/report/invoice_report_demo.py'
+--- invoice_report_per_journal/report/invoice_report_demo.py	2014-09-13 00:43:44 +0000
++++ invoice_report_per_journal/report/invoice_report_demo.py	2014-09-29 16:50:43 +0000
+@@ -27,15 +27,7 @@
+ '''
+ 
+ from openerp.report import report_sxw
+-from openerp import pooler
+-from openerp.tools.translate import _
+-from openerp import tools
+-from openerp import tests
+-from openerp.osv import osv
+-from openerp import netsvc
+-import openerp
+ from report_webkit import webkit_report
+-import datetime
+ 
+ 
+ class invoice_report_demo_html(report_sxw.rml_parse):
+
+=== modified file 'invoice_sale_ref/stock_picking.py'
+--- invoice_sale_ref/stock_picking.py	2014-05-09 21:51:34 +0000
++++ invoice_sale_ref/stock_picking.py	2014-09-29 16:50:43 +0000
+@@ -25,7 +25,7 @@
+ ##############################################################################
+ 
+ 
+-from openerp.osv import fields, osv
++from openerp.osv import osv
+ 
+ 
+ class stock_picking(osv.Model):
+
+=== modified file 'ir_actions_report_xml_multicompany/model/ir_actions_report_xml.py'
+--- ir_actions_report_xml_multicompany/model/ir_actions_report_xml.py	2014-05-09 21:51:34 +0000
++++ ir_actions_report_xml_multicompany/model/ir_actions_report_xml.py	2014-09-29 16:50:43 +0000
+@@ -24,7 +24,6 @@
+ #
+ ##############################################################################
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+ class ir_action_report_xml(osv.Model):
+ 
+
+=== modified file 'issue_load/wizard/load_issue.py'
+--- issue_load/wizard/load_issue.py	2014-05-09 21:51:34 +0000
++++ issue_load/wizard/load_issue.py	2014-09-29 16:50:43 +0000
+@@ -24,13 +24,7 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+-from openerp.tools.translate import _
+ 
+-from tools import config
+-import openerp.netsvc as netsvc
+-import decimal_precision as dp
+-import time
+ import base64
+ from migrate import loadProjectsTasks
+ 
+
+=== modified file 'issue_load/wizard/migrate.py'
+--- issue_load/wizard/migrate.py	2014-05-09 21:51:34 +0000
++++ issue_load/wizard/migrate.py	2014-09-29 16:50:43 +0000
+@@ -4,7 +4,6 @@
+ 
+ @author: truiz
+ """
+-from sys import argv
+ import xlrd
+ import xmlrpclib
+ from datetime import datetime
+
+=== modified file 'issue_load/workflow/wizard/load_issue.py'
+--- issue_load/workflow/wizard/load_issue.py	2014-05-09 21:51:34 +0000
++++ issue_load/workflow/wizard/load_issue.py	2014-09-29 16:50:43 +0000
+@@ -24,13 +24,7 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+-from openerp.tools.translate import _
+ 
+-from tools import config
+-import openerp.netsvc as netsvc
+-import decimal_precision as dp
+-import time
+ import base64
+ from migrate import loadProjectsTasks
+ 
+
+=== modified file 'issue_load/workflow/wizard/migrate.py'
+--- issue_load/workflow/wizard/migrate.py	2014-05-09 21:51:34 +0000
++++ issue_load/workflow/wizard/migrate.py	2014-09-29 16:50:43 +0000
+@@ -4,7 +4,6 @@
+ 
+ @author: truiz
+ """
+-from sys import argv
+ import xlrd
+ import xmlrpclib
+ from datetime import datetime
+
+=== modified file 'issue_view/model/project_issue.py'
+--- issue_view/model/project_issue.py	2014-05-09 21:51:34 +0000
++++ issue_view/model/project_issue.py	2014-09-29 16:50:43 +0000
+@@ -19,14 +19,8 @@
+ #
+ ##############################################################################
+ 
+-from crm import crm
+-from datetime import datetime
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+-import binascii
+-import time
+-import openerp.tools as tools
+ 
+ 
+ class project_issue(osv.Model):
+
+=== modified file 'l10n_ve_commerce/account.py'
+--- l10n_ve_commerce/account.py	2014-05-09 21:51:34 +0000
++++ l10n_ve_commerce/account.py	2014-09-29 16:50:43 +0000
+@@ -19,8 +19,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-from openerp.osv import fields, osv
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+ 
+ class wizard_multi_charts_accounts(osv.TransientModel):
+
+=== modified file 'l10n_ve_stock/wizard/wiz_picking_valued.py'
+--- l10n_ve_stock/wizard/wiz_picking_valued.py	2014-05-09 21:51:34 +0000
++++ l10n_ve_stock/wizard/wiz_picking_valued.py	2014-09-29 16:50:43 +0000
+@@ -24,10 +24,8 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+ from openerp.tools.translate import _
+ 
+-from tools import config
+ import openerp.netsvc as netsvc
+ 
+ 
+
+=== modified file 'ledger_report_partner/wizard/ledger_report.py'
+--- ledger_report_partner/wizard/ledger_report.py	2014-05-09 21:51:34 +0000
++++ ledger_report_partner/wizard/ledger_report.py	2014-09-29 16:50:43 +0000
+@@ -24,13 +24,7 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+-from openerp.tools.translate import _
+ 
+-from tools import config
+-import openerp.netsvc as netsvc
+-import decimal_precision as dp
+-import time
+ 
+ 
+ class ledger_report(osv.TransientModel):
+
+=== modified file 'm321_customization/invoice.py'
+--- m321_customization/invoice.py	2014-05-09 21:51:34 +0000
++++ m321_customization/invoice.py	2014-09-29 16:50:43 +0000
+@@ -26,7 +26,6 @@
+ # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ ###############################################################################
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ import decimal_precision as dp
+ 
+
+=== modified file 'm321_customization/ir_sequence.py'
+--- m321_customization/ir_sequence.py	2014-05-09 21:51:34 +0000
++++ m321_customization/ir_sequence.py	2014-09-29 16:50:43 +0000
+@@ -25,8 +25,7 @@
+ # along with this program; if not, write to the Free Software
+ # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ ###############################################################################
+-from openerp.osv import fields, osv
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+ 
+ class ir_sequence(osv.Model):
+
+=== modified file 'm321_customization/sale.py'
+--- m321_customization/sale.py	2014-05-09 21:51:34 +0000
++++ m321_customization/sale.py	2014-09-29 16:50:43 +0000
+@@ -28,7 +28,6 @@
+ from openerp.osv import fields, osv
+ from openerp.tools.translate import _
+ 
+-import decimal_precision as dp
+ 
+ 
+ class inherited_sale_order(osv.Model):
+
+=== modified file 'm321_reports/report/amd_computadoras_report.py'
+--- m321_reports/report/amd_computadoras_report.py	2014-05-09 21:51:34 +0000
++++ m321_reports/report/amd_computadoras_report.py	2014-09-29 16:50:43 +0000
+@@ -22,10 +22,7 @@
+ #    You should have received a copy of the GNU General Public License     #
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
+ ############################################################################
+-import time
+-import pooler
+ from report import report_sxw
+-from openerp.tools.translate import _
+ 
+ 
+ class m321_c_report(report_sxw.rml_parse):
+
+=== modified file 'm321_reports/report/amd_computer_shop_report.py'
+--- m321_reports/report/amd_computer_shop_report.py	2014-05-09 21:51:34 +0000
++++ m321_reports/report/amd_computer_shop_report.py	2014-09-29 16:50:43 +0000
+@@ -22,10 +22,7 @@
+ #    You should have received a copy of the GNU General Public License     #
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
+ ############################################################################
+-import time
+-import pooler
+ from report import report_sxw
+-from openerp.tools.translate import _
+ 
+ 
+ class m321_cs_report(report_sxw.rml_parse):
+
+=== modified file 'm321_reports/report/comercializadora_m321_report.py'
+--- m321_reports/report/comercializadora_m321_report.py	2014-05-09 21:51:34 +0000
++++ m321_reports/report/comercializadora_m321_report.py	2014-09-29 16:50:43 +0000
+@@ -22,10 +22,7 @@
+ #    You should have received a copy of the GNU General Public License     #
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
+ ############################################################################
+-import time
+-import pooler
+ from report import report_sxw
+-from openerp.tools.translate import _
+ 
+ 
+ class cm321_report(report_sxw.rml_parse):
+
+=== modified file 'm321_reports/report/computacion_activa_report.py'
+--- m321_reports/report/computacion_activa_report.py	2014-05-09 21:51:34 +0000
++++ m321_reports/report/computacion_activa_report.py	2014-09-29 16:50:43 +0000
+@@ -22,10 +22,7 @@
+ #    You should have received a copy of the GNU General Public License     #
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
+ ############################################################################
+-import time
+-import pooler
+ from report import report_sxw
+-from openerp.tools.translate import _
+ 
+ 
+ class m321_ca_report(report_sxw.rml_parse):
+
+=== modified file 'message_post_model/model/message_post.py'
+--- message_post_model/model/message_post.py	2014-07-28 23:38:43 +0000
++++ message_post_model/model/message_post.py	2014-09-29 16:50:43 +0000
+@@ -23,7 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##########################################################################
+ 
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ from openerp.tools.translate import _
+ 
+ 
+
+=== modified file 'message_post_test/model/message_post_test.py'
+--- message_post_test/model/message_post_test.py	2014-07-28 07:45:59 +0000
++++ message_post_test/model/message_post_test.py	2014-09-29 16:50:43 +0000
+@@ -24,7 +24,6 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+ class message_post_test_line(osv.Model):
+ 
+
+=== modified file 'message_post_test/tests/test_message_post.py'
+--- message_post_test/tests/test_message_post.py	2014-07-28 23:39:56 +0000
++++ message_post_test/tests/test_message_post.py	2014-09-29 16:50:43 +0000
+@@ -1,6 +1,4 @@
+ from openerp.tests.common import TransactionCase
+-from openerp.exceptions import AccessError
+-from openerp.osv.orm import except_orm
+ from openerp import SUPERUSER_ID
+ 
+ class TestMessagePost(TransactionCase):
+
+=== modified file 'mrp_account_variation/mrp_account_variation.py'
+--- mrp_account_variation/mrp_account_variation.py	2014-05-09 21:51:34 +0000
++++ mrp_account_variation/mrp_account_variation.py	2014-09-29 16:50:43 +0000
+@@ -23,10 +23,9 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ from openerp.tools.translate import _
+ 
+-import openerp.netsvc as netsvc
+ import time
+ 
+ 
+
+=== modified file 'mrp_account_variation/mrp_account_variation_price.py'
+--- mrp_account_variation/mrp_account_variation_price.py	2014-05-09 21:51:34 +0000
++++ mrp_account_variation/mrp_account_variation_price.py	2014-09-29 16:50:43 +0000
+@@ -23,10 +23,9 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ from openerp.tools.translate import _
+ 
+-import openerp.netsvc as netsvc
+ import time
+ 
+ 
+
+=== modified file 'mrp_account_variation_cancel/account_variation_cancel.py'
+--- mrp_account_variation_cancel/account_variation_cancel.py	2014-05-09 21:51:34 +0000
++++ mrp_account_variation_cancel/account_variation_cancel.py	2014-09-29 16:50:43 +0000
+@@ -23,8 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-from openerp.osv import osv, fields
+-import decimal_precision as dp
++from openerp.osv import osv
+ 
+ 
+ class mrp_production(osv.Model):
+
+=== modified file 'mrp_advance/mrp_bom_cost/mrp.py'
+--- mrp_advance/mrp_bom_cost/mrp.py	2014-05-09 21:51:34 +0000
++++ mrp_advance/mrp_bom_cost/mrp.py	2014-09-29 16:50:43 +0000
+@@ -24,7 +24,6 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##############################################################################
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ import decimal_precision as dp
+ 
+
+=== modified file 'mrp_advance/mrp_bom_cost/product.py'
+--- mrp_advance/mrp_bom_cost/product.py	2014-05-09 21:51:34 +0000
++++ mrp_advance/mrp_bom_cost/product.py	2014-09-29 16:50:43 +0000
+@@ -23,7 +23,6 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##############################################################################
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ 
+ class product_template(osv.Model):
+
+=== modified file 'mrp_advance/mrp_routing_cost/mrp_routing.py'
+--- mrp_advance/mrp_routing_cost/mrp_routing.py	2014-05-09 21:51:34 +0000
++++ mrp_advance/mrp_routing_cost/mrp_routing.py	2014-09-29 16:50:43 +0000
+@@ -24,9 +24,7 @@
+ ##############################################################################
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+-from tools import config
+ 
+ 
+ class mrp_routing_workcenter(osv.Model):
+
+=== modified file 'mrp_bom_constraint/mrp_bom.py'
+--- mrp_bom_constraint/mrp_bom.py	2014-05-09 21:51:34 +0000
++++ mrp_bom_constraint/mrp_bom.py	2014-09-29 16:50:43 +0000
+@@ -20,10 +20,9 @@
+ #    You should have received a copy of the GNU Affero General Public License
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##########################################################################
+-import time
+ from openerp.tools.translate import _
+ 
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ 
+ 
+ class mrp_bom(osv.Model):
+
+=== modified file 'mrp_bom_standard_price/mrp_bom.py'
+--- mrp_bom_standard_price/mrp_bom.py	2014-05-09 21:51:34 +0000
++++ mrp_bom_standard_price/mrp_bom.py	2014-09-29 16:50:44 +0000
+@@ -20,7 +20,6 @@
+ #    You should have received a copy of the GNU Affero General Public License
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##########################################################################
+-from openerp.tools.translate import _
+ 
+ from openerp.osv import osv, fields
+ 
+
+=== modified file 'mrp_bom_subproduct_cost/mrp_subproduct.py'
+--- mrp_bom_subproduct_cost/mrp_subproduct.py	2014-05-09 21:51:34 +0000
++++ mrp_bom_subproduct_cost/mrp_subproduct.py	2014-09-29 16:50:44 +0000
+@@ -25,7 +25,6 @@
+ ##############################################################################
+ 
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+ import decimal_precision as dp
+ 
+
+=== modified file 'mrp_consume_produce/mrp.py'
+--- mrp_consume_produce/mrp.py	2014-05-09 21:51:34 +0000
++++ mrp_consume_produce/mrp.py	2014-09-29 16:50:44 +0000
+@@ -24,7 +24,6 @@
+ #
+ ##############################################################################
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+ import openerp.netsvc as netsvc
+ 
+
+=== modified file 'mrp_consume_produce/mrp_config.py'
+--- mrp_consume_produce/mrp_config.py	2014-05-09 21:51:34 +0000
++++ mrp_consume_produce/mrp_config.py	2014-09-29 16:50:44 +0000
+@@ -23,9 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
+-from openerp import tools
++from openerp.osv import fields
++from openerp.osv import osv
+ 
+ 
+ class mrp_config_settings(osv.TransientModel):
+
+=== modified file 'mrp_consume_produce/wizard/mrp_consume_produce.py'
+--- mrp_consume_produce/wizard/mrp_consume_produce.py	2014-05-09 21:51:34 +0000
++++ mrp_consume_produce/wizard/mrp_consume_produce.py	2014-09-29 16:50:44 +0000
+@@ -23,7 +23,6 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ #
+-import time
+ from openerp.osv import osv, fields
+ import decimal_precision as dp
+ from openerp.tools.translate import _
+
+=== modified file 'mrp_default_location/mrp.py'
+--- mrp_default_location/mrp.py	2014-05-09 21:51:34 +0000
++++ mrp_default_location/mrp.py	2014-09-29 16:50:44 +0000
+@@ -24,15 +24,8 @@
+ #
+ ##############################################################################
+ 
+-import time
+-from openerp.osv import osv, fields
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+-from tools import config
+-import base64
+-import csv
+-import cStringIO
+-import openerp.tools as tools
+ 
+ 
+ class mrp_production(osv.Model):
+
+=== modified file 'mrp_default_location/product.py'
+--- mrp_default_location/product.py	2014-05-09 21:51:34 +0000
++++ mrp_default_location/product.py	2014-09-29 16:50:44 +0000
+@@ -24,15 +24,8 @@
+ #
+ ##############################################################################
+ 
+-import time
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+-from tools import config
+-import base64
+-import csv
+-import cStringIO
+-import openerp.tools as tools
+ 
+ 
+ class product_category(osv.Model):
+
+=== modified file 'mrp_jit_extended/wizard/mrp_jit_extended_wizard.py'
+--- mrp_jit_extended/wizard/mrp_jit_extended_wizard.py	2014-05-09 21:51:34 +0000
++++ mrp_jit_extended/wizard/mrp_jit_extended_wizard.py	2014-09-29 16:50:44 +0000
+@@ -24,7 +24,6 @@
+ #
+ ##############################################################################
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+ import openerp.netsvc as netsvc
+ 
+
+=== modified file 'mrp_location_line_production/mrp.py'
+--- mrp_location_line_production/mrp.py	2014-05-09 21:51:34 +0000
++++ mrp_location_line_production/mrp.py	2014-09-29 16:50:44 +0000
+@@ -23,7 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ 
+ 
+ class mrp_production(osv.Model):
+
+=== modified file 'mrp_product_capacity/model/mrp_product_capacity.py'
+--- mrp_product_capacity/model/mrp_product_capacity.py	2014-05-09 21:51:34 +0000
++++ mrp_product_capacity/model/mrp_product_capacity.py	2014-09-29 16:50:44 +0000
+@@ -23,9 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
+-from openerp import tools
++from openerp.osv import fields
++from openerp.osv import osv
+ 
+ 
+ class mrp_workcenter(osv.Model):
+
+=== modified file 'mrp_production_cancel/mrp.py'
+--- mrp_production_cancel/mrp.py	2014-05-09 21:51:34 +0000
++++ mrp_production_cancel/mrp.py	2014-09-29 16:50:44 +0000
+@@ -23,10 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-from openerp.osv import osv, fields
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+-from datetime import datetime
+ import openerp.netsvc as netsvc
+ 
+ 
+
+=== modified file 'mrp_production_make_wzd/wizard/wizard_production_make.py'
+--- mrp_production_make_wzd/wizard/wizard_production_make.py	2014-05-09 21:51:34 +0000
++++ mrp_production_make_wzd/wizard/wizard_production_make.py	2014-09-29 16:50:44 +0000
+@@ -24,7 +24,6 @@
+ #
+ ##############################################################################
+ from openerp.osv import osv, fields
+-import decimal_precision as dp
+ import time
+ from openerp.tools.translate import _
+ 
+
+=== modified file 'mrp_production_procurement_order/mrp.py'
+--- mrp_production_procurement_order/mrp.py	2014-05-09 21:51:34 +0000
++++ mrp_production_procurement_order/mrp.py	2014-09-29 16:50:44 +0000
+@@ -24,10 +24,8 @@
+ #
+ ##############################################################################
+ 
+-from openerp.tools.translate import _
+ 
+ from openerp.osv import osv, fields
+-import decimal_precision as dp
+ 
+ 
+ class mrp_production(osv.Model):
+
+=== modified file 'mrp_production_procurement_order/procurement.py'
+--- mrp_production_procurement_order/procurement.py	2014-05-09 21:51:34 +0000
++++ mrp_production_procurement_order/procurement.py	2014-09-29 16:50:44 +0000
+@@ -24,7 +24,6 @@
+ #
+ ##############################################################################
+ 
+-from openerp.tools.translate import _
+ 
+ from openerp.osv import osv, fields
+ 
+
+=== modified file 'mrp_production_wizard/mrp.py'
+--- mrp_production_wizard/mrp.py	2014-05-09 21:51:34 +0000
++++ mrp_production_wizard/mrp.py	2014-09-29 16:50:44 +0000
+@@ -24,16 +24,10 @@
+ #
+ ##############################################################################
+ 
+-import pooler
+-import wizard
+-import openerp.netsvc as netsvc
+ from openerp.tools.translate import _
+ 
+-import openerp.tools as tools
+-import os
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ import time
+-from tools import ustr
+ 
+ 
+ class mrp_production(osv.Model):
+
+=== modified file 'mrp_production_wizard/wizard/special_order_wizard.py'
+--- mrp_production_wizard/wizard/special_order_wizard.py	2014-05-09 21:51:34 +0000
++++ mrp_production_wizard/wizard/special_order_wizard.py	2014-09-29 16:50:44 +0000
+@@ -23,9 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-import time
+ from openerp.osv import osv, fields
+-import decimal_precision as dp
+ from openerp.tools.translate import _
+ 
+ 
+
+=== modified file 'mrp_request_add_item/wizard/mrp_request_return.py'
+--- mrp_request_add_item/wizard/mrp_request_return.py	2014-05-09 21:51:34 +0000
++++ mrp_request_add_item/wizard/mrp_request_return.py	2014-09-29 16:50:44 +0000
+@@ -23,8 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.                          
+ ###############################################################################
+ 
+-from openerp.osv import osv, fields
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+ class mrp_request_return(osv.TransientModel):                                                       
+      _inherit = 'mrp.request.return'                                                                    
+
+=== modified file 'mrp_request_return/wizard/mrp_request_return.py'
+--- mrp_request_return/wizard/mrp_request_return.py	2014-05-09 21:51:34 +0000
++++ mrp_request_return/wizard/mrp_request_return.py	2014-09-29 16:50:44 +0000
+@@ -23,10 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-import time
+ from openerp.osv import osv, fields
+ import decimal_precision as dp
+-from openerp.tools.translate import _
+ 
+ 
+ class mrp_request_return(osv.TransientModel):
+
+=== modified file 'mrp_request_return_cancel/mrp.py'
+--- mrp_request_return_cancel/mrp.py	2014-05-09 21:51:34 +0000
++++ mrp_request_return_cancel/mrp.py	2014-09-29 16:50:44 +0000
+@@ -23,10 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-from openerp.osv import osv, fields
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+-from datetime import datetime
+ import openerp.netsvc as netsvc
+ 
+ 
+
+=== modified file 'mrp_scheduled_onchange_product/mrp.py'
+--- mrp_scheduled_onchange_product/mrp.py	2014-05-09 21:51:34 +0000
++++ mrp_scheduled_onchange_product/mrp.py	2014-09-29 16:50:44 +0000
+@@ -24,10 +24,8 @@
+ #
+ ##############################################################################
+ 
+-from openerp.tools.translate import _
+ 
+-from openerp.osv import osv, fields
+-import decimal_precision as dp
++from openerp.osv import osv
+ 
+ 
+ class mrp_production_product_line(osv.Model):
+
+=== modified file 'mrp_subproduct_pt_planified/mrp.py'
+--- mrp_subproduct_pt_planified/mrp.py	2014-05-09 21:51:34 +0000
++++ mrp_subproduct_pt_planified/mrp.py	2014-09-29 16:50:44 +0000
+@@ -23,8 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-from openerp.osv import osv, fields
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+ class mrp_production(osv.Model):
+     _inherit = 'mrp.production'
+
+=== modified file 'mrp_subproduction/mrp.py'
+--- mrp_subproduction/mrp.py	2014-05-09 21:51:34 +0000
++++ mrp_subproduction/mrp.py	2014-09-29 16:50:44 +0000
+@@ -24,7 +24,6 @@
+ #
+ ##############################################################################
+ 
+-from openerp.tools.translate import _
+ 
+ from openerp.osv import osv, fields
+ import decimal_precision as dp
+
+=== modified file 'mrp_workcenter_management/model/mrp_workcenter.py'
+--- mrp_workcenter_management/model/mrp_workcenter.py	2014-05-09 21:51:34 +0000
++++ mrp_workcenter_management/model/mrp_workcenter.py	2014-09-29 16:50:44 +0000
+@@ -24,8 +24,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
++from openerp.osv import fields
++from openerp.osv import osv
+ 
+ # class mrp_workcenter(osv.Model):
+ #
+
+=== modified file 'mrp_workcenter_responsible/model/mrp_workcenter_responsible.py'
+--- mrp_workcenter_responsible/model/mrp_workcenter_responsible.py	2014-05-09 21:51:34 +0000
++++ mrp_workcenter_responsible/model/mrp_workcenter_responsible.py	2014-09-29 16:50:44 +0000
+@@ -23,8 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
++from openerp.osv import fields
++from openerp.osv import osv
+ 
+ 
+ class mrp_workcenter(osv.Model):
+
+=== modified file 'mrp_workorder_lot/model/mrp_workorder_lot.py'
+--- mrp_workorder_lot/model/mrp_workorder_lot.py	2014-05-09 21:51:34 +0000
++++ mrp_workorder_lot/model/mrp_workorder_lot.py	2014-09-29 16:50:44 +0000
+@@ -23,7 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
++from openerp.osv import fields
++from openerp.osv import osv
+ from openerp.tools.translate import _
+ from openerp import tools
+ 
+
+=== modified file 'mrp_workorder_lot/model/res_company.py'
+--- mrp_workorder_lot/model/res_company.py	2014-05-09 21:51:34 +0000
++++ mrp_workorder_lot/model/res_company.py	2014-09-29 16:50:44 +0000
+@@ -23,9 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
+-from openerp import tools
++from openerp.osv import fields
++from openerp.osv import osv
+ 
+ 
+ class res_company(osv.osv):
+
+=== modified file 'mrp_workorder_lot/model/res_config.py'
+--- mrp_workorder_lot/model/res_config.py	2014-05-09 21:51:34 +0000
++++ mrp_workorder_lot/model/res_config.py	2014-09-29 16:50:44 +0000
+@@ -24,9 +24,8 @@
+ ###############################################################################
+ 
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
+-from openerp import tools
++from openerp.osv import fields
++from openerp.osv import osv
+ 
+ 
+ class mrp_config_settings(osv.osv_memory):
+
+=== modified file 'mrp_workorder_lot/wizard/mrp_consume_produce.py'
+--- mrp_workorder_lot/wizard/mrp_consume_produce.py	2014-05-09 21:51:34 +0000
++++ mrp_workorder_lot/wizard/mrp_consume_produce.py	2014-09-29 16:50:44 +0000
+@@ -23,9 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-import time
+ from openerp.osv import osv, fields
+-import decimal_precision as dp
+ from openerp.tools.translate import _
+ 
+ 
+
+=== modified file 'mrp_workorder_variation/model/mrp.py'
+--- mrp_workorder_variation/model/mrp.py	2014-05-09 21:51:34 +0000
++++ mrp_workorder_variation/model/mrp.py	2014-09-29 16:50:44 +0000
+@@ -23,10 +23,9 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import osv, orm, fields
+-from openerp import tools
++from openerp.osv import fields
++from openerp.osv import osv
+ from openerp.tools.translate import _
+-from openerp import netsvc
+ 
+ 
+ class mrp_production_workcenter_line(osv.Model):
+
+=== modified file 'note_to_task/wizard/convert_note.py'
+--- note_to_task/wizard/convert_note.py	2014-05-09 21:51:34 +0000
++++ note_to_task/wizard/convert_note.py	2014-09-29 16:50:44 +0000
+@@ -23,7 +23,6 @@
+ ###############################################################################    
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ class convert_note_task(osv.TransientModel):
+     
+
+=== modified file 'openacademy/partner.py'
+--- openacademy/partner.py	2014-05-09 21:51:34 +0000
++++ openacademy/partner.py	2014-09-29 16:50:44 +0000
+@@ -1,7 +1,6 @@
+ # -*- encoding: utf-8 -*-
+ from osv import osv
+ from osv import fields
+-from tools.translate import _
+ 
+ class res_partner(osv.osv):
+     """
+
+=== modified file 'openacademy/report/openacademy_course.py'
+--- openacademy/report/openacademy_course.py	2014-05-09 21:51:34 +0000
++++ openacademy/report/openacademy_course.py	2014-09-29 16:50:44 +0000
+@@ -1,8 +1,6 @@
+ # -*- encoding: utf-8 -*-
+ import time
+-import pooler
+ from report import report_sxw
+-from tools.translate import _
+ 
+ class openacademy_course(report_sxw.rml_parse):
+     """
+
+=== modified file 'openacademy/wizard/create_attendee_wizard.py'
+--- openacademy/wizard/create_attendee_wizard.py	2014-05-09 21:51:34 +0000
++++ openacademy/wizard/create_attendee_wizard.py	2014-09-29 16:50:45 +0000
+@@ -22,7 +22,6 @@
+ 
+ from osv import osv
+ from osv import fields
+-from tools.translate import _
+ 
+ class attendee_memory(osv.osv_memory):
+     """
+
+=== modified file 'openerp_print/print_model.py'
+--- openerp_print/print_model.py	2014-05-09 21:51:34 +0000
++++ openerp_print/print_model.py	2014-09-29 16:50:45 +0000
+@@ -25,11 +25,7 @@
+ ##############################################################################
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+-from tools import config
+-import time
+-import pooler
+ import cupstree
+ 
+ 
+
+=== modified file 'openerp_print/pyPdf/filters.py'
+--- openerp_print/pyPdf/filters.py	2014-05-09 21:51:34 +0000
++++ openerp_print/pyPdf/filters.py	2014-09-29 16:50:45 +0000
+@@ -52,7 +52,8 @@
+     # Unable to import zlib.  Attempt to use the System.IO.Compression
+     # library from the .NET framework. (IronPython only)
+     import System
+-    from System import IO, Collections, Array
++    from System import Array
++    from System import IO
+ 
+     def _string_to_bytearr(buf):
+         retval = Array.CreateInstance(System.Byte, len(buf))
+
+=== modified file 'openerp_print/pyPdf/pdf.py'
+--- openerp_print/pyPdf/pdf.py	2014-05-09 21:51:34 +0000
++++ openerp_print/pyPdf/pdf.py	2014-09-29 16:50:45 +0000
+@@ -44,9 +44,7 @@
+ except ImportError:
+     from StringIO import StringIO
+ 
+-import filters
+ import utils
+-import warnings
+ from generic import *
+ from utils import readNonWhitespace, readUntilWhitespace, ConvertFunctionsToVirtualList
+ from sets import ImmutableSet
+
+=== modified file 'openerp_print/pyPdf/xmp.py'
+--- openerp_print/pyPdf/xmp.py	2014-05-09 21:51:34 +0000
++++ openerp_print/pyPdf/xmp.py	2014-09-29 16:50:45 +0000
+@@ -2,7 +2,6 @@
+ import datetime
+ import decimal
+ from generic import PdfObject
+-from xml.dom import getDOMImplementation
+ from xml.dom.minidom import parseString
+ 
+ RDF_NAMESPACE = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+
+=== modified file 'openerp_print/report_sxw.py'
+--- openerp_print/report_sxw.py	2014-05-09 21:51:34 +0000
++++ openerp_print/report_sxw.py	2014-09-29 16:50:45 +0000
+@@ -26,31 +26,17 @@
+ import report
+ from report import report_sxw
+ from report.report_sxw import *
+-from report.report_sxw import _format
+-from report.report_sxw import _float_format
+-from report.report_sxw import _int_format
+-from report.report_sxw import _date_format
+-from report.report_sxw import _dttime_format
+-from report.report_sxw import browse_record_list
+ from report.report_sxw import rml_parse
+ import pooler
+ from lxml import etree
+ import subprocess
+ import os
+-import StringIO
+ import cStringIO
+ import base64
+-import copy
+-import locale
+-import mx.DateTime
+-import re
+ import time
+ 
+ import openerp.netsvc as netsvc
+-import osv
+ import openerp.tools as tools
+-import warnings
+-import zipfile
+ import openerp.netsvc as netsvc
+ 
+ logger = netsvc.Logger()
+
+=== modified file 'openerp_print/report_sxw_ext.py'
+--- openerp_print/report_sxw_ext.py	2014-05-09 21:51:34 +0000
++++ openerp_print/report_sxw_ext.py	2014-09-29 16:50:45 +0000
+@@ -29,21 +29,12 @@
+ from lxml import etree
+ import subprocess
+ import os
+-import StringIO
+ import cStringIO
+ import base64
+-import copy
+-import locale
+-import mx.DateTime
+-import re
+ import time
+ 
+ import openerp.netsvc as netsvc
+-import osv
+ import openerp.tools as tools
+-import warnings
+-import zipfile
+-import report
+ import openerp.netsvc as netsvc
+ 
+ logger = netsvc.Logger()
+
+=== modified file 'openerp_print/res_company.py'
+--- openerp_print/res_company.py	2014-05-09 21:51:34 +0000
++++ openerp_print/res_company.py	2014-09-29 16:50:45 +0000
+@@ -24,9 +24,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##############################################################################
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+-from tools import config
+ 
+ 
+ class res_company(osv.Model):
+
+=== modified file 'partner_credit_limit/invoice.py'
+--- partner_credit_limit/invoice.py	2014-05-09 21:51:34 +0000
++++ partner_credit_limit/invoice.py	2014-09-29 16:50:45 +0000
+@@ -26,10 +26,7 @@
+ ##############################################################################
+ 
+ import time
+-import openerp.netsvc as netsvc
+-from openerp.osv import osv, fields
+-from mx import DateTime
+-from tools import config
++from openerp.osv import osv
+ from openerp.tools.translate import _
+ 
+ 
+
+=== modified file 'partner_credit_limit/partner.py'
+--- partner_credit_limit/partner.py	2014-05-09 21:51:34 +0000
++++ partner_credit_limit/partner.py	2014-09-29 16:50:45 +0000
+@@ -21,12 +21,7 @@
+ #
+ ##############################################################################
+ 
+-import time
+-import openerp.netsvc as netsvc
+ from openerp.osv import osv, fields
+-from mx import DateTime
+-from tools import config
+-from openerp.tools.translate import _
+ 
+ 
+ 
+
+=== modified file 'partner_credit_limit/sale.py'
+--- partner_credit_limit/sale.py	2014-05-09 21:51:34 +0000
++++ partner_credit_limit/sale.py	2014-09-29 16:50:45 +0000
+@@ -22,10 +22,7 @@
+ ##############################################################################
+ 
+ import time
+-import openerp.netsvc as netsvc
+-from openerp.osv import osv, fields
+-from mx import DateTime
+-from tools import config
++from openerp.osv import osv
+ from openerp.tools.translate import _
+ 
+ 
+
+=== modified file 'partner_effective_sale/model/partner.py'
+--- partner_effective_sale/model/partner.py	2013-05-24 15:35:09 +0000
++++ partner_effective_sale/model/partner.py	2014-09-29 16:50:45 +0000
+@@ -22,9 +22,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ################################################################################
+ 
+-import time
+ from osv import fields, osv
+-from tools.translate import _
+ 
+ class Partner(osv.osv):
+     _inherit = 'res.partner'
+
+=== modified file 'partner_invoice_description/account_invoice.py'
+--- partner_invoice_description/account_invoice.py	2014-05-09 21:51:34 +0000
++++ partner_invoice_description/account_invoice.py	2014-09-29 16:50:45 +0000
+@@ -24,7 +24,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ 
+ 
+ class account_invoice(osv.Model):
+
+=== modified file 'partner_products/model/res_partner.py'
+--- partner_products/model/res_partner.py	2014-06-09 18:25:55 +0000
++++ partner_products/model/res_partner.py	2014-09-29 16:50:45 +0000
+@@ -23,9 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
+-from openerp import tools
++from openerp.osv import fields
++from openerp.osv import osv
+ 
+ class res_partner(osv.Model):
+ 
+
+=== modified file 'partner_search_by_vat/model/res_partner.py'
+--- partner_search_by_vat/model/res_partner.py	2014-05-09 21:51:34 +0000
++++ partner_search_by_vat/model/res_partner.py	2014-09-29 16:50:45 +0000
+@@ -23,9 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-import math
+ import re
+-from openerp.osv import fields, osv
++from openerp.osv import osv
+ 
+ 
+ class res_partner(osv.osv):
+
+=== modified file 'partner_validate_vat/res_partner.py'
+--- partner_validate_vat/res_partner.py	2014-05-09 21:51:34 +0000
++++ partner_validate_vat/res_partner.py	2014-09-29 16:50:45 +0000
+@@ -24,7 +24,7 @@
+ #
+ #
+ 
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ from openerp.tools.translate import _
+ 
+ 
+
+=== modified file 'payment_terms/model/account.py'
+--- payment_terms/model/account.py	2014-05-09 21:51:34 +0000
++++ payment_terms/model/account.py	2014-09-29 16:50:45 +0000
+@@ -24,11 +24,7 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+-from datetime import datetime
+-from DateTime import DateTime
+-import time
+ 
+ 
+ class account_invoice(osv.Model):
+
+=== modified file 'payment_terms/model/partner.py'
+--- payment_terms/model/partner.py	2014-05-09 21:51:34 +0000
++++ payment_terms/model/partner.py	2014-09-29 16:50:45 +0000
+@@ -19,8 +19,6 @@
+ #
+ ##############################################################################
+ 
+-from operator import itemgetter
+-import time
+ 
+ from openerp.osv import fields, osv
+ 
+
+=== modified file 'payment_terms/model/purchase.py'
+--- payment_terms/model/purchase.py	2014-05-09 21:51:34 +0000
++++ payment_terms/model/purchase.py	2014-09-29 16:50:45 +0000
+@@ -27,7 +27,6 @@
+ ###############################################################################
+ from openerp.osv import osv
+ from openerp.osv import fields
+-from openerp.tools.translate import _
+ 
+ 
+ class inherits_purchase(osv.Model):
+
+=== modified file 'payment_terms/model/sale.py'
+--- payment_terms/model/sale.py	2014-05-09 21:51:34 +0000
++++ payment_terms/model/sale.py	2014-09-29 16:50:45 +0000
+@@ -27,7 +27,6 @@
+ ###############################################################################
+ from openerp.osv import osv
+ from openerp.osv import fields
+-from openerp.tools.translate import _
+ 
+ 
+ class inherits_sale(osv.Model):
+
+=== modified file 'payment_terms/model/stock.py'
+--- payment_terms/model/stock.py	2014-05-09 21:51:34 +0000
++++ payment_terms/model/stock.py	2014-09-29 16:50:45 +0000
+@@ -27,12 +27,7 @@
+ ###############################################################################
+ from openerp.osv import osv
+ from openerp.osv import fields
+-from openerp.tools.translate import _
+-from openerp import pooler
+-import datetime
+-import time
+ 
+-import math
+ 
+ class inherit_picking(osv.Model):
+     
+
+=== modified file 'periodic_inventory_valuation/model/periodic_inventory_valuation.py'
+--- periodic_inventory_valuation/model/periodic_inventory_valuation.py	2014-05-09 21:51:34 +0000
++++ periodic_inventory_valuation/model/periodic_inventory_valuation.py	2014-09-29 16:50:45 +0000
+@@ -25,7 +25,6 @@
+ 
+ from openerp.osv import fields, osv
+ from openerp.tools.translate import _
+-from openerp import tools
+ import datetime
+ 
+ #----------------------------------------------------------
+
+=== modified file 'picking_from_invoice/wizard/picking_from_invoice.py'
+--- picking_from_invoice/wizard/picking_from_invoice.py	2014-05-09 21:51:34 +0000
++++ picking_from_invoice/wizard/picking_from_invoice.py	2014-09-29 16:50:46 +0000
+@@ -24,13 +24,8 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+ from openerp.tools.translate import _
+ 
+-from tools import config
+-import openerp.netsvc as netsvc
+-import decimal_precision as dp
+-import time
+ 
+ 
+ class picking_from_invoice(osv.TransientModel):
+
+=== modified file 'picking_verification_report/report/picking.py'
+--- picking_verification_report/report/picking.py	2014-05-09 21:51:34 +0000
++++ picking_verification_report/report/picking.py	2014-09-29 16:50:46 +0000
+@@ -21,7 +21,6 @@
+ 
+ import time
+ from report import report_sxw
+-import pooler
+ 
+ 
+ class packing_list_report(report_sxw.rml_parse):
+
+=== modified file 'portal_project_kanban_fields/model/project.py'
+--- portal_project_kanban_fields/model/project.py	2014-05-09 21:51:34 +0000
++++ portal_project_kanban_fields/model/project.py	2014-09-29 16:50:46 +0000
+@@ -23,10 +23,9 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import osv, orm, fields
++from openerp.osv import fields
++from openerp.osv import osv
+ from openerp import tools
+-from openerp.tools.translate import _
+-from openerp import netsvc
+ 
+ 
+ class portal_project(osv.Model):
+
+=== modified file 'portal_user_story/tests/test_user_story.py'
+--- portal_user_story/tests/test_user_story.py	2014-07-29 05:33:41 +0000
++++ portal_user_story/tests/test_user_story.py	2014-09-29 16:50:46 +0000
+@@ -1,7 +1,5 @@
+ from openerp.tests.common import TransactionCase
+-from openerp.exceptions import AccessError
+ from openerp.osv.orm import except_orm
+-from openerp import SUPERUSER_ID
+ import threading
+ from openerp.tools import mute_logger
+ 
+
+=== modified file 'pos_delivery_restaurant/model/point_of_sale.py'
+--- pos_delivery_restaurant/model/point_of_sale.py	2014-05-09 21:51:34 +0000
++++ pos_delivery_restaurant/model/point_of_sale.py	2014-09-29 16:50:46 +0000
+@@ -23,9 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
+-from openerp import tools
++from openerp.osv import fields
++from openerp.osv import osv
+ 
+ class pos_config(osv.Model):
+     """
+
+=== modified file 'pos_product_filter/model/product.py'
+--- pos_product_filter/model/product.py	2014-05-09 21:51:34 +0000
++++ pos_product_filter/model/product.py	2014-09-29 16:50:46 +0000
+@@ -23,9 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
+-from openerp import tools
++from openerp.osv import fields
++from openerp.osv import osv
+ 
+ class product_product(osv.Model):
+     """ 
+
+=== modified file 'pr_line_related_po_line/model/purchase_order_line.py'
+--- pr_line_related_po_line/model/purchase_order_line.py	2014-07-12 00:06:52 +0000
++++ pr_line_related_po_line/model/purchase_order_line.py	2014-09-29 16:50:46 +0000
+@@ -24,7 +24,6 @@
+ ###############################################################################
+ 
+ from openerp.osv import fields, osv
+-from openerp import netsvc
+ from openerp.tools.translate import _
+ 
+ class purchase_order_line(osv.Model):
+
+=== modified file 'price_structure/model/product_pricelist.py'
+--- price_structure/model/product_pricelist.py	2014-05-09 21:51:34 +0000
++++ price_structure/model/product_pricelist.py	2014-09-29 16:50:46 +0000
+@@ -24,10 +24,7 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+-from openerp.tools.translate import _
+ 
+-import decimal_precision as dp
+ 
+ 
+ class inherit_price_list_item(osv.Model):
+
+=== modified file 'price_structure/model/product_product.py'
+--- price_structure/model/product_product.py	2014-05-09 21:51:34 +0000
++++ price_structure/model/product_product.py	2014-09-29 16:50:46 +0000
+@@ -24,13 +24,7 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+-from openerp.tools.translate import _
+ 
+-from tools import config
+-import openerp.netsvc as netsvc
+-import decimal_precision as dp
+-from openerp.tools.sql import drop_view_if_exists
+ 
+ 
+ class product_product(osv.Model):
+
+=== modified file 'price_structure/model/sale.py'
+--- price_structure/model/sale.py	2014-05-09 21:51:34 +0000
++++ price_structure/model/sale.py	2014-09-29 16:50:46 +0000
+@@ -24,12 +24,8 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+ from openerp.tools.translate import _
+ 
+-from tools import config
+-import openerp.netsvc as netsvc
+-import decimal_precision as dp
+ 
+ 
+ class sale_order_line(osv.Model):
+
+=== modified file 'price_structure/wizard/create_list_price.py'
+--- price_structure/wizard/create_list_price.py	2014-05-09 21:51:34 +0000
++++ price_structure/wizard/create_list_price.py	2014-09-29 16:50:46 +0000
+@@ -24,7 +24,6 @@
+ ##########################################################################
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ 
+ class virtual_items(osv.TransientModel):
+
+=== modified file 'procurement_location/procurement.py'
+--- procurement_location/procurement.py	2014-05-09 21:51:34 +0000
++++ procurement_location/procurement.py	2014-09-29 16:50:46 +0000
+@@ -23,7 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ 
+ 
+ class procurement_order(osv.Model):
+
+=== modified file 'procurement_order_merge/procurement.py'
+--- procurement_order_merge/procurement.py	2014-05-09 21:51:34 +0000
++++ procurement_order_merge/procurement.py	2014-09-29 16:50:46 +0000
+@@ -23,8 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-from openerp.osv import osv, fields
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+ import openerp.netsvc as netsvc
+ from osv.orm import browse_record, browse_null
+
+=== modified file 'procurement_order_merge/wizard/procurement_order_merge.py'
+--- procurement_order_merge/wizard/procurement_order_merge.py	2014-05-09 21:51:34 +0000
++++ procurement_order_merge/wizard/procurement_order_merge.py	2014-09-29 16:50:46 +0000
+@@ -23,7 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ from openerp.tools.translate import _
+ 
+ 
+
+=== modified file 'procurement_so2po_shiping_address/procurement_so2po_shiping_address.py'
+--- procurement_so2po_shiping_address/procurement_so2po_shiping_address.py	2014-05-09 21:51:34 +0000
++++ procurement_so2po_shiping_address/procurement_so2po_shiping_address.py	2014-09-29 16:50:46 +0000
+@@ -22,12 +22,7 @@
+ ##########################################################################
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+-from openerp import pooler, tools
+-from openerp import netsvc
+-from openerp import SUPERUSER_ID
+ 
+-import time
+ 
+ class purchase_order(osv.Model):
+     _inherit = 'purchase.order'
+
+=== modified file 'procurement_wizard_schedulers/wizard/schedulers_all.py'
+--- procurement_wizard_schedulers/wizard/schedulers_all.py	2014-05-09 21:51:34 +0000
++++ procurement_wizard_schedulers/wizard/schedulers_all.py	2014-09-29 16:50:46 +0000
+@@ -21,10 +21,6 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##########################################################################
+ 
+-import threading
+-import pooler
+-import openerp.netsvc as netsvc
+-import os
+ from openerp.osv import osv, fields
+ 
+ 
+
+=== modified file 'product_context_date/product.py'
+--- product_context_date/product.py	2014-05-09 21:51:34 +0000
++++ product_context_date/product.py	2014-09-29 16:50:46 +0000
+@@ -20,8 +20,6 @@
+ ##############################################################################
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+-import decimal_precision as dp
+ 
+ class product_product(osv.osv):
+     _inherit = "product.product"
+
+=== modified file 'product_customer_code/product.py'
+--- product_customer_code/product.py	2014-05-09 21:51:34 +0000
++++ product_customer_code/product.py	2014-09-29 16:50:46 +0000
+@@ -24,7 +24,6 @@
+ #
+ ##############################################################################
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+ 
+ class product_product(osv.Model):
+
+=== modified file 'product_customer_code/product_customer_code.py'
+--- product_customer_code/product_customer_code.py	2014-05-09 21:51:34 +0000
++++ product_customer_code/product_customer_code.py	2014-09-29 16:50:46 +0000
+@@ -24,7 +24,6 @@
+ #
+ ##############################################################################
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+ 
+ class product_customer_code(osv.Model):
+
+=== modified file 'product_do_merge/model/product.py'
+--- product_do_merge/model/product.py	2014-05-09 21:51:34 +0000
++++ product_do_merge/model/product.py	2014-09-29 16:50:46 +0000
+@@ -21,12 +21,7 @@
+ #    You should have received a copy of the GNU Affero General Public License
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+-import openerp
+-from openerp import SUPERUSER_ID
+-from openerp import tools
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+-from openerp.tools.yaml_import import is_comment
+ 
+ class product_product(osv.Model):
+     _description = 'Product'
+
+=== modified file 'product_do_merge/wizard/base_product_merge.py'
+--- product_do_merge/wizard/base_product_merge.py	2014-05-09 21:51:34 +0000
++++ product_do_merge/wizard/base_product_merge.py	2014-09-29 16:50:46 +0000
+@@ -22,15 +22,11 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ from __future__ import absolute_import
+-from email.utils import parseaddr
+ import functools
+-import htmlentitydefs
+ import itertools
+ import logging
+ import operator
+-import re
+ from ast import literal_eval
+-from openerp.tools import mute_logger
+ import openerp
+ from openerp.osv import osv, orm
+ from openerp.osv import fields
+
+=== modified file 'product_historical_price/product.py'
+--- product_historical_price/product.py	2014-05-09 21:51:34 +0000
++++ product_historical_price/product.py	2014-09-29 16:50:46 +0000
+@@ -23,12 +23,9 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##########################################################################
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ import decimal_precision as dp
+-import pooler
+ import time
+-import math
+ 
+ 
+ class product_historical(osv.Model):
+
+=== modified file 'product_icecat/product_icecat.py'
+--- product_icecat/product_icecat.py	2014-05-09 21:51:34 +0000
++++ product_icecat/product_icecat.py	2014-09-29 16:50:46 +0000
+@@ -23,10 +23,8 @@
+ from openerp.osv import osv, fields
+ from openerp.tools.translate import _
+ 
+-import openerp.netsvc as netsvc
+ 
+ from ftplib import FTP
+-import os
+ 
+ 
+ class product_icecat(osv.Model):
+
+=== modified file 'product_icecat/product_manufacturer.py'
+--- product_icecat/product_manufacturer.py	2014-05-09 21:51:34 +0000
++++ product_icecat/product_manufacturer.py	2014-09-29 16:50:46 +0000
+@@ -22,7 +22,6 @@
+ ##############################################################################
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ 
+ class product_product(osv.Model):
+
+=== modified file 'product_icecat/wizard/wizard_product_icecat.py'
+--- product_icecat/wizard/wizard_product_icecat.py	2014-05-09 21:51:34 +0000
++++ product_icecat/wizard/wizard_product_icecat.py	2014-09-29 16:50:46 +0000
+@@ -26,11 +26,10 @@
+ 
+ import os
+ import re
+-import cgi
+ import libxml2
+ import urllib
+ import urllib2
+-from urllib2 import Request, urlopen, URLError, HTTPError
++from urllib2 import URLError
+ from ftplib import FTP
+ 
+ 
+
+=== modified file 'product_pricelist_date/pricelist.py'
+--- product_pricelist_date/pricelist.py	2014-05-09 21:51:34 +0000
++++ product_pricelist_date/pricelist.py	2014-09-29 16:50:46 +0000
+@@ -23,9 +23,6 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-import time
+-import openerp.netsvc as netsvc
+-import pooler
+ from openerp.osv import osv, fields
+ 
+ 
+
+=== modified file 'product_rfq/model/product.py'
+--- product_rfq/model/product.py	2014-05-09 21:51:34 +0000
++++ product_rfq/model/product.py	2014-09-29 16:50:46 +0000
+@@ -26,7 +26,6 @@
+ # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ ###############################################################################
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ 
+ class inherited_product(osv.Model):
+
+=== modified file 'product_unique_default_code/product.py'
+--- product_unique_default_code/product.py	2014-05-09 21:51:34 +0000
++++ product_unique_default_code/product.py	2014-09-29 16:50:46 +0000
+@@ -23,10 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-from openerp.osv import osv, fields
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+-from datetime import datetime
+ 
+ 
+ class product_product(osv.Model):
+
+=== modified file 'product_uom_update/wizard/product_uom_update.py'
+--- product_uom_update/wizard/product_uom_update.py	2014-05-09 21:51:34 +0000
++++ product_uom_update/wizard/product_uom_update.py	2014-09-29 16:50:46 +0000
+@@ -22,7 +22,7 @@
+ #    You should have received a copy of the GNU Affero General Public License
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+-from openerp.osv import osv, orm
++from openerp.osv import osv
+ from openerp.osv import fields
+ 
+ 
+
+=== modified file 'project_btree/project.py'
+--- project_btree/project.py	2014-05-09 21:51:34 +0000
++++ project_btree/project.py	2014-09-29 16:50:46 +0000
+@@ -19,14 +19,8 @@
+ #
+ ##############################################################################
+ 
+-from datetime import datetime, date
+-from lxml import etree
+-import time
+ 
+-from openerp import SUPERUSER_ID
+-from openerp import tools
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ 
+ class project_project(osv.Model):
+
+=== modified file 'project_complete_name/project.py'
+--- project_complete_name/project.py	2014-05-09 21:51:34 +0000
++++ project_complete_name/project.py	2014-09-29 16:50:46 +0000
+@@ -19,14 +19,9 @@
+ #
+ ##############################################################################
+ 
+-from datetime import datetime, date
+-from lxml import etree
+-import time
+ 
+-from openerp import SUPERUSER_ID
+ from openerp import tools
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ 
+ class project_project(osv.Model):
+
+=== modified file 'project_conf/model/project.py'
+--- project_conf/model/project.py	2014-05-09 21:51:34 +0000
++++ project_conf/model/project.py	2014-09-29 16:50:47 +0000
+@@ -20,7 +20,6 @@
+ #
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ class project_task(osv.osv):
+ 
+
+=== modified file 'project_issue_fix_progress/project.py'
+--- project_issue_fix_progress/project.py	2014-05-09 21:51:34 +0000
++++ project_issue_fix_progress/project.py	2014-09-29 16:50:47 +0000
+@@ -21,7 +21,7 @@
+ #    You should have received a copy of the GNU Affero General Public License
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##########################################################################
+-from osv import fields, osv
++from osv import osv
+ 
+ 
+ class project_task(osv.osv):
+
+=== modified file 'project_issue_report/report/project_issue_report.py'
+--- project_issue_report/report/project_issue_report.py	2014-05-09 21:51:34 +0000
++++ project_issue_report/report/project_issue_report.py	2014-09-29 16:50:47 +0000
+@@ -23,7 +23,6 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##############################################################################
+ 
+-import time
+ 
+ from report import report_sxw
+ import pooler
+
+=== modified file 'project_issue_report2/report/project_issue.py'
+--- project_issue_report2/report/project_issue.py	2014-05-09 21:51:34 +0000
++++ project_issue_report2/report/project_issue.py	2014-09-29 16:50:47 +0000
+@@ -25,7 +25,6 @@
+ import time
+ import pooler
+ from report import report_sxw
+-from openerp.tools.translate import _
+ 
+ 
+ 
+
+=== modified file 'project_issue_report2/wizard/wizard_project_issue.py'
+--- project_issue_report2/wizard/wizard_project_issue.py	2014-05-09 21:51:34 +0000
++++ project_issue_report2/wizard/wizard_project_issue.py	2014-09-29 16:50:47 +0000
+@@ -23,8 +23,6 @@
+ ############################################################################
+ 
+ from openerp.osv import osv, fields
+-import pooler
+-import time
+ 
+ 
+ class wizard_price_list_sequence_report(osv.TransientModel):
+
+=== modified file 'project_phase_description/model/project_phase.py'
+--- project_phase_description/model/project_phase.py	2014-05-09 21:51:34 +0000
++++ project_phase_description/model/project_phase.py	2014-09-29 16:50:47 +0000
+@@ -23,7 +23,6 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+ 
+ class project_phase(osv.Model):
+
+=== modified file 'project_search_create_uid/project.py'
+--- project_search_create_uid/project.py	2014-05-09 21:51:34 +0000
++++ project_search_create_uid/project.py	2014-09-29 16:50:47 +0000
+@@ -19,14 +19,8 @@
+ #
+ ##############################################################################
+ 
+-from datetime import datetime, date
+-from lxml import etree
+-import time
+ 
+-from openerp import SUPERUSER_ID
+-from openerp import tools
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ class project_task(osv.Model):
+     _inherit = 'project.task'
+
+=== modified file 'project_task_domain/model/project_task_work.py'
+--- project_task_domain/model/project_task_work.py	2014-07-04 21:35:01 +0000
++++ project_task_domain/model/project_task_work.py	2014-09-29 16:50:47 +0000
+@@ -24,7 +24,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ #
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ from openerp.tools.translate import _
+ import time
+ 
+
+=== modified file 'project_task_work/model/project_task_work.py'
+--- project_task_work/model/project_task_work.py	2014-07-04 17:49:21 +0000
++++ project_task_work/model/project_task_work.py	2014-09-29 16:50:47 +0000
+@@ -23,9 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##########################################################################
+ 
+-import time
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+ 
+ class project_task(osv.Model):
+
+=== modified file 'project_task_work/report/parser.py'
+--- project_task_work/report/parser.py	2014-05-09 21:51:34 +0000
++++ project_task_work/report/parser.py	2014-09-29 16:50:47 +0000
+@@ -26,7 +26,6 @@
+ 
+ import time
+ from report import report_sxw
+-import mx.DateTime
+ 
+ 
+ class project_task_work_report(report_sxw.rml_parse):
+
+=== modified file 'psm/model/product.py'
+--- psm/model/product.py	2014-05-09 21:51:34 +0000
++++ psm/model/product.py	2014-09-29 16:50:47 +0000
+@@ -23,9 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
+ ############################################################################
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+-import decimal_precision as dp
+ 
+ 
+ class product_product(osv.Model):
+
+=== modified file 'psm/model/stock.py'
+--- psm/model/stock.py	2014-05-09 21:51:34 +0000
++++ psm/model/stock.py	2014-09-29 16:50:47 +0000
+@@ -25,7 +25,6 @@
+ from openerp.osv import osv, fields
+ from openerp.tools.translate import _
+ 
+-import decimal_precision as dp
+ 
+ 
+ class stock_production_lot(osv.Model):
+
+=== modified file 'psm/wizard/stock_invoice_onshipping.py'
+--- psm/wizard/stock_invoice_onshipping.py	2014-05-09 21:51:34 +0000
++++ psm/wizard/stock_invoice_onshipping.py	2014-09-29 16:50:47 +0000
+@@ -21,7 +21,6 @@
+ 
+ from openerp.osv import osv, fields
+ 
+-from openerp.tools.translate import _
+ 
+ 
+ 
+
+=== modified file 'psm/wizard/stock_return_picking.py'
+--- psm/wizard/stock_return_picking.py	2014-05-09 21:51:34 +0000
++++ psm/wizard/stock_return_picking.py	2014-09-29 16:50:47 +0000
+@@ -19,11 +19,8 @@
+ #
+ ##############################################################################
+ 
+-import openerp.netsvc as netsvc
+-import time
+ 
+-from openerp.osv import osv, fields
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+ 
+ 
+
+=== modified file 'purchase_multi_report/res_company.py'
+--- purchase_multi_report/res_company.py	2014-05-09 21:51:34 +0000
++++ purchase_multi_report/res_company.py	2014-09-29 16:50:47 +0000
+@@ -24,7 +24,6 @@
+ ############################################################################
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ 
+ 
+
+=== modified file 'purchase_order_department/model/purchase_order.py'
+--- purchase_order_department/model/purchase_order.py	2014-07-01 16:44:37 +0000
++++ purchase_order_department/model/purchase_order.py	2014-09-29 16:50:47 +0000
+@@ -23,9 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
+-from openerp import tools
++from openerp.osv import fields
++from openerp.osv import osv
+ 
+ -hola_mundo = self.pool.get('res.partner')
+
+ class purchase_order(osv.Model):
+ 
+
+=== modified file 'purchase_order_description/model/purchase_order.py'
+--- purchase_order_description/model/purchase_order.py	2014-07-23 18:43:29 +0000
++++ purchase_order_description/model/purchase_order.py	2014-09-29 16:50:47 +0000
+@@ -23,9 +23,9 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
++from openerp.osv import fields
++from openerp.osv import osv
+ from openerp.tools.translate import _
+-from openerp import tools
+ 
+ class purchase_order(osv.Model):
+ 
+
+=== modified file 'purchase_order_requisitor/model/purchase_requisition.py'
+--- purchase_order_requisitor/model/purchase_requisition.py	2014-06-02 22:02:14 +0000
++++ purchase_order_requisitor/model/purchase_requisition.py	2014-09-29 16:50:47 +0000
+@@ -19,15 +19,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ########################################################################
+-from datetime import datetime
+-from dateutil.relativedelta import relativedelta
+-import time
+-from openerp import netsvc
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+-import openerp.addons.decimal_precision as dp
+-from openerp import tools
+ 
+ class purchase_order(osv.Model):
+     _inherit = "purchase.order"
+
+=== modified file 'purchase_order_type/model/purchase_order.py'
+--- purchase_order_type/model/purchase_order.py	2014-07-22 20:07:11 +0000
++++ purchase_order_type/model/purchase_order.py	2014-09-29 16:50:47 +0000
+@@ -23,9 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
+-from openerp import tools
++from openerp.osv import fields
++from openerp.osv import osv
+ 
+ purchase_order_type = [
+     ('materials', 'Materials'),
+
+=== modified file 'purchase_requisition_contract_analyst/model/purchase_requisition.py'
+--- purchase_requisition_contract_analyst/model/purchase_requisition.py	2014-06-17 15:19:04 +0000
++++ purchase_requisition_contract_analyst/model/purchase_requisition.py	2014-09-29 16:50:47 +0000
+@@ -23,9 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
+-from openerp import tools
++from openerp.osv import fields
++from openerp.osv import osv
+ 
+ class purchase_requisition(osv.Model):
+ 
+
+=== modified file 'purchase_requisition_currency/model/purchase_requisition.py'
+--- purchase_requisition_currency/model/purchase_requisition.py	2014-06-12 15:35:52 +0000
++++ purchase_requisition_currency/model/purchase_requisition.py	2014-09-29 16:50:47 +0000
+@@ -23,9 +23,9 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
++from openerp.osv import fields
++from openerp.osv import osv
+ from openerp.tools.translate import _
+-from openerp import tools
+ 
+ class purchase_requisition(osv.Model):
+ 
+
+=== modified file 'purchase_requisition_department/model/purchase_requisition.py'
+--- purchase_requisition_department/model/purchase_requisition.py	2014-07-01 16:51:25 +0000
++++ purchase_requisition_department/model/purchase_requisition.py	2014-09-29 16:50:47 +0000
+@@ -23,9 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
+-from openerp import tools
++from openerp.osv import fields
++from openerp.osv import osv
+ 
+ class purchase_requisition(osv.Model):
+ 
+
+=== modified file 'purchase_requisition_line_analytic/model/purchase_requisition.py'
+--- purchase_requisition_line_analytic/model/purchase_requisition.py	2014-06-12 21:09:32 +0000
++++ purchase_requisition_line_analytic/model/purchase_requisition.py	2014-09-29 16:50:47 +0000
+@@ -19,15 +19,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ########################################################################
+-from datetime import datetime
+-from dateutil.relativedelta import relativedelta
+-import time
+-from openerp import netsvc
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+-import openerp.addons.decimal_precision as dp
+-from openerp import tools
+ 
+ 
+ class purchase_requisition_line(osv.Model):
+
+=== modified file 'purchase_requisition_line_description/model/purchase_requisition_line.py'
+--- purchase_requisition_line_description/model/purchase_requisition_line.py	2014-06-03 21:32:37 +0000
++++ purchase_requisition_line_description/model/purchase_requisition_line.py	2014-09-29 16:50:47 +0000
+@@ -19,15 +19,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ########################################################################
+-from datetime import datetime
+-from dateutil.relativedelta import relativedelta
+-import time
+-from openerp import netsvc
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+-import openerp.addons.decimal_precision as dp
+-from openerp import tools
+ 
+ 
+ class purchase_requisition_line(osv.Model):
+
+=== modified file 'purchase_requisition_line_plan/model/purchase_requisition.py'
+--- purchase_requisition_line_plan/model/purchase_requisition.py	2014-06-27 22:10:22 +0000
++++ purchase_requisition_line_plan/model/purchase_requisition.py	2014-09-29 16:50:47 +0000
+@@ -19,15 +19,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ########################################################################
+-from datetime import datetime
+-from dateutil.relativedelta import relativedelta
+-import time
+-from openerp import netsvc
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+-import openerp.addons.decimal_precision as dp
+-from openerp import tools
+     
+ class purchase_requisition_line(osv.Model):
+     _inherit = "purchase.requisition.line"
+
+=== modified file 'purchase_requisition_line_price_unit/model/purchase_requisition_line.py'
+--- purchase_requisition_line_price_unit/model/purchase_requisition_line.py	2014-06-18 14:55:50 +0000
++++ purchase_requisition_line_price_unit/model/purchase_requisition_line.py	2014-09-29 16:50:47 +0000
+@@ -19,15 +19,9 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ########################################################################
+-from datetime import datetime
+-from dateutil.relativedelta import relativedelta
+-import time
+-from openerp import netsvc
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ import openerp.addons.decimal_precision as dp
+-from openerp import tools
+ 
+ class purchase_requisition(osv.Model):
+     _inherit = "purchase.requisition"
+
+=== modified file 'purchase_requisition_priority/model/purchase_requisition.py'
+--- purchase_requisition_priority/model/purchase_requisition.py	2014-06-03 22:25:42 +0000
++++ purchase_requisition_priority/model/purchase_requisition.py	2014-09-29 16:50:47 +0000
+@@ -23,9 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
+-from openerp import tools
++from openerp.osv import fields
++from openerp.osv import osv
+ 
+ priority_options = [
+     (05, 'emergency'),
+
+=== modified file 'purchase_requisition_remarks/model/purchase_requisition.py'
+--- purchase_requisition_remarks/model/purchase_requisition.py	2014-07-15 19:33:53 +0000
++++ purchase_requisition_remarks/model/purchase_requisition.py	2014-09-29 16:50:47 +0000
+@@ -23,9 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
+-from openerp import tools
++from openerp.osv import fields
++from openerp.osv import osv
+ 
+ class purchase_requisition(osv.Model):
+     _inherit = 'purchase.requisition'
+
+=== modified file 'purchase_requisition_supplier_list/model/purchase_requisition.py'
+--- purchase_requisition_supplier_list/model/purchase_requisition.py	2014-06-10 18:33:13 +0000
++++ purchase_requisition_supplier_list/model/purchase_requisition.py	2014-09-29 16:50:47 +0000
+@@ -24,9 +24,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
+-from openerp import tools
++from openerp.osv import fields
++from openerp.osv import osv
+ 
+ class purchase_requisition(osv.Model):
+     """
+
+=== modified file 'purchase_requisition_type/model/purchase_requisition.py'
+--- purchase_requisition_type/model/purchase_requisition.py	2014-06-10 18:44:21 +0000
++++ purchase_requisition_type/model/purchase_requisition.py	2014-09-29 16:50:47 +0000
+@@ -23,9 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
+-from openerp import tools
++from openerp.osv import fields
++from openerp.osv import osv
+ 
+ purchase_requisition_type = [
+     ('materials', 'Materials'),
+
+=== modified file 'purchase_supplier/purchase.py'
+--- purchase_supplier/purchase.py	2014-05-09 21:51:34 +0000
++++ purchase_supplier/purchase.py	2014-09-29 16:50:47 +0000
+@@ -25,12 +25,7 @@
+ #
+ ##############################################################################
+ 
+-import time
+-import openerp.netsvc as netsvc
+-from openerp.osv import osv, fields
+-from mx import DateTime
+-from tools import config
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ 
+ 
+ class purchase_order(osv.Model):
+
+=== modified file 'purchase_test_data_imp/wizard/test_yaml.py'
+--- purchase_test_data_imp/wizard/test_yaml.py	2014-05-09 21:51:34 +0000
++++ purchase_test_data_imp/wizard/test_yaml.py	2014-09-29 16:50:47 +0000
+@@ -21,7 +21,6 @@
+ import openerp.tools as tools
+ import os
+ from openerp.tools import assertion_report
+-import sys
+ import base64
+ from openerp.osv import osv, fields
+ import tempfile
+
+=== modified file 'purchase_user_validation/purchase.py'
+--- purchase_user_validation/purchase.py	2014-05-09 21:51:34 +0000
++++ purchase_user_validation/purchase.py	2014-09-29 16:50:47 +0000
+@@ -24,7 +24,6 @@
+ #
+ ##############################################################################
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+ 
+ class purchase_order(osv.Model):
+
+=== modified file 'recovery_attachments_bd/document_storage.py'
+--- recovery_attachments_bd/document_storage.py	2014-05-09 21:51:34 +0000
++++ recovery_attachments_bd/document_storage.py	2014-09-29 16:50:47 +0000
+@@ -23,9 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ import os
+-import random
+ 
+ 
+ class document_storage(osv.Model):
+
+=== modified file 'report_process_production/report/process_production_report.py'
+--- report_process_production/report/process_production_report.py	2014-05-09 21:51:34 +0000
++++ report_process_production/report/process_production_report.py	2014-09-29 16:50:47 +0000
+@@ -22,9 +22,7 @@
+ import time
+ from report import report_sxw
+ import pooler
+-from openerp.tools.amount_to_text import amount_to_text
+ 
+-from openerp.tools.translate import _
+ 
+ 
+ 
+
+=== modified file 'report_process_production/wizard/wizard_report_process.py'
+--- report_process_production/wizard/wizard_report_process.py	2014-05-09 21:51:34 +0000
++++ report_process_production/wizard/wizard_report_process.py	2014-09-29 16:50:47 +0000
+@@ -24,10 +24,8 @@
+ #
+ ##############################################################################
+ 
+-import time
+ 
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+ 
+ class wizard_report_process(osv.TransientModel):
+
+=== modified file 'report_profit/account.py'
+--- report_profit/account.py	2014-05-09 21:51:34 +0000
++++ report_profit/account.py	2014-09-29 16:50:47 +0000
+@@ -28,7 +28,7 @@
+ #
+ ##############################################################################
+ 
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ 
+ 
+ class account_move_line(osv.Model):
+
+=== modified file 'report_profit/wizard/wiz_trial_cost.py'
+--- report_profit/wizard/wiz_trial_cost.py	2014-05-09 21:51:34 +0000
++++ report_profit/wizard/wiz_trial_cost.py	2014-09-29 16:50:47 +0000
+@@ -24,7 +24,6 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+ from openerp.tools.translate import _
+ 
+ import openerp.netsvc as netsvc
+
+=== modified file 'sale_line_import/sale.py'
+--- sale_line_import/sale.py	2014-05-09 21:51:34 +0000
++++ sale_line_import/sale.py	2014-09-29 16:50:47 +0000
+@@ -24,12 +24,9 @@
+ #
+ ##############################################################################
+ 
+-import time
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ from openerp.tools.translate import _
+ 
+-from tools import config
+-import base64
+ import csv
+ import cStringIO
+ import openerp.tools as tools
+
+=== modified file 'sale_line_import/wizard/sale_line_import.py'
+--- sale_line_import/wizard/sale_line_import.py	2014-05-09 21:51:34 +0000
++++ sale_line_import/wizard/sale_line_import.py	2014-09-29 16:50:47 +0000
+@@ -24,14 +24,8 @@
+ #
+ ##############################################################################
+ 
+-import pooler
+ import base64
+-import cStringIO
+-import openerp.netsvc as netsvc
+-from openerp.tools.translate import _
+ 
+-import openerp.tools as tools
+-import os
+ from openerp.osv import osv, fields
+ 
+ 
+
+=== modified file 'sale_margin_commision/sale.py'
+--- sale_margin_commision/sale.py	2014-05-09 21:51:34 +0000
++++ sale_margin_commision/sale.py	2014-09-29 16:50:47 +0000
+@@ -1,6 +1,5 @@
+ # -*- encoding: utf-8 -*-
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ 
+ class sale_order(osv.Model):
+
+=== modified file 'sale_multicompany_report/res_company.py'
+--- sale_multicompany_report/res_company.py	2014-05-09 21:51:34 +0000
++++ sale_multicompany_report/res_company.py	2014-09-29 16:50:48 +0000
+@@ -23,7 +23,6 @@
+ ############################################################################
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ 
+ 
+ 
+
+=== modified file 'sale_order_copy_line/model/sale_order_line.py'
+--- sale_order_copy_line/model/sale_order_line.py	2014-07-18 14:43:44 +0000
++++ sale_order_copy_line/model/sale_order_line.py	2014-09-29 16:50:48 +0000
+@@ -20,11 +20,9 @@
+ #
+ ##############################################################################
+ 
+-from openerp.osv import fields, osv
++from openerp.osv import osv
+ from openerp.tools.translate import _
+ 
+-import time
+-import unicodedata
+ 
+ 
+ class sale_order_line(osv.Model):
+
+=== modified file 'sale_test_data_imp/wizard/test_yaml.py'
+--- sale_test_data_imp/wizard/test_yaml.py	2014-05-09 21:51:34 +0000
++++ sale_test_data_imp/wizard/test_yaml.py	2014-09-29 16:50:48 +0000
+@@ -21,7 +21,6 @@
+ import openerp.tools as tools
+ import os
+ from openerp.tools import assertion_report
+-import sys
+ import base64
+ from openerp.osv import osv, fields
+ import tempfile
+
+=== modified file 'sale_uncommitted_product/model/product.py'
+--- sale_uncommitted_product/model/product.py	2014-05-09 21:51:34 +0000
++++ sale_uncommitted_product/model/product.py	2014-09-29 16:50:48 +0000
+@@ -25,7 +25,6 @@
+ 
+ 
+ from openerp.osv import osv, fields
+-from openerp.tools.translate import _
+ 
+ import decimal_precision as dp
+ 
+
+=== modified file 'sale_uom_group/model/sale_uom_group.py'
+--- sale_uom_group/model/sale_uom_group.py	2014-05-09 21:51:34 +0000
++++ sale_uom_group/model/sale_uom_group.py	2014-09-29 16:50:48 +0000
+@@ -23,11 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##############################################################################
+ 
+-import time
+-import openerp.netsvc as netsvc
+ from openerp.osv import osv, fields
+-from mx import DateTime
+-from openerp.tools.translate import _
+ 
+ 
+ class sale_uom_group(osv.Model):
+
+=== modified file 'send_author_mail/model/mail_notification.py'
+--- send_author_mail/model/mail_notification.py	2014-05-09 21:51:34 +0000
++++ send_author_mail/model/mail_notification.py	2014-09-29 16:50:48 +0000
+@@ -22,7 +22,7 @@
+ ################################################################################
+ 
+ 
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ 
+ class mail_notification(osv.Model):
+     
+
+=== modified file 'split_invoice_button/invoice.py'
+--- split_invoice_button/invoice.py	2014-05-09 21:51:34 +0000
++++ split_invoice_button/invoice.py	2014-09-29 16:50:48 +0000
+@@ -22,10 +22,9 @@
+ #    You should have received a copy of the GNU Affero General Public License
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##############################################################################
+-from openerp.osv import fields, osv
++from openerp.osv import osv
+ from openerp.tools.translate import _
+ 
+-import openerp.netsvc as netsvc
+ 
+ 
+ class account_invoice(osv.Model):
+
+=== modified file 'sprint_kanban/model/sprint_kanban.py'
+--- sprint_kanban/model/sprint_kanban.py	2014-05-09 21:51:34 +0000
++++ sprint_kanban/model/sprint_kanban.py	2014-09-29 16:50:48 +0000
+@@ -2,10 +2,6 @@
+ 
+ from openerp.osv import fields
+ from openerp.osv import osv
+-from openerp.tools.translate import _
+-import time
+-import random
+-from datetime import datetime
+ 
+ 
+ class sprint_kanban(osv.Model):
+
+=== modified file 'standard_price_acl/model/product.py'
+--- standard_price_acl/model/product.py	2014-05-09 21:51:34 +0000
++++ standard_price_acl/model/product.py	2014-09-29 16:50:48 +0000
+@@ -21,7 +21,6 @@
+ ##############################################################################
+ 
+ from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ import openerp.addons.decimal_precision as dp
+ 
+ class product_product(osv.Model):
+
+=== modified file 'stock_card/stock_card.py'
+--- stock_card/stock_card.py	2014-05-09 21:51:34 +0000
++++ stock_card/stock_card.py	2014-09-29 16:50:48 +0000
+@@ -603,7 +603,6 @@
+ 
+             for key in dict_inv:
+                 if dict_inv.get(key, False):
+-                    pass
+                     sca_id = sca_obj.create(cr, uid, {
+                                             'stock_card_id': id,
+                                             'account_id': key,
+
+=== modified file 'stock_inventory_delete/stock.py'
+--- stock_inventory_delete/stock.py	2014-05-09 21:51:34 +0000
++++ stock_inventory_delete/stock.py	2014-09-29 16:50:48 +0000
+@@ -23,7 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ from openerp.tools.translate import _
+ 
+ 
+
+=== modified file 'stock_kardex/kardex.py'
+--- stock_kardex/kardex.py	2014-05-09 21:51:34 +0000
++++ stock_kardex/kardex.py	2014-09-29 16:50:48 +0000
+@@ -21,9 +21,9 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ################################################################################
+ 
+-from openerp.osv import osv, fields, orm
++from openerp.osv import fields
++from openerp.osv import osv
+ import decimal_precision as dp
+-from openerp.tools.translate import _
+ 
+ from datetime import datetime
+ from dateutil.relativedelta import relativedelta
+
+=== modified file 'stock_location_code/stock.py'
+--- stock_location_code/stock.py	2014-05-09 21:51:34 +0000
++++ stock_location_code/stock.py	2014-09-29 16:50:48 +0000
+@@ -25,7 +25,6 @@
+ ##############################################################################
+ 
+ from openerp.osv import osv, fields
+-import re
+ 
+ 
+ class stock_location(osv.Model):
+
+=== modified file 'stock_picking_cancel/stock.py'
+--- stock_picking_cancel/stock.py	2014-05-09 21:51:34 +0000
++++ stock_picking_cancel/stock.py	2014-09-29 16:50:48 +0000
+@@ -23,7 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ import openerp.netsvc as netsvc
+ from openerp.tools.translate import _
+ 
+
+=== modified file 'stock_picking_validate_past/stock.py'
+--- stock_picking_validate_past/stock.py	2014-05-09 21:51:34 +0000
++++ stock_picking_validate_past/stock.py	2014-09-29 16:50:48 +0000
+@@ -24,7 +24,6 @@
+ #
+ ##############################################################################
+ from openerp.osv import osv, fields
+-from lxml import etree
+ 
+ 
+ class stock_move(osv.Model):
+
+=== modified file 'stock_picking_validate_past/stock_partial_move.py'
+--- stock_picking_validate_past/stock_partial_move.py	2014-05-09 21:51:34 +0000
++++ stock_picking_validate_past/stock_partial_move.py	2014-09-29 16:50:48 +0000
+@@ -23,7 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ 
+ 
+ class stock_partial_move(osv.TransientModel):
+
+=== modified file 'stock_purchase_expiry/model/purchase.py'
+--- stock_purchase_expiry/model/purchase.py	2014-07-22 16:16:37 +0000
++++ stock_purchase_expiry/model/purchase.py	2014-09-29 16:50:48 +0000
+@@ -23,9 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
+-from openerp.tools.translate import _
+-from openerp import tools
++from openerp.osv import fields
++from openerp.osv import osv
+ 
+ 
+ class purchase_order(osv.Model):
+
+=== modified file 'stock_purchase_expiry/model/stock.py'
+--- stock_purchase_expiry/model/stock.py	2014-07-28 15:36:34 +0000
++++ stock_purchase_expiry/model/stock.py	2014-09-29 16:50:48 +0000
+@@ -23,9 +23,9 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
++from openerp.osv import fields
++from openerp.osv import osv
+ from openerp.tools.translate import _
+-from openerp import tools
+ import time
+ 
+ 
+
+=== modified file 'stock_purchase_expiry/wizard/stock.py'
+--- stock_purchase_expiry/wizard/stock.py	2014-07-28 16:01:20 +0000
++++ stock_purchase_expiry/wizard/stock.py	2014-09-29 16:50:48 +0000
+@@ -23,9 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ from openerp.tools.translate import _
+-import decimal_precision as dp
+ import time
+ 
+ 
+
+=== modified file 'stock_shipping_packaging/model/stock_shipping_packaging.py'
+--- stock_shipping_packaging/model/stock_shipping_packaging.py	2014-05-09 21:51:34 +0000
++++ stock_shipping_packaging/model/stock_shipping_packaging.py	2014-09-29 16:50:48 +0000
+@@ -23,10 +23,9 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from openerp.osv import fields, osv, orm
++from openerp.osv import fields
++from openerp.osv import osv
+ from openerp.tools.translate import _
+-from openerp import tools
+-import math
+ from openerp.addons.product import product as Product
+ 
+ class stock_tracking(osv.Model):
+
+=== modified file 'supplier_invoice_number_unique/model/account_invoice.py'
+--- supplier_invoice_number_unique/model/account_invoice.py	2014-05-09 21:51:34 +0000
++++ supplier_invoice_number_unique/model/account_invoice.py	2014-09-29 16:50:48 +0000
+@@ -21,9 +21,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ################################################################################
+ 
+-from openerp import netsvc
+-from openerp import pooler
+-from openerp.osv import fields, osv, orm
++from openerp.osv import osv
+ from openerp.tools.translate import _
+ 
+ class account_invoice(osv.Model):
+
+=== modified file 'sync_youtube/model/sign_youtube.py'
+--- sync_youtube/model/sign_youtube.py	2014-05-09 21:51:34 +0000
++++ sync_youtube/model/sign_youtube.py	2014-09-29 16:50:48 +0000
+@@ -28,7 +28,6 @@
+ from openerp.tools.translate import _
+ import logging
+ import urlparse
+-import urllib2
+ _logger = logging.getLogger("SignYouTube")
+ try:
+     from gdata.youtube import service
+
+=== modified file 'transaction_type/model/account.py'
+--- transaction_type/model/account.py	2014-05-09 21:51:34 +0000
++++ transaction_type/model/account.py	2014-09-29 16:50:48 +0000
+@@ -24,12 +24,7 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+-from openerp.tools.translate import _
+ 
+-from tools import config
+-import openerp.netsvc as netsvc
+-import decimal_precision as dp
+ 
+ 
+ class account_move_line(osv.Model):
+
+=== modified file 'transaction_type/model/transaction_type.py'
+--- transaction_type/model/transaction_type.py	2014-05-09 21:51:34 +0000
++++ transaction_type/model/transaction_type.py	2014-09-29 16:50:48 +0000
+@@ -24,12 +24,7 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+-from openerp.tools.translate import _
+ 
+-from tools import config
+-import openerp.netsvc as netsvc
+-import decimal_precision as dp
+ 
+ 
+ class transaction_type(osv.Model):
+
+=== modified file 'update_period/account.py'
+--- update_period/account.py	2014-05-09 21:51:34 +0000
++++ update_period/account.py	2014-09-29 16:50:48 +0000
+@@ -23,7 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##############################################################################
+ 
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ 
+ 
+ class account_move(osv.Model):
+
+=== modified file 'user_story/model/timesheet.py'
+--- user_story/model/timesheet.py	2014-06-09 22:55:59 +0000
++++ user_story/model/timesheet.py	2014-09-29 16:50:48 +0000
+@@ -18,13 +18,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-import time
+-import datetime
+ 
+ from openerp.osv import fields, osv
+-from openerp import pooler
+-from openerp import tools
+-from openerp.tools.translate import _
+ 
+ from openerp.tools.sql import drop_view_if_exists
+ class custom_timesheet(osv.Model):
+
+=== modified file 'user_story/report/user_story_report_mako.py'
+--- user_story/report/user_story_report_mako.py	2014-08-11 23:37:51 +0000
++++ user_story/report/user_story_report_mako.py	2014-09-29 16:50:48 +0000
+@@ -24,12 +24,9 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ 
+-from openerp.osv import fields, osv
+-from openerp.tools.translate import _
+ from report_webkit import webkit_report
+ from report import report_sxw
+ from lxml import html
+-import xml
+ 
+ class user_story_report(report_sxw.rml_parse):
+ 
+
+=== modified file 'user_story/script/load_user_story.py'
+--- user_story/script/load_user_story.py	2014-05-09 21:51:34 +0000
++++ user_story/script/load_user_story.py	2014-09-29 16:50:48 +0000
+@@ -1,8 +1,5 @@
+ import xmlrpclib
+-import csv
+ import time
+-import datetime
+-import random
+ 
+ # Source server info
+ HOST = 'vauxoo.info'
+
+=== modified file 'user_story/tests/test_user_story.py'
+--- user_story/tests/test_user_story.py	2014-08-04 23:56:32 +0000
++++ user_story/tests/test_user_story.py	2014-09-29 16:50:48 +0000
+@@ -1,5 +1,4 @@
+ from openerp.tests.common import TransactionCase
+-from openerp.exceptions import AccessError
+ from openerp.osv.orm import except_orm
+ from openerp import SUPERUSER_ID
+ from openerp.tools import mute_logger
+
+=== modified file 'user_story_long_term/user_story_long_term.py'
+--- user_story_long_term/user_story_long_term.py	2014-05-09 21:51:34 +0000
++++ user_story_long_term/user_story_long_term.py	2014-09-29 16:50:49 +0000
+@@ -23,11 +23,8 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ###############################################################################
+ 
+-from datetime import datetime
+ from openerp.tools.translate import _
+ from openerp.osv import fields, osv
+-from openerp.addons.resource.faces import task as Task
+-import unicodedata
+ 
+ class user_story_phase(osv.Model):
+     _name = "user.story.phase"
+
+=== modified file 'user_story_messages/model/user_story_messages.py'
+--- user_story_messages/model/user_story_messages.py	2014-07-30 00:24:34 +0000
++++ user_story_messages/model/user_story_messages.py	2014-09-29 16:50:49 +0000
+@@ -23,7 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
+ ############################################################################
+ 
+-from openerp.osv import fields, osv
++from openerp.osv import osv
+ 
+ class user_story(osv.osv):
+     _description = "User Story Messages"
+
+=== modified file 'user_wzd/wizard/res_users_wzd.py'
+--- user_wzd/wizard/res_users_wzd.py	2014-05-09 21:51:34 +0000
++++ user_wzd/wizard/res_users_wzd.py	2014-09-29 16:50:49 +0000
+@@ -24,9 +24,7 @@
+ #
+ #
+ 
+-from openerp.tools.translate import _
+ from openerp.osv import fields, osv
+-from openerp import pooler, tools
+ 
+ 
+ class employee_user_wizard(osv.TransientModel):
+
+=== modified file 'validate_stock_move_product/model/stock_move.py'
+--- validate_stock_move_product/model/stock_move.py	2014-05-09 21:51:34 +0000
++++ validate_stock_move_product/model/stock_move.py	2014-09-29 16:50:49 +0000
+@@ -20,7 +20,7 @@
+ #    You should have received a copy of the GNU Affero General Public License
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+-from openerp.osv import fields, osv
++from openerp.osv import osv
+ from openerp.tools.translate import _
+ 
+ 
+
+=== modified file 'validate_stock_picking/model/stock.py'
+--- validate_stock_picking/model/stock.py	2014-05-09 21:51:34 +0000
++++ validate_stock_picking/model/stock.py	2014-09-29 16:50:49 +0000
+@@ -23,19 +23,11 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ##########################################################################
+ 
+-from datetime import datetime                                                                                                                                
+-from dateutil.relativedelta import relativedelta                                    
+ import time                                                                         
+-from operator import itemgetter                                                     
+-from itertools import groupby                                                       
+                                                                                     
+-from openerp.osv import fields, osv                                                 
+-from openerp.tools.translate import _                                               
++from openerp.osv import osv                                                 
+ from openerp import netsvc                                                          
+-from openerp import tools                                                           
+-from openerp.tools import float_compare, DEFAULT_SERVER_DATETIME_FORMAT             
+-import openerp.addons.decimal_precision as dp                                       
+-import logging                                                                      
++from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT             
+ 
+ class inherit_stock_move(osv.Model):
+ 
+
+=== modified file 'validate_stock_picking/wizard/validate_picking.py'
+--- validate_stock_picking/wizard/validate_picking.py	2014-05-09 21:51:34 +0000
++++ validate_stock_picking/wizard/validate_picking.py	2014-09-29 16:50:49 +0000
+@@ -24,7 +24,6 @@
+ ##########################################################################
+ 
+ from openerp.osv import osv, fields
+-import openerp.tools as tools
+ from openerp.tools.translate import _
+ 
+ from openerp import netsvc
+
+=== modified file 'validate_type_line_invoice/account_invoice.py'
+--- validate_type_line_invoice/account_invoice.py	2014-05-09 21:51:34 +0000
++++ validate_type_line_invoice/account_invoice.py	2014-09-29 16:50:49 +0000
+@@ -23,7 +23,7 @@
+ #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ ##############################################################################
+-from openerp.osv import osv, fields
++from openerp.osv import osv
+ from openerp.tools.translate import _
+ 
+ 
+
+=== modified file 'web_captcha/model/res_company.py'
+--- web_captcha/model/res_company.py	2014-05-09 21:51:34 +0000
++++ web_captcha/model/res_company.py	2014-09-29 16:50:49 +0000
+@@ -25,8 +25,7 @@
+ #
+ ##############################################################################
+ from openerp.osv import osv, fields
+-from openerp import SUPERUSER_ID, tools
+-from openerp.tools.translate import _
++from openerp import SUPERUSER_ID
+ 
+ 
+ class res_company(osv.Model):
+
+=== modified file 'winpdb_debugger/winpdb_debugger.py'
+--- winpdb_debugger/winpdb_debugger.py	2014-05-09 21:51:34 +0000
++++ winpdb_debugger/winpdb_debugger.py	2014-09-29 16:50:49 +0000
+@@ -21,8 +21,7 @@
+ ##############################################################################
+ 
+ 
+-from openerp.osv import osv,fields
+-from openerp.tools.translate import _
++from openerp.osv import osv
+ from openerp.tools import config
+ #~ import pdb;pdb.set_trace()
+ 
+

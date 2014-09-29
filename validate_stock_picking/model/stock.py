@@ -23,19 +23,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from datetime import datetime                                                                                                                                
-from dateutil.relativedelta import relativedelta                                    
 import time                                                                         
-from operator import itemgetter                                                     
-from itertools import groupby                                                       
                                                                                     
-from openerp.osv import fields, osv                                                 
-from openerp.tools.translate import _                                               
+from openerp.osv import osv                                                 
 from openerp import netsvc                                                          
-from openerp import tools                                                           
-from openerp.tools import float_compare, DEFAULT_SERVER_DATETIME_FORMAT             
-import openerp.addons.decimal_precision as dp                                       
-import logging                                                                      
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT             
 
 class inherit_stock_move(osv.Model):
 
