@@ -31,9 +31,7 @@ import time
 from openerp_print import report_sxw_ext  # nuevo
 #~ from report_sxw_ext import report_sxw_ext #nuevo
 # from report import report_sxw #original
-from tools import amount_to_text_en
 from numero_a_texto import Numero_a_Texto
-import codecs
 
 
 class report_check_voucher_pay(report_sxw_ext.rml_parse):  # nuevo

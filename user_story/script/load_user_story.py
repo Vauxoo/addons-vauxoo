@@ -1,8 +1,5 @@
 import xmlrpclib
-import csv
 import time
-import datetime
-import random
 
 # Source server info
 HOST = 'vauxoo.info'

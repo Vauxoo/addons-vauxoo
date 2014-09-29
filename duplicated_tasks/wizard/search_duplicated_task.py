@@ -19,9 +19,7 @@
 #
 ##############################################################################
 
-from openerp import tools
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
 
 
 class search_duplicated_task(osv.TransientModel):

@@ -1,8 +1,6 @@
 # -*- encoding: utf-8 -*-
 import time
-import pooler
 from report import report_sxw
-from tools.translate import _
 
 class openacademy_course(report_sxw.rml_parse):
     """

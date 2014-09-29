@@ -25,14 +25,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
-from openerp.osv import osv
-from openerp.osv import fields
-from openerp.tools.translate import _
-from openerp import pooler
-import datetime
-import time
+from openerp.osv import osv, fields
 
-import math
 
 class inherit_picking(osv.Model):
     

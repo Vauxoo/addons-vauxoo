@@ -26,11 +26,10 @@ from openerp.tools.translate import _
 
 import os
 import re
-import cgi
 import libxml2
 import urllib
 import urllib2
-from urllib2 import Request, urlopen, URLError, HTTPError
+from urllib2 import URLError
 from ftplib import FTP
 
 

@@ -25,7 +25,7 @@
 ##############################################################################
 
 
-from openerp.osv import fields, osv
+from openerp.osv import osv
 
 
 class stock_picking(osv.Model):

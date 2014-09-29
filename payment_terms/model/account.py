@@ -24,11 +24,7 @@
 ##########################################################################
 
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
 
-from datetime import datetime
-from DateTime import DateTime
-import time
 
 
 class account_invoice(osv.Model):

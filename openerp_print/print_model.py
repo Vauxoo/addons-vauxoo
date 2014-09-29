@@ -25,11 +25,7 @@
 ##############################################################################
 
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
 
-from tools import config
-import time
-import pooler
 import cupstree
 
 

@@ -19,15 +19,10 @@
 #
 ##############################################################################
 
-import time
-from random import choice
-import string
 import os
-import datetime
-import socket
 
-from openerp import addons, netsvc, tools
-from openerp.osv import fields, osv
+from openerp import addons
+from openerp.osv import osv
 from openerp.tools.translate import _
 
 

@@ -19,15 +19,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ########################################################################
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
-import time
-from openerp import netsvc
 
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
-import openerp.addons.decimal_precision as dp
-from openerp import tools
 
 class purchase_order(osv.Model):
     _inherit = "purchase.order"

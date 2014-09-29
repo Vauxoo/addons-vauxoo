@@ -25,7 +25,6 @@
 
 import time
 from report import report_sxw
-import pooler
 
 
 class rep_conteo_stock2(report_sxw.rml_parse):

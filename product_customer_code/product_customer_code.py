@@ -24,7 +24,6 @@
 #
 ##############################################################################
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
 
 
 class product_customer_code(osv.Model):

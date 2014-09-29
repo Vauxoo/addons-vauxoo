@@ -25,10 +25,7 @@
 
 
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
 
-from tools import config
-from operator import itemgetter
 
 __HELP__ = '''
 Escriba el Patron de las cuentas, su estructura, por ejemplo:

@@ -25,8 +25,7 @@
 #
 ##############################################################################
 from openerp.osv import osv, fields
-from openerp import SUPERUSER_ID, tools
-from openerp.tools.translate import _
+from openerp import SUPERUSER_ID
 
 
 class res_company(osv.Model):

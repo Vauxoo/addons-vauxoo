@@ -603,7 +603,6 @@ class stock_card(osv.Model):
 
             for key in dict_inv:
                 if dict_inv.get(key, False):
-                    pass
                     sca_id = sca_obj.create(cr, uid, {
                                             'stock_card_id': id,
                                             'account_id': key,

@@ -21,7 +21,6 @@
 
 import time
 from report import report_sxw
-import pooler
 
 
 class packing_list_report(report_sxw.rml_parse):

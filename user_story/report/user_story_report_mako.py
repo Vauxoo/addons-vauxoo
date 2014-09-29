@@ -24,12 +24,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from openerp.osv import fields, osv
-from openerp.tools.translate import _
 from report_webkit import webkit_report
 from report import report_sxw
 from lxml import html
-import xml
 
 class user_story_report(report_sxw.rml_parse):
 

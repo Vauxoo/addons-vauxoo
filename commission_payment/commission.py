@@ -1,10 +1,6 @@
 from openerp.osv import osv, fields
-import pooler
-import time
-import math
 import mx.DateTime
 
-from tools import config
 from openerp.tools.translate import _
 
 import decimal_precision as dp
@@ -453,7 +449,6 @@ class commission_payment(osv.Model):
                                             # sobre esta parte no llego a un acuerdo de si se podria permitir al operador cambiar las lineas
                                             # de la factura puesto que es un
                                             # asunto muy delicado.
-                                            pass
                                             sale_noids.create(cr, user, {
                                                 'commission_id':   commission.id,
                                                 'inv_line_id':   inv_lin.id,

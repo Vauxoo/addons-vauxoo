@@ -23,10 +23,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import fields, osv, orm
+from openerp.osv import osv, fields
 from openerp.tools.translate import _
-from openerp import tools
-import math
 from openerp.addons.product import product as Product
 
 class stock_tracking(osv.Model):

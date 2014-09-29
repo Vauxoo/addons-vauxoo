@@ -1,8 +1,6 @@
 # -*- encoding: utf-8 -*-
-from openerp.osv import osv
-from openerp.osv import fields 
+from openerp.osv import osv, fields 
 from openerp.tools.translate import _
-import pprint
 
 class account_move_line(osv.Model):
     _inherit = 'account.move.line'

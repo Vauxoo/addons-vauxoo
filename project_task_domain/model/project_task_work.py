@@ -24,7 +24,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-from openerp.osv import osv, fields
+from openerp.osv import osv
 from openerp.tools.translate import _
 import time
 

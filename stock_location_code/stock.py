@@ -25,7 +25,6 @@
 ##############################################################################
 
 from openerp.osv import osv, fields
-import re
 
 
 class stock_location(osv.Model):

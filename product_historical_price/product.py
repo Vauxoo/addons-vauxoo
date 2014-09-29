@@ -23,12 +23,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
 
 import decimal_precision as dp
-import pooler
 import time
-import math
 
 
 class product_historical(osv.Model):

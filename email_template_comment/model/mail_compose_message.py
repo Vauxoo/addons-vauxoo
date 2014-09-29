@@ -22,8 +22,7 @@
 ################################################################################
 
 
-from openerp.osv import osv, fields
-from openerp import tools, SUPERUSER_ID
+from openerp.osv import osv
 
 class mail_compose_message(osv.TransientModel):
     

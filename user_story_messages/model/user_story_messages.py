@@ -23,7 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
 
-from openerp.osv import fields, osv
+from openerp.osv import osv
 
 class user_story(osv.osv):
     _description = "User Story Messages"

@@ -23,7 +23,6 @@
 
 
 from openerp.osv import osv, fields
-from openerp import tools, SUPERUSER_ID
 
 class email_template(osv.Model):
     

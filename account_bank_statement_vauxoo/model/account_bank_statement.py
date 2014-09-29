@@ -22,14 +22,11 @@
 
 from openerp.osv import fields, osv
 import decimal_precision as dp
-import openerp.netsvc as netsvc
 from openerp.tools.translate import _
 
 # Excel Stuff
 import xlrd
-import xlwt
 import base64
-from tempfile import NamedTemporaryFile
 from datetime import date, datetime, timedelta
 
 

@@ -23,13 +23,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from openerp.osv import osv, fields
-import openerp.tools as tools
-from openerp.tools.translate import _
+from openerp.osv import osv
 
-from tools import config
-import openerp.netsvc as netsvc
-import decimal_precision as dp
 import time
 import datetime
 invo_cost = {}

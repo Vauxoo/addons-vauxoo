@@ -44,9 +44,7 @@ try:
 except ImportError:
     from StringIO import StringIO
 
-import filters
 import utils
-import warnings
 from generic import *
 from utils import readNonWhitespace, readUntilWhitespace, ConvertFunctionsToVirtualList
 from sets import ImmutableSet
