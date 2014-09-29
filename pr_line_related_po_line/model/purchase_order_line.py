@@ -24,7 +24,6 @@
 ###############################################################################
 
 from openerp.osv import fields, osv
-from openerp import netsvc
 from openerp.tools.translate import _
 
 class purchase_order_line(osv.Model):
