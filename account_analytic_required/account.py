@@ -52,7 +52,6 @@ class account_invoice_line(osv.Model):
         res = super(account_invoice_line, self).onchange_account_id(cr, uid, ids, product_id,
             partner_id, inv_type, fposition_id, account_id)
         account_obj = self.pool.get('account.account')
-        invoice_line_obj = self.pool.get('account.invoice.line')
         if account_id:
             analyt_req = account_obj.browse(cr, uid, account_id).analytic_required or False
             res['value'].update({'analytic_required': analyt_req})

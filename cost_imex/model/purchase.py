@@ -60,7 +60,6 @@ class inherit_purchase(osv.Model):
                         context=None):
         if context is None:
             context = {}
-        imex_line_obj = self.pool.get('percent.imex.line')
 
         amount = (base * (imex_line.percent/100))
         imex_lines = {

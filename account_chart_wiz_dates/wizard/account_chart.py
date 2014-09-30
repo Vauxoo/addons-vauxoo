@@ -78,7 +78,6 @@ class account_chart(osv.TransientModel):
             # date_from=str({'date_from':data.get('initial_date', False)})
             # date_to=str({'date_to':data.get('end_date', False)})
             #~ result_get=result.get('context')
-            context_str = result['context']
             context_dict = eval(result['context'])
             context_dict.update({
                 'date_from': data.get('initial_date', False),

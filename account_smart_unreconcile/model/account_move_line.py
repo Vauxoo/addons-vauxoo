@@ -35,7 +35,6 @@ class account_move_line(osv.Model):
             context = {}
         obj_move_line = self.pool.get('account.move.line')
         obj_move_rec = self.pool.get('account.move.reconcile')
-        unlink_ids = []
         if not move_ids:
             return True
         recs = obj_move_line.read(cr, uid, move_ids, [

@@ -63,9 +63,7 @@ class invoice_commission_line(osv.Model):
 
     def get_gain(self, cr, uid, ids, name, args, context=None):
         res = {}
-        product_price = 0
         product_pu = 0
-        gain = 0
         for ail_brw in self.browse(cr, uid, ids):
             if ail_brw.product_id:
                 product_cost = ail_brw.product_id.standard_price

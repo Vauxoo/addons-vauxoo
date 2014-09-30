@@ -40,9 +40,6 @@ import decimal_precision as dp
 class report_profit_picking(osv.Model):
     def _get_invoice_line(self, cr, uid, ids, field_name, arg, context={}):
         result = {}
-        aml_obj = self.pool.get('account.move.line')
-        purchase_obj = self.pool.get('purchase.order')
-        sale_obj = self.pool.get('sale.order')
         il_obj = self.pool.get('account.invoice.line')
         loc_obj = self.pool.get('stock.location')
 
@@ -326,7 +323,6 @@ class report_profit_picking(osv.Model):
         avg = 1430.96
         q = 5.0
         # total=7154,8
-        total = avg*q
         for line in self.browse(cr, uid, ids, context=context):
             subtot = 0.0
             res.setdefault(line.id, 0.0)

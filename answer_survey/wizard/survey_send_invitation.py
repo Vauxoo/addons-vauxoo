@@ -38,7 +38,6 @@ class survey_send_invitation(osv.TransientModel):
         partner_ids = record['partner_ids']
         user_ref= self.pool.get('res.users')
         survey_ref= self.pool.get('survey')
-        mail_message = self.pool.get('mail.message')
 
         model_data_obj = self.pool.get('ir.model.data')
         group_ids = []
@@ -65,7 +64,7 @@ class survey_send_invitation(osv.TransientModel):
             for use in exist_user:
                 new_user.append(use.id)
         for id in survey_ref.browse(cr, uid, survey_ids):
-            report = self.create_report(cr, uid, [id.id], 'report.survey.form', id.title)
+            self.create_report(cr, uid, [id.id], 'report.survey.form', id.title)
             file = open(addons.get_module_resource('survey', 'report') + id.title +".pdf")
             file_data = ""
             while 1:

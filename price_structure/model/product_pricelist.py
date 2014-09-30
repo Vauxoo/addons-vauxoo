@@ -61,7 +61,6 @@ class inherit_price_list_item(osv.Model):
         if context is None:
             context = {}
         res = {}
-        product_obj = self.pool.get('product.product')
         pricelist_obj = self.pool.get('product.pricelist')
         if context.get('product', False):
             for item in self.browse(cr, uid, ids, context=context):

@@ -59,7 +59,6 @@ class inherits_sale(osv.Model):
                           fiscal_position=False, flag=False, context=None):
         context = context or {}
         product_obj = self.pool.get('product.product')
-        uom_obj = self.pool.get('product.uom')
         res = super(
             inherits_sale, self).product_id_change(cr, uid, ids, pricelist,
                    product, qty=qty,

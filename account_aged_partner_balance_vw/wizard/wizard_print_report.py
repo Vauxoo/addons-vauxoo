@@ -50,7 +50,6 @@ class wizard_report_aged_partner_balance(osv.osv_memory):
         }
         
     def print_report(self, cr, uid, ids, context=None):
-        acc_trial_obj = self.pool.get('account.aged.trial.balance')
         datas = {'ids': ids}
         if context.get('datas', False):
             datas = context.get('datas')

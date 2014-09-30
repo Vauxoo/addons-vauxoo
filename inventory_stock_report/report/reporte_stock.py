@@ -44,7 +44,6 @@ class rep_conteo_stock(report_sxw.rml_parse):
         })
 
     def get_tipo(self, stock=None):
-        product = self.pool.get('product.template')
         cabeza = []
         boole = False
         if stock.tipo == "almacenable" or stock.tipo == "consumible":
@@ -58,7 +57,6 @@ class rep_conteo_stock(report_sxw.rml_parse):
         return cabeza
 
     def get_category(self, stock=None):
-        product = self.pool.get('product.template')
         cabeza = []
         if stock.categoria:
             cabeza.append(" %s" % (stock.categoria.name))
@@ -67,7 +65,6 @@ class rep_conteo_stock(report_sxw.rml_parse):
         return cabeza
 
     def get_state(self, stock=None):
-        product = self.pool.get('product.template')
         cabeza = []
         if stock.estado:
             cabeza.append(" %s" % (stock.estado))
@@ -76,7 +73,6 @@ class rep_conteo_stock(report_sxw.rml_parse):
         return cabeza
 
     def get_destinado(self, stock=None):
-        product = self.pool.get('product.template')
         cabeza = " "
 
         if stock.vendible:
@@ -93,7 +89,6 @@ class rep_conteo_stock(report_sxw.rml_parse):
         return cabeza
 
     def get_suministro(self, stock=None):
-        product = self.pool.get('product.template')
         cabeza = []
         if stock.suministro:
             cabeza.append(" %s" % (stock.suministro))

@@ -52,8 +52,6 @@ class procurement_order(osv.Model):
             return tuple(list_key)
 
         new_orders = {}
-        mrp_production_pool = self.pool.get('mrp.production')
-        old_orders = []
 
         for procurement in self.browse(cr, uid, ids):
             if procurement.state == 'draft':

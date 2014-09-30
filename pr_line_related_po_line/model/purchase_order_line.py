@@ -94,12 +94,10 @@ class purchase_requisition(osv.Model):
         return res
 
     def _seller_details_without_product(self, cr, uid, requisition_line, supplier, context=None):
-        product = requisition_line.product_id
         default_uom_pol_id = self.pool.get('purchase.order.line')._get_uom_id(cr, uid, context=context)
         default_uom_po_id = requisition_line.product_uom_id and requisition_line.product_uom_id.id or default_uom_pol_id
         qty = requisition_line.product_qty
         seller_delay = 0.0
         seller_price = False
-        seller_qty = False
         date_planned = self._planned_date(requisition_line.requisition_id, seller_delay)
         return seller_price, qty, default_uom_po_id, date_planned

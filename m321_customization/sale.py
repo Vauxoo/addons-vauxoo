@@ -59,7 +59,6 @@ class inherited_sale_order(osv.Model):
     def qty_confirm(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        product = []
         sale_brw = ids and self.browse(cr, uid, ids[0], context=context)
         for line in sale_brw.order_line:
             virtual = line.product_id.qty_available
@@ -92,7 +91,6 @@ class sale_order_line(osv.Model):
                             context=None):
         if context is None:
             context = {}
-        product_obj = self.pool.get('product.product')
         res = super(
             sale_order_line, self).product_id_change(cr, uid, ids, pricelist,
                                  product, qty=qty,

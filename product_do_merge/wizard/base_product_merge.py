@@ -264,7 +264,6 @@ class MergeProductAutomatic(osv.TransientModel):
     def _update_foreign_keys_modify(self, cr, uid, src_products,
                                     dst_product, model=None,
                                     context=None):
-        res = {}
         uos_table = {}
         po_table = {}
         tables = []

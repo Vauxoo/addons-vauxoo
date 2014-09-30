@@ -123,7 +123,6 @@ class ifrs_ifrs(osv.osv):
         levels = tree.keys()
         levels.sort()
         levels.reverse()
-        ids_o = [i.id for i in ifrs_brw.ifrs_lines_ids]
         ids_x = []  # List of ids per level in order ASC
         for i in levels:
             ids_x += tree[i].keys()
@@ -154,7 +153,6 @@ class ifrs_ifrs(osv.osv):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         fy = self.browse(cr, uid, ids, context=context)[0]
         context.update({'whole_fy': True, 'fiscalyear': fy.fiscalyear_id.id})
-        ifrs_lines = self.pool.get('ifrs.lines')
         self.get_report_data(cr, uid, ids, is_compute=True, context=context)
         return True
 
@@ -509,7 +507,6 @@ class ifrs_lines(osv.osv):
         if not cx.get('fiscalyear'):
             cx['fiscalyear'] = fy_obj.find(cr, uid)
 
-        fy_id = cx['fiscalyear']
 
         brw = self.browse(cr, uid, id)
         res = self._get_sum_total( cr, uid, brw, number_month, is_compute,
@@ -688,8 +685,6 @@ class ifrs_lines(osv.osv):
         return res
 
     def _get_partner_detail(self, cr, uid, ids, ifrs_l, context=None):
-        ifrs = self.pool.get('ifrs.lines')
-        aml_obj = self.pool.get('account.move.line')
         account_obj = self.pool.get('account.account')
         partner_obj = self.pool.get('res.partner')
         res = []

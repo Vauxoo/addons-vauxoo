@@ -78,7 +78,6 @@ class update_amount_base_tax_wizard(osv.osv_memory):
         if not context:
             context = {}
         data = self.browse(cr, uid, ids[0], context=context)
-        invoice_obj = self.pool.get('account.invoice')
         move_line_obj = self.pool.get('account.move.line')
         acc_tax_category_obj = self.pool.get('account.tax.category')
         acc_tax_obj = self.pool.get('account.tax')
