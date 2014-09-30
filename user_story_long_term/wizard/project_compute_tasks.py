@@ -37,7 +37,6 @@ class project_compute_tasks(osv.osv_memory):
         Schedule the tasks according to users and priority.
         """
         project_pool = self.pool.get('project.project')
-        task_pool = self.pool.get('project.task')
         if context is None:
             context = {}
         context['compute_by'] = 'project'

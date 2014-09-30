@@ -52,7 +52,6 @@ class module(osv.Model):
         Name = dict_txt.get('MenuName')
         CompleteMenuName = dict_txt.get('CompleteMenuName')
         ActionHelp = dict_txt.get('ActionHelp')
-        ModuleName = dict_txt.get('ModuleName')
         XmlId = dict_txt.get('XmlId')
         if Name:
             docStr = docStr+"===%s===" % Name
@@ -92,9 +91,6 @@ class module(osv.Model):
         '''
         res = {}
         model_data_obj = self.pool.get('ir.model.data')
-        view_obj = self.pool.get('ir.ui.view')
-        report_obj = self.pool.get('ir.actions.report.xml')
-        act_window_obj_obj = self.pool.get('ir.actions.act_window')
         menu_obj = self.pool.get('ir.ui.menu')
         mlist = self.browse(cr, uid, ids, context=context)
         mnames = {}

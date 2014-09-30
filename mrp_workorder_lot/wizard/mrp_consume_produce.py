@@ -184,7 +184,6 @@ class mrp_consume(osv.TransientModel):
         view_id, search_view_id, action_help = \
             self._get_kanban_view_data(cr, uid, context=context)
 
-        act_obj = self.pool.get('ir.actions.act_window')
 
         return {
             'view_id': view_id,

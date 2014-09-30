@@ -120,7 +120,6 @@ class report_voucher_amount(report_sxw.rml_parse):
         mes = a[0:2]
         dia = a[3:5]
         ano = a[6:10]
-        fecha = "%s-%s-%s" % (ano, mes, dia)
         account_voucher = self.pool.get('account.voucher')
         account_voucher_ids = account_voucher.search(
             self.cr, self.uid, [('date', '<=', line.voucher_id.date)])
@@ -142,7 +141,6 @@ class report_voucher_amount(report_sxw.rml_parse):
         return list_invoice
 
     def get_iva(self, line):
-        list_iva = []
         invoice = line.invoice_id
         rete_line = self.pool.get('account.wh.iva.line')
         rete_line_ids = rete_line.search(self.cr, self.uid, [

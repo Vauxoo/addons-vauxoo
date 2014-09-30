@@ -318,8 +318,6 @@ class periodic_inventory_valuation(osv.osv):
             product_price_purs = {}
             product_price_sales = {}
             
-            qty_purchase = 0 
-            total_purchase = 0 
 
             #Se iteran que esten pagadas o abiertas y que esten dentro del periodo al que corresponde
             #la fecha actual 

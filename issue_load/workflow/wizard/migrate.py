@@ -18,8 +18,6 @@ def loadProjectsTasks(fileName, HOST, PORT, DB, USER, PASS):
     url = 'http://%s:%d/xmlrpc/' % (HOST, PORT)
     common_proxy = xmlrpclib.ServerProxy(url+'common')
     object_proxy = xmlrpclib.ServerProxy(url+'object')
-    wizard_proxy = xmlrpclib.ServerProxy(url+'wizard')
-    workflow_proxy = xmlrpclib.ServerProxy(url+'workflow')
     uid = common_proxy.login(DB, USER, PASS)
 
     ID_ADDR = 1

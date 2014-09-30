@@ -33,7 +33,6 @@ class project_task(osv.Model):
     _inherit = 'project.task'
 
     def _hours_get(self, cr, uid, ids, field_names, args, context=None):
-        res = {}
         data = super(project_task, self)._hours_get(
             cr, uid, ids, field_names, args, context=context)
         empl_obj = self.pool.get('hr.employee')

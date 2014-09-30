@@ -112,7 +112,7 @@ class compute_cost(osv.TransientModel):
         cont_qty = cont + cont_qty
         if price and cont_qty or cont:
 
-            cost = price / (cont_qty > 0 and cont_qty or cont > 0 and cont)
+            price / (cont_qty > 0 and cont_qty or cont > 0 and cont)
         return True
 
     def search_invoice(self, cr, uid, ids, dict, type, period, company, date,
@@ -288,7 +288,7 @@ class compute_cost(osv.TransientModel):
         product_obj = self.pool.get('product.product')
         invoice_line_obj = self.pool.get('account.invoice.line')
         aux = {}
-        dat = DateTime()
+        DateTime()
         list = []
         for i in dic_comp:
             aux.update({i: []})
@@ -435,7 +435,6 @@ class compute_cost(osv.TransientModel):
         invo_obj = self.pool.get('account.invoice')
         invo_line_obj = self.pool.get('account.invoice.line')
         global invo_cost
-        cost_obj = self.pool.get('cost.structure')
         product_obj = self.pool.get('product.product')
         wz_brw = products or ids and self.browse(
             cr, uid, ids and ids[0], context=context)
@@ -461,7 +460,6 @@ class compute_cost(osv.TransientModel):
             aux_dic_nc_vent = {}
             dic_nc_com = {}
             dic_nc_vent = {}
-            aux_cancel = False
             [(dic_comp.update({i.id: []}), dic_vent.update({i.id: []}),
               dic_nc_com.update({i.id: []}), aux_dic_vent.update({i.id: []}),
               aux_dic_nc_vent.update({i.id: []}), dic_nc_vent.update({i.id: []})) for i in products]

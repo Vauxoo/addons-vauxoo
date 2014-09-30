@@ -52,7 +52,7 @@ class project_project(osv.Model):
         inferior = obj_this.from_revno
         if url and res_id and inferior and int(res_id) > inferior:
             project_branch = branch.Branch.open(url)
-            b_revno = project_branch.revno()
+            project_branch.revno()
             if res_id:
                 repo = project_branch.repository
                 revision_map = project_branch.get_revision_id_to_revno_map()
@@ -62,7 +62,7 @@ class project_project(osv.Model):
                         revision = repo.get_revision(revision_id)
                         date = datetime.datetime.fromtimestamp(int(
                             revision.timestamp)).strftime('%Y-%m-%d %H:%M:%S')
-                        splitted_revision_id = revision_id.split('-')
+                        revision_id.split('-')
                         email = revision_id[0]
                         user_ids = user_obj.search(
                             cr, uid, [('email', '=', email)])
@@ -133,7 +133,7 @@ class sprint_kanban_tasks(osv.Model):
         inferior = obj_this.from_revno
         if url and res_id and inferior and int(res_id) > inferior:
             task_branch = branch.Branch.open(url)
-            b_revno = task_branch.revno()
+            task_branch.revno()
             if res_id:
                 repo = task_branch.repository
                 revision_map = task_branch.get_revision_id_to_revno_map()

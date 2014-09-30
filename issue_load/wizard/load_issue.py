@@ -54,7 +54,6 @@ class load_issue(osv.TransientModel):
     def xls_file(self, cr, uid, ids, context={}):
         wz_brw = self.browse(cr, uid, ids, context=context)[0]
         archivo = open("/tmp/load_issue.xls", "w")
-        project_obj = self.pool.get('project.project')
         archivo.write(base64.b64decode(
             wz_brw and wz_brw.issue or 'Archivo Invalido'))
         archivo.close()

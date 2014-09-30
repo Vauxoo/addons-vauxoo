@@ -15,7 +15,6 @@ class TestAnalytic(TransactionCase):
         '''
         cr, uid = self.cr, self.uid
         user_brw = self.user.browse(cr, uid, uid)
-        partner_brw = user_brw.partner_id
         analytic_id = self.analytic.create(cr, uid, {
             'name': 'Test Terms and Conditions Log',
             'code': 'TERMANDCONDITIONS',

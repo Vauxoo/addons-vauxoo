@@ -173,7 +173,6 @@ class account_aged_trial_balance(osv.TransientModel):
 
     def _get_partners(self, cr, uid, ids, form, context=None):
         context = context or {}
-        res = []
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         move_state = ['draft', 'posted']
         if self.target_move == 'posted':

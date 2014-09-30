@@ -156,7 +156,6 @@ class inherited_product(osv.Model):
             return True
 
     def _check_upc_reference_unique(self, cr, uid, ids, context=None):
-        this_record = self.browse(cr, uid, ids)
 
         for product in self.browse(cr, uid, ids):
             product_code_ids = product.default_code and self.search(cr, uid, [(

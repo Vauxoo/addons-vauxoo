@@ -55,11 +55,9 @@ class survey_question_wiz(osv.TransientModel):
         survey_obj = self.pool.get('survey')
         page_obj = self.pool.get('survey.page')
         que_obj = self.pool.get('survey.question')
-        ans_obj = self.pool.get('survey.answer')
         sur_response_obj = self.pool.get('survey.response')
         que_col_head = self.pool.get('survey.question.column.heading')
         user_obj = self.pool.get('res.users')
-        mail_message = self.pool.get('mail.message')
         
         if view_type in ['form']:
             wiz_id = 0
@@ -199,7 +197,6 @@ class survey_question_wiz(osv.TransientModel):
                     for que in que_ids:
                         qu_no += 1
                         que_rec = que_obj.browse(cr, uid, que.id, context=context)
-                        descriptive_text = ""
                         separator_string = tools.ustr(qu_no) + "." + tools.ustr(que_rec.question)
                         if ((context.has_key('active') and not context.get('active',False)) or not context.has_key('active')) and que_rec.is_require_answer:
                             star = '*'
@@ -417,7 +414,7 @@ class survey_question_wiz(osv.TransientModel):
                     if sur_rec.send_response:
                         survey_data = survey_obj.browse(cr, uid, survey_id)
                         response_id = surv_name_wiz.read(cr, uid, context.get('sur_name_id',False))['response']
-                        report = self.create_report(cr, uid, [survey_id], 'report.survey.browse.response', survey_data.title,context)
+                        self.create_report(cr, uid, [survey_id], 'report.survey.browse.response', survey_data.title,context)
                         attachments = {}
                         pdf_filename = addons.get_module_resource('survey', 'report') + survey_data.title + ".pdf"
                         if os.path.exists(pdf_filename):

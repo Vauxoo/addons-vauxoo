@@ -117,13 +117,8 @@ class commission_payment(osv.Model):
         })
 
         #~ Consultas
-        accounts = self.pool.get('account.account')
         vouchers = self.pool.get('account.voucher')
-        payments = self.pool.get('account.voucher.line')
-        invoices = self.pool.get('account.invoice')
-        invoice_lines = self.pool.get('account.invoice.line')
         prod_prices = self.pool.get('product.historic.price')
-        partner_ids = self.pool.get('res.partner')
 
         #~ Elementos Internos
         uninvoiced_pays = self.pool.get('commission.uninvoiced')
@@ -138,9 +133,7 @@ class commission_payment(osv.Model):
 
         ## Retenciones
         # de IVA
-        ret_iva_lines = self.pool.get('account.wh.iva.line')
         # de ISLR
-        ret_islr_lines = self.pool.get('islr.wh.doc.line')
         # de IM
         mun_obj = self.pool.get('account.wh.munici.line')
 
