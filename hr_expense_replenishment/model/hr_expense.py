@@ -1080,6 +1080,27 @@ class hr_expense_expense(osv.Model):
             aml_obj.unlink(cr, uid, res, context=context)
         return True
 
+    def account_move_get(self, cr, uid, expense_id, context=None):
+        '''
+        This method prepare the creation of the account move related to the given expense.
+
+        For this case it will override the date_confirm using date_post
+
+        :param expense_id: Id of voucher for which we are creating account_move.
+        :return: mapping between fieldname and value of account move to create
+        :rtype: dict
+        '''
+        context = context or {}
+        period_obj = self.pool.get('account.period')
+        expense = self.browse(cr, uid, expense_id, context=context)
+        date = expense.date_post
+        res = super(hr_expense_expense, self).account_move_get(cr, uid, expense_id, context=context)
+        res.update({
+            'date': date,
+            'period_id': period_obj.find(cr, uid, date, context=context)[0],
+        })
+        return res
+
 class account_voucher(osv.Model):
     _inherit = 'account.voucher'
     def create(self, cr, uid, vals, context=None):
