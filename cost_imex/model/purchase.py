@@ -26,10 +26,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
 from openerp.osv import fields, osv
-import sys
-from openerp.tools.translate import _
 
-import time
 import decimal_precision as dp
 
 
@@ -63,7 +60,6 @@ class inherit_purchase(osv.Model):
                         context=None):
         if context is None:
             context = {}
-        imex_line_obj = self.pool.get('percent.imex.line')
 
         amount = (base * (imex_line.percent/100))
         imex_lines = {

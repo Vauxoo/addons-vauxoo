@@ -25,13 +25,9 @@
 #
 ##############################################################################
 from openerp.osv import osv, fields
-import xmlrpclib
-import sys
 import os
 import time
 import base64
-import socket
-from openerp.tools.translate import _
 
 import service
 import tempfile
@@ -105,7 +101,6 @@ class db_tools(osv.TransientModel):
         f = file(res, 'r')
         data_b64 = base64.encodestring(f.read())
         f.close()
-        password = data.password
         ws_obj = service.web_services.db()
         ws_obj.exp_restore(name_db, data_b64)
         return True
@@ -114,7 +109,6 @@ class db_tools(osv.TransientModel):
         return True
 
     def confirm_action(self, cr, uid, ids, context=None):
-        uri = context.get('uri', False)
         for lin in self.browse(cr, uid, ids, context=context):
             if lin.filter == 'backup':
                 self.backup_db(cr, uid, ids, context.get(

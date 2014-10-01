@@ -24,10 +24,7 @@
 ##########################################################################
 
 from openerp.osv import osv, fields
-import openerp.tools as tools
-from openerp.tools.translate import _
 
-import decimal_precision as dp
 
 
 class inherit_price_list_item(osv.Model):
@@ -64,7 +61,6 @@ class inherit_price_list_item(osv.Model):
         if context is None:
             context = {}
         res = {}
-        product_obj = self.pool.get('product.product')
         pricelist_obj = self.pool.get('product.pricelist')
         if context.get('product', False):
             for item in self.browse(cr, uid, ids, context=context):

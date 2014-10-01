@@ -21,8 +21,7 @@
 ##############################################################################
 
 
-from openerp.osv import osv,fields
-from openerp.tools.translate import _
+from openerp.osv import osv
 from openerp.tools import config
 #~ import pdb;pdb.set_trace()
 

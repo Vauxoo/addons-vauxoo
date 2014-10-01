@@ -1,8 +1,6 @@
 # -*- encoding: utf-8 -*-
-from openerp.osv import osv
-from openerp.osv import fields 
+from openerp.osv import osv, fields 
 from openerp.tools.translate import _
-import pprint
 
 class account_move_line(osv.Model):
     _inherit = 'account.move.line'
@@ -161,7 +159,6 @@ class account_reconcile_advance(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         self.validate_data(cr, uid, ids, context=context)
         inv_obj = self.pool.get('account.invoice')
-        av_obj = self.pool.get('account.voucher')
         aml_obj = self.pool.get('account.move.line')
         am_obj = self.pool.get('account.move')
         res = {} 
@@ -209,8 +206,6 @@ class account_reconcile_advance(osv.Model):
         mem_av_aml_ids = av_aml_ids and av_aml_ids[:] or []
         lines_2_rec = []
         lines_2_par = []
-        first_time = True
-        inv_flag = True
         aml2_brw = None; account_id = False
 
         inv_brw = None
@@ -261,7 +256,7 @@ class account_reconcile_advance(osv.Model):
                     inv_brw =None
                     
                 elif aml2_brw:
-                    inv_flag = False
+                    pass
 #               Let us spend our money
                     aml_sum -= inv_sum
 #               BE AWARE MULTICURRENCY MISSING HERE

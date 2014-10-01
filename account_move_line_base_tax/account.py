@@ -24,7 +24,6 @@
 #
 ##############################################################################
 from openerp.osv import osv, fields
-from lxml import etree
 from openerp.tools.translate import _
 
 class account_move_line(osv.Model):
@@ -59,7 +58,6 @@ class account_move_line(osv.Model):
         
         res = super(account_move_line, self).write(cr, uid, ids, vals,
             context=context, check=check, update_check=update_check)
-        acc_tax_obj = self.pool.get('account.tax')
         for line in self.browse(cr, uid, ids, context=context):
             if line.tax_id_secondary and line.tax_id_secondary.type_tax_use == 'purchase':
                 cat_tax = line.tax_id_secondary.tax_category_id

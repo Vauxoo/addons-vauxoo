@@ -23,9 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-import time
-from openerp.osv import osv, fields
-import decimal_precision as dp
+from openerp.osv import osv
 from openerp.tools.translate import _
 
 import openerp.netsvc as netsvc
@@ -50,7 +48,6 @@ class account_invoice(osv.Model):
         wf_service = netsvc.LocalService("workflow")
         res = super(account_invoice, self).action_number(cr, uid, ids)
         iva_line_obj = self.pool.get('account.wh.iva.line')
-        iva_obj = self.pool.get('account.wh.iva')
         invo_brw = self.browse(cr, uid, ids, context=context)[0]
         state = [('draft', 'set_to_draft'), (
             'confirmed', 'wh_iva_confirmed'), ('done', 'wh_iva_done')]

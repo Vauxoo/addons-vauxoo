@@ -24,7 +24,6 @@
 #
 ##############################################################################
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
 
 class ir_action_report_xml(osv.Model):
 

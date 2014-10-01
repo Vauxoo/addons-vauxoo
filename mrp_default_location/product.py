@@ -24,15 +24,8 @@
 #
 ##############################################################################
 
-import time
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
 
-from tools import config
-import base64
-import csv
-import cStringIO
-import openerp.tools as tools
 
 
 class product_category(osv.Model):

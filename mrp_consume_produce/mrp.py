@@ -24,7 +24,6 @@
 #
 ##############################################################################
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
 
 import openerp.netsvc as netsvc
 
@@ -90,7 +89,6 @@ class mrp_production(osv.Model):
 
     def action_finish(self, cr, uid, ids, context={}):
         stock_move = self.pool.get('stock.move')
-        stock_picking = self.pool.get('stock.picking')
         for production in self.browse(cr, uid, ids, context=context):
             for moves in production.move_created_ids:
                 stock_move.action_cancel(cr, uid, [moves.id], context=context)

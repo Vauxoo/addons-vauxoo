@@ -23,9 +23,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import math
 import re
-from openerp.osv import fields, osv
+from openerp.osv import osv
 
 
 class res_partner(osv.osv):

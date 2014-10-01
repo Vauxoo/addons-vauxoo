@@ -1,8 +1,5 @@
 import xmlrpclib
-import csv
 import time
-import datetime
-import random
 
 # Source server info
 HOST = 'vauxoo.info'
@@ -107,7 +104,7 @@ def __main__():
     for user_story in user_story_dict:
         accep_crit_ids = user_story.get('accep_crit_ids')
         user_id = user_story.get('user_id')[0]
-        user_name = user_story.get('user_id')[1]
+        user_story.get('user_id')[1]
         user_story_name = user_story.get('name')
 
         print 'Evaluando la historia %s' % (user_story_name)
@@ -165,7 +162,7 @@ def __main__():
                              "project_id": project_id})
 
         # Almacenamos el user_story en el destino
-            user_story_id = create_in_destiny('user.story', user_story)
+            create_in_destiny('user.story', user_story)
             end = time.time()
             print 'Creada la historia %s en %ss' % (user_story_name, end-begin)
 

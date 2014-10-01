@@ -22,14 +22,11 @@
 
 from openerp.osv import fields, osv
 import decimal_precision as dp
-import openerp.netsvc as netsvc
 from openerp.tools.translate import _
 
 # Excel Stuff
 import xlrd
-import xlwt
 import base64
-from tempfile import NamedTemporaryFile
 from datetime import date, datetime, timedelta
 
 
@@ -502,7 +499,6 @@ class bank_statement_imported_lines(osv.Model):
             context = {}
         res = []
         aml = False
-        amount = {}
         total = 0
         invoice_obj = self.pool.get('account.invoice')
         account_move_line_obj = self.pool.get('account.move.line')

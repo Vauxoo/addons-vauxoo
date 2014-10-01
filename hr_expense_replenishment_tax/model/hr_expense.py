@@ -22,11 +22,8 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-import time
 from openerp.osv import fields, osv
-from openerp import netsvc
 import openerp.addons.decimal_precision as dp
-from openerp.tools.translate import _
 
 class hr_expense_expense(osv.Model):
     _inherit = "hr.expense.expense"
@@ -73,7 +70,6 @@ class hr_expense_expense(osv.Model):
     def create_her_tax(self, cr, uid, ids, aml={}, context=None):
         aml_obj = self.pool.get('account.move.line')
         acc_voucher_obj = self.pool.get('account.voucher')
-        acc_invoice = self.pool.get('account.invoice')
         context = context or {}
         ids= isinstance(ids,(int,long)) and [ids] or ids
         exp = self.browse(cr, uid, ids, context=context)[0]
@@ -183,8 +179,6 @@ class hr_expense_expense(osv.Model):
         aml_obj = self.pool.get('account.move.line')
         context = context or {}
         ids= isinstance(ids,(int,long)) and [ids] or ids
-        acc_tax_v = []
-        acc_tax_c = []
         for exp in self.browse(cr, uid, ids, context=context):
             move_ids=self.move_tax_expense(cr, uid, exp, context=context)
             move_round = 0
@@ -239,7 +233,6 @@ class account_move_line(osv.osv):
         account_move_ids = [aml.move_id.id for aml in self.browse(cr, uid, ids,
             context=context)]
         expense_obj = self.pool.get('hr.expense.expense')
-        currency_obj = self.pool.get('res.currency')
         if account_move_ids:
             expense_ids = expense_obj.search(cr, uid,
                 [('account_move_id', 'in', account_move_ids)], context=context)

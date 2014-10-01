@@ -19,15 +19,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ########################################################################
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
-import time
-from openerp import netsvc
 
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
-import openerp.addons.decimal_precision as dp
-from openerp import tools
 
 
 class purchase_requisition_line(osv.Model):
@@ -74,7 +67,6 @@ class purchase_requisition(osv.Model):
         res = super(purchase_requisition, self).make_purchase_order(cr, uid, ids, partner_id, context=context)
         
         pol_obj = self.pool.get('purchase.order.line')
-        prl_obj = self.pool.get('purchase.requisition.line')
         po_obj = self.pool.get('purchase.order') 
 
         for requisition in self.browse(cr, uid, ids, context=context):

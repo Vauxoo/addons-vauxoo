@@ -23,8 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.                          
 ###############################################################################
 
-from openerp.osv import osv, fields
-from openerp.tools.translate import _
+from openerp.osv import osv
 
 class mrp_request_return(osv.TransientModel):                                                       
      _inherit = 'mrp.request.return'                                                                    

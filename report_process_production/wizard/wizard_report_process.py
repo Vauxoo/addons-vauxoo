@@ -24,10 +24,8 @@
 #
 ##############################################################################
 
-import time
 
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
 
 
 class wizard_report_process(osv.TransientModel):
@@ -57,7 +55,6 @@ class wizard_report_process(osv.TransientModel):
         """
         if context is None:
             context = {}
-        prod_obj = self.pool.get('product.product')
         production_obj = self.pool.get('mrp.production')
         res = super(wizard_report_process, self).default_get(
             cr, uid, fields, context=context)

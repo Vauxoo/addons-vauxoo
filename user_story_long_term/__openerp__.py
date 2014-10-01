@@ -29,7 +29,7 @@
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com',
     'category': 'User Story Management',
-    'depends': ['base', 'mail', 'user_story', 'project_conf'],
+    'depends': ['base', 'mail', 'user_story', 'project_conf', 'project_long_term'],
     'description': """
 Long Term User Story Management module
 ======================================
@@ -47,7 +47,7 @@ Features:
         ],
     'test': [],
     'data': [
-        #'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         'user_story_long_term_view.xml',
         'workflow/user_story_long_term_workflow.xml',
         #'data/user_story_template.xml',

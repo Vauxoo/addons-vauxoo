@@ -24,9 +24,7 @@
 #
 #
 
-from openerp.tools.translate import _
 from openerp.osv import fields, osv
-from openerp import pooler, tools
 
 
 class employee_user_wizard(osv.TransientModel):
@@ -60,7 +58,6 @@ class employee_user_wizard(osv.TransientModel):
         """ get the list of users that have not been configured yet """
         if context is None:
             context = {}
-        cmp_select = []
         user_ids = self.pool.get('res.users').search(
             cr, uid, [], context=context)
         cr.execute("""SELECT users.id FROM res_users as users 

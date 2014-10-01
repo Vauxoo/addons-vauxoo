@@ -1,5 +1,4 @@
-from openerp.osv import fields, osv
-from openerp.tools.translate import _
+from openerp.osv import osv
 
 
 
@@ -22,7 +21,6 @@ class account_invoices(osv.Model):
         @return: return a result
         """
 
-        result = None
         # TODO : Business Process
         return {'type': 'ir.action.report.xml',
                 'report_name': 'account.invoice'}

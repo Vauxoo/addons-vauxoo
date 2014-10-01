@@ -25,10 +25,7 @@
 
 
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
 
-from tools import config
-from operator import itemgetter
 
 __HELP__ = '''
 Escriba el Patron de las cuentas, su estructura, por ejemplo:
@@ -193,7 +190,6 @@ class account_order_wizard(osv.TransientModel):
         return True
 
     def get_order(self, cr, uid, ids, context=None):
-        aa_obj = self.pool.get('account.account')
 
         for id in ids:
 
@@ -206,7 +202,6 @@ class account_order_wizard(osv.TransientModel):
 
             pattern_list = self._get_list(cr, uid, id, context)
             parent_id = self.browse(cr, uid, id, context).account_id.id
-            d = {}
             lpl = len(pattern_list)
             top_parent = parent_id
             self._new_ordering(cr, uid, company_id, pattern_list[0],
@@ -255,7 +250,6 @@ class account_order_wizard(osv.TransientModel):
             context = {}
         wz_brw = self.browse(cr, uid, ids[0], context)
         pid = pid or wz_brw.account_id.id
-        company_id = wz_brw.company_id.id
         account_obj = self.pool.get('account.account')
         levels = self.get_level(cr, uid, ids, code, context)
         while levels:

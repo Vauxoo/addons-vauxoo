@@ -24,7 +24,6 @@
 ############################################################################
 
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
 
 
 class invoice_multicompany_report(osv.Model):

@@ -32,7 +32,6 @@ class hr_expense_expense(osv.Model):
     _inherit = "hr.expense.expense"
 
     def expense_canceled(self, cr, uid, ids, context=None):
-        obj_move_line = self.pool.get('account.move.line')
         obj_move = self.pool.get('account.move')
         obj_move_rec = self.pool.get('account.move.reconcile')
 
@@ -367,7 +366,6 @@ class hr_expense_expense(osv.Model):
     def order_payments(self, cr, uid, ids, aml_ids, context=None):
         """ orders the payments lines by partner id. Recive only one id"""
         context = context or {}
-        aml_obj = self.pool.get('account.move.line')
         exp = self.browse(cr, uid, ids, context=context)
         order_partner = list(set(
             [(payment.partner_id.name, payment.partner_id.id, payment.id)
@@ -408,7 +406,7 @@ class hr_expense_expense(osv.Model):
                  for brw in exp.account_move_id.line_id
                  if brw.credit > 0.0]
             if not exp_credit:
-                empty_aml_ids = [brw.id for brw in exp.account_move_id.line_id]
+                [brw.id for brw in exp.account_move_id.line_id]
                 # Really!!!
                 #aml_obj.unlink(cr, uid, empty_aml_ids, context=context)
 
@@ -521,8 +519,6 @@ class hr_expense_expense(osv.Model):
         invoice can be really __nasty__
         """
         context = context or {}
-        res = {}
-        aml_obj = self.pool.get('account.move.line')
         ids = isinstance(ids, (int, long)) and [ids] or ids
         exp = self.browse(cr, uid, ids[0], context=context)
 
@@ -530,10 +526,8 @@ class hr_expense_expense(osv.Model):
         exp_ids = d['exp']
 
         sum_adv = d['debit']
-        sum_exp = d['exp_sum']
+        d['exp_sum']
         sum_inv = d['inv_sum']
-        partial_rec = []
-        full_rec = []
 
         ld = sum_adv - d['credit'] # Remaining Advance
         ld and self.expense_debit_lines(cr, uid, exp.id,exp.account_move_id.id,
@@ -553,8 +547,6 @@ class hr_expense_expense(osv.Model):
         invoice can be really __nasty__
         """
         context = context or {}
-        res = {}
-        aml_obj = self.pool.get('account.move.line')
         ids = isinstance(ids, (int, long)) and [ids] or ids
         exp = self.browse(cr, uid, ids[0], context=context)
 
@@ -728,7 +720,6 @@ class hr_expense_expense(osv.Model):
         @param adjust_balance_to: indicates who is greater credit or debit.
         """
         context = context or {}
-        aml_obj = self.pool.get('account.move.line')
 
         ids = isinstance(ids, (int, long)) and [ids] or ids
         for exp in self.browse(cr, uid, ids, context=context):

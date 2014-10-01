@@ -25,7 +25,6 @@
 import time
 import pooler
 from report import report_sxw
-from openerp.tools.translate import _
 
 
 
@@ -59,7 +58,6 @@ class project_issue(report_sxw.rml_parse):
                 proj_ids.append(issue.project_id.id)
 
         parts = pool.get('res.partner').name_get(self.cr, self.uid, part_ids)
-        project = []
         for part in parts:
             res.append({
                        'name': part[1],

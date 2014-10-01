@@ -25,7 +25,7 @@
 ##############################################################################
 
 
-from openerp.osv import fields, osv, orm
+from openerp.osv import osv, fields
 
 class configure_account_partner(osv.TransientModel):
     _name = 'configure.account.partner'
@@ -111,7 +111,6 @@ class configure_account_partner(osv.TransientModel):
     
     def conf_accounts(self, cr, uid, ids, context=None):
         res_partner_obj = self.pool.get('res.partner')
-        partner_ids = res_partner_obj.search(cr, uid, [] )
         form = self.browse(cr, uid, ids, context=context)[0]
         if form.webkit_partner:
             res_partner_obj.write(cr, uid,

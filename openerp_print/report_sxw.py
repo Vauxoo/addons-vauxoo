@@ -26,31 +26,17 @@
 import report
 from report import report_sxw
 from report.report_sxw import *
-from report.report_sxw import _format
-from report.report_sxw import _float_format
-from report.report_sxw import _int_format
-from report.report_sxw import _date_format
-from report.report_sxw import _dttime_format
-from report.report_sxw import browse_record_list
 from report.report_sxw import rml_parse
 import pooler
 from lxml import etree
 import subprocess
 import os
-import StringIO
 import cStringIO
 import base64
-import copy
-import locale
-import mx.DateTime
-import re
 import time
 
 import openerp.netsvc as netsvc
-import osv
 import openerp.tools as tools
-import warnings
-import zipfile
 import openerp.netsvc as netsvc
 
 logger = netsvc.Logger()

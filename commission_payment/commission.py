@@ -1,10 +1,6 @@
 from openerp.osv import osv, fields
-import pooler
-import time
-import math
 import mx.DateTime
 
-from tools import config
 from openerp.tools.translate import _
 
 import decimal_precision as dp
@@ -121,13 +117,8 @@ class commission_payment(osv.Model):
         })
 
         #~ Consultas
-        accounts = self.pool.get('account.account')
         vouchers = self.pool.get('account.voucher')
-        payments = self.pool.get('account.voucher.line')
-        invoices = self.pool.get('account.invoice')
-        invoice_lines = self.pool.get('account.invoice.line')
         prod_prices = self.pool.get('product.historic.price')
-        partner_ids = self.pool.get('res.partner')
 
         #~ Elementos Internos
         uninvoiced_pays = self.pool.get('commission.uninvoiced')
@@ -142,9 +133,7 @@ class commission_payment(osv.Model):
 
         ## Retenciones
         # de IVA
-        ret_iva_lines = self.pool.get('account.wh.iva.line')
         # de ISLR
-        ret_islr_lines = self.pool.get('islr.wh.doc.line')
         # de IM
         mun_obj = self.pool.get('account.wh.munici.line')
 
@@ -453,7 +442,6 @@ class commission_payment(osv.Model):
                                             # sobre esta parte no llego a un acuerdo de si se podria permitir al operador cambiar las lineas
                                             # de la factura puesto que es un
                                             # asunto muy delicado.
-                                            pass
                                             sale_noids.create(cr, user, {
                                                 'commission_id':   commission.id,
                                                 'inv_line_id':   inv_lin.id,

@@ -24,7 +24,6 @@
 #
 ##############################################################################
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
 
 class account_analytic_account(osv.Model):
     _name = "account.analytic.account"

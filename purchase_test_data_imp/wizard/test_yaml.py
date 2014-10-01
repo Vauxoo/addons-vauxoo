@@ -21,7 +21,6 @@
 import openerp.tools as tools
 import os
 from openerp.tools import assertion_report
-import sys
 import base64
 from openerp.osv import osv, fields
 import tempfile

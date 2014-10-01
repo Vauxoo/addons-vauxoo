@@ -26,10 +26,8 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
 from openerp.osv import osv
-from openerp.osv import fields
 from openerp.tools.translate import _
 
-import math
 
 
 class inherit_account_invocie_line(osv.Model):

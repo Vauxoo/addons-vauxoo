@@ -24,7 +24,6 @@
 #
 ##############################################################################
 from openerp.osv import osv, fields
-from lxml import etree
 
 
 class stock_move(osv.Model):

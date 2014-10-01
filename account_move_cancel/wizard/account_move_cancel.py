@@ -24,14 +24,10 @@
 ##########################################################################
 
 from openerp.osv import osv, fields
-import openerp.tools as tools
 from openerp.tools.translate import _
 
-from tools import config
 import openerp.netsvc as netsvc
-import decimal_precision as dp
 #~ from DateTime import DateTime
-import time
 
 
 class account_move_cancel(osv.TransientModel):
@@ -54,9 +50,7 @@ class account_move_cancel(osv.TransientModel):
         if context is None:
             context = {}
         invo_obj = self.pool.get('account.invoice')
-        iva_obj = self.pool.get('account.wh.iva')
 
-        islr_obj = self.pool.get('islr.wh.doc')
         journal_obj = self.pool.get('account.journal')
         invo_ids = []
         iva_ids = []

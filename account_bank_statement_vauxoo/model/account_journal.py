@@ -21,10 +21,8 @@
 ##############################################################################
 
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
 
 import openerp.netsvc as netsvc
-import logging
 
 
 class account_journal(osv.Model):
@@ -112,4 +110,3 @@ class account_journal_bs_config(osv.Model):
         ["cadenaA","cadenaB","CadenaC"]
         o es inválida''', ['expresion']),
     ]
-account_journal_bs_config

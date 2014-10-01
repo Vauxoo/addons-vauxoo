@@ -28,7 +28,6 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 import logging
 import urlparse
-import urllib2
 _logger = logging.getLogger("SignYouTube")
 try:
     from gdata.youtube import service

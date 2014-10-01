@@ -23,7 +23,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-import time
 from openerp.osv import osv, fields
 import decimal_precision as dp
 from openerp.tools.translate import _
@@ -78,7 +77,6 @@ class mrp_consume(osv.TransientModel):
         """
         context = context or {}
         consume_line_ids = list()
-        production_obj = self.pool.get('mrp.production')
         wol_obj = self.pool.get('mrp.workorder.lot')
         # getting the production_id
         production_ids = context.get('active_ids', [])
@@ -148,7 +146,6 @@ class mrp_consume(osv.TransientModel):
         @return: a dictionary of values for a consume/produce line.
         """
         context = context or {}
-        move_obj = self.pool.get('stock.move')
 
         product_id = self._get_consume_line_product_id(
             cr, uid, move_ids, context=context)

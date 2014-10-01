@@ -23,7 +23,6 @@
 
 
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
 
 
 class account_move_multi_wizard(osv.TransientModel):
@@ -58,7 +57,6 @@ class account_move_multi_wizard(osv.TransientModel):
                 except:
                     lista.append(move.id)
         if lista:
-            pass
             __, xml_id = self.pool.get('ir.model.data').get_object_reference(
                 cr, uid, 'account_move_validate_multi_wizard', 'account_move_validate_multi_wizard_unbalance')
             context.update(

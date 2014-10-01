@@ -25,7 +25,6 @@
 ##########################################################################
 
 from osv import osv
-from osv import fields
 import mx.DateTime
 import time
 

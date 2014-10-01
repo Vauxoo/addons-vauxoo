@@ -33,7 +33,6 @@ class hr_payslip(osv.osv):
         """Function of the field residua. It computes the residual amount (balance) for each payslip"""
         if context is None:
             context = {}
-        ctx = context.copy()
         result = {}
         for payslip in self.browse(cr, uid, ids, context=context):
             nb_inv_in_partial_rec = max_invoice_id = 0

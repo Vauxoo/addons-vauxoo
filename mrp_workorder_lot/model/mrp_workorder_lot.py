@@ -23,7 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import fields, osv, orm
+from openerp.osv import osv, fields
 from openerp.tools.translate import _
 from openerp import tools
 
@@ -175,7 +175,6 @@ class mrp_production(osv.Model):
         context = context or {}
         routing_obj = self.pool.get('mrp.routing')
         uom_obj = self.pool.get('product.uom')
-        product_obj = self.pool.get('product.product')
         routing_brw = routing_obj.browse(cr, uid, rounting_id, context=context)
         production = self.browse(cr, uid, ids, context=context)
 
@@ -322,8 +321,6 @@ class mrp_production(osv.Model):
 
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
-        routing_obj = self.pool.get('mrp.routing')
-        bom_obj = self.pool.get('mrp.bom')
         uom_obj = self.pool.get('product.uom')
         result = []
 
@@ -526,7 +523,6 @@ class mrp_production(osv.Model):
         """
         context = context or {}
         wol_obj = self.pool.get('mrp.workorder.lot')
-        res = list()
         if not isinstance(ids, (int, long)):
             raise osv.except_osv(
                 _('Programming Error'),
@@ -600,7 +596,6 @@ class mrp_production(osv.Model):
         """
         context = context or {}
         wol_obj = self.pool.get('mrp.workorder.lot')
-        wo_obj = self.pool.get('mrp.production.workcenter.line')
         ids = isinstance(ids, (int, long)) and [ids] or ids
         for production in self.browse(cr, uid, ids, context=context):
             #~ get first work order lot id and its belongs work orders ids.

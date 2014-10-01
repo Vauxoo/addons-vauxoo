@@ -22,15 +22,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from __future__ import absolute_import
-from email.utils import parseaddr
 import functools
-import htmlentitydefs
 import itertools
 import logging
 import operator
-import re
 from ast import literal_eval
-from openerp.tools import mute_logger
 import openerp
 from openerp.osv import osv, orm
 from openerp.osv import fields
@@ -268,7 +264,6 @@ class MergeProductAutomatic(osv.TransientModel):
     def _update_foreign_keys_modify(self, cr, uid, src_products,
                                     dst_product, model=None,
                                     context=None):
-        res = {}
         uos_table = {}
         po_table = {}
         tables = []

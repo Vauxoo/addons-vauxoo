@@ -21,11 +21,9 @@
 #
 ##############################################################################
 
-import time
 
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-from openerp import netsvc
 from lxml import etree
 
 class account_invoice_parent(osv.osv_memory):
@@ -63,7 +61,6 @@ class account_invoice_parent(osv.osv_memory):
         """
         if context is None:
             context = {}
-        journal_obj = self.pool.get('account.journal')
         res = super(account_invoice_parent,self).fields_view_get(cr, uid, view_id=view_id, view_type=view_type, context=context, toolbar=toolbar, submenu=submenu)
         if view_type == 'form':
             doc = etree.XML(res['arch'])

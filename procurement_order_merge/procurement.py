@@ -23,8 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import osv, fields
-from openerp.tools.translate import _
+from openerp.osv import osv
 
 import openerp.netsvc as netsvc
 from osv.orm import browse_record, browse_null
@@ -53,8 +52,6 @@ class procurement_order(osv.Model):
             return tuple(list_key)
 
         new_orders = {}
-        mrp_production_pool = self.pool.get('mrp.production')
-        old_orders = []
 
         for procurement in self.browse(cr, uid, ids):
             if procurement.state == 'draft':

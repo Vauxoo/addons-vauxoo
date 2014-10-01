@@ -22,11 +22,7 @@
 ################################################################################
 
 
-import time
 from openerp.osv import fields, osv
-from openerp import netsvc
-import openerp.addons.decimal_precision as dp
-from openerp.tools.translate import _
 
 
 class account_voucher_tax_assigned(osv.TransientModel):

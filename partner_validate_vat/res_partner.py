@@ -24,7 +24,7 @@
 #
 #
 
-from openerp.osv import osv, fields
+from openerp.osv import osv
 from openerp.tools.translate import _
 
 

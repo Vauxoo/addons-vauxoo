@@ -25,12 +25,8 @@
 #
 
 from openerp.osv import fields, osv
-import openerp.tools as tools
-from openerp.tools.translate import _
 
-import openerp.netsvc as netsvc
 import time
-import os
 import mx.DateTime
 
 
@@ -177,7 +173,6 @@ class account_aged_trial_balance(osv.TransientModel):
 
     def _get_partners(self, cr, uid, ids, form, context=None):
         context = context or {}
-        res = []
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         move_state = ['draft', 'posted']
         if self.target_move == 'posted':

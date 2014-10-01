@@ -27,8 +27,6 @@
 import time
 from report import report_sxw
 import mx.DateTime
-import pdb
-import pprint
 from report_webkit import webkit_report
 
 
@@ -71,7 +69,6 @@ class aging_parser(report_sxw.rml_parse):
         amounts, one item for every currency find.
         """
         ixp_gen = self._get_invoice_by_partner(rp_brws, inv_type)
-        total = 0.0
         usr_dict = {}
         res = dict()
 
@@ -115,7 +112,6 @@ class aging_parser(report_sxw.rml_parse):
         res = {}
         rp_obj = self.pool.get('res.partner')
         inv_obj = self.pool.get('account.invoice')
-        mun_obj = self.pool.get('account.wh.munici.line')
         cur_obj = self.pool.get('res.currency')
         for rp_brw in rp_brws:
             inv_ids = inv_obj.search(
@@ -154,13 +150,10 @@ class aging_parser(report_sxw.rml_parse):
 
                     pay_ids = [aml.id for aml in inv_brw.payment_ids]
                     #~ VAT
-                    wh_lines = []
                     pay_vat_ids = []
                     #~ ISLR
-                    wh_lines = []
                     pay_islr_ids = []
                    #~  MUNI
-                    wh_lines = []
                     pay_muni_ids = []
                     #~  TODO: SRC
 

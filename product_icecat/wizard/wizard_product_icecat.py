@@ -26,11 +26,10 @@ from openerp.tools.translate import _
 
 import os
 import re
-import cgi
 import libxml2
 import urllib
 import urllib2
-from urllib2 import Request, urlopen, URLError, HTTPError
+from urllib2 import URLError
 from ftplib import FTP
 
 
@@ -116,7 +115,6 @@ class product_icecat_wizard(osv.TransientModel):
             if prod.xpathEval('@ErrorMessage'):
                 if prod.xpathEval('@ErrorMessage')[0].content:
                     return prod.xpathEval('@ErrorMessage')[0].content
-                    exit
 
         # product info
         short_summary = doc.xpathEval(
@@ -202,7 +200,6 @@ class product_icecat_wizard(osv.TransientModel):
                                          'icecat_category': catID,
                                          'product_id': product.id,
                                          'sequence': sequence})
-                sequence+1
 
             if catID in prodFeature and len(prodFeature[catID]):
 
@@ -215,7 +212,6 @@ class product_icecat_wizard(osv.TransientModel):
                              'icecat_category': catID,
                              'product_id': product.id,
                              'sequence': sequence})
-                        sequence+1
 
                 for mapline_field in mapline_fields:
                     if mapline_field['icecat'] == catID:
@@ -408,7 +404,7 @@ class product_icecat_wizard(osv.TransientModel):
                 # All calls to urllib2.urlopen will now use our handler
 
                 try:
-                    pagehandle = urllib2.urlopen(url)
+                    urllib2.urlopen(url)
                     req = urllib2.Request(url)
                     handle = urllib2.urlopen(req)
                     content = handle.read()

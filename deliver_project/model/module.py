@@ -19,28 +19,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import base64
-import cStringIO
-import imp
-import logging
-import os
-import re
-import StringIO
-import urllib
-import zipfile
-import zipimport
-
-import addons
-import pooler
-import release
-import openerp.tools as tools
-
-from openerp.tools.parse_version import parse_version
-
-from openerp.tools.translate import _
 
 
-from openerp.osv import osv, fields, orm
+
+
+
+from openerp.osv import osv, fields
 
 
 class module(osv.Model):
@@ -68,7 +52,6 @@ class module(osv.Model):
         Name = dict_txt.get('MenuName')
         CompleteMenuName = dict_txt.get('CompleteMenuName')
         ActionHelp = dict_txt.get('ActionHelp')
-        ModuleName = dict_txt.get('ModuleName')
         XmlId = dict_txt.get('XmlId')
         if Name:
             docStr = docStr+"===%s===" % Name
@@ -108,9 +91,6 @@ class module(osv.Model):
         '''
         res = {}
         model_data_obj = self.pool.get('ir.model.data')
-        view_obj = self.pool.get('ir.ui.view')
-        report_obj = self.pool.get('ir.actions.report.xml')
-        act_window_obj_obj = self.pool.get('ir.actions.act_window')
         menu_obj = self.pool.get('ir.ui.menu')
         mlist = self.browse(cr, uid, ids, context=context)
         mnames = {}
@@ -160,12 +140,10 @@ class module(osv.Model):
                 self.__logger.warning(
                     'Data not found for reference %s[%s:%s.%s]', data_id.model,
                     data_id.res_id, data_id.model, data_id.name, exc_info=True)
-                pass
             except Exception, e:
                 self.__logger.warning('Unknown error while browsing %s[%s]',
                                         data_id.model, data_id.res_id,
                                         exc_info=True)
-                pass
         # res_mod_dic['doc_on_module']=list(set(res_mod_dic['doc_on_module']))
         for key, value in res.iteritems():
             for k, v in res[key].iteritems():

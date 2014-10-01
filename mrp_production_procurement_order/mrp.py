@@ -24,10 +24,8 @@
 #
 ##############################################################################
 
-from openerp.tools.translate import _
 
 from openerp.osv import osv, fields
-import decimal_precision as dp
 
 
 class mrp_production(osv.Model):

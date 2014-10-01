@@ -1,15 +1,7 @@
-import time
-import openerp.netsvc as netsvc
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
 
 import decimal_precision as dp
 
-import mx.DateTime
-from mx.DateTime import RelativeDateTime, now, DateTime, localtime
-import openerp.tools as tools
-from tools import config
-from openerp.tools.misc import currency
 
 
 class salesman_commission_payment(osv.Model):
