@@ -18,7 +18,7 @@ msgstr ""
 #. module: invoice_discount
 #: help:account.invoice,subtotal_wo_discount:0
 msgid "Amount without apply the                                                 discount of the lines of the                                                 invoice."
-msgstr "Monto sin aplicar el descuento de las lineas de la factura."
+msgstr "Monto sin aplicar el descuento de las líneas de la factura."
 
 #. module: invoice_discount
 #: field:account.invoice.line,discount_amount:0
@@ -28,7 +28,7 @@ msgstr "Monto descuento"
 #. module: invoice_discount
 #: help:account.invoice.line,subtotal_wo_discount:0
 msgid "Amount without apply                                                 the discount of the line, is                                                 calculated as Qty * Price Unit"
-msgstr "Monto sin aplicar el descuento de la linea, es calculado con Cantidad * Precio Unitario"
+msgstr "Monto sin aplicar el descuento de la línea, es calculado con Cantidad * Precio Unitario"
 
 #. module: invoice_discount
 #: model:ir.model,name:invoice_discount.model_sale_config_settings
@@ -38,7 +38,7 @@ msgstr "Configuración de las ventas"
 #. module: invoice_discount
 #: help:account.invoice,discount_amount:0
 msgid "Total of discount apply in                                            each line of the invoice."
-msgstr "Descuento total aplicado en cada una de las lineas de la factura."
+msgstr "Descuento total aplicado en cada una de las líneas de la factura."
 
 #. module: invoice_discount
 #: model:ir.model,name:invoice_discount.model_account_invoice_line
