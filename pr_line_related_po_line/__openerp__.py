@@ -33,21 +33,19 @@ order line is created, overwrite  the make_purchase_order method for add value o
 purchase_requisition_line_id to record purchase order line, it is help to make best inherit and
 modification of make_purchase_order method, as can be seen in
 purchase_requisition_line_description, purchase_requisition_line_analytic and
-purchase_requisition_requisitor modules.  
-""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
-    "depends": [
-        "purchase", 
-        "purchase_requisition"
-    ], 
-    "demo": [], 
-    "data": [], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False
+purchase_requisition_requisitor modules.
+''',
+    'depends': [
+        'purchase',
+        'purchase_requisition',
+        ],
+    'data': [],
+    'demo': [],
+    'test': [],
+    'qweb': [],
+    'js': [],
+    'css': [],
+    'active': False,
+    'installable': True,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
