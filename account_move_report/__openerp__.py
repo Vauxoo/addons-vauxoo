@@ -20,31 +20,35 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
 {
-    "name" : "Journal Entries report",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Accouting",
-    "description" : """
+    "name": "Journal Entries report", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Accouting", 
+    "description": """
 Report for Journal Entries
 ==========================
 
 This module adds a report in journal entries. You can print one o several
 journal entries in PDF file.
 
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
-        "account",
-        "report_webkit",
-    ],
-    "demo" : [],
-    "data" : [
-        "data.xml",
-        "account_move_report.xml",
-    ],
-    "installable" : True,
-    "active" : False,
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "account", 
+        "report_webkit"
+    ], 
+    "demo": [], 
+    "data": [
+        "data.xml", 
+        "account_move_report.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
