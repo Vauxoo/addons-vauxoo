@@ -30,7 +30,6 @@ from openerp.osv import osv
 from openerp.tools.translate import _
 
 
-
 class account_invoice(osv.Model):
     _inherit = "account.invoice"
 
