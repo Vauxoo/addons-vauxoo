@@ -23,8 +23,8 @@
 from openerp.report import report_sxw
 from openerp.tools.translate import _
 import time
-from report_webkit import report_helper
-from report_webkit import webkit_report
+from openerp.addons.report_webkit import report_helper
+from openerp.addons.report_webkit import webkit_report
 
 class account_move_report_html(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):

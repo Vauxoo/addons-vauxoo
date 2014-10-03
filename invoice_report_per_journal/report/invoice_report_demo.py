@@ -27,14 +27,13 @@ File to added method and function to report Demo
 '''
 
 from openerp.report import report_sxw
-from openerp import pooler
 from openerp.tools.translate import _
 from openerp import tools
 from openerp import tests
 from openerp.osv import osv
 from openerp import netsvc
 import openerp
-from report_webkit import webkit_report
+from openerp.addons.report_webkit import webkit_report
 import datetime
 
 

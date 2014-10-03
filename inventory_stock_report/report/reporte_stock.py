@@ -24,8 +24,7 @@
 ##########################################################################
 
 import time
-from report import report_sxw
-import pooler
+from openerp.report import report_sxw
 
 
 class rep_conteo_stock(report_sxw.rml_parse):

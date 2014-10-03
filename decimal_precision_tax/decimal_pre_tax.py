@@ -29,7 +29,7 @@ from openerp.tools.translate import _
 from tools import config
 import time
 import datetime
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class account_tax(osv.Model):

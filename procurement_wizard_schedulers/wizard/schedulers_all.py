@@ -22,7 +22,6 @@
 ##########################################################################
 
 import threading
-import pooler
 import openerp.netsvc as netsvc
 import os
 from openerp.osv import osv, fields

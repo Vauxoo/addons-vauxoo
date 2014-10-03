@@ -21,7 +21,7 @@
 
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 class product_product(osv.osv):
     _inherit = "product.product"

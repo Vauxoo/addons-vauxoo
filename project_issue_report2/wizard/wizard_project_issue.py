@@ -23,7 +23,6 @@
 ############################################################################
 
 from openerp.osv import osv, fields
-import pooler
 import time
 
 

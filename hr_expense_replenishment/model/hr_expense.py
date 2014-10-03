@@ -235,11 +235,12 @@ class hr_expense_expense(osv.Model):
             res['value'] = {'advance_ids': []}
         else:
             self.load_advances(cr, uid, ids, context=context)
-            res['value'] = {'advance_ids':
-               [advn.id
-                for advn in self.browse(
-                    cr, uid, ids[0], context=context).advance_ids]
-            }
+            if ids:
+                res['value'] = {'advance_ids':
+                   [advn.id
+                    for advn in self.browse(
+                        cr, uid, ids[0], context=context).advance_ids]
+                }
         return res
 
     def check_invoice(self, cr, uid, ids, context=None):

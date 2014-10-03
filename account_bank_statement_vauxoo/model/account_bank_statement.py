@@ -21,7 +21,7 @@
 ##############################################################################
 
 from openerp.osv import fields, osv
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 import openerp.netsvc as netsvc
 from openerp.tools.translate import _
 

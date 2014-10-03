@@ -22,7 +22,6 @@
 ################################################################################
 
 from openerp import netsvc
-from openerp import pooler
 from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 

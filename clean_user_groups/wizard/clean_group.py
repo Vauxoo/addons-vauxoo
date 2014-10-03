@@ -30,7 +30,7 @@ from openerp import SUPERUSER_ID
 
 from tools import config
 import openerp.netsvc as netsvc
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 import time
 import datetime
 import re

@@ -24,8 +24,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 
-from report import report_sxw
-import pooler
+from openerp.report import report_sxw
 from lxml import etree
 import subprocess
 import os
@@ -39,7 +38,7 @@ import re
 import time
 
 import openerp.netsvc as netsvc
-import osv
+from openerp.osv import osv
 import openerp.tools as tools
 import warnings
 import zipfile

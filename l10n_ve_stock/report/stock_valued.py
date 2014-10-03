@@ -24,7 +24,7 @@
 ##########################################################################
 
 import time
-from report import report_sxw
+from openerp.report import report_sxw
 
 
 class stock_valued(report_sxw.rml_parse):

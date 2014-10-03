@@ -27,8 +27,7 @@
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
-import release
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 import time
 
@@ -99,6 +98,7 @@ class account_voucher(osv.Model):
         company_currency = self._get_company_currency(cr, uid, voucher_id, context)
         current_currency = self._get_current_currency(cr, uid, voucher_id, context)
         move_ids=[]
+        context = dict(context)
         for voucher in self.browse(cr, uid, [voucher_id], context=context):
             context.update({'amount_voucher': voucher.amount or 0.0})
             for line in voucher.line_ids:

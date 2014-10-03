@@ -8,7 +8,7 @@
 	"depends" :  [  'project',
 				'web_kanban',
 				'base_setup',
-				'base_status',
+				#~ 'base_status', #deprecated in odoo http://bazaar.launchpad.net/~openerp-dev/openobject-addons/trunk-remove-base_status-tde/revision/8858
 				'product',
 				'analytic',
 				'board',

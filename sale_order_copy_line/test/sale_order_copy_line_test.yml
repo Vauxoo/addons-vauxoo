@@ -7,7 +7,7 @@
     import logging
     from openerp import tools
     import traceback
-    from tools.misc import mute_logger
+    from openerp.tools import mute_logger
     _logger = logging.getLogger("sale.order.copy.line")
 
     try:
@@ -26,7 +26,7 @@
     import logging
     from openerp import tools
     import traceback
-    from tools.misc import mute_logger
+    from openerp.tools import mute_logger
     _logger = logging.getLogger("sale.order.copy.line")
 
     try:

@@ -24,7 +24,6 @@
 #
 ##############################################################################
 
-import pooler
 import wizard
 import openerp.netsvc as netsvc
 from openerp.tools.translate import _

@@ -24,7 +24,6 @@
 #
 ##############################################################################
 
-import pooler
 import wizard
 
 class wizard_open_move_line(wizard.interface):

@@ -38,7 +38,10 @@ class project_task(osv.osv):
         '''
         context = context or {}
         #Dont send context to dont get language of user in read method
-        if ids.get('stage_id'):
+        #@ids in v8 is not a dictionary
+        #@stage deprecated in v8 by odoo
+        #~ if ids.get('stage_id'): #comment while is migrate to v8 this module
+        if {}.get('stage_id'):
             type = self.pool.get('project.task.type').read(cr, uid, ids['stage_id'][0], ['name'])
             if type.get('name', False) == 'Backlog':
                 self.send_mail_task(cr,uid,ids,'template_send_email_task_new',context)

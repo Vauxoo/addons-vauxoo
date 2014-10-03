@@ -25,11 +25,11 @@
 
 
 import time
-from report import report_sxw
+from openerp.report import report_sxw
 import mx.DateTime
 import pdb
 import pprint
-from report_webkit import webkit_report
+from openerp.addons.report_webkit import webkit_report
 
 
 class aging_parser(report_sxw.rml_parse):

@@ -24,7 +24,7 @@
             <field name="domain">[('parent_id2','=',False)]</field>
             <field name="view_type">tree</field>
             <field name="view_id" ref="project_project_hierarchical_tree_view"/>
-            <field name="help" type="html">
+            <field name="help">
             </field>
         </record>
         

@@ -44,7 +44,7 @@ the human recourses that is public.
                 'crm',
                 'website_crm',
                 'web_captcha',
-                'portal_hr_employees',
+                #~ 'portal_hr_employees', deprecated by odoo
                 'vauxoo_widgets',
                 ],
     'data': [

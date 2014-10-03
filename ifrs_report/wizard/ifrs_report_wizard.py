@@ -21,9 +21,8 @@
 
 import time
 
-from osv import fields, osv
-from tools.translate import _
-import netsvc
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 
 class ifrs_report_wizard(osv.osv_memory):

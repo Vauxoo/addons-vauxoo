@@ -31,7 +31,6 @@ import zipfile
 import zipimport
 
 import addons
-import pooler
 import release
 import openerp.tools as tools
 

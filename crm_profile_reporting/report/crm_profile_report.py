@@ -1,7 +1,6 @@
 # -*- encoding: utf-8 -*-
 import time
-import pooler
-from report import report_sxw
+from openerp.report import report_sxw
 from openerp.tools.translate import _
 
 import smtplib

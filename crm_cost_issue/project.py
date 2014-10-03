@@ -27,7 +27,7 @@
 
 
 from openerp.osv import osv, fields
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class project_task(osv.Model):

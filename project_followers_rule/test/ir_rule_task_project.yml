@@ -13,10 +13,10 @@
   Permissions Testing Task
 -
   !python {model: project.task}: |
-    import netsvc, tools, os, base64
     import traceback
     from openerp.osv.orm import except_orm
-    from tools.misc import mute_logger
+    from openerp.tools import mute_logger
+    from openerp import tools
     
     test_ok = False
     

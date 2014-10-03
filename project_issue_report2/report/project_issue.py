@@ -23,8 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
 import time
-import pooler
-from report import report_sxw
+from openerp.report import report_sxw
 from openerp.tools.translate import _
 
 
