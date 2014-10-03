@@ -23,28 +23,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "Invoice Discount",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Generic Modules",
+    "name": "Invoice Discount", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
     "description": """
         Fields to get the amount without discount and discount in lines to
         invoice.
-    """,
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
     "depends": [
-        "account",
-        "sale",
-    ],
-    "demo": [],
+        "account", 
+        "sale"
+    ], 
+    "demo": [], 
     "data": [
-        "view/invoice_view.xml",
-        'view/config_settings_action.xml',
-    ],
-    "test": [],
-    "installable": True,
-    "active": False,
+        "view/invoice_view.xml", 
+        "view/config_settings_action.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
