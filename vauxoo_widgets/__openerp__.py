@@ -29,7 +29,7 @@
 Widgets to customize the openerp views with Qweb extension
 ===========================================================
 If you need add a custom widget in your module you must create it in this
-module and make depend your module of this 
+module and make depend your module of this
 
 
     """,

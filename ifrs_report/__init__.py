@@ -7,7 +7,7 @@
 ###############Credits######################################################
 #    Coded by: Katherine Zaoral <katherine.zaoral@vauxoo.com>
 #    Coded by: Yanina Aular <yanina.aular@vauxoo.com>
-#    Planified by: Humberto Arocha <hbto@vauxoo.com>           
+#    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Nhomar Hernandez <nhomar@vauxoo.com>
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify

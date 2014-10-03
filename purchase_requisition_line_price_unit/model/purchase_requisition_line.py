@@ -23,6 +23,7 @@
 from openerp.osv import fields, osv
 import openerp.addons.decimal_precision as dp
 
+
 class purchase_requisition(osv.Model):
     _inherit = "purchase.requisition"
 
@@ -34,7 +35,7 @@ class purchase_requisition(osv.Model):
 
     def _amount_all(self, cr, uid, ids, field_name, arg, context=None):
         res = {}
-        cur_obj=self.pool.get('res.currency')
+        cur_obj = self.pool.get('res.currency')
         for requisition in self.browse(cr, uid, ids, context=context):
             res[requisition.id] = {
                 'amount_untaxed': 0.0,
@@ -44,27 +45,28 @@ class purchase_requisition(osv.Model):
             val = val1 = 0.0
             cur = requisition.currency_id
             for line in requisition.line_ids:
-               val1 += line.price_subtotal
-               for c in self.pool.get('account.tax').compute_all(cr, uid, [], line.price_unit, line.product_qty, line.product_id)['taxes']:
+                val1 += line.price_subtotal
+                for c in self.pool.get('account.tax').compute_all(cr, uid, [], line.price_unit, line.product_qty, line.product_id)['taxes']:
                     val += c.get('amount', 0.0)
             #res[requisition.id]['amount_tax']=cur_obj.round(cr, uid, cur, val)
-            amount_untaxed =cur_obj.round(cr, uid, cur, val1)
-            res[requisition.id]['amount_total']= amount_untaxed # + res[requisition.id]['amount_tax']
+            amount_untaxed = cur_obj.round(cr, uid, cur, val1)
+            res[requisition.id]['amount_total'] = amount_untaxed  # + res[requisition.id]['amount_tax']
         return res
-    
+
     _columns = {
-        'amount_total': fields.function(_amount_all, digits_compute= dp.get_precision('Account'), string='Total',
+        'amount_total': fields.function(_amount_all, digits_compute=dp.get_precision('Account'), string='Total',
             store={
                 'purchase.requisition.line': (_get_requisition, None, 10),
-            }, multi="sums",help="The total amount"),
+        }, multi="sums", help="The total amount"),
     }
+
 
 class purchase_requisition_line(osv.Model):
     _inherit = "purchase.requisition.line"
 
     def _amount_line(self, cr, uid, ids, prop, arg, context=None):
         res = {}
-        cur_obj=self.pool.get('res.currency')
+        cur_obj = self.pool.get('res.currency')
         tax_obj = self.pool.get('account.tax')
         for line in self.browse(cr, uid, ids, context=context):
             taxes = tax_obj.compute_all(cr, uid, [], line.price_unit, line.product_qty, line.product_id)
@@ -74,7 +76,6 @@ class purchase_requisition_line(osv.Model):
         return res
 
     _columns = {
-        'price_unit': fields.float('Unit Price', digits_compute= dp.get_precision('Product Price')),
-        'price_subtotal': fields.function(_amount_line, string='Subtotal', digits_compute= dp.get_precision('Account')),
+        'price_unit': fields.float('Unit Price', digits_compute=dp.get_precision('Product Price')),
+        'price_subtotal': fields.function(_amount_line, string='Subtotal', digits_compute=dp.get_precision('Account')),
     }
-    

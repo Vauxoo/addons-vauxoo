@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ############################################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2010 Zikzakmedia S.L. (<http://www.zikzakmedia.com>). All Rights Reserved
 #    $Id$
 #

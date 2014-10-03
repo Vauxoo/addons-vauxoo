@@ -28,6 +28,7 @@ from openerp.addons.report_webkit import webkit_report
 from openerp.report import report_sxw
 from lxml import html
 
+
 class user_story_report(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context=None):
@@ -36,10 +37,10 @@ class user_story_report(report_sxw.rml_parse):
         super(user_story_report, self).__init__(
             cr, uid, name, context=context)
         self.localcontext.update({
-            'parse_html_field' : self._parse_html_field,
+            'parse_html_field': self._parse_html_field,
         })
         self.context = context
-        
+
     def _parse_html_field(self, data):
         if data:
             data_str = data.encode('ascii', 'xmlcharrefreplace')

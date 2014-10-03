@@ -23,7 +23,6 @@
 from openerp.osv import osv
 
 
-
 class stock_return_picking(osv.TransientModel):
     _inherit = 'stock.return.picking'
 
@@ -42,7 +41,6 @@ class stock_return_picking(osv.TransientModel):
                           move.prodlot_id.id], {'check_serial': False})
 
         return res
-
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

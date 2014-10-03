@@ -24,7 +24,9 @@ This file loads the necessary information for the custom timesheet view.
 from openerp.osv import fields, osv
 from openerp.tools.sql import drop_view_if_exists
 
+
 class custom_timesheet_all(osv.Model):
+
     '''
     Class that contains the methods needed to return the data to the view.
     '''

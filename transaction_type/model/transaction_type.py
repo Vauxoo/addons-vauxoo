@@ -26,7 +26,6 @@
 from openerp.osv import osv, fields
 
 
-
 class transaction_type(osv.Model):
 
     _name = 'transaction.type'

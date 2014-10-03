@@ -25,6 +25,7 @@ import pooler
 
 
 class spm_report(report_sxw.rml_parse):
+
     def __init__(self, cr, uid, name, context=None):
         if context is None:
             context = {}
@@ -57,8 +58,8 @@ class spm_report(report_sxw.rml_parse):
                         'serial': ' | '.join(aux)
                     }
                     if val:
-                            res.append(val)
-                            val = {}
+                        res.append(val)
+                        val = {}
             return res
 
     def _get_serial(self, picking, product):

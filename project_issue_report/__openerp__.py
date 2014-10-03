@@ -30,9 +30,9 @@
 	"category" : "Generic Modules/Others",
 	"website": "http://wiki.openerp.org.ve/",
     "description": """
-    
-    Modulo que realiza la personalizacion del reporte de incidencias 
-    
+
+    Modulo que realiza la personalizacion del reporte de incidencias
+
     """,
 	"depends" : ["base", "project"],
 	"init_xml" : [],

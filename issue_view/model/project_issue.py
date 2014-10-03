@@ -1,4 +1,4 @@
- #-*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -22,7 +22,6 @@
 from openerp.osv import osv, fields
 
 
-
 class project_issue(osv.Model):
 
     _inherit = 'project.issue'
@@ -33,4 +32,3 @@ class project_issue(osv.Model):
         'sprint_id': fields.related('task_id', 'sprint_id', relation='project.scrum.sprint', type='many2one', string='Sprint', store=True),
         'planned_hours': fields.related('task_id', 'planned_hours', type='float', string='Horas', store=False),
     }
-

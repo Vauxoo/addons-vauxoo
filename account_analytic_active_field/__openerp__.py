@@ -30,7 +30,7 @@
 Field Active In Analytic Accounts
 =================================
 
-Add field active to analytic accounts 
+Add field active to analytic accounts
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",

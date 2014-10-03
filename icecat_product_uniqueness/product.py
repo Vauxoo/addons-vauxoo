@@ -29,6 +29,7 @@ from openerp.osv import osv
 
 
 class product_inherited(osv.Model):
+
     """
     Checks if a loaded product already exists on the database
     """
@@ -57,4 +58,4 @@ class product_inherited(osv.Model):
 
     _constraints = [(
         _check_uniqueness, 'ERROR, product already exists for this company',
-            ['ean13'])]
+        ['ean13'])]

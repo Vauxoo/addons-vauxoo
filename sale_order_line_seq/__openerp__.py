@@ -31,7 +31,7 @@
     "category": "Localization/Mexico",
     "description" : """
         This module add the sequence in the sale order lines
-        
+
         Note: This field is temporary
     """,
     "website": "http://www.vauxoo.com/",

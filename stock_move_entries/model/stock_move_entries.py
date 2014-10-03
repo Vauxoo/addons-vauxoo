@@ -35,9 +35,9 @@ class account_move_line(osv.Model):
 
     _columns = {
         'sm_id': fields.many2one('stock.move', 'Stock move ID'),
-        'location_id':fields.related('sm_id', 'location_id', string='Source Location',
+        'location_id': fields.related('sm_id', 'location_id', string='Source Location',
             type='many2one', relation='stock.location', store=True, help='Location Move Source'),
-        'location_dest_id':fields.related('sm_id', 'location_dest_id',
+        'location_dest_id': fields.related('sm_id', 'location_dest_id',
             type='many2one', string='Destination Location', relation='stock.location', store=True,
             help="Location Move Destination")
     }
@@ -48,6 +48,7 @@ class account_move(osv.Model):
 
     """
     """
+
     def _get_sm(self, cr, uid, ids, field_name, args, context=None):
         res = {}
         for id in ids:
@@ -111,18 +112,19 @@ class stock_move(osv.Model):
             line[2]['sm_id'] = move.id
         return res
 
+
 class stock_picking_out(osv.Model):
     _inherit = "stock.picking.out"
 
     def show_entry_lines(self, cr, uid, ids, context=None):
-        ids = isinstance(ids, (int,long)) and [ids] or ids
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
-        res =[]
+        res = []
         for picking_brw in self.browse(cr, uid, ids, context=context):
             res += [aml_brw.id for move in picking_brw.move_lines if move.am_id for aml_brw in move.am_id.line_id]
         return {
             'domain': "[('id','in',\
-                ["+','.join(map(str, res))+"])]",
+                [" + ','.join(map(str, res)) + "])]",
             'name': _('Journal Entries'),
             'view_type': 'form',
             'view_mode': 'tree,form',
@@ -132,14 +134,14 @@ class stock_picking_out(osv.Model):
         }
 
     def show_journal_entries(self, cr, uid, ids, context=None):
-        ids = isinstance(ids, (int,long)) and [ids] or ids
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
-        res =[]
+        res = []
         for picking_brw in self.browse(cr, uid, ids, context=context):
             res += [move.am_id.id for move in picking_brw.move_lines]
         return {
             'domain': "[('id','in',\
-                ["+','.join(map(str, res))+"])]",
+                [" + ','.join(map(str, res)) + "])]",
             'name': _('Journal Entries'),
             'view_type': 'form',
             'view_mode': 'tree,form',
@@ -153,14 +155,14 @@ class stock_picking_in(osv.Model):
     _inherit = "stock.picking.in"
 
     def show_entry_lines(self, cr, uid, ids, context=None):
-        ids = isinstance(ids, (int,long)) and [ids] or ids
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
-        res =[]
+        res = []
         for picking_brw in self.browse(cr, uid, ids, context=context):
             res += [aml_brw.id for move in picking_brw.move_lines if move.am_id for aml_brw in move.am_id.line_id]
         return {
             'domain': "[('id','in',\
-                ["+','.join(map(str, res))+"])]",
+                [" + ','.join(map(str, res)) + "])]",
             'name': _('Journal Entries'),
             'view_type': 'form',
             'view_mode': 'tree,form',
@@ -170,14 +172,14 @@ class stock_picking_in(osv.Model):
         }
 
     def show_journal_entries(self, cr, uid, ids, context=None):
-        ids = isinstance(ids, (int,long)) and [ids] or ids
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
-        res =[]
+        res = []
         for picking_brw in self.browse(cr, uid, ids, context=context):
             res += [move.am_id.id for move in picking_brw.move_lines]
         return {
             'domain': "[('id','in',\
-                ["+','.join(map(str, res))+"])]",
+                [" + ','.join(map(str, res)) + "])]",
             'name': _('Journal Entries'),
             'view_type': 'form',
             'view_mode': 'tree,form',
@@ -185,4 +187,3 @@ class stock_picking_in(osv.Model):
             'view_id': False,
             'type': 'ir.actions.act_window'
         }
-

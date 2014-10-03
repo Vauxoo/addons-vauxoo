@@ -26,7 +26,9 @@
 
 from openerp.osv import osv, fields
 
+
 class purchase_requisition(osv.Model):
+
     """
     This is an extension of the purchase requisition model to add the
     functionality to manage a suggested list of partners.
@@ -64,4 +66,4 @@ class purchase_requisition(osv.Model):
                 lambda partner_brw: self.make_purchase_order(
                     cr, uid, [req_brw.id], partner_brw.id, context=context),
                 req_brw.supplier_ids)
-        return True 
+        return True

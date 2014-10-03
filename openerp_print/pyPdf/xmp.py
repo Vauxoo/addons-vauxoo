@@ -361,7 +361,7 @@ class XmpInformation(PdfObject):
                     if idx == -1:
                         break
                     key = key[:idx] + chr(int(key[
-                                          idx+1:idx+5], base=16)) + key[idx+5:]
+                                          idx + 1:idx + 5], base=16)) + key[idx + 5:]
                 if node.nodeType == node.ATTRIBUTE_NODE:
                     value = node.nodeValue
                 else:

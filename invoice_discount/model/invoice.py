@@ -93,7 +93,7 @@ class account_invoice_line(osv.osv):
 
 
 class account_invoice(osv.osv):
-    
+
     '''
     Inherit from account.invoice to get the amount total without discount and
     the amount total of this, of all invoice lines.
@@ -156,4 +156,3 @@ class account_invoice(osv.osv):
                                            help='Total of discount apply in \
                                            each line of the invoice.'),
     }
-    

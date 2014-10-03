@@ -29,7 +29,6 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-
 class inherited_sale_order(osv.Model):
     _inherit = "sale.order"
 
@@ -64,14 +63,14 @@ class inherited_sale_order(osv.Model):
             virtual = line.product_id.qty_available
             real = line.product_id.virtual_available
             if virtual == real and\
-                line.product_uom_qty > virtual or\
-                line.product_uom_qty > virtual:
+                    line.product_uom_qty > virtual or\
+                    line.product_uom_qty > virtual:
                 raise osv.except_osv(_('Error'), _(
                     'The quantity in the line of the product %s is minor that\
                     quantity available ' % line.product_id.name))
 
             elif virtual > real and line.product_uom_qty > real and\
-                line.product_uom_qty < virtual and not line.check_confirm:
+                    line.product_uom_qty < virtual and not line.check_confirm:
                 raise osv.except_osv(_('Error'), _(
                     'The amount you want to sell is not available in the real\
                     stock of product %s, but if a shipment next, if you want\
@@ -84,11 +83,11 @@ class inherited_sale_order(osv.Model):
 class sale_order_line(osv.Model):
 
     def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
-                            uom=False, qty_uos=0, uos=False, name='',
-                            partner_id=False,
-                            lang=False, update_tax=True, date_order=False,
-                            packaging=False, fiscal_position=False, flag=False,
-                            context=None):
+                          uom=False, qty_uos=0, uos=False, name='',
+                          partner_id=False,
+                          lang=False, update_tax=True, date_order=False,
+                          packaging=False, fiscal_position=False, flag=False,
+                          context=None):
         if context is None:
             context = {}
         res = super(
@@ -107,7 +106,7 @@ class sale_order_line(osv.Model):
             'stock.move').search(cr, uid, [('product_id', '=', product),
                            ('state', 'in', (
                             'assigned', 'confirmed', 'waiting')),
-                           ('picking_id.type', '=', 'in')], context=context)
+                ('picking_id.type', '=', 'in')], context=context)
         future_stock and res.get('value', False) and res.get(
             'value', False).update({'stock_move_ids': future_stock})
 

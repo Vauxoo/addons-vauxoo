@@ -26,17 +26,18 @@
 
 from openerp.osv import fields, osv
 
+
 class account_analytic_group(osv.Model):
     _name = 'account.analytic.group'
 
     _columns = {
-            'name' : fields.char('Name', required=True, size=128),
-            }
+        'name': fields.char('Name', required=True, size=128),
+    }
+
 
 class account_analytic_account(osv.Model):
     _inherit = 'account.analytic.account'
 
     _columns = {
         'analytic_group_id': fields.many2one('account.analytic.group', 'Analytic Group'),
-            }
-
+    }

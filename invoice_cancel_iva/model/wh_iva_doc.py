@@ -26,7 +26,6 @@
 from openerp.osv import osv, fields
 
 
-
 class wh_iva_doc(osv.Model):
     _inherit = 'account.wh.iva'
 

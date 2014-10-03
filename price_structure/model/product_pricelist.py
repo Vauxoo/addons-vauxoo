@@ -26,9 +26,10 @@
 from openerp.osv import osv, fields
 
 
-
 class inherit_price_list_item(osv.Model):
+
     """ """
+
     def default_get(self, cr, uid, fields, context=None):
         '''test context '''
         if context is None:
@@ -66,7 +67,7 @@ class inherit_price_list_item(osv.Model):
             for item in self.browse(cr, uid, ids, context=context):
                 price = pricelist_obj.price_get(cr, uid,
                             [item.price_list_id and item.price_list_id.id],
-                            context.get('product'), 1, context=context)
+                    context.get('product'), 1, context=context)
 
                 price = item.price_list_id and price.get(item.price_list_id.id)
 
@@ -77,7 +78,7 @@ class inherit_price_list_item(osv.Model):
                 if item.product_id:
                     price = pricelist_obj.price_get(cr, uid,
                                 [item.price_list_id and item.price_list_id.id],
-                                item.product_id.id, 1, context=context)
+                        item.product_id.id, 1, context=context)
 
                     price = item.price_list_id and price.get(
                         item.price_list_id.id)
@@ -87,9 +88,9 @@ class inherit_price_list_item(osv.Model):
                 elif item.product_active_id:
                     price = pricelist_obj.price_get(cr, uid,
                                 [item.price_list_id and item.price_list_id.id],
-                                item.product_active_id and
-                                item.product_active_id.id,
-                                1, context=context)
+                        item.product_active_id and
+                        item.product_active_id.id,
+                        1, context=context)
                     price = item.price_list_id and price.get(
                         item.price_list_id.id)
 

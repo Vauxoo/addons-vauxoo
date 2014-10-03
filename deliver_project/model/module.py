@@ -21,9 +21,6 @@
 ##############################################################################
 
 
-
-
-
 from openerp.osv import osv, fields
 
 
@@ -54,13 +51,13 @@ class module(osv.Model):
         ActionHelp = dict_txt.get('ActionHelp')
         XmlId = dict_txt.get('XmlId')
         if Name:
-            docStr = docStr+"===%s===" % Name
+            docStr = docStr + "===%s===" % Name
         if XmlId:
-            docStr = docStr+"\nimage: %s.jpeg" % XmlId
+            docStr = docStr + "\nimage: %s.jpeg" % XmlId
         if CompleteMenuName:
-            docStr = docStr+"\n''%s''" % CompleteMenuName
+            docStr = docStr + "\n''%s''" % CompleteMenuName
         if ActionHelp:
-            docStr = docStr+"\n%s" % ActionHelp
+            docStr = docStr + "\n%s" % ActionHelp
         return docStr
 
     def title_help(self, cr, uid, mod_id, module, context={}):
@@ -135,21 +132,21 @@ class module(osv.Model):
                             res_mod_dic[
                                 'doc_on_module'].append(self.title_help(cr, uid,
                                         mnames[data_id.module],
-                                        data_id.module, context=context))
+                                    data_id.module, context=context))
             except KeyError, e:
                 self.__logger.warning(
                     'Data not found for reference %s[%s:%s.%s]', data_id.model,
                     data_id.res_id, data_id.model, data_id.name, exc_info=True)
             except Exception, e:
                 self.__logger.warning('Unknown error while browsing %s[%s]',
-                                        data_id.model, data_id.res_id,
-                                        exc_info=True)
+                                      data_id.model, data_id.res_id,
+                                      exc_info=True)
         # res_mod_dic['doc_on_module']=list(set(res_mod_dic['doc_on_module']))
         for key, value in res.iteritems():
             for k, v in res[key].iteritems():
                 # TODO Make Generic or with regEx
                 # Putting title on the begining.
-                txt = "\n".join(sorted(v[:len(v)-2]))
+                txt = "\n".join(sorted(v[:len(v) - 2]))
                 res[key][k] = txt
         return res
 

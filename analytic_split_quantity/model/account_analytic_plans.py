@@ -26,6 +26,7 @@
 
 from openerp.osv import fields, osv
 
+
 class account_analytic_line(osv.Model):
 
     _inherit = 'account.analytic.line'
@@ -34,6 +35,7 @@ class account_analytic_line(osv.Model):
         'split_unit_amount': fields.float('Distributed Quantity', help='This Quantity is equal to percentage times unit_amount'),
     }
 
+
 class account_move_line(osv.osv):
 
     _inherit = "account.move.line"
@@ -41,12 +43,12 @@ class account_move_line(osv.osv):
     def create_analytic_lines(self, cr, uid, ids, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
-        res = super(account_move_line, self).create_analytic_lines(cr, uid, ids,context=context)
+        res = super(account_move_line, self).create_analytic_lines(cr, uid, ids, context=context)
 
         for move_line in self.browse(cr, uid, ids, context=context):
-           if move_line.analytics_id:
-               for al in move_line.analytic_lines:
-                   al.write({
-                       'split_unit_amount': al.unit_amount * al.percentage / 100,
-                       })
+            if move_line.analytics_id:
+                for al in move_line.analytic_lines:
+                    al.write({
+                        'split_unit_amount': al.unit_amount * al.percentage / 100,
+                    })
         return res

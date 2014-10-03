@@ -30,19 +30,18 @@ class res_partner(osv.Model):
     _columns = {
         'property_payment_term_p_suppliers': fields.property(
             'payment.terms.partner',
-             type='many2one',
-             relation='payment.terms.partner',
-             string ='Payment Term Supplier',
+            type='many2one',
+            relation='payment.terms.partner',
+            string='Payment Term Supplier',
             view_load=True,
-             help="This payment term will be used instead of the default one "
-                  "for purchase orders and supplier invoices"),
+            help="This payment term will be used instead of the default one "
+            "for purchase orders and supplier invoices"),
         'property_payment_term_p_customer': fields.property(
             'payment.terms.partner',
-             type='many2one',
-             relation='payment.terms.partner',
+            type='many2one',
+            relation='payment.terms.partner',
             view_load=True,
-             string ='Payment Term Customer',
-             help="This payment term will be used instead of the default one "
-                  "for sale orders and customer invoices"),
+            string='Payment Term Customer',
+            help="This payment term will be used instead of the default one "
+            "for sale orders and customer invoices"),
     }
-

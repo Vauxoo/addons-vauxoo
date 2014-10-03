@@ -24,9 +24,8 @@ from openerp.report import report_sxw
 import pooler
 
 
-
-
 class process_report(report_sxw.rml_parse):
+
     def __init__(self, cr, uid, name, context):
         super(process_report, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({

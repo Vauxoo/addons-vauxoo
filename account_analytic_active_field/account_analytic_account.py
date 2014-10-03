@@ -25,11 +25,12 @@
 ##############################################################################
 from openerp.osv import osv, fields
 
+
 class account_analytic_account(osv.Model):
     _name = "account.analytic.account"
     _inherit = "account.analytic.account"
     _columns = {
-        'active' : fields.boolean('Active')
+        'active': fields.boolean('Active')
     }
 
     _defaults = {

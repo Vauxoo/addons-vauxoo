@@ -30,7 +30,7 @@
     "author" : "Vauxoo",
     "category" : "Generic Modules",
     "description" : """
-        This module validate that the lines don't have account type different to regular 
+        This module validate that the lines don't have account type different to regular
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",

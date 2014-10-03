@@ -25,33 +25,33 @@ from openerp.tools.translate import _
 
 
 class account_voucher_tax_sat(osv.Model):
-    
+
     _name = 'account.voucher.tax.sat'
-    
+
     _columns = {
         'name': fields.char('Name', size=128,
                             help='Name of This Document',
                             ),
         'partner_id': fields.many2one('res.partner', 'Partner',
-                            domain = "[('sat', '=', True)]",
+                            domain="[('sat', '=', True)]",
                             help='Partner of SAT',
-                            ),
+                                      ),
         'date': fields.date('Accounting Date',
                             help='Accounting date affected',
                             ),
         'aml_ids': fields.many2many('account.move.line', 'voucher_tax_sat_rel',
                             'voucher_tax_sat_id', 'move_line_id',
                             'Move Lines', help='Entries to close',
-                            ),
-        'journal_id':fields.many2one('account.journal', 'Journal',
+                                    ),
+        'journal_id': fields.many2one('account.journal', 'Journal',
                             help='Accounting Journal where Entries will be posted',
-                            ), 
+                                      ),
         'move_id': fields.many2one('account.move', 'Journal Entry',
                             help='Accounting Entry'),
-        'company_id':fields.many2one('res.company', 'Company', help='Company'), 
+        'company_id': fields.many2one('res.company', 'Company', help='Company'),
         'period_id': fields.many2one('account.period', 'Period', required=True,
                             help='Period of Entries to find',
-                            ),
+                                     ),
         'state': fields.selection([
             ('draft', 'New'),
             ('cancelled', 'Cancelled'),
@@ -63,7 +63,7 @@ class account_voucher_tax_sat(osv.Model):
             u, cx).company_id.id,
         'state': 'draft'
     }
-    
+
     def onchange_period(self, cr, uid, ids, period, context=None):
         res = {}
         if period:
@@ -74,64 +74,64 @@ class account_voucher_tax_sat(osv.Model):
         move_line_obj = self.pool.get('account.move.line')
         cr.execute(""" SELECT DISTINCT move_line_id FROM voucher_tax_sat_rel
                         WHERE voucher_tax_sat_id <> %s
-                        AND move_line_id IN %s """,(
-                            voucher_tax.id,
-                            tuple([ move_lines.id\
-                                    for move_lines in voucher_tax.aml_ids ]))
-                    )
+                        AND move_line_id IN %s """, (
+            voucher_tax.id,
+            tuple([move_lines.id
+                   for move_lines in voucher_tax.aml_ids]))
+        )
         dat = cr.dictfetchall()
-        move_line_tax = list( set([ move_tax['move_line_id'] for move_tax in dat ]) )
+        move_line_tax = list(set([move_tax['move_line_id'] for move_tax in dat]))
         if dat:
             raise osv.except_osv(_('Warning'),
                 _("You have this jornal items in other voucher tax sat '%s' ")
-                % ([ move_line.name\
-                        for move_line in move_line_obj.browse(cr, uid,
+                % ([move_line.name
+                    for move_line in move_line_obj.browse(cr, uid,
                                             move_line_tax, context=context)]))
 
         return True
-    
+
     def action_close_tax(self, cr, uid, ids, context=None):
         aml_obj = self.pool.get('account.move.line')
         period_obj = self.pool.get('account.period')
         context = context or {}
-        ids= isinstance(ids,(int,long)) and [ids] or ids
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         for voucher_tax_sat in self.browse(cr, uid, ids, context=context):
-                                            
-                self.validate_move_line(cr, uid,
-                                        voucher_tax_sat, context=context)
-                                    
-                move_id = self.create_move_sat(cr, uid, ids, context=context)
-                self.write(cr, uid, ids, {'move_id': move_id})
-                
-                amount_tax_sat = sum([move_line_tax_sat.credit
-                            for move_line_tax_sat in voucher_tax_sat.aml_ids])
-                            
-                self.create_move_line_sat(cr, uid, voucher_tax_sat,
-                                            amount_tax_sat, context=context)
-                                            
-                self.create_entries_tax_iva_sat(cr, uid, voucher_tax_sat,
-                                                            context=context)
-                                        
-                move_line_copy = [ aml_obj.copy(cr, uid, move_line_tax.id,
-                    {
-                        'move_id': move_id,
-                        'period_id': period_obj.find(cr, uid,
-                                        voucher_tax_sat.date,
-                                        context=context)[0],
-                        'journal_id': voucher_tax_sat.journal_id.id,
-                        'credit': 0.0,
-                        'debit': move_line_tax.credit,
-                        'amount_base': None,
-                        'tax_id_secondary': None,
-                        'not_move_diot': True
-                    }) for move_line_tax in voucher_tax_sat.aml_ids ]
-                    
-                cr.execute('UPDATE account_move_line '\
-                            'SET amount_tax_unround = null '\
-                            'WHERE id in %s ',(tuple(move_line_copy), ))
-                            
+
+            self.validate_move_line(cr, uid,
+                                    voucher_tax_sat, context=context)
+
+            move_id = self.create_move_sat(cr, uid, ids, context=context)
+            self.write(cr, uid, ids, {'move_id': move_id})
+
+            amount_tax_sat = sum([move_line_tax_sat.credit
+                        for move_line_tax_sat in voucher_tax_sat.aml_ids])
+
+            self.create_move_line_sat(cr, uid, voucher_tax_sat,
+                                      amount_tax_sat, context=context)
+
+            self.create_entries_tax_iva_sat(cr, uid, voucher_tax_sat,
+                                            context=context)
+
+            move_line_copy = [aml_obj.copy(cr, uid, move_line_tax.id,
+                {
+                    'move_id': move_id,
+                    'period_id': period_obj.find(cr, uid,
+                                    voucher_tax_sat.date,
+                                    context=context)[0],
+                    'journal_id': voucher_tax_sat.journal_id.id,
+                    'credit': 0.0,
+                    'debit': move_line_tax.credit,
+                    'amount_base': None,
+                    'tax_id_secondary': None,
+                    'not_move_diot': True
+                }) for move_line_tax in voucher_tax_sat.aml_ids]
+
+            cr.execute('UPDATE account_move_line '
+                       'SET amount_tax_unround = null '
+                       'WHERE id in %s ', (tuple(move_line_copy), ))
+
         return self.write(cr, uid, ids, {'state': 'done'}, context=context)
-    
+
     def action_cancel(self, cr, uid, ids, context=None):
         obj_move_line = self.pool.get('account.move.line')
         obj_move = self.pool.get('account.move')
@@ -144,15 +144,15 @@ class account_voucher_tax_sat(osv.Model):
                 obj_move.unlink(cr, uid, [tax_sat.move_id.id],
                                 context=context)
         return self.write(cr, uid, ids, {'state': 'draft'}, context=context)
-    
+
     def create_entries_tax_iva_sat(self, cr, uid, voucher_tax_sat,
-                                                            context=None):
+                                   context=None):
         aml_obj = self.pool.get('account.move.line')
         av_obj = self.pool.get('account.voucher')
         period_obj = self.pool.get('account.period')
         for move_line in voucher_tax_sat.aml_ids:
             if move_line.tax_id_secondary and\
-                                        move_line.tax_id_secondary.tax_sat_ok:
+                    move_line.tax_id_secondary.tax_sat_ok:
                 amount_base, tax_secondary = av_obj._get_base_amount_tax_secondary(cr,
                             uid, move_line.tax_id_secondary,
                             move_line.amount_base, move_line.credit,
@@ -162,11 +162,11 @@ class account_voucher_tax_sat(osv.Model):
                     'journal_id': voucher_tax_sat.journal_id.id,
                     'date': voucher_tax_sat.date,
                     'period_id': period_obj.find(cr, uid,
-                                                    voucher_tax_sat.date,
-                                                    context=context)[0],
+                                                 voucher_tax_sat.date,
+                                                 context=context)[0],
                     'debit': move_line.credit,
                     'name': _('Close of IVA Retained'),
-                    'partner_id' : move_line.partner_id.id,
+                    'partner_id': move_line.partner_id.id,
                     'account_id': move_line.tax_id_secondary.account_id_creditable.id,
                     'credit': 0.0,
                     'amount_base': amount_base,
@@ -177,18 +177,18 @@ class account_voucher_tax_sat(osv.Model):
                     'journal_id': voucher_tax_sat.journal_id.id,
                     'date': voucher_tax_sat.date,
                     'period_id': period_obj.find(cr, uid,
-                                                    voucher_tax_sat.date,
-                                                    context=context)[0],
+                                                 voucher_tax_sat.date,
+                                                 context=context)[0],
                     'debit': 0.0,
                     'name': _('Close of IVA Retained'),
-                    'partner_id' : move_line.partner_id.id,
+                    'partner_id': move_line.partner_id.id,
                     'account_id': move_line.tax_id_secondary.account_id_by_creditable.id,
                     'credit': move_line.credit,
                 }
                 for line_dt_cr in [move_line_dt, move_line_cr]:
                     aml_obj.create(cr, uid, line_dt_cr, context=context)
         return True
-    
+
     def create_move_line_sat(self, cr, uid, voucher_tax_sat, amount, context=None):
         aml_obj = self.pool.get('account.move.line')
         period_obj = self.pool.get('account.period')
@@ -197,8 +197,8 @@ class account_voucher_tax_sat(osv.Model):
             'journal_id': voucher_tax_sat.journal_id.id,
             'date': voucher_tax_sat.date,
             'period_id': period_obj.find(cr, uid,
-                                                voucher_tax_sat.date,
-                                                context=context)[0],
+                                         voucher_tax_sat.date,
+                                         context=context)[0],
             'debit': 0,
             'name': _('Payment to SAT'),
             'partner_id': voucher_tax_sat.partner_id.id,
@@ -206,31 +206,31 @@ class account_voucher_tax_sat(osv.Model):
             'credit': amount,
         }
         return aml_obj.create(cr, uid, vals, context=context)
-    
+
     def create_move_sat(self, cr, uid, ids, context=None):
         account_move_obj = self.pool.get('account.move')
         context = context or {}
-        ids= isinstance(ids,(int,long)) and [ids] or ids
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         for move_tax_sat in self.browse(cr, uid, ids, context=context):
-            vals_move_tax= account_move_obj.account_move_prepare(cr, uid,
+            vals_move_tax = account_move_obj.account_move_prepare(cr, uid,
                     move_tax_sat.journal_id.id,
-                    date = move_tax_sat.date,
+                    date=move_tax_sat.date,
                     ref='Entry SAT', context=context)
         return account_move_obj.create(cr, uid, vals_move_tax, context=context)
-
 
     def sat_pay(self, cr, uid, ids, context=None):
         """
         """
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
-        if not ids: return []
+        if not ids:
+            return []
         dummy, view_id = self.pool.get('ir.model.data').\
-                                get_object_reference(cr, uid,
-                                'account_voucher', 'view_vendor_payment_form')
+            get_object_reference(cr, uid,
+                             'account_voucher', 'view_vendor_payment_form')
         exp_brw = self.browse(cr, uid, ids[0], context=context)
         return {
-            'name':_("Pay SAT"),
+            'name': _("Pay SAT"),
             'view_mode': 'form',
             'view_id': view_id,
             'view_type': 'form',
@@ -250,9 +250,9 @@ class account_voucher_tax_sat(osv.Model):
 
 
 class account_tax(osv.Model):
-    
+
     _inherit = 'account.tax'
-    
+
     _columns = {
         'tax_sat_ok': fields.boolean('Create entries IVA to SAT'),
         'account_id_creditable': fields.many2one('account.account',
@@ -261,5 +261,5 @@ class account_tax(osv.Model):
                                         'Account of entries SAT x Acreditable'),
         'tax_reference': fields.many2one('account.tax',
             'Tax Reference',
-            help = 'Tax Reference to get data of DIOT/SAT')
+            help='Tax Reference to get data of DIOT/SAT')
     }

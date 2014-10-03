@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Humberto Arocha <hbto@vauxoo.com>           
+#    Coded by: Humberto Arocha <hbto@vauxoo.com>
 #    Planified by: Humberto Arocha <rsilvam@vauxoo.com>
 #    Audited by: Gabriela Quilarque <gabriela@openerp.com.ve>
 #############################################################################

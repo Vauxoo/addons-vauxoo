@@ -26,54 +26,55 @@
 from openerp.tools.translate import _
 from openerp.osv import fields, osv
 
+
 class user_story_phase(osv.Model):
     _name = "user.story.phase"
     _description = "User Story Phase"
 
     def _check_recursion(self, cr, uid, ids, context=None):
-         if context is None:
+        if context is None:
             context = {}
 
-         data_phase = self.browse(cr, uid, ids[0], context=context)
-         prev_ids = data_phase.previous_phase_ids
-         next_ids = data_phase.next_phase_ids
-         # it should neither be in prev_ids nor in next_ids
-         if (data_phase in prev_ids) or (data_phase in next_ids):
-             return False
-         ids = [id for id in prev_ids if id in next_ids]
-         # both prev_ids and next_ids must be unique
-         if ids:
-             return False
-         # unrelated user_story
-         prev_ids = [rec.id for rec in prev_ids]
-         next_ids = [rec.id for rec in next_ids]
-         # iter prev_ids
-         while prev_ids:
-             cr.execute('SELECT distinct prv_phase_id FROM user_story_phase_rel WHERE next_phase_id IN %s', (tuple(prev_ids),))
-             prv_phase_ids = filter(None, map(lambda x: x[0], cr.fetchall()))
-             if data_phase.id in prv_phase_ids:
-                 return False
-             ids = [id for id in prv_phase_ids if id in next_ids]
-             if ids:
-                 return False
-             prev_ids = prv_phase_ids
-         # iter next_ids
-         while next_ids:
-             cr.execute('SELECT distinct next_phase_id FROM user_story_phase_rel WHERE prv_phase_id IN %s', (tuple(next_ids),))
-             next_phase_ids = filter(None, map(lambda x: x[0], cr.fetchall()))
-             if data_phase.id in next_phase_ids:
-                 return False
-             ids = [id for id in next_phase_ids if id in prev_ids]
-             if ids:
-                 return False
-             next_ids = next_phase_ids
-         return True
+        data_phase = self.browse(cr, uid, ids[0], context=context)
+        prev_ids = data_phase.previous_phase_ids
+        next_ids = data_phase.next_phase_ids
+        # it should neither be in prev_ids nor in next_ids
+        if (data_phase in prev_ids) or (data_phase in next_ids):
+            return False
+        ids = [id for id in prev_ids if id in next_ids]
+        # both prev_ids and next_ids must be unique
+        if ids:
+            return False
+        # unrelated user_story
+        prev_ids = [rec.id for rec in prev_ids]
+        next_ids = [rec.id for rec in next_ids]
+        # iter prev_ids
+        while prev_ids:
+            cr.execute('SELECT distinct prv_phase_id FROM user_story_phase_rel WHERE next_phase_id IN %s', (tuple(prev_ids),))
+            prv_phase_ids = filter(None, map(lambda x: x[0], cr.fetchall()))
+            if data_phase.id in prv_phase_ids:
+                return False
+            ids = [id for id in prv_phase_ids if id in next_ids]
+            if ids:
+                return False
+            prev_ids = prv_phase_ids
+        # iter next_ids
+        while next_ids:
+            cr.execute('SELECT distinct next_phase_id FROM user_story_phase_rel WHERE prv_phase_id IN %s', (tuple(next_ids),))
+            next_phase_ids = filter(None, map(lambda x: x[0], cr.fetchall()))
+            if data_phase.id in next_phase_ids:
+                return False
+            ids = [id for id in next_phase_ids if id in prev_ids]
+            if ids:
+                return False
+            next_ids = next_phase_ids
+        return True
 
     def _check_dates(self, cr, uid, ids, context=None):
-         for phase in self.read(cr, uid, ids, ['date_start', 'date_end'], context=context):
-             if phase['date_start'] and phase['date_end'] and phase['date_start'] > phase['date_end']:
-                 return False
-         return True
+        for phase in self.read(cr, uid, ids, ['date_start', 'date_end'], context=context):
+            if phase['date_start'] and phase['date_end'] and phase['date_start'] > phase['date_end']:
+                return False
+        return True
 #
 #    def _compute_progress(self, cr, uid, ids, field_name, arg, context=None):
 #        res = {}
@@ -104,29 +105,29 @@ class user_story_phase(osv.Model):
     _columns = {
         'name': fields.char("Name", size=64, required=True),
         'user_story_id': fields.many2one('user.story', 'User Story', required=True, select=True),
-        'state': fields.selection([('draft', 'New'), ('cancelled', 'Cancelled'),('open', 'In Progress'), ('pending', 'Pending'), ('done', 'Done')], 'Status', readonly=True, required=True,
+        'state': fields.selection([('draft', 'New'), ('cancelled', 'Cancelled'), ('open', 'In Progress'), ('pending', 'Pending'), ('done', 'Done')], 'Status', readonly=True, required=True,
                                   help='If the phase is created the status \'Draft\'.\n If the phase is started, the status becomes \'In Progress\'.\n If review is needed the phase is in \'Pending\' status.\
                                   \n If the phase is over, the status is set to \'Done\'.'),
-        'date_start': fields.datetime('Start Date', select=True, help="It's computed by the scheduler according the project date or the end date of the previous phase.", states={'done':[('readonly',True)], 'cancelled':[('readonly',True)]}),
-        'date_end': fields.datetime('End Date', help=" It's computed by the scheduler according to the start date and the duration.", states={'done':[('readonly',True)], 'cancelled':[('readonly',True)]}),
+        'date_start': fields.datetime('Start Date', select=True, help="It's computed by the scheduler according the project date or the end date of the previous phase.", states={'done': [('readonly', True)], 'cancelled': [('readonly', True)]}),
+        'date_end': fields.datetime('End Date', help=" It's computed by the scheduler according to the start date and the duration.", states={'done': [('readonly', True)], 'cancelled': [('readonly', True)]}),
         'sequence': fields.integer('Sequence', select=True, help="Gives the sequence order when displaying a list of phases."),
-        'duration': fields.float('Duration', required=True, help="By default in days", states={'done':[('readonly',True)], 'cancelled':[('readonly',True)]}),
+        'duration': fields.float('Duration', required=True, help="By default in days", states={'done': [('readonly', True)], 'cancelled': [('readonly', True)]}),
 
-        'next_phase_ids': fields.many2many('user.story.phase', 'user_story_phase_rel', 'prv_phase_id', 'next_phase_id', 'Next Phases', states={'cancelled':[('readonly',True)]}),
+        'next_phase_ids': fields.many2many('user.story.phase', 'user_story_phase_rel', 'prv_phase_id', 'next_phase_id', 'Next Phases', states={'cancelled': [('readonly', True)]}),
 
         'previous_phase_ids': fields.many2many('user.story.phase', 'user_story_phase_rel',
-            'next_phase_id', 'prv_phase_id', 'Previous Phases', states={'cancelled':[('readonly',True)]}),
+            'next_phase_id', 'prv_phase_id', 'Previous Phases', states={'cancelled': [('readonly', True)]}),
 
-        'product_uom': fields.many2one('product.uom', 'Duration Unit of Measure', required=True, help="Unit of Measure (Unit of Measure) is the unit of measurement for Duration", states={'done':[('readonly',True)], 'cancelled':[('readonly',True)]}),
+        'product_uom': fields.many2one('product.uom', 'Duration Unit of Measure', required=True, help="Unit of Measure (Unit of Measure) is the unit of measurement for Duration", states={'done': [('readonly', True)], 'cancelled': [('readonly', True)]}),
 
-        'constraint_date_start': fields.datetime('Minimum Start Date', help='force the phase to start after this date', states={'done':[('readonly',True)], 'cancelled':[('readonly',True)]}),
-        
-        'constraint_date_end': fields.datetime('Deadline', help='force the phase to finish before this date', states={'done':[('readonly',True)], 'cancelled':[('readonly',True)]}),
+        'constraint_date_start': fields.datetime('Minimum Start Date', help='force the phase to start after this date', states={'done': [('readonly', True)], 'cancelled': [('readonly', True)]}),
+
+        'constraint_date_end': fields.datetime('Deadline', help='force the phase to finish before this date', states={'done': [('readonly', True)], 'cancelled': [('readonly', True)]}),
         'user_force_ids': fields.many2many('res.users', string='Force Assigned Users'),
-        'user_ids': fields.one2many('user.story.user.allocation', 'phase_id', "Assigned Users",states={'done':[('readonly',True)], 'cancelled':[('readonly',True)]},
+        'user_ids': fields.one2many('user.story.user.allocation', 'phase_id', "Assigned Users", states={'done': [('readonly', True)], 'cancelled': [('readonly', True)]},
             help="The resources on the project can be computed automatically by the scheduler."),
-        }
-        
+    }
+
 #        'task_ids': fields.one2many('project.task', 'phase_id', "Project Tasks", states={'done':[('readonly',True)], 'cancelled':[('readonly',True)]}),
 #        'progress': fields.function(_compute_progress, string='Progress', help="Computed based on related tasks"),
 
@@ -136,7 +137,7 @@ class user_story_phase(osv.Model):
     }
     _order = "user_story_id, date_start, sequence"
     _constraints = [
-        (_check_recursion,'Loops in phases not allowed',['next_phase_ids', 'previous_phase_ids']),
+        (_check_recursion, 'Loops in phases not allowed', ['next_phase_ids', 'previous_phase_ids']),
         (_check_dates, 'Phase start-date must be lower than phase end-date.', ['date_start', 'date_end']),
     ]
 
@@ -178,7 +179,7 @@ class user_story_phase(osv.Model):
 #        for phase in phases:
 #            if phase.state in ('done','cancelled'):
 #                continue
-#            # FIXME: brittle and not working if context['lang'] != 'en_US'
+# FIXME: brittle and not working if context['lang'] != 'en_US'
 #            duration_uom = {
 #                'day(s)': 'd', 'days': 'd', 'day': 'd', 'd':'d',
 #                'month(s)': 'm', 'months': 'm', 'month':'month', 'm':'m',
@@ -208,9 +209,8 @@ class user_story_phase(osv.Model):
 #            result += "\n"
 #
 #        return result
-#project_phase()
+# project_phase()
 #
-
 
 
 class user_story_user_allocation(osv.Model):
@@ -225,6 +225,7 @@ class user_story_user_allocation(osv.Model):
         'date_start': fields.datetime('Start Date', help="Starting Date"),
         'date_end': fields.datetime('End Date', help="Ending Date"),
     }
+
 
 class user_story(osv.Model):
     _inherit = 'user.story'
@@ -242,11 +243,12 @@ class user_story(osv.Model):
     }
 
     def create(self, cr, uid, vals, context=None):
-        if context is None: context = {}
+        if context is None:
+            context = {}
         # Prevent double project creation when 'use_tasks' is checked!
         context = dict(context, user_story_creation_in_progress=True)
         context['name'] = "User Story / %s" % (vals['name'])
-        if vals.get('type', False) not in ('template','contract'):
+        if vals.get('type', False) not in ('template', 'contract'):
             vals['type'] = 'contract'
         user_story_id = super(user_story, self).create(cr, uid, vals, context=context)
         return user_story_id
@@ -270,7 +272,7 @@ class user_story(osv.Model):
 #            for phase in project.phase_ids:
 #                if phase.state in ('done','cancelled'):
 #                    continue
-#                # Maybe it's better to update than unlink/create if it already exists ?
+# Maybe it's better to update than unlink/create if it already exists ?
 #                p = getattr(project_gantt, 'Phase_%d' % (phase.id,))
 #
 #                self.pool.get('project.user.allocation').unlink(cr, uid,

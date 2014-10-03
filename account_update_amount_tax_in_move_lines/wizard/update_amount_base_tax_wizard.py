@@ -26,24 +26,25 @@
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
+
 class update_amount_base_tax_wizard(osv.osv_memory):
     _name = 'update.amount.tax.wizard'
-    
+
     _columns = {
-        'warning' : fields.text('WARNING!', readonly=True),
-        'update_tax_sec' : fields.boolean('Update Tax Secondary', help='If this field is active, '\
+        'warning': fields.text('WARNING!', readonly=True),
+        'update_tax_sec': fields.boolean('Update Tax Secondary', help='If this field is active, '
             'was updated the tax secondary of Journal Items although already have tax secondary'),
-        'update_amount_base' : fields.boolean('Update Amount Base', help='If this field is '
-            'active, was updated the amount base of Journal Items although already have '\
+        'update_amount_base': fields.boolean('Update Amount Base', help='If this field is '
+            'active, was updated the amount base of Journal Items although already have '
             'this amount'),
-        }
-    
+    }
+
     _defaults = {
-        'warning' : _('This wizard only should be used when the company have '\
-        'configured a tax by purchases and other by sales for each amount to '\
+        'warning': _('This wizard only should be used when the company have '
+        'configured a tax by purchases and other by sales for each amount to '
         'tax, and the account of each tax is configured correctly')
-        }
-    
+    }
+
     def update_tax_secondary(self, cr, uid, ids, company_id, tax_ids, context=None):
         if not context:
             context = {}
@@ -59,7 +60,7 @@ class update_amount_base_tax_wizard(osv.osv_memory):
             attrs.append(('tax_id_secondary', '=', None))
         line_ids = move_line_obj.search(cr, uid, attrs, context=context)
         for line in move_line_obj.browse(cr, uid, line_ids, context=context):
-            tax_line = acc_tax_obj.search(cr, uid, [('name', '=', line.name),\
+            tax_line = acc_tax_obj.search(cr, uid, [('name', '=', line.name),
                 ('id', 'in', tax_ids)], context=context)
             if tax_line:
                 cr.execute("""UPDATE account_move_line
@@ -73,7 +74,7 @@ class update_amount_base_tax_wizard(osv.osv_memory):
                 SET tax_id_secondary = Null
                 WHERE id = %s""", (line,))
         return True
-    
+
     def apply(self, cr, uid, ids, context=None):
         if not context:
             context = {}
@@ -83,10 +84,10 @@ class update_amount_base_tax_wizard(osv.osv_memory):
         acc_tax_obj = self.pool.get('account.tax')
         company_id = self.pool.get('res.company')._company_default_get(cr, uid,
             'update.amount.tax.wizard', context=context)
-        category_iva_ids = acc_tax_category_obj.search(cr, uid, [\
+        category_iva_ids = acc_tax_category_obj.search(cr, uid, [
             ('name', 'in', ('IVA', 'IVA-EXENTO', 'IVA-RET', 'IVA-PART'))], context=context)
         tax_ids = acc_tax_obj.search(cr, uid, [
-            ('company_id', '=' ,company_id),
+            ('company_id', '=', company_id),
             ('type_tax_use', '=', 'purchase'),
             ('tax_category_id', 'in', category_iva_ids)], context=context)
         self.update_tax_secondary(cr, uid, ids, company_id, tax_ids, context=context)
@@ -108,7 +109,7 @@ class update_amount_base_tax_wizard(osv.osv_memory):
             if amount_tax != 0:
                 cr.execute("""UPDATE account_move_line
                     SET amount_base = %s
-                    WHERE id = %s""", (abs(amount_base/amount_tax), move.id))
+                    WHERE id = %s""", (abs(amount_base / amount_tax), move.id))
             else:
                 if amount_base:
                     cr.execute("""UPDATE account_move_line
@@ -129,25 +130,25 @@ class update_amount_base_tax_wizard(osv.osv_memory):
             #~ list_moves.append(line.move_id)
         #~ list_moves = list(set(list_moves))
         #~ for move in list_moves:
-            #~ move_tax = move_line_obj.search(cr, uid, [('move_id', '=', move.id), 
-                #~ ('tax_id_secondary', '!=', False), ('reconcile_id','=', False),
-                #~ ('reconcile_partial_id', '=', False)])
+            #~ move_tax = move_line_obj.search(cr, uid, [('move_id', '=', move.id),
+            #~ ('tax_id_secondary', '!=', False), ('reconcile_id','=', False),
+            #~ ('reconcile_partial_id', '=', False)])
             #~ reconcile_id = False
             #~ reconcile_partial_id = False
             #~ for line in move.line_id:
-                #~ if line.reconcile_id:
-                    #~ reconcile_id = line.reconcile_id.id
-                    #~ continue
-                #~ if line.reconcile_partial_id:
-                    #~ reconcile_partial_id = line.reconcile_partial_id.id
-                    #~ continue
+            #~ if line.reconcile_id:
+            #~ reconcile_id = line.reconcile_id.id
+            #~ continue
+            #~ if line.reconcile_partial_id:
+            #~ reconcile_partial_id = line.reconcile_partial_id.id
+            #~ continue
             #~ for line in move_line_obj.browse(cr, uid, move_tax, context=context):
-                #~ if reconcile_id:
-                    #~ cr.execute("""UPDATE account_move_line
-                        #~ SET reconcile_id = %s
-                        #~ WHERE id = %s""", (reconcile_id, line.id))
-                #~ if reconcile_partial_id:
-                    #~ cr.execute("""UPDATE account_move_line
-                        #~ SET reconcile_partial_id = %s
-                        #~ WHERE id = %s""", (reconcile_partial_id, line.id))
+            #~ if reconcile_id:
+            #~ cr.execute("""UPDATE account_move_line
+            #~ SET reconcile_id = %s
+            #~ WHERE id = %s""", (reconcile_id, line.id))
+            #~ if reconcile_partial_id:
+            #~ cr.execute("""UPDATE account_move_line
+            #~ SET reconcile_partial_id = %s
+            #~ WHERE id = %s""", (reconcile_partial_id, line.id))
         return True

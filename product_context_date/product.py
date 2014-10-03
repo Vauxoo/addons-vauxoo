@@ -21,9 +21,10 @@
 
 from openerp.osv import fields, osv
 
+
 class product_product(osv.osv):
     _inherit = "product.product"
-    
+
     _columns = {
         'date_from': fields.dummy(string='Date From', type='date'),
         'date_to': fields.dummy(string='Date To', type='date'),

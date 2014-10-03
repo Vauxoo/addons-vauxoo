@@ -37,7 +37,7 @@ To generate journal items per period inventory valuation
 """,
     "depends": ['account','product','stock'],
     "data": [
-            'security/security.xml',                                                
+            'security/security.xml',
             'security/ir.model.access.csv',
             'view/periodic_inventory_valuation_view.xml',
         ],

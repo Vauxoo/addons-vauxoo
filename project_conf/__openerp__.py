@@ -1,10 +1,10 @@
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    d$
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A. (Maria Gabriela Quilarque)          
+#    Coded by: Vauxoo C.A. (Maria Gabriela Quilarque)
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 ##############################################################################
@@ -40,25 +40,25 @@ Project Configuration
 .. image:: project_conf/static/src/img/columns.png
 .
    * Load the templates automatically:
-       * Envio de Tarea por Email: Email Template to send email by task. 
+       * Envio de Tarea por Email: Email Template to send email by task.
        * Template to Outgoing mail server.
        * Envio de Reporte de Credenciales del Server: After install server, the user should send this email.
 
 **What need you do after install this module:**
 
     - For configurate server go to the Menu: Setting->Technical->Email->Outgoing Mail Servers->OUT SERVER, set password for username and Test Conecction.
-   
+
 .. image:: project_conf/static/src/img/test_connection.png
 .
     - For active any template go to the Menu: Setting->Technical->Email->Templates, select the template and action triggers **Act context action**:
-   
+
 .. image:: project_conf/static/src/img/add_context_action.png
 .
       And before for see the action, go to any task and press More-> Send Mail (New Task)
-      
+
 .. image:: project_conf/static/src/img/send_mail.png
 .
-    
+
     - Go to the Users and set the Email.
     - Go to the Menu: Settings-> Technical-> Scheduler -> Scheduler Actions. Sign in template: **Email Queue Manager**, configurate Interval Number,
       and Interval Unit.

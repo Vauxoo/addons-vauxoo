@@ -30,6 +30,7 @@ purchase_requisition_type = [
     ('service', 'Services'),
 ]
 
+
 class purchase_requisition(osv.Model):
 
     _inherit = 'purchase.requisition'

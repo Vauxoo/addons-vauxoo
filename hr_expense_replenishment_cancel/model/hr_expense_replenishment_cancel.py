@@ -24,14 +24,15 @@
 ###############################################################################
 from openerp.osv import osv
 
+
 class hr_expense_expense(osv.Model):
     _inherit = "hr.expense.expense"
-    
+
     def expense_canceled(self, cr, uid, ids, context=None):
         obj_move_line = self.pool.get('account.move.line')
         obj_move = self.pool.get('account.move')
         res = super(hr_expense_expense,
-                        self).expense_canceled(cr, uid, ids, context=context)
+                    self).expense_canceled(cr, uid, ids, context=context)
         for expense in self.browse(cr, uid, ids, context=context):
             if expense.account_move_id:
                 obj_move_line._remove_move_reconcile(cr, uid,

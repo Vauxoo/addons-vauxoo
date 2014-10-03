@@ -25,10 +25,10 @@
 
 from openerp.osv import osv, fields
 
+
 class message_post_test_line(osv.Model):
 
     _name = 'message.post.test.line'
-
 
     _columns = {
         'name': fields.char('Name'),

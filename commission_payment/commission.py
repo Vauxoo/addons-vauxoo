@@ -7,6 +7,7 @@ from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class commission_payment(osv.Model):
+
     """
     OpenERP Model : commission_payment
     """
@@ -131,7 +132,7 @@ class commission_payment(osv.Model):
         comm_invoice_ids = self.pool.get('commission.invoice')
         comm_retention_ids = self.pool.get('commission.retention')
 
-        ## Retenciones
+        # Retenciones
         # de IVA
         # de ISLR
         # de IM
@@ -237,7 +238,7 @@ class commission_payment(osv.Model):
                                     # (productos)
                                     for inv_lin in inv_brw.invoice_line:
 
-                                        #~ #~ print 'Producto: ', inv_lin.name, '\n'
+                                        # ~ #~ print 'Producto: ', inv_lin.name, '\n'
 
                                         # Verificar si tiene producto asociado
                                         if inv_lin.product_id:
@@ -247,7 +248,7 @@ class commission_payment(osv.Model):
                                             #~ Determinar si la linea de la factura tiene
                                             #~ un impuesto retenible (perc_iva)
                                             #~ se asume que si hay mas de una tasa de iva se usara la mayor
-                                            perc_iva = inv_lin.invoice_line_tax_id and [tax.amount for tax in inv_lin.invoice_line_tax_id] and 100*max(
+                                            perc_iva = inv_lin.invoice_line_tax_id and [tax.amount for tax in inv_lin.invoice_line_tax_id] and 100 * max(
                                                 [tax.amount for tax in inv_lin.invoice_line_tax_id]) or 0.0
                                             #~ ====================================================================
                                             #~ ================================
@@ -261,7 +262,7 @@ class commission_payment(osv.Model):
                                             #~ en este caso esta empresa, la cual calcula la comision
                                             perc_ret_islr = inv_lin.concept_id and inv_lin.concept_id.withholdable and \
                                                 [tax.wh_perc for tax in inv_lin.concept_id.rate_ids if tax.residence and not tax.nature] and max(
-                                                [tax.wh_perc for tax in inv_lin.concept_id.rate_ids if tax.residence and not tax.nature]) or 0.0
+                                                    [tax.wh_perc for tax in inv_lin.concept_id.rate_ids if tax.residence and not tax.nature]) or 0.0
                                             #~ ====================================================================
                                             #~ ====================================================================
                                             # Si esta aqui es porque hay un
@@ -289,25 +290,25 @@ class commission_payment(osv.Model):
                                                     list_price = prod_prices_brw.price
                                                     list_date = prod_prices_brw.name
                                                     no_price = False
-                                                    #~ #~ print '[date_invoice : list_price : list_date]: [', inv_brw.date_invoice,' : ', list_price,' : ', list_date,'] \n'
+                                                    # ~ #~ print '[date_invoice : list_price : list_date]: [', inv_brw.date_invoice,' : ', list_price,' : ', list_date,'] \n'
                                                     break
                                             #~ print 'no_price',no_price
                                             if no_price == False:
                                                 #~ print 'entreeeeeeeee aquiiiiiiiii'
                                                 # Determinar cuanto fue el descuento en este producto en aquel momento de la venta
                                                 #~ if (inv_lin.price_subtotal/inv_lin.quantity)< inv_lin.price_unit:
-                                                if abs((inv_lin.price_subtotal/inv_lin.quantity) - inv_lin.price_unit) > 0.05:
+                                                if abs((inv_lin.price_subtotal / inv_lin.quantity) - inv_lin.price_unit) > 0.05:
                                                     # con esto se asegura que
                                                     # no se esta pasando por
                                                     # alto el descuento en
                                                     # linea
                                                     price_unit = round((
-                                                        inv_lin.price_subtotal/inv_lin.quantity), 2)
+                                                        inv_lin.price_subtotal / inv_lin.quantity), 2)
                                                 else:
                                                     price_unit = inv_lin.price_unit
                                                 if list_price:
                                                     dcto = round((
-                                                        list_price - price_unit)*100/list_price, 1)
+                                                        list_price - price_unit) * 100 / list_price, 1)
                                                 rate_item = dcto
 
                                                 # Determinar dias entre la
@@ -381,12 +382,12 @@ class commission_payment(osv.Model):
                                                 # CALCULO DE COMISION POR LINEA DE PRODUCTO #
                                                 ###############################
 
-                                                PenBxLinea = payment_brw.amount*(
-                                                    inv_lin.price_subtotal/inv_brw.amount_untaxed)
+                                                PenBxLinea = payment_brw.amount * (
+                                                    inv_lin.price_subtotal / inv_brw.amount_untaxed)
                                                 Fact_Sup = 1 - perc_ret_islr / \
-                                                    100 - perc_ret_im/100
-                                                Fact_Inf = 1 + (perc_iva/100) * (
-                                                    1 - perc_ret_iva/100) - perc_ret_islr/100 - perc_ret_im/100
+                                                    100 - perc_ret_im / 100
+                                                Fact_Inf = 1 + (perc_iva / 100) * (
+                                                    1 - perc_ret_iva / 100) - perc_ret_islr / 100 - perc_ret_im / 100
 
                                                 comm_line =  PenBxLinea * Fact_Sup * \
                                                     (bar_dcto_comm /
@@ -397,12 +398,12 @@ class commission_payment(osv.Model):
                                                 comm_line_ids.create(cr, user, {
                                                     'commission_id': commission.id,
                                                     'voucher_id': voucher_brw.id,
-                                                    'name':  voucher_brw.name and voucher_brw.name or '/',
+                                                    'name': voucher_brw.name and voucher_brw.name or '/',
                                                     'pay_date': voucher_brw.date,
                                                     'pay_off': voucher_brw.amount,
                                                     'concept': payment_brw.id,
                                                     'invoice_id': payment_brw.invoice_id.id,
-                                                    'invoice_num':  inv_brw.number,
+                                                    'invoice_num': inv_brw.number,
                                                     'partner_id': inv_brw.partner_id.id,
                                                     'saleman_name': saleman and saleman.name,
                                                     'saleman_id': saleman and saleman.id,
@@ -411,9 +412,9 @@ class commission_payment(osv.Model):
                                                     'days': emission_days,
                                                     'inv_subtotal': inv_brw.amount_untaxed,
                                                     'item': inv_lin.name,
-                                                    'price_unit':  price_unit,
-                                                    'price_subtotal':  inv_lin.price_subtotal,
-                                                    'price_list':  list_price,
+                                                    'price_unit': price_unit,
+                                                    'price_subtotal': inv_lin.price_subtotal,
+                                                    'price_list': list_price,
                                                     'price_date': list_date,
                                                     'perc_ret_islr': perc_ret_islr,
                                                     'perc_ret_im': perc_ret_im,
@@ -430,7 +431,7 @@ class commission_payment(osv.Model):
                                                 # Se genera un lista de tuplas con las lineas, productos y sus correspondientes fechas
                                                 # en las cuales no aparece precio de lista, luego al final se escriben los
                                                 # valores en la correspondiente bitacora para su inspeccion.
-                                                #~ #~ print 'No hubo precio de lista para la fecha estipulada, hay que generar el precio en este producto \n'
+                                                # ~ #~ print 'No hubo precio de lista para la fecha estipulada, hay que generar el precio en este producto \n'
                                                 noprice_ids.create(cr, user, {
                                                     'commission_id': commission.id,
                                                     'product_id': prod_id,
@@ -443,8 +444,8 @@ class commission_payment(osv.Model):
                                             # de la factura puesto que es un
                                             # asunto muy delicado.
                                             sale_noids.create(cr, user, {
-                                                'commission_id':   commission.id,
-                                                'inv_line_id':   inv_lin.id,
+                                                'commission_id': commission.id,
+                                                'inv_line_id': inv_lin.id,
                                             }, context=None)
                                 else:
                                     #~ TODO: REVISAR QUE HACEMOS CON ESTA PARTE DEL CODIGO
@@ -453,12 +454,12 @@ class commission_payment(osv.Model):
                                     # tener detalles concisos y porcion de
                                     # voucher de pago de la factura en cuestion
                                     comm_retention_ids.create(cr, user, {
-                                        'commission_id':   commission.id,
+                                        'commission_id': commission.id,
                                         'invoice_id': payment_brw.invoice_id.id,
                                         'voucher_id': voucher_brw.id,
                                         'date': voucher_brw.date,
                                         'ret_iva': no_ret_iva,
-                                        'ret_islr':  no_ret_islr,
+                                        'ret_islr': no_ret_islr,
                                         'ret_im': no_ret_im,
                                     }, context=None)
                             elif (payment_brw.invoice_id.id == False and payment_brw.paid_comm == False):
@@ -469,8 +470,8 @@ class commission_payment(osv.Model):
                                 # no tienen sentido mostrarlas aqui.
                                 if payment_brw.account_id.type == 'receivable':
                                     uninvoiced_pays.create(cr, user, {
-                                        'commission_id':   commission.id,
-                                        'payment_id':   payment_brw.id,
+                                        'commission_id': commission.id,
+                                        'payment_id': payment_brw.id,
                                     }, context=None)
                         else:
                             #~ No se hace nada por que el vendedor del pago que se esta consultando no se incorporo
@@ -488,7 +489,7 @@ class commission_payment(osv.Model):
         saleman_ids = self.pool.get('commission.saleman')
         comm_voucher_ids = self.pool.get('commission.voucher')
         comm_retention_ids = self.pool.get('commission.retention')
-        #~ #~ print 'antes de calcular totales\n'
+        # ~ #~ print 'antes de calcular totales\n'
 
         for commission in commissions:
 
@@ -524,14 +525,14 @@ class commission_payment(osv.Model):
                 criba[vendor_id][voucher_id][1][
                     invoice_id][0].append(comm_line_id)
 
-            ## escribir el total para cada vendedor encontrado
+            # escribir el total para cada vendedor encontrado
             total_comm = 0
             for vendor_key in criba.keys():
                 #~ print 'fooooooooor'
                 vendor_id = saleman_ids.create(cr, user, {
                     'commission_id': commission.id,
                     'saleman_id': vendor_key,
-                    'saleman_name':  sale_comm[vendor_key][0],
+                    'saleman_name': sale_comm[vendor_key][0],
                     'comm_total': sale_comm[vendor_key][1],
                 }, context=None)
 
@@ -541,19 +542,19 @@ class commission_payment(osv.Model):
                     voucher_id = comm_voucher_ids.create(cr, user, {
                         'commission_id': commission.id,
                         'comm_sale_id': vendor_id,
-                        'voucher_id':  voucher_key,
-                        'date':  criba[vendor_key][voucher_key][0],
+                        'voucher_id': voucher_key,
+                        'date': criba[vendor_key][voucher_key][0],
                     }, context=None)
 
                     for inv_key in criba[vendor_key][voucher_key][1].keys():
                         invoice_id = comm_invoice_ids.create(cr, user, {
                             'commission_id': commission.id,
                             'comm_voucher_id': voucher_id,
-                            'invoice_id':  inv_key,
-                            'pay_inv':  criba[vendor_key][voucher_key][1][inv_key][1],
-                            'ret_iva':  criba[vendor_key][voucher_key][1][inv_key][2],
-                            'ret_islr':  criba[vendor_key][voucher_key][1][inv_key][3],
-                            'ret_im':  criba[vendor_key][voucher_key][1][inv_key][4],
+                            'invoice_id': inv_key,
+                            'pay_inv': criba[vendor_key][voucher_key][1][inv_key][1],
+                            'ret_iva': criba[vendor_key][voucher_key][1][inv_key][2],
+                            'ret_islr': criba[vendor_key][voucher_key][1][inv_key][3],
+                            'ret_im': criba[vendor_key][voucher_key][1][inv_key][4],
                         }, context=None)
 
                         for id in criba[vendor_key][voucher_key][1][inv_key][0]:
@@ -667,6 +668,7 @@ class commission_payment(osv.Model):
 
 
 class commission_uninvoiced(osv.Model):
+
     """
     Commission Payment Uninvoiced : commission_uninvoiced
     """
@@ -684,6 +686,7 @@ class commission_uninvoiced(osv.Model):
 
 
 class commission_sale_noid(osv.Model):
+
     """
     Commission Payment : commission_sale_noid
     """
@@ -702,6 +705,7 @@ class commission_sale_noid(osv.Model):
 
 
 class commission_noprice(osv.Model):
+
     """
     Commission Payment : commission_sale_noid
     """
@@ -723,6 +727,7 @@ class commission_noprice(osv.Model):
 
 
 class commission_lines(osv.Model):
+
     """
     Commission Payment : commission_lines
     """
@@ -794,6 +799,7 @@ class commission_lines(osv.Model):
 
 
 class commission_saleman(osv.Model):
+
     """
     Commission Payment : commission_saleman
     """
@@ -818,6 +824,7 @@ class commission_saleman(osv.Model):
 
 
 class commission_voucher(osv.Model):
+
     """
     Commission Payment : commission_voucher
     """
@@ -841,6 +848,7 @@ class commission_voucher(osv.Model):
 
 
 class commission_invoice(osv.Model):
+
     """
     Commission Payment : commission_invoice
     """
@@ -870,6 +878,7 @@ class commission_invoice(osv.Model):
 
 
 class commission_lines_2(osv.Model):
+
     """
     Commission Payment : commission_lines_2
     """
@@ -883,6 +892,7 @@ class commission_lines_2(osv.Model):
 
 
 class commission_retention(osv.Model):
+
     """
     Commission Payment : commission_retention
     """
@@ -922,8 +932,8 @@ class VoucherLines(osv.Model):
 #~ class commission_users(osv.Model):
     #~ _name='commission.users'
     #~ _columns={
-        #~ 'name':fields.char('Nombre', size=8),
-        #~ 'commission_id':fields.many2one('commission.payment', 'Comision'),
-        #~ 'user_id': fields.many2one('res.users', 'Vendedor', required=True),
+    #~ 'name':fields.char('Nombre', size=8),
+    #~ 'commission_id':fields.many2one('commission.payment', 'Comision'),
+    #~ 'user_id': fields.many2one('res.users', 'Vendedor', required=True),
     #~ }
 #~ commission_users()

@@ -39,7 +39,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        
+
     ],
     "installable" : True,
     "active" : False,

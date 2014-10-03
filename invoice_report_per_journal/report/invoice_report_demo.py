@@ -31,6 +31,7 @@ from openerp.addons.report_webkit import webkit_report
 
 
 class invoice_report_demo_html(report_sxw.rml_parse):
+
     '''
     Define methods that need the report
     '''

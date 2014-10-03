@@ -26,8 +26,9 @@
 
 from openerp.osv import osv, fields
 
+
 class res_users(osv.Model):
     _inherit = 'res.users'
-    _columns={
-        'shorcut_ids' : fields.one2many('ir.ui.view_sc', 'user_id',string='Shortcuts'),
+    _columns = {
+        'shorcut_ids': fields.one2many('ir.ui.view_sc', 'user_id', string='Shortcuts'),
     }

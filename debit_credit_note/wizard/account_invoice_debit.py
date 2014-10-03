@@ -23,7 +23,6 @@ import time
 
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-import netsvc
 
 
 class account_invoice_debit(osv.TransientModel):
@@ -173,8 +172,8 @@ class account_invoice_debit(osv.TransientModel):
                             cr.execute("""select p.id from account_fiscalyear \
                             y, account_period p where y.id=p.fiscalyear_id \
                                 and date(%s) between p.date_start AND \
-                                p.date_stop and y.company_id = %s limit 1""",\
-                                         (date, company.id,))
+                                p.date_stop and y.company_id = %s limit 1""",
+                                       (date, company.id,))
                         else:
                             # in mono company mode
                             cr.execute("""SELECT id
@@ -220,8 +219,8 @@ class account_invoice_debit(osv.TransientModel):
                 orig = self._get_orig(cr, uid, inv, invoice[
                                       'reference'], context)
                 invoice.update({
-                    'type': inv.type == 'in_invoice' and 'in_refund' or\
-                            inv.type == 'out_invoice' and 'out_refund',
+                    'type': inv.type == 'in_invoice' and 'in_refund' or
+                    inv.type == 'out_invoice' and 'out_refund',
                     'date_invoice': date,
                     'state': 'draft',
                     'number': False,
@@ -236,7 +235,7 @@ class account_invoice_debit(osv.TransientModel):
                 # take the id part of the tuple returned for many2one fields
                 for field in ('partner_id', 'account_id', 'currency_id',
                               'payment_term', 'journal_id'):
-                        invoice[field] = invoice[field] and invoice[field][0]
+                    invoice[field] = invoice[field] and invoice[field][0]
                 # create the new invoice
                 inv_id = inv_obj.create(cr, uid, invoice, {})
                 # we compute due date
@@ -264,7 +263,6 @@ class account_invoice_debit(osv.TransientModel):
 
     def invoice_debit(self, cr, uid, ids, context=None):
         return self.compute_debit(cr, uid, ids, context=context)
-
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    d$
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A. (Maria Gabriela Quilarque)          
+#    Coded by: Vauxoo C.A. (Maria Gabriela Quilarque)
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 ##############################################################################
@@ -33,8 +33,8 @@
                  ],
     "author" : "Vauxoo",
     "description" : """
-Purchase Manager Payment Approve 
-================================                
+Purchase Manager Payment Approve
+================================
 
 This module, allows to Purchase Manager Approve or Disapproves the pay to one invoice, through two buttons added in the supplier invoice.
 
@@ -43,7 +43,7 @@ Added message to block the invoice messaging when the invoice is Approve to Pay 
 Also added permissions to buttons.
 
 The description of two buttons:
-    
+
     * Approve to Pay: Mark boolean To Pay when is activated.
 
 .. image:: account_payment_approve_invoice/static/src/demo/button_approve.png

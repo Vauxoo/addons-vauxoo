@@ -5,6 +5,7 @@ from openerp.report import report_sxw
 
 
 class report_webkit_variation_group(report_sxw.rml_parse):
+
     def __init__(self, cr, uid, name, context):
         super(report_webkit_variation_group, self).__init__(
             cr, uid, name, context=context)

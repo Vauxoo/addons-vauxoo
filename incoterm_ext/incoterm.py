@@ -23,6 +23,7 @@ from openerp.osv import fields, osv
 
 
 class stock_incoterms(osv.Model):
+
     """
     stock_incoterm
     """

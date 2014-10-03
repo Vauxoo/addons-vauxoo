@@ -30,6 +30,7 @@ from openerp.tools.translate import _
 
 
 class suppliers_assigner(osv.TransientModel):
+
     """
     M321 Customizations to assign suppliers in products
     """
@@ -54,13 +55,13 @@ class suppliers_assigner(osv.TransientModel):
         wz_brw = self.browse(cr, uid, ids and ids[0], context=context)
         if wz_brw.sure and wz_brw.are_sure:
             for po in purchase_obj.browse(cr, uid, purchase_ids,
-                context=context):
+                    context=context):
                 partner_id = po.partner_id.id
                 for line in po.order_line:
                     product_id = line.product_id.product_tmpl_id.id
                     if product_id and not product_supp_obj.search(cr, uid,
-                        [('product_id', '=', product_id),
-                        ('name', '=', partner_id)]):
+                            [('product_id', '=', product_id),
+                            ('name', '=', partner_id)]):
                         product_obj.write(
                             cr, uid, [
                                 product_id], {

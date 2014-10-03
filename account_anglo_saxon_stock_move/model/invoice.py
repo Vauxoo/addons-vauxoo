@@ -23,6 +23,7 @@
 
 from openerp.osv import osv, fields
 
+
 class account_invoice_line(osv.osv):
     _inherit = "account.invoice.line"
 

@@ -8,7 +8,7 @@
 #    Coded by: Humberto Arocha           <humberto@vauxoo.com>
 #              Angelica Barrios          <angélicaisabelb@gmail.com>
 #              María Gabriela Quilarque  <gabrielaquilarque97@gmail.com>
-#              Javier Duran              <javier@vauxoo.com>             
+#              Javier Duran              <javier@vauxoo.com>
 #    Planified by: Nhomar Hernande
 #    Finance by: Helados Gilda, C.A. http://heladosgilda.com.ve
 #    Audited by: Humberto Arocha humberto@vauxoo.com
@@ -27,7 +27,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-###  
+###
 ### res_company --> account_management ver si se puede eliminar esta dependencia ####
 ### retencion_iva, base_vat_ve  ver si se puede eliminar esta dependencia
 

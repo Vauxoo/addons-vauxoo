@@ -30,7 +30,7 @@
     'website': 'http://www.vauxoo.com/',
     'category': '',
     'description': '''
-    Add a user field named Requisitor. 
+    Add a user field named Requisitor.
 ''',
     'depends': [
         'purchase_requisition',

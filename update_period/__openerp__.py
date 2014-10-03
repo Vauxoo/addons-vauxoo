@@ -29,13 +29,13 @@
     "author" : "Vauxoo",
     "category" : "Tools",
     "website": "http://wiki.openerp.org.ve/",
-    "description": 
+    "description":
     '''
     Allow update period in account move and account move line.
     ''',
     "depends" : ["account"],
     "init_xml" : [],
-    "demo_xml" : [], 
+    "demo_xml" : [],
     "update_xml" : ["account_view.xml"],
     "active": False,
     "installable": True

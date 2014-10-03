@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Vauxoo, C.A. (<http://vauxoo.com>). All Rights Reserved
 #    $Id$
 #    This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@
     "version" : "1.0",
     "author" : "Tiny & Vauxoo",
     "category" : "Localisation/Account Charts",
-    "description": 
+    "description":
 '''
 This Module load a generic format for manage medium and big business.
 You will need accounting knowledge to understad sone concepts.

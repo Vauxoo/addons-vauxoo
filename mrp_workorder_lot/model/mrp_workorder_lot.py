@@ -75,12 +75,12 @@ class mrp_production(osv.Model):
             'stock.production.lot',
             'Serial Number',
             help=('Production Serial Number (Lot)\n This is the Serial Number'
-                   ' that will receives the stock move from Virtual Production'
-                   ' Location to the Destination Physical Stock Location.'
-                   ' This is a formalism to use the Track Manufacturing Lots'
-                   ' funcionality that requires that every stock move for your'
-                   ' manufacturing product need to have a Serial Number'
-                   ' associated')),
+                  ' that will receives the stock move from Virtual Production'
+                  ' Location to the Destination Physical Stock Location.'
+                  ' This is a formalism to use the Track Manufacturing Lots'
+                  ' funcionality that requires that every stock move for your'
+                  ' manufacturing product need to have a Serial Number'
+                  ' associated')),
     }
 
     def write(self, cr, uid, ids, values, context=None, update=False):
@@ -179,7 +179,7 @@ class mrp_production(osv.Model):
         production = self.browse(cr, uid, ids, context=context)
 
         #~ print _('\n...Extracting Manufacturing Order Raw Material Needed'
-                   #~ ' Information')
+        #~ ' Information')
         production_rm = dict()
         for bom in production.bom_id.bom_lines:
             production_rm[bom.product_id.id] = \
@@ -191,7 +191,7 @@ class mrp_production(osv.Model):
         #~ pprint.pprint(production_rm)
 
         #~ print _('...Extractiong Work Centers Information: Product Capacity'
-                #~ ' and Operations')
+            #~ ' and Operations')
         wc_brws = [operation.workcenter_id
                    for operation in routing_brw.workcenter_lines]
         wc_brws = list(set(wc_brws))
@@ -211,7 +211,7 @@ class mrp_production(osv.Model):
                     pc_line.product_id.id: uom_obj._compute_qty(
                         cr, uid, pc_line.uom_id.id, pc_line.qty,
                         production_rm[pc_line.product_id.id]['uom'])
-                    })
+                })
         wc_operation = [(operation.id, operation.workcenter_id.id)
                         for operation in routing_brw.workcenter_lines]
 
@@ -254,19 +254,19 @@ class mrp_production(osv.Model):
         #~ for product_id in routing_qty.keys():
             #~ if routing_qty[product_id] > production_rm[product_id]['qty']:
                 #~ routing_qty_error += \
-                    #~ _('\n - It Needs at least %s %s of %s and only %s %s is'
-                      #~ ' given.') % (
-                        #~ routing_qty[product_id],
-                        #~ uom_obj.browse(
-                            #~ cr, uid, production_rm[product_id]['uom'],
-                            #~ context=context).name,
-                        #~ product_obj.browse(
-                            #~ cr, uid, product_id, context=context).name,
-                        #~ production_rm[product_id]['qty'],
-                        #~ uom_obj.browse(
-                            #~ cr, uid, production_rm[product_id]['uom'],
-                            #~ context=context).name,
-                    #~ )
+                #~ _('\n - It Needs at least %s %s of %s and only %s %s is'
+                #~ ' given.') % (
+                #~ routing_qty[product_id],
+                #~ uom_obj.browse(
+                #~ cr, uid, production_rm[product_id]['uom'],
+                #~ context=context).name,
+                #~ product_obj.browse(
+                #~ cr, uid, product_id, context=context).name,
+                #~ production_rm[product_id]['qty'],
+                #~ uom_obj.browse(
+                #~ cr, uid, production_rm[product_id]['uom'],
+                #~ context=context).name,
+                #~ )
         if routing_qty_error:
             raise osv.except_osv(
                 _('Error!'),
@@ -276,7 +276,7 @@ class mrp_production(osv.Model):
                   + str(routing_qty_error)))
 
         #~ print _('...Cheking the Work Center Capacity with the Work Center'
-                #~ ' Operation quantities (Calculate Bottleneck)')
+            #~ ' Operation quantities (Calculate Bottleneck)')
         #~ print "(wc, operation, product_id, capacty, qty)"
         for wc_id in wc_dict:
             for op_id in wc_dict[wc_id]['operations']:
@@ -287,14 +287,14 @@ class mrp_production(osv.Model):
                            #~ product_qty)
                     if wc_dict[wc_id]['capacity'][product_id] and \
                        wc_dict[wc_id]['capacity'][product_id] < product_qty:
-                            div, mod = \
-                                divmod(product_qty,
-                                       wc_dict[wc_id]['capacity'][product_id])
-                            split_size = int(div + (mod and 1 or 0))
-                            wc_dict[wc_id]['bottleneck'] += \
-                                [(split_size,
-                                  wc_dict[wc_id]['capacity'][product_id],
-                                  product_id)]
+                        div, mod = \
+                            divmod(product_qty,
+                                   wc_dict[wc_id]['capacity'][product_id])
+                        split_size = int(div + (mod and 1 or 0))
+                        wc_dict[wc_id]['bottleneck'] += \
+                            [(split_size,
+                              wc_dict[wc_id]['capacity'][product_id],
+                              product_id)]
 
         #~ print 'wc_dict'
         #~ pprint.pprint(wc_dict)
@@ -375,8 +375,8 @@ class mrp_production(osv.Model):
 
                 percentage = {}.fromkeys(m and ['d', 'm'] or ['d'])
                 percentage['d'] = \
-                    (wc_capacity/critic_product_income_qty) * 100.0
-                percentage['m'] = m and (m/critic_product_income_qty) * 100.0 \
+                    (wc_capacity / critic_product_income_qty) * 100.0
+                percentage['m'] = m and (m / critic_product_income_qty) * 100.0 \
                     or percentage['d']
 
                 # create wo lots
@@ -397,9 +397,9 @@ class mrp_production(osv.Model):
                         'name':
                         tools.ustr(wc_op.name) + ' - ' +
                         tools.ustr(production.bom_id.product_id.name) +
-                        ' (%s/%s)' % (new_wo+1, mult),
+                        ' (%s/%s)' % (new_wo + 1, mult),
                         'workcenter_id': wc_brw.id,
-                        'sequence': level+(wc_op.sequence or 0),
+                        'sequence': level + (wc_op.sequence or 0),
                         'wo_lot_id': lot_list[new_wo],
                         'qty': qty,
                         'cycle': cycle,
@@ -455,10 +455,10 @@ class mrp_production(osv.Model):
         for production in self.browse(cr, uid, ids, context=context):
             for item in range(mult):
                 values = {
-                    'name': '%s/WOLOT/%05i' % (production.name, item+1, ),
-                    'number': '%05i' % (item+1,),
+                    'name': '%s/WOLOT/%05i' % (production.name, item + 1, ),
+                    'number': '%05i' % (item + 1,),
                     'production_id': production.id,
-                    'percentage': (item != mult-1) and percentage['d']
+                    'percentage': (item != mult - 1) and percentage['d']
                     or percentage['m']
                 }
                 res += [wo_lot_obj.create(cr, uid, values, context=context)]
@@ -645,14 +645,14 @@ class mrp_workorder_stage(osv.Model):
             'Related Status',
             required=True,
             help=('The status of your document is automatically changed'
-                   ' regarding the selected stage. For example, if a stage is'
-                   ' related to the status \'Close\', when your document'
-                   ' reaches this stage, it is automatically closed.')),
+                  ' regarding the selected stage. For example, if a stage is'
+                  ' related to the status \'Close\', when your document'
+                  ' reaches this stage, it is automatically closed.')),
         'fold': fields.boolean(
             'Folded by Default',
             help=('This stage is not visible, for example in status bar or'
-                   ' kanban view, when there are no records in that stage to'
-                   ' display.')),
+                  ' kanban view, when there are no records in that stage to'
+                  ' display.')),
     }
 
     _defaults = {
@@ -791,13 +791,13 @@ class mrp_production_workcenter_line(osv.Model):
                 _('This operation is no valid. You can\'t change the work'
                   ' order state because it associated lot is no active.\n\n'
                   ' %s' % (
-                    [error_by_wo % (
-                        troble_wo[trb]['name'],
-                        troble_wo[trb]['state'],
-                        troble_wo[trb]['lot_name'],
-                        troble_wo[trb]['lot_state'])
+                      [error_by_wo % (
+                          troble_wo[trb]['name'],
+                          troble_wo[trb]['state'],
+                          troble_wo[trb]['lot_name'],
+                          troble_wo[trb]['lot_state'])
                      for trb in troble_wo
-                ])))
+                       ])))
 
         #~ manage changes in the kanban view
         if values.get('stage_id', False):
