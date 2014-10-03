@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Humberto Arocha <hbto@vauxoo.com>           
+#    Coded by: Humberto Arocha <hbto@vauxoo.com>
 #    Planified by: Rafael Silva <rsilvam@vauxoo.com>
 #    Audited by: Nhomar Hernandez <nhomar@vauxoo.com>
 #############################################################################
@@ -22,28 +22,33 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
-
 {
-    "name" : "sale_double_validation",
-    "version" : "0.1",
-    "category": 'Generic Modules/Sales & Purchases',
-    "depends" : ["base","sale"],
-    "author" : 'Vauxoo',
+    "name": "sale_double_validation", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Sales & Purchases", 
     "description": """
 This module modifies the sale workflow in order to validate sales
 only by authorized group set by configuration wizard,
     
 Acknowledgement to OpenERP SA
 this module is based on purchase_double_validation
-    """,
-    'website': 'http://www.vauxoo.com',
-    'init_xml': [],
-    'update_xml': [
-	   'view/sale_double_validation_installer.xml'
-	    ],
-    'demo_xml': [],
-    'installable': True,
-    'active': False,
-
+    """, 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "sale"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/sale_double_validation_installer.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

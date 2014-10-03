@@ -8,7 +8,7 @@
 #    Coded by: María Gabriela Quilarque  <gabriela@vauxoo.com>
 #              Luis Escobar              <luis@vauxoo.com>
 #    Planified by: Nhomar Hernandez
-#    Finance by: Vauxoo, C.A. http://vauxoo.com 
+#    Finance by: Vauxoo, C.A. http://vauxoo.com
 #    Audited by: Humberto Arocha humberto@vauxoo.com
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
@@ -24,25 +24,29 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
-
 {
-	"name" : "Report Move Voucher ",
-	"version" : "0.7",
-	"author" : "OpenERP",
-	"category" : "Generic Modules/Others",
-	"website": "http://wiki.openerp.org.ve/",
-	"description": '''
- 			Imprime el Comprobante de Asiento
-                    ''',
-	"depends" : ["base",
-                 "account",
- 
-	             ],
-	"init_xml" : [],
-	"update_xml" : [
-		"move_voucher_report.xml",
-
-	],
-	"active": False,
-	"installable": True
+    "name": "Report Move Voucher ", 
+    "version": "0.7", 
+    "author": "OpenERP", 
+    "category": "Generic Modules/Others", 
+    "description": """
+    Imprime el Comprobante de Asiento
+                    """, 
+    "website": "http://wiki.openerp.org.ve/", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "move_voucher_report.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

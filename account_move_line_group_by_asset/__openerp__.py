@@ -24,26 +24,27 @@
 #
 ##############################################################################
 {
-    "name" : "Account Move Line Group By Asset",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Generic Modules",
-    "description" : """
+    "name": "Account Move Line Group By Asset", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
     This module add the option by group in Journal Items by asset
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
-            "account_asset",
-        ],
-    "demo" : [],
-    "data" : [
-        'account_view.xml',
-    ],
-    'js': [],
-    'qweb' : [],
-    'css':[],
-    'test': [],
-    "installable" : True,
-    "active" : False,
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "account_asset"
+    ], 
+    "demo": [], 
+    "data": [
+        "account_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

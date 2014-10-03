@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -23,11 +23,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Cost Structure",
-    "version" : "0.1",
-    "depends" : ['account',"stock",'product','purchase','invoice_date_time'],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Cost Structure", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
     Module that performs a calculation of average cost in products, 
     this module performs a search of all movements made by you for goods 
     and are assigned to cost structure.
@@ -42,23 +42,30 @@
     
     
     
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : ['data/data_load.xml'],
-    "demo_xml" : [],
-    "test": [ ],
-    "update_xml" : [
-    'security/cost_structure_security.xml',
-    'security/ir.model.access.csv',
-    'wizard/update_price_list_view.xml',
-    'view/cost_structure.xml',
-    'view/product_view.xml',
-    
-    
-    
-    
-    ],
-    "active": False,
-    "installable": True,
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account", 
+        "stock", 
+        "product", 
+        "purchase", 
+        "invoice_date_time"
+    ], 
+    "demo": [], 
+    "data": [
+        "data/data_load.xml", 
+        "security/cost_structure_security.xml", 
+        "security/ir.model.access.csv", 
+        "wizard/update_price_list_view.xml", 
+        "view/cost_structure.xml", 
+        "view/product_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

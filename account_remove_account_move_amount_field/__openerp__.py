@@ -23,23 +23,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "Account remove account move amount field",
-    "version": "1.0",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/Account",
-    "website" : "http://www.vauxoo.com/",
+    "name": "Account remove account move amount field", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Account", 
     "description": """ Removes from the account move form view the amount field
     Enhaces speed of account move model a bit.
-    """,
-    'depends': ['account'],
-    'init_xml': [],
-    'update_xml': [
-        'account_view.xml',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "account_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

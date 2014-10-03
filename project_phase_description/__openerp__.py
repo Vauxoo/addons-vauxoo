@@ -24,25 +24,33 @@
 #
 #
 {
-    "name": "Project Phase Description",
-    "version": "1.0",
-    "depends": [
-        "base",
-        "project",
-        "project_long_term",
-    ],
-    "author": "Vauxoo",
+    "name": "Project Phase Description", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Addons Vauxoo", 
     "description": """
 Project Phase Description
 =========================
 
 This module added field description in view Project Phase.
 
-    """,
-    "website": "http://vauxoo.com",
-    "category": "Addons Vauxoo",
-    "data": ["view/project_phase_inherit.xml",],
-    "test": [],
-    "active": False,
-    "installable": True,
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "project", 
+        "project_long_term"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/project_phase_inherit.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

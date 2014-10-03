@@ -26,22 +26,31 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
 {
-    'name' : 'Product RFQ',
-    'version' : '0.1',
-    'author' : 'Vauxoo',
-    'description' : '''
+    "name": "Product RFQ", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Custom", 
+    "description": """
 It's needed know that product need a requisition,
 for this is added a field that indicate if the product
 need a requisition and load in the line the purchase requisition  
-    '''
-    ,
-    'category' : 'Custom',
-    'website' : 'http://vauxoo.com',
-    'depends' : ['base','product','purchase_requisition'],
-    'update_xml' : [
-        'view/product_view.xml',
-],
-    'demo' : [],
-    'active' : False,
-    'installable': True,
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "product", 
+        "purchase_requisition"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/product_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

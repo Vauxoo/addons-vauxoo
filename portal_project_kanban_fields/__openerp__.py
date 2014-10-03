@@ -22,29 +22,36 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'Portal Project Kanban Fields',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com',
-    'category': '',
-    'description': '''
+    "name": "Portal Project Kanban Fields", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "", 
+    "description": """
 Add three fields to the project.
 
 - Project URL: Link to the project in launchpad.
 - Documentation URL: Link to the project documentation.
 - Image: Logo of the Project
-    ''',
-    'depends': ['base', 'project', 'portal_project'],
-    'data': [
-        'view/project_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'active': False,
-    'installable': True,
-    'css':[
-        'static/src/css/project.css',
-        ],
+    """, 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "project", 
+        "portal_project"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/project_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [
+        "static/src/css/project.css"
+    ], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

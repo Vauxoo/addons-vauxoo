@@ -23,13 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "account_voucher_tax",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """
+    "name": "account_voucher_tax", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Localization/Mexico", 
+    "description": """
 
 The tax actually paid/cashed in the move of payment,
 ====================================================
@@ -52,29 +51,34 @@ Caused VAT is that actually charged to customers.
 
 - When you make a sale on credit is transferred iva but when you pay that sale becomes caused VAT
 
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
-        "account",
-        "account_voucher",
-        "account_invoice_tax",
-        "analytic",
-        "account_move_line_base_tax",
-        ],
-    "demo" : [
-    "demo/account_voucher_tax_demo.xml", ],
-    "data" : [
-        "account_tax_view.xml",
-        "account_voucher_tax_view.xml",
-        "security/ir.model.access.csv",
-        ],
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "account", 
+        "account_voucher", 
+        "account_invoice_tax", 
+        "analytic", 
+        "account_move_line_base_tax"
+    ], 
+    "demo": [
+        "demo/account_voucher_tax_demo.xml"
+    ], 
+    "data": [
+        "account_tax_view.xml", 
+        "account_voucher_tax_view.xml", 
+        "security/ir.model.access.csv"
+    ], 
     "test": [
-        'test/account_voucher_taxes.yml',
-        'test/account_voucher_tax_round_off.yml',
-        'test/account_voucher_tax_write_off.yml',
-        'test/account_voucher_tax_currency_diff.yml',
-    ],
-    "installable" : True,
-    "active" : False,
+        "test/account_voucher_taxes.yml", 
+        "test/account_voucher_tax_round_off.yml", 
+        "test/account_voucher_tax_write_off.yml", 
+        "test/account_voucher_tax_currency_diff.yml"
+    ], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -22,12 +22,12 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'MRP WorkOrder Variation',
-    'version': '1.0',
-    'summary': 'Allows you to enter actual quantities of products in a workorder',
-    'description': """
+    "name": "MRP WorkOrder Variation", 
+    "version": "1.0", 
+    "author": "Vauxoo C.A", 
+    "category": "MRP", 
+    "description": """
 
 MRP WorkOrder Variation
 =======================
@@ -37,21 +37,22 @@ this module adds a table in the work orders with the real products that are rece
 In this way the user can make a comparison of the variation of quantities and avoid loss of
 material.
 
-""",
-    'category': 'MRP',
-    'author': 'Vauxoo C.A',
-    'website': 'http://vauxoo.com',
-    'license': 'AGPL-3',
-    'depends': ['mrp', 'mrp_operations'],
-    'data': [
-        'view/mrp_production_workcenter_line_view.xml',
-    ],
-    'demo': [],
-    'installable': True,
-    'auto_install': False,
-    'js': [],
-    'qweb': [],
-    'css': [],
-    'images': [],
-    'test': [],
+""", 
+    "website": "http://vauxoo.com", 
+    "license": "AGPL-3", 
+    "depends": [
+        "mrp", 
+        "mrp_operations"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/mrp_production_workcenter_line_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

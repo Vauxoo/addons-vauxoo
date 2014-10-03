@@ -24,11 +24,11 @@
 #
 #
 {
-    "name": "Wizard Vouchers Partner Invoice",
-    "author": "Vauxoo",
-    "version": "1.0",
-    "category": "Generic Modules",
-    "description" : """
+    "name": "Wizard Vouchers Partner Invoice", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
 Wizard Vouchers Partner Invoice
 ===============================
 
@@ -37,20 +37,22 @@ without even the invoice issued. With this wizard you can
 relate the payments that have already been made ​​to the
 bill to which must belong, in turn making reconciliation of
 payment with invoice
-""",
-    "depends": [
-        "account_voucher",
-    ],
-    "demo": [],
-    "data": [
         #~ "account_voucher_view.xml",
-        "wizard/vouchers_partner_invoice.xml",
-    ],
-    'js': [],
-    'qweb': [],
-    'css': [],
-    'test': [],
-    "active": False,
-    "installable": True
+""", 
+    "website": "", 
+    "license": "", 
+    "depends": [
+        "account_voucher"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/vouchers_partner_invoice.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

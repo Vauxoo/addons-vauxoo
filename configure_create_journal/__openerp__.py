@@ -21,11 +21,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name": "Wizard of Configure And Create Journal",
-    "version": "1.0",
-    "author" : "Vauxoo",
-    "category": "Accounting",
-    "website" : "http://www.vauxoo.com/",
+    "name": "Wizard of Configure And Create Journal", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Accounting", 
     "description": """ 
 Configure And Create Journal:
 =============================
@@ -34,17 +33,22 @@ Configure And Create Journal:
 hijos con tipo liquidez y tipo interno No conciliado.
 
 2.- crea un diario por cada cuenta hija detectada en el paso anterior
-    """,
-    'depends': [
-		'account',
-		'group_configurations_account'
-	],
-    'data': [
-        'wizard/set_accounting_wizard_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "account", 
+        "group_configurations_account"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/set_accounting_wizard_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

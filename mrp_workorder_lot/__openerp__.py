@@ -22,13 +22,11 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    "name": "MRP Workorder Lot",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "website": "http://www.vauxoo.com",
-    "category": "MRP",
+    "name": "MRP Workorder Lot", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "MRP", 
     "description": """
 MRP Workorder Lot
 =================
@@ -136,20 +134,31 @@ If you install this module you need to active some settings:
   ``Settings Menu > Users Sidebar Section > Users Menu > (Select a User) >
   User Form Access Rights Tab > Other Section`` to active the groups permission
   to invidually consume and produce.
-""",
-    "depends": ["mrp", "mrp_operations", "mrp_consume_produce", "mrp_product_capacity"],
-    "data": [
-        'view/mrp_workorder_lot_view.xml',
-        'view/res_config_view.xml',
-        'view/res_company_view.xml',
-        'wizard/mrp_consume_produce.xml',
-        'data/mrp_workorder_lot_data.xml',
-        'security/ir.model.access.csv',
-    ],
+""", 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "mrp", 
+        "mrp_operations", 
+        "mrp_consume_produce", 
+        "mrp_product_capacity"
+    ], 
     "demo": [
-        'demo/mrp_workorder_lot_demo.xml',
-    ],
-    "test": [],
-    "active": False,
-    "installable": True,
+        "demo/mrp_workorder_lot_demo.xml"
+    ], 
+    "data": [
+        "view/mrp_workorder_lot_view.xml", 
+        "view/res_config_view.xml", 
+        "view/res_company_view.xml", 
+        "wizard/mrp_consume_produce.xml", 
+        "data/mrp_workorder_lot_data.xml", 
+        "security/ir.model.access.csv"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -6,7 +6,7 @@
 #    All Rights Reserved
 ############# Credits #########################################################
 #    Coded by: Yanina Aular <yani@vauxoo.com>
-#              Eduardo Ochoa <eduardo.ochoa@clusterbrands.com.ve> 
+#              Eduardo Ochoa <eduardo.ochoa@clusterbrands.com.ve>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -23,14 +23,12 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'POS Product Filter',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': 'Point Of Sale',
-    'description': '''
+    "name": "POS Product Filter", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Point Of Sale", 
+    "description": """
 POS Product Filter
 ==================
 
@@ -38,18 +36,28 @@ This module adds two fields (delivery and restaurant) to the product model, each
 and determine if the product will show in delivery and/or restaurant point of sale. The products
 view depends of the deli_rest field of the point of sale configuration which can be a restaurant or
 delivery.
-    ''',
-    'depends': ['base', 'point_of_sale', 'sale', 'pos_delivery_restaurant'],
-    'data': [
-            'view/product_view.xml', 
-        ],
-    'demo': [],
-    'test': [],
-    'js': [
-        'static/src/js/backbone-super-min.js',
-        'static/src/js/models.js',
-        'static/src/js/main.js', 
-        ],
-    'active': False,
-    'installable': True,
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "point_of_sale", 
+        "sale", 
+        "pos_delivery_restaurant"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/product_view.xml"
+    ], 
+    "test": [], 
+    "js": [
+        "static/src/js/backbone-super-min.js", 
+        "static/src/js/models.js", 
+        "static/src/js/main.js"
+    ], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

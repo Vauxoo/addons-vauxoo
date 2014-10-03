@@ -21,13 +21,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 {
-    "name": "Validate Stock Move Product",
-    "version": "1.0",
-    "depends": ["stock",
-
-                ],
-    "author": "Vauxoo",
-    "description" : """
+    "name": "Validate Stock Move Product", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Addons Vauxoo", 
+    "description": """
 Validate Stock Move Product
 ===========================
 
@@ -40,15 +38,21 @@ to the quantity ordered.'
 This module will extend when will count with decorators
 support in version 7.0
 
-    """,
-    "website": "http://vauxoo.com",
-    "category": "Addons Vauxoo",
-    "demo": [],
-    "test": [],
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "stock"
+    ], 
+    "demo": [], 
     "data": [
-            'view/validate_stock_move_product.xml',
-    ],
-    'application': True,
-    "active": False,
-    "installable": True,
+        "view/validate_stock_move_product.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

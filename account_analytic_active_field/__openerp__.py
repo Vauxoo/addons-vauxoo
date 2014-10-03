@@ -20,27 +20,31 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
 {
-    "name" : "Field Active In Analytic Accounts",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Accouting",
-    "description" : """
+    "name": "Field Active In Analytic Accounts", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Accouting", 
+    "description": """
 Field Active In Analytic Accounts
 =================================
 
 Add field active to analytic accounts 
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
-        "analytic",
-    ],
-    "demo" : [],
-    "data" : [
-        "account_analytic_account_view.xml",
-    ],
-    "installable" : True,
-    "active" : False,
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "analytic"
+    ], 
+    "demo": [], 
+    "data": [
+        "account_analytic_account_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

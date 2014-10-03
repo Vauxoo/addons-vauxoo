@@ -21,25 +21,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name": "Menu of Banks in Human Resources",
-    "version": "1.0",
-    "depends": [
-                "hr_payroll",
-    ],
-    "author": "Vauxoo",
+    "name": "Menu of Banks in Human Resources", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Addons Vauxoo", 
     "description": """
 This module adds the menu banks in human resources
 ===============
-    """,
-    "website": "http://vauxoo.com",
-    "category": "Addons Vauxoo",
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "hr_payroll"
+    ], 
+    "demo": [], 
     "data": [
-        "view/res_bank_view.xml",
-    ],
-    "demo" : [
-    ],
-    "test": [
-    ],
-    "active": False,
-    "installable": True,
+        "view/res_bank_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

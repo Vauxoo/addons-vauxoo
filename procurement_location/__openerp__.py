@@ -24,16 +24,25 @@
 #
 ##############################################################################
 {
-    'name': 'plocation',
-    "version" : "1.1",
-    'author': 'Vauxoo',
-    'depends': ['mrp_default_location'],
-    'description': """
+    "name": "plocation", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "", 
+    "description": """
         Added the Locations by default when select the product in order of production
-    """,
-    'update_xml':[
-    ],
-    'active': False,
-    'installable': True
+""", 
+    "website": "", 
+    "license": "", 
+    "depends": [
+        "mrp_default_location"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

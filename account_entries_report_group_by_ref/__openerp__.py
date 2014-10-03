@@ -21,21 +21,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Inherits the xml account_entries_report_view a button grouping by origin",
-    "version" : "1.0",
-    "depends" : ['account'],
-    "author" : "Vauxoo",
-    #"license" : "AGPL-3",
-    "description" : """This module inherits the xml account_entries_report_view a button grouping by origin
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [],
-    "update_xml" : ['account_entries_report_view.xml',
-    ],
-    "active": False,
-    "installable": True,
+    "name": "Inherits the xml account_entries_report_view a button grouping by origin", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """This module inherits the xml account_entries_report_view a button grouping by origin
+        
+""", 
+    "website": "http://vauxoo.com", 
+    "license" : "AGPL-3", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "account_entries_report_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

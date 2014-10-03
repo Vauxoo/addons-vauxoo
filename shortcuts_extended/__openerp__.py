@@ -23,21 +23,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "Shortcuts",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "",
-    "description" : """""",
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : ['base','web_shortcuts'],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [],
-    'data' : ['view/shortcuts_extended.xml',
-             ],
-    'installable':True,
-    'auto_install':False,
+    "name": "Shortcuts", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "", 
+    "description": """""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "base", 
+        "web_shortcuts"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/shortcuts_extended.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

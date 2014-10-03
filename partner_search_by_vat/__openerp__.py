@@ -23,25 +23,30 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-
 {
-    "name": "Search Supplier by VAT",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Generic Modules",
-    "description" : """
+    "name": "Search Supplier by VAT", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
 Search Supplier by VAT
 ==========================================
 This module adds the possibility to search for vat
-    """,
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
-    "depends": ["l10n_mx_base_vat_split",
-                ],
-    "demo": [],
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "l10n_mx_base_vat_split"
+    ], 
+    "demo": [], 
     "data": [
         "view/res_partner_view.xml"
-    ],
-    "installable": True,
-    "active": False,
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

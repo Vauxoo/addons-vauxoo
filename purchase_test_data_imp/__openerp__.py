@@ -24,16 +24,10 @@
 #
 #
 {
-    "name": "Purchase Test Data IMP",
-    "version": "1.0",
-    "depends": [
-        "base",
-        "purchase",
-        "account",
-        "product",
-        "stock",
-    ],
-    "author": "Vauxoo",
+    "name": "Purchase Test Data IMP", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Addons Vauxoo", 
     "description": """
 Purchase Test Data IMP
 ======================
@@ -44,16 +38,28 @@ Creating a purchase order, picking in and supplier invoice by product.
 
 This test yaml only works with user admin and the search of partner and 
 product is based in the company that have this user assigned.
-    """,
-    "website": "http://vauxoo.com",
-    "category": "Addons Vauxoo",
-    "demo": [],
-    "test": [
-                 'test/purchase_order_test_data.xml',
-                 'test/purchase_order_product_can_be_purchased.yml', ],
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "purchase", 
+        "account", 
+        "product", 
+        "stock"
+    ], 
+    "demo": [], 
     "data": [
-                'wizard/wizard.xml',
-            ],
-    "active": False,
-    "installable": True,
+        "wizard/wizard.xml"
+    ], 
+    "test": [
+        "test/purchase_order_test_data.xml", 
+        "test/purchase_order_product_can_be_purchased.yml"
+    ], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

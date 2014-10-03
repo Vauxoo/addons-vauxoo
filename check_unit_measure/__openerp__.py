@@ -19,11 +19,11 @@
 #
 ##############################################################################
 {
-    'name' : 'Unit Measure Check',
-    'version' : '1',
-    'author' : 'Vauxoo',
-    'category' : 'Sale, Purchase and Warehousee',
-    'description' : """
+    "name": "Unit Measure Check", 
+    "version": "1", 
+    "author": "Vauxoo", 
+    "category": "Sale, Purchase and Warehousee", 
+    "description": """
 
 Unit Measure Check
 ====================================
@@ -35,17 +35,25 @@ Improvements
 Inherit Sale, Purchase, Stock and Account to add constraint to avoid sale order validate with diferent 
 unit measure indicated on the product or diferent quantity compute on the unit measure.
 
-    """,
-    'website': 'http://www.vauxoo.com',
-    'images' : [],
-    'depends' : ['sale', 'purchase', 'product', 'stock','account'],
-    'data': ['wizard/stock_return_picking_view.xml',],
-    'js': [],
-    'qweb' : [],
-    'css':[],
-    'demo': [],
-    'test': [],
-    'installable': True,
-    'auto_install': False,
+""", 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "sale", 
+        "purchase", 
+        "product", 
+        "stock", 
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/stock_return_picking_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,6 +1,6 @@
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    nhomar.hernandez@netquatro.com
 #
@@ -19,25 +19,30 @@
 #
 ##############################################################################
 {
-    "name" : "Baremo Para calculo de Comisiones",
-    "version" : "0.1",
-    "depends" : ["base","decimal_precision"],
-    "author" : "Netquatro",
-    "description" : """
+    "name": "Baremo Para calculo de Comisiones", 
+    "version": "0.1", 
+    "author": "Netquatro", 
+    "category": "Generic Modules", 
+    "description": """
     Crea un modelo para el calculo de comisiones.
-                    """,
-    "website" : "http://openerp.netquatro.com",
-    "category" : "Generic Modules",
-    "init_xml" : [
-    ],
-    "demo_xml" : [
-    ],
-    "update_xml" : [
-        "security/baremo_security.xml",
-        "security/ir.model.access.csv",
-        "baremo_view.xml",
-
-    ],
-    "active": False,
-    "installable": True,
+                    """, 
+    "website": "http://openerp.netquatro.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "decimal_precision"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/baremo_security.xml", 
+        "security/ir.model.access.csv", 
+        "baremo_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

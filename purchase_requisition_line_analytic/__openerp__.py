@@ -22,33 +22,34 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'Purchase Requisition Line Analytic',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': '',
-    'description': '''
+    "name": "Purchase Requisition Line Analytic", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "", 
+    "description": """
 A account analytic is added in purchase requisition lines
 
 Add analytic account on purchase requisition line, so the purchase order takes
 the account analytic value from the purchase requisition.
-''',
-    'depends': [
-        'account_analytic_plans',
-        'purchase_requisition',
-        'purchase_requisition_line_view',
-        'pr_line_related_po_line',
-        ],
-    'data': [
-        'view/purchase_requisition_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'qweb': [],
-    'js': [],
-    'css': [],
-    'active': False,
-    'installable': True,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "account_analytic_plans", 
+        "purchase_requisition", 
+        "purchase_requisition_line_view", 
+        "pr_line_related_po_line"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/purchase_requisition_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -22,14 +22,12 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'Purchase Requisition Currency',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': 'purchase',
-    'description': '''
+    "name": "Purchase Requisition Currency", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "purchase", 
+    "description": """
 Purchase Requisition Currency
 =============================
 
@@ -42,19 +40,22 @@ Technical Settings to take advantage of this functionality:
 
 - Multi Currencies.
 - Purchase Pricelist.
-''',
-    'depends': [
-        'base',
-        'purchase_requisition',
-        ],
-    'data': [
-        'view/purchase_requisition_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'qweb': [],
-    'js': [],
-    'css': [],
-    'active': False,
-    'installable': True,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "purchase_requisition"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/purchase_requisition_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

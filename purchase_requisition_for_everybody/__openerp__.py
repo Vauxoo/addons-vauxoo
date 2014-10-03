@@ -19,11 +19,11 @@
 #
 ##############################################################################
 {
-    'name' : 'Purchase Requisition for Everybody',
-    'version' : '1.0',
-    'author' : 'Vauxoo',
-    'category' : 'Security',
-    'description' : """
+    "name": "Purchase Requisition for Everybody", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Security", 
+    "description": """
 Records Rule for Purchase_Requisition Module
 ============================================
 
@@ -34,26 +34,25 @@ With Requisition / Manage  we can see whole requisition and modify these
 
 You need any of those 2 groups for you can see the new purchase requisition menu
 
-    """,
-    'website': 'http://www.vauxoo.com',
-    'images' : [],
-    'depends' : ['base','purchase','purchase_requisition'],
-    'data': [
-        'security/requisition_security.xml',
-        'view/purchase_requisition_view.xml',
-        'security/ir.model.access.csv',
-    ],
-    'js': [
-    ],
-    'qweb' : [
-    ],
-    'css':[
-    ],
-    'demo': [
-],
-    'test': [
-],
-    'installable': True,
-    'auto_install': False,
+""", 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "purchase", 
+        "purchase_requisition"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/requisition_security.xml", 
+        "view/purchase_requisition_view.xml", 
+        "security/ir.model.access.csv"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

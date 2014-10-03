@@ -26,13 +26,12 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
-
-
 {
-    'name' : 'Deliver Project Report',
-    'version' : '',
-    'author' : 'Vauxoo',
-    'description' : '''
+    "name": "Deliver Project Report", 
+    "version": "", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Projects & Services", 
+    "description": """
     Used to improve documentation module to deliver a report to customer one time
     project is delivered.
 
@@ -46,21 +45,23 @@
     Hours
     Sales Orders related (From your own OpenERP Instance)
     Invoices Related (From your OpenERP Instance)
-    ''',
-    'category' : 'Generic Modules/Projects & Services',
-    'website' : 'http://vauxoo.com',
-    'depends' : ['base'],
-    'update_xml' : [
-        "view/module_view.xml",
-        "report/ir_report.xml",
-        "report/module_report.xml",
-    ],
-    'demo' : [],
-    'active' : False,
-    'installable': True,
-    'test': [],
-    'installable': True,
-    'active': False,
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/module_view.xml", 
+        "report/ir_report.xml", 
+        "report/module_report.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
-
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

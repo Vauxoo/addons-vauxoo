@@ -21,29 +21,33 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Grouped by product,move_id y analytic in model account_move_line",
-    "version" : "1.0",
-    "depends" : [
-        'account',
-        'analytic'
-        ],
-    "author" : "Vauxoo",
-    #"license" : "AGPL-3",
-    "description" : """
+    "name": "Grouped by product,move_id y analytic in model account_move_line", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
 Improvements in account.move.line view:
 =======================================
 
 On search view for journal items (account_move_line) we add group by product,
 move_id and analytic_id.
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [],
-    "update_xml" : ['account_move_line.xml',
-    ],
-    "active": False,
-    "installable": True,
+        #"license" : "AGPL-3",
+""", 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account", 
+        "analytic"
+    ], 
+    "demo": [], 
+    "data": [
+        "account_move_line.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

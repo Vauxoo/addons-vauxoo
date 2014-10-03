@@ -21,21 +21,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Grouped by production and stock move in model account_move_line",
-    "version" : "1.0",
-    "depends" : ['account_relation_move'],
-    "author" : "Vauxoo",
-    #"license" : "AGPL-3",
-    "description" : """Grouped by production and stock move in model account_move_line
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [],
-    "update_xml" : ['account_move_line.xml',
-    ],
-    "active": False,
-    "installable": True,
+    "name": "Grouped by production and stock move in model account_move_line", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """Grouped by production and stock move in model account_move_line
+        
+""", 
+    "website": "http://vauxoo.com", 
+    "license" : "AGPL-3", 
+    "depends": [
+        "account_relation_move"
+    ], 
+    "demo": [], 
+    "data": [
+        "account_move_line.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

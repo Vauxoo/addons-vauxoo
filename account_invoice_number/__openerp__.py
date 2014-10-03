@@ -23,29 +23,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "Account Invoice Number v7",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Localization/Mexico",
-    "description" : """
+    "name": "Account Invoice Number v7", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Localization/Mexico", 
+    "description": """
 This module add field internal_number to invoice view.
 When you cancel a customer invoice will not delete the invoice number.
 
 It also adds field Supplier Invoice Number for suppliers in tree view.
-    """,
-    "website": "http://www.vauxoo.com/",
-    "images": [],
-    "depends": ["account"],
-    "demo": [],
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
     "data": [
-        "account_invoice_view.xml",
-    ],
-    'js': [],
-    'qweb': [],
-    'css': [],
-    'test': [],
-    "installable": True,
-    "auto_install": False,
+        "account_invoice_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

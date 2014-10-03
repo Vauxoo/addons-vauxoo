@@ -24,12 +24,10 @@
 #
 #
 {
-    "name": "Report Multicompany",
-    "version": "1.0",
-    "depends": [
-        "base",
-    ],
-    "author": "Vauxoo",
+    "name": "Report Multicompany", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Addons Vauxoo", 
     "description": """
 Report Multicompany
 ===================
@@ -37,15 +35,23 @@ Report Multicompany
 This module adds a model report_multicompany which helps to have a report
 relationship with company (similar to a property).
 
-    """,
-    "website": "http://vauxoo.com",
-    "category": "Addons Vauxoo",
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base"
+    ], 
+    "demo": [], 
     "data": [
-    "security/ir.model.access.csv",
-    "view/report_multicompany_view.xml",
-    "security/report_multicompany_security.xml"
-    ],
-    "test": [],
-    "active": False,
-    "installable": True,
+        "security/ir.model.access.csv", 
+        "view/report_multicompany_view.xml", 
+        "security/report_multicompany_security.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -23,11 +23,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
 {
-    "name" : "Payments Term",
-    "version" : "0.1",
-    "depends" : ["base","stock","sale",'purchase','account'],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Payments Term", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
     Add Payments terms by partner, Each payments termn is set in each partner
     and each partner have a different payment termn by company,
 
@@ -36,21 +36,29 @@
 
     The Payment term is in sale, stock,purchase and invoice modules and is send 
     through are models
-                    """,
-    "website" : "http://www.vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [    ],
-    "demo_xml" : [    ],
-    "update_xml" : [
-        
-        'view/account_view.xml',
-        'view/partner_view.xml',
-        'view/purchase_view.xml',
-        'view/sale_view.xml',
-        'view/stock_view.xml',
-        
-    
-    ],
-    "active": False,
-    "installable": True,
+                    """, 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "stock", 
+        "sale", 
+        "purchase", 
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/account_view.xml", 
+        "view/partner_view.xml", 
+        "view/purchase_view.xml", 
+        "view/sale_view.xml", 
+        "view/stock_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

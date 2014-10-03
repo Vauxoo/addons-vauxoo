@@ -23,24 +23,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "MRP Subproduction",
-    "version": "1.0",
-    "author" : "Vauxoo",
-    "category": "Generic Modules",
-    "website" : "http://www.vauxoo.com/",
+    "name": "MRP Subproduction", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
     "description": """This module allows to assign production orders to another parent production
     order, showing how many of the parent product was consumed in each of its children production orders.
-    """,
-    'depends': ['mrp'],
-    'init_xml': [],
-    'update_xml': [
-        'mrp_view.xml',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
-    
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "mrp"
+    ], 
+    "demo": [], 
+    "data": [
+        "mrp_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

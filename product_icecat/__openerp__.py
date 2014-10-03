@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ############################################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2010 Zikzakmedia S.L. (<http://www.zikzakmedia.com>). All Rights Reserved
 #    $Id$
 #
@@ -19,20 +19,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ############################################################################################
-
 {
-    "name" : "Product Information Import from icecat",
-    "version" : "1.0",
-    "author" : "Zikzakmedia SL",
-    "website" : "http://www.zikzakmedia.com",
-    "category" : "Added functionality",
-    "depends" : [
-        "base",
-        "product_manufacturer",
-        "product_images_olbs"
-    ],
-    "init_xml" : [],
-    "demo_xml" : [],
+    "name": "Product Information Import from icecat", 
+    "version": "1.0", 
+    "author": "Zikzakmedia SL", 
+    "category": "Added functionality", 
     "description": """
     Import information XML from icecat to OpenERP products.
     This wizard download XML in openerp-server (addons/product_icecat/xml) and after process data mapping line to product import.
@@ -40,14 +31,28 @@
     - HTML Category option: create list details
     - FTP image
     http://www.icecat.biz/
-    """,
-    'update_xml': [
-        'security/ir.model.access.csv',
-        'product_icecat.xml',
-        'product_manufacturer.xml',
-        'wizard/wizard_product_icecat.xml',
-    ],
-    'test':[''],
-    'installable': True,
-    'active': False,
+    """, 
+    "website": "http://www.zikzakmedia.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "product_manufacturer", 
+        "product_images_olbs"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/ir.model.access.csv", 
+        "product_icecat.xml", 
+        "product_manufacturer.xml", 
+        "wizard/wizard_product_icecat.xml"
+    ], 
+    "test": [
+        ""
+    ], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    Financed and Planified by Vauxoo
 #    developed by: nhomar@vauxoo.com
@@ -20,26 +20,30 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    'name': "Customize OpenERP web client",
-    'author': "Vauxoo",
-    'category': "Web",
-    'description': """
+    "name": "Customize OpenERP web client", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Web", 
+    "description": """
     Some customizations for OpenERP web client made by Vauxoo
-    """,
-    'version': "1.0",
-    'depends': ['web', 
-    ],
-    'js': [
-    ],
-    'css': [
-        'static/src/css/style.css',
-    ],
-    'qweb': [
-        'static/src/xml/web_vauxoo_cust.xml',
-    ],
-    'installable': True,
-    'auto_install': False,
-    'web_preload': False,
+    """, 
+    "website": "", 
+    "license": "", 
+    "depends": [
+        "web"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [
+        "static/src/css/style.css"
+    ], 
+    "qweb": [
+        "static/src/xml/web_vauxoo_cust.xml"
+    ], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

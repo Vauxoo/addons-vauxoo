@@ -24,17 +24,28 @@
 #
 ##############################################################################
 {
-    'name': 'mrp default location',
-    "version" : "1.1",
-    'author': 'Vauxoo',
-    'depends': ['mrp','product'],
-    'description': """
+    "name": "mrp default location", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "", 
+    "description": """
         Added the Locations by default when select the product in order of production
-    """,
-    'update_xml':[
-    'product_category_view.xml',
-    ],
-    'active': False,
-    'installable': True
+""", 
+    "website": "", 
+    "license": "", 
+    "depends": [
+        "mrp", 
+        "product"
+    ], 
+    "demo": [], 
+    "data": [
+        "product_category_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

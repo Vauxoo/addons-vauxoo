@@ -1,4 +1,4 @@
- ##############################################################################
+##############################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
@@ -18,12 +18,11 @@
 #
 ##############################################################################
 {
-    'name': 'Purchase Requisitions Description',
-    'version': '0.1',
-    'author': 'Vauxoo',
-    'category': 'Purchase Management',
-    'website': 'http://www.vauxoo.com',
-    'description': """
+    "name": "Purchase Requisitions Description", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Purchase Management", 
+    "description": """
 This module allows you to manage your Purchase Requisition.
 ===========================================================
 Add description on product.
@@ -31,21 +30,32 @@ Add description on product.
 Add analytic account on purchase requisition line, so the purchase order takes
 the account analytic value from the purchase requisition.
 
-Technical warning \n
-Add method override to def make_purchase_order from purchase_requisition\n
+Technical warning 
+
+Add method override to def make_purchase_order from purchase_requisition
+
 When you install this module in the server show this warning:
 
      WARNING: unable to set column name of table purchase_requisition_line not null !
 
 When you upgrade this module the field 'name' is set product name and 
 this warning not be displayed more.
-""",
-    'depends' : ['purchase_requisition',
-                'purchase_requisition_line_description',
-                'purchase_requisition_line_analytic',
-                'purchase_order_requisitor',
-                ],
-    'data': [],
-    'auto_install': False,
-    'installable': True,
+""", 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "purchase_requisition", 
+        "purchase_requisition_line_description", 
+        "purchase_requisition_line_analytic", 
+        "purchase_order_requisitor"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Humberto Arocha <hbto@vauxoo.com>           
+#    Coded by: Humberto Arocha <hbto@vauxoo.com>
 #    Planified by: Humberto Arocha <rsilvam@vauxoo.com>
 #    Audited by: Gabriela Quilarque <gabriela@openerp.com.ve>
 #############################################################################
@@ -22,27 +22,29 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
 {
-    "name" : "Account Order Wizard",
-    "version" : "0.1",
-    "author" : "Vauxoo",
-    "category" : "Generic Modules",
-    "website": "http://www.vauxoo.com",
-    "description": '''
+    "name": "Account Order Wizard", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
 
-''',
-    "depends" : [
-                "account",
-                ],
-    "init_xml" : [],
-    "demo_xml" : [
-
+""", 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account"
     ], 
-    "update_xml" : [
-        'view/wizards.xml',
-        'view/menues.xml',
-    ],
-    "active": False,
-    "installable": True
+    "demo": [], 
+    "data": [
+        "view/wizards.xml", 
+        "view/menues.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -21,20 +21,24 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Account Periods Initial",
-    "version" : "1.1",
-    "author" : "Vauxoo",
-    "category": 'Account',
+    "name": "Account Periods Initial", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "Account", 
     "description": """Add function build_ctx_periods_initial
-    """,
-    'init_xml': [],
-    "depends" : ["account"],
-    'update_xml': [
-
-    ],
-    'demo_xml': [
-    ],
-    'installable': True,
-    'active': False,
+""", 
+    "website": "", 
+    "license": "", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

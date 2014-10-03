@@ -8,7 +8,7 @@
 #    Coded by: Humberto Arocha           <humberto@vauxoo.com>
 #              Angelica Barrios          <angélicaisabelb@gmail.com>
 #              María Gabriela Quilarque  <gabrielaquilarque97@gmail.com>
-#              Javier Duran              <javier@vauxoo.com>             
+#              Javier Duran              <javier@vauxoo.com>
 #    Planified by: Nhomar Hernande
 #    Finance by: Helados Gilda, C.A. http://heladosgilda.com.ve
 #    Audited by: Humberto Arocha humberto@vauxoo.com
@@ -26,32 +26,33 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
-###  
+###
 ### res_company --> account_management ver si se puede eliminar esta dependencia ####
 ### retencion_iva, base_vat_ve  ver si se puede eliminar esta dependencia
-
 {
-    "name" : "Voucher Paid support report",
-    "version" : "0.2",
-    "author" : "Vauxoo",
-    "website" : "http://vauxoo.com",
-    "category": 'Generic Modules/Accounting',
+    "name": "Voucher Paid support report", 
+    "version": "0.2", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Accounting", 
     "description": """
         Este modulo agrega al reporte del soporte de pago detallado las retenciones del Impuesto al valor agregado (IVA)
 
-    """,
-    'init_xml': [],
-    "depends" : ["l10n_ve_withholding_iva", "bank_management"],
-    'update_xml': [
-        'bank_iva_report.xml',
-    ],
-    'demo_xml': [],
-    'test': [],
-    'installable': False,
-    'active': False,
-    'external_dependencies': {},
+""", 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "l10n_ve_withholding_iva", 
+        "bank_management"
+    ], 
+    "demo": [], 
+    "data": [
+        "bank_iva_report.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": False, 
+    "auto_install": False
 }
-
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -21,24 +21,33 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Procurements",
-    "version" : "1.0",
-    "depends" : ["procurement","process", "product", "stock"],
-    "author" : "Vauxoo",
-    #"license" : "AGPL-3",
-    "description" : """The procurement order will schedule a proposal for automatic procurement
+    "name": "Procurements", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """The procurement order will schedule a proposal for automatic procurement
 for the product which needs replenishment. This procurement will start a
 task, either a purchase order form for the supplier, or a production order
 depending on the product's configuration.
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [],
-    "update_xml" : ['wizard/schedulers_all_view.xml',
-    ],
-    "active": False,
-    "installable": True,
+        
+""", 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "procurement", 
+        "process", 
+        "product", 
+        "stock"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/schedulers_all_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

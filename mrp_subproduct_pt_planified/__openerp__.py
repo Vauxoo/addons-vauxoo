@@ -23,24 +23,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "MRP Subproducts Planified",
-    "version": "1.1",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/MRP",
-    "website" : "http://www.vauxoo.com/",
+    "name": "MRP Subproducts Planified", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/MRP", 
     "description": """ Add o2m to subproducts produced.
         This module required apply the merge of the branch: lp:~vauxoo/openobject-addons/6.1-bug-1051367-moylop260_vauxoo 
         to the addons of original openobject.
-    """,
-    'depends': ['mrp_byproduct','mrp_pt_planified'],
-    'init_xml': [],
-    'update_xml': [
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': True,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "mrp_byproduct", 
+        "mrp_pt_planified"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

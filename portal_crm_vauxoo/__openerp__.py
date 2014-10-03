@@ -18,14 +18,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-
 {
-    'name': 'Portal CRM with Captcha',
-    'version': '0.1',
-    'category': 'Tools',
-    'complexity': 'easy',
-    'description': """
+    "name": "Portal CRM with Captcha", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Tools", 
+    "description": """
 Contact page with Captcha widget.
 =================================
 
@@ -37,28 +35,27 @@ You will need to install recaptcha and recaptcha client::
 Added Menu 'Our Team ' as principal Menu, this menu show
 the human recourses that is public.
 
-    """,
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com',
-    'depends': [
-                'crm',
-                'portal',
-                'portal_news',
-                'web_captcha',
-                'portal_hr_employees',
-                'vauxoo_widgets',
-                ],
-    'data': [
-        'view/contact_view.xml',
-    ],
-    'test': [
-        #'test/contact_form.yml',
-    ],
-    'installable': True,
-    'auto_install': False,
-    'css': [
-    ],
-    'js': [],
-    'qweb': [],
+            #'test/contact_form.yml',
+""", 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "crm", 
+        "portal", 
+        "portal_news", 
+        "web_captcha", 
+        "portal_hr_employees", 
+        "vauxoo_widgets"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/contact_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

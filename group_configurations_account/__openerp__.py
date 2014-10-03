@@ -24,21 +24,27 @@
 #
 ##############################################################################
 {
-    "name" : "Group Configurations Accounting",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Accounting",
-    "description" : """
+    "name": "Group Configurations Accounting", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Accounting", 
+    "description": """
         Add a group, and adds in wizard for configurate accounting
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
-		"base",
-        ],
-    "data" : [
-		"security/group_wizards_configure_accounting.xml",
-		],
-    "installable" : True,
-    "active" : False,
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "base"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/group_wizards_configure_accounting.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

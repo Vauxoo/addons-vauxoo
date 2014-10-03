@@ -23,24 +23,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "mrp scheduled onchange product",
-    "version": "1.0",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/Production",
-    "website" : "http://www.vauxoo.com/",
+    "name": "mrp scheduled onchange product", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Production", 
     "description": """When you add a product, it sets automatically the default uom
     for the product and the name of the product. Adds too a domain to the field
     product_uom to only show the uom matching the selected product.
-    """,
-    'depends': ['mrp'],
-    'init_xml': [],
-    'update_xml': [
-        'mrp_view.xml',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "mrp"
+    ], 
+    "demo": [], 
+    "data": [
+        "mrp_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

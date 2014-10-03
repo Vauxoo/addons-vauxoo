@@ -22,31 +22,31 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
-
 {
-    "name" : "salem_uom_group"                                                                              ,
-    "version" : "0.1"                                                                                       ,
-    "depends" : ["sale"]                                                                                    ,
-    "author" : "Openerp Venzuela"                                                                           ,
-    "description" : """
+    "name": "salem_uom_group", 
+    "version": "0.1", 
+    "author": "Openerp Venzuela", 
+    "category": "Generic Modules/MRP", 
+    "description": """
     What do this module:
     Add multi product uom sum of order line.
-                    """                                                                                     ,
-    "website" : "http://vauxoo.com"                                                                     ,
-    "category" : "Generic Modules/MRP"                                                                      ,
-    "init_xml" : [
-    ]                                                                                                       ,
-    "demo_xml" : [
-    ]                                                                                                       ,
-    "update_xml" : [
-        "security/groups.xml"                                                                               ,
-        "security/ir.model.access.csv"                                                                      ,
-        "view/sale_uom_group_view.xml"                                                                      ,
-
-    ]                                                                                                       ,
-    "active": False                                                                                         ,
-    "installable": True                                                                                     ,
+""", 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "sale"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/groups.xml", 
+        "security/ir.model.access.csv", 
+        "view/sale_uom_group_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

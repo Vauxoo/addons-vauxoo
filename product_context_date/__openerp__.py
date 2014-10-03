@@ -23,22 +23,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "Product Context Date",
-    "version": "1.1",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/Product",
-    "website" : "http://www.vauxoo.com/",
+    "name": "Product Context Date", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Product", 
     "description": """ Add field date in view search by the context
-    """,
-    'depends': ['stock'],
-    'update_xml': [
-        'product_context_date_view.xml',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "stock"
+    ], 
+    "demo": [], 
+    "data": [
+        "product_context_date_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

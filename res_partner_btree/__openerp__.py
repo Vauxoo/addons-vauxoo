@@ -21,15 +21,23 @@
 #
 ##############################################################################
 {
-    "name" : "Creacion de parent_left y parent_right en partner",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "description":"""This module creates parent_left y paret_right en partners""",
-    "website" : "http://www.vauxoo.com/",
-    "depends" : ["base"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [],
-    "installable" : True,
-    "active" : False,
+    "name": "Creacion de parent_left y parent_right en partner", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "", 
+    "description": """This module creates parent_left y paret_right en partners""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "base"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -21,16 +21,11 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    "name": "Warranties Enterprise",
-    "version": "0.1",
-    "depends": [
-                "base",
-                "account_analytic_analysis",
-                "project",
-                ],
-    "author": "Vauxoo",
+    "name": "Warranties Enterprise", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Contracts", 
     "description": """
 Enterprise Contract Management.
 ===============================
@@ -48,19 +43,29 @@ this contracts.
 
 * Expiration Warnings.
 * Manage Comunication with OpenERP.
-    """,
-    "website": "http://vauxoo.com",
-    "category": "Contracts",
+    #TODO:
+""", 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "account_analytic_analysis", 
+        "project"
+    ], 
     "demo": [
-        'demo/demo_account_analytic_account.xml',
-    ],
+        "demo/demo_account_analytic_account.xml"
+    ], 
     "data": [
-        'security/ir.model.access.csv',
-        'view/account_analytic_analysis_view.xml',
-    ],
+        "security/ir.model.access.csv", 
+        "view/account_analytic_analysis_view.xml"
+    ], 
     "test": [
-        'test/contract_enterprise_license.yml'
-    ],
-    "active": False,
-    "installable": True,
+        "test/contract_enterprise_license.yml"
+    ], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

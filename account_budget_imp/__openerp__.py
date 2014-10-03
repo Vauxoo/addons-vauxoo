@@ -23,13 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "Account Budget Improvements",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    'category' : 'Accounting & Finance',
-    "description" : """
+    "name": "Account Budget Improvements", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Accounting & Finance", 
+    "description": """
 Improvements to Account Budget
 ==============================
 
@@ -55,30 +54,30 @@ Improvements to Account Budget
 
 The Account Budget view will be used to comply with need to show the executed
 Budget per period.
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
-        "account_budget",
-        "account_accountant",
-        "ifrs_report",
-        "web_kanban",
-    ],
-    "data" : [
-        "view/account_budget_view.xml",
-        "security/res_groups.xml",
-        "data/account_budget_data.xml",
-    ],
-    "demo" : [
-    ],
-    "css": [
-        "static/src/css/account_budget.css",
-    ],
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "account_budget", 
+        "account_accountant", 
+        "ifrs_report", 
+        "web_kanban"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/account_budget_view.xml", 
+        "security/res_groups.xml", 
+        "data/account_budget_data.xml"
+    ], 
+    "test": [], 
     "js": [
-        "static/src/js/account_budget_imp.js",
-    ],
-    "test" : [
-    ],
-    "installable" : True,
-    "active" : False,
+        "static/src/js/account_budget_imp.js"
+    ], 
+    "css": [
+        "static/src/css/account_budget.css"
+    ], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

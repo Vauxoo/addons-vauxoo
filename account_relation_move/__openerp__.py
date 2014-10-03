@@ -23,23 +23,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "Account relation move",
-    "version": "1.0",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/Account",
-    "website" : "http://www.vauxoo.com/",
+    "name": "Account relation move", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Account", 
     "description": """ Adds 4 fields to generate a connection between account
     and production models
-    """,
-    'depends': ['mrp'],
-    'init_xml': [],
-    'update_xml': [
-        #'account_view.xml',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+            #'account_view.xml',
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "mrp"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

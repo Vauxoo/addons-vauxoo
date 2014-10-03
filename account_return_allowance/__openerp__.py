@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -24,11 +24,11 @@
 ################################################################################
 #TODO: Installer to load automagically allowance accounts
 {
-    "name" : "Account Separate Return Allowance",
-    "version" : "0.5",
-    "depends" : ['account'],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Account Separate Return Allowance", 
+    "version": "0.5", 
+    "author": "Vauxoo", 
+    "category": "Accounting", 
+    "description": """
     OpenERP leaks of the feature necesary for some Latinamerican projects on 
     accounting, we need to make the discount explícit on the account move line 
     in the invoicing sale process because some taxes are exonerated with this 
@@ -78,17 +78,24 @@
     
     http://www.principlesofaccounting.com/chapter5/chapter5.html#return
 
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Accounting",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [ ],
-    "update_xml" : [
-    "view/product_view.xml",
-    "view/company_view.xml",
-    "view/invoice_view.xml",
-    ],
-    "active": False,
-    "installable": False,
+        http://www.principlesofaccounting.com/chapter5/chapter5.html#return
+""", 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/product_view.xml", 
+        "view/company_view.xml", 
+        "view/invoice_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": False, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

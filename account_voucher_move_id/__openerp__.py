@@ -1,4 +1,4 @@
- ##############################################################################
+##############################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
@@ -18,24 +18,32 @@
 #
 ##############################################################################
 {
-    'name': 'Show Journal Entry in voucher',
-    'version': '0.1',
-    'author': 'Vauxoo',
-    'category': 'Accounting',
-    'website': 'http://www.vauxoo.com',
-    'description': """
+    "name": "Show Journal Entry in voucher", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Accounting", 
+    "description": """
 This module show Journal Entry in: 
 ========================================
 *Sales Receipts
 *Customer Payments
 *Purchase Receipts
 *Supplier Payments
-""",
-    'depends' : [
-        'account_voucher'],
-    'data': [
-        "account_voucher.xml",
-    ],
-    'auto_install': False,
-    'installable': True,
+""", 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account_voucher"
+    ], 
+    "demo": [], 
+    "data": [
+        "account_voucher.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

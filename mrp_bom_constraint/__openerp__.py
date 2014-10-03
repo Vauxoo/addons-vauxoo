@@ -21,21 +21,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Constraint product_uom",
-    "version" : "1.0",
-    "depends" : ['mrp'],
-    "author" : "Vauxoo",
-    #"license" : "AGPL-3",
-    "description" : """This module add constraint in mrp_bom
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [],
-    "update_xml" : [
-    ],
-    "active": False,
-    "installable": True,
+    "name": "Constraint product_uom", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """This module add constraint in mrp_bom
+     
+""", 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "mrp"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

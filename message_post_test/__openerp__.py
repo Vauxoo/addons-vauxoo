@@ -23,23 +23,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Message Post Test",
-    "version" : "0.1",
-    "depends" : ['message_post_model'],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Message Post Test", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
 Test for message_post_model module
 ==================================
 
 - This module only is used to test the functionality of message_post_model module
 
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "data" : [
-       'security/ir.model.access.csv',
-        ],
-    "active": False,
-    "installable": True,
-
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "message_post_model"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/ir.model.access.csv"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

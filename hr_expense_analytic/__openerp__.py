@@ -23,20 +23,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "hr_expense_analytic",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "hr",
-    "description" : """This module add analytic account to departament""",
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : ["hr","hr_expense","account"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : ["hr_expense_analytic_view.xml"],
-    "test": [],
-    "installable" : True,
-    "active" : False,
+    "name": "hr_expense_analytic", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "hr", 
+    "description": """This module add analytic account to departament""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "hr", 
+        "hr_expense", 
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "hr_expense_analytic_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

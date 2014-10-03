@@ -21,21 +21,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Add locaton_id,location_dest_id,date_expected,state in stocks moves",
-    "version" : "1.0",
-    "depends" : ['stock'],
-    "author" : "Vauxoo",
-    #"license" : "AGPL-3",
-    "description" : """This module add locaton_id,location_dest_id,date_expected,state in stocks moves
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [],
-    "update_xml" : ['stock_product.xml',
-    ],
-    "active": False,
-    "installable": True,
+    "name": "Add locaton_id,location_dest_id,date_expected,state in stocks moves", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """This module add locaton_id,location_dest_id,date_expected,state in stocks moves
+        
+""", 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "stock"
+    ], 
+    "demo": [], 
+    "data": [
+        "stock_product.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

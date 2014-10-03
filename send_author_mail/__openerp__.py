@@ -21,20 +21,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    'name' : 'Send Email Author',
-    'version' : '1.1',
-    "website": "http://vauxoo.com",
-    "category": "Addons Vauxoo",
-    'author' : 'Vauxoo',
-    'description' : """
+    "name": "Send Email Author", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "Addons Vauxoo", 
+    "description": """
 Check Field receive_my_emails in partner to receive your own copy of messages sent
-    """,
-    'depends' : ['mail'],
-    'data': [
-        'view/partner_view.xml',
-        ],
-    "active": False,
-    "installable": True,
+""", 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "mail"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/partner_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

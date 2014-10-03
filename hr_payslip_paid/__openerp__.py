@@ -23,26 +23,30 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-
 {
-    "name": "HR payslip paid",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Localization/Mexico",
-    "description" : """
+    "name": "HR payslip paid", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Localization/Mexico", 
+    "description": """
     This module add the state paid in hr payroll 
-    """,
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
     "depends": [
-        "hr_payroll_account", "hr_payroll_cancel"
-    ],
-    "demo": [],
-    "test": [],
+        "hr_payroll_account", 
+        "hr_payroll_cancel"
+    ], 
+    "demo": [], 
     "data": [
-        "view/hr_payslip_workflow.xml",
-        "view/hr_payslip_view.xml",
-    ],
-    "installable": True,
-    "active": False,
+        "view/hr_payslip_workflow.xml", 
+        "view/hr_payslip_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

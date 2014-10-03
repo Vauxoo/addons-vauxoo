@@ -19,11 +19,11 @@
 #
 ##############################################################################
 {
-    'name': 'Duplicated Tasks',
-    'version': '0.1',
-    'author': 'Vauxoo',
-    'category': 'Projects',
-    'description': """
+    "name": "Duplicated Tasks", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Projects", 
+    "description": """
 
 Identify when a task could be duplicated
 ========================================
@@ -42,27 +42,22 @@ the task that you think that could be the same task
 We add the action menu in task model, where you can search task, with some
 specific words that could match with other task, to avoid create a duplicated
 task 
-    """,
-    'website': 'http://www.vauxoo.com',
-    'images': [],
-    'depends': [
-        'project',
-    ],
-    'data': [
-        'wizard/search_duplicated_task_view.xml',
-        'view/task_view.xml',
-    ],
-    'js': [
-    ],
-    'qweb': [
-    ],
-    'css': [
-    ],
-    'demo': [
-    ],
-    'test': [
-    ],
-    'installable': True,
-    'auto_install': False,
+""", 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "project"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/search_duplicated_task_view.xml", 
+        "view/task_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

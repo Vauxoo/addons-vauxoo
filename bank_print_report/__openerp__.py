@@ -8,7 +8,7 @@
 #    Coded by: Humberto Arocha           <humberto@vauxoo.com>
 #              Angelica Barrios          <angélicaisabelb@gmail.com>
 #              María Gabriela Quilarque  <gabrielaquilarque97@gmail.com>
-#              Javier Duran              <javier@vauxoo.com>             
+#              Javier Duran              <javier@vauxoo.com>
 #    Planified by: Nhomar Hernande
 #    Finance by: Helados Gilda, C.A. http://heladosgilda.com.ve
 #    Audited by: Humberto Arocha humberto@vauxoo.com
@@ -26,30 +26,31 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
-
 {
-    "name" : "Print report check",
-    "version" : "0.2",
-    "author" : "Vauxoo",
-    "website" : "http://vauxoo.com",
-    "category": 'Generic Modules/Accounting',
+    "name": "Print report check", 
+    "version": "0.2", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Accounting", 
     "description": """
         Este modulo agrega la posibilidad de imprimir directamente el cheque a la impresora
 
-    """,
-    'init_xml': [],
-    "depends" : ["openerp_print", "bank_management"],
-    'update_xml': [
-        'bank_print_report.xml',
-        'wizard/voucher_pay_support_wizard_pay_order.xml',
-    ],
-    'demo_xml': [],
-    'test': [],
-    'installable': False,
-    'active': False,
-    'external_dependencies': {},
+""", 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "openerp_print", 
+        "bank_management"
+    ], 
+    "demo": [], 
+    "data": [
+        "bank_print_report.xml", 
+        "wizard/voucher_pay_support_wizard_pay_order.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": False, 
+    "auto_install": False
 }
-
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

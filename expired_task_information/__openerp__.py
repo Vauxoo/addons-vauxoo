@@ -19,11 +19,11 @@
 #
 #
 {
-    'name': 'Expired Task Information',
-    'version': '0.1',
-    'author': 'Vauxoo',
-    'category': 'Project',
-    'description': """
+    "name": "Expired Task Information", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Project", 
+    "description": """
 Information about status tasks
 ==============================
 It's very important know status for our tasks, details like  when it's expire?
@@ -40,30 +40,26 @@ status. To access in this module you need have access rule and is in the setup
 menu of projects. In this module you can configure the day number before the
 expire date to send  email reporting it, and also the day number that a task
 must have without changes(Taking like changes, work summary or messages in the
-task)""",
-    'website': 'http://www.vauxoo.com',
-    'images': [],
-    'depends': [
-        'base',
-        'project',
-    ],
-    'data': [
-        'security/config_task_security.xml',
-        'security/ir.model.access.csv',
-        'view/task_expiry_config_view.xml',
-        'data/config_task_expired_data.xml',
-    ],
-    'js': [
-    ],
-    'qweb': [
-    ],
-    'css': [
-    ],
-    'demo': [
-    ],
-    'test': [
-    ],
-    'installable': True,
-    'auto_install': False,
+task)
+""", 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "project"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/config_task_security.xml", 
+        "security/ir.model.access.csv", 
+        "view/task_expiry_config_view.xml", 
+        "data/config_task_expired_data.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

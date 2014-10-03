@@ -23,13 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-
 {
-    "name": "Account Advance Payment",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Generic Modules",
-    "description" : """
+    "name": "Account Advance Payment", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
 Account Advance Payment
 =======================
 
@@ -40,19 +39,23 @@ Total Customer Advance and Total Supplier Advance in the view form of the partne
 
 Also adds the field Transaction Type in the view payments of customs and suppliers.
 
-    """,
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
     "depends": [
-            "account",
-            "account_voucher",
-                ],
-    "demo": [
-    ],
+        "account", 
+        "account_voucher"
+    ], 
+    "demo": [], 
     "data": [
-        'view/res_partner_advance_payment_view.xml',
-        'view/account_voucher_advance_payment_view.xml',
-    ],
-    "installable": True,
-    "active": False,
+        "view/res_partner_advance_payment_view.xml", 
+        "view/account_voucher_advance_payment_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

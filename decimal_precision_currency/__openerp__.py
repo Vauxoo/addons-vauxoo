@@ -23,23 +23,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################-
 {
-    "name" : "Decimal Precision to Rate Currency",
-    "version" : "0.1",
-    "depends" : ["base","decimal_precision"],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Decimal Precision to Rate Currency", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Administracion/Personalizacion/Estructura de la base de datos/Precision Decimal", 
+    "description": """
                     This module, add decimal  precision format to Rate Currency, for the conversion  between currencies is accurate.
-                    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Administracion/Personalizacion/Estructura de la base de datos/Precision Decimal",
-    "init_xml" : [
-    ],
-    "demo_xml" : [
-    ],
-    "update_xml" : [
-        "decimal_pre_currency_view.xml",
-        "data/decimal_precision_currency.xml",
-    ],
-    "active": False,
-    "installable": True,
+                    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "decimal_precision"
+    ], 
+    "demo": [], 
+    "data": [
+        "decimal_pre_currency_view.xml", 
+        "data/decimal_precision_currency.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

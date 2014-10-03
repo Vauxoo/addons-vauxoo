@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -23,22 +23,33 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Product Historical Price",
-    "version" : "0.2",
-    "depends" : ["product","decimal_precision","account"],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Product Historical Price", 
+    "version": "0.2", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Product", 
+    "description": """
     What do this module:
     This module gets the historical price of a product
-                    """,
-    "website" : "http://Vauxoo.com",
-    "category" : "Generic Modules/Product",
-    "init_xml" : [],
-    "update_xml" : ["view/product_view.xml",
-                    "data/product_data.xml",
-#                    "security/groups.xml",
-                    "security/ir.model.access.csv",
-                    ],
-    "active": False,
-    "installable": True,
+                    #                    "security/groups.xml",
+""", 
+    "website": "http://Vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "product", 
+        "decimal_precision", 
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/product_view.xml", 
+        "data/product_data.xml", 
+        "security/ir.model.access.csv"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

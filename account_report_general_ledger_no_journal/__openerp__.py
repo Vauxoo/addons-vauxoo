@@ -6,7 +6,7 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: 
+#    Coded by:
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,20 +23,24 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "account_report_general_ledger_no_journal",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "account",
-    "description" : """This module """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : ["account",],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [],
-    "test": [],
-    "installable" : True,
-    "active" : False,
+    "name": "account_report_general_ledger_no_journal", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "account", 
+    "description": """This module """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

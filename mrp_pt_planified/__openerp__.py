@@ -23,25 +23,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "MRP Products Planified",
-    "version": "1.1",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/MRP",
-    "website" : "http://www.vauxoo.com/",
+    "name": "MRP Products Planified", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/MRP", 
     "description": """ Add o2m to products produced
-    """,
-    'depends': ['mrp'],
-    'init_xml': [],
-    'update_xml': [
-        'mrp_view.xml',
-        'security/mrp_security.xml',
-        'security/ir.model.access.csv',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "mrp"
+    ], 
+    "demo": [], 
+    "data": [
+        "mrp_view.xml", 
+        "security/mrp_security.xml", 
+        "security/ir.model.access.csv"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

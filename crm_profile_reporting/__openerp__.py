@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 {
-    "name" : "Crm Profiling Report",
-    "version" : "0.1",
-    "depends" : ["base","crm_profiling","email_template"],
-    "author" : "",
-    "description" : """
+    "name": "Crm Profiling Report", 
+    "version": "0.1", 
+    "author": "", 
+    "category": "Generic Modules/Accounting", 
+    "description": """
     What do this module:
 
     This module prints the report of the accepted partners and send it by mail
@@ -35,15 +35,24 @@
           -Report to send: Select this report (Print Profile Report)
         2.3.- We create the action with the button Create Action.
         2.4.- Save the configuration.
-                    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules/Accounting",
-    "init_xml" : [    ],
-    "demo_xml" : [    ],
-    "update_xml" : [
-    "crm_profile_reporting_report.xml",
-    "data/crm_profiling_data.xml",
-    ],
-    "active": False,
-    "installable": True,
+                    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "crm_profiling", 
+        "email_template"
+    ], 
+    "demo": [], 
+    "data": [
+        "crm_profile_reporting_report.xml", 
+        "data/crm_profiling_data.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

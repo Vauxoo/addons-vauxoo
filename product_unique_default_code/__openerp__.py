@@ -24,15 +24,25 @@
 #
 ##############################################################################
 {
-    'name': 'Product Default Code Unique',
-    "version" : "1.1",
-    'author': 'Vauxoo',
-    'depends': ['product'],
-    'description': """
+    "name": "Product Default Code Unique", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "", 
+    "description": """
         Add Constraint for the default_code and change function copy
-    """,
-    'update_xml':[],
-    'active': False,
-    'installable': True
+""", 
+    "website": "", 
+    "license": "", 
+    "depends": [
+        "product"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

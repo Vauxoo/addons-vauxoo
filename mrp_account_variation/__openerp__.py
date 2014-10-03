@@ -23,23 +23,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "MRP Account Variation",
-    "version": "1.1",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/Account",
-    "website" : "http://www.vauxoo.com/",
+    "name": "MRP Account Variation", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Account", 
     "description": """ Add entries to production variation
-    """,
-    'depends': ['mrp_variation','account'],
-    'init_xml': [],
-    'update_xml': [
-        'stock_location_view.xml',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "mrp_variation", 
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "stock_location_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

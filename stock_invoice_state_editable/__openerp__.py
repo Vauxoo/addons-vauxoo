@@ -24,20 +24,26 @@
 #
 ##############################################################################
 {
-    "name" : "Stock invoice state editable",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Stock",
-    "description" : """This module change readonly in field invoice state for a group""",
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : ["stock",],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        "security/stock_security.xml",
-        "stock_view.xml",
-    ],
-    "installable" : True,
-    "active" : False,
+    "name": "Stock invoice state editable", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Stock", 
+    "description": """This module change readonly in field invoice state for a group""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "stock"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/stock_security.xml", 
+        "stock_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

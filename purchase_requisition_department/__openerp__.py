@@ -22,33 +22,34 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'Purchase Requisition Department',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': 'purchase',
-    'description': '''
+    "name": "Purchase Requisition Department", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "purchase", 
+    "description": """
 Purchase Requisition Department
 ===============================
 
 Add the department field relational field to deparment_id extract for the
 current purchase requisition responsible. Also add the filter ins the purchase
 requisition list view to discriminate the purchase requisition by department.
-''',
-    'depends': [
-        'purchase_requisition',
-        'hr',
-    ],
-    'data': [
-        'view/purchase_requisition_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'qweb': [],
-    'js': [],
-    'css': [],
-    'active': False,
-    'installable': True,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "purchase_requisition", 
+        "hr"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/purchase_requisition_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

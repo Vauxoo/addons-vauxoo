@@ -20,14 +20,12 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-{                                                                                  
-    'name' : 'Merge Duplicate Products',
-    'version' : '0.1',                                                             
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category' : 'Generic Modules',                                                          
-    'description' : """     
+{
+    "name": "Merge Duplicate Products", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """     
 Merge Products
 ==============
 We can merge duplicates products and set the new id in all documents of
@@ -44,27 +42,23 @@ operations in different units of measure.
 
 This feature is in the follow path Warehouse/Tools/Duplicate products 
 also is created an action menu in the product view.
-    """,                                                                           
-    'images' : [],                                                                 
-    'depends' : [
-        'base',
-        'stock',
-    ],                                                                
-    'data': [                                                                      
-        "security/res_groups.xml",
-        'wizard/base_product_merge_view.xml',
-    ],                                                                                 
-    'js': [                                                                        
-    ],                                                                                 
-    'qweb' : [                                                                     
-    ],                                                                                 
-    'css':[                                                                        
-    ],                                                                                 
-    'demo': [                                                                      
-    ],                                                                                 
-    'test': [                                                                      
-    ],                                                                                                                                                                                                  
-    'installable': True,                                                           
-    'auto_install': False,                                                         
-}                                                                                  
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "stock"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/res_groups.xml", 
+        "wizard/base_product_merge_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
+}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

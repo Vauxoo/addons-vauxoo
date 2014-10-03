@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -23,26 +23,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Invoice Cancel with withholding vat",
-    "version" : "0.1",
-    "depends" : ['account','account_move_cancel','l10n_ve_withholding_iva'],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Invoice Cancel with withholding vat", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
     Cancels invoices with vat withholding, will be passed to draft and calls 
     mediande vailadadas workflow automatically, keeping the same document that 
     generated initially wittholding
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [ ],
-    "update_xml" : [
-    'workflow/account_workflow.xml', 
-    
-    
-    
-    ],
-    "active": False,
-    "installable": True,
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account", 
+        "account_move_cancel", 
+        "l10n_ve_withholding_iva"
+    ], 
+    "demo": [], 
+    "data": [
+        "workflow/account_workflow.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

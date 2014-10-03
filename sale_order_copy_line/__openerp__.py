@@ -23,29 +23,39 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-
 {
-    "name": "Sale Order Line Copy",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Sale Order",
-    "description" : """
+    "name": "Sale Order Line Copy", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Sale Order", 
+    "description": """
 Sale Order Line Copy
 ====================
 
 This module add the button in the sale order line for copy data.
 
-    """,
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
-    "depends": ["base",
-                "sale",
-                "sale_stock",],
-    "demo": ["demo/sale_order_demo.xml"],
-    "test": ["test/sale_order_copy_line_test.yml"],
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "base", 
+        "sale", 
+        "sale_stock"
+    ], 
+    "demo": [
+        "demo/sale_order_demo.xml"
+    ], 
     "data": [
-    "security/sale_order_line_copy_group.xml",
-    "view/sale_order_line_copy.xml"],
-    "installable": True,
-    "active": False,
+        "security/sale_order_line_copy_group.xml", 
+        "view/sale_order_line_copy.xml"
+    ], 
+    "test": [
+        "test/sale_order_copy_line_test.yml"
+    ], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

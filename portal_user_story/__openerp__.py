@@ -23,17 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "Portal Acess for User Story",
-    "version" : "0.1",
-    "depends" : [
-                 "user_story",
-                 "portal",
-                 "portal_project",
-                 ],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Portal Acess for User Story", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
 This Module only offer Portal Access to customers.
 
     - List User Stories per Project.
@@ -42,18 +37,27 @@ This Module only offer Portal Access to customers.
 
 The only objective is, easily with add Portal Access to Contacts on a Customer
 be able to let them accept user stories.
-                    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "demo" : [
-        'demo/demo.xml',
-    ],
-    "data" : [
-        "security/ir_rules.xml",
-        "security/ir.model.access.csv",
-        'view/portal_view.xml',
-    ],
-    "active": False,
-    "images": [],
-    "installable": True,
+                    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "user_story", 
+        "portal", 
+        "portal_project"
+    ], 
+    "demo": [
+        "demo/demo.xml"
+    ], 
+    "data": [
+        "security/ir_rules.xml", 
+        "security/ir.model.access.csv", 
+        "view/portal_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

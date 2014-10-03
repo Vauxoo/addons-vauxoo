@@ -25,23 +25,28 @@
 #
 ##############################################################################
 {
-    'name':'Purchase - supplier',
-    'version':'1.0',
-    'depends':["base","account","purchase"],
-    'author' : 'Vauxoo',
+    "name": "Purchase - supplier", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Purchases", 
     "description": """Purchse supplier, whe you validate a purchase, the partner is converted in product supplier
-    """,
-    'category' : 'Purchases',
-    'website': 'http://www.vauxoo.com',
-    'init_xml': [
-    ],
-    'update_xml': [
-        #~ 'partner_view.xml',
+            #~ 'partner_view.xml',
         #~ 'purchase_workflow.xml',
-    ],
-    'demo_xml': [
-
-    ],
-    'installable': True,
-    'active': False,
+""", 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "account", 
+        "purchase"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

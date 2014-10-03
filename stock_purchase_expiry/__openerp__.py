@@ -22,35 +22,36 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'Stock Purchase Expiry',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': '',
-    'description': '''
+    "name": "Stock Purchase Expiry", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "", 
+    "description": """
 Stock Purchase Expiry
 =====================
 
 Add a contract expiry date to the purchase order that will control the payment
 and invoice loads of a supplier.
 
-''',
-    'depends': [
-        'purchase',
-        'stock',
-        ],
-    'data': [
-        'view/purchase_order_view.xml',
-        'view/stock_picking_view.xml',
-        'wizard/stock_invoice_onshipping_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'qweb': [],
-    'js': [],
-    'css': [],
-    'active': False,
-    'installable': True,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "purchase", 
+        "stock"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/purchase_order_view.xml", 
+        "view/stock_picking_view.xml", 
+        "wizard/stock_invoice_onshipping_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

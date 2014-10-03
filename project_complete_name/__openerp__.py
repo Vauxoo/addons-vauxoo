@@ -23,23 +23,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "Project Complete Name",
-    "version": "1.1",
-    "author" : "Vauxoo",
-    "website" : "http://www.vauxoo.com/",
+    "name": "Project Complete Name", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "", 
     "description": """ search by complete_name in model Project
-    """,
-    'depends': ['project'],
-    'init_xml': [],
-    'update_xml': [
-        'project_view.xml',
-        'security/project_security.xml'
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "project"
+    ], 
+    "demo": [], 
+    "data": [
+        "project_view.xml", 
+        "security/project_security.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

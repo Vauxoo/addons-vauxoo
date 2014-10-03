@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    d$
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A. (Maria Gabriela Quilarque)          
+#    Coded by: Vauxoo C.A. (Maria Gabriela Quilarque)
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 ##############################################################################
@@ -23,16 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "Payment Approve",
-    "version" : "0.1",
-    "depends" : [
-                 "base",
-                 "account",
-                 ],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Payment Approve", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
 Purchase Manager Payment Approve 
 ================================                
 
@@ -52,19 +48,24 @@ The description of two buttons:
 
 .. image:: account_payment_approve_invoice/static/src/demo/button_disapproves.png
 
-""",
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "data" : [
-        "view/account_invoice_view.xml",
-        "security/account_security.xml",
-        "security/ir.model.access.csv",
-    ],
-    "demo" : [
-    ],
-    "test" : [
-    ],
-    "active": False,
-    "images": [],
-    "installable": True,
+""", 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/account_invoice_view.xml", 
+        "security/account_security.xml", 
+        "security/ir.model.access.csv"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

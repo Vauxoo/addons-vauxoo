@@ -19,35 +19,32 @@
 #
 ##############################################################################
 {
-    'name' : 'Validate Stock Picking',
-    'version' : '0.1',
-    'author' : 'Vauxoo',
-    'category' : 'Stock',
-    'description' : """
+    "name": "Validate Stock Picking", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Stock", 
+    "description": """
 Validate Multiples Stock Picking
 ================================
 
 Select stock picking from tree view and dropdown action menu to select wizard
 and validate picking selected
 
-    """,
-    'website': 'http://www.vauxoo.com',
-    'images' : [],
-    'depends' : ['stock'],
-    'data': [
-        'wizard/validate_picking_view.xml',
-],
-    'js': [
-],
-    'qweb' : [
-],
-    'css':[
-],
-    'demo': [
-],
-    'test': [
-],
-    'installable': True,
-    'auto_install': False,
+""", 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "stock"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/validate_picking_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

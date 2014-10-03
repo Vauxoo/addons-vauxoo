@@ -23,11 +23,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 {
-    "name" : "mrp Advanced",
-    "version" : "0.1",
-    "depends" : ["mrp","product","mrp_routing_cost"],
-    "author" : "Openerp Venzuela",
-    "description" : """
+    "name": "mrp Advanced", 
+    "version": "0.1", 
+    "author": "Openerp Venzuela", 
+    "category": "Generic Modules/MRP", 
+    "description": """
     What do this module:
     Add cost managment feature to manage of production in mrp.bom Object.
     -- Sum all elements on Bill of Material
@@ -41,17 +41,24 @@
     
     Add field of type assets in mrp.bom establishing if bom is assets
     Add menu Bom Assets, Bom for Sales
-                    """,
-    "website" : "http://openerp.com.ve",
-    "category" : "Generic Modules/MRP",
-    "init_xml" : [
-    ],
-    "demo_xml" : [
-    ],
-    "update_xml" : [
-        "mrp_po_view.xml",
-        "data/decimal_precision_cost_bom.xml",
-    ],
-    "active": False,
-    "installable": True,
+                    """, 
+    "website": "http://openerp.com.ve", 
+    "license": "", 
+    "depends": [
+        "mrp", 
+        "product", 
+        "mrp_routing_cost"
+    ], 
+    "demo": [], 
+    "data": [
+        "mrp_po_view.xml", 
+        "data/decimal_precision_cost_bom.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

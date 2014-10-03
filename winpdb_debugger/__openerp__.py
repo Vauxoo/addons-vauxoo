@@ -19,19 +19,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    'name': 'Winpdb Debugger connector',
-    'version': '1.0',
-    'author': 'CLEARCORP S.A.',
-    'website': 'http://clearcorp.co.cr',
-    'category': 'Development',
-    'description': """Adds a wizard to start a Winpdb debugger connection.
-    """,
-    'depends': ['base'],
-    'demo_xml': [],
-    'update_xml': ['winpdb_debugger_wizard.xml'],
-    'license': 'AGPL-3',
-    'installable': True,
-    'active': False,
+    "name": "Winpdb Debugger connector", 
+    "version": "1.0", 
+    "author": "CLEARCORP S.A.", 
+    "category": "Development", 
+    "description": """Adds a wizard to start a Winpdb debugger connection.
+    """, 
+    "website": "http://clearcorp.co.cr", 
+    "license": "AGPL-3", 
+    "depends": [
+        "base"
+    ], 
+    "demo": [], 
+    "data": [
+        "winpdb_debugger_wizard.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

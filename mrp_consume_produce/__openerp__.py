@@ -23,13 +23,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "MRP Consume Produce",
-    "version": "1.1",
-    "author": "Vauxoo",
-    "category": "Generic Modules/Production",
-    "website": "http://www.vauxoo.com/",
+    "name": "MRP Consume Produce", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Production", 
     "description": """
 MRP Consume Produce
 ===================
@@ -50,19 +48,27 @@ You have to options: Go to check some options at the user:
 
 Or go to the ``Settings > Configuration > Manufacturing > Manufacturing Order``
 and active the ``Real Consume and Produce`` option plus selecting a user type.
-    """,
-    'depends': ['mrp', 'mrp_button_box'],
-    'init_xml': [],
-    'update_xml': [
-        'wizard/wizard_view.xml',
-        'mrp_consume_produce_view.xml',
-        'security/mrp_security.xml',
-        'security/ir.model.access.csv',
-        'res_config_view.xml',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+        # use this command
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "mrp", 
+        "mrp_button_box"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/wizard_view.xml", 
+        "mrp_consume_produce_view.xml", 
+        "security/mrp_security.xml", 
+        "security/ir.model.access.csv", 
+        "res_config_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

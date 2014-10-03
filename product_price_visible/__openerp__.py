@@ -24,23 +24,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "Product Price Visible",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Product",
-    "description" : """This module add group to products prices
-    """,
-    "website" : "www.vauxoo.com",
-    "license" : "AGPL-3",
-    "depends" : ["stock"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-            "security/product_price_visible.xml",
-            #~ "security/ir.model.access.csv",
-            "product_view.xml",],
-    "installable" : True,
-    "active" : False,
+    "name": "Product Price Visible", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Product", 
+    "description": """This module add group to products prices
+                #~ "security/ir.model.access.csv",
+""", 
+    "website": "www.vauxoo.com", 
+    "license": "AGPL-3", 
+    "depends": [
+        "stock"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/product_price_visible.xml", 
+        "product_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -23,23 +23,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "Search by Last Modification User, Date Modified, Date Created",
-    "version": "1.1",
-    "author" : "Vauxoo",
-    "website" : "http://www.vauxoo.com/",
+    "name": "Search by Last Modification User, Date Modified, Date Created", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "", 
     "description": """ 
 Search by write_date, write_uid, create_date, create_uid in model Project_task
 ==============================================================================
 To work properly, you need apply the next patch:
 https://code.launchpad.net/~openerp-dev/openobject-server/7.0-opw-593628-msh/+merge/168947
-    """,
-    'depends': ['project'],
-    'data': [
-        'project_view.xml',
-                ],
-    'installable': True,
-    'active': False,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "project"
+    ], 
+    "demo": [], 
+    "data": [
+        "project_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

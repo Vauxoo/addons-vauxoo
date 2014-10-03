@@ -1,20 +1,25 @@
 # -*- encoding: utf-8 -*-
 {
-    "name" : "Fetchmail Corrections",
-    "version" : "0.1",
-    "depends" : ["fetchmail","document",],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Fetchmail Corrections", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Tools", 
+    "description": """
     This module correct some behaviours on Document and Fetchmail modules combinated.
-                    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Tools",
-    "init_xml" : [
-    ],
-    "demo_xml" : [
-    ],
-    "update_xml" : [
-    ],
-    "active": False,
-    "installable": True,
+                    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "fetchmail", 
+        "document"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

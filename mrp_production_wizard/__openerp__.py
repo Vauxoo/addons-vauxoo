@@ -23,25 +23,30 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "MPR Production Wizard",
-    "version": "1.0",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/Production",
-    "website" : "http://www.vauxoo.com/",
+    "name": "MPR Production Wizard", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Production", 
     "description": """ Add wizard to create a new production order of the
     selected product in draft state, with the qty added of the selected
     products. from the stock_picking model
-    """,
-    'depends': ['mrp_default_location',
-                'mrp_pt_planified'],
-    'init_xml': [],
-    'update_xml': [
-        'mrp_view.xml',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "mrp_default_location", 
+        "mrp_pt_planified"
+    ], 
+    "demo": [], 
+    "data": [
+        "mrp_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

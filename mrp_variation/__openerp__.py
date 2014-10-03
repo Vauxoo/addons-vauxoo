@@ -23,25 +23,30 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "MRP Variation",
-    "version": "1.1",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/MRP",
-    "website" : "http://www.vauxoo.com/",
+    "name": "MRP Variation", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/MRP", 
     "description": """ Add table to veiw variation
-    """,
-    'depends': ['mrp_consume_produce','mrp_pt_planified'],
-    'init_xml': [],
-    'update_xml': [
-        'mrp_variation_view.xml',
-        'security/mrp_variation_security.xml',
-        'security/ir.model.access.csv',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "mrp_consume_produce", 
+        "mrp_pt_planified"
+    ], 
+    "demo": [], 
+    "data": [
+        "mrp_variation_view.xml", 
+        "security/mrp_variation_security.xml", 
+        "security/ir.model.access.csv"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

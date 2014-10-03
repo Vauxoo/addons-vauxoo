@@ -26,19 +26,27 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
 {
-    'name' : 'Send mail when create a task',
-    'version' : '0.1',
-    'author' : 'Vauxoo',
-    'description' : '''
+    "name": "Send mail when create a task", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Project", 
+    "description": """
 Modified the data created by project module to send a mail when a task is created
-    ''',
-    'category' : 'Project',
-    'website' : 'http://vauxoo.com',
-    'depends' : ['project'],
-    'update_xml' : [
-        'data/project_data.xml',
-],
-    'demo' : [],
-    'active' : False,
-    'installable': True,
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "project"
+    ], 
+    "demo": [], 
+    "data": [
+        "data/project_data.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

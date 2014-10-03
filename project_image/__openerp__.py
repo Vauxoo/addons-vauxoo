@@ -23,25 +23,33 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "Project Image",
-    "version" : "0.1",
-    "depends" : ["project","portal_project"],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Project Image", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Customization", 
+    "description": """
 Hierarchical View:
 =========================================================
     It creates Hierarchical view to projects
 
   
-                    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Customization",
-    "update_xml" : [
-        'view/project_image_view.xml',
-    ],
-    "active": False,
-    "images": [],
-    "installable": True,
+                    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "project", 
+        "portal_project"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/project_image_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

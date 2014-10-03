@@ -21,28 +21,30 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name": "Account Reconcile Advance Tax",
-    "version": "1.0",
-    "author" : "Vauxoo",
-    "category": "Accounting",
-    "website" : "http://www.vauxoo.com/",
+    "name": "Account Reconcile Advance Tax", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Accounting", 
     "description": """ 
 Create Entries Tax Effectively Paid :
 =====================================
 
 This module creates the tax effectively paid of the invoices associated
 with the advance
-""",
-    'depends': [
-        'account_reconcile_advance',
-        'account_voucher_tax'
-    ],
-    'data': [
-      
-        ],
-    'demo': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "account_reconcile_advance", 
+        "account_voucher_tax"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

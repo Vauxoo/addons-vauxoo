@@ -24,17 +24,27 @@
 #
 ##############################################################################
 {
-    'name': 'Stock Validate Past',
-    "version" : "1.1",
-    'author': 'Vauxoo',
-    "category" : "Warehouse Management",
-    "website" : "http://www.vauxoo.com/",
-    'depends': ['stock',],
-    'description': """
+    "name": "Stock Validate Past", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "Warehouse Management", 
+    "description": """
 This module add the selection field "type_process_date", if its value = planned_date the field date_create takes the value from date_expected
-    """,
-    'update_xml':[
-        'stock_view.xml'],
-    'active':False,
-    'installable':True
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "stock"
+    ], 
+    "demo": [], 
+    "data": [
+        "stock_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

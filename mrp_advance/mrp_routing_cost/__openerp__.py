@@ -23,26 +23,30 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 {
-    "name" : "Calcular de costo teorico MRP"                            ,
-    "version" : "0.1"                                                   ,
-    "depends" : ['mrp'                                                  ,
-                ]                                                       ,
-    "author" : "Openerp Venezuela"                                              ,
-    "description" : """
+    "name": "Calcular de costo teorico MRP", 
+    "version": "0.1", 
+    "author": "Openerp Venezuela", 
+    "category": "Generic Modules/MRP", 
+    "description": """
     What do this module:
     Add cost managment feature to manage of production in mrp.bom Object.
     -- Sum all elements on routing
     -- Add cost concept for routing
-                    """                                                 ,
-    "website" : "http://openerp.com.ve"                          ,
-    "category" : "Generic Modules/MRP"                                      ,
-    "init_xml" : [
-    ],
-    "demo_xml" : [
-    ],
-    "update_xml" : [
-    'mrp_routing_view.xml'                                                      ,
-    ],
-    "active": False                                                     ,
-    "installable": True                                                 ,
+                    """, 
+    "website": "http://openerp.com.ve", 
+    "license": "", 
+    "depends": [
+        "mrp"
+    ], 
+    "demo": [], 
+    "data": [
+        "mrp_routing_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

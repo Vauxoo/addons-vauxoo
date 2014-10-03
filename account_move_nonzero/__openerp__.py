@@ -19,25 +19,26 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
-
 {
-    "name" : "Account Move Nonzero",
-    "version" : "0.1",
-    "depends" : ["account"],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Account Move Nonzero", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Localization", 
+    "description": """
     Check that the entry balance is greater than zero
- """     ,
-    "website" : "http://vauxoo.com",
-    "category" : "Localization",
-    "init_xml" : [
-    ],
-    "demo_xml" : [
-    ],
-    "update_xml" : [
-    ],
-    "active": False,
-    "installable": True,
+    """,
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

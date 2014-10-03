@@ -23,28 +23,33 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "Purchase / Group for button send email",
-    "version": "1.0",
-    "author" : "Vauxoo",
-    "category": "Purchase",
-    "website" : "http://www.vauxoo.com/",
+    "name": "Purchase / Group for button send email", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Purchase", 
     "description": """ 
 Group for button send email:
 ============================
 
 Group that hides the button "send by email" sales order
 
-    """,
-    'depends': ['purchase'],
-    'data': [
-        'security/purchase_security.xml',
-        'purchase_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "purchase"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/purchase_security.xml", 
+        "purchase_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4: 
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

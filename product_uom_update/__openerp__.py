@@ -23,27 +23,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-
 {
-    "name": "Product uom update",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Generic Modules",
-    "description" : """
+    "name": "Product uom update", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
 Product uom update
 ==================
 
     This wizard help you to change units in the products
-    """,
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
-    "depends": ["product_do_merge",
-                ],
-    "init": [],
-    "demo": [],
-    "data": ["wizard/product_uom_update_wizard.xml",
-
-             ],
-    "installable": True,
-    "active": False,
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "product_do_merge"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/product_uom_update_wizard.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

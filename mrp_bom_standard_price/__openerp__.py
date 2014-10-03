@@ -21,21 +21,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "This module inherits standard price field in mrp.bom",
-    "version" : "1.0",
-    "depends" : ['product','mrp'],
-    "author" : "Vauxoo",
-    #"license" : "AGPL-3",
-    "description" : """This module inherits standard price field in mrp.bom
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [],
-    "update_xml" : ['mrp_bom_view.xml',
-    ],
-    "active": False,
-    "installable": True,
+    "name": "This module inherits standard price field in mrp.bom", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """This module inherits standard price field in mrp.bom
+        #"license" : "AGPL-3",
+""", 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "product", 
+        "mrp"
+    ], 
+    "demo": [], 
+    "data": [
+        "mrp_bom_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False
 }
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
