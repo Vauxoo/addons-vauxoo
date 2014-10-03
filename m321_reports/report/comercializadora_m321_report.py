@@ -51,13 +51,13 @@ class cm321_report(report_sxw.rml_parse):
                         str(ppv.date_start)
                         str(ppv.date_end)
                         if ppv.date_start <= obj.date_invoice and\
-                                            obj.date_invoice <= ppv.date_end:
+                                obj.date_invoice <= ppv.date_end:
                             ppli = ppv.items_id
                             for ppl in ppli:
                                 if ppl.sequence < aux:
                                     aux = ppl.sequence
                                     aux2 = ppl.price_discount
-                            return aux2*100
+                            return aux2 * 100
                         else:
                             return aux2
                     else:
@@ -71,13 +71,13 @@ class cm321_report(report_sxw.rml_parse):
                         str(ppv.date_start)
                         str(ppv.date_end)
                         if ppv.date_start <= obj.date_invoice and\
-                                            obj.date_invoice <= ppv.date_end:
+                                obj.date_invoice <= ppv.date_end:
                             ppli = ppv.items_id
                             for ppl in ppli:
                                 if ppl.sequence < aux:
                                     aux = ppl.sequence
                                     aux2 = ppl.price_discount
-                            return aux2*100
+                            return aux2 * 100
                         else:
                             return aux2
                     else:
@@ -99,7 +99,7 @@ class cm321_report(report_sxw.rml_parse):
         wh_ids = obj.tax_line
         aux = []
         for wh in wh_ids:
-            aux.append(wh.tax_id.amount*100)
+            aux.append(wh.tax_id.amount * 100)
         return aux[0]
 
 report_sxw.report_sxw(
@@ -108,6 +108,6 @@ report_sxw.report_sxw(
     'addons/m321_reports/report/comercializadora_m321_report.rml',
     parser=cm321_report
 )
-  # 1 addons/nombre del modulo/carpeta(report)/nombre del archivo rml
-  # 2 A modo didactico vamos a poner que el modulo al que le vamos a poner el reporte es a res.partner
-  #   pero podria ser cualquier modulo.
+# 1 addons/nombre del modulo/carpeta(report)/nombre del archivo rml
+# 2 A modo didactico vamos a poner que el modulo al que le vamos a poner el reporte es a res.partner
+#   pero podria ser cualquier modulo.

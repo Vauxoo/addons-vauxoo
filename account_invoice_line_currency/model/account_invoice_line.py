@@ -29,6 +29,5 @@ from openerp.osv import osv, fields
 class account_invoice_line(osv.Model):
     _inherit = "account.invoice.line"
     _columns = {
-            'currency_id':fields.related('invoice_id', 'currency_id', relation='res.currency', type='many2one', string='Currency', help='field'),
-            }
-
+        'currency_id': fields.related('invoice_id', 'currency_id', relation='res.currency', type='many2one', string='Currency', help='field'),
+    }

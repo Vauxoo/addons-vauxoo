@@ -38,9 +38,9 @@ class warranty_oerp(osv.Model):
             return False
         pids = self.search(cr, uid,
                            [('end_date', '>=', obj_warranty.start_date),
-                                ('start_date','<=', obj_warranty.end_date),
-                                ('contract_id', '=', obj_warranty.contract_id.id),
-                                ('id', '<>', obj_warranty.id),])
+                            ('start_date', '<=', obj_warranty.end_date),
+                            ('contract_id', '=', obj_warranty.contract_id.id),
+                            ('id', '<>', obj_warranty.id), ])
         if len(pids) > 0:
             return False
         return True

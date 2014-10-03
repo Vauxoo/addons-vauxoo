@@ -29,9 +29,9 @@ from openerp.osv import osv, fields
 class stock_move(osv.Model):
     _inherit = "stock.move"
 
-    def _create_account_move_line(self, cr, uid, move, src_account_id, 
-                                    dest_account_id, reference_amount,
-                                    reference_currency_id, context=None):
+    def _create_account_move_line(self, cr, uid, move, src_account_id,
+                                  dest_account_id, reference_amount,
+                                  reference_currency_id, context=None):
         res = super(stock_move, self)._create_account_move_line(
             cr, uid, move, src_account_id, dest_account_id, reference_amount,
             reference_currency_id, context=None)
@@ -39,7 +39,7 @@ class stock_move(osv.Model):
             for r in res:
                 r[2][
                     'analytic_account_id'] = move.analytic_acc and\
-                                            move.analytic_acc.id or False
+                    move.analytic_acc.id or False
         return res
 
     _columns = {

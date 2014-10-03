@@ -83,7 +83,7 @@ class rep_conteo_stock2(report_sxw.rml_parse):
             cabeza = "Vendible "
 
         if stock.comprable:
-            cabeza = cabeza+" Comprable"
+            cabeza = cabeza + " Comprable"
 
         if stock.alquilable:
             cabeza = cabeza + "Alquilable"

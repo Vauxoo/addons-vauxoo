@@ -3,6 +3,7 @@ from openerp.osv import osv
 
 
 class document(osv.Model):
+
     """
     fetchmail
     """

@@ -31,10 +31,11 @@ class account_account(osv.Model):
     _inherit = 'account.account'
 
     _columns = {
-        'partner_required': fields.boolean('Partner Required', help='If this '\
-        'field is active, the journal items that used this account should '\
+        'partner_required': fields.boolean('Partner Required', help='If this '
+        'field is active, the journal items that used this account should '
         'have a partner'),
     }
+
 
 class account_move(osv.Model):
     _inherit = 'account.move'
@@ -48,7 +49,7 @@ class account_move(osv.Model):
                     if not line.partner_id:
                         moves_without_partner += '\n' + line.name
             if moves_without_partner:
-                raise osv.except_osv(_('Error'), _('Need add partner in moves'\
+                raise osv.except_osv(_('Error'), _('Need add partner in moves'
                 ' with name ' + moves_without_partner + '.'))
         res = super(account_move, self).button_validate(
             cr, uid, ids, context=context)

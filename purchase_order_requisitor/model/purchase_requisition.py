@@ -22,6 +22,7 @@
 
 from openerp.osv import fields, osv
 
+
 class purchase_order(osv.Model):
     _inherit = "purchase.order"
 
@@ -29,12 +30,12 @@ class purchase_order(osv.Model):
         'rfq_user_id': fields.many2one('res.users', 'Requisitor'),
     }
 
+
 class purchase_requisition(osv.Model):
     _inherit = "purchase.requisition"
 
-
     def make_purchase_order(self, cr, uid, ids, partner_id,
-                                    context=None):
+                            context=None):
         if context is None:
             context = {}
         res = super(purchase_requisition, self).make_purchase_order(cr, uid, ids, partner_id, context=context)
@@ -44,6 +45,6 @@ class purchase_requisition(osv.Model):
                 cr, uid, res.keys()[0], context=context).user_id
             purchase_order_obj = self.pool.get('purchase.order')
             purchase_order_obj.write(
-                            cr, uid, res[res.keys()[0]],
-                            {'rfq_user_id': requisition_user.id})
+                cr, uid, res[res.keys()[0]],
+                {'rfq_user_id': requisition_user.id})
         return res

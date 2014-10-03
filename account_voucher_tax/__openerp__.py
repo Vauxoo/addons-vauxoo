@@ -36,7 +36,7 @@ The tax actually paid/cashed in the move of payment,
 
 Creditable VAT.
 
-It is the charge to all your payments i.e: 
+It is the charge to all your payments i.e:
 
 Bought a desktop that charge VAT on this desk is the creditable taxes
 

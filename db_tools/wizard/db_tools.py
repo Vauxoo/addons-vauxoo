@@ -94,7 +94,6 @@ class db_tools(osv.TransientModel):
 
     def backup_restore_db(self, cr, uid, ids, uri, dbname=''):
         res = self.backup_db(cr, uid, ids, uri, dbname)
-        data = self.browse(cr, uid, ids[0])
         data_base = os.path.basename(res)
         name_db = data_base[:data_base.rfind(".")]
         print 'name_db', name_db

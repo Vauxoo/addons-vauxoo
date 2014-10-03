@@ -29,6 +29,7 @@ from openerp.report import report_sxw
 
 
 class move_voucher_report(report_sxw.rml_parse):
+
     def __init__(self, cr, uid, name, context):
         super(move_voucher_report, self).__init__(
             cr, uid, name, context=context)

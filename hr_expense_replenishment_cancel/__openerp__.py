@@ -26,7 +26,7 @@
     "author" : "Vauxoo",
     "category": "Accounting",
     "website" : "http://www.vauxoo.com/",
-    "description": """ 
+    "description": """
 Expenses Replenishment Cancel:
 ===========================
 Allows you to cancel an expense already paid to return to draft state and make

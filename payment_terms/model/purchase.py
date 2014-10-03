@@ -29,61 +29,58 @@ from openerp.osv import osv, fields
 
 
 class inherits_purchase(osv.Model):
-    
+
     '''Inherit purchase model to add opration cobol reference'''
-    
+
     _inherit = 'purchase.order'
-    
-    
+
     _columns = {
 
-            'payment_terms_id':fields.many2one('payment.terms.partner',
-                                               'Payment Terms',
-                                               help='Select the payment term '
-                                                    'agreed by company for '
-                                                    'this partner'), 
-            }
+        'payment_terms_id': fields.many2one('payment.terms.partner',
+                                            'Payment Terms',
+                                            help='Select the payment term '
+                                            'agreed by company for '
+                                            'this partner'),
+    }
 
     def action_invoice_create(self, cr, uid, ids, context=None):
         """ Set payment termn in the new invoice create from purchase order
         """
-        res =  super(inherits_purchase,self).action_invoice_create(cr, uid,
+        res = super(inherits_purchase, self).action_invoice_create(cr, uid,
                                                                   ids, context)
         inv_obj = self.pool.get('account.invoice')
         for order in self.browse(cr, uid, ids, context=context):
             inv_obj.write(cr, uid, res,
-                          {'payment_terms_id':order.payment_terms_id and\
-                                             order.payment_terms_id.id},
+                          {'payment_terms_id': order.payment_terms_id and
+                           order.payment_terms_id.id},
                           context=context)
-
 
         return res
 
     def onchange_partner_id(self, cr, uid, ids, partner_id):
         '''Set of new payment term in purchase order from partner'''
         partner = self.pool.get('res.partner')
-        res = super(inherits_purchase,self).onchange_partner_id(cr, uid, ids,
+        res = super(inherits_purchase, self).onchange_partner_id(cr, uid, ids,
                                                                 partner_id)
-        
+
         if not partner_id:
             return {'value': {
                 'fiscal_position': False,
                 'payment_term_id': False,
-                }}
+            }}
         supplier = partner.browse(cr, uid, partner_id)
-        print 'aa',supplier.property_payment_term_p_suppliers
-        res.get('value',{}).update({
-            'payment_terms_id':supplier.property_payment_term_p_suppliers and \
-                               supplier.property_payment_term_p_suppliers.id or False})
+        print 'aa', supplier.property_payment_term_p_suppliers
+        res.get('value', {}).update({
+            'payment_terms_id': supplier.property_payment_term_p_suppliers and
+            supplier.property_payment_term_p_suppliers.id or False})
 
-        return res 
+        return res
 
     def _prepare_order_picking(self, cr, uid, order, context=None):
         '''Send new payment term from purchase to picking'''
-        res = super(inherits_purchase,self)._prepare_order_picking(cr, uid,
+        res = super(inherits_purchase, self)._prepare_order_picking(cr, uid,
                                                                    order,
                                                                    context)
-        res.update({'payment_terms_id':order.payment_terms_id and \
-                                        order.payment_terms_id.id })
+        res.update({'payment_terms_id': order.payment_terms_id and
+                    order.payment_terms_id.id})
         return res
-

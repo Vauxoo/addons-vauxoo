@@ -26,6 +26,7 @@
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
+
 class purchase_order(osv.Model):
 
     _inherit = 'purchase.order'
@@ -33,4 +34,3 @@ class purchase_order(osv.Model):
         'description': fields.text('Description',
             help=_('Description of Purchase Order')),
     }
-

@@ -31,6 +31,7 @@ from numero_a_texto import Numero_a_Texto
 
 
 class report_voucher_amount(report_sxw.rml_parse):
+
     def __init__(self, cr, uid, name, context):
         super(report_voucher_amount, self).__init__(cr, uid, name, context)
         self.localcontext.update({
@@ -59,7 +60,7 @@ class report_voucher_amount(report_sxw.rml_parse):
             payee = voucher.payee_id.name
         else:  # la compania
             payee = res.partner_id.name
-             #.upper()
+            #.upper()
         return payee
 
     def get_vat(self, voucher):

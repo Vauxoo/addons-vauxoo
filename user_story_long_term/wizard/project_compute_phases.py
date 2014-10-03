@@ -26,6 +26,7 @@
 from openerp.tools.translate import _
 from openerp.osv import fields, osv
 
+
 class project_compute_phases(osv.osv_memory):
     _name = 'project.compute.phases'
     _description = 'Project Compute Phases'
@@ -33,7 +34,7 @@ class project_compute_phases(osv.osv_memory):
         'target_project': fields.selection([
             ('all', 'Compute All My Projects'),
             ('one', 'Compute a Single Project'),
-            ], 'Action', required=True),
+        ], 'Action', required=True),
         'project_id': fields.many2one('project.project', 'Project')
     }
     _defaults = {
@@ -55,7 +56,7 @@ class project_compute_phases(osv.osv_memory):
         if data['target_project'] == 'one':
             project_ids = [data['project_id'][0]]
         else:
-            project_ids = project_pool.search(cr, uid, [('user_id','=',uid)], context=context)
+            project_ids = project_pool.search(cr, uid, [('user_id', '=', uid)], context=context)
 
         project_pool.schedule_phases(cr, uid, project_ids, context=context)
         return self._open_phases_list(cr, uid, data, context=context)
@@ -73,7 +74,7 @@ class project_compute_phases(osv.osv_memory):
         result = act_obj.read(cr, uid, [id], context=context)[0]
         result['target'] = 'current'
         project_id = data.get('project_id') and data.get('project_id')[0] or False
-        result['context'] = {"search_default_project_id":project_id, "default_project_id":project_id, "search_default_current": 1}
+        result['context'] = {"search_default_project_id": project_id, "default_project_id": project_id, "search_default_current": 1}
         return result
 
 project_compute_phases()

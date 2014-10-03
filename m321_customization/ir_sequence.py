@@ -29,15 +29,16 @@ from openerp.osv import osv
 
 
 class ir_sequence(osv.Model):
+
     """
     Ir sequence inherit to assing secuence by company
     """
 
     _inherit = 'ir.sequence'
 
-#marca error al abrir una orden de produccion
-#TODO: funcion _process no existe desde version 6, metodo parecido en
-#ir.sequence _interpolation_dict(self), adaptar a esta funcion
+# marca error al abrir una orden de produccion
+# TODO: funcion _process no existe desde version 6, metodo parecido en
+# ir.sequence _interpolation_dict(self), adaptar a esta funcion
 """
     def get_id(self, cr, uid, sequence_id, test='id', context=None):
         assert test in ('code', 'id')

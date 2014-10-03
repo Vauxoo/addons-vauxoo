@@ -29,7 +29,7 @@
     "author" : "Vauxoo",
     "category" : "Generic",
     "description" : """
-    
+
     This module add data to configurate incoming mail server & outgoing mail server, & create an
     server action to notificate when is created a new project issue.
 

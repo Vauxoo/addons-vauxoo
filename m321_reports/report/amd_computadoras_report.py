@@ -51,7 +51,7 @@ class m321_c_report(report_sxw.rml_parse):
         wh_ids = obj.tax_line
         aux = []
         for wh in wh_ids:
-            aux.append(wh.tax_id.amount*100)
+            aux.append(wh.tax_id.amount * 100)
         return aux[0]
 
 report_sxw.report_sxw(
@@ -61,6 +61,6 @@ report_sxw.report_sxw(
     parser=m321_c_report,
     header=False
 )
-  # 1 addons/nombre del modulo/carpeta(report)/nombre del archivo rml
-  # 2 A modo didactico vamos a poner que el modulo al que le vamos a poner el reporte es a res.partner
-  #   pero podria ser cualquier modulo.
+# 1 addons/nombre del modulo/carpeta(report)/nombre del archivo rml
+# 2 A modo didactico vamos a poner que el modulo al que le vamos a poner el reporte es a res.partner
+#   pero podria ser cualquier modulo.

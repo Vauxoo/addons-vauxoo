@@ -26,8 +26,8 @@
 from openerp.osv import fields, osv
 
 
-
 class invoice_multicompany_report(osv.Model):
+
     """
     invoice_multicompany_report
     """

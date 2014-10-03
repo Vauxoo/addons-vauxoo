@@ -32,13 +32,13 @@ class mrp_production(osv.Model):
     _inherit = "mrp.production"
 
     def _make_production_line_procurement(self, cr, uid, production_line,
-                                            shipment_move_id, context=None):
+                                          shipment_move_id, context=None):
         procurement_id = super(mrp_production,
             self)._make_production_line_procurement(
             cr, uid, production_line, shipment_move_id, context=context)
         procurement_order_pool = self.pool.get('procurement.order')
         procurement_order_pool.write(cr, uid, procurement_id, {
-                 'production_ids': [(4, production_line.production_id.id)]})
+            'production_ids': [(4, production_line.production_id.id)]})
         return procurement_id
 
     _columns = {

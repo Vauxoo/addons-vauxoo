@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+#    Coded by: Vauxoo C.A.
 #    Planified by: Humberto Arocha / Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -34,7 +34,7 @@
         a list of aml_ids to be excluded from reconciliation,
         so that the result is a new account_move_reconcile
         without aml_ids.
-    
+
         In Future this module is intended to grow adding a wizard
         that would allow an end user to do smart unreconciliations
 

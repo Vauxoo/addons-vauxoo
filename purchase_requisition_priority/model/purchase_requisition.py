@@ -29,11 +29,12 @@ priority_options = [
     (05, 'emergency'),
     (10, 'urgent'),
     (15, 'normal')
-] 
+]
+
 
 class purchase_requisition(osv.Model):
     _inherit = 'purchase.requisition'
-    _order = 'priority asc' 
+    _order = 'priority asc'
     _columns = {
         'priority': fields.selection(
             priority_options,

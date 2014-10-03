@@ -39,7 +39,7 @@ Module to added field active in view journal and view period.
     """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
-    'depends': ['account'], 
+    'depends': ['account'],
     "data": [
         "view/account_view.xml",
     ],

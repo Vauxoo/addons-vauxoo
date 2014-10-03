@@ -39,7 +39,7 @@
     "description": """
 Vauxoo Account Amortization.
 ============================
-This module allows to separate the expenses amortization of the assets 
+This module allows to separate the expenses amortization of the assets
 depreciation.
 
 This module adds:

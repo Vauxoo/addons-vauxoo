@@ -35,7 +35,7 @@
 Stock Shipping Packaging
 ========================
 
-This module allows to have best control on packaging of stock moves that belong to 
+This module allows to have best control on packaging of stock moves that belong to
 a delivery order.
 
 =============
@@ -65,8 +65,8 @@ In an Order Delivery can add línes of stock.moves, to each stock.move you can a
     'test': [],
     'active': False,
     'installable': True,
-    'js': [],                                                                                       
-    'qweb': [],                                                                                     
-    'css': [],                                                                                      
+    'js': [],
+    'qweb': [],
+    'css': [],
     'images': [],
 }

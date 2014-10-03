@@ -32,7 +32,7 @@ for always set the unit measure that this product has and confirm quantity for o
 
 Improvements
 
-Inherit Sale, Purchase, Stock and Account to add constraint to avoid sale order validate with diferent 
+Inherit Sale, Purchase, Stock and Account to add constraint to avoid sale order validate with diferent
 unit measure indicated on the product or diferent quantity compute on the unit measure.
 
     """,

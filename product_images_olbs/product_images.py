@@ -20,6 +20,7 @@ import urllib
 
 
 class product_images(osv.Model):
+
     "Products Image gallery"
     _name = "product.images"
     _description = __doc__

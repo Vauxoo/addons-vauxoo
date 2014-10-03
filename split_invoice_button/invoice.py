@@ -26,7 +26,6 @@ from openerp.osv import osv
 from openerp.tools.translate import _
 
 
-
 class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
@@ -58,7 +57,7 @@ class account_invoice(osv.Model):
         if action_model:
             action_pool = self.pool.get(action_model)
             action = action_pool.read(cr, uid, action_id, context=context)
-            action['domain'] = "[('id','in', ["+','.join(
-                map(str, invoice_ids))+"])]"
+            action['domain'] = "[('id','in', [" + ','.join(
+                map(str, invoice_ids)) + "])]"
             action.update({'nodestroy': True})
         return action

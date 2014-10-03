@@ -2,8 +2,8 @@
 from openerp.osv import fields, osv
 
 
-
 class sale_order_line(osv.Model):
+
     """
     OpenERP Model : sale_order_line
     """
@@ -14,6 +14,7 @@ class sale_order_line(osv.Model):
 
 
 class sale_order(osv.Model):
+
     """
     OpenERP Model : sale_order_line
     """

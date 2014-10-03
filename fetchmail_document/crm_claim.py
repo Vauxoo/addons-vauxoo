@@ -3,6 +3,7 @@ from openerp.osv import osv
 
 
 class crm_claim(osv.Model):
+
     """
     crm_claim
     """

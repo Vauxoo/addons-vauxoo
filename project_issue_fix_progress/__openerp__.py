@@ -33,7 +33,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "test": [ ],
-    "update_xml" : [    
+    "update_xml" : [
     ],
     "active": False,
     "installable": True,

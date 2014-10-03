@@ -24,7 +24,7 @@
     'category': 'Accounting',
     'website': 'http://www.vauxoo.com',
     'description': """
-This module show Journal Entry in: 
+This module show Journal Entry in:
 ========================================
 *Sales Receipts
 *Customer Payments

@@ -26,7 +26,6 @@
 from openerp.osv import fields, osv
 
 
-
 class res_company(osv.Model):
     _name = 'res.company'
     _inherit = 'res.company'
@@ -34,4 +33,3 @@ class res_company(osv.Model):
     _columns = {
         'header_report': fields.text('Report Header', size=1024, help='Set the header to place the report when it is not suitable for print',),
     }
-

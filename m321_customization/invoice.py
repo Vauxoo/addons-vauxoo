@@ -31,6 +31,7 @@ from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class inherited_invoice(osv.Model):
+
     """
     M321 Customizations for account.invoice model
     """

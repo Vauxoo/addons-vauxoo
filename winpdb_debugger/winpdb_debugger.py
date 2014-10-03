@@ -41,14 +41,14 @@ finish_form ='''<?xml version="1.0"?>
 </form>
 '''
 """
+
+
 class winpdb_debugger_wizard(osv.osv_memory):
     _name = 'winpdb.debugger.wizard'
 
     def action_start_debugger(self, cr, uid, data, context):
         rpdb2.start_embedded_debugger(config['admin_passwd'])
         return{}
-
-
 
 
 winpdb_debugger_wizard()

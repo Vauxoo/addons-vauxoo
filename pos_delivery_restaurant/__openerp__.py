@@ -33,12 +33,12 @@
 POS Delivery Restaurant
 =======================
 
-With this module deli_rest field is added in the point of sale, which can be a 
+With this module deli_rest field is added in the point of sale, which can be a
 restaurant or delivery.
     ''',
     'depends': ['base', 'point_of_sale', 'sale'],
     'data': [
-            'view/point_of_sale_view.xml', 
+            'view/point_of_sale_view.xml',
         ],
     'demo': [],
     'test': [],

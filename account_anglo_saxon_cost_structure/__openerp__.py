@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -28,7 +28,7 @@
     "depends" : ["account",'account_anglo_saxon','cost_structure'],
     "author" : "Vauxoo",
     "description" : """
-   This module was created to build upon the seat by movement of a product, it will take as cost thereof, calculated by the module cost_structure 
+   This module was created to build upon the seat by movement of a product, it will take as cost thereof, calculated by the module cost_structure
     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",

@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -28,8 +28,8 @@
     "depends" : ["account",'account_cancel'],
     "author" : "Vauxoo",
     "description" : """
-    Cancels multiple invoices from a wizard and is called from other modules for direct 
-    billing cancellations and cancel your withholding, withholding automatically validating 
+    Cancels multiple invoices from a wizard and is called from other modules for direct
+    billing cancellations and cancel your withholding, withholding automatically validating
     and maintaining the seat number that generated in its initial stage
     """,
     "website" : "http://vauxoo.com",
@@ -41,10 +41,10 @@
     'security/invoice_cancel_security.xml',
     'security/ir.model.access.csv',
     'wizard/account_move_cancel_view.xml',
-    'view/invoice_view.xml', 
-    
-    
-    
+    'view/invoice_view.xml',
+
+
+
     ],
     "active": False,
     "installable": True,

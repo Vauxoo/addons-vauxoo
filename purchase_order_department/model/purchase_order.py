@@ -25,6 +25,7 @@
 
 from openerp.osv import osv, fields
 
+
 class purchase_order(osv.Model):
 
     _inherit = 'purchase.order'

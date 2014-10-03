@@ -34,7 +34,7 @@
     These fields are located in the Accounting tab, above Others terms added by
     accounting module.
 
-    The Payment term is in sale, stock,purchase and invoice modules and is send 
+    The Payment term is in sale, stock,purchase and invoice modules and is send
     through are models
                     """,
     "website" : "http://www.vauxoo.com",
@@ -42,14 +42,14 @@
     "init_xml" : [    ],
     "demo_xml" : [    ],
     "update_xml" : [
-        
+
         'view/account_view.xml',
         'view/partner_view.xml',
         'view/purchase_view.xml',
         'view/sale_view.xml',
         'view/stock_view.xml',
-        
-    
+
+
     ],
     "active": False,
     "installable": True,

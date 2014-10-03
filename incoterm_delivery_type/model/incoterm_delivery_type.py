@@ -40,4 +40,3 @@ class stock_incoterms(osv.Model):
     _defaults = {
         'is_delivery': False,
     }
-

@@ -26,7 +26,7 @@
     "author" : "Vauxoo",
     "category": "Accounting",
     "website" : "http://www.vauxoo.com/",
-    "description": """ 
+    "description": """
 Configure And Create Journal:
 =============================
 

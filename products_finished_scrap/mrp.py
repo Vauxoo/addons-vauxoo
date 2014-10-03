@@ -51,7 +51,7 @@ class mrp_production(osv.Model):
                         state_move == 'done' and\
                             product_prod == product_move:
                         total_move = move_id.product_qty or 0.0
-                        total = total+total_move
+                        total = total + total_move
             res[id] = total
         return res
 
@@ -77,7 +77,7 @@ class mrp_production(osv.Model):
                         state_move == 'done' and\
                             product_prod == product_move:
                         total_move = move_id.product_qty or 0.0
-                        total_des = total_des+total_move
+                        total_des = total_des + total_move
                     total_produced = prod_id.product_produced or 0.0
                     total = total_produced - total_des
             res[id] = total

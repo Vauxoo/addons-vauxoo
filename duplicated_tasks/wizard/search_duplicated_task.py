@@ -23,6 +23,7 @@ from openerp.osv import osv, fields
 
 
 class search_duplicated_task(osv.TransientModel):
+
     """  """
 
     def search_task_method(self, cr, uid, operator, name, list_ids,
@@ -51,7 +52,7 @@ class search_duplicated_task(osv.TransientModel):
         list_task_ids = context.get('active_ids', [])
         for name in full_name.split(' '):
             if not count:
-                long_name = '%'+name+'%'
+                long_name = '%' + name + '%'
                 if len(long_name) > 5:
                     task_ids = self.search_task_method(cr, uid, 'name',
                                                        long_name,
@@ -65,7 +66,7 @@ class search_duplicated_task(osv.TransientModel):
             else:
                 if len(name) > 3:
                     task_ids = self.search_task_method(cr, uid, 'description',
-                                                       '%'+name+'%',
+                                                       '%' + name + '%',
                                                        list_task_ids,
                                                        context)
 
@@ -73,13 +74,13 @@ class search_duplicated_task(osv.TransientModel):
                         'parent': False, 'task_id': ids} for ids in task_ids]
                     list_task_ids += task_ids
                     task_ids = self.search_task_method(cr, uid, 'name',
-                                                       '%'+name+'%',
+                                                       '%' + name + '%',
                                                        list_task_ids,
                                                        context)
                     list_task_ids += task_ids
                     lines += [{
                         'parent': False, 'task_id': ids} for ids in task_ids]
-                long_name = '%'+long_name+'%'+name
+                long_name = '%' + long_name + '%' + name
                 task_ids = self.search_task_method(cr, uid, 'description',
                                                    long_name,
                                                    list_task_ids,
@@ -186,6 +187,7 @@ class search_duplicated_task(osv.TransientModel):
 
 
 class search_duplicated_task_line(osv.TransientModel):
+
     """  """
     _name = 'search.duplicated.task.line'
 

@@ -36,6 +36,7 @@ _logger = logging.getLogger(__name__)
 
 
 class invoice_report_per_journal(osv.TransientModel):
+
     """
     OpenERP Wizard: invoice.report.per.journal
     """
@@ -110,7 +111,7 @@ class invoice_report_per_journal(osv.TransientModel):
                 cr, uid, inv_id, context=context).invoice_report_id
             try:
                 (result, _) = self._prepare_service(cr, uid, report,
-                                                         context=context)
+                                                    context=context)
             except Exception:
                 if report:
                     _logger.warning("Error occurred in the report, the "
@@ -123,7 +124,7 @@ class invoice_report_per_journal(osv.TransientModel):
                     "ir.actions.report.xml").browse(cr, uid, rep_id,
                                                     context=context)
                 (result, _) = self._prepare_service(cr, uid, report_,
-                                                         context=context)
+                                                    context=context)
             try:
                 act_id = self.pool.get('ir.actions.act_window').search(cr, uid,
                     [('name', '=', report.name + ' txt')], context=context)[0]

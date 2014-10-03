@@ -25,6 +25,7 @@
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
+
 class attach_invoice_to_expense_wizard(osv.TransientModel):
     _name = 'attach.invoice.to.expense.wizard'
     _columns = {
@@ -38,8 +39,8 @@ class attach_invoice_to_expense_wizard(osv.TransientModel):
         #~ TODO: Necesito verificar si el partner es un empleado????
         context = context or {}
         ai_obj = self.pool.get('account.invoice')
-        ai_brw = ai_obj.browse(cr, uid, context['active_id'],context=context)
-        state = ai_brw.expense_id and ai_brw.expense_id.state or 'draft' 
+        ai_brw = ai_obj.browse(cr, uid, context['active_id'], context=context)
+        state = ai_brw.expense_id and ai_brw.expense_id.state or 'draft'
         if state != 'draft':
             raise osv.except_osv(
                 _('Invalid Procedure'),

@@ -26,9 +26,9 @@ from openerp.osv import osv, fields
 
 
 class res_partner(osv.Model):
-    
+
     _inherit = 'res.partner'
-    
+
     _columns = {
         'receive_my_emails': fields.boolean('receive your own email?',
                 help="receives its own messages if you have enabled this option")

@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -36,7 +36,7 @@
     "test": [ ],
     "update_xml" : [
     'view/project_issue_view.xml'
-    
+
     ],
     "active": False,
     "installable": False,

@@ -36,7 +36,7 @@ class res_company(osv.Model):
             context = {}
         res = {}
         obj_captcha = self.pool.get('res.captcha')
-        
+
         captcha_ids = obj_captcha.search(cr, SUPERUSER_ID,
                                          [('company_id', '=', 1)], context=context)
         c_brw = obj_captcha.browse(

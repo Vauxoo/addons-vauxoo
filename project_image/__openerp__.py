@@ -34,7 +34,7 @@ Hierarchical View:
 =========================================================
     It creates Hierarchical view to projects
 
-  
+
                     """,
     "website" : "http://vauxoo.com",
     "category" : "Customization",

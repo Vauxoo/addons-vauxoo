@@ -26,7 +26,7 @@
     "author" : "Vauxoo",
     "category": "Accounting",
     "website" : "http://www.vauxoo.com/",
-    "description": """ 
+    "description": """
 Create Entries Tax Effectively Paid :
 =====================================
 
@@ -38,7 +38,7 @@ with the advance
         'account_voucher_tax'
     ],
     'data': [
-      
+
         ],
     'demo': [],
     'test': [],

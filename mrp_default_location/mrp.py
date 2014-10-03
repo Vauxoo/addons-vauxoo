@@ -27,7 +27,6 @@
 from openerp.osv import osv
 
 
-
 class mrp_production(osv.Model):
     _inherit = 'mrp.production'
 

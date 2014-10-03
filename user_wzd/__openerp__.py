@@ -34,7 +34,7 @@
 Add wizard for create employee from users
 ===============================================
 
-Module that adds a wizard in res.users model and generated employee from one or many users, only 
+Module that adds a wizard in res.users model and generated employee from one or many users, only
 and only if there is no other record of employee assigned to the user in question.
 
     """,

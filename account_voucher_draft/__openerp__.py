@@ -35,7 +35,7 @@ Account Voucher Draft
 
 This module modify the button Pay inside the wizard used to pay an HR Expense
 (using an account voucher). This change is made to do not immediately change
-the HR Expene to done state. 
+the HR Expene to done state.
 
 Notes
 -----

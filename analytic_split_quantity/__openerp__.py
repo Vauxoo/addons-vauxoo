@@ -34,7 +34,7 @@ Analytic Entry Line Split Unit Amount
 -------------------------------------
 This module adds a new field named split_unit_amount which will accordingly
 spread the values in the analytic entry lines the amount which was set in the
-Journal Entry Line 
+Journal Entry Line
 
 The following example illustrated the use of this module.
 
@@ -48,7 +48,7 @@ What you are expected to have in your reports is
 200 USD, 2 Barrels, Saudi Arabia
 100 USD, 1 Barrels, Kuwait
 
-This is what is reported without this module 
+This is what is reported without this module
 
 600 USD, 10 Barrels, Iraq
 300 USD, 10 Barrels, Venezuela

@@ -42,6 +42,7 @@ SUMINISTRO = [('comprar', 'Comprar'),
 
 
 class stock_count(osv.TransientModel):
+
     """
     Conteo del Stock
     """
@@ -55,7 +56,6 @@ class stock_count(osv.TransientModel):
         'comprable': fields.boolean("Comprable"),
         'alquilable': fields.boolean("Alquilable"),
     }
-
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

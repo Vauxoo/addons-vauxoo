@@ -3,8 +3,8 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-
 class sale_order_line(osv.Model):
+
     """
     OpenERP Model : sale_order_line
     """
@@ -15,7 +15,9 @@ class sale_order_line(osv.Model):
         as extra info with sale order"""),
     }
 
+
 class sale_order(osv.Model):
+
     """
     OpenERP Model : sale_order_line
     """
@@ -46,6 +48,6 @@ class sale_order(osv.Model):
         return report.report_name
 
     def print_quotation(self, cr, uid, ids, context=None):
-        pq = super(sale_order, self).print_quotation(cr,uid,ids, context)
-        return  {'type': 'ir.actions.report.xml', 'report_name': self._get_report_name(cr, uid,
-            context), 'datas': pq['datas'], 'nodestroy': True} 
+        pq = super(sale_order, self).print_quotation(cr, uid, ids, context)
+        return {'type': 'ir.actions.report.xml', 'report_name': self._get_report_name(cr, uid,
+            context), 'datas': pq['datas'], 'nodestroy': True}

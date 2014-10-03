@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    Coded and Planified by Nhomar Hernandez <nhomar@vauxoo.com>
 #
@@ -35,7 +35,7 @@ Improve management of Bank Statement.
         b.- Mexican Banks.
         c.- Venezuelan Banks.
             Banco Exterior #TODO
-    2.- 
+    2.-
                     """,
     "website" : "http://vauxoo.com",
     "category" : "Accounting & Finance",

@@ -26,7 +26,7 @@
 
 {
     'name' : 'Account Asset Move Check',
-    'version' : '0.1',                                                             
+    'version' : '0.1',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com',
     'category' : 'Accounting',
@@ -39,24 +39,24 @@ deprecations lines with an special condition using the "check_posted"
 field in the validation of "_get_move_check" function.
 
     """,
-    'images' : [],                                                                 
+    'images' : [],
     'depends' : [
         'account',
         'account_asset',
-    ],                                                                
-    'data': [                                                                      
-    ],                                                                                 
-    'js': [                                                                        
-    ],                                                                                 
-    'qweb' : [                                                                     
-    ],                                                                                 
-    'css':[                                                                        
-    ],                                                                                 
-    'demo': [                                                                      
-    ],                                                                                 
-    'test': [                                                                      
-    ], 
-    'installable': True,                                                           
-    'auto_install': False,                                                         
-}                                                                                  
+    ],
+    'data': [
+    ],
+    'js': [
+    ],
+    'qweb' : [
+    ],
+    'css':[
+    ],
+    'demo': [
+    ],
+    'test': [
+    ],
+    'installable': True,
+    'auto_install': False,
+}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
