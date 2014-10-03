@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 import time
-from report import report_sxw
+from openerp.report import report_sxw
 
 
 

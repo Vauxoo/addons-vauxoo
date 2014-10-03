@@ -22,7 +22,7 @@
 #    You should have received a copy of the GNU General Public License     #
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
-from report import report_sxw
+from openerp.report import report_sxw
 
 
 class m321_c_report(report_sxw.rml_parse):

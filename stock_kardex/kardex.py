@@ -22,7 +22,7 @@
 ################################################################################
 
 from openerp.osv import osv, fields
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 from datetime import datetime
 from dateutil.relativedelta import relativedelta

@@ -25,7 +25,7 @@
 ##############################################################################
 from openerp.osv import fields, osv
 
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class account_tax(osv.Model):

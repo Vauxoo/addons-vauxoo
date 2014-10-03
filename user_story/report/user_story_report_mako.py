@@ -24,8 +24,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from report_webkit import webkit_report
-from report import report_sxw
+from openerp.addons.report_webkit import webkit_report
+from openerp.report import report_sxw
 from lxml import html
 
 class user_story_report(report_sxw.rml_parse):

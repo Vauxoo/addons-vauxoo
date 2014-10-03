@@ -24,7 +24,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import osv
+from openerp.osv import osv
 import mx.DateTime
 import time
 

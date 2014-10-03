@@ -27,7 +27,7 @@ File to added method and function to report Demo
 '''
 
 from openerp.report import report_sxw
-from report_webkit import webkit_report
+from openerp.addons.report_webkit import webkit_report
 
 
 class invoice_report_demo_html(report_sxw.rml_parse):
