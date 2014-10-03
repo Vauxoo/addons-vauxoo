@@ -26,7 +26,6 @@ from openerp.osv import osv
 from openerp.tools.translate import _
 
 
-
 class sale_order(osv.Model):
     _inherit = "sale.order"
 
@@ -41,7 +40,7 @@ class sale_order(osv.Model):
 
         debit, credit = 0.0, 0.0
         debit_maturity, credit_maturity = 0.0, 0.0
-        #~ #~
+        # ~ #~
         for line in movelines:
             if line.date_maturity < time.strftime('%Y-%m-%d') and line.date_maturity != False:
                 credit_maturity += line.debit
