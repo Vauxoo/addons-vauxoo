@@ -20,4 +20,4 @@
 #
 ############################################################################################
 
-import wizard_product_icecat
+from . import wizard_product_icecat

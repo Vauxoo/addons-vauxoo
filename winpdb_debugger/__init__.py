@@ -20,4 +20,4 @@
 #
 ##############################################################################
 
-import winpdb_debugger
+from . import winpdb_debugger

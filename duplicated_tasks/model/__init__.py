@@ -1,1 +1,1 @@
-import task
+from . import task

@@ -1,1 +1,1 @@
-import message_post
+from . import message_post

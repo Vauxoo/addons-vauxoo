@@ -1,3 +1,3 @@
-import cost_structure
-import product_product
-import invoice
+from . import cost_structure
+from . import product_product
+from . import invoice

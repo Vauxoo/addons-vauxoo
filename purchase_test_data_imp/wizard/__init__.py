@@ -1,1 +1,1 @@
-import test_yaml
+from . import test_yaml

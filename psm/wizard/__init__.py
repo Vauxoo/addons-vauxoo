@@ -22,6 +22,6 @@
 #    You should have received a copy of the GNU General Public License     #
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
-import pedigree_serialization_manager
-import stock_invoice_onshipping
-import stock_return_picking
+from . import pedigree_serialization_manager
+from . import stock_invoice_onshipping
+from . import stock_return_picking

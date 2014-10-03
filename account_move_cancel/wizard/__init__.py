@@ -1,1 +1,1 @@
-import account_move_cancel
+from . import account_move_cancel

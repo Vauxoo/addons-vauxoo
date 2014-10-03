@@ -1,2 +1,2 @@
 # -*- encoding: utf-8 -*-
-import account_move_folio
+from . import account_move_folio

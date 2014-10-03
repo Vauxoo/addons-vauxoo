@@ -23,4 +23,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import account_closure_preparation
+from . import account_closure_preparation

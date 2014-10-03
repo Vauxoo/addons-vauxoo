@@ -23,12 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-import unit_analisys
-import account
-import invoice
-import product
-import report_profit
-import report
-import wizard
+from . import unit_analisys
+from . import account
+from . import invoice
+from . import product
+from . import report_profit
+from . import report
+from . import wizard
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

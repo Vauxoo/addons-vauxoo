@@ -1,1 +1,1 @@
-import message_post_test
+from . import message_post_test

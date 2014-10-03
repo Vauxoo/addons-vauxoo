@@ -1,1 +1,1 @@
-import baremo
+from . import baremo

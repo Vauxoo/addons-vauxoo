@@ -1,2 +1,2 @@
-import invoice
-import wh_iva_doc
+from . import invoice
+from . import wh_iva_doc

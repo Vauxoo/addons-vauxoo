@@ -1,1 +1,1 @@
-import create_list_price
+from . import create_list_price

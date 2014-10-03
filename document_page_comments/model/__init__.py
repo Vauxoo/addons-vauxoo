@@ -1,1 +1,1 @@
-import document
+from . import document

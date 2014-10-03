@@ -24,5 +24,5 @@
 #
 ##############################################################################
 
-import wizard
-import sale
+from . import wizard
+from . import sale
