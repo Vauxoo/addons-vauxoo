@@ -164,7 +164,6 @@ class PdfFileWriter(object):
     # @param stream An object to write the file to.  The object must support
     # the write method, and the tell method, similar to a file object.
     def write(self, stream):
-        import struct
         import md5
 
         externalReferenceMap = {}
@@ -565,7 +564,6 @@ class PdfFileReader(object):
             if not hasattr(self, '_decryption_key'):
                 raise Exception("file has not been decrypted")
             # otherwise, decrypt here...
-            import struct
             import md5
             pack1 = struct.pack("<i", indirectReference.idnum)[:3]
             pack2 = struct.pack("<i", indirectReference.generation)[:2]
@@ -1404,7 +1402,6 @@ def _alg32(password, rev, keylen, owner_entry, p_entry, id1_entry, metadata_encr
     # 2. Initialize the MD5 hash function and pass the result of step 1 as
     # input to this function.
     import md5
-    import struct
     m = md5.new(password)
     # 3. Pass the value of the encryption dictionary's /O entry to the MD5 hash
     # function.
