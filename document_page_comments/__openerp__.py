@@ -23,17 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "Document Page Comments",
-    "version" : "0.1",
-    "depends" : [
-                 "base",
-                 "document_page",
-                 "vauxoo_cms",
-                 ],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Document Page Comments", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
 
 Documents Page Comments
 =======================
@@ -42,16 +37,24 @@ This module add messeage history and followers in document page model
 to we can follow each document and receive a mail when those are modified if
 you are follower
 
-                    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "demo" : [
-    ],
-    "data" : [
-    'view/document_page_view.xml',
-    'data/document_pages_data.xml',
-    ],
-    "active": False,
-    "images": [],
-    "installable": True,
+                    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "document_page", 
+        "vauxoo_cms"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/document_page_view.xml", 
+        "data/document_pages_data.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

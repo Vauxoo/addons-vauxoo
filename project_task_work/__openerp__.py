@@ -22,31 +22,32 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
 {
-    "name" : "Project Task Work",
-    "version" : "0.1",
-    "author" : "Vauxoo",
-    "category" : "Generic Modules",
-    "website": "http://www.vauxoo.com",
-    "description": '''
+    "name": "Project Task Work", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
 
-''',
-    "depends" : [
-                "project",
-                "project_issue",
-                ],
-    "init_xml" : [],
-    "demo_xml" : [
-
-    ],
-    "update_xml" : [
-        'security/project_task_work.xml',
-        'security/ir.model.access.csv',
-        'view/project_view.xml',
-        'view/report.xml',
-
-    ],
-    "active": False,
-    "installable": True
+""", 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "project", 
+        "project_issue"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/project_task_work.xml", 
+        "security/ir.model.access.csv", 
+        "view/project_view.xml", 
+        "view/report.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

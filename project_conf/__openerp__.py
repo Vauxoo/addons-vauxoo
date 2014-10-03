@@ -22,13 +22,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "Project Configuration",
-    "version" : "0.1",
-    "depends" : ["base","project","email_template"],
-    "author" : ["Vauxoo",],
-    "description" : """
+    "name": "Project Configuration", 
+    "version": "0.1", 
+    "author": [
+        "Vauxoo"
+    ], 
+    "category": "Generic Modules", 
+    "description": """
 Project Configuration
 =====================
 
@@ -67,18 +68,24 @@ Project Configuration
           * Project Leader.
     - For template: **Envio de Reporte de Credenciales del Server**, you may replace words blue colors with real information.
     - For template "New Task", you should replace the piece of codigo: http://erp.vauxoo.com to your url.
-""",
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [
-    ],
-    "demo_xml" : [
-    ],
-    "update_xml" : [
-      "data/project_conf.xml",
-      "view/project_view.xml",
-    ],
-    "active": False,
-    "images": [],
-    "installable": True,
+""", 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "project", 
+        "email_template"
+    ], 
+    "demo": [], 
+    "data": [
+        "data/project_conf.xml", 
+        "view/project_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

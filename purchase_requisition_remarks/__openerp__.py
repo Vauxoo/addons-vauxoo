@@ -22,31 +22,32 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'Purchase Requisition Remarks',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': 'purchase',
-    'description': '''
+    "name": "Purchase Requisition Remarks", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "purchase", 
+    "description": """
 Purchase Requisition Remarks
 ============================
 
 Add a new field 'remarks' over the purchase requisition that allows to write
 remarks about the purchase requisition.
-''',
-    'depends': [
-        'purchase_requisition',
-    ],
-    'data': [
-        'view/purchase_requisition_view.xml',
-    ],
-    'demo': [],
-    'test': [],
-    'qweb': [],
-    'js': [],
-    'css': [],
-    'active': False,
-    'installable': True,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "purchase_requisition"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/purchase_requisition_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

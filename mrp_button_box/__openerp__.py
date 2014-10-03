@@ -22,26 +22,34 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'MRP Button Box',
-    'version': '1.0',
-    'author': 'Vauxoo C.A.',
-    'website': 'http://www.openerp.com.ve',
-    'category': '',
-    'description': '''
+    "name": "MRP Button Box", 
+    "version": "1.0", 
+    "author": "Vauxoo C.A.", 
+    "category": "", 
+    "description": """
 MRP Button Box
 ==============
 
 Dummy module to add a button box at the manufacturing order right uper corner.
 This module can be find at lp:addons-vauxoo/7.0/mrp_button_box
-''',
-    'depends': ['base', 'mail', 'mrp'],
-    'data': [
-        'view/mrp_button_box_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'active': False,
-    'installable': True,
+""", 
+    "website": "http://www.openerp.com.ve", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "mail", 
+        "mrp"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/mrp_button_box_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

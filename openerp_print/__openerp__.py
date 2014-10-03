@@ -23,11 +23,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 {
-    "name" : "Print Models and Reports",
-    "version" : "0.2",
-    "depends" : ["base"],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Print Models and Reports", 
+    "version": "0.2", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/MRP/Accounting", 
+    "description": """
         Impresion de Reportes
         Configuraciones Previas:
         1-  Instalar pycups:    # aptitude install python-cups
@@ -60,19 +60,24 @@
         7-  PROCESO DE AÑADIR LA IMPRESORA
             7.1- Acceder a Common UNIX Printing System (asistente de impresoras Web): http://localhost:631/ si es, desde una maquina virtual con: http://192.168.*.*
             7.2- Anadir la Impresora que se desea administrar
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules/MRP/Accounting",
-    "init_xml" : [
-    ],
-    "demo_xml" : [
-    ],
-    "update_xml" : [
-        "security/groups.xml",
-        "security/ir.model.access.csv",
-        "print_model_view.xml",
-        "res_company.xml",
-    ],
-    "active": False,
-    "installable": False,
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/groups.xml", 
+        "security/ir.model.access.csv", 
+        "print_model_view.xml", 
+        "res_company.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": False, 
+    "auto_install": False, 
+    "active": False
 }

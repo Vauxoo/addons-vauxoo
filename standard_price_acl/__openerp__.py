@@ -18,12 +18,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    'name' : 'Overwrite field standard_price',
-    'version' : '1.0',
-    'author' : 'Vauxoo',
-    'category' : 'Security',
-    'description' : """
+    "name": "Overwrite field standard_price", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Security", 
+    "description": """
 Fixed groups on field standard_price
 ====================================
 
@@ -34,23 +35,20 @@ the asignation of groups is made in file product.py in model definition:
 
 This way forces to allows work with the groups **base.group_user**.
 
-    """,
-    'website': 'http://www.vauxoo.com',
-    'images' : [],
-    'depends' : ['base','product'],
-    'data': [
-    ],
-    'js': [
-    ],
-    'qweb' : [
-    ],
-    'css':[
-    ],
-    'demo': [
-],
-    'test': [
-],
-    'installable': True,
-    'auto_install': False,
+    """, 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "product"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

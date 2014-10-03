@@ -23,24 +23,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name" : "Pricelist",
-    "version" : "1.1",
-    "author" : "Vauxoo",
-    "category": 'Localization/Mexico',
+    "name": "Pricelist", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "Localization/Mexico", 
     "description": """ This module allows get the rule that has the most current date.
                     Also contains a patch that modifies the query of the item,
                     return to the rule depending on _order defined in the class.
-                """,
-    'init_xml': [],
-    "depends" : ["product","sale"],
-    'update_xml': ["product_pricelist_view.xml",
-    ],
-    'demo_xml': [
-    ],
-    'test':[
-        ],
-    'installable': True,
-    'active': False,
+                """, 
+    "website": "", 
+    "license": "", 
+    "depends": [
+        "product", 
+        "sale"
+    ], 
+    "demo": [], 
+    "data": [
+        "product_pricelist_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

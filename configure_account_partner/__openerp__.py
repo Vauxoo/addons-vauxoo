@@ -23,16 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "Configure Account to partners",
-    "version" : "0.1",
-    "depends" : [
-		"account",
-		'group_configurations_account'
-	],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Configure Account to partners", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Customization", 
+    "description": """
 Configure Accounts On imported Partners:
 ========================================
 
@@ -52,13 +48,22 @@ on all reports.
 **TODO:** This feature is so wired, when we fix the correct behaviour this feature
 must be removed.
 
-                    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Customization",
-    "data" : [
-        "wizard/conf_wizard.xml",
-    ],
-    "active": False,
-    "images": [],
-    "installable": True,
+                    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account", 
+        "group_configurations_account"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/conf_wizard.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

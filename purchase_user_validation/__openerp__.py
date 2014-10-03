@@ -23,18 +23,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    'name': 'Purchase User Validator',
-    "version" : "1.1",
-    'author': 'Vauxoo',
-    'depends': ['purchase'],
-    'description': """
-        add fields that validate the user when approved purchase
-    """,
-    'update_xml':[
-        'purchase_view.xml',
-    ],
-    'active': False,
-    'installable': True
-}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+{
+    "name": "Purchase User Validator", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "", 
+    "description": """
+        add fields that validate the user when approved purchase
+    """, 
+    "website": "", 
+    "license": "", 
+    "depends": [
+        "purchase"
+    ], 
+    "demo": [], 
+    "data": [
+        "purchase_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
+}

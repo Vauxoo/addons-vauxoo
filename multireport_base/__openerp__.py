@@ -24,21 +24,30 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
-
 {
-	"name" : "Vauxoo Report Multicompany",
-	"version" : "0.7",
-	"author" : "Vauxoo",
-	"category" : "Generic Modules/Others",
-	"website": "http://vauxoo.com/",
-	"description": '''
-	               Agrega un tab en la Compañia que va a contener los reportes personalizados.
-                    ''',
-	"depends" : ["base", "account", ],
-	"data" : [
-                "security/ir.model.access.csv",
-		        "report_multicompany_view.xml",
-	],
-	"active": False,
-	"installable": True,
+    "name": "Vauxoo Report Multicompany", 
+    "version": "0.7", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Others", 
+    "description": """
+\t               Agrega un tab en la Compañia que va a contener los reportes personalizados.
+                    """, 
+    "website": "http://vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/ir.model.access.csv", 
+        "report_multicompany_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

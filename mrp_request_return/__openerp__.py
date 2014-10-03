@@ -23,24 +23,30 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-{
-    "name": "MRP Acreation",
-    "version": "1.1",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/MRP",
-    "website" : "http://www.vauxoo.com/",
-    "description": """ Add wizard to request or return product to the stock
-    """,
-    'depends': ['mrp','mrp_consume_produce'],
-    'init_xml': [],
-    'update_xml': [
-        'wizard/mrp_request_return_view.xml',
-        'mrp_view.xml'
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
-}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+{
+    "name": "MRP Acreation", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/MRP", 
+    "description": """ Add wizard to request or return product to the stock
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "mrp", 
+        "mrp_consume_produce"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/mrp_request_return_view.xml", 
+        "mrp_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
+}

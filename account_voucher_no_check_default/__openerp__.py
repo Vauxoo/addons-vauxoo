@@ -23,29 +23,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "No concile Credits Voucher",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Generic Modules",
-    "description" : """
+    "name": "No concile Credits Voucher", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
         This module change the onchange in the lines from account voucher,
         that no check 'reconcile'.
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
-            "account_voucher",
-        ],
-    "demo" : [],
-    "data" : [
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "account_voucher"
+    ], 
+    "demo": [], 
+    "data": [
         "view/voucher_payment_receipt_view.xml"
-        ],
-    'js': [],
-    'qweb' : [],
-    'css':[],
-    'test': [],
-    "installable" : True,
-    "active" : False,
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

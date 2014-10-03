@@ -23,12 +23,13 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Account Ledger Report",
-    "version": "0.1",
-    "depends": ["base","account"],
-    "author": "Vauxoo",
-    "description" : """
+    "name": "Account Ledger Report", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Accounting", 
+    "description": """
     Module that replace original ledger report to optimize the printing space.
     The reports changed are:
         - account_general_ledger.rml
@@ -39,18 +40,22 @@
         - Journal (header)
         - Partner field
         - Ref field
- """,
-    "website": "http://vauxoo.com",
-    "category": "Generic Modules/Accounting",
-    "init_xml": [
-    ],
-    "demo_xml": [
-    ],
-    "update_xml": [
-        'acc_ledger_report.xml',
-    ],
-    "active": False,
-    "installable": True,
+ """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "acc_ledger_report.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

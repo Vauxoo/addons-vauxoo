@@ -22,22 +22,30 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'MRP Product Capacity',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com',
-    'category': '',
-    'description': '''
-''',
-    'depends': ['base', 'mail', 'mrp'],
-    'data': [
-        'security/ir.model.access.csv',
-        'view/mrp_product_capacity_view.xml',
-    ],
-    'demo': [],
-    'test': [],
-    'active': False,
-    'installable': True,
+    "name": "MRP Product Capacity", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "", 
+    "description": """
+""", 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "mail", 
+        "mrp"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/ir.model.access.csv", 
+        "view/mrp_product_capacity_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

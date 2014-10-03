@@ -22,12 +22,12 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'MRP Request Add Item',
-    'version': '1.0',
-    'summary': 'Add new item in the wizard of Request/Return in order manufacturing',
-    'description': """
+    "name": "MRP Request Add Item", 
+    "version": "1.0", 
+    "author": "Vauxoo C.A", 
+    "category": "MRP", 
+    "description": """
 
 MRP Request Add Item
 ====================
@@ -35,21 +35,23 @@ MRP Request Add Item
 Allows you to add new requests of materials through mrp_request_return button not belonging to the
 BOM.
 
-""",
-    'category': 'MRP',
-    'author': 'Vauxoo C.A',
-    'website': 'http://vauxoo.com',
-    'license' : 'AGPL-3',
-    'depends': ['mrp','mrp_consume_produce','mrp_request_return'],
-    'data': [
-        'wizard/mrp_request_return_view.xml',
-        ],
-    'demo': [],
-    'installable': True,
-    'auto_install' : False,
-    'js': [],
-    'qweb': [],
-    'css': [],
-    'images': [],
-    'test' : [],
+""", 
+    "website": "http://vauxoo.com", 
+    "license": "AGPL-3", 
+    "depends": [
+        "mrp", 
+        "mrp_consume_produce", 
+        "mrp_request_return"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/mrp_request_return_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

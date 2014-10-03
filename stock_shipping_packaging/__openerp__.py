@@ -22,15 +22,12 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'Stock Shipping Packaging',
-    'version': '1.0',
-    'author': 'Vauxoo C.A.',
-    'website': 'http://vauxoo.com',
-    'category': 'Warehouse',
-    'summary': 'Packaging stock moves for a delivery order',
-    'description': """
+    "name": "Stock Shipping Packaging", 
+    "version": "1.0", 
+    "author": "Vauxoo C.A.", 
+    "category": "Warehouse", 
+    "description": """
 ========================
 Stock Shipping Packaging
 ========================
@@ -56,17 +53,23 @@ In an Order Delivery can add línes of stock.moves, to each stock.move you can a
 (stock.tracking) filtered by the partner of the delivery order.
 
 
-""",
-    'depends': ['base', 'mail', 'stock'],
-    'data': [
-        'view/stock_shipping_packaging_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'active': False,
-    'installable': True,
-    'js': [],
-    'qweb': [],
-    'css': [],
-    'images': [],
+""", 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "mail", 
+        "stock"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/stock_shipping_packaging_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

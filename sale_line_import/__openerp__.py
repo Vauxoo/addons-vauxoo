@@ -23,25 +23,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-{
-    "name": "Sale Line Import",
-    "version": "1.1",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/Product",
-    "website" : "http://www.vauxoo.com/",
-    "description": """Import a CSV file to lines of Sale Order
-    """,
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com',
-    'depends': ['sale'],
-    'init_xml': [],
-    'update_xml': ['security/wizard_import_line_security.xml',
-        'wizard/sale_line_import_view.xml',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
-}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+{
+    "name": "Sale Line Import", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Product", 
+    "description": """Import a CSV file to lines of Sale Order
+    """, 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "sale"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/wizard_import_line_security.xml", 
+        "wizard/sale_line_import_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
+}

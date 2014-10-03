@@ -24,25 +24,29 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
-
 {
-	"name" : "Report Move Voucher ",
-	"version" : "0.7",
-	"author" : "OpenERP",
-	"category" : "Generic Modules/Others",
-	"website": "http://wiki.openerp.org.ve/",
-	"description": '''
- 			Imprime el Comprobante de Asiento
-                    ''',
-	"depends" : ["base",
-                 "account",
-
-	             ],
-	"init_xml" : [],
-	"update_xml" : [
-		"move_voucher_report.xml",
-
-	],
-	"active": False,
-	"installable": True
+    "name": "Report Move Voucher ", 
+    "version": "0.7", 
+    "author": "OpenERP", 
+    "category": "Generic Modules/Others", 
+    "description": """
+ \t\t\tImprime el Comprobante de Asiento
+                    """, 
+    "website": "http://wiki.openerp.org.ve/", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "move_voucher_report.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

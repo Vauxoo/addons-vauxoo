@@ -22,24 +22,32 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'Incoterm Delivery Type',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': '',
-    'description': '''
+    "name": "Incoterm Delivery Type", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "", 
+    "description": """
 Incoterm Delivery Type
 ======================
 This module add a delivery type boolan field in the incoterms model.
-''',
-    'depends': ['base', 'mail', 'stock'],
-    'data': [
-        'view/incoterm_delivery_type_view.xml',
-    ],
-    'demo': [],
-    'test': [],
-    'active': False,
-    'installable': True,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "mail", 
+        "stock"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/incoterm_delivery_type_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

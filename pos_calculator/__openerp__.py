@@ -21,31 +21,35 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    "name": "Pos Calculator",
-    "version": "0.1",
-    "depends": ["base", "point_of_sale"],
-    "summary": "Add Calculator functionality in Payment Screen of Point Of Sale",
-    "author": "Vauxoo",
+    "name": "Pos Calculator", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Point Of Sale", 
     "description": """
     Add Calculator functionality in Payment Screen of Point Of Sale
-    """,
-    "website": "http://vauxoo.com",
-    "category": "Point Of Sale",
-    "data": [
-    ],
-    'js':[
-        'static/src/js/backbone-super-min.js',
-        'static/src/js/widgets.js',
-    ],
-    'css': [
-        'static/src/css/pos_popup.css',
-        'static/src/css/pos.css',
-    ],
-    'qweb': [
-        'static/src/xml/pos.xml',
-    ],
-    "active": False,
-    "installable": True,
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "point_of_sale"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [
+        "static/src/js/backbone-super-min.js", 
+        "static/src/js/widgets.js"
+    ], 
+    "css": [
+        "static/src/css/pos_popup.css", 
+        "static/src/css/pos.css"
+    ], 
+    "qweb": [
+        "static/src/xml/pos.xml"
+    ], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

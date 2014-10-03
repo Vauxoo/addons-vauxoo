@@ -22,23 +22,28 @@
 #
 #
 {
-    "name": "Bzr to Task Commits",
-    "version": "0.1",
-    "depends": ["sprint_kanban", ],
-    "author": "Vauxoo",
+    "name": "Bzr to Task Commits", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Project Management", 
     "description": """
         This module retrieves commit messages from launchpad and
         stores them as task works in the configured task.
-                   """,
-    "website": "http://vauxoo.com",
-    "category": "Project Management",
-    "init_xml": [
-    ],
-    "demo_xml": [
-    ],
-    "update_xml": [
-    "bzr_to_task_view.xml",
-    ],
-    "active": False,
-    "installable": True,
+                   """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "sprint_kanban"
+    ], 
+    "demo": [], 
+    "data": [
+        "bzr_to_task_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

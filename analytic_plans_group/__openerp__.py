@@ -22,36 +22,37 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'Analytic Plans Group',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': '',
-    'description': '''
+    "name": "Analytic Plans Group", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "", 
+    "description": """
 Analytic Plans Group
 --------------------
 
 This module adds analytic_group_id field in analytic account for grouping of
 analytics entry lines in future.
 
-''',
-    'depends': [
-        'analytic',
-        'account_analytic_plans',
-        'purchase_analytic_plans',
-        ],
-    'data': [
-        'data/res_groups.xml',
-        'security/ir.model.access.csv',
-        'view/account_analytic_plans_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'qweb': [],
-    'js': [],
-    'css': [],
-    'active': False,
-    'installable': True,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "analytic", 
+        "account_analytic_plans", 
+        "purchase_analytic_plans"
+    ], 
+    "demo": [], 
+    "data": [
+        "data/res_groups.xml", 
+        "security/ir.model.access.csv", 
+        "view/account_analytic_plans_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

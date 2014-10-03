@@ -23,20 +23,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Cost assigned in the account move",
-    "version" : "0.1",
-    "depends" : ["account",'account_anglo_saxon','cost_structure'],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Cost assigned in the account move", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
    This module was created to build upon the seat by movement of a product, it will take as cost thereof, calculated by the module cost_structure
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [ ],
-    "update_xml" : [
-    ],
-    "active": False,
-    "installable": True,
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account", 
+        "account_anglo_saxon", 
+        "cost_structure"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

@@ -1,30 +1,37 @@
 # -*- encoding: utf-8 -*-
 {
-    "name" : "OpenAcademy Module",
-    "version" : "0.1",
-    "depends" :["base","board"],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "OpenAcademy Module", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
     What it does!
-                    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [
-    ],
-    "demo_xml" : [
-    "demo/demo_partners.xml"
-    ],
-    "update_xml" : [
-    "openacademy_view.xml",
-    "res_partner_view.xml",
-    "data/openacademy_data.xml",
-    "workflow/openacademy_workflow.xml",
-    "wizard/create_attendee_wizard.xml",
-    "report_openacademy.xml",
-    "openacademy_board.xml",
-    "security/res_groups.xml",
-    "security/ir.model.access.csv",
-    ],
-    "active": False,
-    "installable": False,
+                    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "board"
+    ], 
+    "demo": [
+        "demo/demo_partners.xml"
+    ], 
+    "data": [
+        "openacademy_view.xml", 
+        "res_partner_view.xml", 
+        "data/openacademy_data.xml", 
+        "workflow/openacademy_workflow.xml", 
+        "wizard/create_attendee_wizard.xml", 
+        "report_openacademy.xml", 
+        "openacademy_board.xml", 
+        "security/res_groups.xml", 
+        "security/ir.model.access.csv"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": False, 
+    "auto_install": False, 
+    "active": False
 }

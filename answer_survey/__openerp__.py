@@ -18,40 +18,36 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    'name' : 'Answer Survey',
-    'version' : '0.1',
-    'author' : 'Vauxoo',
-    'category' : '',
-    'description' : """
-
-    """,
-    'website': 'http://www.vauxoo.com',
-    'images' : [],
-    'depends' : [
-        'survey',
-        'web_bootstrap3',
-        'portal_crm_vauxoo',
-        'web_fontawesome',
-    ],
-    'data': [
-            'security/groups_survey.xml',
-            'wizard/survey_answer.xml',
-            'view/answer_survey_menu.xml',
-    ],
-    'js': [
-    ],
-    'qweb' : [
-    ],
-    'css':[
-        'static/src/css/survey.css',
-    ],
-    'demo': [
-    ],
-    'test': [
-    ],
-    'installable': True,
-    'auto_install': False,
-}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+{
+    "name": "Answer Survey", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "", 
+    "description": """
 
+    """, 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "survey", 
+        "web_bootstrap3", 
+        "portal_crm_vauxoo", 
+        "web_fontawesome"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/groups_survey.xml", 
+        "wizard/survey_answer.xml", 
+        "view/answer_survey_menu.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [
+        "static/src/css/survey.css"
+    ], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
+}

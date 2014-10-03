@@ -22,14 +22,12 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
 {
-    "name" : "Sale of Uncommitted Products",
-    "version" : "0.1",
-    "author" : "Vauxoo",
-    "category" : "Generic Modules",
-    "website": "http://www.vauxoo.com",
-    "description": '''
+    "name": "Sale of Uncommitted Products", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
 This module:
 *) Adds a new state to the sale order model, committed
 *) Adds a new activity to the sale order workflow, commit
@@ -44,24 +42,28 @@ and changes it from commit to router.
     -) qty_committed: amounts the quantity of products in sale orders with state committed
     -) qty_uncommitted: amounts the quantity of available to commit
     this amount is, qty_available + outgoing - qty_committed
-''',
-    "depends" : [
-                "base",
-                "sale",
-                "product",
-                "stock",
-                ],
-    "init_xml" : [],
-    "demo_xml" : [
-
-    ],
-    "update_xml" : [
-        'view/product_view.xml',
-        'view/sale_view.xml',
-        'view/sale_double_validation_installer.xml',
-        'workflow/sale_workflow.xml',
-        'security/groups.xml',
-    ],
-    "active": False,
-    "installable": True
+""", 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "sale", 
+        "product", 
+        "stock"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/product_view.xml", 
+        "view/sale_view.xml", 
+        "view/sale_double_validation_installer.xml", 
+        "workflow/sale_workflow.xml", 
+        "security/groups.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

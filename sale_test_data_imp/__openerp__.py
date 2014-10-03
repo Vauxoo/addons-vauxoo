@@ -24,16 +24,10 @@
 #
 #
 {
-    "name": "Sale Test Data IMP",
-    "version": "1.0",
-    "depends": [
-        "base",
-        "sale",
-        "account",
-        "product",
-        "stock",
-    ],
-    "author": "Vauxoo",
+    "name": "Sale Test Data IMP", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Addons Vauxoo", 
     "description": """
 Sale Test Data IMP
 ==================
@@ -43,15 +37,28 @@ Creating a sale order, picking out and customer invoice by prodcut.
 
 This test yaml only works with user admin and the search of partner and
 product is based in the company that have this user assigned.
-    """,
-    "website": "http://vauxoo.com",
-    "category": "Addons Vauxoo",
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "sale", 
+        "account", 
+        "product", 
+        "stock"
+    ], 
+    "demo": [], 
     "data": [
-            'wizard/wizard.xml',
-            ],
+        "wizard/wizard.xml"
+    ], 
     "test": [
-             'test/sale_order_test_data.xml',
-             'test/sale_order_product_can_be_sold.yml', ],
-    "active": False,
-    "installable": True,
+        "test/sale_order_test_data.xml", 
+        "test/sale_order_product_can_be_sold.yml"
+    ], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

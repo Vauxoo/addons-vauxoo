@@ -20,22 +20,31 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-{
-    'name' : 'Email template Followers',
-    'version' : '1.1',
-    "website": "http://vauxoo.com",
-    "category": "Addons Vauxoo",
-    'author' : 'Vauxoo',
-    'description' : """
-Added field boolean to allow send email all followers from template
-    """,
-    'depends' : ['mail','email_template'],
-    'data': [
-       'view/email_template_view.xml',
-       'view/mail_compose_message_view.xml',
-        ],
-    "active": False,
-    "installable": True,
-}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
+{
+    "name": "Email template Followers", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "Addons Vauxoo", 
+    "description": """
+Added field boolean to allow send email all followers from template
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "mail", 
+        "email_template"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/email_template_view.xml", 
+        "view/mail_compose_message_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
+}

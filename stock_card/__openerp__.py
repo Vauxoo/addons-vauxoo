@@ -22,32 +22,40 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name" : "Stock Card",
-    "version" : "0.2",
-    "depends" : ["base","product", "purchase", "account", "stock", "report_profit"],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Stock Card", 
+    "version": "0.2", 
+    "author": "Vauxoo", 
+    "category": "Localization", 
+    "description": """
         Kardex.
 
- """,
-    "website" : "http://vauxoo.com",
-    "category" : "Localization",
-    "init_xml" : [
-    ],
-    "demo_xml" : [
-    ],
-    "update_xml" : [
-        "security/stock_card_security.xml",
-        "security/ir.model.access.csv",
-        "stock_view.xml",
-        "report_profit_picking_view.xml",
-        "stock_card_view.xml",
-        "stock_card_report.xml",
-    ],
-    "active": False,
-    "installable": True,
+ """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "product", 
+        "purchase", 
+        "account", 
+        "stock", 
+        "report_profit"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/stock_card_security.xml", 
+        "security/ir.model.access.csv", 
+        "stock_view.xml", 
+        "report_profit_picking_view.xml", 
+        "stock_card_view.xml", 
+        "stock_card_report.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

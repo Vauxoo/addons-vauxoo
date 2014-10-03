@@ -23,25 +23,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-
 {
-    "name": "Partner Validate VAT",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Addons-vauxoo",
-    "description" : """
+    "name": "Partner Validate VAT", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Addons-vauxoo", 
+    "description": """
 Partner Validate VAT:
 =====================
 
 This module validate that Partner's VAT must be a unique value in each company
-    """,
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
     "depends": [
-                    'base',
-    ],
-    "demo": [],
-    'data': [],
-    "active": False,
-    "installable": True,
+        "base"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

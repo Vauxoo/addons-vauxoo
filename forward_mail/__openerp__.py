@@ -20,21 +20,29 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-{
-    'name' : 'Forward Mail',
-    'version' : '1.1',
-    "website": "http://vauxoo.com",
-    "category": "Addons Vauxoo",
-    'author' : 'Vauxoo',
-    'description' : """
-Add wizard to forward mail in exception state
-    """,
-    'depends' : ['mail'],
-    'data': [
-        'view/forward_mail_view.xml'
-        ],
-    "active": False,
-    "installable": True,
-}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
+{
+    "name": "Forward Mail", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "Addons Vauxoo", 
+    "description": """
+Add wizard to forward mail in exception state
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "mail"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/forward_mail_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
+}

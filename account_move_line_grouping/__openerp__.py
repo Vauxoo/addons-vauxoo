@@ -23,30 +23,33 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-
 {
-    "name": "Account Move Line Grouping",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Accounting",
-    "description" : """
+    "name": "Account Move Line Grouping", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Accounting", 
+    "description": """
 Account Reconcile Grouping
 ==========================
 
 This module allows you to group your journal items by Journal Entry with a new filter in the search view.
 
 
-    """,
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
     "depends": [
-            "account",
-                ],
-    "demo": [
-    ],
+        "account"
+    ], 
+    "demo": [], 
     "data": [
-        'view/account_move_view.xml',
-    ],
-    "installable": True,
-    "active": False,
+        "view/account_move_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
