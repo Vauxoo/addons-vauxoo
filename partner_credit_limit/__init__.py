@@ -21,6 +21,6 @@
 #
 ##############################################################################
 
-import partner
-import sale
-import invoice
+from . import partner
+from . import sale
+from . import invoice
