@@ -24,24 +24,26 @@ from openerp.report import report_sxw
 import time
 from openerp.addons.report_webkit import webkit_report
 
+
 class account_move_report_html(report_sxw.rml_parse):
+
     def __init__(self, cr, uid, name, context):
         super(account_move_report_html, self).__init__(cr, uid, name,
-				context=context)
+                                context=context)
         self.localcontext.update({
             'time': time,
-            'get_total_debit_credit' : self.get_total_debit_credit,            
+            'get_total_debit_credit': self.get_total_debit_credit,
         })
 
     def get_total_debit_credit(self, line_ids):
-		sum_tot_debit = 0.00
-		sum_tot_credit = 0.00
-		for line in line_ids:
-			sum_tot_debit += (line.debit)
-			sum_tot_credit += (line.credit)
-		return {'sum_tot_debit' : sum_tot_debit, 'sum_tot_credit' : sum_tot_credit}
+        sum_tot_debit = 0.00
+        sum_tot_credit = 0.00
+        for line in line_ids:
+            sum_tot_debit += (line.debit)
+            sum_tot_credit += (line.credit)
+        return {'sum_tot_debit': sum_tot_debit, 'sum_tot_credit': sum_tot_credit}
 
-webkit_report.WebKitParser('report.account.move.report.webkit', 
+webkit_report.WebKitParser('report.account.move.report.webkit',
                       'account.move',
                       'addons/report_account_move/report/account_move_report_html.mako',
                       parser=account_move_report_html)
