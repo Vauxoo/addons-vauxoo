@@ -24,7 +24,7 @@
 ##############################################################################
 
 
-from report import report_sxw
+from openerp.report import report_sxw
 import pooler
 
 

@@ -24,7 +24,7 @@
 ##########################################################################
 
 import time
-from report import report_sxw
+from openerp.report import report_sxw
 
 
 class rep_conteo_stock(report_sxw.rml_parse):

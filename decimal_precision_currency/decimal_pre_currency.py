@@ -25,7 +25,7 @@
 from openerp.osv import fields, osv
 
 import time
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class res_currency_rate(osv.Model):

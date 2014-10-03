@@ -23,7 +23,7 @@
 
 
 import time
-from report import report_sxw
+from openerp.report import report_sxw
 from openerp.tools.translate import _
 
 from account.report import common_report_header
