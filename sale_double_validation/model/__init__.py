@@ -23,4 +23,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-import sale_double_validation_installer
+from . import sale_double_validation_installer

@@ -1,2 +1,2 @@
 # -*- encoding: utf-8 -*-
-import account_voucher_category
+from . import account_voucher_category

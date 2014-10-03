@@ -1,5 +1,5 @@
-import account
-import partner
-import purchase
-import sale
-import stock
+from . import account
+from . import partner
+from . import purchase
+from . import sale
+from . import stock

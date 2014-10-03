@@ -24,4 +24,4 @@
 #
 #
 
-import product_uom_update
+from . import product_uom_update

@@ -24,6 +24,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 
-import print_model
-import res_company
-import report_sxw_ext
+from . import print_model
+from . import res_company
+from . import report_sxw_ext

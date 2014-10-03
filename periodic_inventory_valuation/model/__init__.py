@@ -23,4 +23,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import periodic_inventory_valuation
+from . import periodic_inventory_valuation

@@ -29,5 +29,5 @@
 #
 ##############################################################################
 
-import report_webkit_html
-import report_webkit_variation_group
+from . import report_webkit_html
+from . import report_webkit_variation_group

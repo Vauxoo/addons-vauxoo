@@ -1,1 +1,1 @@
-import shortcuts_extended
+from . import shortcuts_extended

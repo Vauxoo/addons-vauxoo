@@ -23,4 +23,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-import vouchers_partner_invoice
+from . import vouchers_partner_invoice
