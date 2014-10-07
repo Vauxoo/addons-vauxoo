@@ -22,7 +22,7 @@
 ##########################################################################
 
 from openerp.osv import osv, fields
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class account_move_line(osv.Model):
@@ -32,7 +32,7 @@ class account_move_line(osv.Model):
         'quantity': fields.float('Quantity',
              digits_compute=dp.get_precision(
                  'Product UoM'),
-             help="The optional quantity expressed by this line,\
+            help="The optional quantity expressed by this line,\
              eg: number of product sold. The quantity is not a legal\
              requirement but is very useful for some reports."),
     }

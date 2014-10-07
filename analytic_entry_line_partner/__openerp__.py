@@ -22,33 +22,34 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'Analytic Entry Line Partner',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': '',
-    'description': '''
+    "name": "Analytic Entry Line Partner", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "", 
+    "description": """
 Analytic Entry Line Partner
 ---------------------------
 
-This module takes partner_id field from move line for grouping of 
+This module takes partner_id field from move line for grouping of
 analytics entry lines by partner_id.
-''',
-    'depends': [
-        'account',
-        'analytic',
-        'account_analytic_plans',
-        ],
-    'data': [
-        'view/account_analytic_plans_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'qweb': [],
-    'js': [],
-    'css': [],
-    'active': False,
-    'installable': True,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "account", 
+        "analytic", 
+        "account_analytic_plans"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/account_analytic_plans_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

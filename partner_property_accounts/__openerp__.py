@@ -23,24 +23,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "Partner account Sin grupo",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Vauxoo",
-    "description" : """This module replace the fields to account in partner to news fields without groups
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
-            "account",
-        ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        'partner_view.xml'
-    ],
-    "installable" : False,
-    "active" : False,
+    "name": "Partner account Sin grupo", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Vauxoo", 
+    "description": """This module replace the fields to account in partner to news fields without groups
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "partner_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": False, 
+    "auto_install": False, 
+    "active": False
 }

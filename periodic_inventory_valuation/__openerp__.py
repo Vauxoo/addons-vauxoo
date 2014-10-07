@@ -22,30 +22,35 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    "name": "Periodic Inventory Valuation",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "website": "http://vauxoo.com",
-    "category": 'Accounting',
+    "name": "Periodic Inventory Valuation", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Accounting", 
     "description": """
 Periodic Inventory Valuation.
 =============================
 
 To generate journal items per period inventory valuation
-""",
-    "depends": ['account','product','stock'],
+""", 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account", 
+        "product", 
+        "stock"
+    ], 
+    "demo": [], 
     "data": [
-            'security/security.xml',                                                
-            'security/ir.model.access.csv',
-            'view/periodic_inventory_valuation_view.xml',
-        ],
-    "js": [],
-    "qweb": [],
-    "css": [],
-    "demo": [],
-    "test": [],
-    "installable": True,
-    "active": False,
+        "security/security.xml", 
+        "security/ir.model.access.csv", 
+        "view/periodic_inventory_valuation_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

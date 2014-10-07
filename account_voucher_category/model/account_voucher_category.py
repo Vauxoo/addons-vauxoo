@@ -1,11 +1,13 @@
 # -*- encoding: utf-8 -*-
 from openerp.osv import fields, osv
 
+
 class account_voucher_category_type(osv.Model):
     _name = 'account.voucher.category.type'
     _columns = {
-        'name':fields.char('Name', 256, help='Type Name', translate=True), 
+        'name': fields.char('Name', 256, help='Type Name', translate=True),
     }
+
 
 class account_voucher_category(osv.Model):
     _order = "parent_left"
@@ -21,31 +23,31 @@ class account_voucher_category(osv.Model):
         for elmt in self.browse(cr, uid, ids, context=context):
             user_type = ''
             if elmt.user_type:
-                user_type = '[%s] '%elmt.user_type.name
+                user_type = '[%s] ' % elmt.user_type.name
             res[elmt.id] = user_type + self._get_one_full_name(elmt)
         return res
 
     def _get_one_full_name(self, elmt, level=6):
-        if level<=0:
+        if level <= 0:
             return '...'
         if elmt.parent_id:
-            parent_path = self._get_one_full_name(elmt.parent_id, level-1) + " / "
+            parent_path = self._get_one_full_name(elmt.parent_id, level - 1) + " / "
         else:
             parent_path = ''
         return parent_path + elmt.name
 
     _columns = {
-        'name':fields.char('Name', 256, help='Category Name', translate=True), 
-        'code':fields.char('Code', 64, help='Category Code'), 
-        'type':fields.selection([('view','View'),('other','Regular')], string='Category Type', help='Category Type'), 
+        'name': fields.char('Name', 256, help='Category Name', translate=True),
+        'code': fields.char('Code', 64, help='Category Code'),
+        'type': fields.selection([('view', 'View'), ('other', 'Regular')], string='Category Type', help='Category Type'),
         'company_id': fields.many2one('res.company', 'Company', required=True),
-        'parent_id':fields.many2one('account.voucher.category', 'Parent Category', 
-            ondelete = 'restrict',
-            help='Allows to create a Hierachycal Tree of Categories'), 
+        'parent_id': fields.many2one('account.voucher.category', 'Parent Category',
+            ondelete='restrict',
+            help='Allows to create a Hierachycal Tree of Categories'),
         'parent_left': fields.integer('Parent Left', select=1),
         'parent_right': fields.integer('Parent Right', select=1),
         'complete_name': fields.function(_get_full_name, type='char', string='Full Name'),
-        'user_type':fields.many2one('account.voucher.category.type', 'Custom Type', help='Let you define you own Category Type'), 
+        'user_type': fields.many2one('account.voucher.category.type', 'Custom Type', help='Let you define you own Category Type'),
     }
 
     _defaults = {
@@ -54,23 +56,24 @@ class account_voucher_category(osv.Model):
 
     def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=100):
         if not args:
-            args=[]
+            args = []
         if context is None:
-            context={}
-        ids2=[]
+            context = {}
+        ids2 = []
         if name:
             ids = self.search(cr, uid, [('code', '=', name)] + args, limit=limit, context=context)
-            ids2 = self.search(cr, uid, [('user_type','ilike',name)] + args, limit=limit, context=context)
+            ids2 = self.search(cr, uid, [('user_type', 'ilike', name)] + args, limit=limit, context=context)
             if not ids:
                 dom = []
                 for name2 in name.split('/'):
                     name = name2.strip()
                     ids = self.search(cr, uid, dom + [('name', 'ilike', name)] + args, limit=limit, context=context)
-                    if not ids: break
-                    dom = [('parent_id','in',ids)]
+                    if not ids:
+                        break
+                    dom = [('parent_id', 'in', ids)]
         else:
             ids = self.search(cr, uid, args, limit=limit, context=context)
-        return self.name_get(cr, uid, ids2+ids, context=context)
+        return self.name_get(cr, uid, ids2 + ids, context=context)
 
     def name_get(self, cr, uid, ids, context=None):
         res = []
@@ -82,9 +85,10 @@ class account_voucher_category(osv.Model):
             elmt = self.browse(cr, uid, id, context=context)
             user_type = ''
             if elmt.user_type:
-                user_type = '[%s] '%elmt.user_type.name
+                user_type = '[%s] ' % elmt.user_type.name
             res.append((id, user_type + self._get_one_full_name(elmt)))
         return res
+
 
 class account_voucher(osv.Model):
     _inherit = 'account.voucher'
@@ -108,7 +112,7 @@ class account_voucher(osv.Model):
         move_line = super(account_voucher, self).first_move_line_get(cr, uid,
                 voucher_id, move_id, company_currency, current_currency,
                 context=context)
-        voucher = self.pool.get('account.voucher').browse(cr,uid,voucher_id,context)
+        voucher = self.pool.get('account.voucher').browse(cr, uid, voucher_id, context)
         move_line['av_cat_id'] = voucher.av_cat_id and voucher.av_cat_id.id or False
         return move_line
 
@@ -119,6 +123,8 @@ class account_move_line(osv.Model):
     _columns = {
         'av_cat_id': fields.many2one('account.voucher.category', 'Voucher Category'),
     }
+
+
 class scrvw_report_account_voucher_category(osv.Model):
 
     _name = 'scrvw.report.account.voucher.category'
@@ -207,5 +213,3 @@ class scrvw_report_account_voucher_category(osv.Model):
                 WHERE aa.type = 'liquidity'
             )""" % (self._name.replace('.', '_'))
         cr.execute(query)
-
-

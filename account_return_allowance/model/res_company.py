@@ -24,8 +24,8 @@
 from openerp.osv import fields, osv
 
 
-
 class res_company(osv.Model):
+
     """
     OpenERP Model : res_company
     """

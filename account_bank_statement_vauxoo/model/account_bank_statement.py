@@ -21,7 +21,7 @@
 ##############################################################################
 
 from openerp.osv import fields, osv
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 from openerp.tools.translate import _
 
 # Excel Stuff
@@ -368,6 +368,7 @@ class account_bank_statement(osv.Model):
 
 
 class bank_statement_imported_lines(osv.Model):
+
     """
     OpenERP Model : ClassName
     """
@@ -376,25 +377,25 @@ class bank_statement_imported_lines(osv.Model):
     _description = 'Imported lines for banks files'
 
     # def _balance(self, cr, uid,ids,field_name,args,context=None):
-        # res = {}
-        #
-        # for i in ids:
-            # debit = 0.0
-            # amt_unt = 0.0
-            # bsil_brw = self.browse(cr,uid,i,context=context)
-            # counterpart_id = bsil_brw.counterpart_id
-            # for aml in bsil_brw.aml_ids:
-                # if aml.account_id == counterpart_id:
-                    # debit += aml.debit or aml.credit
-            # for inv in bsil_brw.invoice_ids:
-                # if inv.account_id == counterpart_id:
-                    # amt_unt += inv.amount_total
-            # for amls in bsil_brw.acc_move_line_ids:
-                # if amls.account_id == counterpart_id:
-                    # amt_unt+=amls[aml.debit and 'credit' or 'debit']
-                #
-            # res[i]=debit-amt_unt
-        # return res
+    # res = {}
+    #
+    # for i in ids:
+    # debit = 0.0
+    # amt_unt = 0.0
+    # bsil_brw = self.browse(cr,uid,i,context=context)
+    # counterpart_id = bsil_brw.counterpart_id
+    # for aml in bsil_brw.aml_ids:
+    # if aml.account_id == counterpart_id:
+    # debit += aml.debit or aml.credit
+    # for inv in bsil_brw.invoice_ids:
+    # if inv.account_id == counterpart_id:
+    # amt_unt += inv.amount_total
+    # for amls in bsil_brw.acc_move_line_ids:
+    # if amls.account_id == counterpart_id:
+    # amt_unt+=amls[aml.debit and 'credit' or 'debit']
+    #
+    # res[i]=debit-amt_unt
+    # return res
     _columns = {
         'name': fields.char('Description', size=255, required=True,
                             readonly=False),
@@ -454,8 +455,8 @@ class bank_statement_imported_lines(osv.Model):
     }
 
     # def explode_aml(self,cr,uid,ids,,context=None):
-        # if context is None:
-            # context={}
+    # if context is None:
+    # context={}
     def change_account(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
@@ -550,14 +551,14 @@ class bank_statement_imported_lines(osv.Model):
                                     (account_move_line_obj.copy(
                                         cr, uid, aml.id, {
                                             'partner_id': aml_id.partner_id and
-                                    aml_id.partner_id.id,
+                                            aml_id.partner_id.id,
                                             '%s' % (aml.debit > 0 and
                                                 'debit' or aml.credit > 0 and
                                                 'credit'):
-                                    (aml_id.reconcile_partial_id and
-                                     aml_id.invoice and
-                                     aml_id.invoice.residual or
-                                     aml_id[aml.debit and
+                                            (aml_id.reconcile_partial_id and
+                                                aml_id.invoice and
+                                                aml_id.invoice.residual or
+                                                aml_id[aml.debit and
                                             'credit' or 'debit'])}),
                                      aml_id.id))
 
@@ -569,7 +570,7 @@ class bank_statement_imported_lines(osv.Model):
                                     (account_move_line_obj.copy(
                                         cr, uid, aml.id, {
                                             'partner_id': aml_id.partner_id and
-                                    aml_id.partner_id.id,
+                                            aml_id.partner_id.id,
                                             '%s' % (aml.debit > 0 and
                                                 'debit' or aml.credit > 0 and
                                                 'credit'): total}),

@@ -1,2 +1,2 @@
-import account_journal
-import account_period
+from . import account_journal
+from . import account_period

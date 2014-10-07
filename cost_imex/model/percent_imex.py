@@ -28,10 +28,11 @@
 from openerp.osv import fields, osv
 
 import time
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class percent_imex(osv.Model):
+
     """ """
 
     _name = 'percent.imex'
@@ -43,11 +44,11 @@ class percent_imex(osv.Model):
         'total_with_flete': fields.float('Total with Flete',
                  digits_compute=dp.get_precision(
                      'Cost Imex'),
-                 help='Compute total with flete'),
+            help='Compute total with flete'),
         'price_unit_bf_flete': fields.float('Price Unit before Flete',
                 digits_compute=dp.get_precision(
                     'Cost Imex'),
-                help='Price Unit compute before Flete'),
+            help='Price Unit compute before Flete'),
         'tax_base': fields.float('Tax Base',
                  digits_compute=dp.get_precision('Cost Imex'),
                  help='Tax base is total + currency '),
@@ -57,7 +58,7 @@ class percent_imex(osv.Model):
         'total_national_expense': fields.float('Total national spending',
                    digits_compute=dp.get_precision(
                        'Cost Imex'),
-                   help='Sum of all taxes calculated'),
+            help='Sum of all taxes calculated'),
         'cost_unit': fields.float('Cost Unit',
                   digits_compute=dp.get_precision('Cost Imex'),
                   help='Cost unit comput betewen Total national\
@@ -65,7 +66,7 @@ class percent_imex(osv.Model):
         'cost_unit_total': fields.float('Cost Unit Total',
                 digits_compute=dp.get_precision(
                     'Cost Imex'),
-                help='Compute of cost with cost unit'),
+            help='Compute of cost with cost unit'),
         'cost_qty': fields.float('Total',
                  digits_compute=dp.get_precision('Cost Imex'),
                  help='Compute betewen  Cost unit total ant quantity in the line'),
@@ -74,6 +75,7 @@ class percent_imex(osv.Model):
 
 
 class percent_imex_line(osv.Model):
+
     """ """
 
     _name = 'percent.imex.line'
@@ -94,6 +96,7 @@ class percent_imex_line(osv.Model):
 
 
 class national_special_tax(osv.Model):
+
     """ """
 
     _name = 'national.special.tax'

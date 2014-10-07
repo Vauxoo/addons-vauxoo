@@ -33,11 +33,11 @@ Fiscal Report For Venezuela
 '''
 
 import time
-from report import report_sxw
-import pooler
+from openerp.report import report_sxw
 
 
 class trial_c(report_sxw.rml_parse):
+
     '''
     Book generates purchase and sale
     '''
@@ -71,8 +71,8 @@ class trial_c(report_sxw.rml_parse):
             'partner_id', '=', idp), ('type', '=', 'invoice')])
         if addr_ids:
             addr = addr_obj.browse(self.cr, self.uid, addr_ids[0])
-            addr_inv = (addr.street or '')+' '+(addr.street2 or '')+' '+(addr.zip or '') + ' '+(
-                addr.city or '') + ' ' + (addr.country_id and addr.country_id.name or '') + ', TELF.:'+(addr.phone or '')
+            addr_inv = (addr.street or '') + ' ' + (addr.street2 or '') + ' ' + (addr.zip or '') + ' ' + (
+                addr.city or '') + ' ' + (addr.country_id and addr.country_id.name or '') + ', TELF.:' + (addr.phone or '')
         return addr_inv
 
     def _get_rif(self, vat=''):
@@ -162,7 +162,7 @@ class trial_c(report_sxw.rml_parse):
                 cond = ' and user_id=%s and partner_id=%s and cat_id=%s' % (
                     form['user_res_id'], form['partner_res_id'], form['cat_res_id'])
 
-        cond = valor and ' and '+vis[1]+'=%s' % valor or cond
+        cond = valor and ' and ' + vis[1] + '=%s' % valor or cond
 
         history = []
         for i in range(4):
@@ -178,7 +178,7 @@ class trial_c(report_sxw.rml_parse):
                         group by %s,p_uom_c_id""" % (vis[1], vis[2], form[str(i)]['start'], form[str(i)]['stop'], cond, vis[3]))
 
             t = self.cr.fetchall()
-            field_str = 'id,'+vis[2]+',slc,sps,sqc,uda'
+            field_str = 'id,' + vis[2] + ',slc,sps,sqc,uda'
             field_lst = field_str.split(',')
             d = {}
             for i in t:

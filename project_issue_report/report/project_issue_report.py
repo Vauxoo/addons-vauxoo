@@ -24,11 +24,12 @@
 ##############################################################################
 
 
-from report import report_sxw
+from openerp.report import report_sxw
 import pooler
 
 
 class Late_payments(report_sxw.rml_parse):
+
     def __init__(self, cr, uid, name, context):
         super(Late_payments, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({

@@ -24,7 +24,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 import report
-from report import report_sxw
+from openerp.report import report_sxw
 from report.report_sxw import *
 from report.report_sxw import rml_parse
 import pooler
@@ -56,19 +56,20 @@ def checkBins(*bin):
 
 checkBins("lpr")
 
-    #~ def search_model(self,cr,uid,model)
-        #~ pool = pooler.get_pool(cr.dbname)
-        #~ print_report_obj =pool.get('print.model.reports')
-        #~ file_data =get_file(cr,uid,report_data)
-        #~
-        #~ for pt_re in ptre_obj.browse(cr,uid,[('report_id.id','=',report_xml_id)])
-            #~ print 'ID PRINT REPORT', pt_re
-            #~ if pt_re:
-                #~ self.create_single_pdf(cr, uid, ids, data, report_xml, context)
-            #~ else:
+#~ def search_model(self,cr,uid,model)
+#~ pool = pooler.get_pool(cr.dbname)
+#~ print_report_obj =pool.get('print.model.reports')
+#~ file_data =get_file(cr,uid,report_data)
+#~
+#~ for pt_re in ptre_obj.browse(cr,uid,[('report_id.id','=',report_xml_id)])
+#~ print 'ID PRINT REPORT', pt_re
+#~ if pt_re:
+#~ self.create_single_pdf(cr, uid, ids, data, report_xml, context)
+#~ else:
 
 
 class Printer(object):
+
     def __init__(self, opts={}):
         """initializes the printer with options"""
         self.options = []
@@ -120,7 +121,6 @@ def check_state(cr, uid, print_report, model, id_obj):
 def get_file(cr, uid, report_data):
     file_print = open('mi_archivo.pdf', 'wb+')
     file_print.write(report_data)
-    file_print.close
     return file_print
 
 
@@ -207,7 +207,6 @@ class report_sxw_ext(report_sxw):
         #~ print 'HEADER',self.header
         #~ print 'STORE',self.store
         pool = pooler.get_pool(cr.dbname)
-        company_obj = pool.get('res.company')
 
         ir_obj = pool.get('ir.actions.report.xml')
         report_xml_ids = ir_obj.search(cr, uid,
@@ -221,6 +220,7 @@ class report_sxw_ext(report_sxw):
             report_type = data.get('report_type', 'pdf')
 
             class a(object):
+
                 def __init__(self, *args, **argv):
                     for key, arg in argv.items():
                         setattr(self, key, arg)
@@ -254,7 +254,7 @@ class report_sxw_ext(report_sxw):
         #~ be printed or not
         #~ if context.get('allow',False):
         validate_report(cr, uid, result['brw'], fnct_ret[0], data['id'])
-                #~ self.create_ir_print(cr,uid,report_xml.id,data['id'])
+        #~ self.create_ir_print(cr,uid,report_xml.id,data['id'])
         return fnct_ret
 
     def create_ir_print(self, cr, uid, report_xml_id, id_obj):
@@ -264,7 +264,7 @@ class report_sxw_ext(report_sxw):
             'report_id': report_xml_id,
             'model_id': id_obj,
         }
-        ir_print_id = ir_print_obj.create(cr, uid, res)
+        ir_print_obj.create(cr, uid, res)
 
     def validate_report(self, cr, uid, report_xml_id, id_obj, context):
         pool = pooler.get_pool(cr.dbname)
@@ -348,7 +348,7 @@ class report_sxw_ext(report_sxw):
     def _add_header_bank(self, rml_dom, bank_header):
         head_dom = etree.XML(bank_header)
         for tag in head_dom:
-            found = rml_dom.find('.//'+tag.tag)
+            found = rml_dom.find('.//' + tag.tag)
             if found is not None and len(found):
                 if tag.get('position'):
                     found.append(tag)
@@ -373,7 +373,7 @@ class report_sxw_ext(report_sxw):
                 aname = eval(attach, {'object': obj, 'time': time})
                 result = False
                 if report_xml.attachment_use and aname and context.get('attachment_use', True):
-                    aids = pool.get('ir.attachment').search(cr, uid, [('datas_fname', '=', aname+'.pdf'), (
+                    aids = pool.get('ir.attachment').search(cr, uid, [('datas_fname', '=', aname + '.pdf'), (
                         'res_model', '=', self.table), ('res_id', '=', obj.id)])
                     if aids:
                         brow_rec = pool.get(
@@ -390,7 +390,7 @@ class report_sxw_ext(report_sxw):
                 try:
                     if aname:
                         flag = True  # ya que entra solo la primera vez sin attachment
-                        name = aname+'.'+result[1]
+                        name = aname + '.' + result[1]
                         pool.get('ir.attachment').create(cr, uid, {
                             'name': aname,
                             'datas': base64.encodestring(result[0]),
@@ -404,7 +404,7 @@ class report_sxw_ext(report_sxw):
                 except Exception, e:
                     import traceback
                     import sys
-                    tb_s = reduce(lambda x, y: x+y, traceback.format_exception(
+                    tb_s = reduce(lambda x, y: x + y, traceback.format_exception(
                         sys.exc_type, sys.exc_value, sys.exc_traceback))
                     netsvc.Logger().notifyChannel(
                         'report', netsvc.LOG_ERROR, str(e))

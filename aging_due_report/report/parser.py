@@ -25,12 +25,13 @@
 
 
 import time
-from report import report_sxw
+from openerp.report import report_sxw
 import mx.DateTime
-from report_webkit import webkit_report
+from openerp.addons.report_webkit import webkit_report
 
 
 class aging_parser(report_sxw.rml_parse):
+
     def __init__(self, cr, uid, name, context):
         super(aging_parser, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
@@ -52,7 +53,7 @@ class aging_parser(report_sxw.rml_parse):
             return res
         if currency_id:
             aml_gen = (
-                aml_brw.amount_currency * sign 
+                aml_brw.amount_currency * sign
                 for aml_brw in aml_obj.browse(self.cr, self.uid, ids))
             for i in aml_gen:
                 res += i
@@ -76,7 +77,7 @@ class aging_parser(report_sxw.rml_parse):
             usr_id = ixp['rp_brw'].user_id and ixp[
                 'rp_brw'].user_id.id or False
 
-            if usr_dict.get( (usr_id, ixp['cur_brw'].id), False):
+            if usr_dict.get((usr_id, ixp['cur_brw'].id), False):
                 usr_dict[(usr_id, ixp['cur_brw'].id)]['total'] += ixp['due_total']
             else:
                 usr_dict[(usr_id, ixp['cur_brw'].id)] = {
@@ -88,7 +89,7 @@ class aging_parser(report_sxw.rml_parse):
             if res.get(ixp['cur_brw'].id, False):
                 res[ixp['cur_brw'].id]['total'] += ixp['due_total']
             else:
-                res[ixp['cur_brw'].id] = dict() 
+                res[ixp['cur_brw'].id] = dict()
                 res[ixp['cur_brw'].id]['currency'] = ixp['cur_brw'].name
                 res[ixp['cur_brw'].id]['total'] = ixp['due_total']
                 res[ixp['cur_brw'].id]['vendor'] = []
@@ -165,7 +166,7 @@ class aging_parser(report_sxw.rml_parse):
                     #~ aml_gen = (refund_brw.move_id.line_id for refund_brw in refund_brws)
                     pay_refund_ids = []
                     #~ for aml_brws in aml_gen:
-                        #~ pay_refund_ids += [aml.id for aml in aml_brws if aml.account_id.id == inv_brw.account_id.id]
+                    #~ pay_refund_ids += [aml.id for aml in aml_brws if aml.account_id.id == inv_brw.account_id.id]
 
                     #~  TODO: N/D
                     #~  ACUMULACION DE LOS NOPAGOS, OBTENCION DEL PAGO
@@ -244,7 +245,7 @@ class aging_parser(report_sxw.rml_parse):
         for item in res:
             if res2.get(item['rp_brw'].id, False):
                 res2[item['rp_brw'].id] += [item]
-            else: 
+            else:
                 res2[item['rp_brw'].id] = [item]
 
         res3 = res2.values()
@@ -259,7 +260,7 @@ class aging_parser(report_sxw.rml_parse):
         for item in res:
             if res2.get(item['cur_brw'].id, False):
                 res2[item['cur_brw'].id] += [item]
-            else: 
+            else:
                 res2[item['cur_brw'].id] = [item]
         return res2.values()
 
@@ -272,14 +273,14 @@ class aging_parser(report_sxw.rml_parse):
         for inv_brw in inv_obj.browse(self.cr, self.uid, inv_ids):
             if res.get(inv_brw.currency_id.id, False):
                 res[inv_brw.currency_id.id] += [inv_brw.id]
-            else: 
+            else:
                 res[inv_brw.currency_id.id] = [inv_brw.id]
         return res
 
     def _get_aged_lines(self, rp_brws, span=30,
             date_from=time.strftime('%Y-%m-%d'), inv_type='out_invoice'):
         """
-        @return 
+        @return
         """
         # span = 30
         # spans = [0, 30, 60, 90, 120]
@@ -323,21 +324,21 @@ class aging_parser(report_sxw.rml_parse):
 
         res_total_by_currency = dict()
         res_total = {
-            'type'      : 'total',
-            'not_due'   : 0.00, 
-            '1to30'     : 0.00, 
-            '31to60'    : 0.00, 
-            '61to90'    : 0.00, 
-            '91to120'   : 0.00, 
-            '120+'      : 0.00,
-            'total'      : 0.00,
+            'type': 'total',
+            'not_due': 0.00,
+            '1to30': 0.00,
+            '31to60': 0.00,
+            '61to90': 0.00,
+            '91to120': 0.00,
+            '120+': 0.00,
+            'total': 0.00,
         }
 
         result = []
         for currency_group in ixp_gen:
             for ixp in currency_group:
                 res = {
-                    'type' : 'partner',
+                    'type': 'partner',
                     'rp_brw': ixp['rp_brw'],
                     'cur_brw': ixp['cur_brw'],
                     'not_due': 0.00,
@@ -351,13 +352,13 @@ class aging_parser(report_sxw.rml_parse):
 
                 for inv in ixp['inv_ids']:
                     currency_id = ixp['cur_brw'].id
-                    if not res_total_by_currency.get(currency_id, False): 
+                    if not res_total_by_currency.get(currency_id, False):
                         res_total_by_currency[currency_id] = res_total.copy()
                         res_total_by_currency[currency_id]['cur_brw'] = ixp['cur_brw']
 
                     res['total'] += inv['residual']
                     res_total_by_currency[currency_id]['total'] += inv['residual']
-                    
+
                     if inv['due_days'] <= 0:
                         res['not_due'] += inv['residual']
                         res_total_by_currency[currency_id]['not_due'] += inv['residual']
@@ -382,9 +383,9 @@ class aging_parser(report_sxw.rml_parse):
 
         # calculate the provisions totals over the totals rows
         res_prov = dict()
-        total_col_sum = ['not_due', '1to30', '31to60', '61to90',  '91to120', '120+']
+        total_col_sum = ['not_due', '1to30', '31to60', '61to90', '91to120', '120+']
         for (key, value) in res_total_by_currency.iteritems():
-            res_prov[key]=value.copy()
+            res_prov[key] = value.copy()
 
         for (currency_id, value) in res_prov.iteritems():
             res_prov[currency_id]['type'] = 'provision'

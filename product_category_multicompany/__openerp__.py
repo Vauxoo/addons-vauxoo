@@ -23,25 +23,33 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Product Category Multi-Company",
-    "version": "1.0",
-    "author" : "Vauxoo",
-    "website" : "http://www.vauxoo.com/",
+    "name": "Product Category Multi-Company", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "", 
     "description": """
 Product Category Multi-Company
 ==============================
 Add company_id field in model product.category
-    """,
-    'depends': ['product','base'],
-    'data': [
-        'security/product_category_security.xml',
-        'view/product_category_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "product", 
+        "base"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/product_category_security.xml", 
+        "view/product_category_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

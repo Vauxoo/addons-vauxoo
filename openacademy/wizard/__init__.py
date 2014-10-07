@@ -1,2 +1,2 @@
 # -*- encoding: utf-8 -*-
-import create_attendee_wizard
+from . import create_attendee_wizard

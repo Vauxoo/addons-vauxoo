@@ -3,7 +3,7 @@
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A. (Maria Gabriela Quilarque)          
+#    Coded by: Vauxoo C.A. (Maria Gabriela Quilarque)
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 ##############################################################################
@@ -25,12 +25,13 @@
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
+
 class account_invoice(osv.osv):
 
     _inherit = 'account.invoice'
 
     _columns = {
-        'to_pay': fields.boolean('To Pay',readonly=True, help="This field will be marked when the purchase manager approve this invoice to be paid, and unmarked if the invoice will be blocked to pay"),
+        'to_pay': fields.boolean('To Pay', readonly=True, help="This field will be marked when the purchase manager approve this invoice to be paid, and unmarked if the invoice will be blocked to pay"),
     }
     _defaults = {
         'to_pay': False,
@@ -39,7 +40,7 @@ class account_invoice(osv.osv):
     def copy(self, cr, uid, id, default=None, context=None):
         default = default or {}
         default.update({
-            'to_pay':False,
+            'to_pay': False,
         })
         return super(account_invoice, self).copy(cr, uid, id, default, context)
 
@@ -49,9 +50,9 @@ class account_invoice(osv.osv):
         Added message to messaging block of supplier invoice,
         when approve invoice.
         '''
-    	context = context or {}
+        context = context or {}
 
-        context.update({'default_body':_(u'Invoice Approved to Pay'),
+        context.update({'default_body': _(u'Invoice Approved to Pay'),
                         'default_parent_id': False,
                         'mail_post_autofollow_partner_ids': [],
                         'default_attachment_ids': [],
@@ -60,32 +61,32 @@ class account_invoice(osv.osv):
                         'default_partner_ids': [],
                         'default_model': 'account.invoice',
                         'active_model': 'account.invoice',
-                        'default_res_id': ids and type(ids) is list and \
-                                          ids[0] or ids,
-                        'active_id': ids and type(ids) is list and \
-                                          ids[0] or ids,
-                        'active_ids': ids and type(ids) is list and \
-                                          ids or [ids],
-                        'stop':True,
+                        'default_res_id': ids and type(ids) is list and
+                        ids[0] or ids,
+                        'active_id': ids and type(ids) is list and
+                        ids[0] or ids,
+                        'active_ids': ids and type(ids) is list and
+                        ids or [ids],
+                        'stop': True,
                         })
 
         mail_obj = self.pool.get('mail.compose.message')
         fields = mail_obj.fields_get(cr, uid)
-        mail_dict = mail_obj.default_get(cr, uid,fields.keys() , context)
+        mail_dict = mail_obj.default_get(cr, uid, fields.keys(), context)
         mail_ids = mail_obj.create(cr, uid, mail_dict, context=context)
         mail_obj.send_mail(cr, uid, [mail_ids], context=context)
 
-        return self.write(cr,uid,ids,{'to_pay':True})
+        return self.write(cr, uid, ids, {'to_pay': True})
 
     def payment_disapproves(self, cr, uid, ids, context=None):
         '''
         Mark boolean as False, to Disapprove invoice to be pay.
-        Added message to messaging block of supplier invoice, 
-        when disapproved to Pay.        
+        Added message to messaging block of supplier invoice,
+        when disapproved to Pay.
         '''
         context = context or {}
 
-        context.update({'default_body':_(u'Invoice Disapproved to Pay'),
+        context.update({'default_body': _(u'Invoice Disapproved to Pay'),
                         'default_parent_id': False,
                         'mail_post_autofollow_partner_ids': [],
                         'default_attachment_ids': [],
@@ -94,20 +95,19 @@ class account_invoice(osv.osv):
                         'default_partner_ids': [],
                         'default_model': 'account.invoice',
                         'active_model': 'account.invoice',
-                        'default_res_id': ids and type(ids) is list and \
-                                          ids[0] or ids,
-                        'active_id': ids and type(ids) is list and \
-                                          ids[0] or ids,
-                        'active_ids': ids and type(ids) is list and \
-                                          ids or [ids],
-                        'stop':True,
+                        'default_res_id': ids and type(ids) is list and
+                        ids[0] or ids,
+                        'active_id': ids and type(ids) is list and
+                        ids[0] or ids,
+                        'active_ids': ids and type(ids) is list and
+                        ids or [ids],
+                        'stop': True,
                         })
 
         mail_obj = self.pool.get('mail.compose.message')
         fields = mail_obj.fields_get(cr, uid)
-        mail_dict = mail_obj.default_get(cr, uid,fields.keys() , context)
+        mail_dict = mail_obj.default_get(cr, uid, fields.keys(), context)
         mail_ids = mail_obj.create(cr, uid, mail_dict, context=context)
         mail_obj.send_mail(cr, uid, [mail_ids], context=context)
 
-        return self.write(cr,uid,ids,{'to_pay':False})
-
+        return self.write(cr, uid, ids, {'to_pay': False})

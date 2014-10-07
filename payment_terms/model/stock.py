@@ -29,68 +29,64 @@ from openerp.osv import osv, fields
 
 
 class inherit_picking(osv.Model):
-    
+
     '''Inherit sotck.picking to add the new payment term field sent from previous orders'''
-    
+
     _inherit = 'stock.picking'
-    
+
     _columns = {
-            'payment_terms_id':fields.many2one('payment.terms.partner',
-                                               'Payment Terms',
-                                               help='Select the payment term '
-                                                    'agreed by company for '
-                                                    'this partner'), 
-            }
-
-
+        'payment_terms_id': fields.many2one('payment.terms.partner',
+                                            'Payment Terms',
+                                            help='Select the payment term '
+                                            'agreed by company for '
+                                            'this partner'),
+    }
 
     def _prepare_invoice(self, cr, uid, picking, partner, inv_type,
                          journal_id, context=None):
         """ Builds the dict containing the values for the invoice with the new
             payment term fields
         """
-        res = super(inherit_picking,self)._prepare_invoice(cr, uid, picking,
+        res = super(inherit_picking, self)._prepare_invoice(cr, uid, picking,
                                                            partner, inv_type,
                                                            journal_id,
                                                            context)
         res.update({
-            'payment_terms_id': picking.payment_terms_id and \
-                                    picking.payment_terms_id.id,
+            'payment_terms_id': picking.payment_terms_id and
+            picking.payment_terms_id.id,
         })
-        return res 
-
-
+        return res
 
 
 class inherit_picking_in(osv.Model):
-    
+
     '''Inherit sotck.picking to add the new payment term field sent from previous orders'''
-    
+
     _inherit = 'stock.picking.in'
-    
+
     _columns = {
 
-            'payment_terms_id':fields.many2one('payment.terms.partner',
-                                               'Payment Terms',
-                                               help='Select the payment term '
-                                                    'agreed by company for '
-                                                    'this partner'), 
+        'payment_terms_id': fields.many2one('payment.terms.partner',
+                                            'Payment Terms',
+                                            help='Select the payment term '
+                                            'agreed by company for '
+                                            'this partner'),
 
-            }
+    }
+
 
 class inherit_picking_out(osv.Model):
-    
+
     '''Inherit sotck.picking to add the new payment term field sent from previous orders'''
-    
+
     _inherit = 'stock.picking.out'
-    
+
     _columns = {
 
-            'payment_terms_id':fields.many2one('payment.terms.partner',
-                                               'Payment Terms',
-                                               help='Select the payment term '
-                                                    'agreed by company for '
-                                                    'this partner'), 
+        'payment_terms_id': fields.many2one('payment.terms.partner',
+                                            'Payment Terms',
+                                            help='Select the payment term '
+                                            'agreed by company for '
+                                            'this partner'),
 
-            }
-
+    }

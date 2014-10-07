@@ -68,8 +68,7 @@ class sale_order(osv.Model):
                                                      prod_id, qty=0, uom=False,
                                                      qty_uos=0, uos=False,
                                                      name='',
-                                                     partner_id=
-                                                     order.partner_id.id,
+                                                     partner_id=order.partner_id.id,
                                                      lang=False,
                                                      update_tax=True,
                                                      date_order=False,
@@ -88,7 +87,7 @@ class sale_order(osv.Model):
                     if lines.keys()[lin] in ('tax_id', 'product_uom',
                                              'product_packaging'):
                         field_val = str(lines.keys()[lin])
-                        field_val = field_val+'.id'
+                        field_val = field_val + '.id'
                         data2.append(field_val)
                         vals_many = str(lines[lines.keys()[lin]]).replace(
                             '[', '').replace(']', '').replace('False', '')
@@ -157,5 +156,5 @@ class sale_order(osv.Model):
                CSV VS System in the following products and fields:''')
         msg += '\n %s ' % (pmsg)
         msg2 = tools.ustr(pmsg)
-        msg = tools.ustr(msg)+'%s ' % (msg2)
+        msg = tools.ustr(msg) + '%s ' % (msg2)
         return msg

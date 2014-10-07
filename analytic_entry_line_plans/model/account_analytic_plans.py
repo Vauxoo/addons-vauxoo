@@ -26,6 +26,7 @@
 
 from openerp.osv import fields, osv
 
+
 class account_analytic_line(osv.Model):
 
     _inherit = 'account.analytic.line'
@@ -33,6 +34,7 @@ class account_analytic_line(osv.Model):
     _columns = {
         'analytics_id': fields.many2one('account.analytic.plan.instance', 'Analytic Distribution'),
     }
+
 
 class account_move_line(osv.osv):
 
@@ -43,13 +45,13 @@ class account_move_line(osv.osv):
             context = {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
-        res = super(account_move_line, self).create_analytic_lines(cr, uid, ids,context=context)
+        res = super(account_move_line, self).create_analytic_lines(cr, uid, ids, context=context)
 
         analytic_line_obj = self.pool.get('account.analytic.line')
         for move_line in self.browse(cr, uid, ids, context=context):
-           if move_line.analytics_id:
-               for line in move_line.analytic_lines:
-                   analytic_line_obj.write(cr, uid, line.id, {
-                       'analytics_id': move_line.analytics_id.id,
-                       }, context=context)
+            if move_line.analytics_id:
+                for line in move_line.analytic_lines:
+                    analytic_line_obj.write(cr, uid, line.id, {
+                        'analytics_id': move_line.analytics_id.id,
+                    }, context=context)
         return res

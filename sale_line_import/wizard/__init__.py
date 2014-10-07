@@ -24,4 +24,4 @@
 #
 ##############################################################################
 
-import sale_line_import 
+from . import sale_line_import

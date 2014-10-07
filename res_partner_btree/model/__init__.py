@@ -23,4 +23,4 @@
 ##############################################################################
 
 
-import res_partner_btree
+from . import res_partner_btree

@@ -23,5 +23,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import stock
-import stock_partial_move
+from . import stock
+from . import stock_partial_move

@@ -20,13 +20,13 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Wizard of Configure Chart Accounting",
-    "version": "1.0",
-    "author" : "Vauxoo",
-    "category": "Accounting",
-    "website" : "http://www.vauxoo.com/",
-    "description": """ 
+    "name": "Wizard of Configure Chart Accounting", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Accounting", 
+    "description": """
 Configure Chart Accounting:
 ===========================
 
@@ -42,17 +42,22 @@ cuentas no tienen asignadas cuenta padre y estas tienen hijas
 2.- Puedes seleccionar varias cuentas de tipo vista y asignarles una cuenta
 padre que se selecciona en el mismo wizard
 
-    """,
-    'depends': [
-		'account',
-		'group_configurations_account',
-		],
-    'data': [
-        'wizard/set_accounting_wizard_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "account", 
+        "group_configurations_account"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/set_accounting_wizard_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

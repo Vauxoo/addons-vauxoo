@@ -22,33 +22,36 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name" : "Formatos Nota de Entrega y Guia Despacho",
-    "version" : "0.3",
-    "author" : "Vauxoo",
-    "category" : "Localization",
+    "name": "Formatos Nota de Entrega y Guia Despacho", 
+    "version": "0.3", 
+    "author": "Vauxoo", 
+    "category": "Localization", 
     "description": """
     Notas de entrega
-    Guías de despacho según decreto 
+    Guías de despacho según decreto
     0591
     Referencia Legal:
     http://wiki.openerp.org.ve/index.php?title=0591
-    """,
-    "license" : "GPL-3",
-    "depends" : ["stock_valued"],
-    "init_xml" : [],
-    "update_xml" : [
-        'stock_valued_sequence.xml',
-        'wizard/wiz_picking_valued.xml',
-        'stock_valued_view.xml',
-        'stock_valued_report.xml',
-                   ],
-    "active": False,
-    "installable": False,
-    "website": "http://vauxoo.com",
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "GPL-3", 
+    "depends": [
+        "stock_valued"
+    ], 
+    "demo": [], 
+    "data": [
+        "stock_valued_sequence.xml", 
+        "wizard/wiz_picking_valued.xml", 
+        "stock_valued_view.xml", 
+        "stock_valued_report.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": False, 
+    "auto_install": False, 
+    "active": False
 }
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

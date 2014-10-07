@@ -23,7 +23,7 @@
 
 
 import time
-from report import report_sxw
+from openerp.report import report_sxw
 from openerp.tools.translate import _
 
 from account.report import common_report_header
@@ -49,7 +49,7 @@ class ledger_report(report_sxw.rml_parse, common_report_header.common_report_hea
         self.init_balance = data['form']['initial_balance']
         self.display_account = data['form']['display_account']
         self.target_move = data['form'].get('target_move', 'all')
-        ## Added partner_id
+        # Added partner_id
         self.partner_id = data['form']['partner_id']
         self.query += self.partner_id and (
             " AND l.partner_id IN (%s) " % (self.partner_id)) or ""
@@ -219,7 +219,7 @@ class ledger_report(report_sxw.rml_parse, common_report_header.common_report_hea
         account_sum = 0.0
         for l in res:
             l['move'] = l['move_name'] != '/' and l[
-                'move_name'] or ('*'+str(l['mmove_id']))
+                'move_name'] or ('*' + str(l['mmove_id']))
             l['partner'] = l['partner_name'] or ''
             account_sum += l['debit'] - l['credit']
             l['progress'] = account_sum

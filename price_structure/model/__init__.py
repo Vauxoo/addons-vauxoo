@@ -1,3 +1,3 @@
-import product_product
-import product_pricelist
-import sale
+from . import product_product
+from . import product_pricelist
+from . import sale

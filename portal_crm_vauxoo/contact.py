@@ -28,6 +28,7 @@ _logger = logging.getLogger(__name__)
 
 
 class crm_contact_us(osv.TransientModel):
+
     """ Create new leads through the "contact us" form """
 
     _name = 'portal_crm.crm_contact_us'

@@ -26,7 +26,6 @@
 from openerp.osv import osv, fields
 
 
-
 class account_invoice(osv.Model):
 
     _inherit = 'account.invoice'
@@ -87,4 +86,3 @@ class account_invoice_line(osv.Model):
                 to this invoice"),
 
     }
-

@@ -23,25 +23,30 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
-{
-    "name": "Ledger Report",
-    "version": "0.1",
-    "depends": ["base","account"],
-    "author": "Vauxoo",
-    "description" : """
- """,
-    "website": "http://vauxoo.com",
-    "category": "Generic Modules/Accounting",
-    "init_xml": [
-    ],
-    "demo_xml": [
-    ],
-    "update_xml": [
-        'reports.xml',
-        'wizard/ledger_report_view.xml',
-    ],
-    "active": False,
-    "installable": True,
-}
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+{
+    "name": "Ledger Report", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Accounting", 
+    "description": """
+ """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "reports.xml", 
+        "wizard/ledger_report_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
+}

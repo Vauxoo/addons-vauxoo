@@ -27,7 +27,9 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 from openerp.addons.product import product as Product
 
+
 class stock_tracking(osv.Model):
+
     """ this class adds three fields for can have packing control on delivery orders lines
     """
     _inherit = 'stock.tracking'

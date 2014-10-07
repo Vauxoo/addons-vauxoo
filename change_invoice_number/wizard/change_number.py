@@ -27,7 +27,6 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-
 class change_number(osv.TransientModel):
 
     _name = 'change.number'

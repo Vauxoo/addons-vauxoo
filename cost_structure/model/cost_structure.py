@@ -25,7 +25,7 @@
 
 from openerp.osv import osv, fields
 
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class cost_structure(osv.Model):
@@ -101,11 +101,9 @@ class cost_structure(osv.Model):
     _rec_name = 'description'
 
     _defaults = {
-        'company_id': lambda s, cr, uid, c: s.pool.get('res.company').\
-                    _company_default_get(cr, uid, 'cost.structure', context=c),
+        'company_id': lambda s, cr, uid, c: s.pool.get('res.company').
+        _company_default_get(cr, uid, 'cost.structure', context=c),
     }
-
-
 
 
 class method_price(osv.Model):
@@ -174,8 +172,8 @@ class method_price(osv.Model):
     _rec_name = 'unit_price'
 
     _defaults = {
-        'company_id': lambda s, cr, uid, c: s.pool.get('res.company').\
-                    _company_default_get(cr, uid, 'cost.structure', context=c),
+        'company_id': lambda s, cr, uid, c: s.pool.get('res.company').
+        _company_default_get(cr, uid, 'cost.structure', context=c),
 
     }
     _order = 'sequence'
@@ -193,12 +191,10 @@ class method_price(osv.Model):
             cost_brw = cost_obj.browse(
                 cr, uid, cost_structure_id, context=context)
             margin_reference and cost_brw.cost_ult and\
-            res['value'].update({'unit_price': (
-                ((float(margin_reference)/100) * cost_brw.cost_ult) +\
+                res['value'].update({'unit_price': (
+                    ((float(margin_reference) / 100) * cost_brw.cost_ult) +
                     cost_brw.cost_ult)})
             unit_price and cost_brw.cost_ult\
-            and res['value'].update({'margin_reference':
-                    ((unit_price - cost_brw.cost_ult)/cost_brw.cost_ult)*100})
+                and res['value'].update({'margin_reference':
+                    ((unit_price - cost_brw.cost_ult) / cost_brw.cost_ult) * 100})
         return res
-
-

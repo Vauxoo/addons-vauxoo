@@ -144,7 +144,7 @@ class mrp_consume(osv.TransientModel):
         for consume_line in consume_line_list:
             consume_line.update({
                 'quantity': sheduled_qty[consume_line['product_id']]
-                * wol_brw.percentage/100.0})
+                * wol_brw.percentage / 100.0})
         return consume_line_list
 
     def action_active_lot(self, cr, uid, ids, context=None):
@@ -183,7 +183,6 @@ class mrp_consume(osv.TransientModel):
         #~ refresh kaban view
         view_id, search_view_id, action_help = \
             self._get_kanban_view_data(cr, uid, context=context)
-
 
         return {
             'view_id': view_id,

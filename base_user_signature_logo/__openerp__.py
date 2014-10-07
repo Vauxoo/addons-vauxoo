@@ -23,24 +23,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "Add signature logo in user",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Vauxoo",
-    "description" : """This module add in user a field to insert signature_logo
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
-            "base",
-        ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        'res_users_view.xml'
-    ],
-    "installable" : True,
-    "active" : False,
+    "name": "Add signature logo in user", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Vauxoo", 
+    "description": """This module add in user a field to insert signature_logo
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "base"
+    ], 
+    "demo": [], 
+    "data": [
+        "res_users_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

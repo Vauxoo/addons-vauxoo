@@ -20,31 +20,35 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Customs Rate Management",
-    "version": "1.0",
+    "name": "Customs Rate Management", 
+    "version": "1.0", 
+    "author": "Cubic ERP & Vauxoo", 
+    "category": "Finance", 
     "description": """
 Management of Customs Rate
 
 Gestión de Customs Rate (Nandina y subpartida nacional)
 
-    """,
-    "author": "Cubic ERP & Vauxoo",
-    "website": "http://cubicERP.com & http://vauxoo.com",
-    "category": "Finance",
+    """, 
+    "website": "http://cubicERP.com & http://vauxoo.com", 
+    "license": "", 
     "depends": [
-            "product","account"
-            ],
-    "data":[
-    ],
-    "demo_xml": [
-    ],
-    "update_xml": [
-        'security/product_customs_rate_security.xml',
-        'security/ir.model.access.csv',
-        'product_view.xml',
-    ],
-    "active": False,
-    "installable": True,
+        "product", 
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/product_customs_rate_security.xml", 
+        "security/ir.model.access.csv", 
+        "product_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 import time
-from report import report_sxw
-
+from openerp.report import report_sxw
 
 
 class crm_report_profile(report_sxw.rml_parse):
+
     """
     Description about crm_report_profile
     """

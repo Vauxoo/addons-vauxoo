@@ -24,29 +24,33 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "user_wzd",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Generic Modules/Human Resources",
+    "name": "user_wzd", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Human Resources", 
     "description": """
 Add wizard for create employee from users
 ===============================================
 
-Module that adds a wizard in res.users model and generated employee from one or many users, only 
+Module that adds a wizard in res.users model and generated employee from one or many users, only
 and only if there is no other record of employee assigned to the user in question.
 
-    """,
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
-    'depends': ['hr'],
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "hr"
+    ], 
+    "demo": [], 
     "data": [
-        "wizard/res_users_view.xml",
-    ],
-    "demo":[],
-    "css": [],
-    "test": [],
-    "installable": True,
-    "active": False,
+        "wizard/res_users_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

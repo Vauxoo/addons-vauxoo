@@ -25,14 +25,15 @@
 ##############################################################################
 from openerp.osv import osv, fields
 
+
 class ir_action_report_xml(osv.Model):
 
     _inherit = "ir.actions.report.xml"
 
     _columns = {
-        'active' : fields.boolean('Active'),
+        'active': fields.boolean('Active'),
         'sequence': fields.integer('Sequence'),
-        'company_id' : fields.many2one('res.company', 'Company'),
+        'company_id': fields.many2one('res.company', 'Company'),
     }
 
     _order = 'sequence'

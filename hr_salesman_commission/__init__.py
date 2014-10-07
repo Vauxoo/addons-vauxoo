@@ -1,1 +1,1 @@
-import hr_salesman_commission
+from . import hr_salesman_commission

@@ -22,8 +22,6 @@
 from openerp.osv import osv, fields
 
 
-
-
 class stock_invoice_onshipping_psm(osv.TransientModel):
 
     _inherit = "stock.invoice.onshipping"
@@ -71,8 +69,7 @@ class stock_invoice_onshipping_psm(osv.TransientModel):
                     cr, uid, [res[r]], context=context)[0]
                 invoice_lines = invoice.invoice_line
                 for invoice_line in invoice_lines:
-                        prod.append(invoice_line.product_id.id)
+                    prod.append(invoice_line.product_id.id)
                 self.drop_duplicate_invoice_lines(
                     cr, uid, invoice.id, list(set(prod)), context=context)
         return res
-

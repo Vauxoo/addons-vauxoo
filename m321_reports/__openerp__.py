@@ -23,22 +23,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
 {
-    "name" : "M321 Reports Instalator",
-    "version" : "0.1",
-    "depends" : ["account","account_accountant"],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "M321 Reports Instalator", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
         This module installs the basic reports and formats for the M321 Companies
-                    """,
-    "website" : "http://www.vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [    ],
-    "demo_xml" : [    ],
-    "update_xml" : [
-                   "m321_report.xml",
-
-
-                    ],
-    "active": False,
-    "installable": True,
+                    """, 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account", 
+        "account_accountant"
+    ], 
+    "demo": [], 
+    "data": [
+        "m321_report.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

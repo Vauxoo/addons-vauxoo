@@ -1,1 +1,1 @@
-import sign_youtube
+from . import sign_youtube

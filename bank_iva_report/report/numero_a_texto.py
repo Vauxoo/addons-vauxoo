@@ -103,16 +103,16 @@ def __convertNumber(n):
     if(n == '100'):
         output = "CIEN "
     elif(n[0] != '0'):
-        output = CENTENAS[int(n[0])-1]
+        output = CENTENAS[int(n[0]) - 1]
 
     k = int(n[1:])
     if(k <= 20):
         output += UNIDADES[k]
     else:
         if((k > 30) & (n[2] != '0')):
-            output += '%sY %s' % (DECENAS[int(n[1])-2], UNIDADES[int(n[2])])
+            output += '%sY %s' % (DECENAS[int(n[1]) - 2], UNIDADES[int(n[2])])
         else:
-            output += '%s%s' % (DECENAS[int(n[1])-2], UNIDADES[int(n[2])])
+            output += '%s%s' % (DECENAS[int(n[1]) - 2], UNIDADES[int(n[2])])
 
     return output
 """

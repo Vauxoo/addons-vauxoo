@@ -33,13 +33,13 @@ class account_invoice(osv.Model):
 
     #~
     #~ def action_cancel_draft(self, cr, uid, ids, *args):
-        #~
-        #~ wf_service = netsvc.LocalService("workflow")
-        #~ res = super(account_invoice, self).action_cancel_draft(cr, uid, ids, ())
-        #~ for i in self.browse(cr,uid,ids,context={}):
-            #~ if i.islr_wh_doc_id:
-                #~ wf_service.trg_validate(uid, 'islr.wh.doc',i.islr_wh_doc_id.id, 'act_draft', cr)
-        #~ return res
+    #~
+    #~ wf_service = netsvc.LocalService("workflow")
+    #~ res = super(account_invoice, self).action_cancel_draft(cr, uid, ids, ())
+    #~ for i in self.browse(cr,uid,ids,context={}):
+    #~ if i.islr_wh_doc_id:
+    #~ wf_service.trg_validate(uid, 'islr.wh.doc',i.islr_wh_doc_id.id, 'act_draft', cr)
+    #~ return res
 
     def action_number(self, cr, uid, ids, context=None):
         '''
@@ -76,7 +76,7 @@ class account_invoice(osv.Model):
         if invo_brw.islr_wh_doc_id:
             islr_obj.write(cr, uid, [invo_brw.islr_wh_doc_id.id], {
                            'prev_state': invo_brw.islr_wh_doc_id.state},
-                            context=context)
+                           context=context)
         res = super(account_invoice, self).invoice_cancel(
             cr, uid, ids, context=context)
 

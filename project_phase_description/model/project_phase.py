@@ -27,11 +27,11 @@ from openerp.osv import osv, fields
 
 class project_phase(osv.Model):
     _inherit = 'project.phase'
-    
+
     _columns = {
-    'description':fields.text('Description'),
+        'description': fields.text('Description'),
     }
-    
+
+
 class project_task(osv.Model):
     _inherit = 'project.task'
-

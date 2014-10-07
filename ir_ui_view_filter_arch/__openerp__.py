@@ -20,22 +20,28 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
+#"license" : "AGPL-3",
 {
-    "name" : "Add field arch in view search ir.ui.view model",
-    "version" : "1.0",
-    "depends" : ['base'],
-    "author" : "Vauxoo",
-    #"license" : "AGPL-3",
-    "description" : """This module Add Add field arch in view search ir.ui.view model
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [],
-    "update_xml" : ['ir_ui_view.xml',
-    ],
-    "active": False,
-    "installable": True,
+    "name": "Add field arch in view search ir.ui.view model", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """This module Add Add field arch in view search ir.ui.view model
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base"
+    ], 
+    "demo": [], 
+    "data": [
+        "ir_ui_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-

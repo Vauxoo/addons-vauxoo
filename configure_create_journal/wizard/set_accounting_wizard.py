@@ -26,12 +26,13 @@
 
 from openerp.osv import fields, osv
 
+
 class configure_create_journal(osv.osv_memory):
     _name = 'configure.create.journal'
-    
-    _columns={
+
+    _columns = {
         'parent_id': fields.many2one('account.account', 'Parent',
-            ondelete='cascade', domain=[('type','=','view')], required=True),
+            ondelete='cascade', domain=[('type', '=', 'view')], required=True),
         'user_type': fields.many2one('account.account.type', 'User Type',
             required=True)
     }
@@ -44,7 +45,7 @@ class configure_create_journal(osv.osv_memory):
         company_user = self.pool.get('res.company')._company_default_get(cr,
                 uid, 'configure.create.journal', context=context)
         cr.execute("""
-            SELECT 
+            SELECT
                 nivel.id,
                 nivel.name,
                 nivel.type,
@@ -58,7 +59,7 @@ class configure_create_journal(osv.osv_memory):
                     ORDER BY parent.parent_left ) nivel
                 WHERE nivel.id<> %s
                 AND nivel.type <> 'view'
-              """,(form.parent_id.id, form.parent_id.id,))
+              """, (form.parent_id.id, form.parent_id.id,))
         dat = cr.dictfetchall()
         code_journal = 0
         for acc_j in dat:
@@ -66,7 +67,7 @@ class configure_create_journal(osv.osv_memory):
             account_obj.write(cr, uid, acc_j['id'], {
                 'type': 'liquidity',
                 'user_type': form.user_type.id,
-                } )
+            })
             journal_id = journal_obj.create(cr, uid, {
                 'name': acc_j['name'],
                 'code': 'BN%s' % code_journal,
@@ -75,8 +76,7 @@ class configure_create_journal(osv.osv_memory):
                 'default_credit_account_id': acc_j['id'],
             })
             journal_bwr = journal_obj.browse(cr, uid, journal_id,
-                context=context )
+                context=context)
             sequence_obj.write(cr, uid, journal_bwr.sequence_id.id,
                 {'company_id': company_user})
         return False
-    

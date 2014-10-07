@@ -21,5 +21,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-import email_template
-import mail_compose_message
+from . import email_template
+from . import mail_compose_message

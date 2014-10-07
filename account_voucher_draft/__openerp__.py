@@ -22,20 +22,18 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'Account Voucher Draft',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': '',
-    'description': '''
+    "name": "Account Voucher Draft", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "", 
+    "description": """
 Account Voucher Draft
 =====================
 
 This module modify the button Pay inside the wizard used to pay an HR Expense
 (using an account voucher). This change is made to do not immediately change
-the HR Expene to done state. 
+the HR Expene to done state.
 
 Notes
 -----
@@ -44,19 +42,22 @@ Notes
   a account voucher related to the current hr expense document.
 - the ``hr_expense_replenishment`` module can be found at lp:addons-vauxoo.
 
-''',
-    'depends': [
-        'account_voucher',
-        'hr_expense_replenishment',
-        ],
-    'data': [
-        'view/hr_expense_expense_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'qweb': [],
-    'js': [],
-    'css': [],
-    'active': False,
-    'installable': True,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "account_voucher", 
+        "hr_expense_replenishment"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/hr_expense_expense_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

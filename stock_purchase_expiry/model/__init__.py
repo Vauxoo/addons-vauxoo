@@ -23,5 +23,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import purchase
-import stock
+from . import purchase
+from . import stock

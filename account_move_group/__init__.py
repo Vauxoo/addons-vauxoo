@@ -23,5 +23,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import wizard
-import account_move_line
+from . import wizard
+from . import account_move_line

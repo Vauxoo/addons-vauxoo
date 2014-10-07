@@ -32,6 +32,7 @@ import datetime
 
 
 class cancel_orders(osv.TransientModel):
+
     """
     M321 Customizations to cancel orders that are confirmed but are not paid
     """
@@ -79,17 +80,17 @@ class cancel_orders(osv.TransientModel):
                     pick = [False for pick in sale.picking_ids
                             if pick and pick.state in ('confirmed', 'done')]
                     invoice = [False for invoice in sale.invoice_ids
-                                if invoice and invoice.state in
-                                ('paid', 'open')]
+                               if invoice and invoice.state in
+                               ('paid', 'open')]
                     all(pick) and all(invoice) and sale_ids.append(sale.id)
 
             sale_ids and picking_obj.action_cancel(cr, uid,
                 [d.id for i in sale_obj.browse(
-                cr, uid, sale_ids, context=context) for d in i.picking_ids],
+                    cr, uid, sale_ids, context=context) for d in i.picking_ids],
                 context=context)
             sale_ids and invoice_obj.action_cancel(cr, uid,
                 [d.id for i in sale_obj.browse(
-                cr, uid, sale_ids, context=context) for d in i.invoice_ids],)
+                    cr, uid, sale_ids, context=context) for d in i.invoice_ids],)
             sale_ids and sale_obj.action_cancel(
                 cr, uid, sale_ids, context=context)
 

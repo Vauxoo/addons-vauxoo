@@ -74,16 +74,16 @@ class report_multicompany(osv.Model):
             assigns in the sequence sequence minimal and subtract one
         '''
         if context is None:
-            context={}
-            
+            context = {}
+
         if sequence is False:
-            sequence=10
+            sequence = 10
         actions_obj = self.pool.get('ir.actions.report.xml')
         ir_model_obj = self.pool.get('ir.model')
         model_id = False
         report_data = actions_obj.browse(cr, uid, report_id)
         sequence_min_id = self.search(
-            cr, uid, [('model', '=', report_data.model),('company_id','=',company_id)], limit=1) or False
+            cr, uid, [('model', '=', report_data.model), ('company_id', '=', company_id)], limit=1) or False
         if sequence_min_id:
             sequence_min = self.browse(
                 cr, uid, sequence_min_id[0]).sequence - 10
@@ -92,14 +92,14 @@ class report_multicompany(osv.Model):
 
         record_id = self.search(cr, uid, [('model', '=', report_data.model),
                                           ('report_id', '=', report_id),
-                                          ('company_id','=',company_id)])
+                                          ('company_id', '=', company_id)])
         if record_id:
             self.write(cr, uid, record_id, {'sequence': sequence_min})
         else:
             model_ids = ir_model_obj.search(
                 cr, uid, [('model', '=', report_data.model)])
             model_id = model_ids and model_ids[0] or False
-            
+
             data_create = {'company_id': company_id,
                            'report_id': report_id,
                            'report_name': report_data.report_name,

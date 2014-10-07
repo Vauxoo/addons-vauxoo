@@ -27,9 +27,9 @@ class survey(osv.Model):
     _inherit = 'survey'
 
     def fill_survey(self, cr, uid, ids, context=None):
-        res = super(survey,self).fill_survey(cr, uid, ids, context)
-        res.update( {
+        res = super(survey, self).fill_survey(cr, uid, ids, context)
+        res.update({
             'target': 'inline',
-            })
+        })
         return res
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

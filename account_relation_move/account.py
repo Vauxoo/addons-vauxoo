@@ -59,8 +59,8 @@ class stock_move(osv.Model):
     """
 
     def _create_account_move_line(self, cr, uid, move, src_account_id,
-        dest_account_id, reference_amount, reference_currency_id,
-        context=None):
+            dest_account_id, reference_amount, reference_currency_id,
+            context=None):
         res = super(stock_move, self)._create_account_move_line(
             cr, uid, move, src_account_id, dest_account_id, reference_amount,
             reference_currency_id, context=context)

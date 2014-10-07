@@ -31,6 +31,7 @@ class account_move_line(osv.Model):
     '''
     Check that the entry balance is greater than zero
     '''
+
     def _update_check_nonzero(self, cr, uid, ids, context=None):
         writeoff = 0.0
         for line in self.browse(cr, uid, ids, context=context):

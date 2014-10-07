@@ -21,7 +21,7 @@
 ##############################################################################
 from openerp.osv import fields, osv
 
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class baremo_book(osv.Model):
@@ -43,6 +43,7 @@ class baremo_book(osv.Model):
 
 
 class baremo(osv.Model):
+
     """
     OpenERP Model : baremo
     """
@@ -66,6 +67,7 @@ class baremo(osv.Model):
 
 
 class baremo_discount(osv.Model):
+
     """
     OpenERP Model : baremo_discount
     """
@@ -78,7 +80,7 @@ class baremo_discount(osv.Model):
         'porc_disc': fields.float('% Dcto',
                   digits_compute=dp.get_precision(
                       'Commission'),
-                  help="% de Descuento por producto", required=True),
+            help="% de Descuento por producto", required=True),
         'porc_com': fields.float('% Com.',
                  digits_compute=dp.get_precision('Commission'),
                  help="% de Comision @ porcentaje Descuento", required=True),

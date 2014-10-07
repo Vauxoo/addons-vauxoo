@@ -27,7 +27,6 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-
 class sale_order_line(osv.Model):
 
     def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
@@ -57,22 +56,22 @@ class sale_order_line(osv.Model):
                         packaging=packaging, fiscal_position=fiscal_position,
                         flag=flag, context=context)
         res.get('value', False) and product_brw and\
-        product_brw.uom_id and\
-        res.get('value', False).update({'product_uom': product_brw.uom_id.id})
+            product_brw.uom_id and\
+            res.get('value', False).update({'product_uom': product_brw.uom_id.id})
         if context.get('price_change', False):
             price = price_obj.price_get(cr, uid, [context.get(
                 'price_change', False)], product, qty, context=context)
             res.get('value', {}).update({'price_unit': round(
                 price.get(context.get('price_change', False)), 2)})
         res.get('value', False) and\
-        product_brw and product_brw.categ_id and\
-        res.get('value', False).update({'categ_id': product_brw.categ_id.id})
+            product_brw and product_brw.categ_id and\
+            res.get('value', False).update({'categ_id': product_brw.categ_id.id})
         res.get('value', False) and 'price_unit' in res.get(
             'value', False) and res['value'].pop('price_unit')
         return res
 
     def price_unit(self, cr, uid, ids, price_list, product_id, qty,
-                    context=None):
+                   context=None):
         '''
         Calculating the amount of model _compute_price method product.uom
         '''
@@ -118,21 +117,21 @@ class sale_order(osv.Model):
         context.update({'query': False})
         pricelist_obj = self.pool.get('product.pricelist')
         for order in len(ids) == 1 and\
-        self.browse(cr, uid, ids, context=context) or []:
+                self.browse(cr, uid, ids, context=context) or []:
             for line in order.order_line:
                 price_compute = line.product_id and [pricelist_obj.price_get(
                     cr, uid, [i.price_list_id and i.price_list_id.id],
                     line.product_id.id, line.product_uom_qty,
-                    context=context).get(i.price_list_id.id)\
-                    for i in line.product_id.price_list_item_ids or\
+                    context=context).get(i.price_list_id.id)
+                    for i in line.product_id.price_list_item_ids or
                     line.product_id.category_item_ids]
 
                 property_cost_structure = line and line.product_id and\
-                line.product_id.property_cost_structure and\
-                line.product_id.property_cost_structure.id or False
+                    line.product_id.property_cost_structure and\
+                    line.product_id.property_cost_structure.id or False
                 if property_cost_structure and\
-                len(price_compute) == len([i for i in price_compute\
-                                        if round(line.price_unit, 2) <\
+                    len(price_compute) == len([i for i in price_compute
+                                        if round(line.price_unit, 2) <
                                         round(i, 2)]):
                     product.append(
                         u'Intenta vender el producto %s a un precio menor al\
@@ -140,7 +139,7 @@ class sale_order(osv.Model):
                     res[order.id] = {'status_bool': True}
 
                 elif property_cost_structure and\
-                len(price_compute) == len([i for i in price_compute\
+                    len(price_compute) == len([i for i in price_compute
                 if round(line.price_unit, 2) > round(i, 2)]):
                     product.append(
                         u'Intenta vender el producto %s a un precio mayor al\
@@ -149,7 +148,7 @@ class sale_order(osv.Model):
 
                 elif not property_cost_structure:
                     product.append(
-                        u'El producto %s no tiene una estructura de costo'\
+                        u'El producto %s no tiene una estructura de costo'
                         % line.product_id.name)
                     res[order.id] = {'status_bool': True}
 
@@ -189,24 +188,24 @@ class sale_order(osv.Model):
         pricelist_obj = self.pool.get('product.pricelist')
         for line in len(ids) == 1 and sale_brw.order_line or []:
             property_cost_structure = line and line.product_id and\
-            line.product_id.property_cost_structure and\
-            line.product_id.property_cost_structure.id or False
+                line.product_id.property_cost_structure and\
+                line.product_id.property_cost_structure.id or False
             price_compute = line.product_id and [pricelist_obj.price_get(
                 cr, uid, [i.price_list_id and i.price_list_id.id],
                 line.product_id.id, line.product_uom_qty,
-                context=context).get(i.price_list_id.id)\
-                for i in line.product_id.price_list_item_ids or\
+                context=context).get(i.price_list_id.id)
+                for i in line.product_id.price_list_item_ids or
                 line.product_id.category_item_ids]
 
             if property_cost_structure and\
-            len(price_compute) == len([i for i in price_compute\
+                len(price_compute) == len([i for i in price_compute
                                 if round(line.price_unit, 2) < round(i, 2)]):
                 product.append(
                     u'Intenta vender el producto %s a un precio menor\
                     al estimado para su venta' % line.product_id.name)
 
             elif property_cost_structure and\
-            len(price_compute) == len([i for i in price_compute\
+                len(price_compute) == len([i for i in price_compute
             if round(line.price_unit, 2) > round(i, 2)]):
                 product.append(
                     u'Intenta vender el producto %s a un precio mayor\
@@ -214,7 +213,7 @@ class sale_order(osv.Model):
 
             elif not property_cost_structure:
                 product.append(
-                    u'The product %s has not a cost structure' %\
+                    u'The product %s has not a cost structure' %
                     line.product_id.name)
 
         if len(product) > 0:

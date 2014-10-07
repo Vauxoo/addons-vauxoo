@@ -1,2 +1,2 @@
-import cancel_order
-import supplier_asigner
+from . import cancel_order
+from . import supplier_asigner

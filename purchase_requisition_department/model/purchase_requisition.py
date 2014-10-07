@@ -25,6 +25,7 @@
 
 from openerp.osv import osv, fields
 
+
 class purchase_requisition(osv.Model):
 
     _inherit = 'purchase.requisition'
@@ -50,9 +51,9 @@ class purchase_requisition(osv.Model):
             res.update({'value': {'department_id': department_id}})
         return res
 
-    #def fields_view_get(self, cr, uid, view_id=None, view_type='form',
+    # def fields_view_get(self, cr, uid, view_id=None, view_type='form',
     #                    context=None, toolbar=False, submenu=False):
-    #    """ 
+    #    """
     #    Filter the department by the ones the current user belongs.
     #    """
     #    context = context or {}
@@ -68,9 +69,9 @@ class purchase_requisition(osv.Model):
     #    return res
 
     # TODO: This filter method is not working.
-    #def fields_view_get(self, cr, uid, view_id=None, view_type='form',
+    # def fields_view_get(self, cr, uid, view_id=None, view_type='form',
     #                    context=None, toolbar=False, submenu=False):
-    #    """ 
+    #    """
     #    Filter the department by the ones the user_id.employee_ids belongs.
     #    """
     #    context = context or {}
@@ -92,4 +93,3 @@ class purchase_requisition(osv.Model):
     #        res['fields']['department_id']['domain'] = [('id', 'in', dep_ids)]
 
     #    return res
-

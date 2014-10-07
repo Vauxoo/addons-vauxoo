@@ -74,8 +74,8 @@ class trial_cost(osv.TransientModel):
         for i in range(4)[::-1]:
             stop = start - RelativeDateTime(days=period_length)
             res[str(i)] = {
-                'name': str((4-(i+1))*period_length) +
-                '-' + str((4-i)*period_length),
+                'name': str((4 - (i + 1)) * period_length) +
+                '-' + str((4 - i) * period_length),
 
                 'stop': start.strftime('%Y-%m-%d'),
                 'start': stop.strftime('%Y-%m-%d'),

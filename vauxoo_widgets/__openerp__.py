@@ -18,36 +18,38 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    'name': 'Vauxoo Widgets',
-    'version': '0.1',
-    'category': 'Tools',
-    'complexity': 'easy',
-    'description': """
+    "name": "Vauxoo Widgets", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Tools", 
+    "description": """
 Widgets to customize the openerp views with Qweb extension
 ===========================================================
 If you need add a custom widget in your module you must create it in this
-module and make depend your module of this 
+module and make depend your module of this
 
 
-    """,
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com',
-    'depends': [
-                'portal_home',
-                ],
-    'data': [
-    ],
-    'test': [
-    ],
-    'installable': True,
-    'auto_install': False,
-    'css': [
-        'static/src/css/vauxoo_widget.css'
-    ],
-    'js': [ 'static/src/js/vauxoo_widgets.js' ],
-    'qweb': [ 'static/src/xml/vauxoo_widget.xml' ],
+    """, 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "portal_home"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [
+        "static/src/js/vauxoo_widgets.js"
+    ], 
+    "css": [
+        "static/src/css/vauxoo_widget.css"
+    ], 
+    "qweb": [
+        "static/src/xml/vauxoo_widget.xml"
+    ], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

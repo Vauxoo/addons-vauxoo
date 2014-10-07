@@ -35,12 +35,12 @@ class account_invoice(osv.Model):
 
     #~ def action_cancel_draft(self, cr, uid, ids, *args):
 #~
-        #~ wf_service = netsvc.LocalService("workflow")
-        #~ res = super(account_invoice, self).action_cancel_draft(cr, uid, ids, ())
-        #~ for i in self.browse(cr,uid,ids,context={}):
-            #~ if i.wh_iva_id:
-                #~ wf_service.trg_validate(uid, 'account.wh.iva',i.wh_iva_id.id, 'set_to_draft', cr)
-        #~ return res
+    #~ wf_service = netsvc.LocalService("workflow")
+    #~ res = super(account_invoice, self).action_cancel_draft(cr, uid, ids, ())
+    #~ for i in self.browse(cr,uid,ids,context={}):
+    #~ if i.wh_iva_id:
+    #~ wf_service.trg_validate(uid, 'account.wh.iva',i.wh_iva_id.id, 'set_to_draft', cr)
+    #~ return res
     def action_number(self, cr, uid, ids, context=None):
         '''
         Modified to witholding vat validate
@@ -62,8 +62,8 @@ class account_invoice(osv.Model):
 
                     if not all([False for line in invo_brw.wh_iva_id.wh_lines
                                 if not line.invoice_id.move_id]):
-                            raise osv.except_osv(_('Error'), _(
-                                'One of the bills involved in the vat retention\
+                        raise osv.except_osv(_('Error'), _(
+                            'One of the bills involved in the vat retention\
                                 has not been validated, because it does not\
                                 have an associated retention'))
                     wf_service.trg_validate(

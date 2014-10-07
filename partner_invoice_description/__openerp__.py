@@ -24,22 +24,29 @@
 #
 ##############################################################################
 {
-    "name" : "Partner Invoice Description",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Generic Modules",
-    "description" : """
+    "name": "Partner Invoice Description", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
         Add notes invoice to partner
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : ["account",'stock','sale'
-        ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        "partner_view.xml",
-    ],
-    "installable" : True,
-    "active" : False,
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "account", 
+        "stock", 
+        "sale"
+    ], 
+    "demo": [], 
+    "data": [
+        "partner_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

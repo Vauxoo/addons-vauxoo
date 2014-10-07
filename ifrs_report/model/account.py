@@ -24,9 +24,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import osv
+from openerp.osv import osv
 import mx.DateTime
 import time
+
 
 class account_period(osv.osv):
     _inherit = 'account.period'
@@ -105,7 +106,7 @@ class account_move_line(osv.osv):
             list_analytic_ids = context.get('analytic')
             ids2 = self.pool.get('account.analytic.account').search(cr, uid, [
                                                                     ('parent_id', 'child_of', list_analytic_ids)], context=context)
-            query += 'AND '+obj+'.analytic_account_id in (%s)' % (
+            query += 'AND ' + obj + '.analytic_account_id in (%s)' % (
                 ','.join(map(str, ids2)))
         if context.get('partner_detail', False):
             query += 'AND l.partner_id in (%s)' % (

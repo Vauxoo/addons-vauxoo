@@ -26,9 +26,10 @@
 from openerp.osv import fields, osv
 from openerp import netsvc
 
+
 class hr_payslip(osv.osv):
     _inherit = 'hr.payslip'
-    
+
     def _compute_lines(self, cr, uid, ids, name, args, context=None):
         result = {}
         for payslip in self.browse(cr, uid, ids, context=context):
@@ -47,7 +48,7 @@ class hr_payslip(osv.osv):
             lines = filter(lambda x: x not in src, lines)
             result[payslip.id] = lines
         return result
-    
+
     def _reconciled(self, cr, uid, ids, name, args, context=None):
         res = {}
         wf_service = netsvc.LocalService("workflow")
@@ -56,10 +57,10 @@ class hr_payslip(osv.osv):
             if not res[pay.id] and pay.state == 'paid':
                 wf_service.trg_validate(uid, 'hr.payslip', pay.id, 'open_test', cr)
         return res
-    
+
     def action_done_paid(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'done'}, context=context)    
-            
+        return self.write(cr, uid, ids, {'state': 'done'}, context=context)
+
     def _get_payslip_from_line(self, cr, uid, ids, context=None):
         move = {}
         for line in self.pool.get('account.move.line').browse(cr, uid, ids, context=context):
@@ -73,7 +74,7 @@ class hr_payslip(osv.osv):
         if move:
             payslip_ids = self.pool.get('hr.payslip').search(cr, uid, [('move_id', 'in', move.keys())], context=context)
         return payslip_ids
-        
+
     def _get_payslip_from_reconcile(self, cr, uid, ids, context=None):
         move = {}
         for r in self.pool.get('account.move.reconcile').browse(cr, uid, ids, context=context):
@@ -89,13 +90,13 @@ class hr_payslip(osv.osv):
 
     _columns = {
         'state': fields.selection([
-                    ('draft', 'Draft'),
-                    ('verify', 'Waiting'),
-                    ('done', 'Done'),
-                    ('cancel', 'Rejected'),
-                    ('paid', 'Paid'),
-                ], 'Status', select=True, readonly=True,
-                    help='* When the payslip is created the status is \'Draft\'.\
+            ('draft', 'Draft'),
+            ('verify', 'Waiting'),
+            ('done', 'Done'),
+            ('cancel', 'Rejected'),
+            ('paid', 'Paid'),
+        ], 'Status', select=True, readonly=True,
+            help='* When the payslip is created the status is \'Draft\'.\
                     \n* If the payslip is under verification, the status is \'Waiting\'. \
                     \n* If the payslip is confirmed then status is set to \'Done\'.\
                     \n* When user cancel payslip the status is \'Rejected\'.\
@@ -106,35 +107,38 @@ class hr_payslip(osv.osv):
             store={
                 'hr.payslip': (lambda self, cr, uid, ids, c={}: ids, [], 50),
                 'account.move.line': (_get_payslip_from_line, None, 50),
-                'account.move.reconcile': (_get_payslip_from_reconcile, None, 50),},
+                'account.move.reconcile': (_get_payslip_from_reconcile, None, 50), },
             help="It indicates that the payslip has been paid and the journal entry of the payslip has been reconciled with one or several journal entries of payment."),
-        }
-        
+    }
+
     def move_line_id_payment_get(self, cr, uid, ids, *args):
-        if not ids: return []
+        if not ids:
+            return []
         result = self.move_line_id_payment_gets(cr, uid, ids, *args)
         return result.get(ids[0], [])
 
     def move_line_id_payment_gets(self, cr, uid, ids, *args):
         res = {}
-        if not ids: return res
+        if not ids:
+            return res
         payslip_bwr = self.browse(cr, uid, ids[0])
         account_ids = []
         for x in payslip_bwr.details_by_salary_rule_category:
             if x.salary_rule_id.account_credit.id:
                 account_ids.append(x.salary_rule_id.account_credit.id)
-        if not account_ids: return res
-        cr.execute('SELECT i.id, l.id '\
-                   'FROM account_move_line l '\
-                   'LEFT JOIN hr_payslip i ON (i.move_id=l.move_id) '\
-                   'WHERE i.id IN %s '\
+        if not account_ids:
+            return res
+        cr.execute('SELECT i.id, l.id '
+                   'FROM account_move_line l '
+                   'LEFT JOIN hr_payslip i ON (i.move_id=l.move_id) '
+                   'WHERE i.id IN %s '
                    'AND l.account_id=%s',
                    (tuple(ids), account_ids[0]))
         for r in cr.fetchall():
             res.setdefault(r[0], [])
-            res[r[0]].append( r[1] )
+            res[r[0]].append(r[1])
         return res
-        
+
     def test_paid(self, cr, uid, ids, *args):
         res = self.move_line_id_payment_get(cr, uid, ids)
         if not res:
@@ -142,12 +146,12 @@ class hr_payslip(osv.osv):
         ok = True
         for id in res:
             cr.execute('select reconcile_id from account_move_line where id=%s', (id,))
-            ok = ok and  bool(cr.fetchone()[0])
+            ok = ok and bool(cr.fetchone()[0])
         return ok
-        
+
     def done_paid(self, cr, uid, ids, context=None):
         """
-        This function is called by a webservice for update the payslip that were created 
+        This function is called by a webservice for update the payslip that were created
         before to added the state paid.
         """
         wf_service = netsvc.LocalService("workflow")

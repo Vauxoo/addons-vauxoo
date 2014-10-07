@@ -17,8 +17,8 @@ def loadProjectsTasks(fileName, HOST, PORT, DB, USER, PASS):
 
     ''' Objects needed for rpc calls '''
     url = 'http://%s:%d/xmlrpc/' % (HOST, PORT)
-    common_proxy = xmlrpclib.ServerProxy(url+'common')
-    object_proxy = xmlrpclib.ServerProxy(url+'object')
+    common_proxy = xmlrpclib.ServerProxy(url + 'common')
+    object_proxy = xmlrpclib.ServerProxy(url + 'object')
     uid = common_proxy.login(DB, USER, PASS)
 
     ID_ADDR = 1
@@ -84,7 +84,7 @@ def loadProjectsTasks(fileName, HOST, PORT, DB, USER, PASS):
                 'type_id': int(issue[5]),
                 'partner_id': int(issue[6]),
                 'partner_address_id': addr,
-                'state':  'open',
+                'state': 'open',
                 'description': ustr(issue[8]),
                 'email_from': issue[4] and user_mail['user_email'] or None,
                 'active': True,
@@ -122,7 +122,7 @@ def loadProjectsTasks(fileName, HOST, PORT, DB, USER, PASS):
                         if task_id:
                             object_proxy.execute(DB, uid, PASS,
                                                  'project.issue', 'write', [
-                                                 project_id],
+                                                     project_id],
                                                  {'task_id': task_id})
                             task_works = searchWorks(int(task[0]), works)
                             if task_works:
@@ -140,6 +140,6 @@ def loadProjectsTasks(fileName, HOST, PORT, DB, USER, PASS):
                                     if work_id:
                                         object_proxy.execute(DB, uid, PASS,
                                                 'project.task', 'write', [
-                                                task_id], {'state': task[4]})
+                                                    task_id], {'state': task[4]})
                 object_proxy.execute(DB, uid, PASS, 'project.issue', 'write', [
                                      project_id], {'state': issue[9]})

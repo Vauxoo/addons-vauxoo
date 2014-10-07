@@ -30,12 +30,12 @@ from openerp.tools.translate import _
 class account_voucher(osv.Model):
     _inherit = 'account.voucher'
     _columns = {
-        'advance_account_id':fields.many2one('account.account', 'Advance Account', required=False, readonly=True, states={'draft':[('readonly',False)]}),
+        'advance_account_id': fields.many2one('account.account', 'Advance Account', required=False, readonly=True, states={'draft': [('readonly', False)]}),
     }
 
     def writeoff_move_line_get(self, cr, uid, voucher_id, line_total, move_id, name, company_currency, current_currency, context=None):
         move_line = super(account_voucher, self).writeoff_move_line_get(cr, uid, voucher_id, line_total, move_id, name, company_currency, current_currency, context=context)
-        voucher = self.pool.get('account.voucher').browse(cr,uid,voucher_id,context)
+        voucher = self.pool.get('account.voucher').browse(cr, uid, voucher_id, context)
         if move_line and not voucher.payment_option == 'with_writeoff' and voucher.partner_id:
             if voucher.type in ('sale', 'receipt'):
                 account_id = voucher.advance_account_id and voucher.advance_account_id.id or voucher.partner_id.property_account_customer_advance.id

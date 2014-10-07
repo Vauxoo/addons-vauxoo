@@ -24,8 +24,7 @@
 ############################################################################
 import time
 import pooler
-from report import report_sxw
-
+from openerp.report import report_sxw
 
 
 class project_issue(report_sxw.rml_parse):

@@ -26,7 +26,6 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-
 class stock_production_lot(osv.Model):
 
     def _serial_identification(self, cr, uid, ids, context=None):

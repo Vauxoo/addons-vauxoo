@@ -22,20 +22,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Manage the amount of progress in parallel",
-    "version" : "1.0",
-    "depends" : ["project","project_issue"],
-    "author" : "Vauxoo",
-    "description" : """Manage the amount of progress in parallel, among other related fields.
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [ ],
-    "update_xml" : [    
-    ],
-    "active": False,
-    "installable": True,
+    "name": "Manage the amount of progress in parallel", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """Manage the amount of progress in parallel, among other related fields.
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "project", 
+        "project_issue"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-

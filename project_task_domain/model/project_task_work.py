@@ -31,19 +31,19 @@ import time
 
 class project_task_work(osv.Model):
     _inherit = 'project.task.work'
-    
+
     def onchange_hours(self, cr, uid, ids, hours=None, context=None):
         if context is None:
             context = {}
         warning = {}
         if hours < 0:
-            warning = { 'title': _('Warning!'), 'message': _('Are you sure that you want to charge hours in negative?')}
-        return { 'warning': warning}
-        
+            warning = {'title': _('Warning!'), 'message': _('Are you sure that you want to charge hours in negative?')}
+        return {'warning': warning}
+
     def onchange_date(self, cr, uid, ids, date=None, context=None):
         if context is None:
             context = {}
         warning = {}
         if date > time.strftime('%Y-%m-%d %H:%M:%S'):
-            warning = { 'title': _('Warning!'), 'message': _('Are you sure that you want to charge a future date?')}
-        return { 'warning': warning}
+            warning = {'title': _('Warning!'), 'message': _('Are you sure that you want to charge a future date?')}
+        return {'warning': warning}

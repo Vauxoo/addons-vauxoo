@@ -25,26 +25,32 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
-
 {
-    "name" : "Report Order customisation Vnzla",
-    "version" : "0.2",
-    "author" : "Vauxoo",
-    "category" : "Generic Modules/Others",
-    "website": "http://wiki.openerp.org.ve/",
-    "description": '''
+    "name": "Report Order customisation Vnzla", 
+    "version": "0.2", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Others", 
+    "description": """
                     Purchase Order customisation for Vauxoo
                     Add new field for Payment Terms in purchase order
                     Changed in purchase order fields to required
-                    ''',
-    "depends" : ["purchase",
-                 "multireport_base",
-                ],
-    "init_xml" : [],
-    "update_xml" : [
-        "wizard/purchase_report_multicompany.xml",
-        "purchase_report_view.xml",
-    ],
-    "active": False,
-    "installable": False,
+                    """, 
+    "website": "http://wiki.openerp.org.ve/", 
+    "license": "", 
+    "depends": [
+        "purchase", 
+        "multireport_base"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/purchase_report_multicompany.xml", 
+        "purchase_report_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": False, 
+    "auto_install": False, 
+    "active": False
 }

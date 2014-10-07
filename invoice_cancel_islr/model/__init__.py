@@ -1,2 +1,2 @@
-import invoice
-import islr_wh_doc
+from . import invoice
+from . import islr_wh_doc

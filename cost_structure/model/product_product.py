@@ -26,9 +26,8 @@
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 from openerp.tools.sql import drop_view_if_exists
-
 
 
 class product_product(osv.Model):
@@ -36,7 +35,7 @@ class product_product(osv.Model):
     _inherit = 'product.product'
 
     def _structure_cost_status(self, cr, uid, ids, field_name, arg,
-                                context=None):
+                               context=None):
         '''
         Variable indicating if the product already has a cost structure
         '''
@@ -152,7 +151,7 @@ class product_product(osv.Model):
 
     _constraints = [(
         _check_default_cost, 'ERROR, The product can only a default price',
-            ['default_cost'])]
+        ['default_cost'])]
 
     def write(self, cr, uid, ids, vals, context=None):
         '''
@@ -160,7 +159,7 @@ class product_product(osv.Model):
         '''
         product_brw = self.browse(cr, uid, ids and ids[0], context=context)
         if product_brw.property_cost_structure and\
-            'property_cost_structure' in vals:
+                'property_cost_structure' in vals:
             raise osv.except_osv(_('Error'), _(
                 'The product already has a cost structure'))
 
@@ -191,10 +190,10 @@ class product_product(osv.Model):
                         pass
                     else:
                         i[2] and i[2].update({
-                                'cost_structure_id': product_brw and
-                                    product_brw.property_cost_structure and
-                                    product_brw.property_cost_structure.id or
-                                    []})
+                            'cost_structure_id': product_brw and
+                            product_brw.property_cost_structure and
+                            product_brw.property_cost_structure.id or
+                            []})
                         method_id = i[2] and method_obj.create(
                             cr, uid, i[2], context=context)
 
@@ -205,7 +204,7 @@ class product_product(osv.Model):
                 'method_cost_ids' in vals and not vals[
                     'method_cost_ids'] and vals.pop('method_cost_ids')
         return super(product_product, self).write(cr, uid, ids, vals,
-                                                    context=context)
+                                                  context=context)
 
     def price_get(self, cr, uid, ids, ptype='list_price', context=None):
         '''
@@ -228,7 +227,7 @@ class product_product(osv.Model):
             ptype = ptype == 'list_price' and 'list_price' or 'cost_ult'
             res[product.id] = product[ptype] or 0.0
             if ptype == 'list_price':
-                res[product.id] = (res[product.id] *\
+                res[product.id] = (res[product.id] *
                     (product.price_margin or 1.0)) + \
                     product.price_extra
             if 'uom' in context:
@@ -246,8 +245,6 @@ class product_product(osv.Model):
                                             res[product.id], context=context)
 
         return res
-
-
 
 
 class report_cost(osv.Model):
@@ -318,4 +315,3 @@ class report_cost(osv.Model):
                 inner join account_invoice_line line on (invo.id=line.invoice_id)
             where invo.state in ('open','paid')
         )''')
-

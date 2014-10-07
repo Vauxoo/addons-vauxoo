@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+#    Coded by: Vauxoo C.A.
 #    Planified by: Humberto Arocha / Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -22,31 +22,34 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name" : "Account Smart Unreconcile",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "website" : "http://vauxoo.com",
-    "category": 'Generic Modules/Accounting',
+    "name": "Account Smart Unreconcile", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Accounting", 
     "description": """
         Allows send and account_move_reconcile and
         a list of aml_ids to be excluded from reconciliation,
         so that the result is a new account_move_reconcile
         without aml_ids.
-    
+
         In Future this module is intended to grow adding a wizard
         that would allow an end user to do smart unreconciliations
 
-    """,
-    'init_xml': [],
-    "depends" : ["account"],
-    'update_xml': [],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

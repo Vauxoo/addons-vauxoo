@@ -22,15 +22,17 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
+#'user_story_long_term_demo.xml'
+#'data/user_story_template.xml',
+#'wizard/user_story_compute_phases_view.xml',
+#'wizard/user_story_compute_tasks_view.xml',
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    'name': 'Long Term User Story',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com',
-    'category': 'User Story Management',
-    'depends': ['base', 'mail', 'user_story', 'project_conf', 'project_long_term'],
-    'description': """
+    "name": "Long Term User Story", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "User Story Management", 
+    "description": """
 Long Term User Story Management module
 ======================================
 
@@ -40,22 +42,29 @@ Features:
     * Send mail to the followers of the user story as an acceptance criteria is accepted.
     * Send mail to the owner, responsible supervisor and execution responsible when the user story
       pass from in progress to pending state.
-    """,
-    'demo': [
-        #'user_story_long_term_demo.xml'
-        'demo/user_story_conf.xml',
-        ],
-    'test': [],
-    'data': [
-        'security/ir.model.access.csv',
-        'user_story_long_term_view.xml',
-        'workflow/user_story_long_term_workflow.xml',
-        #'data/user_story_template.xml',
-        #'wizard/user_story_compute_phases_view.xml',
-        #'wizard/user_story_compute_tasks_view.xml',
-    ],
-    'installable': True,
-    'auto_install': False,
+    """, 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "mail", 
+        "user_story", 
+        "project_conf", 
+        "project_long_term"
+    ], 
+    "demo": [
+        "demo/user_story_conf.xml"
+    ], 
+    "data": [
+        "security/ir.model.access.csv", 
+        "user_story_long_term_view.xml", 
+        "workflow/user_story_long_term_workflow.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
