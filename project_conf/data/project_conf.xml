@@ -24,7 +24,6 @@
         <record id="project_tt_backlog" model="project.task.type">
             <field name="sequence">0</field>
             <field name="name">Backlog</field>
-            <field name="state">draft</field>
             <field name="case_default" eval="True"/>
         </record>
         
@@ -36,7 +35,6 @@
         <record id="project_tt_leader" model="project.task.type">
             <field name="sequence">6</field>
             <field name="name">Testing Leader</field>
-            <field name="state">pending</field>
             <field name="case_default" eval="True"/>
         </record>
     

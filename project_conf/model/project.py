@@ -38,28 +38,24 @@ class project_task(osv.osv):
         '''
         context = context or {}
         #Dont send context to dont get language of user in read method
-        #@ids in v8 is not a dictionary
-        #@stage deprecated in v8 by odoo
-        #~ if ids.get('stage_id'): #comment while is migrate to v8 this module
-        if {}.get('stage_id'):
-            type = self.pool.get('project.task.type').read(cr, uid, ids['stage_id'][0], ['name'])
-            if type.get('name', False) == 'Backlog':
-                self.send_mail_task(cr,uid,ids,'template_send_email_task_new',context)
-            elif type.get('name', False) == 'Testing Leader':
-                self.send_mail_task(cr,uid,ids,'template_send_email_task_end',context)
+        if ids.stage_id:
+            type = ids.stage_id.name or ''
+            if type == 'Backlog':
+                self.send_mail_task(cr, uid, ids, 'template_send_email_task_new', context)
+            elif type == 'Testing Leader':
+                self.send_mail_task(cr, uid, ids, 'template_send_email_task_end', context)
             
-    def send_mail_task(self,cr,uid,ids,template,context=None):
+    def send_mail_task(self, cr, uid, ids, template, context=None):
         imd_obj = self.pool.get('ir.model.data')
         template_ids = imd_obj.search(
             cr, uid, [('model', '=', 'email.template'), ('name', '=', template)])
         if template_ids:
             res_id = imd_obj.read(
                 cr, uid, template_ids, ['res_id'])[0]['res_id']
-
-            followers = self.read(cr, uid, ids.get('id'), [
+            ids = [ids.id]
+            followers = self.read(cr, uid, ids[0], [
                                   'message_follower_ids'])['message_follower_ids']
 
-            ids = [ids.get('id')]
             body_html = self.pool.get('email.template').read(
                 cr, uid, res_id, ['body_html']).get('body_html')
             context.update({'default_template_id': res_id,

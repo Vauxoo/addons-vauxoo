@@ -24,10 +24,10 @@
 ##############################################################################
 
 {
-    "name" : "Project Configuration",
-    "version" : "0.1",
-    "depends" : ["base","project","email_template"],
-    "author" : ["Vauxoo",],
+    "name": "Project Configuration",
+    "version": "0.1",
+    "depends": ["base", "project", "email_template"],
+    "author": ["Vauxoo",],
     "description" : """
 Project Configuration
 =====================
@@ -70,11 +70,9 @@ Project Configuration
 """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
-    "init_xml" : [
+    "demo" : [
     ],
-    "demo_xml" : [
-    ],
-    "update_xml" : [
+    "data" : [
       "data/project_conf.xml",
       "view/project_view.xml",
     ],
