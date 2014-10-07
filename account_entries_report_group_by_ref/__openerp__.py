@@ -20,22 +20,28 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
+#"license" : "AGPL-3",
 {
-    "name" : "Inherits the xml account_entries_report_view a button grouping by origin",
-    "version" : "1.0",
-    "depends" : ['account'],
-    "author" : "Vauxoo",
-    #"license" : "AGPL-3",
-    "description" : """This module inherits the xml account_entries_report_view a button grouping by origin
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [],
-    "update_xml" : ['account_entries_report_view.xml',
-    ],
-    "active": False,
-    "installable": True,
+    "name": "Inherits the xml account_entries_report_view a button grouping by origin", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """This module inherits the xml account_entries_report_view a button grouping by origin
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "account_entries_report_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-

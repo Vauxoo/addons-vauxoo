@@ -23,24 +23,30 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Procurement Order Merge",
-    "version": "1.1",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/Procurement",
-    "website" : "http://www.vauxoo.com/",
+    "name": "Procurement Order Merge", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Procurement", 
     "description": """ This module merges procurements with a wizard, grouping by
     product, location and procure method.
-    """,
-    'depends': ['procurement', 'mrp_production_procurement_order'],
-    'init_xml': [],
-    'update_xml': [
-        'wizard/procurement_order_merge_view.xml',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "procurement", 
+        "mrp_production_procurement_order"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/procurement_order_merge_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

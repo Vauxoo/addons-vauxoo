@@ -1,1 +1,1 @@
-import stock
+from . import stock

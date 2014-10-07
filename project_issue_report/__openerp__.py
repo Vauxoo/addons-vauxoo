@@ -22,24 +22,31 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
-
 {
-	"name" : "Project Issue Report",
-	"version" : "0.1",
-	"author" : "Vauxoo",
-	"category" : "Generic Modules/Others",
-	"website": "http://wiki.openerp.org.ve/",
+    "name": "Project Issue Report", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Others", 
     "description": """
-    
-    Modulo que realiza la personalizacion del reporte de incidencias 
-    
-    """,
-	"depends" : ["base", "project"],
-	"init_xml" : [],
-	"update_xml" : [
-		"project_issue_report.xml",
 
-	],
-	"active": False,
-	"installable": True
+    Modulo que realiza la personalizacion del reporte de incidencias
+
+    """, 
+    "website": "http://wiki.openerp.org.ve/", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "project"
+    ], 
+    "demo": [], 
+    "data": [
+        "project_issue_report.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

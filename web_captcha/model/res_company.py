@@ -25,8 +25,7 @@
 #
 ##############################################################################
 from openerp.osv import osv, fields
-from openerp import SUPERUSER_ID, tools
-from openerp.tools.translate import _
+from openerp import SUPERUSER_ID
 
 
 class res_company(osv.Model):
@@ -37,7 +36,7 @@ class res_company(osv.Model):
             context = {}
         res = {}
         obj_captcha = self.pool.get('res.captcha')
-        
+
         captcha_ids = obj_captcha.search(cr, SUPERUSER_ID,
                                          [('company_id', '=', 1)], context=context)
         c_brw = obj_captcha.browse(

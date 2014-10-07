@@ -24,13 +24,6 @@
 ##########################################################################
 
 from openerp.osv import osv, fields
-import openerp.tools as tools
-from openerp.tools.translate import _
-
-from tools import config
-import openerp.netsvc as netsvc
-import decimal_precision as dp
-from openerp.tools.sql import drop_view_if_exists
 
 
 class product_product(osv.Model):
@@ -38,7 +31,7 @@ class product_product(osv.Model):
     _inherit = 'product.product'
 
     def _search_price_list_item_c(self, cr, uid, ids, field_name, arg,
-                                    context={}):
+                                  context={}):
         item_obj = self.pool.get('product.pricelist.item')
         res = {}
         for product in self.browse(cr, uid, ids, context=context):
@@ -46,12 +39,12 @@ class product_product(osv.Model):
                 'categ_id', '=', product.categ_id.id)], context=context)
             if context.get('query', True):
                 sql_str = item_ids and len(ids) == 1\
-                and '''UPDATE product_pricelist_item set
+                    and '''UPDATE product_pricelist_item set
                                 product_active_id=%d
                                 WHERE id %s %s ''' %\
-                                (product.id, len(item_ids) > 1 and\
-                                'in' or '=', len(item_ids) > 1 and\
-                                tuple(item_ids) or item_ids[0])
+                    (product.id, len(item_ids) > 1 and
+                     'in' or '=', len(item_ids) > 1 and
+                     tuple(item_ids) or item_ids[0])
                 sql_str and cr.execute(sql_str)
                 item_ids and len(ids) == 1 and cr.commit()
             res[product.id] = item_ids
@@ -59,7 +52,7 @@ class product_product(osv.Model):
         return res
 
     def _search_price_list_item_p(self, cr, uid, ids, field_name, arg,
-                                    context={}):
+                                  context={}):
 
         item_obj = self.pool.get('product.pricelist.item')
         res = {}
@@ -71,20 +64,20 @@ class product_product(osv.Model):
                     '''UPDATE product_pricelist_item set
                                 product_active_id=%d
                                 WHERE id %s %s ''' %\
-                                (product.id, len(item_ids) > 1 and\
-                                'in' or '=', len(item_ids) > 1 and\
-                                tuple(item_ids) or item_ids[0])
+                    (product.id, len(item_ids) > 1 and
+                     'in' or '=', len(item_ids) > 1 and
+                     tuple(item_ids) or item_ids[0])
                 sql_str and cr.execute(sql_str)
                 item_ids and len(ids) == 1 and cr.commit()
             res[product.id] = item_ids
         return res
 
     def _write_price_list_item_p(obj, cr, uid, id, name, value, fnct_inv_arg,
-                                    context={}):
+                                 context={}):
         for val in value:
             if val[0] == 1:
                 sql_str = val[2].get('price_discount', False) and\
-                        """UPDATE product_pricelist_item set
+                    """UPDATE product_pricelist_item set
                             price_discount='%s'
                             WHERE id=%d """ % (val[2].get('price_discount'),
                             val[1])
@@ -105,12 +98,13 @@ class product_product(osv.Model):
 
 
 class inherit_product_category(osv.Model):
+
     """ """
 
     _inherit = 'product.category'
 
     def _search_price_list_item(self, cr, uid, ids, field_name, arg,
-                                    context={}):
+                                context={}):
 
         item_obj = self.pool.get('product.pricelist.item')
         res = {}
@@ -120,11 +114,11 @@ class inherit_product_category(osv.Model):
         return res
 
     def _write_price_list_item(obj, cr, uid, id, name, value, fnct_inv_arg,
-                                context={}):
+                               context={}):
         for val in value:
             if val[0] == 1:
                 sql_str = val[2].get('price_discount', False) and\
-                        """UPDATE product_pricelist_item set
+                    """UPDATE product_pricelist_item set
                             price_discount='%s'
                             WHERE id=%d """ % (val[2].get('price_discount'),
                             val[1])

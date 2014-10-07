@@ -24,15 +24,7 @@
 ##########################################################################
 
 from openerp.osv import osv, fields
-import openerp.tools as tools
 from openerp.tools.translate import _
-
-from tools import config
-import openerp.netsvc as netsvc
-import decimal_precision as dp
-import time
-import datetime
-import re
 
 
 class default_price_to_report(osv.TransientModel):
@@ -60,9 +52,9 @@ class default_price_to_report(osv.TransientModel):
                 print name
                 if name:
                     cost_id = [i.property_cost_structure and
-                        i.property_cost_structure.id\
+                        i.property_cost_structure.id
                         for i in product_obj.browse(
-                        cr, uid, context.get('active_ids'), context=context)]
+                            cr, uid, context.get('active_ids'), context=context)]
                     methods_ids = method_obj.search(cr, uid,
                     [('cost_structure_id', 'in', cost_id), (
                         'default_cost', '=', True)], context=context)
@@ -71,7 +63,7 @@ class default_price_to_report(osv.TransientModel):
                             'The product already has a default_cost'))
                     methods_ids = method_obj.search(cr, uid,
                         [('cost_structure_id', 'in', cost_id), (
-                        'sequence', '=', int(name))], context=context)
+                            'sequence', '=', int(name))], context=context)
                     method_obj.write(cr, uid, methods_ids, {
                                      'default_cost': True}, context=context)
         else:

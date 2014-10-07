@@ -24,9 +24,6 @@
 ##########################################################################
 
 from openerp.osv import osv, fields
-import openerp.tools as tools
-from openerp.tools.translate import _
-from openerp import SUPERUSER_ID
 
 
 class inherit_task(osv.Model):

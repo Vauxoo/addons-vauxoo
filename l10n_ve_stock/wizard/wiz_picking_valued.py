@@ -24,10 +24,8 @@
 ##########################################################################
 
 from openerp.osv import osv, fields
-import openerp.tools as tools
 from openerp.tools.translate import _
 
-from tools import config
 import openerp.netsvc as netsvc
 
 
@@ -179,7 +177,6 @@ class picking_valued(osv.TransientModel):
             action.update({'context': context})
 
         return action
-
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -23,6 +23,7 @@
 from openerp.report import report_sxw
 from lxml import html
 
+
 class story_user_html(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context=None):
@@ -31,7 +32,7 @@ class story_user_html(report_sxw.rml_parse):
         super(story_user_html, self).__init__(
             cr, uid, name, context=context)
         self.localcontext.update({
-            'parse_html_field' : self._parse_html_field,
+            'parse_html_field': self._parse_html_field,
         })
         self.context = context
 

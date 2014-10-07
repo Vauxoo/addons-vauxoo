@@ -1,14 +1,15 @@
 # -*- encoding: utf-8 -*-
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
 
 
 class sale_order(osv.Model):
+
     """
     sale_order
     """
+
     def _get_commision(self, price, cost):
-        return (price and cost) and ((price - cost/price)*100) or 0
+        return (price and cost) and ((price - cost / price) * 100) or 0
 
     def _check_commision(self, cr, uid, ids, field_name, arg, context):
         result = {}
@@ -29,17 +30,12 @@ class sale_order(osv.Model):
                                                              qty_uos=qty_uos,
                                                              uos=uos,
                                                              name=name,
-                                                             partner_id=
-                                                             partner_id,
+                                                             partner_id=partner_id,
                                                              lang=lang,
-                                                             update_tax=
-                                                             update_tax,
-                                                             date_order=
-                                                             date_order,
-                                                             packaging=
-                                                             packaging,
-                                                             fiscal_position=
-                                                             fiscal_position,
+                                                             update_tax=update_tax,
+                                                             date_order=date_order,
+                                                             packaging=packaging,
+                                                             fiscal_position=fiscal_position,
                                                              flag=flag)
         frm_cur = self.pool.get('res.users').browse(
             cr, uid, uid).company_id.currency_id.id
@@ -61,12 +57,12 @@ class sale_order(osv.Model):
                 if line.purchase_price:
                     res[line.id] = round((line.price_unit *
                                           line.product_uos_qty *
-                                         (100.0-line.discount) / 100.0) -
+                                         (100.0 - line.discount) / 100.0) -
                                         (line.purchase_price *
                                          line.product_uos_qty), 2)
                 else:
-                    res[line.id] = round((line.price_unit*line.product_uos_qty
-                                          * (100.0-line.discount)/100.0) -
+                    res[line.id] = round((line.price_unit * line.product_uos_qty
+                                          * (100.0 - line.discount) / 100.0) -
                                         (line.product_id.standard_price *
                                          line.product_uos_qty), 2)
         return res

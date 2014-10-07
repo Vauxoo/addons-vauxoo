@@ -9,15 +9,17 @@
                     <xpath expr="//field[@name='property_account_payable']" position="after" >
                         <field name="property_account_supplier_advance"/>
                     </xpath>
-                    <xpath expr="//field[@name='credit']" position="after" >
-                        <field name="customer_advance"/>
-                    </xpath>
                     <xpath expr="//field[@name='property_account_receivable']" position="after" >
                         <field name="property_account_customer_advance"/>
+                    </xpath>
+                    <!--
+                    <xpath expr="//field[@name='credit']" position="after" >
+                        <field name="customer_advance"/>
                     </xpath>
                     <xpath expr="//field[@name='debit']" position="after" >
                         <field name="supplier_advance"/>
                     </xpath>
+                    -->
                 </field>
             </record>
         </data>

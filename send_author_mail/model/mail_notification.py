@@ -22,23 +22,21 @@
 ################################################################################
 
 
-from openerp.osv import osv, fields
+from openerp.osv import osv
+
 
 class mail_notification(osv.Model):
-    
+
     _inherit = 'mail.notification'
-    
+
     def get_partners_to_notify(self, cr, uid, message, partners_to_notify=None, context=None):
-        res  = super(mail_notification, 
-                        self).get_partners_to_notify(cr, uid,
+        res = super(mail_notification,
+                    self).get_partners_to_notify(cr, uid,
                                     message,
                                     partners_to_notify=partners_to_notify,
                                     context=context)
         if message.author_id and\
-                (message.author_id.receive_my_emails and\
+                (message.author_id.receive_my_emails and
                 message.author_id.notification_email_send == "all"):
             res.append(message.author_id.id)
         return res
-        
-        
-        

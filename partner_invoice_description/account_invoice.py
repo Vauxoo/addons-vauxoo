@@ -24,7 +24,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import osv, fields
+from openerp.osv import osv
 
 
 class account_invoice(osv.Model):
@@ -59,7 +59,7 @@ class stock_invoice_onshipping(osv.TransientModel):
                 cr, uid, res[invoice_id]).partner_id.description_invoice
             if invoice_description:
                 self.pool.get('account.invoice').write(cr, uid, res[
-                                invoice_id], {'comment': invoice_description})
+                    invoice_id], {'comment': invoice_description})
         return res
 
 
@@ -86,13 +86,13 @@ class sale_order(osv.Model):
     _inherit = 'sale.order'
 
     def action_invoice_create(self, cr, uid, ids, grouped=False,
-                                states=['confirmed', 'done', 'exception'],
-                                date_inv=False, context=None):
+                              states=['confirmed', 'done', 'exception'],
+                              date_inv=False, context=None):
         if not context:
             context = {}
         res = super(sale_order, self).action_invoice_create(cr, uid, ids,
                     grouped=False, states=['confirmed', 'done', 'exception'],
-                    date_inv=date_inv, context=context)
+            date_inv=date_inv, context=context)
         invoice_description = self.pool.get('account.invoice').browse(
             cr, uid, res).partner_id.description_invoice
         if invoice_description:

@@ -23,12 +23,12 @@
 
 
 from openerp.osv import osv, fields
-from openerp import tools, SUPERUSER_ID
+
 
 class email_template(osv.Model):
-    
+
     _inherit = 'email.template'
-    
+
     _columns = {
         'composition_mode_comment': fields.boolean('Composition Mode',
             help='Create Composition mode like comment'),

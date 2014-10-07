@@ -18,15 +18,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import time
-import datetime
 
 from openerp.osv import fields, osv
-from openerp import pooler
-from openerp import tools
-from openerp.tools.translate import _
 
 from openerp.tools.sql import drop_view_if_exists
+
+
 class custom_timesheet(osv.Model):
     _name = "custom.timesheet"
     _order = "date desc"
@@ -38,16 +35,15 @@ class custom_timesheet(osv.Model):
         'userstory': fields.integer('User Story', readonly=True),
         'analytic_id': fields.many2one('account.analytic.account', 'Project',
                 readonly=True, select=True),
-        'task_title':fields.char('Task Tittle', 128,
+        'task_title': fields.char('Task Tittle', 128,
                                  help='Name of task related'),
-        'userstory_id':fields.many2one('user.story','User Story',
+        'userstory_id': fields.many2one('user.story', 'User Story',
                               help='Code of User Story related to this '
                                    'analytic'),
-        'name':fields.char('Description', 264, help='Description of the work'),
+        'name': fields.char('Description', 264, help='Description of the work'),
 
         'unit_amount': fields.float('Duration', readonly=True),
     }
-
 
     def init(self, cr):
         drop_view_if_exists(cr, 'custom_timesheet')

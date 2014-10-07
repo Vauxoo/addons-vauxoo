@@ -20,10 +20,11 @@
 ##############################################################################
 
 import time
-from report import report_sxw
+from openerp.report import report_sxw
 
 
 class account_invoice2(report_sxw.rml_parse):
+
     def __init__(self, cr, uid, name, context):
         super(account_invoice2, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({

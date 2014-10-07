@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-08-13 06:51+0000\n"
-"X-Generator: Launchpad (build 17156)\n"
+"X-Launchpad-Export-Date: 2014-09-23 07:12+0000\n"
+"X-Generator: Launchpad (build 17196)\n"
 
 #. module: user_story
 #: view:user.story:0
@@ -177,9 +177,8 @@ msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
 msgstr ""
-"Mantiene el sumario de la conversación (número de mensajes, ...) Este "
-"sumario está directamente en formato html con el fin de insertar vistas "
-"kanban"
+"Contiene el resumen del chatter (nº de mensajes, ...). Este resumen está "
+"directamente en formato html para ser insertado en vistas kanban."
 
 #. module: user_story
 #: view:acceptability.criteria:0

@@ -24,25 +24,30 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-
 {
-    "name": "Project Required",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Generic Modules/Project",
-    "description" : """
-    This module set as required the field project_id on 
+    "name": "Project Required", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Project", 
+    "description": """
+    This module set as required the field project_id on
     model project.task from the view by inheritance.
     Also warns the hours and add negative future dates.
-    """,
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
     "depends": [
-        "project",
-    ],
-    "data": ["view/project_task_view_inherit.xml"
-    ],
-    "test": [],
-    "installable": True,
-    "active": False,
+        "project"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/project_task_view_inherit.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

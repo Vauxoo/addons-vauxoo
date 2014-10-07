@@ -26,7 +26,6 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
 from openerp.osv import osv
-from openerp.osv import fields
 from openerp.tools.translate import _
 
 
@@ -60,7 +59,6 @@ class inherits_sale(osv.Model):
                           fiscal_position=False, flag=False, context=None):
         context = context or {}
         product_obj = self.pool.get('product.product')
-        uom_obj = self.pool.get('product.uom')
         res = super(
             inherits_sale, self).product_id_change(cr, uid, ids, pricelist,
                    product, qty=qty,

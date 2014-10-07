@@ -22,10 +22,7 @@
 #    You should have received a copy of the GNU General Public License     #
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
-import time
-import pooler
-from report import report_sxw
-from openerp.tools.translate import _
+from openerp.report import report_sxw
 
 
 class cm321_report(report_sxw.rml_parse):
@@ -44,23 +41,23 @@ class cm321_report(report_sxw.rml_parse):
         aux = 100
         aux2 = 0.0
         ppv = self.pool.get('product.pricelist.version')
-        date_invoice = str(obj.date_invoice)
+        str(obj.date_invoice)
         if obj.type == 'out_invoice':
             price_list = obj.partner_id.property_product_pricelist
             if price_list.active:
                 ppv_ids = price_list.version_id
                 for ppv in ppv_ids:
                     if ppv.date_start and ppv.date_end:
-                        date_start = str(ppv.date_start)
-                        date_end = str(ppv.date_end)
+                        str(ppv.date_start)
+                        str(ppv.date_end)
                         if ppv.date_start <= obj.date_invoice and\
-                                            obj.date_invoice <= ppv.date_end:
+                                obj.date_invoice <= ppv.date_end:
                             ppli = ppv.items_id
                             for ppl in ppli:
                                 if ppl.sequence < aux:
                                     aux = ppl.sequence
                                     aux2 = ppl.price_discount
-                            return aux2*100
+                            return aux2 * 100
                         else:
                             return aux2
                     else:
@@ -71,16 +68,16 @@ class cm321_report(report_sxw.rml_parse):
                 ppv_ids = price_list.version_id
                 for ppv in ppv_ids:
                     if ppv.date_start and ppv.date_end:
-                        date_start = str(ppv.date_start)
-                        date_end = str(ppv.date_end)
+                        str(ppv.date_start)
+                        str(ppv.date_end)
                         if ppv.date_start <= obj.date_invoice and\
-                                            obj.date_invoice <= ppv.date_end:
+                                obj.date_invoice <= ppv.date_end:
                             ppli = ppv.items_id
                             for ppl in ppli:
                                 if ppl.sequence < aux:
                                     aux = ppl.sequence
                                     aux2 = ppl.price_discount
-                            return aux2*100
+                            return aux2 * 100
                         else:
                             return aux2
                     else:
@@ -102,7 +99,7 @@ class cm321_report(report_sxw.rml_parse):
         wh_ids = obj.tax_line
         aux = []
         for wh in wh_ids:
-            aux.append(wh.tax_id.amount*100)
+            aux.append(wh.tax_id.amount * 100)
         return aux[0]
 
 report_sxw.report_sxw(
@@ -111,6 +108,6 @@ report_sxw.report_sxw(
     'addons/m321_reports/report/comercializadora_m321_report.rml',
     parser=cm321_report
 )
-  # 1 addons/nombre del modulo/carpeta(report)/nombre del archivo rml
-  # 2 A modo didactico vamos a poner que el modulo al que le vamos a poner el reporte es a res.partner
-  #   pero podria ser cualquier modulo.
+# 1 addons/nombre del modulo/carpeta(report)/nombre del archivo rml
+# 2 A modo didactico vamos a poner que el modulo al que le vamos a poner el reporte es a res.partner
+#   pero podria ser cualquier modulo.

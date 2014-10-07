@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+#    Coded by: Vauxoo C.A.
 #    Planified by: Humberto Arocha / Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -22,23 +22,28 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
-{
-    "name" : "Account Invoice Line Currency",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "website" : "http://vauxoo.com",
-    "category": 'Generic Modules/Accounting',
-    "description": """
-    """,
-    'init_xml': [],
-    "depends" : ["account"],
-    'update_xml': ["view/account_invoice_line_view.xml"],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
-}
-
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+{
+    "name": "Account Invoice Line Currency", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Accounting", 
+    "description": """
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/account_invoice_line_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
+}

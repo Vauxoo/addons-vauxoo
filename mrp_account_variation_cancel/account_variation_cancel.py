@@ -23,22 +23,21 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import osv, fields
-import decimal_precision as dp
+from openerp.osv import osv
 
 
 class mrp_production(osv.Model):
     _inherit = 'mrp.production'
 
     def create_account_variation_move_line(self, cr, uid, prod_variation,
-        src_account_id, dest_account_id, reference_amount, context=None):
+            src_account_id, dest_account_id, reference_amount, context=None):
         res = super(mrp_production, self).create_account_variation_move_line(
             cr, uid, prod_variation, src_account_id, dest_account_id,
             reference_amount, context=context)
         for lin in res:
             lin[2][
                 'production_id'] = prod_variation.production_id and\
-                                    prod_variation.production_id.id or False
+                prod_variation.production_id.id or False
         return res
 
     def action_cancel(self, cr, uid, ids, context=None):
@@ -48,7 +47,6 @@ class mrp_production(osv.Model):
         if context is None:
             context = {}
 
-        move_obj = self.pool.get('stock.move')
         result = {}
         for production in self.browse(cr, uid, ids, context=context):
             account_move_line_id = account_move_line.search(
@@ -68,4 +66,4 @@ class mrp_production(osv.Model):
                     pass
                 account_move.unlink(cr, uid, [lin[0]])
         return super(mrp_production, self).action_cancel(cr, uid, ids,
-                                                            context=context)
+                                                         context=context)

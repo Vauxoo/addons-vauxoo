@@ -23,23 +23,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
 {
-    "name" : "Wizard Project Issue Report",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "website" : "http://www.vauxoo.com",
-    "category" : "Generic Modules",
-    "depends" : ["base","project_issue"],
-    "init_xml" : [],
-    "demo_xml" : [],
+    "name": "Wizard Project Issue Report", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
     "description": """
     Print Project Issue Report.
-    """,
-    'update_xml': [
-        'wizard/wizard_project_issue.xml',
-        'report/project_issue.xml'
-    ],
-    'test':[],
-    'installable': True,
-    'active': False,
+    """, 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "project_issue"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/wizard_project_issue.xml", 
+        "report/project_issue.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-

@@ -20,24 +20,21 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, osv
+from openerp.osv import osv
 from openerp.tools.translate import _
-
-import time
-import unicodedata
 
 
 class sale_order_line(osv.Model):
-    
+
     _inherit = 'sale.order.line'
-    
+
     def sale_order_line_copy(self, cr, uid, ids, context=None):
-        data = self.copy_data(cr,uid,ids[0],context=context)
+        data = self.copy_data(cr, uid, ids[0], context=context)
         sale_order_obj = self.pool.get('sale.order')
         data_sale_order = sale_order_obj.browse(cr, uid, data.get('order_id'))
 
         if data_sale_order.state == 'draft':
-            sale_order_id = self.create(cr, uid ,data , context=context)
+            sale_order_id = self.create(cr, uid, data, context=context)
             return {
                 'type': 'ir.actions.act_window',
                 'name': _('Sales Order'),
@@ -46,7 +43,6 @@ class sale_order_line(osv.Model):
                 'view_type': 'form',
                 'view_mode': 'form',
                 'target': 'current',
-                'nodestroy': True,}
+                'nodestroy': True, }
         else:
             raise osv.except_osv(_('Error!'), _("This sale order is not in draft state"))
-    

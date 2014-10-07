@@ -24,9 +24,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
-
-from tools import config
 
 
 class res_company(osv.Model):
@@ -36,4 +33,3 @@ class res_company(osv.Model):
     _columns = {
         'header_report': fields.text('Report Header', size=1024, help='Set the header to place the report when it is not suitable for print',),
     }
-

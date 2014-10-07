@@ -24,6 +24,7 @@ from openerp.osv import fields, osv
 
 
 class account_invoice(osv.Model):
+
     """
     account_invoice
     """

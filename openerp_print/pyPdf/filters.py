@@ -52,7 +52,8 @@ except ImportError:
     # Unable to import zlib.  Attempt to use the System.IO.Compression
     # library from the .NET framework. (IronPython only)
     import System
-    from System import IO, Collections, Array
+    from System import Array
+    from System import IO
 
     def _string_to_bytearr(buf):
         retval = Array.CreateInstance(System.Byte, len(buf))
@@ -106,6 +107,7 @@ except ImportError:
 
 
 class FlateDecode(object):
+
     def decode(data, decodeParms):
         data = decompress(data)
         predictor = 1
@@ -123,13 +125,13 @@ class FlateDecode(object):
                 prev_rowdata = (0,) * rowlength
                 for row in xrange(len(data) / rowlength):
                     rowdata = [ord(x) for x in data[(
-                        row*rowlength):((row+1)*rowlength)]]
+                        row * rowlength):((row + 1) * rowlength)]]
                     filterByte = rowdata[0]
                     if filterByte == 0:
                         pass
                     elif filterByte == 1:
                         for i in range(2, rowlength):
-                            rowdata[i] = (rowdata[i] + rowdata[i-1]) % 256
+                            rowdata[i] = (rowdata[i] + rowdata[i - 1]) % 256
                     elif filterByte == 2:
                         for i in range(1, rowlength):
                             rowdata[i] = (rowdata[i] + prev_rowdata[i]) % 256
@@ -153,6 +155,7 @@ class FlateDecode(object):
 
 
 class ASCIIHexDecode(object):
+
     def decode(data, decodeParms=None):
         retval = ""
         char = ""
@@ -175,6 +178,7 @@ class ASCIIHexDecode(object):
 
 
 class ASCII85Decode(object):
+
     def decode(data, decodeParms=None):
         retval = ""
         group = []
@@ -184,7 +188,7 @@ class ASCII85Decode(object):
         data = [y for y in data if not (y in ' \n\r\t')]
         while not hitEod:
             c = data[x]
-            if len(retval) == 0 and c == "<" and data[x+1] == "~":
+            if len(retval) == 0 and c == "<" and data[x + 1] == "~":
                 x += 2
                 continue
             # elif c.isspace():
@@ -194,7 +198,7 @@ class ASCII85Decode(object):
                 assert len(group) == 0
                 retval += '\x00\x00\x00\x00'
                 continue
-            elif c == "~" and data[x+1] == ">":
+            elif c == "~" and data[x + 1] == ">":
                 if len(group) != 0:
                     # cannot have a final group of just 1 char
                     assert len(group) > 1
@@ -208,19 +212,19 @@ class ASCII85Decode(object):
                 assert c >= 0 and c < 85
                 group += [c]
             if len(group) >= 5:
-                b = group[0] * (85**4) + \
-                    group[1] * (85**3) + \
-                    group[2] * (85**2) + \
+                b = group[0] * (85 ** 4) + \
+                    group[1] * (85 ** 3) + \
+                    group[2] * (85 ** 2) + \
                     group[3] * 85 + \
                     group[4]
-                assert b < (2**32 - 1)
+                assert b < (2 ** 32 - 1)
                 c4 = chr((b >> 0) % 256)
                 c3 = chr((b >> 8) % 256)
                 c2 = chr((b >> 16) % 256)
                 c1 = chr(b >> 24)
                 retval += (c1 + c2 + c3 + c4)
                 if hitEod:
-                    retval = retval[:-4+hitEod]
+                    retval = retval[:-4 + hitEod]
                 group = []
             x += 1
         return retval

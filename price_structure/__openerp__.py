@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -23,38 +23,42 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Price Structure",
-    "version" : "0.1",
-    "depends" : ['product','sale','cost_structure'],
-    "author" : "Vauxoo",
-    "description" : """
-   This module adds a new functionality to manage price lists for products adding a new tab on the product 
+    "name": "Price Structure", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
+   This module adds a new functionality to manage price lists for products adding a new tab on the product
    view where you can see the price lists where this product is affected either by product or by category.
 
-   It also adds a new feature to the time of a sale, allowing you to choose a price list through which Live 
-   will calculate to give a product price depending on the price list q be selected, regardless of whether 
+   It also adds a new feature to the time of a sale, allowing you to choose a price list through which Live
+   will calculate to give a product price depending on the price list q be selected, regardless of whether
    the list price selected at the beginning of the order.
 
-   This also adds a blockade preventing sold when selling a product at a price higher or lower than estimated 
+   This also adds a blockade preventing sold when selling a product at a price higher or lower than estimated
    by their price lists
-    
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [ ],
-    "update_xml" : [
-    'view/product_view.xml',
-    'view/sale_view.xml',
-    'view/product_pricelist_view.xml',
-    'workflow/sale_workflow.xml',
-    'wizard/create_list_price_view.xml',
-    
-    
-    
-    
-    ],
-    "active": False,
-    "installable": True,
+
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "product", 
+        "sale", 
+        "cost_structure"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/product_view.xml", 
+        "view/sale_view.xml", 
+        "view/product_pricelist_view.xml", 
+        "workflow/sale_workflow.xml", 
+        "wizard/create_list_price_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

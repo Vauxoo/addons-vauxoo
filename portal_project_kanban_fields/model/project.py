@@ -23,13 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import osv, orm, fields
+from openerp.osv import osv, fields
 from openerp import tools
-from openerp.tools.translate import _
-from openerp import netsvc
 
 
 class portal_project(osv.Model):
+
     """ Add five fields to the project, project_url and documentation_url is in Othe Info and
     image in header.
     """
@@ -54,7 +53,7 @@ class portal_project(osv.Model):
         'image_medium': fields.function(_get_image, fnct_inv=_set_image,
                                         string="Medium-sized image", type="binary", multi="_get_image",
                                         store={
-                                        'project.project': (lambda self, cr, uid, ids, c={}: ids, ['image'], 10),
+                                            'project.project': (lambda self, cr, uid, ids, c={}: ids, ['image'], 10),
                                         },
                                         help="Medium-sized image of this contact. It is automatically "
                                         "resized as a 128x128px image, with aspect ratio preserved. "
@@ -63,7 +62,7 @@ class portal_project(osv.Model):
         'image_small': fields.function(_get_image, fnct_inv=_set_image,
                                        string="Small-sized image", type="binary", multi="_get_image",
                                        store={
-                                       'project.project': (lambda self, cr, uid, ids, c={}: ids, ['image'], 10),
+                                           'project.project': (lambda self, cr, uid, ids, c={}: ids, ['image'], 10),
                                        },
                                        help="Small-sized image of this contact. It is automatically "
                                        "resized as a 64x64px image, with aspect ratio preserved. "

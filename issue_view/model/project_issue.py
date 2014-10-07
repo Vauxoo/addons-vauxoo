@@ -1,4 +1,4 @@
- #-*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -19,14 +19,7 @@
 #
 ##############################################################################
 
-from crm import crm
-from datetime import datetime
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
-
-import binascii
-import time
-import openerp.tools as tools
 
 
 class project_issue(osv.Model):
@@ -39,4 +32,3 @@ class project_issue(osv.Model):
         'sprint_id': fields.related('task_id', 'sprint_id', relation='project.scrum.sprint', type='many2one', string='Sprint', store=True),
         'planned_hours': fields.related('task_id', 'planned_hours', type='float', string='Horas', store=False),
     }
-

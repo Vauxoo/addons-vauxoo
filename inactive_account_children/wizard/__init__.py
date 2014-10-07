@@ -1,1 +1,1 @@
-import inactive_account_wizard
+from . import inactive_account_wizard

@@ -14,28 +14,35 @@
 #You should have received a copy of the GNU General Public License      #
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name" : "Product Image Gallery",
-    "version" : "0.1 ",
-    "author" : "Sharoon Thomas, Open Labs Business Solutions",
-    "website" : "http://openlabs.co.in/",
-    "category" : "Added functionality - Product Extension",
-    "depends" : ['base','product'],
+    "name": "Product Image Gallery", 
+    "version": "0.1 ", 
+    "author": "Sharoon Thomas, Open Labs Business Solutions", 
+    "category": "Added functionality - Product Extension", 
     "description": """
     This Module implements an Image Gallery for products.
     You can add images against every product.
-    
+
     This module is generic but built for Magento ERP connector and
     the upcoming e-commerce system for Open ERP by Open Labs
-    """,
-    "init_xml": [],
-    "update_xml": [
-        'security/ir.model.access.csv',
-        'views/product_images_view.xml',
-    ],
-    "installable": True,
-    "active": False,
+    """, 
+    "website": "http://openlabs.co.in/", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "product"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/ir.model.access.csv", 
+        "views/product_images_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

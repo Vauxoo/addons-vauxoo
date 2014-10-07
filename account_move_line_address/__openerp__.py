@@ -23,23 +23,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-{
-    "name": "Account Move Line Address",
-    "version": "1.1",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/Account",
-    "website" : "http://www.vauxoo.com/",
-    "description": """ Add field address in account_move_line
-    """,
-    'depends': ['account'],
-    'init_xml': [],
-    'update_xml': [
-        'account_move_line_view.xml',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': False,
-    'active': False,
-}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+{
+    "name": "Account Move Line Address", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Account", 
+    "description": """ Add field address in account_move_line
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "account_move_line_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": False, 
+    "auto_install": False, 
+    "active": False
+}

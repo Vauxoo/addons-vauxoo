@@ -21,32 +21,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-from openerp import netsvc
-from openerp import pooler
-from openerp.osv import fields, osv, orm
+from openerp.osv import osv
 from openerp.tools.translate import _
+
 
 class account_invoice(osv.Model):
     _name = "account.invoice"
     _inherit = 'account.invoice'
-    
-    def action_validate_ref_invoice(self, cr, uid, ids, context = None):
+
+    def action_validate_ref_invoice(self, cr, uid, ids, context=None):
         invoice_obj = self.pool.get('account.invoice')
         invoice_duplicate_ids = []
         for invoice in self.browse(cr, uid, ids):
-            invoice_ids = invoice_obj.search(cr, uid, [('supplier_invoice_number', '<>', None), 
-                        ('company_id' , '=', invoice.company_id.id), ('type', '=', invoice.type)])
+            invoice_ids = invoice_obj.search(cr, uid, [('supplier_invoice_number', '<>', None),
+                        ('company_id', '=', invoice.company_id.id), ('type', '=', invoice.type)])
             if invoice.supplier_invoice_number:
                 for invoice_r in invoice_obj.browse(cr, uid, invoice_ids):
                     if invoice.id != invoice_r.id and invoice.partner_id.id == \
-                        invoice_r.partner_id.id and invoice.supplier_invoice_number.upper() == \
-                        invoice_r.supplier_invoice_number.upper() and invoice_r.state != 'cancel':
-                            invoice_duplicate_ids.append(invoice_r.id)
+                            invoice_r.partner_id.id and invoice.supplier_invoice_number.upper() == \
+                            invoice_r.supplier_invoice_number.upper() and invoice_r.state != 'cancel':
+                        invoice_duplicate_ids.append(invoice_r.id)
             if invoice_duplicate_ids:
-                raise osv.except_osv(_('Invalid Action!'), _('Error you can not validate the'\
+                raise osv.except_osv(_('Invalid Action!'), _('Error you can not validate the'
                     ' invoice with supplier invoice number duplicated.'))
         return True
 
     def invoice_validate(self, cr, uid, ids, context=None):
-        self.action_validate_ref_invoice(cr, uid, ids, context = None)
+        self.action_validate_ref_invoice(cr, uid, ids, context=None)
         return super(account_invoice, self).invoice_validate(cr, uid, ids, context=context)

@@ -22,10 +22,7 @@
 #    You should have received a copy of the GNU General Public License     #
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
-import time
-import pooler
-from report import report_sxw
-from openerp.tools.translate import _
+from openerp.report import report_sxw
 
 
 class m321_cs_report(report_sxw.rml_parse):
@@ -54,7 +51,7 @@ class m321_cs_report(report_sxw.rml_parse):
         wh_ids = obj.tax_line
         aux = []
         for wh in wh_ids:
-            aux.append(wh.tax_id.amount*100)
+            aux.append(wh.tax_id.amount * 100)
         return aux[0]
 
 report_sxw.report_sxw(
@@ -63,7 +60,7 @@ report_sxw.report_sxw(
     'addons/m321_reports/report/amd_computer_shop_report.rml',
     parser=m321_cs_report
 )
-  # 1 addons/nombre del modulo/carpeta(report)/nombre del archivo rml
-  # 2 A modo didactico vamos a poner que el modulo al que le vamos a poner el reporte es a res.partner
-  #   pero podria ser cualquier modulo.
-  # 3 report."modulo"."clase"
+# 1 addons/nombre del modulo/carpeta(report)/nombre del archivo rml
+# 2 A modo didactico vamos a poner que el modulo al que le vamos a poner el reporte es a res.partner
+#   pero podria ser cualquier modulo.
+# 3 report."modulo"."clase"

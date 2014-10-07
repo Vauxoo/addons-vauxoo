@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    d$
 #
@@ -22,46 +22,34 @@
 
 
 import xmlrpclib
-HOST='localhost'
-PORT=8069
-DB='security2'
-USER='admin'
-PASS='admin'
-url ='http://%s:%d/xmlrpc/' % (HOST,PORT)
-common_proxy = xmlrpclib.ServerProxy(url+'common')
-object_proxy = xmlrpclib.ServerProxy(url+'object')
+HOST = 'localhost'
+PORT = 8069
+DB = 'security2'
+USER = 'admin'
+PASS = 'admin'
+url = 'http://%s:%d/xmlrpc/' % (HOST, PORT)
+common_proxy = xmlrpclib.ServerProxy(url + 'common')
+object_proxy = xmlrpclib.ServerProxy(url + 'object')
 
-#######create
-#######write
-#######read
+# create
+# write
+# read
 
 
-###Me logueo
-uid = common_proxy.login(DB,USER,PASS)
-#### Creo
+# Me logueo
+uid = common_proxy.login(DB, USER, PASS)
+# Creo
 import csv
 Partners = csv.DictReader(open('demo_use.csv'))
-P={}
-A={}
+P = {}
+A = {}
 for Partner in Partners:
-    
-    P = {'name':Partner['name'],
-        'is_instructor':Partner['is_instructor'],
-        'country':Partner['pais']}
-    p = object_proxy.execute(DB,uid,PASS,'res.partner','create',P)
-    A = {'street':Partner['calle'],
-        'zip':Partner['zip'],'partner_id':p}
-    a = object_proxy.execute(DB,uid,PASS,'res.partner.address','create',A)
-    print  "se ha creado %s " % object_proxy.execute(DB,uid,PASS,'res.partner','read',[p],['name'])
 
-
-
-
-
-
-
-
-
-
-
-
+    P = {'name': Partner['name'],
+        'is_instructor': Partner['is_instructor'],
+        'country': Partner['pais']}
+    p = object_proxy.execute(DB, uid, PASS, 'res.partner', 'create', P)
+    A = {'street': Partner['calle'],
+        'zip': Partner['zip'], 'partner_id': p}
+    a = object_proxy.execute(DB, uid, PASS, 'res.partner.address', 'create', A)
+    print "se ha creado %s " % object_proxy.execute(DB, uid, PASS, 'res.partner', 'read', [p], ['name'])

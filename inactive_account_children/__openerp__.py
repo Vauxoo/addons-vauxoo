@@ -19,26 +19,32 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################ 
+################################################################################
 {
-    "name" : "Wizard that disables accounts childs ",
-    "version" : "1.0",
-    "depends" : ["account",
-    ],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Wizard that disables accounts childs ", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Accounting", 
+    "description": """
 
 Inactive account child's
 ========================
 Inactive accounts childs of select of parent
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Accounting",
-    "demo": [],
-    "test": [],
-    "data" : [
-            'wizard/inactive_account_wizard_view.xml',
-    ],
-    "active": False,
-    "installable": True,
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/inactive_account_wizard_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

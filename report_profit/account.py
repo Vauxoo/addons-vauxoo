@@ -28,7 +28,7 @@
 #
 ##############################################################################
 
-from openerp.osv import osv, fields
+from openerp.osv import osv
 
 
 class account_move_line(osv.Model):
@@ -120,4 +120,3 @@ class account_move_line(osv.Model):
         if not res:
             return False
         return res
-

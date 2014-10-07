@@ -23,9 +23,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import fields, osv, orm
+from openerp.osv import osv, fields
 from openerp.tools.translate import _
-from openerp import tools
+
 
 class purchase_requisition(osv.Model):
 
@@ -36,7 +36,7 @@ class purchase_requisition(osv.Model):
     }
 
     _defaults = {
-        'currency_id': lambda s, c, u, ctx: 
+        'currency_id': lambda s, c, u, ctx:
             s.pool.get('res.users').browse(c, u, u, context=ctx).company_id.currency_id.id,
     }
 
@@ -84,5 +84,5 @@ class purchase_requisition(osv.Model):
                             _('This operation can be done because there\'s not'
                               ' exist a pricelist with the same purchase'
                               ' requisition currency. ({pl} != {pr})'.format(
-                                **currency)))
+                                  **currency)))
         return res

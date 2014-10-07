@@ -1,1 +1,1 @@
-import search_duplicated_task
+from . import search_duplicated_task

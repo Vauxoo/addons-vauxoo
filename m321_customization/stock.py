@@ -30,6 +30,7 @@ from openerp.tools.translate import _
 
 
 class inherited_stock(osv.Model):
+
     """
     M321 Customizations for product.picking model
     """
@@ -86,13 +87,13 @@ class inherited_stock(osv.Model):
         picking_brw = self.browse(cr, uid, ids, context=context) and\
             self.browse(cr, uid, ids, context=context)[0]
         #~ print tuple([(i.product_id.name, i.product_qty) for i in picking_brw.move_lines if i.state != 'done' ])
-        if all([False for i in picking_brw.move_lines if\
-                                                    i.state == 'confirmed']):
+        if all([False for i in picking_brw.move_lines if
+                i.state == 'confirmed']):
             self.write(cr, uid, ids, {'pay_state': 'payed'}, context=context)
         else:
-            e = '\n'.join(['The product %s with quantity %s is not available.'\
+            e = '\n'.join(['The product %s with quantity %s is not available.'
                 % (
-                i.product_id.name, i.product_qty)\
+                    i.product_id.name, i.product_qty)
                 for i in picking_brw.move_lines if i.state == 'confirmed'])
             raise osv.except_osv(_(
                 'Want to pay this without picking the availability\

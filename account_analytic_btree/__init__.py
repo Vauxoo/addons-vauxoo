@@ -26,4 +26,4 @@
 ##############################################################################
 
 
-import account_analytic_btree
+from . import account_analytic_btree

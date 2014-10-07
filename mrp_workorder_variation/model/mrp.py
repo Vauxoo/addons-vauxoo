@@ -23,13 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import osv, orm, fields
-from openerp import tools
+from openerp.osv import osv, fields
 from openerp.tools.translate import _
-from openerp import netsvc
 
 
 class mrp_production_workcenter_line(osv.Model):
+
     """ This class inherits Work Order to add two fields that are handling products
     entering and products leaving in the work order
     """
@@ -46,6 +45,7 @@ class mrp_production_workcenter_line(osv.Model):
 
 
 class mrp_workorder_variation_line(osv.Model):
+
     """ This class are product lines that are received in a work order
     """
 
@@ -74,6 +74,7 @@ class mrp_workorder_variation_line(osv.Model):
 
 
 class mrp_workorder_output_variation_line(osv.Model):
+
     """ This class are product lines that are produced in a work order
     """
 

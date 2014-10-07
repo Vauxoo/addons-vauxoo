@@ -263,5 +263,24 @@
                 </form>
             </field>
         </record>
+
+        <record id="hr_expense_expense_extended_search" model="ir.ui.view">
+            <field name="name">hr.expense.expense.extended.search</field>
+            <field name="model">hr.expense.expense</field>
+            <field name="inherit_id" ref="hr_expense.view_hr_expense_filter"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='date']" position="after">
+                        <field name="partner_id"/>
+                        <field name="state"/>
+                    </xpath>
+                    <xpath expr="//group" position="inside">
+                        <filter string="Partner" domain="[]" context="{'group_by': 'partner_id'}"/>
+                        <filter string="State" domain="[]" context="{'group_by': 'state'}"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
     </data>
 </openerp>

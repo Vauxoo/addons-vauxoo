@@ -59,7 +59,6 @@ class wizard_report_variation(osv.TransientModel):
         """
         if context is None:
             context = {}
-        prod_obj = self.pool.get('product.product')
         production_obj = self.pool.get('mrp.production')
         res = super(wizard_report_variation, self).default_get(
             cr, uid, fields, context=context)
@@ -144,9 +143,9 @@ class wizard_report_variation(osv.TransientModel):
         production_ids = mrp_obj.search(
             cr, uid, [('state', 'not in', ('draft', 'cancel')),
                     ('product_id', 'in', prod_ids),
-                    ('date_finished', '>', data.get('date_start')),
-                    ('date_finished', '<', data.get('date_finished')),
-                    ('company_id', '=', company_id)])
+                ('date_finished', '>', data.get('date_start')),
+                ('date_finished', '<', data.get('date_finished')),
+                ('company_id', '=', company_id)])
         if not production_ids:
             raise osv.except_osv(_('Advice'), _(
                 'There is no production orders for the products you selected\

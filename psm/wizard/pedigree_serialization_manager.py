@@ -22,7 +22,7 @@
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class pedigree_serialization_manager(osv.TransientModel):
@@ -198,8 +198,8 @@ class pedigree_serialization_manager(osv.TransientModel):
                         spl_id = prodlot_obj.search(cr, uid, [(
                             'product_id', '=', move.product_id.id), ('name', '=', line)])
                         if spl_id:
-                            prodlot_obj.write(cr, uid, [spl_id], {'check_serial': True, 'ref':  self.pool.get(
-                                'ir.sequence').get(cr, uid, 'psm.stock.production.lot')+':'+picking.name})
+                            prodlot_obj.write(cr, uid, [spl_id], {'check_serial': True, 'ref': self.pool.get(
+                                'ir.sequence').get(cr, uid, 'psm.stock.production.lot') + ':' + picking.name})
 
                             prodlot_brw = prodlot_obj.browse(
                                 cr, uid, [spl_id], context=context)[0]
@@ -218,7 +218,7 @@ class pedigree_serialization_manager(osv.TransientModel):
                                 prodlot_id = prodlot_obj.create(cr, uid, {
                                     'name': line,
                                     'product_id': move.product_id.id,
-                                    'ref':  self.pool.get('ir.sequence').get(cr, uid, 'psm.stock.production.lot')+':'+picking.name,
+                                    'ref': self.pool.get('ir.sequence').get(cr, uid, 'psm.stock.production.lot') + ':' + picking.name,
                                     'check_serial': check_aux,
                                     'company_id': picking.company_id.id,
                                 }, context=context)
@@ -230,7 +230,7 @@ class pedigree_serialization_manager(osv.TransientModel):
                             prodlot_id = prodlot_obj.create(cr, uid, {
                                 'name': line,
                                 'product_id': move.product_id.id,
-                                'ref':  self.pool.get('ir.sequence').get(cr, uid, 'psm.stock.production.lot')+':'+picking.name,
+                                'ref': self.pool.get('ir.sequence').get(cr, uid, 'psm.stock.production.lot') + ':' + picking.name,
                                 'check_serial': check_aux,
                                 'company_id': picking.company_id.id,
                             }, context=context)
@@ -261,5 +261,3 @@ class pedigree_serialization_manager(osv.TransientModel):
             if res:
                 raise osv.except_osv(_('Error !'), _(
                     'These serial already exist %s ') % '\n'.join(res))
-
-

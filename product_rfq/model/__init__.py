@@ -1,2 +1,2 @@
-import product
+from . import product
 

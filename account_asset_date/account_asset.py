@@ -27,15 +27,11 @@
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
-import release
-import decimal_precision as dp
-
-import time
 
 class account_asset_asset(osv.Model):
     _inherit = 'account.asset.asset'
-    
-    _columns={
-        'purchase_date': fields.date('Purchase Date', required=True, readonly=True, states={'draft':[('readonly',False)]}, help = _('Depreciation start date')),
-        'date_acquisition': fields.date('Date Acquisition', help = _('Date acquisition'))
+
+    _columns = {
+        'purchase_date': fields.date('Purchase Date', required=True, readonly=True, states={'draft': [('readonly', False)]}, help=_('Depreciation start date')),
+        'date_acquisition': fields.date('Date Acquisition', help=_('Date acquisition'))
     }

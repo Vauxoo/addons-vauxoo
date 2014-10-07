@@ -23,7 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import osv, fields
+from openerp.osv import osv
 
 
 class procurement_order(osv.Model):
@@ -36,9 +36,9 @@ class procurement_order(osv.Model):
         cat_prod = self.browse(
             cr, uid, ids, context=context)[0].product_id.categ_id
         loc_src = cat_prod.location_src_id and\
-                    cat_prod.location_src_id.id or False
+            cat_prod.location_src_id.id or False
         loc_dest = cat_prod.location_dest_id and\
-                    cat_prod.location_dest_id.id or False
+            cat_prod.location_dest_id.id or False
         if loc_src:
             mrp_prod_obj.write(cr, uid, res.values()[
                                0], {'location_src_id': loc_src})

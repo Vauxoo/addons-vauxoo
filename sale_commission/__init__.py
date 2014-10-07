@@ -1,2 +1,2 @@
 # -*- encoding: utf-8 -*-
-import sale_commission
+from . import sale_commission

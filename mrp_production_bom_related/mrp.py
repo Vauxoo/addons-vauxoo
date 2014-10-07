@@ -24,7 +24,7 @@
 #
 ##############################################################################
 from openerp.osv import osv, fields
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class mrp_production(osv.Model):
@@ -41,6 +41,6 @@ class mrp_production(osv.Model):
                 relation='product.uom', string='Bom UoM',
                 store=True, readonly=True,
                 states={'draft': [('readonly', False)]},
-                help="BoM's UoM to change from production order"
-                                  ),
+            help="BoM's UoM to change from production order"
+        ),
     }

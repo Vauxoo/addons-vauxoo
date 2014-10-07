@@ -106,5 +106,5 @@ class sale_order(osv.Model):
                     self.browse(cr, uid, id, context=context).name)
                 raise osv.except_osv(_(
                     'Exceeded Committed Products in Sale Order'),
-                    note+res['note'])
+                    note + res['note'])
         return True

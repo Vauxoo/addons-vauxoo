@@ -4,7 +4,6 @@ Created on Tue Jun 12 09:56:42 2012
 
 @author: truiz
 """
-from sys import argv
 import xlrd
 import xmlrpclib
 from datetime import datetime
@@ -17,10 +16,8 @@ def loadProjectsTasks(fileName, HOST, PORT, DB, USER, PASS):
 
     ''' Objects needed for rpc calls '''
     url = 'http://%s:%d/xmlrpc/' % (HOST, PORT)
-    common_proxy = xmlrpclib.ServerProxy(url+'common')
-    object_proxy = xmlrpclib.ServerProxy(url+'object')
-    wizard_proxy = xmlrpclib.ServerProxy(url+'wizard')
-    workflow_proxy = xmlrpclib.ServerProxy(url+'workflow')
+    common_proxy = xmlrpclib.ServerProxy(url + 'common')
+    object_proxy = xmlrpclib.ServerProxy(url + 'object')
     uid = common_proxy.login(DB, USER, PASS)
 
     ID_ADDR = 1
@@ -85,7 +82,7 @@ def loadProjectsTasks(fileName, HOST, PORT, DB, USER, PASS):
                 'type_id': int(issue[5]),
                 'partner_id': int(issue[6]),
                 'partner_address_id': addr,
-                'state':  'open',
+                'state': 'open',
                 'description': issue[8].encode('ascii', 'ignore'),
                 'email_from': issue[4] and user_mail['user_email'] or None,
                 'active': True,

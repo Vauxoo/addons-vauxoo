@@ -24,23 +24,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "Invoice Date Time",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization",
-    "description" : """
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
-        "account",
-    ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-    ],
-    "installable" : True,
-    "active" : False,
+    "name": "Invoice Date Time", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Localization", 
+    "description": """
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

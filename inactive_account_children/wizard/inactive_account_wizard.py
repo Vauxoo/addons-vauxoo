@@ -37,7 +37,7 @@ class inactive_account_wizard(osv.osv_memory):
         for data in self.browse(cr, uid, ids):
             for acc in data.account_ids:
                 account_ids = account_obj.search(cr, uid, [
-                                        ('id', 'child_of', acc.id)])
+                    ('id', 'child_of', acc.id)])
                 accounts = account_obj.browse(cr, uid, account_ids)
                 for account_children in accounts:
                     self._check_moves(cr, uid, account_children.id,
@@ -48,24 +48,24 @@ class inactive_account_wizard(osv.osv_memory):
         return True
 
     def _check_moves(self, cr, uid, ids, method, account=None,
-                                                        context=None):
+                     context=None):
         account_obj = self.pool.get('account.account')
         line_obj = self.pool.get('account.move.line')
         account_ids = account_obj.search(
             cr, SUPERUSER_ID, [('id', 'child_of', ids)])
         if line_obj.search(cr, uid,
-                            [('account_id', 'in', account_ids)]):
+                           [('account_id', 'in', account_ids)]):
             if method == 'write':
                 raise osv.except_osv(_('Error!'), _(
-                    'You cannot deactivate an account '\
-                     'that contains journal items.'))
+                    'You cannot deactivate an account '
+                    'that contains journal items.'))
             elif method == 'unlink':
                 raise osv.except_osv(_('Error!'), _(
-                    'You cannot remove an account that '\
-                        'contains journal items.'))
+                    'You cannot remove an account that '
+                    'contains journal items.'))
         # Checking whether the account is set as a property to any
         #~ Partner or not
-        
+
         value = 'account.account,' + str(ids)
         partner_prop_acc = self.pool.get('ir.property').search(cr,
             uid, [('value_reference', '=', value)], context=context)
@@ -76,8 +76,8 @@ class inactive_account_wizard(osv.osv_memory):
             conc_acc = conc_acc + '\nIds Property:'
             for proper in partner_prop_acc:
                 conc_acc = conc_acc + '\n- ' + str(proper)
-            raise osv.except_osv(_('Warning!'), _('You cannot '\
-                'remove/deactivate an account which is set on a '\
+            raise osv.except_osv(_('Warning!'), _('You cannot '
+                'remove/deactivate an account which is set on a '
                 'customer or supplier.') + conc_acc)
         return True
 

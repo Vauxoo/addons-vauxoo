@@ -26,7 +26,7 @@
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class mrp_production(osv.Model):
@@ -67,7 +67,7 @@ class mrp_production(osv.Model):
             for pro in bom_obj.browse(cr, uid, [bom_id]):
                 val = {
                     'product_id': pro.product_id and
-                                pro.product_id.id or False,
+                    pro.product_id.id or False,
                     'quantity': production.product_qty,
                     'product_uom': production.product_uom.id,
                     'production_id': production.id
@@ -96,5 +96,5 @@ class mrp_pt_planified(osv.Model):
         if product_id:
             product = product_product.browse(cr, uid, product_id)
             return {'value': {'product_uom': product.uom_id and
-                                            product.uom_id.id}}
+                              product.uom_id.id}}
         return {'value': {'product_uom': False}}

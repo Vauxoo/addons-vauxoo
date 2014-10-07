@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -22,33 +22,34 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name" : "l10n-co-stock-count"                                  ,
-    "version" : "0.1"                                               ,
-    "depends" : ['base'                                             ,
-                 'stock'                                            ,
-                 'product'                                          ,
-                ]                                                   ,
-    "author" : "Vauxoo"                                  ,
-    "description" : """
+    "name": "l10n-co-stock-count", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
                 - Reporte de la Hoja de Conteo de Inventario.
                 - Reporte del Total de Invenatrio.
-                    """                                             ,
-    "website" : "http://wiki.openerp.org.ve/"                       ,
-    "category" : "Generic Modules"                                  ,
-    "init_xml" : [
-    ]                                                               ,
-    "demo_xml" : [
-    ]                                                               ,
-    "update_xml" : [
-                'stock_report.xml'                           ,  
-                'wizard/stock_count_view.xml'                           ,  
-                'wizard/stock_qty_view.xml'                       ,
-                
-    ]                                                               ,
-    "active": False                                                 ,
-    "installable": True                                             ,
+                    """, 
+    "website": "http://wiki.openerp.org.ve/", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "stock", 
+        "product"
+    ], 
+    "demo": [], 
+    "data": [
+        "stock_report.xml", 
+        "wizard/stock_count_view.xml", 
+        "wizard/stock_qty_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

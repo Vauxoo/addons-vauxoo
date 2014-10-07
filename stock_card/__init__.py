@@ -23,9 +23,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-import stock
-import report_profit_picking
-import stock_card
-import report
+from . import stock
+from . import report_profit_picking
+from . import stock_card
+from . import report
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

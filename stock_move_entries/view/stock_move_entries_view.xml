@@ -15,11 +15,11 @@
                 </xpath>
         </field>
     </record>
-    
+
 <!--
     Account Move Extension
   -->
-  
+
     <record id="view_stock_move_form_inherit" model="ir.ui.view">
         <field name="name">stock.move.form.inherit</field>
         <field name="model">stock.move</field>
@@ -28,6 +28,38 @@
                 <xpath expr="//field[@name='product_id']" position="after">
                     <field name="am_id"/>
                 </xpath>
+        </field>
+    </record>
+
+    <record id="view_stock_move_entries_picking_in_form" model="ir.ui.view">
+        <field name="name">stock.picking.in.entries</field>
+        <field name="model">stock.picking.in</field>
+        <field name="inherit_id" ref="stock.view_picking_in_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@string='Additional Info']" position="inside">
+                <group>
+                    <group>
+                        <button string="Show Journal Entries" name="show_journal_entries" type="object" states="done"/>
+                        <button string="Show Entry Lines" name="show_entry_lines" type="object" states="done"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_stock_move_entries_picking_out_form" model="ir.ui.view">
+        <field name="name">stock.picking.out.entries</field>
+        <field name="model">stock.picking.out</field>
+        <field name="inherit_id" ref="stock.view_picking_out_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@string='Additional Info']" position="inside">
+                <group>
+                    <group>
+                        <button string="Show Journal Entries" name="show_journal_entries" type="object" states="done"/>
+                        <button string="Show Entry Lines" name="show_entry_lines" type="object" states="done"/>
+                    </group>
+                </group>
+            </xpath>
         </field>
     </record>
   </data>

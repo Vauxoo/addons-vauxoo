@@ -24,29 +24,24 @@
 #
 #
 
-from openerp.tools.translate import _
 from openerp.osv import fields, osv
-from openerp import pooler, tools
 
 
 class employee_user_wizard(osv.TransientModel):
     _name = 'employee.user.wizard'
-    
+
     def default_get(self, cr, uid, fields, context=None):
         if context is None:
             context = {}
-    
+
         res = super(employee_user_wizard, self).default_get(cr, uid, fields, context=context)
         user_ids = context.get('active_ids', False)
         if user_ids:
             all_ids = self.get_unconfigured_cmp(cr, uid, context)
-            user_ids = [i for i in user_ids if i in all_ids] 
+            user_ids = [i for i in user_ids if i in all_ids]
             res.update({'user_ids': user_ids})
 
-    
-    
         return res
-    
 
     _columns = {
         'user_ids': fields.many2many('res.users', 'res_users_wizard_rel', 'user_wizard_id', 'user_id', 'Users'),
@@ -60,10 +55,9 @@ class employee_user_wizard(osv.TransientModel):
         """ get the list of users that have not been configured yet """
         if context is None:
             context = {}
-        cmp_select = []
         user_ids = self.pool.get('res.users').search(
             cr, uid, [], context=context)
-        cr.execute("""SELECT users.id FROM res_users as users 
+        cr.execute("""SELECT users.id FROM res_users as users
                                         JOIN resource_resource as resource
                                         ON resource.user_id = users.id  GROUP BY users.id""")
         configured_cmp = [r[0] for r in cr.fetchall()]
@@ -115,33 +109,10 @@ class employee_user_wizard(osv.TransientModel):
             result = mod_obj.get_object_reference(cr, uid, 'hr', 'open_view_employee_list_my')
             id = result and result[1] or False
             result = act_obj.read(cr, uid, [id], context=context)[0]
-            #choose the view_mode accordingly
-            result['domain'] = "[('id','in',["+','.join(map(str, employee_list))+"])]"
+            # choose the view_mode accordingly
+            result['domain'] = "[('id','in',[" + ','.join(map(str, employee_list)) + "])]"
             result['res_id'] = employee_list and employee_list[0] or False
-            #choose the order 
+            # choose the order
             result['views'] = [(False, u'tree'), (False, u'kanban'), (False, u'form')]
             return result
         return True
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        

@@ -27,14 +27,12 @@
 
 
 from openerp.osv import osv, fields
-import decimal_precision as dp
 
 
 class project_task(osv.Model):
     _inherit = 'project.task'
 
     def _hours_get(self, cr, uid, ids, field_names, args, context=None):
-        res = {}
         data = super(project_task, self)._hours_get(
             cr, uid, ids, field_names, args, context=context)
         empl_obj = self.pool.get('hr.employee')
@@ -54,25 +52,25 @@ class project_task(osv.Model):
 
     def _get_task(self, cr, uid, ids, context=None):
         return super(project_task, self)._get_task(cr, uid, ids,
-                                                    context=context)
+                                                   context=context)
 
     _columns = {
         'effective_hours': fields.function(_hours_get, method=True,
                 string='Hours Spent', multi='hours',
                 help="Computed using the sum of the task work done.",
                 store={
-                   'project.task': (lambda self, cr, uid, ids, c={}: ids,
+                    'project.task': (lambda self, cr, uid, ids, c={}: ids,
                         ['work_ids', 'remaining_hours', 'planned_hours'], 10),
-                   'project.task.work': (_get_task, ['hours'], 10),
-                   }),
+                    'project.task.work': (_get_task, ['hours'], 10),
+                }),
         'total_hours': fields.function(_hours_get, method=True,
                 string='Total Hours', multi='hours',
                 help="Computed as: Time Spent + Remaining Time.",
                 store={
-                   'project.task': (lambda self, cr, uid, ids, c={}: ids,
+                    'project.task': (lambda self, cr, uid, ids, c={}: ids,
                         ['work_ids', 'remaining_hours', 'planned_hours'], 10),
-                   'project.task.work': (_get_task, ['hours'], 10),
-                   }),
+                    'project.task.work': (_get_task, ['hours'], 10),
+                }),
         'progress': fields.function(_hours_get, method=True,
                 string='Progress (%)',
                 multi='hours',
@@ -81,7 +79,7 @@ class project_task(osv.Model):
                 store={
                     'project.task': (lambda self, cr, uid, ids, c={}: ids,
                         ['work_ids', 'remaining_hours', 'planned_hours',
-                                                                'state'], 10),
+                         'state'], 10),
                     'project.task.work': (_get_task, ['hours'], 10),
                 }),
         'delay_hours': fields.function(_hours_get, method=True,
@@ -89,12 +87,11 @@ class project_task(osv.Model):
                 help="Computed as difference of the time estimated by the\
                         project manager and the real time to close the task.",
                 store={
-                   'project.task': (lambda self, cr, uid, ids, c={}: ids,
+                    'project.task': (lambda self, cr, uid, ids, c={}: ids,
                         ['work_ids', 'remaining_hours', 'planned_hours'], 10),
-                   'project.task.work': (_get_task, ['hours'], 10),
-               }),
+                    'project.task.work': (_get_task, ['hours'], 10),
+                }),
         'cost_per_task': fields.float('Cost', readonly=True,
                 help="Computed as: Hour Cost multiplied by Job Hours"),
 
     }
-

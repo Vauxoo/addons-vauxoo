@@ -24,10 +24,9 @@
 #
 ##############################################################################
 
-from openerp.tools.translate import _
 
 from openerp.osv import osv, fields
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class account_move(osv.Model):
@@ -55,10 +54,10 @@ class account_move(osv.Model):
                                string='Total debit', method=True,
                                digits_compute=dp.get_precision(
                                    'Account'),
-                               type='float', multi="total_credit_debit"),
+            type='float', multi="total_credit_debit"),
         'total_credit': fields.function(_sum_credit_debit,
                                 string='Total credit', method=True,
                                 digits_compute=dp.get_precision(
                                     'Account'),
-                                type='float', multi="total_credit_debit"),
+            type='float', multi="total_credit_debit"),
     }

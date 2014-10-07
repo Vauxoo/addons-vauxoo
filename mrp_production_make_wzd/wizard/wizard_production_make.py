@@ -24,7 +24,6 @@
 #
 ##############################################################################
 from openerp.osv import osv, fields
-import decimal_precision as dp
 import time
 from openerp.tools.translate import _
 
@@ -59,19 +58,19 @@ class wizard_production_make(osv.TransientModel):
                 data_product = product_obj.browse(
                     cr, uid, product.id, context=context).uom_id.id
                 if not product.categ_id.location_src_id.id and not\
-                products.location_src_id.id:
+                        products.location_src_id.id:
                     raise osv.except_osv(_('Error!'), _(
                         "Not set a location of raw material for the product: "
-                        +product.name))
+                        + product.name))
                 if not product.categ_id.location_dest_id.id and not\
-                products.location_dest_id.id:
+                        products.location_dest_id.id:
                     raise osv.except_osv(_('Error!'), _(
                         "Not set a location of finished products for the\
-                        product: "+product.name))
+                        product: " + product.name))
                 location_src = product.categ_id.location_src_id.id or\
-                                products.location_src_id.id
+                    products.location_src_id.id
                 location_dest = product.categ_id.location_dest_id.id or\
-                                products.location_dest_id.id
+                    products.location_dest_id.id
                 production_id = production_obj.create(cr, uid, {
                     'product_id': product.id,
                     'product_qty': '1.0',

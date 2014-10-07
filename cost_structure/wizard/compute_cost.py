@@ -24,14 +24,9 @@
 ##########################################################################
 
 from openerp.osv import osv, fields
-import openerp.tools as tools
 from openerp.tools.translate import _
 
-from tools import config
-import openerp.netsvc as netsvc
-import decimal_precision as dp
 from DateTime import DateTime
-import time
 import datetime
 invo_cost = {}
 
@@ -78,10 +73,10 @@ class compute_cost(osv.TransientModel):
         rec_vent = {}
         [rec_com.update({invoice_obj.browse(cr, uid, e[-1],
                             context=context).parent_id.id:e[0]})
-                            for i in dic_nc_com for e in dic_nc_com.get(i)]
+         for i in dic_nc_com for e in dic_nc_com.get(i)]
         [rec_vent.update({invoice_obj.browse(cr, uid, h[-1],
                             context=context).parent_id.id:h[0]})
-                            for g in dic_nc_vent for h in dic_nc_vent.get(g)]
+         for g in dic_nc_vent for h in dic_nc_vent.get(g)]
         cont = 0
         cont_qty = 0
         price = 0
@@ -99,7 +94,7 @@ class compute_cost(osv.TransientModel):
 
             for d in dic_vent.get(i):
                 cont = d[-1] in rec_vent.keys() and\
-                                            (cont + d[0]) - rec_vent.get(d[-1],
+                    (cont + d[0]) - rec_vent.get(d[-1],
                                             False) or cont + d[0]
 
                 if cont <= qty_aux:
@@ -117,11 +112,11 @@ class compute_cost(osv.TransientModel):
         cont_qty = cont + cont_qty
         if price and cont_qty or cont:
 
-            cost = price / (cont_qty > 0 and cont_qty or cont > 0 and cont)
+            price / (cont_qty > 0 and cont_qty or cont > 0 and cont)
         return True
 
     def search_invoice(self, cr, uid, ids, dict, type, period, company, date,
-                        context=None):
+                       context=None):
         '''
         Return a list of invoices ids that have products sended in the dict
         #~ ('period_id','=',period),
@@ -151,7 +146,7 @@ class compute_cost(osv.TransientModel):
         return invo_ids
 
     def compute_actual_cost(self, cr, uid, ids, dic_comp, dic_vent, dic_nc_com,
-                                                    dic_nc_vent, context={}):
+                            dic_nc_vent, context={}):
         '''
         Method that performs the actual average cost, receiving the dictionaries of every movement,
         to perform the calculations for caesarean
@@ -193,12 +188,12 @@ class compute_cost(osv.TransientModel):
                     time = date and date[2].split(' ')
                     time = time and time[1].split(":")
                     date = date and time and datetime.datetime(
-                                                        int(date[0]),
-                                                        int(date[1]),
-                                                        int(date[2][0:2]),
-                                                        int(time[0]),
-                                                        int(time[1]),
-                                                        int(time[2])) or False
+                        int(date[0]),
+                        int(date[1]),
+                        int(date[2][0:2]),
+                        int(time[0]),
+                        int(time[1]),
+                        int(time[2])) or False
                     date = date and date + datetime.timedelta(
                         seconds=1) or dat.strftime('%Y/%m/%d %H:%M:%S')
 
@@ -216,7 +211,7 @@ class compute_cost(osv.TransientModel):
                                               context=context)
 
                         if product_brw.property_cost_structure and\
-                        product_brw.cost_ult > 0:
+                                product_brw.cost_ult > 0:
                             product_obj.write(cr, uid, [product_brw.id],
                                   {'cost_ult': cost,
                                    'date_cost_ult': date,
@@ -231,7 +226,7 @@ class compute_cost(osv.TransientModel):
                                    and product_brw.ult_om.id
                                    or [],
                                    'date_ant_om': product_brw.date_ult_om},
-                                  context=context)
+                                context=context)
                         else:
                             product_obj.write(cr, uid, [product_brw.id],
                                               {'cost_ult': cost,
@@ -240,11 +235,11 @@ class compute_cost(osv.TransientModel):
                                                and aux.get(i)[1],
                                                'ult_om': aux.get(i)[-1] or [],
                                                'date_ult_om': date},
-                                                            context=context)
+                                              context=context)
         return aux
 
     def update_dictionary(self, cr, uid, ids, dict, inv_ids, purchase,
-                            context=None):
+                          context=None):
         '''
         Update a dict send with move all this product
         '''
@@ -293,7 +288,7 @@ class compute_cost(osv.TransientModel):
         product_obj = self.pool.get('product.product')
         invoice_line_obj = self.pool.get('account.invoice.line')
         aux = {}
-        dat = DateTime()
+        DateTime()
         list = []
         for i in dic_comp:
             aux.update({i: []})
@@ -320,14 +315,14 @@ class compute_cost(osv.TransientModel):
                              2] for a in dic_vent.get(i) if eval(evalu)]))
 
                     if d == 0:
-                        cost = qty > 0 and price/qty
+                        cost = qty > 0 and price / qty
                         date = aux2[5]
                         qty_aux = cost and qty
                         price_aux = cost and price
                         aux[i].append((cost, aux2[5], qty))
                         list.append((cost, aux2[5]))
                         aux2[6] and invoice_line_obj.write(cr, uid, aux2[6],
-                                                           {'aux_financial': cost*qty,
+                                                           {'aux_financial': cost * qty,
                                                             'aux_qty': qty},
                                                            context=context)
                         evalu = 'DateTime(a[5]) > DateTime(date) and  \
@@ -337,14 +332,14 @@ class compute_cost(osv.TransientModel):
                     else:
                         qty = qty + qty_aux
                         price = price + price_aux
-                        cost = qty > 0 and price/qty
+                        cost = qty > 0 and price / qty
                         date = aux2[5]
                         qty_aux = cost and qty
                         price_aux = cost and price
                         aux[i].append((cost, aux2[5], qty))
                         list.append((cost, aux2[5]))
                         aux2[6] and invoice_line_obj.write(cr, uid, aux2[6],
-                                           {'aux_financial': cost*qty,
+                                           {'aux_financial': cost * qty,
                                             'aux_qty': qty}, context=context)
 
                         evalu = 'DateTime(a[5]) > DateTime(date) and  \
@@ -386,20 +381,20 @@ class compute_cost(osv.TransientModel):
                                'in_invoice'),
                               ('company_id',
                                '=', company_id),
-                                ('date_invoice', '<', invo_brw.parent_id.date_invoice)],
-                                order='date_invoice')
+                              ('date_invoice', '<', invo_brw.parent_id.date_invoice)],
+                    order='date_invoice')
 
                 inv_ids and [lista.append((d[3],
                                  line.aux_qty and (d[3] * (
-                                     line.aux_financial/line.aux_qty)),
-                                 line.aux_qty and (
-                                     line.aux_financial/line.aux_qty),
-                                 d[4], d[0], d[5]))
-                 for invo in invoice_obj.browse(cr, uid, [inv_ids[-1]],
+                                     line.aux_financial / line.aux_qty)),
+                    line.aux_qty and (
+                                     line.aux_financial / line.aux_qty),
+                    d[4], d[0], d[5]))
+                    for invo in invoice_obj.browse(cr, uid, [inv_ids[-1]],
                      context=context)
-                     for line in invo.invoice_line if line and
-                         line.product_id and
-                         line.product_id.id == product_id]
+                    for line in invo.invoice_line if line and
+                    line.product_id and
+                    line.product_id.id == product_id]
                 #~ lista and invoice_line_obj.write(cr,uid,d[6],{'aux_financial':lista and lista[2]},context=context)
                 return lista
 
@@ -419,12 +414,12 @@ class compute_cost(osv.TransientModel):
             except:
                 pass
                 #~ raise osv.except_osv(_('Invalid action !'),_("Impossible to calculate the actual cost, because the invoice '%s' \
-                                                             #~ does not have a valid date format, to place its cost at \
-                                                            #~ the time of sale ")% (invo_brw.id))
+                #~ does not have a valid date format, to place its cost at \
+                #~ the time of sale ")% (invo_brw.id))
         return lista
 
     def compute_cost(self, cr, uid, ids, context=None, products=False,
-                            period=False, fifo=False, lifo=False, date=False):
+                     period=False, fifo=False, lifo=False, date=False):
         '''
         Method to compute coste from porduct invoice from a wizard or called from other method
 
@@ -440,7 +435,6 @@ class compute_cost(osv.TransientModel):
         invo_obj = self.pool.get('account.invoice')
         invo_line_obj = self.pool.get('account.invoice.line')
         global invo_cost
-        cost_obj = self.pool.get('cost.structure')
         product_obj = self.pool.get('product.product')
         wz_brw = products or ids and self.browse(
             cr, uid, ids and ids[0], context=context)
@@ -466,7 +460,6 @@ class compute_cost(osv.TransientModel):
             aux_dic_nc_vent = {}
             dic_nc_com = {}
             dic_nc_vent = {}
-            aux_cancel = False
             [(dic_comp.update({i.id: []}), dic_vent.update({i.id: []}),
               dic_nc_com.update({i.id: []}), aux_dic_vent.update({i.id: []}),
               aux_dic_nc_vent.update({i.id: []}), dic_nc_vent.update({i.id: []})) for i in products]
@@ -476,10 +469,10 @@ class compute_cost(osv.TransientModel):
             date_aux = [i.date_cost_ult for i in product_brw if i.cost_ult > 0]
             date_aux.sort(reverse=True)
             products_date = date_aux and date \
-                            and DateTime(date) < DateTime(date_aux[-1]) \
-                            and [date] or date_aux \
-                            and DateTime(date_aux[-1]) < DateTime(date) \
-                            and [date_aux[-1]] or [date]
+                and DateTime(date) < DateTime(date_aux[-1]) \
+                and [date] or date_aux \
+                and DateTime(date_aux[-1]) < DateTime(date) \
+                and [date_aux[-1]] or [date]
             products_date.sort(reverse=True)
             #~  Select quantity and cost of product from supplier invoice
             if not context.get('invoice_cancel'):
@@ -518,86 +511,86 @@ class compute_cost(osv.TransientModel):
             #~ -------------  Generate a dict with line values of invoices by p
 
             dic_comp =  invo_com_ids and \
-                        self.update_dictionary(cr, uid, ids, dic_comp,
-                                               invo_com_ids, True,
-                                               context=context) or dic_comp
+                self.update_dictionary(cr, uid, ids, dic_comp,
+                                   invo_com_ids, True,
+                                   context=context) or dic_comp
 
             dic_vent = invo_ven_ids and \
-                       self.update_dictionary(cr, uid, ids, dic_vent,
+                self.update_dictionary(cr, uid, ids, dic_vent,
                                invo_ven_ids, False, context=context) or dic_vent
 
             aux_dic_vent = invo_ven_ids and \
-                           self.update_dictionary(cr, uid, ids, aux_dic_vent,
+                self.update_dictionary(cr, uid, ids, aux_dic_vent,
                             invo_ven_ids, False, context=context) or aux_dic_vent
 
             dic_nc_com = invo_nc_com_ids and \
-                         self.update_dictionary(cr, uid, ids, dic_nc_com,
+                self.update_dictionary(cr, uid, ids, dic_nc_com,
                            invo_nc_com_ids, False, context=context) or dic_nc_com
 
             dic_nc_vent = invo_nc_ven_ids and \
-                          self.update_dictionary(cr, uid, ids, dic_nc_vent,
+                self.update_dictionary(cr, uid, ids, dic_nc_vent,
                            invo_nc_ven_ids, True, context=context) or dic_nc_vent
 
             aux_dic_nc_vent = invo_nc_ven_ids and \
-                              self.update_dictionary(cr, uid, ids,
-                                      aux_dic_nc_vent, invo_nc_ven_ids,
-                                       True, context=context) or aux_dic_nc_vent
+                self.update_dictionary(cr, uid, ids,
+                                   aux_dic_nc_vent, invo_nc_ven_ids,
+                                   True, context=context) or aux_dic_nc_vent
 
             for i in dic_comp:  # Ciclo por cada uno de los productos
                 if dic_comp.get(i, False):  # Validar valores en la compras
                     ids_inv = {}
                     if context.get('invoice_cancel'):
                         dic_comp[i] and dic_comp[i][0] \
-                                and (dic_comp[i][0][7] - dic_comp[i][0][2]) >= 0 and \
-                                dic_comp[i].insert(0, (False,
+                            and (dic_comp[i][0][7] - dic_comp[i][0][2]) >= 0 and \
+                            dic_comp[i].insert(0, (False,
                                 ((dic_comp[i][0][7] - dic_comp[i][0][2]) /
                                 ((dic_comp[i][0][8] - dic_comp[i][0][3]) > 0
                                 and (
                                     dic_comp[
                                         i][0][8] - dic_comp[i][0][3]) or 1)),
-                                 (dic_comp[i][0][7] - dic_comp[i][0][2]),
-                                 (dic_comp[i][0][8] - dic_comp[i][0][3]),
-                                  dic_comp[i][0][4], dic_comp[i][0][5], False, 0, 0))
+                                (dic_comp[i][0][7] - dic_comp[i][0][2]),
+                                (dic_comp[i][0][8] - dic_comp[i][0][3]),
+                                dic_comp[i][0][4], dic_comp[i][0][5], False, 0, 0))
 
                         len(dic_comp[i]) > 1 and  \
-                                invo_line_obj.write(
-                                    cr, uid, [dic_comp[i][1][6]],
-                               {'aux_financial': (dic_comp[i][1][7] - dic_comp[i][1][2]),
-                                'aux_qty': (dic_comp[i][1][8] - dic_comp[i][1][3])},
-                                 context=context)
+                            invo_line_obj.write(
+                            cr, uid, [dic_comp[i][1][6]],
+                            {'aux_financial': (dic_comp[i][1][7] - dic_comp[i][1][2]),
+                             'aux_qty': (dic_comp[i][1][8] - dic_comp[i][1][3])},
+                            context=context)
 
                         print "dic_comp[i]", dic_comp[i]
                         len(dic_comp[
                             i]) > 1 and invo_obj.write(
                                 cr, uid, [dic_comp[i][1][0]],
-                                        {'cancel_check': True}, context=context) or invo_obj.write(cr, uid, [dic_comp[i][0][0]],
+                            {'cancel_check': True}, context=context) or invo_obj.write(cr, uid, [dic_comp[i][0][0]],
                                         {'cancel_check': True}, context=context)
                         len(dic_comp[i]) > 1 and dic_comp[i].pop(
                             1)  # Grabo en la factura que ya fue cancelada
 
                     dic_comp[i][0][0] is not False and dic_comp[i][0][9] and dic_comp[i][0][7] > 0 and \
-                    dic_comp[i].insert(
+                        dic_comp[i].insert(
                         0, (False, (dic_comp[
-                            i][0][7]/dic_comp[i][0][8]), dic_comp[i][0][7], dic_comp[i][0][8], dic_comp[i][0][4],
-                                          dic_comp[i][0][5], 0.0, 0.0))  # Inserto en la lista de la compra el calculo del costo anterior porque la factura fue cancelada
+                            i][0][7] / dic_comp[i][0][8]), dic_comp[i][0][7], dic_comp[i][0][8], dic_comp[i][0][4],
+                            dic_comp[i][0][5], 0.0, 0.0))  # Inserto en la lista de la compra el calculo del costo anterior porque la factura fue cancelada
 
                     if dic_comp[i][0][0] is not False and not dic_comp[i][0][9] and dic_comp[i][0][7] <= 0:
                         inv_ids = invo_obj.search(
                             cr, uid, [('invoice_line.product_id', '=', i),
-                                                    ('type', '=',
-                                                     'in_invoice'),
-                                                    ('company_id',
-                                                     '=', company_id),
-                                                    ('date_invoice', '<', dic_comp[i][0][5])],
-                                                    order='date_invoice')
+                                      ('type', '=',
+                                       'in_invoice'),
+                                      ('company_id',
+                                       '=', company_id),
+                                      ('date_invoice', '<', dic_comp[i][0][5])],
+                            order='date_invoice')
                         inv_ids and [dic_comp[i].insert(
-                            0, (invo.id, line.aux_qty and (line.aux_financial/line.aux_qty), line.aux_financial,
-                                                      line.aux_qty, line.uos_id and
-                                                      line.uos_id.id, invo.date_invoice, line.id, line.aux_financial, line.aux_qty, invo.cancel_check))
+                            0, (invo.id, line.aux_qty and (line.aux_financial / line.aux_qty), line.aux_financial,
+                                line.aux_qty, line.uos_id and
+                                line.uos_id.id, invo.date_invoice, line.id, line.aux_financial, line.aux_qty, invo.cancel_check))
 
-                for invo in invo_obj.browse(cr, uid, [inv_ids[-1]], context=context) for line in invo.invoice_line if line and
-                line.product_id and
-                line.product_id.id == i]
+                            for invo in invo_obj.browse(cr, uid, [inv_ids[-1]], context=context) for line in invo.invoice_line if line and
+                            line.product_id and
+                            line.product_id.id == i]
 
                     [ids_inv.update({h[5]:h[1]}) for h in dic_comp[i]]
 
@@ -624,9 +617,9 @@ class compute_cost(osv.TransientModel):
                 ids_inv = {}
                 [ids_inv.update({h[1]:h[0]}) for h in cost_acc[i]]
                 if aux_dic_vent.get(i, False) and len(aux_dic_vent.get(i, [])) > 0:
-                        lista = self.list_cost(cr, uid, aux_dic_vent.get(
-                            i), ids_inv, i, company_id)
-                        aux_dic_vent.update({i: lista})
+                    lista = self.list_cost(cr, uid, aux_dic_vent.get(
+                        i), ids_inv, i, company_id)
+                    aux_dic_vent.update({i: lista})
 
                 if aux_dic_nc_vent.get(i, False) and len(aux_dic_nc_vent.get(i, [])) > 0:
                     lista = self.list_cost(cr, uid, aux_dic_nc_vent.get(
@@ -637,4 +630,3 @@ class compute_cost(osv.TransientModel):
                                             aux_dic_vent, dic_nc_com,
                                             aux_dic_nc_vent)
         return (cost, cost_acc)
-

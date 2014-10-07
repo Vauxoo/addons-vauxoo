@@ -20,12 +20,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    'name': "Web Captcha",
-    'author': "Vauxoo",
-    'category': "Tools",
-    'description': """
+    "name": "Web Captcha", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Tools", 
+    "description": """
 Some customizations for OpenERP web client made by Vauxoo
 
 To use the Captcha Widget you should go to:
@@ -36,27 +36,28 @@ And generate a public and a private key.
 
 You will need to go to the main company of your Openerp installation and
 set the "Public Key" as the key for you.
-    """,
-    'version': "1.0",
-    'depends': [
-        'portal',
-    ],
-    'js': [
-        'static/src/js/resource.js',
-    ],
-    'data': [
-        'security/ir.model.access.csv',
-        'view/company_view.xml',
-        'view/res_captcha_view.xml',
-        'view/ir_config_view.xml',
-    ],
-    'css': [
-
-    ],
-    'qweb': [
-        'static/src/xml/template.xml',
-    ],
-    'installable': True,
-    'auto_install': False,
-    'web_preload': False,
+    """, 
+    "website": "", 
+    "license": "", 
+    "depends": [
+        "portal"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/ir.model.access.csv", 
+        "view/company_view.xml", 
+        "view/res_captcha_view.xml", 
+        "view/ir_config_view.xml"
+    ], 
+    "test": [], 
+    "js": [
+        "static/src/js/resource.js"
+    ], 
+    "css": [], 
+    "qweb": [
+        "static/src/xml/template.xml"
+    ], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

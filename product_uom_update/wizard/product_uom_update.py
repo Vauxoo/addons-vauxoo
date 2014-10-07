@@ -22,8 +22,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from openerp.osv import osv, orm
-from openerp.osv import fields
+from openerp.osv import osv, fields
 
 
 class product_uom_update(osv.TransientModel):
@@ -56,14 +55,14 @@ class product_uom_update(osv.TransientModel):
         if len(product_ids) > 0:
             context.update({'active_ids': product_ids})
             res = self.pool.get('base.product.merge.automatic.wizard').\
-                    _update_foreign_keys(
+                _update_foreign_keys(
                 cr, uid, False, [new_unit],
                 model='product_uom', context=context)
             dst_product_ids = product_model.browse(
                 cr, uid, product_ids, context=context)
             uom_factor_dst = self.pool.get('product.uom').browse(
                 cr, uid, context.get('uom_id_to_id'), context=context)[0].\
-                        factor
+                factor
             for dst_product_id in dst_product_ids:
                 if dst_product_id.uom_id.factor == uom_factor_dst:
                     product_ids_validate.append(dst_product_id.id)
@@ -76,7 +75,7 @@ class product_uom_update(osv.TransientModel):
                     product_ids_tuple = tuple(product_ids_validate)
                     query = '''UPDATE "product_template" SET uos_id = %s ,\
                             uom_id = %s , uom_po_id = %s
-                                           WHERE id IN %%s''' % (new_unit,\
+                                           WHERE id IN %%s''' % (new_unit,
                                                    new_unit, new_unit)
                     cr.execute(query, (product_ids_tuple,))
 
@@ -87,16 +86,16 @@ class product_uom_update(osv.TransientModel):
             if len(product_ids_unvalidate) > 0:
                 string_aux2 = '\n'.join(product_ids_unvalidate)
                 string_result += '''\n\nProducts that not change because the '''\
-                        '''conversion factor is not equal:\n\n %s''' % (
-                    string_aux2)
-        
+                    '''conversion factor is not equal:\n\n %s''' % (
+                        string_aux2)
+
         else:
-            string_result= 'Warning! \n\n You must choose at least one record..'
+            string_result = 'Warning! \n\n You must choose at least one record..'
 
         __, xml_id = self.pool.get('ir.model.data').get_object_reference(
-            cr, uid, 'product_uom_update',\
-                    'base_product_uom_merge_wizard_result')
-                    
+            cr, uid, 'product_uom_update',
+            'base_product_uom_merge_wizard_result')
+
         context.update(
             {'default_result': string_result})
 
@@ -112,12 +111,12 @@ class product_uom_update(osv.TransientModel):
 
     def close_vw(self, cr, uid, ids, context=None):
         return self.pool.get('base.product.merge.automatic.wizard').\
-                close_cb(cr, uid, ids, context=context)
+            close_cb(cr, uid, ids, context=context)
 
     _columns = {
-        'uom_id_from': fields.many2many('product.product',\
+        'uom_id_from': fields.many2many('product.product',
                 'product_produtc_uom_rel',
-                'product_id', 'uom_id',\
+                'product_id', 'uom_id',
                 'products with unit of measure from',
                 help="Default unit of measure used for all stock operation."),
         'uom_id_to': fields.many2one('product.uom', 'Unit of Measure To',

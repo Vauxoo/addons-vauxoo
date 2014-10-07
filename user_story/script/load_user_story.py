@@ -1,8 +1,5 @@
 import xmlrpclib
-import csv
 import time
-import datetime
-import random
 
 # Source server info
 HOST = 'vauxoo.info'
@@ -11,8 +8,8 @@ DB = 'herrera'
 USER = 'admin'
 PASS = 'admin'
 url = 'http://%s:%d/xmlrpc/' % (HOST, PORT)
-common_proxy = xmlrpclib.ServerProxy(url+'common')
-object_proxy = xmlrpclib.ServerProxy(url+'object')
+common_proxy = xmlrpclib.ServerProxy(url + 'common')
+object_proxy = xmlrpclib.ServerProxy(url + 'object')
 
 uid = common_proxy.login(DB, USER, PASS)
 
@@ -23,8 +20,8 @@ DB2 = 'migration3'
 USER2 = 'admin'
 PASS2 = '12345'
 url2 = 'http://%s:%d/xmlrpc/' % (HOST2, PORT2)
-common_proxy2 = xmlrpclib.ServerProxy(url2+'common')
-object_proxy2 = xmlrpclib.ServerProxy(url2+'object')
+common_proxy2 = xmlrpclib.ServerProxy(url2 + 'common')
+object_proxy2 = xmlrpclib.ServerProxy(url2 + 'object')
 
 uid2 = common_proxy2.login(DB2, USER2, PASS2)
 
@@ -107,7 +104,7 @@ def __main__():
     for user_story in user_story_dict:
         accep_crit_ids = user_story.get('accep_crit_ids')
         user_id = user_story.get('user_id')[0]
-        user_name = user_story.get('user_id')[1]
+        user_story.get('user_id')[1]
         user_story_name = user_story.get('name')
 
         print 'Evaluando la historia %s' % (user_story_name)
@@ -160,20 +157,20 @@ def __main__():
             user_story.pop('id')
             user_story.update(
                 {"accep_crit_ids": accep_crit_ids and accep_crit_o2m,
-                             "user_id": user_matching(user_id),
-                             "task_ids": [],
-                             "project_id": project_id})
+                 "user_id": user_matching(user_id),
+                 "task_ids": [],
+                 "project_id": project_id})
 
         # Almacenamos el user_story en el destino
-            user_story_id = create_in_destiny('user.story', user_story)
+            create_in_destiny('user.story', user_story)
             end = time.time()
-            print 'Creada la historia %s en %ss' % (user_story_name, end-begin)
+            print 'Creada la historia %s en %ss' % (user_story_name, end - begin)
 
         else:
             print 'Ya existe la historia %s' % (user_story_name)
 
     end_p = time.time()
-    print 'Creadas todas las historias en %ss' % (end_p-begin_p)
+    print 'Creadas todas las historias en %ss' % (end_p - begin_p)
     print 'ha finalizado la carga de datos'
 
 __main__()

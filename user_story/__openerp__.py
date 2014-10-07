@@ -23,20 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "User Story",
-    "version" : "0.1",
-    "depends" : [
-                 "base",
-                 "project",
-                 "sprint_kanban",
-                 "project_timesheet",
-                 "project_conf",
-                 "report_webkit",
-                 ],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "User Story", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
 Este módulo registra requerimientos funcionales y técnicos de software a
 través de Historias de Usuarios.
 
@@ -48,24 +40,40 @@ funcionalde este módulo. Las `fuentes`_  en inglés y español el artículo son
 siguientes:
 
 .. Story: http://dannorth.net/whats-in-a-story/
-.. fuentes: http://adrianmoya.com/2012/08/que-hay-en-una-historia/""",
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "demo" : [
-        'demo/demo.xml',
-    ],
-    "data" : [
-        "data/data_us_report.xml",
-        "report/user_story_report_view.xml",
-        "security/userstory_security.xml",
-        "security/ir.model.access.csv",
-        "view/userstory_view.xml",
-        "view/project_view.xml",
-        "view/hr_timesheet_view.xml",
-        "data/data.xml",
-        "data/user_story_template.xml",
-    ],
-    "active": False,
-    "images": [],
-    "installable": True,
+.. fuentes: http://adrianmoya.com/2012/08/que-hay-en-una-historia/""", 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "project", 
+        "sprint_kanban", 
+        "project_timesheet", 
+        "project_conf", 
+        "report_webkit"
+    ], 
+    "demo": [
+        "demo/demo.xml"
+    ], 
+    "data": [
+        "data/data_us_report.xml", 
+        "report/user_story_report_view.xml", 
+        "security/userstory_security.xml", 
+        "security/ir.model.access.csv", 
+        "view/userstory_view.xml", 
+        "view/project_view.xml", 
+        "view/hr_timesheet_view.xml", 
+        "view/hr_timesheet_all_view.xml", 
+        "view/custom_project_task_view.xml", 
+        "data/data.xml", 
+        "data/user_story_template.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [
+        "static/src/css/*.css"
+    ], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

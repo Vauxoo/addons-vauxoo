@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Humberto Arocha <hbto@vauxoo.com>           
+#    Coded by: Humberto Arocha <hbto@vauxoo.com>
 #    Planified by: Rafael Silva <rsilvam@vauxoo.com>
 #    Audited by: Nhomar Hernandez <nhomar@vauxoo.com>
 #############################################################################
@@ -22,26 +22,42 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
 {
-    "name" : "Customer's Due Report",
-    "version" : "0.1",
-    "author" : "Vauxoo",
-    "category" : "Generic Modules/Others",
-    "website": "http://www.vauxoo.com/",
+    "name": "Customer's Due Report", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Others", 
     "description": """
 This module will allow you to get:
 A Customer's Formal Due Report,
 A Customer's Detail Due Report,
 A Customer's Aging Due Report.
-""",
-    "depends" : ["account",
-],
-    "init_xml" : [],
-    "update_xml" : [
-        "report/ing_due_report.xml",
-
-    ],
-    "active": False,
-    "installable": True
+A Supplier's Formal Due Report,
+A Supplier's Detail Due Report,
+A Supplier's Aging Due Report.
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "account", 
+        "report_webkit"
+    ], 
+    "demo": [], 
+    "data": [
+        "report/ing_due_report.xml", 
+        "data/aging_due_webkit_header.xml", 
+        "data/customer_formal_due_webkit_header.xml", 
+        "data/customer_detail_due_webkit_header.xml", 
+        "data/supplier_aging_due_webkit_header.xml", 
+        "data/supplier_formal_due_webkit_header.xml", 
+        "data/supplier_detail_due_webkit_header.xml", 
+        "report/aging_due_report_webkit.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

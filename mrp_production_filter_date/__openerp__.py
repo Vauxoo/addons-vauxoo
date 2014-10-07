@@ -20,22 +20,28 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
+#"license" : "AGPL-3",
 {
-    "name" : "Inherit date_planned field in search view of mrp_production",
-    "version" : "1.0",
-    "depends" : ['mrp'],
-    "author" : "Vauxoo",
-    #"license" : "AGPL-3",
-    "description" : """This module inherit date_planned field in search view of mrp_production
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [],
-    "update_xml" : ['mrp_production_view.xml',
-    ],
-    "active": False,
-    "installable": True,
+    "name": "Inherit date_planned field in search view of mrp_production", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """This module inherit date_planned field in search view of mrp_production
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "mrp"
+    ], 
+    "demo": [], 
+    "data": [
+        "mrp_production_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-

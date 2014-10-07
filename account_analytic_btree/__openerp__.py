@@ -25,16 +25,24 @@
 #
 ##############################################################################
 {
-    "name" : "Creacion de parent_left y parent_right en analiticas",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description":"""This module creates parent_left y paret_right en analytic's accounts""",
-    "website" : "http://www.vauxoo.com/",
-    "depends" : ["account", "project"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [],
-    "installable" : True,
-    "active" : False,
+    "name": "Creacion de parent_left y parent_right en analiticas", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Localization/Mexico", 
+    "description": """This module creates parent_left y paret_right en analytic's accounts""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "account", 
+        "project"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

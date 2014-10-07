@@ -23,25 +23,30 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-{
-    "name": "Purchase Order Cancel",
-    "version": "1.1",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/Account",
-    "website" : "http://www.vauxoo.com/",
-    "description": """ Add button to cancel purchase in state done
-    """,
-    'depends': ['purchase'],
-    'init_xml': [],
-    'update_xml': [
-        'security/purchase_security.xml',
-        'purchase_view.xml',
-        'purchase_workflow.xml',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
-}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+{
+    "name": "Purchase Order Cancel", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Account", 
+    "description": """ Add button to cancel purchase in state done
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "purchase"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/purchase_security.xml", 
+        "purchase_view.xml", 
+        "purchase_workflow.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
+}

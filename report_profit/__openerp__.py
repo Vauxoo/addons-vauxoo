@@ -22,34 +22,41 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name" : "Report Profit",
-    "version" : "0.2",
-    "depends" : ["base","product", "purchase", "account",'sale',],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Report Profit", 
+    "version": "0.2", 
+    "author": "Vauxoo", 
+    "category": "Localization", 
+    "description": """
         Performs the equivalent of a third unit for the analysis of sales.
 
- """,
-    "website" : "http://vauxoo.com",
-    "category" : "Localization",
-    "init_xml" : [
-    ],
-    "demo_xml" : [
-    ],
-    "update_xml" : [
-        "security/report_profit_security.xml",
-        "security/ir.model.access.csv",
-        "unit_analisys_view.xml",
-        "product_view.xml",
-        "report_profit_view.xml",
-        'data/report_profit_data.xml',
-        'report_profit_report.xml',
-        'wizard/wiz_trial_cost.xml'
-    ],
-    "active": False,
-    "installable": False,
+ """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "product", 
+        "purchase", 
+        "account", 
+        "sale"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/report_profit_security.xml", 
+        "security/ir.model.access.csv", 
+        "unit_analisys_view.xml", 
+        "product_view.xml", 
+        "report_profit_view.xml", 
+        "data/report_profit_data.xml", 
+        "report_profit_report.xml", 
+        "wizard/wiz_trial_cost.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": False, 
+    "auto_install": False, 
+    "active": False
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

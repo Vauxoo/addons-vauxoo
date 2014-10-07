@@ -24,21 +24,25 @@
 #
 ##############################################################################
 {
-    "name" : "Stock Picking Cancel",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Generic Modules",
-    "description" : """
+    "name": "Stock Picking Cancel", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
         This Module review that the moment to delete a picking the state is draft
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : ["stock",
-        ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-    ],
-    "installable" : True,
-    "active" : False,
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "stock"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

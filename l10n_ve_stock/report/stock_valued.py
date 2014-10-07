@@ -24,10 +24,11 @@
 ##########################################################################
 
 import time
-from report import report_sxw
+from openerp.report import report_sxw
 
 
 class stock_valued(report_sxw.rml_parse):
+
     def __init__(self, cr, uid, name, context):
         super(stock_valued, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
@@ -46,7 +47,7 @@ class stock_valued(report_sxw.rml_parse):
             tax_ids = tax_obj.search(self.cr, self.uid, [
                                      ('description', '=', tnom)])
         tax = tax_obj.browse(self.cr, self.uid, tax_ids)[0]
-        return tax.amount*100
+        return tax.amount * 100
 
     def _get_rif(self, vat=''):
         if not vat:

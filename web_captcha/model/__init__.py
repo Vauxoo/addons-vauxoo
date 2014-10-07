@@ -1,2 +1,2 @@
-import res_company
-import res_captcha
+from . import res_company
+from . import res_captcha

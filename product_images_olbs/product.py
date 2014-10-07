@@ -21,8 +21,8 @@ class product_product(osv.Model):
     _inherit = "product.product"
     _columns = {
         'image_ids': fields.one2many(
-        'product.images',
-        'product_id',
-        'Product Images'
+            'product.images',
+            'product_id',
+            'Product Images'
         )
     }

@@ -1,17 +1,10 @@
 # -*- encoding: utf-8 -*-
 import time
-import pooler
-from report import report_sxw
-from openerp.tools.translate import _
-
-import smtplib
-import mimetypes
-import base64
-from email.MIMEText import MIMEText
-from email.Encoders import encode_base64
+from openerp.report import report_sxw
 
 
 class crm_report_profile(report_sxw.rml_parse):
+
     """
     Description about crm_report_profile
     """

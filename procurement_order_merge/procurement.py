@@ -23,8 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import osv, fields
-from openerp.tools.translate import _
+from openerp.osv import osv
 
 import openerp.netsvc as netsvc
 from osv.orm import browse_record, browse_null
@@ -53,8 +52,6 @@ class procurement_order(osv.Model):
             return tuple(list_key)
 
         new_orders = {}
-        mrp_production_pool = self.pool.get('mrp.production')
-        old_orders = []
 
         for procurement in self.browse(cr, uid, ids):
             if procurement.state == 'draft':
@@ -76,19 +73,19 @@ class procurement_order(osv.Model):
                         'product_uom': procurement.product_id.uom_id.id,
                         'procure_method': procurement.procure_method,
                         'production_ids': procurement.production_ids and
-                            [(4, procurement.production_ids[0].id)] or False
+                        [(4, procurement.production_ids[0].id)] or False
                     })
                 else:
                     if procurement.name:
                         order_infos['name'] = (order_infos['name'] or '') +\
-                        ',' + procurement.name
+                            ',' + procurement.name
                     if procurement.origin:
                         order_infos['origin'] = (order_infos['origin'] or '') +\
-                        ',' + procurement.origin
+                            ',' + procurement.origin
                     if procurement.product_qty:
                         order_infos['product_qty'] =\
-                        (order_infos['product_qty'] or 0) +\
-                        self.pool.get('product.uom')._compute_qty(
+                            (order_infos['product_qty'] or 0) +\
+                            self.pool.get('product.uom')._compute_qty(
                             cr, uid, procurement.product_uom.id,
                             procurement.product_qty,
                             to_uom_id=procurement.product_id.uom_id.id)
@@ -101,7 +98,7 @@ class procurement_order(osv.Model):
         orders_info = {}
 
         for order_key, (order_data, old_ids) in new_orders.iteritems():
-        # skip merges with only one order
+            # skip merges with only one order
             if len(old_ids) < 2:
                 allorders += (old_ids or [])
                 continue

@@ -22,24 +22,25 @@
 ################################################################################
 
 
-from openerp.osv import osv, fields
-from openerp import tools, SUPERUSER_ID
+from openerp.osv import osv
+
 
 class mail_compose_message(osv.TransientModel):
-    
+
     _inherit = 'mail.compose.message'
-    
+
     def default_get(self, cr, uid, fields, context=None):
         if context is None:
             context = {}
-            
+
         email_template_obj = self.pool.get('email.template')
         result = super(mail_compose_message, self).default_get(cr, uid, fields, context=context)
-        
-        template_id = context.get('default_template_id', False)
-        
-        if template_id and\
-            email_template_obj.browse(cr, uid, template_id,
-                        context=context).composition_mode_comment:
-            result['composition_mode'] = 'comment'
+
+        template_id = context.get('default_template_id', [])
+
+        template_id = isinstance(template_id, (int, long)) and [template_id] or template_id
+        for template in email_template_obj.browse(cr, uid, template_id, context=context):
+            if template.composition_mode_comment:
+                result['composition_mode'] = 'comment'
+
         return result

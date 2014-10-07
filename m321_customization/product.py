@@ -30,6 +30,7 @@ from openerp.tools.translate import _
 
 
 class inherited_product(osv.Model):
+
     """
     M321 Customizations for product.product model
     """
@@ -58,7 +59,7 @@ class inherited_product(osv.Model):
                         })
 
         return super(inherited_product, self).copy(cr, uid, id, default,
-                                                                    context)
+                                                   context)
 
     def _stock_available(self, cr, uid, ids, field_name, arg, context):
         if context is None:
@@ -98,7 +99,7 @@ class inherited_product(osv.Model):
         product = []
 
         for sale in self.pool.get('sale.order').browse(cr, uid, ids,
-                                                            context=context):
+                                                       context=context):
             for line in sale.order_line:
                 sale.product_id and product.append(sale.product_id.id)
         return product
@@ -156,7 +157,6 @@ class inherited_product(osv.Model):
             return True
 
     def _check_upc_reference_unique(self, cr, uid, ids, context=None):
-        this_record = self.browse(cr, uid, ids)
 
         for product in self.browse(cr, uid, ids):
             product_code_ids = product.default_code and self.search(cr, uid, [(
@@ -168,8 +168,8 @@ class inherited_product(osv.Model):
                 return True
 
             elif len(product_code_ids) > 1 or len(product_upc_ids) > 1 or\
-                product.id not in product_code_ids or product.id not in\
-                product_upc_ids:
+                    product.id not in product_code_ids or product.id not in\
+                    product_upc_ids:
                 return False
 
         return True
@@ -187,7 +187,7 @@ class inherited_product(osv.Model):
                         })
 
         return super(inherited_product, self).copy(cr, uid, id, default,
-                                                                    context)
+                                                   context)
 
     def name_get(self, cr, user, ids, context=None):
         if context is None:

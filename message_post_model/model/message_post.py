@@ -23,13 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from openerp.osv import osv, fields
+from openerp.osv import osv
 from openerp.tools.translate import _
 
 
-
-
 class message_post_show_all(osv.Model):
+
     '''
     With this object you can add an extensive log in your model like the
     traditional message log don't does
@@ -66,19 +65,18 @@ class message_post_show_all(osv.Model):
         else:
             value = field and model_brw[field] or ''
 
-
         return field and value or ''
 
     def prepare_many_info(self, cr, uid, id, records, string, n_obj, last=None,
                           context=None):
         context = context or {}
         info = {
-                0: _('Created New Line'),
-                1: _('Updated Line'),
-                2: _('Removed Line'),
-                3: _('Removed Line'),
-                6: _('many2many'),
-                 }
+            0: _('Created New Line'),
+            1: _('Updated Line'),
+            2: _('Removed Line'),
+            3: _('Removed Line'),
+            6: _('many2many'),
+        }
         message = '<ul>'
         obj = self.pool.get(n_obj)
         r_name = obj._rec_name
@@ -88,19 +86,19 @@ class message_post_show_all(osv.Model):
                 if val[0] == 0:
                     value = val[2]
                     message = u'%s\n<li><b>%s<b>: %s</li>' % \
-                                                (message,
-                                                 info.get(val[0]),
-                                                 value.get(r_name),
-                                                 )
+                        (message,
+                     info.get(val[0]),
+                     value.get(r_name),
+                         )
                 elif val[0] in (2, 3):
-                    model_brw =  obj.browse(cr, uid, val[1], context=context)
+                    model_brw = obj.browse(cr, uid, val[1], context=context)
                     last_value = model_brw.name_get()
                     last_value = last_value and last_value[0][1]
                     value = val[1]
                     message = u'%s\n<li><b>%s<b>: %s</li>' % \
-                                                (message,
-                                                 info.get(val[0]),
-                                                 last_value)
+                        (message,
+                     info.get(val[0]),
+                     last_value)
 
                 elif val[0] == 6:
                     lastv = list(set(val[2]) - set(last))
@@ -109,26 +107,22 @@ class message_post_show_all(osv.Model):
                     delete = _('Deleted')
                     if lastv and not new:
 
-                        F_TYPE = obj._columns[r_name]._type
-                        dele = [self.get_last_value(cr, uid, i, n_obj, r_name,
-                                                    F_TYPE) for i in lastv]
+                        dele = [obj.name_get(cr, uid, [i])[0][1] for i in lastv]
                         mes = ' - '.join(dele)
                         message = u'%s\n<li><b>%s %s<b>: %s</li>' % \
-                                                    (message,
-                                                     add,
-                                                     string,
-                                                     mes)
+                            (message,
+                         add,
+                         string,
+                         mes)
                     if not lastv and new:
 
-                        F_TYPE = obj._columns[r_name]._type
-                        dele = [self.get_last_value(cr, uid, i, n_obj, r_name,
-                                                    F_TYPE) for i in new]
+                        dele = [obj.name_get(cr, uid, [i])[0][1] for i in new]
                         mes = '-'.join(dele)
                         message = u'%s\n<li><b>%s %s<b>: %s</li>' % \
-                                                    (message,
-                                                     delete,
-                                                     string,
-                                                     mes)
+                            (message,
+                         delete,
+                         string,
+                         mes)
 
                 elif val[0] == 1:
                     vals = val[2]
@@ -139,11 +133,11 @@ class message_post_show_all(osv.Model):
                             MANY = obj._columns[field]._type == 'many2many'
 
                             LAST = MANY and self.get_last_value(cr, uid,
-                                                                 val[1],
-                                                                 n_obj,
-                                                                 field,
-                                                                 'many2many',
-                                                                 context)
+                                                                val[1],
+                                                                n_obj,
+                                                                field,
+                                                                'many2many',
+                                                                context)
                             ST = obj._columns[field].string
                             N_OBJ = obj._columns[field]._obj
                             mes = self.prepare_many_info(cr, uid, val[1],
@@ -153,7 +147,7 @@ class message_post_show_all(osv.Model):
                                                          LAST,
                                                          context)
 
-                        elif obj._columns[field]._type == 'many2one' :
+                        elif obj._columns[field]._type == 'many2one':
                             mes = self.prepare_many2one_info(cr, uid, val[1],
                                                              n_obj,
                                                              field,
@@ -168,7 +162,6 @@ class message_post_show_all(osv.Model):
                             message = id_line != val[1] and _('%s\n<h3>Line %s</h3>' % (message, val[1])) or message
                             message = '%s\n%s' % (message, mes)
                             id_line = val[1]
-
 
         message = '%s\n</ul>' % message
         return message
@@ -185,22 +178,21 @@ class message_post_show_all(osv.Model):
                                          obj._columns[field]._type,
                                          context)
         model_obj = self.pool.get(obj._columns[field]._obj)
-        model_brw =  model_obj.browse(cr, uid, vals[field], context=context)
+        model_brw = model_obj.browse(cr, uid, vals[field], context=context)
         new_value = model_brw.name_get()
         new_value = new_value and new_value[0][1]
 
         if not (last_value == new_value) and any((new_value, last_value)):
             message = u'<li><b>%s<b>: %s → %s</li>' % \
-                                        (obj._columns[field].string,
-                                         last_value,
-                                         new_value)
+                (obj._columns[field].string,
+                 last_value,
+                 new_value)
         return message
-
 
     def prepare_simple_info(self, cr, uid, id, n_obj, field,
                             vals, context=None):
         context = context or {}
-        obj =  self.pool.get(n_obj)
+        obj = self.pool.get(n_obj)
         message = '<p>'
         last_value = self.get_last_value(cr, uid, id,
                                          obj._name,
@@ -210,9 +202,9 @@ class message_post_show_all(osv.Model):
 
         if not (unicode(last_value) == unicode(vals[field])) and any((last_value, vals[field])):
             message = u'<li><b>%s<b>: %s → %s</li>' % \
-                                        (obj._columns[field].string,
-                                         last_value,
-                                         vals[field])
+                (obj._columns[field].string,
+                 last_value,
+                 vals[field])
         return message
 
     def write(self, cr, uid, ids, vals, context=None):
@@ -222,7 +214,6 @@ class message_post_show_all(osv.Model):
             message = False
             for field in vals:
 
-                track = 'track_visibility' in  dir(self._columns[field])
                 if self._columns[field]._type in ('one2many', 'many2many'):
                     MANY = self._columns[field]._type == 'many2many'
 
@@ -234,8 +225,8 @@ class message_post_show_all(osv.Model):
                     N_OBJ = self._columns[field]._obj
                     message = self.prepare_many_info(cr, uid, id, vals[field],
                                                      ST, N_OBJ, LAST, context)
-                    body = len(message.split('\n'))  > 2 and '%s\n%s: %s' % (body, ST, message)
-                elif self._columns[field]._type == 'many2one' :
+                    body = len(message.split('\n')) > 2 and '%s\n%s: %s' % (body, ST, message)
+                elif self._columns[field]._type == 'many2one':
                     message = self.prepare_many2one_info(cr, uid, id,
                                                          self._name,
                                                          field,
@@ -251,9 +242,8 @@ class message_post_show_all(osv.Model):
 
             body = body and '%s\n</ul>' % body
             body and message and \
-                   self.message_post(cr, uid, [id], body,
-                                     _('Changes in Fields'))
+                self.message_post(cr, uid, [id], body,
+                              _('Changes in Fields'))
         res = super(message_post_show_all, self).write(cr, uid, ids, vals,
                                                  context=context)
         return res
-

@@ -1,2 +1,2 @@
-import sprint_kanban
+from . import sprint_kanban
 

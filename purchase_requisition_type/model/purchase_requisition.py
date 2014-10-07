@@ -23,14 +23,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import fields, osv, orm
-from openerp.tools.translate import _
-from openerp import tools
+from openerp.osv import osv, fields
 
 purchase_requisition_type = [
     ('materials', 'Materials'),
     ('service', 'Services'),
 ]
+
 
 class purchase_requisition(osv.Model):
 

@@ -24,11 +24,11 @@
 #
 ##############################################################################
 {
-    "name" : "Ref Product",
-    "version" : "0.1",
-    "author" : "Vauxoo",
-    "category" : "Generic Modules/Others",
-    "description" : """
+    "name": "Ref Product", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Others", 
+    "description": """
 When you install this module, the form view of the products
 accommodates the fields to give better presentation of the information
 presented to the end user.
@@ -39,23 +39,28 @@ presented to the end user.
         *Can be used in contracts.
 
     This module will be installed until the following bug remains fixed:
-    
+
         https://bugs.launchpad.net/openobject-addons/+bug/1188863
 
-    Image url: 
-    
+    Image url:
+
         https://www.diigo.com/item/image/3z3vg/kj84
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
-                    'base',
-                    'hr_expense',
-                ],
-    "update_xml" : [],
-    'data' : [
-                'view/ref_product_view_inherit.xml',
-             ],
-    'installable':True,
-    'auto_install':False,
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "base", 
+        "hr_expense"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/ref_product_view_inherit.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

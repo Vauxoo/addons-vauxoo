@@ -1,1 +1,1 @@
-import validate_picking
+from . import validate_picking

@@ -1,1 +1,1 @@
-import bzr_to_task
+from . import bzr_to_task

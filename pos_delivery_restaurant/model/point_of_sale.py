@@ -23,19 +23,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import fields, osv, orm
-from openerp.tools.translate import _
-from openerp import tools
+from openerp.osv import osv, fields
+
 
 class pos_config(osv.Model):
+
     """
     To add a field which determine if the point of sale is a restaurant or delivery
     """
     _inherit = 'pos.config'
     _description = ('')
     _columns = {
-        'deli_rest':fields.selection([('delivery','Delivery'),('restaurant','Restaurant'),('all','All')],
-            'Product Type', required=True, help='Is a delivery or restaurant?'), 
+        'deli_rest': fields.selection([('delivery', 'Delivery'), ('restaurant', 'Restaurant'), ('all', 'All')],
+            'Product Type', required=True, help='Is a delivery or restaurant?'),
     }
 
     _defaults = {

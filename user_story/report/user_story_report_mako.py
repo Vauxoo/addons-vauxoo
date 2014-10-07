@@ -24,12 +24,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from openerp.osv import fields, osv
-from openerp.tools.translate import _
-from report_webkit import webkit_report
-from report import report_sxw
+from openerp.addons.report_webkit import webkit_report
+from openerp.report import report_sxw
 from lxml import html
-import xml
+
 
 class user_story_report(report_sxw.rml_parse):
 
@@ -39,10 +37,10 @@ class user_story_report(report_sxw.rml_parse):
         super(user_story_report, self).__init__(
             cr, uid, name, context=context)
         self.localcontext.update({
-            'parse_html_field' : self._parse_html_field,
+            'parse_html_field': self._parse_html_field,
         })
         self.context = context
-        
+
     def _parse_html_field(self, data):
         if data:
             data_str = data.encode('ascii', 'xmlcharrefreplace')

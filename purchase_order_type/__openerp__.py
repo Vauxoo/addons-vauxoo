@@ -22,34 +22,35 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'Purchase Order Type',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': 'purchase',
-    'description': '''
+    "name": "Purchase Order Type", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "purchase", 
+    "description": """
 Purchase Order Type
 ===================
 
 Add a new field name type that can discriminate a materials and service
 purchase order. Also add to the purchase order search view the
 filters need to visually make the discrimination.
-''',
-    'depends': [
-        'purchase',
-        'purchase_requisition_type',
-        'pr_line_related_po_line',
-        ],
-    'data': [
-        'view/purchase_order_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'qweb': [],
-    'js': [],
-    'css': [],
-    'active': False,
-    'installable': True,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "purchase", 
+        "purchase_requisition_type", 
+        "pr_line_related_po_line"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/purchase_order_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

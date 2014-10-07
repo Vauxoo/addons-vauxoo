@@ -22,17 +22,13 @@
 ################################################################################
 
 
-import time
 from openerp.osv import fields, osv
-from openerp import netsvc
-import openerp.addons.decimal_precision as dp
-from openerp.tools.translate import _
 
 
 class account_voucher_tax_assigned(osv.TransientModel):
-    
+
     _name = 'account.voucher.tax.assigned'
-    
+
     _columns = {
         'tax_ids': fields.many2many('account.tax', 'voucher_assgined_tax_rel',
                                 'wiz_id',
@@ -43,7 +39,7 @@ class account_voucher_tax_assigned(osv.TransientModel):
                                 'account_id',
                                 'Account to Close'),
     }
-    
+
     def action_account_assigned(self, cr, uid, ids, context=None):
         aml_obj = self.pool.get('account.move.line')
         acc_voucher_tax_sat_obj = self.pool.get('account.voucher.tax.sat')
@@ -56,11 +52,10 @@ class account_voucher_tax_assigned(osv.TransientModel):
             account_assigned = [acc.id for acc in tax_assigned.account_ids]
             move_line_to_close = aml_obj.search(cr, uid, ['|',
                         ('tax_id_secondary', 'in', taxe_assigned),
-                        ('account_id', 'in', account_assigned),
-                        ('credit', '>', 0.0),
-                        ('period_id', '=', acc_vocuher_tax_sat.period_id.id)
-                        ])
+                ('account_id', 'in', account_assigned),
+                ('credit', '>', 0.0),
+                ('period_id', '=', acc_vocuher_tax_sat.period_id.id)
+            ])
             acc_voucher_tax_sat_obj.write(cr, uid, acc_vocuher_tax_sat.id,
                 {'aml_ids': [(4, move_id) for move_id in move_line_to_close]})
         return True
-    

@@ -25,6 +25,6 @@
 #
 ##############################################################################
 
-import invoice
-import res_config
+from . import invoice
+from . import res_config
 

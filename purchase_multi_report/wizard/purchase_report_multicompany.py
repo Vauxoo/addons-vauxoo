@@ -34,6 +34,7 @@ import openerp.netsvc as netsvc
 
 
 class print_purchase_report(osv.TransientModel):
+
     """
     OpenERP Wizard : print.purchase.report
     """

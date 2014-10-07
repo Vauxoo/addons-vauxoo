@@ -21,12 +21,8 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import openerp
-from openerp import SUPERUSER_ID
-from openerp import tools
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
-from openerp.tools.yaml_import import is_comment
+
 
 class product_product(osv.Model):
     _description = 'Product'

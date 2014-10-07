@@ -22,15 +22,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from __future__ import absolute_import
-from email.utils import parseaddr
 import functools
-import htmlentitydefs
 import itertools
 import logging
 import operator
-import re
 from ast import literal_eval
-from openerp.tools import mute_logger
 import openerp
 from openerp.osv import osv, orm
 from openerp.osv import fields
@@ -150,7 +146,7 @@ class MergeProductAutomatic(osv.TransientModel):
             for table, column in cr.fetchall():
                 if 'base_product_merge_' in table:
                     continue
-                
+
                 product_ids = tuple(map(int, src_products))
 
                 query = """SELECT column_name FROM information_schema.columns
@@ -212,7 +208,7 @@ class MergeProductAutomatic(osv.TransientModel):
                     else:
                         query = '''SELECT * from "%(table)s" WHERE %(column)s IN %%s''' % query_dic
                         cr.execute(query, (product_ids,))
-                        #Validation with flag
+                        # Validation with flag
                         for match in cr.dictfetchall():
                             uos_field = uos_table.get(table)
                             uos_id = [match.get(i)
@@ -221,7 +217,7 @@ class MergeProductAutomatic(osv.TransientModel):
                                 continue
                             else:
                                 flag.append(False)
-                        #Handle exception for the flag validation
+                        # Handle exception for the flag validation
                         if False in flag:
                             raise osv.except_osv(_('Error!'), _(
                                 """You must verify the units of measurement in which
@@ -268,7 +264,6 @@ class MergeProductAutomatic(osv.TransientModel):
     def _update_foreign_keys_modify(self, cr, uid, src_products,
                                     dst_product, model=None,
                                     context=None):
-        res = {}
         uos_table = {}
         po_table = {}
         tables = []
@@ -489,9 +484,9 @@ class MergeProductAutomatic(osv.TransientModel):
                                          context=context) and \
                 self.pool.get('account.move.line').\
             search(cr, openerp.SUPERUSER_ID,
-                   [('product_id', 'in', [product.id for product in
-                                          src_products])],
-                   context=context):
+                    [('product_id', 'in', [product.id for product in
+                                      src_products])],
+                    context=context):
             raise osv.except_osv(_('Error!'), _(
                 """Only the destination product may be linked to existing
                    Journal Items. Please ask the Administrator if you need
@@ -533,17 +528,17 @@ class MergeProductAutomatic(osv.TransientModel):
         context = dict(context or {}, active_test=False)
         this = self.browse(cr, uid, ids[0], context=context)
         p_ids = this.product_ids and this.product_ids
-        p_ids and p_ids.append(this.product_to)        
+        p_ids and p_ids.append(this.product_to)
         product_ids = set(map(int, this.product_from and
-                                [this.product_to, this.product_from] or
-                                p_ids))
+                              [this.product_to, this.product_from] or
+                              p_ids))
         if not list(product_ids):
             raise osv.except_osv(_('Error!'), _(
-                """The product from must be selected for 
+                """The product from must be selected for
                     this option."""))
         else:
             self._merge(cr, uid, product_ids, this.product_to,
-                            context=context)
+                        context=context)
         return True
 
     def _compute_selected_groupby(self, this):

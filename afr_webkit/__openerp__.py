@@ -22,14 +22,12 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'AFR Webkit',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': 'Accounting',
-    'description': '''
+    "name": "AFR Webkit", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Accounting", 
+    "description": """
 AFR Webkit
 ==========
 
@@ -41,15 +39,27 @@ Main Features
 account_financial_report module reports are now printed using webkit.
 
 
-''',
-    'depends': ['base', 'mail', 'account_accountant', 'account_financial_report', 'report_webkit'],
-    'data': [
-        'data/html_css_afr.xml',
-        'report/report_afr.xml',
-        'view/account_financial_report_view.xml'
-        ],
-    'demo': [],
-    'test': [],
-    'active': False,
-    'installable': True,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "mail", 
+        "account_accountant", 
+        "account_financial_report", 
+        "report_webkit"
+    ], 
+    "demo": [], 
+    "data": [
+        "data/html_css_afr.xml", 
+        "report/report_afr.xml", 
+        "view/account_financial_report_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

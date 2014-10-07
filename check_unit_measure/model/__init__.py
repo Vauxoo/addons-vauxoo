@@ -1,4 +1,4 @@
-import sale
-import stock
-import purchase
-import invoice
+from . import sale
+from . import stock
+from . import purchase
+from . import invoice

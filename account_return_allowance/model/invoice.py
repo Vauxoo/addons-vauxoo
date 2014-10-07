@@ -86,18 +86,17 @@ class account_invoice(osv.Model):
         behavior.
         '''
         acc_id = self.get_account_aml(cr, uid, l)
-        type_inv = l.invoice_id.type
-        amount_line = l.quantity*l.price_unit - l.price_subtotal
+        amount_line = l.quantity * l.price_unit - l.price_subtotal
         if acc_id and amount_line > 1e-8:
             line = {'name': _('Discount %s' % l.name[:64]),
                     'ref': _('Discount %s' % l.name[:64]),
                     'credit': False,
                     'debit': amount_line,
                     'product_id': l.product_id.id,
-                    #'amount_currency': 0, #TODO: apply multicurrency?
-                    #'currency_id': False, #TODO: apply multicurrency?
-                    #'tax_code_id': 21, #TODO: Apply some tax?
-                    #'analytic_lines': [], #TODO: apply analityc expenses?
+                    # 'amount_currency': 0, #TODO: apply multicurrency?
+                    # 'currency_id': False, #TODO: apply multicurrency?
+                    # 'tax_code_id': 21, #TODO: Apply some tax?
+                    # 'analytic_lines': [], #TODO: apply analityc expenses?
                     #'analytic_account_id': False,
                     # TODO: apply analityc expenses?
                     'product_uom_id': l.uos_id.id,
@@ -169,7 +168,7 @@ class account_invoice(osv.Model):
                          not in [invoice_browse.account_id.id]]
             for l in invoice_browse.invoice_line:
                 if l.product_id:
-                # If it is commercial.
+                    # If it is commercial.
                     if to_modify:
                         # Look for the new account
                         new_acc_id = self.get_account_aml(cr, uid, l)
@@ -178,9 +177,9 @@ class account_invoice(osv.Model):
                         new_entry.update({'account_id': new_acc_id})
                         # Add the new entry to new s
                         entry = [(0, 0, new_entry)]
-                        new = new+entry
+                        new = new + entry
                 if not l.product_id:
-                # If it is Allowance or it doen't have product_id in the line
+                    # If it is Allowance or it doen't have product_id in the line
                     if to_modify:
                         # Look for the new account
                         new_acc_id = self.get_account_aml(cr, uid, l)
@@ -189,7 +188,7 @@ class account_invoice(osv.Model):
                         new_entry.update({'account_id': new_acc_id})
                         # Add the new entry to new s
                         entry = [(0, 0, new_entry)]
-                        new = new+entry
+                        new = new + entry
             # join everything
             if new:
                 # Verify What is the tax account and receivable and sum to new

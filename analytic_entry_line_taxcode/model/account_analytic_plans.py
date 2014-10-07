@@ -23,21 +23,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import time
-from lxml import etree
 
 from openerp.osv import fields, osv
-from openerp import tools
-from openerp.tools.translate import _
+
 
 class account_analytic_line(osv.Model):
 
     _inherit = 'account.analytic.line'
 
     _columns = {
-        'tax_code_id': fields.many2one('account.tax.code', 'Tax Account', 
+        'tax_code_id': fields.many2one('account.tax.code', 'Tax Account',
             help="The Account can either be a base tax code or a tax code account."),
     }
+
 
 class account_move_line(osv.Model):
 
@@ -48,13 +46,13 @@ class account_move_line(osv.Model):
             context = {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
-        res = super(account_move_line, self).create_analytic_lines(cr, uid, ids,context=context)
+        res = super(account_move_line, self).create_analytic_lines(cr, uid, ids, context=context)
 
         analytic_line_obj = self.pool.get('account.analytic.line')
         for move_line in self.browse(cr, uid, ids, context=context):
-           if move_line.analytics_id:
-               for line in move_line.analytic_lines:
-                   analytic_line_obj.write(cr, uid, line.id, {
-                       'tax_code_id': move_line.tax_code_id.id,
-                       }, context=context)
+            if move_line.analytics_id:
+                for line in move_line.analytic_lines:
+                    analytic_line_obj.write(cr, uid, line.id, {
+                        'tax_code_id': move_line.tax_code_id.id,
+                    }, context=context)
         return res

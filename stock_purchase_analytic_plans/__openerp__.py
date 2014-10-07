@@ -22,14 +22,12 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'Stock Purchase Analytic Plans',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': '',
-    'description': '''
+    "name": "Stock Purchase Analytic Plans", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "", 
+    "description": """
 Stock Purchase Analytic Plans
 -----------------------------
 
@@ -37,17 +35,19 @@ This module sets Analytic Distribution on the Journal Entry Lines when the
 Journal Entries are created because of Real Time Inventory Valuation from an
 Stock Move originated from Purchase Order
 
-''',
-    'depends': [
-        'purchase_analytic_plans',
-        ],
-    'data': [
-        ],
-    'demo': [],
-    'test': [],
-    'qweb': [],
-    'js': [],
-    'css': [],
-    'active': False,
-    'installable': True,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "purchase_analytic_plans"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

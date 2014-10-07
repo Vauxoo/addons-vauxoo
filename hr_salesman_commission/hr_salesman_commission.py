@@ -1,15 +1,6 @@
-import time
-import openerp.netsvc as netsvc
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
 
-import decimal_precision as dp
-
-import mx.DateTime
-from mx.DateTime import RelativeDateTime, now, DateTime, localtime
-import openerp.tools as tools
-from tools import config
-from openerp.tools.misc import currency
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class salesman_commission_payment(osv.Model):
@@ -34,7 +25,7 @@ class salesman_commission_payment(osv.Model):
             ('done', 'Done'),
             ('cancel', 'Cancelled')
         ], 'State', select=True, readonly=True),
-        'commission_rate':  fields.float('Rate(%)',
+        'commission_rate': fields.float('Rate(%)',
             digits_compute=dp.get_precision('Commission'), readonly=False),
         'commission_amount': fields.float('Commission',
             digits_compute=dp.get_precision('Commission'),),
@@ -133,7 +124,7 @@ class salesman_commission_payment(osv.Model):
                 each_line['commission_rate'] = self.browse(
                     cr, uid, idx, context=context).commission_rate
                 each_line['commissioned_amount_line'] = each_line[
-                    'debit'] * each_line['commission_rate']/100.0
+                    'debit'] * each_line['commission_rate'] / 100.0
                 each_line['user_id'] = self.browse(
                     cr, uid, idx, context=context).user_id.id
                 each_line['commission_paid'] = False
@@ -209,7 +200,7 @@ class salesman_commission_payment(osv.Model):
         )
 
         for line_id, period_id, journal_id, partner_id, jtpo, move_id in\
-            cr.fetchall():
+                cr.fetchall():
             res[line_id] = (period_id, journal_id, partner_id, jtpo, move_id)
 
         for aml in res.keys():
@@ -258,9 +249,9 @@ class salesman_commission_payment_line(osv.Model):
         'journal_id': fields.many2one('account.journal', 'Journal',
             required=True, select=1),
         'debit': fields.float('Debit', digits=(16, 2)),
-        'commission_rate':  fields.float('Rate(%)',
+        'commission_rate': fields.float('Rate(%)',
             digits_compute=dp.get_precision('Commission'), readonly=True),
-        'commissioned_amount_line':  fields.float('Commission',
+        'commissioned_amount_line': fields.float('Commission',
             digits_compute=dp.get_precision('Commission'), readonly=True),
         'user_id': fields.many2one('res.users', 'Salesman', required=True,
             states={'draft': [('readonly', False)]}),

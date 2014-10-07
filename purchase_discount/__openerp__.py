@@ -18,28 +18,32 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Purchase order lines with discounts",
-    "author": "Tiny, Acysos S.L.",
+    "name": "Purchase order lines with discounts", 
+    "version": "1.0", 
+    "author": "Tiny, Acysos S.L.", 
+    "category": "Generic Modules/Sales & Purchases", 
     "description": """
     It allows to define a discount per line in the purchase orders. This
     discount can be also negative, interpreting it as an increment.
-    """,
-    "version": "1.0",
-    "contributors": [
-        'Pedro M. Baeza',
-    ],
-    "category": "Generic Modules/Sales & Purchases",
+    """, 
+    "website": "", 
+    "license": "", 
     "depends": [
-        "stock",
-        "purchase",
-    ],
-    "demo": [],
+        "stock", 
+        "purchase"
+    ], 
+    "demo": [], 
     "data": [
-        "purchase_discount_view.xml",
-        "report/purchase_discount_report.xml",
-    ],
-    "active": False,
-    "installable": True
+        "purchase_discount_view.xml", 
+        "report/purchase_discount_report.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

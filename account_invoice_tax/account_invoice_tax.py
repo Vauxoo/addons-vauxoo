@@ -30,10 +30,11 @@ from openerp.tools.translate import _
 
 import time
 
+
 class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
-    def check_tax_lines(self, cr, uid, inv, compute_taxes, ait_obj):#method overriding
+    def check_tax_lines(self, cr, uid, inv, compute_taxes, ait_obj):  # method overriding
         company_currency = self.pool['res.company'].browse(cr, uid, inv.company_id.id).currency_id
         if not inv.tax_line:
             for tax in compute_taxes.values():
@@ -43,10 +44,10 @@ class account_invoice(osv.Model):
             for tax in inv.tax_line:
                 if tax.manual:
                     continue
-                #start custom  change
+                # start custom  change
                 #key = (tax.tax_code_id.id, tax.base_code_id.id, tax.account_id.id, tax.account_analytic_id.id)
                 key = (tax.tax_id and tax.tax_id.id or False)
-                #end custom change
+                # end custom change
                 tax_key.append(key)
                 if not key in compute_taxes:
                     raise osv.except_osv(_('Warning!'), _('Global taxes defined, but they are not in invoice lines !'))
@@ -56,16 +57,17 @@ class account_invoice(osv.Model):
             for key in compute_taxes:
                 if not key in tax_key:
                     raise osv.except_osv(_('Warning!'), _('Taxes are missing!\nClick on compute button.'))
-                    
+
+
 class account_invoice_tax(osv.Model):
     _inherit = 'account.invoice.tax'
-    
+
     _columns = {
         'tax_id': fields.many2one('account.tax', 'Tax', required=False, ondelete='set null',
             help="Tax relation to original tax, to be able to take off all data from invoices."),
     }
-    
-    def compute(self, cr, uid, invoice_id, context=None):#method overriding
+
+    def compute(self, cr, uid, invoice_id, context=None):  # method overriding
         tax_grouped = {}
         tax_obj = self.pool.get('account.tax')
         cur_obj = self.pool.get('res.currency')
@@ -73,19 +75,19 @@ class account_invoice_tax(osv.Model):
         cur = inv.currency_id
         company_currency = self.pool['res.company'].browse(cr, uid, inv.company_id.id).currency_id.id
         for line in inv.invoice_line:
-            for tax in tax_obj.compute_all(cr, uid, line.invoice_line_tax_id, (line.price_unit* (1-(line.discount or 0.0)/100.0)), line.quantity, line.product_id, inv.partner_id)['taxes']:
-                val={}
+            for tax in tax_obj.compute_all(cr, uid, line.invoice_line_tax_id, (line.price_unit * (1 - (line.discount or 0.0) / 100.0)), line.quantity, line.product_id, inv.partner_id)['taxes']:
+                val = {}
                 val['invoice_id'] = inv.id
                 val['name'] = tax['name']
                 val['amount'] = tax['amount']
                 val['manual'] = False
                 val['sequence'] = tax['sequence']
                 val['base'] = cur_obj.round(cr, uid, cur, tax['price_unit'] * line['quantity'])
-                #start custom change
+                # start custom change
                 val['tax_id'] = tax['id']
-                #end custom change
+                # end custom change
 
-                if inv.type in ('out_invoice','in_invoice'):
+                if inv.type in ('out_invoice', 'in_invoice'):
                     val['base_code_id'] = tax['base_code_id']
                     val['tax_code_id'] = tax['tax_code_id']
                     val['base_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['base'] * tax['base_sign'], context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')}, round=False)
@@ -99,10 +101,10 @@ class account_invoice_tax(osv.Model):
                     val['tax_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['amount'] * tax['ref_tax_sign'], context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')}, round=False)
                     val['account_id'] = tax['account_paid_id'] or line.account_id.id
                     val['account_analytic_id'] = tax['account_analytic_paid_id']
-                #start custom change
+                # start custom change
                 #key = (val['tax_code_id'], val['base_code_id'], val['account_id'], val['account_analytic_id'])
                 key = (val['tax_id'])
-                #end custom change
+                # end custom change
                 if not key in tax_grouped:
                     tax_grouped[key] = val
                 else:

@@ -23,47 +23,55 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
 {
-    "name" : "Serial Picking Manager",
-    "version" : "1.0",
-    "depends" : ["base","stock","sale","purchase"],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Serial Picking Manager", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Product Serialization", 
+    "description": """
 
  What do this module:
-        
- Pedigree and Serialization Manager (PSM) is an integrated mass-serialization and pedigree application 
- that enables companies to implement and manage mass serialization of products and share serialized product 
+
+ Pedigree and Serialization Manager (PSM) is an integrated mass-serialization and pedigree application
+ that enables companies to implement and manage mass serialization of products and share serialized product
  data across the supply chain.
- 
+
  To Do:
- 
+
  - Create wizard for product data serialization.
  - Hide native OpenERP wizard.
  - Create action Show serial/lot for products.
  - Create report where the serial printed grouped by porducto.
- 
+
  If you have a multi-company environment you must:
 
 - Login as admin
 - Duplicate the sequence 'PSM', for each company you handle
 - Change the prefix of the sequence by company for differentiation
-       
-        """,
-    "website" : "http://www.vauxoo.com",
-    "category" : "Product Serialization",
-    "init_xml" : [    
-                'data/psm_sequence.xml',
-    ],
-    "demo_xml" : [    ],
-    "update_xml" : [
-                'workflow/stock_workflow.xml',
-                "wizard/pedigree_serialization_manager.xml",
-                "wizard/stock_invoice_onshipping_view.xml",
-                "view/stock_view.xml",
-                "view/product_view.xml",
-                "report/psm_picking_report.xml",
-                
-    ],
-    "active": False,
-    "installable": True,
+
+        """, 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "stock", 
+        "sale", 
+        "purchase"
+    ], 
+    "demo": [], 
+    "data": [
+        "data/psm_sequence.xml", 
+        "workflow/stock_workflow.xml", 
+        "wizard/pedigree_serialization_manager.xml", 
+        "wizard/stock_invoice_onshipping_view.xml", 
+        "view/stock_view.xml", 
+        "view/product_view.xml", 
+        "report/psm_picking_report.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

@@ -24,14 +24,7 @@
 ##########################################################################
 
 from openerp.osv import osv, fields
-import openerp.tools as tools
-from openerp.tools.translate import _
 
-from tools import config
-import openerp.netsvc as netsvc
-import decimal_precision as dp
-import time
-import datetime
 import re
 
 
@@ -69,8 +62,8 @@ class update_price_list(osv.TransientModel):
         wz_brw = self.browse(cr, uid, ids, context=context)[0]
         product_ids = wz_brw.those_products and\
             [i.id for i in wz_brw.product_ids] or product_obj.search(
-            cr, uid, [('cost_ult', '>', 0.0), ('virtual_available', '>', 0.0)],
-            context=context)
+                cr, uid, [('cost_ult', '>', 0.0), ('virtual_available', '>', 0.0)],
+                context=context)
         price_brw = wz_brw and wz_brw.price_list_id and price_obj.browse(
             cr, uid, wz_brw.price_list_id.id, context=context)
         value = 'Precio|precio|price'
@@ -90,31 +83,31 @@ class update_price_list(osv.TransientModel):
                                 product_brw.property_cost_structure and\
                                 product_brw.property_cost_structure.id
                             price_dict = product_brw.virtual_available and\
-                            self.pool.get(
-                                'product.pricelist').price_get(cr, uid,
+                                self.pool.get(
+                                    'product.pricelist').price_get(cr, uid,
                                 [price], product_id, qty, context=context)
                             if price_dict and\
-                                price_dict.get(price, 'False') or False:
+                                    price_dict.get(price, 'False') or False:
                                 [dicti.update({
-                                        i.sequence: i.id})
-                                        for i in product_brw.method_cost_ids]
+                                    i.sequence: i.id})
+                                 for i in product_brw.method_cost_ids]
                                 number = price_brw and price_brw.name.split(
                                     ' ')
                                 number and len(
                                     number) > 1 and number[1].isdigit(
-                                    ) and int(
+                                ) and int(
                                         number[1]) in dicti.keys(
-                                        ) and method_obj.write(
+                                ) and method_obj.write(
                                             cr, uid, [
                                                 property_id], {
                                                     'method_cost_ids':
                                                         [(1, dicti.get(int(number[1])),
                                                     {'reference_cost_structure_id': property_id,
                                                         'unit_price': price_dict.get(price),
-                                                        })]}, context=context) or \
+                                                     })]}, context=context) or \
                                     number and len(
                                         number) > 1 and number[1].isdigit(
-                                        ) and product_obj.write(
+                                ) and product_obj.write(
                                             cr, uid, [
                                                 product_id], {
                                                     'method_cost_ids': [(0, 0, {'reference_cost_structure_id': property_id,
@@ -123,7 +116,7 @@ class update_price_list(osv.TransientModel):
                                                                                 })]}, context=context)
                                 number and len(number) > 1 and number[1].isdigit() and int(number[1]) == 1 and product_obj.write(
                                     cr, uid, [product_id], {'list_price': price_dict.get(price)}, context=context)
-                        #~ --------------------------------------------------------------------#~
+                        # ~ --------------------------------------------------------------------#~
 
             else:
                 for product_id in product_ids:
@@ -139,9 +132,9 @@ class update_price_list(osv.TransientModel):
                         number = price_brw and price_brw.name.split(' ')
                         number and len(
                             number) > 1 and number[1].isdigit(
-                            ) and int(
+                        ) and int(
                                 number[1]) in dicti.keys(
-                                ) and method_obj.write(
+                        ) and method_obj.write(
                                     cr, uid, [
                                         property_id], {
                                             'method_cost_ids': [(1, dicti.get(int(number[1])), {'reference_cost_structure_id': property_id,
@@ -158,4 +151,3 @@ class update_price_list(osv.TransientModel):
                             cr, uid, [product_id], {'list_price': price_dict.get(wz_brw.price_list_id.id)}, context=context)
 
         return {'type': 'ir.actions.act_window_close'}
-

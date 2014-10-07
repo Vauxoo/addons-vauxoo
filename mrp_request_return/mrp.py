@@ -85,9 +85,9 @@ class mrp_production(osv.Model):
             'product_qty': production_line.product_qty,
             'product_uom': production_line.product_uom.id,
             'product_uos_qty': production_line.product_uos and
-                                production_line.product_uos_qty or False,
+            production_line.product_uos_qty or False,
             'product_uos': production_line.product_uos and
-                            production_line.product_uos.id or False,
+            production_line.product_uos.id or False,
             'date': date_planned,
             'move_dest_id': parent_move_id,
             'location_id': source_location_id,
@@ -108,19 +108,19 @@ class mrp_production(osv.Model):
         # If usage of routing location is a internal, make outgoing shipment
         # otherwise internal shipment
         if production.bom_id.routing_id and\
-        production.bom_id.routing_id.location_id:
+                production.bom_id.routing_id.location_id:
             routing_loc = production.bom_id.routing_id.location_id
             if routing_loc.usage != 'internal':
                 pick_type = 'out'
             address_id = routing_loc.address_id and\
-                        routing_loc.address_id.id or False
+                routing_loc.address_id.id or False
 
         # Take next Sequence number of shipment base on type
         pick_name = ir_sequence.get(cr, uid, 'stock.picking')
         picking_id = stock_picking.create(cr, uid, {
             'name': pick_name + '-' + context.get('type', ''),
-            'origin': (production.origin or '').split(':')[0]\
-                        + ':' + production.name,
+            'origin': (production.origin or '').split(':')[0]
+            + ':' + production.name,
             'type': pick_type,
             'state': 'draft',
             'address_id': address_id,

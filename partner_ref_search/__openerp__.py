@@ -20,22 +20,28 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
+#"license" : "AGPL-3",
 {
-    "name" : "Inherit ref field in search view of res_partner",
-    "version" : "1.0",
-    "depends" : ['base'],
-    "author" : "Vauxoo",
-    #"license" : "AGPL-3",
-    "description" : """This module inherit ref field in search view of res_partner
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [],
-    "update_xml" : ['partner_view.xml',
-    ],
-    "active": False,
-    "installable": True,
+    "name": "Inherit ref field in search view of res_partner", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """This module inherit ref field in search view of res_partner
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base"
+    ], 
+    "demo": [], 
+    "data": [
+        "partner_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-

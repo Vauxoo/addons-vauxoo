@@ -23,18 +23,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Message Post Log",
-    "version" : "0.1",
-    "depends" : ['mail'],
-    "author" : "Vauxoo",
-    "description" : """
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "data" : [
-       'security/ir.model.access.csv',
-        ],
-    "active": False,
-    "installable": True,
-
+    "name": "Message Post Log", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "mail"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/ir.model.access.csv"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

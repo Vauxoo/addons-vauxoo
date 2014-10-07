@@ -26,12 +26,12 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
 
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class inherited_invoice(osv.Model):
+
     """
     M321 Customizations for account.invoice model
     """

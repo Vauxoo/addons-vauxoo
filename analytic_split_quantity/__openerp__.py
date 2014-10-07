@@ -22,19 +22,17 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'Analytic Entry Line Split Unit Amount',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': '',
-    'description': '''
+    "name": "Analytic Entry Line Split Unit Amount", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "", 
+    "description": """
 Analytic Entry Line Split Unit Amount
 -------------------------------------
 This module adds a new field named split_unit_amount which will accordingly
 spread the values in the analytic entry lines the amount which was set in the
-Journal Entry Line 
+Journal Entry Line
 
 The following example illustrated the use of this module.
 
@@ -48,27 +46,30 @@ What you are expected to have in your reports is
 200 USD, 2 Barrels, Saudi Arabia
 100 USD, 1 Barrels, Kuwait
 
-This is what is reported without this module 
+This is what is reported without this module
 
 600 USD, 10 Barrels, Iraq
 300 USD, 10 Barrels, Venezuela
 200 USD, 10 Barrels, Saudi Arabia
 100 USD, 10 Barrels, Kuwait
 
-''',
-    'depends': [
-        'account',
-        'analytic',
-        'account_analytic_plans',
-        ],
-    'data': [
-        'view/account_analytic_plans_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'qweb': [],
-    'js': [],
-    'css': [],
-    'active': False,
-    'installable': True,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "account", 
+        "analytic", 
+        "account_analytic_plans"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/account_analytic_plans_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

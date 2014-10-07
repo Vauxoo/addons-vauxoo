@@ -19,12 +19,8 @@
 #
 ##############################################################################
 
-import openerp.netsvc as netsvc
-import time
 
-from openerp.osv import osv, fields
-from openerp.tools.translate import _
-
+from openerp.osv import osv
 
 
 class stock_return_picking(osv.TransientModel):
@@ -45,7 +41,6 @@ class stock_return_picking(osv.TransientModel):
                           move.prodlot_id.id], {'check_serial': False})
 
         return res
-
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

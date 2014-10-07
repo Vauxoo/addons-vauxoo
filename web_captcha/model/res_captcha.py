@@ -36,6 +36,7 @@ except ImportError, e:
 
 
 class res_captcha(osv.Model):
+
     '''
     For security reasons, we can not allow have access to private key trought
     any objets, due to this we create an extra model to manage both keys

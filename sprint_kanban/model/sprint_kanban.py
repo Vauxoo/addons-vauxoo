@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from openerp.osv import fields
-from openerp.osv import osv
-from openerp.tools.translate import _
-import time
-import random
-from datetime import datetime
+from openerp.osv import osv, fields
 
 
 class sprint_kanban(osv.Model):

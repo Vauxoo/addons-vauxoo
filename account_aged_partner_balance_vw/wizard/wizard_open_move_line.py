@@ -27,7 +27,9 @@
 import pooler
 import wizard
 
+
 class wizard_open_move_line(wizard.interface):
+
     def _open_window(self, cr, uid, data, context={}):
         if not context:
             context = {}
@@ -76,7 +78,7 @@ class wizard_open_move_line(wizard.interface):
                   AND (l.reconcile_id IS NULL)
                   AND account_move.state = 'posted'
                AND l.reconcile_id is null --and l.currency_id is null
-       """+where_query_str
+       """ + where_query_str
         cr.execute(query)
         res = cr.fetchall()
         move_ids = [r[0] for r in res]

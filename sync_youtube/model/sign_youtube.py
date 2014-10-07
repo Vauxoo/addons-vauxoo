@@ -28,7 +28,6 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 import logging
 import urlparse
-import urllib2
 _logger = logging.getLogger("SignYouTube")
 try:
     from gdata.youtube import service
@@ -155,9 +154,9 @@ class sign_youtube_conf(osv.Model):
                     line_brw = line.browse(
                         cr, uid, line_ids[0], context=context)
                     line.write(cr, uid, line_ids,
-                                   {
-                                    'public_information': item.get('public_information', ''), },
-                                   context=context)
+                               {
+                                   'public_information': item.get('public_information', ''), },
+                               context=context)
                     if str(line_brw.duration_seconds) == str(item.get('duration_seconds', '')):
                         line.write(cr, uid, line_ids,
                                    {'update': 0,
@@ -212,6 +211,7 @@ class sign_youtube_conf_line(osv.Model):
         'update': 0,
     }
     _order = 'views desc'
+
     def load_url(self, cr, uid, ids, context=None):
         '''
         Launch a new window where you can the watch the video

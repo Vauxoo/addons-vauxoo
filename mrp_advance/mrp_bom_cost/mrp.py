@@ -24,9 +24,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
 
-import decimal_precision as dp
+from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class mrp_bom(osv.Model):
@@ -48,17 +47,17 @@ class mrp_bom(osv.Model):
         res = {}
         for i in self.browse(cr, uid, ids):
             cost = 0.00
-            cost = i.cost_t/i.product_qty
+            cost = i.cost_t / i.product_qty
             for l in i.bom_lines:
                 if not l.bom_lines:
-                    cost = l.product_id.standard_price*l.product_qty
+                    cost = l.product_id.standard_price * l.product_qty
                     res[i.id] = cost
                 else:
                     cost = cost + self._calc_cost_u(cr, uid, [l.id],
                                                 field_name, arg,
-                                                context)[l.id]*l.product_qty
-                    res[i.id] = cost/l.product_qty
-            res[i.id] = i.cost_t/i.product_qty
+                                                context)[l.id] * l.product_qty
+                    res[i.id] = cost / l.product_qty
+            res[i.id] = i.cost_t / i.product_qty
             if 'sub_products' in i._columns and i.sub_products:
                 sum_amount_subproducts = 0.0
                 product_uom_obj = self.pool.get('product.uom')
@@ -117,7 +116,7 @@ class mrp_bom(osv.Model):
                 for l in i.bom_lines:
                     cost += self.compute_bom_cost(cr, uid, [l.id])
             else:
-                cost = i.product_id.standard_price*i.product_qty * \
+                cost = i.product_id.standard_price * i.product_qty * \
                     i.product_uom.factor_inv * i.product_id.uom_id.factor
 
             if i.routing_id:

@@ -22,21 +22,29 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+'''
+File to added method and function to report Demo
+'''
 
 from openerp.report import report_sxw
-from openerp import pooler
-from openerp.tools.translate import _
-from openerp import tools
-from openerp import tests
-from openerp.osv import osv
-from openerp import netsvc
-import openerp
-from report_webkit import webkit_report
-import datetime
+from openerp.addons.report_webkit import webkit_report
+
 
 class invoice_report_demo_html(report_sxw.rml_parse):
+
+    '''
+    Define methods that need the report
+    '''
+
     def __init__(self, cr, uid, name, context=None):
+        '''
+        Initialization method
+        @param self: The object pointer.
+        @param cr: A database cursor
+        @param uid: ID of the user currently logged in
+        @param name: Ids to invoice's to print ticket
+        @param context: A standard dictionary
+        '''
         if context is None:
             context = {}
         super(invoice_report_demo_html, self).__init__(
@@ -45,8 +53,8 @@ class invoice_report_demo_html(report_sxw.rml_parse):
         })
 
 webkit_report.WebKitParser('report.invoice.report.demo.webkit',
-            'account.invoice',
-            'addons/invoice_report_per_journal/report/invoice_report_demo.mako',
-            parser=invoice_report_demo_html)
+           'account.invoice',
+           'addons/invoice_report_per_journal/report/invoice_report_demo.mako',
+           parser=invoice_report_demo_html)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

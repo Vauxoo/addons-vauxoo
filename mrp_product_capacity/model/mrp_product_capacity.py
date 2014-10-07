@@ -23,9 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import fields, osv, orm
-from openerp.tools.translate import _
-from openerp import tools
+from openerp.osv import osv, fields
 
 
 class mrp_workcenter(osv.Model):
@@ -50,6 +48,7 @@ class mrp_routing_workcenter(osv.Model):
             'Products Needed',
             help='Products needed to the operation'),
     }
+
 
 class mrp_workcenter_product_capacity(osv.Model):
 

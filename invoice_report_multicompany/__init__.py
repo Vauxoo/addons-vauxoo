@@ -1,3 +1,3 @@
 # -*- encoding: utf-8 -*-
-import report
-import invoice
+from . import report
+from . import invoice

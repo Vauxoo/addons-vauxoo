@@ -21,13 +21,7 @@
 #
 ##############################################################################
 
-import time
-import openerp.netsvc as netsvc
 from openerp.osv import osv, fields
-from mx import DateTime
-from tools import config
-from openerp.tools.translate import _
-
 
 
 class res_partner(osv.Model):

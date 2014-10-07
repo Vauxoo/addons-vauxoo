@@ -20,11 +20,11 @@
 ##############################################################################
 
 import time
-from report import report_sxw
-import pooler
+from openerp.report import report_sxw
 
 
 class packing_list_report(report_sxw.rml_parse):
+
     def __init__(self, cr, uid, name, context=None):
         if context is None:
             context = {}

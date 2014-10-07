@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2010 Vauxoo C.A. (http://openerp.com.ve/) All Rights Reserved.
 #                    Humberto Arocha <humbertoarocha@gmail.com>
-# 
+#
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -27,24 +27,34 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 ##############################################################################
-
 {
-	"name" : "Cálculo de Pago de Comisiones por producto pagado",
-	"version" : "0.1",
-	"author" : "Vauxoo",
-	"category" : "Generic Modules/Others",
-	"website": "http://wiki.openerp.org.ve/",
-	"description": '''
+    "name": "Cálculo de Pago de Comisiones por producto pagado", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Others", 
+    "description": """
 Cálculo de Pago de Comisiones por producto pagado
-''',
-	"depends" : ['account', 'account_voucher', 'product_historical_price', 'baremo'],
-	"init_xml" : [],
-	"update_xml" : [
-        'security/commission_payment_security.xml',
-        'security/ir.model.access.csv',
-        'commission_report.xml',
-        'commission_view.xml',
-    ],
-	"active": False,
-	"installable": True
+""", 
+    "website": "http://wiki.openerp.org.ve/", 
+    "license": "", 
+    "depends": [
+        "account", 
+        "account_voucher", 
+        "product_historical_price", 
+        "baremo"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/commission_payment_security.xml", 
+        "security/ir.model.access.csv", 
+        "commission_report.xml", 
+        "commission_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

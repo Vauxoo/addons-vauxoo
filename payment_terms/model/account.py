@@ -24,11 +24,6 @@
 ##########################################################################
 
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
-
-from datetime import datetime
-from DateTime import DateTime
-import time
 
 
 class account_invoice(osv.Model):
@@ -36,30 +31,24 @@ class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
     _columns = {
-            'payment_terms_id':fields.many2one('payment.terms.partner',
-                                               'Payment Terms',
-                                               help='Select the payment term '
-                                                    'agreed by company for '
-                                                    'this partner'), 
+        'payment_terms_id': fields.many2one('payment.terms.partner',
+                                            'Payment Terms',
+                                            help='Select the payment term '
+                                            'agreed by company for '
+                                            'this partner'),
     }
 
 
-
-
 class payments_term_partner(osv.Model):
-    
-    '''Payments terms agreed by company to define how to will 
+
+    '''Payments terms agreed by company to define how to will
        pay each partner'''
-    
+
     _name = 'payment.terms.partner'
-    
+
     _columns = {
-            'name':fields.char('Name', 50,
-                               help='Name to identify payment term'), 
-            
-            
-            }
+        'name': fields.char('Name', 50,
+                            help='Name to identify payment term'),
 
 
-
-
+    }
