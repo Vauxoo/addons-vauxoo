@@ -45,7 +45,9 @@ New Features
         'account',
         'account_analytic_plans',
     ],
-    'data': [],
+    'data': [
+        'view/account_model_view.xml',
+    ],
     'demo': [],
     'test': [],
     'qweb': [],
