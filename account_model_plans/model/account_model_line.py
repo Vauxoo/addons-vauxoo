@@ -1,5 +1,10 @@
 #!/usr/bin/python
 # -*- encoding: utf-8 -*-
+
+"""
+Inherit the account.model.line model in the account_model_plans Odoo module.
+"""
+
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
@@ -24,4 +29,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import account_model_line
+from openerp.osv import fields, osv, orm
+from openerp import tools
+
+
+class account_model_line(osv.Model):
+    """
+    Extend the account.model.line model:
+        - Add a new field named analytics_id.
+    """
+
+    _inherit = 'account.model.line'
+    _columns = {
+        'analytics_id': fields.many2one(
+            'account.analytic.plan.instance', string='Analytic Plan Instance',
+            help='Analytic Plan Instance'),
+    }
