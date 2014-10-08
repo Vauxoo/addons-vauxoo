@@ -70,9 +70,9 @@ Project Configuration
 """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
-    "demo" : [
+    "demo": [
     ],
-    "data" : [
+    "data": [
       "data/project_conf.xml",
       "view/project_view.xml",
     ],
