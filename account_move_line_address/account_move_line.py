@@ -24,7 +24,7 @@
 #
 ##############################################################################
 
-from openerp.osv import osv, fields, orm
+from openerp.osv import osv, fields
 from lxml import etree
 import openerp.tools as tools
 

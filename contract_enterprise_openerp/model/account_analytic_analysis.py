@@ -21,15 +21,10 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-import datetime
 import logging
-import time
 
 from openerp.osv import osv, fields
-import openerp.tools
-from openerp.tools.translate import _
 
-from openerp.addons.decimal_precision import decimal_precision as dp
 
 _logger = logging.getLogger(__name__)
 

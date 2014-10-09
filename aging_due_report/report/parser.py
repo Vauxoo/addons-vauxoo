@@ -27,8 +27,6 @@
 import time
 from openerp.report import report_sxw
 import mx.DateTime
-import pdb
-import pprint
 from openerp.addons.report_webkit import webkit_report
 
 

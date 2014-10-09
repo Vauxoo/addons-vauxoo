@@ -24,10 +24,8 @@
 #
 ##############################################################################
 
-import time
 
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
 
 
 class wizard_report_process(osv.TransientModel):

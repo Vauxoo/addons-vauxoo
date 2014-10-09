@@ -24,16 +24,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from openerp.osv import fields, osv
-from openerp.tools.translate import _
-from lxml import html
-import xml
 import logging
 _logger = logging.getLogger(__name__)
 
 try:
-    from report_webkit import webkit_report
-    from report import report_sxw
+    pass
 except ImportError, e:
     _logger.warning('You should declare branch with webkit or migrate this module %s' % __name__)
 

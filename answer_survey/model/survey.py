@@ -19,15 +19,8 @@
 #
 ##############################################################################
 
-import copy
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
-from time import strftime
-import os
 
-from openerp import netsvc, tools
-from openerp.osv import fields, osv
-from openerp.tools.translate import _
+from openerp.osv import osv
 
 
 class survey(osv.Model):

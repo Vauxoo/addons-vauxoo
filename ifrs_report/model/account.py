@@ -25,7 +25,6 @@
 ##########################################################################
 
 from openerp.osv import osv
-from openerp.osv import fields
 import mx.DateTime
 import time
 

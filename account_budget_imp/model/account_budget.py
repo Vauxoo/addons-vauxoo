@@ -24,9 +24,7 @@
 #
 ##############################################################################
 
-import datetime
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
 import openerp.addons.decimal_precision as dp
 
 class crossovered_budget(osv.osv):

@@ -22,7 +22,6 @@
 import time
 
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
 
 
 class ifrs_report_wizard(osv.osv_memory):

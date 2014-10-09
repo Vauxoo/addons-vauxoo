@@ -22,10 +22,7 @@
 #
 #
 
-from openerp.osv import osv
-from openerp.osv import fields
-from openerp.tools.translate import _
-from openerp import pooler, tools
+from openerp.osv import osv, fields
 try:
     from launchpadlib.launchpad import Launchpad
 except ValueError:

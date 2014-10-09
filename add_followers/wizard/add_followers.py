@@ -20,8 +20,7 @@
 ##############################################################################
 
 from openerp import tools
-from openerp.osv import osv
-from openerp.osv import fields
+from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 

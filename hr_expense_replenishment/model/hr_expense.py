@@ -440,11 +440,18 @@ class hr_expense_expense(osv.Model):
             vals={'date':date_post,'period_id':period_id}
             exp.account_move_id.write(vals)
             aml_obj.write(cr,uid,x_aml_ids,vals)
-
             for line_pair in full_rec+[ff]:
                 if not line_pair: continue
-                aml_obj.reconcile(
-                    cr, uid, line_pair, 'manual', context=context)
+                try:
+                    aml_obj.reconcile(
+                        cr, uid, line_pair, 'manual', context=context)
+                except:
+                    new_line_pair = self.invoice_counter_move_lines( cr, uid, exp.id,
+                        am_id=exp.account_move_id.id, aml_ids=line_pair,
+                        context=context)
+                    for nlp in new_line_pair:
+                        aml_obj.reconcile(
+                            cr, uid, nlp, 'manual', context=context)
             for line_pair in part_rec+[pp]:
                 if not line_pair: continue
                 aml_obj.reconcile_partial(
@@ -697,7 +704,6 @@ class hr_expense_expense(osv.Model):
             'date' : fields.date.today(),
             'period_id' : self.pool.get('account.period').find(
                 cr, uid, context=context)[0],
-            'credit' : 0.0,
             'name' : _('Payment through Expense'),
         }
 
@@ -706,6 +712,7 @@ class hr_expense_expense(osv.Model):
             vals_debit['partner_id'] = aml_brw.partner_id.id
             vals_debit['account_id'] = aml_brw.account_id.id
             vals_debit['debit'] = aml_brw.credit
+            vals_debit['credit'] = aml_brw.debit
 
             debit_id = aml_obj.create(cr, uid, vals_debit, context=context)
             res.append([aml_brw.id, debit_id])

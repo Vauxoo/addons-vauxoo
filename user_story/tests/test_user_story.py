@@ -1,5 +1,4 @@
 from openerp.tests.common import TransactionCase
-from openerp.exceptions import AccessError
 from openerp.osv.orm import except_orm
 from openerp import SUPERUSER_ID
 from openerp.tools import mute_logger

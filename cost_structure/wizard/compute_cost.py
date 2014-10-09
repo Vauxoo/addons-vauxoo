@@ -24,14 +24,9 @@
 ##########################################################################
 
 from openerp.osv import osv, fields
-import openerp.tools as tools
 from openerp.tools.translate import _
 
-from tools import config
-import openerp.netsvc as netsvc
-from openerp.addons.decimal_precision import decimal_precision as dp
 from DateTime import DateTime
-import time
 import datetime
 invo_cost = {}
 

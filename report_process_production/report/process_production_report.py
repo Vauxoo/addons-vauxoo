@@ -21,9 +21,7 @@
 
 import time
 from openerp.report import report_sxw
-from openerp.tools.amount_to_text import amount_to_text
 
-from openerp.tools.translate import _
 
 
 

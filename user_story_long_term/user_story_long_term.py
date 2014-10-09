@@ -23,11 +23,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from datetime import datetime
 from openerp.tools.translate import _
 from openerp.osv import fields, osv
-from openerp.addons.resource.faces import task as Task
-import unicodedata
 
 class user_story_phase(osv.Model):
     _name = "user.story.phase"

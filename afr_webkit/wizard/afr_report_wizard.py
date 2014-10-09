@@ -26,7 +26,6 @@
 
 
 from openerp.osv import osv, fields
-import time
 from openerp.tools.translate import _
 
 import logging

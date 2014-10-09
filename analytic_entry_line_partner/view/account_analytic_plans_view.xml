@@ -31,6 +31,9 @@
                 <xpath expr="//group" position="inside">
                     <filter string="Partner" context="{'group_by':'partner_id'}"/>
                 </xpath>
+                <xpath expr="//search" position="inside">
+                    <field name="partner_id"/>
+                </xpath>
             </field>
         </record>
 

@@ -24,10 +24,7 @@
 ##########################################################################
 
 from openerp.osv import osv, fields
-import openerp.tools as tools
-from openerp.tools.translate import _
 
-from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class inherit_price_list_item(osv.Model):

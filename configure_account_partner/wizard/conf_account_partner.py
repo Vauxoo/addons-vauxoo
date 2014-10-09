@@ -25,7 +25,7 @@
 ##############################################################################
 
 
-from openerp.osv import fields, osv, orm
+from openerp.osv import osv, fields
 
 class configure_account_partner(osv.TransientModel):
     _name = 'configure.account.partner'

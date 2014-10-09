@@ -28,21 +28,12 @@ from openerp.report import report_sxw
 from lxml import etree
 import subprocess
 import os
-import StringIO
 import cStringIO
 import base64
-import copy
-import locale
-import mx.DateTime
-import re
 import time
 
 import openerp.netsvc as netsvc
-from openerp.osv import osv
 import openerp.tools as tools
-import warnings
-import zipfile
-import report
 import openerp.netsvc as netsvc
 
 logger = netsvc.Logger()

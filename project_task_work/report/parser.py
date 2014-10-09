@@ -26,7 +26,6 @@
 
 import time
 from openerp.report import report_sxw
-import mx.DateTime
 
 
 class project_task_work_report(report_sxw.rml_parse):

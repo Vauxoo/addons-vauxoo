@@ -24,10 +24,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from openerp.osv import osv
-from openerp.osv import fields
+from openerp.osv import osv, fields
 from openerp.tools.translate import _
-import time
 #~ import pdb
 
 class ifrs_ifrs(osv.osv):

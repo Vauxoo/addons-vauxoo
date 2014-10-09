@@ -19,14 +19,8 @@
 #
 ##############################################################################
 
-from crm import crm
-from datetime import datetime
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
 
-import binascii
-import time
-import openerp.tools as tools
 
 
 class project_issue(osv.Model):

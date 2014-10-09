@@ -23,10 +23,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import time
 from openerp.osv import osv, fields
 from openerp.addons.decimal_precision import decimal_precision as dp
-from openerp.tools.translate import _
 
 
 class mrp_request_return(osv.TransientModel):

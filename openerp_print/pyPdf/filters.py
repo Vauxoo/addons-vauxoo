@@ -52,7 +52,8 @@ except ImportError:
     # Unable to import zlib.  Attempt to use the System.IO.Compression
     # library from the .NET framework. (IronPython only)
     import System
-    from System import IO, Collections, Array
+    from System import Array
+    from System import IO
 
     def _string_to_bytearr(buf):
         retval = Array.CreateInstance(System.Byte, len(buf))

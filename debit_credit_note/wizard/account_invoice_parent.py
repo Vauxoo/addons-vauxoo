@@ -21,11 +21,9 @@
 #
 ##############################################################################
 
-import time
 
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-from openerp import netsvc
 from lxml import etree
 
 class account_invoice_parent(osv.osv_memory):

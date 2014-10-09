@@ -19,14 +19,8 @@
 #
 ##############################################################################
 
-from datetime import datetime, date
-from lxml import etree
-import time
 
-from openerp import SUPERUSER_ID
-from openerp import tools
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
 
 class project_task(osv.Model):
     _inherit = 'project.task'
