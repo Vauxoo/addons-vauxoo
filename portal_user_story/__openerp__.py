@@ -28,6 +28,7 @@
     "name" : "Portal Acess for User Story",
     "version" : "0.1",
     "depends" : [
+                 "base",
                  "user_story",
                  "portal",
                  "portal_project",

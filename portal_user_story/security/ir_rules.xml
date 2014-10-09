@@ -9,7 +9,7 @@
         <field name="perm_create" eval="True"/>
         <field name="perm_write" eval="True"/>
         <field name="perm_unlink" eval="True"/>
-        <field name="groups" eval="[(4, ref('portal.group_portal'))]"/>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
         <field name="domain_force">[
             ('owner_id.id', '=', user.id)
             ]</field>
@@ -22,7 +22,7 @@
         <field name="perm_create" eval="False"/>
         <field name="perm_write" eval="False"/>
         <field name="perm_unlink" eval="False"/>
-        <field name="groups" eval="[(4, ref('portal.group_portal'))]"/>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
         <field name="domain_force">['|',
             ('accep_crit_id.project_id.partner_id.id', 'in', [user.partner_id.id, user.partner_id.parent_id.id]),'|',
             ('accep_crit_id.user_id.id', 'in', [user.partner_id.id, user.partner_id.parent_id.id]),
@@ -37,7 +37,7 @@
         <field name="perm_create" eval="True"/>
         <field name="perm_write" eval="True"/>
         <field name="perm_unlink" eval="False"/>
-        <field name="groups" eval="[(4, ref('portal.group_portal'))]"/>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
         <field name="domain_force">[
             ('accep_crit_id.owner_id.id', '=', user.id),
             ]</field>
@@ -50,7 +50,7 @@
         <field name="perm_create" eval="False"/>
         <field name="perm_write" eval="False"/>
         <field name="perm_unlink" eval="False"/>
-        <field name="groups" eval="[(4, ref('portal.group_portal'))]"/>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
         <field name="domain_force">['|',
             ('project_id.partner_id.id', 'in', [user.partner_id.id, user.partner_id.parent_id.id]),'|',
             ('user_id.id', 'in', [user.partner_id.id, user.partner_id.parent_id.id]),

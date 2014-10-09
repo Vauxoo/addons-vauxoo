@@ -2,20 +2,20 @@
 <openerp>
     <data>
         <record id="user_story_demo_user_1" model="res.users">
-            <field name="partner_id" ref="base.res_partner_address_17"/>
+            <field name="partner_id" ref="base.res_partner_17"/>
             <field name="login">daniel@jackson.com</field>
             <field name="password">d4n13l</field>
             <field name="signature">Daniel Jackson</field>
             <field name="company_id" ref="base.main_company"/>
-            <field name="groups_id" eval="[(6,0,[ref('portal.group_portal')])]"/>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_portal')])]"/>
         </record>
         <record id="user_story_demo_user_2" model="res.users">
-            <field name="partner_id" ref="base.res_partner_address_13"/>
+            <field name="partner_id" ref="base.res_partner_13"/>
             <field name="login">charlie.bernard@wealthyandsons.com</field>
             <field name="password">ch4rl13</field>
             <field name="signature">Charlie Bernard</field>
             <field name="company_id" ref="base.main_company"/>
-            <field name="groups_id" eval="[(6,0,[ref('portal.group_portal')])]"/>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_portal')])]"/>
         </record>
         <record id="project.project_project_1" model="project.project">
             <field name="privacy_visibility">followers</field>
