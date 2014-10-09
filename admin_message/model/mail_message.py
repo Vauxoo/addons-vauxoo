@@ -20,8 +20,6 @@
 ##############################################################################
 
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
-from ast import literal_eval
 
 _TASK_STATE = [('new', 'New'), (
     'publish', 'Publish'), ('unpublish', 'Cancel Publish')]

@@ -20,27 +20,34 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Expenses Replenishment Cancel",
-    "version": "1.0",
-    "author" : "Vauxoo",
-    "category": "Accounting",
-    "website" : "http://www.vauxoo.com/",
-    "description": """ 
+    "name": "Expenses Replenishment Cancel", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Accounting", 
+    "description": """
 Expenses Replenishment Cancel:
 ===========================
 Allows you to cancel an expense already paid to return to draft state and make
 changes to your entrie or regenerate
 
-    """,
-    'depends': ['hr_expense_replenishment'],
-    'data': [
-        'workflow/hr_expense_workflow.xml',
-        'view/hr_expense_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "hr_expense_replenishment"
+    ], 
+    "demo": [], 
+    "data": [
+        "workflow/hr_expense_workflow.xml", 
+        "view/hr_expense_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

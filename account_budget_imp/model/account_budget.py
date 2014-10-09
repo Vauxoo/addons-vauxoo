@@ -24,10 +24,9 @@
 #
 ##############################################################################
 
-import datetime
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
 import openerp.addons.decimal_precision as dp
+
 
 class crossovered_budget(osv.osv):
     _inherit = "crossovered.budget"
@@ -35,46 +34,47 @@ class crossovered_budget(osv.osv):
 
     _columns = {
         'dt_approved': fields.date('Date Approved',
-                                   readonly = True),
+                                   readonly=True),
         'dt_validated': fields.date('Date Validated',
-                                    readonly = True),
+                                    readonly=True),
         'dt_done': fields.date('Date Done',
-                               readonly = True,
-                               help = "Date when the cicle finish."),
+                               readonly=True,
+                               help="Date when the cicle finish."),
         'fiscalyear_id': fields.many2one('account.fiscalyear', 'Fiscal Year',
                                      help="Period for this budget"),
         'period_id': fields.many2one('account.period', 'Period',
                                      help="Period for this budget"),
-        'date_from': fields.date('Start Date', states={'done':[('readonly',True)]}),
-        'date_to': fields.date('End Date', states={'done':[('readonly',True)]}),
+        'date_from': fields.date('Start Date', states={'done': [('readonly', True)]}),
+        'date_to': fields.date('End Date', states={'done': [('readonly', True)]}),
         'company_id': fields.many2one('res.company', 'Company'),
         'general_budget_id': fields.many2one('account.budget.post', 'Budgetary Position'),
-     }
+    }
 
     _default = {
-        'company_id': lambda self,cr,uid,c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
+        'company_id': lambda self, cr, uid, c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
     }
-   
+
+
 class crossovered_budget_lines(osv.osv):
     _inherit = 'crossovered.budget.lines'
 
     def _prac_acc(self, cr, uid, ids, name, args, context=None):
-        res={}
+        res = {}
         for line in self.browse(cr, uid, ids, context=context):
             res[line.id] = self._prac_amt_acc(cr, uid, [line.id], context=context)[line.id]
         return res
 
     def _get_ifrs_total(self, cr, uid, ids, name, args, context=None):
         res = {}
-        cbl_brws = self.browse(cr, uid, ids, context = context)
+        cbl_brws = self.browse(cr, uid, ids, context=context)
         ifrs_line_obj = self.pool.get('ifrs.lines')
         for line in cbl_brws:
             ifrs_result = ifrs_line_obj._get_amount_value(cr, uid,
                     [line.ifrs_lines_id.id],
-                    ifrs_line = line.ifrs_lines_id,
-                    period_info = line.period_id,
-                    context = context)
-            res[line.id] = ifrs_result 
+                ifrs_line=line.ifrs_lines_id,
+                period_info=line.period_id,
+                context=context)
+            res[line.id] = ifrs_result
         return res
 
     _columns = {
@@ -94,7 +94,7 @@ class crossovered_budget_lines(osv.osv):
                            the manager stimate will comply to be compared with
                            the Planned Ammount"""),
         'ifrs_lines_id': fields.many2one("ifrs.lines", "Report Line",
-        help= "Line on the IFRS report to analyse your budget."),
+        help="Line on the IFRS report to analyse your budget."),
         'period_id': fields.many2one('account.period', 'Period',
                                      domain=[('special', '<>', True)],
                                      help="Period for this budget"),
@@ -103,30 +103,30 @@ class crossovered_budget_lines(osv.osv):
     }
 
     _default = {
-        'company_id': lambda self,cr,uid,c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
+        'company_id': lambda self, cr, uid, c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
     }
 
-    def write(self, cr, uid, ids, values, context = None):
-        period_brw = self.pool.get('account.period').browse(cr, uid, values.get('period_id'), context = context)
+    def write(self, cr, uid, ids, values, context=None):
+        period_brw = self.pool.get('account.period').browse(cr, uid, values.get('period_id'), context=context)
         values.update({'date_from': period_brw.date_start,
                        'date_to': period_brw.date_stop})
-        return super(crossovered_budget_lines, self).write(cr, uid, ids, values, context = context)
+        return super(crossovered_budget_lines, self).write(cr, uid, ids, values, context=context)
 
-    def create(self, cr, uid, values, context = None):
-        period_brw = self.pool.get('account.period').browse(cr, uid, values.get('period_id'), context = context)
+    def create(self, cr, uid, values, context=None):
+        period_brw = self.pool.get('account.period').browse(cr, uid, values.get('period_id'), context=context)
         values.update({'date_from': period_brw.date_start,
                        'date_to': period_brw.date_stop})
-        return super(crossovered_budget_lines, self).create(cr, uid, values, context = context)
+        return super(crossovered_budget_lines, self).create(cr, uid, values, context=context)
 
     def _prac_amt_acc(self, cr, uid, ids, context=None):
         '''
-        This Method should compute considering Accounts Accounts due to the 
+        This Method should compute considering Accounts Accounts due to the
         Account Analityc Account is not mandatory in the budget Line.
-        If the account Analityc Account is empty 
+        If the account Analityc Account is empty
         '''
         res = {}
         result = 0.0
-        if context is None: 
+        if context is None:
             context = {}
         for line in self.browse(cr, uid, ids, context=context):
             date_to = line.date_to
@@ -143,10 +143,10 @@ class crossovered_budget_lines(osv.osv):
                 if line.analytic_account_id.id:
                     cr.execute("SELECT SUM(amount) FROM account_analytic_line WHERE account_id=%s AND (date "
                            "between to_date(%s,'yyyy-mm-dd') AND to_date(%s,'yyyy-mm-dd')) AND "
-                           "general_account_id=ANY(%s)", (line.analytic_account_id.id, date_from, date_to,acc_ids,))
+                           "general_account_id=ANY(%s)", (line.analytic_account_id.id, date_from, date_to, acc_ids,))
                     result = cr.fetchone()[0]
                 else:
-                    result = sum([a.balance for a in line.general_budget_id.account_ids]) 
+                    result = sum([a.balance for a in line.general_budget_id.account_ids])
             else:
                 result = 0.00
             if result is None:

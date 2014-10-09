@@ -23,10 +23,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import osv, fields
+from openerp.osv import osv
 from openerp.tools.translate import _
 
-import openerp.netsvc as netsvc
 import time
 
 
@@ -67,7 +66,7 @@ class mrp_production(osv.Model):
                             src_account_id = production.product_id.property_stock_production.valuation_out_account_id.id
                             dest_account_id = production.product_id.property_stock_production.property_account_in_production_price_difference.id
                             reference_amount = (
-                                total_product_consumed -\
+                                total_product_consumed -
                                 total_product_finished)
                             journal_id = production.product_id.categ_id.property_stock_journal.id
                             account_moves = [(journal_id,
@@ -80,8 +79,8 @@ class mrp_production(osv.Model):
                             src_account_id = production.product_id.property_stock_production.property_account_out_production_price_difference.id
                             dest_account_id = production.product_id.property_stock_production.valuation_in_account_id.id
                             reference_amount = (
-                                total_product_consumed -\
-                                total_product_finished)*-1
+                                total_product_consumed -
+                                total_product_finished) * -1
                             journal_id = production.product_id.categ_id.property_stock_journal.id
                             account_moves = [(journal_id,
                                 self.create_account_variation_price_move_line(
@@ -93,18 +92,18 @@ class mrp_production(osv.Model):
                     for j_id, move_lines in account_moves:
                         move_obj.create(cr, uid,
                                         {
-                                        'journal_id': j_id,
-                                        'line_id': move_lines,
-                                        'ref': 'PROD: ' + production.name +\
+                                            'journal_id': j_id,
+                                            'line_id': move_lines,
+                                            'ref': 'PROD: ' + production.name +
                                             ' - ' + _('Deflection  by\
                                             difference on consume RM vs FP')})
         return True
 
     def create_account_variation_price_move_line(self, cr, uid, production,
-                                                    src_account_id,
-                                                    dest_account_id,
-                                                    reference_amount,
-                                                    context=None):
+                                                 src_account_id,
+                                                 dest_account_id,
+                                                 reference_amount,
+                                                 context=None):
         debit_line_vals = {
             'name': 'PROD: ' + production.name or '',
                     'date': time.strftime('%Y-%m-%d'),

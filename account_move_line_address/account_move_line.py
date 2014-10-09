@@ -24,7 +24,7 @@
 #
 ##############################################################################
 
-from openerp.osv import osv, fields, orm
+from openerp.osv import osv, fields
 from lxml import etree
 import openerp.tools as tools
 
@@ -38,7 +38,6 @@ class account_move_line(osv.Model):
     def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
         result = super(account_move_line, self).fields_view_get(
             cr, uid, view_id, view_type, context=context, toolbar=toolbar, submenu=submenu)
-        fields_get = self.fields_get(cr, uid, ['address_id'], context)
         xml_form = etree.fromstring(result['arch'])
         placeholder = xml_form.xpath("//field[@name='partner_id']")
         placeholder[0].addnext(etree.Element('field', {'name': 'address_id'}))

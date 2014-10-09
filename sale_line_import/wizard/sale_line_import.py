@@ -25,12 +25,7 @@
 ##############################################################################
 
 import base64
-import cStringIO
-import openerp.netsvc as netsvc
-from openerp.tools.translate import _
 
-import openerp.tools as tools
-import os
 from openerp.osv import osv, fields
 
 

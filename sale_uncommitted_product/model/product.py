@@ -25,7 +25,6 @@
 
 
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
 
 from openerp.addons.decimal_precision import decimal_precision as dp
 
@@ -94,16 +93,14 @@ class product_product(osv.Model):
                                          help="""Current quantities of
                                                  committed products in
                                                  Committe Sale Orders.""",
-                                         digits_compute=
-                                              dp.get_precision('Product UoM')),
+                                         digits_compute=dp.get_precision('Product UoM')),
         'qty_uncommitted': fields.function(_product_committed, method=True,
                                            type='float', string='Uncommitted',
                                            multi='committed',
                                            help="""Current quantities of
                                                    committed products in
                                                    Committe Sale Orders.i""",
-                                           digits_compute=
-                                           dp.get_precision('Product UoM')),
+                                           digits_compute=dp.get_precision('Product UoM')),
     }
 
 

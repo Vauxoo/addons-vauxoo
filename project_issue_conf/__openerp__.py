@@ -24,29 +24,33 @@
 #
 ##############################################################################
 {
-    "name" : "Project Issue Conf",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Generic",
-    "description" : """
-    
+    "name": "Project Issue Conf", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic", 
+    "description": """
+
     This module add data to configurate incoming mail server & outgoing mail server, & create an
     server action to notificate when is created a new project issue.
 
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
-        "fetchmail",
-        "project_issue",
-        ],
-    "demo" : [
-        "demo/project_issue_conf_demo.xml",
-        ],
-    "data" : [
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "fetchmail", 
+        "project_issue"
+    ], 
+    "demo": [
+        "demo/project_issue_conf_demo.xml"
+    ], 
+    "data": [
         "data/mail_server_data.xml"
-        ],
-    "test": [],
-    "installable" : True,
-    "active" : False,
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

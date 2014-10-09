@@ -23,12 +23,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "Add many followers in many task or project",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Task and Project",
+    "name": "Add many followers in many task or project", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Task and Project", 
     "description": """
 
     This module is a help to add followers massive,
@@ -58,14 +57,23 @@
         an email will be sent to each of them advising that they have been
         added to these documents (this may take a few seconds)
 
-    """,
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
-    "depends": ["project", 'user_story'],
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "project", 
+        "user_story"
+    ], 
+    "demo": [], 
     "data": [
-        'security/security_groups.xml',
-        'wizard/add_followers_view.xml',
-    ],
-    "installable": True,
-    "active": False,
+        "security/security_groups.xml", 
+        "wizard/add_followers_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

@@ -24,9 +24,6 @@
 ##############################################################################
 
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
-
-from tools import config
 
 
 class mrp_routing_workcenter(osv.Model):
@@ -36,7 +33,7 @@ class mrp_routing_workcenter(osv.Model):
         res = {}
         for i in self.browse(cr, uid, ids):
             cost = 0.00
-            cost = i.hour_nbr*i.costo
+            cost = i.hour_nbr * i.costo
             res[i.id] = cost
         return res
 

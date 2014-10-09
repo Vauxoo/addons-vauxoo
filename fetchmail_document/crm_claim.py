@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
-from openerp.osv import fields, osv
-from openerp.tools.translate import _
+from openerp.osv import osv
 
 
 class crm_claim(osv.Model):
+
     """
     crm_claim
     """

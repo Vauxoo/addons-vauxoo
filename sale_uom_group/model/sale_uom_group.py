@@ -23,11 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 
-import time
-import openerp.netsvc as netsvc
 from openerp.osv import osv, fields
-from mx import DateTime
-from openerp.tools.translate import _
 
 
 class sale_uom_group(osv.Model):

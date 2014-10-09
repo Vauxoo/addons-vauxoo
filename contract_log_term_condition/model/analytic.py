@@ -23,7 +23,7 @@
 ###############################################################################
 
 from openerp.osv import osv, fields
-import openerp.tools
+
 
 class account_analytic_account(osv.Model):
     _inherit = 'account.analytic.account'

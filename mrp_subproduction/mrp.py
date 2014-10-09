@@ -24,7 +24,6 @@
 #
 ##############################################################################
 
-from openerp.tools.translate import _
 
 from openerp.osv import osv, fields
 from openerp.addons.decimal_precision import decimal_precision as dp
@@ -34,7 +33,7 @@ class mrp_production(osv.Model):
     _inherit = "mrp.production"
 
     def _get_product_subproduction_qty(self, cr, uid, ids, field_names,
-                                        args, context=None):
+                                       args, context=None):
         if context is None:
             context = {}
         product_uom_pool = self.pool.get('product.uom')
@@ -44,21 +43,21 @@ class mrp_production(osv.Model):
         for production in self.browse(cr, uid, ids, context=context):
             if production.subproduction_ids:
                 for subprod in production.subproduction_ids:
-                    if (subprod.product_lines and\
+                    if (subprod.product_lines and
                     subprod.state not in ('cancel')):
                         for scheduled in subprod.product_lines:
                             if scheduled.product_id.id ==\
-                            production.product_id.id:
+                                    production.product_id.id:
                                 subp_sum += product_uom_pool._compute_qty(
                                     cr, uid, scheduled.product_uom.id,
                                     scheduled.product_qty,
                                     to_uom_id=production.product_uom.id)
 
-                    if (subprod.move_lines2 and\
+                    if (subprod.move_lines2 and
                     subprod.state not in ('cancel')):
                         for consumed in subprod.move_lines2:
-                            if (consumed.product_id.id ==\
-                            production.product_id.id and\
+                            if (consumed.product_id.id ==
+                            production.product_id.id and
                             consumed.state not in ('cancel')):
                                 subp_real_sum += product_uom_pool._compute_qty(
                                     cr, uid, consumed.product_uom.id,
@@ -71,7 +70,7 @@ class mrp_production(osv.Model):
         return result
 
     def _get_parent_product(self, cr, uid, ids, field_names, args,
-                                                                context=None):
+                            context=None):
         product_uom_pool = self.pool.get('product.uom')
         parent_id = context.get('subproduction_parent_id') or 0
         parent_product_id = 0
@@ -94,7 +93,7 @@ class mrp_production(osv.Model):
 
             if production.move_lines2:
                 for consumed in production.move_lines2:
-                    if (consumed.product_id.id == parent_product_id and\
+                    if (consumed.product_id.id == parent_product_id and
                     consumed.state in ('done')):
                         real_qty += product_uom_pool._compute_qty(
                             cr, uid, consumed.product_uom.id,
@@ -119,7 +118,7 @@ class mrp_production(osv.Model):
             if production.move_created_ids2:
 
                 for finished in production.move_created_ids2:
-                    if (finished.product_id.id == production.product_id.id and\
+                    if (finished.product_id.id == production.product_id.id and
                     finished.state in ('done')):
                         total_consumed += product_uom_pool._compute_qty(
                             cr, uid, finished.product_uom.id,
@@ -130,11 +129,11 @@ class mrp_production(osv.Model):
             result[production.id] = total_consumed
             if production.subproduction_ids:
                 for subprods in production.subproduction_ids:
-                    if (subprods.move_lines2 and\
+                    if (subprods.move_lines2 and
                     subprods.state not in ('cancel')):
                         for consumed in subprods.move_lines2:
-                            if (consumed.product_id.id ==\
-                            production.product_id.id and\
+                            if (consumed.product_id.id ==
+                            production.product_id.id and
                             consumed.state in ('done')):
                                 total_consumed -=\
                                     product_uom_pool._compute_qty(cr, uid,

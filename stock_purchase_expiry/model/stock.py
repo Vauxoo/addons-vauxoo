@@ -23,9 +23,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import fields, osv, orm
+from openerp.osv import osv, fields
 from openerp.tools.translate import _
-from openerp import tools
 import time
 
 
@@ -47,8 +46,8 @@ class stock_picking(osv.Model):
         cr_date = time.strftime('%Y-%m-%d')
         sp_brw = self.browse(cur, uid, ids[0], context=context)
         if ((not sp_brw.date_contract_expiry) or
-            (sp_brw.date_contract_expiry and cr_date <= sp_brw.date_contract_expiry) or
-            context.get('force_expiry_pickings', False)):
+                (sp_brw.date_contract_expiry and cr_date <= sp_brw.date_contract_expiry) or
+                context.get('force_expiry_pickings', False)):
             res = super(stock_picking, self).action_process(
                 cur, uid, [sp_brw.id], context=context)
         else:
@@ -69,6 +68,7 @@ class stock_picking(osv.Model):
             cur, uid, id, default=default, context=context)
         return res
 
+
 class stock_picking_in(osv.Model):
     _inherit = 'stock.picking.in'
     _columns = {
@@ -87,8 +87,8 @@ class stock_picking_in(osv.Model):
         cr_date = time.strftime('%Y-%m-%d')
         sp_brw = self.browse(cur, uid, ids[0], context=context)
         if ((not sp_brw.date_contract_expiry) or
-            (sp_brw.date_contract_expiry and cr_date <= sp_brw.date_contract_expiry) or
-            context.get('force_expiry_pickings', False)):
+                (sp_brw.date_contract_expiry and cr_date <= sp_brw.date_contract_expiry) or
+                context.get('force_expiry_pickings', False)):
             res = super(stock_picking_in, self).action_process(
                 cur, uid, [sp_brw.id], context=context)
         else:
@@ -109,6 +109,7 @@ class stock_picking_in(osv.Model):
             cur, uid, id, default=default, context=context)
         return res
 
+
 class stock_picking_out(osv.Model):
     _inherit = 'stock.picking.out'
     _columns = {
@@ -127,8 +128,8 @@ class stock_picking_out(osv.Model):
         cr_date = time.strftime('%Y-%m-%d')
         sp_brw = self.browse(cur, uid, ids[0], context=context)
         if ((not sp_brw.date_contract_expiry) or
-            (sp_brw.date_contract_expiry and cr_date <= sp_brw.date_contract_expiry) or
-            context.get('force_expiry_pickings', False)):
+                (sp_brw.date_contract_expiry and cr_date <= sp_brw.date_contract_expiry) or
+                context.get('force_expiry_pickings', False)):
             res = super(stock_picking_out, self).action_process(
                 cur, uid, [sp_brw.id], context=context)
         else:
@@ -148,4 +149,3 @@ class stock_picking_out(osv.Model):
         res = super(stock_picking_out, self).copy(
             cur, uid, id, default=default, context=context)
         return res
-

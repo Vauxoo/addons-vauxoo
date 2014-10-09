@@ -59,6 +59,4 @@ class sale_double_validation_installer(osv.TransientModel):
         return {}
 
 
-
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

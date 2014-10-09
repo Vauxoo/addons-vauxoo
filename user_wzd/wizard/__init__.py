@@ -1,1 +1,1 @@
-import res_users_wzd
+from . import res_users_wzd

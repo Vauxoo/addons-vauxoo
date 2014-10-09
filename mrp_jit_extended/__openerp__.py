@@ -23,28 +23,34 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "MRP JIT extended",
-    "version": "1.0",
-    "author" : "Vauxoo",
-    "category": "Generic Modules",
-    "website" : "http://www.vauxoo.com/",
+    "name": "MRP JIT extended", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
     "description": """This module uses a wizard to merge an run the procurements
-    of the selected manufacturing orders (creating new manufacturing orders) to make a recursive supply 
+    of the selected manufacturing orders (creating new manufacturing orders) to make a recursive supply
     of the parent orders.
     To apply patches needed use the command:
     patch -b "procurement/procurement.py" "procurement.py.patch"
     patch -b "mrp/mrp.py" "mrp.py.patch"
-    """,
-    'depends': ['procurement_order_merge', 'mrp_subproduction', 'procurement_location'],
-    'init_xml': [],
-    'update_xml': [
-    'wizard/mrp_jit_extended_wizard_view.xml'
-    ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
-    
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "procurement_order_merge", 
+        "mrp_subproduction", 
+        "procurement_location"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/mrp_jit_extended_wizard_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

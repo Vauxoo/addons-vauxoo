@@ -23,6 +23,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import stock_location
-import mrp_account_variation
-import mrp_account_variation_price
+from . import stock_location
+from . import mrp_account_variation
+from . import mrp_account_variation_price

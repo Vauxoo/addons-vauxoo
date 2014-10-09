@@ -23,9 +23,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import osv, fields
+from openerp.osv import osv
 from openerp.tools.translate import _
-from openerp.addons.decimal_precision import decimal_precision as dp
 import time
 
 
@@ -55,7 +54,7 @@ class stock_invoice_onshipping(osv.TransientModel):
         done_picking = [
             bool(picking_brw.state == 'done')
             for picking_brw in self.pool.get(active_model).browse(cur, uid,
-                active_ids, context=context) ]
+                active_ids, context=context)]
         if context.get('force_expiry_pickings', False):
             pass
         elif any(expire_dates) or any(done_picking):
@@ -64,4 +63,4 @@ class stock_invoice_onshipping(osv.TransientModel):
                  ' date pickings which also are not in done state.'))
         res = super(stock_invoice_onshipping, self).open_invoice(
             cur, uid, ids, context=context)
-        return res 
+        return res

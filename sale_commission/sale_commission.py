@@ -38,7 +38,7 @@ class sale_commission_line(osv.Model):
         bar_obj = self.pool.get('baremo.book')
         res = {}
         for sol_brw in self.browse(cr, uid, ids):
-            bar_id = hasattr(sol_brw.company_id,'bar_id') and sol_brw.company_id.bar_id  and sol_brw.company_id.bar_id.id or False
+            bar_id = hasattr(sol_brw.company_id, 'bar_id') and sol_brw.company_id.bar_id and sol_brw.company_id.bar_id.id or False
             print '--------------- bar_id -------------', bar_id
             if not bar_id:
                 # TODO: raise exception, levantar excepcion.
@@ -57,16 +57,14 @@ class sale_commission_line(osv.Model):
 
     def get_gain(self, cr, uid, ids, name, args, context=None):
         res = {}
-        product_price = 0
         product_pu = 0
-        gain = 0
         for sol_brw in self.browse(cr, uid, ids):
             if sol_brw.product_id:
                 product_cost = sol_brw.product_id.standard_price
                 if product_cost != 0.0:
                     product_pu = sol_brw.price_unit
                     res[sol_brw.id] = ((
-                        product_pu-product_cost)/product_cost)*100
+                        product_pu - product_cost) / product_cost) * 100
                 else:
                     raise osv.except_osv(_("User Error"), _(
                         "The product standard price can't be 0.0!"))
@@ -86,4 +84,3 @@ class sale_commission_line(osv.Model):
                                       'sale.order.line': (lambda self, cr, uid, ids, c={}: ids, None, 25),
                                       }),
     }
-

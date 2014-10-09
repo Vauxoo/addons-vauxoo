@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -23,42 +23,49 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Cost Structure",
-    "version" : "0.1",
-    "depends" : ['account',"stock",'product','purchase','invoice_date_time'],
-    "author" : "Vauxoo",
-    "description" : """
-    Module that performs a calculation of average cost in products, 
-    this module performs a search of all movements made by you for goods 
+    "name": "Cost Structure", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
+    Module that performs a calculation of average cost in products,
+    this module performs a search of all movements made by you for goods
     and are assigned to cost structure.
     This module creates a new tab in the product view, where we have the cost structure for product and price list.
-    The average cost is calculated automatically when validating an invoice or credit note, the price list is created 
+    The average cost is calculated automatically when validating an invoice or credit note, the price list is created
     by a wizard located in the sales configuration menu.
     The product has a list price, the sale must respect the price structure proposed by the calculation, since you will
     not be allowed the confirmation of an operation if any of the suggested prices is not in accordance with the established ragos product price list.
     In the menu of sale may select which type of price you want to sell the product
-    
-    
-    
-    
-    
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : ['data/data_load.xml'],
-    "demo_xml" : [],
-    "test": [ ],
-    "update_xml" : [
-    'security/cost_structure_security.xml',
-    'security/ir.model.access.csv',
-    'wizard/update_price_list_view.xml',
-    'view/cost_structure.xml',
-    'view/product_view.xml',
-    
-    
-    
-    
-    ],
-    "active": False,
-    "installable": True,
+
+
+
+
+
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account", 
+        "stock", 
+        "product", 
+        "purchase", 
+        "invoice_date_time"
+    ], 
+    "demo": [], 
+    "data": [
+        "data/data_load.xml", 
+        "security/cost_structure_security.xml", 
+        "security/ir.model.access.csv", 
+        "wizard/update_price_list_view.xml", 
+        "view/cost_structure.xml", 
+        "view/product_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

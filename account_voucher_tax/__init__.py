@@ -1,3 +1,3 @@
-import account_tax
-import account_voucher
-import invoice
+from . import account_tax
+from . import account_voucher
+from . import invoice

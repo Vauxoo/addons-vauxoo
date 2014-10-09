@@ -19,5 +19,5 @@
 #
 ##############################################################################
 
-import contact
-import controllers 
+from . import contact
+from . import controllers 

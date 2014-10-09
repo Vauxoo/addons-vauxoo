@@ -26,20 +26,29 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
 {
-    'name' : 'Move vat field',
-    'version' : '0.1',
-    'author' : 'Vauxoo',
-    'description' : '''
+    "name": "Move vat field", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Customer", 
+    "description": """
 Move vat field to show after partner name, to easier searching
 -Inherit Partner view form and set vat field after partner name
-    ''',
-    'category' : 'Customer',
-    'website' : 'http://vauxoo.com',
-    'depends' : ['base','base_vat'],
-    'update_xml' : [
-        'view/partner_view.xml',
-],
-    'demo' : [],
-    'active' : False,
-    'installable': True,
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "base_vat"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/partner_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

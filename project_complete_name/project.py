@@ -19,14 +19,9 @@
 #
 ##############################################################################
 
-from datetime import datetime, date
-from lxml import etree
-import time
 
-from openerp import SUPERUSER_ID
 from openerp import tools
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
 
 
 class project_project(osv.Model):
@@ -77,7 +72,7 @@ class project_project(osv.Model):
     }
 
     def name_search(self, cr, user, name='', args=None, operator='ilike',
-                                                    context=None, limit=100):
+                    context=None, limit=100):
         if not args:
             args = []
         if name:

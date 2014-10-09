@@ -20,7 +20,7 @@
 #
 
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
+
 
 class project_task(osv.osv):
 
@@ -37,14 +37,14 @@ class project_task(osv.osv):
         Send mail automatically to change task to Backlog and to Testing Leader.
         '''
         context = context or {}
-        #Dont send context to dont get language of user in read method
+        # Dont send context to dont get language of user in read method
         if ids.stage_id:
             type = ids.stage_id.name or ''
             if type == 'Backlog':
                 self.send_mail_task(cr, uid, ids, 'template_send_email_task_new', context)
             elif type == 'Testing Leader':
                 self.send_mail_task(cr, uid, ids, 'template_send_email_task_end', context)
-            
+
     def send_mail_task(self, cr, uid, ids, template, context=None):
         imd_obj = self.pool.get('ir.model.data')
         template_ids = imd_obj.search(
@@ -85,8 +85,8 @@ class project_task(osv.osv):
     _track = {'stage_id': {'project.mt_task_stage': send_mail_task_new_test, }}
 
     _columns = {
-            'project_leader_id': fields.many2one('res.users','Project Leader',help="""Person responsible of task review, when is in Testing Leader state. The person should review: Work Summary, Branch and Make Functional Tests. When everything works this person should change task to done."""),
+        'project_leader_id': fields.many2one('res.users', 'Project Leader', help="""Person responsible of task review, when is in Testing Leader state. The person should review: Work Summary, Branch and Make Functional Tests. When everything works this person should change task to done."""),
     }
     _defaults = {
-         'project_leader_id': lambda obj,cr,uid,context: uid,
+        'project_leader_id': lambda obj, cr, uid, context: uid,
     }

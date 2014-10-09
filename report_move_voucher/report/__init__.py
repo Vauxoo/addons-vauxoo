@@ -6,7 +6,7 @@
 #    All Rights Reserved
 ###############Credits######################################################
 #    Coded by: María Gabriela Quilarque  <gabrielaquilarque97@gmail.com>
-#              Luis Escobar <luis@vauxoo.com> 
+#              Luis Escobar <luis@vauxoo.com>
 #    Planified by: Nhomar Hernandez
 #    Finance by: Vauxoo, C.A. http://vauxoo.com
 #    Audited by: Humberto Arocha humberto@openerp.com.ve
@@ -26,4 +26,4 @@
 ##############################################################################
 
 
-import account
+from . import account

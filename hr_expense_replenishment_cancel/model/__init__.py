@@ -21,4 +21,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import hr_expense_replenishment_cancel
+from . import hr_expense_replenishment_cancel

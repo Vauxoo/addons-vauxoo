@@ -24,25 +24,18 @@
 ##########################################################################
 
 from openerp.osv import osv, fields
-import openerp.tools as tools
-from openerp.tools.translate import _
-
-from tools import config
-import openerp.netsvc as netsvc
-from openerp.addons.decimal_precision import decimal_precision as dp
-import time
 
 
 class account_ledger_report(osv.TransientModel):
     _inherit = "account.report.general.ledger"
 
-    def _get_all_journal(self, cr, uid, context=None):                          
+    def _get_all_journal(self, cr, uid, context=None):
         return []
-      
+
     _columns = {
         'journal_ids': fields.many2many('account.journal', string='Journals', required=True),
-        }
+    }
 
-    _defaults = {                                                               
-            'journal_ids': _get_all_journal, 
-            }
+    _defaults = {
+        'journal_ids': _get_all_journal,
+    }

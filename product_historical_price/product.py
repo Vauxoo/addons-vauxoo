@@ -23,17 +23,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
 
 from openerp.addons.decimal_precision import decimal_precision as dp
 import time
-import math
 
 
 class product_historical(osv.Model):
+
     """
     product_historical
     """
+
     def _get_historical_price(self, cr, uid, ids, field_name, field_value,
                               arg, context={}):
         res = {}
@@ -41,7 +41,7 @@ class product_historical(osv.Model):
         for id in ids:
             if self.browse(cr, uid, id).list_price != self.browse(cr, uid,
                                                                   id).\
-                                                         list_price_historical:
+                    list_price_historical:
                 res[id] = self.browse(cr, uid, id).list_price
                 product_hist.create(cr, uid, {
                     'product_id': id,
@@ -68,24 +68,24 @@ class product_historical(osv.Model):
     _inherit = 'product.product'
     _columns = {
         'list_price_historical':
-           fields.function(_get_historical_price,
-                                         method=True, string='Latest Price',
-                                         type='float',
-                                         digits_compute=dp.get_precision(
-                                             'List_Price_Historical'),
-                                         store={'product.product': ( lambda
+        fields.function(_get_historical_price,
+                        method=True, string='Latest Price',
+                        type='float',
+                        digits_compute=dp.get_precision(
+                            'List_Price_Historical'),
+                        store={'product.product': (lambda
                                              self, cr, uid, ids, c={}: ids, [
                                                  'list_price'], 50), },
-                                             help="""Latest Recorded Historical
+                        help="""Latest Recorded Historical
                                              Value"""),
         'cost_historical': fields.function(_get_historical_cost, method=True,
                                            string=' Latest Cost', type='float',
                                            digits_compute=dp.get_precision(
                                                'Cost_Historical'),
-                                           store={'product.product': ( lambda
+                                           store={'product.product': (lambda
                                                self, cr, uid, ids, c={}: ids, [
                                                    'standard_price'], 50), },
-                                               help="""Latest Recorded
+                                           help="""Latest Recorded
                                                Historical Cost"""),
         'list_price_historical_ids': fields.one2many('product.historic.price',
                                                      'product_id',
@@ -106,7 +106,7 @@ class product_historic_price(osv.Model):
         'product_id': fields.many2one('product.product',
                                       string='Product related to this Price',
                                       required=True),
-        'name': fields.datetime(string='Date',  required=True),
+        'name': fields.datetime(string='Date', required=True),
         'price': fields.float(string='Price',
                               digits_compute=dp.get_precision('Price')),
         'product_uom': fields.many2one('product.uom', string="Supplier UoM",

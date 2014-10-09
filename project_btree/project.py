@@ -19,14 +19,8 @@
 #
 ##############################################################################
 
-from datetime import datetime, date
-from lxml import etree
-import time
 
-from openerp import SUPERUSER_ID
-from openerp import tools
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
 
 
 class project_project(osv.Model):
@@ -58,7 +52,7 @@ class project_project(osv.Model):
             relation='project.project',
             string='Parent Project',
             store={
-               'account.analytic.account':
+                'account.analytic.account':
                 (_get_projects, ['parent_id', 'name'], 10)}, select=2),
         'child_ids2': fields.one2many('project.project',
             'parent_id2', 'Child Accounts'),

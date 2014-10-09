@@ -1,26 +1,9 @@
 # -*- coding: utf-8 -*-
-import cStringIO
-import contextlib
-import hashlib
-import json
 from openerp import SUPERUSER_ID
 import logging
-import os
-import datetime
 
-from sys import maxint
-import base64
 
-import psycopg2
-import werkzeug
-import werkzeug.exceptions
-import werkzeug.utils
-import werkzeug.wrappers
-from PIL import Image
 
-import openerp
-from openerp.osv import fields
-from openerp.addons.website.models import website
 from openerp.addons.web import http
 from openerp.addons.web.http import request
 from urllib import quote_plus

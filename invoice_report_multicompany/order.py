@@ -1,10 +1,9 @@
 # -*- encoding: utf-8 -*-
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
-
 
 
 class sale_order_line(osv.Model):
+
     """
     OpenERP Model : sale_order_line
     """
@@ -15,6 +14,7 @@ class sale_order_line(osv.Model):
 
 
 class sale_order(osv.Model):
+
     """
     OpenERP Model : sale_order_line
     """

@@ -6,9 +6,9 @@
 #    All Rights Reserved
 ###############Credits######################################################
 #    Coded by: María Gabriela Quilarque  <gabriela@openerp.com.ve>
-#              Luis Escobar <luis@vauxoo.com> 
+#              Luis Escobar <luis@vauxoo.com>
 #    Planified by: Nhomar Hernandez
-#    Finance by: Vauxoo, C.A. http://vauxoo.com 
+#    Finance by: Vauxoo, C.A. http://vauxoo.com
 #    Audited by: María Gabriela Quilarque  <gabriela@openerp.com.ve>
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
@@ -25,4 +25,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 
-import report
+from . import report

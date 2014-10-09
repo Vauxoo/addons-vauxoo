@@ -26,14 +26,12 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
 from openerp.osv import fields, osv
-import sys
-from openerp.tools.translate import _
 
-import time
 from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class inherit_purchase(osv.Model):
+
     """ """
 
     _inherit = 'purchase.order'
@@ -49,7 +47,7 @@ class inherit_purchase(osv.Model):
         'percent_special': fields.float('Other Percent',
                     digits_compute=dp.get_precision(
                         'Cost Imex'),
-                    help='Percent to special compute'),
+            help='Percent to special compute'),
         'import_purchase': fields.boolean('Importation Purchase',
                     help='Indicate if purchase is a importation '),
         'percent_imex_ids': fields.one2many('percent.imex', 'purchase_id',
@@ -63,9 +61,8 @@ class inherit_purchase(osv.Model):
                         context=None):
         if context is None:
             context = {}
-        imex_line_obj = self.pool.get('percent.imex.line')
 
-        amount = (base * (imex_line.percent/100))
+        amount = (base * (imex_line.percent / 100))
         imex_lines = {
             'percent': imex_line.percent,
             'date': imex_line.date,
@@ -106,7 +103,7 @@ class inherit_purchase(osv.Model):
                             if rate.name <= purchase.date_order]
                     print 'rate', rate
                     tax_base = total_with_flete * (rate and rate[0] or 1)
-                    price_unit_bf_flete = total_with_flete/line.product_qty
+                    price_unit_bf_flete = total_with_flete / line.product_qty
                     percent_lines = [(0, 0, self.compute_percent(
                         cr, uid, ids, i, line,
                         tax_base, context=context))
@@ -114,7 +111,7 @@ class inherit_purchase(osv.Model):
                     total_national_expense = sum([i[2].get(
                         'amount') for i in percent_lines])
                     cost_unit = (
-                        total_national_expense + tax_base)/line.product_qty
+                        total_national_expense + tax_base) / line.product_qty
                     cost_unit_total = (
                         price_unit_bf_flete + (total_national_expense / (
                                                rate and rate[0] or 1)) / line.product_qty) * (purchase.percent_special)

@@ -24,14 +24,12 @@
 ##########################################################################
 
 from openerp.osv import osv, fields
-import openerp.tools as tools
-from openerp.tools.translate import _
-
-from openerp.addons.decimal_precision import decimal_precision as dp
 
 
 class inherit_price_list_item(osv.Model):
+
     """ """
+
     def default_get(self, cr, uid, fields, context=None):
         '''test context '''
         if context is None:
@@ -64,13 +62,12 @@ class inherit_price_list_item(osv.Model):
         if context is None:
             context = {}
         res = {}
-        product_obj = self.pool.get('product.product')
         pricelist_obj = self.pool.get('product.pricelist')
         if context.get('product', False):
             for item in self.browse(cr, uid, ids, context=context):
                 price = pricelist_obj.price_get(cr, uid,
                             [item.price_list_id and item.price_list_id.id],
-                            context.get('product'), 1, context=context)
+                    context.get('product'), 1, context=context)
 
                 price = item.price_list_id and price.get(item.price_list_id.id)
 
@@ -81,7 +78,7 @@ class inherit_price_list_item(osv.Model):
                 if item.product_id:
                     price = pricelist_obj.price_get(cr, uid,
                                 [item.price_list_id and item.price_list_id.id],
-                                item.product_id.id, 1, context=context)
+                        item.product_id.id, 1, context=context)
 
                     price = item.price_list_id and price.get(
                         item.price_list_id.id)
@@ -91,9 +88,9 @@ class inherit_price_list_item(osv.Model):
                 elif item.product_active_id:
                     price = pricelist_obj.price_get(cr, uid,
                                 [item.price_list_id and item.price_list_id.id],
-                                item.product_active_id and
-                                item.product_active_id.id,
-                                1, context=context)
+                        item.product_active_id and
+                        item.product_active_id.id,
+                        1, context=context)
                     price = item.price_list_id and price.get(
                         item.price_list_id.id)
 

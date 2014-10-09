@@ -23,9 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-import time
-from openerp.osv import osv, fields
-from openerp.addons.decimal_precision import decimal_precision as dp
+from openerp.osv import osv
 from openerp.tools.translate import _
 
 import openerp.netsvc as netsvc
@@ -37,12 +35,12 @@ class account_invoice(osv.Model):
 
     #~ def action_cancel_draft(self, cr, uid, ids, *args):
 #~
-        #~ wf_service = netsvc.LocalService("workflow")
-        #~ res = super(account_invoice, self).action_cancel_draft(cr, uid, ids, ())
-        #~ for i in self.browse(cr,uid,ids,context={}):
-            #~ if i.wh_iva_id:
-                #~ wf_service.trg_validate(uid, 'account.wh.iva',i.wh_iva_id.id, 'set_to_draft', cr)
-        #~ return res
+    #~ wf_service = netsvc.LocalService("workflow")
+    #~ res = super(account_invoice, self).action_cancel_draft(cr, uid, ids, ())
+    #~ for i in self.browse(cr,uid,ids,context={}):
+    #~ if i.wh_iva_id:
+    #~ wf_service.trg_validate(uid, 'account.wh.iva',i.wh_iva_id.id, 'set_to_draft', cr)
+    #~ return res
     def action_number(self, cr, uid, ids, context=None):
         '''
         Modified to witholding vat validate
@@ -50,7 +48,6 @@ class account_invoice(osv.Model):
         wf_service = netsvc.LocalService("workflow")
         res = super(account_invoice, self).action_number(cr, uid, ids)
         iva_line_obj = self.pool.get('account.wh.iva.line')
-        iva_obj = self.pool.get('account.wh.iva')
         invo_brw = self.browse(cr, uid, ids, context=context)[0]
         state = [('draft', 'set_to_draft'), (
             'confirmed', 'wh_iva_confirmed'), ('done', 'wh_iva_done')]
@@ -65,8 +62,8 @@ class account_invoice(osv.Model):
 
                     if not all([False for line in invo_brw.wh_iva_id.wh_lines
                                 if not line.invoice_id.move_id]):
-                            raise osv.except_osv(_('Error'), _(
-                                'One of the bills involved in the vat retention\
+                        raise osv.except_osv(_('Error'), _(
+                            'One of the bills involved in the vat retention\
                                 has not been validated, because it does not\
                                 have an associated retention'))
                     wf_service.trg_validate(

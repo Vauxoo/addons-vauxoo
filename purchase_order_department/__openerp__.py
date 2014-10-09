@@ -22,14 +22,12 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'Purchase Order Department',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': 'purchase',
-    'description': '''
+    "name": "Purchase Order Department", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "purchase", 
+    "description": """
 Purchase Order Department
 =========================
 
@@ -39,22 +37,24 @@ employee info. Also add a search filter by text to search the department name
 and a gruop by filter by department.
 
 Note: this module do not work propertly for users with multiple employees.
-''',
-
-    'depends': [
-        'purchase',
-        'hr',
-        'purchase_order_requisitor',
-        'purchase_requisition_department',
-        ],
-    'data': [
-        'view/purchase_order_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'qweb': [],
-    'js': [],
-    'css': [],
-    'active': False,
-    'installable': True,
+""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "purchase", 
+        "hr", 
+        "purchase_order_requisitor", 
+        "purchase_requisition_department"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/purchase_order_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

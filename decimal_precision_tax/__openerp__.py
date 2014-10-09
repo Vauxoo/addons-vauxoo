@@ -24,22 +24,29 @@
 #
 ##############################################################################
 {
-    "name" : "Decimal Precision to Rate Tax",
-    "version" : "0.1",
-    "depends" : ["base","decimal_precision","account"],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Decimal Precision to Rate Tax", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Administracion/Personalizacion/Estructura de la base de datos/Precision Decimal", 
+    "description": """
                     This module, add decimal  precision format to Rate Tax.
-                    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Administracion/Personalizacion/Estructura de la base de datos/Precision Decimal",
-    "init_xml" : [
-    ],
-    "demo_xml" : [
-    ],
-    "update_xml" : [
-        "data/decimal_precision_tax.xml",
-    ],
-    "active": False,
-    "installable": True,
+                    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "decimal_precision", 
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "data/decimal_precision_tax.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

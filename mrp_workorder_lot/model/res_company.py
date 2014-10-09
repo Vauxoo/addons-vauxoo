@@ -23,9 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import fields, osv, orm
-from openerp.tools.translate import _
-from openerp import tools
+from openerp.osv import osv, fields
 
 
 class res_company(osv.osv):
@@ -36,14 +34,14 @@ class res_company(osv.osv):
              ('max_cost', 'Maxime Workcenter Productivity / Minimizing Production Cost')],
             'Production Batch Process Type',
             help=('Two options when management the batch work orders:\n\n'
-                   ' - Avoid Production Bottleneck: Will create the batch'
-                   ' work orders taking into a count the minium workcenter'
-                   ' capacity.'
-                   ' - Maxime Workcenter Productivity / Minimizing Production'
-                   ' Cost: For every workcenter will'
-                   ' create a batch of works orders that always explotes the'
-                   ' product capacity of the workcenter.\n')
-            ),
+                  ' - Avoid Production Bottleneck: Will create the batch'
+                  ' work orders taking into a count the minium workcenter'
+                  ' capacity.'
+                  ' - Maxime Workcenter Productivity / Minimizing Production'
+                  ' Cost: For every workcenter will'
+                  ' create a batch of works orders that always explotes the'
+                  ' product capacity of the workcenter.\n')
+        ),
     }
 
     _defaults = {

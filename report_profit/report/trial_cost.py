@@ -37,6 +37,7 @@ from openerp.report import report_sxw
 
 
 class trial_c(report_sxw.rml_parse):
+
     '''
     Book generates purchase and sale
     '''
@@ -70,8 +71,8 @@ class trial_c(report_sxw.rml_parse):
             'partner_id', '=', idp), ('type', '=', 'invoice')])
         if addr_ids:
             addr = addr_obj.browse(self.cr, self.uid, addr_ids[0])
-            addr_inv = (addr.street or '')+' '+(addr.street2 or '')+' '+(addr.zip or '') + ' '+(
-                addr.city or '') + ' ' + (addr.country_id and addr.country_id.name or '') + ', TELF.:'+(addr.phone or '')
+            addr_inv = (addr.street or '') + ' ' + (addr.street2 or '') + ' ' + (addr.zip or '') + ' ' + (
+                addr.city or '') + ' ' + (addr.country_id and addr.country_id.name or '') + ', TELF.:' + (addr.phone or '')
         return addr_inv
 
     def _get_rif(self, vat=''):
@@ -83,7 +84,6 @@ class trial_c(report_sxw.rml_parse):
         return vat[2:].replace(' ', '')
 
     def _get_data(self, form):
-        pool = pooler.get_pool(self.cr.dbname)
         line_ids = []
         cond = ''
         valor = ''
@@ -91,26 +91,22 @@ class trial_c(report_sxw.rml_parse):
 
         if form['u_check']:
             vis = ('user', 'user_id', 'user_id', 'user_id')
-            xml_id = 'action_profit_user_product_tree'
             if form['user_res_id']:
                 valor = form['user_res_id']
 
         if form['p_check']:
             vis = ('partner', 'partner_id', 'partner_id', 'partner_id')
-            xml_id = 'action_profit_partner_product_tree'
             if form['partner_res_id']:
                 valor = form['partner_res_id']
 
         if form['c_check']:
             vis = ('category', 'cat_id', 'cat_id', 'cat_id')
-            xml_id = 'action_profit_category_product_tree'
             if form['cat_res_id']:
                 valor = form['cat_res_id']
 
         if form['u_check'] and form['p_check']:
             vis = ('uxp', '((user_id*1000000)+partner_id)',
                    'user_id,partner_id', 'user_id,partner_id')
-            xml_id = 'action_profit_uxp_product_tree'
             valor = ''
             if form['user_res_id']:
                 cond = ' and user_id=%s' % form['user_res_id']
@@ -123,7 +119,6 @@ class trial_c(report_sxw.rml_parse):
         if form['u_check'] and form['c_check']:
             vis = ('uxc', '((user_id*1000000)+cat_id)',
                    'user_id,cat_id', 'user_id,cat_id')
-            xml_id = 'action_profit_uxc_product_tree'
             valor = ''
             if form['user_res_id']:
                 cond = ' and user_id=%s' % form['user_res_id']
@@ -136,7 +131,6 @@ class trial_c(report_sxw.rml_parse):
         if form['p_check'] and form['c_check']:
             vis = ('pxc', '((cat_id*1000000)+partner_id)',
                    'partner_id,cat_id', 'partner_id,cat_id')
-            xml_id = 'action_profit_pxc_product_tree'
             valor = ''
             if form['partner_res_id']:
                 cond = ' and partner_id=%s' % form['partner_res_id']
@@ -150,7 +144,6 @@ class trial_c(report_sxw.rml_parse):
             vis = (
                 'upc', '((user_id*100000000000)+(cat_id*1000000)+partner_id)',
                 'user_id,partner_id,cat_id', 'user_id,partner_id,cat_id')
-            xml_id = 'action_profit_upc_product_tree'
             valor = ''
             if form['partner_res_id']:
                 cond = ' and partner_id=%s' % form['partner_res_id']
@@ -169,7 +162,7 @@ class trial_c(report_sxw.rml_parse):
                 cond = ' and user_id=%s and partner_id=%s and cat_id=%s' % (
                     form['user_res_id'], form['partner_res_id'], form['cat_res_id'])
 
-        cond = valor and ' and '+vis[1]+'=%s' % valor or cond
+        cond = valor and ' and ' + vis[1] + '=%s' % valor or cond
 
         history = []
         for i in range(4):
@@ -185,7 +178,7 @@ class trial_c(report_sxw.rml_parse):
                         group by %s,p_uom_c_id""" % (vis[1], vis[2], form[str(i)]['start'], form[str(i)]['stop'], cond, vis[3]))
 
             t = self.cr.fetchall()
-            field_str = 'id,'+vis[2]+',slc,sps,sqc,uda'
+            field_str = 'id,' + vis[2] + ',slc,sps,sqc,uda'
             field_lst = field_str.split(',')
             d = {}
             for i in t:

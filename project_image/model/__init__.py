@@ -1,1 +1,1 @@
-import project_image
+from . import project_image

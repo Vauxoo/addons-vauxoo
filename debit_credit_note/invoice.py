@@ -29,7 +29,6 @@
 #
 ##############################################################################
 
-import time
 from openerp.osv import fields, osv
 
 
@@ -59,10 +58,9 @@ class account_invoice(osv.Model):
         if context is None:
             context = {}
         default.update({
-            'child_ids':[],
+            'child_ids': [],
         })
         return super(account_invoice, self).copy(cr, uid, id, default, context)
-
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

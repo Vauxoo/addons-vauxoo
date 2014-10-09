@@ -26,10 +26,10 @@
 
 import time
 from openerp.report import report_sxw
-import mx.DateTime
 
 
 class project_task_work_report(report_sxw.rml_parse):
+
     def __init__(self, cr, uid, name, context):
         super(project_task_work_report, self).__init__(
             cr, uid, name, context=context)
@@ -47,12 +47,12 @@ class project_task_work_report(report_sxw.rml_parse):
         This Method was taken from
         http://stackoverflow.com/questions/775049/python-time-seconds-to-hms
         '''
-        seconds = int(float_hour*3600)
+        seconds = int(float_hour * 3600)
         hours = seconds / 3600
-        seconds -= 3600*hours
+        seconds -= 3600 * hours
         minutes = seconds / 60
-        seconds -= 60*minutes
-        return format == 'hh:mm:ss' and "%02d:%02d:%02d" % (hours, minutes, seconds) or "%02d:%02d" % (hours, minutes+round(seconds/60.0))
+        seconds -= 60 * minutes
+        return format == 'hh:mm:ss' and "%02d:%02d:%02d" % (hours, minutes, seconds) or "%02d:%02d" % (hours, minutes + round(seconds / 60.0))
 
     def _get_time(self, strtime=time.strftime('%Y-%m-%d %H:%M:%S')):
         '''

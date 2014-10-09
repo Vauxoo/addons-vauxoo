@@ -26,11 +26,10 @@ from openerp.tools.translate import _
 
 import os
 import re
-import cgi
 import libxml2
 import urllib
 import urllib2
-from urllib2 import Request, urlopen, URLError, HTTPError
+from urllib2 import URLError
 from ftplib import FTP
 
 
@@ -87,7 +86,7 @@ class product_icecat_wizard(osv.TransientModel):
             if start >= 0:
                 stop = text[start:].find(">")
                 if stop >= 0:
-                    text = text[:start] + text[start+stop+1:]
+                    text = text[:start] + text[start + stop + 1:]
                     finished = 0
         return text
 
@@ -116,7 +115,6 @@ class product_icecat_wizard(osv.TransientModel):
             if prod.xpathEval('@ErrorMessage'):
                 if prod.xpathEval('@ErrorMessage')[0].content:
                     return prod.xpathEval('@ErrorMessage')[0].content
-                    exit
 
         # product info
         short_summary = doc.xpathEval(
@@ -152,7 +150,7 @@ class product_icecat_wizard(osv.TransientModel):
         values = {}
         for prod in doc.xpathEval('//ProductFeature'):
             prodFeatureId.append(prod.xpathEval('@CategoryFeatureGroup_ID')[
-             0].content+"#"+prod.xpathEval('@Presentation_Value')[0].content)
+                0].content + "#" + prod.xpathEval('@Presentation_Value')[0].content)
 
         for prod in doc.xpathEval('//ProductFeature//Feature//Name'):
             prodFeatureName.append(prod.xpathEval('@Value')[0].content)
@@ -172,7 +170,7 @@ class product_icecat_wizard(osv.TransientModel):
                 if values[0] not in prodFeature:
                     prodFeature[values[0]] = []
                 prodFeature[values[0]].append(
-                    '<strong>'+prodFeatureName[i]+':</strong>'+' '+value)
+                    '<strong>' + prodFeatureName[i] + ':</strong>' + ' ' + value)
             i += 1
 
         mapline_ids = self.pool.get('product.icecat.mapline').search(
@@ -182,8 +180,8 @@ class product_icecat_wizard(osv.TransientModel):
             mapline = self.pool.get(
                 'product.icecat.mapline').browse(cr, uid, mapline_id)
             mapline_fields.append({
-                                    'icecat': mapline.name,
-                                    'oerp': mapline.field_id.name})
+                'icecat': mapline.name,
+                'oerp': mapline.field_id.name})
 
         # show details product
         # TODO: HTML template use Mako template for not hardcode HTML tags
@@ -202,7 +200,6 @@ class product_icecat_wizard(osv.TransientModel):
                                          'icecat_category': catID,
                                          'product_id': product.id,
                                          'sequence': sequence})
-                sequence+1
 
             if catID in prodFeature and len(prodFeature[catID]):
 
@@ -210,12 +207,11 @@ class product_icecat_wizard(osv.TransientModel):
                     prod_value = feature.split(":")
                     if len(prod_value) > 0:
                         attributes_values.append(
-                            {'name': '>'+self.StripTags(prod_value[0]),
+                            {'name': '>' + self.StripTags(prod_value[0]),
                              'value': self.StripTags(prod_value[1]),
                              'icecat_category': catID,
                              'product_id': product.id,
                              'sequence': sequence})
-                        sequence+1
 
                 for mapline_field in mapline_fields:
                     if mapline_field['icecat'] == catID:
@@ -236,7 +232,7 @@ class product_icecat_wizard(osv.TransientModel):
                     # fields (magento, djnago,...)
                     if mapline_field['icecat'] == 'ShortSummaryDescription':
                         mapline_values.append({'field': mapline_field['oerp'],
-                                                'source': short_description})
+                                               'source': short_description})
 
         # update icecat values at product
         # default values. It is not hardcode ;)
@@ -270,8 +266,8 @@ class product_icecat_wizard(osv.TransientModel):
                 description = self.StripTags(description)
             trans_description_id = self.pool.get('ir.translation').search(cr,
                 uid, [('lang', '=', language),
-                ('name', '=', 'product.template,description'), 
-                ('res_id', '=', product.id)])
+                ('name', '=', 'product.template,description'),
+                    ('res_id', '=', product.id)])
             if trans_description_id:
                 self.pool.get('ir.translation').write(
                     cr, uid, trans_description_id, {'value': description},
@@ -285,8 +281,8 @@ class product_icecat_wizard(osv.TransientModel):
             manufacturers.append(supplier.xpathEval('@Name')[0].content)
         if len(manufacturers) > 0:
             partner_id = self.pool.get('res.partner').search(cr, uid, [
-                                         ('name', 'ilike',
-                                         manufacturers[len(manufacturers)-1])])
+                ('name', 'ilike',
+                 manufacturers[len(manufacturers) - 1])])
             if len(partner_id) > 0:
                 values['manufacturer'] = partner_id[0]
         values['manufacturer_pname'] = name
@@ -316,7 +312,7 @@ class product_icecat_wizard(osv.TransientModel):
     # Convert icecat values to OpenERP mapline
     # ==========================================
     def iceimg2oerpimg(self, cr, uid, form, product, icecat, pathxml, data,
-                        context):
+                       context):
         doc = libxml2.parseFile(pathxml)
 
         # product image
@@ -326,7 +322,7 @@ class product_icecat_wizard(osv.TransientModel):
 
         if image:
             fname = image.split('/')
-            fname = fname[len(fname)-1]
+            fname = fname[len(fname) - 1]
 
             path = os.path.abspath(os.path.dirname(__file__))
             path += '/icecat/%s' % fname
@@ -340,7 +336,7 @@ class product_icecat_wizard(osv.TransientModel):
             ftp.login(icecat.ftpusername, icecat.ftppassword)
             ftp.cwd(icecat.ftpdirectory)
             f = file(path, 'rb')
-            ftp.storbinary('STOR '+os.path.basename(path), f)
+            ftp.storbinary('STOR ' + os.path.basename(path), f)
             ftp.quit()
 
             # add values into product_image
@@ -353,11 +349,11 @@ class product_icecat_wizard(osv.TransientModel):
             values = {
                 'name': name,
                 'link': 1,
-                'filename': icecat.ftpurl+fname,
+                'filename': icecat.ftpurl + fname,
                 'product_id': product.id,
             }
             self.pool.get('product.images').create(cr, uid, values, context)
-            return icecat.ftpurl+fname
+            return icecat.ftpurl + fname
         else:
             return _("Not exist %s image") % fname
 
@@ -408,7 +404,7 @@ class product_icecat_wizard(osv.TransientModel):
                 # All calls to urllib2.urlopen will now use our handler
 
                 try:
-                    pagehandle = urllib2.urlopen(url)
+                    urllib2.urlopen(url)
                     req = urllib2.Request(url)
                     handle = urllib2.urlopen(req)
                     content = handle.read()

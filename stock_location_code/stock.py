@@ -25,7 +25,6 @@
 ##############################################################################
 
 from openerp.osv import osv, fields
-import re
 
 
 class stock_location(osv.Model):
@@ -47,7 +46,7 @@ class stock_location(osv.Model):
                     'code', operator, name)], limit=limit, context=context))
                 ids.update(map(lambda a: a[0],
                                super(stock_location, self).name_search(
-                             cr, user, name=name, args=args, operator=operator,
+                    cr, user, name=name, args=args, operator=operator,
                                context=context, limit=limit)))
                 ids = list(ids)
         else:

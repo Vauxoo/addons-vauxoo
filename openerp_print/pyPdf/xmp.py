@@ -2,7 +2,6 @@ import re
 import datetime
 import decimal
 from generic import PdfObject
-from xml.dom import getDOMImplementation
 from xml.dom.minidom import parseString
 
 RDF_NAMESPACE = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -362,7 +361,7 @@ class XmpInformation(PdfObject):
                     if idx == -1:
                         break
                     key = key[:idx] + chr(int(key[
-                                          idx+1:idx+5], base=16)) + key[idx+5:]
+                                          idx + 1:idx + 5], base=16)) + key[idx + 5:]
                 if node.nodeType == node.ATTRIBUTE_NODE:
                     value = node.nodeValue
                 else:

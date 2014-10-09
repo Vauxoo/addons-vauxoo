@@ -34,7 +34,7 @@ class product_customs_rate(osv.Model):
         for record in reads:
             name = record['name']
             if record['code']:
-                name = record['code']+': '+name
+                name = record['code'] + ': ' + name
             res.append((record['id'], name))
         return res
 
@@ -46,7 +46,7 @@ class product_customs_rate(osv.Model):
         ids = []
         if name:
             ids = self.search(cr, user, [(
-                'code', '=like', name+"%")]+args, limit=limit)
+                'code', '=like', name + "%")] + args, limit=limit)
             if not ids:
                 ids = self.search(cr, user, [(
                     'name', operator, name)] + args, limit=limit)

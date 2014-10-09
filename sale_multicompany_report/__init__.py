@@ -1,3 +1,3 @@
-import order
-import wizard
-import res_company
+from . import order
+from . import wizard
+from . import res_company

@@ -22,10 +22,8 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
-from openerp.osv import fields, osv
+from openerp.osv import osv
 from openerp.tools.translate import _
-
-import openerp.netsvc as netsvc
 
 
 class account_invoice(osv.Model):
@@ -59,7 +57,7 @@ class account_invoice(osv.Model):
         if action_model:
             action_pool = self.pool.get(action_model)
             action = action_pool.read(cr, uid, action_id, context=context)
-            action['domain'] = "[('id','in', ["+','.join(
-                map(str, invoice_ids))+"])]"
+            action['domain'] = "[('id','in', [" + ','.join(
+                map(str, invoice_ids)) + "])]"
             action.update({'nodestroy': True})
         return action

@@ -25,7 +25,6 @@
 ##############################################################################
 
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
 
 from openerp.addons.decimal_precision import decimal_precision as dp
 
@@ -60,8 +59,7 @@ class mrp_subproduct(osv.Model):
     def compute_bom_cost(self, cr, uid, ids, *args):
         for i in self.browse(cr, uid, ids):
             cost = 0.00
-            cost = i.product_id.standard_price*i.product_qty * \
+            cost = i.product_id.standard_price * i.product_qty * \
                 i.product_uom.factor_inv * i.product_id.uom_id.factor
 
         return cost
-

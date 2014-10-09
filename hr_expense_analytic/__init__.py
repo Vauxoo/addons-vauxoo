@@ -1,1 +1,1 @@
-import hr_expense_analytic
+from . import hr_expense_analytic

@@ -22,51 +22,44 @@
 ##########################################################################
 
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
-from openerp import tools
-from openerp import netsvc
-from openerp import SUPERUSER_ID
 
-import time
 
 class purchase_order(osv.Model):
     _inherit = 'purchase.order'
-            
-    
-    _columns={
+
+    _columns = {
         'partner_address_dest_id': fields.many2one('res.partner', 'Customer Address Dest',
-            states={'confirmed':[('readonly',True)], 'approved':[('readonly',True)],'done':[('readonly',True)]},
-            help="Put an address if you want to deliver directly from the supplier to the customer. " \
-                "Otherwise, keep empty to deliver to your own company."
+            states={'confirmed': [('readonly', True)], 'approved': [('readonly', True)], 'done': [('readonly', True)]},
+            help="Put an address if you want to deliver directly from the supplier to the customer. "
+            "Otherwise, keep empty to deliver to your own company."
         ),
     }
 
+
 class procurement_order(osv.Model):
     _inherit = 'procurement.order'
-    
+
     def make_po(self, cr, uid, ids, context=None):
         purchase_obj = self.pool.get('purchase.order')
-        res= super(procurement_order, self).make_po(cr, uid, ids=ids, context=context)
+        res = super(procurement_order, self).make_po(cr, uid, ids=ids, context=context)
         for procurement in self.browse(cr, uid, ids, context=context):
-            purchase_obj.write(cr,uid,res[procurement.id], {'partner_address_dest_id':procurement.partner_address_dest_id.id}, context=context)
+            purchase_obj.write(cr, uid, res[procurement.id], {'partner_address_dest_id': procurement.partner_address_dest_id.id}, context=context)
         return res
-        
+
     def _prepare_orderpoint_procurement(self, cr, uid, orderpoint, product_qty, context=None):
-        res=super(procurement_order, self)._prepare_orderpoint_procurement(cr, uid, orderpoint=orderpoint, product_qty=product_qty, context=context)
-        res['partner_address_dest_id']=orderpoint.partner_shipping_id.id
+        res = super(procurement_order, self)._prepare_orderpoint_procurement(cr, uid, orderpoint=orderpoint, product_qty=product_qty, context=context)
+        res['partner_address_dest_id'] = orderpoint.partner_shipping_id.id
         return res
-        
-    _columns={
+
+    _columns = {
         'partner_address_dest_id': fields.many2one('res.partner', 'Customer Address Dest'),
     }
+
 
 class sale_order(osv.Model):
     _inherit = 'sale.order'
 
     def _prepare_order_line_procurement(self, cr, uid, order, line, move_id, date_planned, context=None):
-        res=super(sale_order, self)._prepare_order_line_procurement( cr, uid, order=order, line=line, move_id=move_id, date_planned=date_planned,context=context)
-        res['partner_address_dest_id']=order.partner_shipping_id.id
+        res = super(sale_order, self)._prepare_order_line_procurement(cr, uid, order=order, line=line, move_id=move_id, date_planned=date_planned, context=context)
+        res['partner_address_dest_id'] = order.partner_shipping_id.id
         return res
-        
-        
-        

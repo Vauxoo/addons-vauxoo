@@ -24,26 +24,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "invoice_datetime",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """Add new field invoice_datetime for electronic invoice data
+    "name": "invoice_datetime", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Localization/Mexico", 
+    "description": """Add new field invoice_datetime for electronic invoice data
             and add hour & minute to field date_invoice
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
-        "account",
-        
-    ],
-    "demo" : [],
-    "data" : [
-        "account_invoice_view.xml",
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "account_invoice_view.xml", 
         "res_config_acc_view.xml"
-    ],
-    "installable" : True,
-    "active" : False,
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

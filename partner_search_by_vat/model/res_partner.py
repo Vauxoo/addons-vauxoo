@@ -23,17 +23,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import math
 import re
-from openerp.osv import fields, osv
+from openerp.osv import osv
 
 
 class res_partner(osv.osv):
 
     _inherit = 'res.partner'
-    
+
     def name_search(self, cr, user, name, args=None, operator='ilike',
-                                                    context=None, limit=100):
+                    context=None, limit=100):
         if not args:
             args = []
         if context is None:
@@ -43,26 +42,26 @@ class res_partner(osv.osv):
             ptrn_name = re.compile('(\[(.*?)\])')
             res_name = ptrn_name.search(name)
             if res_name:
-                name = name.replace('['+res_name.group(2)+'] ', '')
+                name = name.replace('[' + res_name.group(2) + '] ', '')
             partner_search = super(res_partner, self).name_search(cr, user,
                                         name, args, operator, context, limit)
             ids = [partner[0] for partner in partner_search]
             if not ids:
-                ids = self.search(cr, user, [('vat', operator, name)]+ args,
-                                                limit=limit, context=context)
+                ids = self.search(cr, user, [('vat', operator, name)] + args,
+                                  limit=limit, context=context)
             if not ids:
                 ptrn = re.compile('(\[(.*?)\])')
                 res = ptrn.search(name)
                 if res:
                     ids = self.search(cr, user,
-                        [('vat', operator, res.group(2))]+ args, limit=limit,
-                                                            context=context)
+                        [('vat', operator, res.group(2))] + args, limit=limit,
+                        context=context)
         else:
             return super(res_partner, self).name_search(cr, user,
                                         name, args, operator, context, limit)
-                                                            
+
         return self.name_get(cr, user, ids, context=context)
-        
+
     def name_get(self, cr, uid, ids, context=None):
         if isinstance(ids, (list, tuple)) and not len(ids):
             return []
@@ -74,6 +73,6 @@ class res_partner(osv.osv):
             partner = self.browse(cr, uid, record[0], context=context)
             name = record[1]
             if partner.vat:
-                name = '['+partner.vat+'] '+name
+                name = '[' + partner.vat + '] ' + name
             res.append((record[0], name))
         return res

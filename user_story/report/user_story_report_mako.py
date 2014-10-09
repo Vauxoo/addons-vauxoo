@@ -24,16 +24,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from openerp.osv import fields, osv
-from openerp.tools.translate import _
-from lxml import html
-import xml
 import logging
 _logger = logging.getLogger(__name__)
 
 try:
-    from report_webkit import webkit_report
-    from report import report_sxw
+    pass
 except ImportError, e:
     _logger.warning('You should declare branch with webkit or migrate this module %s' % __name__)
 
@@ -49,7 +44,7 @@ class user_story_report(report_sxw.rml_parse):
             'parse_html_field' : self._parse_html_field,
         })
         self.context = context
-        
+
     def _parse_html_field(self, data):
         if data:
             data_str = data.encode('ascii', 'xmlcharrefreplace')

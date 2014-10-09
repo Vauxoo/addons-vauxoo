@@ -24,7 +24,6 @@ import time
 
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
-import openerp.addons.decimal_precision as dp
 
 
 class stock_return_picking_memory(osv.TransientModel):
@@ -97,8 +96,6 @@ class stock_return_picking(osv.TransientModel):
         pick_obj = self.pool.get('stock.picking')
         uom_obj = self.pool.get('product.uom')
         data_obj = self.pool.get('stock.return.picking.memory')
-        act_obj = self.pool.get('ir.actions.act_window')
-        model_obj = self.pool.get('ir.model.data')
         wf_service = netsvc.LocalService("workflow")
         pick = pick_obj.browse(cr, uid, record_id, context=context)
         data = self.read(cr, uid, ids[0], context=context)
@@ -172,7 +169,7 @@ class stock_return_picking(osv.TransientModel):
             'internal': 'stock.picking',
         }
         return {
-            'domain': "[('id', 'in', ["+str(new_picking)+"])]",
+            'domain': "[('id', 'in', [" + str(new_picking) + "])]",
             'name': _('Returned Picking'),
             'view_type': 'form',
             'view_mode': 'tree,form',

@@ -20,7 +20,6 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
-from openerp.tools.translate import _
 
 from openerp.osv import osv, fields
 from openerp.addons.decimal_precision import decimal_precision as dp
@@ -33,7 +32,7 @@ class account_move_line(osv.Model):
         'quantity': fields.float('Quantity',
              digits_compute=dp.get_precision(
                  'Product UoM'),
-             help="The optional quantity expressed by this line,\
+            help="The optional quantity expressed by this line,\
              eg: number of product sold. The quantity is not a legal\
              requirement but is very useful for some reports."),
     }

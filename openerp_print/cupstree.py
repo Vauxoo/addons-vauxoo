@@ -29,7 +29,7 @@ import cups
 
 
 def do_indent(indent):
-    return "  "*indent
+    return "  " * indent
 
 
 def getippqueue(dev, queue, depth):
@@ -67,7 +67,7 @@ def getippqueue(dev, queue, depth):
 
 def getqueue(name, queue, host, depth, printers, classes):
     # print "entro en el metodo: getqueue"
-    indent = do_indent(depth)
+    do_indent(depth)
     if queue['printer-type'] & cups.CUPS_PRINTER_CLASS:
        # print "%s* Name:\t%s[@%s] (class)" % (indent, name, host)
         dev = queue['device-uri']
@@ -76,14 +76,13 @@ def getqueue(name, queue, host, depth, printers, classes):
         else:
             members = classes[name]
             depth += 1
-            indent = do_indent(depth)
+            do_indent(depth)
             for member in members:
                 getqueue(member, printers[member], host,
                          depth, printers, classes)
     else:
        # print "%s* Name:\t%s[@%s]" % (indent, name, host)
         dev = queue['device-uri']
-        info = queue['printer-info']
        # print "%sURI:\t%s" % (indent, dev)
        # print "%sInfo:\t%s" % (indent, info)
         if dev.startswith('ipp:'):
@@ -97,7 +96,7 @@ def gethost(host=None, depth=0):
     cups.setServer(host)
     c = cups.Connection()
     printers = c.getPrinters()
-    indent = do_indent(depth)
+    do_indent(depth)
     lista_impresoras = []
     for name, queue in printers.iteritems():
         getqueue(name, queue, host, depth, printers, classes)

@@ -19,27 +19,26 @@
 #
 ##############################################################################
 
-import time
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
+
 
 class account_move_line(osv.Model):
     _inherit = "account.move.line"
 
-    def _get_reconcile(self, cr, uid, ids,name, unknow_none, context=None):
+    def _get_reconcile(self, cr, uid, ids, name, unknow_none, context=None):
         res = super(account_move_line, self)._get_reconcile(cr, uid, ids, name, unknow_none, context)
         return res
-    
+
     def fc(s, c, u, ids, cx):
         return ids
-    
+
     _columns = {
         'reconcile': fields.function(
             _get_reconcile,
-            type ='char',
-            string ='Reconcile Ref',
-            store = {
-                'account.move.line':(fc, ['reconcile_id','partial_reconcile_id'],30),
-                },
-            ),
-        }
+            type='char',
+            string='Reconcile Ref',
+            store={
+                'account.move.line': (fc, ['reconcile_id', 'partial_reconcile_id'], 30),
+            },
+        ),
+    }

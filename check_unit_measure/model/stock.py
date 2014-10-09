@@ -26,10 +26,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
 from openerp.osv import osv
-from openerp.osv import fields
 from openerp.tools.translate import _
-
-import math
 
 
 class inherit_move(osv.Model):
@@ -42,7 +39,6 @@ class inherit_move(osv.Model):
         print 'stock check'
         context = context or {}
         sm_brw = self.browse(cr, uid, ids[0], context=context)
-        type = sm_brw.picking_id and sm_brw.picking_id.type
         if not context.get('pass_check', False) and sm_brw.picking_id and \
                 hasattr(sm_brw.picking_id, 'sale_id') and \
                 sm_brw.picking_id.sale_id and sm_brw.picking_id.type == 'out':

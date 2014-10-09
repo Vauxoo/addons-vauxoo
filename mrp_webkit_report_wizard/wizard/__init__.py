@@ -1,1 +1,1 @@
-import wizard_report_variation
+from . import wizard_report_variation

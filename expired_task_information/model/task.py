@@ -20,9 +20,6 @@
 #
 
 from openerp.osv import fields, osv
-from openerp import tools
-from openerp.tools.translate import _
-import time
 from datetime import *
 
 
@@ -68,7 +65,7 @@ class task_expired_config(osv.Model):
 
     def send_expiration_message(self, cr, uid, context=None):
         context = context or {}
-        
+
         mail_mail = self.pool.get('mail.mail')
         message = self.pool.get('mail.message')
         task_obj = self.pool.get('project.task')
@@ -92,18 +89,18 @@ class task_expired_config(osv.Model):
                 last_message_ids = message.search(cr, uid,
                                    [('res_id', '=', task.id),
                                    ('model', '=', 'project.task')],
-                                   context, order='date desc')
+                    context, order='date desc')
                 last_fecha = last_message_ids and message.browse(cr, uid, last_message_ids[0]).date
                 #~ Para cuando la tarea se vencio a la fecha de hoy.
                 #~ if task.date_deadline and task.date_deadline <= today:
-                    #~ msg_expired = ('<p>Esta tarea ha expirado el dia %s \
-                                   #~ </p>', task.date_deadline)
-                    #~ msg_expiredp = 'ACTIVIDAD VENCIDA'
+                #~ msg_expired = ('<p>Esta tarea ha expirado el dia %s \
+                #~ </p>', task.date_deadline)
+                #~ msg_expiredp = 'ACTIVIDAD VENCIDA'
                 if work_obj.search(cr, uid,
                                    [('date', '<=', last_change),
                                     ('task_id', '=', task.id)],
                                    context) or \
-                    last_fecha and last_fecha <= last_change :
+                        last_fecha and last_fecha <= last_change:
                     msg_expiredp = 'ACTIVIDAD SIN CAMBIOS'
                     msg_expired = ('<p>La Tarea tiene mas de %s dia(s) sin \
                                                       cambios</p>'
@@ -111,10 +108,10 @@ class task_expired_config(osv.Model):
                 #~ Para cuando la tarea tiene x cantidad de dias vencida.
                 #~ if task.date_deadline and task.date_deadline == before_expiry:
                     #~ msg_expired = ('<p>La Tarea expirara en %s \
-                                    #~ dias</p>' % config_brw.before_expiry)
+                    #~ dias</p>' % config_brw.before_expiry)
                     #~ msg_expiredp = 'ACTIVIDAD VENCIDA'
                 if msg_expired:
-                    html = """<html>
+                    html = r"""<html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>*|MC:SUBJECT|*</title>
@@ -598,7 +595,7 @@ Si es por alguna de las 3 siguientes razones, o alguna ajena a estos puntos just
                                                {
                                                    'model': 'project.task',
                                                    'res_id': task.id,
-                                                   'subject':('#'+str(task.id)+' - '+task.name),
+                                                   'subject': ('#' + str(task.id) + ' - ' + task.name),
                                                    'body_html': html,
                                                    'auto_delete': True,
                                                }, context=context)

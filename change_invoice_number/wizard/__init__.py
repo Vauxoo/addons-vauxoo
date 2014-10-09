@@ -1,1 +1,1 @@
-import change_number
+from . import change_number

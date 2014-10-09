@@ -21,15 +21,15 @@
 import openerp.tools as tools
 import os
 from openerp.tools import assertion_report
-import sys
 import base64
 from openerp.osv import osv, fields
 import tempfile
 
+
 class test_yaml_data_purchase(osv.osv_memory):
-    
+
     _name = 'test.yaml.data.purchase'
-    
+
     _columns = {
         'yaml_file': fields.binary('File purchase order worng'),
         'yaml_file_log': fields.binary('File Log'),
@@ -37,14 +37,14 @@ class test_yaml_data_purchase(osv.osv_memory):
         'filename_log_general': fields.char('File name log', size=128, readonly=True),
         'test_commit': fields.boolean('Commit')
     }
-    
-    _defaults={
-        'test_commit' : False,
+
+    _defaults = {
+        'test_commit': False,
     }
-    
-    def test_purchase (self, cr, uid, ids, context=None):
+
+    def test_purchase(self, cr, uid, ids, context=None):
         if context == None:
-            context={}
+            context = {}
         assertion_obj = assertion_report.assertion_report()
         this = self.browse(cr, uid, ids)[0]
         fp_data = tools.file_open(os.path.join('purchase_test_data_imp', 'test/purchase_order_test_data.xml'))
@@ -52,38 +52,38 @@ class test_yaml_data_purchase(osv.osv_memory):
         try:
             cr.execute("SAVEPOINT test_yaml_purchase_savepoint")
             context.update({'uid': uid})
-            tools.convert_xml_import(cr, 'purchase_test_data_imp', fp_data , {}, 'init', False, assertion_obj)
-            tools.convert_yaml_import(cr, 'purchase_test_data_imp', fp_test ,'test', {}, 'init', False, assertion_obj, context=context)
+            tools.convert_xml_import(cr, 'purchase_test_data_imp', fp_data, {}, 'init', False, assertion_obj)
+            tools.convert_yaml_import(cr, 'purchase_test_data_imp', fp_test, 'test', {}, 'init', False, assertion_obj, context=context)
         finally:
             if this.test_commit:
                 cr.execute("RELEASE SAVEPOINT test_yaml_purchase_savepoint")
             else:
                 cr.execute("ROLLBACK TO test_yaml_purchase_savepoint")
-                
+
         fp_data.close()
         fp_test.close()
-        
+
         tmp_path = tempfile.gettempdir()
-        file_purchase_order_wrong = base64.encodestring(open(os.path.join(tmp_path,'purchase_order_product_log.csv'), 'rb+').read())
-        file_purchase_order_log = base64.encodestring(open(os.path.join(tmp_path,'purchase_order_general_log.csv'), 'rb+').read())
-            
+        file_purchase_order_wrong = base64.encodestring(open(os.path.join(tmp_path, 'purchase_order_product_log.csv'), 'rb+').read())
+        file_purchase_order_log = base64.encodestring(open(os.path.join(tmp_path, 'purchase_order_general_log.csv'), 'rb+').read())
+
         self.write(cr, uid, ids, {
-                        'yaml_file': file_purchase_order_wrong,
-                        'yaml_file_log' : file_purchase_order_log,
-                        'filename_product': 'purchase_order_product_log.csv',
-                        'filename_log_general' : 'purchase_order_general_log.csv',
-                        }, context=context)
-                                
+            'yaml_file': file_purchase_order_wrong,
+            'yaml_file_log': file_purchase_order_log,
+            'filename_product': 'purchase_order_product_log.csv',
+            'filename_log_general': 'purchase_order_general_log.csv',
+        }, context=context)
+
         __, xml_id = self.pool.get('ir.model.data').get_object_reference(
-                cr, uid, 'purchase_test_data_imp', 'view_wizard_purchase_test_data_result')
-                
+            cr, uid, 'purchase_test_data_imp', 'view_wizard_purchase_test_data_result')
+
         return {
-                'res_model': 'test.yaml.data.purchase',
-                'view_type': 'form',
-                'view_mode': 'form',
-                'view_id': xml_id,
-                'res_id': this.id,
-                'context': context,
-                'type': 'ir.actions.act_window',
-                'target': 'new',
-            }
+            'res_model': 'test.yaml.data.purchase',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'view_id': xml_id,
+            'res_id': this.id,
+            'context': context,
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+        }

@@ -24,17 +24,18 @@
 ###############################################################################
 
 from openerp.osv import fields, osv
-from openerp import netsvc
 from openerp.tools.translate import _
+
 
 class purchase_order_line(osv.Model):
 
     _inherit = 'purchase.order.line'
 
     _columns = {
-            'purchase_requisition_line_id': fields.many2one('purchase.requisition.line',"Purchase \
+        'purchase_requisition_line_id': fields.many2one('purchase.requisition.line', "Purchase \
                 Requisition Line"),
-            }
+    }
+
 
 class purchase_requisition(osv.Model):
 
@@ -56,18 +57,18 @@ class purchase_requisition(osv.Model):
         res = {}
         for requisition in self.browse(cr, uid, ids, context=context):
             if supplier.id in filter(lambda x: x, [rfq.state <> 'cancel' and rfq.partner_id.id or None for rfq in requisition.purchase_ids]):
-                 raise osv.except_osv(_('Warning!'), _('You have already one %s purchase order for this partner, you must cancel this purchase order to create a new quotation.') % rfq.state)
+                raise osv.except_osv(_('Warning!'), _('You have already one %s purchase order for this partner, you must cancel this purchase order to create a new quotation.') % rfq.state)
             location_id = requisition.warehouse_id.lot_input_id.id
             purchase_id = purchase_order.create(cr, uid, {
-                        'origin': requisition.name,
-                        'partner_id': supplier.id,
-                        'pricelist_id': supplier_pricelist.id,
-                        'location_id': location_id,
-                        'company_id': requisition.company_id.id,
-                        'fiscal_position': supplier.property_account_position and supplier.property_account_position.id or False,
-                        'requisition_id':requisition.id,
-                        'notes':requisition.description,
-                        'warehouse_id':requisition.warehouse_id.id ,
+                'origin': requisition.name,
+                'partner_id': supplier.id,
+                'pricelist_id': supplier_pricelist.id,
+                'location_id': location_id,
+                'company_id': requisition.company_id.id,
+                'fiscal_position': supplier.property_account_position and supplier.property_account_position.id or False,
+                'requisition_id': requisition.id,
+                'notes': requisition.description,
+                'warehouse_id': requisition.warehouse_id.id,
             })
             res[requisition.id] = purchase_id
             for line in requisition.line_ids:
@@ -80,9 +81,9 @@ class purchase_requisition(osv.Model):
                 taxes = fiscal_position.map_tax(cr, uid, supplier.property_account_position, taxes_ids)
                 purchase_order_line.create(cr, uid, {
                     'order_id': purchase_id,
-                    #change
+                    # change
                     'purchase_requisition_line_id': line.id,
-                    #end change
+                    # end change
                     'name': product and product.partner_ref or '',
                     'product_qty': qty,
                     'product_id': product and product.id or False,
@@ -91,16 +92,14 @@ class purchase_requisition(osv.Model):
                     'date_planned': date_planned,
                     'taxes_id': [(6, 0, taxes)],
                 }, context=context)
-                
+
         return res
 
     def _seller_details_without_product(self, cr, uid, requisition_line, supplier, context=None):
-        product = requisition_line.product_id
         default_uom_pol_id = self.pool.get('purchase.order.line')._get_uom_id(cr, uid, context=context)
         default_uom_po_id = requisition_line.product_uom_id and requisition_line.product_uom_id.id or default_uom_pol_id
         qty = requisition_line.product_qty
         seller_delay = 0.0
         seller_price = False
-        seller_qty = False
         date_planned = self._planned_date(requisition_line.requisition_id, seller_delay)
         return seller_price, qty, default_uom_po_id, date_planned

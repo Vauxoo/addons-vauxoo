@@ -23,7 +23,6 @@
 ############################################################################
 
 from openerp.osv import osv, fields
-import time
 
 
 class wizard_price_list_sequence_report(osv.TransientModel):
@@ -46,4 +45,3 @@ class wizard_price_list_sequence_report(osv.TransientModel):
             'report_name': 'project.issuereport',
             'datas': datas
         }
-

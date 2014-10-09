@@ -23,30 +23,33 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "Report Account Aged Partner Balance view",
-    "version" : "2.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """This module creates a sql view for Account Aged Partner Balance today.""",
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
-        "account",
-        'board',
-        'report_webkit',
-        ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        "view/wizard.xml",
-        "view/view.xml",
-        'view/action_menues.xml',
-        'view/wizard_print_report_view.xml',
-        "data/data.xml",
-        'report/report.xml',
-    ],
-    "installable" : True,
-    'auto_install': False,
+    "name": "Report Account Aged Partner Balance view", 
+    "version": "2.0", 
+    "author": "Vauxoo", 
+    "category": "Localization/Mexico", 
+    "description": """This module creates a sql view for Account Aged Partner Balance today.""", 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "account", 
+        "board", 
+        "report_webkit"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/wizard.xml", 
+        "view/view.xml", 
+        "view/action_menues.xml", 
+        "view/wizard_print_report_view.xml", 
+        "data/data.xml", 
+        "report/report.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

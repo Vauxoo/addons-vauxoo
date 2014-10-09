@@ -23,26 +23,33 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "Product hierarchical view",
-    "version" : "0.1",
-    "depends" : ["project"],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Product hierarchical view", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Customization", 
+    "description": """
 Hierarchical View:
 =========================================================
     It creates Hierarchical view to projects
 
-  
-                    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Customization",
-    "data" : [
-        "project_hierarchical_view.xml",
+
+                    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "project"
+    ], 
+    "demo": [], 
+    "data": [
+        "project_hierarchical_view.xml", 
         "project_data.xml"
-    ],
-    "active": False,
-    "images": [],
-    "installable": True,
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

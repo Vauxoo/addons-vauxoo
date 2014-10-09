@@ -20,22 +20,28 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
+#"license" : "AGPL-3",
 {
-    "name" : "Add the Name and referenced in the view search account.move.line model",
-    "version" : "1.0",
-    "depends" : ['account'],
-    "author" : "Vauxoo",
-    #"license" : "AGPL-3",
-    "description" : """This module Add the Name and referenced in the view search account.move.line model to perform the filter
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [],
-    "update_xml" : ['account_move_line.xml',
-    ],
-    "active": False,
-    "installable": True,
+    "name": "Add the Name and referenced in the view search account.move.line model", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """This module Add the Name and referenced in the view search account.move.line model to perform the filter
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "account_move_line.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-

@@ -25,10 +25,7 @@
 
 
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
 
-from tools import config
-from operator import itemgetter
 
 __HELP__ = '''
 Escriba el Patron de las cuentas, su estructura, por ejemplo:
@@ -103,16 +100,16 @@ class account_order_wizard(osv.TransientModel):
         for j in dict.keys():
             #~ la similitud del codigo con la similutud del patron
             #~
-            if len(dict[j][0]) == patron[i+1] and\
+            if len(dict[j][0]) == patron[i + 1] and\
                     dict[j][0][:patron[i]] == dict_i0:
                 dict[j][1] = True
                 dict[j][2] = k
-                if i+1 < len_patron:
+                if i + 1 < len_patron:
                     self._ordering(
-                        cr, uid, patron, len_patron, dict, dict[j][0], j, i+1)
+                        cr, uid, patron, len_patron, dict, dict[j][0], j, i + 1)
 
     def _new_ordering(self, cr, uid, company_id, pattern, pattern_list,
-                      lpl, top_parent, parent_id,  pc=0, d={}):
+                      lpl, top_parent, parent_id, pc=0, d={}):
         aa_obj = self.pool.get('account.account')
         cr.execute("SELECT id, code FROM account_account\
                 WHERE code like %s AND company_id = %s AND active = True", (
@@ -157,7 +154,7 @@ class account_order_wizard(osv.TransientModel):
                 continue
 
             now = pattern_list[pc]
-            nxt = pattern_list[pc+1]
+            nxt = pattern_list[pc + 1]
             #~ code = ild['code']
             #~ minlen = min(map(len,[now,nxt,code]))
             #~ maxlen = max(map(len,[now,nxt,code]))
@@ -185,7 +182,7 @@ class account_order_wizard(osv.TransientModel):
             new_parent_id = ild['id']
             self._new_ordering(cr, uid, company_id, new_pattern,
                                pattern_list, lpl, top_parent,
-                               new_parent_id, pc+1, {})
+                               new_parent_id, pc + 1, {})
         #~ for ac_id in d:
             #~ print 'IMPRIMIENDO UN DIC id: %s - parent_id %s'%(ac_id,d[ac_id],)
             #~ aa_obj.write(cr, uid, [ac_id], d[ac_id])
@@ -193,7 +190,6 @@ class account_order_wizard(osv.TransientModel):
         return True
 
     def get_order(self, cr, uid, ids, context=None):
-        aa_obj = self.pool.get('account.account')
 
         for id in ids:
 
@@ -206,7 +202,6 @@ class account_order_wizard(osv.TransientModel):
 
             pattern_list = self._get_list(cr, uid, id, context)
             parent_id = self.browse(cr, uid, id, context).account_id.id
-            d = {}
             lpl = len(pattern_list)
             top_parent = parent_id
             self._new_ordering(cr, uid, company_id, pattern_list[0],
@@ -215,8 +210,8 @@ class account_order_wizard(osv.TransientModel):
             #~ d.get(top_parent) and d.pop(top_parent)
             #~ print 'DICCIONARIO TOTAL',d
             #~ for ac_id in d:
-                #~ print 'IMPRIMIENDO UN DIC ',d[ac_id]
-                #~ aa_obj.write(cr, uid, [ac_id], d[ac_id])
+            #~ print 'IMPRIMIENDO UN DIC ',d[ac_id]
+            #~ aa_obj.write(cr, uid, [ac_id], d[ac_id])
         return {}
 
     def get_level(self, cr, uid, ids, code, context=None):
@@ -226,7 +221,7 @@ class account_order_wizard(osv.TransientModel):
                         from account_account
                         where code like '%s'
                         and char_length(code) > %s
-                        order by level''' % (code+'%', len(str(code))))
+                        order by level''' % (code + '%', len(str(code))))
 
         return cr.fetchall()
 
@@ -255,7 +250,6 @@ class account_order_wizard(osv.TransientModel):
             context = {}
         wz_brw = self.browse(cr, uid, ids[0], context)
         pid = pid or wz_brw.account_id.id
-        company_id = wz_brw.company_id.id
         account_obj = self.pool.get('account.account')
         levels = self.get_level(cr, uid, ids, code, context)
         while levels:
@@ -263,7 +257,7 @@ class account_order_wizard(osv.TransientModel):
             codes = self.get_code(cr, uid, ids, code, level and level[0],
                                   pid, context)
             c_ids = [i.get('id') for i in codes]
-            c_ids = list(set(c_ids)-set([pid]))
+            c_ids = list(set(c_ids) - set([pid]))
             account_obj.write(cr, uid, c_ids, {
                               'parent_id': pid}, context=context)
             cr.commit()

@@ -26,26 +26,26 @@
 from openerp.osv import fields, osv
 import openerp.addons.decimal_precision as dp
 
+
 class hr_payslip(osv.osv):
     _inherit = 'hr.payslip'
-    
+
     def _amount_residual(self, cr, uid, ids, name, args, context=None):
         """Function of the field residua. It computes the residual amount (balance) for each payslip"""
         if context is None:
             context = {}
-        ctx = context.copy()
         result = {}
         for payslip in self.browse(cr, uid, ids, context=context):
             nb_inv_in_partial_rec = max_invoice_id = 0
             result[payslip.id] = 0.0
             if payslip.move_id:
                 for aml in payslip.move_id.line_id:
-                    if aml.account_id.type in ('receivable','payable'):
+                    if aml.account_id.type in ('receivable', 'payable'):
                         result[payslip.id] += aml.amount_residual_currency
-            #prevent the residual amount on the payslip to be less than 0
-            result[payslip.id] = max(result[payslip.id], 0.0)            
+            # prevent the residual amount on the payslip to be less than 0
+            result[payslip.id] = max(result[payslip.id], 0.0)
         return result
-    
+
     def _get_payslip_from_line(self, cr, uid, ids, context=None):
         move = {}
         for line in self.pool.get('account.move.line').browse(cr, uid, ids, context=context):
@@ -72,12 +72,12 @@ class hr_payslip(osv.osv):
         if move:
             payslip_ids = self.pool.get('hr.payslip').search(cr, uid, [('move_id', 'in', move.keys())], context=context)
         return payslip_ids
-        
+
     _columns = {
         'residual': fields.function(_amount_residual, digits_compute=dp.get_precision('Account'), string='Balance',
             store={
                 'hr.payslip': (lambda self, cr, uid, ids, c={}: ids, [], 50),
                 'account.move.line': (_get_payslip_from_line, None, 50),
                 'account.move.reconcile': (_get_payslip_from_reconcile, None, 50),
-            },),
-        }
+        },),
+    }

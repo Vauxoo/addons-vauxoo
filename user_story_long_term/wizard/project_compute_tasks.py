@@ -25,6 +25,7 @@
 
 from openerp.osv import fields, osv
 
+
 class project_compute_tasks(osv.osv_memory):
     _name = 'project.compute.tasks'
     _description = 'Project Compute Tasks'
@@ -37,7 +38,6 @@ class project_compute_tasks(osv.osv_memory):
         Schedule the tasks according to users and priority.
         """
         project_pool = self.pool.get('project.project')
-        task_pool = self.pool.get('project.task')
         if context is None:
             context = {}
         context['compute_by'] = 'project'

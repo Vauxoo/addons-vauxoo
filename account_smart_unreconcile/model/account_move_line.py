@@ -23,19 +23,18 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from openerp.osv import osv, fields
+from openerp.osv import osv
 
 
 class account_move_line(osv.Model):
     _inherit = "account.move.line"
 
-    def _remove_move_reconcile(self, cr, uid, move_ids=[], opening_reconciliation=False,context=None):
+    def _remove_move_reconcile(self, cr, uid, move_ids=[], opening_reconciliation=False, context=None):
         # Function remove move rencocile ids related with moves
         if context is None:
             context = {}
         obj_move_line = self.pool.get('account.move.line')
         obj_move_rec = self.pool.get('account.move.reconcile')
-        unlink_ids = []
         if not move_ids:
             return True
         recs = obj_move_line.read(cr, uid, move_ids, [

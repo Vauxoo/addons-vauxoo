@@ -34,6 +34,7 @@ import openerp.netsvc as netsvc
 
 
 class print_sale_order_report(osv.TransientModel):
+
     """
     OpenERP Wizard : print.sale.order.report
     """

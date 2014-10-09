@@ -23,10 +23,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import osv, fields
-from openerp.tools.translate import _
+from openerp.osv import osv
 
-from datetime import datetime
 import openerp.netsvc as netsvc
 
 
@@ -49,6 +47,6 @@ class mrp_production(osv.Model):
                                    x.id for x in production.move_lines2])
             if production.move_created_ids2:
                 move_obj.action_cancel(cr, uid, [
-                                x.id for x in production.move_created_ids2])
+                    x.id for x in production.move_created_ids2])
         return super(mrp_production, self).action_cancel(cr, uid, ids,
-                                                            context=context)
+                                                         context=context)

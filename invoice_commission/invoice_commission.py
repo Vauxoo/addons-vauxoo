@@ -29,10 +29,10 @@ class invoice_commission(osv.Model):
               type='float', string='Commission',
               digits_compute=dp.get_precision(
                   'Commission'),
-              store={
-              'account.invoice': (lambda self, cr, uid, ids, c={}: ids,
+            store={
+                  'account.invoice': (lambda self, cr, uid, ids, c={}: ids,
                                   ['invoice_line', 'state'], 25),
-              'account.invoice.line': (_get_invoice_line,
+                  'account.invoice.line': (_get_invoice_line,
                                        ['gain', 'commission'], 15), })
     }
 
@@ -63,16 +63,14 @@ class invoice_commission_line(osv.Model):
 
     def get_gain(self, cr, uid, ids, name, args, context=None):
         res = {}
-        product_price = 0
         product_pu = 0
-        gain = 0
         for ail_brw in self.browse(cr, uid, ids):
             if ail_brw.product_id:
                 product_cost = ail_brw.product_id.standard_price
                 if product_cost != 0.0:
                     product_pu = ail_brw.price_unit
                     res[ail_brw.id] = ((
-                        product_pu-product_cost)/product_cost)*100
+                        product_pu - product_cost) / product_cost) * 100
                 else:
                     raise osv.except_osv(_("User Error"), _(
                         "The product standard price can't be 0.0!"))
@@ -96,5 +94,5 @@ class invoice_commission_line(osv.Model):
             store={
                 'account.invoice.line': (lambda self, cr, uid, ids,
                                        c={}: ids, None, 25),
-              }),
+            }),
     }

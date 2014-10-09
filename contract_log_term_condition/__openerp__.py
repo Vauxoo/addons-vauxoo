@@ -18,36 +18,30 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    'name' : 'Log of Terms and Conditions',
-    'version' : '0.1',
-    'author' : 'Vauxoo',
-    'category' : '',
-    'description' : """
+    "name": "Log of Terms and Conditions", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "", 
+    "description": """
 Terms and Conditions Log
 ========================
 - This module creates a log of all change in the Terms and Conditions fields
  in the Contract
-    """,
-    'website': 'http://www.vauxoo.com',
-    'images' : [],
-    'depends' : [
-        'account_analytic_analysis',
-    ],
-    'data': [
-    ],
-    'js': [
-    ],
-    'qweb' : [
-    ],
-    'css':[
-    ],
-    'demo': [
-    ],
-    'test': [
-    ],
-    'installable': True,
-    'auto_install': False,
+    """, 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account_analytic_analysis"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

@@ -1,1 +1,1 @@
-import survey
+from . import survey

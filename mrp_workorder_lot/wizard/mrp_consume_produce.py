@@ -23,7 +23,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import time
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
@@ -145,7 +144,7 @@ class mrp_consume(osv.TransientModel):
         for consume_line in consume_line_list:
             consume_line.update({
                 'quantity': sheduled_qty[consume_line['product_id']]
-                * wol_brw.percentage/100.0})
+                * wol_brw.percentage / 100.0})
         return consume_line_list
 
     def action_active_lot(self, cr, uid, ids, context=None):
@@ -184,8 +183,6 @@ class mrp_consume(osv.TransientModel):
         #~ refresh kaban view
         view_id, search_view_id, action_help = \
             self._get_kanban_view_data(cr, uid, context=context)
-
-        act_obj = self.pool.get('ir.actions.act_window')
 
         return {
             'view_id': view_id,

@@ -22,18 +22,12 @@
 ##########################################################################
 
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
-from openerp import tools
-from openerp import netsvc
-from openerp import SUPERUSER_ID
-
-import time
 
 
 class res_groups(osv.Model):
     _inherit = 'res.groups'
-    
-    _columns={
+
+    _columns = {
         'xml_id': fields.function(osv.osv.get_xml_id, type='char', size=128, string="External ID",
                                   help="ID of the view defined in xml file"),
     }

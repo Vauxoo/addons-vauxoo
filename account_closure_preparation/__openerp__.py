@@ -22,13 +22,11 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    "name": "Accounting Closure Preparation",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "website": "http://vauxoo.com",
-    "category": 'Accounting',
+    "name": "Accounting Closure Preparation", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Accounting", 
     "description": """
 Accounting Closure Preparation.
 ==============================
@@ -36,17 +34,22 @@ Accounting Closure Preparation.
 Let accounting people do a revision of the Chart of account, in order to avoid
 undesirable outcomes when closing a fiscalyear, i.e., transferring balance from
 a fiscalyear to be closed to another to be open.
-""",
-    "depends": ['account'],
+""", 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
     "data": [
-        'view/views.xml',
-        'view/menues_and_actions.xml',
-        ],
-    "js": [],
-    "qweb": [],
-    "css": [],
-    "demo": [],
-    "test": [],
-    "installable": True,
-    "active": False,
+        "view/views.xml", 
+        "view/menues_and_actions.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

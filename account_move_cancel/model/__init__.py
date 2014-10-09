@@ -1,1 +1,1 @@
-import invoice
+from . import invoice

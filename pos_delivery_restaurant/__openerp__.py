@@ -22,27 +22,34 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    'name': 'POS Delivery Restaurant',
-    'version': '1.0',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com/',
-    'category': 'Point Of Sale',
-    'description': '''
+    "name": "POS Delivery Restaurant", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Point Of Sale", 
+    "description": """
 POS Delivery Restaurant
 =======================
 
-With this module deli_rest field is added in the point of sale, which can be a 
+With this module deli_rest field is added in the point of sale, which can be a
 restaurant or delivery.
-    ''',
-    'depends': ['base', 'point_of_sale', 'sale'],
-    'data': [
-            'view/point_of_sale_view.xml', 
-        ],
-    'demo': [],
-    'test': [],
-    'js': [],
-    'active': False,
-    'installable': True,
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "point_of_sale", 
+        "sale"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/point_of_sale_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

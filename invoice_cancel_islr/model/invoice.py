@@ -23,10 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-import time
-from openerp.osv import osv, fields
-from openerp.addons.decimal_precision import decimal_precision as dp
-from openerp.tools.translate import _
+from openerp.osv import osv
 
 import openerp.netsvc as netsvc
 
@@ -36,13 +33,13 @@ class account_invoice(osv.Model):
 
     #~
     #~ def action_cancel_draft(self, cr, uid, ids, *args):
-        #~
-        #~ wf_service = netsvc.LocalService("workflow")
-        #~ res = super(account_invoice, self).action_cancel_draft(cr, uid, ids, ())
-        #~ for i in self.browse(cr,uid,ids,context={}):
-            #~ if i.islr_wh_doc_id:
-                #~ wf_service.trg_validate(uid, 'islr.wh.doc',i.islr_wh_doc_id.id, 'act_draft', cr)
-        #~ return res
+    #~
+    #~ wf_service = netsvc.LocalService("workflow")
+    #~ res = super(account_invoice, self).action_cancel_draft(cr, uid, ids, ())
+    #~ for i in self.browse(cr,uid,ids,context={}):
+    #~ if i.islr_wh_doc_id:
+    #~ wf_service.trg_validate(uid, 'islr.wh.doc',i.islr_wh_doc_id.id, 'act_draft', cr)
+    #~ return res
 
     def action_number(self, cr, uid, ids, context=None):
         '''
@@ -50,8 +47,6 @@ class account_invoice(osv.Model):
         '''
         wf_service = netsvc.LocalService("workflow")
         res = super(account_invoice, self).action_number(cr, uid, ids)
-        iva_line_obj = self.pool.get('account.wh.iva.line')
-        iva_obj = self.pool.get('account.wh.iva')
         invo_brw = self.browse(cr, uid, ids, context=context)[0]
         state = [('draft', 'act_draft'), ('progress', 'act_progress'), (
             'confirmed', 'act_confirmed'), ('done', 'act_done')]
@@ -81,7 +76,7 @@ class account_invoice(osv.Model):
         if invo_brw.islr_wh_doc_id:
             islr_obj.write(cr, uid, [invo_brw.islr_wh_doc_id.id], {
                            'prev_state': invo_brw.islr_wh_doc_id.state},
-                            context=context)
+                           context=context)
         res = super(account_invoice, self).invoice_cancel(
             cr, uid, ids, context=context)
 

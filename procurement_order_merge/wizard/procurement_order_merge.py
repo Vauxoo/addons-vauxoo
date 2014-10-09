@@ -23,7 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import osv, fields
+from openerp.osv import osv
 from openerp.tools.translate import _
 
 
@@ -31,14 +31,14 @@ class procurement_order_merge(osv.TransientModel):
     _name = 'procurement.order.merge'
 
     def fields_view_get(self, cr, uid, view_id=None, view_type='form',
-                            context=None, toolbar=False, submenu=False):
+                        context=None, toolbar=False, submenu=False):
         if context is None:
             context = {}
         res = super(procurement_order_merge, self).fields_view_get(
             cr, uid, view_id=view_id, view_type=view_type, context=context,
             toolbar=toolbar, submenu=False)
         if context.get('active_model', '') == 'procurement.order' and\
-        len(context['active_ids']) < 2:
+                len(context['active_ids']) < 2:
             raise osv.except_osv(_('Warning'),
                                  _('Please select multiple order to merge\
                                     in the list view.'))

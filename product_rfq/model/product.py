@@ -26,16 +26,16 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
 
 
 class inherited_product(osv.Model):
+
     """
     Inherit to add rfq field for indicate which product has requisition
     """
     _inherit = "product.product"
     _columns = {
-            'product_rfq':fields.boolean('RFQ', help='This field indicate if '
-                                                     'this product will have '
-                                                     'a requisition'), 
+        'product_rfq': fields.boolean('RFQ', help='This field indicate if '
+                                      'this product will have '
+                                      'a requisition'),
     }

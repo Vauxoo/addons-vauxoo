@@ -37,7 +37,7 @@ class user_story(osv.Model):
         context = context or {}
         task_obj = self.pool.get('project.task')
         context.update({'force_send': True})
-        if task_obj.check_access_rights( cr, uid, 'write', False):
+        if task_obj.check_access_rights(cr, uid, 'write', False):
             # In order to be sync correctly tasks related with tags on this user story
             # Tasks Must belong to same category, but in portal usage, this feature is not necesary
             # and incorrect if we allow with SUPERUSERID, then we will check_permision and
@@ -49,9 +49,9 @@ class user_story(osv.Model):
                             cr, uid, [task.id], {'categ_ids': vals['categ_ids']})
             if vals.get('sk_id'):
                 task_ids = task_obj.search(cr, uid, [
-                                        ('userstory_id', '=', ids[0])])
+                    ('userstory_id', '=', ids[0])])
                 task_obj.write(cr, uid, task_ids, {
-                            'sprint_id': vals.get('sk_id')}, context=context)
+                    'sprint_id': vals.get('sk_id')}, context=context)
             context.pop('force_send')
 
         if vals.get('categ_ids'):
@@ -157,7 +157,7 @@ class user_story(osv.Model):
             if owner_id:
                 user_o = [owner_id]
                 followers.append(user_o[0].partner_id.id)
-                followers.append( user_o[0].partner_id.id)
+                followers.append(user_o[0].partner_id.id)
 
         context.update({
             'default_body': body,
@@ -225,7 +225,7 @@ class user_story(osv.Model):
         return res
 
     _columns = {
-        'name': fields.char('Title', size=255, required=True, readonly=False, translate=True,track_visibility='onchange'),
+        'name': fields.char('Title', size=255, required=True, readonly=False, translate=True, track_visibility='onchange'),
         'owner_id': fields.many2one('res.users', 'Owner',
                                     help="User Story's Owner, generally the person which asked to develop this feature",
                                     track_visibility='always'),
@@ -254,8 +254,8 @@ class user_story(osv.Model):
                   " in some cases also the supervisor for the correct"
                   " execution of the user story."), track_visibility='always'),
         'user_execute_id': fields.many2one('res.users', 'Execution Responsible',
-                                            help="Person responsible for user story takes place, either by delegating work to other human resource or running it by itself. For delegate work should monitor the proper implementation of associated activities.",
-                                            track_visibility='always'),
+                                           help="Person responsible for user story takes place, either by delegating work to other human resource or running it by itself. For delegate work should monitor the proper implementation of associated activities.",
+                                           track_visibility='always'),
         'sk_id': fields.many2one('sprint.kanban', 'Sprint Kanban'),
         'state': fields.selection(_US_STATE, 'State', readonly=True, track_visibility='onchange'),
         'task_ids': fields.one2many(
@@ -338,7 +338,7 @@ class user_story(osv.Model):
         user = user_obj.pool['res.users'].browse(cr, uid, uid, context)
         followers = self.read(cr, uid, ids[0], [
             'message_follower_ids'])['message_follower_ids']
-        #TODO: Re-do when correctly rendered is done using email template
+        # TODO: Re-do when correctly rendered is done using email template
         for i in ids:
             body = self.get_body_approval(cr, uid, i, context)
             context.update({
@@ -349,7 +349,7 @@ class user_story(osv.Model):
                                         'model': 'user.story',
                                         'res_id': i,
                                         'subject': (u'{name} Approved the User Story with id {number}'.format(
-                                        number=i, name=user.name)),
+                                            number=i, name=user.name)),
                                         'body_html': body,
                                         'auto_delete': True,
                                         'email_from': user.email,
@@ -379,12 +379,14 @@ class user_story(osv.Model):
         return self.write(cr, uid, ids, {'state': 'cancelled'},
                           context=context)
 
+
 class user_story_priority(osv.Model):
     _name = 'user.story.priority'
     _description = "User Story Priority Level"
     _columns = {
         'name': fields.char('Name', size=255, required=True),
     }
+
 
 class user_story_difficulty(osv.Model):
     _name = 'user.story.difficulty'
@@ -396,6 +398,7 @@ class user_story_difficulty(osv.Model):
         'points': fields.integer('Points', required=True, help="Just to give another value to criterias and User Stories. With it you can set an order and a value in terms of effort."),
         'help': fields.text('Help', required=True, help="Explain what kind of User Stories can be on this level, tell your experience give examples and so on."),
     }
+
 
 class acceptability_criteria(osv.Model):
     _name = 'acceptability.criteria'

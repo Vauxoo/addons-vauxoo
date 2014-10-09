@@ -24,6 +24,6 @@
 #
 #
 
-import res_partner
-import account_voucher
+from . import res_partner
+from . import account_voucher
 

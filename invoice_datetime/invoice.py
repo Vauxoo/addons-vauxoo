@@ -28,15 +28,12 @@
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 from openerp import tools
-from openerp import netsvc
 from openerp import release
 import datetime
 from pytz import timezone
 import pytz
-from dateutil.relativedelta import relativedelta
 
 import time
-import os
 
 
 class account_payment_term(osv.Model):
@@ -89,11 +86,11 @@ class account_invoice(osv.Model):
         # Extract date_invoice from original, but add datetime
         #'date_invoice': fields.datetime('Date Invoiced', states={'open':[
         #('readonly',True)],'close':[('readonly',True)]},
-        #help="Keep empty to use the current date"),
+        # help="Keep empty to use the current date"),
         'invoice_datetime': fields.datetime('Date time of invoice',
             states={'open': [('readonly', True)], 'close': [('readonly', True)]},
             help="Keep empty to use the current date"),
-        'date_invoice_tz':  fields.function(_get_date_invoice_tz, method=True,
+        'date_invoice_tz': fields.function(_get_date_invoice_tz, method=True,
             type='datetime', string='Date Invoiced with TZ', store=True,
             help='Date of Invoice with Time Zone'),
         'date_type': fields.function(_get_field_params, storage=False, type='char', string="Date type")
@@ -108,15 +105,15 @@ class account_invoice(osv.Model):
         #'date_invoice': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
         "date_type": _get_default_type
     }
-        
+
     def copy(self, cr, uid, ids, default=None, context=None):
         if context is None:
             context = {}
         if default is None:
             default = {}
-        default.update({'invoice_datetime': False, 'date_invoice' : False})
+        default.update({'invoice_datetime': False, 'date_invoice': False})
         return super(account_invoice, self).copy(cr, uid, ids, default, context)
-    
+
     def _get_time_zone(self, cr, uid, invoice_id, context=None):
         if context is None:
             context = {}
@@ -134,38 +131,38 @@ class account_invoice(osv.Model):
             timezone_original = int(diff_timezone_original)
             str_datetime = str(datetime.datetime.now(pytz.timezone(userstz)))
             str_datetime = str_datetime[-6:-3]
-            timezone_present = int(str_datetime)*-1
+            timezone_present = int(str_datetime) * -1
             result = timezone_original + ((
-                timezone_present + timezone_original)*-1)
+                timezone_present + timezone_original) * -1)
         return result
-    
+
     def assigned_datetime(self, cr, uid, ids, values, context=None):
         if context is None:
             context = {}
         res = {}
         if values.get('date_invoice', False) and\
-                                    not values.get('invoice_datetime', False):
+                not values.get('invoice_datetime', False):
             user_hour = self._get_time_zone(cr, uid, [], context=context)
             time_invoice = datetime.time(abs(user_hour), 0, 0)
 
             date_invoice = datetime.datetime.strptime(
                 values['date_invoice'], '%Y-%m-%d').date()
-                
+
             dt_invoice = datetime.datetime.combine(
                 date_invoice, time_invoice).strftime('%Y-%m-%d %H:%M:%S')
 
             res['invoice_datetime'] = dt_invoice
             res['date_invoice'] = values['date_invoice']
-            
+
         if values.get('invoice_datetime', False) and not\
-            values.get('date_invoice', False):
+                values.get('date_invoice', False):
             date_invoice = fields.datetime.context_timestamp(cr, uid,
                 datetime.datetime.strptime(values['invoice_datetime'],
                 tools.DEFAULT_SERVER_DATETIME_FORMAT), context=context)
             res['date_invoice'] = date_invoice
             res['invoice_datetime'] = values['invoice_datetime']
-        
-        if 'invoice_datetime' in values  and 'date_invoice' in values:
+
+        if 'invoice_datetime' in values and 'date_invoice' in values:
             if values['invoice_datetime'] and values['date_invoice']:
                 date_invoice = datetime.datetime.strptime(
                     values['invoice_datetime'],
@@ -183,7 +180,7 @@ class account_invoice(osv.Model):
 
                         date_invoice = datetime.datetime.strptime(
                             values['date_invoice'], '%Y-%m-%d').date()
-                            
+
                         dt_invoice = datetime.datetime.combine(
                             date_invoice, time_invoice).strftime('%Y-%m-%d %H:%M:%S')
 
@@ -193,12 +190,12 @@ class account_invoice(osv.Model):
                         raise osv.except_osv(_('Warning!'), _('Invoice dates should be equal'))
                     #~ else:
                         #~ raise osv.except_osv(_('Warning!'), _('Invoice dates should be equal'))
-                            
+
         if  not values.get('invoice_datetime', False) and\
-                                        not values.get('date_invoice', False):
-            res['date_invoice'] = fields.date.context_today(self,cr,uid,context=context)
+                not values.get('date_invoice', False):
+            res['date_invoice'] = fields.date.context_today(self, cr, uid, context=context)
             res['invoice_datetime'] = fields.datetime.now()
-            
+
         return res
 
     def action_move_create(self, cr, uid, ids, context=None):
@@ -207,7 +204,7 @@ class account_invoice(osv.Model):
                 vals_date = self.assigned_datetime(cr, uid, ids,
                     {'invoice_datetime': inv.invoice_datetime,
                         'date_invoice': inv.date_invoice},
-                        context=context)
+                    context=context)
                 self.write(cr, uid, ids, vals_date, context=context)
         return super(account_invoice,
-                        self).action_move_create(cr, uid, ids, context=context)
+                     self).action_move_create(cr, uid, ids, context=context)

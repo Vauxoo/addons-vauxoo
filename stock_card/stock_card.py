@@ -69,7 +69,7 @@ class stock_card(osv.Model):
         #~ print 'devoluciones: ',scl_ids
         for scl in sc_line_obj.browse(cr, uid, scl_ids):
             nb = scl.picking_id.name[
-                :scl.picking_id.name.lower().find('return')-1].strip()
+                :scl.picking_id.name.lower().find('return') - 1].strip()
             #~ print 'a buscar: ',nb
             sp_ids = sp_obj.search(cr, uid, [('name', '=', nb)])
             #~ print 'posible picking padre: ',sp_ids
@@ -279,7 +279,7 @@ class stock_card(osv.Model):
         subtot = scl_obj.invoice_line_id.price_subtotal
         tot += subtot
         if q_des > 0:
-            prom = tot/q_des
+            prom = tot / q_des
         else:
             prom = 0
 
@@ -294,10 +294,10 @@ class stock_card(osv.Model):
             prom_pad = prom
 
         q_des += q_mov
-        subtot = prom_pad*q_mov
+        subtot = prom_pad * q_mov
         tot += subtot
         if q_des > 0:
-            prom = tot/q_des
+            prom = tot / q_des
         else:
             prom = 0
 
@@ -342,7 +342,7 @@ class stock_card(osv.Model):
     def compute_venta(self, cr, uid, ids, scl_obj, q_mov, tot, prom, q_des):
         subtot = 0.0
         q_des -= q_mov
-        subtot = prom*q_mov
+        subtot = prom * q_mov
         tot -= subtot
         res = (q_des, subtot, tot, prom)
         return res
@@ -421,7 +421,7 @@ class stock_card(osv.Model):
             scl_obj.invoice_line_id.price_subtotal or 0.0
         tot -= subtot
         if q_des > 0:
-            prom = tot/q_des
+            prom = tot / q_des
         else:
             prom = 0
 
@@ -483,7 +483,7 @@ class stock_card(osv.Model):
 
         q_des += q_mov
         tot += subtot
-        prom = tot/q_des
+        prom = tot / q_des
 
         res = (q_des, subtot, tot, prom)
 
@@ -599,11 +599,10 @@ class stock_card(osv.Model):
                                          'scp_id': dict_prod[key],
                                          'aml_id': i})
 
-            #~ # Crear los asientos que queden
+            # ~ # Crear los asientos que queden
 
             for key in dict_inv:
                 if dict_inv.get(key, False):
-                    pass
                     sca_id = sca_obj.create(cr, uid, {
                                             'stock_card_id': id,
                                             'account_id': key,
@@ -640,13 +639,13 @@ class stock_card(osv.Model):
         Dict = {}
         for prod_id in product_ids:
             Dict[prod_id] = {
-                'sml':          self.action_sm_x_pd(cr, uid, ids, prod_id),
-                'no_cump':      [],
-                'total':        0.0,
-                'avg':          0.0,
-                'qda':          0.0,
-                'cont':         False,
-                'seq':          0,
+                'sml': self.action_sm_x_pd(cr, uid, ids, prod_id),
+                'no_cump': [],
+                'total': 0.0,
+                'avg': 0.0,
+                'qda': 0.0,
+                'cont': False,
+                'seq': 0,
             }
 
         for prod_id in product_ids:
@@ -659,7 +658,7 @@ class stock_card(osv.Model):
         # interno)
         lst_scl_refac_mov_int = self.lst_scl_mov_int(cr, uid, ids)
         # unir las dos lista a refactorizar
-        self.write_new_cost(cr, uid, lst_scl_refac+lst_scl_refac_mov_int,
+        self.write_new_cost(cr, uid, lst_scl_refac + lst_scl_refac_mov_int,
                             loc_ids, inter_loc_ids, prod_loc_ids)
         return True
 
@@ -705,8 +704,8 @@ class stock_card(osv.Model):
                     else:
                         no_cump.append(sml_id)
                         continue
-                total = avg*q
-                subtotal = avg*q
+                total = avg * q
+                subtotal = avg * q
                 qda = q
                 seq += 1
                 value = {
@@ -851,14 +850,14 @@ class stock_card(osv.Model):
                             subtotal += sc_line_obj.browse(
                                 cr, uid, i.id).subtotal
                     total += subtotal
-                    avg = qda and total/qda or 0.0
+                    avg = qda and total / qda or 0.0
                     value = {
                         'subtotal': subtotal,
                         'total': total,
-                        'avg': qda and total/qda or 0.0,
+                        'avg': qda and total / qda or 0.0,
                         'stk_bef_cor': q_bef,
                         'stk_aft_cor': qda,
-                        'aml_cost_price_unit': subtotal/q
+                        'aml_cost_price_unit': subtotal / q
                     }
                     seq = self.write_data(cr, uid, ids, scl.id, value, seq)
 
@@ -877,7 +876,7 @@ class stock_card(osv.Model):
                             property_stock_account_input.id
 
                         acc_mov_id = self.write_aml(cr, uid, ids, scl, q,
-                                                    q and subtotal/q or 0,
+                                                    q and subtotal / q or 0,
                                                     acc_src, acc_dest)
                         acc_mov_obj = self.pool.get(
                             'account.move').browse(cr, uid, acc_mov_id)
@@ -893,7 +892,6 @@ class stock_card(osv.Model):
                                 valores.update({'aml_inv_id': aml.id})
 
                         sc_line_obj.write(cr, uid, scl.id, valores)
-                        kkk = sc_line_obj.read(cr, uid, scl.id)
 
                 # NO HAY MAS COMPRAS O NC VENTAS Y QUEDAN MOVIMIENTOS
                 if no_cump and not sml_x_pd_id:
@@ -992,22 +990,18 @@ class stock_card_line(osv.Model):
                                     digits_compute=dp.get_precision('Account'),
                                     readonly=True),
         'aml_cost_qty': fields.float(string='Cost entry quantity',
-                                     digits_compute=
-                                     dp.get_precision('Account'),
+                                     digits_compute=dp.get_precision('Account'),
                                      readonly=True),
         'invoice_price_unit': fields.float(string='Invoice price unit',
-                                           digits_compute=
-                                                  dp.get_precision('Account'),
+                                           digits_compute=dp.get_precision('Account'),
                                                   readonly=True),
         'aml_cost_price_unit': fields.float(string='Cost entry price unit',
-                                            digits_compute=
-                                                   dp.get_precision('Account'),
+                                            digits_compute=dp.get_precision('Account'),
                                                    readonly=True),
         'invoice_id': fields.many2one('account.invoice', string='Invoice',
                                       readonly=True, select=True),
         'stock_before': fields.float(string='Stock before',
-                                     digits_compute=
-                                     dp.get_precision('Account'),
+                                     digits_compute=dp.get_precision('Account'),
                                      readonly=True),
         'stock_after': fields.float(string='Stock after',
                                     digits_compute=dp.get_precision('Account'),
@@ -1015,8 +1009,7 @@ class stock_card_line(osv.Model):
         'date_inv': fields.char(string='Date invoice', size=20, readonly=True,
                                 select=True),
         'stock_invoice': fields.float(string='Stock invoice',
-                                      digits_compute=
-                                      dp.get_precision('Account'),
+                                      digits_compute=dp.get_precision('Account'),
                                       readonly=True),
         'subtotal': fields.float(string='Subtotal',
                                  digits_compute=dp.get_precision('Account'),
@@ -1040,9 +1033,9 @@ class stock_card_line(osv.Model):
                                       type='many2one',
                                       relation='stock.card.line',
                                       store={
-                                      'stock.card.line': (_get_scl_from_scl,
+                                          'stock.card.line': (_get_scl_from_scl,
                                                           None, 50),
-                                      'stock.move': (_get_scl_from_sm,
+                                          'stock.move': (_get_scl_from_sm,
                                                      None, 50),
                                       }, string='Out sml', select=True, ),
         'in_sml_ids': fields.one2many('stock.card.line',
@@ -1051,15 +1044,13 @@ class stock_card_line(osv.Model):
                                       string='Inv entry', readonly=True,
                                       select=True),
         'aml_inv_price_unit': fields.float(string='Inv entry price unit',
-                                           digits_compute=
-                                           dp.get_precision('Account'),
+                                           digits_compute=dp.get_precision('Account'),
                                            readonly=True),
         'aml_inv_qty': fields.float(string='Inv entry quantity',
                                     digits_compute=dp.get_precision('Account'),
                                     readonly=True),
         'aml_cost_cor': fields.float(string='Cost entry cal',
-                                     digits_compute=
-                                     dp.get_precision('Account'),
+                                     digits_compute=dp.get_precision('Account'),
                                      readonly=True),
 
     }

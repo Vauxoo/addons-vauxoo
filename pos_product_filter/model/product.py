@@ -23,19 +23,18 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import fields, osv, orm
-from openerp.tools.translate import _
-from openerp import tools
+from openerp.osv import osv, fields
+
 
 class product_product(osv.Model):
-    """ 
+
+    """
     To add two fields which determine if a product is show in restaurant and/or delivery
     point of sale
     """
     _inherit = 'product.product'
     _description = ('')
     _columns = {
-        'restaurant':fields.boolean('POS Restaurant', help='To be sold in restaurant'), 
-        'delivery':fields.boolean('POS Delivery', help='To be sold in delivery'), 
+        'restaurant': fields.boolean('POS Restaurant', help='To be sold in restaurant'),
+        'delivery': fields.boolean('POS Delivery', help='To be sold in delivery'),
     }
-

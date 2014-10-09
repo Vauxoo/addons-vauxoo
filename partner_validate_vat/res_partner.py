@@ -24,7 +24,7 @@
 #
 #
 
-from openerp.osv import osv, fields
+from openerp.osv import osv
 from openerp.tools.translate import _
 
 
@@ -32,7 +32,7 @@ class res_partner(osv.Model):
     _inherit = 'res.partner'
 
     def _check_vat_uniqueness(self, cr, uid, ids, context=None):
-        """ Check that the vat is unique in the level 
+        """ Check that the vat is unique in the level
             where the partner in the tree
         """
         if context is None:
@@ -42,9 +42,9 @@ class res_partner(osv.Model):
             'res.users').browse(cr, uid, uid).company_id
 
         # User must be of MX
-        if not (user_company.partner_id and\
-            user_company.partner_id.country_id\
-            and user_company.partner_id.country_id.code == 'MX'):
+        if not (user_company.partner_id and
+                user_company.partner_id.country_id
+                and user_company.partner_id.country_id.code == 'MX'):
             return True
 
         partner_brw = self.browse(cr, uid, ids)
@@ -66,5 +66,5 @@ class res_partner(osv.Model):
 
     _constraints = [
         (_check_vat_uniqueness,
-         _("Error ! Partner's VAT must be a unique value or empty"), 
+         _("Error ! Partner's VAT must be a unique value or empty"),
          []), ]

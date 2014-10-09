@@ -20,4 +20,4 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-import ir_actions_report_xml
+from . import ir_actions_report_xml

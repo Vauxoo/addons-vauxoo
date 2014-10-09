@@ -24,13 +24,6 @@
 ##########################################################################
 
 from openerp.osv import osv, fields
-import openerp.tools as tools
-from openerp.tools.translate import _
-
-from tools import config
-import openerp.netsvc as netsvc
-from openerp.addons.decimal_precision import decimal_precision as dp
-import time
 
 
 class ledger_report(osv.TransientModel):
@@ -51,12 +44,12 @@ class ledger_report(osv.TransientModel):
             context = {}
         data = self.pre_print_report(cr, uid, ids, data, context=context)
         data['form'].update(self.read(cr, uid, ids, [
-                            'landscape',  'initial_balance',
+                            'landscape', 'initial_balance',
                             'amount_currency', 'sortby', 'partner_id'])[0])
         if not data['form']['fiscalyear_id']:  # GTK client problem onchange does not consider in save record
             data['form'].update({'initial_balance': False})
         res = data['form']['partner_id'] and \
-            ({ 'type': 'ir.actions.report.xml',
+            ({'type': 'ir.actions.report.xml',
                 'report_name': 'report.ledger', 'datas': data}) or \
             ({'type': 'ir.actions.report.xml', 'report_name':
               'report.ledger_partner_field', 'datas': data})

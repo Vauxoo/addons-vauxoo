@@ -23,20 +23,32 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    'name': 'MRP Production Cancel',
-    "version" : "1.1",
-    'author': 'Vauxoo',
-    'depends': ['mrp','stock_picking_cancel'],
-    'description': """
-        Add Button Cancel in Order Production when Producton is done
-    """,
-    'update_xml':[
-        'security/production_cancel_security.xml',
-        'mrp_view.xml',
-        'mrp_workflow.xml',
-    ],
-    'active': False,
-    'installable': True
-}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+{
+    "name": "MRP Production Cancel", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "", 
+    "description": """
+        Add Button Cancel in Order Production when Producton is done
+    """, 
+    "website": "", 
+    "license": "", 
+    "depends": [
+        "mrp", 
+        "stock_picking_cancel"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/production_cancel_security.xml", 
+        "mrp_view.xml", 
+        "mrp_workflow.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
+}
