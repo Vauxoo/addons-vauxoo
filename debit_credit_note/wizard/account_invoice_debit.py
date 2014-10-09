@@ -124,11 +124,8 @@ class account_invoice_debit(osv.TransientModel):
 
         """
         inv_obj = self.pool.get('account.invoice')
-        reconcile_obj = self.pool.get('account.move.reconcile')
-        account_m_line_obj = self.pool.get('account.move.line')
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
-        wf_service = netsvc.LocalService('workflow')
         inv_tax_obj = self.pool.get('account.invoice.tax')
         inv_line_obj = self.pool.get('account.invoice.line')
         res_users_obj = self.pool.get('res.users')

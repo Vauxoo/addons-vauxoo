@@ -892,7 +892,6 @@ class stock_card(osv.Model):
                                 valores.update({'aml_inv_id': aml.id})
 
                         sc_line_obj.write(cr, uid, scl.id, valores)
-                        kkk = sc_line_obj.read(cr, uid, scl.id)
 
                 # NO HAY MAS COMPRAS O NC VENTAS Y QUEDAN MOVIMIENTOS
                 if no_cump and not sml_x_pd_id:

@@ -40,7 +40,6 @@ class account_move_line(osv.Model):
         res_reference = {}
         moves = []
         moves_line = []
-        ok = False
 
         for move in account_move.browse(cr, uid, ids, context=context):
             moves.append(move.id)

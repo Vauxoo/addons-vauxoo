@@ -57,9 +57,7 @@ class sale_commission_line(osv.Model):
 
     def get_gain(self, cr, uid, ids, name, args, context=None):
         res = {}
-        product_price = 0
         product_pu = 0
-        gain = 0
         for sol_brw in self.browse(cr, uid, ids):
             if sol_brw.product_id:
                 product_cost = sol_brw.product_id.standard_price

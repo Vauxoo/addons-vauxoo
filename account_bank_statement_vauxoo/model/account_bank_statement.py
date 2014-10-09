@@ -499,7 +499,6 @@ class bank_statement_imported_lines(osv.Model):
             context = {}
         res = []
         aml = False
-        amount = {}
         total = 0
         invoice_obj = self.pool.get('account.invoice')
         account_move_line_obj = self.pool.get('account.move.line')

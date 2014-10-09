@@ -96,8 +96,6 @@ class stock_return_picking(osv.TransientModel):
         pick_obj = self.pool.get('stock.picking')
         uom_obj = self.pool.get('product.uom')
         data_obj = self.pool.get('stock.return.picking.memory')
-        act_obj = self.pool.get('ir.actions.act_window')
-        model_obj = self.pool.get('ir.model.data')
         wf_service = netsvc.LocalService("workflow")
         pick = pick_obj.browse(cr, uid, record_id, context=context)
         data = self.read(cr, uid, ids[0], context=context)

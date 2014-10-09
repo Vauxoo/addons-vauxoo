@@ -47,7 +47,6 @@ class mrp_production(osv.Model):
         if context is None:
             context = {}
 
-        move_obj = self.pool.get('stock.move')
         result = {}
         for production in self.browse(cr, uid, ids, context=context):
             account_move_line_id = account_move_line.search(

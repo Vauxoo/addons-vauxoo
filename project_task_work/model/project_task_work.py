@@ -133,7 +133,6 @@ class project_task_work(osv.Model):
     def _get_work_in_issue(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        res = []
         pi_obj = self.pool.get('project.issue')
         pt_ids = [pi_brw.task_id.id for pi_brw in pi_obj.browse(
             cr, uid, ids, context=context) if pi_brw.task_id]

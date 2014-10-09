@@ -110,4 +110,3 @@ class account_journal_bs_config(osv.Model):
         ["cadenaA","cadenaB","CadenaC"]
         o es inválida''', ['expresion']),
     ]
-account_journal_bs_config

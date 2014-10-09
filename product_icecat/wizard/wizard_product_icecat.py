@@ -115,7 +115,6 @@ class product_icecat_wizard(osv.TransientModel):
             if prod.xpathEval('@ErrorMessage'):
                 if prod.xpathEval('@ErrorMessage')[0].content:
                     return prod.xpathEval('@ErrorMessage')[0].content
-                    exit
 
         # product info
         short_summary = doc.xpathEval(
@@ -201,7 +200,6 @@ class product_icecat_wizard(osv.TransientModel):
                                          'icecat_category': catID,
                                          'product_id': product.id,
                                          'sequence': sequence})
-                sequence+1
 
             if catID in prodFeature and len(prodFeature[catID]):
 
@@ -214,7 +212,6 @@ class product_icecat_wizard(osv.TransientModel):
                              'icecat_category': catID,
                              'product_id': product.id,
                              'sequence': sequence})
-                        sequence+1
 
                 for mapline_field in mapline_fields:
                     if mapline_field['icecat'] == catID:
@@ -407,7 +404,7 @@ class product_icecat_wizard(osv.TransientModel):
                 # All calls to urllib2.urlopen will now use our handler
 
                 try:
-                    pagehandle = urllib2.urlopen(url)
+                    urllib2.urlopen(url)
                     req = urllib2.Request(url)
                     handle = urllib2.urlopen(req)
                     content = handle.read()

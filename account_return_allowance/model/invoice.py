@@ -86,7 +86,6 @@ class account_invoice(osv.Model):
         behavior.
         '''
         acc_id = self.get_account_aml(cr, uid, l)
-        type_inv = l.invoice_id.type
         amount_line = l.quantity*l.price_unit - l.price_subtotal
         if acc_id and amount_line > 1e-8:
             line = {'name': _('Discount %s' % l.name[:64]),

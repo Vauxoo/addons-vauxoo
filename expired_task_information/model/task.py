@@ -111,7 +111,7 @@ class task_expired_config(osv.Model):
                                     #~ dias</p>' % config_brw.before_expiry)
                     #~ msg_expiredp = 'ACTIVIDAD VENCIDA'
                 if msg_expired:
-                    html = """<html>
+                    html = r"""<html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>*|MC:SUBJECT|*</title>

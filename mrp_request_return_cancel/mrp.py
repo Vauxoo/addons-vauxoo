@@ -38,7 +38,6 @@ class mrp_production(osv.Model):
 
         wf_service = netsvc.LocalService("workflow")
 
-        move_obj = self.pool.get('stock.move')
         for production in self.browse(cr, uid, ids, context=context):
             for line in production.picking_ids:
                 wf_service.trg_validate(

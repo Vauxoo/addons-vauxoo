@@ -89,10 +89,7 @@ class account_voucher(osv.Model):
         return tax_amount*tax_base
     
     def voucher_move_line_tax_create(self, cr, uid, voucher_id, move_id, context=None):
-        move_obj = self.pool.get('account.move')
         move_line_obj = self.pool.get('account.move.line')
-        invoice_obj = self.pool.get('account.invoice')
-        currency_obj = self.pool.get('res.currency')
         company_currency = self._get_company_currency(cr, uid, voucher_id, context)
         current_currency = self._get_current_currency(cr, uid, voucher_id, context)
         move_ids=[]
@@ -107,7 +104,6 @@ class account_voucher(osv.Model):
                         amount_to_paid = line.amount
                     factor = ((amount_to_paid * 100) / line.amount_original) / 100
                 for line_tax in line.tax_line_ids:
-                    credit=line_tax.amount_tax
                     amount_tax_unround=line_tax.amount_tax_unround
                     
                     if voucher.type in ('sale', 'receipt'):
@@ -140,7 +136,6 @@ class account_voucher(osv.Model):
                             amount_tax_unround, reference_currency_id,
                             tax_id, line_tax, acc_a, amount_base_tax,#informacion de lineas de impuestos
                             factor=0, context=None):
-        acc_tax_obj = self.pool.get('account.tax')
         if type == 'payment' or reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
         if type == 'payment' and reference_amount < 0:
@@ -239,10 +234,6 @@ class account_voucher(osv.Model):
         return [amount_base, tax_secondary]
     
     def voucher_move_line_create(self, cr, uid, voucher_id, line_total, move_id, company_currency, current_currency, context=None):
-        move_obj = self.pool.get('account.move')
-        move_line_obj = self.pool.get('account.move.line')
-        invoice_obj = self.pool.get('account.invoice')
-        currency_obj = self.pool.get('res.currency')
         res=super(account_voucher, self).voucher_move_line_create(cr, uid, voucher_id, line_total, move_id, company_currency, current_currency, context=None)
         new=self.voucher_move_line_tax_create(cr,uid, voucher_id, move_id, context=context)
         #~ res[1] and res[1][0]+new
@@ -252,7 +243,6 @@ class account_voucher(osv.Model):
         date=False, context=None):
         invoice_obj = self.pool.get('account.invoice')
         currency_obj = self.pool.get('res.currency')
-        tax_line_obj = self.pool.get('account.voucher.line.tax')
         move_obj = self.pool.get('account.move.line')
         company_user = self.pool.get('res.users').browse(cr, uid, uid,\
             context=context).company_id.id
@@ -265,7 +255,6 @@ class account_voucher(osv.Model):
                 context=context).currency_id.id
         company_currency = company_obj.browse(cr, uid, company_user,\
             context=context).currency_id.id
-        tax_lines = {}
         lines_ids = []
         if lines and lines.get('value', False):
             lines_ids.extend(lines['value'].get('line_cr_ids', []))
@@ -344,7 +333,6 @@ class account_voucher(osv.Model):
                                         else:
                                             diff_account_id=tax.tax_id.\
                                             account_expense_voucher_id.id
-                                debit_amount = 0.0
                                 move_line_id = False
                                 line_ids = move_obj.browse(cr, uid, line[\
                                     'move_line_id'], context=context).move_id.\
@@ -388,7 +376,6 @@ class account_voucher_line(osv.Model):
         move_obj = self.pool.get('account.move.line')
         invoice_obj = self.pool.get('account.invoice')
         company_obj = self.pool.get('res.company')
-        tax_line_obj = self.pool.get('account.voucher.line.tax')
         company_user = self.pool.get('res.users').browse(cr, uid, uid,\
             context=context).company_id.id
         company_currency = company_obj.browse(cr, uid, company_user,\
@@ -472,7 +459,6 @@ class account_voucher_line(osv.Model):
                                     diff_account_id = acc_income_voucher_id
                                 else:
                                     diff_account_id = acc_expense_voucher_id
-                        debit_amount = 0.0
                         move_line_id2 = False
                         line_ids = move_obj.browse(cr, uid, move_line_id,\
                             context=context).move_id.line_id

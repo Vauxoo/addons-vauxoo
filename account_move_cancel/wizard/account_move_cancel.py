@@ -50,9 +50,7 @@ class account_move_cancel(osv.TransientModel):
         if context is None:
             context = {}
         invo_obj = self.pool.get('account.invoice')
-        iva_obj = self.pool.get('account.wh.iva')
 
-        islr_obj = self.pool.get('islr.wh.doc')
         journal_obj = self.pool.get('account.journal')
         invo_ids = []
         iva_ids = []

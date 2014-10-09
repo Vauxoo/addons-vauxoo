@@ -83,7 +83,6 @@ class trial_c(report_sxw.rml_parse):
         return vat[2:].replace(' ', '')
 
     def _get_data(self, form):
-        pool = pooler.get_pool(self.cr.dbname)
         line_ids = []
         cond = ''
         valor = ''
@@ -91,26 +90,22 @@ class trial_c(report_sxw.rml_parse):
 
         if form['u_check']:
             vis = ('user', 'user_id', 'user_id', 'user_id')
-            xml_id = 'action_profit_user_product_tree'
             if form['user_res_id']:
                 valor = form['user_res_id']
 
         if form['p_check']:
             vis = ('partner', 'partner_id', 'partner_id', 'partner_id')
-            xml_id = 'action_profit_partner_product_tree'
             if form['partner_res_id']:
                 valor = form['partner_res_id']
 
         if form['c_check']:
             vis = ('category', 'cat_id', 'cat_id', 'cat_id')
-            xml_id = 'action_profit_category_product_tree'
             if form['cat_res_id']:
                 valor = form['cat_res_id']
 
         if form['u_check'] and form['p_check']:
             vis = ('uxp', '((user_id*1000000)+partner_id)',
                    'user_id,partner_id', 'user_id,partner_id')
-            xml_id = 'action_profit_uxp_product_tree'
             valor = ''
             if form['user_res_id']:
                 cond = ' and user_id=%s' % form['user_res_id']
@@ -123,7 +118,6 @@ class trial_c(report_sxw.rml_parse):
         if form['u_check'] and form['c_check']:
             vis = ('uxc', '((user_id*1000000)+cat_id)',
                    'user_id,cat_id', 'user_id,cat_id')
-            xml_id = 'action_profit_uxc_product_tree'
             valor = ''
             if form['user_res_id']:
                 cond = ' and user_id=%s' % form['user_res_id']
@@ -136,7 +130,6 @@ class trial_c(report_sxw.rml_parse):
         if form['p_check'] and form['c_check']:
             vis = ('pxc', '((cat_id*1000000)+partner_id)',
                    'partner_id,cat_id', 'partner_id,cat_id')
-            xml_id = 'action_profit_pxc_product_tree'
             valor = ''
             if form['partner_res_id']:
                 cond = ' and partner_id=%s' % form['partner_res_id']
@@ -150,7 +143,6 @@ class trial_c(report_sxw.rml_parse):
             vis = (
                 'upc', '((user_id*100000000000)+(cat_id*1000000)+partner_id)',
                 'user_id,partner_id,cat_id', 'user_id,partner_id,cat_id')
-            xml_id = 'action_profit_upc_product_tree'
             valor = ''
             if form['partner_res_id']:
                 cond = ' and partner_id=%s' % form['partner_res_id']
