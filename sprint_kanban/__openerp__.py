@@ -1,34 +1,28 @@
 #!/usr/bin/python
 # -*- enconding: utf-8 -*-
-
-
 {
-	"name" : "Sprint Kanban",#Module's name
-	"version" : "1.1",	#Version's number
+	"name" : "Sprint Kanban",
+	"version" : "1.1",
 	"depends" :  [  'project',
 				'web_kanban',
 				'base_setup',
-				#~ 'base_status', #deprecated in odoo http://bazaar.launchpad.net/~openerp-dev/openobject-addons/trunk-remove-base_status-tde/revision/8858
 				'product',
 				'analytic',
 				'board',
 				'mail',
-				'resource',],	#Dependent module
+				'resource',],
 	"author" : "Vauxoo",
 	"description" : """
 	This is a module of the sprint kanban
-	""", #Description of the module
-	"website" : "http://vauxoo.com",#Website
+	""",
+	"website" : "http://www.vauxoo.com",
 	"category" : "Project",
-	"init_xml" : [],
-	"demo_xml" : [],
 	"test" : [],
-	"update_xml" : [
+	"data" : [
 					'security/security_sprint_kanban.xml','security/ir.model.access.csv',
 					"view/sprint_kanban_view.xml",
 					"view/project_view.xml",
 	                 ],
 	"installable" : True,
 	"active" : False
-
 }
