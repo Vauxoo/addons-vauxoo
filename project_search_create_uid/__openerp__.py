@@ -29,7 +29,7 @@
     "version": "1.1",
     "author" : "Vauxoo",
     "website" : "http://www.vauxoo.com/",
-    "description": """ 
+    "description": """
 Search by write_date, write_uid, create_date, create_uid in model Project_task
 ==============================================================================
 To work properly, you need apply the next patch:

@@ -61,7 +61,7 @@ lp:~vauxoo/web-addons/7.0-web_hideleftmenu
     'depends': ['base',
                 'base_setup',
                 'web_many2many_attachments',
-                'mail'], 
+                'mail'],
     "data": [
         "security/security_groups.xml",
         "view/mail_message_view.xml",

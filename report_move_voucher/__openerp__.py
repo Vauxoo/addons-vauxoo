@@ -8,7 +8,7 @@
 #    Coded by: María Gabriela Quilarque  <gabriela@vauxoo.com>
 #              Luis Escobar              <luis@vauxoo.com>
 #    Planified by: Nhomar Hernandez
-#    Finance by: Vauxoo, C.A. http://vauxoo.com 
+#    Finance by: Vauxoo, C.A. http://vauxoo.com
 #    Audited by: Humberto Arocha humberto@vauxoo.com
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
@@ -36,7 +36,7 @@
                     ''',
 	"depends" : ["base",
                  "account",
- 
+
 	             ],
 	"init_xml" : [],
 	"update_xml" : [

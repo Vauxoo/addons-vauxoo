@@ -56,7 +56,9 @@ import base64
 
 
 class DomApiGeneral:
+
     """General DOM API utilities."""
+
     def __init__(self, content_string="", file=""):
         self.content_string = content_string
         self.re_digits = re.compile(r"(.*?\d)(pt|cm|mm|inch|in)")
@@ -71,7 +73,7 @@ class DomApiGeneral:
 
     def stringPercentToFloat(self, string):
         temp = string.replace("""%""", "")
-        return float(temp)/100
+        return float(temp) / 100
 
     def findChildrenByName(self, parent, name, attr_dict={}):
         """Helper functions. Does not work recursively.
@@ -136,7 +138,9 @@ class DomApiGeneral:
 
 
 class DomApi(DomApiGeneral):
+
     """This class provides a DOM-API for XML-Files from an SXW-Archive."""
+
     def __init__(self, xml_content, xml_styles):
         DomApiGeneral.__init__(self)
         self.content_dom = xml.dom.minidom.parseString(xml_content)
@@ -253,7 +257,7 @@ class DomApi(DomApiGeneral):
             if c.hasAttribute("table:number-columns-repeated"):
                 number = int(c.getAttribute("table:number-columns-repeated"))
                 c.removeAttribute("table:number-columns-repeated")
-                for i in range(number-1):
+                for i in range(number - 1):
                     (c.parentNode).insertBefore(c.cloneNode(deep=1), c)
 
     def buildStyleDict(self):
@@ -285,7 +289,9 @@ class DomApi(DomApiGeneral):
 
 
 class PyOpenOffice(object):
+
     """This is the main class which provides all functionality."""
+
     def __init__(self, path='.', save_pict=False):
         self.path = path
         self.save_pict = save_pict

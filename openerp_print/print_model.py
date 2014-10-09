@@ -43,7 +43,6 @@ class print_model(osv.Model):
         'name_uniq', 'unique(model)', 'No se puede repetir un modelo')]
 
 
-
 class print_lpr_option(osv.Model):
     _name = 'print.lpr.option'
     _description = ''' http://www.cups.org/documentation.php/options.html '''
@@ -69,7 +68,6 @@ class print_lpr_option(osv.Model):
     }
 
 
-
 class print_gs_option(osv.Model):
     _name = 'print.gs.option'
     _description = ''' ftp://mirror.switch.ch/mirror/ghost/gs5man_e.pdf '''
@@ -82,7 +80,6 @@ class print_gs_option(osv.Model):
             ('eps9high', ' Epson-compatible 9-pin, triple resolutio'),
         ], 'Device Driver', help='Sets the device driver'),
     }
-
 
 
 class print_model_reports(osv.Model):
@@ -132,7 +129,6 @@ class print_model_reports(osv.Model):
         return True
 
 
-
 class ir_print(osv.Model):
     _name = 'ir.print'
     _description = ''' '''
@@ -141,5 +137,5 @@ class ir_print(osv.Model):
         'report_id': fields.many2one('ir.actions.report.xml', 'Report', readonly=True),
         'model_id': fields.integer('Document', readonly=True),
         'create_date': fields.datetime('Date Created', readonly=True),
-        'create_uid':  fields.many2one('res.users', 'Creator', readonly=True),
+        'create_uid': fields.many2one('res.users', 'Creator', readonly=True),
     }

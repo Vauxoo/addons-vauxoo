@@ -36,39 +36,33 @@ class document_page(osv.Model):
         context = context or {}
 
         return field == 'new' and ids.get('state') in context or \
-               field == 'changed' and ids.get('state') in context.get('states')
+            field == 'changed' and ids.get('state') in context.get('states')
 
     def _check_new(self, cr, uid, ids, context=None):
 
         context = context or {}
-        context.update({'draft':True})
+        context.update({'draft': True})
         return self._check_all(cr, uid, ids, 'new', context)
-
 
     def _check_changed(self, cr, uid, ids, context=None):
 
         context = context or {}
-        context.update({'states':['review','menucreated','published']})
+        context.update({'states': ['review', 'menucreated', 'published']})
         return self._check_all(cr, uid, ids, 'changed', context)
 
-
- 
-
-    _inherit = ['document.page','mail.thread', 'ir.needaction_mixin']
-
-
+    _inherit = ['document.page', 'mail.thread', 'ir.needaction_mixin']
 
     _track = {
-        'state': {                                                              
-            'document_page_comments.document_page_changed':_check_changed,
-            'document_page_comments.document_page_new':_check_new,
-           }, 
-            }
+        'state': {
+            'document_page_comments.document_page_changed': _check_changed,
+            'document_page_comments.document_page_new': _check_new,
+        },
+    }
 
 #    def write(self, cr, uid, ids, vals, context=None):
 #        document_browse = self.browse(cr, uid, ids and type(ids) is list and \
 #                                      ids[0] or ids, context=context)
-#        
+#
 #        result = super(document_page, self).write(cr, uid, ids, vals, context)
 #        if context.get('stop'):
 #            return result
@@ -97,7 +91,6 @@ class document_page(osv.Model):
 #        mail_dict = mail_obj.default_get(cr, uid,fields.keys() , context)
 #        mail_ids = mail_obj.create(cr, uid, mail_dict, context=context)
 #        mail_obj.send_mail(cr, uid, [mail_ids], context=context)
-#        
-#        
+#
+#
 #        return result
-

@@ -29,31 +29,31 @@ class purchase_requisition_line(osv.Model):
     _columns = {
         'account_analytic_id': fields.many2one(
             'account.analytic.account', 'Analytic Account',
-                help='This field is used to assign the selected'\
-                ' analytic account to the line of the purchase order'),
+            help='This field is used to assign the selected'
+            ' analytic account to the line of the purchase order'),
     }
-    
+
 purchase_requisition_line()
+
 
 class purchase_requisition(osv.Model):
     _inherit = "purchase.requisition"
 
-
     def make_purchase_order(self, cr, uid, ids, partner_id,
-                                    context=None):
+                            context=None):
         if context is None:
             context = {}
         res = super(purchase_requisition, self).make_purchase_order(cr, uid, ids, partner_id, context=context)
-        
+
         pol_obj = self.pool.get('purchase.order.line')
-        po_obj = self.pool.get('purchase.order') 
+        po_obj = self.pool.get('purchase.order')
 
         for requisition in self.browse(cr, uid, ids, context=context):
-            po_req = po_obj.search(cr, uid, [('requisition_id','=',requisition.id)], context=context)
+            po_req = po_obj.search(cr, uid, [('requisition_id', '=', requisition.id)], context=context)
             for po_id in po_req:
-                pol_ids = pol_obj.search(cr, uid, [('order_id','=',po_id)])
+                pol_ids = pol_obj.search(cr, uid, [('order_id', '=', po_id)])
                 for pol_id in pol_ids:
-                    pol_brw = pol_obj.browse(cr, uid, pol_id) 
+                    pol_brw = pol_obj.browse(cr, uid, pol_id)
                     pol_obj.write(cr, uid, [pol_brw.id], {'account_analytic_id':
                         pol_brw.purchase_requisition_line_id.account_analytic_id.id}, context=context)
         return res

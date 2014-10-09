@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -42,10 +42,10 @@
     "demo_xml" : [
     ]                                                               ,
     "update_xml" : [
-                'stock_report.xml'                           ,  
-                'wizard/stock_count_view.xml'                           ,  
+                'stock_report.xml'                           ,
+                'wizard/stock_count_view.xml'                           ,
                 'wizard/stock_qty_view.xml'                       ,
-                
+
     ]                                                               ,
     "active": False                                                 ,
     "installable": True                                             ,

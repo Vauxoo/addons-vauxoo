@@ -35,10 +35,10 @@
     -- If the element has bom children elements the process of calc is the same of parent.
 
     Validate that the Unit to produce is in the same category of Unit for the product Id to avoid inconsistencies around unit conversion.
-    
+
     Add field of type assets in product.template establishing if product is assets
     Add menu Product Assets, Product for Sale
-    
+
     Add field of type assets in mrp.bom establishing if bom is assets
     Add menu Bom Assets, Bom for Sales
                     """,

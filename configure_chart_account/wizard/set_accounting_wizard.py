@@ -26,33 +26,34 @@
 
 from openerp.osv import fields, osv
 
+
 class set_accounting_data_wizard(osv.osv_memory):
     _name = 'set.accounting.data.wizard'
-    
-    _columns={
-        'account_ids' : fields.many2many('account.account',
+
+    _columns = {
+        'account_ids': fields.many2many('account.account',
             'account_account_partner_rel', 'parent_id', 'account_id',
             'Account'),
         'parent_id': fields.many2one('account.account', 'Parent',
-            help='This account will be assigned as parent for '\
+            help='This account will be assigned as parent for '
             'the accounts selects in the previous field.',
-            ondelete='cascade', domain=[('type','=','view')]),
-        'account_analytic_ids' : fields.many2many('account.analytic.account',
+            ondelete='cascade', domain=[('type', '=', 'view')]),
+        'account_analytic_ids': fields.many2many('account.analytic.account',
             'account__analytic_account_partner_rel', 'parent_id', 'account_id',
             'Account'),
         'parent_analytic_id': fields.many2one('account.analytic.account',
-            'Parent', help='This account will be assigned as parent for '\
+            'Parent', help='This account will be assigned as parent for '
             'the analytic accounts selects in the previous field.',
-            ondelete='cascade', domain=[('type','=','view')]),
-        'type_accounts' : fields.selection([('accounts', 'Accounts'),
-            ('analytic_accounts', 'Analytic Accounts')],'Type Accounts',
+            ondelete='cascade', domain=[('type', '=', 'view')]),
+        'type_accounts': fields.selection([('accounts', 'Accounts'),
+            ('analytic_accounts', 'Analytic Accounts')], 'Type Accounts',
             required=True),
     }
 
     _defaults = {
-            'type_accounts' : 'accounts'
-        }
-        
+        'type_accounts': 'accounts'
+    }
+
     def set_accounting_company(self, cr, uid, ids, context=None):
         '''
         This wizard assigns a partner account and change your account
@@ -70,11 +71,10 @@ class set_accounting_data_wizard(osv.osv_memory):
                 if acc.id != data.parent_id.id:
                     self.pool.get('account.account').write(cr, uid, [acc.id],
                         {'parent_id': data.parent_id.id})
-                        
+
         if data.type_accounts == 'analytic_accounts':
-             for acc in data.account_analytic_ids:
+            for acc in data.account_analytic_ids:
                 if acc != data.parent_analytic_id.id:
                     self.pool.get('account.analytic.account').write(cr, uid,
                         [acc.id], {'parent_id': data.parent_analytic_id.id})
         return True
-        

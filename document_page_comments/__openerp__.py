@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    d$
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A. (Yanina Aular & Miguel Delgado)          
+#    Coded by: Vauxoo C.A. (Yanina Aular & Miguel Delgado)
 #    Planified by: Rafael Silva
 #    Audited by: Vauxoo C.A.
 ##############################################################################
@@ -38,8 +38,8 @@
 Documents Page Comments
 =======================
 
-This module add messeage history and followers in document page model 
-to we can follow each document and receive a mail when those are modified if 
+This module add messeage history and followers in document page model
+to we can follow each document and receive a mail when those are modified if
 you are follower
 
                     """,

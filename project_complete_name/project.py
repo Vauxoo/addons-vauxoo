@@ -72,7 +72,7 @@ class project_project(osv.Model):
     }
 
     def name_search(self, cr, user, name='', args=None, operator='ilike',
-                                                    context=None, limit=100):
+                    context=None, limit=100):
         if not args:
             args = []
         if name:

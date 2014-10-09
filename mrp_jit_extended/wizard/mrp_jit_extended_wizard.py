@@ -49,7 +49,7 @@ class procurement_order_merge_jit_extended(osv.TransientModel):
                 cr, uid, production_id, context=context)
             for line in production_data.procurement_ids:
                 if (line.state == 'draft') and\
-                (line.product_id.supply_method == 'produce'):
+                        (line.product_id.supply_method == 'produce'):
                     procurement_ids.append(line.id)
 
         res = procurement_order_pool.do_merge(
@@ -60,8 +60,8 @@ class procurement_order_merge_jit_extended(osv.TransientModel):
             cr, uid, procurement_ids, context=context)
         for line in draft_procurements:
             if (line.state == 'draft') and\
-            (line.product_id.supply_method == 'produce') and\
-            (line.product_id.type != 'service'):
+                    (line.product_id.supply_method == 'produce') and\
+                    (line.product_id.type != 'service'):
                 res.append(line.id)
         # forwards procurements that were merged
         wf_service = netsvc.LocalService("workflow")

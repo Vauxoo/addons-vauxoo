@@ -29,7 +29,7 @@
     "author" : "Vauxoo",
     "category" : "Generic",
     "description" : """
-    
+
     This module adda field to save the amount residual in an payslip
 
     """,

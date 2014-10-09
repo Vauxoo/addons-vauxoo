@@ -24,6 +24,7 @@
 
 from openerp.osv import osv, fields
 
+
 class account_analytic_account(osv.Model):
     _inherit = 'account.analytic.account'
     _columns = {

@@ -24,7 +24,9 @@ This file loads the necessary information for the custom task view.
 from openerp.osv import fields, osv
 from openerp.tools.sql import drop_view_if_exists
 
+
 class custom_project_task(osv.Model):
+
     '''
     Class that contains the methods needed to return the data to the view.
     '''

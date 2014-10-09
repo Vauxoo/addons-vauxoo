@@ -6,7 +6,7 @@
 #    All Rights Reserved
 ############# Credits #########################################################
 #    Coded by: Yanina Aular <yani@vauxoo.com>
-#              Eduardo Ochoa <eduardo.ochoa@clusterbrands.com.ve> 
+#              Eduardo Ochoa <eduardo.ochoa@clusterbrands.com.ve>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -41,14 +41,14 @@ delivery.
     ''',
     'depends': ['base', 'point_of_sale', 'sale', 'pos_delivery_restaurant'],
     'data': [
-            'view/product_view.xml', 
+            'view/product_view.xml',
         ],
     'demo': [],
     'test': [],
     'js': [
         'static/src/js/backbone-super-min.js',
         'static/src/js/models.js',
-        'static/src/js/main.js', 
+        'static/src/js/main.js',
         ],
     'active': False,
     'installable': True,

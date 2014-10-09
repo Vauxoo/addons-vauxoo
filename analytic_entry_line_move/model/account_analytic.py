@@ -26,11 +26,12 @@
 
 from openerp.osv import fields, osv
 
+
 class account_analytic_line(osv.Model):
 
     _inherit = 'account.analytic.line'
 
     _columns = {
-        'am_id':fields.related('move_id', 'move_id', string='Journal Entry',
+        'am_id': fields.related('move_id', 'move_id', string='Journal Entry',
             type='many2one', relation='account.move', store=True),
     }

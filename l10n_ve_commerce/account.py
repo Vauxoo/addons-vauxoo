@@ -23,6 +23,7 @@ from openerp.osv import osv
 
 
 class wizard_multi_charts_accounts(osv.TransientModel):
+
     """
     wizard_multi_charts_accounts(osv.osv_memory):
     """
@@ -47,9 +48,9 @@ class wizard_multi_charts_accounts(osv.TransientModel):
             chart_template_id = ids[0]
             purchase_tax_ids = self.pool.get('account.tax.template').search(cr,
                         uid, [
-                        ("chart_template_id", "=", chart_template_id),
-                        ('type_tax_use', 'in', ('purchase', 'all'))],
-                        order="sequence")
+                            ("chart_template_id", "=", chart_template_id),
+                            ('type_tax_use', 'in', ('purchase', 'all'))],
+                order="sequence")
             return purchase_tax_ids and purchase_tax_ids[0] or False
         return False
 
@@ -60,19 +61,19 @@ class wizard_multi_charts_accounts(osv.TransientModel):
             chart_template_id = ids[0]
             sale_tax_ids = self.pool.get('account.tax.template').search(cr,
                         uid, [("chart_template_id", "=", chart_template_id),
-                                ('type_tax_use', 'in', ('sale', 'all'))],
-                                order="sequence")
+                              ('type_tax_use', 'in', ('sale', 'all'))],
+                order="sequence")
             return sale_tax_ids and sale_tax_ids[0] or False
         return False
 
     _defaults = {
-        'company_id': lambda self, cr, uid, c:\
-            self.pool.get('res.users').browse(cr, uid,
-                                                [uid], c)[0].company_id.id,
+        'company_id': lambda self, cr, uid, c:
+        self.pool.get('res.users').browse(cr, uid,
+                                          [uid], c)[0].company_id.id,
         'chart_template_id': _get_chart,
         'bank_accounts_id': _get_default_accounts,
         'code_digits': 10,
         'sale_tax': _get_sale_tax,
         'purchase_tax': _get_purchase_tax,
-#        'seq_journal': True # no existe campo
+        # 'seq_journal': True # no existe campo
     }

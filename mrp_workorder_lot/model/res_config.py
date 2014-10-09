@@ -53,13 +53,13 @@ class mrp_config_settings(osv.osv_memory):
             _get_batch_modes,
             'Production Batch Process Type',
             help=('Two options when management the batch work orders:\n\n'
-                   ' - Maxime Workcenter Productivity / Minimizing Production'
-                   ' Cost: For every workcenter will'
-                   ' create a batch of works orders that always explotes the'
-                   ' product capacity of the workcenter.\n'
-                   ' - Avoid Production Bottleneck: Will create the batch'
-                   ' work orders taking into a count the minium workcenter'
-                   ' capacity.')),
+                  ' - Maxime Workcenter Productivity / Minimizing Production'
+                  ' Cost: For every workcenter will'
+                  ' create a batch of works orders that always explotes the'
+                  ' product capacity of the workcenter.\n'
+                  ' - Avoid Production Bottleneck: Will create the batch'
+                  ' work orders taking into a count the minium workcenter'
+                  ' capacity.')),
     }
 
     _defaults = {

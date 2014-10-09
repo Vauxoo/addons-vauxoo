@@ -52,7 +52,7 @@ class project_project(osv.Model):
             relation='project.project',
             string='Parent Project',
             store={
-               'account.analytic.account':
+                'account.analytic.account':
                 (_get_projects, ['parent_id', 'name'], 10)}, select=2),
         'child_ids2': fields.one2many('project.project',
             'parent_id2', 'Child Accounts'),

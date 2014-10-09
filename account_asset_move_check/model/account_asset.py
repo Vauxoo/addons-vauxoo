@@ -29,18 +29,18 @@ from openerp.osv import osv, fields
 
 class account_asset_depreciation_line(osv.Model):
     _inherit = 'account.asset.depreciation.line'
-    
+
     def _get_move_check(self, cr, uid, ids, name, args, context=None):
         res = super(account_asset_depreciation_line, self)._get_move_check(cr, uid, ids, name, args, context=context)
         for line in self.browse(cr, uid, ids, context=context):
             res[line.id] = bool(line.move_id or line.check_posted)
         return res
-    
-    _columns={
+
+    _columns = {
         'check_posted': fields.boolean('Posted'),
         'move_check': fields.function(_get_move_check, method=True, type='boolean', string='Posted', store=True)
     }
-    
+
     _defaults = {
         'check_posted': False,
     }

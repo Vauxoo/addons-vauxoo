@@ -29,7 +29,7 @@ from openerp.osv import osv
 class account_move_line(osv.Model):
     _inherit = "account.move.line"
 
-    def _remove_move_reconcile(self, cr, uid, move_ids=[], opening_reconciliation=False,context=None):
+    def _remove_move_reconcile(self, cr, uid, move_ids=[], opening_reconciliation=False, context=None):
         # Function remove move rencocile ids related with moves
         if context is None:
             context = {}

@@ -252,8 +252,8 @@ class account_invoice_refund(osv.osv_memory):
                         for field in (
                             'partner_id', 'account_id', 'currency_id',
                                 'payment_term', 'journal_id'):
-                                invoice[field] = invoice[
-                                    field] and invoice[field][0]
+                            invoice[field] = invoice[
+                                field] and invoice[field][0]
                         inv_id = inv_obj.create(cr, uid, invoice, {})
                         if inv.payment_term.id:
                             data = inv_obj.onchange_payment_term_date_invoice(

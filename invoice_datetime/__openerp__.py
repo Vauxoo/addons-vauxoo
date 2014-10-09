@@ -37,7 +37,7 @@
     "license" : "AGPL-3",
     "depends" : [
         "account",
-        
+
     ],
     "demo" : [],
     "data" : [

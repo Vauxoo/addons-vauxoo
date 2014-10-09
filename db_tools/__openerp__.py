@@ -35,7 +35,7 @@
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ['base', 
+    "depends" : ['base',
         ],
     "init_xml" : [],
     "demo_xml" : [],

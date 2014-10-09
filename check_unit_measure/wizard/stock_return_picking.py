@@ -169,7 +169,7 @@ class stock_return_picking(osv.TransientModel):
             'internal': 'stock.picking',
         }
         return {
-            'domain': "[('id', 'in', ["+str(new_picking)+"])]",
+            'domain': "[('id', 'in', [" + str(new_picking) + "])]",
             'name': _('Returned Picking'),
             'view_type': 'form',
             'view_mode': 'tree,form',

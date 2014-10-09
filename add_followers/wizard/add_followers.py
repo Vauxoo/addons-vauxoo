@@ -25,6 +25,7 @@ from openerp.tools.translate import _
 
 
 class invite_wizard(osv.osv_memory):
+
     """ Wizard to invite partners and make them followers. """
     _inherit = 'mail.wizard.invite'
     _description = 'Invite wizard'
@@ -124,8 +125,7 @@ class invite_wizard(osv.osv_memory):
                                 tools.append_content_to_html(wizard.message,
                                                              signature,
                                                              plaintext=True,
-                                                             container_tag=
-                                                             'div')
+                                                             container_tag='div')
                         # FIXME 8.0: use notification_email_send, send a wall
                         # message and let mail handle email notification +
                         # message box
@@ -138,7 +138,7 @@ class invite_wizard(osv.osv_memory):
                                 'res_id': res_id,
                                 'subject': 'Invitation to follow %s' %
                                                        document.name_get()[
-                                                       0][1],
+                                                           0][1],
                                 'body_html': '%s' % wizard.message,
                                 'auto_delete': True,
                                                        }, context=context)
@@ -165,15 +165,15 @@ class invite_wizard(osv.osv_memory):
                 document = model_obj.browse(cr, uid, res_id, context=context)
                 if not wizard.bring_partners:
                     new_follower_ids = [p.id for p in wizard.partner_ids]
-                    follower_ids = [i.id for i in  document.message_follower_ids]
-                    remove_ids = list(set(follower_ids) -  set(new_follower_ids))
-                    document.write({'message_follower_ids':[(6, 0, remove_ids)]})
+                    follower_ids = [i.id for i in document.message_follower_ids]
+                    remove_ids = list(set(follower_ids) - set(new_follower_ids))
+                    document.write({'message_follower_ids': [(6, 0, remove_ids)]})
                 else:
                     new_follower_ids = [p.id for p in wizard.partner_ids]
-                    remove_ids = [i.id for i in  document.message_follower_ids \
-                                       if i.id in new_follower_ids]
-                    document.write({'message_follower_ids':[(6, 0, remove_ids)]})
-                    
+                    remove_ids = [i.id for i in document.message_follower_ids
+                                  if i.id in new_follower_ids]
+                    document.write({'message_follower_ids': [(6, 0, remove_ids)]})
+
         return res
 
     def load_partners(self, cr, uid, ids, mail_groups, check, check2,
@@ -198,6 +198,7 @@ class invite_wizard(osv.osv_memory):
 
         partner_ids and res['value'].update({'partner_ids': partner_ids})
         return res
+
     def bring_partner(self, cr, uid, ids, context=None):
         ''' Used to add all partnes in mail.group selected in the view and
             return it
@@ -205,36 +206,35 @@ class invite_wizard(osv.osv_memory):
         if context is None:
             context = {}
         res = {'value': {}}
-        context.update({'remove':True})
+        context.update({'remove': True})
         model = context.get('active_model')
         model_obj = self.pool.get(model)
         data_obj = self.pool.get('ir.model.data')
         partner_ids = []
         for res_id in context.get('active_ids'):
-            partner_ids+=[i.id for i in model_obj.browse(cr, uid, res_id,
-                                                         context=context).message_follower_ids \
-                               if i.id not in partner_ids]
+            partner_ids += [i.id for i in model_obj.browse(cr, uid, res_id,
+                                                         context=context).message_follower_ids
+                          if i.id not in partner_ids]
 
         partner_ids = list(set(partner_ids))
 
-        self.write(cr, uid, ids, {'partner_ids':[(6, 0, partner_ids)],
+        self.write(cr, uid, ids, {'partner_ids': [(6, 0, partner_ids)],
                                   'partners': True,
                                   'bring_partners': True},
-                       context=context)
-        
+                   context=context)
 
         view_id = data_obj.get_object(cr, uid, 'add_followers',
                                       'add_followers_wizard_invite_form')
         partner_ids and res['value'].update({'partner_ids': partner_ids})
         return {
-             'type': 'ir.actions.act_window',
-             'name': "Remove Partners",
-             'res_model': self._name,
-             'res_id': ids[0],
-             'view_type': 'form',
-             'view_mode': 'form',
-             'view_id': view_id.id,
-             'target': 'new',
-             'nodestroy': True,
-             'context':context,
-               }
+            'type': 'ir.actions.act_window',
+            'name': "Remove Partners",
+            'res_model': self._name,
+            'res_id': ids[0],
+            'view_type': 'form',
+            'view_mode': 'form',
+            'view_id': view_id.id,
+            'target': 'new',
+            'nodestroy': True,
+            'context': context,
+        }

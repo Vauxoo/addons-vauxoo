@@ -40,4 +40,4 @@ This module Allow to create mail.composse.message from email_template like compo
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
- 
+

@@ -30,7 +30,7 @@
     "author" : "Vauxoo",
     "category": "Purchase",
     "website" : "http://www.vauxoo.com/",
-    "description": """ 
+    "description": """
 Group for button send email:
 ============================
 
@@ -47,4 +47,4 @@ Group that hides the button "send by email" sales order
     'installable': True,
     'active': False,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4: 
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

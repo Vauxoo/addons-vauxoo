@@ -8,7 +8,7 @@
 #    Coded by: María Gabriela Quilarque  <gabriela@vauxoo.com>
 #              Luis Escobar              <luis@vauxoo.com>
 #    Planified by: Nhomar Hernandez <nhomar@vauxoo.com>
-#    Finance by: Vauxoo, C.A. http://vauxoo.com 
+#    Finance by: Vauxoo, C.A. http://vauxoo.com
 #    Audited by: Humberto Arocha <humberto@vauxoo.com>
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
@@ -32,10 +32,10 @@
 	"category" : "Generic Modules/Others",
 	"website": "http://vauxoo.com/",
 	"description": '''
-	               Agrega un tab en la Compañia que va a contener los reportes personalizados. 
+	               Agrega un tab en la Compañia que va a contener los reportes personalizados.
                     ''',
 	"depends" : ["base", "account", ],
-	"data" : [  
+	"data" : [
                 "security/ir.model.access.csv",
 		        "report_multicompany_view.xml",
 	],

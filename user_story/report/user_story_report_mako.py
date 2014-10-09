@@ -44,7 +44,7 @@ class user_story_report(report_sxw.rml_parse):
             'parse_html_field' : self._parse_html_field,
         })
         self.context = context
-        
+
     def _parse_html_field(self, data):
         if data:
             data_str = data.encode('ascii', 'xmlcharrefreplace')

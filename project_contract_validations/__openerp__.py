@@ -33,7 +33,7 @@
                  ],
     "author" : "Vauxoo",
     "description" : """
-        This module adds guidelines and validations in the relation 
+        This module adds guidelines and validations in the relation
         between Project and Analytic Account modules.
     """,
     "website" : "http://vauxoo.com",

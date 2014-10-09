@@ -112,9 +112,9 @@ class mrp_request_return(osv.TransientModel):
             'product_qty': 0.0,
             'product_uom': move.product_uom.id,
             'product_uos_qty': move.product_uos and
-                                move.product_uos_qty or False,
+            move.product_uos_qty or False,
             'product_uos': move.product_uos and
-                            move.product_uos.id or False,
+            move.product_uos.id or False,
             'location_id': production.location_src_id.id,
             'location_dest_id': production.location_src_id.id,
             'production_id': move.production_id.id
@@ -196,17 +196,17 @@ class mrp_consume(osv.TransientModel):
                     to_uom_id=fetch_record.product_uom.id)
                 if qty_to_consume > current_qty:
                     move_id = stock_move_obj.copy(cr, uid, line.move_id.id, {
-                                'product_qty': qty_to_consume-current_qty})
+                        'product_qty': qty_to_consume - current_qty})
                     mrp_production.write(cr, uid,
                                 context.get('active_ids', False), {
-                                'move_lines': [(4, move_id)]}, context=context)
+                                    'move_lines': [(4, move_id)]}, context=context)
                     stock_move_obj.action_consume(cr, uid, [move_id],
-                                                qty_to_consume-current_qty,
+                                                qty_to_consume - current_qty,
                                                 line.location_id.id,
                                                 context=context)
                     mrp_consume_line.write(cr, uid, line.id, {
-                                'quantity': current_qty,
-                                'product_uom': fetch_record.product_uom.id})
+                        'quantity': current_qty,
+                        'product_uom': fetch_record.product_uom.id})
 
                     fetch_record.production_id = production
                     fetch_record.product_qty = qty_to_consume - current_qty

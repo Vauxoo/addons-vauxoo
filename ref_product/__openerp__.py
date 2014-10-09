@@ -39,11 +39,11 @@ presented to the end user.
         *Can be used in contracts.
 
     This module will be installed until the following bug remains fixed:
-    
+
         https://bugs.launchpad.net/openobject-addons/+bug/1188863
 
-    Image url: 
-    
+    Image url:
+
         https://www.diigo.com/item/image/3z3vg/kj84
     """,
     "website" : "http://www.vauxoo.com/",

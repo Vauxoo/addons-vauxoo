@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -28,7 +28,7 @@
     "depends" : ["account"],
     "author" : "Vauxoo",
     "description" : """
-    This module allows you to modify the control number of the invoice and the internal number is 
+    This module allows you to modify the control number of the invoice and the internal number is
     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",

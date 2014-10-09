@@ -29,14 +29,14 @@ class purchase_requisition_line(osv.Model):
     _columns = {
         'name': fields.char('Description', size=256),
     }
-    
-    def init(self, cr ):
-        cr.execute("""UPDATE purchase_requisition_line prl 
+
+    def init(self, cr):
+        cr.execute("""UPDATE purchase_requisition_line prl
                       SET name = (SELECT CONCAT('[',default_code,']',' ', name_template )
-                                  FROM product_product pp 
+                                  FROM product_product pp
                                   WHERE pp.id = prl.product_id)
-                                  WHERE prl.name is NULL""") 
-    
+                                  WHERE prl.name is NULL""")
+
     def onchange_product_id(self, cr, uid, ids, product_id,
                             product_uom_id, context=None):
         product_obj = self.pool.get('product.product')
@@ -45,10 +45,10 @@ class purchase_requisition_line(osv.Model):
             product_name = product_obj.name_get(
                 cr, uid, product_id, context=context)
             dummy, name = product_name and product_name[0] or (False,
-                                                                False)
+                                                               False)
 
             product = product_obj.browse(cr, uid, product_id,
-                                                    context=context)
+                                         context=context)
             if product.description_purchase:
                 name += '\n' + product.description_purchase
             res['value'].update({'name': name})
@@ -61,20 +61,20 @@ class purchase_requisition(osv.Model):
     _inherit = "purchase.requisition"
 
     def make_purchase_order(self, cr, uid, ids, partner_id,
-                                    context=None):
+                            context=None):
         if context is None:
             context = {}
         res = super(purchase_requisition, self).make_purchase_order(cr, uid, ids, partner_id, context=context)
-        
+
         pol_obj = self.pool.get('purchase.order.line')
-        po_obj = self.pool.get('purchase.order') 
+        po_obj = self.pool.get('purchase.order')
 
         for requisition in self.browse(cr, uid, ids, context=context):
-            po_req = po_obj.search(cr, uid, [('requisition_id','=',requisition.id)], context=context)
+            po_req = po_obj.search(cr, uid, [('requisition_id', '=', requisition.id)], context=context)
             for po_id in po_req:
-                pol_ids = pol_obj.search(cr, uid, [('order_id','=',po_id)])
+                pol_ids = pol_obj.search(cr, uid, [('order_id', '=', po_id)])
                 for pol_id in pol_ids:
-                    pol_brw = pol_obj.browse(cr, uid, pol_id) 
+                    pol_brw = pol_obj.browse(cr, uid, pol_id)
                     pol_obj.write(cr, uid, [pol_brw.id], {'name':
                         pol_brw.purchase_requisition_line_id.name}, context=context)
         return res

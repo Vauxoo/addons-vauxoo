@@ -25,9 +25,10 @@
 
 from openerp.osv import osv, fields
 
+
 class purchase_requisition(osv.Model):
     _inherit = 'purchase.requisition'
-    _order = 'priority asc' 
+    _order = 'priority asc'
     _columns = {
         'remarks': fields.text(
             'Remarks',

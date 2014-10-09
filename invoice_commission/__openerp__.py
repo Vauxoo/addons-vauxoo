@@ -6,7 +6,7 @@
     "author" : "Vauxoo",
     "description" : """
     What do this module:
-    Update account module to show invoice commission 
+    Update account module to show invoice commission
                     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules/Accounting",

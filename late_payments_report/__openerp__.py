@@ -30,9 +30,9 @@
 	"category" : "Generic Modules/Others",
 	"website": "http://wiki.openerp.org.ve/",
     "description": """
-    
-    Modulo que realiza la personalizacion del reporte de pagos atrasados 
-    
+
+    Modulo que realiza la personalizacion del reporte de pagos atrasados
+
     """,
 	"depends" : ["base", "account"],
 	"init_xml" : [],

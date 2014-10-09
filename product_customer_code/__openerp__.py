@@ -40,7 +40,7 @@ Add manies Codes of Customer's in product
                     "security/ir.model.access.csv",
                     "product_customer_code_view.xml",
                     "product_product_view.xml",
-                    
+
                     ],
     "active": False,
     "installable": True,

@@ -45,9 +45,9 @@ class product_icecat_mapline(osv.Model):
     }
 
     _defaults = {
-        'model_id': lambda self, cr, uid, c:\
-            self.pool.get('ir.model').\
-                    search(cr, uid, [('model', '=', 'product.product')])[0],
+        'model_id': lambda self, cr, uid, c:
+        self.pool.get('ir.model').
+        search(cr, uid, [('model', '=', 'product.product')])[0],
     }
 
 
@@ -87,7 +87,7 @@ class product_icecat(osv.Model):
             'icecat_id', 'Mapline'),
         'ftp': fields.boolean('Active'),
         'ftpip': fields.char('IP', size=256),
-        'ftpdirectory': fields.char('Directory', size=256, 
+        'ftpdirectory': fields.char('Directory', size=256,
             help='If not use directory, insert . (point). If use\
                 directory, path FTP dir'),
         'ftpusername': fields.char('Username', size=32),

@@ -27,9 +27,10 @@
 
 from openerp import models, fields, api, _
 
+
 class account_invoice(models.Model):
     _inherit = 'account.invoice'
-    
+
     @api.multi
     def check_tax_lines(self, compute_taxes):
         account_invoice_tax = self.env['account.invoice.tax']
@@ -45,7 +46,7 @@ class account_invoice(models.Model):
                 # start custom change
                 #~ key = (tax.tax_code_id.id, tax.base_code_id.id, tax.account_id.icd, tax.account_analytic_id.id)
                 key = (tax.tax_id and tax.tax_id.id or False)
-                #end custom change
+                # end custom change
                 tax_key.append(key)
                 if key not in compute_taxes:
                     raise except_orm(_('Warning!'), _('Global taxes defined, but they are not in invoice lines !'))
@@ -55,10 +56,11 @@ class account_invoice(models.Model):
             for key in compute_taxes:
                 if key not in tax_key:
                     raise except_orm(_('Warning!'), _('Taxes are missing!\nClick on compute button.'))
-                    
+
+
 class account_invoice_tax(models.Model):
     _inherit = 'account.invoice.tax'
-    
+
     tax_id = fields.Many2one('account.tax', string='Tax', required=False, ondelete='set null', index=True,
         help="Tax relation to original tax, to be able to take off all data from invoices.")
 
@@ -81,7 +83,7 @@ class account_invoice_tax(models.Model):
                     'base': currency.round(tax['price_unit'] * line['quantity']),
                     'tax_id': tax['id']
                 }
-                if invoice.type in ('out_invoice','in_invoice'):
+                if invoice.type in ('out_invoice', 'in_invoice'):
                     val['base_code_id'] = tax['base_code_id']
                     val['tax_code_id'] = tax['tax_code_id']
                     val['base_amount'] = currency.compute(val['base'] * tax['base_sign'], company_currency, round=False)
@@ -95,10 +97,10 @@ class account_invoice_tax(models.Model):
                     val['tax_amount'] = currency.compute(val['amount'] * tax['ref_tax_sign'], company_currency, round=False)
                     val['account_id'] = tax['account_paid_id'] or line.account_id.id
                     val['account_analytic_id'] = tax['account_analytic_paid_id']
-                #start custom change
+                # start custom change
                 #key = (val['tax_code_id'], val['base_code_id'], val['account_id'], val['account_analytic_id'])
                 key = (val['tax_id'])
-                #end custom change
+                # end custom change
                 if not key in tax_grouped:
                     tax_grouped[key] = val
                 else:

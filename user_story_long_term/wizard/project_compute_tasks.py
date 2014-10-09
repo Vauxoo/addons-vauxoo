@@ -25,6 +25,7 @@
 
 from openerp.osv import fields, osv
 
+
 class project_compute_tasks(osv.osv_memory):
     _name = 'project.compute.tasks'
     _description = 'Project Compute Tasks'

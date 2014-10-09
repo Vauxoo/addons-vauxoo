@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Humberto Arocha <hbto@vauxoo.com>           
+#    Coded by: Humberto Arocha <hbto@vauxoo.com>
 #    Planified by: Rafael Silva <rsilvam@vauxoo.com>
 #    Audited by: Nhomar Hernandez <nhomar@vauxoo.com>
 #############################################################################
@@ -36,7 +36,7 @@ This module:
 *) Adds two new transitions from draft to commit,
     -) One which could force commitment of sale order,
     -) The other will check if any product does not overflow the availability
-*) Modifies the existing Transition from draft to router 
+*) Modifies the existing Transition from draft to router
 and changes it from commit to router.
 
 *) Adds a wizard so that it is possible to assign groups to the newly transitions.
@@ -54,7 +54,7 @@ and changes it from commit to router.
     "init_xml" : [],
     "demo_xml" : [
 
-    ], 
+    ],
     "update_xml" : [
         'view/product_view.xml',
         'view/sale_view.xml',

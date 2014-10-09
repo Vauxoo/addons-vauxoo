@@ -3,8 +3,8 @@ import time
 from openerp.report import report_sxw
 
 
-
 class crm_report_profile(report_sxw.rml_parse):
+
     """
     Description about crm_report_profile
     """

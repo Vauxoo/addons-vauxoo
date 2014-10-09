@@ -76,11 +76,11 @@ class mrp_production(osv.Model):
         if parent_move_id and production.analytic_acc_rm:
             stock_move.write(cr, uid, [parent_move_id], {
                              'analytic_acc': production.analytic_acc_rm.id},
-                                            context=context)
+                             context=context)
         if res and production.analytic_acc_rm:
             stock_move.write(cr, uid, [res], {
                              'analytic_acc': production.analytic_acc_rm.id},
-                                            context=context)
+                             context=context)
         return res
 
     def _make_production_produce_line(self, cr, uid, production, context=None):
@@ -90,7 +90,7 @@ class mrp_production(osv.Model):
         if production.analytic_acc_fg:
             stock_move.write(cr, uid, [res], {
                              'analytic_acc': production.analytic_acc_fg.id},
-                                            context=context)
+                             context=context)
         return res
 
         def _make_production_consume_line(self, cr, uid, production_line,
@@ -102,8 +102,8 @@ class mrp_production(osv.Model):
                 source_location_id=False, context=context)
             if production.analytic_acc_rm.id:
                 stock_move.write(cr, uid, [res], {
-                            'analytic_acc': production.analytic_acc_rm.id},
-                                            context=context)
+                    'analytic_acc': production.analytic_acc_rm.id},
+                    context=context)
             return res
 
     _columns = {

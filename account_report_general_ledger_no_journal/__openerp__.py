@@ -6,7 +6,7 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: 
+#    Coded by:
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify

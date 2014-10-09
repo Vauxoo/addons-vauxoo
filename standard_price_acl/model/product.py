@@ -23,11 +23,11 @@
 from openerp.osv import fields, osv
 import openerp.addons.decimal_precision as dp
 
+
 class product_product(osv.Model):
 
-    _inherit="product.template"
+    _inherit = "product.template"
 
     _columns = {
         'standard_price': fields.float('Cost', digits_compute=dp.get_precision('Product Price'), help="Cost price of the product used for standard stock valuation in accounting and used as a base price on purchase orders."),
     }
-

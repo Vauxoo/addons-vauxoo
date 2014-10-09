@@ -30,7 +30,7 @@
     "author" : "Vauxoo",
     "category" : "Generic Modules",
     "description" : """
-    This module change place where take location in lines of production 
+    This module change place where take location in lines of production
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",

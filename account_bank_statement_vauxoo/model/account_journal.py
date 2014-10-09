@@ -90,17 +90,17 @@ class account_journal_bs_config(osv.Model):
         try:
             exp_ = self.browse(cr, user, ids, context=context)[0].expresion
             exp = eval(exp_)
-            self.logger.notifyChannel('Chain. '+str(exp), netsvc.LOG_DEBUG,
+            self.logger.notifyChannel('Chain. ' + str(exp), netsvc.LOG_DEBUG,
                                       'Succefully Validated')
             if type(exp) is list:
                 return True
             else:
                 self.logger.notifyChannel(
-                    'Chain. '+str(exp_), netsvc.LOG_ERROR,
+                    'Chain. ' + str(exp_), netsvc.LOG_ERROR,
                     'Fail With You must use a list')
                 return False
         except Exception, var:
-            self.logger.notifyChannel('Chain. '+str(exp_), netsvc.LOG_ERROR,
+            self.logger.notifyChannel('Chain. ' + str(exp_), netsvc.LOG_ERROR,
                                       'Fail With %s' % var)
             return False
 

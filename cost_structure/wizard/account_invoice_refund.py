@@ -67,4 +67,3 @@ class account_invoice_refund(osv.TransientModel):
         invo_obj.write(cr, uid, [invo_brw and invo_brw.id], {
                        'date_invoice': date_2}, context=context)
         return res
-

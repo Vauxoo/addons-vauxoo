@@ -27,7 +27,7 @@
 Fixed groups on field standard_price
 ====================================
 
-This module is created because in the definiton of field **standard_price* on the module product.product, 
+This module is created because in the definiton of field **standard_price* on the module product.product,
 the asignation of groups is made in file product.py in model definition:
 
 'standard_price': fields.float('Cost', digits_compute=dp.get_precision('Product Price'), help="Cost price of the product used for standard stock valuation in accounting and used as a base price on purchase orders.", groups="base.group_user"),

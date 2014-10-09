@@ -49,6 +49,7 @@ class mrp_routing_workcenter(osv.Model):
             help='Products needed to the operation'),
     }
 
+
 class mrp_workcenter_product_capacity(osv.Model):
 
     _name = 'mrp.workcenter.product.capacity'

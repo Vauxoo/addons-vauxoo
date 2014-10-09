@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -28,8 +28,8 @@
     "depends" : ['account','account_move_cancel','l10n_ve_withholding_iva'],
     "author" : "Vauxoo",
     "description" : """
-    Cancels invoices with vat withholding, will be passed to draft and calls 
-    mediande vailadadas workflow automatically, keeping the same document that 
+    Cancels invoices with vat withholding, will be passed to draft and calls
+    mediande vailadadas workflow automatically, keeping the same document that
     generated initially wittholding
     """,
     "website" : "http://vauxoo.com",
@@ -38,10 +38,10 @@
     "demo_xml" : [],
     "test": [ ],
     "update_xml" : [
-    'workflow/account_workflow.xml', 
-    
-    
-    
+    'workflow/account_workflow.xml',
+
+
+
     ],
     "active": False,
     "installable": True,

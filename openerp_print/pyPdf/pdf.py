@@ -55,6 +55,7 @@ from sets import ImmutableSet
 
 
 class PdfFileWriter(object):
+
     def __init__(self):
         self._header = "%PDF-1.3"
         self._objects = []  # array of indirect objects
@@ -99,7 +100,7 @@ class PdfFileWriter(object):
     # Stability: Added in v1.0, will exist for all v1.x releases.
     #
     # @param page The page to add to the document.  This argument should be
-    #             an instance of {@link #PageObject PageObject}.
+    # an instance of {@link #PageObject PageObject}.
     def addPage(self, page):
         assert page["/Type"] == "/Page"
         page[NameObject("/Parent")] = self._pages
@@ -163,7 +164,6 @@ class PdfFileWriter(object):
     # @param stream An object to write the file to.  The object must support
     # the write method, and the tell method, similar to a file object.
     def write(self, stream):
-        import struct
         import md5
 
         externalReferenceMap = {}
@@ -218,7 +218,6 @@ class PdfFileWriter(object):
     def _sweepIndirectReferences(self, externMap, data):
         if isinstance(data, DictionaryObject):
             for key, value in data.items():
-                origvalue = value
                 value = self._sweepIndirectReferences(externMap, value)
                 if isinstance(value, StreamObject):
                     # a dictionary value is a stream.  streams must be indirect
@@ -261,7 +260,7 @@ class PdfFileWriter(object):
                     externMap[data.pdf][data.generation][
                         data.idnum] = newobj_ido
                     newobj = self._sweepIndirectReferences(externMap, newobj)
-                    self._objects[idnum-1] = newobj
+                    self._objects[idnum - 1] = newobj
                     return newobj_ido
                 return newobj
         else:
@@ -277,6 +276,7 @@ class PdfFileWriter(object):
 # @param stream An object that supports the standard read and seek methods
 #               similar to a file object.
 class PdfFileReader(object):
+
     def __init__(self, stream):
         self.flattenedPages = None
         self.resolvedObjects = {}
@@ -303,7 +303,7 @@ class PdfFileReader(object):
 
     ##
     # Read-only property that accesses the {@link
-    # #PdfFileReader.getDocumentInfo getDocumentInfo} function.
+    # PdfFileReader.getDocumentInfo getDocumentInfo} function.
     # <p>
     # Stability: Added in v1.7, will exist for all future v1.x releases.
     documentInfo = property(lambda self: self.getDocumentInfo(), None, None)
@@ -353,7 +353,7 @@ class PdfFileReader(object):
     # Stability: Added in v1.0, will exist for all v1.x releases.
     # @return Returns a {@link #PageObject PageObject} instance.
     def getPage(self, pageNumber):
-        ## ensure that we're not trying to access an encrypted PDF
+        # ensure that we're not trying to access an encrypted PDF
         # assert not self.trailer.has_key("/Encrypt")
         if self.flattenedPages == None:
             self._flatten()
@@ -399,7 +399,7 @@ class PdfFileReader(object):
             names = tree["/Names"]
             for i in range(0, len(names), 2):
                 key = names[i].getObject()
-                val = names[i+1].getObject()
+                val = names[i + 1].getObject()
                 if isinstance(val, DictionaryObject) and '/D' in val:
                     val = val['/D']
                 dest = self._buildDestination(key, val)
@@ -486,7 +486,7 @@ class PdfFileReader(object):
 
     ##
     # Read-only property that emulates a list based upon the {@link
-    # #PdfFileReader.getNumPages getNumPages} and {@link #PdfFileReader.getPage
+    # PdfFileReader.getNumPages getNumPages} and {@link #PdfFileReader.getPage
     # getPage} functions.
     # <p>
     # Stability: Added in v1.7, and will exist for all future v1.x releases.
@@ -545,7 +545,7 @@ class PdfFileReader(object):
                 readNonWhitespace(streamData)
                 streamData.seek(-1, 1)
                 t = streamData.tell()
-                streamData.seek(objStm['/First']+offset, 0)
+                streamData.seek(objStm['/First'] + offset, 0)
                 obj = readObject(streamData, self)
                 self.resolvedObjects[0][objnum] = obj
                 streamData.seek(t, 0)
@@ -564,7 +564,6 @@ class PdfFileReader(object):
             if not hasattr(self, '_decryption_key'):
                 raise Exception("file has not been decrypted")
             # otherwise, decrypt here...
-            import struct
             import md5
             pack1 = struct.pack("<i", indirectReference.idnum)[:3]
             pack2 = struct.pack("<i", indirectReference.generation)[:2]
@@ -600,7 +599,7 @@ class PdfFileReader(object):
         stream.seek(-1, 1)
         idnum = readUntilWhitespace(stream)
         generation = readUntilWhitespace(stream)
-        obj = stream.read(3)
+        stream.read(3)
         readNonWhitespace(stream)
         stream.seek(-1, 1)
         return int(idnum), int(generation)
@@ -714,14 +713,14 @@ class PdfFileReader(object):
                                 xref_type = di
                             elif i == 1:
                                 if xref_type == 0:
-                                    next_free_object = di
+                                    pass
                                 elif xref_type == 1:
                                     byte_offset = di
                                 elif xref_type == 2:
                                     objstr_num = di
                             elif i == 2:
                                 if xref_type == 0:
-                                    next_generation = di
+                                    pass
                                 elif xref_type == 1:
                                     generation = di
                                 elif xref_type == 2:
@@ -764,9 +763,9 @@ class PdfFileReader(object):
     def _pairs(self, array):
         i = 0
         while True:
-            yield array[i], array[i+1]
+            yield array[i], array[i + 1]
             i += 2
-            if (i+1) >= len(array):
+            if (i + 1) >= len(array):
                 break
 
     def readNextEndLine(self, stream):
@@ -868,7 +867,7 @@ class PdfFileReader(object):
     ##
     # Read-only boolean property showing whether this PDF file is encrypted.
     # Note that this property, if true, will remain true even after the {@link
-    # #PdfFileReader.decrypt decrypt} function is called.
+    # PdfFileReader.decrypt decrypt} function is called.
     isEncrypted = property(lambda self: self.getIsEncrypted(), None, None)
 
 
@@ -913,6 +912,7 @@ def createRectangleAccessor(name, fallback):
 
 
 class PageObject(DictionaryObject):
+
     def __init__(self, pdf):
         DictionaryObject.__init__(self)
         self.pdf = pdf
@@ -1128,6 +1128,7 @@ class PageObject(DictionaryObject):
 
 
 class ContentStream(DecodedStreamObject):
+
     def __init__(self, stream, pdf):
         self.pdf = pdf
         self.operations = []
@@ -1212,7 +1213,7 @@ class ContentStream(DecodedStreamObject):
                     data += tok
             else:
                 data += tok
-        x = readNonWhitespace(stream)
+        readNonWhitespace(stream)
         stream.seek(-1, 1)
         return {"settings": settings, "data": data}
 
@@ -1251,6 +1252,7 @@ class ContentStream(DecodedStreamObject):
 # if pyPdf was unable to decode the string's text encoding; this requires
 # additional safety in the caller and therefore is not as commonly accessed.
 class DocumentInformation(DictionaryObject):
+
     def __init__(self):
         DictionaryObject.__init__(self)
 
@@ -1310,6 +1312,7 @@ class DocumentInformation(DictionaryObject):
 # See section 8.2.1 of the PDF 1.6 reference.
 # Stability: Added in v1.10, will exist for all v1.x releases.
 class Destination(DictionaryObject):
+
     def __init__(self, title, page, typ, *args):
         DictionaryObject.__init__(self)
         self[NameObject("/Title")] = title
@@ -1399,7 +1402,6 @@ def _alg32(password, rev, keylen, owner_entry, p_entry, id1_entry, metadata_encr
     # 2. Initialize the MD5 hash function and pass the result of step 1 as
     # input to this function.
     import md5
-    import struct
     m = md5.new(password)
     # 3. Pass the value of the encryption dictionary's /O entry to the MD5 hash
     # function.

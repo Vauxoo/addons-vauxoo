@@ -36,7 +36,7 @@
         - account_partner_ledger.rml
         - account_partner_ledger_other.rml
     In these reports were eliminated:
-        - Journal (header) 
+        - Journal (header)
         - Partner field
         - Ref field
  """,

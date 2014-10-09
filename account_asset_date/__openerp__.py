@@ -30,8 +30,8 @@
     "author" : "Vauxoo",
     "category" : "account asset",
     "description" : """
-        This module adds a date field in assets and change the 
-        translation of the purchase date field to use as the start date 
+        This module adds a date field in assets and change the
+        translation of the purchase date field to use as the start date
         for depreciation
     """,
     "website" : "http://www.vauxoo.com/",

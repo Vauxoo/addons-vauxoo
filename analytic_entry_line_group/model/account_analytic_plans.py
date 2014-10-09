@@ -26,6 +26,7 @@
 
 from openerp.osv import fields, osv
 
+
 class account_analytic_line(osv.Model):
 
     _inherit = 'account.analytic.line'
@@ -35,4 +36,3 @@ class account_analytic_line(osv.Model):
             type='many2one', relation='account.analytic.group', string='Analytic Group',
             store=True, readonly=True),
     }
-

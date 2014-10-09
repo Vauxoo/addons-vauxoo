@@ -29,54 +29,52 @@ from openerp.osv import osv, fields
 
 
 class inherits_sale(osv.Model):
-    
+
     '''Inherit sale order to add a new field, Payment Terms'''
-    
+
     _inherit = 'sale.order'
-    
+
     _columns = {
 
-            'payment_terms_id':fields.many2one('payment.terms.partner',
-                                               'Payment Terms',
-                                               help='Select the payment term '
-                                                    'agreed by company for '
-                                                    'this partner'), 
-            }
+        'payment_terms_id': fields.many2one('payment.terms.partner',
+                                            'Payment Terms',
+                                            help='Select the payment term '
+                                            'agreed by company for '
+                                            'this partner'),
+    }
 
-    def _prepare_invoice(self, cr, uid, order, lines, context=None):            
+    def _prepare_invoice(self, cr, uid, order, lines, context=None):
         '''Overwrite this method to send the payment term new to invoice '''
-        
-        res = super(inherits_sale,self)._prepare_invoice(cr, uid, order,
+
+        res = super(inherits_sale, self)._prepare_invoice(cr, uid, order,
                                                          lines, context)
-        res.update({'payment_terms_id':order.payment_terms_id and\
-                                        order.payment_terms_id.id                                                       
-        })                                                                       
-                                                                                                                                                             
-        return res 
+        res.update({'payment_terms_id': order.payment_terms_id and
+                    order.payment_terms_id.id
+                    })
 
+        return res
 
-    def onchange_partner_id(self, cr, uid, ids, part, context=None):                
-
+    def onchange_partner_id(self, cr, uid, ids, part, context=None):
         '''Overwrite this method to set payment term new to sale order '''
 
-        res = super(inherits_sale,self).onchange_partner_id(cr, uid, ids,
+        res = super(inherits_sale, self).onchange_partner_id(cr, uid, ids,
                                                             part, context)
         part = self.pool.get('res.partner').browse(cr, uid, part, context)
 
         payment_term = part.property_payment_term_p_customer and\
-                             part.property_payment_term_p_customer.id or False
-        res.get('value',{}).update({                                                                     
-            'payment_terms_id': payment_term,                                           
-        })                                                                           
+            part.property_payment_term_p_customer.id or False
+        res.get('value', {}).update({
+            'payment_terms_id': payment_term,
+        })
 
-        return res 
+        return res
 
-    def _prepare_order_picking(self, cr, uid, order, context=None):                                                                                          
+    def _prepare_order_picking(self, cr, uid, order, context=None):
         '''Overwrite this method to send the payment term new to picking '''
 
-        res = super(inherits_sale,self)._prepare_order_picking(cr, uid,
+        res = super(inherits_sale, self)._prepare_order_picking(cr, uid,
                                                                order,
                                                                context)
-        res.update({'payment_terms_id':order.payment_terms_id and\
-                                      order.payment_terms_id.id}) 
+        res.update({'payment_terms_id': order.payment_terms_id and
+                    order.payment_terms_id.id})
         return res

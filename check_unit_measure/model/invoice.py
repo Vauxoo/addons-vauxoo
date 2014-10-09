@@ -29,7 +29,6 @@ from openerp.osv import osv
 from openerp.tools.translate import _
 
 
-
 class inherit_account_invocie_line(osv.Model):
 
     '''Inherit account.invoice.line to set unit measure for product in the line'''

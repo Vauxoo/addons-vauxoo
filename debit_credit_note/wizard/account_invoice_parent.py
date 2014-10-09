@@ -26,6 +26,7 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 from lxml import etree
 
+
 class account_invoice_parent(osv.osv_memory):
 
     """Assign parent to invoice"""
@@ -33,10 +34,10 @@ class account_invoice_parent(osv.osv_memory):
     _name = "account.invoice.parent"
     _description = "Parent Invoice"
     _columns = {
-       'parent_id': fields.many2one('account.invoice', 'Source Invoice', help='You can select here the source invoice to use as father as the current invoice.'),
-       'sure': fields.boolean('Are you sure?'),
-       'partner_id': fields.many2one('res.partner', 'Partner', help='Customer or supplier who owns the invoice'),
-       'type': fields.selection([('modify', 'Change source invoice')], "Operation Type", help='Operation to make on the refund invoice or debit credit note.\n'\
+        'parent_id': fields.many2one('account.invoice', 'Source Invoice', help='You can select here the source invoice to use as father as the current invoice.'),
+        'sure': fields.boolean('Are you sure?'),
+        'partner_id': fields.many2one('res.partner', 'Partner', help='Customer or supplier who owns the invoice'),
+        'type': fields.selection([('modify', 'Change source invoice')], "Operation Type", help='Operation to make on the refund invoice or debit credit note.\n'
                 'Change source invoice: Modify the current parent invoice of the current invoice.'),
     }
 
@@ -57,11 +58,11 @@ class account_invoice_parent(osv.osv_memory):
     }
 
     def fields_view_get(self, cr, uid, view_id=None, view_type=False, context=None, toolbar=False, submenu=False):
-        """ Change fields position in the view 
+        """ Change fields position in the view
         """
         if context is None:
             context = {}
-        res = super(account_invoice_parent,self).fields_view_get(cr, uid, view_id=view_id, view_type=view_type, context=context, toolbar=toolbar, submenu=submenu)
+        res = super(account_invoice_parent, self).fields_view_get(cr, uid, view_id=view_id, view_type=view_type, context=context, toolbar=toolbar, submenu=submenu)
         if view_type == 'form':
             doc = etree.XML(res['arch'])
             nodes = doc.xpath("//field[@name='partner_id']")
@@ -72,20 +73,19 @@ class account_invoice_parent(osv.osv_memory):
                 node.set('string', partner_string)
 
             nodes = doc.xpath("//field[@name='parent_id']")
-            parent_invisible ='True'
+            parent_invisible = 'True'
             domain = str(False)
             required = str(False)
             if context.get('op_type', False) in ('modify', 'assigned'):
-                parent_invisible ='False'
-                state_lst=['open','paid']
-                domain = '[("partner_id", "=", '+ str(context.get('partner_id', False))+'),("id", "!=", '+ str(context.get('active_id', False))+'),("state", "in", '+ str(state_lst)+')]'
+                parent_invisible = 'False'
+                state_lst = ['open', 'paid']
+                domain = '[("partner_id", "=", ' + str(context.get('partner_id', False)) + '),("id", "!=", ' + str(context.get('active_id', False)) + '),("state", "in", ' + str(state_lst) + ')]'
                 required = str(True)
             for node in nodes:
                 node.set('invisible', parent_invisible)
                 node.set('domain', domain)
                 node.set('required', required)
                 domain = '[("state", "in", "[open,paid]")]'
-
 
             nodes = doc.xpath("//button[@string='Next']")
             button_string = _('Next')
@@ -97,7 +97,6 @@ class account_invoice_parent(osv.osv_memory):
                 button_string = _('Modify')
             for node in nodes:
                 node.set('string', button_string)
-
 
             res['arch'] = etree.tostring(doc)
         return res
@@ -111,7 +110,7 @@ class account_invoice_parent(osv.osv_memory):
         return res
 
     def get_window(self, cr, uid, ids, xml_id, module, op_type, partner_id, parent_id=False, context=None):
-        """ Update values (op_type, partner_id and parent_id) in the window  
+        """ Update values (op_type, partner_id and parent_id) in the window
         @param xml_id:
         @param op_type:
         @param partner_id:
@@ -119,26 +118,26 @@ class account_invoice_parent(osv.osv_memory):
         """
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
-        #we get the model
+        # we get the model
         result = mod_obj.get_object_reference(cr, uid, module, xml_id)
         id = result and result[1] or False
         # we read the act window
         result = act_obj.read(cr, uid, id, context=context)
         # we add the new context into context dictionary
         invoice_context = eval(result['context'])
-        invoice_context.update({'op_type': op_type, 'partner_id':partner_id, 'parent_id':parent_id})
+        invoice_context.update({'op_type': op_type, 'partner_id': partner_id, 'parent_id': parent_id})
         result['context'] = invoice_context
         return result
 
     def check_sure(self, cr, uid, ids, ok, context=None):
-        """ Checks if the user is sure 
+        """ Checks if the user is sure
         """
         if not ok:
             raise osv.except_osv(_('User Error'), _('Assign parent invoice, Please check the box to confirm that you agree!'))
         return True
 
-    def check_recursion(self, cr, uid, ids, child_id,parent_id, context=None):
-        """ Checks that have not recursion between parent and children   
+    def check_recursion(self, cr, uid, ids, child_id, parent_id, context=None):
+        """ Checks that have not recursion between parent and children
         @param child_id: child id
         @param parent_id: parent id
         """
@@ -166,19 +165,18 @@ class account_invoice_parent(osv.osv_memory):
         partner_id = form.get('partner_id', False)
         self.check_recursion(cr, uid, ids, active_id, parent_id, context)
         inv_obj = self.pool.get('account.invoice')
-        inv_brw = inv_obj.browse(cr, uid, active_id,context=context)
+        inv_brw = inv_obj.browse(cr, uid, active_id, context=context)
 
         if inv_brw.parent_id:
             raise osv.except_osv(_('User Error'), _('Credit or debit note assign, This credit or debit note already assign to an invoice!'))
         if parent_id:
             self.check_grandfather(cr, uid, ids, parent_id, context)
-            inv_obj.write(cr, uid, active_id, {'parent_id':parent_id}, context=context)
+            inv_obj.write(cr, uid, active_id, {'parent_id': parent_id}, context=context)
             return {}
 
         result = self.get_window(cr, uid, ids, 'action_account_invoice_parent', 'l10n_ve_fiscal_requirements', 'assigned', partner_id, parent_id)
 
         return result
-
 
     def action_unlink(self, cr, uid, ids, form, context=None):
         """ Remove the parent of the partner
@@ -189,10 +187,10 @@ class account_invoice_parent(osv.osv_memory):
         parent_id = form.get('parent_id', False)
         partner_id = form.get('partner_id', False)
         inv_obj = self.pool.get('account.invoice')
-        inv_brw = inv_obj.browse(cr, uid, active_id,context=context)
+        inv_brw = inv_obj.browse(cr, uid, active_id, context=context)
 
         if inv_brw.parent_id:
-            inv_obj.write(cr, uid, active_id, {'parent_id':False}, context=context)
+            inv_obj.write(cr, uid, active_id, {'parent_id': False}, context=context)
             return {}
 
         result = self.get_window(cr, uid, ids, 'action_account_invoice_parent', 'l10n_ve_fiscal_requirements', 'unlink', partner_id, parent_id)
@@ -200,7 +198,7 @@ class account_invoice_parent(osv.osv_memory):
 
     def action_modify(self, cr, uid, ids, form, context=None):
         """ Modify parent of the partner
-        @param form: fields values parent_id and partner_id  
+        @param form: fields values parent_id and partner_id
         """
         self.check_sure(cr, uid, ids, form['sure'], context)
         active_id = context.get('active_id', False)
@@ -208,16 +206,15 @@ class account_invoice_parent(osv.osv_memory):
         partner_id = form.get('partner_id', False)
         self.check_recursion(cr, uid, ids, active_id, parent_id, context)
         inv_obj = self.pool.get('account.invoice')
-        inv_brw = inv_obj.browse(cr, uid, active_id,context=context)
+        inv_brw = inv_obj.browse(cr, uid, active_id, context=context)
 
         if parent_id:
             self.check_grandfather(cr, uid, ids, parent_id, context)
-            inv_obj.write(cr, uid, active_id, {'parent_id':parent_id}, context=context)
+            inv_obj.write(cr, uid, active_id, {'parent_id': parent_id}, context=context)
             return {}
 
         result = self.get_window(cr, uid, ids, 'action_account_invoice_parent', 'l10n_ve_fiscal_requirements', 'modify', partner_id, parent_id)
         return result
-
 
     def invoice_operation(self, cr, uid, ids, context=None):
         """ General method that calls a function depending of the data['type']

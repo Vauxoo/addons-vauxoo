@@ -68,7 +68,7 @@ class mrp_production(osv.Model):
                 res_diff[product_id] -= real.get(product_id, 0)
             for val_diff in res_diff.items():
                 val = {'product_id': val_diff[0],
-                       'quantity': (val_diff[1])*-1,
+                       'quantity': (val_diff[1]) * -1,
                        'product_uom': prod_product.browse(cr, uid,
                                         val_diff[0]).uom_id.id,
                        'production_id': production.id
@@ -86,7 +86,7 @@ class mrp_production(osv.Model):
             product = product_product.browse(cr, uid, lin['product_id'])
             qty_uom_convert = self.pool.get('product.uom')._compute_qty(cr,
                                 uid, lin['product_uom'], lin['product_qty'],
-                                to_uom_id=product.uom_id.id)
+                to_uom_id=product.uom_id.id)
             res[lin['product_id']] += qty_uom_convert
         return res
 

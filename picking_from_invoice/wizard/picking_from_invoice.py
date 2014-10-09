@@ -27,7 +27,6 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-
 class picking_from_invoice(osv.TransientModel):
 
     _name = 'picking.from.invoice'
@@ -66,7 +65,7 @@ class picking_from_invoice(osv.TransientModel):
                         'origin': invoice.name,
                         'type': invoice and
                         invoice.type == 'in_invoice' and
-                                        'in' or invoice.type == 'out_invoice'\
+                                        'in' or invoice.type == 'out_invoice'
                                         and 'out',
                         'state': 'auto',
                         'move_type': 'direct',
@@ -87,13 +86,13 @@ class picking_from_invoice(osv.TransientModel):
                         'product_qty': line.quantity,
                         'product_uos': line.uos_id and line.uos_id.id,
                         'address_id': invoice.partner_id and
-                                        invoice.partner_id.address and
-                                        invoice.partner_id.address[0].id,
+                        invoice.partner_id.address and
+                        invoice.partner_id.address[0].id,
                         'location_id': ware_brw and ware_brw.lot_stock_id and
-                                        ware_brw.lot_stock_id.id,
+                        ware_brw.lot_stock_id.id,
                         'location_dest_id': ware_brw and
-                                            ware_brw.lot_output_id and
-                                            ware_brw.lot_output_id.id,
+                        ware_brw.lot_output_id and
+                        ware_brw.lot_output_id.id,
                         'tracking_id': False,
                         'state': 'draft',
                         'note': line.note,

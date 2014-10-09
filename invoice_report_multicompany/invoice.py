@@ -1,8 +1,8 @@
 from openerp.osv import osv
 
 
-
 class account_invoices(osv.Model):
+
     """
     account_invoices
     """
@@ -24,4 +24,3 @@ class account_invoices(osv.Model):
         # TODO : Business Process
         return {'type': 'ir.action.report.xml',
                 'report_name': 'account.invoice'}
-

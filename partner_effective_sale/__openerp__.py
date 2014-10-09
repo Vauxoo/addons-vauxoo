@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Humberto Arocha <hbto@vauxoo.com>           
+#    Coded by: Humberto Arocha <hbto@vauxoo.com>
 #    Planified by: Rafael Silva <rsilvam@vauxoo.com>
 #    Audited by: Nhomar Hernandez <nhomar@vauxoo.com>
 #############################################################################
@@ -38,11 +38,11 @@
     "init_xml" : [],
     "demo_xml" : [
 
-    ], 
+    ],
     "update_xml" : [
         'security/groups.xml',
         'view/partner_view.xml',
-        
+
     ],
     "active": False,
     "installable": True

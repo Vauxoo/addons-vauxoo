@@ -41,6 +41,6 @@ class mrp_production(osv.Model):
                 relation='product.uom', string='Bom UoM',
                 store=True, readonly=True,
                 states={'draft': [('readonly', False)]},
-                help="BoM's UoM to change from production order"
-                                  ),
+            help="BoM's UoM to change from production order"
+        ),
     }

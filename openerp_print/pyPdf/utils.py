@@ -68,6 +68,7 @@ def readNonWhitespace(stream):
 
 
 class ConvertFunctionsToVirtualList(object):
+
     def __init__(self, lengthFunction, getFunction):
         self.lengthFunction = lengthFunction
         self.getFunction = getFunction
