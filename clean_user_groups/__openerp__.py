@@ -18,13 +18,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    'name' : 'Clean Groups',
-    'version' : '1.1',
-    'author' : 'Vauxoo',
-    'website': 'http://www.vauxoo.com',
-    'category' : 'Technical',
-    'description' : """
+    "name": "Clean Groups", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "Technical", 
+    "description": """
 Clean Users Groups
 ====================================
 How to
@@ -35,23 +35,21 @@ How to
 - Press Clean Groups
 
 You need have Technical group
-    """,
-    'images' : [],
-    'depends' : ['base'],
-    'data': [
-        'wizard/clean_group_view.xml',
-    ],
-    'js': [
-    ],
-    'qweb' : [
-    ],
-    'css':[
-    ],
-    'demo': [
-],
-    'test': [
-],
-    'installable': True,
-    'auto_install': False,
+    """, 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/clean_group_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

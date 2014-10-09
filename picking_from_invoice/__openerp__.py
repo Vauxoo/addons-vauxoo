@@ -23,22 +23,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Picking from invoice generator",
-    "version" : "0.1",
-    "depends" : ["account",'stock'],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Picking from invoice generator", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
     Generate multiple picking in and picking out from invoices selected
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [ ],
-    "update_xml" : [
-    'wizard/picking_from_invoice_view.xml',
-
-    ],
-    "active": False,
-    "installable": True,
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account", 
+        "stock"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/picking_from_invoice_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

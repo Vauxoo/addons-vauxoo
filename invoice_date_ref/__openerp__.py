@@ -23,23 +23,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-
 {
-    "name": "Invoice Data",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Generic Modules",
-    "description" : """
+    "name": "Invoice Data", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
     The module invoice_date_ref adds the field  date_info in invoice,
     this fields is informative only
-    """,
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
     "depends": [
-        "account",
-    ],
+        "account"
+    ], 
+    "demo": [], 
     "data": [
-        "invoice_date.xml"],
-    "installable": True,
-    "active": False,
+        "invoice_date.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

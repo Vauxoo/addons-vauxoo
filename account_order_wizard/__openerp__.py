@@ -22,27 +22,29 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
 {
-    "name" : "Account Order Wizard",
-    "version" : "0.1",
-    "author" : "Vauxoo",
-    "category" : "Generic Modules",
-    "website": "http://www.vauxoo.com",
-    "description": '''
+    "name": "Account Order Wizard", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
 
-''',
-    "depends" : [
-                "account",
-                ],
-    "init_xml" : [],
-    "demo_xml" : [
-
-    ],
-    "update_xml" : [
-        'view/wizards.xml',
-        'view/menues.xml',
-    ],
-    "active": False,
-    "installable": True
+""", 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/wizards.xml", 
+        "view/menues.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

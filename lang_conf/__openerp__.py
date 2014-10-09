@@ -24,21 +24,28 @@
 #
 ##############################################################################
 {
-    "name" : "Complete data from lang english",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Generics Modules",
-    "description" : """
+    "name": "Complete data from lang english", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generics Modules", 
+    "description": """
         This module complete the Separator Format, Decimal Separator, Thousands Separator in
         data of lang english
-        """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : ["base",],
-    "demo" : [],
-    "data" : [
-        "data/lang_data.xml",
-    ],
-    "installable" : True,
-    "active" : False,
+        """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "base"
+    ], 
+    "demo": [], 
+    "data": [
+        "data/lang_data.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

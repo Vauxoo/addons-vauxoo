@@ -22,31 +22,35 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    "name": "Expenses Replenishment Tax",
-    "version": "0.1",
-    "depends": [
-        "account_invoice_tax",
-        "hr_expense_replenishment",
-        "account_voucher_tax"
-        ],
-    "author": "Vauxoo",
+    "name": "Expenses Replenishment Tax", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "HR Module", 
     "description": """
 Create Entries Tax Effectively Paid :
 =====================================
 
 This module creates the tax effectively paid of the invoices associated
 with the expense
-""",
-    "website": "http://openerp.com.ve",
-    "category": "HR Module",
-    "init_xml": [],
-    "demo_xml": [],
-    "update_xml": [
-        'view/hr_expense_view.xml',
-        'workflow/hr_expense_workflow.xml'
-    ],
-    "active": False,
-    "installable": True,
+""", 
+    "website": "http://openerp.com.ve", 
+    "license": "", 
+    "depends": [
+        "account_invoice_tax", 
+        "hr_expense_replenishment", 
+        "account_voucher_tax"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/hr_expense_view.xml", 
+        "workflow/hr_expense_workflow.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

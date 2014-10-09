@@ -23,27 +23,30 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-
 {
-    "name": "Sale order line sequence",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Localization/Mexico",
-    "description" : """
+    "name": "Sale order line sequence", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Localization/Mexico", 
+    "description": """
         This module add the sequence in the sale order lines
 
         Note: This field is temporary
-    """,
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
     "depends": [
-        "sale",
-    ],
-    "demo": [],
-    "test": [],
+        "sale"
+    ], 
+    "demo": [], 
     "data": [
-        "view/sale_order_line_view.xml",
-    ],
-    "installable": True,
-    "active": False,
+        "view/sale_order_line_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

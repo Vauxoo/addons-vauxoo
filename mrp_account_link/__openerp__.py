@@ -23,24 +23,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "mrp acount link",
-    "version": "1.0",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/Production",
-    "website" : "http://www.vauxoo.com/",
+    "name": "mrp acount link", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Production", 
     "description": """This module adds a link
     between the production order to its account_move_lines generated after
     the instalation of this module.
-    """,
-    'depends': ['account_relation_move'],
-    'init_xml': [],
-    'update_xml': [
-        'mrp_view.xml',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "account_relation_move"
+    ], 
+    "demo": [], 
+    "data": [
+        "mrp_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

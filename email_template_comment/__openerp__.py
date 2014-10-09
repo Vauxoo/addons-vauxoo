@@ -20,24 +20,32 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    'name' : 'Email template Comment',
-    'version' : '1.1',
-    "website": "http://vauxoo.com",
-    "category": "Addons Vauxoo",
-    'author' : 'Vauxoo',
-    'description' : """
+    "name": "Email template Comment", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "Addons Vauxoo", 
+    "description": """
 Composition mode in email_template
 ==================================
 This module Allow to create mail.composse.message from email_template like composition_model=comment
-""",
-    'depends' : ['mail','email_template'],
-    'data': [
-        'view/email_template_view.xml'
-        ],
-    "active": False,
-    "installable": True,
+""", 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "mail", 
+        "email_template"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/email_template_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
-

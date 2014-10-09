@@ -18,12 +18,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    'name' : 'Sign Youtube',
-    'version' : '0.1',
-    'author' : 'Vauxoo',
-    'category' : '',
-    'description' : """
+    "name": "Sign Youtube", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "", 
+    "description": """
 Sign YouTube
 ============
 
@@ -40,27 +41,22 @@ You need fill the required information to load all videos for you YouTube accoun
 configuration test
 
 If the configuration is correct you can load the YouTube videos for send it in the company inbox
-    """,
-    'website': 'http://www.vauxoo.com',
-    'images' : [],
-    'depends' : [
-        'base',
-    ],
-    'data': [
-    'security/ir.model.access.csv',
-    'view/sign_youtube_view.xml',
-    ],
-    'js': [
-    ],
-    'qweb' : [
-    ],
-    'css':[
-    ],
-    'demo': [
-    ],
-    'test': [
-    ],
-    'installable': True,
-    'auto_install': False,
+    """, 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/ir.model.access.csv", 
+        "view/sign_youtube_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -22,28 +22,39 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
 {
-    "name" : "IFRS",
-    "version" : "0.2",
-    "author" : "Vauxoo",
-    "category" : "Generic Modules",
-    "website": "http://www.vauxoo.com",
-    "description": ''' International Financial Reporting Standards Module
+    "name": "IFRS", 
+    "version": "0.2", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """ International Financial Reporting Standards Module
 Instructions:
 =============
-How to print the report in PDF or spreadsheet in the following video: http://www.youtube.com/watch?v=zcxS9zO04FQ''',
-    "depends" : ['base','account_periods_initial','account','report_webkit'],
-    "data" : [
-        'security/security.xml',
-        'security/ir.model.access.csv',
-        'data/data.xml',
-        'data/data1.xml',
-        'view/ifrs_view.xml',
-        'report/report_ifrs.xml',
-        'wizard/ifrs_report_wizard_view.xml',
-        'data/data_ifrs.xml',
-        ],
-    "active": False,
-    "installable": True
+How to print the report in PDF or spreadsheet in the following video: http://www.youtube.com/watch?v=zcxS9zO04FQ""", 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "account_periods_initial", 
+        "account", 
+        "report_webkit"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/security.xml", 
+        "security/ir.model.access.csv", 
+        "data/data.xml", 
+        "data/data1.xml", 
+        "view/ifrs_view.xml", 
+        "report/report_ifrs.xml", 
+        "wizard/ifrs_report_wizard_view.xml", 
+        "data/data_ifrs.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

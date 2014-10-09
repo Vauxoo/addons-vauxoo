@@ -23,23 +23,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "Account move sum all credits debits",
-    "version": "1.0",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/Production",
-    "website" : "http://www.vauxoo.com/",
+    "name": "Account move sum all credits debits", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Production", 
     "description": """ Add two function fields to sum all of the credits and
     debits of the account move lines
-    """,
-    'depends': ['account'],
-    'init_xml': [],
-    'update_xml': [
-        'account_view.xml',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "account_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

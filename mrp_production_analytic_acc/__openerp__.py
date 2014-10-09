@@ -24,20 +24,32 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    'name': 'mrp account analytics',
-    "version" : "1.1",
-    'author': 'Vauxoo',
-    "category" : "analytic production",
-    'depends': ['stock','account','mrp'],
-    'description': """
-        Added field for account analitic
-    """,
-    'update_xml':[
-        'stock_view.xml',
-        'mrp_view.xml',
-    ],
-    'active': False,
-    'installable': True
-}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+{
+    "name": "mrp account analytics", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "analytic production", 
+    "description": """
+        Added field for account analitic
+    """, 
+    "website": "", 
+    "license": "", 
+    "depends": [
+        "stock", 
+        "account", 
+        "mrp"
+    ], 
+    "demo": [], 
+    "data": [
+        "stock_view.xml", 
+        "mrp_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
+}

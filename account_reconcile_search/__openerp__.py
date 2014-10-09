@@ -18,35 +18,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    'name' : 'Account Reconcile Search',
-    'version' : '0.1',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com',
-    'category' : 'Account',
-    'description' : """
+    "name": "Account Reconcile Search", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Account", 
+    "description": """
 Account Reconcile Search
 ========================
 This module allows the feature to group by reconcile ref field
-    """,
-    'images' : [],
-    'depends' : [
-        'account',
-    ],
-    'data': [
-        'view/account_reconcile_search.xml',
-    ],
-    'js': [
-    ],
-    'qweb' : [
-    ],
-    'css':[
-    ],
-    'demo': [
-    ],
-    'test': [
-    ],
-    'installable': True,
-    'auto_install': False,
+    """, 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/account_reconcile_search.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

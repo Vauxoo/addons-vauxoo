@@ -23,29 +23,33 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Account Move Cancel",
-    "version" : "0.1",
-    "depends" : ["account",'account_cancel'],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Account Move Cancel", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
     Cancels multiple invoices from a wizard and is called from other modules for direct
     billing cancellations and cancel your withholding, withholding automatically validating
     and maintaining the seat number that generated in its initial stage
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [ ],
-    "update_xml" : [
-    'security/invoice_cancel_security.xml',
-    'security/ir.model.access.csv',
-    'wizard/account_move_cancel_view.xml',
-    'view/invoice_view.xml',
-
-
-
-    ],
-    "active": False,
-    "installable": True,
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account", 
+        "account_cancel"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/invoice_cancel_security.xml", 
+        "security/ir.model.access.csv", 
+        "wizard/account_move_cancel_view.xml", 
+        "view/invoice_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

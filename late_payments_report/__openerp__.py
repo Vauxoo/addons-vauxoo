@@ -22,24 +22,31 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
-
 {
-	"name" : "Venezuelan Late Payments customisation",
-	"version" : "0.1",
-	"author" : "Vauxoo",
-	"category" : "Generic Modules/Others",
-	"website": "http://wiki.openerp.org.ve/",
+    "name": "Venezuelan Late Payments customisation", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Others", 
     "description": """
 
     Modulo que realiza la personalizacion del reporte de pagos atrasados
 
-    """,
-	"depends" : ["base", "account"],
-	"init_xml" : [],
-	"update_xml" : [
-		"late_payments_report.xml",
-
-	],
-	"active": False,
-	"installable": False
+    """, 
+    "website": "http://wiki.openerp.org.ve/", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "late_payments_report.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": False, 
+    "auto_install": False, 
+    "active": False
 }

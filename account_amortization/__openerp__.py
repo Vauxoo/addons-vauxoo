@@ -23,19 +23,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "Vauxoo Account Amortization",
-    "version": "0.1",
-    "depends": [
-                "decimal_precision",
-                "account_asset",
-                "account_asset_date",
-               ],
-    "author": "Vauxoo",
-    "licence": "AGPL v3",
-    "website": "http://www.vauxoo.com",
-    "category": "Accounting & Finance",
+    "name": "Vauxoo Account Amortization", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Accounting & Finance", 
     "description": """
 Vauxoo Account Amortization.
 ============================
@@ -52,10 +44,23 @@ This module adds:
 See the documentation here:
 ---------------------------
 http://www.principlesofaccounting.com/chapter13/chapter13.html
-""",
-    "data":[
-        "view/account_amortization_view.xml",
-        ],
-    "installable": True,
-    "auto_install": False,
+""", 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "decimal_precision", 
+        "account_asset", 
+        "account_asset_date"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/account_amortization_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

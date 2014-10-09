@@ -23,21 +23,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Projects",
-    "version" : "0.1",
-    "depends" : ['project','project_issue','project_scrum'],
-    "author" : "Vauxoo",
-    "description" : """
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [ ],
-    "update_xml" : [
-    'view/project_issue_view.xml'
-
-    ],
-    "active": False,
-    "installable": False,
+    "name": "Projects", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "project", 
+        "project_issue", 
+        "project_scrum"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/project_issue_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": False, 
+    "auto_install": False, 
+    "active": False
 }

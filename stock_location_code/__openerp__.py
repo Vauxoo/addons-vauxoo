@@ -23,23 +23,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-{
-    "name": "Stock Location Code",
-    "version": "1.1",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/Account",
-    "website" : "http://www.vauxoo.com/",
-    "description": """ Add field to code of the location
-    """,
-    'depends': ['stock'],
-    'init_xml': [],
-    'update_xml': [
-        'stock_view.xml',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
-}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+{
+    "name": "Stock Location Code", 
+    "version": "1.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Account", 
+    "description": """ Add field to code of the location
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "stock"
+    ], 
+    "demo": [], 
+    "data": [
+        "stock_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
+}

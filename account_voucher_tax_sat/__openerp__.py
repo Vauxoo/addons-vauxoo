@@ -20,12 +20,12 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Account Voucher Tax SAT",
-    "version": "1.0",
-    "author" : "Vauxoo",
-    "category": "Accounting",
-    "website" : "http://www.vauxoo.com/",
+    "name": "Account Voucher Tax SAT", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Accounting", 
     "description": """
 Polizas de SAT:
 ===============
@@ -33,21 +33,26 @@ Polizas de SAT:
 1.- Crea los apuntes contables para los impuestos con retenciones
 2.- Crea provicion de pago al SAT
 3.- Crea apuntes contables para las retenciones de IVA
-    """,
-    'depends': [
-        'account',
-        'account_voucher_tax'
-        ],
-    'data': [
-        'security/security.xml',
-        'security/ir.model.access.csv',
-        'wizard/account_tax_sat_view.xml',
-        'view/account_voucher_tax_sat_view.xml',
-        'view/partner_view.xml',
-        ],
-    'demo': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "account", 
+        "account_voucher_tax"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/security.xml", 
+        "security/ir.model.access.csv", 
+        "wizard/account_tax_sat_view.xml", 
+        "view/account_voucher_tax_sat_view.xml", 
+        "view/partner_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

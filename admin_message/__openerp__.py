@@ -23,12 +23,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "Administration Message",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Mail Message",
+    "name": "Administration Message", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Mail Message", 
     "description": """
 Administration for Messages
 ===========================
@@ -55,20 +54,27 @@ The web_many2many_attachment dependency can be found here:
 lp:~vauxoo/web-addons/7.0-web_hideleftmenu
 
 [1] http://getbootstrap.com/
-    """,
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
-    'depends': ['base',
-                'base_setup',
-                'web_many2many_attachments',
-                'mail'],
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "base", 
+        "base_setup", 
+        "web_many2many_attachments", 
+        "mail"
+    ], 
+    "demo": [], 
     "data": [
-        "security/security_groups.xml",
-        "view/mail_message_view.xml",
-    ],
+        "security/security_groups.xml", 
+        "view/mail_message_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
     "css": [
-        "static/src/css/base.css",
-        ],
-    "installable": True,
-    "active": False,
+        "static/src/css/base.css"
+    ], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

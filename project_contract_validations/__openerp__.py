@@ -23,26 +23,30 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "Project Contract Validations",
-    "version" : "0.1",
-    "depends" : [
-                 "project",
-                 "sale",
-                 ],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Project Contract Validations", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
         This module adds guidelines and validations in the relation
         between Project and Analytic Account modules.
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "demo" : [],
-    "data" : [
-        "view/project_view.xml",
-    ],
-    "active": False,
-    "images": [],
-    "installable": True,
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "project", 
+        "sale"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/project_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

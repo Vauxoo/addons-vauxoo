@@ -23,13 +23,11 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
 {
-    "name": "MRP Workcenter Management",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "website": "http://vauxoo.com",
-    "category": "MRP",
+    "name": "MRP Workcenter Management", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "MRP", 
     "description": """
 
 MRP Management Workcenter.
@@ -40,16 +38,23 @@ List of new functionalities:
 
 - adds a new menuitem at **Manufacturing** > **Manufacturing** > **Work Centers**  that shows the work centers registered.
 
- """,
-    "depends": ["base", "mrp", "mrp_operations"],
+ """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "mrp", 
+        "mrp_operations"
+    ], 
+    "demo": [], 
     "data": [
-        "view/mrp_workcenter_view.xml",
-    ],
-    "js": [],
-    "qweb": [],
-    "css": [],
-    "demo": [],
-    "test": [],
-    "installable": True,
-    "active": False,
-    }
+        "view/mrp_workcenter_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
+}

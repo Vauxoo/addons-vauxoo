@@ -23,24 +23,30 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Cost assigned in the account move",
-    "version" : "0.1",
-    "depends" : ["account"],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Cost assigned in the account move", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
     This module allows you to modify the control number of the invoice and the internal number is
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [ ],
-    "update_xml" : [
-    'security/change_number_security.xml',
-    'security/ir.model.access.csv',
-    'wizard/change_number_view.xml',
-    'view/invoice_view.xml'
-    ],
-    "active": False,
-    "installable": True,
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/change_number_security.xml", 
+        "security/ir.model.access.csv", 
+        "wizard/change_number_view.xml", 
+        "view/invoice_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

@@ -24,28 +24,32 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "Active in view Journal and Period",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Generic Modules/Account",
+    "name": "Active in view Journal and Period", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Account", 
     "description": """
 Add active for journal and Period
 ===================================
 
 Module to added field active in view journal and view period.
 
-    """,
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
-    'depends': ['account'],
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
     "data": [
-        "view/account_view.xml",
-    ],
-    "demo":[],
-    "css": [],
-    "test": [],
-    "installable": True,
-    "active": False,
+        "view/account_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

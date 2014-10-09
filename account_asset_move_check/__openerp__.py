@@ -23,14 +23,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    'name' : 'Account Asset Move Check',
-    'version' : '0.1',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com',
-    'category' : 'Accounting',
-    'description' : """
+    "name": "Account Asset Move Check", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Accounting", 
+    "description": """
 Account Asset Move Check
 ========================
 
@@ -38,25 +37,20 @@ This module add a field that makes posible check like posted some
 deprecations lines with an special condition using the "check_posted"
 field in the validation of "_get_move_check" function.
 
-    """,
-    'images' : [],
-    'depends' : [
-        'account',
-        'account_asset',
-    ],
-    'data': [
-    ],
-    'js': [
-    ],
-    'qweb' : [
-    ],
-    'css':[
-    ],
-    'demo': [
-    ],
-    'test': [
-    ],
-    'installable': True,
-    'auto_install': False,
+    """, 
+    "website": "http://www.vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account", 
+        "account_asset"
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

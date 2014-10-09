@@ -19,13 +19,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "Fixes and Imrpovements to Bank Statement management",
-    "version" : "0.1",
-    "depends" : ["account",],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Fixes and Imrpovements to Bank Statement management", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Accounting & Finance", 
+    "description": """
 Improve management of Bank Statement.
 =====================================
     1.- Import directly from files given by banks.
@@ -36,22 +35,26 @@ Improve management of Bank Statement.
         c.- Venezuelan Banks.
             Banco Exterior #TODO
     2.-
-                    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Accounting & Finance",
-    "init_xml" : [
-    ],
-    "demo_xml" : [
-    ],
-    "update_xml" : [
-        "security/bank_statement_security.xml",
-        "security/ir.model.access.csv",
-        "view/account_bank_statement_view.xml",
-        "view/account_invoice_view.xml",
-        "view/account_journal_view.xml",
-        "data/data.xml",
-    ],
-    "active": False,
-    "images": [],
-    "installable": True,
+                    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "account"
+    ], 
+    "demo": [], 
+    "data": [
+        "security/bank_statement_security.xml", 
+        "security/ir.model.access.csv", 
+        "view/account_bank_statement_view.xml", 
+        "view/account_invoice_view.xml", 
+        "view/account_journal_view.xml", 
+        "data/data.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

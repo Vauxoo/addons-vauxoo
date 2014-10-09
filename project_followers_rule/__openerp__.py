@@ -23,33 +23,37 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-
 {
-    "name": "Followers of Task to Project",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Generic Modules",
-    "description" : """
+    "name": "Followers of Task to Project", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
 The followers_task_ids function field type is added, this field is used in the registration rule Follow Project Task,
 allowing read, write, delete and create tasks without being a follower of the project.
-    """,
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
-    "depends": ["base",
-        "portal_project",
-        "hr",
-    ],
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
+    "depends": [
+        "base", 
+        "portal_project", 
+        "hr"
+    ], 
     "demo": [
-        'demo/project_task_demo.xml',
-    ],
+        "demo/project_task_demo.xml"
+    ], 
     "data": [
-        'data/group_follower.xml',
-        'data/ir_rule_project_data.xml',
-        'view/project_project_view.xml',
-    ],
+        "data/group_follower.xml", 
+        "data/ir_rule_project_data.xml", 
+        "view/project_project_view.xml"
+    ], 
     "test": [
-        "test/ir_rule_task_project.yml",
-    ],
-    "installable": True,
-    "active": False,
+        "test/ir_rule_task_project.yml"
+    ], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

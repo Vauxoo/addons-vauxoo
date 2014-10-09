@@ -22,23 +22,31 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name" : "Load incidences from xls fiel",
-    "version" : "0.1",
-    "depends" : ["project",'project_issue'],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Load incidences from xls fiel", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
+    "description": """
     Load incidences from xls
     You need install python library xlrd and only load xls field
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [ ],
-    "update_xml" : [
-    'wizard/load_issue_view.xml'
-    ],
-    "active": False,
-    "installable": True,
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "project", 
+        "project_issue"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/load_issue_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

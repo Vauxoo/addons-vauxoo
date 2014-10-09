@@ -22,21 +22,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name" : "Sale Report for MultiReports Environment",
-    "version" : "0.1",
-    "depends" : ["sale", "multireport_base"],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "Sale Report for MultiReports Environment", 
+    "version": "0.1", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Sales", 
+    "description": """
     What do this module:
     Just the quotation format.
-                    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules/Sales",
-    "data" : [
-        "wizard/sale_order_multicompany.xml",
-        "sale_multicompany_report_view.xml",
-        "sale_order_view.xml",
-    ],
-    "active": False,
-    "installable": True,
+                    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "sale", 
+        "multireport_base"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/sale_order_multicompany.xml", 
+        "sale_multicompany_report_view.xml", 
+        "sale_order_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

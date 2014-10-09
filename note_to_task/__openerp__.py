@@ -22,11 +22,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    'name': 'Convert Note to Task',
-    'version': '1.0',
-    'category': 'Tools',
-    'depends': ['base','note', 'project'],
-    'description': """
+    "name": "Convert Note to Task", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Tools", 
+    "description": """
 Convert Note to Task
 ====================
     Add a button in Notes showing a wizard to convert the note into a task
@@ -34,15 +34,24 @@ Convert Note to Task
             1. - Estimated time for this task.
             2.- Associate Project.
             3.- Date to end.
-            """,
-    'author': 'Vauxoo',
-    'website': 'http://vauxoo.com',
-    'data': [
-        'wizard/convert_note_view.xml',
-        'view/note_view.xml',
-        ],
-    'js':[],
-    'css': [],
-    'qweb': [],
-    'installable': True,
+            """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "note", 
+        "project"
+    ], 
+    "demo": [], 
+    "data": [
+        "wizard/convert_note_view.xml", 
+        "view/note_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

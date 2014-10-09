@@ -24,32 +24,37 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
 ###
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name" : "CRM Cost Issue",
-    "version" : "0.2",
-    "author" : "Vauxoo",
-    "website" : "http://vauxoo.com",
-    "category": 'Generic Modules/Accounting',
+    "name": "CRM Cost Issue", 
+    "version": "0.2", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules/Accounting", 
     "description": """
         Este modulo agrega el costo de una incidencia segun las horas estimadas.
 
         Para definir el costo de la Hora, hay que crear un producto de tipo servicio y asociarlo al usuario para que asi pueda generar el costo.
 
-    """,
-    'init_xml': [],
-    "depends" : ["base", "crm", "project", "project_issue", "product"],
-    'update_xml': [
-        'view/project_task_view.xml'
-    ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
-    'external_dependencies': {},
+    """, 
+    "website": "http://vauxoo.com", 
+    "license": "", 
+    "depends": [
+        "base", 
+        "crm", 
+        "project", 
+        "project_issue", 
+        "product"
+    ], 
+    "demo": [], 
+    "data": [
+        "view/project_task_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

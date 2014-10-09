@@ -23,29 +23,32 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-
 {
-    "name": "Hr Payroll Home Address Validation",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Localization/Mexico",
-    "description" : """
+    "name": "Hr Payroll Home Address Validation", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Localization/Mexico", 
+    "description": """
     This module adds validation for the field home_address of the employee in payroll
     Just have to install the module, not to do any configuration.
     This field home_address is found in form view HR / Payroll Employee / Employee_id
     in "Personal Information" tab If the field home_address is empty you can not confirm
     that employee's payroll and will see the message that the employee needs to have a
     home address, otherwise if may confirm the payroll.
-    """,
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "AGPL-3", 
     "depends": [
-        "hr_payroll",
+        "hr_payroll", 
         "hr_payroll_account"
-    ],
-    "data": [
-    ],
-    "test": [],
-    "installable": True,
-    "active": False,
+    ], 
+    "demo": [], 
+    "data": [], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }

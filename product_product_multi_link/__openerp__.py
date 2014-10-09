@@ -23,25 +23,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name": "Product product multi link",
-    "version": "1.0",
-    "author" : "Vauxoo",
-    "category": "Generic Modules",
-    "website" : "http://www.vauxoo.com/",
+    "name": "Product product multi link", 
+    "version": "1.0", 
+    "author": "Vauxoo", 
+    "category": "Generic Modules", 
     "description": """This module links from products to their journal items,
     production orders, stock moves with productions, and bill of materials where
     those products are components
-    """,
-    'depends': ['product', 'stock', 'mrp'],
-    'init_xml': [],
-    'update_xml': [
-        'product_view.xml',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
-
+    """, 
+    "website": "http://www.vauxoo.com/", 
+    "license": "", 
+    "depends": [
+        "product", 
+        "stock", 
+        "mrp"
+    ], 
+    "demo": [], 
+    "data": [
+        "product_view.xml"
+    ], 
+    "test": [], 
+    "js": [], 
+    "css": [], 
+    "qweb": [], 
+    "installable": True, 
+    "auto_install": False, 
+    "active": False
 }
