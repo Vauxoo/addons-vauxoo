@@ -25,7 +25,7 @@
 ###############################################################################
 
 {
-    'name': 'account_model_plans',
+    'name': 'Account Model Plans',
     'version': '1.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',
@@ -33,9 +33,6 @@
     'description': '''
 Account Model Plans
 ===================
-
-New Features
-------------
 
 - adds analytics_id field (``account.analytic.plan.instance``) to the
   ``account.model.line`` model.
