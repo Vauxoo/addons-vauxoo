@@ -400,15 +400,18 @@ class hr_expense_expense(osv.Model):
         for exp in self.browse(cr, uid, ids, context=context):
             self.check_advance_no_empty_condition(cr, uid, exp.id,
                                                   context=context)
+            if not exp.account_move_id:
+                raise osv.except_osv(
+                    _('Warning Data Integrity Failure!!!'),
+                    _('Journal Entry for this Expense has been previously '
+                      'deleted, please cancel document and go through the '
+                      'previous steps up to this current step to recreate it!'
+                      ))
             #~ clear empty expense move.
-            exp_credit = \
+            exp_credit = exp.account_move_id and \
                 [brw.id
                  for brw in exp.account_move_id.line_id
                  if brw.credit > 0.0]
-            if not exp_credit:
-                [brw.id for brw in exp.account_move_id.line_id]
-                # Really!!!
-                #aml_obj.unlink(cr, uid, empty_aml_ids, context=context)
 
             #~ manage the expense move lines
             exp_aml_brws = exp.account_move_id and \
@@ -487,6 +490,15 @@ class hr_expense_expense(osv.Model):
             period_id = per_obj.find(cr, uid, dt=date_post)
             period_id = period_id and period_id[0]
             exp.write({'date_post': date_post})
+
+            if not exp.account_move_id:
+                raise osv.except_osv(
+                    _('Warning Data Integrity Failure!!!'),
+                    _('Journal Entry for this Expense has been previously '
+                      'deleted, please cancel document and go through the '
+                      'previous steps up to this current step to recreate it!'
+                      ))
+
             x_aml_ids = [aml_brw.id for aml_brw in exp.account_move_id.line_id]
 
             vals = {'date': date_post, 'period_id': period_id}
@@ -632,6 +644,15 @@ class hr_expense_expense(osv.Model):
             exp.employee_id.address_home_id.property_account_payable.id
         partner_id = partner_id or exp.employee_id.address_home_id and \
             exp.employee_id.address_home_id.id
+
+        if not exp.account_move_id:
+            raise osv.except_osv(
+                _('Warning Data Integrity Failure!!!'),
+                _('Journal Entry for this Expense has been previously '
+                  'deleted, please cancel document and go through the '
+                  'previous steps up to this current step to recreate it!'
+                  ))
+
         vals = {
             'move_id': am_id,
             'journal_id': exp.account_move_id.journal_id.id,
