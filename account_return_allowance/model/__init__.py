@@ -1,3 +1,3 @@
-import product
-import invoice
-import res_company
+from . import product
+from . import invoice
+from . import res_company

@@ -24,7 +24,7 @@
 ################################################################################
 
 
-import reporte_stock
-import reporte_stock2
+from . import reporte_stock
+from . import reporte_stock2
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

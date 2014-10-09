@@ -24,4 +24,4 @@
 ################################################################################
 
 
-import sale_double_validation_installer
+from . import sale_double_validation_installer

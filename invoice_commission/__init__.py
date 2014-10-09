@@ -1,2 +1,2 @@
 # -*- encoding: utf-8 -*-
-import invoice_commission  
+from . import invoice_commission

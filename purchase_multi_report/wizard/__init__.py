@@ -19,4 +19,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import purchase_report_multicompany
+from . import purchase_report_multicompany

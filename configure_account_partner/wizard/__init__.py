@@ -25,4 +25,4 @@
 ##############################################################################
 
 
-import conf_account_partner
+from . import conf_account_partner

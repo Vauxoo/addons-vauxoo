@@ -23,5 +23,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import hr_expense
-import account_invoice
+from . import hr_expense
+from . import account_invoice

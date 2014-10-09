@@ -23,4 +23,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import wizard_production_make
+from . import wizard_production_make

@@ -23,4 +23,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import afr_report_wizard 
+from . import afr_report_wizard

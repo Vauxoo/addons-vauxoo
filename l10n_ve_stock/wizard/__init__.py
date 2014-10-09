@@ -24,7 +24,7 @@
 ################################################################################
 
 
-import wiz_picking_valued
+from . import wiz_picking_valued
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

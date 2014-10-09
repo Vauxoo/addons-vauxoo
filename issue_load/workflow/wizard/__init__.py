@@ -1,1 +1,1 @@
-import load_issue 
+from . import load_issue

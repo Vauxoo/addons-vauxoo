@@ -23,4 +23,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import attach_invoice_to_expense_wizard
+from . import attach_invoice_to_expense_wizard

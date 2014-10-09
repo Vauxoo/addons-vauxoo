@@ -23,4 +23,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import account_invoice
+from . import account_invoice
