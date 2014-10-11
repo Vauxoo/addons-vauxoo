@@ -31,6 +31,7 @@ _US_STATE = [('draft', 'New'), ('open', 'In Progress'), (
 class user_story(osv.Model):
     _name = 'user.story'
     _description = 'User Story'
+    _order = 'id desc'
     _inherit = ['mail.thread']
 
     def write(self, cr, uid, ids, vals, context=None):
