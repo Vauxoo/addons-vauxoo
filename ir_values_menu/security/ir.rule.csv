@@ -1,2 +1,0 @@
-perm_create,perm_unlink,perm_write,perm_read,domain_force,groups,id,name,model_id
-True,True,True,True,"['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]",,ir.values,IR Values,ir.values

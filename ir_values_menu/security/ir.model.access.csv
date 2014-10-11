@@ -1,2 +1,0 @@
-group_id,id,name,model_id,perm_create,perm_unlink,perm_write,perm_read
-,base.access_ir_values_default,Ir Values Defaults,ir.values,True,True,True,True
