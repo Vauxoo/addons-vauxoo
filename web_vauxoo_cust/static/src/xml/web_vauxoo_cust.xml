@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<templates id="template" xml:space="preserve">
-    <t t-extend="Login">
-        <t t-jquery="div[class=oe_login_logo]" t-operation="replace">
-            <div class="oe_login_logo"><img src='/web_vauxoo_cust/static/src/img/logo.png'/></div>
-        </t>
-
-    </t>
-</templates>
