@@ -10,9 +10,9 @@
 
                 <xpath expr="//notebook" position="inside">
                     <page string="Suppliers">
-                        <separator string="Suggested Suppliers"/>
+                        <separator string="Suggested Suppliers by Requester"/>
                         <field name="suggested_supplier_ids"/>
-                        <separator string="Suppliers"/>
+                        <separator string="Selected Contractor / Suppliers"/>
                         <field name="supplier_ids"/>
                     </page>
                 </xpath>
