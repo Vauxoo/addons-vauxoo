@@ -465,7 +465,8 @@ class acceptability_criteria(osv.Model):
         user_story_brw.user_id and partner_ids.append(user_story_brw.user_id.partner_id.id)
         user_story_brw.user_execute_id and partner_ids.append(user_story_brw.user_execute_id.partner_id.id)
         partner_ids = list(set(partner_ids))
-        model_data_id = data_obj._get_id(cr, uid, 'user_story', 'email_compose_message_wizard_inherit_form_without_partner')
+        model_data_id = data_obj._get_id(cr, uid, 'user_story',
+                                         'email_compose_message_wizard_inherit_form_without_partner')
         res_id = data_obj.browse(cr, uid, model_data_id, context=context).res_id
         ction = {
                 'type': 'ir.actions.act_window',
