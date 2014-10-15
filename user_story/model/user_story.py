@@ -300,7 +300,7 @@ class user_story(osv.Model):
         '''
         usname = self.browse(cr, uid, i).name
         username = self.pool.get('res.users').browse(cr, uid, uid).name
-        urlbase = self.pool.get('ir.config_parameter').get_param(cr, uid, 'web.base.url')
+        urlbase = self.pool.get('ir.config_parameter').get_param(cr, SUPERUSER_ID, 'web.base.url')
         link = '#id={i}&view_type=form&model=user.story'.format(i=i, urlbase=urlbase)
         return _(u'''<html><div>
                  <h2>{usname}</h2>
@@ -323,7 +323,7 @@ class user_story(osv.Model):
     def get_body_approval(self, cr, uid, i, context=None):
         usname = self.browse(cr, uid, i).name
         username = self.pool.get('res.users').browse(cr, uid, uid).name
-        urlbase = self.pool.get('ir.config_parameter').get_param(cr, uid, 'web.base.url')
+        urlbase = self.pool.get('ir.config_parameter').get_param(cr, SUPERUSER_ID, 'web.base.url')
         link = '#id={i}&view_type=form&model=user.story'.format(i=i, urlbase=urlbase)
         return _(u'''<html><div>
                  <h2>{usname}</h2>
@@ -418,6 +418,106 @@ class acceptability_criteria(osv.Model):
             cr, uid, [('accep_crit_id', 'in', us_ids)], context=context)
         return ac_ids
 
+    def get_body_disapproval(self, cr, uid, i, context=None):
+        '''
+        TODO: This body must be verified to give the information regarding the answers in
+        the do_disaproval method.
+        '''
+        model_brw = self.browse(cr, uid, i[0])
+        urlbase = self.pool.get('ir.config_parameter').get_param(cr, SUPERUSER_ID, 'web.base.url')
+        link = '#id={i}&view_type=form&model=user.story'.format(i=model_brw.accep_crit_id and model_brw.accep_crit_id.id, urlbase=urlbase)
+        return link
+
+    def approve(self, cr, uid, ids, context=None):
+        context = context or {}
+        criterial_brw2 = self.browse(cr, uid, ids[0])
+        criterial_brw = self.browse(cr, SUPERUSER_ID, ids[0])
+        if criterial_brw.accepted:
+            return True
+        data_obj = self.pool.get('ir.model.data')
+        compose_obj = self.pool.get('mail.compose.message')
+        user_story_brw = criterial_brw.accep_crit_id
+        partner_ids = [i.id for i in user_story_brw.message_follower_ids]
+        partner_ids.append(user_story_brw.owner_id.partner_id.id)
+        user_story_brw.user_id and partner_ids.append(user_story_brw.user_id.partner_id.id)
+        user_story_brw.user_execute_id and partner_ids.append(user_story_brw.user_execute_id.partner_id.id)
+        partner_ids = list(set(partner_ids))
+        template = data_obj.get_object(cr, uid, 'user_story', 'template_approve_aceptabilty_criterial')
+        mail = self.pool.get('email.template').generate_email(cr, SUPERUSER_ID, template.id, ids[0])
+        compose_id = compose_obj.create(cr, uid, {
+                        'res_model': 'user.story',
+                        'model': 'user.story',
+                        'res_id': user_story_brw.id,
+                        'partner_ids': [(6, 0, partner_ids)],
+                        'partner_id':0,
+                        'body': mail.get('body'),
+        })
+        criterial_brw2.write({'accepted': True})
+        compose_obj.send_mail(cr, uid, [compose_id])
+        return True
+
+    def disapprove(self, cr, uid, ids, context=None):
+        context = context or {}
+        criterial_brw = self.browse(cr, SUPERUSER_ID, ids[0])
+        if criterial_brw.accepted:
+            return True
+        data_obj = self.pool.get('ir.model.data')
+        user_story_brw = criterial_brw.accep_crit_id
+        partner_ids = [i.id for i in user_story_brw.message_follower_ids]
+        partner_ids.append(user_story_brw.owner_id.partner_id.id)
+        user_story_brw.user_id and partner_ids.append(user_story_brw.user_id.partner_id.id)
+        user_story_brw.user_execute_id and partner_ids.append(user_story_brw.user_execute_id.partner_id.id)
+        partner_ids = list(set(partner_ids))
+        model_data_id = data_obj._get_id(cr, uid, 'user_story',
+                                         'email_compose_message_wizard_inherit_form_without_partner')
+        res_id = data_obj.browse(cr, uid, model_data_id, context=context).res_id
+        ction = {
+                'type': 'ir.actions.act_window',
+                'res_model': 'mail.compose.message',
+                'src_model': 'user.story',
+                'view_mode': 'form',
+                'view_mode':'form,tree',
+                'view_id': res_id,
+                'view_type': 'form',
+                'views': [[res_id, 'form']],
+                'target': 'new',
+                'context': {
+                        'default_res_model': 'user.story',
+                        'default_mail_compose_log': True,
+                        'default_model': 'user.story',
+                        'default_res_id': user_story_brw.id,
+                        'default_partner_ids': [(6, 0, partner_ids)],
+                        'default_body': _('<b>Description the cause of disapproval</b>'),
+                                   }
+                            }
+        return ction
+
+    def ask_review(self, cr, uid, ids, context=None):
+        context = context or {}
+        criterial_brw = self.browse(cr, SUPERUSER_ID, ids[0])
+        if criterial_brw.accepted:
+            return True
+        data_obj = self.pool.get('ir.model.data')
+        compose_obj = self.pool.get('mail.compose.message')
+        user_story_brw = criterial_brw.accep_crit_id
+        partner_ids = [i.id for i in user_story_brw.message_follower_ids]
+        partner_ids.append(user_story_brw.owner_id.partner_id.id)
+        user_story_brw.user_id and partner_ids.append(user_story_brw.user_id.partner_id.id)
+        user_story_brw.user_execute_id and partner_ids.append(user_story_brw.user_execute_id.partner_id.id)
+        partner_ids = list(set(partner_ids))
+        template = data_obj.get_object(cr, uid, 'user_story', 'template_ask_aceptabilty_criterial')
+        mail = self.pool.get('email.template').generate_email(cr, SUPERUSER_ID, template.id, ids[0])
+        compose_id = compose_obj.create(cr, uid, {
+                        'res_model': 'user.story',
+                        'model': 'user.story',
+                        'res_id': user_story_brw.id,
+                        'partner_ids': [(6, 0, partner_ids)],
+                        'partner_id':0,
+                        'body': mail.get('body'),
+        })
+        compose_obj.send_mail(cr, uid, [compose_id])
+        return True
+
     def _get_user_story_field(self, cr, uid, ids, fieldname, arg, context=None):
         """
         Method used as the function for extracting values for the user.story
@@ -441,7 +541,7 @@ class acceptability_criteria(osv.Model):
         'accep_crit_id': fields.many2one('user.story',
                                          'User Story',
                                          ondelete='cascade',
-                                         required=True),
+                                         ),
         'accepted': fields.boolean('Accepted',
                                    help='Check if this criterion apply'),
         'development': fields.boolean('Development'),
