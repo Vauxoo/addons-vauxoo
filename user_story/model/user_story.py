@@ -87,7 +87,7 @@ class user_story(osv.Model):
         return super(user_story, self).write(cr, uid, ids,
                                              vals, context=context)
 
-    def body_progress(self, cr, uid, ids, template, hu, context=None):
+    def body_progress(self, cr, uid, ids, template, context=None):
         imd_obj = self.pool.get('ir.model.data')
         template_ids = imd_obj.search(
             cr, uid, [('model', '=', 'email.template'), ('name', '=', template)])
@@ -138,7 +138,8 @@ class user_story(osv.Model):
         else:
             return False
 
-    def send_mail_hu(self, cr, uid, ids, subject, body, res_id, users=[], context=None):
+    def send_mail_hu(self, cr, uid, ids, subject, body, res_id,
+                     users=None, context=None):
         if context is None:
             context = {}
         if context.get('force_send', False):
@@ -215,7 +216,9 @@ class user_story(osv.Model):
                 result[task.userstory_id.id] = True
         return result.keys()
 
-    def _message_get_auto_subscribe_fields(self, cr, uid, updated_fields, auto_follow_fields=['user_id'], context=None):
+    def _message_get_auto_subscribe_fields(self, cr, uid, updated_fields,
+                                           auto_follow_fields=None,
+                                           context=None):
         if auto_follow_fields is None:
             auto_follow_fields = ['user_id']
 
@@ -300,13 +303,13 @@ class user_story(osv.Model):
         '''
         usname = self.browse(cr, uid, i).name
         username = self.pool.get('res.users').browse(cr, uid, uid).name
-        urlbase = self.pool.get('ir.config_parameter').get_param(cr, SUPERUSER_ID, 'web.base.url')
-        link = '#id={i}&view_type=form&model=user.story'.format(i=i, urlbase=urlbase)
+        link = '#id={i}&view_type=form&model=user.story'.format(i=i)
         return _(u'''<html><div>
                  <h2>{usname}</h2>
                  <p>The user {user} has approved the user Story
                  <a href="{link}">See what we are talking about here</a>
-                 </div></html>'''.format(usname=usname, user=username, link=link))
+                 </div></html>'''.format(usname=usname, user=username,
+                                         link=link))
 
     def do_disapproval(self, cr, uid, ids, context=None):
         '''
@@ -323,13 +326,13 @@ class user_story(osv.Model):
     def get_body_approval(self, cr, uid, i, context=None):
         usname = self.browse(cr, uid, i).name
         username = self.pool.get('res.users').browse(cr, uid, uid).name
-        urlbase = self.pool.get('ir.config_parameter').get_param(cr, SUPERUSER_ID, 'web.base.url')
-        link = '#id={i}&view_type=form&model=user.story'.format(i=i, urlbase=urlbase)
+        link = '#id={i}&view_type=form&model=user.story'.format(i=i)
         return _(u'''<html><div>
                  <h2>{usname}</h2>
                  <p>The user {user} has approved the user Story
                  <a href="{link}">See what we are talking about here</a>
-                 </div></html>'''.format(usname=usname, user=username, link=link))
+                 </div></html>'''.format(usname=usname, user=username,
+                                         link=link))
 
     def do_approval(self, cr, uid, ids, context=None):
         context = context or {}
@@ -439,8 +442,10 @@ class acceptability_criteria(osv.Model):
         user_story_brw = criterial_brw.accep_crit_id
         partner_ids = [i.id for i in user_story_brw.message_follower_ids]
         partner_ids.append(user_story_brw.owner_id.partner_id.id)
-        user_story_brw.user_id and partner_ids.append(user_story_brw.user_id.partner_id.id)
-        user_story_brw.user_execute_id and partner_ids.append(user_story_brw.user_execute_id.partner_id.id)
+        if user_story_brw.user_id:
+            partner_ids.append(user_story_brw.user_id.partner_id.id)
+        if user_story_brw.user_execute_id:
+            partner_ids.append(user_story_brw.user_execute_id.partner_id.id)
         partner_ids = list(set(partner_ids))
         template = data_obj.get_object(cr, uid, 'user_story', 'template_approve_aceptabilty_criterial')
         mail = self.pool.get('email.template').generate_email(cr, SUPERUSER_ID, template.id, ids[0])
@@ -465,8 +470,10 @@ class acceptability_criteria(osv.Model):
         user_story_brw = criterial_brw.accep_crit_id
         partner_ids = [i.id for i in user_story_brw.message_follower_ids]
         partner_ids.append(user_story_brw.owner_id.partner_id.id)
-        user_story_brw.user_id and partner_ids.append(user_story_brw.user_id.partner_id.id)
-        user_story_brw.user_execute_id and partner_ids.append(user_story_brw.user_execute_id.partner_id.id)
+        if user_story_brw.user_id:
+            partner_ids.append(user_story_brw.user_id.partner_id.id)
+        if user_story_brw.user_execute_idi:
+            partner_ids.append(user_story_brw.user_execute_id.partner_id.id)
         partner_ids = list(set(partner_ids))
         model_data_id = data_obj._get_id(cr, uid, 'user_story',
                                          'email_compose_message_wizard_inherit_form_without_partner')
@@ -502,8 +509,10 @@ class acceptability_criteria(osv.Model):
         user_story_brw = criterial_brw.accep_crit_id
         partner_ids = [i.id for i in user_story_brw.message_follower_ids]
         partner_ids.append(user_story_brw.owner_id.partner_id.id)
-        user_story_brw.user_id and partner_ids.append(user_story_brw.user_id.partner_id.id)
-        user_story_brw.user_execute_id and partner_ids.append(user_story_brw.user_execute_id.partner_id.id)
+        if user_story_brw.user_id:
+            partner_ids.append(user_story_brw.user_id.partner_id.id)
+        if user_story_brw.user_execute_id:
+            partner_ids.append(user_story_brw.user_execute_id.partner_id.id)
         partner_ids = list(set(partner_ids))
         template = data_obj.get_object(cr, uid, 'user_story', 'template_ask_aceptabilty_criterial')
         mail = self.pool.get('email.template').generate_email(cr, SUPERUSER_ID, template.id, ids[0])
