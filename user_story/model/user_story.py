@@ -427,8 +427,7 @@ class acceptability_criteria(osv.Model):
         the do_disaproval method.
         '''
         model_brw = self.browse(cr, uid, i[0])
-        urlbase = self.pool.get('ir.config_parameter').get_param(cr, SUPERUSER_ID, 'web.base.url')
-        link = '#id={i}&view_type=form&model=user.story'.format(i=model_brw.accep_crit_id and model_brw.accep_crit_id.id, urlbase=urlbase)
+        link = '#id={i}&view_type=form&model=user.story'.format(i=model_brw.accep_crit_id and model_brw.accep_crit_id.id)
         return link
 
     def approve(self, cr, uid, ids, context=None):
@@ -627,15 +626,17 @@ class acceptability_criteria(osv.Model):
 class project_task(osv.Model):
     _inherit = 'project.task'
 
-    def default_get(self, cr, uid, fields, context=None):
+    def default_get(self, cr, uid, field, context=None):
         '''Owerwrite default get to add project in new task automatically'''
         if context is None:
             context = {}
         res = super(project_task, self).default_get(
-            cr, uid, fields, context=context)
-        context.get('project_task', False) and \
-            res.update({'project_id': context.get('project_task'), 'categ_ids': context.get('categ_task'),
-                        'sprint_id': context.get('sprint_task'), 'userstory_id': context.get('userstory_task')})
+            cr, uid, field, context=context)
+        if context.get('project_task', False):
+            res.update({'project_id': context.get('project_task'),
+                        'categ_ids': context.get('categ_task'),
+                        'sprint_id': context.get('sprint_task'),
+                        'userstory_id': context.get('userstory_task')})
         return res
 
     def onchange_user_story_task(self, cr, uid, ids, us_id, context=None):
