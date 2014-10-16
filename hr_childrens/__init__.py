@@ -1,1 +1,1 @@
-from . import hr_children
+import model

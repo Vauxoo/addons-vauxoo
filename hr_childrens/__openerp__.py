@@ -38,7 +38,7 @@ This module add Date Start, SSN and children of employees
     ], 
     "demo": [], 
     "data": [
-        "hr_children_view.xml", 
+        "view/hr_children_view.xml", 
         "security/ir.model.access.csv"
     ], 
     "test": [], 
