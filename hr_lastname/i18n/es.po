@@ -1,0 +1,73 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* hr_lastname
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-10-16 22:37+0000\n"
+"PO-Revision-Date: 2014-10-16 22:37+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: hr_lastname
+#: field:hr.employee,couple_last_name:0
+msgid "Couple Last Name"
+msgstr "Apellido Pareja"
+
+#. module: hr_lastname
+#: view:hr.employee:hr_lastname.view_last_name_form
+msgid "Couple Last Name..."
+msgstr "Apellido Pareja..."
+
+#. module: hr_lastname
+#: model:ir.model,name:hr_lastname.model_hr_employee
+msgid "Employee"
+msgstr "Empleado"
+
+#. module: hr_lastname
+#: view:hr.employee:hr_lastname.view_last_name_form
+#: view:hr.employee:hr_lastname.view_last_name_tree
+msgid "First Name"
+msgstr "Primer Nombre"
+
+#. module: hr_lastname
+#: field:hr.employee,full_name:0
+msgid "Full Name"
+msgstr "Nombre Completo"
+
+#. module: hr_lastname
+#: field:hr.employee,last_name:0
+msgid "Last Name"
+msgstr "Apellido"
+
+#. module: hr_lastname
+#: view:hr.employee:hr_lastname.view_last_name_form
+msgid "Last Name..."
+msgstr "Apellido..."
+
+#. module: hr_lastname
+#: field:hr.employee,second_last_name:0
+msgid "Second Last Name"
+msgstr "Segundo Apellido"
+
+#. module: hr_lastname
+#: view:hr.employee:hr_lastname.view_last_name_form
+msgid "Second Last Name..."
+msgstr "Segundo Apellido..."
+
+#. module: hr_lastname
+#: field:hr.employee,second_name:0
+msgid "Second Name"
+msgstr "Segundo Nombre"
+
+#. module: hr_lastname
+#: view:hr.employee:hr_lastname.view_last_name_form
+msgid "Second Name..."
+msgstr "Segundo Nombre..."
+
