@@ -24,4 +24,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from . import purchase_requisition
+from openerp.osv import fields, osv
+
+
+class purchase_requisition(osv.Model):
+    """
+    Extend the purchase.requisition  model to add a new field m2o to
+    stock.incoterm model named 'delivery'.
+    """
+
+    _inherit = 'purchase.requisition'
+    _columns = {
+        'delivery': fields.many2one(
+            'stock.incoterms',
+            string='Delivery',
+            help='Delivery'),
+    }
