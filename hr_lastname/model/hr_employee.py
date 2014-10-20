@@ -49,11 +49,21 @@ class hr_employee(osv.Model):
                 emp.second_name or '')
         return res
 
+    def _update_fill_name(self, cr, uid, ids, context=None):
+        '''
+        Method call function
+        '''
+        return ids
+
     _columns = {
         'second_name': fields.char('Second Name',),
         'last_name': fields.char('Last Name',),
         'second_last_name': fields.char('Second Last Name',),
         'couple_last_name': fields.char('Couple Last Name',),
         'full_name': fields.function(
-            _get_full_name, string='Full Name', type='char', store=True,),
+            _get_full_name, string='Full Name', type='char', store={
+                'hr.employee': (_update_fill_name, [
+                    'name', 'second_name', 'last_name', 'second_last_name'],
+                    50),
+            }, method=True,),
         }
