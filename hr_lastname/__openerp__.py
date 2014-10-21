@@ -38,6 +38,12 @@
     "depends": [
         "hr",
         ],
+    "test": [
+        "test/test_employee.yml",
+    ],
+    "demo": [
+        "demo/hr_employee.xml",
+    ],
     "data": [
         "view/hr_employee_view.xml",
     ],
