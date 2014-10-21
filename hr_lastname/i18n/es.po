@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-21 21:36+0000\n"
-"PO-Revision-Date: 2014-10-21 21:36+0000\n"
+"POT-Creation-Date: 2014-10-21 22:53+0000\n"
+"PO-Revision-Date: 2014-10-21 22:53+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -37,14 +37,34 @@ msgid "First Name"
 msgstr "Primer Nombre"
 
 #. module: hr_lastname
-#: field:hr.employee,full_name:0
-msgid "Full Name"
+#: field:hr.employee,full_first_name:0
+msgid "Full First Name"
 msgstr "Nombre Completo"
 
 #. module: hr_lastname
-#: help:hr.employee,full_name:0
+#: field:hr.employee,complete_name:0
+msgid "Full Name"
+msgstr "Nombre completo"
+
+#. module: hr_lastname
+#: help:hr.employee,full_first_name:0
+msgid "Full firs name of employee, conformed by:             Name + Second Name"
+msgstr "Nombre completo del empleado, conformado por: Nombre + Segundo nombre"
+
+#. module: hr_lastname
+#: field:hr.employee,full_last_name:0
+msgid "Full last Name"
+msgstr "Apellidos completos"
+
+#. module: hr_lastname
+#: help:hr.employee,full_last_name:0
+msgid "Full last name of employee, conformed by:             Last name + Second last name"
+msgstr "Apellido completo del empleado, conformado por: Primer apellido + Segundo Apellido"
+
+#. module: hr_lastname
+#: help:hr.employee,complete_name:0
 msgid "Full name of employee, conformed by: Last             name + Second last name + Name + Second Name"
-msgstr "Nombre completo del empleado, conformado por: Apellido + Segundo apellido + Nombre + Segundo nombre"
+msgstr "Nombre y apellidos del empleado, conformado por: Apellido + Segundo apellido + Nombre + Segundo nombre"
 
 #. module: hr_lastname
 #: field:hr.employee,last_name:0
@@ -59,12 +79,12 @@ msgstr "Apellido..."
 #. module: hr_lastname
 #: help:hr.employee,last_name:0
 msgid "Last employee name"
-msgstr "Primer apellido empleado"
+msgstr "Apellido empleado"
 
 #. module: hr_lastname
 #: help:hr.employee,couple_last_name:0
 msgid "Last name of employee couple"
-msgstr "Apellido de la pareja del empleado"
+msgstr "Apellidos de la pareja del empleado"
 
 #. module: hr_lastname
 #: field:hr.employee,second_last_name:0

@@ -55,6 +55,25 @@ class hr_employee(osv.Model):
         '''
         return ids
 
+    def _get_full_first_name(self, cr, uid, ids, fields_name, args,
+                             context=None):
+        if context is None:
+            context = {}
+        res = {}
+        for emp in self.browse(cr, uid, ids, context=context):
+            res[emp.id] = (emp.name or '') + ' ' + (emp.second_name or '')
+        return res
+
+    def _get_full_last_name(self, cr, uid, ids, fields_name, args,
+                            context=None):
+        if context is None:
+            context = {}
+        res = {}
+        for emp in self.browse(cr, uid, ids, context=context):
+            res[emp.id] = (emp.last_name or '') + ' ' + (
+                emp.second_last_name or '')
+        return res
+
     _columns = {
         'second_name': fields.char(
             'Second Name', help='Second employee name'),
@@ -64,11 +83,24 @@ class hr_employee(osv.Model):
             'Second Last Name', help='Second employee last name'),
         'couple_last_name': fields.char(
             'Couple Last Name', help='Last name of employee couple'),
-        'full_name': fields.function(
+        'complete_name': fields.function(
             _get_full_name, string='Full Name', type='char', store={
                 'hr.employee': (_update_fill_name, [
                     'name', 'second_name', 'last_name', 'second_last_name'],
                     50),
             }, method=True, help='Full name of employee, conformed by: Last \
             name + Second last name + Name + Second Name'),
+        'full_first_name': fields.function(
+            _get_full_first_name, string='Full First Name', type='char',
+            store={
+                'hr.employee': (
+                    _update_fill_name, ['name', 'second_name'], 50),
+            }, method=True, help='Full firs name of employee, conformed by: \
+            Name + Second Name'),
+        'full_last_name': fields.function(
+            _get_full_last_name, string='Full last Name', type='char', store={
+                'hr.employee': (_update_fill_name, [
+                    'last_name', 'second_last_name'], 50),
+            }, method=True, help='Full last name of employee, conformed by: \
+            Last name + Second last name'),
         }

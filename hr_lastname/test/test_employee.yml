@@ -9,12 +9,12 @@
         full_name = (emp.last_name or '') + ' ' + (
             emp.second_last_name or '') + ' ' + (emp.name or '') + ' ' + (
             emp.second_name or '')
-        assert full_name == emp.full_name, 'The full name not is equal to yours values'
+        assert full_name == emp.complete_name, 'The full name not is equal to yours values'
     log("I change the name to employee, and review your full name")
     for emp in self.browse(cr, uid, employee_demo, context=context):
         emp.write({'name': 'Joana'})
         full_name = (emp.last_name or '') + ' ' + (
             emp.second_last_name or '') + ' ' + (emp.name or '') + ' ' + (
             emp.second_name or '')
-        assert full_name == emp.full_name, 'The full name not is equal to yours values'
+        assert full_name == emp.complete_name, 'The full name not is equal to yours values'
     log("Succesful Test")

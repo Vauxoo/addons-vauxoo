@@ -16,7 +16,7 @@
                         <group>
                             <field name="second_last_name" placeholder="Second Last Name..." nolabel="1"/>
                         </group>
-                        <field name="full_name" invisible='1'/>
+                        <field name="complete_name" invisible='1'/>
                     </group>
                 </xpath>
                 <xpath expr="//field[@name='marital']" position="after">
@@ -37,10 +37,12 @@
             <field name='inherit_id' ref='hr.view_employee_tree'/>
             <field name='arch' type='xml'>
                 <xpath expr="//field[@name='name']" position="after">
-                    <field name="full_name"/>
+                    <field name="complete_name"/>
+                    <field name="full_first_name" invisible="1"/>
+                    <field name="full_last_name" invisible="1"/>
                 </xpath>
-                <xpath expr="//field[@name='name']" position="replace">
-                    <field name="name" string="First Name"/>
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="string">First Name</attribute>
                 </xpath>
             </field>
         </record>
@@ -51,7 +53,9 @@
             <field name='inherit_id' ref='hr.view_employee_filter'/>
             <field name='arch' type='xml'>
                 <xpath expr="//field[@name='name']" position="after">
-                    <field name="full_name"/>
+                    <field name="complete_name"/>
+                    <field name="full_first_name"/>
+                    <field name="full_last_name"/>
                 </xpath>
             </field>
         </record>
