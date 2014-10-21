@@ -31,7 +31,7 @@
     "category": "hr",
     "description": """
         This module add fields to set last name, second name, second last name
-        & coupe last name, and and a field function to concatenate this values.
+        & couple last name, and a field function to concatenate this values.
     """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
@@ -49,5 +49,5 @@
     ],
     'installable': True,
     'application': False,
-    'active': False
+    'auto_install': False
 }

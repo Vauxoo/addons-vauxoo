@@ -37,7 +37,7 @@ class hr_employee(osv.Model):
 
     def _get_full_name(self, cr, uid, ids, fields_name, args, context=None):
         '''
-        Methot to concatenate last_name, second_last_name, name & second_name
+        Method to concatenate last_name, second_last_name, name & second_name
         in a new field function
         '''
         if context is None:
@@ -56,14 +56,19 @@ class hr_employee(osv.Model):
         return ids
 
     _columns = {
-        'second_name': fields.char('Second Name',),
-        'last_name': fields.char('Last Name',),
-        'second_last_name': fields.char('Second Last Name',),
-        'couple_last_name': fields.char('Couple Last Name',),
+        'second_name': fields.char(
+            'Second Name', help='Second employee name'),
+        'last_name': fields.char(
+            'Last Name', help='Last employee name'),
+        'second_last_name': fields.char(
+            'Second Last Name', help='Second employee last name'),
+        'couple_last_name': fields.char(
+            'Couple Last Name', help='Last name of employee couple'),
         'full_name': fields.function(
             _get_full_name, string='Full Name', type='char', store={
                 'hr.employee': (_update_fill_name, [
                     'name', 'second_name', 'last_name', 'second_last_name'],
                     50),
-            }, method=True,),
+            }, method=True, help='Full name of employee, conformed by: Last \
+            name + Second last name + Name + Second Name'),
         }

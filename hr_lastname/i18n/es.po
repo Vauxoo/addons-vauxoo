@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-16 22:37+0000\n"
-"PO-Revision-Date: 2014-10-16 22:37+0000\n"
+"POT-Creation-Date: 2014-10-21 21:36+0000\n"
+"PO-Revision-Date: 2014-10-21 21:36+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -42,6 +42,11 @@ msgid "Full Name"
 msgstr "Nombre Completo"
 
 #. module: hr_lastname
+#: help:hr.employee,full_name:0
+msgid "Full name of employee, conformed by: Last             name + Second last name + Name + Second Name"
+msgstr "Nombre completo del empleado, conformado por: Apellido + Segundo apellido + Nombre + Segundo nombre"
+
+#. module: hr_lastname
 #: field:hr.employee,last_name:0
 msgid "Last Name"
 msgstr "Apellido"
@@ -50,6 +55,16 @@ msgstr "Apellido"
 #: view:hr.employee:hr_lastname.view_last_name_form
 msgid "Last Name..."
 msgstr "Apellido..."
+
+#. module: hr_lastname
+#: help:hr.employee,last_name:0
+msgid "Last employee name"
+msgstr "Primer apellido empleado"
+
+#. module: hr_lastname
+#: help:hr.employee,couple_last_name:0
+msgid "Last name of employee couple"
+msgstr "Apellido de la pareja del empleado"
 
 #. module: hr_lastname
 #: field:hr.employee,second_last_name:0
@@ -70,4 +85,14 @@ msgstr "Segundo Nombre"
 #: view:hr.employee:hr_lastname.view_last_name_form
 msgid "Second Name..."
 msgstr "Segundo Nombre..."
+
+#. module: hr_lastname
+#: help:hr.employee,second_last_name:0
+msgid "Second employee last name"
+msgstr "Segundo apellido del empleado"
+
+#. module: hr_lastname
+#: help:hr.employee,second_name:0
+msgid "Second employee name"
+msgstr "Segundo nombre del empleado"
 
