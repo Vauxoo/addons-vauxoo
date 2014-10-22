@@ -41,7 +41,9 @@ class purchase_requisition_line(osv.Model):
                             product_uom_id, context=None):
         context = context or {}
         product_obj = self.pool.get('product.product')
-        res = {'value': {'name': ''}}
+        res = super(purchase_requisition_line, self).onchange_product_id(
+            cr, uid, ids, product_id, product_uom_id, context=context)
+        res['value'].update({'name': ''})
         if product_id:
             product_name = product_obj.name_get(
                 cr, uid, product_id, context=context)
