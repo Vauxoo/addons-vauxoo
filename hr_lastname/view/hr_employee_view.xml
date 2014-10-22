@@ -11,7 +11,7 @@
                     <group>
                         <group>
                             <field name="second_name" placeholder="Second Name..." nolabel="1"/>
-                            <field name="last_name" placeholder="Last Name..." nolabel="1"/>
+                            <field name="last_name" placeholder="First Last Name..." nolabel="1"/>
                         </group>
                         <group>
                             <field name="second_last_name" placeholder="Second Last Name..." nolabel="1"/>
@@ -23,10 +23,7 @@
                     <field name="couple_last_name" placeholder="Couple Last Name..."/>
                 </xpath>
                 <xpath expr="//field[@name='name']" position="attributes">
-                    <attribute name="string">First Name</attribute>
-                </xpath>
-                <xpath expr="//label[@for='name']" position="attributes">
-                    <attribute name="string">First Name</attribute>
+                    <attribute name="placeholder">First Name...</attribute>
                 </xpath>
             </field>
         </record>
@@ -40,9 +37,6 @@
                     <field name="complete_name"/>
                     <field name="full_first_name" invisible="1"/>
                     <field name="full_last_name" invisible="1"/>
-                </xpath>
-                <xpath expr="//field[@name='name']" position="attributes">
-                    <attribute name="string">First Name</attribute>
                 </xpath>
             </field>
         </record>

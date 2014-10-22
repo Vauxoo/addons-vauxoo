@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-21 22:53+0000\n"
-"PO-Revision-Date: 2014-10-21 22:53+0000\n"
+"POT-Creation-Date: 2014-10-22 20:55+0000\n"
+"PO-Revision-Date: 2014-10-22 20:55+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,12 +18,12 @@ msgstr ""
 #. module: hr_lastname
 #: field:hr.employee,couple_last_name:0
 msgid "Couple Last Name"
-msgstr "Apellido Pareja"
+msgstr "Apellido Cónyuge"
 
 #. module: hr_lastname
 #: view:hr.employee:hr_lastname.view_last_name_form
 msgid "Couple Last Name..."
-msgstr "Apellido Pareja..."
+msgstr "Apellido Cónyuge..."
 
 #. module: hr_lastname
 #: model:ir.model,name:hr_lastname.model_hr_employee
@@ -32,9 +32,13 @@ msgstr "Empleado"
 
 #. module: hr_lastname
 #: view:hr.employee:hr_lastname.view_last_name_form
-#: view:hr.employee:hr_lastname.view_last_name_tree
-msgid "First Name"
-msgstr "Primer Nombre"
+msgid "First Last Name..."
+msgstr "Primer Apellido..."
+
+#. module: hr_lastname
+#: view:hr.employee:hr_lastname.view_last_name_form
+msgid "First Name..."
+msgstr "Primer Nombre..."
 
 #. module: hr_lastname
 #: field:hr.employee,full_first_name:0
@@ -72,11 +76,6 @@ msgid "Last Name"
 msgstr "Apellido"
 
 #. module: hr_lastname
-#: view:hr.employee:hr_lastname.view_last_name_form
-msgid "Last Name..."
-msgstr "Apellido..."
-
-#. module: hr_lastname
 #: help:hr.employee,last_name:0
 msgid "Last employee name"
 msgstr "Apellido empleado"
@@ -84,7 +83,7 @@ msgstr "Apellido empleado"
 #. module: hr_lastname
 #: help:hr.employee,couple_last_name:0
 msgid "Last name of employee couple"
-msgstr "Apellidos de la pareja del empleado"
+msgstr "Apellidos del cónyuge del empleado"
 
 #. module: hr_lastname
 #: field:hr.employee,second_last_name:0
