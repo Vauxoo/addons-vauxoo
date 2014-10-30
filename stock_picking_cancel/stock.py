@@ -26,7 +26,8 @@
 from openerp.osv import osv
 import openerp.netsvc as netsvc
 from openerp.tools.translate import _
-
+import logging
+_logger = logging.getLogger(__name__)
 
 class stock_picking(osv.Model):
     _inherit = 'stock.picking'
@@ -43,9 +44,9 @@ class stock_picking(osv.Model):
             # Deleting the existing instance of workflow for PO
             wf_service.trg_delete(uid, 'stock.picking', p_id, cr)
             wf_service.trg_create(uid, 'stock.picking', p_id, cr)
-        for (id, name) in self.name_get(cr, uid, ids):
+        for (ids, name) in self.name_get(cr, uid, ids):
             message = _("Picking '%s' has been set in draft state.") % name
-            self.log(cr, uid, id, message)
+            self.log(cr, uid, ids, message)
         return True
 
 
@@ -64,9 +65,9 @@ class stock_picking_in(osv.Model):
             # Deleting the existing instance of workflow for PO
             wf_service.trg_delete(uid, 'stock.picking', p_id, cr)
             wf_service.trg_create(uid, 'stock.picking', p_id, cr)
-        for (id, name) in self.name_get(cr, uid, ids):
+        for (ids, name) in self.name_get(cr, uid, ids):
             message = _("Picking '%s' has been set in draft state.") % name
-            self.log(cr, uid, id, message)
+            self.log(cr, uid, ids, message)
         return True
 
 
@@ -85,9 +86,9 @@ class stock_picking_out(osv.Model):
             # Deleting the existing instance of workflow for PO
             wf_service.trg_delete(uid, 'stock.picking', p_id, cr)
             wf_service.trg_create(uid, 'stock.picking', p_id, cr)
-        for (id, name) in self.name_get(cr, uid, ids):
+        for (ids, name) in self.name_get(cr, uid, ids):
             message = _("Picking '%s' has been set in draft state.") % name
-            self.log(cr, uid, id, message)
+            self.log(cr, uid, ids, message)
         return True
 
 
@@ -111,7 +112,7 @@ class stock_move(osv.Model):
             if len(account_production.line_id) == 0:
                 try:
                     account_move.button_cancel(cr, uid, [lin[0]], context=context)
-                except:
-                    pass
+                except BaseException, e:
+                    _logger.exception(e)
                 account_move.unlink(cr, uid, [lin[0]])
         return super(stock_move, self).action_cancel(cr, uid, ids, context=context)

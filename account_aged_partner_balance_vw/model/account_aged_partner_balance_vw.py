@@ -143,11 +143,11 @@ class account_aged_trial_balance(osv.TransientModel):
         self.set_context(cr, uid, ids, data, context=context)
         if wzd_brw.type in ('variation', 'distributed'):
             res = self._get_lines(cr, uid, ids, form, context=context)
-            res = map(lambda x: (0, 0, x), res)
+            res = [(0, 0, x) for x in res]
             wzd_brw.write({'partner_line_ids': res})
         elif wzd_brw.type == 'by_document':
             res = self._get_doc_lines(cr, uid, ids, form, context=context)
-            res = map(lambda x: (0, 0, x), res)
+            res = [(0, 0, x) for x in res]
             wzd_brw.write({'partner_doc_ids': res})
         return {}
 
@@ -164,16 +164,15 @@ class account_aged_trial_balance(osv.TransientModel):
         self.date_from = data['form'].get(
             'date_from',
             time.strftime('%Y-%m-%d'))
-        if (data['form']['result_selection'] == 'customer'):
-            self.ACCOUNT_TYPE = ['receivable']
-        elif (data['form']['result_selection'] == 'supplier'):
-            self.ACCOUNT_TYPE = ['payable']
+        if data['form']['result_selection'] == 'customer':
+            self.account_type = ['receivable']
+        elif data['form']['result_selection'] == 'supplier':
+            self.account_type = ['payable']
         else:
-            self.ACCOUNT_TYPE = ['payable', 'receivable']
+            self.account_type = ['payable', 'receivable']
 
     def _get_partners(self, cr, uid, ids, form, context=None):
         context = context or {}
-        wzd_brw = self.browse(cr, uid, ids[0], context=context)
         move_state = ['draft', 'posted']
         if self.target_move == 'posted':
             move_state = ['posted']
@@ -190,7 +189,7 @@ class account_aged_trial_balance(osv.TransientModel):
                     AND (l.partner_id=res_partner.id)\
                     AND (l.date <= %s)\
                     AND ' + self.query + ' \
-                ORDER BY res_partner.name', (tuple(move_state), tuple(self.ACCOUNT_TYPE), self.date_from, self.date_from,))
+                ORDER BY res_partner.name', (tuple(move_state), tuple(self.account_type), self.date_from, self.date_from,))
         return cr.dictfetchall()
 
     def _get_lines(self, cr, uid, ids, form, context=None):
@@ -237,9 +236,9 @@ class account_aged_trial_balance(osv.TransientModel):
                     AND ' + self.query + '\
                     AND account_account.active\
                     AND (l.date <= %s)\
-                    GROUP BY l.partner_id ', (tuple(move_state), tuple(self.ACCOUNT_TYPE), tuple(partner_ids), self.date_from, self.date_from,))
-        t = cr.fetchall()
-        for i in t:
+                    GROUP BY l.partner_id ', (tuple(move_state), tuple(self.account_type), tuple(partner_ids), self.date_from, self.date_from,))
+        t_var = cr.fetchall()
+        for i in t_var:
             totals[i[0]] = i[1]
             if wzd_brw.type == 'distributed':
                 if wzd_brw.result_selection in ('customer', 'supplier'):
@@ -260,9 +259,9 @@ class account_aged_trial_balance(osv.TransientModel):
                         AND ' + self.query + '\
                         AND account_account.active\
                     AND (l.date <= %s)\
-                        GROUP BY l.partner_id', (tuple(move_state), tuple(self.ACCOUNT_TYPE), self.date_from, tuple(partner_ids), self.date_from, self.date_from,))
-            t = cr.fetchall()
-            for i in t:
+                        GROUP BY l.partner_id', (tuple(move_state), tuple(self.account_type), self.date_from, tuple(partner_ids), self.date_from, self.date_from,))
+            t_var = cr.fetchall()
+            for i in t_var:
                 future_past[i[0]] = i[1]
         # Using elif so people could extend without this breaking
         elif self.direction_selection == 'past':
@@ -279,18 +278,18 @@ class account_aged_trial_balance(osv.TransientModel):
                         AND ' + self.query + '\
                         AND account_account.active\
                     AND (l.date <= %s)\
-                        GROUP BY l.partner_id', (tuple(move_state), tuple(self.ACCOUNT_TYPE), self.date_from, tuple(partner_ids), self.date_from, self.date_from,))
-            t = cr.fetchall()
+                        GROUP BY l.partner_id', (tuple(move_state), tuple(self.account_type), self.date_from, tuple(partner_ids), self.date_from, self.date_from,))
+            t_var = cr.fetchall()
             if wzd_brw.type == 'distributed':
                 if wzd_brw.result_selection in ('customer', 'supplier'):
-                    for i in t:
+                    for i in t_var:
                         future_past[i[0]] = wzd_brw.result_selection == 'customer' \
                             and i[2] or -(i[2])
                 else:
-                    for i in t:
+                    for i in t_var:
                         future_past[i[0]] = i[1]
             else:
-                for i in t:
+                for i in t_var:
                     future_past[i[0]] = i[1]
 
         # Use one query per period and store results in history (a list variable)
@@ -300,7 +299,7 @@ class account_aged_trial_balance(osv.TransientModel):
         for i in range(5):
             args_list = (
                 tuple(move_state),
-                tuple(self.ACCOUNT_TYPE),
+                tuple(self.account_type),
                 tuple(partner_ids),
                 self.date_from,
             )
@@ -329,29 +328,29 @@ class account_aged_trial_balance(osv.TransientModel):
                         AND ''' + dates_query + '''
                     AND (l.date <= %s)
                     GROUP BY l.partner_id''', args_list)
-            t = cr.fetchall()
-            d = {}
+            t_var = cr.fetchall()
+            d_var = {}
             if wzd_brw.type == 'distributed':
                 if wzd_brw.result_selection in ('customer', 'supplier'):
-                    for i in t:
+                    for i in t_var:
                         if advances[i[0]] >= i[2]:
-                            d[i[0]] = 0.0
+                            d_var[i[0]] = 0.0
                             advances[i[0]] -= i[2]
                         elif advances[i[0]] < i[2] and advances[i[0]]:
-                            d[i[0]] = wzd_brw.result_selection == 'customer' \
+                            d_var[i[0]] = wzd_brw.result_selection == 'customer' \
                                 and i[2] - advances[i[0]] or \
                                 -(i[2] - advances[i[0]])
                             advances[i[0]] = 0.0
                         else:
-                            d[i[0]] = wzd_brw.result_selection == 'customer' \
+                            d_var[i[0]] = wzd_brw.result_selection == 'customer' \
                                 and i[2] or -(i[2])
                 else:
-                    for i in t:
-                        d[i[0]] = i[1]
+                    for i in t_var:
+                        d_var[i[0]] = i[1]
             else:
-                for i in t:
-                    d[i[0]] = i[1]
-            history.append(d)
+                for i in t_var:
+                    d_var[i[0]] = i[1]
+            history.append(d_var)
 
         for partner in partners:
             values = {}
@@ -420,11 +419,11 @@ class account_aged_trial_balance(osv.TransientModel):
 
         total = 0.0
         totals = {}
-        for r in res:
-            total += float(r['total'] or 0.0)
+        for r_var in res:
+            total += float(r_var['total'] or 0.0)
             for i in range(5) + ['direction']:
                 totals.setdefault(str(i), 0.0)
-                totals[str(i)] += float(r[str(i)] or 0.0)
+                totals[str(i)] += float(r_var[str(i)] or 0.0)
         mapping = {
             'direction': 'not_due',
             '4': 'days_due_01to30',
@@ -434,17 +433,16 @@ class account_aged_trial_balance(osv.TransientModel):
             '0': 'days_due_121togr',
         }
         res2 = []
-        for r in res:
-            for j, k in mapping.iteritems():
-                r[k] = r.pop(j)
-            r.pop('name')
-            res2.append(r)
+        for r_var in res:
+            for v, k in mapping.iteritems():
+                r_var[k] = r_var.pop(v)
+            r_var.pop('name')
+            res2.append(r_var)
         return res2
 
     def _get_doc_lines(self, cr, uid, ids, form, context=None):
         context = context or {}
         res = []
-        wzd_brw = self.browse(cr, uid, ids[0], context=context)
         partners = self._get_partners(cr, uid, ids, form, context=context)
         partner_ids = [x['id'] for x in partners]
         if not partner_ids:
@@ -461,20 +459,20 @@ class account_aged_trial_balance(osv.TransientModel):
         res2 = []
         if not res:
             return []
-        for r in res:
-            if form['0']['stop'] >= r['date_due']:
-                r['days_due_121togr'] = r['residual']
-            elif form['1']['start'] <= r['date_due'] and form['1']['stop'] >= r['date_due']:
-                r['days_due_91to120'] = r['residual']
-            elif form['2']['start'] <= r['date_due'] and form['2']['stop'] >= r['date_due']:
-                r['days_due_61to90'] = r['residual']
-            elif form['3']['start'] <= r['date_due'] and form['3']['stop'] >= r['date_due']:
-                r['days_due_31to60'] = r['residual']
-            elif form['4']['start'] <= r['date_due'] and form['4']['stop'] >= r['date_due']:
-                r['days_due_01to30'] = r['residual']
+        for r_var in res:
+            if form['0']['stop'] >= r_var['date_due']:
+                r_var['days_due_121togr'] = r_var['residual']
+            elif form['1']['start'] <= r_var['date_due'] and form['1']['stop'] >= r_var['date_due']:
+                r_var['days_due_91to120'] = r_var['residual']
+            elif form['2']['start'] <= r_var['date_due'] and form['2']['stop'] >= r_var['date_due']:
+                r_var['days_due_61to90'] = r_var['residual']
+            elif form['3']['start'] <= r_var['date_due'] and form['3']['stop'] >= r_var['date_due']:
+                r_var['days_due_31to60'] = r_var['residual']
+            elif form['4']['start'] <= r_var['date_due'] and form['4']['stop'] >= r_var['date_due']:
+                r_var['days_due_01to30'] = r_var['residual']
             else:
-                r['not_due'] = r['residual']
-            res2.append(r)
+                r_var['not_due'] = r_var['residual']
+            res2.append(r_var)
         return res2
 
     def _get_invoice_by_partner(self, cr, uid, ids, rp_ids, context=None):

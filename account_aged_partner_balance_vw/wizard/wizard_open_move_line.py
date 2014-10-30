@@ -25,12 +25,13 @@
 ##############################################################################
 
 import pooler
-import wizard
+from openerp.addons.account_aged_partner_balance_vw import wizard
+
 
 
 class wizard_open_move_line(wizard.interface):
 
-    def _open_window(self, cr, uid, data, context={}):
+    def _open_window(self, cr, uid, data, context=None):
         if not context:
             context = {}
         mod_obj = pooler.get_pool(cr.dbname).get('ir.model.data')
@@ -42,8 +43,8 @@ class wizard_open_move_line(wizard.interface):
         # result = mod_obj._get_id(cr, uid, 'account',
         # 'action_account_moves_all_a')
         result = mod_obj._get_id(cr, uid, 'account', 'action_move_line_select')
-        id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
-        result = act_obj.read(cr, uid, [id])[0]
+        ids = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
+        result = act_obj.read(cr, uid, [ids])[0]
         # result['context'] = {'partner_id': partner_ids}
         # result['domain'] = [('partner_id','in',partner_ids),
         # ('account_id.type','=','receivable')]

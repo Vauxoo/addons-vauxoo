@@ -34,7 +34,8 @@ from pytz import timezone
 import pytz
 
 import time
-
+import logging
+_logger = logging.getLogger(__name__)
 
 class account_payment_term(osv.Model):
     _inherit = "account.payment.term"
@@ -46,8 +47,8 @@ class account_payment_term(osv.Model):
             try:
                 date_ref = time.strftime('%Y-%m-%d', time.strptime(
                     date_ref, '%Y-%m-%d %H:%M:%S'))
-            except Exception, e:
-                pass
+            except BaseException, e:
+                _logger.exception(e)
         return super(account_payment_term, self).compute(cr, uid, ids, value,
             date_ref, context=context)
 
