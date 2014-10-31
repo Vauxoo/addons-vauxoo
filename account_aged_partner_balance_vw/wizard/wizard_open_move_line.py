@@ -25,8 +25,7 @@
 ##############################################################################
 
 import pooler
-from openerp.addons.account_aged_partner_balance_vw import wizard
-
+import wizard
 
 
 class wizard_open_move_line(wizard.interface):
