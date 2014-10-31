@@ -78,6 +78,14 @@ class account_aged_partner_document(osv.TransientModel):
 class account_aged_trial_balance(osv.TransientModel):
     _inherit = 'account.aged.trial.balance'
 
+    account_type = None
+    date_from = None
+    total_account = None
+    query = None
+    target = None
+    direction_selection = None
+    target_move =None
+
     _columns = {
         'partner_doc_ids': fields.one2many('account.aged.partner.document',
                                            'aatb_id', 'Partner Aged Trail Balance',
