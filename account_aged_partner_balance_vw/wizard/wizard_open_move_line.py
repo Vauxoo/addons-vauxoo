@@ -24,9 +24,9 @@
 #
 ##############################################################################
 
+'''
 import pooler
-from openerp import wizard
-
+from . import wizard
 
 class wizard_open_move_line(wizard.interface):
 
@@ -93,4 +93,6 @@ class wizard_open_move_line(wizard.interface):
         }
     }
 wizard_open_move_line('wizard.open.move.line')
+'''
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
