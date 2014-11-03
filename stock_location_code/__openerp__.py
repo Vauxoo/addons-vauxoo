@@ -45,7 +45,7 @@ by code and also by location.
     ],
     "demo": [],
     "data": [
-        "stock_view.xml"
+        "view/stock_view.xml",
     ],
     "test": [],
     "js": [],

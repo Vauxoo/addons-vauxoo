@@ -21,6 +21,9 @@
                     <xpath expr="//field[@name='name']" position="replace">
 			<field name="name" filter_domain="['|', ('name','ilike',self),('code','ilike',self)]"/>
                     </xpath>
+                    <xpath expr="//field[@name='name']" position="after">
+                        <field name="code" string="Code"/>
+                    </xpath>
 	    </field>
         </record>
 
