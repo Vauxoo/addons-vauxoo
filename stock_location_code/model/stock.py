@@ -61,7 +61,7 @@ class stock_location(osv.Model):
                 return False
         return True
 
-    _constraint = [(
+    _constraints = [(
         _check_unique_code,
         'Error: The Product code need to be unique per company ',
         ['code', 'company_id'])]
