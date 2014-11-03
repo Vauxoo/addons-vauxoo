@@ -31,6 +31,7 @@ searchable.
 ##############################################################################
 
 from openerp.osv import osv, fields
+import re
 
 
 class stock_location(osv.Model):
@@ -47,21 +48,30 @@ class stock_location(osv.Model):
 
     def name_search(self, cr, user, name='', args=None,
                     operator='ilike', context=None, limit=100):
-        if not args:
-            args = []
+        args = args or []
         if name:
-            ids = self.search(cr, user, [(
-                'code', '=', name)] + args, limit=limit, context=context)
+            ids = self.search(
+                cr, user, [('code', '=', name)] + args, limit=limit,
+                context=context)
             if not ids:
                 ids = set()
                 ids.update(self.search(cr, user, args + [(
                     'code', operator, name)], limit=limit, context=context))
-                ids = [
-                    item[0]
-                    for item in super(stock_location, self).name_search(
-                        cr, user, name=name, args=args, operator=operator,
-                        context=context, limit=limit)]
+                if not limit or len(ids) < limit:
+                    # we may underrun the limit because of dupes in the results,
+                    # that's fine
+                    ids.update(self.search(
+                        cr, user, args + [('name', operator, name)],
+                        limit=(limit and (limit-len(ids)) or False),
+                        context=context))
                 ids = list(ids)
+            if not ids:
+                ptrn = re.compile('(\[(.*?)\])')
+                res = ptrn.search(name)
+                if res:
+                    ids = self.search(
+                        cr, user, [('code', '=', res.group(2))] + args,
+                        limit=limit, context=context)
         else:
             ids = self.search(cr, user, args, limit=limit, context=context)
         result = self.name_get(cr, user, ids, context=context)
