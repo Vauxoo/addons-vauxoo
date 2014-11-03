@@ -56,7 +56,7 @@ class stock_location(osv.Model):
                 ids = set()
                 ids.update(self.search(cr, user, args + [(
                     'code', operator, name)], limit=limit, context=context))
-                ids.update = [
+                ids = [
                     item[0]
                     for item in super(stock_location, self).name_search(
                         cr, user, name=name, args=args, operator=operator,
