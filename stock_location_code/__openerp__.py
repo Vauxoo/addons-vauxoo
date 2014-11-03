@@ -34,9 +34,11 @@
 Stock Location Code
 ===================
 
-Add field to code of the location, also when trying to access to a location
-document will show the "[code] location name". The location will be searcheable
-by code and also by location.
+Add the code field to the location model. The location code is unique per
+company and will fo with the location name always. This way when searching a
+a location you can search it by name or code. The location record will be
+show "[code] name" location in the many2one fields (This emule the product
+model of product module).
     """,
     "website": "http://www.vauxoo.com/",
     "license": "",
