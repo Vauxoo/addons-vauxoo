@@ -1,4 +1,10 @@
 # -*- encoding: utf-8 -*-
+
+"""
+Inherit the stock location model to add a code attribute and make the code
+searchable.
+"""
+
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -28,6 +34,12 @@ from openerp.osv import osv, fields
 
 
 class stock_location(osv.Model):
+
+    """
+    Inherit the stock location model to add a code attribute and make the code
+    searchable.
+    """
+
     _inherit = 'stock.location'
     _columns = {
         'code': fields.char('Code', size=64)
@@ -44,12 +56,43 @@ class stock_location(osv.Model):
                 ids = set()
                 ids.update(self.search(cr, user, args + [(
                     'code', operator, name)], limit=limit, context=context))
-                ids.update(map(lambda a: a[0],
-                               super(stock_location, self).name_search(
-                    cr, user, name=name, args=args, operator=operator,
-                               context=context, limit=limit)))
+                ids.update = [
+                    item[0]
+                    for item in super(stock_location, self).name_search(
+                        cr, user, name=name, args=args, operator=operator,
+                        context=context, limit=limit)]
                 ids = list(ids)
         else:
             ids = self.search(cr, user, args, limit=limit, context=context)
         result = self.name_get(cr, user, ids, context=context)
+        return result
+
+    def _name_get(self, data_dict, context=None):
+        """
+        @return dictionary
+        """
+        context = context or {}
+        name = data_dict.get('name', '')
+        code = data_dict.get('code', False)
+        if code:
+            name = '[%s] %s' % (code, name)
+        return (data_dict['id'], name)
+
+    def name_get(self, cr, user, ids, context=None):
+        """
+        overwrite openerp method like the one for product.product model in the
+        product module.
+        """
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        result = []
+        if not len(ids):
+            return result
+        for location in self.browse(cr, user, ids, context=context):
+            mydict = {
+                'id': location.id,
+                'name': location.name,
+                'code': location.code,
+            }
+            result.append(self._name_get(mydict))
         return result
