@@ -30,7 +30,13 @@
     "version": "1.1",
     "author": "Vauxoo",
     "category": "Generic Modules/Account",
-    "description": """ Add field to code of the location
+    "description": """
+Stock Location Code
+===================
+
+Add field to code of the location, also when trying to access to a location
+document will show the "[code] location name". The location will be searcheable
+by code and also by location.
     """,
     "website": "http://www.vauxoo.com/",
     "license": "",
