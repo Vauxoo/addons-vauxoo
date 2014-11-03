@@ -1,4 +1,10 @@
+#!/usr/bin/python
 # -*- encoding: utf-8 -*-
+
+"""
+Init file to support all the folders in the stock_location_code Odoo module.
+"""
+
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -23,4 +29,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import stock
+
+from . import model
+from . import wizard
