@@ -46,6 +46,26 @@ class stock_location(osv.Model):
         'code': fields.char('Code', size=64)
     }
 
+    def _check_unique_code(self, cr, uid, ids, context=None):
+        """
+        Check if the location code are unique per company.
+        @return True or False
+        """
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        for location in self.browse(cr, uid, ids, context=context):
+            domain = [('code', '=', location.code),
+                      ('company_id', '=', location.company_id.id)]
+            repeat_ids = self.search(cr, uid, domain, context=context)
+            if repeat_ids:
+                return False
+        return True
+
+    _constraint = [(
+        _check_unique_code,
+        'Error: The Product code need to be unique per company ',
+        ['code', 'company_id'])]
+
     def name_search(self, cr, user, name='', args=None,
                     operator='ilike', context=None, limit=100):
         args = args or []
