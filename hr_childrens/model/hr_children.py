@@ -52,7 +52,7 @@ class hr_children(osv.Model):
     _order = 'name'
 
     _columns = {
-        'name': fields.char('Name', size=64),
+        'name': fields.char('Name', size=64, required=True),
         'date_of_birth': fields.date('Date of birth'),
         'schooling': fields.selection(
             [('elementary', 'Elementary'),
