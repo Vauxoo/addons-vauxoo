@@ -55,7 +55,8 @@ class stock_location(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         for location in self.browse(cr, uid, ids, context=context):
             domain = [('code', '=', location.code),
-                      ('company_id', '=', location.company_id.id)]
+                      ('company_id', '=', location.company_id.id),
+                      ('id', '<>', location.id)]
             repeat_ids = self.search(cr, uid, domain, context=context)
             if repeat_ids:
                 return False
