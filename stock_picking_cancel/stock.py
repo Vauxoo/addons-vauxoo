@@ -26,8 +26,7 @@
 from openerp.osv import osv
 import openerp.netsvc as netsvc
 from openerp.tools.translate import _
-import logging
-_logger = logging.getLogger(__name__)
+
 
 class stock_picking(osv.Model):
     _inherit = 'stock.picking'
@@ -112,7 +111,7 @@ class stock_move(osv.Model):
             if len(account_production.line_id) == 0:
                 try:
                     account_move.button_cancel(cr, uid, [lin[0]], context=context)
-                except BaseException, e:
-                    _logger.exception(e)
+                except BaseException:
+                    pass
                 account_move.unlink(cr, uid, [lin[0]])
         return super(stock_move, self).action_cancel(cr, uid, ids, context=context)
