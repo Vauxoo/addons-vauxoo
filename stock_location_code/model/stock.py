@@ -78,15 +78,15 @@ class stock_location(osv.Model):
                 ids.update(self.search(cr, user, args + [(
                     'code', operator, name)], limit=limit, context=context))
                 if not limit or len(ids) < limit:
-                    # we may underrun the limit because of dupes in the results,
-                    # that's fine
+                    # we may underrun the limit because of dupes in the
+                    # results, that's fine
                     ids.update(self.search(
                         cr, user, args + [('name', operator, name)],
                         limit=(limit and (limit-len(ids)) or False),
                         context=context))
                 ids = list(ids)
             if not ids:
-                ptrn = re.compile('(\[(.*?)\])')
+                ptrn = re.compile(r'(\[(.*?)\])')
                 res = ptrn.search(name)
                 if res:
                     ids = self.search(
