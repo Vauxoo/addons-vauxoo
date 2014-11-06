@@ -46,10 +46,10 @@ class account_payment_term(osv.Model):
             try:
                 date_ref = time.strftime('%Y-%m-%d', time.strptime(
                     date_ref, '%Y-%m-%d %H:%M:%S'))
-            except Exception, e:
+            except BaseException:
                 pass
         return super(account_payment_term, self).compute(cr, uid, ids, value,
-            date_ref, context=context)
+                                                         date_ref, context=context)
 
 
 class account_invoice(osv.Model):
@@ -65,8 +65,8 @@ class account_invoice(osv.Model):
             for invoice in self.browse(cr, uid, ids, context=context):
                 res[invoice.id] = invoice.invoice_datetime and tools.\
                     server_to_local_timestamp(invoice.invoice_datetime,
-                    tools.DEFAULT_SERVER_DATETIME_FORMAT,
-                    tools.DEFAULT_SERVER_DATETIME_FORMAT, tz) or False
+                                              tools.DEFAULT_SERVER_DATETIME_FORMAT,
+                                              tools.DEFAULT_SERVER_DATETIME_FORMAT, tz) or False
         elif release.version < '6':
             # TODO: tz change for openerp5
             for invoice in self.browse(cr, uid, ids, context=context):
@@ -88,11 +88,11 @@ class account_invoice(osv.Model):
         #('readonly',True)],'close':[('readonly',True)]},
         # help="Keep empty to use the current date"),
         'invoice_datetime': fields.datetime('Date time of invoice',
-            states={'open': [('readonly', True)], 'close': [('readonly', True)]},
-            help="Keep empty to use the current date"),
+                                            states={'open': [('readonly', True)], 'close': [('readonly', True)]},
+                                            help="Keep empty to use the current date"),
         'date_invoice_tz': fields.function(_get_date_invoice_tz, method=True,
-            type='datetime', string='Date Invoiced with TZ', store=True,
-            help='Date of Invoice with Time Zone'),
+                                           type='datetime', string='Date Invoiced with TZ', store=True,
+                                           help='Date of Invoice with Time Zone'),
         'date_type': fields.function(_get_field_params, storage=False, type='char', string="Date type")
     }
 
@@ -125,7 +125,7 @@ class account_invoice(osv.Model):
             fmt = '%Y-%m-%d %H:%M:%S %Z%z'
             now = datetime.datetime.now()
             loc_dt = hours.localize(datetime.datetime(now.year, now.month, now.day,
-                                             now.hour, now.minute, now.second))
+                                                      now.hour, now.minute, now.second))
             timezone_loc = (loc_dt.strftime(fmt))
             diff_timezone_original = timezone_loc[-5:-2]
             timezone_original = int(diff_timezone_original)
@@ -157,8 +157,8 @@ class account_invoice(osv.Model):
         if values.get('invoice_datetime', False) and not\
                 values.get('date_invoice', False):
             date_invoice = fields.datetime.context_timestamp(cr, uid,
-                datetime.datetime.strptime(values['invoice_datetime'],
-                tools.DEFAULT_SERVER_DATETIME_FORMAT), context=context)
+                                                             datetime.datetime.strptime(values['invoice_datetime'],
+                                                                                        tools.DEFAULT_SERVER_DATETIME_FORMAT), context=context)
             res['date_invoice'] = date_invoice
             res['invoice_datetime'] = values['invoice_datetime']
 
@@ -170,8 +170,8 @@ class account_invoice(osv.Model):
                 if date_invoice != values['date_invoice']:
                     if self.browse(cr, uid, ids)[0].date_type == 'datetime':
                         date_invoice = fields.datetime.context_timestamp(cr, uid,
-                            datetime.datetime.strptime(values['invoice_datetime'],
-                            tools.DEFAULT_SERVER_DATETIME_FORMAT), context=context)
+                                                                         datetime.datetime.strptime(values['invoice_datetime'],
+                                                                                                    tools.DEFAULT_SERVER_DATETIME_FORMAT), context=context)
                         res['date_invoice'] = date_invoice
                         res['invoice_datetime'] = values['invoice_datetime']
                     elif self.browse(cr, uid, ids)[0].date_type == 'date':
@@ -202,9 +202,9 @@ class account_invoice(osv.Model):
         for inv in self.browse(cr, uid, ids, context=context):
             if inv.type in ('out_invoice', 'out_refund'):
                 vals_date = self.assigned_datetime(cr, uid, ids,
-                    {'invoice_datetime': inv.invoice_datetime,
-                        'date_invoice': inv.date_invoice},
-                    context=context)
+                                                   {'invoice_datetime': inv.invoice_datetime,
+                                                    'date_invoice': inv.date_invoice},
+                                                   context=context)
                 self.write(cr, uid, ids, vals_date, context=context)
         return super(account_invoice,
                      self).action_move_create(cr, uid, ids, context=context)

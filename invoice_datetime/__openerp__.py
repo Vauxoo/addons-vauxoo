@@ -25,28 +25,28 @@
 #
 ##############################################################################
 {
-    "name": "invoice_datetime", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Localization/Mexico", 
+    "name": "invoice_datetime",
+    "version": "1.0",
+    "author": "Vauxoo",
+    "category": "Localization/Mexico",
     "description": """Add new field invoice_datetime for electronic invoice data
             and add hour & minute to field date_invoice
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    """,
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "account"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "account_invoice_view.xml", 
+        "account_invoice_view.xml",
         "res_config_acc_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }
