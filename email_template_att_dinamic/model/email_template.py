@@ -1,12 +1,12 @@
-#!/usr/bin/python
+# !/usr/bin/python
 # -*- encoding: utf-8 -*-
-###########################################################################
+# #############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) 2013 Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
-# ##############Credits######################################################
+# ##############Credits########################################################
 #    Coded by: vauxoo consultores (info@vauxoo.com)
-#############################################################################
+# #############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
 #    by the Free Software Foundation, either version 3 of the License, or
@@ -19,10 +19,11 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#############################################################################
+# #############################################################################
 
 
 from openerp.osv import osv, fields
+import ast
 
 
 class email_template(osv.Model):
@@ -67,7 +68,7 @@ class mail_compose_message(osv.TransientModel):
                 att_field_render = template_obj.render_template(
                     cr, uid, template.att_other_field, template.model,
                     res_id, context=context)
-                attach += [id_att for id_att in eval(
+                attach += [id_att for id_att in ast.literal_eval(
                     "[" + att_field_render + "]") if att_field_render]
 
         attach += res.get('value', {}).pop('attachment_ids', [])

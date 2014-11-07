@@ -21,7 +21,6 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
 
 from openerp.osv import osv, fields
 
@@ -31,12 +30,13 @@ class project(osv.Model):
 
     def _get_followers(self, cr, uid, ids, field_name, arg, context=None):
         result = {}
-        for project in self.browse(cr, uid, ids, context=context):
+        for project_obj in self.browse(cr, uid, ids, context=context):
             task_ids = self.pool.get('project.task').search(
-                cr, uid, [('project_id', '=', project.id)])
-            for task in self.pool.get('project.task').browse(cr, uid, task_ids):
+                cr, uid, [('project_id', '=', project_obj.id)])
+            for task in self.pool.get('project.task').browse(cr, uid,
+                                                             task_ids):
                 if task.message_follower_ids:
-                    result[project.id] = [
+                    result[project_obj.id] = [
                         follower.id for follower in task.message_follower_ids]
         return result
 
@@ -44,13 +44,20 @@ class project(osv.Model):
         for cond in args:
             partner_ids = cond[2]
             task_ids = self.pool.get('project.task').search(
-                cr, uid, [('message_follower_ids', 'in', partner_ids),
-                    ('project_id.privacy_visibility', '=', 'followers')])
+                cr,
+                uid,
+                [('message_follower_ids', 'in', partner_ids),
+                 ('project_id.privacy_visibility', '=', 'followers')])
         project_ids = set(task.project_id.id for task in self.pool.get(
             'project.task').browse(cr, uid, task_ids))
         return [('id', 'in', tuple(project_ids))]
     _columns = {
-        'followers_tasks_ids': fields.function(_get_followers, type='many2many',
-            relation="res.partner", string="Followers Task", method=True, store=False,
-                fnct_search=_search_project),
+        'followers_tasks_ids': fields.function(
+            _get_followers,
+            type='many2many',
+            relation="res.partner",
+            string="Followers Task",
+            method=True,
+            store=False,
+            fnct_search=_search_project),
     }
