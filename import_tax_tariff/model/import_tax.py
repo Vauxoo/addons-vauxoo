@@ -28,4 +28,5 @@ class import_tax_tariff(models.Model):
     _name = "import.tax.tariff"
     _description = "Import Tax Tariff"
 
-    name = field.Char(required=True)
+    name = fields.Char(required=True)
+    description = fields.Text()
