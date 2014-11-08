@@ -47,21 +47,21 @@ class TestInvoiceDatetime(TransactionCase):
         datetime_object = datetime.datetime.strptime(dt_server,
                                                      '%Y-%m-%d %H:%M:%S')
         # create list with tz to apply in datetime
-        self.user.write(cr, uid, uid, {'tz': 'Europe/Rome'}) #Assign tz to user
+        self.user.write(cr, uid, uid, {'tz': 'Europe/Rome'})  # Assign tz to user
         #call the function _get_datetime_with_user_tz to get the date with tz applied
         datetime_tz_rome = self.invoice._get_datetime_with_user_tz(cr, uid,
                                                                    datetime_object)
         # Create an invoice with last tz of cycle America/Mexico_City
         invoice_tz_rome_id = self.invoice.create(cr, uid,
-                                                 {'partner_id':1,
-                                                  'account_id':1,
+                                                 {'partner_id': 1,
+                                                  'account_id': 1,
                                                   'invoice_datetime': dt_server})
         self.user.write(cr, uid, uid, {'tz': 'America/Mexico_City'}) #Assign tz to user
         datetime_tz_mx = self.invoice._get_datetime_with_user_tz(cr, uid,
                                                                  datetime_object)
         invoice_tz_mx_id = self.invoice.create(cr, uid,
-                                               {'partner_id':1,
-                                                'account_id':1,
+                                               {'partner_id': 1,
+                                                'account_id': 1,
                                                 'invoice_datetime': dt_server})
         dt_inv_tz_rome = self.invoice.read(cr, uid, invoice_tz_rome_id, []).get('date_invoice_tz')
         dt_inv_tz_mx = self.invoice.read(cr, uid, invoice_tz_mx_id, []).get('date_invoice_tz')
