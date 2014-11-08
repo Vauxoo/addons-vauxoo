@@ -112,7 +112,7 @@ class invoice_report_per_journal(osv.TransientModel):
             try:
                 (result, _) = self._prepare_service(cr, uid, report,
                                                     context=context)
-            except Exception:
+            except BaseException, e:
                 if report:
                     _logger.warning("Error occurred in the report, the "
                                     "report set to the journal will be "
@@ -137,7 +137,7 @@ class invoice_report_per_journal(osv.TransientModel):
                     wiz_id = wiz_obj.create(cr, uid, {}, context=ctx_cpy)
                     wiz_brw = wiz_obj.browse(cr, uid, wiz_id, context=context)
                     result = base64.decodestring(wiz_brw.fname_txt)
-            except Exception:
+            except BaseException:
                 if report:
                     _logger.info(
                         "txt report not defined for the report assigned to "
@@ -164,7 +164,7 @@ class invoice_report_per_journal(osv.TransientModel):
         try:
             (_, _) = self._prepare_service(
                 cr, uid, report, context=context)
-        except Exception:
+        except BaseException:
             if report:
                 _logger.warning(
                     "Error occurred in the report, the report set to the "

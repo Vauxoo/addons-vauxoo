@@ -32,7 +32,6 @@ from openerp import release
 import datetime
 from pytz import timezone
 import pytz
-
 import time
 
 

@@ -31,8 +31,8 @@ class res_partner(osv.Model):
 
     def _supplier_customer_advance_get(self, cr, uid, ids, field, arg, context=None):
         res = {}
-        for id in ids:
-            res = {id: {'customer_advance': 0.0, 'supplier_advance': 0.0}}
+        for record_id in ids:
+            res = {record_id: {'customer_advance': 0.0, 'supplier_advance': 0.0}}
         return res
 
     _columns = {
