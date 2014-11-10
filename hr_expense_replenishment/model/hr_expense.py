@@ -144,7 +144,7 @@ class hr_expense_expense(osv.Model):
                     continue
                 if aml_brw.reconcile_id:
                     continue
-                res[id] += [aml_brw.id]
+                rex[id] += [aml_brw.id]
         for id, aml_ids in rex.iteritems():
             exp_brw = self.browse(cr, uid, id, context=context)
             if exp_brw.state == 'paid' and not aml_ids:
