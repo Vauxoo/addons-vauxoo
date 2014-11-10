@@ -29,4 +29,19 @@ class import_tax_tariff(models.Model):
     _description = "Import Tax Tariff"
 
     name = fields.Char(required=True)
+    tariff_ids = fields.One2many('tariff.tariff',
+                                 'import_tax_id',
+                                 string='Tariff')
     description = fields.Text()
+
+class tariff_tariff(models.Model):
+    _name = "tariff.tariff"
+
+    name = fields.Char(required=True)
+    code = fields.Char()
+    minimum = fields.Float(digits=(6, 2),
+                           help="Amount Minimun")
+    import_tax_id = fields.Many2one('import.tax.tariff',
+                                    ondelete = 'set null',
+                                    string = 'Import Tax',
+                                    index = True)

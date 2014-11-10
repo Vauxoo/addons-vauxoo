@@ -16,7 +16,23 @@
             <field name="model">import.tax.tariff</field>
             <field name="arch" type="xml">
                 <form string="Import Tax - Tariff">
-                    <field name="name"/>
+                    <sheet>
+                        <label for="name"/>
+                        <field name="name" nolabel="1"/>
+                        <label for="description"/>
+                        <field name="description" nolabel="1"/>
+                        <notebook>
+                            <page>
+                                <field name="tariff_ids">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="code" required="1"/>
+                                        <field name="minimum" required="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
                 </form>
             </field>
         </record>
