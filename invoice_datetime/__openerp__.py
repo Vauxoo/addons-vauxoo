@@ -6,8 +6,10 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com) modified by carlosecv74@gmail.com
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
+#    Coded by: moylop260 (moylop260@vauxoo.com)
+#    modified by carlosecv74@gmail.com
+#    Launchpad Project Manager for Publication:
+#   Nhomar Hernandez - nhomar@vauxoo.com
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
