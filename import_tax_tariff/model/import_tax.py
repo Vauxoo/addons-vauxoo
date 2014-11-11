@@ -39,9 +39,9 @@ class import_tax_tariff(models.Model):
 class tariff_tariff(models.Model):
     _name = "tariff.tariff"
 
-    name = fields.Char(required=True)
-    description = fields.Text()
-    code = fields.Char()
+    name = fields.Char("Name", required=True)
+    description = fields.Text("Description")
+    code = fields.Char("Code")
     unit_value = fields.Float(digits=(6, 2),
                            help="Tariff per Unit of Product")
     tax_percentage = fields.Float(digits=(6, 2),
@@ -56,5 +56,5 @@ class tariff_tariff(models.Model):
          ('ad_valorem', "Ad Valorem"),
          ('specific', "Specific"),
          ('mixed', "Mixed"),
-         ], string = 'Type',
+         ], string='Type',
       default='ad_valorem')

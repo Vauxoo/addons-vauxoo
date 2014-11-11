@@ -37,6 +37,7 @@ Import Tax and Tariff
     "category": "Accounting",
     "data": [
         "view/import_tax_view.xml",
+        "view/tariff_tariff_view.xml",
         ],
     "demo": [],
     "test": [],
