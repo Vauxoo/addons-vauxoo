@@ -25,7 +25,3 @@
 #
 
 from . import test_invoice_datetime
-
-fast_suite = [
-    test_invoice_datetime
-]
