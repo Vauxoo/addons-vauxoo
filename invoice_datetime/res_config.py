@@ -68,7 +68,8 @@ class account_config_settings(osv.osv_memory):
         type_date = result.get('value', {})
         key_by_company_id = "acc_invoice.date_invoice_type_" + str(
             company_id or self._default_company(cr, uid))
-        type_date['select_date'] = self.pool.get("ir.config_parameter")
-        .get_param(cr, uid, key_by_company_id, default='date', context=context)
+        type_date['select_date'] = self.pool.get(
+            "ir.config_parameter").get_param(
+            cr, uid, key_by_company_id, default='date', context=context)
         result.update({'value': type_date})
         return result
