@@ -32,7 +32,7 @@ class import_tax_tariff(models.Model):
     tariff_ids = fields.One2many('tariff.tariff',
                                  'import_tax_id',
                                  string='Tariff')
-    product_id = fields.Many2one('product.category',
+    product_category_id = fields.Many2one('product.category',
                                     string = 'Product Category',)
     description = fields.Text()
 

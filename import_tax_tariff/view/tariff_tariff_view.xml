@@ -8,15 +8,18 @@
             <field name="arch" type="xml">
                 <form string="Import Tax - Tariff" version="7.0">
                     <sheet>
-                        <group>
                             <label for="name"/>
                             <field name="name" nolabel="1"/>
+                            <label for="code"/>
                             <field name="code" required="True"/>
+                            <label for="type_id"/>
                             <field name="type_id" required="True"/>
+                            <label for="tax_percentage"/>
                             <field name="tax_percentage" attrs="{'required': [('type_id', 'in', ['ad_valorem', 'mixed'])], 'readonly': [('type_id', '=', 'specific')]}"/>
+                            <label for="unit_value"/>
                             <field name="unit_value" attrs="{'required': [('type_id', 'in', ['specific', 'mixed'])], 'readonly': [('type_id', '=', 'ad_valorem')]}"/>
+                            <label for="description"/>
                             <field name="description"/>
-                        </group>
                     </sheet>
                 </form>
             </field>

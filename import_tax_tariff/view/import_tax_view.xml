@@ -19,8 +19,8 @@
                     <sheet>
                         <label for="name"/>
                         <field name="name" nolabel="1"/>
-                        <label for="product_id"/>
-                        <field name="product_id"/>
+                        <label for="product_category_id"/>
+                        <field name="product_category_id"/>
                         <label for="description"/>
                         <field name="description" nolabel="1"/>
                         <notebook>
