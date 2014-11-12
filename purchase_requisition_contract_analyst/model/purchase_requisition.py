@@ -36,3 +36,9 @@ class purchase_requisition(osv.Model):
             help=('Contract Analyst responsible to evaluate the current'
                   ' purchase requisition.')),
     }
+
+    def copy(self, cr, uid, id, default=None, context=None):
+        default = default or {}
+        default.update({'purchaser_id': False})
+        return super(purchase_requisition, self).copy(cr, uid, id, default,
+                                                      context=context)
