@@ -20,7 +20,7 @@
 #
 
 from openerp.osv import fields, osv
-from datetime import *
+from datetime import date, timedelta
 
 
 class task_expired_config(osv.Model):
@@ -86,16 +86,17 @@ class task_expired_config(osv.Model):
             for task in task_ids and task_obj.browse(cr, uid, task_ids):
                 msg_expired = ''
                 msg_expiredp = ''
-                last_message_ids = message.search(cr, uid,
-                                   [('res_id', '=', task.id),
-                                   ('model', '=', 'project.task')],
+                last_message_ids = message.search(
+                    cr, uid,
+                    [('res_id', '=', task.id), ('model', '=', 'project.task')],
                     context, order='date desc')
-                last_fecha = last_message_ids and message.browse(cr, uid, last_message_ids[0]).date
-                #~ Para cuando la tarea se vencio a la fecha de hoy.
-                #~ if task.date_deadline and task.date_deadline <= today:
-                #~ msg_expired = ('<p>Esta tarea ha expirado el dia %s \
-                #~ </p>', task.date_deadline)
-                #~ msg_expiredp = 'ACTIVIDAD VENCIDA'
+                last_fecha = last_message_ids and message.browse(
+                    cr, uid, last_message_ids[0]).date
+                # Para cuando la tarea se vencio a la fecha de hoy.
+                # if task.date_deadline and task.date_deadline <= today:
+                # msg_expired = ('<p>Esta tarea ha expirado el dia %s \
+                # </p>', task.date_deadline)
+                # msg_expiredp = 'ACTIVIDAD VENCIDA'
                 if work_obj.search(cr, uid,
                                    [('date', '<=', last_change),
                                     ('task_id', '=', task.id)],
@@ -105,11 +106,11 @@ class task_expired_config(osv.Model):
                     msg_expired = ('<p>La Tarea tiene mas de %s dia(s) sin \
                                                       cambios</p>'
                                    % config_brw.without_change)
-                #~ Para cuando la tarea tiene x cantidad de dias vencida.
-                #~ if task.date_deadline and task.date_deadline == before_expiry:
-                    #~ msg_expired = ('<p>La Tarea expirara en %s \
-                    #~ dias</p>' % config_brw.before_expiry)
-                    #~ msg_expiredp = 'ACTIVIDAD VENCIDA'
+                # Para cuando la tarea tiene x cantidad de dias vencida.
+                # if task.date_deadline and task.date_deadline==before_expiry:
+                    # msg_expired = ('<p>La Tarea expirara en %s \
+                    # dias</p>' % config_brw.before_expiry)
+                    # msg_expiredp = 'ACTIVIDAD VENCIDA'
                 if msg_expired:
                     html = r"""<html>
     <head>
@@ -117,24 +118,53 @@ class task_expired_config(osv.Model):
         <title>*|MC:SUBJECT|*</title>
         <style type="text/css">
             /* Client-specific Styles */
-            #outlook a{padding:0;} /* Force Outlook to provide a "view in browser" button. */
-            body{width:100% !important;} .ReadMsgBody{width:100%;} .ExternalClass{width:100%;} /* Force Hotmail to display emails at full width */
-            body{-webkit-text-size-adjust:none;} /* Prevent Webkit platforms from changing default text sizes. */
+            # outlook a{
+            # padding:0;
+            # } /* Force Outlook to provide a "view in browser" button. */
+
+            body{
+            width:100% !important;
+            }
+            .ReadMsgBody{
+            width:100%;
+            }
+            .ExternalClass{
+            width:100%;
+            } /* Force Hotmail to display emails at full width */
+            body{
+            -webkit-text-size-adjust:none;
+            } /* Prevent Webkit platforms from changing default text sizes. */
 
             /* Reset Styles */
-            body{margin:0; padding:0;}
-            img{border:0; height:auto; line-height:100%; outline:none; text-decoration:none;}
-            table td{border-collapse:collapse;}
-            #backgroundTable{height:100% !important; margin:0; padding:0; width:100% !important;}
+            body{
+            margin:0; padding:0;
+            }
+            img{
+            border:0;
+            height:auto;
+            line-height:100%;
+            outline:none;
+            text-decoration:none;
+            }
+            table td{
+            border-collapse:collapse;
+            }
+            # backgroundTable{
+            # height:100% !important;
+            # margin:0;
+            # padding:0;
+            # width:100% !important;
+            # }
 
             /* Template Styles */
 
-            /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: COMMON PAGE ELEMENTS /\/\/\/\/\/\/\/\/\/\ */
+            /* /\/\/\/\/\ STANDARD STYLING: COMMON PAGE ELEMENTS /\/\/\/\/\ */
 
             /**
             * @tab Page
             * @section background color
-            * @tip Set the background color for your email. You may want to choose one that matches your company's branding.
+            * @tip Set the background color for your email. You may want to
+            *      choose one that matches your company's branding.
             * @theme page
             */
             body, #backgroundTable{
@@ -153,7 +183,8 @@ class task_expired_config(osv.Model):
             /**
             * @tab Page
             * @section heading 1
-            * @tip Set the styling for all first-level headings in your emails. These should be the largest of your headings.
+            * @tip Set the styling for all first-level headings in your emails.
+            *      These should be the largest of your headings.
             * @style heading 1
             */
             h1, .h1{
@@ -173,7 +204,8 @@ class task_expired_config(osv.Model):
             /**
             * @tab Page
             * @section heading 2
-            * @tip Set the styling for all second-level headings in your emails.
+            * @tip Set the styling for all second-level headings in
+            *      your emails.
             * @style heading 2
             */
             h2, .h2{
@@ -213,7 +245,8 @@ class task_expired_config(osv.Model):
             /**
             * @tab Page
             * @section heading 4
-            * @tip Set the styling for all fourth-level headings in your emails. These should be the smallest of your headings.
+            * @tip Set the styling for all fourth-level headings in your
+            *      emails. These should be the smallest of your headings.
             * @style heading 4
             */
             h4, .h4{
@@ -230,7 +263,7 @@ class task_expired_config(osv.Model):
                 /*@editable*/ text-align:left;
             }
 
-            /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: PREHEADER /\/\/\/\/\/\/\/\/\/\ */
+            /* /\/\/\/\/\/\/\/\ STANDARD STYLING: PREHEADER /\/\/\/\/\/\/\/\ */
 
             /**
             * @tab Header
@@ -245,7 +278,8 @@ class task_expired_config(osv.Model):
             /**
             * @tab Header
             * @section preheader text
-            * @tip Set the styling for your email's preheader text. Choose a size and color that is easy to read.
+            * @tip Set the styling for your email's preheader text. Choose a
+            *      size and color that is easy to read.
             */
             .preheaderContent div{
                 /*@editable*/ color:#707070;
@@ -258,9 +292,12 @@ class task_expired_config(osv.Model):
             /**
             * @tab Header
             * @section preheader link
-            * @tip Set the styling for your email's preheader links. Choose a color that helps them stand out from your text.
+            * @tip Set the styling for your email's preheader links. Choose a
+            *      color that helps them stand out from your text.
             */
-            .preheaderContent div a:link, .preheaderContent div a:visited, /* Yahoo! Mail Override */ .preheaderContent div a .yshortcuts /* Yahoo! Mail Override */{
+            .preheaderContent div a:link,
+            .preheaderContent div a:visited, /* Yahoo! Mail Override */
+            .preheaderContent div a .yshortcuts /* Yahoo! Mail Override */{
                 /*@editable*/ color:#336699;
                 /*@editable*/ font-weight:normal;
                 /*@editable*/ text-decoration:underline;
@@ -269,18 +306,20 @@ class task_expired_config(osv.Model):
             /**
             * @tab Header
             * @section social bar style
-            * @tip Set the background color and border for your email's footer social bar.
+            * @tip Set the background color and border for your email's footer
+            *      social bar.
             */
             #social div{
                 /*@editable*/ text-align:right;
             }
 
-            /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: HEADER /\/\/\/\/\/\/\/\/\/\ */
+            /* /\/\/\/\/\/\/\/\ STANDARD STYLING: HEADER /\/\/\/\/\/\/\/\/\ */
 
             /**
             * @tab Header
             * @section header style
-            * @tip Set the background color and border for your email's header area.
+            * @tip Set the background color and border for your email's
+            *      header area.
             * @theme header
             */
             #templateHeader{
@@ -291,7 +330,8 @@ class task_expired_config(osv.Model):
             /**
             * @tab Header
             * @section header text
-            * @tip Set the styling for your email's header text. Choose a size and color that is easy to read.
+            * @tip Set the styling for your email's header text. Choose a size
+            *      and color that is easy to read.
             */
             .headerContent{
                 /*@editable*/ color:#202020;
@@ -307,9 +347,12 @@ class task_expired_config(osv.Model):
             /**
             * @tab Header
             * @section header link
-            * @tip Set the styling for your email's header links. Choose a color that helps them stand out from your text.
+            * @tip Set the styling for your email's header links. Choose a
+            *      color that helps them stand out from your text.
             */
-            .headerContent a:link, .headerContent a:visited, /* Yahoo! Mail Override */ .headerContent a .yshortcuts /* Yahoo! Mail Override */{
+            .headerContent a:link,
+            .headerContent a:visited, /* Yahoo! Mail Override */
+            .headerContent a .yshortcuts /* Yahoo! Mail Override */{
                 /*@editable*/ color:#336699;
                 /*@editable*/ font-weight:normal;
                 /*@editable*/ text-decoration:underline;
@@ -320,7 +363,7 @@ class task_expired_config(osv.Model):
                 max-width:600px !important;
             }
 
-            /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: MAIN BODY /\/\/\/\/\/\/\/\/\/\ */
+            /* /\/\/\/\/\/\/\/\ STANDARD STYLING: MAIN BODY /\/\/\/\/\/\/\/\ */
 
             /**
             * @tab Body
@@ -334,7 +377,8 @@ class task_expired_config(osv.Model):
             /**
             * @tab Body
             * @section body text
-            * @tip Set the styling for your email's main content text. Choose a size and color that is easy to read.
+            * @tip Set the styling for your email's main content text. Choose a
+            *      size and color that is easy to read.
             * @theme main
             */
             .bodyContent div{
@@ -348,9 +392,12 @@ class task_expired_config(osv.Model):
             /**
             * @tab Body
             * @section body link
-            * @tip Set the styling for your email's main content links. Choose a color that helps them stand out from your text.
+            * @tip Set the styling for your email's main content links. Choose
+            *      a color that helps them stand out from your text.
             */
-            .bodyContent div a:link, .bodyContent div a:visited, /* Yahoo! Mail Override */ .bodyContent div a .yshortcuts /* Yahoo! Mail Override */{
+            .bodyContent div a:link,
+            .bodyContent div a:visited, /* Yahoo! Mail Override */
+            .bodyContent div a .yshortcuts /* Yahoo! Mail Override */{
                 /*@editable*/ color:#336699;
                 /*@editable*/ font-weight:normal;
                 /*@editable*/ text-decoration:underline;
@@ -361,12 +408,13 @@ class task_expired_config(osv.Model):
                 height:auto;
             }
 
-            /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: SIDEBAR /\/\/\/\/\/\/\/\/\/\ */
+            /* /\/\/\/\/\/\/\/\/\ STANDARD STYLING: SIDEBAR /\/\/\/\/\/\/\/\ */
 
             /**
             * @tab Sidebar
             * @section sidebar style
-            * @tip Set the background color and border for your email's sidebar area.
+            * @tip Set the background color and border for your email's
+            *      sidebar area.
             */
             #templateSidebar{
                 /*@editable*/ background-color:#FDFDFD;
@@ -375,7 +423,8 @@ class task_expired_config(osv.Model):
             /**
             * @tab Sidebar
             * @section sidebar style
-            * @tip Set the background color and border for your email's sidebar area.
+            * @tip Set the background color and border for your email's
+            *      sidebar area.
             */
             .sidebarContent{
                 /*@editable*/ border-right:1px solid #DDDDDD;
@@ -384,7 +433,8 @@ class task_expired_config(osv.Model):
             /**
             * @tab Sidebar
             * @section sidebar text
-            * @tip Set the styling for your email's sidebar text. Choose a size and color that is easy to read.
+            * @tip Set the styling for your email's sidebar text. Choose a size
+            *      and color that is easy to read.
             */
             .sidebarContent div{
                 /*@editable*/ color:#505050;
@@ -397,9 +447,12 @@ class task_expired_config(osv.Model):
             /**
             * @tab Sidebar
             * @section sidebar link
-            * @tip Set the styling for your email's sidebar links. Choose a color that helps them stand out from your text.
+            * @tip Set the styling for your email's sidebar links. Choose a
+            *      color that helps them stand out from your text.
             */
-            .sidebarContent div a:link, .sidebarContent div a:visited, /* Yahoo! Mail Override */ .sidebarContent div a .yshortcuts /* Yahoo! Mail Override */{
+            .sidebarContent div a:link,
+            .sidebarContent div a:visited, /* Yahoo! Mail Override */
+            .sidebarContent div a .yshortcuts /* Yahoo! Mail Override */{
                 /*@editable*/ color:#336699;
                 /*@editable*/ font-weight:normal;
                 /*@editable*/ text-decoration:underline;
@@ -410,12 +463,13 @@ class task_expired_config(osv.Model):
                 height:auto;
             }
 
-            /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: FOOTER /\/\/\/\/\/\/\/\/\/\ */
+            /* /\/\/\/\/\/\/\/\/\ STANDARD STYLING: FOOTER /\/\/\/\/\/\/\/\ */
 
             /**
             * @tab Footer
             * @section footer style
-            * @tip Set the background color and top border for your email's footer area.
+            * @tip Set the background color and top border for your email's
+            *      footer area.
             * @theme footer
             */
             #templateFooter{
@@ -426,7 +480,8 @@ class task_expired_config(osv.Model):
             /**
             * @tab Footer
             * @section footer text
-            * @tip Set the styling for your email's footer text. Choose a size and color that is easy to read.
+            * @tip Set the styling for your email's footer text. Choose a size
+            *      and color that is easy to read.
             * @theme footer
             */
             .footerContent div{
@@ -440,9 +495,12 @@ class task_expired_config(osv.Model):
             /**
             * @tab Footer
             * @section footer link
-            * @tip Set the styling for your email's footer links. Choose a color that helps them stand out from your text.
+            * @tip Set the styling for your email's footer links. Choose a
+            *      color that helps them stand out from your text.
             */
-            .footerContent div a:link, .footerContent div a:visited, /* Yahoo! Mail Override */ .footerContent div a .yshortcuts /* Yahoo! Mail Override */{
+            .footerContent div a:link,
+            .footerContent div a:visited, /* Yahoo! Mail Override */
+            .footerContent div a .yshortcuts /* Yahoo! Mail Override */{
                 /*@editable*/ color:#336699;
                 /*@editable*/ font-weight:normal;
                 /*@editable*/ text-decoration:underline;
@@ -455,7 +513,8 @@ class task_expired_config(osv.Model):
             /**
             * @tab Footer
             * @section social bar style
-            * @tip Set the background color and border for your email's footer social bar.
+            * @tip Set the background color and border for your email's footer
+            *      social bar.
             * @theme footer
             */
             #social{
@@ -466,7 +525,8 @@ class task_expired_config(osv.Model):
             /**
             * @tab Footer
             * @section social bar style
-            * @tip Set the background color and border for your email's footer social bar.
+            * @tip Set the background color and border for your email's footer
+            *      social bar.
             */
             #social div{
                 /*@editable*/ text-align:left;
@@ -475,7 +535,8 @@ class task_expired_config(osv.Model):
             /**
             * @tab Footer
             * @section utility bar style
-            * @tip Set the background color and border for your email's footer utility bar.
+            * @tip Set the background color and border for your email's footer
+            *      utility bar.
             * @theme footer
             */
             #utility{
@@ -486,7 +547,8 @@ class task_expired_config(osv.Model):
             /**
             * @tab Footer
             * @section utility bar style
-            * @tip Set the background color and border for your email's footer utility bar.
+            * @tip Set the background color and border for your email's footer
+            *      utility bar.
             */
             #utility div{
                 /*@editable*/ text-align:left;
@@ -497,22 +559,39 @@ class task_expired_config(osv.Model):
             }
         </style>
     </head>
-    <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+    <body leftmargin="0" marginwidth="0" topmargin="0"
+          marginheight="0" offset="0">
         <center>
-            <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="backgroundTable">
+            <table border="0" cellpadding="0" cellspacing="0" height="100%"
+                   width="100%" id="backgroundTable">
                 <tr>
                     <td align="center" valign="top">
-                        <table border="0" cellpadding="0" cellspacing="0" width="600" id="templateContainer">
-                            <tr style="margin: 0px; padding: 0px; background-color: rgb(247, 247, 247);">
+                        <table border="0" cellpadding="0" cellspacing="0"
+                               width="600" id="templateContainer">
+                            <tr style="margin: 0px; padding: 0px;
+                                background-color: rgb(247, 247, 247);">
                                 <td align="center" valign="top">
                                     <!-- // Begin Template Header \\ -->
-                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin: 0px; padding: 0px;  background-color: rgb(253, 253, 253);">
+                                    <table border="0" cellpadding="0"
+                                        cellspacing="0" width="100%"
+                                        style="margin: 0px; padding: 0px;
+                                        background-color: rgb(253, 253, 253);">
                                         <tr>
                                             <td class="headerContent">
-                                                <img src="http://drive.google.com/uc?export=view&id=0B0ktFgMTDB8KV2FGWWhOaEMwbm8" style="max-width:60px; padding: 2px 2px 2px;" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowtext />
+                                                <img src=
+    "http://drive.google.com/uc?export=view&id=0B0ktFgMTDB8KV2FGWWhOaEMwbm8"
+                                                style="max-width:60px;
+                                                       padding: 2px 2px 2px;"
+                                                id="headerImage campaign-icon"
+                                                mc:label="header_image"
+                                                mc:edit="header_image"
+                                                mc:allowtext />
                                             </td>
 
-                                            <td class="headerContent" width="100%" style="padding-left:10px; padding-right:20px;">
+                                            <td class="headerContent"
+                                                width="100%"
+                                                style="padding-left:10px;
+                                                       padding-right:20px;">
                                                 <div mc:edit="Header_content">
                                                     <h2>"""
                     html += task.name
@@ -525,8 +604,11 @@ class task_expired_config(osv.Model):
                                 </td>
                             </tr>
                             <tr>
-                            <td align="center" style="margin: 0px; padding: 0px; width: 600px; background-color: #E8C808">
-                                <div style="font-size:1.3em; font-family:Arial"><b>"""
+                            <td align="center"
+                                style="margin: 0px; padding: 0px;
+                                    width: 600px; background-color: #E8C808">
+                                <div style="font-size:1.3em;
+                                            font-family:Arial"><b>"""
                     html += msg_expiredp
                     html += """</b></div>
                             </td>
@@ -534,11 +616,19 @@ class task_expired_config(osv.Model):
                             <tr>
                                 <td align="center" valign="top">
                                     <!-- // Begin Template Body \\ -->
-                                    <table border="0" cellpadding="10" cellspacing="0" width="600" style="margin: 0px; padding: 0px; width: 600px; background-color: rgb(247, 247, 247);">
+                                    <table border="0" cellpadding="10"
+                                        cellspacing="0" width="600"
+                                        style="margin: 0px; padding: 0px;
+                                        width: 600px;
+                                        background-color: rgb(247, 247, 247);">
                                         <tr>
                                             <!-- // Begin Sidebar \\  -->
-                                            <td valign="top" width="180" id="templateSidebar">
-                                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                            <td valign="top" width="180"
+                                                id="templateSidebar">
+                                                <table border="0"
+                                                cellpadding="0"
+                                                cellspacing="0"
+                                                width="100%">
                                                     <tr>
                                                         <td valign="top">
                                                         </td>
@@ -546,37 +636,48 @@ class task_expired_config(osv.Model):
                                                 </table>
                                             </td>
                                             <!-- // End Sidebar \\ -->
-                                            <td valign="top" class="bodyContent">
+                                            <td valign="top"
+                                                class="bodyContent">
 
-                                                <!-- // Begin Module: Standard Content \\ -->
-                                                <table border="0" cellpadding="10" cellspacing="0" width="600">
+                                <!-- // Begin Module: Standard Content \\ -->
+                                                <table border="0"
+                                                    cellpadding="10"
+                                                    cellspacing="0"
+                                                    width="600">
                                                     <tr>
-                                                        <td valign="top" style="padding-left:0;">
-                                                            <div mc:edit="std_content00">
-                                                                <h2 class="h2">Hola @"""
+                                                    <td valign="top"
+                                                    style="padding-left:0;">
+                                                <div mc:edit="std_content00">
+                                                    <h2 class="h2">Hola @"""
                     html += task.user_id.name
                     html += """</h2>
                     <h3 class="h3">"""
                     html += msg_expired
                     html += """</h3>
-<pre style="font-size:1.1em; font-family:Arial">Podrias ser tan amable de comentarnos el estatus de la misma por este medio.
+<pre style="font-size:1.1em; font-family:Arial">Podrias ser tan amable de co"""
+                    """mentarnos el estatus de la misma por este medio.
 
-Si es por alguna de las 3 siguientes razones, o alguna ajena a estos puntos justificalo por favor:
+Si es por alguna de las 3 siguientes razones, o alguna ajena a estos puntos """
+                    """justificalo por favor:
 
 <b>1.- Aun no cargas tus labores en la instancia. </b>
-(Recuerda que gran parte del trabajo que realizas esta en cargar las horas, asi demuestras en que te ocupas realmente).
+(Recuerda que gran parte del trabajo que realizas esta en cargar las horas, """
+                    """asi demuestras en que te ocupas realmente).
 
 <b>2.- Se te pidio la postergaras.</b>
-(Si fue asi espero nos comentes por esta via las razones que se te dieron, y por favor actualices la fecha correcta).
+(Si fue asi espero nos comentes por esta via las razones que se te dieron, y"""
+                    """ por favor actualices la fecha correcta).
 
-<b>3.- No la habias visto, o tienes alguna duda con el contenido, si es asi puedes colocar aqui cuales son tus dudas.</b>
-(La comunicacion es importante para un mejor desarrollo de tus actividades).</pre>
+<b>3.- No la habias visto, o tienes alguna duda con el contenido, si es asi """
+                    """puedes colocar aqui cuales son tus dudas.</b>
+(La comunicacion es importante para un mejor desarrollo de tus actividades)."""
+                    """</pre>
                                                                 <br />
                                                         </div>
                                                     </td>
                                                     </tr>
                                                 </table>
-                                                <!-- // End Module: Standard Content \\ -->
+                                    <!-- // End Module: Standard Content \\ -->
 
                                             </td>
                                         </tr>
@@ -591,14 +692,16 @@ Si es por alguna de las 3 siguientes razones, o alguna ajena a estos puntos just
         </center>
     </body>
 </html>"""
-                    mail_id = mail_mail.create(cr, uid,
-                                               {
-                                                   'model': 'project.task',
-                                                   'res_id': task.id,
-                                                   'subject': ('#' + str(task.id) + ' - ' + task.name),
-                                                   'body_html': html,
-                                                   'auto_delete': True,
-                                               }, context=context)
+                    mail_id = mail_mail.create(
+                        cr, uid,
+                        {
+                            'model': 'project.task',
+                            'res_id': task.id,
+                            'subject': ('#' + str(task.id) + ' - ' +
+                                        task.name),
+                            'body_html': html,
+                            'auto_delete': True,
+                        }, context=context)
                     mail_mail.send(cr, uid, [mail_id],
                                    recipient_ids=[task.user_id.partner_id.id],
                                    context=context)
