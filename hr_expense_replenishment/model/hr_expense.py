@@ -61,8 +61,6 @@ class hr_expense_expense(osv.Model):
         cur_obj = self.pool.get('res.currency')
         res = super(hr_expense_expense, self)._amount(
             cr, uid, ids, field_name, arg, context=context)
-        acc_payable_ids = self.pool.get('account.account').search(
-            cr, uid, [('type', '=', 'payable')], context=context)
         for expense in self.browse(cr, uid, res.keys(), context=context):
             for invoice in expense.invoice_ids:
                 if expense.state in ('draft', 'confirm', 'accepted', 'cancelled'):
@@ -180,7 +178,7 @@ class hr_expense_expense(osv.Model):
             'Status', readonly=True, track_visibility='onchange',
             help=_('When the expense request is created the status is '
             '\'Draft\'.\n It is confirmed by the user and request is sent to '
-            'admin, the status is \'Waiting Confirmation\'.\ \nIf the admin '
+            'admin, the status is \'Waiting Confirmation\'. \nIf the admin '
             'accepts it, the status is \'Accepted\'.\n If the accounting '
             'entries are made for the expense request, the status is '
             '\'Waiting Payment\'.')),
@@ -250,7 +248,7 @@ class hr_expense_expense(osv.Model):
         inv_brws = self.browse(cr, uid, ids[0], context=context).invoice_ids
         res = [True]
         if inv_brws:
-            res += map(lambda x: x.state == 'open' and True or False, inv_brws)
+            res += [inv.state == 'open' and True or False for inv in inv_brws]
             res = all(res)
         if not res:
             raise osv.except_osv(
@@ -300,7 +298,7 @@ class hr_expense_expense(osv.Model):
             cr.execute(('SELECT aml_id FROM expense_advance_rel '
                         'WHERE expense_id != %s'), (exp.id,))
             already_use_aml = cr.fetchall()
-            already_use_aml = map(lambda x: x[0], already_use_aml)
+            already_use_aml = [dat[0] for dat in already_use_aml]
             aml_ids = list(set(aml_ids) - set(already_use_aml))
             vals['advance_ids'] = \
                 [(6, 0, aml_ids)]
@@ -352,10 +350,6 @@ class hr_expense_expense(osv.Model):
                 [brw.id
                  for brw in exp.account_move_id.line_id
                  if brw.credit > 0.0]
-            if not exp_credit:
-                [brw.id for brw in exp.account_move_id.line_id]
-                # Really!!!
-                #aml_obj.unlink(cr, uid, empty_aml_ids, context=context)
 
             #~ manage the expense move lines
             exp_aml_brws = exp.account_move_id and \
@@ -445,7 +439,7 @@ class hr_expense_expense(osv.Model):
                 try:
                     aml_obj.reconcile(
                         cr, uid, line_pair, 'manual', context=context)
-                except:
+                except BaseException:
                     new_line_pair = self.invoice_counter_move_lines(cr, uid, exp.id,
                         am_id=exp.account_move_id.id, aml_ids=line_pair,
                         context=context)
@@ -459,7 +453,7 @@ class hr_expense_expense(osv.Model):
                     cr, uid, line_pair, 'manual', context=context)
         return aml
 
-    def expense_reconcile_partial_deduction(self, cr, uid, ids, d, context=None):
+    def expense_reconcile_partial_deduction(self, cr, uid, ids, aml, context=None):
         """
         This method make a distribution of the advances, whenever applies
         paying fully those invoice that can be paid and leaving just a remaining
@@ -471,23 +465,22 @@ class hr_expense_expense(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         exp = self.browse(cr, uid, ids[0], context=context)
 
-        adv_ids = d['advances']
-        exp_ids = d['exp']
+        adv_ids = aml['advances']
+        exp_ids = aml['exp']
 
-        sum_adv = d['debit']
-        d['exp_sum']
-        sum_inv = d['inv_sum']
+        sum_adv = aml['debit']
+        sum_inv = aml['inv_sum']
 
-        ld = sum_adv - d['credit']  # Remaining Advance
-        ld and self.expense_debit_lines(cr, uid, exp.id, exp.account_move_id.id,
-                    ld)
-        lc = sum_adv - d['credit'] + sum_inv
+        ld = sum_adv - aml['credit']  # Remaining Advance
+        if ld:
+            self.expense_debit_lines(cr, uid, exp.id, exp.account_move_id.id, ld)
+        lc = sum_adv - aml['credit'] + sum_inv
         lc = self.expense_credit_lines(cr, uid, exp.id, exp.account_move_id.id,
                     lc)
 
         return adv_ids + exp_ids + [lc], []
 
-    def expense_reconcile_partial_payment(self, cr, uid, ids, d, context=None):
+    def expense_reconcile_partial_payment(self, cr, uid, ids, aml, context=None):
         """
         This method make a distribution of the advances, whenever applies
         paying fully those invoice that can be paid and leaving just a remaining
@@ -499,12 +492,12 @@ class hr_expense_expense(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         exp = self.browse(cr, uid, ids[0], context=context)
 
-        adv_ids = d['advances']
-        exp_ids = d['exp']
+        adv_ids = aml['advances']
+        exp_ids = aml['exp']
 
-        sum_adv = d['debit']
-        sum_exp = d['exp_sum']
-        sum_inv = d['inv_sum']
+        sum_adv = aml['debit']
+        sum_exp = aml['exp_sum']
+        sum_inv = aml['inv_sum']
         partial_rec = []
         full_rec = []
 
@@ -960,19 +953,18 @@ class hr_expense_expense(osv.Model):
             self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
         return True
 
-    def copy(self, cr, uid, id, default=None, context=None):
+    def copy(self, cr, uid, ids, default=None, context=None):
         if default is None:
             default = {}
         default = default.copy()
         default.update({'advance_ids': [],
                         'invoice_ids': [],
                         'payment_ids': [],
-                        'advance_ids': [],
                         'ail_ids': [],
                         'ait_ids': [],
                         'date_post': False,
                         })
-        return super(hr_expense_expense, self).copy(cr, uid, id, default,
+        return super(hr_expense_expense, self).copy(cr, uid, ids, default,
                         context=context)
 
     def show_entries(self, cr, uid, ids, context=None):
@@ -988,7 +980,7 @@ class hr_expense_expense(osv.Model):
                        for move2 in inv.move_id.line_id]
         return {
             'domain': "[('id','in',\
-                [" + ','.join(map(str, res_exp + res_adv + res_pay + res_inv)) + "])]",
+                [" + ','.join([str(dat) for dat in res_exp + res_adv + res_pay + res_inv]) + "])]",
             'name': _('Entries'),
             'view_type': 'form',
             'view_mode': 'tree,form',
@@ -1109,7 +1101,7 @@ class hr_department(osv.Model):
 class hr_expense_line(osv.Model):
     _inherit = "hr.expense.line"
 
-    def _get_analytic(self, cr, uid, context={}):
+    def _get_analytic(self, cr, uid, context=None):
         context = context or {}
         res = super(hr_expense_line, self)._get_analytic(cr, uid,
             context=context)

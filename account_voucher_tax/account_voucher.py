@@ -182,17 +182,21 @@ class account_voucher(osv.Model):
             credit_line_vals.update({'debit': credit_line_vals.get('credit', 0.0), 'credit': 0.0})
 
         if type in ('payment', 'purchase'):
-            reference_amount < 0 and\
-                [credit_line_vals.pop('analytic_account_id'),
-                credit_line_vals.update({'amount_base': abs(amount_base),
-                                        'tax_id_secondary': tax_secondary})] or\
-                [debit_line_vals.pop('analytic_account_id'),
-                debit_line_vals.update({'tax_id_secondary': tax_secondary,
-                                        'amount_base': abs(amount_base)})]
+            if reference_amount < 0:
+                credit_line_vals.pop('analytic_account_id')
+                credit_line_vals.update({
+                    'amount_base': abs(amount_base),
+                    'tax_id_secondary': tax_secondary})
+            else:
+                debit_line_vals.pop('analytic_account_id')
+                debit_line_vals.update({
+                    'tax_id_secondary': tax_secondary,
+                    'amount_base': abs(amount_base)})
         else:
-            reference_amount < 0 and\
-                [debit_line_vals.pop('analytic_account_id'),
-                debit_line_vals.pop('tax_id_secondary')] or\
+            if reference_amount < 0:
+                debit_line_vals.pop('analytic_account_id')
+                debit_line_vals.pop('tax_id_secondary')
+            else:
                 credit_line_vals.pop('analytic_account_id')
 
         if not amount_tax_unround:
@@ -233,7 +237,7 @@ class account_voucher(osv.Model):
 
     def voucher_move_line_create(self, cr, uid, voucher_id, line_total, move_id, company_currency, current_currency, context=None):
         res = super(account_voucher, self).voucher_move_line_create(cr, uid, voucher_id, line_total, move_id, company_currency, current_currency, context=None)
-        new = self.voucher_move_line_tax_create(cr, uid, voucher_id, move_id, context=context)
+        self.voucher_move_line_tax_create(cr, uid, voucher_id, move_id, context=context)
         #~ res[1] and res[1][0]+new
         return res
 
@@ -539,7 +543,7 @@ class account_move_line(osv.Model):
         for res_diff_id in res_round.items():
             diff_val = abs(res_without_round[res_diff_id[0]]) - abs(res_round[res_diff_id[0]])
             diff_val = round(diff_val, 2)
-            if diff_val <> 0.00:
+            if diff_val != 0.00:
                 move_diff_id = [res_ids[res_diff_id[0]]]
                 for move in self.browse(cr, uid, move_diff_id, context=context):
                     move_line_ids = self.search(cr, uid, [('move_id', '=', move.move_id.id), ('tax_id', '=', move.tax_id.id)])
@@ -564,11 +568,11 @@ class account_voucher_line_tax(osv.Model):
         res = {}
 
         for line_tax in self.browse(cr, uid, ids, context=context):
-            sum = 0.0
+            tax_sum = 0.0
             old_ids = self.search(cr, uid, [('move_line_id', '=', line_tax.move_line_id.id), ('id', '!=', line_tax.id)])
             for lin_sum in self.browse(cr, uid, old_ids, context=context):
-                sum += lin_sum.amount_tax
-            res[line_tax.id] = line_tax.original_tax - sum
+                tax_sum += lin_sum.amount_tax
+            res[line_tax.id] = line_tax.original_tax - tax_sum
         return res
 
     def onchange_amount_tax(self, cr, uid, ids, amount, tax):

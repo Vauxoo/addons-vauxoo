@@ -38,7 +38,9 @@ class hr_department(osv.Model):
 class hr_expense_line(osv.Model):
     _inherit = "hr.expense.line"
 
-    def _get_analytic(self, cr, uid, context={}):
+    def _get_analytic(self, cr, uid, context=None):
+        if context is None:
+            context = {}
         if context['depto']:
             depto = self.pool.get('hr.department').browse(
                 cr, uid, [context['depto']])[0]
