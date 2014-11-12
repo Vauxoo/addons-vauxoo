@@ -22,3 +22,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from . import import_tax
+from . import product_template

@@ -67,5 +67,16 @@
             id="menu_action_import_tax_tariff"
             parent="account.next_id_27"
             sequence="20" groups="base.group_no_one"/>
+
+        <record id="view_import_tax_tariff_inh_product_template" model="ir.ui.view">
+            <field name="name">import.tax.tariff.product.template</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='default_code']" position="after">
+                    <field name="tariff_id"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
