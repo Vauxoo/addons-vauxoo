@@ -130,7 +130,7 @@
                 <td>
                     <para style="ITEMSLEFT">F: [[ inv['inv_brw'].number or 0]]</para>
                 </td>
-                <td><para style="ITEMSLEFT">[[ formatLang(inv['inv_brw'].date_invoice,date=True) ]]</para></td>
+                <td><para style="ITEMSLEFT">[[ formatLang(inv['inv_brw'].date_invoice,date_time=True)[:10] ]]</para></td>
                 <td><para style="ITEMSLEFT">[[ formatLang(inv['inv_brw'].date_due,date=True) ]]</para></td>
                 <td><para style="ITEMSRIGHT">[[ inv.get('due_days') and '%s DIAS'%inv.get('due_days') or '0 DIAS' ]]</para></td>
                 <td><para style="ITEMSRIGHT">[[ formatLang(inv['inv_brw'].amount_untaxed) or '0.00']]</para></td>
