@@ -8,16 +8,16 @@
       <field name="arch" type="xml">
         <form string="User Story" version="7.0">
           <header>
-			 <button name="do_draft" string="Draft" type="object" states="open,pending,done,cancelled"/>
-			 <button name="do_progress" string="Progress" type="object" states="draft,pending,done,cancelled"/>
-			 <button name="do_pending" string="Pending" type="object" states="draft,open,done,cancelled"/>
-			 <button name="do_done" string="Done" type="object" states="draft,open,pending,cancelled"/>
-			 <button name="do_cancel" string="Cancel" type="object" states="draft,open,pending,done"/>
-			 <field name="state" widget="statusbar"/>
+             <button name="do_draft" string="Draft" type="object" states="open,pending,done,cancelled"/>
+             <button name="do_progress" string="Progress" type="object" states="draft,pending,done,cancelled"/>
+             <button name="do_pending" string="Pending" type="object" states="draft,open,done,cancelled"/>
+             <button name="do_done" string="Done" type="object" states="draft,open,pending,cancelled"/>
+             <button name="do_cancel" string="Cancel" type="object" states="draft,open,pending,done"/>
+             <field name="state" widget="statusbar"/>
                 <label for='help'/>
                 <field name='help'/>
-		  </header>
-		  <sheet string="User Story">
+          </header>
+          <sheet string="User Story">
             <div class="oe_right">
                         <field name="date" select="1"
                             string="Created at"/>
@@ -28,10 +28,10 @@
                  -->
             <h2 class="no_print"><label for="approved" string="0.- Is this User Story Approved to work with?"/><field name="approved"/></h2>
             <h1><label for="name" string="1.- Name of what will be done/configured/developed: Title of the Story" class="oe_horizontal_separator oe_clear"/></h1>
-			<h2><field name="name"/></h2>
-			<h3>
-		        <label for="project_id" string="2.- Related Project" class="oe_horizontal_separator oe_clear"/>
-			</h3>
+            <h2><field name="name"/></h2>
+            <h3>
+                <label for="project_id" string="2.- Related Project" class="oe_horizontal_separator oe_clear"/>
+            </h3>
             <div>
                 <field name="project_id" domain="[('child_ids','=',False)]" context="{'current_model': 'project.project'}" />
                 <div class="no_print" attrs="{'invisible':[('help','=',False)]}">
@@ -75,11 +75,16 @@
                     </p>
                 </div>
                 <div class="no_print oe_right">
-                    <button name="do_approval" type="object" states="draft" help="Please, Approve this User Story to start to work with it take care about if you are not the Owner of this User Story you will not be able to approve it." string="I approve start to work with this Story"/>
+                    <button name="do_approval"
+                            type="object"
+                            attrs="{'invisible':[('approved','=',True)]}"
+                            states="draft"
+                            help="Please, Approve this User Story to start to work with it take care about if you are not the Owner of this User Story you will not be able to approve it."
+                            string="I approve start to work with this Story"/>
                     <h3>This User Story was approved by: <field name="approval_user_id" readonly="True"/></h3>
                 </div>
               <field name="description" colspan="4" nolabel="1" attrs="{'readonly':[('approved','=',True)]}" placeholder="Add a description here ..." widget="html"/>
-		      <h1><label for="accep_crit_ids" string="4.- Aceptability Criteria" class="oe_horizontal_separator oe_clear"/></h1>
+              <h1><label for="accep_crit_ids" string="4.- Aceptability Criteria" class="oe_horizontal_separator oe_clear"/></h1>
               <field name="accep_crit_ids" colspan="4" nolabel="1">
                 <tree string="Acceptability Criteria" editable="bottom">
                   <field name="name"/>
@@ -111,7 +116,7 @@
                     <a href="/user_story/static/src/demo/TestUS.xmind" target="_NEW">here</a>
                     </p>
                 </div>
-			  <separator colspan="4" string="5.- Technical Conclusions" class="oe_horizontal_separator oe_clear"/>
+              <separator colspan="4" string="5.- Technical Conclusions" class="oe_horizontal_separator oe_clear"/>
                 <div class="no_print" attrs="{'invisible':[('help','=',False)]}">
                     <p class="oe_grey">
                         Here you need to declare technically how will be
@@ -171,7 +176,7 @@
               </field>
             </page>
           </notebook>
-		  </sheet>
+          </sheet>
            <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
                     <field name="message_ids" widget="mail_thread"/>
@@ -223,7 +228,6 @@
                     </h1>
                     <group>
                         <field name="scenario"/>
-                        <field name="accep_crit_id"/>
                         <field name="accepted"/>
                         <field name="development"/>
                         <field name="difficulty" invisible="1"/>
@@ -289,6 +293,32 @@
             </search>
         </field>
     </record>
+     <record model="ir.ui.view" id="email_compose_message_wizard_inherit_form_without_partner">
+            <field name="name">mail.compose.message.form</field>
+            <field name="model">mail.compose.message</field>
+            <field name="priority">9999</field>
+            <field name="groups_id" eval="[(3,ref('base.group_user'))]"/>
+            <field name="arch" type="xml">
+                <form string="Compose Email" version="7.0">
+                    <group>
+                        <!-- truly invisible fields for control and options -->
+                        <field name="composition_mode" invisible="1"/>
+                        <field name="model" invisible="1"/>
+                        <field name="res_id" invisible="1"/>
+                        <field name="parent_id" invisible="1"/>
+                        <!-- visible wizard -->
+                        <field name="subject" placeholder="Subject..."/>
+                    </group>
+                    <field name="body"/>
+                    <field name="attachment_ids" widget="many2many_binary"/>
+                    <footer>
+                        <button string="Send" name="send_mail" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+     </record>
 
      <record id="view_userstory_search" model="ir.ui.view">
       <field name="name">user.story.search</field>

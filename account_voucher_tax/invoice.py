@@ -38,13 +38,13 @@ class invoice(osv.osv):
         inv = self.browse(cr, uid, ids[0], context=context)
         inv_ids = []
         result = mod_obj.get_object_reference(cr, uid, 'account_voucher', 'action_voucher_list')
-        id = result and result[1] or False
+        id_pay = result and result[1] or False
         if inv.type == 'out_invoice' or inv.type == 'out_refund':
             view_type = 'view_vendor_receipt_form'
         else:
             view_type = 'view_vendor_payment_form'
         res = mod_obj.get_object_reference(cr, uid, 'account_voucher', view_type)
-        result = act_obj.read(cr, uid, [id], context=context)[0]
+        result = act_obj.read(cr, uid, [id_pay], context=context)[0]
         result['views'] = [(res and res[1] or False, 'form')]
         result['context'] = {
             'default_partner_id': self.pool.get('res.partner')._find_accounting_partner(inv.partner_id).id,

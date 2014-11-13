@@ -32,7 +32,6 @@ from openerp import release
 import datetime
 from pytz import timezone
 import pytz
-
 import time
 
 
@@ -46,7 +45,7 @@ class account_payment_term(osv.Model):
             try:
                 date_ref = time.strftime('%Y-%m-%d', time.strptime(
                     date_ref, '%Y-%m-%d %H:%M:%S'))
-            except Exception, e:
+            except BaseException:
                 pass
         return super(account_payment_term, self).compute(cr, uid, ids, value,
             date_ref, context=context)
