@@ -480,6 +480,7 @@ class hr_expense_expense(osv.Model):
 
         return adv_ids + exp_ids + [lc], []
 
+    # pylint: disable=R0911
     def expense_reconcile_partial_payment(self, cr, uid, ids, aml, context=None):
         """
         This method make a distribution of the advances, whenever applies
@@ -1047,6 +1048,7 @@ class account_voucher(osv.Model):
 class account_move_line(osv.osv):
     _inherit = "account.move.line"
 
+    # pylint: disable=W0622
     def reconcile(self, cr, uid, ids, type='auto', writeoff_acc_id=False,
                   writeoff_period_id=False, writeoff_journal_id=False,
                   context=None):
