@@ -1,4 +1,4 @@
-##############################################################################
+# #############################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
@@ -18,7 +18,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+# #############################################################################
 
 from openerp.osv import osv
 from openerp.tools.translate import _
@@ -34,7 +34,7 @@ class sale_order_line(osv.Model):
         data_sale_order = sale_order_obj.browse(cr, uid, data.get('order_id'))
 
         if data_sale_order.state == 'draft':
-            sale_order_id = self.create(cr, uid, data, context=context)
+            self.create(cr, uid, data, context=context)
             return {
                 'type': 'ir.actions.act_window',
                 'name': _('Sales Order'),
@@ -45,4 +45,5 @@ class sale_order_line(osv.Model):
                 'target': 'current',
                 'nodestroy': True, }
         else:
-            raise osv.except_osv(_('Error!'), _("This sale order is not in draft state"))
+            raise osv.except_osv(_('Error!'),
+                                 _("This sale order is not in draft state"))

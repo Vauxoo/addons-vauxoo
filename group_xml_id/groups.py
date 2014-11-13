@@ -8,8 +8,8 @@
 #    Coded by: Rodo(rodo@vauxoo.com)
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
@@ -28,6 +28,10 @@ class res_groups(osv.Model):
     _inherit = 'res.groups'
 
     _columns = {
-        'xml_id': fields.function(osv.osv.get_xml_id, type='char', size=128, string="External ID",
-                                  help="ID of the view defined in xml file"),
+        'xml_id': fields.function(
+            osv.osv.get_xml_id,
+            type='char',
+            size=128,
+            string="External ID",
+            help="ID of the view defined in xml file"),
     }
