@@ -174,7 +174,7 @@ class hr_expense_expense(osv.Model):
         return move_tax_ids
 
     def unlink_move_tax(self, cr, uid, exp, context=None):
-        if context in None:
+        if context is None:
             context = {}
         aml_obj = self.pool.get('account.move.line')
         move_ids = self.move_tax_expense(cr, uid, exp, context=context)
