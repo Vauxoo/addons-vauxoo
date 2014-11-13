@@ -1,4 +1,4 @@
-#!/usr/bin/python
+# !/usr/bin/python
 # -*- encoding: utf-8 -*-
 #
 #    Module Writen to OpenERP, Open Source Management Solution
@@ -22,7 +22,6 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
 
 from openerp.addons.report_webkit import webkit_report
 from openerp.report import report_sxw
@@ -51,9 +50,10 @@ class user_story_report(report_sxw.rml_parse):
             return text_data
         return ''
 
-webkit_report.WebKitParser('report.user.story.report',
-            'user.story',
-            'addons/user_story/report/user_story_report.mako',
-            parser=user_story_report)
+webkit_report.WebKitParser(
+    'report.user.story.report',
+    'user.story',
+    'addons/user_story/report/user_story_report.mako',
+    parser=user_story_report)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -27,29 +27,35 @@ uid2 = common_proxy2.login(DB2, USER2, PASS2)
 
 
 def search_in_destiny(model, name):
-    return object_proxy2.execute(DB2, uid2, PASS2, model, 'search', [("name", "ilike", name)])
+    return object_proxy2.execute(DB2, uid2, PASS2, model, 'search',
+                                 [("name", "ilike", name)])
 
 
 def create_in_destiny(model, model_dict={}):
     if model_dict:
-        return object_proxy2.execute(DB2, uid2, PASS2, model, 'create', model_dict)
+        return object_proxy2.execute(DB2, uid2, PASS2, model, 'create',
+                                     model_dict)
     else:
         print 'dictionary empty, model: %d' % model
         return False
 
 
 def read_in_source(model, model_id, fields=[]):
-    return object_proxy.execute(DB, uid, PASS, model, 'read', [model_id], fields)[0]
+    return object_proxy.execute(DB, uid, PASS, model, 'read',
+                                [model_id], fields)[0]
 
 
 def read_in_destiny(model, model_id, fields=[]):
-    return object_proxy2.execute(DB2, uid2, PASS2, model, 'read', [model_id], fields)[0]
+    return object_proxy2.execute(DB2, uid2, PASS2, model, 'read', [model_id],
+                                 fields)[0]
 
 
 def user_matching(user_id):
     # Capturamos el diccionario de usuario con los valores del origen
-    user = read_in_source('res.users', user_id, [
-                          'name', 'groups_id', 'login', 'password', 'email', 'signature', 'notification_email_send', 'company_id'])
+    user = read_in_source(
+        'res.users', user_id,
+        ['name', 'groups_id', 'login', 'password', 'email',
+         'signature', 'notification_email_send', 'company_id'])
 
     # Si no existe el usuario en el destino
     if not search_in_destiny('res.users', user.get('name')):
@@ -118,7 +124,8 @@ def __main__():
         # estos elementos en el destino
             if accep_crit_ids:
                 accep_crit_dict = object_proxy.execute(
-                    DB, uid, PASS, 'acceptability.criteria', 'read', accep_crit_ids, ['name', 'scenario'])
+                    DB, uid, PASS, 'acceptability.criteria', 'read',
+                    accep_crit_ids, ['name', 'scenario'])
                 accep_crit_o2m = []
                 for j in accep_crit_dict:
                     accep_crit_o2m.append((0, 0, j))
@@ -127,7 +134,9 @@ def __main__():
         # crea
             project = read_in_source(
                 'project.project', user_story.get('project_id', [])[0],
-                ['name', 'state', 'date_start', 'date_end', 'privacy_visibility', 'priority', 'user_task', 'user_id', 'members'])
+                ['name', 'state', 'date_start', 'date_end',
+                 'privacy_visibility', 'priority', 'user_task',
+                 'user_id', 'members'])
 
         # Inicilizamos la lista de los miembros del proyecto
             project_members = []
@@ -148,8 +157,9 @@ def __main__():
                 project.get('user_id')[0])})
 
         # Ubicamos los datos de project en el destino, sino existe se crea
-            project_id = user_story.get('project_id', []) and search_in_destiny(
-                'project.project', project.get('name', []))
+            project_id = user_story.get('project_id', []) \
+                and search_in_destiny('project.project',
+                                      project.get('name', []))
             project_id = project_id and project_id[
                 0] or create_in_destiny('project.project', project)
 
@@ -164,7 +174,8 @@ def __main__():
         # Almacenamos el user_story en el destino
             create_in_destiny('user.story', user_story)
             end = time.time()
-            print 'Creada la historia %s en %ss' % (user_story_name, end - begin)
+            print 'Creada la historia %s en %ss' % \
+                (user_story_name, end - begin)
 
         else:
             print 'Ya existe la historia %s' % (user_story_name)

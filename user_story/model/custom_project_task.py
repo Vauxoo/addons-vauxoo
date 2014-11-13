@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+# #############################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (c) 2014 Vauxoo - http://www.vauxoo.com/
@@ -17,7 +17,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+# #############################################################################
 '''
 This file loads the necessary information for the custom task view.
 '''
@@ -80,8 +80,12 @@ class custom_project_task(osv.Model):
                     task.id AS task_id,
                     task_type.name AS state
                 FROM project_task AS task
-                LEFT JOIN project_project AS project ON project.id = task.project_id
-                LEFT JOIN account_analytic_account AS analytic ON analytic.id = project.analytic_account_id
-                LEFT JOIN user_story AS us ON us.id = task.userstory_id
-                LEFT JOIN project_task_type AS task_type ON task_type.id = task.stage_id
+                LEFT JOIN project_project AS project
+                     ON project.id = task.project_id
+                LEFT JOIN account_analytic_account AS analytic
+                     ON analytic.id = project.analytic_account_id
+                LEFT JOIN user_story AS us
+                     ON us.id = task.userstory_id
+                LEFT JOIN project_task_type AS task_type
+                     ON task_type.id = task.stage_id
         )''')

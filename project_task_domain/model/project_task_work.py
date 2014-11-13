@@ -1,4 +1,4 @@
-#!/usr/bin/python
+# !/usr/bin/python
 # -*- encoding: utf-8 -*-
 #
 #    Module Writen to OpenERP, Open Source Management Solution
@@ -22,8 +22,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-#
+
 from openerp.osv import osv
 from openerp.tools.translate import _
 import time
@@ -37,7 +36,9 @@ class project_task_work(osv.Model):
             context = {}
         warning = {}
         if hours < 0:
-            warning = {'title': _('Warning!'), 'message': _('Are you sure that you want to charge hours in negative?')}
+            warning = {'title': _('Warning!'),
+                       'message': _('Are you sure that you want to charge '
+                                    'hours in negative?')}
         return {'warning': warning}
 
     def onchange_date(self, cr, uid, ids, date=None, context=None):
@@ -45,5 +46,7 @@ class project_task_work(osv.Model):
             context = {}
         warning = {}
         if date > time.strftime('%Y-%m-%d %H:%M:%S'):
-            warning = {'title': _('Warning!'), 'message': _('Are you sure that you want to charge a future date?')}
+            warning = {'title': _('Warning!'),
+                       'message': _('Are you sure that'
+                                    ' you want to charge a future date?')}
         return {'warning': warning}

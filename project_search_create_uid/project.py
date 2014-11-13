@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+# ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-today OpenERP SA (<http://www.openerp.com>)
@@ -17,7 +17,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+# ##############################################################################
 
 
 from openerp.osv import fields, osv
@@ -28,10 +28,12 @@ class project_task(osv.Model):
 
     _columns = {
         'write_date': fields.datetime('Date Modified', readonly=True),
-        'write_uid': fields.many2one('res.users', 'Last Modification User', readonly=True),
+        'write_uid': fields.many2one('res.users', 'Last Modification User',
+                                     readonly=True),
         'create_date': fields.datetime('Date Created', readonly=True),
         'create_uid': fields.many2one('res.users', 'Creator', readonly=True),
-        'date_from_create': fields.dummy(string="Create Date From", type='date'),
+        'date_from_create': fields.dummy(string="Create Date From",
+                                         type='date'),
         'date_to_create': fields.dummy(string="Create Date To", type='date'),
         'date_from_write': fields.dummy(string="Write Date From", type='date'),
         'date_to_write': fields.dummy(string="Write Date To", type='date'),

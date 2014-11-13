@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
+from openerp.osv.osv import except_osv
 
 
 class sale_order_line(osv.Model):
@@ -10,8 +11,11 @@ class sale_order_line(osv.Model):
     """
     _inherit = 'sale.order.line'
     _columns = {
-        'att_bro': fields.boolean('Attach Brochure', required=False, help="""If you check this
-        option, the first attachment related to the product_id marked as brochure will be printed
+        'att_bro': fields.boolean(
+            'Attach Brochure',
+            required=False,
+            help="""If you check this option, the first attachment related """
+            """to the product_id marked as brochure will be printed
         as extra info with sale order"""),
     }
 
@@ -49,5 +53,6 @@ class sale_order(osv.Model):
 
     def print_quotation(self, cr, uid, ids, context=None):
         pq = super(sale_order, self).print_quotation(cr, uid, ids, context)
-        return {'type': 'ir.actions.report.xml', 'report_name': self._get_report_name(cr, uid,
-            context), 'datas': pq['datas'], 'nodestroy': True}
+        return {'type': 'ir.actions.report.xml',
+                'report_name': self._get_report_name(cr, uid, context),
+                'datas': pq['datas'], 'nodestroy': True}

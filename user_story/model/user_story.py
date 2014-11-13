@@ -1,4 +1,4 @@
-##############################################################################
+# #############################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
@@ -16,7 +16,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+# #############################################################################
 
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
@@ -38,15 +38,17 @@ class user_story(osv.Model):
         task_obj = self.pool.get('project.task')
         context.update({'force_send': True})
         if task_obj.check_access_rights(cr, uid, 'write', False):
-            # In order to be sync correctly tasks related with tags on this user story
-            # Tasks Must belong to same category, but in portal usage, this feature is not necesary
-            # and incorrect if we allow with SUPERUSERID, then we will check_permision and
-            # then make the sync process, if not it will pass silently.
+            # In order to be sync correctly tasks related with tags on this
+            # user story Tasks Must belong to same category, but in portal
+            # usage, this feature is not necesary and incorrect if we allow
+            # with SUPERUSERID, then we will check_permision and then make
+            # the sync process, if not it will pass silently.
             if vals.get('categ_ids'):
                 for tag_id in self.browse(cr, uid, ids, context=context):
                     for task in tag_id.task_ids:
                         task_obj.write(
-                            cr, uid, [task.id], {'categ_ids': vals['categ_ids']})
+                            cr, uid, [task.id],
+                            {'categ_ids': vals['categ_ids']})
             if vals.get('sk_id'):
                 task_ids = task_obj.search(cr, uid, [
                     ('userstory_id', '=', ids[0])])
@@ -57,7 +59,8 @@ class user_story(osv.Model):
         if vals.get('categ_ids'):
             for tag_id in self.browse(cr, uid, ids, context=context):
                 for task in tag_id.task_ids:
-                    task_obj.write(cr, uid, [task.id], {'categ_ids': vals['categ_ids']})
+                    task_obj.write(cr, uid, [task.id],
+                                   {'categ_ids': vals['categ_ids']})
 
         if vals.get('sk_id'):
             task_ids = task_obj.search(cr, uid, [
@@ -76,40 +79,48 @@ class user_story(osv.Model):
                     else:
                         criteria[1] = ac[2].get('name', False)
                     body = self.body_criteria(
-                        cr, uid, ids, 'template_send_email_hu', criteria[1], context)
+                        cr, uid, ids, 'template_send_email_hu',
+                        criteria[1], context)
 
-                    body = self.body_criteria(cr, uid, ids, 'template_send_email_hu', criteria[1], context)
+                    body = self.body_criteria(
+                        cr, uid, ids, 'template_send_email_hu',
+                        criteria[1], context)
                     hu = self.browse(cr, uid, ids[0], context=context)
-                    subject = _(u'Acceptance criteria accepted {criteria} on User Story {hu}'.format(
-                        criteria=criteria[1][:30], hu=hu.id))
+                    subject = _(u'Acceptance criteria accepted {criteria} on '
+                                'User Story {hu}'.format(
+                                    criteria=criteria[1][:30],
+                                    hu=hu.id))
                     self.send_mail_hu(
-                        cr, uid, ids, subject, body, hu.id, users=False, context=context)
+                        cr, uid, ids, subject, body, hu.id, users=False,
+                        context=context)
         return super(user_story, self).write(cr, uid, ids,
                                              vals, context=context)
 
     def body_progress(self, cr, uid, ids, template, hu, context=None):
         imd_obj = self.pool.get('ir.model.data')
         template_ids = imd_obj.search(
-            cr, uid, [('model', '=', 'email.template'), ('name', '=', template)])
+            cr, uid, [('model', '=', 'email.template'),
+                      ('name', '=', template)])
         if template_ids:
             res_id = imd_obj.read(
                 cr, uid, template_ids, ['res_id'])[0]['res_id']
-            body_html = self.pool.get('email.template').read(cr, uid, res_id,
-                                                             ['body_html']).get('body_html')
+            body_html = self.pool.get('email.template').read(
+                cr, uid, res_id, ['body_html']).get('body_html')
             return body_html
         else:
             return False
 
     def body_criteria(self, cr, uid, ids, template, criteria, context=None):
         '''
-        TODO: This method is incorrect, change for the original method which render
-        the template with the original engine.
+        TODO: This method is incorrect, change for the original method which
+        render the template with the original engine.
         '''
         if context is None:
             context = {}
         imd_obj = self.pool.get('ir.model.data')
         template_ids = imd_obj.search(
-            cr, SUPERUSER_ID, [('model', '=', 'email.template'), ('name', '=', template)])
+            cr, SUPERUSER_ID,
+            [('model', '=', 'email.template'), ('name', '=', template)])
         if template_ids:
             res_id = imd_obj.read(
                 cr, SUPERUSER_ID, template_ids, ['res_id'])[0]['res_id']
@@ -138,7 +149,8 @@ class user_story(osv.Model):
         else:
             return False
 
-    def send_mail_hu(self, cr, uid, ids, subject, body, res_id, users=[], context=None):
+    def send_mail_hu(self, cr, uid, ids, subject, body, res_id,
+                     users=[], context=None):
         if context is None:
             context = {}
         if context.get('force_send', False):
@@ -199,42 +211,57 @@ class user_story(osv.Model):
     def _get_user_story_from_ptw(self, cr, uid, ids, context=None):
         result = {}
         task_ids = {}
-        for work in self.pool.get('project.task.work').browse(cr, uid, ids, context=context):
+        for work in self.pool.get('project.task.work').browse(
+                cr, uid, ids, context=context):
             if work.task_id:
                 result[work.task_id.id] = True
         task_ids = task_ids.keys()
-        for task in self.pool.get('project.task').browse(cr, uid, task_ids, context=context):
+        for task in self.pool.get('project.task').browse(
+                cr, uid, task_ids, context=context):
             if task.userstory_id:
                 result[task.userstory_id.id] = True
         return result.keys()
 
     def _get_user_story_from_pt(self, cr, uid, ids, context=None):
         result = {}
-        for task in self.pool.get('project.task').browse(cr, uid, ids, context=context):
+        for task in self.pool.get('project.task').browse(
+                cr, uid, ids, context=context):
             if task.userstory_id:
                 result[task.userstory_id.id] = True
         return result.keys()
 
-    def _message_get_auto_subscribe_fields(self, cr, uid, updated_fields, auto_follow_fields=['user_id'], context=None):
+    def _message_get_auto_subscribe_fields(self, cr, uid, updated_fields,
+                                           auto_follow_fields=['user_id'],
+                                           context=None):
         if auto_follow_fields is None:
             auto_follow_fields = ['user_id']
 
         auto_follow_fields.append('user_execute_id')
         auto_follow_fields.append('approval_user_id')
-        res = super(user_story, self)._message_get_auto_subscribe_fields(cr, uid, updated_fields, auto_follow_fields=auto_follow_fields, context=context)
+        res = super(user_story, self)._message_get_auto_subscribe_fields(
+            cr, uid, updated_fields, auto_follow_fields=auto_follow_fields,
+            context=context)
         return res
 
     _columns = {
-        'name': fields.char('Title', size=255, required=True, readonly=False, translate=True, track_visibility='onchange'),
-        'owner_id': fields.many2one('res.users', 'Owner',
-                                    help="User Story's Owner, generally the person which asked to develop this feature",
-                                    track_visibility='always'),
-        'approval_user_id': fields.many2one('res.users', 'Approver', help="User which approve this USer Story"),
+        'name': fields.char('Title', size=255, required=True, readonly=False,
+                            translate=True, track_visibility='onchange'),
+        'owner_id': fields.many2one(
+            'res.users',
+            'Owner',
+            help="User Story's Owner, generally the person which asked to "
+            "develop this feature",
+            track_visibility='always'),
+        'approval_user_id': fields.many2one(
+            'res.users',
+            'Approver',
+            help="User which approve this USer Story"),
         'code': fields.char('Code', size=64, readonly=False),
         'planned_hours': fields.float('Planned Hours'),
         'project_id': fields.many2one('project.project', 'Project',
                                       required=True),
-        'description': fields.text('Description', translate=True, track_visibility='onchange'),
+        'description': fields.text(
+            'Description', translate=True, track_visibility='onchange'),
         'accep_crit_ids': fields.one2many('acceptability.criteria',
                                           'accep_crit_id',
                                           'Acceptability Criteria',
@@ -253,26 +280,51 @@ class user_story(osv.Model):
                   " details of the progress or completion of the User Story,"
                   " in some cases also the supervisor for the correct"
                   " execution of the user story."), track_visibility='always'),
-        'user_execute_id': fields.many2one('res.users', 'Execution Responsible',
-                                           help="Person responsible for user story takes place, either by delegating work to other human resource or running it by itself. For delegate work should monitor the proper implementation of associated activities.",
-                                           track_visibility='always'),
+        'user_execute_id': fields.many2one(
+            'res.users',
+            'Execution Responsible',
+            help="Person responsible for user story takes place, either by "
+            "delegating work to other human resource or running it by itself. "
+            "For delegate work should monitor the proper implementation of "
+            "associated activities.",
+            track_visibility='always'),
         'sk_id': fields.many2one('sprint.kanban', 'Sprint Kanban'),
-        'state': fields.selection(_US_STATE, 'State', readonly=True, track_visibility='onchange'),
+        'state': fields.selection(
+            _US_STATE,
+            'State',
+            readonly=True,
+            track_visibility='onchange'),
         'task_ids': fields.one2many(
             'project.task', 'userstory_id',
             string="Tasks",
             help=("Draft procurement of the product and location of that"
                   " orderpoint")),
-        'categ_ids': fields.many2many('project.category', 'project_category_user_story_rel', 'userstory_id', 'categ_id', string="Tags"),
-        'implementation': fields.text('Implementation Conclusions', translate=True),
-        'help': fields.boolean('Show Help', help='Allows you to show the help in the form'),
-        'approved': fields.boolean('Approved', help='Has been this user story approved by customer', track_visibility='onchange'),
-        'effective_hours': fields.function(_hours_get, string='Hours Spent', help="Computed using the sum of the task work done.",
-                                           store = {
-                                               _name: (lambda s, c, u, ids, cx={}: ids, ['task_ids'], 10),
-                                               'project.task': (_get_user_story_from_pt, ['work_ids', 'userstory_id'], 10),
-                                               'project.task.work': (_get_user_story_from_ptw, ['hours'], 10),
-                                           }),
+        'categ_ids': fields.many2many(
+            'project.category',
+            'project_category_user_story_rel',
+            'userstory_id',
+            'categ_id',
+            string="Tags"),
+        'implementation': fields.text(
+            'Implementation Conclusions',
+            translate=True),
+        'help': fields.boolean(
+            'Show Help',
+            help='Allows you to show the help in the form'),
+        'approved': fields.boolean(
+            'Approved',
+            help='Has been this user story approved by customer',
+            track_visibility='onchange'),
+        'effective_hours': fields.function(
+            _hours_get,
+            string='Hours Spent',
+            help="Computed using the sum of the task work done.",
+            store = {
+                _name: (lambda s, c, u, ids, cx={}: ids, ['task_ids'], 10),
+                'project.task': (_get_user_story_from_pt,
+                                 ['work_ids', 'userstory_id'], 10),
+                'project.task.work': (_get_user_story_from_ptw, ['hours'], 10),
+                }),
     }
 
     _defaults = {
@@ -295,18 +347,21 @@ class user_story(osv.Model):
 
     def get_body_disapproval(self, cr, uid, i, context=None):
         '''
-        TODO: This body must be verified to give the information regarding the answers in
-        the do_disaproval method.
+        TODO: This body must be verified to give the information regarding the
+        answers inthe do_disaproval method.
         '''
         usname = self.browse(cr, uid, i).name
         username = self.pool.get('res.users').browse(cr, uid, uid).name
-        urlbase = self.pool.get('ir.config_parameter').get_param(cr, uid, 'web.base.url')
-        link = '#id={i}&view_type=form&model=user.story'.format(i=i, urlbase=urlbase)
+        urlbase = self.pool.get('ir.config_parameter').get_param(
+            cr, uid, 'web.base.url')
+        link = '#id={i}&view_type=form&model=user.story'.format(
+            i=i, urlbase=urlbase)
         return _(u'''<html><div>
                  <h2>{usname}</h2>
                  <p>The user {user} has approved the user Story
                  <a href="{link}">See what we are talking about here</a>
-                 </div></html>'''.format(usname=usname, user=username, link=link))
+                 </div></html>'''.format(usname=usname, user=username,
+                                         link=link))
 
     def do_disapproval(self, cr, uid, ids, context=None):
         '''
@@ -315,21 +370,24 @@ class user_story(osv.Model):
             Can be done IF?
             What are the actions if We desapprove, (Cancel it too)?
             What Happen with tasks already done?
-            What is the actions that must be take by, Project Manager, Product Owner and
-            the rest of the team?
+            What is the actions that must be take by, Project Manager, Product
+            Owner and the rest of the team?
         '''
         return self.write(cr, uid, ids, {'approved': False}, context=context)
 
     def get_body_approval(self, cr, uid, i, context=None):
         usname = self.browse(cr, uid, i).name
         username = self.pool.get('res.users').browse(cr, uid, uid).name
-        urlbase = self.pool.get('ir.config_parameter').get_param(cr, uid, 'web.base.url')
-        link = '#id={i}&view_type=form&model=user.story'.format(i=i, urlbase=urlbase)
+        urlbase = self.pool.get('ir.config_parameter').get_param(
+            cr, uid, 'web.base.url')
+        link = '#id={i}&view_type=form&model=user.story'.format(
+            i=i, urlbase=urlbase)
         return _(u'''<html><div>
                  <h2>{usname}</h2>
                  <p>The user {user} has approved the user Story
                  <a href="{link}">See what we are talking about here</a>
-                 </div></html>'''.format(usname=usname, user=username, link=link))
+                 </div></html>'''.format(usname=usname, user=username,
+                                         link=link))
 
     def do_approval(self, cr, uid, ids, context=None):
         context = context or {}
@@ -344,19 +402,19 @@ class user_story(osv.Model):
             context.update({
                 'default_body': body,
             })
-            mail_id = mail_mail.create(cr, uid,
-                                    {
-                                        'model': 'user.story',
-                                        'res_id': i,
-                                        'subject': (u'{name} Approved the User Story with id {number}'.format(
-                                            number=i, name=user.name)),
-                                        'body_html': body,
-                                        'auto_delete': True,
-                                        'email_from': user.email,
-                                    }, context=context)
-            mail_mail.send(cr, uid, [mail_id],
-                        recipient_ids=followers,
-                        context=context)
+            mail_id = mail_mail.create(
+                cr, uid,
+                {
+                    'model': 'user.story',
+                    'res_id': i,
+                    'subject': (u'{name} Approved the User Story with id '
+                                '{number}'.format(number=i, name=user.name)),
+                    'body_html': body,
+                    'auto_delete': True,
+                    'email_from': user.email,
+                    }, context=context)
+            mail_mail.send(
+                cr, uid, [mail_id], recipient_ids=followers, context=context)
         return self.write(cr, uid, ids,
                           {'approval_user_id': uid,
                            'approved': True}, context=context)
@@ -366,8 +424,9 @@ class user_story(osv.Model):
             cr, uid, ids, 'template_send_email_hu_progress', 'hu', context)
         hu_model = self.pool.get('user.story')
         hu = hu_model.browse(cr, uid, ids[0], context=context)
-        subject = 'The User Story with ID %s, "%s...", is now in Pending state' % (
-            hu.id, hu.name[:30])
+        subject = \
+            'The User Story with ID %s, "%s...", is now in Pending state' % \
+            (hu.id, hu.name[:30])
         self.send_mail_hu(
             cr, uid, ids, subject, body, hu.id, users=True, context=context)
         return self.write(cr, uid, ids, {'state': 'pending'}, context=context)
@@ -393,10 +452,26 @@ class user_story_difficulty(osv.Model):
     _description = "User Story Difficulty Level"
     _order = "points asc"
     _columns = {
-        'name': fields.char('Name', size=32, required=True, help="Set a Name for this Estimation."),
-        'estimated': fields.float('Estimated Hours', size=32, required=True, help="How many hour do you think it can take."),
-        'points': fields.integer('Points', required=True, help="Just to give another value to criterias and User Stories. With it you can set an order and a value in terms of effort."),
-        'help': fields.text('Help', required=True, help="Explain what kind of User Stories can be on this level, tell your experience give examples and so on."),
+        'name': fields.char(
+            'Name',
+            size=32,
+            required=True,
+            help="Set a Name for this Estimation."),
+        'estimated': fields.float(
+            'Estimated Hours',
+            size=32,
+            required=True,
+            help="How many hour do you think it can take."),
+        'points': fields.integer(
+            'Points',
+            required=True,
+            help="Just to give another value to criterias and User Stories. "
+            "With it you can set an order and a value in terms of effort."),
+        'help': fields.text(
+            'Help',
+            required=True,
+            help="Explain what kind of User Stories can be on this level, "
+            "tell your experience give examples and so on."),
     }
 
 
@@ -418,7 +493,8 @@ class acceptability_criteria(osv.Model):
             cr, uid, [('accep_crit_id', 'in', us_ids)], context=context)
         return ac_ids
 
-    def _get_user_story_field(self, cr, uid, ids, fieldname, arg, context=None):
+    def _get_user_story_field(self, cr, uid, ids, fieldname,
+                              arg, context=None):
         """
         Method used as the function for extracting values for the user.story
         model using functional fields. This method is used for various fields,
@@ -448,10 +524,11 @@ class acceptability_criteria(osv.Model):
         'difficulty_level': fields.many2one(
             'user.story.difficulty',
             'Difficulty',
-            help=('User story level estimated level, Estimated level is the one which will be used'
-                  ' to propose a number of hours based on the experience of supervisors to estimate'
-                  ' how many hours it can take. you can set a different'
-                  ' number of hours if you think the estimation is wrong')),
+            help=_('User story level estimated level, Estimated level is the '
+                   'one which will be used to propose a number of hours based '
+                   'on the experience of supervisors to estimate how many '
+                   'hours it can take. you can set a different number of hours'
+                   ' if you think the estimation is wrong')),
         'difficulty': fields.selection(
             [('low', 'Low'),
              ('medium', 'Medium'),
@@ -465,7 +542,8 @@ class acceptability_criteria(osv.Model):
             string='Project',
             help='User Story Project',
             store={
-                'acceptability.criteria': (lambda s, c, u, i, ctx: i, ['accep_crit_id'], 16),
+                'acceptability.criteria': (lambda s, c, u, i, ctx: i,
+                                           ['accep_crit_id'], 16),
                 'user.story': (_get_ac_ids_by_us_ids, ['project_id'], 20),
             }),
         'sk_id': fields.function(
@@ -475,7 +553,8 @@ class acceptability_criteria(osv.Model):
             string='Sprint',
             help='Sprint Kanban',
             store={
-                'acceptability.criteria': (lambda s, c, u, i, ctx: i, ['accep_crit_id'], 16),
+                'acceptability.criteria': (lambda s, c, u, i, ctx: i,
+                                           ['accep_crit_id'], 16),
                 'user.story': (_get_ac_ids_by_us_ids, ['sk_id'], 20),
             }),
         'categ_ids': fields.function(
@@ -485,7 +564,8 @@ class acceptability_criteria(osv.Model):
             string='Tag',
             help='Tag',
             store={
-                'acceptability.criteria': (lambda s, c, u, i, ctx: i, ['accep_crit_id'], 16),
+                'acceptability.criteria': (lambda s, c, u, i, ctx: i,
+                                           ['accep_crit_id'], 16),
                 'user.story': (_get_ac_ids_by_us_ids, ['categ_ids'], 20),
             }),
         'user_id': fields.function(
@@ -495,7 +575,8 @@ class acceptability_criteria(osv.Model):
             string='Responsible Supervisor',
             help='Responsible Supervisor',
             store={
-                'acceptability.criteria': (lambda s, c, u, i, ctx: i, ['accep_crit_id'], 16),
+                'acceptability.criteria': (lambda s, c, u, i, ctx: i,
+                                           ['accep_crit_id'], 16),
                 'user.story': (_get_ac_ids_by_us_ids, ['user_id'], 20),
             }),
         'user_execute_id': fields.function(
@@ -505,7 +586,8 @@ class acceptability_criteria(osv.Model):
             string='Execution Responsible',
             help='Execution Responsible',
             store={
-                'acceptability.criteria': (lambda s, c, u, i, ctx: i, ['accep_crit_id'], 16),
+                'acceptability.criteria': (lambda s, c, u, i, ctx: i,
+                                           ['accep_crit_id'], 16),
                 'user.story': (_get_ac_ids_by_us_ids, ['user_execute_id'], 20),
             }),
     }
@@ -525,8 +607,11 @@ class project_task(osv.Model):
         res = super(project_task, self).default_get(
             cr, uid, fields, context=context)
         context.get('project_task', False) and \
-            res.update({'project_id': context.get('project_task'), 'categ_ids': context.get('categ_task'),
-                        'sprint_id': context.get('sprint_task'), 'userstory_id': context.get('userstory_task')})
+            res.update(
+                {'project_id': context.get('project_task'),
+                 'categ_ids': context.get('categ_task'),
+                 'sprint_id': context.get('sprint_task'),
+                 'userstory_id': context.get('userstory_task')})
         return res
 
     def onchange_user_story_task(self, cr, uid, ids, us_id, context=None):
@@ -554,11 +639,14 @@ class project_task(osv.Model):
         return res
 
     _columns = {
-        'userstory_id': fields.many2one('user.story', 'User Story',
-                                        #domain="[('sk_id', '=', sprint_id)]",
-                                        help="Set here the User Story related with this task"),
-        'branch_to_clone': fields.char('Branch to clone', 512,
-                                       help='Source branch to be clone and make merge proposal'),
+        'userstory_id': fields.many2one(
+            'user.story',
+            'User Story',
+            # domain="[('sk_id', '=', sprint_id)]",
+            help="Set here the User Story related with this task"),
+        'branch_to_clone': fields.char(
+            'Branch to clone', 512,
+            help='Source branch to be clone and make merge proposal'),
 
     }
 
@@ -569,6 +657,7 @@ class inherit_project(osv.Model):
 
     _inherit = 'project.project'
     _columns = {
-        'descriptions': fields.text('Description',
-                                    help="Reference on what the project is about"),
+        'descriptions': fields.text(
+            'Description',
+            help="Reference on what the project is about"),
     }

@@ -1,4 +1,4 @@
-##############################################################################
+# #############################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
@@ -18,7 +18,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+# #############################################################################
 
 from openerp.report import report_sxw
 from lxml import html
@@ -46,9 +46,10 @@ class story_user_html(report_sxw.rml_parse):
             return text_data
         return ''
 
-report_sxw.report_sxw('report.user.story.report',
-            'user.story',
-            'addons/user_story/report/user_story_report.sxw',
-            parser=story_user_html)
+report_sxw.report_sxw(
+    'report.user.story.report',
+    'user.story',
+    'addons/user_story/report/user_story_report.sxw',
+    parser=story_user_html)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
