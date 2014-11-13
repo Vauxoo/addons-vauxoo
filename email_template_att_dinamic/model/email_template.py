@@ -23,6 +23,7 @@
 
 
 from openerp.osv import osv, fields
+import ast
 
 
 class email_template(osv.Model):
@@ -67,7 +68,7 @@ class mail_compose_message(osv.TransientModel):
                 att_field_render = template_obj.render_template(
                     cr, uid, template.att_other_field, template.model,
                     res_id, context=context)
-                attach += [id_att for id_att in eval(
+                attach += [id_att for id_att in ast.literal_eval(
                     "[" + att_field_render + "]") if att_field_render]
 
         attach += res.get('value', {}).pop('attachment_ids', [])

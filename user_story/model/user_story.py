@@ -87,7 +87,7 @@ class user_story(osv.Model):
         return super(user_story, self).write(cr, uid, ids,
                                              vals, context=context)
 
-    def body_progress(self, cr, uid, ids, template, hu, context=None):
+    def body_progress(self, cr, uid, ids, template, context=None):
         imd_obj = self.pool.get('ir.model.data')
         template_ids = imd_obj.search(
             cr, uid, [('model', '=', 'email.template'), ('name', '=', template)])
@@ -138,7 +138,8 @@ class user_story(osv.Model):
         else:
             return False
 
-    def send_mail_hu(self, cr, uid, ids, subject, body, res_id, users=[], context=None):
+    def send_mail_hu(self, cr, uid, ids, subject, body, res_id,
+                     users=None, context=None):
         if context is None:
             context = {}
         if context.get('force_send', False):
@@ -215,7 +216,9 @@ class user_story(osv.Model):
                 result[task.userstory_id.id] = True
         return result.keys()
 
-    def _message_get_auto_subscribe_fields(self, cr, uid, updated_fields, auto_follow_fields=['user_id'], context=None):
+    def _message_get_auto_subscribe_fields(self, cr, uid, updated_fields,
+                                           auto_follow_fields=None,
+                                           context=None):
         if auto_follow_fields is None:
             auto_follow_fields = ['user_id']
 
@@ -300,13 +303,13 @@ class user_story(osv.Model):
         '''
         usname = self.browse(cr, uid, i).name
         username = self.pool.get('res.users').browse(cr, uid, uid).name
-        urlbase = self.pool.get('ir.config_parameter').get_param(cr, uid, 'web.base.url')
-        link = '#id={i}&view_type=form&model=user.story'.format(i=i, urlbase=urlbase)
+        link = '#id={i}&view_type=form&model=user.story'.format(i=i)
         return _(u'''<html><div>
                  <h2>{usname}</h2>
                  <p>The user {user} has approved the user Story
                  <a href="{link}">See what we are talking about here</a>
-                 </div></html>'''.format(usname=usname, user=username, link=link))
+                 </div></html>'''.format(usname=usname, user=username,
+                                         link=link))
 
     def do_disapproval(self, cr, uid, ids, context=None):
         '''
@@ -323,13 +326,13 @@ class user_story(osv.Model):
     def get_body_approval(self, cr, uid, i, context=None):
         usname = self.browse(cr, uid, i).name
         username = self.pool.get('res.users').browse(cr, uid, uid).name
-        urlbase = self.pool.get('ir.config_parameter').get_param(cr, uid, 'web.base.url')
-        link = '#id={i}&view_type=form&model=user.story'.format(i=i, urlbase=urlbase)
+        link = '#id={i}&view_type=form&model=user.story'.format(i=i)
         return _(u'''<html><div>
                  <h2>{usname}</h2>
                  <p>The user {user} has approved the user Story
                  <a href="{link}">See what we are talking about here</a>
-                 </div></html>'''.format(usname=usname, user=username, link=link))
+                 </div></html>'''.format(usname=usname, user=username,
+                                         link=link))
 
     def do_approval(self, cr, uid, ids, context=None):
         context = context or {}
@@ -418,6 +421,111 @@ class acceptability_criteria(osv.Model):
             cr, uid, [('accep_crit_id', 'in', us_ids)], context=context)
         return ac_ids
 
+    def get_body_disapproval(self, cr, uid, i, context=None):
+        '''
+        TODO: This body must be verified to give the information regarding the answers in
+        the do_disaproval method.
+        '''
+        model_brw = self.browse(cr, uid, i[0])
+        link = '#id={i}&view_type=form&model=user.story'.format(i=model_brw.accep_crit_id and model_brw.accep_crit_id.id)
+        return link
+
+    def approve(self, cr, uid, ids, context=None):
+        context = context or {}
+        criterial_brw2 = self.browse(cr, uid, ids[0])
+        criterial_brw = self.browse(cr, SUPERUSER_ID, ids[0])
+        if criterial_brw.accepted:
+            return True
+        data_obj = self.pool.get('ir.model.data')
+        compose_obj = self.pool.get('mail.compose.message')
+        user_story_brw = criterial_brw.accep_crit_id
+        partner_ids = [i.id for i in user_story_brw.message_follower_ids]
+        partner_ids.append(user_story_brw.owner_id.partner_id.id)
+        if user_story_brw.user_id:
+            partner_ids.append(user_story_brw.user_id.partner_id.id)
+        if user_story_brw.user_execute_id:
+            partner_ids.append(user_story_brw.user_execute_id.partner_id.id)
+        partner_ids = list(set(partner_ids))
+        template = data_obj.get_object(cr, uid, 'user_story', 'template_approve_aceptabilty_criterial')
+        mail = self.pool.get('email.template').generate_email(cr, SUPERUSER_ID, template.id, ids[0])
+        compose_id = compose_obj.create(cr, uid, {
+                        'res_model': 'user.story',
+                        'model': 'user.story',
+                        'res_id': user_story_brw.id,
+                        'partner_ids': [(6, 0, partner_ids)],
+                        'partner_id':0,
+                        'body': mail.get('body'),
+        })
+        criterial_brw2.write({'accepted': True})
+        compose_obj.send_mail(cr, uid, [compose_id])
+        return True
+
+    def disapprove(self, cr, uid, ids, context=None):
+        context = context or {}
+        criterial_brw = self.browse(cr, SUPERUSER_ID, ids[0])
+        if criterial_brw.accepted:
+            return True
+        data_obj = self.pool.get('ir.model.data')
+        user_story_brw = criterial_brw.accep_crit_id
+        partner_ids = [i.id for i in user_story_brw.message_follower_ids]
+        partner_ids.append(user_story_brw.owner_id.partner_id.id)
+        if user_story_brw.user_id:
+            partner_ids.append(user_story_brw.user_id.partner_id.id)
+        if user_story_brw.user_execute_idi:
+            partner_ids.append(user_story_brw.user_execute_id.partner_id.id)
+        partner_ids = list(set(partner_ids))
+        model_data_id = data_obj._get_id(cr, uid, 'user_story',
+                                         'email_compose_message_wizard_inherit_form_without_partner')
+        res_id = data_obj.browse(cr, uid, model_data_id, context=context).res_id
+        ction = {
+                'type': 'ir.actions.act_window',
+                'res_model': 'mail.compose.message',
+                'src_model': 'user.story',
+                'view_mode': 'form',
+                'view_mode':'form,tree',
+                'view_id': res_id,
+                'view_type': 'form',
+                'views': [[res_id, 'form']],
+                'target': 'new',
+                'context': {
+                        'default_res_model': 'user.story',
+                        'default_mail_compose_log': True,
+                        'default_model': 'user.story',
+                        'default_res_id': user_story_brw.id,
+                        'default_partner_ids': [(6, 0, partner_ids)],
+                        'default_body': _('<b>Description the cause of disapproval</b>'),
+                                   }
+                            }
+        return ction
+
+    def ask_review(self, cr, uid, ids, context=None):
+        context = context or {}
+        criterial_brw = self.browse(cr, SUPERUSER_ID, ids[0])
+        if criterial_brw.accepted:
+            return True
+        data_obj = self.pool.get('ir.model.data')
+        compose_obj = self.pool.get('mail.compose.message')
+        user_story_brw = criterial_brw.accep_crit_id
+        partner_ids = [i.id for i in user_story_brw.message_follower_ids]
+        partner_ids.append(user_story_brw.owner_id.partner_id.id)
+        if user_story_brw.user_id:
+            partner_ids.append(user_story_brw.user_id.partner_id.id)
+        if user_story_brw.user_execute_id:
+            partner_ids.append(user_story_brw.user_execute_id.partner_id.id)
+        partner_ids = list(set(partner_ids))
+        template = data_obj.get_object(cr, uid, 'user_story', 'template_ask_aceptabilty_criterial')
+        mail = self.pool.get('email.template').generate_email(cr, SUPERUSER_ID, template.id, ids[0])
+        compose_id = compose_obj.create(cr, uid, {
+                        'res_model': 'user.story',
+                        'model': 'user.story',
+                        'res_id': user_story_brw.id,
+                        'partner_ids': [(6, 0, partner_ids)],
+                        'partner_id':0,
+                        'body': mail.get('body'),
+        })
+        compose_obj.send_mail(cr, uid, [compose_id])
+        return True
+
     def _get_user_story_field(self, cr, uid, ids, fieldname, arg, context=None):
         """
         Method used as the function for extracting values for the user.story
@@ -441,7 +549,7 @@ class acceptability_criteria(osv.Model):
         'accep_crit_id': fields.many2one('user.story',
                                          'User Story',
                                          ondelete='cascade',
-                                         required=True),
+                                         ),
         'accepted': fields.boolean('Accepted',
                                    help='Check if this criterion apply'),
         'development': fields.boolean('Development'),
@@ -518,15 +626,17 @@ class acceptability_criteria(osv.Model):
 class project_task(osv.Model):
     _inherit = 'project.task'
 
-    def default_get(self, cr, uid, fields, context=None):
+    def default_get(self, cr, uid, field, context=None):
         '''Owerwrite default get to add project in new task automatically'''
         if context is None:
             context = {}
         res = super(project_task, self).default_get(
-            cr, uid, fields, context=context)
-        context.get('project_task', False) and \
-            res.update({'project_id': context.get('project_task'), 'categ_ids': context.get('categ_task'),
-                        'sprint_id': context.get('sprint_task'), 'userstory_id': context.get('userstory_task')})
+            cr, uid, field, context=context)
+        if context.get('project_task', False):
+            res.update({'project_id': context.get('project_task'),
+                        'categ_ids': context.get('categ_task'),
+                        'sprint_id': context.get('sprint_task'),
+                        'userstory_id': context.get('userstory_task')})
         return res
 
     def onchange_user_story_task(self, cr, uid, ids, us_id, context=None):
