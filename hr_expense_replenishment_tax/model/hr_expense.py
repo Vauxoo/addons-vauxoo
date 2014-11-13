@@ -35,13 +35,13 @@ class hr_expense_expense(osv.Model):
                                     digits_compute=dp.get_precision('Account'))
     }
 
-    def copy(self, cr, uid, id, default=None, context=None):
+    def copy(self, cr, uid, ids, default=None, context=None):
         if default is None:
             default = {}
         default = default.copy()
         default.update({'fully_applied_vat': False,
                         })
-        return super(hr_expense_expense, self).copy(cr, uid, id, default,
+        return super(hr_expense_expense, self).copy(cr, uid, ids, default,
                         context=context)
 
     def payment_reconcile(self, cr, uid, ids, context=None):
@@ -69,10 +69,12 @@ class hr_expense_expense(osv.Model):
             self.apply_round_tax(cr, uid, exp.id, context=context)
         return True
 
-    def create_her_tax(self, cr, uid, ids, aml={}, context=None):
+    def create_her_tax(self, cr, uid, ids, aml=None, context=None):
         aml_obj = self.pool.get('account.move.line')
         acc_voucher_obj = self.pool.get('account.voucher')
         context = context or {}
+        if aml is None:
+            aml = {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         exp = self.browse(cr, uid, ids, context=context)[0]
 
@@ -136,7 +138,7 @@ class hr_expense_expense(osv.Model):
                         tax.base_amount, factor, context=context)
 
                     for move_line_tax in move_lines_tax:
-                        move_create = aml_obj.create(cr, uid, move_line_tax,
+                        aml_obj.create(cr, uid, move_line_tax,
                                                 context=context)
 
         self.write(cr, uid, ids,
@@ -171,7 +173,9 @@ class hr_expense_expense(osv.Model):
         ])
         return move_tax_ids
 
-    def unlink_move_tax(self, cr, uid, exp, context={}):
+    def unlink_move_tax(self, cr, uid, exp, context=None):
+        if context is None:
+            context = {}
         aml_obj = self.pool.get('account.move.line')
         move_ids = self.move_tax_expense(cr, uid, exp, context=context)
         aml_obj.unlink(cr, uid, move_ids)
@@ -191,7 +195,7 @@ class hr_expense_expense(osv.Model):
                     move_without_round += abs(move.amount_tax_unround)
             move_diff = abs(move_without_round) - abs(move_round)
             move_diff = round(move_diff, 2)
-            if move_diff <> 0.00:
+            if move_diff != 0.00:
                 move_ids.sort()
                 for move_line in aml_obj.browse(cr, uid, move_ids[-2:],
                                                 context=context):

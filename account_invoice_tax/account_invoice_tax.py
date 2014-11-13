@@ -113,9 +113,9 @@ class account_invoice_tax(osv.Model):
                     tax_grouped[key]['base_amount'] += val['base_amount']
                     tax_grouped[key]['tax_amount'] += val['tax_amount']
 
-        for t in tax_grouped.values():
-            t['base'] = cur_obj.round(cr, uid, cur, t['base'])
-            t['amount'] = cur_obj.round(cr, uid, cur, t['amount'])
-            t['base_amount'] = cur_obj.round(cr, uid, cur, t['base_amount'])
-            t['tax_amount'] = cur_obj.round(cr, uid, cur, t['tax_amount'])
+        for dat_tax in tax_grouped.values():
+            dat_tax['base'] = cur_obj.round(cr, uid, cur, dat_tax['base'])
+            dat_tax['amount'] = cur_obj.round(cr, uid, cur, dat_tax['amount'])
+            dat_tax['base_amount'] = cur_obj.round(cr, uid, cur, dat_tax['base_amount'])
+            dat_tax['tax_amount'] = cur_obj.round(cr, uid, cur, dat_tax['tax_amount'])
         return tax_grouped
