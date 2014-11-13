@@ -128,6 +128,7 @@ class account_voucher(osv.Model):
                         move_ids.append(move_create)
         return move_ids
 
+    # pylint: disable=W0622
     def _preparate_move_line_tax(self, cr, uid, src_account_id, dest_account_id,
                             move_id, type, partner, period, journal, date,
                             company_currency, reference_amount,
@@ -520,6 +521,7 @@ class account_move_line(osv.Model):
         dat = cr.dictfetchall()
         return dat
 
+    # pylint: disable=W0622
     def reconcile(self, cr, uid, ids, type='auto', writeoff_acc_id=False, writeoff_period_id=False, writeoff_journal_id=False, context=None):
         res = super(account_move_line, self).reconcile(cr, uid, ids=ids,
         type='auto', writeoff_acc_id=writeoff_acc_id, writeoff_period_id=writeoff_period_id,
