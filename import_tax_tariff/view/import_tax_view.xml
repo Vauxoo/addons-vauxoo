@@ -29,11 +29,11 @@
                                     <tree editable="bottom">
                                         <field name="name"/>
                                         <field name="description"/>
-                                        <field name="code" required="1"/>
-                                        <field name="unit_value" required="1"/>
-                                        <field name="tax_percentage" required="1"/>
+                                        <field name="code" required="True"/>
+                                        <field name="type_id" required="True"/>
                                         <field name="minimum" required="1"/>
-                                        <field name="type_id"/>
+                                        <field name="tax_percentage" attrs="{'required': [('type_id', 'in', ['ad_valorem', 'mixed'])], 'readonly': [('type_id', '=', 'specific')]}"/>
+                                        <field name="unit_value" attrs="{'required': [('type_id', 'in', ['specific', 'mixed'])], 'readonly': [('type_id', '=', 'ad_valorem')]}"/>
                                     </tree>
                                 </field>
                             </page>
@@ -73,7 +73,7 @@
             <field name="model">product.template</field>
             <field name="inherit_id" ref="product.product_template_only_form_view"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='default_code']" position="after">
+                <xpath expr="//field[@name='taxes_id']" position="after">
                     <field name="tariff_id"/>
                 </xpath>
             </field>

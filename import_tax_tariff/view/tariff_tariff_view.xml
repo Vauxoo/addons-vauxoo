@@ -12,6 +12,8 @@
                             <field name="name" nolabel="1"/>
                             <label for="code"/>
                             <field name="code" required="True"/>
+                            <label for="minimum"/>
+                            <field name="minimum" required="True"/>
                             <label for="type_id"/>
                             <field name="type_id" required="True"/>
                             <label for="tax_percentage"/>

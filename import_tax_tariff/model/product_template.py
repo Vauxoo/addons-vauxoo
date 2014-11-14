@@ -27,4 +27,4 @@ from openerp import models, fields
 class product_template(models.Model):
     _inherit = "product.template"
 
-    tariff_id = fields.Many2one("import.tax.tariff")
+    tariff_id = fields.Many2one("import.tax.tariff", string="Tariff")
