@@ -31,6 +31,7 @@ import datetime
 import logging
 _logger = logging.getLogger(__name__)
 
+
 class TestInvoiceDatetime(TransactionCase):
     def setUp(self):
         super(TestInvoiceDatetime, self).setUp()

@@ -110,35 +110,49 @@ class account_invoice(osv.Model):
                                      type='char', string="Date type")
     }
 
-    def _get_datetime_with_user_tz(self, cr, uid, datetime=False, context=None):
-        datetime_inv_tz=False
+    def _get_datetime_with_user_tz(self, cr, uid, datetime=False,
+                                   context=None):
+        datetime_inv_tz = False
         if datetime:
-            time_tz = self.pool.get("res.users").read(cr, uid, uid, ["tz_offset"], context=context).get("tz_offset")
+            time_tz = self.pool.get("res.users").read(
+                cr, uid, uid, ["tz_offset"], context=context).get("tz_offset")
             hours_tz = int(time_tz[:-2])
             minut_tz = int(time_tz[-2:])
             if time_tz[0] == '-':
                 minut_tz = minut_tz * -1
-            datetime_inv_tz = (datetime + timedelta(hours=hours_tz, minutes=minut_tz)).strftime('%Y-%m-%d %H:%M:%S')
+            datetime_inv_tz = (datetime + timedelta(hours=hours_tz,
+                                                    minutes=minut_tz)).\
+                strftime('%Y-%m-%d %H:%M:%S')
         return datetime_inv_tz
 
     def create(self, cr, uid, vals, context=None):
         if 'invoice_datetime' in vals.keys():
-            datetime_inv = vals.get("invoice_datetime") and datetime.datetime.strptime(vals.get("invoice_datetime"), "%Y-%m-%d %H:%M:%S") or False
+            datetime_inv = vals.get("invoice_datetime") and \
+                datetime.datetime.strptime(
+                    vals.get("invoice_datetime"), "%Y-%m-%d %H:%M:%S") or False
             if datetime_inv:
-                vals.update({'date_invoice_tz': self._get_datetime_with_user_tz(cr, uid, datetime_inv)})
-        return super(account_invoice, self).create(cr, uid, vals, context=context)
+                vals.update(
+                    {'date_invoice_tz': self._get_datetime_with_user_tz(
+                        cr, uid, datetime_inv)})
+        return super(account_invoice, self).create(
+            cr, uid, vals, context=context)
 
     def write(self, cr, uid, ids, vals, context=None):
         for invoice in self.browse(cr, uid, ids, context=context):
-            datetime_inv = invoice.invoice_datetime and datetime.datetime.strptime(invoice.invoice_datetime, "%Y-%m-%d %H:%M:%S") or False
+            datetime_inv = invoice.invoice_datetime and \
+                datetime.datetime.strptime(invoice.invoice_datetime,
+                                           "%Y-%m-%d %H:%M:%S") or False
             if datetime_inv:
-                vals.update({'date_invoice_tz': self._get_datetime_with_user_tz(cr, uid, datetime_inv)})
-        return super(account_invoice, self).write(cr, uid, ids, vals, context=context)
+                vals.update(
+                    {'date_invoice_tz': self._get_datetime_with_user_tz(
+                        cr, uid, datetime_inv)})
+        return super(account_invoice, self).write(
+            cr, uid, ids, vals, context=context)
 
     def _get_default_type(self, cr, uid, ids):
         account_setting_obj = self.pool.get("account.config.settings")
         key_by_company_id = "acc_invoice.date_invoice_type_" + \
-                            str(account_setting_obj._default_company(cr, uid))
+            str(account_setting_obj._default_company(cr, uid))
         type_show_date = self.pool.get("ir.config_parameter").get_param(
             cr, uid, key_by_company_id, default='date')
         return type_show_date
@@ -236,9 +250,9 @@ class account_invoice(osv.Model):
                         res['invoice_datetime'] = dt_invoice
                         res['date_invoice'] = values['date_invoice']
                     else:
-                        raise osv.except_osv(_('Warning!'),
-                                             _('Invoice dates should be equal')
-                                             )
+                        raise osv.except_osv(
+                            _('Warning!'),
+                            _('Invoice dates should be equal'))
                     # ~ else:
                     # ~ raise osv.except_osv(_('Warning!'),
                     # _('Invoice dates should be equal'))
