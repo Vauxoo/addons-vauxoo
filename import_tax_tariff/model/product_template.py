@@ -21,5 +21,10 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from . import import_tax
-from . import product_template
+from openerp import models, fields
+
+
+class product_template(models.Model):
+    _inherit = "product.template"
+
+    tariff_id = fields.Many2one("import.tax.tariff", string="Tariff")

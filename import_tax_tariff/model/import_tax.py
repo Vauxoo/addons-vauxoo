@@ -21,8 +21,8 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from openerp import models, fields, api, _
-from openerp.exceptions import except_orm, Warning, RedirectWarning
+from openerp import models, fields
+
 
 class import_tax_tariff(models.Model):
     _name = "import.tax.tariff"
@@ -32,9 +32,10 @@ class import_tax_tariff(models.Model):
     tariff_ids = fields.One2many('tariff.tariff',
                                  'import_tax_id',
                                  string='Tariff')
-    product_id = fields.Many2one('product.category',
-                                    string = 'Product Category',)
+    product_category_id = fields.Many2one('product.category',
+                                          string='Product Category',)
     description = fields.Text()
+
 
 class tariff_tariff(models.Model):
     _name = "tariff.tariff"
@@ -42,19 +43,14 @@ class tariff_tariff(models.Model):
     name = fields.Char(required=True)
     description = fields.Text()
     code = fields.Char()
-    unit_value = fields.Float(digits=(6, 2),
-                           help="Tariff per Unit of Product")
-    tax_percentage = fields.Float(digits=(6, 2),
-                           help="Tax Percentage")
-    minimum = fields.Float(digits=(6, 2),
-                           help="Amount Minimun")
+    unit_value = fields.Float(digits=(6, 2), help="Tariff per Unit of Product")
+    tax_percentage = fields.Float(digits=(6, 2), help="Tax Percentage")
+    minimum = fields.Float(digits=(6, 2), help="Amount Minimun")
     import_tax_id = fields.Many2one('import.tax.tariff',
-                                    ondelete = 'set null',
-                                    string = 'Import Tax',
-                                    index = True)
-    type_id = fields.Selection([
-         ('ad_valorem', "Ad Valorem"),
-         ('specific', "Specific"),
-         ('mixed', "Mixed"),
-         ], string = 'Type',
-      default='ad_valorem')
+                                    ondelete='set null',
+                                    string='Import Tax',
+                                    index=True)
+    type_id = fields.Selection([('ad_valorem', "Ad Valorem"),
+                                ('specific', "Specific"),
+                                ('mixed', "Mixed")], string='Type',
+                               default='ad_valorem')

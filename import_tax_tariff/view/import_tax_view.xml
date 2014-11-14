@@ -19,8 +19,8 @@
                     <sheet>
                         <label for="name"/>
                         <field name="name" nolabel="1"/>
-                        <label for="product_id"/>
-                        <field name="product_id"/>
+                        <label for="product_category_id"/>
+                        <field name="product_category_id"/>
                         <label for="description"/>
                         <field name="description" nolabel="1"/>
                         <notebook>
@@ -29,11 +29,11 @@
                                     <tree editable="bottom">
                                         <field name="name"/>
                                         <field name="description"/>
-                                        <field name="code" required="1"/>
-                                        <field name="unit_value" required="1"/>
-                                        <field name="tax_percentage" required="1"/>
+                                        <field name="code" required="True"/>
+                                        <field name="type_id" required="True"/>
                                         <field name="minimum" required="1"/>
-                                        <field name="type_id"/>
+                                        <field name="tax_percentage" attrs="{'required': [('type_id', 'in', ['ad_valorem', 'mixed'])], 'readonly': [('type_id', '=', 'specific')]}"/>
+                                        <field name="unit_value" attrs="{'required': [('type_id', 'in', ['specific', 'mixed'])], 'readonly': [('type_id', '=', 'ad_valorem')]}"/>
                                     </tree>
                                 </field>
                             </page>
@@ -67,5 +67,16 @@
             id="menu_action_import_tax_tariff"
             parent="account.next_id_27"
             sequence="20" groups="base.group_no_one"/>
+
+        <record id="view_import_tax_tariff_inh_product_template" model="ir.ui.view">
+            <field name="name">import.tax.tariff.product.template</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='taxes_id']" position="after">
+                    <field name="tariff_id"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>

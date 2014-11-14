@@ -27,7 +27,7 @@
     "summary": "Import Tax and Tariff",
     "depends": [
         "account_accountant",
-        "product",],
+        "stock"],
     "author": "Vauxoo",
     "description": """
 Import Tax and Tariff
@@ -37,7 +37,7 @@ Import Tax and Tariff
     "category": "Accounting",
     "data": [
         "view/import_tax_view.xml",
-        ],
+        "view/tariff_tariff_view.xml"],
     "demo": [],
     "test": [],
     "active": False,
