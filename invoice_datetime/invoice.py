@@ -57,25 +57,6 @@ class account_invoice(osv.Model):
     _inherit = 'account.invoice'
     # _order = 'invoice_datetime asc'
 
-    def _get_date_invoice_tz(self, cr, uid, ids, field_names=None, arg=False,
-                             context=None):
-        if context is None:
-            context = {}
-        res = {}
-        if release.version >= '6':
-            tz = self.pool.get('res.users').browse(cr, uid, uid).tz
-            for invoice in self.browse(cr, uid, ids, context=context):
-                res[invoice.id] = invoice.invoice_datetime and tools.\
-                    server_to_local_timestamp(
-                        invoice.invoice_datetime,
-                        tools.DEFAULT_SERVER_DATETIME_FORMAT,
-                        tools.DEFAULT_SERVER_DATETIME_FORMAT, tz) or False
-        elif release.version < '6':
-            # TODO: tz change for openerp5
-            for invoice in self.browse(cr, uid, ids, context=context):
-                res[invoice.id] = invoice.date_invoice
-        return res
-
     def _get_field_params(self, cr, uid, ids, name, unknow_none, context=None):
         if context is None:
             context = {}
@@ -99,12 +80,8 @@ class account_invoice(osv.Model):
                 'open': [('readonly', True)],
                 'close': [('readonly', True)]},
             help="Keep empty to use the current date"),
-        'date_invoice_tz': fields.function(
-            _get_date_invoice_tz,
-            method=True,
-            type='datetime',
+        'date_invoice_tz': fields.datetime(
             string='Date Invoiced with TZ',
-            store=True,
             help='Date of Invoice with Time Zone'),
         'date_type': fields.function(_get_field_params, storage=False,
                                      type='char', string="Date type")
