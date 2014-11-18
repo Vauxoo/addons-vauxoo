@@ -29,7 +29,6 @@
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 from openerp import tools
-from openerp import release
 import datetime
 from datetime import timedelta
 from pytz import timezone
@@ -87,19 +86,20 @@ class account_invoice(osv.Model):
                                      type='char', string="Date type")
     }
 
-    def _get_datetime_with_user_tz(self, cr, uid, datetime=False,
+    def _get_datetime_with_user_tz(self, cr, uid, datetime_invoice=False,
                                    context=None):
         datetime_inv_tz = False
-        if datetime:
+        if datetime_invoice:
             time_tz = self.pool.get("res.users").read(
                 cr, uid, uid, ["tz_offset"], context=context).get("tz_offset")
             hours_tz = int(time_tz[:-2])
             minut_tz = int(time_tz[-2:])
             if time_tz[0] == '-':
                 minut_tz = minut_tz * -1
-            datetime_inv_tz = (datetime + timedelta(hours=hours_tz,
-                                                    minutes=minut_tz)).\
-                strftime('%Y-%m-%d %H:%M:%S')
+            datetime_inv_tz = (
+                datetime_invoice + timedelta(
+                    hours=hours_tz,
+                    minutes=minut_tz)).strftime('%Y-%m-%d %H:%M:%S')
         return datetime_inv_tz
 
     def create(self, cr, uid, vals, context=None):
