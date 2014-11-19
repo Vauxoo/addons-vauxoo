@@ -22,4 +22,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from . import stock_partial_picking
+
+from openerp.osv import fields, osv
+
+
+class stock_partial_picking_line(osv.TransientModel):
+
+    _inherit = "stock.partial.picking.line"
+    _columns = {
+        'name': fields.char('Description'),
+    }
+
+
+class stock_partial_picking(osv.osv_memory):
+    _inherit = "stock.partial.picking"
+
+    def _partial_move_for(self, cr, uid, move, context=None):
+        context = context or {}
+        partial_move = super(stock_partial_picking,
+                             self)._partial_move_for(cr, uid, move,
+                                                     context=context)
+        partial_move['name'] = move.name
+        return partial_move
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

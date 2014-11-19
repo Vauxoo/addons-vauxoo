@@ -21,6 +21,16 @@
                 </xpath>
             </field>
         </record>
+        <record model="ir.ui.view" id="stock_partial_picking_line_name_list">
+            <field name="name">stock.partial.picking.line.name.list</field>
+            <field name="model">stock.partial.picking</field>
+            <field name="inherit_id" ref="stock.stock_partial_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="before">
+                    <field name="name" readonly='1'/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
 
