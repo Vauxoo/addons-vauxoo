@@ -1,15 +1,14 @@
+#!/usr/bin/python
 # -*- encoding: utf-8 -*-
-###########################################################################
+#
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2014 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
-############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Launchpad Project Manager for Publication:
-#    Nhomar Hernandez - nhomar@vauxoo.com
-############################################################################
+#
+#    Coded by: vauxoo consultores (info@vauxoo.com)
+#
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -24,7 +23,5 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
 
-from . import invoice
-from . import res_config
+from . import test_invoice_datetime
