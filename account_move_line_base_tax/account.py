@@ -90,21 +90,21 @@ class account_invoice_tax(osv.Model):
         super(account_invoice_tax, self).move_line_get(cr, uid, invoice_id)
         tax_invoice_ids = self.search(cr, uid, [
             ('invoice_id', '=', invoice_id)], context=context)
-        for t in self.browse(cr, uid, tax_invoice_ids, context=context):
-            if not t.amount and not t.tax_code_id and not t.tax_amount:
+        for inv_t in self.browse(cr, uid, tax_invoice_ids, context=context):
+            if not inv_t.amount and not inv_t.tax_code_id and not inv_t.tax_amount:
                 continue
             res.append({
                 'type': 'tax',
-                'name': t.name,
-                'price_unit': t.amount,
+                'name': inv_t.name,
+                'price_unit': inv_t.amount,
                 'quantity': 1,
-                'price': t.amount or 0.0,
-                'account_id': t.account_id.id or False,
-                'tax_code_id': t.tax_code_id.id or False,
-                'tax_amount': t.tax_amount or False,
-                'account_analytic_id': t.account_analytic_id.id or False,
-                'amount_base': t.base_amount or 0.0,
-                'tax_id_secondary': t.tax_id.id or False,
+                'price': inv_t.amount or 0.0,
+                'account_id': inv_t.account_id.id or False,
+                'tax_code_id': inv_t.tax_code_id.id or False,
+                'tax_amount': inv_t.tax_amount or False,
+                'account_analytic_id': inv_t.account_analytic_id.id or False,
+                'amount_base': inv_t.base_amount or 0.0,
+                'tax_id_secondary': inv_t.tax_id.id or False,
             })
         return res
 
@@ -112,11 +112,11 @@ class account_invoice_tax(osv.Model):
 class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
-    def line_get_convert(self, cr, uid, x, part, date, context=None):
-        res = super(account_invoice, self).line_get_convert(cr, uid, x, part,
+    def line_get_convert(self, cr, uid, value, part, date, context=None):
+        res = super(account_invoice, self).line_get_convert(cr, uid, value, part,
             date, context=context)
         res.update({
-            'amount_base': x.get('amount_base', False),
-            'tax_id_secondary': x.get('tax_id_secondary', False),
+            'amount_base': value.get('amount_base', False),
+            'tax_id_secondary': value.get('tax_id_secondary', False),
         })
         return res

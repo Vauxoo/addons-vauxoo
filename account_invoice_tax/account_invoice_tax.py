@@ -109,10 +109,10 @@ class account_invoice_tax(models.Model):
                     tax_grouped[key]['base_amount'] += val['base_amount']
                     tax_grouped[key]['tax_amount'] += val['tax_amount']
 
-        for t in tax_grouped.values():
-            t['base'] = currency.round(t['base'])
-            t['amount'] = currency.round(t['amount'])
-            t['base_amount'] = currency.round(t['base_amount'])
-            t['tax_amount'] = currency.round(t['tax_amount'])
+        for dat_tax in tax_grouped.values():
+            dat_tax['base'] = currency.round(dat_tax['base'])
+            dat_tax['amount'] = currency.round(dat_tax['amount'])
+            dat_tax['base_amount'] = currency.round(dat_tax['base_amount'])
+            dat_tax['tax_amount'] = currency.round(dat_tax['tax_amount'])
 
         return tax_grouped
