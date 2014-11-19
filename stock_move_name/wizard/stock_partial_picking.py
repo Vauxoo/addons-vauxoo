@@ -40,8 +40,7 @@ class stock_partial_picking(osv.osv_memory):
     def _partial_move_for(self, cr, uid, move, context=None):
         context = context or {}
         partial_move = super(stock_partial_picking,
-                             self)._partial_move_for(cr, uid, move,
-                                                     context=context)
+                             self)._partial_move_for(cr, uid, move)
         partial_move['name'] = move.name
         return partial_move
 
