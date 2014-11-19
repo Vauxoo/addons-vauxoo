@@ -58,12 +58,12 @@ class account_invoice(osv.Model):
             exp_obj.write(cr, uid, exp_id, {'line_ids': data}, context=context)
         return True
 
-    def copy(self, cr, uid, id, default=None, context=None):
+    def copy(self, cr, uid, ids, default=None, context=None):
         if default is None:
             default = {}
         default = default.copy()
         default.update({'expense_id': False})
-        return super(account_invoice, self).copy(cr, uid, id, default, context=context)
+        return super(account_invoice, self).copy(cr, uid, ids, default, context=context)
 
 
 class account_invoice_line(osv.Model):
