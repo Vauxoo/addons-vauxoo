@@ -119,7 +119,7 @@ class account_invoice(osv.Model):
             datetime_inv = invoice.invoice_datetime and \
                 datetime.datetime.strptime(invoice.invoice_datetime,
                                            "%Y-%m-%d %H:%M:%S") or False
-            if datetime_inv:
+            if datetime_inv and not invoice.date_invoice_tz:
                 vals.update(
                     {'date_invoice_tz': self._get_datetime_with_user_tz(
                         cr, uid, datetime_inv)})
