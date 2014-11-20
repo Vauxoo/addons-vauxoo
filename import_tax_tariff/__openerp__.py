@@ -37,7 +37,8 @@ Import Tax and Tariff
     "category": "Accounting",
     "data": [
         "view/import_tax_view.xml",
-        "view/tariff_tariff_view.xml"],
+        "view/tariff_tariff_view.xml",
+        "security/ir.model.access.csv"],
     "demo": [],
     "test": [],
     "active": False,
