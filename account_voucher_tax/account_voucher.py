@@ -535,17 +535,19 @@ class account_move_line(osv.Model):
         res_round = {}
         res_without_round = {}
         res_ids = {}
+        object_dp = self.pool.get('decimal.precision')
+        round_val = object_dp.precision_get(cr, uid, 'Account')
 
         for val_round in dat:
             res_round.setdefault(val_round['account_id'], 0)
             res_without_round.setdefault(val_round['account_id'], 0)
             res_ids.setdefault(val_round['account_id'], 0)
-            res_round[val_round['account_id']] += val_round['round']
+            res_round[val_round['account_id']] += round(val_round['round'], round_val)
             res_without_round[val_round['account_id']] += val_round['without']
             res_ids[val_round['account_id']] = val_round['id']
         for res_diff_id in res_round.items():
             diff_val = abs(res_without_round[res_diff_id[0]]) - abs(res_round[res_diff_id[0]])
-            diff_val = round(diff_val, 2)
+            diff_val = round(diff_val, round_val)
             if diff_val != 0.00:
                 move_diff_id = [res_ids[res_diff_id[0]]]
                 for move in self.browse(cr, uid, move_diff_id, context=context):
