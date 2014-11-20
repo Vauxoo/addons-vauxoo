@@ -36,6 +36,8 @@ class purchase_requisition(osv.Model):
 
     _inherit = 'purchase.requisition'
     _columns = {
+        'suggested_supplier':
+            fields.text('Suggested Suppliers'),
         'suggested_supplier_ids': fields.many2many(
             'res.partner',
             'purchase_requisition_suggested_suppliers_rel',
