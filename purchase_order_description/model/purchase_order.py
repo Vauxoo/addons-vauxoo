@@ -31,6 +31,8 @@ class purchase_order(osv.Model):
 
     _inherit = 'purchase.order'
     _columns = {
+        'rfq_notes': fields.text('RFQ Notes',
+                                 help=_('Notes for RFQ')),
         'description': fields.text('Description',
-            help=_('Description of Purchase Order')),
+                                   help=_('Description of Purchase Order')),
     }
