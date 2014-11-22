@@ -33,6 +33,7 @@ class purchase_requisition(osv.Model):
         'purchaser_id': fields.many2one(
             'res.users',
             'P&C Analyst',
+            domain=[('is_purchaser', '=', True)],
             help=('Contract Analyst responsible to evaluate the current'
                   ' purchase requisition.')),
     }
@@ -42,3 +43,19 @@ class purchase_requisition(osv.Model):
         default.update({'purchaser_id': False})
         return super(purchase_requisition, self).copy(cr, uid, id, default,
                                                       context=context)
+
+
+class res_partner(osv.Model):
+
+    _inherit = 'res.partner'
+    _columns = {
+        'is_purchaser': fields.boolean(
+            'P&C Analyst',
+            help='Is this a Purchaser?'),
+    }
+
+    def copy(self, cr, uid, id, default=None, context=None):
+        default = default or {}
+        default.update({'is_purchaser': False})
+        return super(res_partner, self).copy(cr, uid, id, default,
+                                             context=context)
