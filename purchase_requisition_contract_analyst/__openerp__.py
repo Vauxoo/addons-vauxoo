@@ -23,31 +23,32 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Purchase Requisition Contract Analyst", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "purchase", 
+    "name": "Purchase Requisition Contract Analyst",
+    "version": "1.0",
+    "author": "Vauxoo",
+    "category": "purchase",
     "description": """
 Purchase Requisition Contract Analyst
 =====================================
 
 Extend the purchase requisition document to add an contract analyst that will
 be responsible for evaluate the purchase requisition.
-""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+""",
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
         "purchase_requisition"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "view/purchase_requisition_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+        "view/purchase_requisition_view.xml",
+        "wizard/analyst_delegation_view.xml"
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }
