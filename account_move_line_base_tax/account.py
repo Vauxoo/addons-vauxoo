@@ -66,7 +66,7 @@ class account_move_line(osv.Model):
                         not line.not_move_diot:
                     raise osv.except_osv(_('Warning!'), _('The lines with tax of purchase, need '
                         'have a value in the amount base.'))
-                elif cat_tax and cat_tax == 'IVA-RET' and line.credit <= 0 and\
+                elif cat_tax and cat_tax.name == 'IVA-RET' and line.credit <= 0 and\
                         not line.not_move_diot:
                     raise osv.except_osv(_('Warning!'), _('The lines with tax of purchase, need '
                         'have a value in the credit.'))
