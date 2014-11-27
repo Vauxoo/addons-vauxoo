@@ -43,3 +43,21 @@ class purchase_order(osv.Model):
         default.update({'purchaser_id': False})
         return super(purchase_order, self).copy(cr, uid, id, default,
                                                       context=context)
+
+
+class purchase_requisition(osv.Model):
+
+    _inherit = 'purchase.requisition'
+
+    def make_purchase_order(self, cr, uid, ids, partner_id,
+                            context=None):
+        if context is None:
+            context = {}
+        res = super(purchase_requisition, self).make_purchase_order(cr, uid, ids, partner_id, context=context)
+
+        po_obj = self.pool.get('purchase.order')
+        for requisition in self.browse(cr, uid, ids, context=context):
+            po_req = po_obj.search(cr, uid, [('requisition_id', '=', requisition.id)], context=context)
+            for po_id in po_req:
+                po_obj.write(cr, uid, [po_id], {'purchaser_id': requisition.purchaser_id}, context=context)
+        return res
