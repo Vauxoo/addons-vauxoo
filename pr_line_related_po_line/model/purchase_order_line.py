@@ -84,9 +84,9 @@ class purchase_requisition(osv.Model):
                     'purchase_requisition_line_id': line.id,
                     # end change
                     'name': product and product.partner_ref or '',
-                    'product_qty': qty,
+                    'product_qty': line.product_qty or qty,
                     'product_id': product and product.id or False,
-                    'product_uom': default_uom_po_id,
+                    'product_uom': line.product_uom_id.id or default_uom_po_id,
                     'price_unit': seller_price,
                     'date_planned': date_planned,
                     'taxes_id': [(6, 0, taxes)],
