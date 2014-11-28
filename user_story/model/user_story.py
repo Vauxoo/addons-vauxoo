@@ -96,7 +96,7 @@ class user_story(osv.Model):
         return super(user_story, self).write(cr, uid, ids,
                                              vals, context=context)
 
-    def body_progress(self, cr, uid, ids, template, hu, context=None):
+    def body_progress(self, cr, uid, ids, template, h_user, context=None):
         imd_obj = self.pool.get('ir.model.data')
         template_ids = imd_obj.search(
             cr, uid, [('model', '=', 'email.template'),
@@ -150,9 +150,11 @@ class user_story(osv.Model):
             return False
 
     def send_mail_hu(self, cr, uid, ids, subject, body, res_id,
-                     users=[], context=None):
+                     users=None, context=None):
         if context is None:
             context = {}
+        if users is None:
+            users = []
         if context.get('force_send', False):
             uid = SUPERUSER_ID
         if not users:
@@ -231,7 +233,7 @@ class user_story(osv.Model):
         return result.keys()
 
     def _message_get_auto_subscribe_fields(self, cr, uid, updated_fields,
-                                           auto_follow_fields=['user_id'],
+                                           auto_follow_fields=None,
                                            context=None):
         if auto_follow_fields is None:
             auto_follow_fields = ['user_id']
@@ -352,10 +354,8 @@ class user_story(osv.Model):
         '''
         usname = self.browse(cr, uid, i).name
         username = self.pool.get('res.users').browse(cr, uid, uid).name
-        urlbase = self.pool.get('ir.config_parameter').get_param(
-            cr, uid, 'web.base.url')
         link = '#id={i}&view_type=form&model=user.story'.format(
-            i=i, urlbase=urlbase)
+            i=i)
         return _(u'''<html><div>
                  <h2>{usname}</h2>
                  <p>The user {user} has approved the user Story
@@ -378,10 +378,8 @@ class user_story(osv.Model):
     def get_body_approval(self, cr, uid, i, context=None):
         usname = self.browse(cr, uid, i).name
         username = self.pool.get('res.users').browse(cr, uid, uid).name
-        urlbase = self.pool.get('ir.config_parameter').get_param(
-            cr, uid, 'web.base.url')
         link = '#id={i}&view_type=form&model=user.story'.format(
-            i=i, urlbase=urlbase)
+            i=i)
         return _(u'''<html><div>
                  <h2>{usname}</h2>
                  <p>The user {user} has approved the user Story
@@ -600,13 +598,13 @@ class acceptability_criteria(osv.Model):
 class project_task(osv.Model):
     _inherit = 'project.task'
 
-    def default_get(self, cr, uid, fields, context=None):
+    def default_get(self, cr, uid, def_fields, context=None):
         '''Owerwrite default get to add project in new task automatically'''
         if context is None:
             context = {}
         res = super(project_task, self).default_get(
-            cr, uid, fields, context=context)
-        context.get('project_task', False) and \
+            cr, uid, def_fields, context=context)
+        if context.get('project_task', False):
             res.update(
                 {'project_id': context.get('project_task'),
                  'categ_ids': context.get('categ_task'),

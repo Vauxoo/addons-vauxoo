@@ -21,6 +21,7 @@
 
 from openerp.osv import osv, fields
 
+
 class mail_compose_message(osv.TransientModel):
     _inherit = 'mail.compose.message'
 
@@ -28,15 +29,17 @@ class mail_compose_message(osv.TransientModel):
         if context is None:
             context = {}
         email_template_obj = self.pool.get('email.template')
-        if not email_template_obj.check_access_rights(cr, uid, 'read', raise_exception=False):
+        if not email_template_obj.check_access_rights(
+                cr, uid, 'read', raise_exception=False):
             return []
         else:
-            return super(mail_compose_message, self)._get_templates(cr, uid, context=context)
+            return super(mail_compose_message, self)._get_templates(
+                cr, uid, context=context)
         return []
 
-
     _columns = {
-        # incredible hack of the day: size=-1 means we want an int db column instead of an str one
+        # incredible hack of the day: size=-1 means we want
+        # an int db column instead of an str one
         'template_id': fields.selection(_get_templates, 'Template', size=-1),
     }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

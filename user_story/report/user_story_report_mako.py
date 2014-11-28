@@ -23,7 +23,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from openerp.addons.report_webkit import webkit_report
+from openerp.addons import webkit_report
 from openerp.report import report_sxw
 from lxml import html
 

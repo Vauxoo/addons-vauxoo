@@ -60,10 +60,10 @@ class print_sale_order_report(osv.TransientModel):
                 "ir.actions.report.xml").browse(cr, uid, rep_id)
 
         service = netsvc.LocalService('report.' + report.report_name)
-        (result, format) = service.create(
+        result = service.create(
             cr, uid, context['active_ids'],
             {'model': context['active_model']}, {})
-        return base64.encodestring(result)
+        return base64.encodestring(result[0])
 
     def _get_report_name(self, cr, uid, context):
         report = self.__get_company_object(cr, uid).sale_report_id
