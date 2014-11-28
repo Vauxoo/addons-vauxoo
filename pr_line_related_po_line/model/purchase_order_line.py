@@ -87,7 +87,7 @@ class purchase_requisition(osv.Model):
                     'product_qty': line.product_qty or qty,
                     'product_id': product and product.id or False,
                     'product_uom': line.product_uom_id.id or default_uom_po_id,
-                    'price_unit': seller_price,
+                    'price_unit': 0.0,
                     'date_planned': date_planned,
                     'taxes_id': [(6, 0, taxes)],
                 }, context=context)
