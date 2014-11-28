@@ -24,16 +24,16 @@ from datetime import date, timedelta
 
 
 class task_expired_config(osv.Model):
-
     """
+    Class to define task_expired_config model
     """
     _name = 'task.expired.config'
 
-    def default_get(self, cr, uid, fields, context=None):
+    def default_get(self, cr, uid, def_fields, context=None):
         if context is None:
             context = {}
-        res = super(task_expired_config, self).default_get(cr, uid, fields,
-                                                           context=context)
+        res = super(task_expired_config, self).default_get(
+            cr, uid, def_fields, context=context)
         model_ids = self.search(cr, uid, [], context=context)
         if model_ids:
             return self.read(cr, uid, model_ids[0], [], context=context)
@@ -654,23 +654,23 @@ class task_expired_config(osv.Model):
                     <h3 class="h3">"""
                     html += msg_expired
                     html += """</h3>
-<pre style="font-size:1.1em; font-family:Arial">Podrias ser tan amable de co"""
+<pre style="font-size:1.1em; font-family:Arial">Podrias ser tan amable de co"""\
                     """mentarnos el estatus de la misma por este medio.
 
-Si es por alguna de las 3 siguientes razones, o alguna ajena a estos puntos """
+Si es por alguna de las 3 siguientes razones, o alguna ajena a estos puntos """\
                     """justificalo por favor:
 
 <b>1.- Aun no cargas tus labores en la instancia. </b>
-(Recuerda que gran parte del trabajo que realizas esta en cargar las horas, """
+(Recuerda que gran parte del trabajo que realizas esta en cargar las horas, """\
                     """asi demuestras en que te ocupas realmente).
 
 <b>2.- Se te pidio la postergaras.</b>
-(Si fue asi espero nos comentes por esta via las razones que se te dieron, y"""
+(Si fue asi espero nos comentes por esta via las razones que se te dieron, y"""\
                     """ por favor actualices la fecha correcta).
 
-<b>3.- No la habias visto, o tienes alguna duda con el contenido, si es asi """
+<b>3.- No la habias visto, o tienes alguna duda con el contenido, si es asi """\
                     """puedes colocar aqui cuales son tus dudas.</b>
-(La comunicacion es importante para un mejor desarrollo de tus actividades)."""
+(La comunicacion es importante para un mejor desarrollo de tus actividades)."""\
                     """</pre>
                                                                 <br />
                                                         </div>
