@@ -35,6 +35,7 @@
     'depends': ['account'],
     'init_xml': [],
     'update_xml': [
+        'security/wizard_merge.xml',
         'wizard/account_move_group_view.xml',
         ],
     'demo_xml': [],
