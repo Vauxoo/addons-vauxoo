@@ -81,6 +81,8 @@ class account_voucher(osv.Model):
 
     def get_percent_pay_vs_invoice(self, cr, uid, amount_original, amount,
             context=None):
+        print amount_original,"amount_original"
+        print amount,"amount"
         return amount_original != 0 and float(amount) / float(
             amount_original) or 1.0
 
@@ -537,7 +539,6 @@ class account_move_line(osv.Model):
         res_ids = {}
         object_dp = self.pool.get('decimal.precision')
         round_val = object_dp.precision_get(cr, uid, 'Account')
-
         for val_round in dat:
             res_round.setdefault(val_round['account_id'], 0)
             res_without_round.setdefault(val_round['account_id'], 0)
@@ -553,9 +554,9 @@ class account_move_line(osv.Model):
                 for move in self.browse(cr, uid, move_diff_id, context=context):
                     move_line_ids = self.search(cr, uid, [('move_id', '=', move.move_id.id), ('tax_id', '=', move.tax_id.id)])
                     for diff_move in self.browse(cr, uid, move_line_ids, context=context):
-                        if diff_move.debit == 0.0 and diff_move.credit:
+                        if diff_move.debit == 0.0 and diff_move.credit and diff_move.credit + diff_val:
                             self.write(cr, uid, [diff_move.id], {'credit': diff_move.credit + diff_val})
-                        if diff_move.credit == 0.0 and diff_move.debit:
+                        if diff_move.credit == 0.0 and diff_move.debit and diff_move.debit + diff_val:
                             self.write(cr, uid, [diff_move.id], {'debit': diff_move.debit + diff_val})
         return res
 
@@ -601,3 +602,65 @@ class account_voucher_line_tax(osv.Model):
         'analytic_account_id': fields.many2one('account.analytic.account', 'Account Analytic'),
         'amount_base': fields.float('Amount Base')
     }
+
+
+class account_bank_statement_line(osv.osv):
+
+    _inherit = 'account.bank.statement.line'
+
+    def process_reconciliation(self, cr, uid, id, mv_line_dicts, context=None):
+
+        if context is None:
+            context = {}
+
+        move_obj = self.pool.get('account.move.line')
+        invoice_obj = self.pool.get('account.invoice')
+        acc_voucher_obj = self.pool.get('account.voucher')
+
+        res = super(account_bank_statement_line, self).process_reconciliation(cr, uid, id, mv_line_dicts, context=context)
+
+        st_line = self.browse(cr, uid, id, context=context)
+        company_currency = st_line.journal_id.company_id.currency_id.id
+        statement_currency = st_line.journal_id.currency.id or company_currency
+
+        for mv_line_dict in mv_line_dicts:
+            print mv_line_dict,"mv_line_dict"
+            if mv_line_dict.get('counterpart_move_line_id'):
+                move_line_id = mv_line_dict.get('counterpart_move_line_id')
+                move_id = move_obj.browse(
+                        cr, uid, move_line_id, context=context).move_id.id
+                invoice_ids = invoice_obj.search(
+                        cr, uid, [('move_id', '=', move_id)], context=context)
+                print invoice_ids,"invoice_ids"
+                for invoice in invoice_obj.browse(cr, uid, invoice_ids, context=context):
+                    for tax in invoice.tax_line:
+                        if tax.tax_id.tax_voucher_ok:
+                            account_tax_voucher = tax.tax_id.account_paid_voucher_id.id
+                            account_tax_collected = tax.tax_id.account_collected_id.id
+                            amount_original_inv = invoice.amount_total
+                            amount_statement_bank = st_line.amount
+                            if st_line.amount > invoice.amount_total:
+                                amount_statement_bank = invoice.amount_total
+                            type = st_line.amount < 0 and 'payment' or 'sale'
+                            factor = acc_voucher_obj.get_percent_pay_vs_invoice(cr, uid,
+                                amount_original_inv , amount_statement_bank, context=context)
+                            move_lines_tax = acc_voucher_obj.\
+                                _preparate_move_line_tax(cr, uid,
+                                account_tax_voucher,
+                                account_tax_collected, mv_line_dict['move_id'],
+                                type, invoice.partner_id.id,
+                                st_line.statement_id.period_id.id,
+                                st_line.statement_id.journal_id.id,
+                                st_line.date, company_currency,
+                                tax.amount * factor, tax.amount * factor,
+                                statement_currency,
+                                False, tax.tax_id, tax.account_analytic_id and
+                                    tax.account_analytic_id.id or False,
+                                tax.base_amount, factor, context=context)
+
+                            for move_line_tax in move_lines_tax:
+                                    move_obj.create(cr, uid, move_line_tax,
+                                                            context=context)
+
+
+        return res
