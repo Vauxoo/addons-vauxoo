@@ -22,9 +22,7 @@
 #
 ##############################################################################
 
-from openerp.osv import osv, fields
-
-from openerp.addons.decimal_precision import decimal_precision as dp
+from openerp.osv import osv
 
 
 class account_bank_statement_line(osv.osv):
