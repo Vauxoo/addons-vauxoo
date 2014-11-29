@@ -81,8 +81,6 @@ class account_voucher(osv.Model):
 
     def get_percent_pay_vs_invoice(self, cr, uid, amount_original, amount,
             context=None):
-        print amount_original,"amount_original"
-        print amount,"amount"
         return amount_original != 0 and float(amount) / float(
             amount_original) or 1.0
 
@@ -138,7 +136,6 @@ class account_voucher(osv.Model):
                             amount_tax_unround, reference_currency_id,
                             tax_id, line_tax, acc_a, amount_base_tax,  # informacion de lineas de impuestos
                             factor=0, context=None):
-        print type, reference_amount, "reference_amountreference_amountreference_amountreference_amountreference_amount"
         if type == 'payment' or reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
         if type == 'payment' and reference_amount < 0:
@@ -526,7 +523,8 @@ class account_move_line(osv.Model):
         return dat
 
     # pylint: disable=W0622
-    def reconcile(self, cr, uid, ids, type='auto', writeoff_acc_id=False, writeoff_period_id=False, writeoff_journal_id=False, context=None):
+    # commented because that has an error with bank statement
+    def __reconcile(self, cr, uid, ids, type='auto', writeoff_acc_id=False, writeoff_period_id=False, writeoff_journal_id=False, context=None):
         res = super(account_move_line, self).reconcile(cr, uid, ids=ids,
         type='auto', writeoff_acc_id=writeoff_acc_id, writeoff_period_id=writeoff_period_id,
         writeoff_journal_id=writeoff_journal_id, context=context)
