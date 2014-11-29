@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+    
+        <record id="view_wizard_pos_invoice_form" model="ir.ui.view">
+            <field name="name">view.wizard.pos.invoice.form</field>
+            <field name="model">wizard.pos.invoice</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+               <form string="Crear Factura">
+                    <field name="group" colspan="4"/>
+                    <field name="pos_ids" colspan="4"/>
+                    <field name="partner_id" colspan="4"/>
+                    <newline/>
+                    <button special="cancel" string="Cancel" colspan="2" icon="gtk-cancel"/>
+                    <button name="create_invoice" string="Crear" type="object" colspan="1" icon="gtk-execute"/>
+
+                </form>
+            </field>
+        </record>
+        
+            <act_window id="wizard_pos_invoice"
+                name="Crear Factura"
+                src_model="pos.order"
+                res_model="wizard.pos.invoice"
+                view_mode="form"
+                target="new"
+                key2="client_action_multi"
+                />
+
+        <menuitem
+            parent="point_of_sale.menu_point_of_sale"
+            action="wizard_pos_invoice"
+            id="menu_wizard_pos-invoice" sequence="1" />
+
+    </data>
+</openerp>

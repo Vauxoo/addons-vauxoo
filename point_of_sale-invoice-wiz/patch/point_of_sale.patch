@@ -1,0 +1,169 @@
+=== modified file 'point_of_sale/point_of_sale.py'
+--- point_of_sale/point_of_sale.py	2012-02-13 16:12:01 +0000
++++ point_of_sale/point_of_sale.py	2013-01-09 12:20:24 +0000
+@@ -359,10 +359,13 @@
+     def action_invoice(self, cr, uid, ids, context=None):
+         wf_service = netsvc.LocalService("workflow")
+         inv_ref = self.pool.get('account.invoice')
++        voucher_ref = self.pool.get('account.voucher')
++        voucher_line_ref = self.pool.get('account.voucher.line')
+         inv_line_ref = self.pool.get('account.invoice.line')
+         product_obj = self.pool.get('product.product')
+         inv_ids = []
+-
++        group=context.get('group')
++        partners={}
+         for order in self.pool.get('pos.order').browse(cr, uid, ids, context=context):
+             if order.invoice_id:
+                 inv_ids.append(order.invoice_id.id)
+@@ -370,7 +373,7 @@
+ 
+             if not order.partner_id:
+                 raise osv.except_osv(_('Error'), _('Please provide a partner for the sale.'))
+-
++            
+             acc = order.partner_id.property_account_receivable.id
+             inv = {
+                 'name': order.name,
+@@ -386,35 +389,113 @@
+             inv.update(inv_ref.onchange_partner_id(cr, uid, [], 'out_invoice', order.partner_id.id)['value'])
+             if not inv.get('account_id', None):
+                 inv['account_id'] = acc
+-            inv_id = inv_ref.create(cr, uid, inv, context=context)
+-
+-            self.write(cr, uid, [order.id], {'invoice_id': inv_id, 'state': 'invoiced'}, context=context)
+-            inv_ids.append(inv_id)
+-            for line in order.lines:
+-                inv_line = {
+-                    'invoice_id': inv_id,
+-                    'product_id': line.product_id.id,
+-                    'quantity': line.qty,
+-                }
+-                inv_name = product_obj.name_get(cr, uid, [line.product_id.id], context=context)[0][1]
+-                inv_line.update(inv_line_ref.product_id_change(cr, uid, [],
+-                                                               line.product_id.id,
+-                                                               line.product_id.uom_id.id,
+-                                                               line.qty, partner_id = order.partner_id.id,
+-                                                               fposition_id=order.partner_id.property_account_position.id)['value'])
+-                if line.product_id.description_sale:
+-                    inv_line['note'] = line.product_id.description_sale
+-                inv_line['price_unit'] = line.price_unit
+-                inv_line['discount'] = line.discount
+-                inv_line['name'] = inv_name
+-                inv_line['invoice_line_tax_id'] = ('invoice_line_tax_id' in inv_line)\
+-                    and [(6, 0, inv_line['invoice_line_tax_id'])] or []
+-                inv_line_ref.create(cr, uid, inv_line, context=context)
+-            inv_ref.button_reset_taxes(cr, uid, [inv_id], context=context)
+-            wf_service.trg_validate(uid, 'pos.order', order.id, 'invoice', cr)
++            if group:
++                if (order.partner_id.id,order.sale_journal.id,order.pricelist_id.currency_id.id) in partners:
++                    inv_old=partners.get((order.partner_id.id,order.sale_journal.id,order.pricelist_id.currency_id.id))
++                    self.write(cr, uid, [order.id], {'invoice_id': inv_old, 'state': 'invoiced'}, context=context)
++                    for line in order.lines:
++                        inv_line = {
++                            'invoice_id': inv_old,
++                            'product_id': line.product_id.id,
++                            'quantity': line.qty,
++                        }
++                        inv_name = product_obj.name_get(cr, uid, [line.product_id.id], context=context)[0][1]
++                        inv_line.update(inv_line_ref.product_id_change(cr, uid, [],
++                                                                       line.product_id.id,
++                                                                       line.product_id.uom_id.id,
++                                                                       line.qty, partner_id = order.partner_id.id,
++                                                                       fposition_id=order.partner_id.property_account_position.id)['value'])
++                        if line.product_id.description_sale:
++                            inv_line['note'] = line.product_id.description_sale
++                        inv_line['price_unit'] = line.price_unit
++                        inv_line['discount'] = line.discount
++                        inv_line['name'] = inv_name
++                        inv_line['invoice_line_tax_id'] = ('invoice_line_tax_id' in inv_line)\
++                            and [(6, 0, inv_line['invoice_line_tax_id'])] or []
++                        inv_line_ref.create(cr, uid, inv_line, context=context)
++                    inv_ref.button_reset_taxes(cr, uid, [inv_old], context=context)
++                    wf_service.trg_validate(uid, 'pos.order', order.id, 'invoice', cr)
++                
++                if (order.partner_id.id,order.sale_journal.id,order.pricelist_id.currency_id.id) not in partners :
++                    
++                    inv_id = inv_ref.create(cr, uid, inv, context=context)
++                    partners.update({(order.partner_id.id,order.sale_journal.id,order.pricelist_id.currency_id.id):inv_id})
++                    self.write(cr, uid, [order.id], {'invoice_id': inv_id, 'state': 'invoiced'}, context=context)
++                    inv_ids.append(inv_id)
++                    for line in order.lines:
++                        inv_line = {
++                            'invoice_id': inv_id,
++                            'product_id': line.product_id.id,
++                            'quantity': line.qty,
++                        }
++                        inv_name = product_obj.name_get(cr, uid, [line.product_id.id], context=context)[0][1]
++                        inv_line.update(inv_line_ref.product_id_change(cr, uid, [],
++                                                                       line.product_id.id,
++                                                                       line.product_id.uom_id.id,
++                                                                       line.qty, partner_id = order.partner_id.id,
++                                                                       fposition_id=order.partner_id.property_account_position.id)['value'])
++                        if line.product_id.description_sale:
++                            inv_line['note'] = line.product_id.description_sale
++                        inv_line['price_unit'] = line.price_unit
++                        inv_line['discount'] = line.discount
++                        inv_line['name'] = inv_name
++                        inv_line['invoice_line_tax_id'] = ('invoice_line_tax_id' in inv_line)\
++                            and [(6, 0, inv_line['invoice_line_tax_id'])] or []
++                        inv_line_ref.create(cr, uid, inv_line, context=context)
++                    inv_ref.button_reset_taxes(cr, uid, [inv_id], context=context)
++                    wf_service.trg_validate(uid, 'pos.order', order.id, 'invoice', cr)
++
++            else:
++                inv.update(inv_ref.onchange_partner_id(cr, uid, [], 'out_invoice', order.partner_id.id)['value'])
++                if not inv.get('account_id', None):
++                    inv['account_id'] = acc
++                inv_id = inv_ref.create(cr, uid, inv, context=context)
++
++                self.write(cr, uid, [order.id], {'invoice_id': inv_id, 'state': 'invoiced'}, context=context)
++                inv_ids.append(inv_id)
++                for line in order.lines:
++                    inv_line = {
++                        'invoice_id': inv_id,
++                        'product_id': line.product_id.id,
++                        'quantity': line.qty,
++                    }
++                    inv_name = product_obj.name_get(cr, uid, [line.product_id.id], context=context)[0][1]
++                    inv_line.update(inv_line_ref.product_id_change(cr, uid, [],
++                                                                   line.product_id.id,
++                                                                   line.product_id.uom_id.id,
++                                                                   line.qty, partner_id = order.partner_id.id,
++                                                                   fposition_id=order.partner_id.property_account_position.id)['value'])
++                    if line.product_id.description_sale:
++                        inv_line['note'] = line.product_id.description_sale
++                    inv_line['price_unit'] = line.price_unit
++                    inv_line['discount'] = line.discount
++                    inv_line['name'] = inv_name
++                    inv_line['invoice_line_tax_id'] = ('invoice_line_tax_id' in inv_line)\
++                        and [(6, 0, inv_line['invoice_line_tax_id'])] or []
++                    inv_line_ref.create(cr, uid, inv_line, context=context)
++                inv_ref.button_reset_taxes(cr, uid, [inv_id], context=context)
++                wf_service.trg_validate(uid, 'pos.order', order.id, 'invoice', cr)
++
+ 
+         if not inv_ids: return {}
+-        
++        for inv in inv_ids:
++            wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)
++        for order in self.pool.get('pos.order').browse(cr, uid, ids, context=context):
++            voucher=inv_ref.invoice_pay_customer(cr, uid, [order.invoice_id.id], context=context)
++            for pay in order.statement_ids:
++                print pay,"paymejordado"
++                voucher['context'].update({'partner_id':order.partner_id.id,'amount':pay.amount,'account_id':pay.statement_id.journal_id.default_debit_account_id.id})
++                new_voucher=voucher_ref.create(cr, uid, voucher['context'], context=context)
++                v2=voucher_ref.browse(cr, uid, new_voucher, context=context)
++                inv2=inv_ref.browse(cr, uid, order.invoice_id.id, context=context)
++                v_lines= voucher_ref.onchange_journal(cr, uid, [new_voucher], journal_id=v2.journal_id.id, line_ids=v2.line_ids, tax_id=False, partner_id=order.partner_id.id, date=time.strftime('%Y-%m-%d'), amount=pay.amount, ttype=voucher['context'].get('type'), company_id=order.company_id.id, context=None) 
++                for v_line in v_lines['value']['line_cr_ids']:
++                    print v_line['name'],inv2.move_id.name, "Compra222222"
++                    if v_line['name']==inv2.move_id.name:
++                        v_line.update({'voucher_id':new_voucher,'amount':pay.amount})
++                        voucher_line_ref.create(cr, uid, v_line, context=context)
++                        wf_service.trg_validate(uid, 'account.voucher', new_voucher, 'proforma_voucher', cr)
++        inv_ref.invoice_report_cbb(cr, uid, inv_ids, context=context)
+         mod_obj = self.pool.get('ir.model.data')
+         res = mod_obj.get_object_reference(cr, uid, 'account', 'invoice_form')
+         res_id = res and res[1] or False
+
