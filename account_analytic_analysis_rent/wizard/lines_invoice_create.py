@@ -55,7 +55,9 @@ class account_analytic_line(osv.osv):
             context = {}
 
         account_ids = {}
+        date_lines = time.strftime('%d/%m/%Y')
         for line in self.pool.get('account.analytic.line').browse(cr, uid, ids, context=context):
+            date_lines = line.date
             account_ids[line.account_id.id] = True
 
         account_ids = account_ids.keys() #data['accounts']
@@ -79,7 +81,7 @@ class account_analytic_line(osv.osv):
                     pterm_list.sort()
                     date_due = pterm_list[-1]
             curr_invoice = {
-                'name': time.strftime('%d/%m/%Y')+' - '+account.name,
+                'name': date_lines + ' - ' + account.name,
                 'partner_id': account.partner_id.id,
                 'address_contact_id': res_partner_obj.address_get(cr, uid,
                     [account.partner_id.id], adr_pref=['contact'])['contact'],
