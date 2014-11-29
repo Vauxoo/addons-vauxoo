@@ -138,6 +138,7 @@ class account_voucher(osv.Model):
                             amount_tax_unround, reference_currency_id,
                             tax_id, line_tax, acc_a, amount_base_tax,  # informacion de lineas de impuestos
                             factor=0, context=None):
+        print type, reference_amount, "reference_amountreference_amountreference_amountreference_amountreference_amount"
         if type == 'payment' or reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
         if type == 'payment' and reference_amount < 0:
@@ -602,65 +603,3 @@ class account_voucher_line_tax(osv.Model):
         'analytic_account_id': fields.many2one('account.analytic.account', 'Account Analytic'),
         'amount_base': fields.float('Amount Base')
     }
-
-
-class account_bank_statement_line(osv.osv):
-
-    _inherit = 'account.bank.statement.line'
-
-    def process_reconciliation(self, cr, uid, id, mv_line_dicts, context=None):
-
-        if context is None:
-            context = {}
-
-        move_obj = self.pool.get('account.move.line')
-        invoice_obj = self.pool.get('account.invoice')
-        acc_voucher_obj = self.pool.get('account.voucher')
-
-        res = super(account_bank_statement_line, self).process_reconciliation(cr, uid, id, mv_line_dicts, context=context)
-
-        st_line = self.browse(cr, uid, id, context=context)
-        company_currency = st_line.journal_id.company_id.currency_id.id
-        statement_currency = st_line.journal_id.currency.id or company_currency
-
-        for mv_line_dict in mv_line_dicts:
-            print mv_line_dict,"mv_line_dict"
-            if mv_line_dict.get('counterpart_move_line_id'):
-                move_line_id = mv_line_dict.get('counterpart_move_line_id')
-                move_id = move_obj.browse(
-                        cr, uid, move_line_id, context=context).move_id.id
-                invoice_ids = invoice_obj.search(
-                        cr, uid, [('move_id', '=', move_id)], context=context)
-                print invoice_ids,"invoice_ids"
-                for invoice in invoice_obj.browse(cr, uid, invoice_ids, context=context):
-                    for tax in invoice.tax_line:
-                        if tax.tax_id.tax_voucher_ok:
-                            account_tax_voucher = tax.tax_id.account_paid_voucher_id.id
-                            account_tax_collected = tax.tax_id.account_collected_id.id
-                            amount_original_inv = invoice.amount_total
-                            amount_statement_bank = st_line.amount
-                            if st_line.amount > invoice.amount_total:
-                                amount_statement_bank = invoice.amount_total
-                            type = st_line.amount < 0 and 'payment' or 'sale'
-                            factor = acc_voucher_obj.get_percent_pay_vs_invoice(cr, uid,
-                                amount_original_inv , amount_statement_bank, context=context)
-                            move_lines_tax = acc_voucher_obj.\
-                                _preparate_move_line_tax(cr, uid,
-                                account_tax_voucher,
-                                account_tax_collected, mv_line_dict['move_id'],
-                                type, invoice.partner_id.id,
-                                st_line.statement_id.period_id.id,
-                                st_line.statement_id.journal_id.id,
-                                st_line.date, company_currency,
-                                tax.amount * factor, tax.amount * factor,
-                                statement_currency,
-                                False, tax.tax_id, tax.account_analytic_id and
-                                    tax.account_analytic_id.id or False,
-                                tax.base_amount, factor, context=context)
-
-                            for move_line_tax in move_lines_tax:
-                                    move_obj.create(cr, uid, move_line_tax,
-                                                            context=context)
-
-
-        return res
