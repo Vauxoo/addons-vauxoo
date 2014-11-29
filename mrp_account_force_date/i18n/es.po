@@ -1,0 +1,69 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* mrp_force_date
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-05-14 23:20+0000\n"
+"PO-Revision-Date: 2013-05-14 18:27-0600\n"
+"Last-Translator: juan <openerp1@hotmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: mrp_force_date
+#: field:wizard.mrp.production,mrp_ids:0
+msgid "Mrp Productions"
+msgstr "Ordenes de Producción"
+
+#. module: mrp_force_date
+#: model:ir.model,name:mrp_force_date.model_wizard_mrp_production
+msgid "wizard.mrp.production"
+msgstr "wizard.mrp.production"
+
+#. module: mrp_force_date
+#: model:ir.actions.act_window,name:mrp_force_date.action_mrp_production_wizard
+#: model:ir.actions.act_window,name:mrp_force_date.action_view_mrp_production_wizard
+#: view:wizard.mrp.production:0
+msgid "Change Mrp Production Date"
+msgstr "Cambiar Fecha a Ordenes"
+
+#. module: mrp_force_date
+#: model:ir.model,name:mrp_force_date.model_mrp_production
+msgid "Manufacturing Order"
+msgstr " Orden de Fabricació"
+
+#. module: mrp_force_date
+#: view:wizard.mrp.production:0
+msgid "Change Date"
+msgstr "Cambiar Fecha"
+
+#. module: mrp_force_date
+#: field:wizard.mrp.production,new_date:0
+msgid "New Date"
+msgstr "Fecha Nueva"
+
+#. module: mrp_force_date
+#: sql_constraint:mrp.production:0
+msgid "Reference must be unique per Company!"
+msgstr "Referencia debe ser único por Empresa!"
+
+#. module: mrp_force_date
+#: model:res.groups,name:mrp_force_date.group_wizard_mrp_production
+msgid "Mrp Production / Wizard Change Date"
+msgstr "Mrp Production / Wizard Cambia Fecha"
+
+#. module: mrp_force_date
+#: view:wizard.mrp.production:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: mrp_force_date
+#: constraint:mrp.production:0
+msgid "Order quantity cannot be negative or zero!"
+msgstr "Cantidad de pedido no puede ser negativo o cero!"
+

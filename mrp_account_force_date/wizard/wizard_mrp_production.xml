@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_mrp_production_wizard" model="ir.ui.view">
+            <field name="name">Change Production Date</field>
+            <field name="model">wizard.mrp.production</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Change Mrp Production Date">
+                    <group>
+                    <field name="new_date"/>
+                    </group>
+                    <newline/>
+                    <field name="mrp_ids" colspan="4" nolabel="1" width="650" height="200"/>
+                    <group col="2" colspan="4">
+                        <button icon='gtk-cancel' special="cancel"
+                            string="Cancel" />
+                        <button name="wizard_mrp_change_date" string="Change Date"
+                            colspan="1" type="object" icon="gtk-yes" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+         <record id="action_view_mrp_production_wizard" model="ir.actions.act_window">
+            <field name="name">Change Mrp Production Date</field>
+            <field name="res_model">wizard.mrp.production</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_mrp_production_wizard"/>
+            <field name="target">new</field>
+            <field name="context">context</field>
+        </record>
+
+         <act_window name="Change Mrp Production Date"
+            res_model="wizard.mrp.production"
+            src_model="mrp.production"
+            view_mode="form"
+            target="new"
+            multi="True"
+            id="action_mrp_production_wizard"
+            groups="group_wizard_mrp_production"/>
+
+    </data>
+</openerp>
