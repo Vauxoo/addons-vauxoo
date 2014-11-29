@@ -155,7 +155,7 @@ class account_voucher(osv.Model):
             'journal_id': journal,
             'period_id': period,
             'company_id': company_currency,
-            'move_id': int(move_id),
+            'move_id': move_id and int(move_id) or None,
             'tax_id': tax_id,
             'analytic_account_id': acc_a,
             'date': date,
@@ -171,7 +171,7 @@ class account_voucher(osv.Model):
             'journal_id': journal,
             'period_id': period,
             'company_id': company_currency,
-            'move_id': int(move_id),
+            'move_id': move_id and int(move_id) or None,
             'amount_tax_unround': amount_tax_unround,
             'tax_id': tax_id,
             'analytic_account_id': acc_a,
@@ -523,7 +523,8 @@ class account_move_line(osv.Model):
         return dat
 
     # pylint: disable=W0622
-    def reconcile(self, cr, uid, ids, type='auto', writeoff_acc_id=False, writeoff_period_id=False, writeoff_journal_id=False, context=None):
+    # commented because that has an error with bank statement
+    def __reconcile(self, cr, uid, ids, type='auto', writeoff_acc_id=False, writeoff_period_id=False, writeoff_journal_id=False, context=None):
         res = super(account_move_line, self).reconcile(cr, uid, ids=ids,
         type='auto', writeoff_acc_id=writeoff_acc_id, writeoff_period_id=writeoff_period_id,
         writeoff_journal_id=writeoff_journal_id, context=context)
@@ -537,7 +538,6 @@ class account_move_line(osv.Model):
         res_ids = {}
         object_dp = self.pool.get('decimal.precision')
         round_val = object_dp.precision_get(cr, uid, 'Account')
-
         for val_round in dat:
             res_round.setdefault(val_round['account_id'], 0)
             res_without_round.setdefault(val_round['account_id'], 0)
@@ -553,9 +553,9 @@ class account_move_line(osv.Model):
                 for move in self.browse(cr, uid, move_diff_id, context=context):
                     move_line_ids = self.search(cr, uid, [('move_id', '=', move.move_id.id), ('tax_id', '=', move.tax_id.id)])
                     for diff_move in self.browse(cr, uid, move_line_ids, context=context):
-                        if diff_move.debit == 0.0 and diff_move.credit:
+                        if diff_move.debit == 0.0 and diff_move.credit and diff_move.credit + diff_val:
                             self.write(cr, uid, [diff_move.id], {'credit': diff_move.credit + diff_val})
-                        if diff_move.credit == 0.0 and diff_move.debit:
+                        if diff_move.credit == 0.0 and diff_move.debit and diff_move.debit + diff_val:
                             self.write(cr, uid, [diff_move.id], {'debit': diff_move.debit + diff_val})
         return res
 
