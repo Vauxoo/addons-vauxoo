@@ -23,6 +23,7 @@
 ##############################################################################
 
 from openerp.osv import osv
+import time
 
 
 class account_bank_statement_line(osv.osv):
@@ -34,7 +35,8 @@ class account_bank_statement_line(osv.osv):
         if context is None:
             context = {}
 
-        move_obj = self.pool.get('account.move.line')
+        move_line_obj = self.pool.get('account.move.line')
+        move_obj = self.pool.get('account.move')
         invoice_obj = self.pool.get('account.invoice')
         acc_voucher_obj = self.pool.get('account.voucher')
         move_line_ids = []
@@ -43,15 +45,20 @@ class account_bank_statement_line(osv.osv):
         company_currency = st_line.journal_id.company_id.currency_id.id
         statement_currency = st_line.journal_id.currency.id or company_currency
 
+        vals_move = {
+            'date': time.strftime('%Y-%m-%d'),
+            'period_id': st_line.statement_id.period_id.id,
+            'journal_id': st_line.statement_id.journal_id.id,
+            }
+        move_id_old = move_obj.create(cr, uid, vals_move, context)
+
         for mv_line_dict in mv_line_dicts:
-            print mv_line_dict,"mv_line_dict"
             if mv_line_dict.get('counterpart_move_line_id'):
                 move_line_id = mv_line_dict.get('counterpart_move_line_id')
-                move_id = move_obj.browse(
+                move_id = move_line_obj.browse(
                         cr, uid, move_line_id, context=context).move_id.id
                 invoice_ids = invoice_obj.search(
                         cr, uid, [('move_id', '=', move_id)], context=context)
-                print invoice_ids,"invoice_ids"
                 for invoice in invoice_obj.browse(cr, uid, invoice_ids, context=context):
                     for tax in invoice.tax_line:
                         if tax.tax_id.tax_voucher_ok:
@@ -71,7 +78,7 @@ class account_bank_statement_line(osv.osv):
                             move_lines_tax = acc_voucher_obj.\
                                 _preparate_move_line_tax(cr, uid,
                                 account_tax_voucher,
-                                account_tax_collected, None,
+                                account_tax_collected, move_id_old,
                                 type, invoice.partner_id.id,
                                 st_line.statement_id.period_id.id,
                                 st_line.statement_id.journal_id.id,
@@ -84,9 +91,10 @@ class account_bank_statement_line(osv.osv):
 
                             for move_line_tax in move_lines_tax:
                                     move_line_ids.append(
-                                        move_obj.create(cr, uid, move_line_tax,
+                                        move_line_obj.create(cr, uid, move_line_tax,
                                                             context=context))
 
         res = super(account_bank_statement_line, self).process_reconciliation(cr, uid, id, mv_line_dicts, context=context)
-        move_obj.write(cr, uid, move_line_ids, {'move_id': st_line.journal_entry_id.id})
+        move_line_obj.write(cr, uid, move_line_ids, {'move_id': st_line.journal_entry_id.id})
+        move_obj.unlink(cr, uid, move_id_old)
         return res
