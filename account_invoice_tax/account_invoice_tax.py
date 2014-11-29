@@ -26,6 +26,7 @@
 ##############################################################################
 
 from openerp import models, fields, api, _
+from openerp.exceptions import except_orm
 
 
 class account_invoice(models.Model):
