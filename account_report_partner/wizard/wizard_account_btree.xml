@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_account_btree_wizard" model="ir.ui.view">
+            <field name="name">Auxiliar</field>
+            <field name="model">wizard.account</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Auxiliar">
+                    <group colspan="2" col="4">
+                        <field name="filter" on_change="onchange_filter(filter)"/>
+                        <field name="partner"/>
+                        <field name="nivel"/>
+                        <field name="show"/>
+                        <field name="type_show" attrs="{'invisible':[('show','=',0)], 'required':[('show','=',1)]}"/>
+                    </group>
+                    <newline/>
+                    <group>
+                        <separator string="Periodos" colspan="4"/>
+                        <newline/>
+                        <field name="period_from" attrs="{'readonly':[('filter','!=','filter_period')],'required':[('filter','=','filter_period')]}"/>
+                        <field name="period_to" attrs="{'readonly':[('filter','!=','filter_period')],'required':[('filter','=','filter_period')]}"/>
+                    </group>
+                    <newline/>
+                    <group>
+                        <separator string="Fechas" colspan="4"/>
+                        <newline/>
+                        <field name="date_ini" attrs="{'readonly':[('filter','!=','filter_date')],'required':[('filter','=','filter_date')]}"/>
+                        <field name="date_fin" attrs="{'readonly':[('filter','!=','filter_date')],'required':[('filter','=','filter_date')]}"/>
+                    </group>
+                    <field name="account_ids" colspan="4" nolabel="1" width="650" height="200"/>
+                    <group col="2" colspan="4">
+                        <button icon='gtk-cancel' special="cancel"
+                            string="Cancel" />
+                        <button name="calculation" string="Imprimir"
+                            colspan="1" type="object" icon="gtk-print" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+         <record id="action_account_btree_print" model="ir.actions.act_window">
+            <field name="name">Auxiliar de Cuentas</field>
+            <field name="res_model">wizard.account</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_account_btree_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+         <act_window name="Auxiliar de Cuentas"
+            res_model="wizard.account"
+            src_model="account.move"
+            view_mode="form"
+            target="new"
+            multi="True"
+            key2="client_action_multi"
+            id="action_account_btree_print"/>
+
+        <menuitem icon="STOCK_PRINT"
+                  parent="account.final_accounting_reports"
+                  id="menu_report_btree_wizard"
+                  name="Auxiliares de Cuentas"
+                  action="action_account_btree_print"/>
+
+    </data>
+</openerp>
