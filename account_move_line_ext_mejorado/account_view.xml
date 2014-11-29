@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_move_form_iva" model="ir.ui.view">
+            <field name="name">account.move.form.iva</field>
+            <field name="model">account.move</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr='/form/notebook/page[@string="Journal Items"]/field[@name="line_id"]/form[@string="Journal Item"]/group/field[@name="ref"]' position="after">
+                    <field name='ref2'/>
+                </xpath>
+                <xpath expr='/form/notebook/page[@string="Journal Items"]/field[@name="line_id"]/tree[@string="Journal Items"]/field[@name="ref"]' position="after">
+                    <field name='ref2'/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_move_line_tree_ref2" model="ir.ui.view">
+            <field name="name">account.move.line.tree.ref2</field>
+            <field name="model">account.move.line</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.view_move_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr='/tree/field[@name="period_id"]' position="before">
+                    <field name='ref2'/>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>
+
+
+
