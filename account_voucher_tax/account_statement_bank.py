@@ -37,8 +37,7 @@ class account_bank_statement_line(osv.osv):
         move_obj = self.pool.get('account.move.line')
         invoice_obj = self.pool.get('account.invoice')
         acc_voucher_obj = self.pool.get('account.voucher')
-
-        res = super(account_bank_statement_line, self).process_reconciliation(cr, uid, id, mv_line_dicts, context=context)
+        move_line_ids = []
 
         st_line = self.browse(cr, uid, id, context=context)
         company_currency = st_line.journal_id.company_id.currency_id.id
@@ -72,7 +71,7 @@ class account_bank_statement_line(osv.osv):
                             move_lines_tax = acc_voucher_obj.\
                                 _preparate_move_line_tax(cr, uid,
                                 account_tax_voucher,
-                                account_tax_collected, mv_line_dict['move_id'],
+                                account_tax_collected, None,
                                 type, invoice.partner_id.id,
                                 st_line.statement_id.period_id.id,
                                 st_line.statement_id.journal_id.id,
@@ -84,8 +83,10 @@ class account_bank_statement_line(osv.osv):
                                 tax.base_amount, factor, context=context)
 
                             for move_line_tax in move_lines_tax:
-                                    move_obj.create(cr, uid, move_line_tax,
-                                                            context=context)
+                                    move_line_ids.append(
+                                        move_obj.create(cr, uid, move_line_tax,
+                                                            context=context))
 
-
+        res = super(account_bank_statement_line, self).process_reconciliation(cr, uid, id, mv_line_dicts, context=context)
+        move_obj.write(cr, uid, move_line_ids, {'move_id': st_line.journal_entry_id.id})
         return res
