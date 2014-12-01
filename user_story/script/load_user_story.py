@@ -1,5 +1,7 @@
 import xmlrpclib
+import logging
 import time
+_logger = logging.getLogger(__name__)
 
 # Source server info
 HOST = 'vauxoo.info'
@@ -38,7 +40,7 @@ def create_in_destiny(model, model_dict=None):
         return OBJECT_PROXY2.execute(DB2, UID2, PASS2, model, 'create',
                                      model_dict)
     else:
-        print 'dictionary empty, model: %d' % model
+        _logger.warning('dictionary empty, model: %d', model)
         return False
 
 
@@ -106,7 +108,7 @@ def user_matching(user_id):
 
 def __main__():
 
-    print 'ha comenzado la carga de datos'
+    _logger.info('ha comenzado la carga de datos')
     begin_p = time.time()
 
     user_story_ids = OBJECT_PROXY.execute(
@@ -119,11 +121,11 @@ def __main__():
         user_id = user_story.get('user_id')[0]
         user_story_name = user_story.get('name')
 
-        print 'Evaluando la historia %s' % (user_story_name)
+        _logger.info('Evaluando la historia %s', user_story_name)
 
         # Si no existe la historia de usuario (user_story)
         if not search_in_destiny('user.story', user_story_name):
-            print 'Creando la historia %s' % (user_story_name)
+            _logger.info('Creando la historia %s', user_story_name)
             begin = time.time()
 
         # Comprobamos si tiene elementos accep_crit_ids, de ser asi creamos
@@ -180,14 +182,14 @@ def __main__():
         # Almacenamos el user_story en el destino
             create_in_destiny('user.story', user_story)
             end = time.time()
-            print 'Creada la historia %s en %ss' % \
-                (user_story_name, end - begin)
+            _logger.info('Creada la historia %s en %ss',
+                         user_story_name, end - begin)
 
         else:
-            print 'Ya existe la historia %s' % (user_story_name)
+            _logger.info('Ya existe la historia %s', user_story_name)
 
     end_p = time.time()
-    print 'Creadas todas las historias en %ss' % (end_p - begin_p)
-    print 'ha finalizado la carga de datos'
+    _logger.info('Creadas todas las historias en %ss', end_p - begin_p)
+    _logger.info('ha finalizado la carga de datos')
 
 __main__()

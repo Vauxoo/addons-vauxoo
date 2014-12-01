@@ -31,6 +31,8 @@ from openerp.tools.translate import _
 from openerp.osv.osv import except_osv
 import base64
 import openerp.netsvc as netsvc
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class print_sale_order_report(osv.TransientModel):
@@ -42,7 +44,7 @@ class print_sale_order_report(osv.TransientModel):
 
     def __get_company_object(self, cr, uid):
         user = self.pool.get('res.users').browse(cr, uid, uid)
-        print user
+        _logger.info(user)
         if not user.company_id:
             raise except_osv(_('ERROR !'), _(
                 'There is no company configured for this user'))

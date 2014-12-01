@@ -2,6 +2,8 @@
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 from openerp.osv.osv import except_osv
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class sale_order_line(osv.Model):
@@ -33,12 +35,12 @@ class sale_order(osv.Model):
         for o in self.browse(cr, user, ids, context):
             for ol in o.order_line:
                 if ol.att_bro:
-                    print "Im Here i will go to print %s " % ol.name
+                    _logger.info("Im Here i will go to print %s ", ol.name)
         return True
 
     def __get_company_object(self, cr, uid):
         user = self.pool.get('res.users').browse(cr, uid, uid)
-        print user
+        _logger.info(user)
         if not user.company_id:
             raise except_osv(_('ERROR !'), _(
                 'There is no company configured for this user'))
