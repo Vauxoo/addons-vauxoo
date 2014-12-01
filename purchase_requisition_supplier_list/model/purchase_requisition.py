@@ -36,6 +36,8 @@ class purchase_requisition(osv.Model):
 
     _inherit = 'purchase.requisition'
     _columns = {
+        'suggested_supplier':
+            fields.text('Suggested Suppliers'),
         'suggested_supplier_ids': fields.many2many(
             'res.partner',
             'purchase_requisition_suggested_suppliers_rel',
@@ -51,6 +53,8 @@ class purchase_requisition(osv.Model):
             help=('The Suppliers that will participate in the tender. This'
                   ' suppliers can only be defined by the purchase analyst in'
                   ' the phase of Prepare Tenderplan.')),
+        'single_source_justification':
+            fields.text('Single Source Justification'),
     }
 
     def create_orders(self, cr, uid, ids, context=None):
