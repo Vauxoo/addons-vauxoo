@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-10-24 06:37+0000\n"
-"X-Generator: Launchpad (build 17203)\n"
+"X-Launchpad-Export-Date: 2014-11-21 06:46+0000\n"
+"X-Generator: Launchpad (build 17252)\n"
 
 #. module: partner_required_in_acc_move_line
 #: model:ir.model,name:partner_required_in_acc_move_line.model_account_account

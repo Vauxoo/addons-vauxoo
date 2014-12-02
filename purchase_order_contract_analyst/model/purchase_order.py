@@ -55,5 +55,5 @@ class purchase_requisition(osv.Model):
         for requisition in self.browse(cr, uid, ids, context=context):
             po_req = po_obj.search(cr, uid, [('requisition_id', '=', requisition.id)], context=context)
             for po_id in po_req:
-                po_obj.write(cr, uid, [po_id], {'purchaser_id': requisition.purchaser_id}, context=context)
+                po_obj.write(cr, uid, [po_id], {'purchaser_id': requisition.purchaser_id.id}, context=context)
         return res
