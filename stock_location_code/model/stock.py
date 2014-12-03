@@ -43,6 +43,12 @@ class stock_location(osv.Model):
 
     _inherit = 'stock.location'
 
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+        if context is None:
+            context = {}
+        ids = super(stock_location, self).search(cr, uid, args, offset, limit, order, context, count)
+        return ids
+
     def _check_unique_code(self, cr, uid, ids, context=None):
         """
         Check if the location code are unique per company.
