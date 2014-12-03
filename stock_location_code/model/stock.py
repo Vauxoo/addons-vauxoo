@@ -43,28 +43,6 @@ class stock_location(osv.Model):
 
     _inherit = 'stock.location'
 
-    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
-        if context is None:
-            context = {}
-        ids = super(stock_location, self).search(cr, uid, args, offset, limit, order, context, count)
-        return ids
-
-    def _check_unique_code(self, cr, uid, ids, context=None):
-        """
-        Check if the location code are unique per company.
-        @return True or False
-        """
-        context = context or {}
-        ids = isinstance(ids, (int, long)) and [ids] or ids
-        for location in self.browse(cr, uid, ids, context=context):
-            domain = [('loc_barcode', '=', location.code),
-                      ('company_id', '=', location.company_id.id),
-                      ('id', '<>', location.id)]
-            repeat_ids = self.search(cr, uid, domain, context=context)
-            if repeat_ids:
-                return False
-        return True
-
     def name_search(self, cr, user, name='', args=None,
                     operator='ilike', context=None, limit=100):
         args = args or []
