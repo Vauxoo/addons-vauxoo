@@ -116,7 +116,7 @@ class stock_location(osv.Model):
             mydict = {
                 'id': location.id,
                 'name': location.name,
-                'code': location.loc_barcode,
+                'loc_barcode': location.loc_barcode,
             }
             result.append(self._name_get(mydict))
         return result
