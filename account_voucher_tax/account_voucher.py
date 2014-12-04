@@ -533,9 +533,9 @@ class account_move_line(osv.Model):
                     move_line_ids = self.search(cr, uid, [('move_id', '=', move.move_id.id), ('is_tax_voucher', '=', True)])
                     for diff_move in self.browse(cr, uid, move_line_ids, context=context):
                         if diff_move.debit == 0.0 and diff_move.credit and diff_move.credit + diff_val:
-                            self.write(cr, uid, [diff_move.id], {'credit': diff_move.credit + diff_val})
+                            self._write(cr, uid, [diff_move.id], {'credit': diff_move.credit + diff_val})
                         if diff_move.credit == 0.0 and diff_move.debit and diff_move.debit + diff_val:
-                            self.write(cr, uid, [diff_move.id], {'debit': diff_move.debit + diff_val})
+                            self._write(cr, uid, [diff_move.id], {'debit': diff_move.debit + diff_val})
         return True
 
     def _get_query_round(self, cr, uid, ids, context=None):

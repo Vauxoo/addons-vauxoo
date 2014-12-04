@@ -30,6 +30,7 @@ class account_bank_statement_line(osv.osv):
 
     _inherit = 'account.bank.statement.line'
 
+    # pylint: disable=W0622
     def process_reconciliation(self, cr, uid, id, mv_line_dicts, context=None):
 
         if context is None:
@@ -38,13 +39,12 @@ class account_bank_statement_line(osv.osv):
         move_line_obj = self.pool.get('account.move.line')
         move_obj = self.pool.get('account.move')
         invoice_obj = self.pool.get('account.invoice')
-        acc_voucher_obj = self.pool.get('account.voucher')
+        voucher_obj = self.pool.get('account.voucher')
         move_line_ids = []
 
         st_line = self.browse(cr, uid, id, context=context)
         company_currency = st_line.journal_id.company_id.currency_id.id
         statement_currency = st_line.journal_id.currency.id or company_currency
-
 
         vals_move = {
             'date': time.strftime('%Y-%m-%d'),
@@ -55,16 +55,19 @@ class account_bank_statement_line(osv.osv):
 
         for mv_line_dict in mv_line_dicts:
             if mv_line_dict.get('counterpart_move_line_id'):
-                move_line_id = mv_line_dict.get('counterpart_move_line_id')
+                move_line_id = mv_line_dict.get('counterpart_move_line_id', [])
                 move_id = move_line_obj.browse(
-                        cr, uid, move_line_id, context=context).move_id.id
+                    cr, uid, move_line_id, context=context).move_id.id
                 invoice_ids = invoice_obj.search(
-                        cr, uid, [('move_id', '=', move_id)], context=context)
-                for invoice in invoice_obj.browse(cr, uid, invoice_ids, context=context):
+                    cr, uid, [('move_id', '=', move_id)], context=context)
+                for invoice in invoice_obj.browse(cr, uid, invoice_ids,
+                                                  context=context):
                     for tax in invoice.tax_line:
                         if tax.tax_id.tax_voucher_ok:
-                            account_tax_voucher = tax.tax_id.account_paid_voucher_id.id
-                            account_tax_collected = tax.tax_id.account_collected_id.id
+                            account_tax_voucher =\
+                                tax.tax_id.account_paid_voucher_id.id
+                            account_tax_collected =\
+                                tax.tax_id.account_collected_id.id
                             amount_original_inv = invoice.amount_total
                             amount_statement_bank = st_line.amount
                             type = 'sale'
@@ -72,13 +75,14 @@ class account_bank_statement_line(osv.osv):
                                 amount_statement_bank = invoice.amount_total
                             if st_line.amount < 0:
                                 type = 'payment'
-                                amount_statement_bank = amount_statement_bank * -1
+                                amount_statement_bank =\
+                                    amount_statement_bank * -1
 
-                            factor = acc_voucher_obj.get_percent_pay_vs_invoice(cr, uid,
-                                amount_original_inv , amount_statement_bank, context=context)
-                            move_lines_tax = acc_voucher_obj.\
-                                _preparate_move_line_tax(cr, uid,
-                                account_tax_voucher,
+                            factor = voucher_obj.get_percent_pay_vs_invoice(
+                                cr, uid, amount_original_inv,
+                                amount_statement_bank, context=context)
+                            lines_tax = voucher_obj._preparate_move_line_tax(
+                                cr, uid, account_tax_voucher,
                                 account_tax_collected, move_id_old,
                                 type, invoice.partner_id.id,
                                 st_line.statement_id.period_id.id,
@@ -87,21 +91,29 @@ class account_bank_statement_line(osv.osv):
                                 tax.amount * factor, tax.amount * factor,
                                 statement_currency,
                                 False, tax.tax_id, tax.account_analytic_id and
-                                    tax.account_analytic_id.id or False,
+                                tax.account_analytic_id.id or False,
                                 tax.base_amount, factor, context=context)
 
-                            for move_line_tax in move_lines_tax:
-                                    move_line_ids.append(
-                                        move_line_obj.create(cr, uid, move_line_tax,
-                                                            context=context))
+                            for move_line_tax in lines_tax:
+                                move_line_ids.append(
+                                    move_line_obj.create(
+                                        cr, uid, move_line_tax, context=context
+                                        ))
 
         context['apply_round'] = True
-        res = super(account_bank_statement_line, self).process_reconciliation(cr, uid, id, mv_line_dicts, context=context)
-        move_line_obj.write(cr, uid, move_line_ids, {'move_id': st_line.journal_entry_id.id})
+        res = super(account_bank_statement_line, self).process_reconciliation(
+            cr, uid, id, mv_line_dicts, context=context)
+        move_line_obj.write(cr, uid, move_line_ids,
+                            {'move_id': st_line.journal_entry_id.id})
         move_obj.unlink(cr, uid, move_id_old)
-        move_line_reconcile_id = [dat.reconcile_id.id for dat in st_line.journal_entry_id.line_id if dat.reconcile_id]
+        move_line_reconcile_id = [dat.reconcile_id.id
+                                  for dat in st_line.journal_entry_id.line_id
+                                  if dat.reconcile_id]
         if move_line_reconcile_id:
-            move_line_statement_bank = move_line_obj.search(cr, uid, [('reconcile_id', 'in', move_line_reconcile_id)])
+            move_line_statement_bank = move_line_obj.search(
+                cr, uid, [('reconcile_id', 'in', move_line_reconcile_id)])
+
             context['apply_round'] = False
-            move_line_obj._get_round(cr, uid, move_line_statement_bank, context=context)
+            move_line_obj._get_round(cr, uid,
+                                     move_line_statement_bank, context=context)
         return res
