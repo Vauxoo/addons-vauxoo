@@ -45,6 +45,7 @@ class account_bank_statement_line(osv.osv):
         company_currency = st_line.journal_id.company_id.currency_id.id
         statement_currency = st_line.journal_id.currency.id or company_currency
 
+
         vals_move = {
             'date': time.strftime('%Y-%m-%d'),
             'period_id': st_line.statement_id.period_id.id,
@@ -94,7 +95,13 @@ class account_bank_statement_line(osv.osv):
                                         move_line_obj.create(cr, uid, move_line_tax,
                                                             context=context))
 
+        context['apply_round'] = True
         res = super(account_bank_statement_line, self).process_reconciliation(cr, uid, id, mv_line_dicts, context=context)
         move_line_obj.write(cr, uid, move_line_ids, {'move_id': st_line.journal_entry_id.id})
         move_obj.unlink(cr, uid, move_id_old)
+        move_line_reconcile_id = [dat.reconcile_id.id for dat in st_line.journal_entry_id.line_id if dat.reconcile_id]
+        if move_line_reconcile_id:
+            move_line_statement_bank = move_line_obj.search(cr, uid, [('reconcile_id', 'in', move_line_reconcile_id)])
+            context['apply_round'] = False
+            move_line_obj._get_round(cr, uid, move_line_statement_bank, context=context)
         return res
