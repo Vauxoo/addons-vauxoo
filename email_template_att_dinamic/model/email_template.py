@@ -49,7 +49,8 @@ class mail_compose_message(osv.TransientModel):
 
         template_obj = self.pool.get('email.template')
 
-        template_id = template_id and template_id[0] or False
+        if template_id and isinstance(template_id, list):
+            template_id = template_id[0]
 
         res = super(mail_compose_message,
                     self).onchange_template_id(cr, uid, ids, template_id,
