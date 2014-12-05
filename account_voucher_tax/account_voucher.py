@@ -145,6 +145,7 @@ class account_voucher(osv.Model):
                                     uid, line_tax,
                                     amount_base_tax * factor, reference_amount,
                                     context=context)
+
         debit_line_vals = {
             'name': line_tax.name,
             'quantity': 1,
@@ -154,9 +155,9 @@ class account_voucher(osv.Model):
             'account_id': dest_account_id,
             'journal_id': journal,
             'period_id': period,
-            'company_id': company_currency,
             'move_id': move_id and int(move_id) or None,
             'tax_id': tax_id,
+            'is_tax_voucher': True,
             'analytic_account_id': acc_a,
             'date': date,
             'tax_voucher_id': tax_id,
@@ -170,10 +171,10 @@ class account_voucher(osv.Model):
             'account_id': src_account_id,
             'journal_id': journal,
             'period_id': period,
-            'company_id': company_currency,
             'move_id': move_id and int(move_id) or None,
             'amount_tax_unround': amount_tax_unround,
             'tax_id': tax_id,
+            'is_tax_voucher': True,
             'analytic_account_id': acc_a,
             'date': date,
             'tax_voucher_id': tax_id,
@@ -205,6 +206,8 @@ class account_voucher(osv.Model):
             credit_line_vals.pop('amount_tax_unround')
             credit_line_vals.pop('tax_id')
             debit_line_vals.pop('tax_id')
+            credit_line_vals.pop('is_tax_voucher')
+            debit_line_vals.pop('is_tax_voucher')
 
         account_obj = self.pool.get('account.account')
         reference_amount = abs(reference_amount)
@@ -264,6 +267,8 @@ class account_voucher(osv.Model):
             lines_ids.extend(lines['value'].get('line_cr_ids', []))
             lines_ids.extend(lines['value'].get('line_dr_ids', []))
             for line in lines_ids:
+                if isinstance(line, tuple):
+                    continue
                 factor = self.get_percent_pay_vs_invoice(cr, uid, line[
                     'amount_original'], line['amount'], context=context)
                 list_tax = []
@@ -502,33 +507,7 @@ class account_voucher_line(osv.Model):
 class account_move_line(osv.Model):
     _inherit = 'account.move.line'
 
-    def _get_query_round(self, cr, uid, ids, context=None):
-        if context == None:
-            context = {}
-        cr.execute("""
-                select account_id, sum(amount_tax_unround) as without,
-                    case  when sum(credit) > 0.0
-                        then sum(credit)
-                    when sum(debit) > 0.0
-                        then sum(debit)
-                    end as round, id
-                from account_move_line
-                where move_id in (
-                select move_id from account_move_line aml
-                where id in %s)
-                and amount_tax_unround is not null
-                group by account_id, id
-                order by id asc """, (tuple(ids),))
-        dat = cr.dictfetchall()
-        return dat
-
-    # pylint: disable=W0622
-    # commented because that has an error with bank statement
-    def __reconcile(self, cr, uid, ids, type='auto', writeoff_acc_id=False, writeoff_period_id=False, writeoff_journal_id=False, context=None):
-        res = super(account_move_line, self).reconcile(cr, uid, ids=ids,
-        type='auto', writeoff_acc_id=writeoff_acc_id, writeoff_period_id=writeoff_period_id,
-        writeoff_journal_id=writeoff_journal_id, context=context)
-#        if not writeoff_acc_id:
+    def _get_round(self, cr, uid, ids, context=None):
         if context.get('apply_round', False):
             dat = []
         else:
@@ -551,18 +530,48 @@ class account_move_line(osv.Model):
             if diff_val != 0.00:
                 move_diff_id = [res_ids[res_diff_id[0]]]
                 for move in self.browse(cr, uid, move_diff_id, context=context):
-                    move_line_ids = self.search(cr, uid, [('move_id', '=', move.move_id.id), ('tax_id', '=', move.tax_id.id)])
+                    move_line_ids = self.search(cr, uid, [('move_id', '=', move.move_id.id), ('is_tax_voucher', '=', True)])
                     for diff_move in self.browse(cr, uid, move_line_ids, context=context):
                         if diff_move.debit == 0.0 and diff_move.credit and diff_move.credit + diff_val:
-                            self.write(cr, uid, [diff_move.id], {'credit': diff_move.credit + diff_val})
+                            self._write(cr, uid, [diff_move.id], {'credit': diff_move.credit + diff_val})
                         if diff_move.credit == 0.0 and diff_move.debit and diff_move.debit + diff_val:
-                            self.write(cr, uid, [diff_move.id], {'debit': diff_move.debit + diff_val})
+                            self._write(cr, uid, [diff_move.id], {'debit': diff_move.debit + diff_val})
+        return True
+
+    def _get_query_round(self, cr, uid, ids, context=None):
+        if context == None:
+            context = {}
+        cr.execute("""
+                select account_id, sum(amount_tax_unround) as without,
+                    case  when sum(credit) > 0.0
+                        then sum(credit)
+                    when sum(debit) > 0.0
+                        then sum(debit)
+                    end as round, id
+                from account_move_line
+                where move_id in (
+                select move_id from account_move_line aml
+                where id in %s)
+                and amount_tax_unround is not null
+                group by account_id, id
+                order by id asc """, (tuple(ids),))
+        dat = cr.dictfetchall()
+        return dat
+
+    # pylint: disable=W0622
+    # commented because that has an error with bank statement
+    def reconcile(self, cr, uid, ids, type='auto', writeoff_acc_id=False, writeoff_period_id=False, writeoff_journal_id=False, context=None):
+        res = super(account_move_line, self).reconcile(cr, uid, ids=ids,
+        type='auto', writeoff_acc_id=writeoff_acc_id, writeoff_period_id=writeoff_period_id,
+        writeoff_journal_id=writeoff_journal_id, context=context)
+        self._get_round(cr, uid, ids, context=context)
         return res
 
     _columns = {
         'amount_tax_unround': fields.float('Amount tax undound', digits=(12, 16)),
         'tax_id': fields.many2one('account.voucher.line.tax', 'Tax'),
         'tax_voucher_id': fields.many2one('account.voucher.line.tax', 'Tax Voucher'),
+        'is_tax_voucher': fields.boolean('Tax voucher')
     }
 
 

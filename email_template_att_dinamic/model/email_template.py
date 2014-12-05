@@ -43,14 +43,19 @@ class mail_compose_message(osv.TransientModel):
 
     def onchange_template_id(self, cr, uid, ids, template_id,
                         composition_mode, model, res_id, context=None):
+
         if not context:
             context = {}
 
         template_obj = self.pool.get('email.template')
 
+        if template_id and isinstance(template_id, list):
+            template_id = template_id[0]
+
         res = super(mail_compose_message,
                     self).onchange_template_id(cr, uid, ids, template_id,
                             composition_mode, model, res_id, context=context)
+
         attach = []
         if template_id:
 
@@ -66,6 +71,6 @@ class mail_compose_message(osv.TransientModel):
                 attach += [id_att for id_att in ast.literal_eval("[" + att_field_render + "]") if att_field_render]
 
         attach += res.get('value', {}).pop('attachment_ids', [])
-        res.get('value', {}).update({'attachment_ids': [(6, 0, attach)]})
+        res.get('value', {}).update({'attachment_ids': attach})
 
         return res
