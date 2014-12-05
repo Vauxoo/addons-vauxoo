@@ -30,7 +30,7 @@ searchable.
 #
 ##############################################################################
 
-from openerp.osv import osv, fields
+from openerp.osv import osv
 import re
 
 
@@ -42,42 +42,18 @@ class stock_location(osv.Model):
     """
 
     _inherit = 'stock.location'
-    _columns = {
-        'code': fields.char('Code', size=64)
-    }
-
-    def _check_unique_code(self, cr, uid, ids, context=None):
-        """
-        Check if the location code are unique per company.
-        @return True or False
-        """
-        context = context or {}
-        ids = isinstance(ids, (int, long)) and [ids] or ids
-        for location in self.browse(cr, uid, ids, context=context):
-            domain = [('code', '=', location.code),
-                      ('company_id', '=', location.company_id.id),
-                      ('id', '<>', location.id)]
-            repeat_ids = self.search(cr, uid, domain, context=context)
-            if repeat_ids:
-                return False
-        return True
-
-    _constraints = [(
-        _check_unique_code,
-        'Error: The Product code need to be unique per company ',
-        ['code', 'company_id'])]
 
     def name_search(self, cr, user, name='', args=None,
                     operator='ilike', context=None, limit=100):
         args = args or []
         if name:
             ids = self.search(
-                cr, user, [('code', '=', name)] + args, limit=limit,
+                cr, user, [('loc_barcode', '=', name)] + args, limit=limit,
                 context=context)
             if not ids:
                 ids = set()
                 ids.update(self.search(cr, user, args + [(
-                    'code', operator, name)], limit=limit, context=context))
+                    'loc_barcode', operator, name)], limit=limit, context=context))
                 if not limit or len(ids) < limit:
                     # we may underrun the limit because of dupes in the
                     # results, that's fine
@@ -86,12 +62,13 @@ class stock_location(osv.Model):
                         limit=(limit and (limit-len(ids)) or False),
                         context=context))
                 ids = list(ids)
+
             if not ids:
                 ptrn = re.compile(r'(\[(.*?)\])')
                 res = ptrn.search(name)
                 if res:
                     ids = self.search(
-                        cr, user, [('code', '=', res.group(2))] + args,
+                        cr, user, [('loc_barcode', '=', res.group(2))] + args,
                         limit=limit, context=context)
         else:
             ids = self.search(cr, user, args, limit=limit, context=context)
@@ -104,9 +81,9 @@ class stock_location(osv.Model):
         """
         context = context or {}
         name = data_dict.get('name', '')
-        code = data_dict.get('code', False)
-        if code:
-            name = '[%s] %s' % (code, name)
+        loc_barcode = data_dict.get('loc_barcode', False)
+        if loc_barcode:
+            name = '[%s] %s' % (loc_barcode, name)
         return (data_dict['id'], name)
 
     def name_get(self, cr, user, ids, context=None):
@@ -123,7 +100,7 @@ class stock_location(osv.Model):
             mydict = {
                 'id': location.id,
                 'name': location.name,
-                'code': location.code,
+                'loc_barcode': location.loc_barcode,
             }
             result.append(self._name_get(mydict))
         return result
