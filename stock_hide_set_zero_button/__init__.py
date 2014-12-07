@@ -4,7 +4,7 @@
 #
 #    Copyright (c) 2014 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info Conectel (info@vauxoo.com)
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
 #    Coded by: echeverrifm (echeverrifm@vauxoo.com)
 ############################################################################
