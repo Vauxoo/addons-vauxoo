@@ -24,7 +24,7 @@
 ###############################################################################
 import time
 from openerp.osv import fields, osv
-from openerp import netsvc
+from openerp import workflow
 import openerp.addons.decimal_precision as dp
 from openerp.tools.translate import _
 
@@ -827,7 +827,7 @@ class hr_expense_expense(osv.Model):
         Open State. """
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
-        wf_service = netsvc.LocalService("workflow")
+        wf_service = workflow
         inv_obj = self.pool.get('account.invoice')
         for exp_brw in self.browse(cr, uid, ids, context=context):
             self.check_inv_periods(cr, uid, exp_brw.id, context=context)
@@ -876,7 +876,7 @@ class hr_expense_expense(osv.Model):
         'Generate Accounting Entries' button. """
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
-        wf_service = netsvc.LocalService("workflow")
+        wf_service = workflow
         for exp_brw in self.browse(cr, uid, ids, context=context):
             if exp_brw.state not in ['done']:
                 wf_service.trg_validate(uid, 'hr.expense.expense', exp_brw.id,
