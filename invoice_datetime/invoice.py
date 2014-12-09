@@ -144,7 +144,10 @@ class account_invoice(osv.Model):
             context = {}
         if default is None:
             default = {}
-        default.update({'invoice_datetime': False, 'date_invoice': False})
+        default.update({
+            'invoice_datetime': False,
+            'date_invoice': False,
+            'date_invoice_tz': False})
         return super(account_invoice, self).copy(
             cr, uid, ids, default, context)
 
