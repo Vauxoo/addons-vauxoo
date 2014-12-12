@@ -36,7 +36,7 @@ the account analytic value from the purchase requisition.
     "website": "http://www.vauxoo.com/", 
     "license": "", 
     "depends": [
-        "account_analytic_plans", 
+        "analytic",
         "purchase_requisition", 
         "purchase_requisition_line_view", 
         "pr_line_related_po_line"
