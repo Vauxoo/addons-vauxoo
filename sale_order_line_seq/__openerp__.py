@@ -36,12 +36,15 @@
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [
-        "sale"
+        "sale", 
+        "sale_stock", 
+        "sale_margin", 
     ], 
     "demo": [], 
     "data": [
-        "view/sale_order_line_view.xml"
-    ], 
+        "view/sale_order_line_view.xml", 
+        'security/res_groups.xml',
+    ],
     "test": [], 
     "js": [], 
     "css": [], 
@@ -49,4 +52,4 @@
     "installable": True, 
     "auto_install": False, 
     "active": False
-}
+} 
