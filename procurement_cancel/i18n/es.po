@@ -36,4 +36,9 @@ msgstr "Cancelar abastecimientos"
 msgid "Cancel procurements."
 msgstr "Cancelar Abastecimientos"
 
+#. module: procurement_cancel
+#: view:cancel.procurement.order:procurement_cancel.view_cancel_procurement_wizard
+msgid "You are sure cancellations?"
+msgstr "You are sure cancellations?"
+
 
