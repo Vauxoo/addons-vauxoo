@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+	<data>
+	    <record id="procurement_cancel.group_procurement_cancel" model="res.groups">
+    	    <field name="name">Procurement / Procurement Cancel</field>
+    	</record>
+	</data>
+</openerp>
