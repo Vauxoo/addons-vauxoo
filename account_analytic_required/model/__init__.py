@@ -24,4 +24,5 @@
 #
 ##############################################################################
 from . import account
-from . import account2
+from . import account_account_type
+from . import account_move_line
