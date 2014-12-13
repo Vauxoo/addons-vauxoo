@@ -20,14 +20,11 @@
 ##############################################################################
 
 import logging
-import threading
-from openerp import SUPERUSER_ID
-from openerp import tools
 
 from openerp.osv import osv
-from openerp.api import Environment
 
 _logger = logging.getLogger(__name__)
+
 
 class cancel_procurement_order(osv.osv_memory):
     _name = 'cancel.procurement.order'
@@ -42,15 +39,14 @@ class cancel_procurement_order(osv.osv_memory):
         @param context: A standard dictionary
         """
 
-        procurement_obj = self.pool['procurement.order']
-        procurement_ids = context.get('active_ids', False)
+        pr_obj = self.pool['procurement.order']
+        _logger.info('Cancel Procurement is running')
         for procurement_id in context.get('active_ids', False):
-            state = procurement_obj.browse(cr, uid, procurement_id,
-                context=context).state
+            state = pr_obj.browse(cr, uid, procurement_id,
+                                  context=context).state
             if state in ('exception', 'confirmed', 'running'):
-                procurement_obj.write(cr, uid, procurement_id,
-                    {'state': 'cancel'}, context=context)
-                print state, procurement_id
+                pr_obj.write(cr, uid, procurement_id, {'state': 'cancel'},
+                             context=context)
         return {'type': 'ir.actions.act_window_close'}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
