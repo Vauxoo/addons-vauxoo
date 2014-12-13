@@ -24,17 +24,6 @@
 #
 ##############################################################################
 from openerp.osv import osv, fields
-from openerp.tools.translate import _
-
-
-class account_account(osv.Model):
-    _inherit = 'account.account'
-
-    _columns = {
-        'analytic_required': fields.boolean('Analytic Required', help='If '
-        'this field is active, the journal items that used this account '
-        'should have an analytic account'),
-    }
 
 
 class account_invoice_line(osv.Model):
