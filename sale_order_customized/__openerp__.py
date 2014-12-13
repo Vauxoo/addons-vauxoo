@@ -24,24 +24,30 @@
 #
 #
 {
-    "name": "Sale order line sequence", 
+    "name": "Sale order Customized", 
     "version": "1.0", 
     "author": "Vauxoo", 
     "category": "Localization/Mexico", 
     "description": """
-        This module add the sequence in the sale order lines
+This module customized
+----------------------
 
-        Note: This field is temporary
+* Add the sequence in the sale order lines
+* Grows larger the width of the sheet of sale order
+* Add new groups to hide fields
     """, 
     "website": "http://www.vauxoo.com/", 
     "license": "AGPL-3", 
     "depends": [
-        "sale"
+        "sale", 
+        "sale_stock", 
+        "sale_margin", 
     ], 
     "demo": [], 
     "data": [
-        "view/sale_order_line_view.xml"
-    ], 
+        "view/sale_order_line_view.xml", 
+        'security/res_groups.xml',
+    ],
     "test": [], 
     "js": [], 
     "css": [], 
@@ -49,4 +55,4 @@
     "installable": True, 
     "auto_install": False, 
     "active": False
-}
+} 
