@@ -41,12 +41,14 @@ class cancel_procurement_order(osv.osv_memory):
 
         pr_obj = self.pool['procurement.order']
         _logger.info('Cancel Procurement is running')
-        for procurement_id in context.get('active_ids', False):
-            state = pr_obj.browse(cr, uid, procurement_id,
-                                  context=context).state
-            if state in ('exception', 'confirmed', 'running'):
-                pr_obj.write(cr, uid, procurement_id, {'state': 'cancel'},
-                             context=context)
+        pr_ids = context.get('active_ids', False)
+        pr_obj.cancel(cr, uid, pr_ids, context=None)
+#        for procurement_id in context.get('active_ids', False):
+#            state = pr_obj.browse(cr, uid, procurement_id,
+#                                  context=context).state
+#            if state in ('exception', 'confirmed', 'running'):
+#                pr_obj.write(cr, uid, procurement_id, {'state': 'cancel'},
+#                             context=context)
         return {'type': 'ir.actions.act_window_close'}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

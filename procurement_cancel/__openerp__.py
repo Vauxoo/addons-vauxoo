@@ -29,7 +29,7 @@
     "version": "1.0",
     "author": "Vauxoo ( Federico Manuel Echeverri Choux ) ",
     "category": "",
-    "description": """    """,
+    "description": """ This module can cancel massively Procurements   """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
