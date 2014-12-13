@@ -39,5 +39,18 @@
                 </xpath>
             </field>
         </record>
+
+        <record model="ir.ui.view" id="view_sale_order_line_editable">
+            <field name="name">view.sale.order.line.editable</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form_editable_list"/>
+            <field name="priority">10</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']/tree" position="attributes">
+                    <attribute name="editable">botton</attribute>
+                </xpath>
+            </field>
+        </record>
+        
     </data>
 </openerp>
