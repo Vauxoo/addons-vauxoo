@@ -41,19 +41,25 @@ class account_invoice_line(osv.Model):
     _inherit = 'account.invoice.line'
 
     _columns = {
-        'analytic_required': fields.boolean('Analytic Required', help='If this field is active, '
-            'be required fill the field "account analytic"'),
+        'analytic_required':
+            fields.boolean('Analytic Required', help='If this field is active,'
+                           ' it is required to fill field "account analytic"'),
     }
 
-    def onchange_account_id(self, cr, uid, ids, product_id=False, partner_id=False,
-            inv_type=False, fposition_id=False, account_id=False):
+    def onchange_account_id(self, cr, uid, ids, product_id=False,
+                            partner_id=False, inv_type=False,
+                            fposition_id=False, account_id=False):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         if not account_id:
             return {}
-        res = super(account_invoice_line, self).onchange_account_id(cr, uid, ids, product_id,
-            partner_id, inv_type, fposition_id, account_id)
+        res = super(
+            account_invoice_line, self).onchange_account_id(
+                cr, uid, ids, product_id, partner_id, inv_type, fposition_id,
+                account_id)
         account_obj = self.pool.get('account.account')
         if account_id:
-            analyt_req = account_obj.browse(cr, uid, account_id).analytic_required or False
+            account_brw = account_obj.browse(cr, uid, account_id)
+            analyt_req = \
+                account_brw.user_type.analytic_policy == 'always' or False
             res['value'].update({'analytic_required': analyt_req})
         return res
