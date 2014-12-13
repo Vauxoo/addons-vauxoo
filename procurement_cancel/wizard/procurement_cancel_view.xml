@@ -10,7 +10,7 @@
             <field name="arch" type="xml">
                 <form string="Cancel Procurements">
                     <p>
-                        Cancel procurements.
+                        You are sure cancellations?
                     </p>
                     <footer>
                         <button name="cancel_procurement" string="Cancel Procurements" type="object"  class="oe_highlight"  />
