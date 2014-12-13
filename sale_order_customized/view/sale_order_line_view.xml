@@ -35,7 +35,7 @@
             <field name="priority">10</field>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='order_line']/tree//field[@name='purchase_price']" position="attributes">
-                    <attribute name="groups">sale_order_line_seq.res_group_sale_order_line</attribute>
+                    <attribute name="groups">sale_order_customized.res_group_sale_order_line</attribute>
                 </xpath>
             </field>
         </record>
