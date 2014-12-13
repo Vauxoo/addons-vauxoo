@@ -57,23 +57,3 @@ class account_invoice_line(osv.Model):
             analyt_req = account_obj.browse(cr, uid, account_id).analytic_required or False
             res['value'].update({'analytic_required': analyt_req})
         return res
-
-
-class account_move(osv.Model):
-    _inherit = 'account.move'
-
-    def button_validate(self, cr, uid, ids, context=None):
-        moves_without_analytic = ''
-        for move in self.browse(cr, uid, ids, context=context):
-            for line in move.line_id:
-                analytic_st = line.account_id.analytic_required
-                if analytic_st and line.debit + line.credit > 0:
-                    analytic_acc_move = line.analytic_account_id
-                    if not analytic_acc_move:
-                        moves_without_analytic += '\n' + line.name
-            if moves_without_analytic:
-                raise osv.except_osv(_('Error'), _('Need add analytic account'
-                    ' in move with name ' + moves_without_analytic + '.'))
-        res = super(account_move, self).button_validate(
-            cr, uid, ids, context=context)
-        return res
