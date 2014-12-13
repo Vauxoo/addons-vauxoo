@@ -21,8 +21,8 @@
 #
 ##############################################################################
 
-from osv import osv
-from tools.translate import _
+from openerp.osv import osv
+from openerp.tools.translate import _
 
 
 class account_move_line(osv.osv):
@@ -38,9 +38,8 @@ class account_move_line(osv.osv):
                     _('Error :'),
                     _('Analytic policy is set to "Always" with account %s "%s"'
                         ' but the analytic account is missing in the account '
-                        'move line with label "%s" has an analytic account %s '
-                        '"%s".' % (account_brw.code, account_brw.name,
-                                   aml_brw.name)))
+                        'move line with label "%s"'
+                        % (account_brw.code, account_brw.name, aml_brw.name)))
             elif account_brw.user_type.analytic_policy == 'never' and \
                     analytic_brw:
                 raise osv.except_osv(

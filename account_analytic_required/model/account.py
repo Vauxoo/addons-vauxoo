@@ -48,7 +48,11 @@ class account_invoice_line(osv.Model):
         account_obj = self.pool.get('account.account')
         if account_id:
             account_brw = account_obj.browse(cr, uid, account_id)
-            analyt_req = \
-                account_brw.user_type.analytic_policy == 'always' or False
-            res['value'].update({'analytic_required': analyt_req})
+            if account_brw.user_type.analytic_policy == 'always':
+                res['value'].update({'analytic_required': True})
+            elif account_brw.user_type.analytic_policy == 'never':
+                res['value'].update({'analytic_required': False})
+                res['value'].update({'analytic_account_id': False})
+            else:
+                res['value'].update({'analytic_required': False})
         return res
