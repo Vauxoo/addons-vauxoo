@@ -38,7 +38,7 @@
     ],
     "demo": [],
     "data": [
-            "security/procurement_cancel.xml"
+            "security/procurement_cancel.xml",
             "wizard/procurement_cancel_view.xml",
     ],
     "installable": True,
