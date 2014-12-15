@@ -39,13 +39,19 @@ class account_invoice_refund(osv.osv_memory):
         air.account_invoice_refund._columns.get('filter_refund').__dict__
     REFUND_METHOD = filter_refund.get('selection')
     REFUND_METHOD.append(('early_payment',
-                         'Early_payment: Discount early payment'))
+                         'Early payment: Discount early payment'))
 
     _columns = {
        'filter_refund': fields.selection(REFUND_METHOD,
                                          "Refund Method",
                                          required=True,
                                          help=filter_refund.get('_args')\
-                                                 .get('help') )
-            }
+                                                 .get('help') ),
+       'percent' : fields.float('Percent'),
+       'discount_applied' : fields.selection([('amount_total',' Amount Total'),
+                                             ('balance','Balance')],
+                                             'Discount applies to',
+                                             help = 'Amount to be applied discount'),
+       'product_id' : fields.many2one('product.product', string='Product'),
+        }
 
