@@ -31,7 +31,7 @@
     'category': '',
     'description': '''
 ''',
-    'depends': ['account'],
+    'depends': ['account_accountant'],
     'data': [
         'data/data.xml',
         'view/refund_early_payment.xml',
