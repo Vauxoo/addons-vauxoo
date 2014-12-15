@@ -99,7 +99,8 @@ the fiscal experct adviced us it is right on that way.
         "account_voucher",
         "account_invoice_tax",
         "analytic",
-        "account_move_line_base_tax"
+        "account_move_line_base_tax",
+        "account_cancel",
     ],
     "demo": [
         "demo/account_voucher_tax_demo.xml"
