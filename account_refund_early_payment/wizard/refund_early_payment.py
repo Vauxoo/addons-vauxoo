@@ -41,6 +41,18 @@ class account_invoice_refund(osv.osv_memory):
     REFUND_METHOD.append(('early_payment',
                          'Early payment: Discount early payment'))
 
+    def _search_xml_id(self, cr, uid, model, record_xml_id, context=None):
+        if context is None:
+            context = {}
+        imd_obj = self.pool.get('ir.model.data')
+        res_id = False
+        imd_id = imd_obj.search(cr, uid,
+                                [('module', '=', model),
+                                ('name', '=', record_xml_id)])
+        if imd_id:
+            res_id = imd_obj.browse(cr, uid, imd_id)[0].res_id
+        return res_id
+
     _columns = {
        'filter_refund': fields.selection(REFUND_METHOD,
                                          "Refund Method",
@@ -54,4 +66,11 @@ class account_invoice_refund(osv.osv_memory):
                                              help = 'Amount to be applied discount'),
        'product_id' : fields.many2one('product.product', string='Product'),
         }
+
+
+    _defaults = {
+        'product_id': lambda self,cr,uid,c: self._search_xml_id(cr, uid,
+            'account_refund_early_payment', 'product_discount_early_payment', context=c),
+
+    }
 
