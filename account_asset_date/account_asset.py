@@ -31,7 +31,8 @@ from openerp.tools.translate import _
 class account_asset_asset(models.Model):
     _inherit = 'account.asset.asset'
 
-    purchase_date = fields.Date(required=True, readonly=True,
+    purchase_date = fields.Date('Start Depreciation Date', required=True,
+                                readonly=True,
                                 states={'draft': [('readonly', False)]},
                                 help=_('Depreciation start date'))
     date_acquisition = fields.Date(help=_('Date acquisition'))
