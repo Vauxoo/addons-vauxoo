@@ -23,11 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import openerp
-from openerp import SUPERUSER_ID, api
-from openerp import tools
-from openerp.osv import fields, osv, expression
-
+from openerp.osv import fields, osv
 from openerp.addons.account.wizard import account_invoice_refund as air
 
 class account_invoice_refund(osv.osv_memory):
@@ -67,10 +63,27 @@ class account_invoice_refund(osv.osv_memory):
        'product_id' : fields.many2one('product.product', string='Product'),
         }
 
+    def compute_refund(self, cr, uid, ids, mode='refund', context=None):
+
+        inv_obj = self.pool.get('account.invoice')
+        account_m_line_obj = self.pool.get('account.move.line')
+        inv_line_obj = self.pool.get('account.invoice.line')
+
+        result = super(account_invoice_refund,self).compute_refund(cr, uid,
+                                                                ids, mode,
+                                                                context=context)
+        invoice = result.get('domain')[2][0]
+        import pdb; pdb.set_trace()
+
+        return result
+
+    def _get_percent_default(cr, uid, ids, context=None):
+        return 5.0
 
     _defaults = {
         'product_id': lambda self,cr,uid,c: self._search_xml_id(cr, uid,
             'account_refund_early_payment', 'product_discount_early_payment', context=c),
+        'percent' : _get_percent_default,
 
     }
 
