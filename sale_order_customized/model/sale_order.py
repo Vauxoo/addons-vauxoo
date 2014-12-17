@@ -56,7 +56,7 @@ class sale_order_line(osv.osv):
             product_id = self.pool.get('product.product').browse(
                 cr, uid, product, context=context)
             prod_category = product_id.categ_id and product_id.categ_id.name
-            name_description = res.get('value', {}).pop('name')
+            name_description = res.get('value', {}).pop('name', '')
             name_description = '[{}]'.format(prod_category) + name_description
             res.get('value', {}).update({'name': name_description})
         return res
