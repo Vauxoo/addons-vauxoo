@@ -97,6 +97,7 @@ class account_invoice_refund(osv.osv_memory):
         if context is None:
             context = {}
         inv_obj = self.pool.get('account.invoice')
+        inv_line_obj = self.pool.get('account.invoice.line')
         account_m_line_obj = self.pool.get('account.move.line')
 
         result = super(account_invoice_refund,
@@ -112,14 +113,35 @@ class account_invoice_refund(osv.osv_memory):
             if mode in ('early_payment'):
                 refund = inv_obj.browse(cr, uid, refund_id, context=context)
                 refund_lines_brw = refund.invoice_line
-                # line_total = 0.0
+                percent = wizard_brw.percent / 100
+                line_data_dict = {}
                 for refund_line in refund_lines_brw:
-                    percent = wizard_brw.percent / 100
-                    # line_total += refund_line.price_unit
-                    refund_line.write({
-                        'product_id': wizard_brw.product_id.id,
-                        'price_unit': refund_line.price_unit * percent,
-                    })
+                    tax_tuple = refund_line.\
+                        invoice_line_tax_id.\
+                        __dict__.get('_ids')
+
+                    price_unit_discount = refund_line.price_unit * percent
+
+                    if line_data_dict.get(tax_tuple):
+                        line_data_dict[tax_tuple]['price_unit'] +=\
+                            price_unit_discount
+                    else:
+                        line_data_dict[tax_tuple] =\
+                            inv_line_obj.copy_data(cr, uid, refund_line.id)
+                        line_data_dict[tax_tuple]['product_id'] =\
+                            wizard_brw.product_id.id
+                        line_data_dict[tax_tuple]['name'] =\
+                            wizard_brw.product_id.name
+                        line_data_dict[tax_tuple]['price_unit'] =\
+                            price_unit_discount
+
+                    inv_line_obj.unlink(cr, uid, [refund_line.id])
+                for new_refund_line in line_data_dict.values():
+                    inv_line_obj.create(cr,
+                                        uid,
+                                        new_refund_line,
+                                        context=context)
+
                 refund.button_reset_taxes()
                 movelines = inv.move_id.line_id
                 to_reconcile_ids = {}
