@@ -105,6 +105,11 @@ class account_bank_statement_line(osv.osv):
             cr, uid, id, mv_line_dicts, context=context)
         move_line_obj.write(cr, uid, move_line_ids,
                             {'move_id': st_line.journal_entry_id.id})
+        update_ok = st_line.journal_id.update_posted
+        if not update_ok:
+            st_line.journal_id.write({'update_posted': True})
+        move_obj.button_cancel(cr, uid, [move_id_old])
+        st_line.journal_id.write({'update_posted': update_ok})
         move_obj.unlink(cr, uid, move_id_old)
         move_line_reconcile_id = [dat.reconcile_id.id
                                   for dat in st_line.journal_entry_id.line_id

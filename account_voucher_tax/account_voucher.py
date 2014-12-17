@@ -508,6 +508,10 @@ class account_move_line(osv.Model):
     _inherit = 'account.move.line'
 
     def _get_round(self, cr, uid, ids, context=None):
+
+        if context is None:
+            context = {}
+
         if context.get('apply_round', False):
             dat = []
         else:
