@@ -10,7 +10,7 @@
                     <group colspan="2" attrs="{'invisible':[('filter_refund', '!=', 'early_payment')]}">
                         <field name="active_id" invisible="True"/>
                         <field name="percent" class="oe_inline" on_change="onchange_amount_total(percent, active_id)"/>
-                        <field name="amount_total" class="oe_inline" readonly="True"/>
+                        <field name="amount_total" class="oe_inline"/>
                         <field name="product_id" class="oe_inline"/>
                     </group>
                 </xpath>
