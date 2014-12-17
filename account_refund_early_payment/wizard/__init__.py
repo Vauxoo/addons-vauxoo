@@ -23,4 +23,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-import refund_early_payment
+#import refund_early_payment
+import refund_early_payments
