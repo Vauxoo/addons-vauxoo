@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
-############# Credits #########################################################
+# ############ Credits ########################################################
 #    Coded by: Yanina Aular <yani@vauxoo.com>
 #    Planified by: Nhomar Hernandez <nhomar@vauxoo.com>
 #    Audited by: Jose Morales <jose@vauxoo.com>
@@ -99,20 +99,23 @@ class account_invoice_refund(osv.osv_memory):
         inv_obj = self.pool.get('account.invoice')
         account_m_line_obj = self.pool.get('account.move.line')
 
-        result = super(account_invoice_refund,self).compute_refund(cr, uid,
-                                                                   ids, module,
+        result = super(account_invoice_refund,
+                       self).compute_refund(cr, uid,
+                                            ids, mode,
+                                            context=context)
         refund_id = result.get('domain')[1][2]
 
-        wizard_brw = self.browse(cr, uid, ids,
-                                 context=context)
+        wizard_brw = self.browse(cr, uid, ids, context=context)
 
         for inv in inv_obj.browse(cr, uid, context.get('active_ids'),
                                   context=context):
             if mode in ('early_payment'):
                 refund = inv_obj.browse(cr, uid, refund_id, context=context)
                 refund_lines_brw = refund.invoice_line
+                # line_total = 0.0
                 for refund_line in refund_lines_brw:
                     percent = wizard_brw.percent / 100
+                    # line_total += refund_line.price_unit
                     refund_line.write({
                         'product_id': wizard_brw.product_id.id,
                         'price_unit': refund_line.price_unit * percent,
@@ -147,13 +150,12 @@ class account_invoice_refund(osv.osv_memory):
         return 5.0
 
     _defaults = {
-        'product_id': lambda self,
-                            cr, uid, c: self._search_xml_id(cr,
-                                                            uid,
-                                                            'account_refund_early_payment',
-                                                            'product_discount_early_payment',
-                                                            context=c),
-        'percent' : _get_percent_default,
+        'product_id': lambda self, cr,
+        uid, c: self._search_xml_id(cr,
+                                    uid,
+                                    'account_refund_early_payment',
+                                    'product_discount_early_payment',
+                                    context=c),
+        'percent': _get_percent_default,
 
     }
-
