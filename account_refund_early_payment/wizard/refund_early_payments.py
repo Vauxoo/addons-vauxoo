@@ -48,29 +48,58 @@ class account_invoice_refund(osv.osv_memory):
             res_id = imd_obj.browse(cr, uid, imd_id)[0].res_id
         return res_id
 
+
+    def _compute_amount(self, cr, uid, ids, field_names, arg=None, context=None,
+                  query='', query_params=()):
+        if context is None:
+            context = {}
+        res = {}
+        for wzd in self.browse(cr, uid, ids, context=context):
+            res[wzd.id] = wzd.percent * 10
+
+        return res
+
+    def default_get(self, cr, uid, fields, context=None):
+        ret = super(account_invoice_refund, self).default_get(cr, uid, fields, context=context)
+        active_id = context.get('active_id',False)
+        if active_id:
+            ret['active_id'] = active_id
+        return ret
+
+    def onchange_amount_total(self, cr, uid, ids, percent = 0.0, active_id=None, context=None):
+        inv_obj = self.pool.get('account.invoice')
+        inv = inv_obj.browse(cr, uid, active_id, context=context)
+        return {
+            'value': {
+                'amount_total': percent * (inv.amount_total / 100),
+            }
+        }
+        return {}
+
+
     _columns = {
-       'filter_refund': fields.selection(REFUND_METHOD,
+        'filter_refund': fields.selection(REFUND_METHOD,
                                          "Refund Method",
                                          required=True,
                                          help=filter_refund.get('_args')\
                                                  .get('help') ),
-       'percent' : fields.float('Percent'),
-       'product_id' : fields.many2one('product.product', string='Product'),
-        }
+        'percent' : fields.float('Percent'),
+        'product_id' : fields.many2one('product.product', string='Product'),
+        'amount_total': fields.float('Amount'),
+        'active_id' : fields.integer('Active ID'),
+    }
 
     def compute_refund(self, cr, uid, ids, mode='refund', context=None):
-
+        if context is None:
+            context = {}
         inv_obj = self.pool.get('account.invoice')
         account_m_line_obj = self.pool.get('account.move.line')
-        inv_line_obj = self.pool.get('account.invoice.line')
 
         result = super(account_invoice_refund,self).compute_refund(cr, uid,
                                                                 ids, mode,
                                                                 context=context)
-        #invoice_ids = context.get('active_ids')
         refund_id = result.get('domain')[1][2]
         wizard_brw = self.browse(cr, uid, ids, context=context)
-
 
         for inv in inv_obj.browse(cr, uid, context.get('active_ids'), context=context):
             if mode in ('early_payment'):
@@ -104,16 +133,16 @@ class account_invoice_refund(osv.osv_memory):
                                     writeoff_journal_id = inv.journal_id.id,
                                     writeoff_acc_id=inv.account_id.id
                                     )
-
-
         return result
 
     def _get_percent_default(cr, uid, ids, context=None):
         return 5.0
 
     _defaults = {
-        'product_id': lambda self,cr,uid,c: self._search_xml_id(cr, uid,
-            'account_refund_early_payment', 'product_discount_early_payment', context=c),
+        'product_id': lambda self, cr, uid, c: self._search_xml_id(cr, uid,
+                                                                'account_refund_early_payment',
+                                                                'product_discount_early_payment',
+                                                                context=c),
         'percent' : _get_percent_default,
 
     }
