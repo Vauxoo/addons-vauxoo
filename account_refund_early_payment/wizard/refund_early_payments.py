@@ -128,11 +128,8 @@ class account_invoice_refund(osv.osv_memory):
                     if tmpline.account_id.id == inv.account_id.id:
                         to_reconcile_ids[tmpline.account_id.id].append(tmpline.id)
                 for account in to_reconcile_ids:
-                    account_m_line_obj.reconcile(cr, uid, to_reconcile_ids[account],
-                                    writeoff_period_id=period,
-                                    writeoff_journal_id = inv.journal_id.id,
-                                    writeoff_acc_id=inv.account_id.id
-                                    )
+                    account_m_line_obj.reconcile_partial(cr, uid, to_reconcile_ids[account],
+                                                         context=context)
         return result
 
     def _get_percent_default(cr, uid, ids, context=None):
