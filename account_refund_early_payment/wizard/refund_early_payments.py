@@ -37,32 +37,34 @@ class account_invoice_refund(osv.osv_memory):
     REFUND_METHOD.append(('early_payment',
                          'Early payment: Discount early payment'))
 
-    def _search_xml_id(self, cr, uid, model, record_xml_id, context=None):
+    def _search_xml_id(self, cur, uid, model, record_xml_id, context=None):
         if context is None:
             context = {}
         imd_obj = self.pool.get('ir.model.data')
         res_id = False
-        imd_id = imd_obj.search(cr, uid,
+        imd_id = imd_obj.search(cur, uid,
                                 [('module', '=', model),
                                  ('name', '=', record_xml_id)])
         if imd_id:
-            res_id = imd_obj.browse(cr, uid, imd_id)[0].res_id
+            res_id = imd_obj.browse(cur, uid, imd_id)[0].res_id
         return res_id
 
-    def _compute_amount(self, cr, uid, ids, field_names,
+    def _compute_amount(self, cur, uid, ids, field_names,
                         arg=None,
                         context=None,
                         query='', query_params=()):
         if context is None:
             context = {}
         res = {}
-        for wzd in self.browse(cr, uid, ids, context=context):
+        for wzd in self.browse(cur, uid, ids, context=context):
             res[wzd.id] = wzd.percent * 10
 
         return res
 
-    def default_get(self, cr, uid, fields, context=None):
-        ret = super(account_invoice_refund, self).default_get(cr, uid,
+    def default_get(self, cur, uid, fields, context=None):
+        if context is None:
+            context = {}
+        ret = super(account_invoice_refund, self).default_get(cur, uid,
                                                               fields,
                                                               context=context)
         active_id = context.get('active_id', False)
@@ -70,10 +72,12 @@ class account_invoice_refund(osv.osv_memory):
             ret['active_id'] = active_id
         return ret
 
-    def onchange_amount_total(self, cr, uid, ids, percent=0.0,
+    def onchange_amount_total(self, cur, uid, ids, percent=0.0,
                               active_id=None, context=None):
+        if context is None:
+            context = {}
         inv_obj = self.pool.get('account.invoice')
-        inv = inv_obj.browse(cr, uid, active_id, context=context)
+        inv = inv_obj.browse(cur, uid, active_id, context=context)
         return {
             'value': {
                 'amount_total': percent * (inv.amount_total / 100),
@@ -93,25 +97,26 @@ class account_invoice_refund(osv.osv_memory):
         'active_id': fields.integer('Active ID'),
     }
 
-    def compute_refund(self, cr, uid, ids, mode='refund', context=None):
+    def compute_refund(self, cur, uid, ids, mode='refund', context=None):
         if context is None:
             context = {}
+
         inv_obj = self.pool.get('account.invoice')
         inv_line_obj = self.pool.get('account.invoice.line')
         account_m_line_obj = self.pool.get('account.move.line')
 
         result = super(account_invoice_refund,
-                       self).compute_refund(cr, uid,
+                       self).compute_refund(cur, uid,
                                             ids, mode,
                                             context=context)
         refund_id = result.get('domain')[1][2]
 
-        wizard_brw = self.browse(cr, uid, ids, context=context)
+        wizard_brw = self.browse(cur, uid, ids, context=context)
 
-        for inv in inv_obj.browse(cr, uid, context.get('active_ids'),
+        for inv in inv_obj.browse(cur, uid, context.get('active_ids'),
                                   context=context):
             if mode in ('early_payment'):
-                refund = inv_obj.browse(cr, uid, refund_id, context=context)
+                refund = inv_obj.browse(cur, uid, refund_id, context=context)
                 refund_lines_brw = refund.invoice_line
                 percent = wizard_brw.percent / 100
                 line_data_dict = {}
@@ -127,7 +132,7 @@ class account_invoice_refund(osv.osv_memory):
                             price_unit_discount
                     else:
                         line_data_dict[tax_tuple] =\
-                            inv_line_obj.copy_data(cr, uid, refund_line.id)
+                            inv_line_obj.copy_data(cur, uid, refund_line.id)
                         line_data_dict[tax_tuple]['product_id'] =\
                             wizard_brw.product_id.id
                         line_data_dict[tax_tuple]['name'] =\
@@ -135,12 +140,12 @@ class account_invoice_refund(osv.osv_memory):
                         line_data_dict[tax_tuple]['price_unit'] =\
                             price_unit_discount
 
-                    inv_line_obj.unlink(cr, uid, [refund_line.id])
+                    inv_line_obj.unlink(cur, uid, [refund_line.id])
                 for new_refund_line in line_data_dict.values():
-                    inv_line_obj.create(cr,
-                                        uid,
-                                        new_refund_line,
-                                        context=context)
+                    inv_line_obj.cureate(cur,
+                                         uid,
+                                         new_refund_line,
+                                         context=context)
 
                 refund.button_reset_taxes()
                 movelines = inv.move_id.line_id
@@ -152,28 +157,31 @@ class account_invoice_refund(osv.osv_memory):
                     if line.reconcile_id:
                         line.reconcile_id.unlink()
                 refund.signal_workflow('invoice_open')
-                refund = inv_obj.browse(cr, uid, refund_id[0], context=context)
+                refund = inv_obj.browse(cur, uid, refund_id[0],
+                                        context=context)
                 for tmpline in refund.move_id.line_id:
                     if tmpline.account_id.id == inv.account_id.id:
                         to_reconcile_ids[tmpline.
                                          account_id.id].append(tmpline.id)
                 for account in to_reconcile_ids:
-                    account_m_line_obj.reconcile_partial(cr,
+                    account_m_line_obj.reconcile_partial(cur,
                                                          uid,
                                                          to_reconcile_ids[
                                                              account],
                                                          context=context)
         return result
 
-    def _get_percent_default(cr, uid, ids, context=None):
+    def _get_percent_default(self, cur, uid, ids, context=None):
         """
         It is a hook method. In order to put some smart computation.
         """
+        if context is None:
+            context = {}
         return 5.0
 
     _defaults = {
-        'product_id': lambda self, cr,
-        uid, c: self._search_xml_id(cr,
+        'product_id': lambda self, cur,
+        uid, c: self._search_xml_id(cur,
                                     uid,
                                     'account_refund_early_payment',
                                     'product_discount_early_payment',
