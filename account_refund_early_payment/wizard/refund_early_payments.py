@@ -55,10 +55,6 @@ class account_invoice_refund(osv.osv_memory):
                                          help=filter_refund.get('_args')\
                                                  .get('help') ),
        'percent' : fields.float('Percent'),
-       'discount_applied' : fields.selection([('amount_total',' Amount Total'),
-                                             ('balance','Balance')],
-                                             'Discount applies to',
-                                             help = 'Amount to be applied discount'),
        'product_id' : fields.many2one('product.product', string='Product'),
         }
 
@@ -71,21 +67,44 @@ class account_invoice_refund(osv.osv_memory):
         result = super(account_invoice_refund,self).compute_refund(cr, uid,
                                                                 ids, mode,
                                                                 context=context)
-        invoice_ids = context.get('active_ids')
-        refund_ids = result.get('domain')[1][2]
+        #invoice_ids = context.get('active_ids')
+        refund_id = result.get('domain')[1][2]
         wizard_brw = self.browse(cr, uid, ids, context=context)
 
-        if mode in ('early_payment'):
-            refund_brw = inv_obj.browse(cr, uid, refund_ids, context=context)
-            refund_lines_brw = refund_brw.invoice_line
-            for refund_line in refund_lines_brw:
-                percent = wizard_brw.percent / 100
-                refund_line.write({
-                    'product_id': wizard_brw.product_id.id,
-                    'price_unit': refund_line.price_unit * percent,
-                })
-            import pdb; pdb.set_trace()
-            refund_brw.button_reset_taxes()
+
+        for inv in inv_obj.browse(cr, uid, context.get('active_ids'), context=context):
+            if mode in ('early_payment'):
+                refund = inv_obj.browse(cr, uid, refund_id, context=context)
+                refund_lines_brw = refund.invoice_line
+                for refund_line in refund_lines_brw:
+                    percent = wizard_brw.percent / 100
+                    refund_line.write({
+                        'product_id': wizard_brw.product_id.id,
+                        'price_unit': refund_line.price_unit * percent,
+                    })
+                refund.button_reset_taxes()
+
+                period = inv.period_id and inv.period_id.id or False
+
+                movelines = inv.move_id.line_id
+                to_reconcile_ids = {}
+                for line in movelines:
+                    if line.account_id.id == inv.account_id.id:
+                        to_reconcile_ids.setdefault(line.account_id.id, []).append(line.id)
+                    if line.reconcile_id:
+                        line.reconcile_id.unlink()
+                refund.signal_workflow('invoice_open')
+                refund = inv_obj.browse(cr, uid, refund_id[0], context=context)
+                for tmpline in  refund.move_id.line_id:
+                    if tmpline.account_id.id == inv.account_id.id:
+                        to_reconcile_ids[tmpline.account_id.id].append(tmpline.id)
+                for account in to_reconcile_ids:
+                    account_m_line_obj.reconcile(cr, uid, to_reconcile_ids[account],
+                                    writeoff_period_id=period,
+                                    writeoff_journal_id = inv.journal_id.id,
+                                    writeoff_acc_id=inv.account_id.id
+                                    )
+
 
         return result
 
