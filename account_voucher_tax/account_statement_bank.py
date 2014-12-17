@@ -38,7 +38,6 @@ class account_bank_statement_line(osv.osv):
 
         move_line_obj = self.pool.get('account.move.line')
         move_obj = self.pool.get('account.move')
-        invoice_obj = self.pool.get('account.invoice')
         voucher_obj = self.pool.get('account.voucher')
         move_line_ids = []
 
@@ -56,49 +55,54 @@ class account_bank_statement_line(osv.osv):
         for mv_line_dict in mv_line_dicts:
             if mv_line_dict.get('counterpart_move_line_id'):
                 move_line_id = mv_line_dict.get('counterpart_move_line_id', [])
+                move_id_reconcile = move_line_obj.browse(
+                    cr, uid, move_line_id, context=context)
+                print move_id_reconcile.debit, move_id_reconcile.credit,"qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq"
                 move_id = move_line_obj.browse(
                     cr, uid, move_line_id, context=context).move_id.id
-                invoice_ids = invoice_obj.search(
-                    cr, uid, [('move_id', '=', move_id)], context=context)
-                for invoice in invoice_obj.browse(cr, uid, invoice_ids,
-                                                  context=context):
-                    for tax in invoice.tax_line:
-                        if tax.tax_id.tax_voucher_ok:
-                            account_tax_voucher =\
-                                tax.tax_id.account_paid_voucher_id.id
-                            account_tax_collected =\
-                                tax.tax_id.account_collected_id.id
-                            amount_original_inv = invoice.amount_total
-                            amount_statement_bank = st_line.amount
-                            type = 'sale'
-                            if st_line.amount > invoice.amount_total:
-                                amount_statement_bank = invoice.amount_total
-                            if st_line.amount < 0:
-                                type = 'payment'
-                                amount_statement_bank =\
-                                    amount_statement_bank * -1
+                for move_line_tax in self._get_move_line_tax(
+                        cr, uid, move_id, context=context):
+                    account_tax_voucher =\
+                        move_line_tax.get('account_tax_voucher')
+                    account_tax_collected =\
+                        move_line_tax.get('account_tax_collected')
+                    amount_original_inv = move_id_reconcile.credit > 0 and\
+                        move_id_reconcile.credit or\
+                        move_id_reconcile.debit
+                    amount_statement_bank = st_line.amount
+                    type = 'sale'
+                    if st_line.amount > amount_original_inv:
+                        amount_statement_bank = amount_original_inv
+                    if st_line.amount < 0:
+                        type = 'payment'
+                        amount_statement_bank =\
+                            amount_statement_bank * -1
 
-                            factor = voucher_obj.get_percent_pay_vs_invoice(
-                                cr, uid, amount_original_inv,
-                                amount_statement_bank, context=context)
-                            lines_tax = voucher_obj._preparate_move_line_tax(
-                                cr, uid, account_tax_voucher,
-                                account_tax_collected, move_id_old,
-                                type, invoice.partner_id.id,
-                                st_line.statement_id.period_id.id,
-                                st_line.statement_id.journal_id.id,
-                                st_line.date, company_currency,
-                                tax.amount * factor, tax.amount * factor,
-                                statement_currency,
-                                False, tax.tax_id, tax.account_analytic_id and
-                                tax.account_analytic_id.id or False,
-                                tax.base_amount, factor, context=context)
+                    factor = voucher_obj.get_percent_pay_vs_invoice(
+                        cr, uid, amount_original_inv,
+                        amount_statement_bank, context=context)
+                    lines_tax = voucher_obj._preparate_move_line_tax(
+                        cr, uid,
+                        account_tax_voucher, # cuenta del impuesto(account.tax)
+                        account_tax_collected, # cuenta del impuesto para notas de credito/debito(account.tax)
+                        move_id_old, type,
+                        move_id_reconcile.partner_id.id,
+                        st_line.statement_id.period_id.id,
+                        st_line.statement_id.journal_id.id,
+                        st_line.date, company_currency,
+                        move_line_tax.get('amount') * factor, # Monto del impuesto por el factor(cuanto le corresponde)(aml)
+                        move_line_tax.get('amount') * factor, # Monto del impuesto por el factor(cuanto le corresponde)(aml)
+                        statement_currency, False,
+                        move_line_tax.get('tax_id'), # Impuesto
+                        move_line_tax.get('tax_analytic_id'), # Cuenta analitica del impuesto(aml)
+                        move_line_tax.get('amount_base'), # Monto base(aml)
+                        factor, context=context)
 
-                            for move_line_tax in lines_tax:
-                                move_line_ids.append(
-                                    move_line_obj.create(
-                                        cr, uid, move_line_tax, context=context
-                                        ))
+                    for move_line_tax in lines_tax:
+                        move_line_ids.append(
+                            move_line_obj.create(
+                                cr, uid, move_line_tax, context=context
+                                ))
 
         context['apply_round'] = True
         res = super(account_bank_statement_line, self).process_reconciliation(
@@ -122,3 +126,34 @@ class account_bank_statement_line(osv.osv):
             move_line_obj._get_round(cr, uid,
                                      move_line_statement_bank, context=context)
         return res
+
+    def _get_move_line_tax(self, cr, uid, move, context=None):
+        move_obj = self.pool.get('account.move')
+        tax_obj = self.pool.get('account.tax')
+
+        dat = []
+        move_line = move_obj.browse(cr, uid, move, context=context)
+        for move_line_id in move_line.line_id:
+            if move_line_id.account_id.type not in ('receivable', 'payable'):
+                tax_ids = tax_obj.search(
+                    cr, uid,
+                    [('account_collected_id', '=', move_line_id.account_id.id),
+                     ('tax_voucher_ok', '=', True)], limit=1)
+                if tax_ids:
+                    tax_id = tax_obj.browse(cr, uid, tax_ids[0])
+                    dat.append({
+                        'account_tax_voucher':
+                            tax_id.account_paid_voucher_id.id,
+                        'account_tax_collected':
+                            tax_id.account_collected_id.id,
+                        'amount': move_line_id.debit > 0 and
+                            move_line_id.debit or move_line_id.credit,
+                        'tax_id': tax_id,
+                        'tax_analytic_id':
+                            tax_id.account_analytic_collected_id and
+                            tax_id.account_analytic_collected_id.id or False,
+                        'amount_base': move_line_id.amount_base
+                        })
+                    print dat,"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
+        return dat
+
