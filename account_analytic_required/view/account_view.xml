@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
-
+        <!--
         <record model="ir.ui.view" id="view_account_inherit_analytic_required_form2">
             <field name="name">view.account.inherit.analytic.required.form2</field>
             <field name="model">account.invoice.line</field>
@@ -69,7 +69,7 @@
                 </xpath>
             </field>
         </record>
-
+-->
         <!--
         Account analytic required module for OpenERP
         Copyright (C) 2011 Akretion (http://www.akretion.com). All Rights Reserved
