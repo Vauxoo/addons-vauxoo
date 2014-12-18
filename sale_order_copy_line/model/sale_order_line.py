@@ -34,7 +34,7 @@ class sale_order_line(osv.Model):
         data_sale_order = sale_order_obj.browse(cr, uid, data.get('order_id'))
 
         if data_sale_order.state == 'draft':
-            sale_order_id = self.create(cr, uid, data, context=context)
+            self.create(cr, uid, data, context=context)
             return {
                 'type': 'ir.actions.act_window',
                 'name': _('Sales Order'),
@@ -45,4 +45,5 @@ class sale_order_line(osv.Model):
                 'target': 'current',
                 'nodestroy': True, }
         else:
-            raise osv.except_osv(_('Error!'), _("This sale order is not in draft state"))
+            raise osv.except_osv(_('Error!'), _(
+                "This sale order is not in draft state"))

@@ -24,4 +24,4 @@
 #
 ##############################################################################
 
-import procurement_cancel
+from . import procurement_cancel
