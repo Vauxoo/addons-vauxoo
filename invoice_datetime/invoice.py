@@ -39,7 +39,7 @@ import time
 class account_payment_term(osv.Model):
     _inherit = "account.payment.term"
 
-    def compute(self, cr, uid, id, value, date_ref=False, context=None):
+    def compute(self, cr, uid, ids, value, date_ref=False, context=None):
         if context is None:
             context = {}
         if date_ref:
@@ -49,7 +49,7 @@ class account_payment_term(osv.Model):
             except BaseException:
                 pass
         return super(account_payment_term, self).compute(
-            cr, uid, id, value, date_ref, context=context)
+            cr, uid, ids, value, date_ref, context=context)
 
 
 class account_invoice(osv.Model):
