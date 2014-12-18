@@ -142,7 +142,7 @@ class account_invoice_refund(osv.osv_memory):
 
                     inv_line_obj.unlink(cur, uid, [refund_line.id])
                 for new_refund_line in line_data_dict.values():
-                    inv_line_obj.cureate(cur,
+                    inv_line_obj.create(cur,
                                          uid,
                                          new_refund_line,
                                          context=context)
