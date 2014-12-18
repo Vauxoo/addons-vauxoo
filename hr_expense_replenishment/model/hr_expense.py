@@ -417,11 +417,6 @@ class hr_expense_expense(osv.Model):
                       'deleted, please cancel document and go through the '
                       'previous steps up to this current step to recreate it!'
                       ))
-            # clear empty expense move.
-            exp_credit = exp.account_move_id and \
-                [brw.id
-                 for brw in exp.account_move_id.line_id
-                 if brw.credit > 0.0]
 
             # manage the expense move lines
             exp_aml_brws = exp.account_move_id and \
