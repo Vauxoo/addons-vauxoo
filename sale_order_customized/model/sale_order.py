@@ -56,6 +56,7 @@ class sale_order_line(osv.osv):
                 cr, uid, product, context=context)
             prod_category = product_id.categ_id and product_id.categ_id.name
             name_description = res.get('value', {}).pop('name', '')
+            prod_category = prod_category.encode('ascii', 'replace')
             name_description = '[{}]'.format(prod_category) + name_description
             res.get('value', {}).update({'name': name_description})
         return res
