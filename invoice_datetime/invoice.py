@@ -39,6 +39,7 @@ import time
 class account_payment_term(osv.Model):
     _inherit = "account.payment.term"
 
+    # pylint: disable=W0622
     def compute(self, cr, uid, id_to_compute, value,
                 date_ref=False, context=None):
         if context is None:
