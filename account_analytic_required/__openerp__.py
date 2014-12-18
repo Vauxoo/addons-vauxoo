@@ -24,27 +24,46 @@
 #
 ##############################################################################
 {
-    "name": "Account Analytic Required", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
+    "name": "Account Analytic Required",
+    "version": "1.0",
+    "author": "Vauxoo",
+    'category': 'Generic Modules/Accounting',
     "description": """
-    Add field analytic_required, for when is select required an account analytic to the validate an account.move
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    This module adds an option "analytic policy" on Account Types.
+
+    You have the choice between 3 policies : always, never and optional. For
+    example, if you want to have an analytic account on all your expenses, set
+    the policy to "always" for the account type "expense" ; then, if you try to
+    save an account move line with an account of type "expense" without
+    analytic account, you will get an error message.
+
+    In a preemptively it avoid that an Invoice be validated if using accounts
+    that has to fulfil the policy by adding field analytic_required, making
+    mandatory filling an Analytic Account when depending on the policy
+    selected in the Account Type
+
+    This module uses original code from a module with same name developed by
+    Alexis de Lattre <alexis.delattre@akretion.com> during the
+    Akretion-Camptocamp code sprint of June 2011. Modification of code has been
+    made to comply with Odoo available API.
+
+    """,
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "account"
-    ], 
-    "demo": [], 
+        "account",
+    ],
+    "demo": [
+
+    ],
     "data": [
-        "account_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+        "view/account_view.xml",
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

@@ -23,4 +23,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import model
+from . import account
+from . import account_account_type
+from . import account_move_line
