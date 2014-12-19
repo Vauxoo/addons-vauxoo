@@ -92,17 +92,20 @@ class sale_order(osv.osv):
 
         if isinstance(ids, (int, long)):
             ids = [ids]
+        
+        for order_id in ids:
 
-        cr.execute(
-            """ SELECT id, name FROM sale_order_line
-            WHERE order_id IN %s
-            ORDER BY name  """, (tuple(ids), ))
-        dat = cr.dictfetchall()
+            cr.execute(
+                """ SELECT id, name FROM sale_order_line
+                WHERE order_id = %s
+                ORDER BY name  """, (order_id, ))
+            dat = cr.dictfetchall()
 
-        o_sequence = 0
-        for o_line in dat:
-            o_line_obj.write(cr, uid, o_line['id'],
-                             {'sequence': o_sequence+1})
-            o_sequence += 1
+            o_sequence = 0
+
+            for o_line in dat:
+                o_line_obj.write(cr, uid, o_line['id'],
+                                 {'sequence': o_sequence+1})
+                o_sequence += 1
 
         return True
