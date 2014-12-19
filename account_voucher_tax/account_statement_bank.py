@@ -51,7 +51,7 @@ class account_bank_statement_line(osv.osv):
             'journal_id': st_line.statement_id.journal_id.id,
             }
         move_id_old = move_obj.create(cr, uid, vals_move, context)
-        
+
         move_amount_counterpart = self._get_move_line_counterpart(
             cr, uid, mv_line_dicts, context=context)
         move_line_tax_dict = self._get_move_line_tax(
@@ -62,6 +62,8 @@ class account_bank_statement_line(osv.osv):
             move_amount_counterpart[0], context=context)
 
         for move_line_tax in move_line_tax_dict:
+            line_tax_id = move_line_tax.get('tax_id')
+            amount_base_secondary = move_amount_counterpart[1] / (1+line_tax_id.amount)
             account_tax_voucher =\
                 move_line_tax.get('account_tax_voucher')
             account_tax_collected =\
@@ -73,19 +75,19 @@ class account_bank_statement_line(osv.osv):
             
             lines_tax = voucher_obj._preparate_move_line_tax(
                 cr, uid,
-                account_tax_voucher, # cuenta del impuesto(account.tax)
-                account_tax_collected, # cuenta del impuesto para notas de credito/debito(account.tax)
+                account_tax_voucher,  # cuenta del impuesto(account.tax)
+                account_tax_collected,  # cuenta del impuesto para notas de credito/debito(account.tax)
                 move_id_old, type,
                 st_line.partner_id.id,
                 st_line.statement_id.period_id.id,
                 st_line.statement_id.journal_id.id,
                 st_line.date, company_currency,
-                move_line_tax.get('amount') * factor, # Monto del impuesto por el factor(cuanto le corresponde)(aml)
-                move_line_tax.get('amount') * factor, # Monto del impuesto por el factor(cuanto le corresponde)(aml)
+                move_line_tax.get('amount') * factor,  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
+                move_line_tax.get('amount') * factor,  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
                 statement_currency, False,
-                move_line_tax.get('tax_id'), # Impuesto
-                move_line_tax.get('tax_analytic_id'), # Cuenta analitica del impuesto(aml)
-                move_line_tax.get('amount_base'), # Monto base(aml)
+                move_line_tax.get('tax_id'),  # Impuesto
+                move_line_tax.get('tax_analytic_id'),  # Cuenta analitica del impuesto(aml)
+                amount_base_secondary,  # Monto base(aml)
                 factor, context=context)
             for move_line_tax in lines_tax:
                 move_line_ids.append(
@@ -180,6 +182,5 @@ class account_bank_statement_line(osv.osv):
                     'tax_analytic_id':
                         tax_id.account_analytic_collected_id and
                         tax_id.account_analytic_collected_id.id or False,
-                    'amount_base': 300
                     })
         return dat
