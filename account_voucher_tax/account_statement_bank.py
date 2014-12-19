@@ -100,7 +100,8 @@ class account_bank_statement_line(osv.osv):
         res = super(account_bank_statement_line, self).process_reconciliation(
             cr, uid, id, mv_line_dicts, context=context)
         move_line_obj.write(cr, uid, move_line_ids,
-                            {'move_id': st_line.journal_entry_id.id})
+                            {'move_id': st_line.journal_entry_id.id,
+                             'statement_id': st_line.statement_id.id})
         update_ok = st_line.journal_id.update_posted
         if not update_ok:
             st_line.journal_id.write({'update_posted': True})
@@ -193,3 +194,24 @@ class account_bank_statement_line(osv.osv):
                         tax_id.account_analytic_collected_id.id or False,
                     })
         return dat
+
+
+class account_bank_statement(osv.osv):
+
+    _inherit = 'account.bank.statement'
+
+    def button_journal_entries(self, cr, uid, ids, context=None):
+
+        aml_obj = self.pool.get('account.move.line')
+        move_line_ids = []
+
+        res = super(account_bank_statement, self).button_journal_entries(
+            cr, uid, ids, context=context)
+
+        aml_id_statement = aml_obj.search(cr, uid, res.get('domain', []))
+        for move_line in aml_obj.browse(cr, uid, aml_id_statement):
+            for move_id in move_line.move_id.line_id:
+                move_line_ids.append(move_id.id)
+
+        res.update({'domain': [('id', 'in', list(set(move_line_ids)))]})
+        return res
