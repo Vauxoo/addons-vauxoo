@@ -63,7 +63,8 @@ class account_bank_statement_line(osv.osv):
 
         for move_line_tax in move_line_tax_dict:
             line_tax_id = move_line_tax.get('tax_id')
-            amount_base_secondary = move_amount_counterpart[1] / (1+line_tax_id.amount)
+            amount_base_secondary =\
+                move_amount_counterpart[1] / (1+line_tax_id.amount)
             account_tax_voucher =\
                 move_line_tax.get('account_tax_voucher')
             account_tax_collected =\
@@ -72,7 +73,7 @@ class account_bank_statement_line(osv.osv):
             type = 'sale'
             if st_line.amount < 0:
                 type = 'payment'
-            
+
             lines_tax = voucher_obj._preparate_move_line_tax(
                 cr, uid,
                 account_tax_voucher,  # cuenta del impuesto(account.tax)
@@ -121,30 +122,36 @@ class account_bank_statement_line(osv.osv):
     def _get_move_line_counterpart(self, cr, uid, mv_line_dicts, context=None):
 
         move_line_obj = self.pool.get('account.move.line')
-        
+
         counterpart_amount = 0
         statement_amount = 0
         for move_line_dict in mv_line_dicts:
 
             if move_line_dict.get('counterpart_move_line_id'):
-                move_counterpart_id = move_line_dict.get('counterpart_move_line_id')
+                move_counterpart_id =\
+                    move_line_dict.get('counterpart_move_line_id')
+
                 move_line_id = move_line_obj.browse(
                     cr, uid, move_counterpart_id, context=context)
-                
-                if move_line_id.journal_id.type not in ('sale_refund', 'purchase_refund'):
-                    statement_amount += move_line_dict.get('credit') > 0 and move_line_dict.get('credit') or move_line_dict.get('debit')
+
+                if move_line_id.journal_id.type not in (
+                        'sale_refund', 'purchase_refund'):
+
+                    statement_amount += move_line_dict.get('credit') > 0 and\
+                        move_line_dict.get('credit') or\
+                        move_line_dict.get('debit')
+
                     counterpart_amount += move_line_id.credit > 0 and\
                         move_line_id.credit or move_line_id.debit
 
         return [statement_amount, counterpart_amount]
 
     def _get_move_line_tax(self, cr, uid, mv_line_dicts, context=None):
-        move_obj = self.pool.get('account.move')
+
         tax_obj = self.pool.get('account.tax')
         move_line_obj = self.pool.get('account.move.line')
 
         dat = []
-        move_tax_amount = []
         account_group = {}
         move_line_ids = []
 
@@ -154,22 +161,24 @@ class account_bank_statement_line(osv.osv):
             if mv_line_dict.get('counterpart_move_line_id')]
 
         for move_line in move_line_obj.browse(
-            cr, uid, counterpart_move_line_ids, context=context):
-    
+                cr, uid, counterpart_move_line_ids, context=context):
+
             move_line_ids.extend(move_line_obj.search(
                 cr, uid, [('move_id', '=', move_line.move_id.id)]))
 
         for move_line_id in move_line_obj.browse(cr, uid, move_line_ids):
             if move_line_id.account_id.type not in ('receivable', 'payable'):
                 account_group.setdefault(move_line_id.account_id.id, 0)
-                account_group[move_line_id.account_id.id] += move_line_id.debit > 0 and move_line_id.debit or move_line_id.credit*-1
-                
+                account_group[move_line_id.account_id.id] +=\
+                    move_line_id.debit > 0 and\
+                    move_line_id.debit or move_line_id.credit*-1
+
         for move_account_tax in account_group:
             tax_ids = tax_obj.search(
                 cr, uid,
                 [('account_collected_id', '=', move_account_tax),
                  ('tax_voucher_ok', '=', True)], limit=1)
-            
+
             if tax_ids:
                 tax_id = tax_obj.browse(cr, uid, tax_ids[0])
                 dat.append({
