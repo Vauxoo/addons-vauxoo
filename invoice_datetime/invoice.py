@@ -40,7 +40,7 @@ class account_payment_term(osv.Model):
     _inherit = "account.payment.term"
 
     # pylint: disable=W0622
-    def compute(self, cr, uid, id_to_compute, value,
+    def compute(self, cr, uid, id, value,
                 date_ref=False, context=None):
         if context is None:
             context = {}
@@ -51,7 +51,7 @@ class account_payment_term(osv.Model):
             except BaseException:
                 pass
         return super(account_payment_term, self).compute(
-            cr, uid, id_to_compute, value, date_ref, context=context)
+            cr, uid, id, value, date_ref, context=context)
 
 
 class account_invoice(osv.Model):
