@@ -96,7 +96,6 @@ class account_bank_statement_line(osv.osv):
                         cr, uid, move_line_tax, context=context
                         ))
 
-        context['apply_round'] = True
         res = super(account_bank_statement_line, self).process_reconciliation(
             cr, uid, id, mv_line_dicts, context=context)
         move_line_obj.write(cr, uid, move_line_ids,
@@ -108,16 +107,6 @@ class account_bank_statement_line(osv.osv):
         move_obj.button_cancel(cr, uid, [move_id_old])
         st_line.journal_id.write({'update_posted': update_ok})
         move_obj.unlink(cr, uid, move_id_old)
-        move_line_reconcile_id = [dat.reconcile_id.id
-                                  for dat in st_line.journal_entry_id.line_id
-                                  if dat.reconcile_id]
-        if move_line_reconcile_id:
-            move_line_statement_bank = move_line_obj.search(
-                cr, uid, [('reconcile_id', 'in', move_line_reconcile_id)])
-
-            context['apply_round'] = False
-            move_line_obj._get_round(cr, uid,
-                                     move_line_statement_bank, context=context)
         return res
 
     def _get_move_line_counterpart(self, cr, uid, mv_line_dicts, context=None):
