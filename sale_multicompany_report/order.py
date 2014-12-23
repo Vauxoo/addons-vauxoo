@@ -1,6 +1,9 @@
 # -*- encoding: utf-8 -*-
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
+from openerp.osv.osv import except_osv
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class sale_order_line(osv.Model):
@@ -10,8 +13,11 @@ class sale_order_line(osv.Model):
     """
     _inherit = 'sale.order.line'
     _columns = {
-        'att_bro': fields.boolean('Attach Brochure', required=False, help="""If you check this
-        option, the first attachment related to the product_id marked as brochure will be printed
+        'att_bro': fields.boolean(
+            'Attach Brochure',
+            required=False,
+            help="""If you check this option, the first attachment related """
+            """to the product_id marked as brochure will be printed
         as extra info with sale order"""),
     }
 
@@ -23,16 +29,18 @@ class sale_order(osv.Model):
     """
     _inherit = 'sale.order'
 
-    def print_with_attachment(self, cr, user, ids, context={}):
+    def print_with_attachment(self, cr, user, ids, context=None):
+        if context is None:
+            context = {}
         for o in self.browse(cr, user, ids, context):
             for ol in o.order_line:
                 if ol.att_bro:
-                    print "Im Here i will go to print %s " % ol.name
+                    _logger.info("Im Here i will go to print %s ", ol.name)
         return True
 
     def __get_company_object(self, cr, uid):
         user = self.pool.get('res.users').browse(cr, uid, uid)
-        print user
+        _logger.info(user)
         if not user.company_id:
             raise except_osv(_('ERROR !'), _(
                 'There is no company configured for this user'))
@@ -49,5 +57,6 @@ class sale_order(osv.Model):
 
     def print_quotation(self, cr, uid, ids, context=None):
         pq = super(sale_order, self).print_quotation(cr, uid, ids, context)
-        return {'type': 'ir.actions.report.xml', 'report_name': self._get_report_name(cr, uid,
-            context), 'datas': pq['datas'], 'nodestroy': True}
+        return {'type': 'ir.actions.report.xml',
+                'report_name': self._get_report_name(cr, uid, context),
+                'datas': pq['datas'], 'nodestroy': True}

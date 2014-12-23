@@ -25,13 +25,15 @@
 #
 #
 from openerp.osv import osv, fields
+from openerp.osv.orm import except_orm
+from openerp.osv.osv import except_osv
 from openerp.tools.translate import _
 import logging
 import urlparse
 _logger = logging.getLogger("SignYouTube")
 try:
     from gdata.youtube import service
-except:
+except ImportError:
     _logger.error("You need the gdata library ---> sudo pip install gdata")
 
 
@@ -39,21 +41,34 @@ class sign_youtube_conf(osv.Model):
     _name = 'sign.youtube.conf'
 
     _columns = {
-        'name': fields.char('YouTube User', 25, help='User name for youtube account used to login in '
-                            'youtube'),
-        'line': fields.one2many('sign.youtube.conf.line', 'config_id', 'Videos Uploaded'),
-        'passwd': fields.char('YouTube Password', 25, help='Password used for your youtube account'),
-        'max_v': fields.integer('Max Number Video to load',
-                                help='Number max of video to load'),
-        'client_id': fields.char('ID Client', 200,
-                                 help='Client ID for your youtube account if you do not have a '
-                                 'client ID you can a developer key in the YouTube API '
-                                 'https://code.google.com/apis/youtube/dashboard/gwt/index.html'),
-        'developer_key': fields.char('Developer Key', 150,
-                                     help='Developer key used by de API if you do not have one you '
-                                     'can get one in the YouTube API '
-                                     'https://code.google.com/apis/youtube/dashboard/gwt/index.'
-                                     'html'),
+        'name': fields.char(
+            'YouTube User',
+            25,
+            help='User name for youtube account used to login in youtube'),
+        'line': fields.one2many(
+            'sign.youtube.conf.line',
+            'config_id',
+            'Videos Uploaded'),
+        'passwd': fields.char(
+            'YouTube Password',
+            25,
+            help='Password used for your youtube account'),
+        'max_v': fields.integer(
+            'Max Number Video to load',
+            help='Number max of video to load'),
+        'client_id': fields.char(
+            'ID Client',
+            200,
+            help='Client ID for your youtube account if you do not have a '
+            'client ID you can a developer key in the YouTube API '
+            'https://code.google.com/apis/youtube/dashboard/gwt/index.html'),
+        'developer_key': fields.char(
+            'Developer Key',
+            150,
+            help='Developer key used by de API if you do not have one you '
+            'can get one in the YouTube API '
+            'https://code.google.com/apis/youtube/dashboard/gwt/index.'
+            'html'),
     }
 
     _defaults = {
@@ -79,9 +94,12 @@ class sign_youtube_conf(osv.Model):
             'category': entry and entry.media.category[0].text or '',
             'tags': entry and entry.media.keywords.text or '',
             'url_swf': entry and entry.GetSwfUrl() or '',
-            'duration_seconds': entry and float(entry.media.duration.seconds) or '',
-            'favorites': entry and entry.statistics and entry.statistics.favorite_count or '',
-            'views': entry and entry.statistics and entry.statistics.view_count or '',
+            'duration_seconds': entry and float(entry.media.duration.seconds)
+            or '',
+            'favorites': entry and entry.statistics
+            and entry.statistics.favorite_count or '',
+            'views': entry and entry.statistics and entry.statistics.view_count
+            or '',
             'private': entry.media.private and entry.media.private.text,
             'public_information': entry and youtube_id or '',
         }
@@ -92,14 +110,16 @@ class sign_youtube_conf(osv.Model):
         for wzr in self.browse(cr, uid, ids, context=context):
             yt_service = False
             try:
-                yt_service = service.YouTubeService(email=wzr.name,
-                                                    password=wzr.passwd,
-                                                    client_id=wzr.client_id,
-                                                    developer_key=wzr.developer_key)
+                yt_service = service.YouTubeService(
+                    email=wzr.name,
+                    password=wzr.passwd,
+                    client_id=wzr.client_id,
+                    developer_key=wzr.developer_key)
             except:
-                raise osv.except_osv(_('Error!'),
-                                     _("""The config parameters are wrong please verify it and try
-                                           again"""))
+                raise osv.except_osv(
+                    _('Error!'),
+                    _("""The config parameters are wrong please verify it"""
+                      """ and try again"""))
             if yt_service:
                 raise osv.except_osv(_('Perfect!'),
                                      _("""Connection Completed"""))
@@ -116,10 +136,11 @@ class sign_youtube_conf(osv.Model):
         for wzr in self.browse(cr, uid, ids, context=context):
             userfeed_entry = []
             try:
-                yt_service = service.YouTubeService(email=wzr.name,
-                                                    password=wzr.passwd,
-                                                    client_id=wzr.client_id,
-                                                    developer_key=wzr.developer_key)
+                yt_service = service.YouTubeService(
+                    email=wzr.name,
+                    password=wzr.passwd,
+                    client_id=wzr.client_id,
+                    developer_key=wzr.developer_key)
                 yt_service.ProgrammaticLogin()
                 username = wzr.name[:wzr.name.index('@')]
                 max_results = wzr.max_v
@@ -135,10 +156,10 @@ class sign_youtube_conf(osv.Model):
                     index += max_results
 
                 entry_datas = []
-            except Exception, e:
-                _logger.error(
-                    """Connection error, login to Youtube we got this error %s please veriry the
-                    parameters and try again""" % e)
+            except BaseException, e:
+                _logger.error(str(
+                    "Connection error, login to Youtube we got this error "
+                    "%s please verify the parameters and try again" % e))
             for entry in userfeed_entry:
                 item = self.get_items(entry)
                 line_ids = line.search(
@@ -147,27 +168,35 @@ class sign_youtube_conf(osv.Model):
                     context=context)
                 if filters_name:
                     for filter_name in filters_name:
-                        if filter_name.lower() in item.get('title', '').lower():
+                        if filter_name.lower() in \
+                                item.get('title', '').lower():
                             entry_datas.append(item)
                             break
                 if line_ids:
                     line_brw = line.browse(
                         cr, uid, line_ids[0], context=context)
-                    line.write(cr, uid, line_ids,
-                               {
-                                   'public_information': item.get('public_information', ''), },
-                               context=context)
-                    if str(line_brw.duration_seconds) == str(item.get('duration_seconds', '')):
+                    line.write(
+                        cr, uid, line_ids,
+                        {
+                            'public_information': item.get(
+                                'public_information', ''),
+                        },
+                        context=context)
+                    if str(line_brw.duration_seconds) == \
+                            str(item.get('duration_seconds', '')):
                         line.write(cr, uid, line_ids,
                                    {'update': 0,
                                     },
                                    context=context)
                         continue
                     else:
-                        line.write(cr, uid, line_ids,
-                                   {'update': 1,
-                                    'duration_seconds': item.get('duration_seconds', ''), },
-                                   context=context)
+                        line.write(
+                            cr, uid, line_ids,
+                            {'update': 1,
+                             'duration_seconds': item.get(
+                                 'duration_seconds', ''),
+                             },
+                            context=context)
                 else:
                     item.update({'config_id': wzr.id})
                     line.create(cr, uid, item, context=context)
@@ -181,31 +210,64 @@ class sign_youtube_conf_line(osv.Model):
     _name = 'sign.youtube.conf.line'
 
     _columns = {
-        'views': fields.integer('Number of views',
-                                help='Number of times they have viewed the video'),
-        'favorites': fields.integer('Number of favorites',
-                                    help='Number of times they have viewed the video'),
-        'name': fields.text('Video Title ', help='Tittle for YouTube Video'),
-        'message': fields.text('Message', help='Message to shown in inbox'),
-        'private': fields.char('Private', 200, help='Private info about the video'),
-        'info': fields.boolean('Add in messages', help='Select if you want add this video in the '
-                               'company messages'),
-        'config_id': fields.many2one('sign.youtube.conf', 'Config'),
-        'published': fields.char('Published ', 200, help=''),
-        'attachment_ids': fields.many2many('ir.attachment', 'youtube_attachment_rel',
-                                           'youtube_id', 'attachment_id', 'Attachments'),
-        'tags': fields.char('Tags ', 200, help=''),
-        'update': fields.selection([(0, 'Normal'), (1, 'Update')], 'Update', help='Used to know if '
-                                   'the video was '
-                                   'update'),
-        'url_swf': fields.char('Url ', 200, help='URL for you can see the video'),
-        'duration_seconds': fields.float('Duration ', help='Video duration in seconds'),
-        'category': fields.char('Category ', 200, help='Category seleted for this video from '
-                                'YouTube'),
-        'description': fields.text('Description', help='Description added for this video when was '
-                                   'created'),
-        'public_information': fields.text('Public Information', help='This information accept html'
-                                   'and is the information that will be used in the portal page.'),
+        'views': fields.integer(
+            'Number of views',
+            help='Number of times they have viewed the video'),
+        'favorites': fields.integer(
+            'Number of favorites',
+            help='Number of times they have viewed the video'),
+        'name': fields.text(
+            'Video Title ',
+            help='Tittle for YouTube Video'),
+        'message': fields.text(
+            'Message',
+            help='Message to shown in inbox'),
+        'private': fields.char(
+            'Private',
+            200,
+            help='Private info about the video'),
+        'info': fields.boolean(
+            'Add in messages',
+            help='Select if you want add this video in the company messages'),
+        'config_id': fields.many2one(
+            'sign.youtube.conf',
+            'Config'),
+        'published': fields.char(
+            'Published ',
+            200,
+            help=''),
+        'attachment_ids': fields.many2many(
+            'ir.attachment',
+            'youtube_attachment_rel',
+            'youtube_id',
+            'attachment_id',
+            'Attachments'),
+        'tags': fields.char(
+            'Tags ',
+            200,
+            help=''),
+        'update': fields.selection(
+            [(0, 'Normal'), (1, 'Update')],
+            'Update',
+            help='Used to know if the video was update'),
+        'url_swf': fields.char(
+            'Url ',
+            200,
+            help='URL for you can see the video'),
+        'duration_seconds': fields.float(
+            'Duration ',
+            help='Video duration in seconds'),
+        'category': fields.char(
+            'Category ',
+            200,
+            help='Category seleted for this video from YouTube'),
+        'description': fields.text(
+            'Description',
+            help='Description added for this video when was created'),
+        'public_information': fields.text(
+            'Public Information',
+            help='This information accept html and is the information that '
+            'will be used in the portal page.'),
     }
     _defaults = {
         'update': 0,
@@ -227,7 +289,8 @@ class sign_youtube_conf_line(osv.Model):
 
     def show_on_inbox(self, cr, uid, ids, context=None):
         '''
-        Generate a new windows to add a message for then send it to the inbox message
+        Generate a new windows to add a message for then send it
+        to the inbox message
         '''
         if context is None:
             context = {}
@@ -240,10 +303,7 @@ class sign_youtube_conf_line(osv.Model):
                                          fields=['res_id'])[0]['res_id']
             message = 2 * '<br>' + wzr.name + 2 * '<br>' + _('You need watch this video ') + \
                 '<a href="%s">%s</a>' % \
-                                                            (wzr.url_swf[
-                                                                :wzr.url_swf.find(
-                                                                    '?')],
-                                                             wzr.name)
+                (wzr.url_swf[:wzr.url_swf.find('?')], wzr.name)
             return {
                 'view_type': 'form',
                 'view_mode': 'form',
@@ -251,7 +311,8 @@ class sign_youtube_conf_line(osv.Model):
                 'views': [(resource_id, 'form')],
                 'type': 'ir.actions.act_window',
                 'target': 'new',
-                'context': {'default_message': message, 'default_name': wzr.name},
+                'context': {'default_message': message,
+                            'default_name': wzr.name},
             }
 
     def send_to_inbox(self, cr, uid, ids, context=None):
@@ -266,13 +327,13 @@ class sign_youtube_conf_line(osv.Model):
         for wzr in self.browse(cr, uid, ids, context=context):
             attachment_ids = [i.id for i in wzr.attachment_ids]
             try:
-                (model, mail_group_id) = data_obj.get_object_reference(cr, uid, 'portal_gallery',
-                                                                       'company_gallery_feed')
-            except:
-                (model, mail_group_id) = data_obj.get_object_reference(cr, uid, 'mail',
-                                                                       'group_all_employees')
-            message_id = message_obj.message_post(cr, uid, [mail_group_id],
-                                                  body=wzr.message, subject=wzr.name,
-                                                  attachment_ids=attachment_ids,
-                                                  subtype='mail.mt_comment', context=context)
+                (dummy, mail_group_id) = data_obj.get_object_reference(
+                    cr, uid, 'portal_gallery', 'company_gallery_feed')
+            except (except_orm, except_osv):
+                (dummy, mail_group_id) = data_obj.get_object_reference(
+                    cr, uid, 'mail', 'group_all_employees')
+            message_obj.message_post(
+                cr, uid, [mail_group_id], body=wzr.message, subject=wzr.name,
+                attachment_ids=attachment_ids, subtype='mail.mt_comment',
+                context=context)
         return {'type': 'ir.actions.act_window_close'}

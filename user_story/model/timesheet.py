@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+# #############################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
@@ -17,7 +17,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+# #############################################################################
 
 from openerp.osv import fields, osv
 
@@ -30,17 +30,29 @@ class custom_timesheet(osv.Model):
     _auto = False
     _columns = {
         'date': fields.date('Date', readonly=True),
-        'user_id': fields.many2one('res.users', 'User',
-                readonly=True, select=True),
-        'userstory': fields.integer('User Story', readonly=True),
-        'analytic_id': fields.many2one('account.analytic.account', 'Project',
-                readonly=True, select=True),
-        'task_title': fields.char('Task Tittle', 128,
-                                 help='Name of task related'),
-        'userstory_id': fields.many2one('user.story', 'User Story',
-                              help='Code of User Story related to this '
-                                   'analytic'),
-        'name': fields.char('Description', 264, help='Description of the work'),
+        'user_id': fields.many2one(
+            'res.users',
+            'User',
+            readonly=True,
+            select=True),
+        'userstory': fields.integer(
+            'User Story',
+            readonly=True),
+        'analytic_id': fields.many2one(
+            'account.analytic.account',
+            'Project',
+            readonly=True,
+            select=True),
+        'task_title': fields.char(
+            'Task Tittle',
+            128,
+            help='Name of task related'),
+        'userstory_id': fields.many2one(
+            'user.story',
+            'User Story',
+            help='Code of User Story related to this analytic'),
+        'name': fields.char('Description', 264,
+                            help='Description of the work'),
 
         'unit_amount': fields.float('Duration', readonly=True),
     }
@@ -62,6 +74,8 @@ class custom_timesheet(osv.Model):
                 FROM project_task_work AS work
                 INNER JOIN project_task AS task ON task.id = work.task_id
                 INNER JOIN user_story AS us ON us.id = task.userstory_id
-                INNER JOIN project_project AS project ON project.id = task.project_id
-                INNER JOIN account_analytic_account AS analytic ON analytic.id = project.analytic_account_id
+                INNER JOIN project_project AS project
+                      ON project.id = task.project_id
+                INNER JOIN account_analytic_account AS analytic
+                      ON analytic.id = project.analytic_account_id
         )''')

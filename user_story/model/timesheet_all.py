@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+# #############################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (c) 2014 Vauxoo - http://www.vauxoo.com/
@@ -17,7 +17,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+# #############################################################################
 '''
 This file loads the necessary information for the custom timesheet view.
 '''
@@ -79,9 +79,14 @@ class custom_timesheet_all(osv.Model):
                     work.hours AS unit_amount,
                     acc_anal_line.to_invoice AS invoiceable
                 FROM project_task_work AS work
-                LEFT JOIN hr_analytic_timesheet AS tsheet ON tsheet.id = work.hr_analytic_timesheet_id
-                LEFT JOIN account_analytic_line AS acc_anal_line ON acc_anal_line.id = tsheet.line_id
-                LEFT JOIN account_analytic_account AS analytic ON analytic.id = acc_anal_line.account_id
-                LEFT JOIN project_task AS task ON task.id = work.task_id
-                LEFT JOIN user_story AS us ON us.id = task.userstory_id
+                LEFT JOIN hr_analytic_timesheet AS tsheet
+                     ON tsheet.id = work.hr_analytic_timesheet_id
+                LEFT JOIN account_analytic_line AS acc_anal_line
+                     ON acc_anal_line.id = tsheet.line_id
+                LEFT JOIN account_analytic_account AS analytic
+                     ON analytic.id = acc_anal_line.account_id
+                LEFT JOIN project_task AS task
+                     ON task.id = work.task_id
+                LEFT JOIN user_story AS us
+                     ON us.id = task.userstory_id
         )''')

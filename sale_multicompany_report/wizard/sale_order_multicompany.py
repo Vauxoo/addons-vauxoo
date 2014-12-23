@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-##############################################################################
+# #############################################################################
 # Copyright (c) 2011 OpenERP Venezuela (http://openerp.com.ve)
 # All Rights Reserved.
 # Programmed by: Israel Fermín Montilla  <israel@openerp.com.ve>
@@ -25,12 +25,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-###############################################################################
+# #############################################################################
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-
+from openerp.osv.osv import except_osv
 import base64
 import openerp.netsvc as netsvc
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class print_sale_order_report(osv.TransientModel):
@@ -42,7 +44,7 @@ class print_sale_order_report(osv.TransientModel):
 
     def __get_company_object(self, cr, uid):
         user = self.pool.get('res.users').browse(cr, uid, uid)
-        print user
+        _logger.info(user)
         if not user.company_id:
             raise except_osv(_('ERROR !'), _(
                 'There is no company configured for this user'))
@@ -60,9 +62,10 @@ class print_sale_order_report(osv.TransientModel):
                 "ir.actions.report.xml").browse(cr, uid, rep_id)
 
         service = netsvc.LocalService('report.' + report.report_name)
-        (result, format) = service.create(cr, uid, context[
-                                          'active_ids'], {'model': context['active_model']}, {})
-        return base64.encodestring(result)
+        result = service.create(
+            cr, uid, context['active_ids'],
+            {'model': context['active_model']}, {})
+        return base64.encodestring(result[0])
 
     def _get_report_name(self, cr, uid, context):
         report = self.__get_company_object(cr, uid).sale_report_id
@@ -74,8 +77,9 @@ class print_sale_order_report(osv.TransientModel):
         return report.report_name
 
     def print_invoice(self, cr, uid, ids, context=None):
-        return {'type': 'ir.actions.report.xml', 'report_name': self._get_report_name(cr, uid,
-            context), 'datas': {'ids': context['active_ids']}}
+        return {'type': 'ir.actions.report.xml',
+                'report_name': self._get_report_name(cr, uid, context),
+                'datas': {'ids': context['active_ids']}}
 
     _columns = {
         'company': fields.char('Company', 64, readonly=True, requied=True),

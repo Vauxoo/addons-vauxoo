@@ -1,5 +1,7 @@
 import xmlrpclib
+import logging
 import time
+_logger = logging.getLogger(__name__)
 
 # Source server info
 HOST = 'vauxoo.info'
@@ -7,11 +9,11 @@ PORT = 18869
 DB = 'herrera'
 USER = 'admin'
 PASS = 'admin'
-url = 'http://%s:%d/xmlrpc/' % (HOST, PORT)
-common_proxy = xmlrpclib.ServerProxy(url + 'common')
-object_proxy = xmlrpclib.ServerProxy(url + 'object')
+URL = 'http://%s:%d/xmlrpc/' % (HOST, PORT)
+COMMON_PROXY = xmlrpclib.ServerProxy(URL + 'common')
+OBJECT_PROXY = xmlrpclib.ServerProxy(URL + 'object')
 
-uid = common_proxy.login(DB, USER, PASS)
+uid = COMMON_PROXY.login(DB, USER, PASS)
 
 # Destiny server info
 HOST2 = 'localhost'
@@ -19,37 +21,49 @@ PORT2 = 8069
 DB2 = 'migration3'
 USER2 = 'admin'
 PASS2 = '12345'
-url2 = 'http://%s:%d/xmlrpc/' % (HOST2, PORT2)
-common_proxy2 = xmlrpclib.ServerProxy(url2 + 'common')
-object_proxy2 = xmlrpclib.ServerProxy(url2 + 'object')
+URL2 = 'http://%s:%d/xmlrpc/' % (HOST2, PORT2)
+COMMON_PROXY2 = xmlrpclib.ServerProxy(URL2 + 'common')
+OBJECT_PROXY2 = xmlrpclib.ServerProxy(URL2 + 'object')
 
-uid2 = common_proxy2.login(DB2, USER2, PASS2)
+UID2 = COMMON_PROXY2.login(DB2, USER2, PASS2)
 
 
 def search_in_destiny(model, name):
-    return object_proxy2.execute(DB2, uid2, PASS2, model, 'search', [("name", "ilike", name)])
+    return OBJECT_PROXY2.execute(DB2, UID2, PASS2, model, 'search',
+                                 [("name", "ilike", name)])
 
 
-def create_in_destiny(model, model_dict={}):
+def create_in_destiny(model, model_dict=None):
+    if model_dict is None:
+        model_dict = {}
     if model_dict:
-        return object_proxy2.execute(DB2, uid2, PASS2, model, 'create', model_dict)
+        return OBJECT_PROXY2.execute(DB2, UID2, PASS2, model, 'create',
+                                     model_dict)
     else:
-        print 'dictionary empty, model: %d' % model
+        _logger.warning('dictionary empty, model: %d', model)
         return False
 
 
-def read_in_source(model, model_id, fields=[]):
-    return object_proxy.execute(DB, uid, PASS, model, 'read', [model_id], fields)[0]
+def read_in_source(model, model_id, fields=None):
+    if fields is None:
+        fields = []
+    return OBJECT_PROXY.execute(DB, uid, PASS, model, 'read',
+                                [model_id], fields)[0]
 
 
-def read_in_destiny(model, model_id, fields=[]):
-    return object_proxy2.execute(DB2, uid2, PASS2, model, 'read', [model_id], fields)[0]
+def read_in_destiny(model, model_id, fields=None):
+    if fields is None:
+        fields = []
+    return OBJECT_PROXY2.execute(DB2, UID2, PASS2, model, 'read', [model_id],
+                                 fields)[0]
 
 
 def user_matching(user_id):
     # Capturamos el diccionario de usuario con los valores del origen
-    user = read_in_source('res.users', user_id, [
-                          'name', 'groups_id', 'login', 'password', 'email', 'signature', 'notification_email_send', 'company_id'])
+    user = read_in_source(
+        'res.users', user_id,
+        ['name', 'groups_id', 'login', 'password', 'email',
+         'signature', 'notification_email_send', 'company_id'])
 
     # Si no existe el usuario en el destino
     if not search_in_destiny('res.users', user.get('name')):
@@ -58,8 +72,9 @@ def user_matching(user_id):
         groups_id = []
 
         # Ubicamos los grupos de permiso en el destino
-        for j in user.get('groups_id', []):
-            group_name = read_in_source('res.groups', j, ['name']).get('name')
+        for group_n in user.get('groups_id', []):
+            group_name = read_in_source(
+                'res.groups', group_n, ['name']).get('name')
             if search_in_destiny('res.groups', group_name):
                 groups_id.append(search_in_destiny(
                     'res.groups', group_name)[0])
@@ -93,41 +108,43 @@ def user_matching(user_id):
 
 def __main__():
 
-    print 'ha comenzado la carga de datos'
+    _logger.info('ha comenzado la carga de datos')
     begin_p = time.time()
 
-    user_story_ids = object_proxy.execute(
+    user_story_ids = OBJECT_PROXY.execute(
         DB, uid, PASS, 'user.story', 'search', [])
-    user_story_dict = object_proxy.execute(
+    user_story_dict = OBJECT_PROXY.execute(
         DB, uid, PASS, 'user.story', 'read', user_story_ids, [])
 
     for user_story in user_story_dict:
         accep_crit_ids = user_story.get('accep_crit_ids')
         user_id = user_story.get('user_id')[0]
-        user_story.get('user_id')[1]
         user_story_name = user_story.get('name')
 
-        print 'Evaluando la historia %s' % (user_story_name)
+        _logger.info('Evaluando la historia %s', user_story_name)
 
         # Si no existe la historia de usuario (user_story)
         if not search_in_destiny('user.story', user_story_name):
-            print 'Creando la historia %s' % (user_story_name)
+            _logger.info('Creando la historia %s', user_story_name)
             begin = time.time()
 
         # Comprobamos si tiene elementos accep_crit_ids, de ser asi creamos
         # estos elementos en el destino
             if accep_crit_ids:
-                accep_crit_dict = object_proxy.execute(
-                    DB, uid, PASS, 'acceptability.criteria', 'read', accep_crit_ids, ['name', 'scenario'])
+                accep_crit_dict = OBJECT_PROXY.execute(
+                    DB, uid, PASS, 'acceptability.criteria', 'read',
+                    accep_crit_ids, ['name', 'scenario'])
                 accep_crit_o2m = []
-                for j in accep_crit_dict:
-                    accep_crit_o2m.append((0, 0, j))
+                for crit_dic in accep_crit_dict:
+                    accep_crit_o2m.append((0, 0, crit_dic))
 
         # Ubicamos los datos de project.project en el destino, sino existe se
         # crea
             project = read_in_source(
                 'project.project', user_story.get('project_id', [])[0],
-                ['name', 'state', 'date_start', 'date_end', 'privacy_visibility', 'priority', 'user_task', 'user_id', 'members'])
+                ['name', 'state', 'date_start', 'date_end',
+                 'privacy_visibility', 'priority', 'user_task',
+                 'user_id', 'members'])
 
         # Inicilizamos la lista de los miembros del proyecto
             project_members = []
@@ -148,8 +165,9 @@ def __main__():
                 project.get('user_id')[0])})
 
         # Ubicamos los datos de project en el destino, sino existe se crea
-            project_id = user_story.get('project_id', []) and search_in_destiny(
-                'project.project', project.get('name', []))
+            project_id = user_story.get('project_id', []) \
+                and search_in_destiny('project.project',
+                                      project.get('name', []))
             project_id = project_id and project_id[
                 0] or create_in_destiny('project.project', project)
 
@@ -164,13 +182,14 @@ def __main__():
         # Almacenamos el user_story en el destino
             create_in_destiny('user.story', user_story)
             end = time.time()
-            print 'Creada la historia %s en %ss' % (user_story_name, end - begin)
+            _logger.info('Creada la historia %s en %ss',
+                         user_story_name, end - begin)
 
         else:
-            print 'Ya existe la historia %s' % (user_story_name)
+            _logger.info('Ya existe la historia %s', user_story_name)
 
     end_p = time.time()
-    print 'Creadas todas las historias en %ss' % (end_p - begin_p)
-    print 'ha finalizado la carga de datos'
+    _logger.info('Creadas todas las historias en %ss', end_p - begin_p)
+    _logger.info('ha finalizado la carga de datos')
 
 __main__()

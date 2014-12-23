@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+# #############################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-today OpenERP SA (<http://www.openerp.com>)
@@ -17,7 +17,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+# #############################################################################
 
 
 from openerp.osv import fields, osv
@@ -29,8 +29,8 @@ class project_project(osv.Model):
 
     def _get_projects(self, cr, uid, ids, context=None):
         project_project_obj = self.pool.get('project.project')
-        return project_project_obj.search(cr, uid,
-                                        [('analytic_account_id', '=', ids[0])])
+        return project_project_obj.search(
+            cr, uid, [('analytic_account_id', '=', ids[0])])
 
     def action_projects(self, cr, uid, context=None):
         project_ids = self.search(cr, uid, [])
@@ -48,13 +48,16 @@ class project_project(osv.Model):
         return res
 
     _columns = {
-        'parent_id2': fields.function(_get_parent_id, type='many2one',
+        'parent_id2': fields.function(
+            _get_parent_id,
+            type='many2one',
             relation='project.project',
             string='Parent Project',
             store={
                 'account.analytic.account':
-                (_get_projects, ['parent_id', 'name'], 10)}, select=2),
-        'child_ids2': fields.one2many('project.project',
-            'parent_id2', 'Child Accounts'),
+                (_get_projects, ['parent_id', 'name'], 10)
+            }, select=2),
+        'child_ids2': fields.one2many('project.project', 'parent_id2',
+                                      'Child Accounts'),
 
     }

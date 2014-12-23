@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 #
 #
 #    OpenERP, Open Source Management Solution
@@ -31,9 +31,10 @@ class project_project(osv.Model):
     _columns = {
         'sprint_id': fields.many2one('sprint.kanban', 'Sprint',
                                      ondelete="cascade"),
-        'url_branch': fields.char('Url Branch', 264, help="Here you must place"
-             " the bazar url without 's' in the protocol ie."
-             " http://bazaar.launchpad.net/~vauxoo/addons-vauxoo/7.0"),
+        'url_branch': fields.char(
+            'Url Branch', 264, help="Here you must place the bazar url "
+            "without 's' in the protocol ie."
+            " http://bazaar.launchpad.net/~vauxoo/addons-vauxoo/7.0"),
         'merge_proposal': fields.char('Merge Proposal', 264),
         'blueprint': fields.char('Blueprint', 264),
         'res_id': fields.char('Revno', 64),
@@ -73,15 +74,19 @@ class project_project(osv.Model):
                         }
                         if user_ids:
                             task_data['user_id'] = user_ids[0]
-                        task_ids = task_obj.search(cr, uid, [('project_id', '=', ids[
-                                                   0]), ('revno', '=', task_data['revno'])])
+                        task_ids = task_obj.search(
+                            cr, uid, [('project_id', '=', ids[0]),
+                                      ('revno', '=', task_data['revno'])])
                         if not task_ids:
-                            if inferior and inferior <= task_data['revno'] and int(res_id) >= task_data['revno']:
-                                self.write(cr, uid, ids, {
-                                           'tasks': [(0, 0, task_data)]})
+                            if inferior and inferior <= task_data['revno'] and\
+                                    int(res_id) >= task_data['revno']:
+                                self._write(cr, uid, ids, {
+                                            'tasks': [(0, 0, task_data)]})
         else:
-            raise osv.except_osv(('Error'), ('Fields: URL Branch, From Revno and Revno are required to execute this operation, \
-                also From Revno must be minor than Revno'))
+            raise osv.except_osv(('Error'), (
+                'Fields: URL Branch, From Revno and Revno are required to '
+                'execute this operation, also From Revno must be minor than '
+                'Revno'))
         return True
 
 
@@ -90,9 +95,10 @@ class sprint_kanban_tasks(osv.Model):
     _columns = {
         'revno': fields.integer('Revno'),
         'from_revno': fields.integer('From Revno'),
-        'url_branch': fields.char('Url Branch', 264, help="Here you must place"
-             " the bazar url without 's' in the protocol ie."
-             " http://bazaar.launchpad.net/~vauxoo/addons-vauxoo/7.0"),
+        'url_branch': fields.char(
+            'Url Branch', 264, help="Here you must place the bazar url "
+            "without 's' in the protocol ie. "
+            "http://bazaar.launchpad.net/~vauxoo/addons-vauxoo/7.0"),
     }
     _defaults = {
         'res_id': 0,
@@ -157,17 +163,21 @@ class sprint_kanban_tasks(osv.Model):
                             tw_data['user_id'] = user_ids[0]
                         else:
                             tw_data['user_id'] = uid
-                        tw_ids = tw_obj.search(cr, uid, [('task_id', '=', ids[
-                                               0]), ('revno', '=', tw_data['revno'])])
+                        tw_ids = tw_obj.search(
+                            cr, uid, [('task_id', '=', ids[0]),
+                                      ('revno', '=', tw_data['revno'])])
                         if not tw_ids:
-                            if inferior and inferior <= tw_data['revno'] and int(res_id) >= tw_data['revno']:
-                                self.write(cr, uid, ids, {
-                                           'work_ids': [(0, 0, tw_data), ], })
+                            if inferior and inferior <= tw_data['revno'] and\
+                                    int(res_id) >= tw_data['revno']:
+                                self._write(cr, uid, ids, {
+                                            'work_ids': [(0, 0, tw_data), ], })
                     deadline = self.set_work_time(cr, uid, ids, context)
-                    self.write(cr, uid, ids, {'date_deadline': deadline})
+                    self._write(cr, uid, ids, {'date_deadline': deadline})
         else:
-            raise osv.except_osv(('Error'), ('Fields: URL Branch, From Revno and Revno are required to execute this operation, \
-                also From Revno must be minor than Revno'))
+            raise osv.except_osv(('Error'), (
+                'Fields: URL Branch, From Revno and Revno are required to '
+                'execute this operation, also From Revno must be minor than '
+                'Revno'))
         return True
 
 
