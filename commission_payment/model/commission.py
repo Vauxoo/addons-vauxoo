@@ -105,7 +105,7 @@ class commission_payment(osv.Model):
             mensaje y su contenido',
     }
 
-    def prepare(self, cr, user, ids, context={}):
+    def prepare(self, cr, user, ids, context=None):
         """
         Este metodo recorre los elementos de account_voucher y verifica al
         menos tres (3) caracteristicas primordiales para continuar con los
@@ -492,23 +492,23 @@ class commission_payment(osv.Model):
                                                 # DE PRODUCTO
                                                 ###############################
 
-                                                PenBxLinea = \
+                                                penbxlinea = \
                                                     payment_brw.amount * (
                                                         inv_lin.price_subtotal
                                                         /
                                                         inv_brw.amount_untaxed)
-                                                Fact_Sup = 1 - perc_ret_islr / \
+                                                fact_sup = 1 - perc_ret_islr / \
                                                     100 - perc_ret_im / 100
-                                                Fact_Inf = 1 + (perc_iva /
+                                                fact_inf = 1 + (perc_iva /
                                                                 100) * (
                                                     1 - perc_ret_iva / 100) - \
                                                     perc_ret_islr / 100 - \
                                                     perc_ret_im / 100
 
-                                                comm_line = PenBxLinea * \
-                                                    Fact_Sup * \
+                                                comm_line = penbxlinea * \
+                                                    fact_sup * \
                                                     (bar_dcto_comm /
-                                                     100) / Fact_Inf
+                                                     100) / fact_inf
                                                 # Generar las lineas de
                                                 # comision por cada producto
 
@@ -731,9 +731,9 @@ class commission_payment(osv.Model):
                             criba[vendor_key][voucher_key][1][inv_key][4],
                         }, context=None)
 
-                        for id in \
+                        for idx in \
                                 criba[vendor_key][voucher_key][1][inv_key][0]:
-                            comm_line_ids.write(cr, user, id, {
+                            comm_line_ids.write(cr, user, idx, {
                                 'comm_invoice_id': invoice_id,
                             }, context=None)
 
@@ -743,7 +743,7 @@ class commission_payment(osv.Model):
         result = True
         return result
 
-    def pre_process(self, cr, user, ids, context={}):
+    def pre_process(self, cr, user, ids, context=None):
         commissions = self.browse(cr, user, ids, context=None)
         for commission in commissions:
             self.prepare(cr, user, ids, context=None)
@@ -769,18 +769,16 @@ class commission_payment(osv.Model):
                     continuar'))
         return True
 
-    def delete(self, cr, user, ids, context={}):
-        commissions = self.browse(cr, user, ids, context=None)
+    def delete(self, cr, user, ids, context=None):
 
-        for commission in commissions:
-            self.unlink(cr, user, ids, context=None)
-            self.write(cr, user, ids, {
-                'state': 'draft',
-                'total_comm': None,
-            })
+        self.unlink(cr, user, ids, context=None)
+        self.write(cr, user, ids, {
+            'state': 'draft',
+            'total_comm': None,
+        })
         return True
 
-    def unlink(self, cr, user, ids, context={}):
+    def unlink(self, cr, user, ids, context=None):
 
         uninvoiced_pays = self.pool.get('commission.uninvoiced')
         sale_noids = self.pool.get('commission.sale.noid')
@@ -827,7 +825,7 @@ class commission_payment(osv.Model):
                 cr, user, [line.id for line in commission.comm_retention_ids])
             ###
 
-    def decide(self, cr, user, ids, context={}):
+    def decide(self, cr, user, ids, context=None):
         commissions = self.browse(cr, user, ids, context=None)
         avl = self.pool.get('account.voucher.line')
         # escribir en el avl el estado buleano de paid_comm a True para indicar
@@ -841,7 +839,7 @@ class commission_payment(osv.Model):
             'state': 'done',
         })
 
-    def going_back(self, cr, user, ids, context={}):
+    def going_back(self, cr, user, ids, context=None):
         self.write(cr, user, ids, {
             'state': 'open',
         })
