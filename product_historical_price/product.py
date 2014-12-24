@@ -65,7 +65,7 @@ class product_historical(osv.Model):
                 }, context)
         return res
 
-    _inherit = 'product.product'
+    _inherit = 'product.template'
     _columns = {
         'list_price_historical':
         fields.function(_get_historical_price,

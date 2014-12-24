@@ -34,27 +34,27 @@
                     </header>
                     <notebook colspan="6">
                         <page string="Datos">
-                            <group col="4" colspan="4">
-                                <group col="2" colspan="2">
-                                    <label align="0.0" string="Concepto de Comision:"/>
-                                    <newline/>
-                                    <field colspan="2" name="name" nolabel="1"/>
-                                    <newline/>
-                                    <label align="0.0" string="Baremo a Usar:"/>
-                                    <newline/>
-                                    <field colspan="2" name="bar_id" nolabel="1"/>
-                                    <field name="date_start" nolabel="1"/>
-                                    <field name="date_stop" nolabel="1"/>
-                                    <label align="1.0" string="Total a Pagar:"/>
-                                    <field name="total_comm" nolabel="1"/>
-                                </group>
-                                <group col="2" colspan="2">
-                                    <field name="user_ids" nolabel="1">
-                                        <tree>
-                                            <field name="name" string="Asesor"/>
-                                        </tree>
-                                    </field>
-                                </group>
+                            <group col="2" colspan="2">
+                                <label align="0.0" string="Concepto de Comision:"/>
+                                <newline/>
+                                <field colspan="2" name="name" nolabel="1"/>
+                                <newline/>
+                                <label align="0.0" string="Baremo a Usar:"/>
+                                <newline/>
+                                <field colspan="2" name="bar_id" nolabel="1"/>
+                                <field name="date_start" nolabel="1"/>
+                                <field name="date_stop" nolabel="1"/>
+                                <label align="1.0" string="Total a Pagar:"/>
+                                <field name="total_comm" nolabel="1"/>
+                            </group>
+                        </page>
+                        <page string="Salespeople">
+                            <group col="2" colspan="2">
+                                <field name="user_ids" nolabel="1">
+                                    <tree>
+                                        <field name="name" string="Asesor"/>
+                                    </tree>
+                                </field>
                             </group>
                         </page>
                         <page string="Vouchers">
