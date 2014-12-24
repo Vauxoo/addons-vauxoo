@@ -2,8 +2,15 @@
 <openerp>
     <data>
 <!-- Salesman Commission Main Menu-->
- 
-     <menuitem id="commission" name="Salesmen Commissions" parent="baremo.commission" groups="group_comm_payment_manager" sequence="10"/>
+
+    <menuitem
+        id="commission"
+        name="Salesmen Commissions"
+        parent="base.menu_base_partner"
+        groups="group_comm_payment_manager"
+        sequence="10"
+        />
+
         <!-- View FORM Creation for the object salesman.commission.payment-->
         <record model="ir.ui.view" id="commission_payment_form">
             <field name="name">commission.payment.form</field>
@@ -25,14 +32,14 @@
                                 <field name="date_stop" nolabel="1"/>
                                 <label align="1.0" string="Total a Pagar:"/>
                                 <field name="total_comm" nolabel="1"/>
-                                <field colspan="1" name="state"/>  
+                                <field colspan="1" name="state"/>
                             </group>
                             <field name="user_ids" nolabel="1">
                                 <tree>
                                     <field name="name" string="Asesor"/>
                                 </tree>
                             </field>
-                            
+
                             <group col="3" colspan="2">
                                 <group col="1" colspan="1">
                                     <button icon="STOCK_OK" name="prepare" states="draft,open" string="Preparar" type="object"/>
@@ -48,7 +55,7 @@
                                 </group>
                             </group>
                         </page>
-                        
+
                         <page string="Vouchers">
                             <label align="0.0" string="Seleccione los vouchers sobre los cuales desea calcular comisiones. Deje en blanco para que se autorellene con los parametros introducidos en Datos. Si selecciona un Voucher solo se haran los calculos sobre este unicamente. Puede editarse mientras este en Estado: INICIAL y EN PROCESO"/><field domain="[('state', '=', 'posted'), ('type', '=', 'bank_rec_voucher'),('date', '&gt;=', date_start),('date', '&lt;=', date_stop)]" name="voucher_ids" nolabel="1">
                                 <tree>
@@ -64,7 +71,7 @@
 
                     <notebook colspan="6">
                         <page string="Comisiones x Vendedor">
-                             <field name="saleman_ids" nolabel="1" mode="graph,tree" widget="one2many_list" colspan="4"/>  
+                             <field name="saleman_ids" nolabel="1" mode="graph,tree" widget="one2many_list" colspan="4"/>
                         </page>
                         <page string="Comisiones x Producto">
                             <field name="comm_line_ids" nolabel="1" mode="tree,graph" widget="one2many_list" colspan="4"/>
@@ -123,7 +130,7 @@
                     </notebook>
 
                 </form>
-                
+
                 </field>
         </record>
 
@@ -154,21 +161,6 @@
 
         <menuitem name="Todas las comisiones" id="commission_all_mi" action="commission_payment_all_act" icon="terp-project" parent="commission"/>
 
-<!--
-         Creating a menu to open the View FORM of the object salesman.commission.payment 
--->
-        <record model="ir.actions.act_window" id="commission_payment_new_act">
-            <field name="name">Crear Nueva Comision</field>
-            <field name="res_model">commission.payment</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form,tree</field>
-        </record>
-
-<!--
-         Creating a menu to use the action sales_commission_payment_new_act 
--->
-        <menuitem name="Crear Nueva Comision" id="commission_payment_new_mi" action="commission_payment_new_act" parent="commission_all_mi"/>
-            
         <record model="ir.ui.view" id="commission_saleman_graph">
             <field name="name">commission.saleman.graph</field>
             <field name="model">commission.saleman</field>
@@ -201,7 +193,7 @@
                 </form>
             </field>
         </record>
-            
+
         <record model="ir.ui.view" id="commission_lines_graph">
             <field name="name">commission.lines.graph</field>
             <field name="model">commission.lines</field>
