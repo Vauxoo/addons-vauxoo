@@ -189,8 +189,7 @@ class commission_payment(osv.Model):
                                ('date', '<=', date_stop)])
 
                 commission.write({
-                    'voucher_ids': [(6, commission.id, voucher_ids)],
-                }, context=None)
+                    'voucher_ids': [(6, commission.id, voucher_ids)]})
 
             # TODO: Se necesita hacer si no se consiguen nuevos voucher_ids
 
