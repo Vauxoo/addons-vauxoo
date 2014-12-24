@@ -17,39 +17,43 @@
             <field name="model">commission.payment</field>
             <field name="arch" type="xml">
                 <form string="Pago de Comisiones" version="7.0">
+                    <header>
+                        <button icon="STOCK_OK" name="prepare" states="draft,open" string="Preparar" type="object"/>
+                        <button icon="STOCK_OK" name="pre_process" states="open" string="Creo que esto es lo que quiero" type="object"/>
+                        <button icon="STOCK_OK" name="decide" states="decide" string="Realmente esto es lo que deseo" type="object"/>
+                        <button icon="STOCK_OK" name="going_back" states="decide" string="Todavia No! Me falta algo" type="object"/>
+                        <button icon="STOCK_OK" name="delete" states="open,decide" string="Comenzar de Nuevo" type="object"/>
+                        <button icon="gtk-print" name="%(report_commission_payment)d" states="decide" string="Imprimir Borrador Comisiones" type="action"/>
+                        <button icon="gtk-print" name="%(report_commission_payment)d" states="done" string="Imprimir Comisiones" type="action"/>
+                        <field
+                            name="state"
+                            widget="statusbar"
+                            statusbar_visible="draft,open,decide,write,done"
+                            statusbar_colors='{"invoice_except":"red","waiting_date":"blue"}'
+                            />
+                    </header>
                     <notebook colspan="6">
                         <page string="Datos">
-                            <group col="2" colspan="1">
-                                <label align="0.0" string="Concepto de Comision:"/>
-                                <newline/>
-                                <field colspan="2" name="name" nolabel="1"/>
-                                <newline/>
-                                <label align="0.0" string="Baremo a Usar:"/>
-                                <newline/>
-                                <field colspan="2" name="bar_id" nolabel="1"/>
-                                <field name="date_start" nolabel="1"/>
-                                <field name="date_stop" nolabel="1"/>
-                                <label align="1.0" string="Total a Pagar:"/>
-                                <field name="total_comm" nolabel="1"/>
-                                <field colspan="1" name="state"/>
-                            </group>
-                            <field name="user_ids" nolabel="1">
-                                <tree>
-                                    <field name="name" string="Asesor"/>
-                                </tree>
-                            </field>
-                            <group col="3" colspan="2">
-                                <group col="1" colspan="1">
-                                    <button icon="STOCK_OK" name="prepare" states="draft,open" string="Preparar" type="object"/>
+                            <group col="4" colspan="4">
+                                <group col="2" colspan="2">
+                                    <label align="0.0" string="Concepto de Comision:"/>
+                                    <newline/>
+                                    <field colspan="2" name="name" nolabel="1"/>
+                                    <newline/>
+                                    <label align="0.0" string="Baremo a Usar:"/>
+                                    <newline/>
+                                    <field colspan="2" name="bar_id" nolabel="1"/>
+                                    <field name="date_start" nolabel="1"/>
+                                    <field name="date_stop" nolabel="1"/>
+                                    <label align="1.0" string="Total a Pagar:"/>
+                                    <field name="total_comm" nolabel="1"/>
                                 </group>
-                                <hpaned/>
-                                <group col="1" colspan="1">
-                                    <button icon="STOCK_OK" name="pre_process" states="open" string="Creo que esto es lo que quiero" type="object"/>
-                                    <button icon="STOCK_OK" name="decide" states="decide" string="Realmente esto es lo que deseo" type="object"/>
-                                    <button icon="STOCK_OK" name="going_back" states="decide" string="Todavia No! Me falta algo" type="object"/>
-                                    <button icon="STOCK_OK" name="delete" states="open,decide" string="Comenzar de Nuevo" type="object"/>
-                                    <button icon="gtk-print" name="%(report_commission_payment)d" states="decide" string="Imprimir Borrador Comisiones" type="action"/>
-                                    <button icon="gtk-print" name="%(report_commission_payment)d" states="done" string="Imprimir Comisiones" type="action"/>
+                                <group col="2" colspan="2">
+                                    <field name="user_ids" nolabel="1">
+                                        <tree>
+                                            <field name="name" string="Asesor"/>
+                                        </tree>
+                                    </field>
                                 </group>
                             </group>
                         </page>
