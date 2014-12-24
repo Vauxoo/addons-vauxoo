@@ -16,8 +16,7 @@
             <field name="name">commission.payment.form</field>
             <field name="model">commission.payment</field>
             <field name="arch" type="xml">
-
-            <form string="Pago de Comisiones" version="7.0">
+                <form string="Pago de Comisiones" version="7.0">
                     <notebook colspan="6">
                         <page string="Datos">
                             <group col="2" colspan="1">
@@ -39,7 +38,6 @@
                                     <field name="name" string="Asesor"/>
                                 </tree>
                             </field>
-
                             <group col="3" colspan="2">
                                 <group col="1" colspan="1">
                                     <button icon="STOCK_OK" name="prepare" states="draft,open" string="Preparar" type="object"/>
@@ -55,7 +53,6 @@
                                 </group>
                             </group>
                         </page>
-
                         <page string="Vouchers">
                             <label align="0.0" string="Seleccione los vouchers sobre los cuales desea calcular comisiones. Deje en blanco para que se autorellene con los parametros introducidos en Datos. Si selecciona un Voucher solo se haran los calculos sobre este unicamente. Puede editarse mientras este en Estado: INICIAL y EN PROCESO"/><field domain="[('state', '=', 'posted'), ('type', '=', 'bank_rec_voucher'),('date', '&gt;=', date_start),('date', '&lt;=', date_stop)]" name="voucher_ids" nolabel="1">
                                 <tree>
@@ -67,14 +64,12 @@
                             </field>
                         </page>
                     </notebook>
-
-
                     <notebook colspan="6">
                         <page string="Comisiones x Vendedor">
-                             <field name="saleman_ids" nolabel="1" mode="graph,tree" widget="one2many_list" colspan="4"/>
+                             <field name="saleman_ids" nolabel="1" widget="one2many_list" colspan="4"/>
                         </page>
                         <page string="Comisiones x Producto">
-                            <field name="comm_line_ids" nolabel="1" mode="tree,graph" widget="one2many_list" colspan="4"/>
+                            <field name="comm_line_ids" nolabel="1" widget="one2many_list" colspan="4"/>
                         </page>
                         <page string="Facturas Afectadas">
                             <field name="comm_invoice_ids" nolabel="1">
@@ -128,10 +123,8 @@
                             </field>
                         </page>
                     </notebook>
-
                 </form>
-
-                </field>
+            </field>
         </record>
 
         <!-- View LIST Creation for the object salesman.commission.payment -->
