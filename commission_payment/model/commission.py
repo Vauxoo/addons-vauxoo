@@ -119,22 +119,38 @@ class commission_payment(osv.Model):
     def _prepare_based_on_payments(self, cr, uid, ids, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
-        comm_brw = self.browse(cr, uid, ids[0], context=context)
-        invoice_ids = [(3, x.id) for x in comm_brw.invoice_ids]
-        if invoice_ids:
-            comm_brw.write({'invoice_ids': invoice_ids})
-            pass
+        av_obj = self.pool.get('account.voucher')
+
+        for comm_brw in self.browse(cr, uid, ids[0], context=context):
+            invoice_ids = [(3, x.id) for x in comm_brw.invoice_ids]
+            if invoice_ids:
+                comm_brw.write({'invoice_ids': invoice_ids})
+
+            date_start = comm_brw.date_start
+            date_stop = comm_brw.date_stop
+
+            # En esta busqueda restringimos que el voucher se haya
+            # contabilizado y que sea un cobro bancario y este dentro de la
+            # fecha estipulada
+            voucher_ids = av_obj.search(
+                cr, uid, [('state', '=', 'posted'),
+                          ('type', '=', 'receipt'),
+                          ('date', '>=', date_start),
+                          ('date', '<=', date_stop)])
+
+            comm_brw.write({
+                'voucher_ids': [(6, comm_brw.id, voucher_ids)]})
 
         return True
 
     def _prepare_based_on_invoices(self, cr, uid, ids, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
-        comm_brw = self.browse(cr, uid, ids[0], context=context)
-        voucher_ids = [(3, x.id) for x in comm_brw.voucher_ids]
-        if voucher_ids:
-            comm_brw.write({'voucher_ids': voucher_ids})
-            pass
+        for comm_brw in self.browse(cr, uid, ids[0], context=context):
+            voucher_ids = [(3, x.id) for x in comm_brw.voucher_ids]
+            if voucher_ids:
+                comm_brw.write({'voucher_ids': voucher_ids})
+
         return True
 
     def prepare(self, cr, user, ids, context=None):
@@ -203,40 +219,15 @@ class commission_payment(osv.Model):
             # Desvincular lineas existentes, si las hubiere
             self.unlink(cr, user, ids, context=None)
 
-            date_start = commission.date_start
-            date_stop = commission.date_stop
-
             # Obtener la lista de asesores/vendedores a los cuales se les hara
             # el calculo de comisiones
             user_ids = []
             user_ids = [line.id for line in commission.user_ids]
 
-            # Obtener la lista de vouchers que se seleccionaron manualmente en
-            # el widget many2many
-            voucher_ids = []
-            voucher_ids = [line.id for line in commission.voucher_ids]
-
-            # Aqui verificamos que si no hay ningun voucher nosotros nos
-            # encargaremos de hacer la lista
-            if not voucher_ids:
-                # En esta busqueda restringimos que el voucher se haya
-                # contabilizado y que sea un cobro bancario y este dentro de la
-                # fecha estipulada
-                voucher_ids = vouchers.search(
-                    cr, user, [('state', '=', 'posted'),
-                               ('type', '=', 'receipt'),
-                               ('date', '>=', date_start),
-                               ('date', '<=', date_stop)])
-
-                commission.write({
-                    'voucher_ids': [(6, commission.id, voucher_ids)]})
-
             # TODO: Se necesita hacer si no se consiguen nuevos voucher_ids
 
-            for voucher_brw in vouchers.browse(cr, user, voucher_ids,
-                                               context=None):
-                if len(voucher_brw.move_ids) != 0 and \
-                        len(voucher_brw.line_cr_ids) != 0:
+            for voucher_brw in commission.voucher_ids:
+                if voucher_brw.move_ids and voucher_brw.line_cr_ids:
                     # Con la negacion de esta condicion se termina de realizar
                     # la revision de las lineas de pago que cumplen con las
                     # tres condiciones estipuladas inicialmente, ahora se debe
@@ -251,65 +242,12 @@ class commission_payment(osv.Model):
 
                             # Verificar si esta linea tiene factura y la
                             # comision del pago no se ha pagado
-                            if payment_brw.invoice_id and not \
+                            if payment_brw.move_line_id and \
+                                    payment_brw.move_line_id.invoice and not \
                                     payment_brw.paid_comm:
                                 # Si esta aqui dentro es porque esta linea
                                 # tiene una id valida de una factura.
-                                inv_brw = payment_brw.invoice_id
-
-                                # DETERMINACION DE RETENIBILIDAD DE IVA EN
-                                # FACTURA  (perc_ret_iva)
-                                # =============================================
-                                # =============================================
-                                # Determinar si la factura tiene o tendra una
-                                # retencion de IVA (perc_ret_iva)
-                                wh_lines = inv_brw.wh_iva_id and \
-                                    inv_brw.wh_iva_id.wh_lines and \
-                                    [line.wh_iva_rate for line in
-                                     inv_brw.wh_iva_id.wh_lines if inv_brw.id
-                                     == line.invoice_id.id] or []
-
-                                perc_ret_iva = wh_lines and wh_lines[0] or \
-                                    (inv_brw.partner_id.wh_iva_agent and
-                                     inv_brw.company_id.partner_id.wh_iva_rate
-                                     or 0.00)
-                                # =============================================
-                                # =============================================
-
-                                # DETERMINACION DE RETENIBILIDAD MUNICIPAL EN
-                                # FACTURA  (perc_ret_im)
-                                # =============================================
-                                # =============================================
-                                # Determinar si la factura tiene o tendra una
-                                # retencion MUNICIPAL (perc_ret_im) Se
-                                # intentara buscar una retencion municipal para
-                                # la factura, si no se logra conseguir se asume
-                                # que si existen retenciones municpales para el
-                                # cliente entonces este mismo cliente aplicara
-                                # la misma tasa de retencion que ha aplicado
-                                # previamente, se seleccionara la mayor tasa
-
-                                mun_ids = mun_obj.search(
-                                    cr, user,
-                                    [('invoice_id', '=', inv_brw.id)]) or \
-                                    mun_obj.search(
-                                        cr, user,
-                                        [('invoice_id.partner_id', '=',
-                                          inv_brw.partner_id.id)])
-
-                                perc_ret_im = mun_ids and \
-                                    [mun_brw.wh_loc_rate for mun_brw in
-                                     mun_obj.browse(cr, user, mun_ids)] and \
-                                    max([mun_brw.wh_loc_rate for mun_brw in
-                                         mun_obj.browse(cr, user, mun_ids)]) \
-                                    or 0.0
-
-                                # =============================================
-                                # =============================================
-
-                                no_ret_iva = True
-                                no_ret_islr = True
-                                no_ret_im = True
+                                inv_brw = payment_brw.move_line_id.invoice
 
                                 # Obtener el vendedor del partner
                                 saleman = inv_brw.partner_id.user_id
@@ -324,53 +262,6 @@ class commission_payment(osv.Model):
 
                                         # Verificar si tiene producto asociado
                                         if inv_lin.product_id:
-                                            # DETERMINAR EL PORCENTAJE DE IVA
-                                            # EN LA LINEA (perc_iva)
-                                            # =================================
-                                            # =================================
-                                            # Determinar si la linea de la
-                                            # factura tiene un impuesto
-                                            # retenible (perc_iva) se asume que
-                                            # si hay mas de una tasa de iva se
-                                            # usara la mayor
-                                            perc_iva = \
-                                                inv_lin.invoice_line_tax_id \
-                                                and [tax.amount for
-                                                     tax in inv_lin.
-                                                     invoice_line_tax_id] and \
-                                                100 * \
-                                                max([tax.amount for tax in
-                                                     inv_lin.
-                                                     invoice_line_tax_id]) \
-                                                or 0.0
-                                            # =================================
-                                            # =================================
-
-                                            # DETERMINAR EL PORCENTAJE DE RET
-                                            # ISLR EN LA LINEA (perc_ret_islr)
-                                            # =================================
-                                            # =================================
-                                            # Determinar si la linea de la
-                                            # factura tiene un concepto
-                                            # retenible (perc_ret_islr) se
-                                            # asume que el cliente siempre le
-                                            # retiene a un Juridico Domiciliado
-                                            # en este caso esta empresa, la
-                                            # cual calcula la comision
-                                            perc_ret_islr = \
-                                                inv_lin.concept_id and \
-                                                inv_lin.concept_id.\
-                                                withholdable and \
-                                                [tax.wh_perc for tax in
-                                                 inv_lin.concept_id.rate_ids if
-                                                 tax.residence and not
-                                                 tax.nature] \
-                                                and \
-                                                max([tax.wh_perc for tax in
-                                                     inv_lin.concept_id.
-                                                     rate_ids
-                                                     if tax.residence and not
-                                                     tax.nature]) or 0.0
                                             # =================================
                                             # =================================
                                             # Si esta aqui es porque hay un
@@ -625,6 +516,8 @@ class commission_payment(osv.Model):
                                                 # estipulada, hay que generar
                                                 # el precio en este producto
                                                 # \n'
+                                                import pdb
+                                                pdb.set_trace()
                                                 noprice_ids.create(cr, user, {
                                                     'commission_id':
                                                     commission.id,
@@ -937,8 +830,7 @@ class commission_noprice(osv.Model):
         'commission_id': fields.many2one('commission.payment', 'Comision'),
         'product_id': fields.many2one('product.product', 'Producto'),
         'date': fields.date('Fecha'),
-        'invoice_num': fields.integer('Numero de Factura'),
-
+        'invoice_num': fields.char('Invoice Number', size=256),
     }
     _defaults = {
         'name': lambda *a: None,
