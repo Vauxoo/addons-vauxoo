@@ -28,105 +28,121 @@
                         <field
                             name="state"
                             widget="statusbar"
-                            statusbar_visible="draft,open,decide,write,done"
-                            statusbar_colors='{"invoice_except":"red","waiting_date":"blue"}'
+                            statusbar_visible="draft,open,done"
+                            statusbar_colors='{"cancel":"red","draft":"blue"}'
                             />
                     </header>
-                    <notebook colspan="6">
-                        <page string="Datos">
-                            <group col="2" colspan="2">
-                                <label align="0.0" string="Concepto de Comision:"/>
-                                <newline/>
-                                <field colspan="2" name="name" nolabel="1"/>
-                                <newline/>
-                                <label align="0.0" string="Baremo a Usar:"/>
-                                <newline/>
-                                <field colspan="2" name="bar_id" nolabel="1"/>
-                                <field name="date_start" nolabel="1"/>
-                                <field name="date_stop" nolabel="1"/>
-                                <label align="1.0" string="Total a Pagar:"/>
-                                <field name="total_comm" nolabel="1"/>
-                            </group>
-                        </page>
-                        <page string="Salespeople">
-                            <group col="2" colspan="2">
-                                <field name="user_ids" nolabel="1">
+                    <sheet>
+                        <div class="oe_right oe_button_box" style="width: 300px;" name="buttons">
+                        </div>
+                        <div class="oe_title">
+                            <div class="oe_edit_only">
+                                <label for="name"/>
+                            </div>
+                            <h1>
+                                <field name="name" default_focus="1" placeholder="Commission Concept" />
+                            </h1>
+                            <div class="oe_edit_only">
+                                <label class="oe_edit_only" for="commission_type" string="Commission Computation Basis"/>
+                            </div>
+                            <field name="commission_type"
+                                placeholder="Commission Computation Basis"
+                                />
+                        </div>
+                        <group col="2" colspan="2">
+                        </group>
+                        <notebook colspan="6">
+                            <page string="Datos">
+                                <group col="2" colspan="2">
+                                    <label align="0.0" string="Baremo a Usar:"/>
+                                    <newline/>
+                                    <field colspan="2" name="bar_id" nolabel="1"/>
+                                    <field name="date_start" nolabel="1"/>
+                                    <field name="date_stop" nolabel="1"/>
+                                    <label align="1.0" string="Total a Pagar:"/>
+                                    <field name="total_comm" nolabel="1"/>
+                                </group>
+                            </page>
+                            <page string="Salespeople">
+                                <group col="2" colspan="2">
+                                    <field name="user_ids" nolabel="1">
+                                        <tree>
+                                            <field name="name" string="Asesor"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                            <page string="Vouchers">
+                                <label align="0.0" string="Seleccione los vouchers sobre los cuales desea calcular comisiones. Deje en blanco para que se autorellene con los parametros introducidos en Datos. Si selecciona un Voucher solo se haran los calculos sobre este unicamente. Puede editarse mientras este en Estado: INICIAL y EN PROCESO"/><field domain="[('state', '=', 'posted'), ('type', '=', 'bank_rec_voucher'),('date', '&gt;=', date_start),('date', '&lt;=', date_stop)]" name="voucher_ids" nolabel="1">
                                     <tree>
-                                        <field name="name" string="Asesor"/>
+                                        <field name="name"/>
+                                        <field name="date"/>
+                                        <field name="amount"/>
+                                        <field name="journal_id"/>
                                     </tree>
                                 </field>
-                            </group>
-                        </page>
-                        <page string="Vouchers">
-                            <label align="0.0" string="Seleccione los vouchers sobre los cuales desea calcular comisiones. Deje en blanco para que se autorellene con los parametros introducidos en Datos. Si selecciona un Voucher solo se haran los calculos sobre este unicamente. Puede editarse mientras este en Estado: INICIAL y EN PROCESO"/><field domain="[('state', '=', 'posted'), ('type', '=', 'bank_rec_voucher'),('date', '&gt;=', date_start),('date', '&lt;=', date_stop)]" name="voucher_ids" nolabel="1">
-                                <tree>
-                                    <field name="name"/>
-                                    <field name="date"/>
-                                    <field name="amount"/>
-                                    <field name="journal_id"/>
-                                </tree>
-                            </field>
-                        </page>
-                    </notebook>
-                    <notebook colspan="6">
-                        <page string="Comisiones x Vendedor">
-                             <field name="saleman_ids" nolabel="1" widget="one2many_list" colspan="4"/>
-                        </page>
-                        <page string="Comisiones x Producto">
-                            <field name="comm_line_ids" nolabel="1" widget="one2many_list" colspan="4"/>
-                        </page>
-                        <page string="Facturas Afectadas">
-                            <field name="comm_invoice_ids" nolabel="1">
-                                <tree string="Este es un listado de todas las facturas afectadas en este calculo de comisiones">
-                                    <field name="invoice_id"/>
-                                </tree>
-                            </field>
-                        </page>
-                        <page string="Trans. Afectadas">
-                            <field name="comm_voucher_ids" nolabel="1">
-                                <tree string="Este es un listado de todas las operaciones mercantiles involucradas en este calculo de comisiones">
-                                    <field name="voucher_id"/>
-                                    <field name="date"/>
-                                </tree>
-                            </field>
-                        </page>
-                        <page string="Transacciones sin Factura">
-                            <field colspan="6" name="uninvoiced_ids" nolabel="1">
-                                <tree string="Esta es una lista de las transacciones bancarias que se deben asociar a una factura para dar completo procesamiento al pago en cuestion">
-                                    <field name="payment_id"/>
-                                </tree>
-                            </field>
-                        </page>
-                        <page string="Fact. con Ret. en Duda">
-                            <field name="comm_retention_ids" nolabel="1">
-                                <tree string="En la lista se muestra cual posiblemente sea el problema. [Si]: posible problema [No]: No es el problema">
-                                    <field name="invoice_id"/>
-                                    <field name="voucher_id"/>
-                                    <field name="date"/>
-                                    <field name="ret_iva"/>
-                                    <field name="ret_islr"/>
-                                    <field name="ret_im"/>
-                                </tree>
-                            </field>
-                            <field colspan="6" name="ret_notes" nolabel="1"/>
-                        </page>
-                        <page string="Prod. sin Lista de Precio">
-                            <field name="noprice_ids" nolabel="1">
-                                <tree string="Por favor, dirijase al producto en cuestion y en la seccion Precio Historico inserte una fecha y precio de venta">
-                                    <field name="invoice_num"/>
-                                    <field name="date"/>
-                                    <field name="product_id"/>
-                                </tree>
-                            </field>
-                        </page>
-                        <page string="Articulos sin asociar">
-                            <field name="sale_noids" nolabel="1">
-                                <tree string="Aqui no deberia aparecer producto alguno, el problema presente aqui se ha suscitado al momento de facturar">
-                                    <field name="inv_line_id"/>
-                                </tree>
-                            </field>
-                        </page>
-                    </notebook>
+                            </page>
+                        </notebook>
+                        <notebook colspan="6">
+                            <page string="Comisiones x Vendedor">
+                                <field name="saleman_ids" nolabel="1" widget="one2many_list" colspan="4"/>
+                            </page>
+                            <page string="Comisiones x Producto">
+                                <field name="comm_line_ids" nolabel="1" widget="one2many_list" colspan="4"/>
+                            </page>
+                            <page string="Facturas Afectadas">
+                                <field name="comm_invoice_ids" nolabel="1">
+                                    <tree string="Este es un listado de todas las facturas afectadas en este calculo de comisiones">
+                                        <field name="invoice_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Trans. Afectadas">
+                                <field name="comm_voucher_ids" nolabel="1">
+                                    <tree string="Este es un listado de todas las operaciones mercantiles involucradas en este calculo de comisiones">
+                                        <field name="voucher_id"/>
+                                        <field name="date"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Transacciones sin Factura">
+                                <field colspan="6" name="uninvoiced_ids" nolabel="1">
+                                    <tree string="Esta es una lista de las transacciones bancarias que se deben asociar a una factura para dar completo procesamiento al pago en cuestion">
+                                        <field name="payment_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Fact. con Ret. en Duda">
+                                <field name="comm_retention_ids" nolabel="1">
+                                    <tree string="En la lista se muestra cual posiblemente sea el problema. [Si]: posible problema [No]: No es el problema">
+                                        <field name="invoice_id"/>
+                                        <field name="voucher_id"/>
+                                        <field name="date"/>
+                                        <field name="ret_iva"/>
+                                        <field name="ret_islr"/>
+                                        <field name="ret_im"/>
+                                    </tree>
+                                </field>
+                                <field colspan="6" name="ret_notes" nolabel="1"/>
+                            </page>
+                            <page string="Prod. sin Lista de Precio">
+                                <field name="noprice_ids" nolabel="1">
+                                    <tree string="Por favor, dirijase al producto en cuestion y en la seccion Precio Historico inserte una fecha y precio de venta">
+                                        <field name="invoice_num"/>
+                                        <field name="date"/>
+                                        <field name="product_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Articulos sin asociar">
+                                <field name="sale_noids" nolabel="1">
+                                    <tree string="Aqui no deberia aparecer producto alguno, el problema presente aqui se ha suscitado al momento de facturar">
+                                        <field name="inv_line_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
                 </form>
             </field>
         </record>

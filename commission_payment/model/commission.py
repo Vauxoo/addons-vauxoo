@@ -1,9 +1,19 @@
 from openerp.osv import osv, fields
 import mx.DateTime
-
 from openerp.tools.translate import _
-
 from openerp.addons.decimal_precision import decimal_precision as dp
+
+COMMISSION_STATES = [
+    ('draft', 'Draft'),
+    ('open', 'In Progress'),
+    ('done', 'Done'),
+    ('cancel', 'Cancelled'),
+]
+
+COMMISSION_TYPES = [
+    ('partial_payment', 'Based on Partial Payments'),
+    ('fully_paid_invoice', 'Based on Fully Paid Invoices'),
+]
 
 
 class commission_payment(osv.Model):
@@ -17,7 +27,7 @@ class commission_payment(osv.Model):
 
     _columns = {
         'name': fields.char(
-            'Concepto de Comisiones', size=256, required=True,
+            'Commission Concept', size=256, required=True,
             readonly=True, states={'draft': [('readonly', False)]}),
         'bar_id': fields.many2one(
             'baremo.book', 'Baremo', required=True,
@@ -77,14 +87,9 @@ class commission_payment(osv.Model):
             'commission.retention',
             'commission_id', 'Facturas con Problemas de Retencion',
             readonly=True, states={'write': [('readonly', False)]}),
-        'state': fields.selection([
-            ('draft', 'Inicial'),
-            ('open', 'En Proceso'),
-            ('decide', 'Decidir'),
-            ('write', 'Escribiendo'),
-            ('done', 'Listo'),
-            ('cancel', 'Cancelado')
-        ], 'Estado', readonly=True),
+        'state': fields.selection(COMMISSION_STATES, 'Estado', readonly=True),
+        'commission_type': fields.selection(
+            COMMISSION_TYPES, 'Commission Computation Basis', readonly=False),
     }
     _defaults = {
         'name': lambda *a: None,
