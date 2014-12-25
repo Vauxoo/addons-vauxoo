@@ -70,6 +70,11 @@ class commission_payment(osv.Model):
             'res.users', 'commission_users',
             'commission_id', 'user_id', 'Vendedores', required=True,
             readonly=True, states={'draft': [('readonly', False)]}),
+        'invoice_ids': fields.many2many(
+            'account.invoice', 'commission_account_invoice', 'commission_id',
+            'invoice_id', 'Invoices', readonly=True,
+            states={'draft': [('readonly', False)],
+                    'open': [('readonly', False)], }),
         'voucher_ids': fields.many2many(
             'account.voucher', 'commission_account_voucher', 'commission_id',
             'voucher_id', 'Vouchers', readonly=True,
@@ -89,7 +94,8 @@ class commission_payment(osv.Model):
             readonly=True, states={'write': [('readonly', False)]}),
         'state': fields.selection(COMMISSION_STATES, 'Estado', readonly=True),
         'commission_type': fields.selection(
-            COMMISSION_TYPES, 'Commission Computation Basis', readonly=False),
+            COMMISSION_TYPES,
+            string='Commission Computation Basis', required=True),
     }
     _defaults = {
         'name': lambda *a: None,
@@ -109,6 +115,27 @@ class commission_payment(osv.Model):
             y encontrar una solucion. De otra forma haga caso omiso de este\
             mensaje y su contenido',
     }
+
+    def _prepare_based_on_payments(self, cr, uid, ids, context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        context = context or {}
+        comm_brw = self.browse(cr, uid, ids[0], context=context)
+        invoice_ids = [(3, x.id) for x in comm_brw.invoice_ids]
+        if invoice_ids:
+            comm_brw.write({'invoice_ids': invoice_ids})
+            pass
+
+        return True
+
+    def _prepare_based_on_invoices(self, cr, uid, ids, context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        context = context or {}
+        comm_brw = self.browse(cr, uid, ids[0], context=context)
+        voucher_ids = [(3, x.id) for x in comm_brw.voucher_ids]
+        if voucher_ids:
+            comm_brw.write({'voucher_ids': voucher_ids})
+            pass
+        return True
 
     def prepare(self, cr, user, ids, context=None):
         """
@@ -135,6 +162,14 @@ class commission_payment(osv.Model):
 
         @return: return a result
         """
+        uid = user
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        context = context or {}
+        comm_brw = self.browse(cr, uid, ids[0], context=context)
+        if comm_brw.commission_type == 'partial_payment':
+            self._prepare_based_on_payments(cr, uid, ids, context=context)
+        elif comm_brw.commission_type == 'fully_paid_invoice':
+            self._prepare_based_on_invoices(cr, uid, ids, context=context)
 
         self.write(cr, user, ids, {
             'state': 'open',

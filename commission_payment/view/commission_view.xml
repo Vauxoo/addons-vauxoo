@@ -20,10 +20,10 @@
                     <header>
                         <button icon="STOCK_OK" name="prepare" states="draft,open" string="Preparar" type="object"/>
                         <button icon="STOCK_OK" name="pre_process" states="open" string="Creo que esto es lo que quiero" type="object"/>
-                        <button icon="STOCK_OK" name="decide" states="decide" string="Realmente esto es lo que deseo" type="object"/>
-                        <button icon="STOCK_OK" name="going_back" states="decide" string="Todavia No! Me falta algo" type="object"/>
-                        <button icon="STOCK_OK" name="delete" states="open,decide" string="Comenzar de Nuevo" type="object"/>
-                        <button icon="gtk-print" name="%(report_commission_payment)d" states="decide" string="Imprimir Borrador Comisiones" type="action"/>
+                        <button icon="STOCK_OK" name="decide" states="open" string="Realmente esto es lo que deseo" type="object"/>
+                        <button icon="STOCK_OK" name="going_back" states="open" string="Todavia No! Me falta algo" type="object"/>
+                        <button icon="STOCK_OK" name="delete" states="open" string="Comenzar de Nuevo" type="object"/>
+                        <button icon="gtk-print" name="%(report_commission_payment)d" states="done" string="Imprimir Borrador Comisiones" type="action"/>
                         <button icon="gtk-print" name="%(report_commission_payment)d" states="done" string="Imprimir Comisiones" type="action"/>
                         <field
                             name="state"
@@ -73,13 +73,38 @@
                                 </group>
                             </page>
                             <page string="Vouchers">
-                                <label align="0.0" string="Seleccione los vouchers sobre los cuales desea calcular comisiones. Deje en blanco para que se autorellene con los parametros introducidos en Datos. Si selecciona un Voucher solo se haran los calculos sobre este unicamente. Puede editarse mientras este en Estado: INICIAL y EN PROCESO"/><field domain="[('state', '=', 'posted'), ('type', '=', 'bank_rec_voucher'),('date', '&gt;=', date_start),('date', '&lt;=', date_stop)]" name="voucher_ids" nolabel="1">
-                                    <tree>
-                                        <field name="name"/>
-                                        <field name="date"/>
-                                        <field name="amount"/>
-                                        <field name="journal_id"/>
-                                    </tree>
+                                <label
+                                    align="0.0"
+                                    string="Seleccione los vouchers sobre los
+                                    cuales desea calcular comisiones. Deje en
+                                    blanco para que se autorellene con los
+                                    parametros introducidos en Datos. Si
+                                    selecciona un Voucher solo se haran los
+                                    calculos sobre este unicamente. Puede
+                                    editarse mientras este en Estado: INICIAL y
+                                    EN PROCESO"
+                                    />
+                                <field
+                                    name="voucher_ids"
+                                    domain="[
+                                        ('state', '=', 'posted'),
+                                        ('type', '=', 'receipt'),
+                                        ('date', '&gt;=', date_start),
+                                        ('date', '&lt;=', date_stop),
+                                        ]"
+                                    nolabel="1"
+                                    >
+                                </field>
+                            </page>
+                            <page string="Invoices">
+                                <label align="0.0" string="Seleccione los vouchers sobre los cuales desea calcular comisiones. Deje en blanco para que se autorellene con los parametros introducidos en Datos. Si selecciona un Voucher solo se haran los calculos sobre este unicamente. Puede editarse mientras este en Estado: INICIAL y EN PROCESO"/>
+                                <field
+                                    name="invoice_ids"
+                                    domain="[
+                                        ('state', '=', 'paid'),
+                                        ('type', '=', 'out_invoice'),
+                                        ]"
+                                    nolabel="1">
                                 </field>
                             </page>
                         </notebook>
