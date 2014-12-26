@@ -42,13 +42,20 @@
                             <h1>
                                 <field name="name" default_focus="1" placeholder="Commission Concept" />
                             </h1>
-                            <div class="oe_edit_only">
-                                <label class="oe_edit_only" for="commission_type" string="Commission Computation Basis"/>
-                            </div>
-                            <field
-                                name="commission_type"
-                                widget="radio"
-                                />
+                            <group>
+                                <group>
+                                    <field
+                                        name="commission_type"
+                                        widget="radio"
+                                        />
+                                </group>
+                                <group>
+                                    <field
+                                        name="commission_scope"
+                                        widget="radio"
+                                        />
+                                </group>
+                            </group>
                         </div>
                         <group col="2" colspan="2">
                         </group>

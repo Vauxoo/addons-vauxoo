@@ -16,6 +16,11 @@ COMMISSION_TYPES = [
     ('fully_paid_invoice', 'Based on Fully Paid Invoices'),
 ]
 
+COMMISSION_SCOPES = [
+    ('partner_baremo', 'Baremo in Partner (Whole Invoice)'),
+    ('product_baremo', 'Baremo in Commission (Product Detailed)'),
+]
+
 
 def tTime(dt):
     '''
@@ -105,7 +110,10 @@ class commission_payment(osv.Model):
         'state': fields.selection(COMMISSION_STATES, 'Estado', readonly=True),
         'commission_type': fields.selection(
             COMMISSION_TYPES,
-            string='Commission Computation Basis', required=True),
+            string='Commission Basis', required=True),
+        'commission_scope': fields.selection(
+            COMMISSION_SCOPES,
+            string='Commission Scope', required=False),
     }
     _defaults = {
         'name': lambda *a: None,
