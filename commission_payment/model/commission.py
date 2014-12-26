@@ -172,7 +172,7 @@ class commission_payment(osv.Model):
         sale_noids = self.pool.get('commission.sale.noid')
         noprice_ids = self.pool.get('commission.noprice')
         comm_line_ids = self.pool.get('commission.lines')
-        comm_retention_ids = self.pool.get('commission.retention')
+        avl_obj = self.pool.get('account.voucher.line')
 
         for comm_brw in self.browse(cr, uid, ids, context=context):
             # Desvincular lineas existentes, si las hubiere
@@ -183,337 +183,334 @@ class commission_payment(osv.Model):
             user_ids = []
             user_ids = [line.id for line in comm_brw.user_ids]
 
-            for voucher_brw in comm_brw.voucher_ids:
-                if voucher_brw.move_ids and voucher_brw.line_cr_ids:
-                    # Con la negacion de esta condicion se termina de realizar
-                    # la revision de las lineas de pago que cumplen con las
-                    # tres condiciones estipuladas inicialmente, ahora se debe
-                    # proseguir con la revision de las lineas de pago
+            payment_ids = []
+            uninvoice_payment_ids = []
 
-                    # Leer cada una de las lineas de los vouchers
+            for av_brw in comm_brw.voucher_ids:
+                # Leer cada una de las lineas de los vouchers
+                for avl_brw in av_brw.line_cr_ids:
+                    pay_line_vendor = avl_brw.partner_id.user_id and \
+                        avl_brw.partner_id.user_id.id or False
+                    if pay_line_vendor in user_ids:
 
-                    for payment_brw in voucher_brw.line_cr_ids:
-                        pay_line_vendor = payment_brw.partner_id.user_id and \
-                            payment_brw.partner_id.user_id.id or False
-                        if pay_line_vendor in user_ids:
-
-                            # Verificar si esta linea tiene factura y la
-                            # comision del pago no se ha pagado
-                            if payment_brw.move_line_id and \
-                                    payment_brw.move_line_id.invoice and not \
-                                    payment_brw.paid_comm:
-                                # Si esta aqui dentro es porque esta linea
-                                # tiene una id valida de una factura.
-                                inv_brw = payment_brw.move_line_id.invoice
-
-                                # Obtener el vendedor del partner
-                                saleman = inv_brw.partner_id.user_id
-
-                                # se procede con la preparacion de las
-                                # comisiones.
-
-                                # Revision de cada linea de factura
-                                # (productos)
-                                for inv_lin in inv_brw.invoice_line:
-
-                                    # Verificar si tiene producto asociado
-                                    if inv_lin.product_id:
-                                        # =================================
-                                        # =================================
-                                        # Si esta aqui es porque hay un
-                                        # producto asociado
-                                        prod_id = inv_lin.product_id.\
-                                            product_tmpl_id.id
-                                        # se obtienen las listas de precio,
-                                        # vienen ordenadas por defecto, de
-                                        # acuerdo al objeto
-                                        # product.historic de mayor a menor
-                                        # fecha
-                                        price_ids = prod_prices.search(
-                                            cr, uid,
-                                            [('product_id', '=', prod_id)])
-                                        # Buscar Precio Historico de Venta
-                                        # de este producto @ la fecha de
-                                        # facturacion
-                                        no_price = True
-
-                                        for price_id in price_ids:
-                                            prod_prices_brw = \
-                                                prod_prices.browse(
-                                                    cr, uid, price_id,
-                                                    context=context)
-                                            if inv_brw.date_invoice >= \
-                                                    tTime(prod_prices_brw.
-                                                            name):
-                                                list_price = \
-                                                    prod_prices_brw.price
-                                                list_date = \
-                                                    prod_prices_brw.name
-                                                no_price = False
-                                                break
-                                        if not no_price:
-                                            # Determinar cuanto fue el
-                                            # descuento en este producto en
-                                            # aquel momento de la venta
-                                            if abs(
-                                                    (inv_lin.price_subtotal
-                                                        / inv_lin.quantity) -
-                                                    inv_lin.price_unit) > \
-                                                    0.05:
-                                                # con esto se asegura que
-                                                # no se esta pasando por
-                                                # alto el descuento en
-                                                # linea
-                                                price_unit = round((
-                                                    inv_lin.price_subtotal
-                                                    / inv_lin.quantity), 2)
-                                            else:
-                                                price_unit = \
-                                                    inv_lin.price_unit
-                                            if list_price:
-                                                dcto = round((
-                                                    list_price -
-                                                    price_unit) * 100 /
-                                                    list_price, 1)
-                                            rate_item = dcto
-
-                                            # Determinar dias entre la
-                                            # emision de la factura del
-                                            # producto y el pago del mismo
-                                            pay_date = mx.DateTime.\
-                                                strptime(voucher_brw.date,
-                                                            '%Y-%m-%d')
-                                            inv_date = mx.DateTime.\
-                                                strptime(
-                                                    inv_brw.date_invoice,
-                                                    '%Y-%m-%d')
-                                            emission_days = (
-                                                pay_date - inv_date).day
-
-                                            # Teniendose dias y descuento
-                                            # por producto se procede a
-                                            # buscar en el baremo el
-                                            # correspondiente valor de
-                                            # comision para el producto en
-                                            # cuestion. se entra con el
-                                            # numero de dias
-
-                                            # Esta busqueda devuelve los
-                                            # dias ordenadados de menor a
-                                            # mayor dia, de acuerdo con lo
-                                            # estipulado que se ordenaria
-                                            # en el modulo baremo
-                                            bar_day_ids = comm_brw.\
-                                                bar_id.bar_ids
-
-                                            no_days = True
-                                            no_dcto = True
-                                            for day_id in bar_day_ids:
-                                                # Se busca que el baremo
-                                                # tenga un rango que cubra
-                                                # a emision_days
-                                                if emission_days <= \
-                                                        day_id.number:
-                                                    bar_day = day_id.number
-                                                    no_days = False
-                                                    no_dcto = True
-                                                    for dcto_id in day_id.\
-                                                            disc_ids:
-                                                        # Se busca que el
-                                                        # baremo tenga un
-                                                        # rango para el
-                                                        # valor de
-                                                        # descuento en
-                                                        # producto
-                                                        if (dcto -
-                                                            dcto_id.
-                                                            porc_disc) \
-                                                                <= 0.01:
-                                                            bardctdsc \
-                                                                = \
-                                                                dcto_id.\
-                                                                porc_disc
-                                                            if bardctdsc \
-                                                                    == 0.0:
-                                                                # cuando el
-                                                                # descuento
-                                                                # en baremo
-                                                                # es cero
-                                                                # (0) no
-                                                                # aparece
-                                                                # reflejado,
-                                                                # forzamos
-                                                                # a que sea
-                                                                # un cero
-                                                                # (0)
-                                                                # string.
-                                                                bardctdsc \
-                                                                    = 0.0
-                                                            bar_dcto_comm \
-                                                                = \
-                                                                dcto_id.\
-                                                                porc_com
-                                                            no_dcto = False
-                                                            break
-                                                    break
-
-                                            if (not no_days) and no_dcto:
-                                                bar_dcto_comm = 0.0
-                                                bardctdsc = 0.0
-
-                                            # Si emission_days no es
-                                            # cubierto por ningun rango del
-                                            # baremo diremos entonces que
-                                            # la comision es cero (0) %
-                                            elif no_days and no_dcto:
-                                                # Diremos que los dias de
-                                                # baremo es menos uno (-1)
-                                                # cuando los dias de
-                                                # emision no esten dentro
-                                                # del rango del baremo
-                                                bar_day = '0.0'
-                                                bardctdsc = 0.0
-                                                bar_dcto_comm = 0.0
-
-                                            ###############################
-                                            # CALCULO DE COMISION POR LINEA
-                                            # DE PRODUCTO
-                                            ###############################
-
-                                            penbxlinea = \
-                                                payment_brw.amount * (
-                                                    inv_lin.price_subtotal
-                                                    /
-                                                    inv_brw.amount_untaxed)
-                                            fact_sup = 1 - 0.0 / \
-                                                100 - 0.0 / 100
-                                            fact_inf = 1 + (0.0 /
-                                                            100) * (
-                                                1 - 0.0 / 100) - \
-                                                0.0 / 100 - \
-                                                0.0 / 100
-
-                                            comm_line = penbxlinea * \
-                                                fact_sup * \
-                                                (bar_dcto_comm /
-                                                    100) / fact_inf
-                                            # Generar las lineas de
-                                            # comision por cada producto
-
-                                            comm_line_ids.create(
-                                                cr, uid, {
-                                                    'commission_id':
-                                                    comm_brw.id,
-                                                    'voucher_id':
-                                                    voucher_brw.id,
-                                                    'name':
-                                                    voucher_brw.name and
-                                                    voucher_brw.name or
-                                                    '/',
-                                                    'pay_date':
-                                                    voucher_brw.date,
-                                                    'pay_off':
-                                                    voucher_brw.amount,
-                                                    'concept':
-                                                    payment_brw.id,
-                                                    'invoice_id':
-                                                    payment_brw.
-                                                    move_line_id.
-                                                    invoice.id,
-                                                    'invoice_num':
-                                                    inv_brw.number,
-                                                    'partner_id':
-                                                    inv_brw.partner_id.id,
-                                                    'saleman_name': saleman
-                                                    and saleman.name,
-                                                    'saleman_id': saleman
-                                                    and saleman.id,
-                                                    'pay_inv':
-                                                    payment_brw.amount,
-                                                    'inv_date':
-                                                    inv_brw.date_invoice,
-                                                    'days': emission_days,
-                                                    'inv_subtotal':
-                                                    inv_brw.amount_untaxed,
-                                                    'item': inv_lin.name,
-                                                    'price_unit':
-                                                    price_unit,
-                                                    'price_subtotal':
-                                                    inv_lin.price_subtotal,
-                                                    'price_list':
-                                                    list_price,
-                                                    'price_date':
-                                                    list_date,
-                                                    'rate_item': rate_item,
-                                                    'rate_number':
-                                                    bardctdsc,
-                                                    'timespan': bar_day,
-                                                    'baremo_comm':
-                                                    bar_dcto_comm,
-                                                    'commission':
-                                                        comm_line,
-                                                }, context=None)
-
-                                        else:
-                                            # Se genera un lista de tuplas
-                                            # con las lineas, productos y
-                                            # sus correspondientes fechas
-                                            # en las cuales no aparece
-                                            # precio de lista, luego al
-                                            # final se escriben los valores
-                                            # en la correspondiente
-                                            # bitacora para su inspeccion.
-                                            # ~ #~ print 'No hubo precio de
-                                            # lista para la fecha
-                                            # estipulada, hay que generar
-                                            # el precio en este producto
-                                            # \n'
-                                            noprice_ids.create(cr, uid, {
-                                                'commission_id':
-                                                comm_brw.id,
-                                                'product_id': prod_id,
-                                                'date':
-                                                inv_brw.date_invoice,
-                                                'invoice_num':
-                                                inv_brw.number,
-                                            }, context=None)
-                                    else:
-                                        # cuando una linea no tiene
-                                        # product_id asociado se escribe en
-                                        # una tabla para alertar al
-                                        # operador sobre esta parte no
-                                        # llego a un acuerdo de si se
-                                        # podria permitir al operador
-                                        # cambiar las lineas de la factura
-                                        # puesto que es un asunto muy
-                                        # delicado.
-                                        sale_noids.create(cr, uid, {
-                                            'commission_id': comm_brw.id,
-                                            'inv_line_id': inv_lin.id,
-                                        }, context=None)
-                            elif (payment_brw.invoice_id.id is False and
-                                  payment_brw.paid_comm is False):
-                                # Si esta aqui dentro es porque esta linea
-                                # (transaccion) no tiene factura valida, se
-                                # escribe entonces una linea en una vista donde
-                                # se muestran las transacciones que no tienen
-                                # factura asociada para su correccion si
-                                # aplica. tampoco se ha pagado la comision del
-                                # mismo solo se incluiran pagos que sean de
-                                # cuentas cobrables, puesto que las de otra
-                                # naturaleza, no tienen sentido mostrarlas
-                                # aqui.
-                                if payment_brw.account_id.type == 'receivable':
-                                    uninvoiced_pays.create(cr, uid, {
-                                        'commission_id': comm_brw.id,
-                                        'payment_id': payment_brw.id,
-                                    }, context=None)
+                        # Verificar si esta linea tiene factura y la
+                        # comision del pago no se ha pagado
+                        if avl_brw.move_line_id and \
+                                avl_brw.move_line_id.invoice and not \
+                                avl_brw.paid_comm:
+                            payment_ids.append(avl_brw.id)
                         else:
-                            # No se hace nada por que el vendedor del pago que
-                            # se esta consultando no se incorporo a la lista de
-                            # asesores a los que se debe calcular la comision
-                            pass
+                            uninvoice_payment_ids.append(avl_brw.id)
 
+            for payment_brw in avl_obj.browse(cr, uid, payment_ids,
+                                              context=context):
+
+                # Si esta aqui dentro es porque esta linea
+                # tiene una id valida de una factura.
+                inv_brw = payment_brw.move_line_id.invoice
+
+                # Obtener el vendedor del partner
+                saleman = inv_brw.partner_id.user_id
+
+                # se procede con la preparacion de las
+                # comisiones.
+
+                # Revision de cada linea de factura
+                # (productos)
+                for inv_lin in inv_brw.invoice_line:
+
+                    # Verificar si tiene producto asociado
+                    if inv_lin.product_id:
+                        # =================================
+                        # =================================
+                        # Si esta aqui es porque hay un
+                        # producto asociado
+                        prod_id = inv_lin.product_id.\
+                            product_tmpl_id.id
+                        # se obtienen las listas de precio,
+                        # vienen ordenadas por defecto, de
+                        # acuerdo al objeto
+                        # product.historic de mayor a menor
+                        # fecha
+                        price_ids = prod_prices.search(
+                            cr, uid,
+                            [('product_id', '=', prod_id)])
+                        # Buscar Precio Historico de Venta
+                        # de este producto @ la fecha de
+                        # facturacion
+                        no_price = True
+
+                        for price_id in price_ids:
+                            prod_prices_brw = \
+                                prod_prices.browse(
+                                    cr, uid, price_id,
+                                    context=context)
+                            if inv_brw.date_invoice >= \
+                                    tTime(prod_prices_brw.name):
+                                list_price = \
+                                    prod_prices_brw.price
+                                list_date = \
+                                    prod_prices_brw.name
+                                no_price = False
+                                break
+                        if not no_price:
+                            # Determinar cuanto fue el
+                            # descuento en este producto en
+                            # aquel momento de la venta
+                            if abs(
+                                    (inv_lin.price_subtotal
+                                        / inv_lin.quantity) -
+                                    inv_lin.price_unit) > \
+                                    0.05:
+                                # con esto se asegura que
+                                # no se esta pasando por
+                                # alto el descuento en
+                                # linea
+                                price_unit = round((
+                                    inv_lin.price_subtotal
+                                    / inv_lin.quantity), 2)
+                            else:
+                                price_unit = \
+                                    inv_lin.price_unit
+                            if list_price:
+                                dcto = round((
+                                    list_price -
+                                    price_unit) * 100 /
+                                    list_price, 1)
+                            rate_item = dcto
+
+                            # Determinar dias entre la
+                            # emision de la factura del
+                            # producto y el pago del mismo
+                            pay_date = mx.DateTime.\
+                                strptime(payment_brw.voucher_id.date,
+                                         '%Y-%m-%d')
+                            inv_date = mx.DateTime.\
+                                strptime(
+                                    inv_brw.date_invoice,
+                                    '%Y-%m-%d')
+                            emission_days = (
+                                pay_date - inv_date).day
+
+                            # Teniendose dias y descuento
+                            # por producto se procede a
+                            # buscar en el baremo el
+                            # correspondiente valor de
+                            # comision para el producto en
+                            # cuestion. se entra con el
+                            # numero de dias
+
+                            # Esta busqueda devuelve los
+                            # dias ordenadados de menor a
+                            # mayor dia, de acuerdo con lo
+                            # estipulado que se ordenaria
+                            # en el modulo baremo
+                            bar_day_ids = comm_brw.\
+                                bar_id.bar_ids
+
+                            no_days = True
+                            no_dcto = True
+                            for day_id in bar_day_ids:
+                                # Se busca que el baremo
+                                # tenga un rango que cubra
+                                # a emision_days
+                                if emission_days <= \
+                                        day_id.number:
+                                    bar_day = day_id.number
+                                    no_days = False
+                                    no_dcto = True
+                                    for dcto_id in day_id.\
+                                            disc_ids:
+                                        # Se busca que el
+                                        # baremo tenga un
+                                        # rango para el
+                                        # valor de
+                                        # descuento en
+                                        # producto
+                                        if (dcto -
+                                            dcto_id.
+                                            porc_disc) \
+                                                <= 0.01:
+                                            bardctdsc \
+                                                = \
+                                                dcto_id.\
+                                                porc_disc
+                                            if bardctdsc \
+                                                    == 0.0:
+                                                # cuando el
+                                                # descuento
+                                                # en baremo
+                                                # es cero
+                                                # (0) no
+                                                # aparece
+                                                # reflejado,
+                                                # forzamos
+                                                # a que sea
+                                                # un cero
+                                                # (0)
+                                                # string.
+                                                bardctdsc \
+                                                    = 0.0
+                                            bar_dcto_comm \
+                                                = \
+                                                dcto_id.\
+                                                porc_com
+                                            no_dcto = False
+                                            break
+                                    break
+
+                            if (not no_days) and no_dcto:
+                                bar_dcto_comm = 0.0
+                                bardctdsc = 0.0
+
+                            # Si emission_days no es
+                            # cubierto por ningun rango del
+                            # baremo diremos entonces que
+                            # la comision es cero (0) %
+                            elif no_days and no_dcto:
+                                # Diremos que los dias de
+                                # baremo es menos uno (-1)
+                                # cuando los dias de
+                                # emision no esten dentro
+                                # del rango del baremo
+                                bar_day = '0.0'
+                                bardctdsc = 0.0
+                                bar_dcto_comm = 0.0
+
+                            ###############################
+                            # CALCULO DE COMISION POR LINEA
+                            # DE PRODUCTO
+                            ###############################
+
+                            penbxlinea = \
+                                payment_brw.amount * (
+                                    inv_lin.price_subtotal
+                                    /
+                                    inv_brw.amount_untaxed)
+                            fact_sup = 1 - 0.0 / \
+                                100 - 0.0 / 100
+                            fact_inf = 1 + (0.0 /
+                                            100) * (
+                                1 - 0.0 / 100) - \
+                                0.0 / 100 - \
+                                0.0 / 100
+
+                            comm_line = penbxlinea * \
+                                fact_sup * \
+                                (bar_dcto_comm /
+                                    100) / fact_inf
+                            # Generar las lineas de
+                            # comision por cada producto
+
+                            comm_line_ids.create(
+                                cr, uid, {
+                                    'commission_id':
+                                    comm_brw.id,
+                                    'voucher_id':
+                                    payment_brw.voucher_id.id,
+                                    'name':
+                                    payment_brw.voucher_id.name and
+                                    payment_brw.voucher_id.name or
+                                    '/',
+                                    'pay_date':
+                                    payment_brw.voucher_id.date,
+                                    'pay_off':
+                                    payment_brw.voucher_id.amount,
+                                    'concept':
+                                    payment_brw.id,
+                                    'invoice_id':
+                                    payment_brw.
+                                    move_line_id.
+                                    invoice.id,
+                                    'invoice_num':
+                                    inv_brw.number,
+                                    'partner_id':
+                                    inv_brw.partner_id.id,
+                                    'saleman_name': saleman
+                                    and saleman.name,
+                                    'saleman_id': saleman
+                                    and saleman.id,
+                                    'pay_inv':
+                                    payment_brw.amount,
+                                    'inv_date':
+                                    inv_brw.date_invoice,
+                                    'days': emission_days,
+                                    'inv_subtotal':
+                                    inv_brw.amount_untaxed,
+                                    'item': inv_lin.name,
+                                    'price_unit':
+                                    price_unit,
+                                    'price_subtotal':
+                                    inv_lin.price_subtotal,
+                                    'price_list':
+                                    list_price,
+                                    'price_date':
+                                    list_date,
+                                    'rate_item': rate_item,
+                                    'rate_number':
+                                    bardctdsc,
+                                    'timespan': bar_day,
+                                    'baremo_comm':
+                                    bar_dcto_comm,
+                                    'commission':
+                                        comm_line,
+                                }, context=None)
+
+                        else:
+                            # Se genera un lista de tuplas
+                            # con las lineas, productos y
+                            # sus correspondientes fechas
+                            # en las cuales no aparece
+                            # precio de lista, luego al
+                            # final se escriben los valores
+                            # en la correspondiente
+                            # bitacora para su inspeccion.
+                            # ~ #~ print 'No hubo precio de
+                            # lista para la fecha
+                            # estipulada, hay que generar
+                            # el precio en este producto
+                            # \n'
+                            noprice_ids.create(cr, uid, {
+                                'commission_id':
+                                comm_brw.id,
+                                'product_id': prod_id,
+                                'date':
+                                inv_brw.date_invoice,
+                                'invoice_num':
+                                inv_brw.number,
+                            }, context=None)
+                    else:
+                        # cuando una linea no tiene
+                        # product_id asociado se escribe en
+                        # una tabla para alertar al
+                        # operador sobre esta parte no
+                        # llego a un acuerdo de si se
+                        # podria permitir al operador
+                        # cambiar las lineas de la factura
+                        # puesto que es un asunto muy
+                        # delicado.
+                        sale_noids.create(cr, uid, {
+                            'commission_id': comm_brw.id,
+                            'inv_line_id': inv_lin.id,
+                        }, context=None)
+            for payment_brw in \
+                    avl_obj.browse(cr, uid, uninvoice_payment_ids,
+                                   context=context):
+                # Si esta aqui dentro es porque esta linea
+                # (transaccion) no tiene factura valida, se
+                # escribe entonces una linea en una vista donde
+                # se muestran las transacciones que no tienen
+                # factura asociada para su correccion si
+                # aplica. tampoco se ha pagado la comision del
+                # mismo solo se incluiran pagos que sean de
+                # cuentas cobrables, puesto que las de otra
+                # naturaleza, no tienen sentido mostrarlas
+                # aqui.
+                if payment_brw.account_id.type == 'receivable':
+                    uninvoiced_pays.create(cr, uid, {
+                        'commission_id': comm_brw.id,
+                        'payment_id': payment_brw.id,
+                    }, context=None)
         return True
 
     def prepare(self, cr, user, ids, context=None):
