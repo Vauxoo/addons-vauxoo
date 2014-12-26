@@ -171,6 +171,69 @@ class commission_payment(osv.Model):
 
         return True
 
+    def _get_commission_rate(self, cr, uid, ids, pay_date, inv_date, dcto=0.0,
+                             context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        context = context or {}
+        comm_brw = self.browse(cr, uid, ids[0], context=context)
+        # Determinar dias entre la emision de la factura del producto y el pago
+        # del mismo
+        pay_date = mx.DateTime.strptime(pay_date, '%Y-%m-%d')
+        inv_date = mx.DateTime.strptime(inv_date, '%Y-%m-%d')
+        emission_days = (pay_date - inv_date).day
+
+        # Teniendose dias y descuento por producto se procede a buscar en el
+        # baremo el correspondiente valor de comision para el producto en
+        # cuestion. se entra con el numero de dias
+
+        # Esta busqueda devuelve los dias ordenadados de menor a mayor dia, de
+        # acuerdo con lo estipulado que se ordenaria en el modulo baremo
+        bar_day_ids = comm_brw.bar_id.bar_ids
+
+        no_days = True
+        no_dcto = True
+        for day_id in bar_day_ids:
+            # Se busca que el baremo tenga un rango que cubra a emision_days
+            if emission_days <= day_id.number:
+                bar_day = day_id.number
+                no_days = False
+                no_dcto = True
+                for dcto_id in day_id.disc_ids:
+                    # Se busca que el baremo tenga un rango para el valor de
+                    # descuento en producto
+                    if (dcto - dcto_id.porc_disc) <= 0.01:
+                        bardctdsc = dcto_id.porc_disc
+                        if bardctdsc == 0.0:
+                            # cuando el descuento en baremo es cero (0) no
+                            # aparece reflejado, forzamos a que sea un cero (0)
+                            # string.
+                            bardctdsc = 0.0
+                        bar_dcto_comm = dcto_id.porc_com
+                        no_dcto = False
+                        break
+                break
+
+        if (not no_days) and no_dcto:
+            bar_dcto_comm = 0.0
+            bardctdsc = 0.0
+
+        # Si emission_days no es cubierto por ningun rango del baremo diremos
+        # entonces que la comision es cero (0) %
+        elif no_days and no_dcto:
+            # Diremos que los dias de baremo es menos uno (-1) cuando los dias
+            # de emision no esten dentro del rango del baremo
+            bar_day = '0.0'
+            bardctdsc = 0.0
+            bar_dcto_comm = 0.0
+
+        res = dict(
+            bar_day=bar_day,
+            bar_dcto_comm=bar_dcto_comm,
+            bardctdsc=bardctdsc,
+            emission_days=emission_days,
+        )
+        return res
+
     def _commission_based_on_payments(self, cr, uid, ids, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
@@ -266,65 +329,15 @@ class commission_payment(osv.Model):
                                              list_price, 1)
                             rate_item = dcto
 
-                            # Determinar dias entre la emision de la factura
-                            # del producto y el pago del mismo
-                            pay_date = mx.DateTime.\
-                                strptime(payment_brw.voucher_id.date,
-                                         '%Y-%m-%d')
-                            inv_date = mx.DateTime.\
-                                strptime(inv_brw.date_invoice, '%Y-%m-%d')
-                            emission_days = (pay_date - inv_date).day
+                            commission_params = self._get_commission_rate(
+                                cr, uid, comm_brw.id,
+                                payment_brw.voucher_id.date,
+                                inv_brw.date_invoice, dcto=dcto)
 
-                            # Teniendose dias y descuento por producto se
-                            # procede a buscar en el baremo el correspondiente
-                            # valor de comision para el producto en cuestion.
-                            # se entra con el numero de dias
-
-                            # Esta busqueda devuelve los dias ordenadados de
-                            # menor a mayor dia, de acuerdo con lo estipulado
-                            # que se ordenaria en el modulo baremo
-                            bar_day_ids = comm_brw.bar_id.bar_ids
-
-                            no_days = True
-                            no_dcto = True
-                            for day_id in bar_day_ids:
-                                # Se busca que el baremo tenga un rango que
-                                # cubra a emision_days
-                                if emission_days <= day_id.number:
-                                    bar_day = day_id.number
-                                    no_days = False
-                                    no_dcto = True
-                                    for dcto_id in day_id.disc_ids:
-                                        # Se busca que el baremo tenga un rango
-                                        # para el valor de descuento en
-                                        # producto
-                                        if (dcto - dcto_id. porc_disc) <= 0.01:
-                                            bardctdsc = dcto_id.porc_disc
-                                            if bardctdsc == 0.0:
-                                                # cuando el descuento en baremo
-                                                # es cero (0) no aparece
-                                                # reflejado, forzamos a que sea
-                                                # un cero (0) string.
-                                                bardctdsc = 0.0
-                                            bar_dcto_comm = dcto_id.porc_com
-                                            no_dcto = False
-                                            break
-                                    break
-
-                            if (not no_days) and no_dcto:
-                                bar_dcto_comm = 0.0
-                                bardctdsc = 0.0
-
-                            # Si emission_days no es cubierto por ningun rango
-                            # del baremo diremos entonces que la comision es
-                            # cero (0) %
-                            elif no_days and no_dcto:
-                                # Diremos que los dias de baremo es menos uno
-                                # (-1) cuando los dias de emision no esten
-                                # dentro del rango del baremo
-                                bar_day = '0.0'
-                                bardctdsc = 0.0
-                                bar_dcto_comm = 0.0
+                            bar_day = commission_params['bar_day']
+                            bar_dcto_comm = commission_params['bar_dcto_comm']
+                            bardctdsc = commission_params['bardctdsc']
+                            emission_days = commission_params['emission_days']
 
                             #############################################
                             # CALCULO DE COMISION POR LINEA DE PRODUCTO #
