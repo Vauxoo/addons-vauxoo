@@ -2,6 +2,7 @@ from openerp.osv import osv, fields
 import mx.DateTime
 from openerp.tools.translate import _
 from openerp.addons.decimal_precision import decimal_precision as dp
+import datetime
 
 COMMISSION_STATES = [
     ('draft', 'Draft'),
@@ -14,6 +15,15 @@ COMMISSION_TYPES = [
     ('partial_payment', 'Based on Partial Payments'),
     ('fully_paid_invoice', 'Based on Fully Paid Invoices'),
 ]
+
+
+def tTime(dt):
+    '''
+    Trims time from "%Y-%m-%d %H:%M:%S" to "%Y-%m-%d"
+    '''
+    dt = datetime.datetime.strptime(dt, "%Y-%m-%d %H:%M:%S")
+    dt = datetime.date(dt.year, dt.month, dt.day)
+    return dt.strftime("%Y-%m-%d")
 
 
 class commission_payment(osv.Model):
@@ -192,7 +202,6 @@ class commission_payment(osv.Model):
         })
 
         # Consultas
-        vouchers = self.pool.get('account.voucher')
         prod_prices = self.pool.get('product.historic.price')
 
         # Elementos Internos
@@ -205,12 +214,6 @@ class commission_payment(osv.Model):
         comm_voucher_ids = self.pool.get('commission.voucher')
         comm_invoice_ids = self.pool.get('commission.invoice')
         comm_retention_ids = self.pool.get('commission.retention')
-
-        # Retenciones
-        # de IVA
-        # de ISLR
-        # de IM
-        mun_obj = self.pool.get('account.wh.munici.line')
 
         # commissions = self.pool.get('commission.payment')
         commissions = self.browse(cr, user, ids, context=None)
@@ -266,7 +269,8 @@ class commission_payment(osv.Model):
                                             # =================================
                                             # Si esta aqui es porque hay un
                                             # producto asociado
-                                            prod_id = inv_lin.product_id.id
+                                            prod_id = inv_lin.product_id.\
+                                                product_tmpl_id.id
                                             # se obtienen las listas de precio,
                                             # vienen ordenadas por defecto, de
                                             # acuerdo al objeto
@@ -286,7 +290,8 @@ class commission_payment(osv.Model):
                                                         cr, user, price_id,
                                                         context=context)
                                                 if inv_brw.date_invoice >= \
-                                                        prod_prices_brw.name:
+                                                        tTime(prod_prices_brw.
+                                                              name):
                                                     list_price = \
                                                         prod_prices_brw.price
                                                     list_date = \
@@ -427,13 +432,13 @@ class commission_payment(osv.Model):
                                                         inv_lin.price_subtotal
                                                         /
                                                         inv_brw.amount_untaxed)
-                                                fact_sup = 1 - perc_ret_islr / \
-                                                    100 - perc_ret_im / 100
-                                                fact_inf = 1 + (perc_iva /
+                                                fact_sup = 1 - 0.0 / \
+                                                    100 - 0.0 / 100
+                                                fact_inf = 1 + (0.0 /
                                                                 100) * (
-                                                    1 - perc_ret_iva / 100) - \
-                                                    perc_ret_islr / 100 - \
-                                                    perc_ret_im / 100
+                                                    1 - 0.0 / 100) - \
+                                                    0.0 / 100 - \
+                                                    0.0 / 100
 
                                                 comm_line = penbxlinea * \
                                                     fact_sup * \
@@ -460,7 +465,8 @@ class commission_payment(osv.Model):
                                                         payment_brw.id,
                                                         'invoice_id':
                                                         payment_brw.
-                                                        invoice_id.id,
+                                                        move_line_id.
+                                                        invoice.id,
                                                         'invoice_num':
                                                         inv_brw.number,
                                                         'partner_id':
@@ -485,13 +491,6 @@ class commission_payment(osv.Model):
                                                         list_price,
                                                         'price_date':
                                                         list_date,
-                                                        'perc_ret_islr':
-                                                        perc_ret_islr,
-                                                        'perc_ret_im':
-                                                        perc_ret_im,
-                                                        'perc_ret_iva':
-                                                        perc_ret_iva,
-                                                        'perc_iva': perc_iva,
                                                         'rate_item': rate_item,
                                                         'rate_number':
                                                         bardctdsc,
@@ -516,8 +515,6 @@ class commission_payment(osv.Model):
                                                 # estipulada, hay que generar
                                                 # el precio en este producto
                                                 # \n'
-                                                import pdb
-                                                pdb.set_trace()
                                                 noprice_ids.create(cr, user, {
                                                     'commission_id':
                                                     commission.id,
@@ -556,9 +553,6 @@ class commission_payment(osv.Model):
                                         payment_brw.invoice_id.id,
                                         'voucher_id': voucher_brw.id,
                                         'date': voucher_brw.date,
-                                        'ret_iva': no_ret_iva,
-                                        'ret_islr': no_ret_islr,
-                                        'ret_im': no_ret_im,
                                     }, context=None)
                             elif (payment_brw.invoice_id.id is False and
                                   payment_brw.paid_comm is False):
