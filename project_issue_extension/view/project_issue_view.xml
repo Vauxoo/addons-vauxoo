@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+          <record id="view_issue_filter" model="ir.ui.view">
+            <field name="name">Project Issue Tracker Search</field>
+            <field name="model">project.issue</field>
+            <field name="type">search</field>
+            <field name="inherit_id" ref="project_issue.view_project_issue_filter"/>
+            <field name="arch" type="xml">
+               <xpath expr='/search/group[@string="Group By..."]/filter[@string="Responsible"]' position="before">
+               </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="project_view">
+            <field name="name">Project Issue Tracker Form</field>
+            <field name="model">project.issue</field>
+            <field name="inherit_id" ref="project_issue.project_issue_form_view"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr='//button[@name="case_cancel"]' position="after">
+                    <button string="Take for Me"
+                        class="oe_highlight"
+                        name="take_for_me"
+                        help="Assign this issue to yourself"
+                        type="object"/>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="project_view_tree_inherit">
+            <field name="name">Project Issue Tracker Form</field>
+            <field name="model">project.issue</field>
+            <field name="inherit_id" ref="project_issue.project_issue_tree_view"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr='/tree/field[@name="project_id"]' position="before">
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
+
