@@ -45,8 +45,9 @@
                             <div class="oe_edit_only">
                                 <label class="oe_edit_only" for="commission_type" string="Commission Computation Basis"/>
                             </div>
-                            <field name="commission_type"
-                                placeholder="Commission Computation Basis"
+                            <field
+                                name="commission_type"
+                                widget="radio"
                                 />
                         </div>
                         <group col="2" colspan="2">
