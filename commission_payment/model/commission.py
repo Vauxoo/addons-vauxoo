@@ -131,7 +131,7 @@ class commission_payment(osv.Model):
         context = context or {}
         av_obj = self.pool.get('account.voucher')
 
-        for comm_brw in self.browse(cr, uid, ids[0], context=context):
+        for comm_brw in self.browse(cr, uid, ids, context=context):
             invoice_ids = [(3, x.id) for x in comm_brw.invoice_ids]
             if invoice_ids:
                 comm_brw.write({'invoice_ids': invoice_ids})
@@ -156,80 +156,34 @@ class commission_payment(osv.Model):
     def _prepare_based_on_invoices(self, cr, uid, ids, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
-        for comm_brw in self.browse(cr, uid, ids[0], context=context):
+        for comm_brw in self.browse(cr, uid, ids, context=context):
             voucher_ids = [(3, x.id) for x in comm_brw.voucher_ids]
             if voucher_ids:
                 comm_brw.write({'voucher_ids': voucher_ids})
 
         return True
 
-    def prepare(self, cr, user, ids, context=None):
-        """
-        Este metodo recorre los elementos de account_voucher y verifica al
-        menos tres (3) caracteristicas primordiales para continuar con los
-        vouchers: estas caracteristicas son:
-        - bank_rec_voucher: quiere decir que el voucher es de un deposito
-        bancario (aqui aun no se ha considerado el trato que se le da a los
-        cheques devueltos).
-        - posted: quiere decir que el voucher ya se ha contabilizado, condicion
-        necesaria pero no suficiente.
-        - move_ids: si la longitud de estos es distinto de cero es porque este
-        voucher es por completo valido, es decir, realmente tiene asientos
-        contables registrados.
-
-        Si estas tres (3) condiciones se cumplen entonces se puede proceder a
-        realizar la revision de las lineas de pago.
-
-
-        @param cr: cursor to database
-        @param user: id of current user
-        @param ids: list of record ids to be process
-        @param context: context arguments, like lang, time zone
-
-        @return: return a result
-        """
-        uid = user
+    def _commission_based_on_payments(self, cr, uid, ids, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
-        comm_brw = self.browse(cr, uid, ids[0], context=context)
-        if comm_brw.commission_type == 'partial_payment':
-            self._prepare_based_on_payments(cr, uid, ids, context=context)
-        elif comm_brw.commission_type == 'fully_paid_invoice':
-            self._prepare_based_on_invoices(cr, uid, ids, context=context)
 
-        self.write(cr, user, ids, {
-            'state': 'open',
-        })
-
-        # Consultas
         prod_prices = self.pool.get('product.historic.price')
-
-        # Elementos Internos
         uninvoiced_pays = self.pool.get('commission.uninvoiced')
         sale_noids = self.pool.get('commission.sale.noid')
         noprice_ids = self.pool.get('commission.noprice')
         comm_line_ids = self.pool.get('commission.lines')
-        saleman_ids = self.pool.get('commission.saleman')
-        # users_ids = self.pool.get ('commission.users')
-        comm_voucher_ids = self.pool.get('commission.voucher')
-        comm_invoice_ids = self.pool.get('commission.invoice')
         comm_retention_ids = self.pool.get('commission.retention')
 
-        # commissions = self.pool.get('commission.payment')
-        commissions = self.browse(cr, user, ids, context=None)
-
-        for commission in commissions:
+        for comm_brw in self.browse(cr, uid, ids, context=context):
             # Desvincular lineas existentes, si las hubiere
-            self.unlink(cr, user, ids, context=None)
+            comm_brw.unlink()
 
             # Obtener la lista de asesores/vendedores a los cuales se les hara
             # el calculo de comisiones
             user_ids = []
-            user_ids = [line.id for line in commission.user_ids]
+            user_ids = [line.id for line in comm_brw.user_ids]
 
-            # TODO: Se necesita hacer si no se consiguen nuevos voucher_ids
-
-            for voucher_brw in commission.voucher_ids:
+            for voucher_brw in comm_brw.voucher_ids:
                 if voucher_brw.move_ids and voucher_brw.line_cr_ids:
                     # Con la negacion de esta condicion se termina de realizar
                     # la revision de las lineas de pago que cumplen con las
@@ -277,7 +231,7 @@ class commission_payment(osv.Model):
                                             # product.historic de mayor a menor
                                             # fecha
                                             price_ids = prod_prices.search(
-                                                cr, user,
+                                                cr, uid,
                                                 [('product_id', '=', prod_id)])
                                             # Buscar Precio Historico de Venta
                                             # de este producto @ la fecha de
@@ -287,7 +241,7 @@ class commission_payment(osv.Model):
                                             for price_id in price_ids:
                                                 prod_prices_brw = \
                                                     prod_prices.browse(
-                                                        cr, user, price_id,
+                                                        cr, uid, price_id,
                                                         context=context)
                                                 if inv_brw.date_invoice >= \
                                                         tTime(prod_prices_brw.
@@ -350,7 +304,7 @@ class commission_payment(osv.Model):
                                                 # mayor dia, de acuerdo con lo
                                                 # estipulado que se ordenaria
                                                 # en el modulo baremo
-                                                bar_day_ids = commission.\
+                                                bar_day_ids = comm_brw.\
                                                     bar_id.bar_ids
 
                                                 no_days = True
@@ -448,9 +402,9 @@ class commission_payment(osv.Model):
                                                 # comision por cada producto
 
                                                 comm_line_ids.create(
-                                                    cr, user, {
+                                                    cr, uid, {
                                                         'commission_id':
-                                                        commission.id,
+                                                        comm_brw.id,
                                                         'voucher_id':
                                                         voucher_brw.id,
                                                         'name':
@@ -515,9 +469,9 @@ class commission_payment(osv.Model):
                                                 # estipulada, hay que generar
                                                 # el precio en este producto
                                                 # \n'
-                                                noprice_ids.create(cr, user, {
+                                                noprice_ids.create(cr, uid, {
                                                     'commission_id':
-                                                    commission.id,
+                                                    comm_brw.id,
                                                     'product_id': prod_id,
                                                     'date':
                                                     inv_brw.date_invoice,
@@ -534,8 +488,8 @@ class commission_payment(osv.Model):
                                             # cambiar las lineas de la factura
                                             # puesto que es un asunto muy
                                             # delicado.
-                                            sale_noids.create(cr, user, {
-                                                'commission_id': commission.id,
+                                            sale_noids.create(cr, uid, {
+                                                'commission_id': comm_brw.id,
                                                 'inv_line_id': inv_lin.id,
                                             }, context=None)
                                 else:
@@ -547,8 +501,8 @@ class commission_payment(osv.Model):
                                     # retenciones y el numero de la factura
                                     # para tener detalles concisos y porcion de
                                     # voucher de pago de la factura en cuestion
-                                    comm_retention_ids.create(cr, user, {
-                                        'commission_id': commission.id,
+                                    comm_retention_ids.create(cr, uid, {
+                                        'commission_id': comm_brw.id,
                                         'invoice_id':
                                         payment_brw.invoice_id.id,
                                         'voucher_id': voucher_brw.id,
@@ -567,8 +521,8 @@ class commission_payment(osv.Model):
                                 # naturaleza, no tienen sentido mostrarlas
                                 # aqui.
                                 if payment_brw.account_id.type == 'receivable':
-                                    uninvoiced_pays.create(cr, user, {
-                                        'commission_id': commission.id,
+                                    uninvoiced_pays.create(cr, uid, {
+                                        'commission_id': comm_brw.id,
                                         'payment_id': payment_brw.id,
                                     }, context=None)
                         else:
@@ -576,6 +530,63 @@ class commission_payment(osv.Model):
                             # se esta consultando no se incorporo a la lista de
                             # asesores a los que se debe calcular la comision
                             pass
+
+        return True
+
+    def prepare(self, cr, user, ids, context=None):
+        """
+        Este metodo recorre los elementos de account_voucher y verifica al
+        menos tres (3) caracteristicas primordiales para continuar con los
+        vouchers: estas caracteristicas son:
+        - bank_rec_voucher: quiere decir que el voucher es de un deposito
+        bancario (aqui aun no se ha considerado el trato que se le da a los
+        cheques devueltos).
+        - posted: quiere decir que el voucher ya se ha contabilizado, condicion
+        necesaria pero no suficiente.
+        - move_ids: si la longitud de estos es distinto de cero es porque este
+        voucher es por completo valido, es decir, realmente tiene asientos
+        contables registrados.
+
+        Si estas tres (3) condiciones se cumplen entonces se puede proceder a
+        realizar la revision de las lineas de pago.
+
+
+        @param cr: cursor to database
+        @param user: id of current user
+        @param ids: list of record ids to be process
+        @param context: context arguments, like lang, time zone
+
+        @return: return a result
+        """
+        uid = user
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        context = context or {}
+        comm_brw = self.browse(cr, uid, ids[0], context=context)
+        if comm_brw.commission_type == 'partial_payment':
+            self._prepare_based_on_payments(cr, uid, ids, context=context)
+        elif comm_brw.commission_type == 'fully_paid_invoice':
+            self._prepare_based_on_invoices(cr, uid, ids, context=context)
+
+        self._commission_based_on_payments(cr, uid, ids, context=context)
+
+        self.write(cr, user, ids, {
+            'state': 'open',
+        })
+
+        comm_line_ids = self.pool.get('commission.lines')
+        saleman_ids = self.pool.get('commission.saleman')
+        # users_ids = self.pool.get ('commission.users')
+        comm_voucher_ids = self.pool.get('commission.voucher')
+        comm_invoice_ids = self.pool.get('commission.invoice')
+
+        # commissions = self.pool.get('commission.payment')
+        commissions = self.browse(cr, user, ids, context=None)
+
+        for commission in commissions:
+            pass
+
+            # TODO: Se necesita hacer si no se consiguen nuevos voucher_ids
+
         # habiendo recorrido todos los vouchers, mostrado todos los elementos
         # que necesitan correccion se procede a agrupar las comisiones por
         # vendedor para mayor facilidad de uso
@@ -587,7 +598,6 @@ class commission_payment(osv.Model):
         commissions = self.browse(cr, user, ids, context=None)
         saleman_ids = self.pool.get('commission.saleman')
         comm_voucher_ids = self.pool.get('commission.voucher')
-        comm_retention_ids = self.pool.get('commission.retention')
 
         for commission in commissions:
 
@@ -706,6 +716,8 @@ class commission_payment(osv.Model):
 
     def unlink(self, cr, user, ids, context=None):
 
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+
         uninvoiced_pays = self.pool.get('commission.uninvoiced')
         sale_noids = self.pool.get('commission.sale.noid')
         noprice_ids = self.pool.get('commission.noprice')
@@ -716,9 +728,7 @@ class commission_payment(osv.Model):
         comm_invoice_ids = self.pool.get('commission.invoice')
         comm_retention_ids = self.pool.get('commission.retention')
 
-        commissions = self.browse(cr, user, ids, context=None)
-
-        for commission in commissions:
+        for commission in self.browse(cr, user, ids, context=None):
             ###
             # Desvincular todos los elementos que esten conectados a este
             # calculo de comisiones
