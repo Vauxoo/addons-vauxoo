@@ -492,22 +492,6 @@ class commission_payment(osv.Model):
                                                 'commission_id': comm_brw.id,
                                                 'inv_line_id': inv_lin.id,
                                             }, context=None)
-                                else:
-                                    # TODO: REVISAR QUE HACEMOS CON ESTA PARTE
-                                    # DEL CODIGO
-                                    # generar campo y vista donde se han de
-                                    # cargar las facturas que tienen problemas
-                                    # se debe grabar los tres campos de las
-                                    # retenciones y el numero de la factura
-                                    # para tener detalles concisos y porcion de
-                                    # voucher de pago de la factura en cuestion
-                                    comm_retention_ids.create(cr, uid, {
-                                        'commission_id': comm_brw.id,
-                                        'invoice_id':
-                                        payment_brw.invoice_id.id,
-                                        'voucher_id': voucher_brw.id,
-                                        'date': voucher_brw.date,
-                                    }, context=None)
                             elif (payment_brw.invoice_id.id is False and
                                   payment_brw.paid_comm is False):
                                 # Si esta aqui dentro es porque esta linea
