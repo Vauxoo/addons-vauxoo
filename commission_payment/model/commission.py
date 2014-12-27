@@ -234,7 +234,8 @@ class commission_payment(osv.Model):
         )
         return res
 
-    def _get_commission_payment(self, cr, uid, ids, pay_id, context=None):
+    def _get_commission_payment_on_invoice_line(self, cr, uid, ids, pay_id,
+                                                context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
         comm_brw = self.browse(cr, uid, ids[0], context=context)
@@ -283,8 +284,8 @@ class commission_payment(osv.Model):
                     # Determinar cuanto fue el
                     # descuento en este producto en
                     # aquel momento de la venta
-                    if abs((inv_lin.price_subtotal / inv_lin.quantity)
-                            - inv_lin.price_unit) > 0.05:
+                    if abs((inv_lin.price_subtotal / inv_lin.quantity) -
+                           inv_lin.price_unit) > 0.05:
                         # con esto se asegura que no se esta pasando
                         # por alto el descuento en linea
                         price_unit = round((inv_lin.price_subtotal /
@@ -376,6 +377,92 @@ class commission_payment(osv.Model):
                 sale_noids.create(cr, uid, {'commission_id': comm_brw.id,
                                             'inv_line_id': inv_lin.id, },
                                   context=None)
+        return True
+
+    def _get_commission_payment_on_invoice(self, cr, uid, ids, pay_id,
+                                           context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        context = context or {}
+        comm_brw = self.browse(cr, uid, ids[0], context=context)
+
+        avl_obj = self.pool.get('account.voucher.line')
+        comm_line_ids = self.pool.get('commission.lines')
+
+        payment_brw = avl_obj.browse(cr, uid, pay_id, context=context)
+
+        # Si esta aqui dentro es porque esta linea tiene una id valida
+        # de una factura.
+        inv_brw = payment_brw.move_line_id.invoice
+
+        # Obtener el vendedor del partner
+        saleman = inv_brw.partner_id.user_id
+
+        commission_params = self._get_commission_rate(
+            cr, uid, comm_brw.id,
+            payment_brw.voucher_id.date,
+            inv_brw.date_invoice, dcto=0.0)
+
+        bar_day = commission_params['bar_day']
+        bar_dcto_comm = commission_params['bar_dcto_comm']
+        bardctdsc = commission_params['bardctdsc']
+        emission_days = commission_params['emission_days']
+
+        #############################################
+        # CALCULO DE COMISION POR LINEA DE PRODUCTO #
+        #############################################
+
+        penbxlinea = payment_brw.amount * (
+            inv_brw.amount_untaxed /
+            inv_brw.amount_untaxed)
+        fact_sup = 1 - 0.0 / 100 - 0.0 / 100
+        fact_inf = 1 + (0.0 / 100) * (1 - 0.0 / 100) - \
+            0.0 / 100 - 0.0 / 100
+
+        comm_line = penbxlinea * fact_sup * (
+            bar_dcto_comm / 100) / fact_inf
+
+        # Generar las lineas de comision por cada producto
+        comm_line_ids.create(
+            cr, uid, {
+                'commission_id': comm_brw.id,
+                'voucher_id': payment_brw.voucher_id.id,
+                'name':
+                payment_brw.voucher_id.name and
+                payment_brw.voucher_id.name or '/',
+                'pay_date': payment_brw.voucher_id.date,
+                'pay_off': payment_brw.voucher_id.amount,
+                'concept': payment_brw.id,
+                'invoice_id':
+                payment_brw.move_line_id.invoice.id,
+                'invoice_num': inv_brw.number,
+                'partner_id': inv_brw.partner_id.id,
+                'saleman_name': saleman and saleman.name,
+                'saleman_id': saleman and saleman.id,
+                'pay_inv': payment_brw.amount,
+                'inv_date': inv_brw.date_invoice,
+                'days': emission_days,
+                'inv_subtotal': inv_brw.amount_untaxed,
+                'rate_number': bardctdsc,
+                'timespan': bar_day,
+                'baremo_comm': bar_dcto_comm,
+                'commission': comm_line,
+            }, context=None)
+
+        return True
+
+    def _get_commission_payment(self, cr, uid, ids, pay_id, context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        context = context or {}
+        comm_brw = self.browse(cr, uid, ids[0], context=context)
+        if comm_brw.commission_scope == 'product_baremo':
+            self._get_commission_payment_on_invoice_line(cr, uid, ids, pay_id,
+                                                         context=context)
+        elif comm_brw.commission_scope == 'partner_baremo':
+            self._get_commission_payment_on_invoice(cr, uid, ids, pay_id,
+                                                    context=context)
+            pass
+
+        return True
 
     def _commission_based_on_payments(self, cr, uid, ids, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
