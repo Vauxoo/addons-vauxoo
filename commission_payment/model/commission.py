@@ -247,6 +247,8 @@ class commission_payment(osv.Model):
         comm_line_ids = self.pool.get('commission.lines')
 
         payment_brw = avl_obj.browse(cr, uid, pay_id, context=context)
+        if not payment_brw.amount:
+            return True
 
         # Si esta aqui dentro es porque esta linea tiene una id valida
         # de una factura.
@@ -389,6 +391,8 @@ class commission_payment(osv.Model):
         comm_line_ids = self.pool.get('commission.lines')
 
         payment_brw = avl_obj.browse(cr, uid, pay_id, context=context)
+        if not payment_brw.amount:
+            return True
 
         # Si esta aqui dentro es porque esta linea tiene una id valida
         # de una factura.
@@ -867,7 +871,7 @@ class commission_lines(osv.Model):
             'SubTot. Doc.',
             digits_compute=dp.get_precision('Commission')),
 
-        'item': fields.char('Item', size=256, required=True),
+        'item': fields.char('Item', size=256, required=False),
         'price_unit': fields.float(
             'Prec. Unit.',
             digits_compute=dp.get_precision('Commission')),
