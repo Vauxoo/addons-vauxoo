@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
-    
+
     <menuitem id="commission" name="Commission Settings" parent="base.menu_base_config" groups="baremo.group_baremo_manager" sequence="10"/>
 
     <record model="ir.ui.view" id="view_baremo_book_form">
@@ -16,7 +16,7 @@
             </form>
         </field>
     </record>
-    
+
     <record model="ir.ui.view" id="view_baremo_book_tree">
         <field name="name">baremo.book.tree</field>
         <field name="model">baremo.book</field>
@@ -36,7 +36,7 @@
         <record model="ir.actions.act_window.view" id="action_baremo_book_tree">
             <field name="sequence" eval="10"/>
             <field name="view_mode">tree</field>
-            <field name="view_id" ref="view_baremo_book_tree"/> 
+            <field name="view_id" ref="view_baremo_book_tree"/>
             <field name="act_window_id" ref="commision_baremo_act"/>
         </record>
         <record model="ir.actions.act_window.view" id="action_baremo_book_form">
@@ -45,11 +45,11 @@
             <field name="view_id" ref="view_baremo_book_form"/>
             <field name="act_window_id" ref="commision_baremo_act"/>
         </record>
-    
-    
+
+
     <menuitem name="Baremes" parent="commission" id="menu_baremes_tree" action="commision_baremo_act" groups="baremo.group_baremo_manager"/>
-    
-    
+
+
     <record model="ir.ui.view" id="view_baremo_form">
         <field name="name">baremo.form</field>
         <field name="model">baremo</field>
@@ -67,7 +67,7 @@
             </form>
         </field>
     </record>
-    
+
     <record model="ir.ui.view" id="view_baremo_tree">
         <field name="name">baremo.tree</field>
         <field name="model">baremo</field>
@@ -79,7 +79,7 @@
             </tree>
         </field>
     </record>
-    
+
     <record model="ir.ui.view" id="view_baremo_discount_form">
         <field name="name">baremo.discount.tree</field>
         <field name="model">baremo.discount</field>
@@ -93,6 +93,17 @@
             </form>
         </field>
     </record>
-    
+
+    <record id="res_partner_view_baremo" model="ir.ui.view">
+        <field name="name">res.partner.view.baremo</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="baremo_id"/>
+            </xpath>
+        </field>
+    </record>
+
     </data>
 </openerp>

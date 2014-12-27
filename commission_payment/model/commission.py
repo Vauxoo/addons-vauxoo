@@ -182,7 +182,7 @@ class commission_payment(osv.Model):
         return True
 
     def _get_commission_rate(self, cr, uid, ids, pay_date, inv_date, dcto=0.0,
-                             context=None):
+                             bar_brw=None, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
         comm_brw = self.browse(cr, uid, ids[0], context=context)
@@ -198,7 +198,7 @@ class commission_payment(osv.Model):
 
         # Esta busqueda devuelve los dias ordenadados de menor a mayor dia, de
         # acuerdo con lo estipulado que se ordenaria en el modulo baremo
-        bar_day_ids = comm_brw.bar_id.bar_ids
+        bar_day_ids = bar_brw and bar_brw.bar_ids or comm_brw.bar_id.bar_ids
 
         no_days = True
         no_dcto = True
@@ -415,7 +415,8 @@ class commission_payment(osv.Model):
         commission_params = self._get_commission_rate(
             cr, uid, comm_brw.id,
             payment_brw.voucher_id.date,
-            inv_brw.date_invoice, dcto=0.0)
+            inv_brw.date_invoice, dcto=0.0,
+            bar_brw=inv_brw.partner_id.baremo_id)
 
         bar_day = commission_params['bar_day']
         bar_dcto_comm = commission_params['bar_dcto_comm']
