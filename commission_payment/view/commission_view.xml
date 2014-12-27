@@ -44,20 +44,20 @@
                             </h1>
                             <group col="4" colspan="2">
                                 <group col="2" colspan="2">
+                                    <label for="date_start"/>
+                                    <field name="date_start" nolabel="1"/>
                                     <field
                                         name="commission_type"
                                         widget="radio"
                                         />
-                                    <label for="date_start"/>
-                                    <field name="date_start" nolabel="1"/>
                                 </group>
                                 <group col="2" colspan="2">
+                                    <label for="date_stop"/>
+                                    <field name="date_stop" nolabel="1"/>
                                     <field
                                         name="commission_scope"
                                         widget="radio"
                                         />
-                                    <label for="date_stop"/>
-                                    <field name="date_stop" nolabel="1"/>
                                 </group>
                                 <group col="2" colspan="4">
                                     <label for="bar_id" string="Baremo to be used if not policy set on Partner:"/>
