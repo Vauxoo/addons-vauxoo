@@ -94,5 +94,5 @@ class baremo_discount(osv.Model):
 class res_parter(osv.Model):
     _inherit = "res.partner"
     _columns = {
-        'baremo_id': fields.many2one('baremo.book', 'Baremo', required=True),
+        'baremo_id': fields.many2one('baremo.book', 'Baremo', required=False),
     }

@@ -17,8 +17,8 @@ COMMISSION_TYPES = [
 ]
 
 COMMISSION_SCOPES = [
-    ('partner_baremo', 'Baremo in Partner (Whole Invoice)'),
-    ('product_baremo', 'Baremo in Commission (Product Detailed)'),
+    ('whole_invoice', 'Based on Whole Invoice'),
+    ('product_invoiced', 'Based on Invoiced Products '),
 ]
 
 
@@ -312,7 +312,8 @@ class commission_payment(osv.Model):
                     commission_params = self._get_commission_rate(
                         cr, uid, comm_brw.id,
                         payment_brw.voucher_id.date,
-                        inv_brw.date_invoice, dcto=dcto)
+                        inv_brw.date_invoice, dcto=0.0,
+                        bar_brw=inv_brw.partner_id.baremo_id)
 
                     bar_day = commission_params['bar_day']
                     bar_dcto_comm = commission_params['bar_dcto_comm']
@@ -470,13 +471,12 @@ class commission_payment(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
         comm_brw = self.browse(cr, uid, ids[0], context=context)
-        if comm_brw.commission_scope == 'product_baremo':
+        if comm_brw.commission_scope == 'product_invoiced':
             self._get_commission_payment_on_invoice_line(cr, uid, ids, pay_id,
                                                          context=context)
-        elif comm_brw.commission_scope == 'partner_baremo':
+        elif comm_brw.commission_scope == 'whole_invoice':
             self._get_commission_payment_on_invoice(cr, uid, ids, pay_id,
                                                     context=context)
-            pass
 
         return True
 

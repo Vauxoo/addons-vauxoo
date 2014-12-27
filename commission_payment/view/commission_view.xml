@@ -62,7 +62,7 @@
                         <notebook colspan="6">
                             <page string="Datos">
                                 <group col="2" colspan="2">
-                                    <label align="0.0" string="Baremo a Usar:"/>
+                                    <label align="0.0" string="Baremo to be used if not policy set on Partner:"/>
                                     <newline/>
                                     <field colspan="2" name="bar_id" nolabel="1"/>
                                     <field name="date_start" nolabel="1"/>
@@ -120,14 +120,20 @@
                             <page string="Commissions by Salespeople">
                                 <field name="saleman_ids" nolabel="1" widget="one2many_list" colspan="4"/>
                             </page>
-                            <page string="Commissions on Products">
+                            <page
+                                string="Commissions on Products"
+                                attrs="{'invisible':[('commission_scope','!=','product_invoiced')]}"
+                                >
                                 <field
                                     name="comm_line_product_ids"
                                     nolabel="1"
                                     widget="one2many_list"
                                     colspan="4"/>
                             </page>
-                            <page string="Commissions on Invoices">
+                            <page
+                                string="Commissions on Invoices"
+                                attrs="{'invisible':[('commission_scope','!=','whole_invoice')]}"
+                                >
                                 <field
                                     name="comm_line_invoice_ids"
                                     nolabel="1"
