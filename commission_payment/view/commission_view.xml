@@ -355,5 +355,16 @@
                 </form>
             </field>
         </record>
+
+        <record id="view_invoice_customer_last_payment" model="ir.ui.view">
+            <field name="name">account.invoice.customer.last_payment</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='move_id']" position="after">
+                    <field name="date_last_payment"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>

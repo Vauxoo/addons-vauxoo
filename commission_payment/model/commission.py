@@ -176,10 +176,26 @@ class commission_payment(osv.Model):
     def _prepare_based_on_invoices(self, cr, uid, ids, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
+        inv_obj = self.pool.get('account.invoice')
+
         for comm_brw in self.browse(cr, uid, ids, context=context):
             voucher_ids = [(3, x.id) for x in comm_brw.voucher_ids]
             if voucher_ids:
                 comm_brw.write({'voucher_ids': voucher_ids})
+
+            date_start = comm_brw.date_start
+            date_stop = comm_brw.date_stop
+
+            # En esta busqueda restringimos que la factura de cliente se haya
+            # pagado y que  este dentro de la fecha estipulada
+            invoice_ids = inv_obj.search(
+                cr, uid, [('state', '=', 'paid'),
+                          ('type', '=', 'out_invoice'),
+                          ('date_last_payment', '>=', date_start),
+                          ('date_last_payment', '<=', date_stop)])
+
+            comm_brw.write({
+                'invoice_ids': [(6, comm_brw.id, invoice_ids)]})
 
         return True
 
@@ -1068,4 +1084,40 @@ class VoucherLines(osv.Model):
     }
     _defaults = {
         'paid_comm': lambda *a: False,
+    }
+
+
+class account_invoice(osv.Model):
+
+    def _date_last_payment(self, cr, uid, ids, fieldname, arg, context=None):
+        res = {}.fromkeys(ids, None)
+        context = context or {}
+        for inv_brw in self.browse(cr, uid, ids, context=context):
+            if inv_brw.type != 'out_invoice':
+                continue
+            date_last_payment = inv_brw.date_last_payment
+            for aml_brw in inv_brw.payment_ids:
+                if aml_brw.journal_id.type in ('bank', 'cash'):
+                    date_last_payment = aml_brw.date > date_last_payment and \
+                        aml_brw.date or date_last_payment
+
+            res[inv_brw.id] = date_last_payment
+        return res
+
+    def _get_related_date(self, cr, uid, ids, context=None):
+        res = set([])
+        aml_obj = self.pool.get('account.move.line')
+        for aml_brw in aml_obj.browse(cr, uid, ids, context=context):
+            if aml_brw.invoice:
+                res.add(aml_brw.invoice.id)
+        return list(res)
+
+    _inherit = "account.invoice"
+    _columns = {
+        'date_last_payment': fields.function(
+            _date_last_payment, string='Last Payment Date', type="date",
+            store={
+                _inherit: (lambda s, c, u, ids, cx: ids, ['residual'], 15),
+                'account.move.line': (_get_related_date, None, 20),
+            }),
     }
