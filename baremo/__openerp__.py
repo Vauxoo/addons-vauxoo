@@ -21,7 +21,7 @@
 {
     "name": "Baremo Para calculo de Comisiones",
     "version": "0.1",
-    "author": "Netquatro",
+    "author": "Vauxoo",
     "category": "Generic Modules",
     "description": """
     Crea un modelo para el calculo de comisiones.
