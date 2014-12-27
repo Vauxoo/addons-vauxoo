@@ -48,13 +48,13 @@ class commission_payment(osv.Model):
             'baremo.book', 'Baremo', required=True,
             readonly=True, states={'draft': [('readonly', False)]}),
         'date_start': fields.date(
-            'Desde', required=True, readonly=True,
+            'Date Start', required=True, readonly=True,
             states={'draft': [('readonly', False)]}),
         'date_stop': fields.date(
-            'Hasta', required=True, readonly=True,
+            'Date End', required=True, readonly=True,
             states={'draft': [('readonly', False)]}),
         'total_comm': fields.float(
-            'Total a Pagar',
+            'Total Commission',
             digits_compute=dp.get_precision('Commission'),
             readonly=True, states={'write': [('readonly', False)]}),
         'ret_notes': fields.text(
@@ -98,13 +98,11 @@ class commission_payment(osv.Model):
         'invoice_ids': fields.many2many(
             'account.invoice', 'commission_account_invoice', 'commission_id',
             'invoice_id', 'Invoices', readonly=True,
-            states={'draft': [('readonly', False)],
-                    'open': [('readonly', False)], }),
+            states={'draft': [('readonly', False)]}),
         'voucher_ids': fields.many2many(
             'account.voucher', 'commission_account_voucher', 'commission_id',
             'voucher_id', 'Vouchers', readonly=True,
-            states={'draft': [('readonly', False)],
-                    'open': [('readonly', False)], }),
+            states={'draft': [('readonly', False)]}),
         'comm_voucher_ids': fields.one2many(
             'commission.voucher',
             'commission_id', 'Vouchers afectados en esta comision',
@@ -120,10 +118,14 @@ class commission_payment(osv.Model):
         'state': fields.selection(COMMISSION_STATES, 'Estado', readonly=True),
         'commission_type': fields.selection(
             COMMISSION_TYPES,
-            string='Commission Basis', required=True),
+            string='Commission Basis', required=True,
+            readonly=True,
+            states={'draft': [('readonly', False)]}),
         'commission_scope': fields.selection(
             COMMISSION_SCOPES,
-            string='Commission Scope', required=False),
+            string='Commission Scope', required=False,
+            readonly=True,
+            states={'draft': [('readonly', False)]}),
     }
     _defaults = {
         'name': lambda *a: None,
@@ -340,8 +342,8 @@ class commission_payment(osv.Model):
                             'commission_id': comm_brw.id,
                             'voucher_id': payment_brw.voucher_id.id,
                             'name':
-                            payment_brw.voucher_id.name and
-                            payment_brw.voucher_id.name or '/',
+                            payment_brw.voucher_id.number and
+                            payment_brw.voucher_id.number or '/',
                             'pay_date': payment_brw.voucher_id.date,
                             'pay_off': payment_brw.voucher_id.amount,
                             'concept': payment_brw.id,
@@ -444,8 +446,8 @@ class commission_payment(osv.Model):
                 'commission_id': comm_brw.id,
                 'voucher_id': payment_brw.voucher_id.id,
                 'name':
-                payment_brw.voucher_id.name and
-                payment_brw.voucher_id.name or '/',
+                payment_brw.voucher_id.number and
+                payment_brw.voucher_id.number or '/',
                 'pay_date': payment_brw.voucher_id.date,
                 'pay_off': payment_brw.voucher_id.amount,
                 'concept': payment_brw.id,
