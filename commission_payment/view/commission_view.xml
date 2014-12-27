@@ -117,11 +117,22 @@
                             </page>
                         </notebook>
                         <notebook colspan="6">
-                            <page string="Comisiones x Vendedor">
+                            <page string="Commissions by Salespeople">
                                 <field name="saleman_ids" nolabel="1" widget="one2many_list" colspan="4"/>
                             </page>
-                            <page string="Comisiones x Producto">
-                                <field name="comm_line_ids" nolabel="1" widget="one2many_list" colspan="4"/>
+                            <page string="Commissions on Products">
+                                <field
+                                    name="comm_line_product_ids"
+                                    nolabel="1"
+                                    widget="one2many_list"
+                                    colspan="4"/>
+                            </page>
+                            <page string="Commissions on Invoices">
+                                <field
+                                    name="comm_line_invoice_ids"
+                                    nolabel="1"
+                                    widget="one2many_list"
+                                    colspan="4"/>
                             </page>
                             <page string="Facturas Afectadas">
                                 <field name="comm_invoice_ids" nolabel="1">

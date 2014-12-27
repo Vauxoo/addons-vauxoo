@@ -73,6 +73,16 @@ class commission_payment(osv.Model):
             'commission.noprice', 'commission_id',
             'Productos sin precio de lista historico', readonly=True,
             states={'write': [('readonly', False)]}),
+        'comm_line_product_ids': fields.one2many(
+            'commission.lines', 'commission_id',
+            'Comision por productos', readonly=True,
+            domain=[('product_id', '!=', False)],
+            states={'write': [('readonly', False)]}),
+        'comm_line_invoice_ids': fields.one2many(
+            'commission.lines', 'commission_id',
+            'Comision por productos', readonly=True,
+            domain=[('product_id', '=', False)],
+            states={'write': [('readonly', False)]}),
         'comm_line_ids': fields.one2many(
             'commission.lines', 'commission_id',
             'Comision por productos', readonly=True,
@@ -345,6 +355,7 @@ class commission_payment(osv.Model):
                             'days': emission_days,
                             'inv_subtotal': inv_brw.amount_untaxed,
                             'item': inv_lin.name,
+                            'product_id': inv_lin.product_id.id,
                             'price_unit': price_unit,
                             'price_subtotal': inv_lin.price_subtotal,
                             'price_list': list_price,
@@ -872,6 +883,7 @@ class commission_lines(osv.Model):
             digits_compute=dp.get_precision('Commission')),
 
         'item': fields.char('Item', size=256, required=False),
+        'product_id': fields.many2one('product.product', 'Item'),
         'price_unit': fields.float(
             'Prec. Unit.',
             digits_compute=dp.get_precision('Commission')),
