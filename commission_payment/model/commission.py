@@ -736,7 +736,7 @@ class commission_payment(osv.Model):
         })
         return True
 
-    def delete(self, cr, user, ids, context=None):
+    def action_draft(self, cr, user, ids, context=None):
 
         self.unlink(cr, user, ids, context=context)
         self.write(cr, user, ids, {'state': 'draft', 'total_comm': None},
@@ -789,6 +789,19 @@ class commission_payment(osv.Model):
             comm_retention_ids.unlink(
                 cr, user, [line.id for line in commission.comm_retention_ids])
             ###
+
+    def validate(self, cr, user, ids, context=None):
+        avl = self.pool.get('account.voucher.line')
+        # escribir en el avl el estado buleano de paid_comm a True para indicar
+        # que ya esta comision se esta pagando
+        for commission in self.browse(cr, user, ids, context=context):
+            avl.write(cr, user, [line.concept.id for line in
+                                 commission.comm_line_ids],
+                      {'paid_comm': True}, context=context)
+
+        self.write(cr, user, ids, {'state': 'done', }, context=context)
+        return True
+
 
 class commission_uninvoiced(osv.Model):
 
