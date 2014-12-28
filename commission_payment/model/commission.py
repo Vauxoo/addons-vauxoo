@@ -1,6 +1,5 @@
 from openerp.osv import osv, fields
 import mx.DateTime
-from openerp.tools.translate import _
 from openerp.addons.decimal_precision import decimal_precision as dp
 import datetime
 
