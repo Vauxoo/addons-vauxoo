@@ -607,27 +607,15 @@ class commission_payment(osv.Model):
         comm_voucher_ids = self.pool.get('commission.voucher')
         comm_invoice_ids = self.pool.get('commission.invoice')
 
-        # commissions = self.pool.get('commission.payment')
-        commissions = self.browse(cr, user, ids, context=None)
-
-        for commission in commissions:
-            pass
-
-            # TODO: Se necesita hacer si no se consiguen nuevos voucher_ids
-
         # habiendo recorrido todos los vouchers, mostrado todos los elementos
         # que necesitan correccion se procede a agrupar las comisiones por
         # vendedor para mayor facilidad de uso
 
-        # comm_line_ids.unlink(cr, user, [line_ids.id for line_ids in
-        # commission.comm_line_ids])
-
         # recargando las lineas que se han creado
-        commissions = self.browse(cr, user, ids, context=None)
         saleman_ids = self.pool.get('commission.saleman')
         comm_voucher_ids = self.pool.get('commission.voucher')
 
-        for commission in commissions:
+        for commission in self.browse(cr, user, ids, context=context):
 
             # recoge todos los vendedores y suma el total de sus comisiones
             sale_comm = {}
