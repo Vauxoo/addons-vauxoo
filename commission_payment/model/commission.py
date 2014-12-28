@@ -737,39 +737,11 @@ class commission_payment(osv.Model):
         })
         return True
 
-    def pre_process(self, cr, user, ids, context=None):
-        commissions = self.browse(cr, user, ids, context=None)
-        for commission in commissions:
-            self.prepare(cr, user, ids, context=None)
-
-            if commission.comm_line_ids:
-                self.write(cr, user, ids, {
-                    'state': 'decide',
-                })
-            else:
-                raise osv.except_osv(
-                    _('Atencion !'),
-                    _('No Existen Lineas de Comision x Producto que procesar \
-                      !!!'))
-
-            if not commission.noprice_ids:
-                self.write(cr, user, ids, {
-                    'state': 'decide',
-                })
-            else:
-                raise osv.except_osv(_('Atencion !'), _(
-                    'Debe primero solucionar el asunto de los Productos sin \
-                    Listas de Precio para las fechas especificadas antes de \
-                    continuar'))
-        return True
-
     def delete(self, cr, user, ids, context=None):
 
-        self.unlink(cr, user, ids, context=None)
-        self.write(cr, user, ids, {
-            'state': 'draft',
-            'total_comm': None,
-        })
+        self.unlink(cr, user, ids, context=context)
+        self.write(cr, user, ids, {'state': 'draft', 'total_comm': None},
+                   context=context)
         return True
 
     def unlink(self, cr, user, ids, context=None):
@@ -786,7 +758,7 @@ class commission_payment(osv.Model):
         comm_invoice_ids = self.pool.get('commission.invoice')
         comm_retention_ids = self.pool.get('commission.retention')
 
-        for commission in self.browse(cr, user, ids, context=None):
+        for commission in self.browse(cr, user, ids, context=context):
             ###
             # Desvincular todos los elementos que esten conectados a este
             # calculo de comisiones
@@ -820,23 +792,18 @@ class commission_payment(osv.Model):
             ###
 
     def decide(self, cr, user, ids, context=None):
-        commissions = self.browse(cr, user, ids, context=None)
         avl = self.pool.get('account.voucher.line')
         # escribir en el avl el estado buleano de paid_comm a True para indicar
         # que ya esta comision se esta pagando
-        for commission in commissions:
+        for commission in self.browse(cr, user, ids, context=context):
             avl.write(cr, user, [line.concept.id for line in
                                  commission.comm_line_ids],
-                      {'paid_comm': True})
+                      {'paid_comm': True}, context=context)
 
-        self.write(cr, user, ids, {
-            'state': 'done',
-        })
+        self.write(cr, user, ids, {'state': 'done', }, context=context)
 
     def going_back(self, cr, user, ids, context=None):
-        self.write(cr, user, ids, {
-            'state': 'open',
-        })
+        self.write(cr, user, ids, {'state': 'open', }, context=context)
         return True
 
 
