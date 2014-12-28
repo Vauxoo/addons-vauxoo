@@ -597,46 +597,10 @@ class commission_payment(osv.Model):
                                              context=context)
         return True
 
-    def prepare(self, cr, user, ids, context=None):
-        """
-        Este metodo recorre los elementos de account_voucher y verifica al
-        menos tres (3) caracteristicas primordiales para continuar con los
-        vouchers: estas caracteristicas son:
-        - bank_rec_voucher: quiere decir que el voucher es de un deposito
-        bancario (aqui aun no se ha considerado el trato que se le da a los
-        cheques devueltos).
-        - posted: quiere decir que el voucher ya se ha contabilizado, condicion
-        necesaria pero no suficiente.
-        - move_ids: si la longitud de estos es distinto de cero es porque este
-        voucher es por completo valido, es decir, realmente tiene asientos
-        contables registrados.
-
-        Si estas tres (3) condiciones se cumplen entonces se puede proceder a
-        realizar la revision de las lineas de pago.
-
-
-        @param cr: cursor to database
-        @param user: id of current user
-        @param ids: list of record ids to be process
-        @param context: context arguments, like lang, time zone
-
-        @return: return a result
-        """
-        uid = user
+    def _post_processing(self, cr, uid, ids, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
-        comm_brw = self.browse(cr, uid, ids[0], context=context)
-        if comm_brw.commission_type == 'partial_payment':
-            self._prepare_based_on_payments(cr, uid, ids, context=context)
-            self._commission_based_on_payments(cr, uid, ids, context=context)
-        elif comm_brw.commission_type == 'fully_paid_invoice':
-            self._prepare_based_on_invoices(cr, uid, ids, context=context)
-            self._commission_based_on_invoices(cr, uid, ids, context=context)
-
-        self.write(cr, user, ids, {
-            'state': 'open',
-        })
-
+        user = uid
         comm_line_ids = self.pool.get('commission.lines')
         saleman_ids = self.pool.get('commission.saleman')
         # users_ids = self.pool.get ('commission.users')
@@ -740,8 +704,50 @@ class commission_payment(osv.Model):
             self.write(cr, user, ids, {
                 'total_comm': total_comm,
             })
-        result = True
-        return result
+        return True
+
+    def prepare(self, cr, user, ids, context=None):
+        """
+        Este metodo recorre los elementos de account_voucher y verifica al
+        menos tres (3) caracteristicas primordiales para continuar con los
+        vouchers: estas caracteristicas son:
+        - bank_rec_voucher: quiere decir que el voucher es de un deposito
+        bancario (aqui aun no se ha considerado el trato que se le da a los
+        cheques devueltos).
+        - posted: quiere decir que el voucher ya se ha contabilizado, condicion
+        necesaria pero no suficiente.
+        - move_ids: si la longitud de estos es distinto de cero es porque este
+        voucher es por completo valido, es decir, realmente tiene asientos
+        contables registrados.
+
+        Si estas tres (3) condiciones se cumplen entonces se puede proceder a
+        realizar la revision de las lineas de pago.
+
+
+        @param cr: cursor to database
+        @param user: id of current user
+        @param ids: list of record ids to be process
+        @param context: context arguments, like lang, time zone
+
+        @return: return a result
+        """
+        uid = user
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        context = context or {}
+        comm_brw = self.browse(cr, uid, ids[0], context=context)
+        if comm_brw.commission_type == 'partial_payment':
+            self._prepare_based_on_payments(cr, uid, ids, context=context)
+            self._commission_based_on_payments(cr, uid, ids, context=context)
+        elif comm_brw.commission_type == 'fully_paid_invoice':
+            self._prepare_based_on_invoices(cr, uid, ids, context=context)
+            self._commission_based_on_invoices(cr, uid, ids, context=context)
+
+        self._post_processing(cr, uid, ids, context=context)
+
+        self.write(cr, user, ids, {
+            'state': 'open',
+        })
+        return True
 
     def pre_process(self, cr, user, ids, context=None):
         commissions = self.browse(cr, user, ids, context=None)
