@@ -392,7 +392,7 @@ class commission_payment(osv.Model):
                             'timespan': bar_day,
                             'baremo_comm': bar_dcto_comm,
                             'commission': comm_line,
-                        }, context=None)
+                        }, context=context)
 
                 else:
                     # Se genera un lista de tuplas con las lineas,
@@ -407,7 +407,7 @@ class commission_payment(osv.Model):
                                                  'date': inv_brw.date_invoice,
                                                  'invoice_num':
                                                  inv_brw.number},
-                                       context=None)
+                                       context=context)
             else:
                 # cuando una linea no tiene product_id asociado se
                 # escribe en una tabla para alertar al operador sobre
@@ -416,7 +416,7 @@ class commission_payment(osv.Model):
                 # puesto que es un asunto muy delicado.
                 sale_noids.create(cr, uid, {'commission_id': comm_brw.id,
                                             'inv_line_id': inv_lin.id, },
-                                  context=None)
+                                  context=context)
         return True
 
     def _get_commission_payment_on_invoice(self, cr, uid, ids, pay_id,
@@ -489,7 +489,7 @@ class commission_payment(osv.Model):
                 'timespan': bar_day,
                 'baremo_comm': bar_dcto_comm,
                 'commission': comm_line,
-            }, context=None)
+            }, context=context)
 
         return True
 
@@ -559,7 +559,7 @@ class commission_payment(osv.Model):
                     uninvoiced_pays.create(cr, uid, {
                         'commission_id': comm_brw.id,
                         'payment_id': payment_brw.id,
-                    }, context=None)
+                    }, context=context)
         return True
 
     def _commission_based_on_invoices(self, cr, uid, ids, context=None):
@@ -656,7 +656,7 @@ class commission_payment(osv.Model):
                     'saleman_id': vendor_key,
                     'saleman_name': sale_comm[vendor_key][0],
                     'comm_total': sale_comm[vendor_key][1],
-                }, context=None)
+                }, context=context)
 
                 total_comm += sale_comm[vendor_key][1]
 
@@ -666,7 +666,7 @@ class commission_payment(osv.Model):
                         'comm_sale_id': vendor_id,
                         'voucher_id': voucher_key,
                         'date': criba[vendor_key][voucher_key][0],
-                    }, context=None)
+                    }, context=context)
 
                     for inv_key in criba[vendor_key][voucher_key][1].keys():
                         invoice_id = comm_invoice_ids.create(cr, user, {
@@ -681,13 +681,13 @@ class commission_payment(osv.Model):
                             criba[vendor_key][voucher_key][1][inv_key][3],
                             'ret_im':
                             criba[vendor_key][voucher_key][1][inv_key][4],
-                        }, context=None)
+                        }, context=context)
 
                         for idx in \
                                 criba[vendor_key][voucher_key][1][inv_key][0]:
                             comm_line_ids.write(cr, user, idx, {
                                 'comm_invoice_id': invoice_id,
-                            }, context=None)
+                            }, context=context)
 
             self.write(cr, user, ids, {
                 'total_comm': total_comm,
