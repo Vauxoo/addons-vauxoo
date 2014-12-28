@@ -790,11 +790,6 @@ class commission_payment(osv.Model):
                 cr, user, [line.id for line in commission.comm_retention_ids])
             ###
 
-    def going_back(self, cr, user, ids, context=None):
-        self.write(cr, user, ids, {'state': 'open', }, context=context)
-        return True
-
-
 class commission_uninvoiced(osv.Model):
 
     """
