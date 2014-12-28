@@ -790,17 +790,6 @@ class commission_payment(osv.Model):
                 cr, user, [line.id for line in commission.comm_retention_ids])
             ###
 
-    def decide(self, cr, user, ids, context=None):
-        avl = self.pool.get('account.voucher.line')
-        # escribir en el avl el estado buleano de paid_comm a True para indicar
-        # que ya esta comision se esta pagando
-        for commission in self.browse(cr, user, ids, context=context):
-            avl.write(cr, user, [line.concept.id for line in
-                                 commission.comm_line_ids],
-                      {'paid_comm': True}, context=context)
-
-        self.write(cr, user, ids, {'state': 'done', }, context=context)
-
     def going_back(self, cr, user, ids, context=None):
         self.write(cr, user, ids, {'state': 'open', }, context=context)
         return True

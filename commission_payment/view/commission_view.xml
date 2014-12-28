@@ -18,11 +18,9 @@
             <field name="arch" type="xml">
                 <form string="Pago de Comisiones" version="7.0">
                     <header>
-                        <button icon="STOCK_OK" name="prepare" states="draft,open" string="Preparar" type="object"/>
-                        <button icon="STOCK_OK" name="pre_process" states="open" string="Creo que esto es lo que quiero" type="object"/>
-                        <button icon="STOCK_OK" name="decide" states="open" string="Realmente esto es lo que deseo" type="object"/>
+                        <button icon="STOCK_OK" name="prepare" states="draft,open" string="Prepare" type="object"/>
                         <button icon="STOCK_OK" name="going_back" states="open" string="Todavia No! Me falta algo" type="object"/>
-                        <button icon="STOCK_OK" name="delete" states="open" string="Comenzar de Nuevo" type="object"/>
+                        <button icon="STOCK_OK" name="delete" states="open" string="Set to Draft" type="object"/>
                         <button icon="gtk-print" name="%(report_commission_payment)d" states="done" string="Imprimir Borrador Comisiones" type="action"/>
                         <button icon="gtk-print" name="%(report_commission_payment)d" states="done" string="Imprimir Comisiones" type="action"/>
                         <field
