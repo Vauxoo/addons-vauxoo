@@ -2,11 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2015 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: Sabrina Romero (sabrina@vauxoo.com)
+#    Coded by: Luis Torres (luis_t@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,5 +24,36 @@
 #
 ##############################################################################
 
-from . import model
-from . import wizard
+from openerp.osv import fields, osv
+
+
+class wizard_asset_depreciation(osv.osv_memory):
+    _name = 'wizard.asset.depreciation'
+
+    _columns = {
+        'period_id': fields.many2one(
+            'account.period', 'Period', help='Select period to moves'
+            'that will write ckeck post = True', required=True),
+    }
+
+    def _get_period(self, cr, uid, context=None):
+        periods = self.pool.get('account.period').find(
+            cr, uid, context=context)
+        if periods:
+            return periods[0]
+        return False
+
+    _defaults = {
+        'period_id': _get_period,
+    }
+
+    def _write_check_post(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        acc_asset_obj = self.pool.get('account.asset.asste')
+        data = self.browse(cr, uid, ids, context=context)[0]
+        print 'data', data.period_id
+        for asset in acc_asset_obj.browse(
+                cr, uid, context.get('active_ids', [])):
+            print asset
+        return True

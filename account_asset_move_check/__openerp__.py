@@ -47,6 +47,7 @@ field in the validation of "_get_move_check" function.
     "demo": [], 
     "data": [
         "view/asset_line.xml",
+        "wizard/wizard_asset_depreciation.xml"
         ], 
     "test": [], 
     "js": [], 

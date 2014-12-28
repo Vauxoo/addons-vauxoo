@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_wizard_asset_depreciation_check" model="ir.ui.view">
+            <field name="name">Check posted depreciation</field>
+            <field name="model">wizard.asset.depreciation</field>
+            <field name="arch" type="xml">
+            <form string="Depreciation lines to check posted" version="7.0">
+                <group>
+                    <field name="period_id"/>
+                </group>
+                <footer>
+                    <button string="Check posted" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+        
+        <record id="action_depeciation_check" model="ir.actions.act_window">
+            <field name="name">Depreciation Check Posted</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.asset.depreciation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_wizard_asset_depreciation_check"/>
+            <field name="target">new</field>
+            <field name="multi"></field>
+        </record>
+
+        <record model="ir.values" id="depreciation_check_posted">
+            <field name="model_id" ref="account_asset.model_account_asset_asset" />
+            <field name="name">Check Posted</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_depeciation_check'))" />
+            <field name="key">action</field>
+            <field name="model">account.asset.asset</field>
+        </record>
+
+    </data>
+</openerp>
