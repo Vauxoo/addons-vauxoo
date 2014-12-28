@@ -2,11 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2015 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: Sabrina Romero (sabrina@vauxoo.com)
+#    Coded by: Luis Torres (luis_t@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,37 +23,37 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    'name' : 'Account Asset Move Check',
-    'version' : '0.1',
-    'author': 'Vauxoo',
-    'website': 'http://www.vauxoo.com',
-    'category' : 'Accounting',
-    'description' : """
-Account Asset Move Check
-========================
 
-This module add a field that makes posible check like posted some
-deprecations lines with an special condition using the "check_posted"
-field in the validation of "_get_move_check" function.
+from openerp.osv import fields, osv
 
-    """,
-    "website": "http://www.vauxoo.com",
-    "license": "",
-    "depends": [
-        "account",
-        "account_asset"
-    ],
-    "demo": [],
-    "data": [
-        "view/asset_line.xml",
-        "wizard/wizard_asset_depreciation.xml"
-        ],
-    "test": [],
-    "js": [],
-    "css": [],
-    "qweb": [],
-    "installable": True,
-    "auto_install": False,
-    "active": False
-}
+
+class wizard_asset_depreciation(osv.osv_memory):
+    _name = 'wizard.asset.depreciation'
+
+    _columns = {
+        'period_id': fields.many2one(
+            'account.period', 'Period', help='Select period to moves'
+            'that will write ckeck post = True', required=True),
+    }
+
+    def _get_period(self, cr, uid, context=None):
+        periods = self.pool.get('account.period').find(
+            cr, uid, context=context)
+        if periods:
+            return periods[0]
+        return False
+
+    _defaults = {
+        'period_id': _get_period,
+    }
+
+    def _write_check_post(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        acc_asset_obj = self.pool.get('account.asset.asste')
+        data = self.browse(cr, uid, ids, context=context)[0]
+        print 'data', data.period_id
+        for asset in acc_asset_obj.browse(
+                cr, uid, context.get('active_ids', [])):
+            print asset
+        return True
