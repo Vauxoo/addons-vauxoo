@@ -80,7 +80,7 @@ class account_invoice_refund(osv.osv_memory):
         inv = inv_obj.browse(cur, uid, active_id, context=context)
         return {
             'value': {
-                'amount_total': percent * (inv.amount_total / 100),
+                'amount_total': inv.amount_total * (percent / 100),
             }
         }
         return {}
@@ -125,7 +125,7 @@ class account_invoice_refund(osv.osv_memory):
                         invoice_line_tax_id.\
                         __dict__.get('_ids')
 
-                    price_unit_discount = refund_line.price_unit * percent
+                    price_unit_discount = refund_line.price_unit * percent * refund_line.quantity
 
                     if line_data_dict.get(tax_tuple):
                         line_data_dict[tax_tuple]['price_unit'] +=\
@@ -139,6 +139,8 @@ class account_invoice_refund(osv.osv_memory):
                             wizard_brw.product_id.name
                         line_data_dict[tax_tuple]['price_unit'] =\
                             price_unit_discount
+                        line_data_dict[tax_tuple]['quantity'] =\
+                            1
 
                     inv_line_obj.unlink(cur, uid, [refund_line.id])
                 for new_refund_line in line_data_dict.values():
