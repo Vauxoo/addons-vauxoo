@@ -28,33 +28,33 @@
 #
 ##############################################################################
 {
-    "name": "Cálculo de Pago de Comisiones por producto pagado", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Others", 
+    "name": "Cálculo de Pago de Comisiones por producto pagado",
+    "version": "0.1",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Others",
     "description": """
 Cálculo de Pago de Comisiones por producto pagado
-""", 
-    "website": "http://wiki.openerp.org.ve/", 
-    "license": "", 
+""",
+    "website": "http://wiki.openerp.org.ve/",
+    "license": "",
     "depends": [
-        "account", 
-        "account_voucher", 
-        "product_historical_price", 
+        "account",
+        "account_voucher",
+        "product_historical_price",
         "baremo"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "security/commission_payment_security.xml", 
-        "security/ir.model.access.csv", 
-        "commission_report.xml", 
-        "commission_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+        "security/commission_payment_security.xml",
+        "security/ir.model.access.csv",
+        "view/commission_report.xml",
+        "view/commission_view.xml"
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }
