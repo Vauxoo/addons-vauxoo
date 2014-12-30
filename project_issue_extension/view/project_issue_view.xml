@@ -25,6 +25,9 @@
                         help="Assign this issue to yourself"
                         type="object"/>
                 </xpath>
+                <xpath expr='//field[@name="state"]' position="after">
+                    <field name="analytic_account_id"/>
+                </xpath>
             </field>
         </record>
         <record model="ir.ui.view" id="project_view_tree_inherit">

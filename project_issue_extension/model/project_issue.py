@@ -19,15 +19,27 @@
 #
 ##############################################################################
 
-from openerp.osv import osv
+from openerp.osv import osv, fields
 
 
 class project_issue(osv.Model):
 
     _inherit = 'project.issue'
 
+    _columns = {
+        'analytic_account_id': fields.many2one('project.project',
+                                               'Analytic Account',
+                                               help='Project to load '
+                                               'the work in case you '
+                                               'want set timesheet for this.')
+    }
+
     def take_for_me(self, cr, uid, ids, context=None):
-        print uid
-        print ids
         self.write(cr, uid, ids, {'user_id': uid}, context=context)
+        return True
+
+    def update_project(self, cr, uid, ids, context=None):
+        for i in ids:
+            issue = self.browse(cr, uid, i, context=context)
+            issue.task_id.write({'project_id': issue.analytic_account_id.id})
         return True
