@@ -26,7 +26,7 @@
     "description": """
     Crea un modelo para el calculo de comisiones.
                     """,
-    "website": "http://openerp.netquatro.com",
+    "website": "http://www.vauxoo.com",
     "license": "",
     "depends": [
         "base",

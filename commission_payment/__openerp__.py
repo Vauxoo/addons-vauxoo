@@ -35,7 +35,7 @@
     "description": """
 Cálculo de Pago de Comisiones por producto pagado
 """,
-    "website": "http://wiki.openerp.org.ve/",
+    "website": "http://www.vauxoo.com",
     "license": "",
     "depends": [
         "account",
