@@ -48,6 +48,10 @@
                                         name="commission_type"
                                         widget="radio"
                                         />
+                                    <field
+                                        name="commission_policy_date"
+                                        widget="radio"
+                                        />
                                 </group>
                                 <group col="2" colspan="2">
                                     <label for="date_stop"/>

@@ -20,6 +20,11 @@ COMMISSION_SCOPES = [
     ('product_invoiced', 'Based on Invoiced Products '),
 ]
 
+COMMISSION_POLICY_DATE = [
+    ('last_payment_date', 'Based on Last Payment on Invoice'),
+    ('date_on_payment', 'Based on Date on Payment'),
+]
+
 
 def tTime(dt):
     '''
@@ -123,6 +128,11 @@ class commission_payment(osv.Model):
         'commission_scope': fields.selection(
             COMMISSION_SCOPES,
             string='Commission Scope', required=False,
+            readonly=True,
+            states={'draft': [('readonly', False)]}),
+        'commission_policy_date': fields.selection(
+            COMMISSION_POLICY_DATE,
+            string='Commission Policy Date', required=False,
             readonly=True,
             states={'draft': [('readonly', False)]}),
     }
@@ -269,6 +279,19 @@ class commission_payment(osv.Model):
         )
         return res
 
+    def _get_commission_policy_date(self, cr, uid, ids, pay_id, context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        context = context or {}
+        avl_obj = self.pool.get('account.voucher.line')
+        comm_brw = self.browse(cr, uid, ids[0], context=context)
+        payment_brw = avl_obj.browse(cr, uid, pay_id, context=context)
+        date = False
+        if comm_brw.commission_policy_date == 'last_payment_date':
+            date = payment_brw.move_line_id.invoice.date_last_payment
+        elif comm_brw.commission_policy_date == 'date_on_payment':
+            date = payment_brw.voucher_id.date
+        return date
+
     def _get_commission_payment_on_invoice_line(self, cr, uid, ids, pay_id,
                                                 context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -284,6 +307,10 @@ class commission_payment(osv.Model):
         payment_brw = avl_obj.browse(cr, uid, pay_id, context=context)
         if not payment_brw.amount:
             return True
+
+        commission_policy_date = \
+            self._get_commission_policy_date(cr, uid, ids, pay_id,
+                                             context=context)
 
         # Si esta aqui dentro es porque esta linea tiene una id valida
         # de una factura.
@@ -336,7 +363,7 @@ class commission_payment(osv.Model):
 
                     commission_params = self._get_commission_rate(
                         cr, uid, comm_brw.id,
-                        payment_brw.voucher_id.date,
+                        commission_policy_date,
                         inv_brw.date_invoice, dcto=0.0,
                         bar_brw=inv_brw.partner_id.baremo_id)
 
@@ -367,7 +394,7 @@ class commission_payment(osv.Model):
                             'name':
                             payment_brw.voucher_id.number and
                             payment_brw.voucher_id.number or '/',
-                            'pay_date': payment_brw.voucher_id.date,
+                            'pay_date': commission_policy_date,
                             'pay_off': payment_brw.voucher_id.amount,
                             'concept': payment_brw.id,
                             'invoice_id':
@@ -431,6 +458,10 @@ class commission_payment(osv.Model):
         if not payment_brw.amount:
             return True
 
+        commission_policy_date = \
+            self._get_commission_policy_date(cr, uid, ids, pay_id,
+                                             context=context)
+
         # Si esta aqui dentro es porque esta linea tiene una id valida
         # de una factura.
         inv_brw = payment_brw.move_line_id.invoice
@@ -440,7 +471,7 @@ class commission_payment(osv.Model):
 
         commission_params = self._get_commission_rate(
             cr, uid, comm_brw.id,
-            payment_brw.voucher_id.date,
+            commission_policy_date,
             inv_brw.date_invoice, dcto=0.0,
             bar_brw=inv_brw.partner_id.baremo_id)
 
@@ -471,7 +502,7 @@ class commission_payment(osv.Model):
                 'name':
                 payment_brw.voucher_id.number and
                 payment_brw.voucher_id.number or '/',
-                'pay_date': payment_brw.voucher_id.date,
+                'pay_date': commission_policy_date,
                 'pay_off': payment_brw.voucher_id.amount,
                 'concept': payment_brw.id,
                 'invoice_id':
