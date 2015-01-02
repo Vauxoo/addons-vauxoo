@@ -38,24 +38,21 @@ deprecations lines with an special condition using the "check_posted"
 field in the validation of "_get_move_check" function.
 
     """,
-    'images' : [],
-    'depends' : [
-        'account',
-        'account_asset',
+    "website": "http://www.vauxoo.com",
+    "license": "",
+    "depends": [
+        "account",
+        "account_asset"
     ],
-    'data': [
-    ],
-    'js': [
-    ],
-    'qweb' : [
-    ],
-    'css':[
-    ],
-    'demo': [
-    ],
-    'test': [
-    ],
-    'installable': True,
-    'auto_install': False,
+    "demo": [],
+    "data": [
+        "view/asset_line.xml",
+        ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
+    "active": False
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
