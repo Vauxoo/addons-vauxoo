@@ -7,11 +7,8 @@
             <field name='model'>account.asset.asset</field>
             <field name='inherit_id' ref='account_asset.view_account_asset_asset_form'/>
             <field name='arch' type='xml'>
-                <!-- <xpath expr="//field[@name='depreciation_line_ids']/form/field[@name='remaining_value']" position="after"> -->
                 <xpath expr="//field[@name='depreciation_line_ids']/form[@string='Depreciation Lines']/group/group/field[@name='remaining_value']" position="after">
-                <!-- <xpath expr="//field[@name='depreciation_line_ids']/form[@string='Depreciation Lines']/field[@name='']" position="after"> -->
                     <field name="check_posted" attrs="{'invisible':[('move_id','!=',False)]}"/>
-                    <!-- <separator string='Why fill the information?'/> -->
                 </xpath>
             </field>
         </record>
