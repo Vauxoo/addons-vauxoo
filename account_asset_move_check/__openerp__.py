@@ -45,7 +45,9 @@ field in the validation of "_get_move_check" function.
         "account_asset"
     ], 
     "demo": [], 
-    "data": [], 
+    "data": [
+        "view/asset_line.xml",
+        ], 
     "test": [], 
     "js": [], 
     "css": [], 
