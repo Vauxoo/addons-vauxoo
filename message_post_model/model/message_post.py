@@ -10,8 +10,8 @@
 #    Audited by: Vauxoo C.A.
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
+#    it under the terms of the GNU Affero General Public License as published
+#    by #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
@@ -58,7 +58,8 @@ class message_post_show_all(osv.Model):
         model_obj = self.pool.get(model)
         model_brw = model_obj.browse(cr, uid, ids, context=context)
         if 'many2one' in field_type:
-            value = field and model_brw[field] and model_brw[field].name_get() or ''
+            value = field and model_brw[field] and \
+                model_brw[field].name_get() or ''
             value = value and value[0][1]
         elif 'many2many' in field_type:
             value = [i.id for i in model_brw[field]]
@@ -67,8 +68,8 @@ class message_post_show_all(osv.Model):
 
         return field and value or ''
 
-    def prepare_many_info(self, cr, uid, ids, records, string, n_obj, last=None,
-                          context=None):
+    def prepare_many_info(self, cr, uid, ids, records, string, n_obj,
+                          last=None, context=None):
         context = context or {}
         info = {
             0: _('Created New Line'),
@@ -102,7 +103,8 @@ class message_post_show_all(osv.Model):
                     delete = _('Deleted')
                     if lastv and not new:
 
-                        dele = [obj.name_get(cr, uid, [i])[0][1] for i in lastv]
+                        dele = [obj.name_get(cr, uid, [i])[0][1]
+                                for i in lastv]
                         mes = ' - '.join(dele)
                         message = u'%s\n<li><b>%s %s<b>: %s</li>' % \
                             (message, add, string, mes)
@@ -145,7 +147,9 @@ class message_post_show_all(osv.Model):
                                                            n_obj, field,
                                                            vals, context)
                         if mes and mes != '<p>':
-                            message = id_line != val[1] and _('%s\n<h3>Line %s</h3>' % (message, val[1])) or message
+                            message = id_line != val[1] and \
+                                _('%s\n<h3>Line %s</h3>' % (message, val[1])) \
+                                or message
                             message = '%s\n%s' % (message, mes)
                             id_line = val[1]
 
@@ -180,7 +184,8 @@ class message_post_show_all(osv.Model):
         last_value = self.get_last_value(
             cr, uid, ids, obj._name, field, obj._columns[field]._type, context)
 
-        if not (unicode(last_value) == unicode(vals[field])) and any((last_value, vals[field])):
+        if (not (unicode(last_value) == unicode(vals[field]))
+                and any((last_value, vals[field]))):
             message = u'<li><b>%s<b>: %s → %s</li>' % \
                 (obj._columns[field].string,
                  last_value,
@@ -201,9 +206,11 @@ class message_post_show_all(osv.Model):
                         cr, uid, idx, self._name, field, 'many2many', context)
                     field_str = self._columns[field].string
                     n_obj = self._columns[field]._obj
-                    message = self.prepare_many_info(cr, uid, idx, vals[field],
-                                                     field_str, n_obj, last_value, context)
-                    body = len(message.split('\n')) > 2 and '%s\n%s: %s' % (body, field_str, message)
+                    message = self.prepare_many_info(
+                        cr, uid, idx, vals[field], field_str, n_obj,
+                        last_value, context)
+                    body = len(message.split('\n')) > 2 and '%s\n%s: %s' % (
+                        body, field_str, message)
                 elif self._columns[field]._type == 'many2one':
                     message = self.prepare_many2one_info(cr, uid, idx,
                                                          self._name,
@@ -213,14 +220,13 @@ class message_post_show_all(osv.Model):
                     body = '%s\n%s' % (body, message)
 
                 elif 'many' not in self._columns[field]._type:
-                    message = self.prepare_simple_info(cr, uid, idx, self._name,
-                                                       field,
-                                                       vals, context)
+                    message = self.prepare_simple_info(
+                        cr, uid, idx, self._name, field, vals, context)
                     body = '%s\n%s' % (body, message)
 
             body = body and '%s\n</ul>' % body
             if body and message:
                 self.message_post(cr, uid, [idx], body, _('Changes in Fields'))
         res = super(message_post_show_all, self).write(cr, uid, ids, vals,
-                                                 context=context)
+                                                       context=context)
         return res
