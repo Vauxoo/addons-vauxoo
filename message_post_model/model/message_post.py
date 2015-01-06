@@ -219,9 +219,8 @@ class message_post_show_all(osv.Model):
                     body = '%s\n%s' % (body, message)
 
             body = body and '%s\n</ul>' % body
-            body and message and \
-                self.message_post(cr, uid, [idx], body,
-                              _('Changes in Fields'))
+            if body and message:
+                self.message_post(cr, uid, [idx], body, _('Changes in Fields'))
         res = super(message_post_show_all, self).write(cr, uid, ids, vals,
                                                  context=context)
         return res
