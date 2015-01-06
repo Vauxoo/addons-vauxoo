@@ -49,7 +49,7 @@
             </field>
         </record>
 
-
+        <!--
         <record model="ir.ui.view" id="product_historical_price">
             <field name="name">product.historical.price</field>
             <field name="model">product.template</field>
@@ -72,5 +72,6 @@
                 </xpath>
             </field>
         </record>
+        -->
     </data>
 </openerp>
