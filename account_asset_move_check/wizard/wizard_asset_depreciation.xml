@@ -2,11 +2,11 @@
 <openerp>
     <data>
 
-        <record id="view_wizard_asset_depreciation_check" model="ir.ui.view">
-            <field name="name">Check posted depreciation</field>
+        <record id="view_wizard_asset_depreciation_historical" model="ir.ui.view">
+            <field name="name">Historical depreciation</field>
             <field name="model">wizard.asset.depreciation</field>
             <field name="arch" type="xml">
-            <form string="Depreciation lines to check posted" version="7.0">
+            <form string="Depreciation lines to historical" version="7.0">
                 <group>
                     <group>
                         <field name="date_start"/>
@@ -23,22 +23,22 @@
             </field>
         </record>
         
-        <record id="action_depeciation_check" model="ir.actions.act_window">
-            <field name="name">Depreciation Check Posted</field>
+        <record id="action_depeciation_historical" model="ir.actions.act_window">
+            <field name="name">Depreciation Historical</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">wizard.asset.depreciation</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
-            <field name="view_id" ref="view_wizard_asset_depreciation_check"/>
+            <field name="view_id" ref="view_wizard_asset_depreciation_historical"/>
             <field name="target">new</field>
             <field name="multi"></field>
         </record>
 
-        <record model="ir.values" id="depreciation_check_posted">
+        <record model="ir.values" id="depreciation_historical">
             <field name="model_id" ref="account_asset.model_account_asset_asset" />
-            <field name="name">Check Posted</field>
+            <field name="name">Historical</field>
             <field name="key2">client_action_multi</field>
-            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_depeciation_check'))" />
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_depeciation_historical'))" />
             <field name="key">action</field>
             <field name="model">account.asset.asset</field>
         </record>
