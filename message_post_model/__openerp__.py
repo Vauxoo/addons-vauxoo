@@ -23,26 +23,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name": "Message Post Log", 
-    "version": "0.1", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules", 
+    "name": "Message Post Log",
+    "version": "0.1",
+    "author": "Vauxoo",
+    "category": "Generic Modules",
     "description": """
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+
+""",
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
         "mail"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "security/ir.model.access.csv"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
-    "active": False
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
