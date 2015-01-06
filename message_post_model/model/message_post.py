@@ -119,18 +119,18 @@ class message_post_show_all(osv.Model):
                     for field in vals:
                         if obj._columns[field]._type in ('one2many',
                                                          'many2many'):
-                            MANY = obj._columns[field]._type == 'many2many'
+                            is_many = obj._columns[field]._type == 'many2many'
 
-                            LAST = MANY and self.get_last_value(
+                            last_value = is_many and self.get_last_value(
                                 cr, uid, val[1], n_obj, field, 'many2many',
                                 context)
-                            ST = obj._columns[field].string
-                            N_OBJ = obj._columns[field]._obj
+                            field_str = obj._columns[field].string
+                            new_n_obj = obj._columns[field]._obj
                             mes = self.prepare_many_info(cr, uid, val[1],
                                                          vals[field],
-                                                         ST,
-                                                         N_OBJ,
-                                                         LAST,
+                                                         field_str,
+                                                         new_n_obj,
+                                                         last_value,
                                                          context)
 
                         elif obj._columns[field]._type == 'many2one':
@@ -195,15 +195,15 @@ class message_post_show_all(osv.Model):
             for field in vals:
 
                 if self._columns[field]._type in ('one2many', 'many2many'):
-                    MANY = self._columns[field]._type == 'many2many'
+                    is_many = self._columns[field]._type == 'many2many'
 
-                    LAST = MANY and self.get_last_value(
+                    last_value = is_many and self.get_last_value(
                         cr, uid, idx, self._name, field, 'many2many', context)
-                    ST = self._columns[field].string
-                    N_OBJ = self._columns[field]._obj
+                    field_str = self._columns[field].string
+                    n_obj = self._columns[field]._obj
                     message = self.prepare_many_info(cr, uid, idx, vals[field],
-                                                     ST, N_OBJ, LAST, context)
-                    body = len(message.split('\n')) > 2 and '%s\n%s: %s' % (body, ST, message)
+                                                     field_str, n_obj, last_value, context)
+                    body = len(message.split('\n')) > 2 and '%s\n%s: %s' % (body, field_str, message)
                 elif self._columns[field]._type == 'many2one':
                     message = self.prepare_many2one_info(cr, uid, idx,
                                                          self._name,
