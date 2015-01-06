@@ -4,14 +4,15 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
-###############Credits######################################################
+############################################################################
+#    Credits:
 #    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
@@ -21,7 +22,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+###############################################################################
 {
     "name": "Message Post Test",
     "version": "0.1",
@@ -31,7 +32,8 @@
 Test for message_post_model module
 ==================================
 
-- This module only is used to test the functionality of message_post_model module
+- This module only is used to test the functionality of message_post_model
+  module
 
 
 """,
