@@ -286,6 +286,9 @@ class account_voucher(osv.Model):
 
     def onchange_compute_tax(self, cr, uid, ids, lines=None, ttype=False,
                              date=False, context=None):
+        if context is None:
+            context = {}
+        context = dict(context)
         invoice_obj = self.pool.get('account.invoice')
         currency_obj = self.pool.get('res.currency')
         move_obj = self.pool.get('account.move.line')
