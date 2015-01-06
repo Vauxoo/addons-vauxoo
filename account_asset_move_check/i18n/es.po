@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-06 01:18+0000\n"
-"PO-Revision-Date: 2015-01-06 01:18+0000\n"
+"POT-Creation-Date: 2015-01-06 22:32+0000\n"
+"PO-Revision-Date: 2015-01-06 22:32+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,44 +16,55 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_asset_move_check
+#: model:ir.model,name:account_asset_move_check.model_account_asset_asset
+msgid "Asset"
+msgstr "Activo"
+
+#. module: account_asset_move_check
 #: model:ir.model,name:account_asset_move_check.model_account_asset_depreciation_line
 msgid "Asset depreciation line"
 msgstr "Línea de depreciación del activo"
 
 #. module: account_asset_move_check
-#: view:wizard.asset.depreciation:account_asset_move_check.view_wizard_asset_depreciation_check
+#: view:wizard.asset.depreciation:account_asset_move_check.view_wizard_asset_depreciation_historical
 msgid "Cancel"
-msgstr "Cancel"
-
-#. module: account_asset_move_check
-#: field:account.asset.depreciation.line,check_posted:0
-msgid "Check Posted"
-msgstr "Check Posted"
-
-#. module: account_asset_move_check
-#: view:wizard.asset.depreciation:account_asset_move_check.view_wizard_asset_depreciation_check
-msgid "Check posted"
-msgstr "Check posted"
+msgstr "Cancelar"
 
 #. module: account_asset_move_check
 #: field:wizard.asset.depreciation,create_uid:0
 msgid "Created by"
-msgstr "Created by"
+msgstr "Creado por"
 
 #. module: account_asset_move_check
 #: field:wizard.asset.depreciation,create_date:0
 msgid "Created on"
-msgstr "Created on"
+msgstr "Creado en"
 
 #. module: account_asset_move_check
-#: model:ir.actions.act_window,name:account_asset_move_check.action_depeciation_check
-msgid "Depreciation Check Posted"
-msgstr "Depreciation Check Posted"
+#: field:wizard.asset.depreciation,date_start:0
+msgid "Date Start"
+msgstr "Fecha Inicio"
 
 #. module: account_asset_move_check
-#: view:wizard.asset.depreciation:account_asset_move_check.view_wizard_asset_depreciation_check
-msgid "Depreciation lines to check posted"
-msgstr "Depreciation lines to check posted"
+#: field:wizard.asset.depreciation,date_stop:0
+msgid "Date Stop"
+msgstr "Fecha Fin"
+
+#. module: account_asset_move_check
+#: model:ir.actions.act_window,name:account_asset_move_check.action_depeciation_historical
+msgid "Depreciation Historical"
+msgstr "Depreciación Histórica"
+
+#. module: account_asset_move_check
+#: view:wizard.asset.depreciation:account_asset_move_check.view_wizard_asset_depreciation_historical
+msgid "Depreciation lines to historical"
+msgstr "Lineas de depreciación histórica"
+
+#. module: account_asset_move_check
+#: field:account.asset.depreciation.line,historical:0
+#: view:wizard.asset.depreciation:account_asset_move_check.view_wizard_asset_depreciation_historical
+msgid "Historical"
+msgstr "Histórica"
 
 #. module: account_asset_move_check
 #: field:wizard.asset.depreciation,id:0
@@ -63,20 +74,20 @@ msgstr "ID"
 #. module: account_asset_move_check
 #: field:wizard.asset.depreciation,write_uid:0
 msgid "Last Updated by"
-msgstr "Last Updated by"
+msgstr "Última actualización por"
 
 #. module: account_asset_move_check
 #: field:wizard.asset.depreciation,write_date:0
 msgid "Last Updated on"
-msgstr "Last Updated on"
+msgstr "Última actualización en"
 
 #. module: account_asset_move_check
-#: field:wizard.asset.depreciation,period_id:0
-msgid "Period"
-msgstr "Period"
+#: help:wizard.asset.depreciation,date_start:0
+msgid "Select date start to depreciation lines that will write that the lines are historical"
+msgstr "Seleccione la fecha inicial para las lineas de depreciación que se indicarán como históricas"
 
 #. module: account_asset_move_check
-#: help:wizard.asset.depreciation,period_id:0
-msgid "Select period to movesthat will write ckeck post = True"
-msgstr "Select period to movesthat will write ckeck post = True"
+#: help:wizard.asset.depreciation,date_stop:0
+msgid "Select date stop to depreciation lines that will write that the lines are historical"
+msgstr "Seleccione la fecha final para las lineas de depreciación que se indicarán como históricas"
 
