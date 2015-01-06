@@ -11,7 +11,7 @@
                     <field name="period_id"/>
                 </group>
                 <footer>
-                    <button string="Check posted" class="oe_highlight"/>
+                    <button name='write_check_post' string="Check posted" class="oe_highlight" type="object" icon="gtk-ok"/>
                     <button special="cancel" string="Cancel"/>
                 </footer>
             </form>

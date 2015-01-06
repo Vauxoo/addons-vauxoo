@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#
+#Ch
 #    Copyright (c) 2015 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
@@ -47,13 +47,23 @@ class wizard_asset_depreciation(osv.osv_memory):
         'period_id': _get_period,
     }
 
-    def _write_check_post(self, cr, uid, ids, context=None):
+    def write_check_post(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        acc_asset_obj = self.pool.get('account.asset.asste')
+        acc_asset_obj = self.pool.get('account.asset.asset')
+        dep_line_obj = self.pool.get('account.asset.depreciation.line')
         data = self.browse(cr, uid, ids, context=context)[0]
-        print 'data', data.period_id
+        date_start = data.period_id.date_start
+        date_stop = data.period_id.date_stop
         for asset in acc_asset_obj.browse(
                 cr, uid, context.get('active_ids', [])):
-            print asset
+            asset_lines = dep_line_obj.search(
+                cr, uid, [
+                    ('asset_id', '=', asset.id),
+                    ('depreciation_date', '>=', date_start),
+                    ('depreciation_date', '<=', date_stop),
+                    ('move_id', '=', False)])
+            for line in dep_line_obj.browse(
+                    cr, uid, asset_lines, context=context):
+                line.write({'check_posted': True})
         return True
