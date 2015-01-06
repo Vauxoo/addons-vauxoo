@@ -32,8 +32,8 @@ class wizard_asset_depreciation(osv.osv_memory):
 
     _columns = {
         'period_id': fields.many2one(
-            'account.period', 'Period', help='Select period to moves'
-            'that will write ckeck post = True', required=True),
+            'account.period', 'Period', help="Select period to depreciation "
+            "lines that will write 'ckeck post' = True", required=True),
     }
 
     def _get_period(self, cr, uid, context=None):
