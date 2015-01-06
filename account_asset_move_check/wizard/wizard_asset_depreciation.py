@@ -31,30 +31,22 @@ class wizard_asset_depreciation(osv.osv_memory):
     _name = 'wizard.asset.depreciation'
 
     _columns = {
-        'period_id': fields.many2one(
-            'account.period', 'Period', help="Select period to depreciation "
-            "lines that will write 'ckeck post' = True", required=True),
+        'date_start': fields.date(
+            'Date Start', help='Select date start to depreciation lines that '
+            'will write that the lines are historical', required=True),
+        'date_stop': fields.date(
+            'Date Stop', help='Select date stop to depreciation lines that '
+            'will write that the lines are historical', required=True),
     }
 
-    def _get_period(self, cr, uid, context=None):
-        periods = self.pool.get('account.period').find(
-            cr, uid, context=context)
-        if periods:
-            return periods[0]
-        return False
-
-    _defaults = {
-        'period_id': _get_period,
-    }
-
-    def write_check_post(self, cr, uid, ids, context=None):
+    def write_historical_true(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
         acc_asset_obj = self.pool.get('account.asset.asset')
         dep_line_obj = self.pool.get('account.asset.depreciation.line')
         data = self.browse(cr, uid, ids, context=context)[0]
-        date_start = data.period_id.date_start
-        date_stop = data.period_id.date_stop
+        date_start = data.date_start
+        date_stop = data.date_stop
         for asset in acc_asset_obj.browse(
                 cr, uid, context.get('active_ids', [])):
             asset_lines = dep_line_obj.search(
@@ -65,5 +57,5 @@ class wizard_asset_depreciation(osv.osv_memory):
                     ('move_id', '=', False)])
             for line in dep_line_obj.browse(
                     cr, uid, asset_lines, context=context):
-                line.write({'check_posted': True})
+                line.write({'historical': True})
         return True

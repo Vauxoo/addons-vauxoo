@@ -25,6 +25,7 @@
 ##############################################################################
 
 from openerp.osv import osv, fields
+import openerp.addons.decimal_precision as dp
 
 
 class account_asset_depreciation_line(osv.Model):
@@ -34,16 +35,44 @@ class account_asset_depreciation_line(osv.Model):
         res = super(account_asset_depreciation_line, self)._get_move_check(
             cr, uid, ids, name, args, context=context)
         for line in self.browse(cr, uid, ids, context=context):
-            res[line.id] = bool(line.move_id or line.check_posted)
+            res[line.id] = bool(line.move_id or line.historical)
         return res
 
     _columns = {
-        'check_posted': fields.boolean('Check Posted'),
+        'historical': fields.boolean('Historical'),
         'move_check': fields.function(
             _get_move_check, method=True, type='boolean', string='Posted',
-            store=True)
+            store=True),
     }
 
     _defaults = {
-        'check_posted': False,
+        'historical': False,
+    }
+
+
+class account_asset_asset(osv.osv):
+    _inherit = 'account.asset.asset'
+
+    def _amount_residual(self, cr, uid, ids, name, args, context=None):
+        res = super(account_asset_asset, self)._amount_residual(
+            cr, uid, ids, name, args, context=context)
+        dep_line_obj = self.pool.get('account.asset.depreciation.line')
+        for asset in res:
+            dep_lines = dep_line_obj.search(
+                cr, uid, [('asset_id', '=', asset),
+                          ('move_id', '=', False),
+                          ('move_check', '=', True),
+                          ], context=context)
+            amount = 0
+            for line in dep_line_obj.browse(
+                    cr, uid, dep_lines, context=context):
+                amount += line.amount or 0.0
+            res.update({asset: res.get(asset, 0.0) - amount})
+        return res
+
+    _columns = {
+        'value_residual': fields.function(
+            _amount_residual, method=True,
+            digits_compute=dp.get_precision('Account'),
+            string='Net Book Value'),
     }

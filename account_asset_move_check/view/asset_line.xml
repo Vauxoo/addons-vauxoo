@@ -8,7 +8,10 @@
             <field name='inherit_id' ref='account_asset.view_account_asset_asset_form'/>
             <field name='arch' type='xml'>
                 <xpath expr="//field[@name='depreciation_line_ids']/form[@string='Depreciation Lines']/group/group/field[@name='remaining_value']" position="after">
-                    <field name="check_posted" attrs="{'invisible':[('move_id','!=',False)]}"/>
+                    <field name="historical" attrs="{'invisible':[('move_id','!=',False)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='depreciation_line_ids']/tree[@string='Depreciation Lines']/field[@name='remaining_value']" position="after">
+                    <field name="historical"/>
                 </xpath>
             </field>
         </record>

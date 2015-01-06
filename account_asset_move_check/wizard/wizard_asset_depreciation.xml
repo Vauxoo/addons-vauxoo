@@ -8,10 +8,15 @@
             <field name="arch" type="xml">
             <form string="Depreciation lines to check posted" version="7.0">
                 <group>
-                    <field name="period_id"/>
+                    <group>
+                        <field name="date_start"/>
+                    </group>
+                    <group>
+                        <field name="date_stop"/>
+                    </group>
                 </group>
                 <footer>
-                    <button name='write_check_post' string="Check posted" class="oe_highlight" type="object" icon="gtk-ok"/>
+                    <button name='write_historical_true' string="Historical" class="oe_highlight" type="object" icon="gtk-ok"/>
                     <button special="cancel" string="Cancel"/>
                 </footer>
             </form>
