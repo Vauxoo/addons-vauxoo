@@ -41,8 +41,8 @@ class message_post_show_all(osv.Model):
     _name = 'message.post.show.all'
     _inherit = ['mail.thread']
 
-    def get_last_value(self, cr, uid, ids, model=None, field=None, type=None,
-                       context=None):
+    def get_last_value(self, cr, uid, ids, model=None, field=None,
+                       field_type=None, context=None):
         '''
         Return the last value of a record in the model to show a post with the
         change
@@ -57,17 +57,17 @@ class message_post_show_all(osv.Model):
         field = ids and field or []
         model_obj = self.pool.get(model)
         model_brw = model_obj.browse(cr, uid, ids, context=context)
-        if 'many2one' in type:
+        if 'many2one' in field_type:
             value = field and model_brw[field] and model_brw[field].name_get() or ''
             value = value and value[0][1]
-        elif 'many2many' in type:
+        elif 'many2many' in field_type:
             value = [i.id for i in model_brw[field]]
         else:
             value = field and model_brw[field] or ''
 
         return field and value or ''
 
-    def prepare_many_info(self, cr, uid, id, records, string, n_obj, last=None,
+    def prepare_many_info(self, cr, uid, ids, records, string, n_obj, last=None,
                           context=None):
         context = context or {}
         info = {
@@ -86,19 +86,14 @@ class message_post_show_all(osv.Model):
                 if val[0] == 0:
                     value = val[2]
                     message = u'%s\n<li><b>%s<b>: %s</li>' % \
-                        (message,
-                     info.get(val[0]),
-                     value.get(r_name),
-                         )
+                        (message, info.get(val[0]), value.get(r_name),)
                 elif val[0] in (2, 3):
                     model_brw = obj.browse(cr, uid, val[1], context=context)
                     last_value = model_brw.name_get()
                     last_value = last_value and last_value[0][1]
                     value = val[1]
                     message = u'%s\n<li><b>%s<b>: %s</li>' % \
-                        (message,
-                     info.get(val[0]),
-                     last_value)
+                        (message, info.get(val[0]), last_value)
 
                 elif val[0] == 6:
                     lastv = list(set(val[2]) - set(last))
@@ -110,19 +105,13 @@ class message_post_show_all(osv.Model):
                         dele = [obj.name_get(cr, uid, [i])[0][1] for i in lastv]
                         mes = ' - '.join(dele)
                         message = u'%s\n<li><b>%s %s<b>: %s</li>' % \
-                            (message,
-                         add,
-                         string,
-                         mes)
+                            (message, add, string, mes)
                     if not lastv and new:
 
                         dele = [obj.name_get(cr, uid, [i])[0][1] for i in new]
                         mes = '-'.join(dele)
                         message = u'%s\n<li><b>%s %s<b>: %s</li>' % \
-                            (message,
-                         delete,
-                         string,
-                         mes)
+                            (message, delete, string, mes)
 
                 elif val[0] == 1:
                     vals = val[2]
@@ -132,12 +121,9 @@ class message_post_show_all(osv.Model):
                                                          'many2many'):
                             MANY = obj._columns[field]._type == 'many2many'
 
-                            LAST = MANY and self.get_last_value(cr, uid,
-                                                                val[1],
-                                                                n_obj,
-                                                                field,
-                                                                'many2many',
-                                                                context)
+                            LAST = MANY and self.get_last_value(
+                                cr, uid, val[1], n_obj, field, 'many2many',
+                                context)
                             ST = obj._columns[field].string
                             N_OBJ = obj._columns[field]._obj
                             mes = self.prepare_many_info(cr, uid, val[1],
@@ -166,17 +152,14 @@ class message_post_show_all(osv.Model):
         message = '%s\n</ul>' % message
         return message
 
-    def prepare_many2one_info(self, cr, uid, id, n_obj, field, vals,
+    def prepare_many2one_info(self, cr, uid, ids, n_obj, field, vals,
                               context=None):
         context = context or {}
         obj = self.pool.get(n_obj)
         message = '<p>'
 
-        last_value = self.get_last_value(cr, uid, id,
-                                         obj._name,
-                                         field,
-                                         obj._columns[field]._type,
-                                         context)
+        last_value = self.get_last_value(
+            cr, uid, ids, obj._name, field, obj._columns[field]._type, context)
         model_obj = self.pool.get(obj._columns[field]._obj)
         model_brw = model_obj.browse(cr, uid, vals[field], context=context)
         new_value = model_brw.name_get()
@@ -189,16 +172,13 @@ class message_post_show_all(osv.Model):
                  new_value)
         return message
 
-    def prepare_simple_info(self, cr, uid, id, n_obj, field,
+    def prepare_simple_info(self, cr, uid, ids, n_obj, field,
                             vals, context=None):
         context = context or {}
         obj = self.pool.get(n_obj)
         message = '<p>'
-        last_value = self.get_last_value(cr, uid, id,
-                                         obj._name,
-                                         field,
-                                         obj._columns[field]._type,
-                                         context)
+        last_value = self.get_last_value(
+            cr, uid, ids, obj._name, field, obj._columns[field]._type, context)
 
         if not (unicode(last_value) == unicode(vals[field])) and any((last_value, vals[field])):
             message = u'<li><b>%s<b>: %s → %s</li>' % \
@@ -209,7 +189,7 @@ class message_post_show_all(osv.Model):
 
     def write(self, cr, uid, ids, vals, context=None):
         context = context or {}
-        for id in ids:
+        for idx in ids:
             body = '<ul>'
             message = False
             for field in vals:
@@ -217,17 +197,15 @@ class message_post_show_all(osv.Model):
                 if self._columns[field]._type in ('one2many', 'many2many'):
                     MANY = self._columns[field]._type == 'many2many'
 
-                    LAST = MANY and self.get_last_value(cr, uid, id,
-                                                        self._name,
-                                                        field, 'many2many',
-                                                        context)
+                    LAST = MANY and self.get_last_value(
+                        cr, uid, idx, self._name, field, 'many2many', context)
                     ST = self._columns[field].string
                     N_OBJ = self._columns[field]._obj
-                    message = self.prepare_many_info(cr, uid, id, vals[field],
+                    message = self.prepare_many_info(cr, uid, idx, vals[field],
                                                      ST, N_OBJ, LAST, context)
                     body = len(message.split('\n')) > 2 and '%s\n%s: %s' % (body, ST, message)
                 elif self._columns[field]._type == 'many2one':
-                    message = self.prepare_many2one_info(cr, uid, id,
+                    message = self.prepare_many2one_info(cr, uid, idx,
                                                          self._name,
                                                          field,
                                                          vals,
@@ -235,14 +213,14 @@ class message_post_show_all(osv.Model):
                     body = '%s\n%s' % (body, message)
 
                 elif 'many' not in self._columns[field]._type:
-                    message = self.prepare_simple_info(cr, uid, id, self._name,
+                    message = self.prepare_simple_info(cr, uid, idx, self._name,
                                                        field,
                                                        vals, context)
                     body = '%s\n%s' % (body, message)
 
             body = body and '%s\n</ul>' % body
             body and message and \
-                self.message_post(cr, uid, [id], body,
+                self.message_post(cr, uid, [idx], body,
                               _('Changes in Fields'))
         res = super(message_post_show_all, self).write(cr, uid, ids, vals,
                                                  context=context)
