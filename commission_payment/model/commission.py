@@ -20,7 +20,12 @@ COMMISSION_SCOPES = [
     ('product_invoiced', 'Based on Invoiced Products '),
 ]
 
-COMMISSION_POLICY_DATE = [
+COMMISSION_POLICY_DATE_START = [
+    ('invoice_emission_date', 'Based on Invoice Emission Date'),
+    ('invoice_due_date', 'Based on Invoice Due Date'),
+]
+
+COMMISSION_POLICY_DATE_END = [
     ('last_payment_date', 'Based on Last Payment on Invoice'),
     ('date_on_payment', 'Based on Date on Payment'),
 ]
@@ -130,9 +135,14 @@ class commission_payment(osv.Model):
             string='Commission Scope', required=False,
             readonly=True,
             states={'draft': [('readonly', False)]}),
-        'commission_policy_date': fields.selection(
-            COMMISSION_POLICY_DATE,
-            string='Commission Policy Date', required=False,
+        'commission_policy_date_start': fields.selection(
+            COMMISSION_POLICY_DATE_START,
+            string='Commission Start Date Policy', required=False,
+            readonly=True,
+            states={'draft': [('readonly', False)]}),
+        'commission_policy_date_end': fields.selection(
+            COMMISSION_POLICY_DATE_END,
+            string='Commission End Date Policy', required=False,
             readonly=True,
             states={'draft': [('readonly', False)]}),
     }
@@ -279,16 +289,17 @@ class commission_payment(osv.Model):
         )
         return res
 
-    def _get_commission_policy_date(self, cr, uid, ids, pay_id, context=None):
+    def _get_commission_policy_end_date(self, cr, uid, ids, pay_id,
+                                        context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
         avl_obj = self.pool.get('account.voucher.line')
         comm_brw = self.browse(cr, uid, ids[0], context=context)
         payment_brw = avl_obj.browse(cr, uid, pay_id, context=context)
         date = False
-        if comm_brw.commission_policy_date == 'last_payment_date':
+        if comm_brw.commission_policy_date_end == 'last_payment_date':
             date = payment_brw.move_line_id.invoice.date_last_payment
-        elif comm_brw.commission_policy_date == 'date_on_payment':
+        elif comm_brw.commission_policy_date_end == 'date_on_payment':
             date = payment_brw.voucher_id.date
         return date
 
@@ -308,9 +319,9 @@ class commission_payment(osv.Model):
         if not payment_brw.amount:
             return True
 
-        commission_policy_date = \
-            self._get_commission_policy_date(cr, uid, ids, pay_id,
-                                             context=context)
+        commission_policy_date_end = \
+            self._get_commission_policy_end_date(cr, uid, ids, pay_id,
+                                                 context=context)
 
         # Si esta aqui dentro es porque esta linea tiene una id valida
         # de una factura.
@@ -363,7 +374,7 @@ class commission_payment(osv.Model):
 
                     commission_params = self._get_commission_rate(
                         cr, uid, comm_brw.id,
-                        commission_policy_date,
+                        commission_policy_date_end,
                         inv_brw.date_invoice, dcto=0.0,
                         bar_brw=inv_brw.partner_id.baremo_id)
 
@@ -394,7 +405,7 @@ class commission_payment(osv.Model):
                             'name':
                             payment_brw.voucher_id.number and
                             payment_brw.voucher_id.number or '/',
-                            'pay_date': commission_policy_date,
+                            'pay_date': commission_policy_date_end,
                             'pay_off': payment_brw.voucher_id.amount,
                             'concept': payment_brw.id,
                             'invoice_id':
@@ -458,9 +469,9 @@ class commission_payment(osv.Model):
         if not payment_brw.amount:
             return True
 
-        commission_policy_date = \
-            self._get_commission_policy_date(cr, uid, ids, pay_id,
-                                             context=context)
+        commission_policy_date_end = \
+            self._get_commission_policy_end_date(cr, uid, ids, pay_id,
+                                                 context=context)
 
         # Si esta aqui dentro es porque esta linea tiene una id valida
         # de una factura.
@@ -471,7 +482,7 @@ class commission_payment(osv.Model):
 
         commission_params = self._get_commission_rate(
             cr, uid, comm_brw.id,
-            commission_policy_date,
+            commission_policy_date_end,
             inv_brw.date_invoice, dcto=0.0,
             bar_brw=inv_brw.partner_id.baremo_id)
 
@@ -502,7 +513,7 @@ class commission_payment(osv.Model):
                 'name':
                 payment_brw.voucher_id.number and
                 payment_brw.voucher_id.number or '/',
-                'pay_date': commission_policy_date,
+                'pay_date': commission_policy_date_end,
                 'pay_off': payment_brw.voucher_id.amount,
                 'concept': payment_brw.id,
                 'invoice_id':
