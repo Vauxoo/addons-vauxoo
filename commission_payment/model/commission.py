@@ -582,7 +582,6 @@ class commission_payment(osv.Model):
 
             # Obtener la lista de asesores/vendedores a los cuales se les hara
             # el calculo de comisiones
-            user_ids = []
             user_ids = [line.id for line in comm_brw.user_ids]
 
             payment_ids = []
