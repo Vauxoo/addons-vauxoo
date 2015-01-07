@@ -15,6 +15,13 @@ COMMISSION_TYPES = [
     ('fully_paid_invoice', 'Based on Fully Paid Invoices'),
 ]
 
+COMMISSION_SALESMAN_POLICY = [
+    ('salesmanOnInvoice', 'Based on Salesman on Invoice'),
+    ('salesmanOnInvoicedPartner', 'Based on Salesman on Invoiced Partner'),
+    ('salesmanOnAccountingPartner',
+     'Based on Salesman on Accounting Partner Invoiced'),
+]
+
 COMMISSION_SCOPES = [
     ('whole_invoice', 'Based on Whole Invoice'),
     ('product_invoiced', 'Based on Invoiced Products '),
