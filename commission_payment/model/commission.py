@@ -289,6 +289,20 @@ class commission_payment(osv.Model):
         )
         return res
 
+    def _get_commission_policy_start_date(self, cr, uid, ids, pay_id,
+                                          context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        context = context or {}
+        avl_obj = self.pool.get('account.voucher.line')
+        comm_brw = self.browse(cr, uid, ids[0], context=context)
+        payment_brw = avl_obj.browse(cr, uid, pay_id, context=context)
+        date = False
+        if comm_brw.commission_policy_date_start == 'invoice_emission_date':
+            date = payment_brw.move_line_id.invoice.date_invoice
+        elif comm_brw.commission_policy_date_start == 'invoice_due_date':
+            date = payment_brw.move_line_id.invoice.date_due
+        return date
+
     def _get_commission_policy_end_date(self, cr, uid, ids, pay_id,
                                         context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -318,6 +332,10 @@ class commission_payment(osv.Model):
         payment_brw = avl_obj.browse(cr, uid, pay_id, context=context)
         if not payment_brw.amount:
             return True
+
+        commission_policy_date_start = \
+            self._get_commission_policy_start_date(cr, uid, ids, pay_id,
+                                                   context=context)
 
         commission_policy_date_end = \
             self._get_commission_policy_end_date(cr, uid, ids, pay_id,
@@ -375,7 +393,7 @@ class commission_payment(osv.Model):
                     commission_params = self._get_commission_rate(
                         cr, uid, comm_brw.id,
                         commission_policy_date_end,
-                        inv_brw.date_invoice, dcto=0.0,
+                        commission_policy_date_start, dcto=0.0,
                         bar_brw=inv_brw.partner_id.baremo_id)
 
                     bar_day = commission_params['bar_day']
@@ -415,7 +433,7 @@ class commission_payment(osv.Model):
                             'saleman_name': saleman and saleman.name,
                             'saleman_id': saleman and saleman.id,
                             'pay_inv': payment_brw.amount,
-                            'inv_date': inv_brw.date_invoice,
+                            'inv_date': commission_policy_date_start,
                             'days': emission_days,
                             'inv_subtotal': inv_brw.amount_untaxed,
                             'item': inv_lin.name,
@@ -469,6 +487,10 @@ class commission_payment(osv.Model):
         if not payment_brw.amount:
             return True
 
+        commission_policy_date_start = \
+            self._get_commission_policy_start_date(cr, uid, ids, pay_id,
+                                                   context=context)
+
         commission_policy_date_end = \
             self._get_commission_policy_end_date(cr, uid, ids, pay_id,
                                                  context=context)
@@ -483,7 +505,7 @@ class commission_payment(osv.Model):
         commission_params = self._get_commission_rate(
             cr, uid, comm_brw.id,
             commission_policy_date_end,
-            inv_brw.date_invoice, dcto=0.0,
+            commission_policy_date_start, dcto=0.0,
             bar_brw=inv_brw.partner_id.baremo_id)
 
         bar_day = commission_params['bar_day']
@@ -523,7 +545,7 @@ class commission_payment(osv.Model):
                 'saleman_name': saleman and saleman.name,
                 'saleman_id': saleman and saleman.id,
                 'pay_inv': payment_brw.amount,
-                'inv_date': inv_brw.date_invoice,
+                'inv_date': commission_policy_date_start,
                 'days': emission_days,
                 'inv_subtotal': inv_brw.amount_untaxed,
                 'rate_number': bardctdsc,
