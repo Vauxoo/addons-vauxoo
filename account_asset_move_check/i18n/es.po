@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-06 22:32+0000\n"
-"PO-Revision-Date: 2015-01-06 22:32+0000\n"
+"POT-Creation-Date: 2015-01-08 16:16+0000\n"
+"PO-Revision-Date: 2015-01-08 16:16+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -51,18 +51,7 @@ msgid "Date Stop"
 msgstr "Fecha Fin"
 
 #. module: account_asset_move_check
-#: model:ir.actions.act_window,name:account_asset_move_check.action_depeciation_historical
-msgid "Depreciation Historical"
-msgstr "Depreciación Histórica"
-
-#. module: account_asset_move_check
-#: view:wizard.asset.depreciation:account_asset_move_check.view_wizard_asset_depreciation_historical
-msgid "Depreciation lines to historical"
-msgstr "Lineas de depreciación histórica"
-
-#. module: account_asset_move_check
 #: field:account.asset.depreciation.line,historical:0
-#: view:wizard.asset.depreciation:account_asset_move_check.view_wizard_asset_depreciation_historical
 msgid "Historical"
 msgstr "Histórica"
 
@@ -90,4 +79,19 @@ msgstr "Seleccione la fecha inicial para las lineas de depreciación que se indi
 #: help:wizard.asset.depreciation,date_stop:0
 msgid "Select date stop to depreciation lines that will write that the lines are historical"
 msgstr "Seleccione la fecha final para las lineas de depreciación que se indicarán como históricas"
+
+#. module: account_asset_move_check
+#: model:ir.actions.act_window,name:account_asset_move_check.action_depeciation_historical
+msgid "Set Depreciation Historical"
+msgstr "Establecer Depreciación Histórica"
+
+#. module: account_asset_move_check
+#: view:wizard.asset.depreciation:account_asset_move_check.view_wizard_asset_depreciation_historical
+msgid "Set as historical"
+msgstr "Estaablecer como históricas"
+
+#. module: account_asset_move_check
+#: view:wizard.asset.depreciation:account_asset_move_check.view_wizard_asset_depreciation_historical
+msgid "Set depreciation lines as historical"
+msgstr "Establecer lineas depreciación como históricas"
 

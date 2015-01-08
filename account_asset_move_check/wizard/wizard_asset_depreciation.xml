@@ -6,7 +6,7 @@
             <field name="name">Historical depreciation</field>
             <field name="model">wizard.asset.depreciation</field>
             <field name="arch" type="xml">
-            <form string="Depreciation lines to historical" version="7.0">
+            <form string="Set depreciation lines as historical" version="7.0">
                 <group>
                     <group>
                         <field name="date_start"/>
@@ -16,7 +16,7 @@
                     </group>
                 </group>
                 <footer>
-                    <button name='write_historical_true' string="Historical" class="oe_highlight" type="object" icon="gtk-ok"/>
+                    <button name='write_historical_true' string="Set as historical" class="oe_highlight" type="object" icon="gtk-ok"/>
                     <button special="cancel" string="Cancel"/>
                 </footer>
             </form>
@@ -24,7 +24,7 @@
         </record>
         
         <record id="action_depeciation_historical" model="ir.actions.act_window">
-            <field name="name">Depreciation Historical</field>
+            <field name="name">Set Depreciation Historical</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">wizard.asset.depreciation</field>
             <field name="view_type">form</field>
@@ -36,7 +36,7 @@
 
         <record model="ir.values" id="depreciation_historical">
             <field name="model_id" ref="account_asset.model_account_asset_asset" />
-            <field name="name">Historical</field>
+            <field name="name">Set Historical</field>
             <field name="key2">client_action_multi</field>
             <field name="value" eval="'ir.actions.act_window,' + str(ref('action_depeciation_historical'))" />
             <field name="key">action</field>
