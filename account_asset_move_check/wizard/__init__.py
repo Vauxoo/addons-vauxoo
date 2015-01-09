@@ -2,11 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2015 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: Sabrina Romero (sabrina@vauxoo.com)
+#    Coded by: Luis Torres (luis_t@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,5 +23,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-import account_asset 
+from . import wizard_asset_depreciation
