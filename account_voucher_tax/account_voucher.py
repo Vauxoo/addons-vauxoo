@@ -121,7 +121,7 @@ class account_voucher(osv.Model):
                             line_tax.tax_id.account_paid_voucher_id.id
                     account_tax_collected = \
                         line_tax.tax_id.account_collected_id.id
-                    context['date'] = line.move_line_id.date
+                    context['date'] = voucher.date
                     reference_amount = line_tax.amount_tax
                     move_lines_tax = self._preparate_move_line_tax(
                         cr, uid, account_tax_voucher, account_tax_collected,
@@ -644,7 +644,6 @@ class account_move_line(osv.Model):
             cr, uid, ids=ids, type='auto', writeoff_acc_id=writeoff_acc_id,
             writeoff_period_id=writeoff_period_id,
             writeoff_journal_id=writeoff_journal_id, context=context)
-        self._get_round(cr, uid, ids, context=context)
         return res
 
     _columns = {
