@@ -52,6 +52,10 @@
                                         name="commission_policy_date_start"
                                         widget="radio"
                                         />
+                                    <field
+                                        name="commission_salesman_policy"
+                                        widget="radio"
+                                        />
                                 </group>
                                 <group col="2" colspan="2">
                                     <label for="date_stop"/>

@@ -152,6 +152,11 @@ class commission_payment(osv.Model):
             string='Commission End Date Policy', required=False,
             readonly=True,
             states={'draft': [('readonly', False)]}),
+        'commission_salesman_policy': fields.selection(
+            COMMISSION_SALESMAN_POLICY,
+            string='Commission Salesman Policy', required=False,
+            readonly=True,
+            states={'draft': [('readonly', False)]}),
     }
     _defaults = {
         'name': lambda *a: None,
