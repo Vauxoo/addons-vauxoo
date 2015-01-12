@@ -329,6 +329,26 @@ class commission_payment(osv.Model):
             date = payment_brw.voucher_id.date
         return date
 
+    def _get_commission_salesman_policy(self, cr, uid, ids, pay_id,
+                                        context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        context = context or {}
+        avl_obj = self.pool.get('account.voucher.line')
+        rp_obj = self.pool.get('res.partner')
+        comm_brw = self.browse(cr, uid, ids[0], context=context)
+        payment_brw = avl_obj.browse(cr, uid, pay_id, context=context)
+        res = None
+        if comm_brw.commission_salesman_policy == 'salesmanOnInvoice':
+            res = payment_brw.move_line_id.invoice.user_id
+        elif comm_brw.commission_salesman_policy == \
+                'salesmanOnInvoicedPartner':
+            res = payment_brw.move_line_id.invoice.partner_id.user_id
+        elif comm_brw.commission_salesman_policy == \
+                'salesmanOnAccountingPartner':
+            res = rp_obj._find_accounting_partner(
+                payment_brw.move_line_id.invoice.partner_id).user_id
+        return res
+
     def _get_commission_payment_on_invoice_line(self, cr, uid, ids, pay_id,
                                                 context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -358,7 +378,8 @@ class commission_payment(osv.Model):
         inv_brw = payment_brw.move_line_id.invoice
 
         # Obtener el vendedor del partner
-        saleman = inv_brw.partner_id.user_id
+        saleman = self._get_commission_salesman_policy(cr, uid, ids, pay_id,
+                                                       context=context)
 
         # Revision de cada linea de factura (productos)
         for inv_lin in inv_brw.invoice_line:
@@ -512,7 +533,8 @@ class commission_payment(osv.Model):
         inv_brw = payment_brw.move_line_id.invoice
 
         # Obtener el vendedor del partner
-        saleman = inv_brw.partner_id.user_id
+        saleman = self._get_commission_salesman_policy(cr, uid, ids, pay_id,
+                                                       context=context)
 
         commission_params = self._get_commission_rate(
             cr, uid, comm_brw.id,
@@ -611,13 +633,20 @@ class commission_payment(osv.Model):
                         continue
 
                     # Verificar si esta linea tiene factura
-                    if avl_brw.move_line_id.invoice:
-                        pay_line_vendor = avl_brw.partner_id.user_id and \
-                            avl_brw.partner_id.user_id.id or False
-                        if pay_line_vendor in user_ids:
-                            payment_ids.append(avl_brw.id)
-                    else:
+                    if not avl_brw.move_line_id.invoice:
                         uninvoice_payment_ids.append(avl_brw.id)
+                        continue
+
+                    commission_salesman_policy = \
+                        self._get_commission_salesman_policy(
+                            cr, uid, ids, avl_brw.id, context=context)
+
+                    if commission_salesman_policy is None:
+                        # TODO: Some Warnings have to be done here
+                        continue
+
+                    if commission_salesman_policy.id in user_ids:
+                        payment_ids.append(avl_brw.id)
 
             for pay_id in payment_ids:
                 # se procede con la preparacion de las comisiones.
