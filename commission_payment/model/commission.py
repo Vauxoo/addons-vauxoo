@@ -38,13 +38,13 @@ COMMISSION_POLICY_DATE_END = [
 ]
 
 
-def tTime(dt):
+def t_time(date):
     '''
     Trims time from "%Y-%m-%d %H:%M:%S" to "%Y-%m-%d"
     '''
-    dt = datetime.datetime.strptime(dt, "%Y-%m-%d %H:%M:%S")
-    dt = datetime.date(dt.year, dt.month, dt.day)
-    return dt.strftime("%Y-%m-%d")
+    date = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
+    date = datetime.date(date.year, date.month, date.day)
+    return date.strftime("%Y-%m-%d")
 
 
 class commission_payment(osv.Model):
@@ -401,7 +401,7 @@ class commission_payment(osv.Model):
                 for price_id in price_ids:
                     prod_prices_brw = \
                         prod_prices.browse(cr, uid, price_id, context=context)
-                    if inv_brw.date_invoice >= tTime(prod_prices_brw.name):
+                    if inv_brw.date_invoice >= t_time(prod_prices_brw.name):
                         list_price = prod_prices_brw.price
                         list_date = prod_prices_brw.name
                         no_price = False
