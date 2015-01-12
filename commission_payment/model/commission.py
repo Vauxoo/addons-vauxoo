@@ -602,18 +602,22 @@ class commission_payment(osv.Model):
             for av_brw in comm_brw.voucher_ids:
                 # Leer cada una de las lineas de los vouchers
                 for avl_brw in av_brw.line_cr_ids:
-                    pay_line_vendor = avl_brw.partner_id.user_id and \
-                        avl_brw.partner_id.user_id.id or False
-                    if pay_line_vendor in user_ids:
+                    # Verificar si la comision del pago ya se ha pagado
+                    if avl_brw.paid_comm:
+                        continue
 
-                        # Verificar si esta linea tiene factura y la comision
-                        # del pago no se ha pagado
-                        if avl_brw.move_line_id and \
-                                avl_brw.move_line_id.invoice and not \
-                                avl_brw.paid_comm:
+                    # Verificar si el pago esta relacionado con un move_line
+                    if not avl_brw.move_line_id:
+                        continue
+
+                    # Verificar si esta linea tiene factura
+                    if avl_brw.move_line_id.invoice:
+                        pay_line_vendor = avl_brw.partner_id.user_id and \
+                            avl_brw.partner_id.user_id.id or False
+                        if pay_line_vendor in user_ids:
                             payment_ids.append(avl_brw.id)
-                        else:
-                            uninvoice_payment_ids.append(avl_brw.id)
+                    else:
+                        uninvoice_payment_ids.append(avl_brw.id)
 
             for pay_id in payment_ids:
                 # se procede con la preparacion de las comisiones.
