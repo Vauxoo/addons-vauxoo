@@ -122,6 +122,7 @@
                                         <field name="partner_id"/>
                                         <field name="account_id"/>
                                         <field name="move_id"/>
+                                        <field name="rec_invoice"/>
                                         <field name="debit" sum="Total Debit"/>
                                         <field name="credit" sum="Total Credit"/>
                                     </tree>

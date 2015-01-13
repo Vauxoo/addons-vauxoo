@@ -1182,10 +1182,47 @@ class commission_retention(osv.Model):
 
 
 class account_move_line(osv.Model):
+
+    def _get_reconciling_invoice(self, cr, uid, ids, fieldname, arg,
+                                 context=None):
+        res = {}.fromkeys(ids, None)
+        context = context or {}
+        for aml_brw in self.browse(cr, uid, ids, context=context):
+            if aml_brw.state != 'valid':
+                continue
+            if not aml_brw.credit:
+                continue
+            if aml_brw.account_id.type != 'receivable':
+                continue
+            if aml_brw.journal_id.type not in ('cash', 'bank'):
+                continue
+            if not aml_brw.reconcile_id and not aml_brw.reconcile_partial_id:
+                continue
+
+            for frec in aml_brw.reconcile_id.line_id:
+                if frec.invoice and frec.invoice.type == 'out_invoice':
+                    res[aml_brw.id] = frec.invoice.id
+                    break
+
+            if res.get(aml_brw.id, False):
+                continue
+
+            for prec in aml_brw.reconcile_parcial_ids.line_partial_ids:
+                if prec.invoice and prec.invoice.type == 'out_invoice':
+                    res[aml_brw.id] = prec.invoice.id
+                    break
+        return res
+
     _inherit = 'account.move.line'
 
     _columns = {
         'paid_comm': fields.boolean('Paid Commission?'),
+        'rec_invoice': fields.function(
+            _get_reconciling_invoice,
+            string='Reconciling Invoice',
+            type="many2one",
+            relation="account.invoice",
+        ),
     }
     _defaults = {
         'paid_comm': lambda *a: False,
