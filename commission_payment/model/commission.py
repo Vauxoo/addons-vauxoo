@@ -114,10 +114,12 @@ class commission_payment(osv.Model):
             'account.invoice', 'commission_account_invoice', 'commission_id',
             'invoice_id', 'Invoices', readonly=True,
             states={'draft': [('readonly', False)]}),
+        # TODO: Change name to field voucher_ids and all naming to
+        # account_move_lines
         'voucher_ids': fields.many2many(
-            'account.voucher', 'commission_account_voucher', 'commission_id',
+            'account.move.line', 'commission_aml', 'commission_id',
             'voucher_id', 'Vouchers', readonly=True,
-            states={'draft': [('readonly', False)]}),
+            ),
         'comm_voucher_ids': fields.one2many(
             'commission.voucher',
             'commission_id', 'Vouchers afectados en esta comision',
@@ -179,7 +181,7 @@ class commission_payment(osv.Model):
     def _prepare_based_on_payments(self, cr, uid, ids, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
-        av_obj = self.pool.get('account.voucher')
+        aml_obj = self.pool.get('account.move.line')
 
         for comm_brw in self.browse(cr, uid, ids, context=context):
             invoice_ids = [(3, x.id) for x in comm_brw.invoice_ids]
@@ -189,17 +191,19 @@ class commission_payment(osv.Model):
             date_start = comm_brw.date_start
             date_stop = comm_brw.date_stop
 
-            # En esta busqueda restringimos que el voucher se haya
-            # contabilizado y que sea un cobro bancario y este dentro de la
-            # fecha estipulada
-            voucher_ids = av_obj.search(
-                cr, uid, [('state', '=', 'posted'),
-                          ('type', '=', 'receipt'),
+            # In this search we will restrict domain to those Entry Lines
+            # coming from a Cash or Bank Journal within the given dates
+            aml_ids = aml_obj.search(
+                cr, uid, [('state', '=', 'valid'),
                           ('date', '>=', date_start),
-                          ('date', '<=', date_stop)])
+                          ('date', '<=', date_stop),
+                          ('journal_id.type', 'in', ('bank', 'cash')),
+                          ('credit', '>', 0.0)
+                          ], context=context)
 
+            # TODO: Change name to field voucher_ids
             comm_brw.write({
-                'voucher_ids': [(6, comm_brw.id, voucher_ids)]})
+                'voucher_ids': [(6, comm_brw.id, aml_ids)]})
 
         return True
 
@@ -207,7 +211,6 @@ class commission_payment(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
         inv_obj = self.pool.get('account.invoice')
-        av_obj = self.pool.get('account.voucher')
 
         for comm_brw in self.browse(cr, uid, ids, context=context):
             comm_brw.write({'voucher_ids': []})
@@ -227,13 +230,12 @@ class commission_payment(osv.Model):
 
             comm_brw.refresh()
 
-            am_ids = [aml_brw.move_id.id for inv_brw in comm_brw.invoice_ids
-                      for aml_brw in inv_brw.payment_ids]
+            aml_ids = [aml_brw.id for inv_brw in comm_brw.invoice_ids
+                       for aml_brw in inv_brw.payment_ids
+                       if aml_brw.journal_id.type in ('bank', 'cash')
+                       ]
 
-            av_ids = av_obj.search(cr, uid, [('move_id', 'in', am_ids)],
-                                   context=context)
-            if av_ids:
-                comm_brw.write({'voucher_ids': [(6, comm_brw.id, av_ids)]})
+            comm_brw.write({'voucher_ids': [(6, comm_brw.id, aml_ids)]})
 
         return True
 
@@ -304,48 +306,51 @@ class commission_payment(osv.Model):
                                           context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
-        avl_obj = self.pool.get('account.voucher.line')
+        aml_obj = self.pool.get('account.move.line')
         comm_brw = self.browse(cr, uid, ids[0], context=context)
-        payment_brw = avl_obj.browse(cr, uid, pay_id, context=context)
+        aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
         date = False
         if comm_brw.commission_policy_date_start == 'invoice_emission_date':
-            date = payment_brw.move_line_id.invoice.date_invoice
+            # TODO: here goes the comm_invoice
+            date = aml_brw.invoice.date_invoice
         elif comm_brw.commission_policy_date_start == 'invoice_due_date':
-            date = payment_brw.move_line_id.invoice.date_due
+            # TODO: here goes the comm_invoice
+            date = aml_brw.move_line_id.invoice.date_due
         return date
 
     def _get_commission_policy_end_date(self, cr, uid, ids, pay_id,
                                         context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
-        avl_obj = self.pool.get('account.voucher.line')
+        aml_obj = self.pool.get('account.move.line')
         comm_brw = self.browse(cr, uid, ids[0], context=context)
-        payment_brw = avl_obj.browse(cr, uid, pay_id, context=context)
+        aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
         date = False
         if comm_brw.commission_policy_date_end == 'last_payment_date':
-            date = payment_brw.move_line_id.invoice.date_last_payment
+            # TODO: here goes the comm_invoice
+            date = aml_brw.invoice.date_last_payment
         elif comm_brw.commission_policy_date_end == 'date_on_payment':
-            date = payment_brw.voucher_id.date
+            date = aml_brw.date
         return date
 
     def _get_commission_salesman_policy(self, cr, uid, ids, pay_id,
                                         context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
-        avl_obj = self.pool.get('account.voucher.line')
+        aml_obj = self.pool.get('account.move.line')
         rp_obj = self.pool.get('res.partner')
         comm_brw = self.browse(cr, uid, ids[0], context=context)
-        payment_brw = avl_obj.browse(cr, uid, pay_id, context=context)
+        aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
         res = None
         if comm_brw.commission_salesman_policy == 'salesmanOnInvoice':
-            res = payment_brw.move_line_id.invoice.user_id
+            res = aml_brw.invoice.user_id
         elif comm_brw.commission_salesman_policy == \
                 'salesmanOnInvoicedPartner':
-            res = payment_brw.move_line_id.invoice.partner_id.user_id
+            res = aml_brw.invoice.partner_id.user_id
         elif comm_brw.commission_salesman_policy == \
                 'salesmanOnAccountingPartner':
             res = rp_obj._find_accounting_partner(
-                payment_brw.move_line_id.invoice.partner_id).user_id
+                aml_brw.invoice.partner_id).user_id
         return res
 
     def _get_commission_payment_on_invoice_line(self, cr, uid, ids, pay_id,
@@ -354,14 +359,14 @@ class commission_payment(osv.Model):
         context = context or {}
         comm_brw = self.browse(cr, uid, ids[0], context=context)
 
-        avl_obj = self.pool.get('account.voucher.line')
+        aml_obj = self.pool.get('account.move.line')
         prod_prices = self.pool.get('product.historic.price')
         sale_noids = self.pool.get('commission.sale.noid')
         noprice_ids = self.pool.get('commission.noprice')
         comm_line_ids = self.pool.get('commission.lines')
 
-        payment_brw = avl_obj.browse(cr, uid, pay_id, context=context)
-        if not payment_brw.amount:
+        aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
+        if not aml_brw.credit:
             return True
 
         commission_policy_date_start = \
@@ -374,7 +379,8 @@ class commission_payment(osv.Model):
 
         # Si esta aqui dentro es porque esta linea tiene una id valida
         # de una factura.
-        inv_brw = payment_brw.move_line_id.invoice
+        # TODO: here goes the comm_invoice
+        inv_brw = aml_brw.invoice
 
         # Obtener el vendedor del partner
         saleman = self._get_commission_salesman_policy(cr, uid, ids, pay_id,
@@ -437,7 +443,7 @@ class commission_payment(osv.Model):
                     # CALCULO DE COMISION POR LINEA DE PRODUCTO #
                     #############################################
 
-                    penbxlinea = payment_brw.amount * (
+                    penbxlinea = aml_brw.credit * (
                         inv_lin.price_subtotal /
                         inv_brw.amount_untaxed)
                     fact_sup = 1 - 0.0 / 100 - 0.0 / 100
@@ -451,20 +457,20 @@ class commission_payment(osv.Model):
                     comm_line_ids.create(
                         cr, uid, {
                             'commission_id': comm_brw.id,
-                            'voucher_id': payment_brw.voucher_id.id,
+                            'voucher_id': aml_brw.id,
                             'name':
-                            payment_brw.voucher_id.number and
-                            payment_brw.voucher_id.number or '/',
+                            aml_brw.move_id.name and
+                            aml_brw.move_id.name or '/',
                             'pay_date': commission_policy_date_end,
-                            'pay_off': payment_brw.voucher_id.amount,
-                            'concept': payment_brw.id,
+                            'pay_off': aml_brw.credit,
+                            'concept': aml_brw.id,
                             'invoice_id':
-                            payment_brw.move_line_id.invoice.id,
+                            aml_brw.invoice.id,
                             'invoice_num': inv_brw.number,
                             'partner_id': inv_brw.partner_id.id,
                             'saleman_name': saleman and saleman.name,
                             'saleman_id': saleman and saleman.id,
-                            'pay_inv': payment_brw.amount,
+                            'pay_inv': aml_brw.credit,
                             'inv_date': commission_policy_date_start,
                             'days': emission_days,
                             'inv_subtotal': inv_brw.amount_untaxed,
@@ -506,33 +512,33 @@ class commission_payment(osv.Model):
                                   context=context)
         return True
 
-    def _get_commission_payment_on_invoice(self, cr, uid, ids, pay_id,
+    def _get_commission_payment_on_invoice(self, cr, uid, ids, aml_id,
                                            context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
         comm_brw = self.browse(cr, uid, ids[0], context=context)
 
-        avl_obj = self.pool.get('account.voucher.line')
+        aml_obj = self.pool.get('account.move.line')
         comm_line_ids = self.pool.get('commission.lines')
 
-        payment_brw = avl_obj.browse(cr, uid, pay_id, context=context)
-        if not payment_brw.amount:
+        aml_brw = aml_obj.browse(cr, uid, aml_id, context=context)
+        if not aml_brw.amount:
             return True
 
         commission_policy_date_start = \
-            self._get_commission_policy_start_date(cr, uid, ids, pay_id,
+            self._get_commission_policy_start_date(cr, uid, ids, aml_id,
                                                    context=context)
 
         commission_policy_date_end = \
-            self._get_commission_policy_end_date(cr, uid, ids, pay_id,
+            self._get_commission_policy_end_date(cr, uid, ids, aml_id,
                                                  context=context)
 
         # Si esta aqui dentro es porque esta linea tiene una id valida
         # de una factura.
-        inv_brw = payment_brw.move_line_id.invoice
+        inv_brw = aml_brw.invoice
 
         # Obtener el vendedor del partner
-        saleman = self._get_commission_salesman_policy(cr, uid, ids, pay_id,
+        saleman = self._get_commission_salesman_policy(cr, uid, ids, aml_id,
                                                        context=context)
 
         commission_params = self._get_commission_rate(
@@ -550,7 +556,7 @@ class commission_payment(osv.Model):
         # CALCULO DE COMISION POR LINEA DE PRODUCTO #
         #############################################
 
-        penbxlinea = payment_brw.amount * (
+        penbxlinea = aml_brw.credit * (
             inv_brw.amount_untaxed /
             inv_brw.amount_untaxed)
         fact_sup = 1 - 0.0 / 100 - 0.0 / 100
@@ -564,20 +570,19 @@ class commission_payment(osv.Model):
         comm_line_ids.create(
             cr, uid, {
                 'commission_id': comm_brw.id,
-                'voucher_id': payment_brw.voucher_id.id,
+                'voucher_id': aml_brw.id,
                 'name':
-                payment_brw.voucher_id.number and
-                payment_brw.voucher_id.number or '/',
+                aml_brw.move_id.name and
+                aml_brw.move_id.name or '/',
                 'pay_date': commission_policy_date_end,
-                'pay_off': payment_brw.voucher_id.amount,
-                'concept': payment_brw.id,
-                'invoice_id':
-                payment_brw.move_line_id.invoice.id,
+                'pay_off': aml_brw.credit,
+                'concept': aml_brw.id,
+                'invoice_id': aml_brw.invoice.id,
                 'invoice_num': inv_brw.number,
                 'partner_id': inv_brw.partner_id.id,
                 'saleman_name': saleman and saleman.name,
                 'saleman_id': saleman and saleman.id,
-                'pay_inv': payment_brw.amount,
+                'pay_inv': aml_brw.credit,
                 'inv_date': commission_policy_date_start,
                 'days': emission_days,
                 'inv_subtotal': inv_brw.amount_untaxed,
@@ -589,15 +594,15 @@ class commission_payment(osv.Model):
 
         return True
 
-    def _get_commission_payment(self, cr, uid, ids, pay_id, context=None):
+    def _get_commission_payment(self, cr, uid, ids, aml_id, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
         comm_brw = self.browse(cr, uid, ids[0], context=context)
         if comm_brw.commission_scope == 'product_invoiced':
-            self._get_commission_payment_on_invoice_line(cr, uid, ids, pay_id,
+            self._get_commission_payment_on_invoice_line(cr, uid, ids, aml_id,
                                                          context=context)
         elif comm_brw.commission_scope == 'whole_invoice':
-            self._get_commission_payment_on_invoice(cr, uid, ids, pay_id,
+            self._get_commission_payment_on_invoice(cr, uid, ids, aml_id,
                                                     context=context)
 
         return True
@@ -607,11 +612,9 @@ class commission_payment(osv.Model):
         context = context or {}
 
         uninvoiced_pays = self.pool.get('commission.uninvoiced')
-        avl_obj = self.pool.get('account.voucher.line')
+        aml_obj = self.pool.get('account.move.line')
 
         for comm_brw in self.browse(cr, uid, ids, context=context):
-            # Desvincular lineas existentes, si las hubiere
-            comm_brw.unlink()
 
             # Obtener la lista de asesores/vendedores a los cuales se les hara
             # el calculo de comisiones
@@ -620,40 +623,35 @@ class commission_payment(osv.Model):
             payment_ids = []
             uninvoice_payment_ids = []
 
-            for av_brw in comm_brw.voucher_ids:
-                # Leer cada una de las lineas de los vouchers
-                for avl_brw in av_brw.line_cr_ids:
-                    # Verificar si la comision del pago ya se ha pagado
-                    if avl_brw.paid_comm:
-                        continue
+            # Read each Journal Entry Line
+            for aml_brw in comm_brw.voucher_ids:
+                # Verificar si la comision del pago ya se ha pagado
+                if aml_brw.paid_comm:
+                    continue
 
-                    # Verificar si el pago esta relacionado con un move_line
-                    if not avl_brw.move_line_id:
-                        continue
+                # Verificar si esta linea tiene factura
+                if not aml_brw.invoice:
+                    uninvoice_payment_ids.append(aml_brw.id)
+                    continue
 
-                    # Verificar si esta linea tiene factura
-                    if not avl_brw.move_line_id.invoice:
-                        uninvoice_payment_ids.append(avl_brw.id)
-                        continue
+                commission_salesman_policy = \
+                    self._get_commission_salesman_policy(
+                        cr, uid, ids, aml_brw.id, context=context)
 
-                    commission_salesman_policy = \
-                        self._get_commission_salesman_policy(
-                            cr, uid, ids, avl_brw.id, context=context)
+                if commission_salesman_policy is None:
+                    # TODO: Some Warnings have to be done here
+                    continue
 
-                    if commission_salesman_policy is None:
-                        # TODO: Some Warnings have to be done here
-                        continue
-
-                    if commission_salesman_policy.id in user_ids:
-                        payment_ids.append(avl_brw.id)
+                if commission_salesman_policy.id in user_ids:
+                    payment_ids.append(aml_brw.id)
 
             for pay_id in payment_ids:
                 # se procede con la preparacion de las comisiones.
                 self._get_commission_payment(cr, uid, ids, pay_id,
                                              context=context)
 
-            for payment_brw in avl_obj.browse(cr, uid, uninvoice_payment_ids,
-                                              context=context):
+            for aml_brw in aml_obj.browse(cr, uid, uninvoice_payment_ids,
+                                          context=context):
                 # Si esta aqui dentro es porque esta linea (transaccion) no
                 # tiene factura valida, se escribe entonces una linea en una
                 # vista donde se muestran las transacciones que no tienen
@@ -661,10 +659,10 @@ class commission_payment(osv.Model):
                 # pagado la comision del mismo solo se incluiran pagos que sean
                 # de cuentas cobrables, puesto que las de otra naturaleza, no
                 # tienen sentido mostrarlas aqui.
-                if payment_brw.account_id.type == 'receivable':
+                if aml_brw.account_id.type == 'receivable':
                     uninvoiced_pays.create(cr, uid, {
                         'commission_id': comm_brw.id,
-                        'payment_id': payment_brw.id,
+                        'payment_id': aml_brw.id,
                     }, context=context)
         return True
 
@@ -802,17 +800,15 @@ class commission_payment(osv.Model):
 
     def prepare(self, cr, user, ids, context=None):
         """
-        Este metodo recorre los elementos de account_voucher y verifica al
+        Este metodo recorre los elementos de lineas de asiento y verifica al
         menos tres (3) caracteristicas primordiales para continuar con los
-        vouchers: estas caracteristicas son:
-        - bank_rec_voucher: quiere decir que el voucher es de un deposito
-        bancario (aqui aun no se ha considerado el trato que se le da a los
-        cheques devueltos).
-        - posted: quiere decir que el voucher ya se ha contabilizado, condicion
-        necesaria pero no suficiente.
-        - move_ids: si la longitud de estos es distinto de cero es porque este
-        voucher es por completo valido, es decir, realmente tiene asientos
-        contables registrados.
+        mismos: estas caracteristicas son:
+        - journal_id.type in ('cash', 'bank'): quiere decir que la linea es de
+        un deposito bancario (aqui aun no se ha considerado el trato que se le
+        da a los cheques devueltos).
+        - state == 'valid' : quiere decir que la linea ya se ha contabilizado y
+        que esta cuadrado el asiento, condicion necesaria pero no suficiente.
+        - paid_comm: que la linea aun no se ha considerado para una comision.
 
         Si estas tres (3) condiciones se cumplen entonces se puede proceder a
         realizar la revision de las lineas de pago.
@@ -830,6 +826,8 @@ class commission_payment(osv.Model):
         context = context or {}
         comm_brw = self.browse(cr, uid, ids[0], context=context)
         if comm_brw.commission_type == 'partial_payment':
+            # Desvincular lineas existentes, si las hubiere
+            comm_brw.unlink()
             self._prepare_based_on_payments(cr, uid, ids, context=context)
             self._commission_based_on_payments(cr, uid, ids, context=context)
         elif comm_brw.commission_type == 'fully_paid_invoice':
@@ -896,15 +894,17 @@ class commission_payment(osv.Model):
             comm_retention_ids.unlink(
                 cr, user, [line.id for line in commission.comm_retention_ids])
             ###
+            commission.write(
+                {'voucher_ids': [(3, x.id) for x in commission.voucher_ids]})
 
     def validate(self, cr, user, ids, context=None):
-        avl = self.pool.get('account.voucher.line')
+        aml_obj = self.pool.get('account.move.line')
         # escribir en el avl el estado buleano de paid_comm a True para indicar
         # que ya esta comision se esta pagando
         for commission in self.browse(cr, user, ids, context=context):
-            avl.write(cr, user, [line.concept.id for line in
-                                 commission.comm_line_ids],
-                      {'paid_comm': True}, context=context)
+            aml_obj.write(cr, user, [line.concept.id for line in
+                                     commission.comm_line_ids],
+                          {'paid_comm': True}, context=context)
 
         self.write(cr, user, ids, {'state': 'done', }, context=context)
         return True
@@ -922,7 +922,7 @@ class commission_uninvoiced(osv.Model):
         'name': fields.char('Comentario', size=256),
         'commission_id': fields.many2one('commission.payment', 'Comision'),
         'payment_id': fields.many2one(
-            'account.voucher.line', 'Descripcion de Transaccion'),
+            'account.move.line', 'Descripcion de Transaccion'),
     }
     _defaults = {
         'name': lambda *a: None,
@@ -987,9 +987,10 @@ class commission_lines(osv.Model):
             'Pago',
             digits_compute=dp.get_precision('Commission')),
 
-        'voucher_id': fields.many2one('account.voucher', 'Voucher'),
+        'voucher_id': fields.many2one('account.move.line', 'Entry Line'),
 
-        'concept': fields.many2one('account.voucher.line', 'Concepto'),
+        # TODO: Delete this field will be redundant
+        'concept': fields.many2one('account.move.line', 'Concepto'),
         'invoice_id': fields.many2one('account.invoice', 'Doc.'),
         'invoice_num': fields.char('Doc.', size=256),
         'partner_id': fields.many2one('res.partner', 'Empresa'),
@@ -1098,7 +1099,7 @@ class commission_voucher(osv.Model):
         'name': fields.char('Comentario', size=256),
         'commission_id': fields.many2one('commission.payment', 'Comision'),
         'comm_sale_id': fields.many2one('commission.saleman', 'Vendedor'),
-        'voucher_id': fields.many2one('account.voucher', 'Voucher'),
+        'voucher_id': fields.many2one('account.move.line', 'Voucher'),
         'comm_invoice_ids': fields.one2many(
             'commission.invoice',
             'comm_voucher_id', 'Facturas afectadas en esta comision',
@@ -1169,7 +1170,7 @@ class commission_retention(osv.Model):
         'name': fields.char('Comentario', size=256),
         'commission_id': fields.many2one('commission.payment', 'Comision'),
         'invoice_id': fields.many2one('account.invoice', 'Factura'),
-        'voucher_id': fields.many2one('account.voucher', 'Pagado con...'),
+        'voucher_id': fields.many2one('account.move.line', 'Pagado con...'),
         'date': fields.date('Fecha'),
         'ret_iva': fields.boolean('Ret. IVA'),
         'ret_islr': fields.boolean('Ret. ISLR'),
@@ -1180,14 +1181,11 @@ class commission_retention(osv.Model):
     }
 
 
-class VoucherLines(osv.Model):
-    _inherit = 'account.voucher.line'
+class account_move_line(osv.Model):
+    _inherit = 'account.move.line'
 
     _columns = {
-        'paid_comm': fields.boolean('Comision Pagada?'),
-        'partner_id': fields.related('voucher_id', 'partner_id',
-                                     type='many2one', relation='res.partner',
-                                     string='Partner', store=True),
+        'paid_comm': fields.boolean('Paid Commission?'),
     }
     _defaults = {
         'paid_comm': lambda *a: False,

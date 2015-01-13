@@ -109,14 +109,22 @@
                                     />
                                 <field
                                     name="voucher_ids"
-                                    domain="[
-                                        ('state', '=', 'posted'),
-                                        ('type', '=', 'receipt'),
-                                        ('date', '&gt;=', date_start),
-                                        ('date', '&lt;=', date_stop),
-                                        ]"
+                                    readonly="1"
                                     nolabel="1"
                                     >
+                                    <tree string="Journal Items">
+                                        <field name="journal_id"/>
+                                        <field name="period_id"/>
+                                        <field name="date"/>
+                                        <field name="date_maturity"/>
+                                        <field name="name"/>
+                                        <field name="ref"/>
+                                        <field name="partner_id"/>
+                                        <field name="account_id"/>
+                                        <field name="move_id"/>
+                                        <field name="debit" sum="Total Debit"/>
+                                        <field name="credit" sum="Total Credit"/>
+                                    </tree>
                                 </field>
                             </page>
                             <page
