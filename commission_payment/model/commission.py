@@ -11,30 +11,29 @@ COMMISSION_STATES = [
 ]
 
 COMMISSION_TYPES = [
-    ('partial_payment', 'Based on Partial Payments'),
-    ('fully_paid_invoice', 'Based on Fully Paid Invoices'),
+    ('partial_payment', 'Partial Payments'),
+    ('fully_paid_invoice', 'Fully Paid Invoices'),
 ]
 
 COMMISSION_SALESMAN_POLICY = [
-    ('salesmanOnInvoice', 'Based on Salesman on Invoice'),
-    ('salesmanOnInvoicedPartner', 'Based on Salesman on Invoiced Partner'),
-    ('salesmanOnAccountingPartner',
-     'Based on Salesman on Accounting Partner Invoiced'),
+    ('salesmanOnInvoice', 'Invoice'),
+    ('salesmanOnInvoicedPartner', 'Partner'),
+    ('salesmanOnAccountingPartner', 'Commercial Entity'),
 ]
 
 COMMISSION_SCOPES = [
-    ('whole_invoice', 'Based on Whole Invoice'),
-    ('product_invoiced', 'Based on Invoiced Products '),
+    ('whole_invoice', 'Whole Invoice'),
+    ('product_invoiced', 'Invoiced Products '),
 ]
 
 COMMISSION_POLICY_DATE_START = [
-    ('invoice_emission_date', 'Based on Invoice Emission Date'),
-    ('invoice_due_date', 'Based on Invoice Due Date'),
+    ('invoice_emission_date', 'Emission Date'),
+    ('invoice_due_date', 'Due Date'),
 ]
 
 COMMISSION_POLICY_DATE_END = [
-    ('last_payment_date', 'Based on Last Payment on Invoice'),
-    ('date_on_payment', 'Based on Date on Payment'),
+    ('last_payment_date', 'Last Payment on Invoice'),
+    ('date_on_payment', 'Date of Payment'),
 ]
 
 
@@ -64,10 +63,10 @@ class commission_payment(osv.Model):
             'baremo.book', 'Baremo', required=True,
             readonly=True, states={'draft': [('readonly', False)]}),
         'date_start': fields.date(
-            'Date Start', required=True, readonly=True,
+            'Start Date', required=True, readonly=True,
             states={'draft': [('readonly', False)]}),
         'date_stop': fields.date(
-            'Date End', required=True, readonly=True,
+            'End Date', required=True, readonly=True,
             states={'draft': [('readonly', False)]}),
         'total_comm': fields.float(
             'Total Commission',
@@ -134,27 +133,27 @@ class commission_payment(osv.Model):
         'state': fields.selection(COMMISSION_STATES, 'Estado', readonly=True),
         'commission_type': fields.selection(
             COMMISSION_TYPES,
-            string='Commission Basis', required=True,
+            string='Basis', required=True,
             readonly=True,
             states={'draft': [('readonly', False)]}),
         'commission_scope': fields.selection(
             COMMISSION_SCOPES,
-            string='Commission Scope', required=False,
+            string='Scope', required=False,
             readonly=True,
             states={'draft': [('readonly', False)]}),
         'commission_policy_date_start': fields.selection(
             COMMISSION_POLICY_DATE_START,
-            string='Commission Start Date Policy', required=False,
+            string='Start Date Computation Policy', required=False,
             readonly=True,
             states={'draft': [('readonly', False)]}),
         'commission_policy_date_end': fields.selection(
             COMMISSION_POLICY_DATE_END,
-            string='Commission End Date Policy', required=False,
+            string='End Date Computation Policy', required=False,
             readonly=True,
             states={'draft': [('readonly', False)]}),
         'commission_salesman_policy': fields.selection(
             COMMISSION_SALESMAN_POLICY,
-            string='Commission Salesman Policy', required=False,
+            string='Salesman Policy', required=False,
             readonly=True,
             states={'draft': [('readonly', False)]}),
     }

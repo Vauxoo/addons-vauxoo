@@ -5,7 +5,7 @@
 
     <menuitem
         id="commission"
-        name="Salesmen Commissions"
+        name="Salespeople Commissions"
         parent="base.menu_base_partner"
         groups="group_comm_payment_manager"
         sequence="10"
@@ -47,14 +47,17 @@
                                     <field
                                         name="commission_type"
                                         widget="radio"
+                                        string="Based on"
                                         />
                                     <field
                                         name="commission_policy_date_start"
                                         widget="radio"
+                                        string='Computation begins on'
                                         />
                                     <field
                                         name="commission_salesman_policy"
                                         widget="radio"
+                                        string="Salespeople from"
                                         />
                                 </group>
                                 <group col="2" colspan="2">
@@ -63,10 +66,12 @@
                                     <field
                                         name="commission_scope"
                                         widget="radio"
+                                        string="Compute on"
                                         />
                                     <field
                                         name="commission_policy_date_end"
                                         widget="radio"
+                                        string='Computation ends on'
                                         />
                                 </group>
                                 <group col="2" colspan="4">
@@ -274,7 +279,12 @@
 
         <!-- Creating a menu to use the action sales_commission_payment_all_act -->
 
-        <menuitem name="Todas las comisiones" id="commission_all_mi" action="commission_payment_all_act" icon="terp-project" parent="commission"/>
+        <menuitem
+            name="All Commissions"
+            id="commission_all_mi"
+            action="commission_payment_all_act"
+            icon="terp-project"
+            parent="commission"/>
 
         <record model="ir.ui.view" id="commission_saleman_graph">
             <field name="name">commission.saleman.graph</field>
