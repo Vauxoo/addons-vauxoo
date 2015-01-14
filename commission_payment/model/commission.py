@@ -222,12 +222,6 @@ class commission_payment(osv.Model):
         aml_obj = self.pool.get('account.move.line')
 
         for comm_brw in self.browse(cr, uid, ids, context=context):
-            # TODO: START: If this piece of code really needed
-            invoice_ids = [(3, x.id) for x in comm_brw.invoice_ids]
-            if invoice_ids:
-                comm_brw.write({'invoice_ids': invoice_ids})
-            # TODO: END: If this piece of code really needed
-
             date_start = comm_brw.date_start
             date_stop = comm_brw.date_stop
 
@@ -907,7 +901,7 @@ class commission_payment(osv.Model):
 
     def validate(self, cr, user, ids, context=None):
         aml_obj = self.pool.get('account.move.line')
-        # escribir en el avl el estado buleano de paid_comm a True para indicar
+        # escribir en el aml el estado buleano de paid_comm a True para indicar
         # que ya esta comision se esta pagando
         for commission in self.browse(cr, user, ids, context=context):
             aml_obj.write(cr, user, [line.concept.id for line in
