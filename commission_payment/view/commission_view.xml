@@ -73,6 +73,11 @@
                                         widget="radio"
                                         string='Computation ends on'
                                         />
+                                    <field
+                                        name="commission_baremo_policy"
+                                        widget="radio"
+                                        string='Baremo from'
+                                        />
                                 </group>
                                 <group col="2" colspan="4">
                                     <label for="bar_id" string="Baremo to be used if not policy set on Partner:"/>

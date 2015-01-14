@@ -36,6 +36,14 @@ COMMISSION_POLICY_DATE_END = [
     ('date_on_payment', 'Date of Payment'),
 ]
 
+COMMISSION_POLICY_BAREMO = [
+    ('onCompany', 'Company'),
+    ('onPartner', 'Partner'),
+    ('onAccountingPartner', 'Commercial Entity'),
+    ('onUser', 'User'),
+    ('onCommission', 'This Document'),
+]
+
 QUERY_REC_INVOICE = '''
 SELECT id, invoice_id
 FROM
@@ -194,6 +202,11 @@ class commission_payment(osv.Model):
         'commission_salesman_policy': fields.selection(
             COMMISSION_SALESMAN_POLICY,
             string='Salesman Policy', required=False,
+            readonly=True,
+            states={'draft': [('readonly', False)]}),
+        'commission_baremo_policy': fields.selection(
+            COMMISSION_POLICY_BAREMO,
+            string='Baremo Policy', required=False,
             readonly=True,
             states={'draft': [('readonly', False)]}),
     }
