@@ -36,6 +36,44 @@ COMMISSION_POLICY_DATE_END = [
     ('date_on_payment', 'Date of Payment'),
 ]
 
+QUERY_REC_INVOICE = '''
+SELECT id, invoice_id
+FROM
+    (SELECT
+        l.id
+        , l.reconcile_id AS p_reconcile_id
+        , l.reconcile_partial_id AS p_reconcile_partial_id
+    FROM account_move_line l
+    INNER JOIN account_journal j ON l.journal_id = j.id
+    INNER JOIN account_account a ON l.account_id = a.id
+    WHERE
+        l.state = 'valid'
+        AND l.credit != 0.0
+        AND a.type = 'receivable'
+        AND j.type IN ('cash', 'bank')
+        AND (l.reconcile_id IS NOT NULL OR l.reconcile_partial_id IS NOT NULL)
+    ) AS PAY_VIEW,
+    (SELECT
+        i.id AS invoice_id
+        , l.reconcile_id AS i_reconcile_id
+        , l.reconcile_partial_id AS i_reconcile_partial_id
+    FROM account_move_line l
+    INNER JOIN account_invoice i ON l.move_id = i.move_id
+    INNER JOIN account_account a ON l.account_id = a.id
+    INNER JOIN account_journal j ON l.journal_id = j.id
+    WHERE
+        l.state = 'valid'
+        AND l.debit != 0.0
+        AND a.type = 'receivable'
+        AND j.type IN ('sale')
+        AND (l.reconcile_id IS NOT NULL OR l.reconcile_partial_id IS NOT NULL)
+    ) AS INV_VIEW
+WHERE
+    (p_reconcile_id = i_reconcile_id
+    OR
+    p_reconcile_partial_id = i_reconcile_partial_id)
+'''
+
 
 def t_time(date):
     '''
@@ -184,22 +222,27 @@ class commission_payment(osv.Model):
         aml_obj = self.pool.get('account.move.line')
 
         for comm_brw in self.browse(cr, uid, ids, context=context):
+            # TODO: START: If this piece of code really needed
             invoice_ids = [(3, x.id) for x in comm_brw.invoice_ids]
             if invoice_ids:
                 comm_brw.write({'invoice_ids': invoice_ids})
+            # TODO: END: If this piece of code really needed
 
             date_start = comm_brw.date_start
             date_stop = comm_brw.date_stop
 
             # In this search we will restrict domain to those Entry Lines
             # coming from a Cash or Bank Journal within the given dates
+            args = [('state', '=', 'valid'),
+                    ('date', '>=', date_start),
+                    ('date', '<=', date_stop),
+                    ('journal_id.type', 'in', ('bank', 'cash')),
+                    ('credit', '>', 0.0),
+                    ('paid_comm', '=', False),
+                    ('rec_invoice', '!=', False),
+                    ]
             aml_ids = aml_obj.search(
-                cr, uid, [('state', '=', 'valid'),
-                          ('date', '>=', date_start),
-                          ('date', '<=', date_stop),
-                          ('journal_id.type', 'in', ('bank', 'cash')),
-                          ('credit', '>', 0.0)
-                          ], context=context)
+                cr, uid, args, context=context)
 
             # TODO: Change name to field voucher_ids
             comm_brw.write({
@@ -312,10 +355,10 @@ class commission_payment(osv.Model):
         date = False
         if comm_brw.commission_policy_date_start == 'invoice_emission_date':
             # TODO: here goes the comm_invoice
-            date = aml_brw.invoice.date_invoice
+            date = aml_brw.rec_invoice.date_invoice
         elif comm_brw.commission_policy_date_start == 'invoice_due_date':
             # TODO: here goes the comm_invoice
-            date = aml_brw.move_line_id.invoice.date_due
+            date = aml_brw.rec_invoice.date_due
         return date
 
     def _get_commission_policy_end_date(self, cr, uid, ids, pay_id,
@@ -328,7 +371,7 @@ class commission_payment(osv.Model):
         date = False
         if comm_brw.commission_policy_date_end == 'last_payment_date':
             # TODO: here goes the comm_invoice
-            date = aml_brw.invoice.date_last_payment
+            date = aml_brw.rec_invoice.date_last_payment
         elif comm_brw.commission_policy_date_end == 'date_on_payment':
             date = aml_brw.date
         return date
@@ -380,7 +423,7 @@ class commission_payment(osv.Model):
         # Si esta aqui dentro es porque esta linea tiene una id valida
         # de una factura.
         # TODO: here goes the comm_invoice
-        inv_brw = aml_brw.invoice
+        inv_brw = aml_brw.rec_invoice
 
         # Obtener el vendedor del partner
         saleman = self._get_commission_salesman_policy(cr, uid, ids, pay_id,
@@ -825,9 +868,9 @@ class commission_payment(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
         comm_brw = self.browse(cr, uid, ids[0], context=context)
+        # Desvincular lineas existentes, si las hubiere
+        comm_brw.unlink()
         if comm_brw.commission_type == 'partial_payment':
-            # Desvincular lineas existentes, si las hubiere
-            comm_brw.unlink()
             self._prepare_based_on_payments(cr, uid, ids, context=context)
             self._commission_based_on_payments(cr, uid, ids, context=context)
         elif comm_brw.commission_type == 'fully_paid_invoice':
@@ -1187,31 +1230,58 @@ class account_move_line(osv.Model):
                                  context=None):
         res = {}.fromkeys(ids, None)
         context = context or {}
-        for aml_brw in self.browse(cr, uid, ids, context=context):
-            if aml_brw.state != 'valid':
-                continue
-            if not aml_brw.credit:
-                continue
-            if aml_brw.account_id.type != 'receivable':
-                continue
-            if aml_brw.journal_id.type not in ('cash', 'bank'):
-                continue
-            if not aml_brw.reconcile_id and not aml_brw.reconcile_partial_id:
-                continue
+        sub_query = 'AND id IN (%s)' % ', '.join([str(x) for x in ids])
+        cr.execute(QUERY_REC_INVOICE + sub_query)
+        rex = cr.fetchall()
 
-            for frec in aml_brw.reconcile_id.line_id:
-                if frec.invoice and frec.invoice.type == 'out_invoice':
-                    res[aml_brw.id] = frec.invoice.id
-                    break
+        for aml_id, inv_id in rex:
+            res[aml_id] = inv_id
 
-            if res.get(aml_brw.id, False):
-                continue
-
-            for prec in aml_brw.reconcile_parcial_ids.line_partial_ids:
-                if prec.invoice and prec.invoice.type == 'out_invoice':
-                    res[aml_brw.id] = prec.invoice.id
-                    break
         return res
+
+    def _rec_invoice_search(self, cursor, user, obj, name, args, context=None):
+        if not args:
+            return []
+        invoice_obj = self.pool.get('account.invoice')
+        i = 0
+        while i < len(args):
+            fargs = args[i][0].split('.', 1)
+            if len(fargs) > 1:
+                args[i] = (fargs[0], 'in', invoice_obj.search(
+                    cursor, user, [(fargs[1], args[i][1], args[i][2])]))
+                i += 1
+                continue
+            if isinstance(args[i][2], basestring):
+                res_ids = invoice_obj.name_search(
+                    cursor, user, args[i][2], [], args[i][1])
+                args[i] = (args[i][0], 'in', [x[0] for x in res_ids])
+            i += 1
+        qu1, qu2 = [], []
+        for x in args:
+            if x[1] != 'in':
+                if (x[2] is False) and (x[1] == '='):
+                    qu1.append('(id IS NULL)')
+                elif (x[2] is False) and (x[1] == '<>' or x[1] == '!='):
+                    qu1.append('(id IS NOT NULL)')
+                else:
+                    qu1.append('(id %s %s)' % (x[1], '%s'))
+                    qu2.append(x[2])
+            elif x[1] == 'in':
+                if len(x[2]) > 0:
+                    qu1.append('(id IN (%s))' % (
+                        ','.join(['%s'] * len(x[2]))))
+                    qu2 += x[2]
+                else:
+                    qu1.append(' (False)')
+        if qu1:
+            qu1 = ' AND' + ' AND'.join(qu1)
+        else:
+            qu1 = ''
+        cursor.execute(QUERY_REC_INVOICE + qu1, qu2)
+        res = cursor.fetchall()
+        if not res:
+            return [('id', '=', '0')]
+        return [('id', 'in', [x[0] for x in res])]
 
     _inherit = 'account.move.line'
 
@@ -1222,6 +1292,7 @@ class account_move_line(osv.Model):
             string='Reconciling Invoice',
             type="many2one",
             relation="account.invoice",
+            fnct_search=_rec_invoice_search,
         ),
     }
     _defaults = {
