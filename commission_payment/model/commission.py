@@ -708,38 +708,6 @@ class commission_payment(osv.Model):
                     }, context=context)
         return True
 
-    def _commission_based_on_invoices(self, cr, uid, ids, context=None):
-        ids = isinstance(ids, (int, long)) and [ids] or ids
-        context = context or {}
-
-        for comm_brw in self.browse(cr, uid, ids, context=context):
-            # Obtener la lista de asesores/vendedores a los cuales se les hara
-            # el calculo de comisiones
-            user_ids = [line.id for line in comm_brw.user_ids]
-            invoice_ids = [inv_brw.id for inv_brw in comm_brw.invoice_ids]
-            payment_ids = []
-
-            for av_brw in comm_brw.voucher_ids:
-                # Leer cada una de las lineas de los vouchers
-                for avl_brw in av_brw.line_cr_ids:
-                    pay_line_vendor = avl_brw.partner_id.user_id and \
-                        avl_brw.partner_id.user_id.id or False
-                    if pay_line_vendor in user_ids:
-
-                        # Verificar si esta linea tiene factura y la comision
-                        # del pago no se ha pagado
-                        if avl_brw.move_line_id and \
-                                avl_brw.move_line_id.invoice and \
-                                avl_brw.move_line_id.invoice.id in invoice_ids\
-                                and not avl_brw.paid_comm:
-                            payment_ids.append(avl_brw.id)
-
-            for pay_id in payment_ids:
-                # se procede con la preparacion de las comisiones.
-                self._get_commission_payment(cr, uid, ids, pay_id,
-                                             context=context)
-        return True
-
     def _post_processing(self, cr, uid, ids, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
@@ -868,11 +836,10 @@ class commission_payment(osv.Model):
         comm_brw.unlink()
         if comm_brw.commission_type == 'partial_payment':
             self._prepare_based_on_payments(cr, uid, ids, context=context)
-            self._commission_based_on_payments(cr, uid, ids, context=context)
         elif comm_brw.commission_type == 'fully_paid_invoice':
             self._prepare_based_on_invoices(cr, uid, ids, context=context)
-            self._commission_based_on_invoices(cr, uid, ids, context=context)
 
+        self._commission_based_on_payments(cr, uid, ids, context=context)
         self._post_processing(cr, uid, ids, context=context)
 
         self.write(cr, user, ids, {
