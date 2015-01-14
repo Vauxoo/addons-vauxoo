@@ -713,9 +713,6 @@ class commission_payment(osv.Model):
         context = context or {}
 
         for comm_brw in self.browse(cr, uid, ids, context=context):
-            # Desvincular lineas existentes, si las hubiere
-            comm_brw.unlink()
-
             # Obtener la lista de asesores/vendedores a los cuales se les hara
             # el calculo de comisiones
             user_ids = [line.id for line in comm_brw.user_ids]

@@ -94,7 +94,6 @@
                             </page>
                             <page
                                 string="Payments"
-                                attrs="{'invisible':[('commission_type','!=','partial_payment')]}"
                                 >
                                 <label
                                     align="0.0"
@@ -130,7 +129,6 @@
                             </page>
                             <page
                                 string="Invoices"
-                                attrs="{'invisible':[('commission_type','!=','fully_paid_invoice')]}"
                                 >
                                 <label align="0.0" string="Seleccione los vouchers sobre los cuales desea calcular comisiones. Deje en blanco para que se autorellene con los parametros introducidos en Datos. Si selecciona un Voucher solo se haran los calculos sobre este unicamente. Puede editarse mientras este en Estado: INICIAL y EN PROCESO"/>
                                 <field
