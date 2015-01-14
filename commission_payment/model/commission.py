@@ -937,7 +937,9 @@ class commission_payment(osv.Model):
                 cr, user, [line.id for line in commission.comm_retention_ids])
             ###
             commission.write(
-                {'voucher_ids': [(3, x.id) for x in commission.voucher_ids]})
+                {'voucher_ids': [(3, x.id) for x in commission.voucher_ids],
+                 'invoice_ids': [(3, y.id) for y in commission.invoice_ids],
+                 })
 
     def validate(self, cr, user, ids, context=None):
         aml_obj = self.pool.get('account.move.line')
