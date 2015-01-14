@@ -412,6 +412,32 @@ class commission_payment(osv.Model):
                 aml_brw.rec_invoice.partner_id).user_id
         return res
 
+    def _get_commission_policy_baremo(self, cr, uid, ids, pay_id,
+                                      context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        context = context or {}
+        aml_obj = self.pool.get('account.move.line')
+        rp_obj = self.pool.get('res.partner')
+        comm_brw = self.browse(cr, uid, ids[0], context=context)
+        aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
+        res = None
+        if comm_brw.commission_baremo_policy == 'onCompany':
+            res = aml_brw.company_id.partner_id.baremo_id
+        elif comm_brw.commission_baremo_policy == 'onPartner':
+            res = aml_brw.rec_invoice.partner_id.baremo_id
+        elif comm_brw.commission_baremo_policy == 'onAccountingPartner':
+            res = rp_obj._find_accounting_partner(
+                aml_brw.rec_invoice.partner_id).baremo_id
+        elif comm_brw.commission_baremo_policy == 'onUser':
+            res = self._get_commission_salesman_policy(
+                cr, uid, ids[0], pay_id, context=context).baremo_id
+        elif comm_brw.commission_baremo_policy == 'onCommission':
+            res = comm_brw.baremo_id
+        # Fall back to baremo in Commission
+        if not res:
+            res = comm_brw.baremo_id
+        return res
+
     def _get_commission_payment_on_invoice_line(self, cr, uid, ids, pay_id,
                                                 context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -444,6 +470,10 @@ class commission_payment(osv.Model):
         # Obtener el vendedor del partner
         saleman = self._get_commission_salesman_policy(cr, uid, ids, pay_id,
                                                        context=context)
+
+        commission_policy_baremo = \
+            self._get_commission_policy_baremo(cr, uid, ids, pay_id,
+                                               context=context)
 
         # Revision de cada linea de factura (productos)
         for inv_lin in inv_brw.invoice_line:
@@ -491,7 +521,7 @@ class commission_payment(osv.Model):
                         cr, uid, comm_brw.id,
                         commission_policy_date_end,
                         commission_policy_date_start, dcto=0.0,
-                        bar_brw=inv_brw.partner_id.baremo_id)
+                        bar_brw=commission_policy_baremo)
 
                     bar_day = commission_params['bar_day']
                     bar_dcto_comm = commission_params['bar_dcto_comm']
@@ -600,11 +630,15 @@ class commission_payment(osv.Model):
         saleman = self._get_commission_salesman_policy(cr, uid, ids, aml_id,
                                                        context=context)
 
+        commission_policy_baremo = \
+            self._get_commission_policy_baremo(cr, uid, ids, aml_id,
+                                               context=context)
+
         commission_params = self._get_commission_rate(
             cr, uid, comm_brw.id,
             commission_policy_date_end,
             commission_policy_date_start, dcto=0.0,
-            bar_brw=inv_brw.partner_id.baremo_id)
+            bar_brw=commission_policy_baremo)
 
         bar_day = commission_params['bar_day']
         bar_dcto_comm = commission_params['bar_dcto_comm']
