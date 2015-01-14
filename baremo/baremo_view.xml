@@ -105,5 +105,16 @@
         </field>
     </record>
 
+    <record id="res_users_view_baremo" model="ir.ui.view">
+        <field name="name">res.users.view.baremo</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tz']" position="after">
+                <field name="baremo_id"/>
+            </xpath>
+        </field>
+    </record>
+
     </data>
 </openerp>
