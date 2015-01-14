@@ -386,14 +386,14 @@ class commission_payment(osv.Model):
         aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
         res = None
         if comm_brw.commission_salesman_policy == 'salesmanOnInvoice':
-            res = aml_brw.invoice.user_id
+            res = aml_brw.rec_invoice.user_id
         elif comm_brw.commission_salesman_policy == \
                 'salesmanOnInvoicedPartner':
-            res = aml_brw.invoice.partner_id.user_id
+            res = aml_brw.rec_invoice.partner_id.user_id
         elif comm_brw.commission_salesman_policy == \
                 'salesmanOnAccountingPartner':
             res = rp_obj._find_accounting_partner(
-                aml_brw.invoice.partner_id).user_id
+                aml_brw.rec_invoice.partner_id).user_id
         return res
 
     def _get_commission_payment_on_invoice_line(self, cr, uid, ids, pay_id,
@@ -565,7 +565,7 @@ class commission_payment(osv.Model):
         comm_line_ids = self.pool.get('commission.lines')
 
         aml_brw = aml_obj.browse(cr, uid, aml_id, context=context)
-        if not aml_brw.amount:
+        if not aml_brw.credit:
             return True
 
         commission_policy_date_start = \
@@ -578,7 +578,7 @@ class commission_payment(osv.Model):
 
         # Si esta aqui dentro es porque esta linea tiene una id valida
         # de una factura.
-        inv_brw = aml_brw.invoice
+        inv_brw = aml_brw.rec_invoice
 
         # Obtener el vendedor del partner
         saleman = self._get_commission_salesman_policy(cr, uid, ids, aml_id,
@@ -599,9 +599,8 @@ class commission_payment(osv.Model):
         # CALCULO DE COMISION POR LINEA DE PRODUCTO #
         #############################################
 
-        penbxlinea = aml_brw.credit * (
-            inv_brw.amount_untaxed /
-            inv_brw.amount_untaxed)
+        penbxlinea = inv_brw.amount_untaxed and aml_brw.credit * (
+            inv_brw.amount_untaxed / inv_brw.amount_untaxed) or aml_brw.credit
         fact_sup = 1 - 0.0 / 100 - 0.0 / 100
         fact_inf = 1 + (0.0 / 100) * (1 - 0.0 / 100) - \
             0.0 / 100 - 0.0 / 100
@@ -673,7 +672,7 @@ class commission_payment(osv.Model):
                     continue
 
                 # Verificar si esta linea tiene factura
-                if not aml_brw.invoice:
+                if not aml_brw.rec_invoice:
                     uninvoice_payment_ids.append(aml_brw.id)
                     continue
 

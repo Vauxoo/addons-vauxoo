@@ -93,7 +93,7 @@
                                 </group>
                             </page>
                             <page
-                                string="Vouchers"
+                                string="Payments"
                                 attrs="{'invisible':[('commission_type','!=','partial_payment')]}"
                                 >
                                 <label
