@@ -40,8 +40,8 @@ COMMISSION_POLICY_BAREMO = [
     ('onCompany', 'Company'),
     ('onPartner', 'Partner'),
     ('onAccountingPartner', 'Commercial Entity'),
-    ('onUser', 'User'),
-    ('onCommission', 'This Document'),
+    ('onUser', 'Salespeople'),
+    ('onCommission', 'Document'),
 ]
 
 QUERY_REC_INVOICE = '''
