@@ -21,6 +21,7 @@
 ##############################################################################
 from openerp.osv import fields, osv
 from openerp.addons.decimal_precision import decimal_precision as dp
+from openerp import SUPERUSER_ID
 
 
 class baremo_book(osv.Model):
@@ -95,4 +96,44 @@ class res_parter(osv.Model):
     _inherit = "res.partner"
     _columns = {
         'baremo_id': fields.many2one('baremo.book', 'Baremo', required=False),
+    }
+
+
+class res_company(osv.Model):
+    _inherit = "res.company"
+    _description = 'Companies'
+
+    def _get_baremo_data(self, cr, uid, ids, field_names, arg, context=None):
+        """ Read the 'baremo_id' functional field. """
+        result = {}
+        part_obj = self.pool.get('res.partner')
+        for company in self.browse(cr, uid, ids, context=context):
+            result[company.id] = {}.fromkeys(field_names, False)
+            if company.partner_id:
+                data = part_obj.read(cr, SUPERUSER_ID, [company.partner_id.id],
+                                     field_names, context=context)[0]
+                for field in field_names:
+                    result[company.id][field] = data[field] or False
+        return result
+
+    def _set_baremo_data(self, cr, uid, company_id, name, value, arg,
+                         context=None):
+        """ Write the 'baremo_id' functional field. """
+        part_obj = self.pool.get('res.partner')
+        company = self.browse(cr, uid, company_id, context=context)
+        if company.partner_id:
+            part_obj.write(
+                cr, uid, company.partner_id.id, {name: value or False},
+                context=context)
+        return True
+
+    _columns = {
+        'baremo_id': fields.function(
+            _get_baremo_data,
+            fnct_inv=_set_baremo_data,
+            type='many2one',
+            relation='baremo.book',
+            string="Baremo",
+            multi='baremo',
+            ),
     }

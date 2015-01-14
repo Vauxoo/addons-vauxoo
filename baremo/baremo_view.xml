@@ -116,5 +116,18 @@
         </field>
     </record>
 
+        <record id="res_company_view_baremo" model="ir.ui.view">
+            <field name="name">res.company.view.baremo</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='account_grp']" position="after">
+                    <group name="baremo_grp" string="Baremo">
+                        <field name="baremo_id"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
     </data>
 </openerp>
