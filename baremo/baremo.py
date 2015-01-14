@@ -30,8 +30,11 @@ class baremo_book(osv.Model):
     _columns = {
         'name': fields.char('Baremo', size=64, required=True, readonly=False),
         'notes': fields.text('Notas', required=True, readonly=False),
-        'bar_ids': fields.one2many('baremo', 'bar_id', 'Dias de Emision',
-                                   required=False),
+        'bar_ids': fields.one2many(
+            'baremo', 'bar_id', 'Dias de Emision',
+            required=False,
+            copy=True,
+        ),
     }
     _defaults = {
         'name': lambda *a: 'DEBE ESCRIBIR UNA NOTA REFERENTE A ESTE BAREMO \
@@ -59,7 +62,9 @@ class baremo(osv.Model):
             'Dias', help="Dias desde emision de la factura", required=True),
         'disc_ids': fields.one2many(
             'baremo.discount', 'disc_id', 'Comision x Dscto.',
-            required=False, help="Comision x Dscto x Dia"),
+            required=False, help="Comision x Dscto x Dia",
+            copy=True,
+        ),
         'bar_id': fields.many2one('baremo.book', 'Padre', required=False),
     }
     _defaults = {
