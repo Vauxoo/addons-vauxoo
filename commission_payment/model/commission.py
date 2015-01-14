@@ -242,6 +242,15 @@ class commission_payment(osv.Model):
             comm_brw.write({
                 'voucher_ids': [(6, comm_brw.id, aml_ids)]})
 
+            invoice_ids = [aml_brw.rec_invoice.id
+                           for aml_brw in comm_brw.voucher_ids
+                           if aml_brw.rec_invoice
+                           ]
+
+            invoice_ids = list(set(invoice_ids))
+
+            comm_brw.write({'invoice_ids': [(6, comm_brw.id, invoice_ids)]})
+
         return True
 
     def _prepare_based_on_invoices(self, cr, uid, ids, context=None):
