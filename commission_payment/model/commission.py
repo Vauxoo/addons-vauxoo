@@ -432,10 +432,10 @@ class commission_payment(osv.Model):
             res = self._get_commission_salesman_policy(
                 cr, uid, ids[0], pay_id, context=context).baremo_id
         elif comm_brw.commission_baremo_policy == 'onCommission':
-            res = comm_brw.baremo_id
+            res = comm_brw.bar_id
         # Fall back to baremo in Commission
         if not res:
-            res = comm_brw.baremo_id
+            res = comm_brw.bar_id
         return res
 
     def _get_commission_payment_on_invoice_line(self, cr, uid, ids, pay_id,
