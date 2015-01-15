@@ -11,6 +11,45 @@
         sequence="10"
         />
 
+        <record id="act_res_partner_2_sale_order" model="ir.actions.act_window">
+            <field name="name">Quotations and Sales</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="context">{'search_default_partner_id': active_id}</field>
+            <field name="groups_id" eval="[(4, ref('base.group_sale_salesman'))]"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a quotation or sales order for this customer.
+              </p><p>
+                Odoo will help you efficiently handle the complete sale flow:
+                quotation, sales order, delivery, invoicing and
+                payment.
+              </p><p>
+                The social feature helps you organize discussions on each sales
+                order, and allow your customer to keep track of the evolution
+                of the sales order.
+              </p>
+            </field>
+        </record>
+
+        <!-- Creating and Action to open the View LIST for the object commission.salesman -->
+        <record model="ir.actions.act_window" id="commission_saleman_all_act">
+            <field name="name">Salespeople Commissions</field>
+            <field name="res_model">commission.saleman</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph,form,tree</field>
+            <field name="domain">[('commission_id','=',context.get('active_id',False))]</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                No commissions for Salespeople have been computed
+              </p><p>
+                It could be due to the fact that there are some missing
+                parameters in computation or just this Commissions is void
+              </p>
+            </field>
+        </record>
+
         <!-- View FORM Creation for the object salesman.commission.payment-->
         <record model="ir.ui.view" id="commission_payment_form">
             <field name="name">commission.payment.form</field>
@@ -55,6 +94,19 @@
                                     attrs="{'invisible':[('total_comm','=',0.0)]}"
                                     />
                             </h1>
+                            <button
+                                class="oe_inline oe_stat_button"
+                                type="action"
+                                name="%(commission_payment.commission_saleman_all_act)d"
+                                attrs="{'invisible':[('state','=','draft')]}"
+                                icon="fa-strikethrough"
+                                >
+                                <field
+                                    string="Commissions"
+                                    name="saleman_ids"
+                                    widget="statinfo"
+                                    />
+                            </button>
                         </div>
                         <group col="4" colspan="2">
                             <group col="2" colspan="2">

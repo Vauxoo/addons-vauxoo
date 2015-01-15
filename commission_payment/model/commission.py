@@ -1154,16 +1154,17 @@ class commission_saleman(osv.Model):
     _order = 'saleman_name'
 
     _columns = {
-        'name': fields.char('Comentario', size=256),
-        'commission_id': fields.many2one('commission.payment', 'Comision'),
-        'saleman_name': fields.char('Vendedor', size=256, required=True),
-        'saleman_id': fields.many2one('res.users', 'Vendedor', required=True),
+        'name': fields.char('Comment', size=256),
+        'commission_id': fields.many2one('commission.payment',
+                                         'Commission Document'),
+        'saleman_name': fields.char('Salesman', size=256, required=True),
+        'saleman_id': fields.many2one('res.users', 'Salesman', required=True),
         'comm_total': fields.float(
-            'Comision a pagar',
+            'Commission to be paid',
             digits_compute=dp.get_precision('Commission')),
         'comm_voucher_ids': fields.one2many(
             'commission.voucher',
-            'comm_sale_id', 'Vouchers afectados en esta comision',
+            'comm_sale_id', 'Vouchers Affected in this commission',
             required=False),
     }
     _defaults = {
