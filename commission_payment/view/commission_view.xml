@@ -23,7 +23,8 @@
                         <button name="prepare" states="open" string="Prepare" type="object"/>
                         <button name="%(report_commission_payment)d" states="open" string="Draft Commission Report" type="action"/>
                         <button name="%(report_commission_payment)d" states="done" string="Commission Report" type="action" class="oe_highlight"/>
-                        <button name="action_draft" states="open,done" string="Set to Draft" type="object"/>
+                        <button name="action_draft" states="open" string="Set to Draft" type="object"/>
+                        <button name="action_draft" states="done" string="Set to Draft" type="object" groups="commission_payment.group_comm_payment_manager"/>
                         <field
                             name="state"
                             widget="statusbar"
