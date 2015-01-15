@@ -33,84 +33,97 @@
                             />
                     </header>
                     <sheet>
-                        <div class="oe_right oe_button_box" style="width: 300px;" name="buttons">
-                        </div>
-                        <div class="oe_title">
+                        <div class="oe_title oe_left">
                             <div class="oe_edit_only">
                                 <label for="name"/>
                             </div>
                             <h1>
                                 <field name="name" default_focus="1" placeholder="Commission Concept" />
                             </h1>
-                            <group col="4" colspan="2">
-                                <group col="2" colspan="2">
-                                    <label for="date_start"/>
-                                    <field name="date_start" nolabel="1"/>
-                                    <field
-                                        name="commission_type"
-                                        widget="radio"
-                                        string="Based on"
-                                        />
-                                    <field
-                                        name="commission_policy_date_start"
-                                        widget="radio"
-                                        string='Computation begins on'
-                                        />
-                                    <field
-                                        name="commission_salesman_policy"
-                                        widget="radio"
-                                        string="Salespeople from"
-                                        />
-                                </group>
-                                <group col="2" colspan="2">
-                                    <label for="date_stop"/>
-                                    <field name="date_stop" nolabel="1"/>
-                                    <field
-                                        name="commission_scope"
-                                        widget="radio"
-                                        string="Compute on"
-                                        />
-                                    <field
-                                        name="commission_policy_date_end"
-                                        widget="radio"
-                                        string='Computation ends on'
-                                        />
-                                    <field
-                                        name="commission_baremo_policy"
-                                        widget="radio"
-                                        string='Baremo from'
-                                        />
-                                </group>
-                                <group col="2" colspan="4">
-                                    <label
-                                        for="bar_id"
-                                        string="Baremo to be used if not Baremo set on Company:"
-                                        attrs="{'invisible':[('commission_baremo_policy','!=','onCompany')]}"
-                                        />
-                                    <label
-                                        for="bar_id"
-                                        string="Baremo to be used if not Baremo set on Partner:"
-                                        attrs="{'invisible':[('commission_baremo_policy','!=','onPartner')]}"
-                                        />
-                                    <label
-                                        for="bar_id"
-                                        string="Baremo to be used if not Baremo set on Commercial Entity:"
-                                        attrs="{'invisible':[('commission_baremo_policy','!=','onAccountingPartner')]}"
-                                        />
-                                    <label
-                                        for="bar_id"
-                                        string="Baremo to be used if not policy set on Salespeople:"
-                                        attrs="{'invisible':[('commission_baremo_policy','!=','onUser')]}"
-                                        />
-                                    <label
-                                        for="bar_id"
-                                        string="This baremo is the only one to be used on this Document:"
-                                        attrs="{'invisible':[('commission_baremo_policy','!=','onCommission')]}"
-                                        />
-                                    <field colspan="2" name="bar_id" nolabel="1"/>
-                                </group>
-                            </group>
                         </div>
+                        <div class="oe_right oe_button_box" style="width: 300px;" name="buttons">
+                            <!--BUTTONS GO HERE-->
+                            <div>
+                                <label
+                                    for="total_comm"
+                                    attrs="{'invisible':[('total_comm','=',0.0)]}"
+                                    />
+                            </div>
+                            <h1>
+                                <field
+                                    name="total_comm"
+                                    attrs="{'invisible':[('total_comm','=',0.0)]}"
+                                    />
+                            </h1>
+                        </div>
+                        <group col="4" colspan="2">
+                            <group col="2" colspan="2">
+                                <label for="date_start"/>
+                                <field name="date_start" nolabel="1"/>
+                                <field
+                                    name="commission_type"
+                                    widget="radio"
+                                    string="Based on"
+                                    />
+                                <field
+                                    name="commission_policy_date_start"
+                                    widget="radio"
+                                    string='Computation begins on'
+                                    />
+                                <field
+                                    name="commission_salesman_policy"
+                                    widget="radio"
+                                    string="Salespeople from"
+                                    />
+                            </group>
+                            <group col="2" colspan="2">
+                                <label for="date_stop"/>
+                                <field name="date_stop" nolabel="1"/>
+                                <field
+                                    name="commission_scope"
+                                    widget="radio"
+                                    string="Compute on"
+                                    />
+                                <field
+                                    name="commission_policy_date_end"
+                                    widget="radio"
+                                    string='Computation ends on'
+                                    />
+                                <field
+                                    name="commission_baremo_policy"
+                                    widget="radio"
+                                    string='Baremo from'
+                                    />
+                            </group>
+                            <group col="2" colspan="4">
+                                <label
+                                    for="bar_id"
+                                    string="Baremo to be used if not Baremo set on Company:"
+                                    attrs="{'invisible':[('commission_baremo_policy','!=','onCompany')]}"
+                                    />
+                                <label
+                                    for="bar_id"
+                                    string="Baremo to be used if not Baremo set on Partner:"
+                                    attrs="{'invisible':[('commission_baremo_policy','!=','onPartner')]}"
+                                    />
+                                <label
+                                    for="bar_id"
+                                    string="Baremo to be used if not Baremo set on Commercial Entity:"
+                                    attrs="{'invisible':[('commission_baremo_policy','!=','onAccountingPartner')]}"
+                                    />
+                                <label
+                                    for="bar_id"
+                                    string="Baremo to be used if not policy set on Salespeople:"
+                                    attrs="{'invisible':[('commission_baremo_policy','!=','onUser')]}"
+                                    />
+                                <label
+                                    for="bar_id"
+                                    string="This baremo is the only one to be used on this Document:"
+                                    attrs="{'invisible':[('commission_baremo_policy','!=','onCommission')]}"
+                                    />
+                                <field colspan="2" name="bar_id" nolabel="1"/>
+                            </group>
+                        </group>
                         <group col="2" colspan="2">
                         </group>
                         <notebook colspan="6">
@@ -174,9 +187,6 @@
                         </notebook>
                         <notebook colspan="6">
                             <page string="Commissions by Salespeople">
-                                <group col="2" colspan="2">
-                                    <field name="total_comm"/>
-                                </group>
                                 <field name="saleman_ids" nolabel="1" widget="one2many_list" colspan="4"/>
                             </page>
                             <page
