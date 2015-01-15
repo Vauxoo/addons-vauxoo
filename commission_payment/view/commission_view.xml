@@ -217,17 +217,6 @@
                             <page
                                 string="Payments"
                                 >
-                                <label
-                                    align="0.0"
-                                    string="Seleccione los vouchers sobre los
-                                    cuales desea calcular comisiones. Deje en
-                                    blanco para que se autorellene con los
-                                    parametros introducidos en Datos. Si
-                                    selecciona un Voucher solo se haran los
-                                    calculos sobre este unicamente. Puede
-                                    editarse mientras este en Estado: INICIAL y
-                                    EN PROCESO"
-                                    />
                                 <field
                                     name="voucher_ids"
                                     readonly="1"
@@ -252,7 +241,6 @@
                             <page
                                 string="Invoices"
                                 >
-                                <label align="0.0" string="Seleccione los vouchers sobre los cuales desea calcular comisiones. Deje en blanco para que se autorellene con los parametros introducidos en Datos. Si selecciona un Voucher solo se haran los calculos sobre este unicamente. Puede editarse mientras este en Estado: INICIAL y EN PROCESO"/>
                                 <field
                                     name="invoice_ids"
                                     domain="[
@@ -264,12 +252,12 @@
                             </page>
                         </notebook>
                         <notebook colspan="6">
-                            <page string="Commissions by Salespeople">
+                            <page string="Commissions by Salespeople" invisible="1">
                                 <field name="saleman_ids" nolabel="1" widget="one2many_list" colspan="4"/>
                             </page>
                             <page
                                 string="Commissions on Products"
-                                attrs="{'invisible':[('commission_scope','!=','product_invoiced')]}"
+                                invisible="1"
                                 >
                                 <field
                                     name="comm_line_product_ids"
@@ -304,7 +292,7 @@
                             </page>
                             <page
                                 string="Commissions on Invoices"
-                                attrs="{'invisible':[('commission_scope','!=','whole_invoice')]}"
+                                invisible="1"
                                 >
                                 <field
                                     name="comm_line_invoice_ids"
