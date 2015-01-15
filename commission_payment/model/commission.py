@@ -129,12 +129,6 @@ class commission_payment(osv.Model):
             readonly=True, states={'write': [('readonly', False)]},
             track_visibility='onchange',
         ),
-        'ret_notes': fields.text(
-            'Notas para las Retenciones', readonly=True,
-            states={'draft': [('readonly', False)],
-                    'open': [('readonly', False)]},
-            track_visibility='onchange',
-        ),
         'uninvoiced_ids': fields.one2many(
             'commission.uninvoiced',
             'commission_id', 'Transacciones sin Facturas', readonly=True,
@@ -241,19 +235,6 @@ class commission_payment(osv.Model):
         'name': lambda *a: None,
         'total_comm': lambda *a: 0.00,
         'state': lambda *a: 'draft',
-        'ret_notes': lambda *a: 'Las Facturas que se mencionan ya tienen un\
-            pago registrado, pero presentan problemas con una o mas de las\
-            retenciones que se indican en el cuadro, se ha tratado bajo los\
-            medios existentes de identificar cuales son los porcentajes de\
-            retenciones pero no ha sido posible, para generar la comision\
-            sobre el pago de las mismas, es necesario el conocimiento de estos\
-            valores, por lo que le increpamos a que contacte a sus asociados\
-            para obtener esta informacion, su falta no afectara el calculo de\
-            la comision pero retardara su ejecucion. Si considera que ha\
-            habido un error por favor hable sobre el tema con el personal\
-            Administrativo y de Sistemas para determinar las causas del mismo\
-            y encontrar una solucion. De otra forma haga caso omiso de este\
-            mensaje y su contenido',
     }
 
     def _prepare_based_on_payments(self, cr, uid, ids, context=None):
