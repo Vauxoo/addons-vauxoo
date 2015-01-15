@@ -50,7 +50,7 @@
             <field name="name">Commissions on Products</field>
             <field name="res_model">commission.lines</field>
             <field name="view_type">form</field>
-            <field name="view_mode">graph,form,tree</field>
+            <field name="view_mode">graph,tree</field>
             <field name="domain">[('commission_id','=',context.get('active_id',False)),('product_id', '=', False)]</field>
             <field name="help" type="html">
               <p class="oe_view_nocontent_create">
@@ -226,17 +226,16 @@
                                     >
                                     <tree string="Journal Items">
                                         <field name="journal_id"/>
-                                        <field name="period_id"/>
                                         <field name="date"/>
-                                        <field name="date_maturity"/>
                                         <field name="name"/>
                                         <field name="ref"/>
                                         <field name="partner_id"/>
                                         <field name="account_id"/>
                                         <field name="move_id"/>
                                         <field name="rec_invoice"/>
-                                        <field name="debit" sum="Total Debit"/>
                                         <field name="credit" sum="Total Credit"/>
+                                        <field name="amount_currency"/>
+                                        <field name="currency_id"/>
                                     </tree>
                                 </field>
                             </page>
