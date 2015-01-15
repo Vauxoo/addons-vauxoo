@@ -2,6 +2,7 @@ from openerp.osv import osv, fields
 import mx.DateTime
 from openerp.addons.decimal_precision import decimal_precision as dp
 import datetime
+from openerp.tools.translate import _
 
 COMMISSION_STATES = [
     ('draft', 'Draft'),
@@ -101,6 +102,14 @@ class commission_payment(osv.Model):
     _name = 'commission.payment'
     _inherit = ['mail.thread']
     _description = __doc__
+
+    def _get_default_company(self, cr, uid, context=None):
+        company_id = self.pool.get('res.users')._get_company(cr, uid, context=context)
+        if not company_id:
+            raise osv.except_osv(
+                _('Error!'),
+                _('There is no default company for the current user!'))
+        return company_id
 
     _columns = {
         'name': fields.char(
@@ -230,11 +239,31 @@ class commission_payment(osv.Model):
             states={'draft': [('readonly', False)]},
             track_visibility='onchange',
         ),
+        'company_id': fields.many2one('res.company', 'Company',
+                                      readonly='1'),
+        'currency_id':
+            fields.related('company_id', 'currency_id',
+                           string='Currency',
+                           relation='res.currency',
+                           type='many2one',
+                           store=True,
+                           readonly=True,
+                           help=('Currency at which this report will be \
+                                 expressed. If not selected will be used the \
+                                 one set in the company')),
+        'exchange_date': fields.date('Exchange Date', help=('Date of change\
+                                                            that will be\
+                                                            printed in the\
+                                                            report, with\
+                                                            respect to the\
+                                                            currency of the\
+                                                            company')),
     }
     _defaults = {
         'name': lambda *a: None,
         'total_comm': lambda *a: 0.00,
         'state': lambda *a: 'draft',
+        'company_id': _get_default_company,
     }
 
     def _prepare_based_on_payments(self, cr, uid, ids, context=None):
@@ -582,6 +611,9 @@ class commission_payment(osv.Model):
                             'timespan': bar_day,
                             'baremo_comm': bar_dcto_comm,
                             'commission': comm_line,
+                            'currency_id': aml_brw.currency_id and
+                            aml_brw.currency_id.id or
+                            aml_brw.company_id.currency_id.id,
                         }, context=context)
 
                 else:
@@ -690,6 +722,8 @@ class commission_payment(osv.Model):
                 'timespan': bar_day,
                 'baremo_comm': bar_dcto_comm,
                 'commission': comm_line,
+                'currency_id': aml_brw.currency_id and aml_brw.currency_id.id
+                or aml_brw.company_id.currency_id.id,
             }, context=context)
 
         return True
@@ -891,7 +925,7 @@ class commission_payment(osv.Model):
         context = context or {}
         comm_brw = self.browse(cr, uid, ids[0], context=context)
         # Desvincular lineas existentes, si las hubiere
-        comm_brw.unlink()
+        comm_brw.clear()
         if comm_brw.commission_type == 'partial_payment':
             self._prepare_based_on_payments(cr, uid, ids, context=context)
         elif comm_brw.commission_type == 'fully_paid_invoice':
@@ -907,12 +941,12 @@ class commission_payment(osv.Model):
 
     def action_draft(self, cr, user, ids, context=None):
 
-        self.unlink(cr, user, ids, context=context)
+        self.clear(cr, user, ids, context=context)
         self.write(cr, user, ids, {'state': 'draft', 'total_comm': None},
                    context=context)
         return True
 
-    def unlink(self, cr, user, ids, context=None):
+    def clear(self, cr, user, ids, context=None):
 
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
@@ -1118,6 +1152,8 @@ class commission_lines(osv.Model):
         'commission': fields.float(
             'Comm. / Item',
             digits_compute=dp.get_precision('Commission')),
+        'currency_id':
+            fields.many2one('res.currency', 'Currency'),
     }
 
     _defaults = {
@@ -1147,6 +1183,8 @@ class commission_saleman(osv.Model):
             'commission.voucher',
             'comm_sale_id', 'Vouchers Affected in this commission',
             required=False),
+        'currency_id':
+            fields.many2one('res.currency', 'Currency'),
     }
     _defaults = {
         'name': lambda *a: None,
@@ -1254,7 +1292,7 @@ class account_move_line(osv.Model):
                                  context=None):
         res = {}.fromkeys(ids, None)
         context = context or {}
-        sub_query = 'AND id IN (%s)' % ', '.join([str(x) for x in ids])
+        sub_query = 'AND id IN (%s)' % ', '.join([str(xxx) for xxx in ids])
         cr.execute(QUERY_REC_INVOICE + sub_query)
         rex = cr.fetchall()
 
@@ -1278,23 +1316,23 @@ class account_move_line(osv.Model):
             if isinstance(args[i][2], basestring):
                 res_ids = invoice_obj.name_search(
                     cursor, user, args[i][2], [], args[i][1])
-                args[i] = (args[i][0], 'in', [x[0] for x in res_ids])
+                args[i] = (args[i][0], 'in', [xxx[0] for xxx in res_ids])
             i += 1
         qu1, qu2 = [], []
-        for x in args:
-            if x[1] != 'in':
-                if (x[2] is False) and (x[1] == '='):
+        for xxx in args:
+            if xxx[1] != 'in':
+                if (xxx[2] is False) and (xxx[1] == '='):
                     qu1.append('(id IS NULL)')
-                elif (x[2] is False) and (x[1] == '<>' or x[1] == '!='):
+                elif (xxx[2] is False) and (xxx[1] == '<>' or xxx[1] == '!='):
                     qu1.append('(id IS NOT NULL)')
                 else:
-                    qu1.append('(id %s %s)' % (x[1], '%s'))
-                    qu2.append(x[2])
-            elif x[1] == 'in':
-                if len(x[2]) > 0:
+                    qu1.append('(id %s %s)' % (xxx[1], '%s'))
+                    qu2.append(xxx[2])
+            elif xxx[1] == 'in':
+                if len(xxx[2]) > 0:
                     qu1.append('(id IN (%s))' % (
-                        ','.join(['%s'] * len(x[2]))))
-                    qu2 += x[2]
+                        ','.join(['%s'] * len(xxx[2]))))
+                    qu2 += xxx[2]
                 else:
                     qu1.append(' (False)')
         if qu1:

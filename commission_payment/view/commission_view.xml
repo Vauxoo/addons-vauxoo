@@ -16,7 +16,7 @@
             <field name="name">Salespeople Commissions</field>
             <field name="res_model">commission.saleman</field>
             <field name="view_type">form</field>
-            <field name="view_mode">graph,form,tree</field>
+            <field name="view_mode">graph,tree</field>
             <field name="domain">[('commission_id','=',context.get('active_id',False))]</field>
             <field name="help" type="html">
               <p class="oe_view_nocontent_create">
@@ -33,7 +33,7 @@
             <field name="name">Commissions on Products</field>
             <field name="res_model">commission.lines</field>
             <field name="view_type">form</field>
-            <field name="view_mode">graph,form,tree</field>
+            <field name="view_mode">graph,tree</field>
             <field name="domain">[('commission_id','=',context.get('active_id',False)),('product_id', '!=', False)]</field>
             <field name="help" type="html">
               <p class="oe_view_nocontent_create">
@@ -97,13 +97,15 @@
                             <div>
                                 <label
                                     for="total_comm"
-                                    attrs="{'invisible':[('total_comm','=',0.0)]}"
+                                    attrs="{'invisible':[('state','=','draft')]}"
                                     />
                             </div>
                             <h1>
                                 <field
                                     name="total_comm"
-                                    attrs="{'invisible':[('total_comm','=',0.0)]}"
+                                    widget="monetary"
+                                    options="{'currency_field': 'currency_id'}"
+                                    attrs="{'invisible':[('state','=','draft')]}"
                                     />
                             </h1>
                             <button
@@ -250,6 +252,16 @@
                                     nolabel="1">
                                 </field>
                             </page>
+                            <page string="Other Info" invisible='0'>
+                                <group>
+                                    <field
+                                        name="company_id"
+                                        />
+                                    <field
+                                        name="currency_id"
+                                        />
+                                </group>
+                            </page>
                         </notebook>
                         <notebook colspan="6">
                             <page string="Commissions by Salespeople" invisible="1">
@@ -286,6 +298,7 @@
                                         <field name="timespan"/>
                                         <field name="baremo_comm"/>
                                         <field name="commission"/>
+                                        <field name="currency_id"/>
                                     </tree>
                                 </field>
 
@@ -315,6 +328,7 @@
                                         <field name="timespan"/>
                                         <field name="baremo_comm"/>
                                         <field name="commission"/>
+                                        <field name="currency_id"/>
                                     </tree>
                                 </field>
                             </page>
@@ -422,6 +436,7 @@
                 <tree string="Pago de Comisiones">
                     <field name="saleman_id"/>
                     <field name="comm_total"/>
+                    <field name="currency_id"/>
                 </tree>
             </field>
         </record>
@@ -478,6 +493,7 @@
                     <field name="perc_ret_im"/>
                     <field name="perc_ret_islr"/>
                     <field name="commission"/>
+                    <field name="currency_id"/>
                 </tree>
             </field>
         </record>
