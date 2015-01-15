@@ -41,7 +41,8 @@ Cálculo de Pago de Comisiones por producto pagado
         "account",
         "account_voucher",
         "product_historical_price",
-        "baremo"
+        "mail",
+        "baremo",
     ],
     "demo": [],
     "data": [

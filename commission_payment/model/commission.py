@@ -99,6 +99,7 @@ class commission_payment(osv.Model):
     """
 
     _name = 'commission.payment'
+    _inherit = ['mail.thread']
     _description = __doc__
 
     _columns = {
