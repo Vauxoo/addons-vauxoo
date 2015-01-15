@@ -18,11 +18,12 @@
             <field name="arch" type="xml">
                 <form string="Pago de Comisiones" version="7.0">
                     <header>
-                        <button icon="STOCK_OK" name="prepare" states="draft,open" string="Prepare" type="object"/>
-                        <button icon="STOCK_OK" name="validate" states="open" string="Validate" type="object"/>
-                        <button icon="STOCK_OK" name="action_draft" states="open,done" string="Set to Draft" type="object"/>
-                        <button icon="gtk-print" name="%(report_commission_payment)d" states="done" string="Imprimir Borrador Comisiones" type="action"/>
-                        <button icon="gtk-print" name="%(report_commission_payment)d" states="done" string="Imprimir Comisiones" type="action"/>
+                        <button name="prepare" states="draft" string="Prepare" type="object" class="oe_highlight"/>
+                        <button name="validate" states="open" string="Validate" type="object" class="oe_highlight"/>
+                        <button name="prepare" states="open" string="Prepare" type="object"/>
+                        <button name="%(report_commission_payment)d" states="open" string="Draft Commission Report" type="action"/>
+                        <button name="%(report_commission_payment)d" states="done" string="Commission Report" type="action" class="oe_highlight"/>
+                        <button name="action_draft" states="open,done" string="Set to Draft" type="object"/>
                         <field
                             name="state"
                             widget="statusbar"
