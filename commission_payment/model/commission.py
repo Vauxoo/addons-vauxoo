@@ -840,7 +840,7 @@ class commission_payment(osv.Model):
             commission.write({'total_comm': total_comm})
         return True
 
-    def prepare(self, cr, user, ids, context=None):
+    def prepare(self, cr, uid, ids, context=None):
         """
         Este metodo recorre los elementos de lineas de asiento y verifica al
         menos tres (3) caracteristicas primordiales para continuar con los
@@ -857,13 +857,12 @@ class commission_payment(osv.Model):
 
 
         @param cr: cursor to database
-        @param user: id of current user
+        @param uid: id of current user
         @param ids: list of record ids to be process
         @param context: context arguments, like lang, time zone
 
         @return: return a result
         """
-        uid = user
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
         comm_brw = self.browse(cr, uid, ids[0], context=context)
@@ -877,9 +876,7 @@ class commission_payment(osv.Model):
         self._commission_based_on_payments(cr, uid, ids, context=context)
         self._post_processing(cr, uid, ids, context=context)
 
-        self.write(cr, user, ids, {
-            'state': 'open',
-        })
+        self.write(cr, uid, ids, {'state': 'open'}, context=context)
         return True
 
     def action_draft(self, cr, user, ids, context=None):
