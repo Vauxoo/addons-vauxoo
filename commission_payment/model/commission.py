@@ -803,18 +803,13 @@ class commission_payment(osv.Model):
     def _post_processing(self, cr, uid, ids, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
-        user = uid
         saleman_ids = self.pool.get('commission.saleman')
-        # users_ids = self.pool.get ('commission.users')
 
         # habiendo recorrido todos los vouchers, mostrado todos los elementos
         # que necesitan correccion se procede a agrupar las comisiones por
         # vendedor para mayor facilidad de uso
 
-        # recargando las lineas que se han creado
-        saleman_ids = self.pool.get('commission.saleman')
-
-        for commission in self.browse(cr, user, ids, context=context):
+        for commission in self.browse(cr, uid, ids, context=context):
 
             # recoge todos los vendedores y suma el total de sus comisiones
             sale_comm = {}
@@ -823,7 +818,6 @@ class commission_payment(osv.Model):
             for comm_line in commission.comm_line_ids:
                 vendor_id = comm_line.saleman_id.id
                 currency_id = comm_line.currency_id.id
-                print comm_line.currency_id.name
 
                 if vendor_id not in sale_comm.keys():
                     sale_comm[vendor_id] = {}
@@ -836,16 +830,14 @@ class commission_payment(osv.Model):
 
             for salesman_id, salesman_values in sale_comm.iteritems():
                 for currency_id, value in salesman_values.iteritems():
-                    vendor_id = saleman_ids.create(cr, user, {
+                    vendor_id = saleman_ids.create(cr, uid, {
                         'commission_id': commission.id,
                         'saleman_id': salesman_id,
                         'currency_id': currency_id,
                         'comm_total': value,
                     }, context=context)
 
-            self.write(cr, user, ids, {
-                'total_comm': total_comm,
-            })
+            commission.write({'total_comm': total_comm})
         return True
 
     def prepare(self, cr, user, ids, context=None):
