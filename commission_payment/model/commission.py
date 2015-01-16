@@ -241,16 +241,16 @@ class commission_payment(osv.Model):
         ),
         'company_id': fields.many2one('res.company', 'Company',
                                       readonly='1'),
-        'currency_id':
-            fields.related('company_id', 'currency_id',
-                           string='Currency',
-                           relation='res.currency',
-                           type='many2one',
-                           store=True,
-                           readonly=True,
-                           help=('Currency at which this report will be \
-                                 expressed. If not selected will be used the \
-                                 one set in the company')),
+        'currency_id': fields.related(
+            'company_id', 'currency_id',
+            string='Currency',
+            relation='res.currency',
+            type='many2one',
+            store=True,
+            readonly=True,
+            help=('Currency at which this report will be \
+                    expressed. If not selected will be used the \
+                    one set in the company')),
         'exchange_date': fields.date('Exchange Date', help=('Date of change\
                                                             that will be\
                                                             printed in the\
@@ -575,6 +575,24 @@ class commission_payment(osv.Model):
                     comm_line = penbxlinea * fact_sup * (
                         bar_dcto_comm / 100) / fact_inf
 
+                    if aml_brw.currency_id and aml_brw.amount_currency:
+                        payxlinea_curr = aml_brw.amount_currency * (
+                            inv_lin.price_subtotal /
+                            inv_brw.amount_untaxed)
+
+                        comm_currency_line = abs(payxlinea_curr) * fact_sup * (
+                            bar_dcto_comm / 100) / fact_inf
+
+                        commission_currency = \
+                            (aml_brw.currency_id and aml_brw.amount_currency
+                             and comm_currency_line or comm_line)
+                    elif aml_brw.currency_id and not aml_brw.amount_currency:
+                        commission_currency = 0.00
+                    else:
+                        commission_currency = comm_line
+
+
+
                     # Generar las lineas de comision por cada producto
                     comm_line_ids.create(
                         cr, uid, {
@@ -607,6 +625,7 @@ class commission_payment(osv.Model):
                             'timespan': bar_day,
                             'baremo_comm': bar_dcto_comm,
                             'commission': comm_line,
+                            'commission_currency': commission_currency,
                             'currency_id': inv_brw.currency_id and
                             inv_brw.currency_id.id or
                             inv_brw.company_id.currency_id.id,
@@ -694,6 +713,22 @@ class commission_payment(osv.Model):
         comm_line = penbxlinea * fact_sup * (
             bar_dcto_comm / 100) / fact_inf
 
+        if aml_brw.currency_id and aml_brw.amount_currency:
+            payxlinea_curr = (inv_brw.amount_untaxed and
+                              aml_brw.amount_currency *
+                              (inv_brw.amount_untaxed / inv_brw.amount_untaxed)
+                              or aml_brw.amount_currency)
+            comm_currency_line = abs(payxlinea_curr) * fact_sup * (
+                bar_dcto_comm / 100) / fact_inf
+
+            commission_currency = (aml_brw.currency_id and
+                                   aml_brw.amount_currency and
+                                   comm_currency_line or comm_line)
+        elif aml_brw.currency_id and not aml_brw.amount_currency:
+            commission_currency = 0.00
+        else:
+            commission_currency = comm_line
+
         # Generar las lineas de comision por cada producto
         comm_line_ids.create(
             cr, uid, {
@@ -718,6 +753,7 @@ class commission_payment(osv.Model):
                 'timespan': bar_day,
                 'baremo_comm': bar_dcto_comm,
                 'commission': comm_line,
+                'commission_currency': commission_currency,
                 'currency_id': inv_brw.currency_id and inv_brw.currency_id.id
                 or inv_brw.company_id.currency_id.id,
             }, context=context)
@@ -819,9 +855,15 @@ class commission_payment(osv.Model):
                     sale_comm[vendor_id] = {}
 
                 if currency_id not in sale_comm[vendor_id].keys():
-                    sale_comm[vendor_id][currency_id] = 0.0
+                    sale_comm[vendor_id][currency_id] = {
+                        'comm_total': 0.0,
+                        'comm_total_currency': 0.0
+                    }
 
-                sale_comm[vendor_id][currency_id] += comm_line.commission
+                sale_comm[vendor_id][currency_id]['comm_total'] += \
+                    comm_line.commission
+                sale_comm[vendor_id][currency_id]['comm_total_currency'] += \
+                    comm_line.commission_currency
                 total_comm += comm_line.commission
 
             for salesman_id, salesman_values in sale_comm.iteritems():
@@ -830,7 +872,8 @@ class commission_payment(osv.Model):
                         'commission_id': commission.id,
                         'saleman_id': salesman_id,
                         'currency_id': currency_id,
-                        'comm_total': value,
+                        'comm_total': value['comm_total'],
+                        'comm_total_currency': value['comm_total_currency'],
                     }, context=context)
 
             commission.write({'total_comm': total_comm})
@@ -1016,7 +1059,7 @@ class commission_lines(osv.Model):
 
     _columns = {
         'commission_id': fields.many2one(
-            'commission.payment', 'Comision', required=True),
+            'commission.payment', 'Commission Document', required=True),
         'name': fields.char('Transaccion', size=256, required=True),
         'pay_date': fields.date('Fecha', required=True),
         'pay_off': fields.float(
@@ -1086,10 +1129,12 @@ class commission_lines(osv.Model):
             'Baremo %Comm.',
             digits_compute=dp.get_precision('Commission')),
         'commission': fields.float(
-            'Comm. / Item',
+            'Commission Amount',
             digits_compute=dp.get_precision('Commission')),
-        'currency_id':
-            fields.many2one('res.currency', 'Currency'),
+        'commission_currency': fields.float(
+            'Currency Amount',
+            digits_compute=dp.get_precision('Commission')),
+        'currency_id': fields.many2one('res.currency', 'Currency'),
     }
 
     _defaults = {
@@ -1113,7 +1158,7 @@ class commission_saleman(osv.Model):
         'saleman_name': fields.char('Salesman', size=256, required=False),
         'saleman_id': fields.many2one('res.users', 'Salesman', required=True),
         'comm_total': fields.float(
-            'Commission to be paid',
+            'Commission Amount',
             digits_compute=dp.get_precision('Commission')),
         'comm_voucher_ids': fields.one2many(
             'commission.voucher',
@@ -1121,6 +1166,9 @@ class commission_saleman(osv.Model):
             required=False),
         'currency_id':
             fields.many2one('res.currency', 'Currency'),
+        'comm_total_currency': fields.float(
+            'Currency Amount',
+            digits_compute=dp.get_precision('Commission')),
     }
     _defaults = {
         'name': lambda *a: None,

@@ -434,7 +434,8 @@
             <field name="arch" type="xml">
                 <tree string="Pago de Comisiones">
                     <field name="saleman_id"/>
-                    <field name="comm_total"/>
+                    <field name="comm_total" sum="Commission Amount"/>
+                    <field name="comm_total_currency"/>
                     <field name="currency_id"/>
                 </tree>
             </field>
@@ -492,6 +493,7 @@
                     <field name="perc_ret_im"/>
                     <field name="perc_ret_islr"/>
                     <field name="commission"/>
+                    <field name="commission_currency"/>
                     <field name="currency_id"/>
                 </tree>
             </field>
