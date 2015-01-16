@@ -171,18 +171,49 @@ class account_bank_statement_line(osv.osv):
 
             if tax_ids:
                 tax_id = tax_obj.browse(cr, uid, tax_ids[0])
+
+                amount_ret_tax = self._get_retention(
+                    cr, uid, account_group, tax_id)
+
+                amount_total_tax =\
+                    account_group.get(move_account_tax)+amount_ret_tax
+
                 dat.append({
                     'account_tax_voucher':
                         tax_id.account_paid_voucher_id.id,
                     'account_tax_collected':
                         tax_id.account_collected_id.id,
-                    'amount': abs(account_group.get(move_account_tax)),
+                    'amount': abs(amount_total_tax),
                     'tax_id': tax_id,
                     'tax_analytic_id':
                         tax_id.account_analytic_collected_id and
                         tax_id.account_analytic_collected_id.id or False,
                     })
         return dat
+
+    def _get_retention(self, cr, uid, account_group={}, tax=[]):
+        ''' Get retention of same type of category tax
+            @param account_group: Dictionary with grouped by key of account_id
+                and value amount fox example {1: 1.0}
+            @param tax: Object Browse of tax '''
+
+        tax_obj = self.pool.get('account.tax')
+        amount_retention_tax = 0
+
+        if account_group and tax:
+
+            for move_account_tax in account_group:
+                tax_ids = tax_obj.search(
+                    cr, uid,
+                    [('account_collected_id', '=', move_account_tax),
+                     ('tax_voucher_ok', '=', False),
+                     ('tax_category_id.code', '=', tax.tax_category_id.code),
+                     ('amount', '<', 0), ('id', '<>', tax.id),
+                     ], limit=1)
+                if tax_ids:
+                    amount_retention_tax += account_group[move_account_tax]
+
+        return amount_retention_tax
 
 
 class account_bank_statement(osv.osv):
