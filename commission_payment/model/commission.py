@@ -611,9 +611,9 @@ class commission_payment(osv.Model):
                             'timespan': bar_day,
                             'baremo_comm': bar_dcto_comm,
                             'commission': comm_line,
-                            'currency_id': aml_brw.currency_id and
-                            aml_brw.currency_id.id or
-                            aml_brw.company_id.currency_id.id,
+                            'currency_id': inv_brw.currency_id and
+                            inv_brw.currency_id.id or
+                            inv_brw.company_id.currency_id.id,
                         }, context=context)
 
                 else:
@@ -722,8 +722,8 @@ class commission_payment(osv.Model):
                 'timespan': bar_day,
                 'baremo_comm': bar_dcto_comm,
                 'commission': comm_line,
-                'currency_id': aml_brw.currency_id and aml_brw.currency_id.id
-                or aml_brw.company_id.currency_id.id,
+                'currency_id': inv_brw.currency_id and inv_brw.currency_id.id
+                or inv_brw.company_id.currency_id.id,
             }, context=context)
 
         return True
@@ -824,15 +824,26 @@ class commission_payment(osv.Model):
             sale_comm = {}
             # ordena en un arbol todas las lineas de comisiones de producto
             criba = {}
+            total_comm = 0
             for comm_line in commission.comm_line_ids:
                 vendor_id = comm_line.saleman_id.id
                 voucher_id = comm_line.voucher_id.id
                 invoice_id = comm_line.invoice_id.id
+                currency_id = comm_line.currency_id.id
                 comm_line_id = comm_line.id
+                print comm_line.currency_id.name
 
                 if vendor_id not in sale_comm.keys():
-                    sale_comm[vendor_id] = [comm_line.saleman_name, 0.0]
-                sale_comm[vendor_id][1] += comm_line.commission
+                    sale_comm[vendor_id] = {}
+
+                if currency_id not in sale_comm[vendor_id].keys():
+                    sale_comm[vendor_id][currency_id]= 0.0
+
+                sale_comm[vendor_id][currency_id] += comm_line.commission
+                total_comm += comm_line.commission
+
+                print sale_comm
+                continue
 
                 if vendor_id not in criba.keys():
                     criba[vendor_id] = {}
@@ -850,6 +861,18 @@ class commission_payment(osv.Model):
 
                 criba[vendor_id][voucher_id][1][
                     invoice_id][0].append(comm_line_id)
+
+            print sale_comm
+            for salesman_id, salesman_values in sale_comm.iteritems():
+                for currency_id, value in salesman_values.iteritems():
+                    vendor_id = saleman_ids.create(cr, user, {
+                        'commission_id': commission.id,
+                        'saleman_id': salesman_id,
+                        'currency_id': currency_id,
+                        'comm_total': value,
+                    }, context=context)
+
+            continue
 
             # escribir el total para cada vendedor encontrado
             total_comm = 0
@@ -1094,7 +1117,7 @@ class commission_lines(osv.Model):
         'invoice_id': fields.many2one('account.invoice', 'Doc.'),
         'invoice_num': fields.char('Doc.', size=256),
         'partner_id': fields.many2one('res.partner', 'Empresa'),
-        'saleman_name': fields.char('Vendedor', size=256, required=True),
+        'saleman_name': fields.char('Vendedor', size=256, required=False),
         'saleman_id': fields.many2one('res.users', 'Vendedor', required=True),
         'pay_inv': fields.float(
             'Abono Fact.',
@@ -1174,7 +1197,7 @@ class commission_saleman(osv.Model):
         'name': fields.char('Comment', size=256),
         'commission_id': fields.many2one('commission.payment',
                                          'Commission Document'),
-        'saleman_name': fields.char('Salesman', size=256, required=True),
+        'saleman_name': fields.char('Salesman', size=256, required=False),
         'saleman_id': fields.many2one('res.users', 'Salesman', required=True),
         'comm_total': fields.float(
             'Commission to be paid',
