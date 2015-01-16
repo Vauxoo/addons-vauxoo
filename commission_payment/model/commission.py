@@ -407,10 +407,8 @@ class commission_payment(osv.Model):
         aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
         date = False
         if comm_brw.commission_policy_date_start == 'invoice_emission_date':
-            # TODO: here goes the comm_invoice
             date = aml_brw.rec_invoice.date_invoice
         elif comm_brw.commission_policy_date_start == 'invoice_due_date':
-            # TODO: here goes the comm_invoice
             date = aml_brw.rec_invoice.date_due
         return date
 
@@ -423,7 +421,6 @@ class commission_payment(osv.Model):
         aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
         date = False
         if comm_brw.commission_policy_date_end == 'last_payment_date':
-            # TODO: here goes the comm_invoice
             date = aml_brw.rec_invoice.date_last_payment
         elif comm_brw.commission_policy_date_end == 'date_on_payment':
             date = aml_brw.date
@@ -501,7 +498,6 @@ class commission_payment(osv.Model):
 
         # Si esta aqui dentro es porque esta linea tiene una id valida
         # de una factura.
-        # TODO: here goes the comm_invoice
         inv_brw = aml_brw.rec_invoice
 
         # Obtener el vendedor del partner
