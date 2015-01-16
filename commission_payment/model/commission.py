@@ -1102,15 +1102,6 @@ class commission_lines(osv.Model):
             digits_compute=dp.get_precision('Commission')),
         'price_date': fields.date('Fecha Lista'),
 
-        'perc_ret_islr': fields.float(
-            'Ret ISLR (%)',
-            digits_compute=dp.get_precision('Commission')),
-        'perc_ret_im': fields.float(
-            'Ret IM (%)',
-            digits_compute=dp.get_precision('Commission')),
-        'perc_ret_iva': fields.float(
-            'Ret IVA (%)',
-            digits_compute=dp.get_precision('Commission')),
         'perc_iva': fields.float(
             'IVA (%)',
             digits_compute=dp.get_precision('Commission')),
@@ -1220,12 +1211,6 @@ class commission_invoice(osv.Model):
         'pay_inv': fields.float(
             'Abono Fact.',
             digits_compute=dp.get_precision('Commission')),
-        'ret_iva': fields.float(
-            '% Ret. IVA', digits_compute=dp.get_precision('Commission')),
-        'ret_islr': fields.float(
-            '% Ret. ISLR', digits_compute=dp.get_precision('Commission')),
-        'ret_im': fields.float('% Ret. IM',
-                               digits_compute=dp.get_precision('Commission')),
     }
     _defaults = {
         'name': lambda *a: None,
@@ -1261,9 +1246,6 @@ class commission_retention(osv.Model):
         'invoice_id': fields.many2one('account.invoice', 'Factura'),
         'voucher_id': fields.many2one('account.move.line', 'Pagado con...'),
         'date': fields.date('Fecha'),
-        'ret_iva': fields.boolean('Ret. IVA'),
-        'ret_islr': fields.boolean('Ret. ISLR'),
-        'ret_im': fields.boolean('Ret. IM'),
     }
     _defaults = {
         'name': lambda *a: None,
