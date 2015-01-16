@@ -862,7 +862,6 @@ class commission_payment(osv.Model):
                 criba[vendor_id][voucher_id][1][
                     invoice_id][0].append(comm_line_id)
 
-            print sale_comm
             for salesman_id, salesman_values in sale_comm.iteritems():
                 for currency_id, value in salesman_values.iteritems():
                     vendor_id = saleman_ids.create(cr, user, {
@@ -872,6 +871,9 @@ class commission_payment(osv.Model):
                         'comm_total': value,
                     }, context=context)
 
+            self.write(cr, user, ids, {
+                'total_comm': total_comm,
+            })
             continue
 
             # escribir el total para cada vendedor encontrado
@@ -915,9 +917,6 @@ class commission_payment(osv.Model):
                                 'comm_invoice_id': invoice_id,
                             }, context=context)
 
-            self.write(cr, user, ids, {
-                'total_comm': total_comm,
-            })
         return True
 
     def prepare(self, cr, user, ids, context=None):
