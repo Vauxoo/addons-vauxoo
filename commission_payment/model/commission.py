@@ -804,11 +804,8 @@ class commission_payment(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
         user = uid
-        comm_line_ids = self.pool.get('commission.lines')
         saleman_ids = self.pool.get('commission.saleman')
         # users_ids = self.pool.get ('commission.users')
-        comm_voucher_ids = self.pool.get('commission.voucher')
-        comm_invoice_ids = self.pool.get('commission.invoice')
 
         # habiendo recorrido todos los vouchers, mostrado todos los elementos
         # que necesitan correccion se procede a agrupar las comisiones por
@@ -816,51 +813,26 @@ class commission_payment(osv.Model):
 
         # recargando las lineas que se han creado
         saleman_ids = self.pool.get('commission.saleman')
-        comm_voucher_ids = self.pool.get('commission.voucher')
 
         for commission in self.browse(cr, user, ids, context=context):
 
             # recoge todos los vendedores y suma el total de sus comisiones
             sale_comm = {}
             # ordena en un arbol todas las lineas de comisiones de producto
-            criba = {}
             total_comm = 0
             for comm_line in commission.comm_line_ids:
                 vendor_id = comm_line.saleman_id.id
-                voucher_id = comm_line.voucher_id.id
-                invoice_id = comm_line.invoice_id.id
                 currency_id = comm_line.currency_id.id
-                comm_line_id = comm_line.id
                 print comm_line.currency_id.name
 
                 if vendor_id not in sale_comm.keys():
                     sale_comm[vendor_id] = {}
 
                 if currency_id not in sale_comm[vendor_id].keys():
-                    sale_comm[vendor_id][currency_id]= 0.0
+                    sale_comm[vendor_id][currency_id] = 0.0
 
                 sale_comm[vendor_id][currency_id] += comm_line.commission
                 total_comm += comm_line.commission
-
-                print sale_comm
-                continue
-
-                if vendor_id not in criba.keys():
-                    criba[vendor_id] = {}
-
-                if voucher_id not in criba[vendor_id].keys():
-                    criba[vendor_id][voucher_id] = [comm_line.pay_date, {}]
-
-                if invoice_id not in criba[vendor_id][voucher_id][1].keys():
-                    criba[vendor_id][voucher_id][1][invoice_id] = {}
-
-                if len(criba[vendor_id][voucher_id][1][invoice_id]) == 0:
-                    criba[vendor_id][voucher_id][1][invoice_id] = [
-                        [], comm_line.pay_inv, comm_line.perc_ret_iva,
-                        comm_line.perc_ret_islr, comm_line.perc_ret_im]
-
-                criba[vendor_id][voucher_id][1][
-                    invoice_id][0].append(comm_line_id)
 
             for salesman_id, salesman_values in sale_comm.iteritems():
                 for currency_id, value in salesman_values.iteritems():
@@ -874,49 +846,6 @@ class commission_payment(osv.Model):
             self.write(cr, user, ids, {
                 'total_comm': total_comm,
             })
-            continue
-
-            # escribir el total para cada vendedor encontrado
-            total_comm = 0
-            for vendor_key in criba.keys():
-                vendor_id = saleman_ids.create(cr, user, {
-                    'commission_id': commission.id,
-                    'saleman_id': vendor_key,
-                    'saleman_name': sale_comm[vendor_key][0],
-                    'comm_total': sale_comm[vendor_key][1],
-                }, context=context)
-
-                total_comm += sale_comm[vendor_key][1]
-
-                for voucher_key in criba[vendor_key].keys():
-                    voucher_id = comm_voucher_ids.create(cr, user, {
-                        'commission_id': commission.id,
-                        'comm_sale_id': vendor_id,
-                        'voucher_id': voucher_key,
-                        'date': criba[vendor_key][voucher_key][0],
-                    }, context=context)
-
-                    for inv_key in criba[vendor_key][voucher_key][1].keys():
-                        invoice_id = comm_invoice_ids.create(cr, user, {
-                            'commission_id': commission.id,
-                            'comm_voucher_id': voucher_id,
-                            'invoice_id': inv_key,
-                            'pay_inv':
-                            criba[vendor_key][voucher_key][1][inv_key][1],
-                            'ret_iva':
-                            criba[vendor_key][voucher_key][1][inv_key][2],
-                            'ret_islr':
-                            criba[vendor_key][voucher_key][1][inv_key][3],
-                            'ret_im':
-                            criba[vendor_key][voucher_key][1][inv_key][4],
-                        }, context=context)
-
-                        for idx in \
-                                criba[vendor_key][voucher_key][1][inv_key][0]:
-                            comm_line_ids.write(cr, user, idx, {
-                                'comm_invoice_id': invoice_id,
-                            }, context=context)
-
         return True
 
     def prepare(self, cr, user, ids, context=None):
