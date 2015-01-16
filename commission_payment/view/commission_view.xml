@@ -47,7 +47,7 @@
 
         <!-- Creating and Action to open the View LIST for the object commission.salesman -->
         <record model="ir.actions.act_window" id="comm_line_invoice_ids_all_act">
-            <field name="name">Commissions on Products</field>
+            <field name="name">Commissions on Invoices</field>
             <field name="res_model">commission.lines</field>
             <field name="view_type">form</field>
             <field name="view_mode">graph,tree</field>
