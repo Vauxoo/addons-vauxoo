@@ -183,31 +183,31 @@
                             </group>
                             <group col="2" colspan="4">
                                 <label
-                                    for="bar_id"
+                                    for="baremo_id"
                                     string="Baremo to be used if not Baremo set on Company:"
                                     attrs="{'invisible':[('commission_baremo_policy','!=','onCompany')]}"
                                     />
                                 <label
-                                    for="bar_id"
+                                    for="baremo_id"
                                     string="Baremo to be used if not Baremo set on Partner:"
                                     attrs="{'invisible':[('commission_baremo_policy','!=','onPartner')]}"
                                     />
                                 <label
-                                    for="bar_id"
+                                    for="baremo_id"
                                     string="Baremo to be used if not Baremo set on Commercial Entity:"
                                     attrs="{'invisible':[('commission_baremo_policy','!=','onAccountingPartner')]}"
                                     />
                                 <label
-                                    for="bar_id"
+                                    for="baremo_id"
                                     string="Baremo to be used if not policy set on Salespeople:"
                                     attrs="{'invisible':[('commission_baremo_policy','!=','onUser')]}"
                                     />
                                 <label
-                                    for="bar_id"
+                                    for="baremo_id"
                                     string="This baremo is the only one to be used on this Document:"
                                     attrs="{'invisible':[('commission_baremo_policy','!=','onCommission')]}"
                                     />
-                                <field colspan="2" name="bar_id" nolabel="1"/>
+                                <field colspan="2" name="baremo_id" nolabel="1"/>
                             </group>
                         </group>
                         <group col="2" colspan="2">

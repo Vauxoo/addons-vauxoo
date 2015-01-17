@@ -80,7 +80,7 @@ class commission_payment(osv.Model):
             readonly=True, states={'draft': [('readonly', False)]},
             track_visibility='onchange',
         ),
-        'bar_id': fields.many2one(
+        'baremo_id': fields.many2one(
             'baremo.book', 'Baremo', required=True,
             readonly=True, states={'draft': [('readonly', False)]},
             track_visibility='onchange',
@@ -308,7 +308,7 @@ class commission_payment(osv.Model):
 
         # Esta busqueda devuelve los dias ordenadados de menor a mayor dia, de
         # acuerdo con lo estipulado que se ordenaria en el modulo baremo
-        bar_day_ids = bar_brw and bar_brw.bar_ids or comm_brw.bar_id.bar_ids
+        bar_day_ids = bar_brw and bar_brw.bar_ids or comm_brw.baremo_id.bar_ids
 
         no_days = True
         no_dcto = True
@@ -422,10 +422,10 @@ class commission_payment(osv.Model):
             res = self._get_commission_salesman_policy(
                 cr, uid, ids[0], pay_id, context=context).baremo_id
         elif comm_brw.commission_baremo_policy == 'onCommission':
-            res = comm_brw.bar_id
+            res = comm_brw.baremo_id
         # Fall back to baremo in Commission
         if not res:
-            res = comm_brw.bar_id
+            res = comm_brw.baremo_id
         return res
 
     def _get_commission_payment_on_invoice_line(self, cr, uid, ids, pay_id,
