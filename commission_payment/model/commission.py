@@ -234,7 +234,6 @@ class commission_payment(osv.Model):
             aml_ids = aml_obj.search(
                 cr, uid, args, context=context)
 
-            # TODO: Change name to field aml_ids
             comm_brw.write({
                 'aml_ids': [(6, comm_brw.id, aml_ids)]})
 
