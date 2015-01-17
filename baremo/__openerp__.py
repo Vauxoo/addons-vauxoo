@@ -36,7 +36,7 @@
     "data": [
         "security/baremo_security.xml",
         "security/ir.model.access.csv",
-        "baremo_view.xml"
+        "view/baremo_view.xml",
     ],
     "test": [],
     "js": [],
