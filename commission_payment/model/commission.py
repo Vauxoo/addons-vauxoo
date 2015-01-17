@@ -564,7 +564,6 @@ class commission_payment(osv.Model):
                             'inv_date': commission_policy_date_start,
                             'days': emission_days,
                             'inv_subtotal': inv_brw.amount_untaxed,
-                            'item': inv_lin.name,
                             'product_id': inv_lin.product_id.id,
                             'price_unit': price_unit,
                             'price_subtotal': inv_lin.price_subtotal,
@@ -987,13 +986,12 @@ class commission_lines(osv.Model):
             'SubTot. Doc.',
             digits_compute=dp.get_precision('Commission')),
 
-        'item': fields.char('Item', size=256, required=False),
-        'product_id': fields.many2one('product.product', 'Item'),
+        'product_id': fields.many2one('product.product', 'Product'),
         'price_unit': fields.float(
             'Prec. Unit.',
             digits_compute=dp.get_precision('Commission')),
         'price_subtotal': fields.float(
-            'SubTot. Item',
+            'SubTot. Product',
             digits_compute=dp.get_precision('Commission')),
 
         'price_list': fields.float(

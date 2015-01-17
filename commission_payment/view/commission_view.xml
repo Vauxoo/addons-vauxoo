@@ -463,7 +463,6 @@
                     <field name="inv_date"/>
                     <field name="days"/>
                     <field name="inv_subtotal"/>
-                    <field name="item"/>
                     <field name="price_unit"/>
                     <field name="price_subtotal"/>
                     <field name="price_list"/>
@@ -486,7 +485,6 @@
             <field name="arch" type="xml">
                 <form string="Pago de Comisiones" version="7.0">
                     <field name="salesman_id"/>
-                    <field name="item"/>
                     <field name="commission"/>
                 </form>
             </field>
