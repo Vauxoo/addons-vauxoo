@@ -838,6 +838,7 @@ class commission_payment(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
         saleman_ids = self.pool.get('commission.saleman')
+        comm_line_obj = self.pool.get('commission.lines')
 
         # habiendo recorrido todos los vouchers, mostrado todos los elementos
         # que necesitan correccion se procede a agrupar las comisiones por
@@ -859,13 +860,16 @@ class commission_payment(osv.Model):
                 if currency_id not in sale_comm[vendor_id].keys():
                     sale_comm[vendor_id][currency_id] = {
                         'comm_total': 0.0,
-                        'comm_total_currency': 0.0
+                        'comm_total_currency': 0.0,
+                        'comm_lines_ids': [],
                     }
 
                 sale_comm[vendor_id][currency_id]['comm_total'] += \
                     comm_line.commission
                 sale_comm[vendor_id][currency_id]['comm_total_currency'] += \
                     comm_line.commission_currency
+                sale_comm[vendor_id][currency_id]['comm_lines_ids'] += \
+                    [comm_line.id]
                 total_comm += comm_line.commission
 
             for salesman_id, salesman_values in sale_comm.iteritems():
@@ -877,6 +881,10 @@ class commission_payment(osv.Model):
                         'comm_total': value['comm_total'],
                         'comm_total_currency': value['comm_total_currency'],
                     }, context=context)
+
+                    comm_line_obj.write(cr, uid, value['comm_lines_ids'],
+                                        {'comm_salespeople_id': vendor_id},
+                                        context=context)
 
             commission.write({'total_comm': total_comm})
         return True
@@ -1077,6 +1085,8 @@ class commission_lines(osv.Model):
         'partner_id': fields.many2one('res.partner', 'Empresa'),
         'saleman_name': fields.char('Vendedor', size=256, required=False),
         'saleman_id': fields.many2one('res.users', 'Vendedor', required=True),
+        'comm_salespeople_id': fields.many2one(
+            'commission.saleman', 'Salespeople Commission', required=False),
         'pay_inv': fields.float(
             'Abono Fact.',
             digits_compute=dp.get_precision('Commission')),
@@ -1156,6 +1166,10 @@ class commission_saleman(osv.Model):
         'comm_voucher_ids': fields.one2many(
             'commission.voucher',
             'comm_sale_id', 'Vouchers Affected in this commission',
+            required=False),
+        'comm_lines_ids': fields.one2many(
+            'commission.lines',
+            'comm_salespeople_id', 'Details in this Salespeople Commission',
             required=False),
         'currency_id':
             fields.many2one('res.currency', 'Currency'),
