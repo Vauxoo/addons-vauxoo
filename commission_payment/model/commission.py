@@ -590,14 +590,10 @@ class commission_payment(osv.Model):
                             inv_lin.price_subtotal /
                             inv_brw.amount_untaxed)
 
-                        comm_currency_line = abs(payxlinea_curr) * fact_sup * (
+                        commission_currency = abs(payxlinea_curr) * fact_sup * (
                             bar_dcto_comm / 100) / fact_inf
-
-                        commission_currency = \
-                            (aml_brw.currency_id and aml_brw.amount_currency
-                             and comm_currency_line or comm_line)
                     elif aml_brw.currency_id and not aml_brw.amount_currency:
-                        commission_currency = 0.00
+                        return True
                     else:
                         commission_currency = comm_line
 
@@ -727,18 +723,10 @@ class commission_payment(osv.Model):
             bar_dcto_comm / 100) / fact_inf
 
         if aml_brw.currency_id and aml_brw.amount_currency:
-            payxlinea_curr = (inv_brw.amount_untaxed and
-                              aml_brw.amount_currency *
-                              (inv_brw.amount_untaxed / inv_brw.amount_untaxed)
-                              or aml_brw.amount_currency)
-            comm_currency_line = abs(payxlinea_curr) * fact_sup * (
+            commission_currency = abs(aml_brw.amount_currency) * fact_sup * (
                 bar_dcto_comm / 100) / fact_inf
-
-            commission_currency = (aml_brw.currency_id and
-                                   aml_brw.amount_currency and
-                                   comm_currency_line or comm_line)
         elif aml_brw.currency_id and not aml_brw.amount_currency:
-            commission_currency = 0.00
+            return True
         else:
             commission_currency = comm_line
 
