@@ -15,6 +15,4 @@
 "access_commission_voucher_manager","commission.voucher.manager","model_commission_voucher","commission_payment.group_comm_payment_manager",1,1,1,1
 "access_commission_invoice_user","commission.invoice.user","model_commission_invoice","commission_payment.group_comm_payment_user",1,0,0,0
 "access_commission_invoice_manager","commission.invoice.manager","model_commission_invoice","commission_payment.group_comm_payment_manager",1,1,1,1
-"access_commission_retention_user","commission.retention.user","model_commission_retention","commission_payment.group_comm_payment_user",1,0,0,0
-"access_commission_retention_manager","commission.retention.manager","model_commission_retention","commission_payment.group_comm_payment_manager",1,1,1,1
 

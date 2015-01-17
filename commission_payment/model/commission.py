@@ -190,11 +190,8 @@ class commission_payment(osv.Model):
             'commission.invoice',
             'commission_id', 'Facturas afectadas en esta comision',
             readonly=True, states={'write': [('readonly', False)]}),
-        'comm_retention_ids': fields.one2many(
-            'commission.retention',
-            'commission_id', 'Facturas con Problemas de Retencion',
-            readonly=True, states={'write': [('readonly', False)]}),
-        'state': fields.selection(COMMISSION_STATES, 'Estado', readonly=True,
+        'state': fields.selection(
+            COMMISSION_STATES, 'Estado', readonly=True,
             track_visibility='onchange',
         ),
         'commission_type': fields.selection(
@@ -947,7 +944,6 @@ class commission_payment(osv.Model):
         # users_ids = self.pool.get ('commission.users')
         comm_voucher_ids = self.pool.get('commission.voucher')
         comm_invoice_ids = self.pool.get('commission.invoice')
-        comm_retention_ids = self.pool.get('commission.retention')
 
         for commission in self.browse(cr, user, ids, context=context):
             ###
@@ -977,9 +973,6 @@ class commission_payment(osv.Model):
             # * Desvinculando los vouchers afectados
             comm_invoice_ids.unlink(
                 cr, user, [line.id for line in commission.comm_invoice_ids])
-            # * Desvinculando las facturas con problemas de retenciones
-            comm_retention_ids.unlink(
-                cr, user, [line.id for line in commission.comm_retention_ids])
             ###
             commission.write(
                 {'voucher_ids': [(3, x.id) for x in commission.voucher_ids],
@@ -1244,27 +1237,6 @@ class commission_lines_2(osv.Model):
     _columns = {
         'comm_invoice_id': fields.many2one('commission.invoice',
                                            'Factura Relacional Interna'),
-    }
-
-
-class commission_retention(osv.Model):
-
-    """
-    Commission Payment : commission_retention
-    """
-
-    _name = 'commission.retention'
-    _order = 'invoice_id'
-
-    _columns = {
-        'name': fields.char('Comentario', size=256),
-        'commission_id': fields.many2one('commission.payment', 'Comision'),
-        'invoice_id': fields.many2one('account.invoice', 'Factura'),
-        'voucher_id': fields.many2one('account.move.line', 'Pagado con...'),
-        'date': fields.date('Fecha'),
-    }
-    _defaults = {
-        'name': lambda *a: None,
     }
 
 
