@@ -123,8 +123,8 @@ class commission_payment(osv.Model):
             'commission.lines', 'commission_id',
             'Comision por productos', readonly=True,
             states={'write': [('readonly', False)]}),
-        'saleman_ids': fields.one2many(
-            'commission.saleman', 'commission_id',
+        'salesman_ids': fields.one2many(
+            'commission.salesman', 'commission_id',
             'Total de Comisiones por Vendedor', readonly=True,
             states={'write': [('readonly', False)]}),
         'user_ids': fields.many2many(
@@ -447,7 +447,7 @@ class commission_payment(osv.Model):
         inv_brw = aml_brw.rec_invoice
 
         # Obtener el vendedor del partner
-        saleman = self._get_commission_salesman_policy(cr, uid, ids, pay_id,
+        salesman = self._get_commission_salesman_policy(cr, uid, ids, pay_id,
                                                        context=context)
 
         commission_policy_baremo = \
@@ -559,7 +559,7 @@ class commission_payment(osv.Model):
                             aml_brw.invoice.id,
                             'invoice_num': inv_brw.number,
                             'partner_id': inv_brw.partner_id.id,
-                            'saleman_id': saleman and saleman.id,
+                            'salesman_id': salesman and salesman.id,
                             'pay_inv': aml_brw.credit,
                             'inv_date': commission_policy_date_start,
                             'days': emission_days,
@@ -638,7 +638,7 @@ class commission_payment(osv.Model):
         perc_iva = (inv_brw.amount_total / inv_brw.amount_untaxed - 1) * 100
 
         # Obtener el vendedor del partner
-        saleman = self._get_commission_salesman_policy(cr, uid, ids, aml_id,
+        salesman = self._get_commission_salesman_policy(cr, uid, ids, aml_id,
                                                        context=context)
 
         commission_policy_baremo = \
@@ -690,7 +690,7 @@ class commission_payment(osv.Model):
                 'invoice_id': aml_brw.invoice.id,
                 'invoice_num': inv_brw.number,
                 'partner_id': inv_brw.partner_id.id,
-                'saleman_id': saleman and saleman.id,
+                'salesman_id': salesman and salesman.id,
                 'pay_inv': aml_brw.credit,
                 'inv_date': commission_policy_date_start,
                 'days': emission_days,
@@ -765,7 +765,7 @@ class commission_payment(osv.Model):
     def _post_processing(self, cr, uid, ids, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
-        saleman_ids = self.pool.get('commission.saleman')
+        salesman_ids = self.pool.get('commission.salesman')
         comm_line_obj = self.pool.get('commission.lines')
 
         # habiendo recorrido todos los vouchers, mostrado todos los elementos
@@ -779,7 +779,7 @@ class commission_payment(osv.Model):
             # ordena en un arbol todas las lineas de comisiones de producto
             total_comm = 0
             for comm_line in commission.comm_line_ids:
-                vendor_id = comm_line.saleman_id.id
+                vendor_id = comm_line.salesman_id.id
                 currency_id = comm_line.currency_id.id
 
                 if vendor_id not in sale_comm.keys():
@@ -802,9 +802,9 @@ class commission_payment(osv.Model):
 
             for salesman_id, salesman_values in sale_comm.iteritems():
                 for currency_id, value in salesman_values.iteritems():
-                    vendor_id = saleman_ids.create(cr, uid, {
+                    vendor_id = salesman_ids.create(cr, uid, {
                         'commission_id': commission.id,
-                        'saleman_id': salesman_id,
+                        'salesman_id': salesman_id,
                         'currency_id': currency_id,
                         'comm_total': value['comm_total'],
                         'comm_total_currency': value['comm_total_currency'],
@@ -870,7 +870,7 @@ class commission_payment(osv.Model):
         sale_noids = self.pool.get('commission.sale.noid')
         noprice_ids = self.pool.get('commission.noprice')
         comm_line_ids = self.pool.get('commission.lines')
-        saleman_ids = self.pool.get('commission.saleman')
+        salesman_ids = self.pool.get('commission.salesman')
 
         for commission in self.browse(cr, user, ids, context=context):
             ###
@@ -886,8 +886,8 @@ class commission_payment(osv.Model):
             comm_line_ids.unlink(
                 cr, user, [line.id for line in commission.comm_line_ids])
             # * Desvinculando los totales por vendedor
-            saleman_ids.unlink(
-                cr, user, [line.id for line in commission.saleman_ids])
+            salesman_ids.unlink(
+                cr, user, [line.id for line in commission.salesman_ids])
             ###
             commission.write(
                 {'invoice_ids': [(3, inv_brw.id) for inv_brw in
@@ -953,7 +953,7 @@ class commission_lines(osv.Model):
     """
 
     _name = 'commission.lines'
-    _order = 'saleman_id'
+    _order = 'salesman_id'
 
     _columns = {
         'commission_id': fields.many2one(
@@ -971,9 +971,9 @@ class commission_lines(osv.Model):
         'invoice_id': fields.many2one('account.invoice', 'Doc.'),
         'invoice_num': fields.char('Doc.', size=256),
         'partner_id': fields.many2one('res.partner', 'Empresa'),
-        'saleman_id': fields.many2one('res.users', 'Vendedor', required=True),
+        'salesman_id': fields.many2one('res.users', 'Vendedor', required=True),
         'comm_salespeople_id': fields.many2one(
-            'commission.saleman', 'Salespeople Commission', required=False),
+            'commission.salesman', 'Salespeople Commission', required=False),
         'pay_inv': fields.float(
             'Abono Fact.',
             digits_compute=dp.get_precision('Commission')),
@@ -1032,19 +1032,19 @@ class commission_lines(osv.Model):
     }
 
 
-class commission_saleman(osv.Model):
+class commission_salesman(osv.Model):
 
     """
-    Commission Payment : commission_saleman
+    Commission Payment : commission_salesman
     """
 
-    _name = 'commission.saleman'
-    _rec_name = 'saleman_id'
+    _name = 'commission.salesman'
+    _rec_name = 'salesman_id'
 
     _columns = {
         'commission_id': fields.many2one('commission.payment',
                                          'Commission Document'),
-        'saleman_id': fields.many2one('res.users', 'Salesman', required=True),
+        'salesman_id': fields.many2one('res.users', 'Salesman', required=True),
         'comm_total': fields.float(
             'Commission Amount',
             digits_compute=dp.get_precision('Commission')),

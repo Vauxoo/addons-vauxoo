@@ -7,5 +7,5 @@
 "access_commission_noprice_manager","commission.noprice.manager","model_commission_noprice","commission_payment.group_comm_payment_manager",1,1,1,1
 "access_commission_lines_user","commission.lines.user","model_commission_lines","commission_payment.group_comm_payment_user",1,0,0,0
 "access_commission_lines_manager","commission.lines.manager","model_commission_lines","commission_payment.group_comm_payment_manager",1,1,1,1
-"access_commission_saleman_user","commission.saleman.user","model_commission_saleman","commission_payment.group_comm_payment_user",1,0,0,0
-"access_commission_saleman_manager","commission.saleman.manager","model_commission_saleman","commission_payment.group_comm_payment_manager",1,1,1,1
+"access_commission_salesman_user","commission.salesman.user","model_commission_salesman","commission_payment.group_comm_payment_user",1,0,0,0
+"access_commission_salesman_manager","commission.salesman.manager","model_commission_salesman","commission_payment.group_comm_payment_manager",1,1,1,1
