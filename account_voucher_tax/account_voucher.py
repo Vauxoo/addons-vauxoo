@@ -322,7 +322,9 @@ class account_voucher(osv.Model):
                             cr, uid, invoice_ids, context=context):
                         for tax in invoice.tax_line:
                             if tax.tax_id.tax_voucher_ok:
-                                base_amount = tax.amount
+                                base_amount = tax.amount +\
+                                    self._get_retention_voucher(
+                                        cr, uid, invoice, tax)
                                 account = tax.tax_id.\
                                     account_collected_voucher_id.id
                                 credit_amount = float('%.*f' % (2, (
@@ -418,6 +420,20 @@ class account_voucher(osv.Model):
                 line.update({'tax_line_ids': lista_tax_to_add})
         return lines
 
+    def _get_retention_voucher(self, cr, uid, invoice=[], tax=[]):
+        invoice_obj = self.pool.get('account.invoice')
+        amount_retention_tax = 0
+        for inv in invoice_obj.browse(cr, uid, [invoice.id]):
+            for tax_inv in inv.tax_line:
+                if tax.amount > 0:
+                    if not tax_inv.tax_id.tax_voucher_ok and\
+                        tax_inv.tax_id.tax_category_id.code ==\
+                        tax.tax_id.tax_category_id.code and\
+                            tax_inv.tax_id.amount < 0:
+
+                        amount_retention_tax += tax_inv.amount
+        return amount_retention_tax
+
 
 class account_voucher_line(osv.Model):
     _inherit = 'account.voucher.line'
@@ -460,7 +476,9 @@ class account_voucher_line(osv.Model):
                     cr, uid, invoice_ids, context=context):
                 for tax in invoice.tax_line:
                     if tax.tax_id.tax_voucher_ok:
-                        base_amount = tax.amount
+                        base_amount = tax.amount +\
+                            voucher_obj._get_retention_voucher(
+                                cr, uid, invoice, tax)
                         account = tax.tax_id.account_collected_voucher_id.id
                         credit_amount = float('%.*f' %
                                               (2, (base_amount * factor)))
