@@ -522,7 +522,7 @@ class commission_payment(osv.Model):
                 # porcentuales
                 perc_iva = (inv_lin.invoice_line_tax_id and
                             sum([tax.amount for tax in
-                                 inv_lin.invoice_line_tax_id]) or 0.0)
+                                 inv_lin.invoice_line_tax_id]) * 100 or 0.0)
                 # Si esta aqui es porque hay un producto asociado
                 prod_id = inv_lin.product_id.product_tmpl_id.id
                 # se obtienen las listas de precio, vienen ordenadas
@@ -690,6 +690,11 @@ class commission_payment(osv.Model):
         # de una factura.
         inv_brw = aml_brw.rec_invoice
 
+        # DETERMINAR EL PORCENTAJE DE IVA EN LA FACTUR (perc_iva)
+        # =======================================================
+        # =======================================================
+        perc_iva = (inv_brw.amount_total / inv_brw.amount_untaxed - 1) * 100
+
         # Obtener el vendedor del partner
         saleman = self._get_commission_salesman_policy(cr, uid, ids, aml_id,
                                                        context=context)
@@ -709,14 +714,13 @@ class commission_payment(osv.Model):
         bardctdsc = commission_params['bardctdsc']
         emission_days = commission_params['emission_days']
 
-        #############################################
-        # CALCULO DE COMISION POR LINEA DE PRODUCTO #
-        #############################################
+        ###################################
+        # CALCULO DE COMISION POR FACTURA #
+        ###################################
 
-        penbxlinea = inv_brw.amount_untaxed and aml_brw.credit * (
-            inv_brw.amount_untaxed / inv_brw.amount_untaxed) or aml_brw.credit
+        penbxlinea = aml_brw.credit
         fact_sup = 1 - 0.0 / 100 - 0.0 / 100
-        fact_inf = 1 + (0.0 / 100) * (1 - 0.0 / 100) - \
+        fact_inf = 1 + (perc_iva / 100) * (1 - 0.0 / 100) - \
             0.0 / 100 - 0.0 / 100
 
         comm_line = penbxlinea * fact_sup * (
@@ -758,6 +762,7 @@ class commission_payment(osv.Model):
                 'inv_date': commission_policy_date_start,
                 'days': emission_days,
                 'inv_subtotal': inv_brw.amount_untaxed,
+                'perc_iva': perc_iva,
                 'rate_number': bardctdsc,
                 'timespan': bar_day,
                 'baremo_comm': bar_dcto_comm,
