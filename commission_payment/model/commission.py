@@ -135,11 +135,9 @@ class commission_payment(osv.Model):
             'account.invoice', 'commission_account_invoice', 'commission_id',
             'invoice_id', 'Invoices', readonly=True,
             states={'draft': [('readonly', False)]}),
-        # TODO: Change name to field voucher_ids and all naming to
-        # account_move_lines
-        'voucher_ids': fields.many2many(
-            'account.move.line', 'commission_aml', 'commission_id',
-            'voucher_id', 'Vouchers', readonly=True,
+        'aml_ids': fields.many2many(
+            'account.move.line', 'commission_aml_rel', 'commission_id',
+            'aml_id', 'Journal Items', readonly=True,
             ),
         'state': fields.selection(
             COMMISSION_STATES, 'Estado', readonly=True,
@@ -236,12 +234,12 @@ class commission_payment(osv.Model):
             aml_ids = aml_obj.search(
                 cr, uid, args, context=context)
 
-            # TODO: Change name to field voucher_ids
+            # TODO: Change name to field aml_ids
             comm_brw.write({
-                'voucher_ids': [(6, comm_brw.id, aml_ids)]})
+                'aml_ids': [(6, comm_brw.id, aml_ids)]})
 
             invoice_ids = [aml_brw.rec_invoice.id
-                           for aml_brw in comm_brw.voucher_ids
+                           for aml_brw in comm_brw.aml_ids
                            if aml_brw.rec_invoice
                            ]
 
@@ -257,7 +255,7 @@ class commission_payment(osv.Model):
         inv_obj = self.pool.get('account.invoice')
 
         for comm_brw in self.browse(cr, uid, ids, context=context):
-            comm_brw.write({'voucher_ids': []})
+            comm_brw.write({'aml_ids': []})
             date_start = comm_brw.date_start
             date_stop = comm_brw.date_stop
 
@@ -279,7 +277,7 @@ class commission_payment(osv.Model):
                        if aml_brw.journal_id.type in ('bank', 'cash')
                        ]
 
-            comm_brw.write({'voucher_ids': [(6, comm_brw.id, aml_ids)]})
+            comm_brw.write({'aml_ids': [(6, comm_brw.id, aml_ids)]})
 
         return True
 
@@ -736,7 +734,7 @@ class commission_payment(osv.Model):
             uninvoice_payment_ids = []
 
             # Read each Journal Entry Line
-            for aml_brw in comm_brw.voucher_ids:
+            for aml_brw in comm_brw.aml_ids:
                 # Verificar si la comision del pago ya se ha pagado
                 if aml_brw.paid_comm:
                     continue

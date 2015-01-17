@@ -226,7 +226,7 @@
                                 string="Payments"
                                 >
                                 <field
-                                    name="voucher_ids"
+                                    name="aml_ids"
                                     readonly="1"
                                     nolabel="1"
                                     >
