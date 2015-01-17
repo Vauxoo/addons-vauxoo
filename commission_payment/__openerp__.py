@@ -43,6 +43,7 @@ Cálculo de Pago de Comisiones por producto pagado
         "product_historical_price",
         "mail",
         "baremo",
+        "message_post_model",
     ],
     "demo": [],
     "data": [
