@@ -337,14 +337,6 @@
                                     </tree>
                                 </field>
                             </page>
-                            <page string="Affected Payments" invisible="1">
-                                <field name="comm_voucher_ids" nolabel="1">
-                                    <tree>
-                                        <field name="voucher_id"/>
-                                        <field name="date"/>
-                                    </tree>
-                                </field>
-                            </page>
                             <page
                                 string="Products w/o PriceList"
                                 attrs="{'invisible':[('commission_scope','!=','product_invoiced')]}"

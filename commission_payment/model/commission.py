@@ -141,10 +141,6 @@ class commission_payment(osv.Model):
             'account.move.line', 'commission_aml', 'commission_id',
             'voucher_id', 'Vouchers', readonly=True,
             ),
-        'comm_voucher_ids': fields.one2many(
-            'commission.voucher',
-            'commission_id', 'Vouchers afectados en esta comision',
-            readonly=True, states={'write': [('readonly', False)]}),
         'state': fields.selection(
             COMMISSION_STATES, 'Estado', readonly=True,
             track_visibility='onchange',
@@ -879,8 +875,6 @@ class commission_payment(osv.Model):
         noprice_ids = self.pool.get('commission.noprice')
         comm_line_ids = self.pool.get('commission.lines')
         saleman_ids = self.pool.get('commission.saleman')
-        # users_ids = self.pool.get ('commission.users')
-        comm_voucher_ids = self.pool.get('commission.voucher')
 
         for commission in self.browse(cr, user, ids, context=context):
             ###
@@ -898,17 +892,10 @@ class commission_payment(osv.Model):
             # * Desvinculando los totales por vendedor
             saleman_ids.unlink(
                 cr, user, [line.id for line in commission.saleman_ids])
-            # * Desvinculando los vendedores
-            # users_ids.unlink(cr, user, [line.id for line in
-            # commission.users_ids])
-            # * Desvinculando los vouchers afectados
-            comm_voucher_ids.unlink(
-                cr, user, [line.id for line in commission.comm_voucher_ids])
             ###
             commission.write(
-                {'voucher_ids': [(3, x.id) for x in commission.voucher_ids],
-                 'invoice_ids': [(3, y.id) for y in commission.invoice_ids],
-                 })
+                {'invoice_ids': [(3, inv_brw.id) for inv_brw in
+                                 commission.invoice_ids]})
 
     def validate(self, cr, user, ids, context=None):
         aml_obj = self.pool.get('account.move.line')
@@ -1068,40 +1055,15 @@ class commission_saleman(osv.Model):
         'comm_total': fields.float(
             'Commission Amount',
             digits_compute=dp.get_precision('Commission')),
-        'comm_voucher_ids': fields.one2many(
-            'commission.voucher',
-            'comm_sale_id', 'Vouchers Affected in this commission',
-            required=False),
         'comm_lines_ids': fields.one2many(
             'commission.lines',
-            'comm_salespeople_id', 'Details in this Salespeople Commission',
+            'comm_salespeople_id', 'Salespeople Commission Details',
             required=False),
         'currency_id':
             fields.many2one('res.currency', 'Currency'),
         'comm_total_currency': fields.float(
             'Currency Amount',
             digits_compute=dp.get_precision('Commission')),
-    }
-    _defaults = {
-        'name': lambda *a: None,
-    }
-
-
-class commission_voucher(osv.Model):
-
-    """
-    Commission Payment : commission_voucher
-    """
-
-    _name = 'commission.voucher'
-    _order = 'date'
-
-    _columns = {
-        'name': fields.char('Comentario', size=256),
-        'commission_id': fields.many2one('commission.payment', 'Comision'),
-        'comm_sale_id': fields.many2one('commission.saleman', 'Vendedor'),
-        'voucher_id': fields.many2one('account.move.line', 'Voucher'),
-        'date': fields.date('Fecha'),
     }
     _defaults = {
         'name': lambda *a: None,
