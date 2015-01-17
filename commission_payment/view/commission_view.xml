@@ -144,16 +144,19 @@
                                     name="commission_type"
                                     widget="radio"
                                     string="Based on"
+                                    required='1'
                                     />
                                 <field
                                     name="commission_policy_date_start"
                                     widget="radio"
                                     string='Computation begins on'
+                                    required='1'
                                     />
                                 <field
                                     name="commission_salesman_policy"
                                     widget="radio"
                                     string="Salespeople from"
+                                    required='1'
                                     />
                             </group>
                             <group col="2" colspan="2">
@@ -163,16 +166,19 @@
                                     name="commission_scope"
                                     widget="radio"
                                     string="Compute on"
+                                    required='1'
                                     />
                                 <field
                                     name="commission_policy_date_end"
                                     widget="radio"
                                     string='Computation ends on'
+                                    required='1'
                                     />
                                 <field
                                     name="commission_baremo_policy"
                                     widget="radio"
                                     string='Baremo from'
+                                    required='1'
                                     />
                             </group>
                             <group col="2" colspan="4">
