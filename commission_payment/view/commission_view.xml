@@ -7,7 +7,7 @@
         id="commission"
         name="Salespeople Commissions"
         parent="base.menu_base_partner"
-        groups="group_comm_payment_manager"
+        groups="commission_payment.group_comm_payment_user"
         sequence="10"
         />
 
@@ -420,7 +420,7 @@
             name="All Commissions"
             id="commission_all_mi"
             action="commission_payment_all_act"
-            icon="terp-project"
+            groups="commission_payment.group_comm_payment_user"
             parent="commission"/>
 
         <record model="ir.ui.view" id="commission_saleman_graph">
