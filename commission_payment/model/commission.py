@@ -513,6 +513,16 @@ class commission_payment(osv.Model):
 
             # Verificar si tiene producto asociado
             if inv_lin.product_id:
+                # DETERMINAR EL PORCENTAJE DE IVA EN LA LINEA (perc_iva)
+                # =============================================================
+                # =============================================================
+                # Determinar si la linea de la factura tiene un impuesto
+                # (perc_iva). El impuesto aplicado a una linea es igual a la
+                # suma de los impuestos se asume que todos los impuestos son
+                # porcentuales
+                perc_iva = (inv_lin.invoice_line_tax_id and
+                            sum([tax.amount for tax in
+                                 inv_lin.invoice_line_tax_id]) or 0.0)
                 # Si esta aqui es porque hay un producto asociado
                 prod_id = inv_lin.product_id.product_tmpl_id.id
                 # se obtienen las listas de precio, vienen ordenadas
@@ -569,7 +579,7 @@ class commission_payment(osv.Model):
                         inv_lin.price_subtotal /
                         inv_brw.amount_untaxed)
                     fact_sup = 1 - 0.0 / 100 - 0.0 / 100
-                    fact_inf = 1 + (0.0 / 100) * (1 - 0.0 / 100) - \
+                    fact_inf = 1 + (perc_iva / 100) * (1 - 0.0 / 100) - \
                         0.0 / 100 - 0.0 / 100
 
                     comm_line = penbxlinea * fact_sup * (
@@ -590,8 +600,6 @@ class commission_payment(osv.Model):
                         commission_currency = 0.00
                     else:
                         commission_currency = comm_line
-
-
 
                     # Generar las lineas de comision por cada producto
                     comm_line_ids.create(
@@ -620,6 +628,7 @@ class commission_payment(osv.Model):
                             'price_subtotal': inv_lin.price_subtotal,
                             'price_list': list_price,
                             'price_date': list_date,
+                            'perc_iva': perc_iva,
                             'rate_item': rate_item,
                             'rate_number': bardctdsc,
                             'timespan': bar_day,
