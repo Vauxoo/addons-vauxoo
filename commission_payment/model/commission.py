@@ -561,7 +561,6 @@ class commission_payment(osv.Model):
                             aml_brw.invoice.id,
                             'invoice_num': inv_brw.number,
                             'partner_id': inv_brw.partner_id.id,
-                            'saleman_name': saleman and saleman.name,
                             'saleman_id': saleman and saleman.id,
                             'pay_inv': aml_brw.credit,
                             'inv_date': commission_policy_date_start,
@@ -693,7 +692,6 @@ class commission_payment(osv.Model):
                 'invoice_id': aml_brw.invoice.id,
                 'invoice_num': inv_brw.number,
                 'partner_id': inv_brw.partner_id.id,
-                'saleman_name': saleman and saleman.name,
                 'saleman_id': saleman and saleman.id,
                 'pay_inv': aml_brw.credit,
                 'inv_date': commission_policy_date_start,
@@ -975,7 +973,6 @@ class commission_lines(osv.Model):
         'invoice_id': fields.many2one('account.invoice', 'Doc.'),
         'invoice_num': fields.char('Doc.', size=256),
         'partner_id': fields.many2one('res.partner', 'Empresa'),
-        'saleman_name': fields.char('Vendedor', size=256, required=False),
         'saleman_id': fields.many2one('res.users', 'Vendedor', required=True),
         'comm_salespeople_id': fields.many2one(
             'commission.saleman', 'Salespeople Commission', required=False),
@@ -1044,13 +1041,11 @@ class commission_saleman(osv.Model):
     """
 
     _name = 'commission.saleman'
-    _order = 'saleman_name'
+    _rec_name = 'saleman_id'
 
     _columns = {
-        'name': fields.char('Comment', size=256),
         'commission_id': fields.many2one('commission.payment',
                                          'Commission Document'),
-        'saleman_name': fields.char('Salesman', size=256, required=False),
         'saleman_id': fields.many2one('res.users', 'Salesman', required=True),
         'comm_total': fields.float(
             'Commission Amount',
@@ -1064,7 +1059,4 @@ class commission_saleman(osv.Model):
         'comm_total_currency': fields.float(
             'Currency Amount',
             digits_compute=dp.get_precision('Commission')),
-    }
-    _defaults = {
-        'name': lambda *a: None,
     }
