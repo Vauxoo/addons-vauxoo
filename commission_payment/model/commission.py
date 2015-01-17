@@ -104,7 +104,8 @@ class commission_payment(osv.Model):
     _description = __doc__
 
     def _get_default_company(self, cr, uid, context=None):
-        company_id = self.pool.get('res.users')._get_company(cr, uid, context=context)
+        company_id = self.pool.get('res.users')._get_company(cr, uid,
+                                                             context=context)
         if not company_id:
             raise osv.except_osv(
                 _('Error!'),
@@ -185,10 +186,6 @@ class commission_payment(osv.Model):
         'comm_voucher_ids': fields.one2many(
             'commission.voucher',
             'commission_id', 'Vouchers afectados en esta comision',
-            readonly=True, states={'write': [('readonly', False)]}),
-        'comm_invoice_ids': fields.one2many(
-            'commission.invoice',
-            'commission_id', 'Facturas afectadas en esta comision',
             readonly=True, states={'write': [('readonly', False)]}),
         'state': fields.selection(
             COMMISSION_STATES, 'Estado', readonly=True,
@@ -587,8 +584,9 @@ class commission_payment(osv.Model):
                             inv_lin.price_subtotal /
                             inv_brw.amount_untaxed)
 
-                        commission_currency = abs(payxlinea_curr) * fact_sup * (
-                            bar_dcto_comm / 100) / fact_inf
+                        commission_currency = (abs(payxlinea_curr) * fact_sup *
+                                               (bar_dcto_comm / 100) /
+                                               fact_inf)
                     elif aml_brw.currency_id and not aml_brw.amount_currency:
                         return True
                     else:
@@ -943,7 +941,6 @@ class commission_payment(osv.Model):
         saleman_ids = self.pool.get('commission.saleman')
         # users_ids = self.pool.get ('commission.users')
         comm_voucher_ids = self.pool.get('commission.voucher')
-        comm_invoice_ids = self.pool.get('commission.invoice')
 
         for commission in self.browse(cr, user, ids, context=context):
             ###
@@ -970,9 +967,6 @@ class commission_payment(osv.Model):
             # * Desvinculando los vouchers afectados
             comm_voucher_ids.unlink(
                 cr, user, [line.id for line in commission.comm_voucher_ids])
-            # * Desvinculando los vouchers afectados
-            comm_invoice_ids.unlink(
-                cr, user, [line.id for line in commission.comm_invoice_ids])
             ###
             commission.write(
                 {'voucher_ids': [(3, x.id) for x in commission.voucher_ids],
@@ -1189,54 +1183,10 @@ class commission_voucher(osv.Model):
         'commission_id': fields.many2one('commission.payment', 'Comision'),
         'comm_sale_id': fields.many2one('commission.saleman', 'Vendedor'),
         'voucher_id': fields.many2one('account.move.line', 'Voucher'),
-        'comm_invoice_ids': fields.one2many(
-            'commission.invoice',
-            'comm_voucher_id', 'Facturas afectadas en esta comision',
-            required=False),
         'date': fields.date('Fecha'),
     }
     _defaults = {
         'name': lambda *a: None,
-    }
-
-
-class commission_invoice(osv.Model):
-
-    """
-    Commission Payment : commission_invoice
-    """
-
-    _name = 'commission.invoice'
-    _order = 'invoice_id'
-
-    _columns = {
-        'name': fields.char('Comentario', size=256),
-        'commission_id': fields.many2one('commission.payment', 'Comision'),
-        'comm_voucher_id': fields.many2one('commission.voucher', 'Voucher'),
-        'invoice_id': fields.many2one('account.invoice', 'Factura'),
-        'comm_line_ids': fields.one2many(
-            'commission.lines',
-            'comm_invoice_id', 'Comision por productos', required=False),
-        'pay_inv': fields.float(
-            'Abono Fact.',
-            digits_compute=dp.get_precision('Commission')),
-    }
-    _defaults = {
-        'name': lambda *a: None,
-    }
-
-
-class commission_lines_2(osv.Model):
-
-    """
-    Commission Payment : commission_lines_2
-    """
-
-    _inherit = 'commission.lines'
-
-    _columns = {
-        'comm_invoice_id': fields.many2one('commission.invoice',
-                                           'Factura Relacional Interna'),
     }
 
 

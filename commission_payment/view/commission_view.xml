@@ -337,13 +337,6 @@
                                     </tree>
                                 </field>
                             </page>
-                            <page string="Affected Invoices" invisible="1">
-                                <field name="comm_invoice_ids" nolabel="1">
-                                    <tree>
-                                        <field name="invoice_id"/>
-                                    </tree>
-                                </field>
-                            </page>
                             <page string="Affected Payments" invisible="1">
                                 <field name="comm_voucher_ids" nolabel="1">
                                     <tree>
