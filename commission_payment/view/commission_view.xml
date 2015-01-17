@@ -455,7 +455,6 @@
                                         <field name="name"/>
                     <field name="pay_date"/>
                     <field name="pay_off"/>
-                    <field name="concept"/>
                     <field name="invoice_num"/>
                     <field name="partner_id"/>
                     <field name="salesman_id"/>

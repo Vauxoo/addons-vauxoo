@@ -548,13 +548,12 @@ class commission_payment(osv.Model):
                     comm_line_ids.create(
                         cr, uid, {
                             'commission_id': comm_brw.id,
-                            'voucher_id': aml_brw.id,
+                            'aml_id': aml_brw.id,
                             'name':
                             aml_brw.move_id.name and
                             aml_brw.move_id.name or '/',
                             'pay_date': commission_policy_date_end,
                             'pay_off': aml_brw.credit,
-                            'concept': aml_brw.id,
                             'invoice_id':
                             aml_brw.invoice.id,
                             'invoice_num': inv_brw.number,
@@ -679,13 +678,12 @@ class commission_payment(osv.Model):
         comm_line_ids.create(
             cr, uid, {
                 'commission_id': comm_brw.id,
-                'voucher_id': aml_brw.id,
+                'aml_id': aml_brw.id,
                 'name':
                 aml_brw.move_id.name and
                 aml_brw.move_id.name or '/',
                 'pay_date': commission_policy_date_end,
                 'pay_off': aml_brw.credit,
-                'concept': aml_brw.id,
                 'invoice_id': aml_brw.invoice.id,
                 'invoice_num': inv_brw.number,
                 'partner_id': inv_brw.partner_id.id,
@@ -896,9 +894,9 @@ class commission_payment(osv.Model):
         aml_obj = self.pool.get('account.move.line')
         # escribir en el aml el estado buleano de paid_comm a True para indicar
         # que ya esta comision se esta pagando
-        for commission in self.browse(cr, user, ids, context=context):
-            aml_obj.write(cr, user, [line.concept.id for line in
-                                     commission.comm_line_ids],
+        for comm_brw in self.browse(cr, user, ids, context=context):
+            aml_obj.write(cr, user,
+                          [line.aml_id.id for line in comm_brw.comm_line_ids],
                           {'paid_comm': True}, context=context)
 
         self.write(cr, user, ids, {'state': 'done', }, context=context)
@@ -963,9 +961,8 @@ class commission_lines(osv.Model):
             'Pago',
             digits_compute=dp.get_precision('Commission')),
 
-        'voucher_id': fields.many2one('account.move.line', 'Entry Line'),
+        'aml_id': fields.many2one('account.move.line', 'Entry Line'),
 
-        # TODO: Delete this field will be redundant
         'concept': fields.many2one('account.move.line', 'Concepto'),
         'invoice_id': fields.many2one('account.invoice', 'Doc.'),
         'invoice_num': fields.char('Doc.', size=256),
