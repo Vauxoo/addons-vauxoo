@@ -101,10 +101,6 @@ class commission_payment(osv.Model):
             readonly=True, states={'write': [('readonly', False)]},
             track_visibility='onchange',
         ),
-        'uninvoiced_ids': fields.one2many(
-            'commission.uninvoiced',
-            'commission_id', 'Transacciones sin Facturas', readonly=True,
-            states={'write': [('readonly', False)]}),
         'sale_noids': fields.one2many(
             'commission.sale.noid', 'commission_id',
             'Articulos sin asociacion', readonly=True,
@@ -736,9 +732,6 @@ class commission_payment(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
 
-        uninvoiced_pays = self.pool.get('commission.uninvoiced')
-        aml_obj = self.pool.get('account.move.line')
-
         for comm_brw in self.browse(cr, uid, ids, context=context):
 
             # Obtener la lista de asesores/vendedores a los cuales se les hara
@@ -775,20 +768,6 @@ class commission_payment(osv.Model):
                 self._get_commission_payment(cr, uid, ids, pay_id,
                                              context=context)
 
-            for aml_brw in aml_obj.browse(cr, uid, uninvoice_payment_ids,
-                                          context=context):
-                # Si esta aqui dentro es porque esta linea (transaccion) no
-                # tiene factura valida, se escribe entonces una linea en una
-                # vista donde se muestran las transacciones que no tienen
-                # factura asociada para su correccion si aplica. tampoco se ha
-                # pagado la comision del mismo solo se incluiran pagos que sean
-                # de cuentas cobrables, puesto que las de otra naturaleza, no
-                # tienen sentido mostrarlas aqui.
-                if aml_brw.account_id.type == 'receivable':
-                    uninvoiced_pays.create(cr, uid, {
-                        'commission_id': comm_brw.id,
-                        'payment_id': aml_brw.id,
-                    }, context=context)
         return True
 
     def _post_processing(self, cr, uid, ids, context=None):
@@ -896,7 +875,6 @@ class commission_payment(osv.Model):
 
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
-        uninvoiced_pays = self.pool.get('commission.uninvoiced')
         sale_noids = self.pool.get('commission.sale.noid')
         noprice_ids = self.pool.get('commission.noprice')
         comm_line_ids = self.pool.get('commission.lines')
@@ -908,9 +886,6 @@ class commission_payment(osv.Model):
             ###
             # Desvincular todos los elementos que esten conectados a este
             # calculo de comisiones
-            # * Desvinculando los pagos sin facturas
-            uninvoiced_pays.unlink(
-                cr, user, [line.id for line in commission.uninvoiced_ids])
             # * Desvinculando los articulos sin id
             sale_noids.unlink(cr, user, [
                               line.id for line in commission.sale_noids])
@@ -946,25 +921,6 @@ class commission_payment(osv.Model):
 
         self.write(cr, user, ids, {'state': 'done', }, context=context)
         return True
-
-
-class commission_uninvoiced(osv.Model):
-
-    """
-    Commission Payment Uninvoiced : commission_uninvoiced
-    """
-
-    _name = 'commission.uninvoiced'
-
-    _columns = {
-        'name': fields.char('Comentario', size=256),
-        'commission_id': fields.many2one('commission.payment', 'Comision'),
-        'payment_id': fields.many2one(
-            'account.move.line', 'Descripcion de Transaccion'),
-    }
-    _defaults = {
-        'name': lambda *a: None,
-    }
 
 
 class commission_sale_noid(osv.Model):

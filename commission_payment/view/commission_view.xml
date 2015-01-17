@@ -345,13 +345,6 @@
                                     </tree>
                                 </field>
                             </page>
-                            <page string="Payment without Invoices" invisible="1">
-                                <field colspan="6" name="uninvoiced_ids" nolabel="1">
-                                    <tree>
-                                        <field name="payment_id"/>
-                                    </tree>
-                                </field>
-                            </page>
                             <page
                                 string="Products w/o PriceList"
                                 attrs="{'invisible':[('commission_scope','!=','product_invoiced')]}"

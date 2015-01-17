@@ -1,8 +1,6 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
 "access_commission_payment_user","commission.payment.user","model_commission_payment","commission_payment.group_comm_payment_user",1,0,0,0
 "access_commission_payment_manager","commission.payment.manager","model_commission_payment","commission_payment.group_comm_payment_manager",1,1,1,1
-"access_commission_uninvoiced_user","commission.uninvoiced.user","model_commission_uninvoiced","commission_payment.group_comm_payment_user",1,0,0,0
-"access_commission_uninvoiced_manager","commission.uninvoiced.manager","model_commission_uninvoiced","commission_payment.group_comm_payment_manager",1,1,1,1
 "access_commission_sale_noid_user","commission.sale.noid.user","model_commission_sale_noid","commission_payment.group_comm_payment_user",1,0,0,0
 "access_commission_sale_noid_manager","commission.sale.noid.manager","model_commission_sale_noid","commission_payment.group_comm_payment_manager",1,1,1,1
 "access_commission_noprice_user","commission.noprice.user","model_commission_noprice","commission_payment.group_comm_payment_user",1,0,0,0
