@@ -8,11 +8,23 @@
         <field name="name">baremo.book.form</field>
         <field name="model">baremo.book</field>
         <field name="arch" type="xml">
-            <form string="Baremes" version="7.0">
-                <field name="name" colspan="6" nolabel="1"/>
-                <field name="bar_ids" nolabel="1" colspan="6"/>
-                <separator string="Notes"/>
-                <field name="notes" colspan="6" nolabel="1"/>
+            <form string="Baremos" version="7.0">
+                <sheet>
+                    <div class="oe_title oe_left" style="width: 100%;">
+                        <div class="oe_edit_only">
+                            <label for="name"/>
+                        </div>
+                        <h1 style="width: 100%;">
+                            <field
+                                name="name"
+                                default_focus="1"
+                                placeholder="3% Commission at 30 days w/o Disc." />
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="bar_ids" nolabel="1" colspan="6"/>
+                    </group>
+                </sheet>
             </form>
         </field>
     </record>
@@ -55,15 +67,39 @@
         <field name="model">baremo</field>
         <field name="arch" type="xml">
             <form string="Commission Days &amp; Discounts" version="7.0">
-                <field name="name" colspan="2"/>
-                <field name="number" colspan="2"/>
-                <field name="disc_ids" nolabel="1" colspan="6">
-                    <tree string="Commission by Discount">
-                        <field name="name"/>
-                        <field name="porc_disc"/>
-                        <field name="porc_com"/>
-                    </tree>
-                </field>
+                <sheet>
+                    <div class="oe_title oe_left" name="left">
+                        <div>
+                            <label for="name"/>
+                        </div>
+                        <h1>
+                            <field
+                                name="name"
+                                default_focus="1"
+                                placeholder="Up to 30 days"
+                                />
+                        </h1>
+                    </div>
+                    <div class="oe_right oe_button_box" style="width: 20%;" name="right">
+                        <div>
+                            <label for="number"/>
+                        </div>
+                        <h1>
+                            <field
+                                name="number"
+                                placeholder="30"
+                                />
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="disc_ids" nolabel="1" colspan="6">
+                            <tree string="Commission by Discount" editable='top'>
+                                <field name="porc_disc"/>
+                                <field name="porc_com"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
             </form>
         </field>
     </record>
@@ -86,7 +122,6 @@
         <field name="arch" type="xml">
             <form string="Commission by Discount" version="7.0">
                 <group col="6">
-                    <field name="name"/>
                     <field name="porc_disc"/>
                     <field name="porc_com"/>
                 </group>
