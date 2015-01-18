@@ -170,6 +170,10 @@ table {
             <ul class="list-inline">
                 <li><span t-field="o.commission_id.name" style="font-style:italic;"/></li>
                 <li>&amp;bull;</li>
+                <t t-if="o.commission_id.state!='done'">
+                    <li><p style="font-style:italic;">(Draft Document)</p></li>
+                    <li>&amp;bull;</li>
+                </t>
                 <li>Page:</li>
                 <li><span class="page"/></li>
                 <li>/</li>
