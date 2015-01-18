@@ -143,6 +143,10 @@ class commission_payment(osv.Model):
             'commission.voucher',
             'commission_id', 'Vouchers afectados en esta comision',
             readonly=True, states={'write': [('readonly', False)]}),
+        'comm_invoice_ids': fields.one2many(
+            'commission.invoice',
+            'commission_id', 'Facturas afectadas en esta comision',
+            readonly=True, states={'write': [('readonly', False)]}),
         'state': fields.selection(
             COMMISSION_STATES, 'Estado', readonly=True,
             track_visibility='onchange',
@@ -872,6 +876,7 @@ class commission_payment(osv.Model):
         comm_line_ids = self.pool.get('commission.lines')
         salesman_ids = self.pool.get('commission.salesman')
         comm_voucher_ids = self.pool.get('commission.voucher')
+        comm_invoice_ids = self.pool.get('commission.invoice')
 
         for commission in self.browse(cr, user, ids, context=context):
             ###
@@ -893,6 +898,9 @@ class commission_payment(osv.Model):
             # * Desvinculando los vouchers afectados
             comm_voucher_ids.unlink(
                 cr, user, [line.id for line in commission.comm_voucher_ids])
+            # * Desvinculando las facturas afectadas
+            comm_invoice_ids.unlink(
+                cr, user, [line.id for line in commission.comm_invoice_ids])
             ###
             commission.write(
                 {'aml_ids': [(3, aml_brw.id) for aml_brw in
@@ -1093,8 +1101,52 @@ class commission_voucher(osv.Model):
         'commission_id': fields.many2one('commission.payment', 'Comision'),
         'comm_sale_id': fields.many2one('commission.saleman', 'Vendedor'),
         'voucher_id': fields.many2one('account.move.line', 'Voucher'),
+        'comm_invoice_ids': fields.one2many(
+            'commission.invoice',
+            'comm_voucher_id', 'Facturas afectadas en esta comision',
+            required=False),
         'date': fields.date('Fecha'),
     }
     _defaults = {
         'name': lambda *a: None,
+    }
+
+
+class commission_invoice(osv.Model):
+
+    """
+    Commission Payment : commission_invoice
+    """
+
+    _name = 'commission.invoice'
+    _order = 'invoice_id'
+
+    _columns = {
+        'name': fields.char('Comentario', size=256),
+        'commission_id': fields.many2one('commission.payment', 'Comision'),
+        'comm_voucher_id': fields.many2one('commission.voucher', 'Voucher'),
+        'invoice_id': fields.many2one('account.invoice', 'Factura'),
+        'comm_line_ids': fields.one2many(
+            'commission.lines',
+            'comm_invoice_id', 'Comision por productos', required=False),
+        'pay_inv': fields.float(
+            'Abono Fact.',
+            digits_compute=dp.get_precision('Commission')),
+    }
+    _defaults = {
+        'name': lambda *a: None,
+    }
+
+
+class commission_lines_2(osv.Model):
+
+    """
+    Commission Payment : commission_lines_2
+    """
+
+    _inherit = 'commission.lines'
+
+    _columns = {
+        'comm_invoice_id': fields.many2one('commission.invoice',
+                                           'Factura Relacional Interna'),
     }
