@@ -1051,4 +1051,14 @@ class commission_salesman(osv.Model):
         'comm_total_currency': fields.float(
             'Currency Amount',
             digits_compute=dp.get_precision('Commission')),
+        'company_id': fields.related(
+            'commission_id', 'company_id',
+            string='Company',
+            relation='res.company',
+            type='many2one',
+            store=True,
+            readonly=True,
+            help=('Currency at which this report will be \
+                    expressed. If not selected will be used the \
+                    one set in the company')),
     }

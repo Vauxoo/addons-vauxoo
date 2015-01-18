@@ -44,11 +44,14 @@ Cálculo de Pago de Comisiones por producto pagado
         "mail",
         "baremo",
         "message_post_model",
+        "report",
     ],
     "demo": [],
     "data": [
         "security/commission_payment_security.xml",
         "security/ir.model.access.csv",
+        "report/layouts.xml",
+        "report/template.xml",
         "view/commission_report.xml",
         "view/commission_view.xml"
     ],

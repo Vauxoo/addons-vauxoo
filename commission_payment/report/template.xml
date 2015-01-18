@@ -1,10 +1,37 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="salespeople_document">
+            <t t-call="commission_payment.external_layout">
+                <!-- CALLING HEADER and FOOTER -->
+                <t t-call="commission_payment.external_layout_header"/>
+                <t t-call="commission_payment.external_layout_footer"/>
+
+
+                <div class="page">
+                    <table class="basic_table"  width="100%">
+                            <tbody>
+                            </tbody>
+                    </table>
+                </div>
+            </t>
+        </template>
+
+        <template id="comm_salespeople_template">
+            <t t-call="commission_payment.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'company_id.partner_id.lang', 'commission_payment.salespeople_document')"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>
+<!--
 <document filename="test.pdf">
   <template pageSize="(280.0mm,220.0mm)" title="Test" author="Martin Simon" allowSplitting="20" showBoundary="0">
     <pageTemplate id="first">
         <pageGraphics>
-            <!--TABLA DE TITULOS-->
-            <place x="10.0mm"     y="150.0mm"    width="260.0mm"  height="60.0mm">  
+            <place x="10.0mm"     y="150.0mm"    width="260.0mm"  height="60.0mm">
 
                 <blockTable colWidths="52mm, 52mm, 52mm, 52mm, 52mm" style="TITLE">
                     <tr>
@@ -21,46 +48,45 @@
                         </td>
                         <td>
                             <para style="TITLE"><b>[[ (o.state=='decide') and 'BORRADOR' or removeParentNode('para')]]</b></para>
-                        </td>                            
+                        </td>
                         <td>
                             <para style="TITLE"><b>COMISIONES</b></para>
                         </td>
                     </tr>
                 </blockTable>
 
-            </place>            
+            </place>
             <setFont name="Helvetica-BoldOblique" size="8.0"/>
-            <drawRightString x="270mm" y="10mm">CALCULO DE COMISIONES - DESDE [[ o.date_start ]] HASTA [[ o.date_stop ]] / PAGINA: <pageNumber/> DE <pageCount/> </drawRightString> 
+            <drawRightString x="270mm" y="10mm">CALCULO DE COMISIONES - DESDE [[ o.date_start ]] HASTA [[ o.date_stop ]] / PAGINA: <pageNumber/> DE <pageCount/> </drawRightString>
 
         </pageGraphics>
       <frame id="first"     x1="10.0mm"     y1="15mm"    width="260mm"  height="180mm"/>
 
     </pageTemplate>
   </template>
-  <!--ESTILO OBSCURO / TONOS NEGROS-->
 
   <stylesheet>
-  
+
 		<blockTableStyle id="BLACKITEMS">
             <blockBackground colorName="#4a4a4d" start="0,0" stop="-1,-1"/>
             <blockValign value="TOP"/>
 			<lineStyle kind="GRID" colorName="white" start="0,0" stop="-1,-1" thickness="0.5"/>
 			<lineStyle kind="OUTLINE" colorName="white" thickness="0.5"/>
-		</blockTableStyle>   
-  
+		</blockTableStyle>
+
 		<blockTableStyle id="GREYITEMS">
             <blockBackground colorName="grey" start="0,0" stop="-1,-1"/>
             <blockValign value="TOP"/>
 			<lineStyle kind="GRID" colorName="white" start="0,0" stop="-1,-1" thickness="0.5"/>
 			<lineStyle kind="OUTLINE" colorName="white" thickness="0.5"/>
-		</blockTableStyle>   
-  
+		</blockTableStyle>
+
 		<blockTableStyle id="SOFTITEMS">
             <blockBackground colorName="lightgrey" start="0,0" stop="-1,-1"/>
             <blockValign value="TOP"/>
 			<lineStyle kind="GRID" colorName="white" start="0,0" stop="-1,-1" thickness="0.5"/>
 			<lineStyle kind="OUTLINE" colorName="white" thickness="0.5"/>
-		</blockTableStyle>   
+		</blockTableStyle>
 
 		<blockTableStyle id="TITLE">
             <blockBackground colorName="lavender" start="0,0" stop="-0,-1"/>
@@ -69,56 +95,56 @@
             <blockBackground colorName="#4a4a4d" start="3,0" stop="3,-1"/>
             <blockBackground colorName="black" start="4,0" stop="4,-1"/>
             <blockValign value="TOP"/>
-		</blockTableStyle>     
+		</blockTableStyle>
 
 		<blockTableStyle id="TERMS">
             <blockValign value="TOP"/>
 			<lineStyle kind="GRID" colorName="white" start="0,0" stop="-1,0" thickness="0.5"/>
 			<lineStyle kind="GRID" colorName="black" start="0,1" stop="-1,-1" thickness="0.5"/>
 			<lineStyle kind="OUTLINE" colorName="black" thickness="0.5"/>
-		</blockTableStyle>          
+		</blockTableStyle>
 
-       
+
 
 		<blockTableStyle id="ITEMS">
             <blockValign value="TOP"/>
             <blockBackground colorName="lavender" start="0,0" stop="-1,-1"/>
 			<lineStyle kind="GRID" colorName="lightgrey" start="0,0" stop="-1,-1" thickness="0.5" />
 			<lineStyle kind="OUTLINE" colorName="lightgrey" thickness="0.5"/>
-		</blockTableStyle>           
+		</blockTableStyle>
 
 		<blockTableStyle id="TOTAL">
             <blockValign value="TOP"/>
 			<lineStyle kind="GRID" colorName="black" start="1,0" stop="-1,-1" thickness="0.5" />
-		</blockTableStyle>          
+		</blockTableStyle>
 
     <initialize>
       <paraStyle name="all" alignment="JUSTIFY" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="3.0" textColor="blue"/>
     </initialize>
 
-    <paraStyle name="BLACKLEFT" alignment="LEFT" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="white"/>    
-    <paraStyle name="BLACKRIGHT" alignment="RIGHT" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="white"/>    
-    <paraStyle name="BLACKCENTER" alignment="CENTER" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="white"/>    
+    <paraStyle name="BLACKLEFT" alignment="LEFT" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="white"/>
+    <paraStyle name="BLACKRIGHT" alignment="RIGHT" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="white"/>
+    <paraStyle name="BLACKCENTER" alignment="CENTER" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="white"/>
 
-    <paraStyle name="GREYLEFT" alignment="LEFT" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="darkgrey"/>    
-    <paraStyle name="GREYRIGHT" alignment="RIGHT" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="darkgrey"/>    
-    <paraStyle name="GREYCENTER" alignment="CENTER" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="darkgrey"/>    
-        
-    <paraStyle name="COMPANYNAME" alignment="LEFT" fontName="Helvetica-Bold" fontSize="16.0" leading="10" spaceBefore="3.0" textColor="black"/>    
+    <paraStyle name="GREYLEFT" alignment="LEFT" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="darkgrey"/>
+    <paraStyle name="GREYRIGHT" alignment="RIGHT" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="darkgrey"/>
+    <paraStyle name="GREYCENTER" alignment="CENTER" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="darkgrey"/>
+
+    <paraStyle name="COMPANYNAME" alignment="LEFT" fontName="Helvetica-Bold" fontSize="16.0" leading="10" spaceBefore="3.0" textColor="black"/>
     <paraStyle name="TITLE" alignment="CENTER" fontName="Helvetica" fontSize="18.0" leading="8" spaceBefore="3.0" textColor="white"/>
-    <paraStyle name="SUPPLIERNAME" alignment="LEFT" fontName="Helvetica" fontSize="10.0" leading="12" spaceBefore="3.0" textColor="green"/>    
-    <paraStyle name="NOTEANDNUMBER" alignment="JUSTIFY" fontName="Helvetica" fontSize="10.0" leading="12" spaceBefore="3.0" textColor="darkblue"/>    
+    <paraStyle name="SUPPLIERNAME" alignment="LEFT" fontName="Helvetica" fontSize="10.0" leading="12" spaceBefore="3.0" textColor="green"/>
+    <paraStyle name="NOTEANDNUMBER" alignment="JUSTIFY" fontName="Helvetica" fontSize="10.0" leading="12" spaceBefore="3.0" textColor="darkblue"/>
 
     <paraStyle name="TERMS" alignment="CENTER" fontName="Helvetica-Bold" fontSize="8.0" leading="12" spaceBefore="3.0" textColor="white"/>
-    <paraStyle name="ITEMSTITLE" alignment="CENTER" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="white"/>    
+    <paraStyle name="ITEMSTITLE" alignment="CENTER" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="white"/>
 
-    <paraStyle name="ITEMSLEFT" alignment="LEFT" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="black"/>    
-    <paraStyle name="ITEMSCENTER" alignment="CENTER" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="black"/>    
-    <paraStyle name="ITEMSRIGHT" alignment="RIGHT" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="black"/>    
+    <paraStyle name="ITEMSLEFT" alignment="LEFT" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="black"/>
+    <paraStyle name="ITEMSCENTER" alignment="CENTER" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="black"/>
+    <paraStyle name="ITEMSRIGHT" alignment="RIGHT" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="black"/>
 
-    <paraStyle name="ITEMSLEFTSMALL" alignment="LEFT" fontName="Helvetica-Bold" fontSize="6.0" leading="7" spaceBefore="1.0" textColor="darkslategray"/>    
-    <paraStyle name="ITEMSCENTERSMALL" alignment="CENTER" fontName="Helvetica-Bold" fontSize="6.0" leading="7" spaceBefore="1.0" textColor="darkslategray"/>    
-    <paraStyle name="ITEMSRIGHTSMALL" alignment="RIGHT" fontName="Helvetica-Bold" fontSize="6.0" leading="7" spaceBefore="1.0" textColor="darkslategray"/>    
+    <paraStyle name="ITEMSLEFTSMALL" alignment="LEFT" fontName="Helvetica-Bold" fontSize="6.0" leading="7" spaceBefore="1.0" textColor="darkslategray"/>
+    <paraStyle name="ITEMSCENTERSMALL" alignment="CENTER" fontName="Helvetica-Bold" fontSize="6.0" leading="7" spaceBefore="1.0" textColor="darkslategray"/>
+    <paraStyle name="ITEMSRIGHTSMALL" alignment="RIGHT" fontName="Helvetica-Bold" fontSize="6.0" leading="7" spaceBefore="1.0" textColor="darkslategray"/>
 
 
   </stylesheet>
@@ -129,9 +155,9 @@
   <images/>
   <story>
     <para>[[repeatIn(objects,'o')]]</para>
-    
+
     <section>
-        <para>[[repeatIn(o.saleman_ids,'vendor')]]</para>    
+        <para>[[repeatIn(o.saleman_ids,'vendor')]]</para>
         <blockTable colWidths="180mm,60mm,20mm" style="BLACKITEMS">
             <tr>
                 <td>
@@ -145,7 +171,7 @@
                 </td>
             </tr>
 		</blockTable>
-        
+
         <blockTable colWidths="220mm,20mm,20mm" style="GREYITEMS">
             <tr>
                 <td>
@@ -160,7 +186,7 @@
             </tr>
         </blockTable>
         <section>
-            <para>[[repeatIn(vendor.comm_voucher_ids,'voucher')]]</para>   
+            <para>[[repeatIn(vendor.comm_voucher_ids,'voucher')]]</para>
 
             <blockTable colWidths="180mm,40mm,20mm,20mm" style="GREYITEMS">
                 <tr>
@@ -178,9 +204,6 @@
                     </td>
                 </tr>
             </blockTable>
-<!--
-            <spacer length="0.2mm"/>
--->
 
             <section>
                 <para>[[repeatIn(voucher.comm_invoice_ids,'inv')]]</para>
@@ -217,8 +240,8 @@
                             <para style="ITEMSRIGHTSMALL">ABONO FACT.</para>
                         </td>
                     </tr>
-                </blockTable>  
-  
+                </blockTable>
+
                 <blockTable colWidths="80mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm" style="SOFTITEMS">
                     <tr>
                         <td>
@@ -252,12 +275,9 @@
                             <para style="ITEMSRIGHT">[[ inv.pay_inv ]]</para>
                         </td>
                     </tr>
-                </blockTable>          
+                </blockTable>
 
-<!--
-            <spacer length="0.5mm"/>
--->
-            
+
                     <blockTable colWidths="80mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm" style="ITEMS">
                         <tr>
                             <td>
@@ -291,10 +311,10 @@
                                 <para style="ITEMSRIGHTSMALL">COM. PROD.</para>
                             </td>
                         </tr>
-                    </blockTable>                       
+                    </blockTable>
 
                 <section>
-                    <para>[[repeatIn(inv.comm_line_ids,'lines')]]</para> 
+                    <para>[[repeatIn(inv.comm_line_ids,'lines')]]</para>
                     <blockTable colWidths="80mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm" style="ITEMS">
                         <tr>
                             <td>
@@ -328,18 +348,12 @@
                                 <para style="ITEMSRIGHT">[[ lines.commission or '0.00' ]]</para>
                             </td>
                         </tr>
-                    </blockTable>            
-                </section>  
-                
-<!--
-            <spacer length="1mm"/>
--->
-                
+                    </blockTable>
+                </section>
+
+
             </section>
-                
-<!--
-            <spacer length="1mm"/>
--->
+
         </section>
 
         <blockTable colWidths="240mm,20mm" style="BLACKITEMS">
@@ -354,10 +368,10 @@
             </blockTable>
 
             <section>
-                
+
                 <para> [[repeatIn(o.comm_retention_ids,'retention')]]</para>
 
-                
+
                 <blockTable colWidths="40mm,220mm" style="SOFTITEMS">
                     <tr>
                         <td>
@@ -367,7 +381,7 @@
                 <para style="ITEMSLEFT"> [[retention.voucher_id.name]] </para>
                         </td>
                     </tr>
-                </blockTable>    
+                </blockTable>
                 <blockTable colWidths="40mm,160mm,20mm,20mm,20mm" style="SOFTITEMS">
                     <tr>
                         <td>
@@ -386,28 +400,28 @@
                 <para style="ITEMSLEFT"> [[(retention.ret_im == True) and 'FALTA' or 'OK']]  </para>
                         </td>
                     </tr>
-                </blockTable>    
+                </blockTable>
             </section>
         <nextFrame/>
-        
+
             <blockTable colWidths="260mm" style="ITEMS">
                 <tr>
                     <td>
                         <para style="ITEMSLEFT"> [[o.bar_id.name.upper()]] </para>
                     </td>
                 </tr>
-            </blockTable>    
+            </blockTable>
             <blockTable colWidths="260mm" style="ITEMS">
                 <tr>
                     <td>
                         <para style="ITEMSLEFT"> [[o.bar_id.notes.upper()]] </para>
                     </td>
                 </tr>
-            </blockTable>    
+            </blockTable>
 <spacer length="5mm"/>
 
             <section>
-                
+
                 <blockTable colWidths="25mm,30mm,30mm" repeatRows="1" style="SOFTITEMS">
                     <tr>
                         <td>
@@ -442,8 +456,8 @@
             </section>
         <nextFrame/>
     </section>
-    
-    
+
+
         <blockTable colWidths="180mm,60mm,20mm" style="BLACKITEMS">
             <tr>
                 <td>
@@ -459,7 +473,7 @@
 		</blockTable>
 
             <spacer length="5mm"/>
-            
+
     <blockTable colWidths="80mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm" repeatRows='1' style="ITEMS">
         <tr>
             <td>
@@ -495,7 +509,7 @@
         </tr>
         <tr>
             <td>
-                <para>[[repeatIn(o.comm_line_ids,'lines')]]</para> 
+                <para>[[repeatIn(o.comm_line_ids,'lines')]]</para>
                 <para style="ITEMSLEFT">[[ lines.item ]]</para>
             </td>
             <td>
@@ -526,7 +540,7 @@
                 <para style="ITEMSRIGHT">[[ lines.commission or '0.00' ]]</para>
             </td>
         </tr>
-    </blockTable> 
+    </blockTable>
 
         <blockTable colWidths="180mm,60mm,20mm" style="BLACKITEMS">
             <tr>
@@ -540,6 +554,7 @@
                     <para style="BLACKRIGHT">[[ o.total_comm ]]</para>
                 </td>
             </tr>
-		</blockTable>    
+		</blockTable>
   </story>
 </document>
+-->
