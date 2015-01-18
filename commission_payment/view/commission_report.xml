@@ -15,7 +15,7 @@
             menu="True"/>
 
         <record id="comm_salespeople_report" model="ir.actions.report.xml">
-            <field name="paperformat_id" ref="report.paperformat_us"/>
+            <field name="paperformat_id" ref="commission_payment.paperformat_us_double_letter"/>
         </record>
     </data>
 </openerp>

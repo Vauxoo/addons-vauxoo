@@ -52,6 +52,7 @@ Cálculo de Pago de Comisiones por producto pagado
         "security/ir.model.access.csv",
         "report/layouts.xml",
         "report/template.xml",
+        "data/report_paperformat.xml",
         "view/commission_report.xml",
         "view/commission_view.xml"
     ],
