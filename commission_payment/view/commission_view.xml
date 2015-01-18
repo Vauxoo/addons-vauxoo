@@ -16,7 +16,7 @@
             <field name="name">Salespeople Commissions</field>
             <field name="res_model">commission.salesman</field>
             <field name="view_type">form</field>
-            <field name="view_mode">graph,tree</field>
+            <field name="view_mode">graph,tree,form</field>
             <field name="domain">[('commission_id','=',context.get('active_id',False))]</field>
             <field name="help" type="html">
               <p class="oe_view_nocontent_create">
@@ -28,7 +28,7 @@
             </field>
         </record>
 
-        <!-- Creating and Action to open the View LIST for the object commission.salesman -->
+        <!-- Creating and Action to open the View LIST for the object commission.lines -->
         <record model="ir.actions.act_window" id="comm_line_product_ids_all_act">
             <field name="name">Commissions on Products</field>
             <field name="res_model">commission.lines</field>
@@ -45,7 +45,7 @@
             </field>
         </record>
 
-        <!-- Creating and Action to open the View LIST for the object commission.salesman -->
+        <!-- Creating and Action to open the View LIST for the object commission.lines -->
         <record model="ir.actions.act_window" id="comm_line_invoice_ids_all_act">
             <field name="name">Commissions on Invoices</field>
             <field name="res_model">commission.lines</field>
@@ -430,6 +430,34 @@
                 <form string="Pago de Comisiones" version="7.0">
                     <field name="salesman_id"/>
                     <field name="comm_total"/>
+                    <field name="comm_total_currency"/>
+                    <field name="currency_id"/>
+                    <field name="comm_lines_ids">
+                        <tree>
+                            <field name="name"/>
+                            <field name="pay_date"/>
+                            <field name="pay_off"/>
+                            <field name="invoice_num"/>
+                            <field name="partner_id"/>
+                            <field name="salesman_id"/>
+                            <field name="pay_inv"/>
+                            <field name="inv_date"/>
+                            <field name="days"/>
+                            <field name="inv_subtotal"/>
+                            <field name="product_id"/>
+                            <field name="price_unit"/>
+                            <field name="price_subtotal"/>
+                            <field name="price_list"/>
+                            <field name="price_date"/>
+                            <field name="rate_item"/>
+                            <field name="rate_number"/>
+                            <field name="timespan"/>
+                            <field name="baremo_comm"/>
+                            <field name="commission" sum=""/>
+                            <field name="commission_currency" sum=""/>
+                            <field name="currency_id"/>
+                        </tree>
+                    </field>
                 </form>
             </field>
         </record>
