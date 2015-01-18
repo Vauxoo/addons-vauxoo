@@ -9,3 +9,5 @@
 "access_commission_lines_manager","commission.lines.manager","model_commission_lines","commission_payment.group_comm_payment_manager",1,1,1,1
 "access_commission_salesman_user","commission.salesman.user","model_commission_salesman","commission_payment.group_comm_payment_user",1,0,0,0
 "access_commission_salesman_manager","commission.salesman.manager","model_commission_salesman","commission_payment.group_comm_payment_manager",1,1,1,1
+"access_commission_voucher_user","commission.voucher.user","model_commission_voucher","commission_payment.group_comm_payment_user",1,0,0,0
+"access_commission_voucher_manager","commission.voucher.manager","model_commission_voucher","commission_payment.group_comm_payment_manager",1,1,1,1

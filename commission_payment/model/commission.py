@@ -139,6 +139,10 @@ class commission_payment(osv.Model):
             'account.move.line', 'commission_aml_rel', 'commission_id',
             'aml_id', 'Journal Items', readonly=True,
             ),
+        'comm_voucher_ids': fields.one2many(
+            'commission.voucher',
+            'commission_id', 'Vouchers afectados en esta comision',
+            readonly=True, states={'write': [('readonly', False)]}),
         'state': fields.selection(
             COMMISSION_STATES, 'Estado', readonly=True,
             track_visibility='onchange',
@@ -867,6 +871,7 @@ class commission_payment(osv.Model):
         noprice_ids = self.pool.get('commission.noprice')
         comm_line_ids = self.pool.get('commission.lines')
         salesman_ids = self.pool.get('commission.salesman')
+        comm_voucher_ids = self.pool.get('commission.voucher')
 
         for commission in self.browse(cr, user, ids, context=context):
             ###
@@ -885,8 +890,14 @@ class commission_payment(osv.Model):
             salesman_ids.unlink(
                 cr, user, [line.id for line in commission.salesman_ids])
             ###
+            # * Desvinculando los vouchers afectados
+            comm_voucher_ids.unlink(
+                cr, user, [line.id for line in commission.comm_voucher_ids])
+            ###
             commission.write(
-                {'invoice_ids': [(3, inv_brw.id) for inv_brw in
+                {'aml_ids': [(3, aml_brw.id) for aml_brw in
+                             commission.aml_ids],
+                 'invoice_ids': [(3, inv_brw.id) for inv_brw in
                                  commission.invoice_ids]})
 
     def validate(self, cr, user, ids, context=None):
@@ -1042,6 +1053,10 @@ class commission_salesman(osv.Model):
         'comm_total': fields.float(
             'Commission Amount',
             digits_compute=dp.get_precision('Commission')),
+        'comm_voucher_ids': fields.one2many(
+            'commission.voucher',
+            'comm_sale_id', 'Vouchers Affected in this commission',
+            required=False),
         'comm_lines_ids': fields.one2many(
             'commission.lines',
             'comm_salespeople_id', 'Salespeople Commission Details',
@@ -1061,4 +1076,25 @@ class commission_salesman(osv.Model):
             help=('Currency at which this report will be \
                     expressed. If not selected will be used the \
                     one set in the company')),
+    }
+
+
+class commission_voucher(osv.Model):
+
+    """
+    Commission Payment : commission_voucher
+    """
+
+    _name = 'commission.voucher'
+    _order = 'date'
+
+    _columns = {
+        'name': fields.char('Comentario', size=256),
+        'commission_id': fields.many2one('commission.payment', 'Comision'),
+        'comm_sale_id': fields.many2one('commission.saleman', 'Vendedor'),
+        'voucher_id': fields.many2one('account.move.line', 'Voucher'),
+        'date': fields.date('Fecha'),
+    }
+    _defaults = {
+        'name': lambda *a: None,
     }
