@@ -126,11 +126,11 @@ class commission_payment(osv.Model):
             states={'write': [('readonly', False)]}),
         'salesman_ids': fields.one2many(
             'commission.salesman', 'commission_id',
-            'Total de Comisiones por Vendedor', readonly=True,
+            'Salespeople Commissions', readonly=True,
             states={'write': [('readonly', False)]}),
         'user_ids': fields.many2many(
             'res.users', 'commission_users',
-            'commission_id', 'user_id', 'Vendedores', required=True,
+            'commission_id', 'user_id', 'Salespeople', required=True,
             readonly=True, states={'draft': [('readonly', False)]}),
         'invoice_ids': fields.many2many(
             'account.invoice', 'commission_account_invoice', 'commission_id',
@@ -802,7 +802,6 @@ class commission_payment(osv.Model):
                     'comm_total': value,
                     'comm_total_currency': sale_comm_curr[key],
                 }, context=context)
-
                 comm_line_obj.write(cr, uid, sale_comm_cl[key],
                                     {'comm_salespeople_id': vendor_id},
                                     context=context)
@@ -813,13 +812,16 @@ class commission_payment(osv.Model):
             cl_data = DataFrame(cl_ids).set_index('id')
             vc_group = cl_data.groupby(['comm_salespeople_id', 'am_id']).groups
 
-            for key in vc_group.keys():
+            for key, values in vc_group.iteritems():
                 comm_salespeople_id, am_id = key
-                comm_voucher_ids.create(cr, uid, {
+                comm_voucher_id = comm_voucher_ids.create(cr, uid, {
                     'commission_id': commission.id,
                     'comm_sale_id': comm_salespeople_id,
                     'am_id': am_id,
                 }, context=context)
+                comm_line_obj.write(cr, uid, values,
+                                    {'comm_voucher_id': comm_voucher_id},
+                                    context=context)
         return True
 
     def prepare(self, cr, uid, ids, context=None):
@@ -991,9 +993,11 @@ class commission_lines(osv.Model):
             string='Reconciling Invoice', relation='account.invoice',
             type='many2one', store=True, readonly=True),
         'partner_id': fields.many2one('res.partner', 'Empresa'),
-        'salesman_id': fields.many2one('res.users', 'Vendedor', required=True),
+        'salesman_id': fields.many2one('res.users', 'Salesman', required=True),
         'comm_salespeople_id': fields.many2one(
             'commission.salesman', 'Salespeople Commission', required=False),
+        'comm_voucher_id': fields.many2one(
+            'commission.voucher', 'Voucher Commission', required=False),
         'pay_inv': fields.float(
             'Abono Fact.',
             digits_compute=dp.get_precision('Commission')),
@@ -1152,5 +1156,5 @@ class commission_lines_2(osv.Model):
 
     _columns = {
         'comm_invoice_id': fields.many2one('commission.invoice',
-                                           'Factura Relacional Interna'),
+                                           'Invoice Commission'),
     }
