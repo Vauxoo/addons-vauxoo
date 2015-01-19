@@ -146,13 +146,9 @@ table {
               <td width="70%">
                   <table style="width: 100%; text-align:center;">
                       <tr><td><div class="td_company_title"><span t-field="o.company_id.name"/></div></td></tr>
-                      <tr>
-                          <td>
-                              <div class="td_company">
-                              </div>
-                          </td>
-                      </tr>
-                      <tr><td><div class="td_company"></div></td></tr>
+                      <tr><td><div class="td_company"><t>COMMISSION PAYMENT</t></div></td></tr>
+                      <tr><td><div class="td_company"><span t-esc="o.salesman_id.name.upper()"/></div></td></tr>
+                      <tr><td><div class="td_company"><span t-field="o.comm_total_currency"/> <span t-esc="o.currency_id.name"/></div></td></tr>
                   </table>
               </td>
           </tr>
