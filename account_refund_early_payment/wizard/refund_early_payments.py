@@ -61,11 +61,11 @@ class account_invoice_refund(osv.osv_memory):
 
         return res
 
-    def default_get(self, cur, uid, fields, context=None):
+    def default_get(self, cur, uid, fields_data, context=None):
         if context is None:
             context = {}
         ret = super(account_invoice_refund, self).default_get(cur, uid,
-                                                              fields,
+                                                              fields_data,
                                                               context=context)
         active_id = context.get('active_id', False)
         if active_id:
@@ -83,14 +83,13 @@ class account_invoice_refund(osv.osv_memory):
                 'amount_total': inv.amount_total * (percent / 100),
             }
         }
-        return {}
 
     _columns = {
-        'filter_refund': fields.selection(REFUND_METHOD,
-                                          "Refund Method",
-                                          required=True,
-                                          help=filter_refund_inh.get('_args')
-                                                            .get('help')),
+        'filter_refund': fields.selection(
+            REFUND_METHOD,
+            "Refund Method",
+            required=True,
+            help=filter_refund_inh.get('_args').get('help')),
         'percent': fields.float('Percent'),
         'product_id': fields.many2one('product.product', string='Product'),
         'amount_total': fields.float('Amount'),
@@ -117,13 +116,14 @@ class account_invoice_refund(osv.osv_memory):
         for inv in inv_obj.browse(cur, uid, context.get('active_ids'),
                                   context=context):
 
-            if mode in ('early_payment'):
+            if mode in 'early_payment':
 
                 refund = inv_obj.browse(cur, uid, refund_id, context=context)
                 refund_lines_brw = refund.invoice_line
                 line_data_dict = {}
 
-                if wizard_brw.amount_total == round(inv.amount_total * percent, 2):
+                if wizard_brw.amount_total == \
+                        round(inv.amount_total * percent, 2):
                     for refund_line in refund_lines_brw:
                         tax_tuple = refund_line.\
                             invoice_line_tax_id.\
