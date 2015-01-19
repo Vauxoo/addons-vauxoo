@@ -56,7 +56,7 @@ class sale_order_line(osv.osv):
                 cr, uid, product, context=context)
             prod_category = product_id.categ_id and product_id.categ_id.name
             name_description = res.get('value', {}).pop('name', '')
-            name_description =  '[%s]' % (prod_category) + name_description
+            name_description = '[%s]' % (prod_category) + name_description
             res.get('value', {}).update({'name': name_description})
         return res
 
@@ -92,7 +92,7 @@ class sale_order(osv.osv):
 
         if isinstance(ids, (int, long)):
             ids = [ids]
-        
+
         for order_id in ids:
 
             cr.execute(

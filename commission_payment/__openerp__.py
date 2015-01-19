@@ -35,18 +35,24 @@
     "description": """
 Cálculo de Pago de Comisiones por producto pagado
 """,
-    "website": "http://wiki.openerp.org.ve/",
+    "website": "http://www.vauxoo.com",
     "license": "",
     "depends": [
         "account",
         "account_voucher",
         "product_historical_price",
-        "baremo"
+        "mail",
+        "baremo",
+        "message_post_model",
+        "report",
     ],
     "demo": [],
     "data": [
         "security/commission_payment_security.xml",
         "security/ir.model.access.csv",
+        "report/layouts.xml",
+        "report/template.xml",
+        "data/report_paperformat.xml",
         "view/commission_report.xml",
         "view/commission_view.xml"
     ],
