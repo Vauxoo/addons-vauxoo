@@ -7,12 +7,49 @@
                 <t t-call="commission_payment.external_layout_header"/>
                 <t t-call="commission_payment.external_layout_footer"/>
 
-
                 <div class="page">
-                    <table class="basic_table"  width="100%">
+                    <t t-set="cv_ids" t-value="o.comm_voucher_ids"/>
+                    <t t-foreach="cv_ids" t-as="cv">
+                        <table class="basic_table"  width="100%">
                             <tbody>
+                                <tr class="prueba">
+                                    <td class="celdaAbstractTotal" width="28%">
+                                        <span t-esc="cv.am_id.name.upper()"/>
+                                    </td>
+                                </tr>
                             </tbody>
-                    </table>
+                        </table>
+
+                        <t t-set="ci_ids" t-value="cv.comm_invoice_ids"/>
+                        <t t-foreach="ci_ids" t-as="ci">
+                            <table class="basic_table"  width="100%">
+                                <tbody>
+                                    <tr class="prueba">
+                                        <td class="celdaAbstractTotal" width="28%">
+                                            <span t-esc="ci.invoice_id.number.upper()"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <t t-set="cl_ids" t-value="ci.comm_line_ids "/>
+                            <t t-foreach="cl_ids" t-as="cl">
+                                <table class="basic_table"  width="100%">
+                                    <tbody>
+                                        <tr class="prueba">
+                                            <td class="celdaAbstractTotal" width="28%">
+                                                <span t-esc="cl.commission"/>
+                                                <span t-esc="cl.currency_id.name"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </t>
+
+
+                        </t>
+                    </t>
                 </div>
             </t>
         </template>
