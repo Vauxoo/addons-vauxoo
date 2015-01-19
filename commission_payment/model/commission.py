@@ -989,7 +989,7 @@ class commission_lines(osv.Model):
     """
 
     _name = 'commission.lines'
-    _order = 'salesman_id'
+    _order = 'pay_date'
 
     _columns = {
         'commission_id': fields.many2one(
