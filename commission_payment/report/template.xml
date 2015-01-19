@@ -142,51 +142,51 @@
                             <tbody>
                                 <t t-set="cl_ids" t-value="o.comm_lines_ids "/>
                                 <tr>
-                                    <td>
+                                    <th class="celdaTituloTabla">
                                         <para>TRANSACCION</para>
-                                    </td>
-                                    <td>
+                                    </th>
+                                    <th class="celdaTituloTabla">
                                         <para>FECHA</para>
-                                    </td>
-                                    <td>
+                                    </th>
+                                    <th class="celdaTituloTabla">
                                         <para>PARTNER</para>
-                                    </td>
-                                    <td>
+                                    </th>
+                                    <th class="celdaTituloTabla">
                                         <para>MONTO</para>
-                                    </td>
-                                    <td>
+                                    </th>
+                                    <th class="celdaTituloTabla">
                                         <para>INV. DATE</para>
-                                    </td>
-                                    <td>
+                                    </th>
+                                    <th class="celdaTituloTabla">
                                         <para>INV. NUMBER</para>
-                                    </td>
-                                    <td>
+                                    </th>
+                                    <th class="celdaTituloTabla">
                                         <para>INV. SUBTOTAL</para>
-                                    </td>
-                                    <td>
+                                    </th>
+                                    <th class="celdaTituloTabla">
                                         <para>TAX %</para>
-                                    </td>
-                                    <td>
+                                    </th>
+                                    <th class="celdaTituloTabla">
                                         <para>INV. TOT.</para>
-                                    </td>
-                                    <td>
+                                    </th>
+                                    <th class="celdaTituloTabla">
                                         <para>PAY. INV.</para>
-                                    </td>
-                                    <td>
+                                    </th>
+                                    <th class="celdaTituloTabla">
                                         <para>B. DSCT</para>
-                                    </td>
-                                    <td>
+                                    </th>
+                                    <th class="celdaTituloTabla">
                                         <para>EM. DAYS</para>
-                                    </td>
-                                    <td>
+                                    </th>
+                                    <th class="celdaTituloTabla">
                                         <para>B. DAYS</para>
-                                    </td>
-                                    <td>
-                                        <para>%B. COMM</para>
-                                    </td>
-                                    <td>
+                                    </th>
+                                    <th class="celdaTituloTabla">
+                                        <para>% COMM</para>
+                                    </th>
+                                    <th class="celdaTituloTabla">
                                         <para>COMMISSION</para>
-                                    </td>
+                                    </th>
                                 </tr>
                                 <tr class="prueba" t-foreach="cl_ids" t-as="cl">
                                     <td class="celdaDetailLeft" width="6.66%">
