@@ -10,10 +10,137 @@
                 <t t-call="commission_payment.external_layout_footer"/>
 
                 <div class="page">
-                    <t t-set="cv_ids" t-value="o.comm_voucher_ids"/>
-                    <t t-foreach="cv_ids" t-as="cv">
+                    <t t-if="comm_scope=='product_invoiced'">
+                        <t t-set="cv_ids" t-value="o.comm_voucher_ids"/>
+                        <t t-foreach="cv_ids" t-as="cv">
+                            <table class="basic_table"  width="100%">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <para>TRANSACCION</para>
+                                        </td>
+                                        <td>
+                                            <para>FECHA</para>
+                                        </td>
+                                        <td>
+                                            <para>MONTO</para>
+                                        </td>
+                                    </tr>
+                                    <tr class="prueba">
+                                        <td class="celdaAbstractTotal" width="33%">
+                                            <span t-esc="cv.am_id.name.upper()"/>
+                                        </td>
+                                        <td class="celdaAbstractTotal" width="33%">
+                                            <span t-esc="cv.am_id.date"/>
+                                        </td>
+                                        <td class="celdaAbstractTotal" width="33%">
+                                            <span t-esc="cv.am_id.amount"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <t t-set="ci_ids" t-value="cv.comm_invoice_ids"/>
+                            <t t-foreach="ci_ids" t-as="ci">
+                                <table class="basic_table"  width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <para>PARTNER</para>
+                                            </td>
+                                            <td>
+                                                <para>INVOICE DATE</para>
+                                            </td>
+                                            <td>
+                                                <para>INV. NUMBER</para>
+                                            </td>
+                                            <td>
+                                                <para>INV. SUBTOTAL</para>
+                                            </td>
+                                            <td>
+                                                <para>TAX %</para>
+                                            </td>
+                                            <td>
+                                                <para>INV. TOT.</para>
+                                            </td>
+                                            <td>
+                                                <para>PAY. INV.</para>
+                                            </td>
+                                        </tr>
+                                        <tr class="prueba">
+                                            <td class="celdaAbstractTotal" width="14.25%">
+                                                <span t-esc="ci.invoice_id.partner_id.name.upper()"/>
+                                            </td>
+                                            <td class="celdaAbstractTotal" width="14.25%">
+                                                <span t-esc="ci.invoice_id.date_invoice"/>
+                                            </td>
+                                            <td class="celdaAbstractTotal" width="14.25%">
+                                                <span t-esc="ci.invoice_id.number.upper()"/>
+                                            </td>
+                                            <td class="celdaAbstractTotal" width="14.25%">
+                                                <span t-esc="ci.invoice_id.amount_untaxed"/>
+                                            </td>
+                                            <td class="celdaAbstractTotal" width="14.25%">
+                                                <span t-esc="((ci.invoice_id.amount_total / ci.invoice_id.amount_untaxed)-1)*100"/>
+                                            </td>
+                                            <td class="celdaAbstractTotal" width="14.25%">
+                                                <span t-esc="ci.invoice_id.amount_total"/>
+                                            </td>
+                                            <td class="celdaAbstractTotal" width="14.25%">
+                                                <span t-esc="ci.pay_inv"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <t t-set="cl_ids" t-value="ci.comm_line_ids "/>
+                                <t t-foreach="cl_ids" t-as="cl">
+                                    <table class="basic_table"  width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <para>BRMO DSCT</para>
+                                                </td>
+                                                <td>
+                                                    <para>EMISSION DAYS</para>
+                                                </td>
+                                                <td>
+                                                    <para>BRMO DAYS</para>
+                                                </td>
+                                                <td>
+                                                    <para>BRMO COMM %</para>
+                                                </td>
+                                                <td>
+                                                    <para>COMMISSION</para>
+                                                </td>
+                                            </tr>
+                                            <tr class="prueba">
+                                                <td class="celdaAbstractTotal" width="20.0%">
+                                                    <span t-esc="cl.rate_number"/>
+                                                </td>
+                                                <td class="celdaAbstractTotal" width="20.0%">
+                                                    <span t-esc="cl.days"/>
+                                                </td>
+                                                <td class="celdaAbstractTotal" width="20.0%">
+                                                    <span t-esc="cl.timespan"/>
+                                                </td>
+                                                <td class="celdaAbstractTotal" width="20.0%">
+                                                    <span t-esc="cl.baremo_comm"/>
+                                                </td>
+                                                <td class="celdaAbstractTotal" width="20.0%">
+                                                    <span t-esc="cl.commission_currency"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </t>
+                            </t>
+                        </t>
+                    </t>
+                    <t t-if="comm_scope=='whole_invoice'">
                         <table class="basic_table"  width="100%">
                             <tbody>
+                                <t t-set="cl_ids" t-value="o.comm_lines_ids "/>
                                 <tr>
                                     <td>
                                         <para>TRANSACCION</para>
@@ -24,119 +151,95 @@
                                     <td>
                                         <para>MONTO</para>
                                     </td>
+                                    <td>
+                                        <para>PARTNER</para>
+                                    </td>
+                                    <td>
+                                        <para>INVOICE DATE</para>
+                                    </td>
+                                    <td>
+                                        <para>INV. NUMBER</para>
+                                    </td>
+                                    <td>
+                                        <para>INV. SUBTOTAL</para>
+                                    </td>
+                                    <td>
+                                        <para>TAX %</para>
+                                    </td>
+                                    <td>
+                                        <para>INV. TOT.</para>
+                                    </td>
+                                    <td>
+                                        <para>PAY. INV.</para>
+                                    </td>
+                                    <td>
+                                        <para>BRMO DSCT</para>
+                                    </td>
+                                    <td>
+                                        <para>EMISSION DAYS</para>
+                                    </td>
+                                    <td>
+                                        <para>BRMO DAYS</para>
+                                    </td>
+                                    <td>
+                                        <para>BRMO COMM %</para>
+                                    </td>
+                                    <td>
+                                        <para>COMMISSION</para>
+                                    </td>
                                 </tr>
-                                <tr class="prueba">
-                                    <td class="celdaAbstractTotal" width="33%">
-                                        <span t-esc="cv.am_id.name.upper()"/>
+                                <tr class="prueba" t-foreach="cl_ids" t-as="cl">
+                                    <td class="celdaAbstractTotal" width="6.66%">
+                                        <span t-esc="cl.am_id.name.upper()"/>
                                     </td>
-                                    <td class="celdaAbstractTotal" width="33%">
-                                        <span t-esc="cv.am_id.date"/>
+                                    <td class="celdaAbstractTotal" width="6.66%">
+                                        <span t-esc="cl.am_id.date"/>
                                     </td>
-                                    <td class="celdaAbstractTotal" width="33%">
-                                        <span t-esc="cv.am_id.amount"/>
+                                    <td class="celdaAbstractTotal" width="6.66%">
+                                        <span t-esc="cl.am_id.amount"/>
+                                    </td>
+
+                                    <td class="celdaAbstractTotal" width="6.66%">
+                                        <span t-esc="cl.invoice_id.partner_id.name.upper()"/>
+                                    </td>
+                                    <td class="celdaAbstractTotal" width="6.66%">
+                                        <span t-esc="cl.invoice_id.date_invoice"/>
+                                    </td>
+                                    <td class="celdaAbstractTotal" width="6.66%">
+                                        <span t-esc="cl.invoice_id.number.upper()"/>
+                                    </td>
+                                    <td class="celdaAbstractTotal" width="6.66%">
+                                        <span t-esc="cl.invoice_id.amount_untaxed"/>
+                                    </td>
+                                    <td class="celdaAbstractTotal" width="6.66%">
+                                        <span t-esc="((cl.invoice_id.amount_total / cl.invoice_id.amount_untaxed)-1)*100"/>
+                                    </td>
+                                    <td class="celdaAbstractTotal" width="6.66%">
+                                        <span t-esc="cl.invoice_id.amount_total"/>
+                                    </td>
+                                    <td class="celdaAbstractTotal" width="6.66%">
+                                        <span t-esc="cl.pay_inv"/>
+
+                                    </td>
+
+                                    <td class="celdaAbstractTotal" width="6.66%">
+                                        <span t-esc="cl.rate_number"/>
+                                    </td>
+                                    <td class="celdaAbstractTotal" width="6.66%">
+                                        <span t-esc="cl.days"/>
+                                    </td>
+                                    <td class="celdaAbstractTotal" width="6.66%">
+                                        <span t-esc="cl.timespan"/>
+                                    </td>
+                                    <td class="celdaAbstractTotal" width="6.66%">
+                                        <span t-esc="cl.baremo_comm"/>
+                                    </td>
+                                    <td class="celdaAbstractTotal" width="6.66%">
+                                        <span t-esc="cl.commission_currency"/>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-
-                        <t t-set="ci_ids" t-value="cv.comm_invoice_ids"/>
-                        <t t-foreach="ci_ids" t-as="ci">
-                            <table class="basic_table"  width="100%">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <para>PARTNER</para>
-                                        </td>
-                                        <td>
-                                            <para>INVOICE DATE</para>
-                                        </td>
-                                        <td>
-                                            <para>INV. NUMBER</para>
-                                        </td>
-                                        <td>
-                                            <para>INV. SUBTOTAL</para>
-                                        </td>
-                                        <td>
-                                            <para>TAX %</para>
-                                        </td>
-                                        <td>
-                                            <para>INV. TOT.</para>
-                                        </td>
-                                        <td>
-                                            <para>PAY. INV.</para>
-                                        </td>
-                                    </tr>
-                                    <tr class="prueba">
-                                        <td class="celdaAbstractTotal" width="14.25%">
-                                            <span t-esc="ci.invoice_id.partner_id.name.upper()"/>
-                                        </td>
-                                        <td class="celdaAbstractTotal" width="14.25%">
-                                            <span t-esc="ci.invoice_id.date_invoice"/>
-                                        </td>
-                                        <td class="celdaAbstractTotal" width="14.25%">
-                                            <span t-esc="ci.invoice_id.number.upper()"/>
-                                        </td>
-                                        <td class="celdaAbstractTotal" width="14.25%">
-                                            <span t-esc="ci.invoice_id.amount_untaxed"/>
-                                        </td>
-                                        <td class="celdaAbstractTotal" width="14.25%">
-                                            <span t-esc="((ci.invoice_id.amount_total / ci.invoice_id.amount_untaxed)-1)*100"/>
-                                        </td>
-                                        <td class="celdaAbstractTotal" width="14.25%">
-                                            <span t-esc="ci.invoice_id.amount_total"/>
-                                        </td>
-                                        <td class="celdaAbstractTotal" width="14.25%">
-                                            <span t-esc="ci.pay_inv"/>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                            <t t-set="cl_ids" t-value="ci.comm_line_ids "/>
-                            <t t-foreach="cl_ids" t-as="cl">
-                                <table class="basic_table"  width="100%">
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <para>BRMO DSCT</para>
-                                            </td>
-                                            <td>
-                                                <para>EMISSION DAYS</para>
-                                            </td>
-                                            <td>
-                                                <para>BRMO DAYS</para>
-                                            </td>
-                                            <td>
-                                                <para>BRMO COMM %</para>
-                                            </td>
-                                            <td>
-                                                <para>COMMISSION</para>
-                                            </td>
-                                        </tr>
-                                        <tr class="prueba">
-                                            <td class="celdaAbstractTotal" width="20.0%">
-                                                <span t-esc="cl.rate_number"/>
-                                            </td>
-                                            <td class="celdaAbstractTotal" width="20.0%">
-                                                <span t-esc="cl.days"/>
-                                            </td>
-                                            <td class="celdaAbstractTotal" width="20.0%">
-                                                <span t-esc="cl.timespan"/>
-                                            </td>
-                                            <td class="celdaAbstractTotal" width="20.0%">
-                                                <span t-esc="cl.baremo_comm"/>
-                                            </td>
-                                            <td class="celdaAbstractTotal" width="20.0%">
-                                                <span t-esc="cl.commission_currency"/>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                            </t>
-
-
-                        </t>
                     </t>
                 </div>
             </t>
