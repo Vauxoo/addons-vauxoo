@@ -768,6 +768,7 @@ class commission_payment(osv.Model):
         salesman_ids = self.pool.get('commission.salesman')
         comm_line_obj = self.pool.get('commission.lines')
         comm_voucher_ids = self.pool.get('commission.voucher')
+        comm_invoice_ids = self.pool.get('commission.invoice')
 
         # habiendo recorrido todos los vouchers, mostrado todos los elementos
         # que necesitan correccion se procede a agrupar las comisiones por
@@ -780,7 +781,7 @@ class commission_payment(osv.Model):
             # ordena en un arbol todas las lineas de comisiones de producto
             cl_fields = ['id', 'salesman_id', 'currency_id', 'commission',
                          'commission_currency', 'am_id', 'invoice_id',
-                         'comm_salespeople_id']
+                         'comm_salespeople_id', 'comm_voucher_id', ]
 
             cl_ids = commission.comm_line_ids.read(cl_fields, load=None)
 
@@ -822,6 +823,23 @@ class commission_payment(osv.Model):
                 comm_line_obj.write(cr, uid, values,
                                     {'comm_voucher_id': comm_voucher_id},
                                     context=context)
+
+            cl_ids = commission.comm_line_ids.read(cl_fields, load=None)
+            cl_data = DataFrame(cl_ids).set_index('id')
+            vc_group = cl_data.groupby(['comm_voucher_id',
+                                        'invoice_id']).groups
+
+            for key, values in vc_group.iteritems():
+                comm_voucher_id, invoice_id = key
+                comm_invoice_id = comm_invoice_ids.create(cr, uid, {
+                    'commission_id': commission.id,
+                    'comm_voucher_id': comm_voucher_id,
+                    'invoice_id': invoice_id,
+                }, context=context)
+                comm_line_obj.write(cr, uid, values,
+                                    {'comm_invoice_id': comm_invoice_id},
+                                    context=context)
+
         return True
 
     def prepare(self, cr, uid, ids, context=None):
