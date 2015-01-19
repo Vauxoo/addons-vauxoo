@@ -284,7 +284,6 @@
                                         <field name="name"/>
                                         <field name="pay_date"/>
                                         <field name="pay_off"/>
-                                        <field name="invoice_num"/>
                                         <field name="partner_id"/>
                                         <field name="salesman_id"/>
                                         <field name="pay_inv"/>
@@ -319,7 +318,6 @@
                                     <tree>
                                         <field name="name"/>
                                         <field name="pay_date"/>
-                                        <field name="invoice_num"/>
                                         <field name="partner_id"/>
                                         <field name="salesman_id"/>
                                         <field name="pay_inv"/>
@@ -437,7 +435,6 @@
                             <field name="name"/>
                             <field name="pay_date"/>
                             <field name="pay_off"/>
-                            <field name="invoice_num"/>
                             <field name="partner_id"/>
                             <field name="salesman_id"/>
                             <field name="pay_inv"/>
@@ -481,7 +478,6 @@
                                         <field name="name"/>
                     <field name="pay_date"/>
                     <field name="pay_off"/>
-                    <field name="invoice_num"/>
                     <field name="partner_id"/>
                     <field name="salesman_id"/>
                     <field name="pay_inv"/>

@@ -562,9 +562,6 @@ class commission_payment(osv.Model):
                             aml_brw.move_id.name or '/',
                             'pay_date': commission_policy_date_end,
                             'pay_off': aml_brw.credit,
-                            'invoice_id':
-                            aml_brw.invoice.id,
-                            'invoice_num': inv_brw.number,
                             'partner_id': inv_brw.partner_id.id,
                             'salesman_id': salesman and salesman.id,
                             'pay_inv': aml_brw.credit,
@@ -682,7 +679,7 @@ class commission_payment(osv.Model):
         else:
             commission_currency = comm_line
 
-        # Generar las lineas de comision por cada producto
+        # Generar las lineas de comision por cada factura
         comm_line_ids.create(
             cr, uid, {
                 'commission_id': comm_brw.id,
@@ -692,8 +689,6 @@ class commission_payment(osv.Model):
                 aml_brw.move_id.name or '/',
                 'pay_date': commission_policy_date_end,
                 'pay_off': aml_brw.credit,
-                'invoice_id': aml_brw.invoice.id,
-                'invoice_num': inv_brw.number,
                 'partner_id': inv_brw.partner_id.id,
                 'salesman_id': salesman and salesman.id,
                 'pay_inv': aml_brw.credit,
@@ -973,10 +968,15 @@ class commission_lines(osv.Model):
             digits_compute=dp.get_precision('Commission')),
 
         'aml_id': fields.many2one('account.move.line', 'Entry Line'),
+        'am_id': fields.related(
+            'aml_id', 'move_id',
+            string='Journal Entry', relation='account.move',
+            type='many2one', store=True, readonly=True),
 
-        'concept': fields.many2one('account.move.line', 'Concepto'),
-        'invoice_id': fields.many2one('account.invoice', 'Doc.'),
-        'invoice_num': fields.char('Doc.', size=256),
+        'invoice_id': fields.related(
+            'aml_id', 'rec_invoice',
+            string='Reconciling Invoice', relation='account.invoice',
+            type='many2one', store=True, readonly=True),
         'partner_id': fields.many2one('res.partner', 'Empresa'),
         'salesman_id': fields.many2one('res.users', 'Vendedor', required=True),
         'comm_salespeople_id': fields.many2one(
@@ -985,9 +985,9 @@ class commission_lines(osv.Model):
             'Abono Fact.',
             digits_compute=dp.get_precision('Commission')),
 
-        'inv_date': fields.date('Fecha Doc.'),
+        'inv_date': fields.date('Invoice Date'),
         'days': fields.float(
-            'Dias',
+            'Days',
             digits_compute=dp.get_precision('Commission')),
 
         'inv_subtotal': fields.float(
@@ -1003,26 +1003,26 @@ class commission_lines(osv.Model):
             digits_compute=dp.get_precision('Commission')),
 
         'price_list': fields.float(
-            'Precio Lista',
+            'Price List',
             digits_compute=dp.get_precision('Commission')),
-        'price_date': fields.date('Fecha Lista'),
+        'price_date': fields.date('List Date'),
 
         'perc_iva': fields.float(
-            'IVA (%)',
+            'Tax (%)',
             digits_compute=dp.get_precision('Commission')),
 
         'rate_item': fields.float(
-            'Dcto. (%)',
+            'Dsct. (%)',
             digits_compute=dp.get_precision('Commission')),
 
         'rate_number': fields.float(
-            'Bar. Rate (%)',
+            'B./Rate (%)',
             digits_compute=dp.get_precision('Commission')),
         'timespan': fields.float(
-            'Bar. Dias',
+            'B./Days',
             digits_compute=dp.get_precision('Commission')),
         'baremo_comm': fields.float(
-            'Baremo %Comm.',
+            'B./%Comm.',
             digits_compute=dp.get_precision('Commission')),
         'commission': fields.float(
             'Commission Amount',
