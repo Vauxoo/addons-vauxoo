@@ -287,6 +287,7 @@
                                         <field name="partner_id"/>
                                         <field name="salesman_id"/>
                                         <field name="pay_inv"/>
+                                        <field name="invoice_id"/>
                                         <field name="inv_date"/>
                                         <field name="days"/>
                                         <field name="inv_subtotal"/>
@@ -321,6 +322,7 @@
                                         <field name="partner_id"/>
                                         <field name="salesman_id"/>
                                         <field name="pay_inv"/>
+                                        <field name="invoice_id"/>
                                         <field name="inv_date"/>
                                         <field name="days"/>
                                         <field name="inv_subtotal"/>
@@ -438,6 +440,7 @@
                             <field name="partner_id"/>
                             <field name="salesman_id"/>
                             <field name="pay_inv"/>
+                            <field name="invoice_id"/>
                             <field name="inv_date"/>
                             <field name="days"/>
                             <field name="inv_subtotal"/>
@@ -481,6 +484,7 @@
                     <field name="partner_id"/>
                     <field name="salesman_id"/>
                     <field name="pay_inv"/>
+                    <field name="invoice_id"/>
                     <field name="inv_date"/>
                     <field name="days"/>
                     <field name="inv_subtotal"/>

@@ -767,6 +767,7 @@ class commission_payment(osv.Model):
         context = context or {}
         salesman_ids = self.pool.get('commission.salesman')
         comm_line_obj = self.pool.get('commission.lines')
+        comm_voucher_ids = self.pool.get('commission.voucher')
 
         # habiendo recorrido todos los vouchers, mostrado todos los elementos
         # que necesitan correccion se procede a agrupar las comisiones por
@@ -778,7 +779,8 @@ class commission_payment(osv.Model):
             sale_comm = {}
             # ordena en un arbol todas las lineas de comisiones de producto
             cl_fields = ['id', 'salesman_id', 'currency_id', 'commission',
-                         'commission_currency']
+                         'commission_currency', 'am_id', 'invoice_id',
+                         'comm_salespeople_id']
 
             cl_ids = commission.comm_line_ids.read(cl_fields, load=None)
 
@@ -806,6 +808,18 @@ class commission_payment(osv.Model):
                                     context=context)
 
             commission.write({'total_comm': cl_data.sum().get('commission')})
+
+            cl_ids = commission.comm_line_ids.read(cl_fields, load=None)
+            cl_data = DataFrame(cl_ids).set_index('id')
+            vc_group = cl_data.groupby(['comm_salespeople_id', 'am_id']).groups
+
+            for key in vc_group.keys():
+                comm_salespeople_id, am_id = key
+                comm_voucher_ids.create(cr, uid, {
+                    'commission_id': commission.id,
+                    'comm_sale_id': comm_salespeople_id,
+                    'am_id': am_id,
+                }, context=context)
         return True
 
     def prepare(self, cr, uid, ids, context=None):
@@ -1087,20 +1101,18 @@ class commission_voucher(osv.Model):
 
     _name = 'commission.voucher'
     _order = 'date'
+    _rec_name = 'am_id'
 
     _columns = {
-        'name': fields.char('Comentario', size=256),
-        'commission_id': fields.many2one('commission.payment', 'Comision'),
-        'comm_sale_id': fields.many2one('commission.saleman', 'Vendedor'),
-        'voucher_id': fields.many2one('account.move.line', 'Voucher'),
+        'commission_id': fields.many2one('commission.payment', 'Commission'),
+        'comm_sale_id': fields.many2one('commission.salesman', 'Salesman'),
+        'am_id': fields.many2one('account.move', 'Journal Entry'),
         'comm_invoice_ids': fields.one2many(
             'commission.invoice',
             'comm_voucher_id', 'Facturas afectadas en esta comision',
             required=False),
-        'date': fields.date('Fecha'),
-    }
-    _defaults = {
-        'name': lambda *a: None,
+        'date': fields.related('am_id', 'date', string='Date', type='date',
+                               store=True, readonly=True),
     }
 
 
