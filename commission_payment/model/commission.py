@@ -777,7 +777,6 @@ class commission_payment(osv.Model):
             # recoge todos los vendedores y suma el total de sus comisiones
             sale_comm = {}
             # ordena en un arbol todas las lineas de comisiones de producto
-            total_comm = 0
             cl_fields = ['id', 'salesman_id', 'currency_id', 'commission',
                          'commission_currency']
 
@@ -806,7 +805,7 @@ class commission_payment(osv.Model):
                                     {'comm_salespeople_id': vendor_id},
                                     context=context)
 
-            commission.write({'total_comm': total_comm})
+            commission.write({'total_comm': cl_data.sum().get('commission')})
         return True
 
     def prepare(self, cr, uid, ids, context=None):
