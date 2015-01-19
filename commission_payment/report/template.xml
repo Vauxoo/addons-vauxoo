@@ -149,10 +149,10 @@
                                         <para>FECHA</para>
                                     </td>
                                     <td>
-                                        <para>MONTO</para>
+                                        <para>PARTNER</para>
                                     </td>
                                     <td>
-                                        <para>PARTNER</para>
+                                        <para>MONTO</para>
                                     </td>
                                     <td>
                                         <para>INV. DATE</para>
@@ -195,12 +195,12 @@
                                     <td class="celdaDetail" width="4.66%">
                                         <span t-esc="formatLang(cl.am_id.date, date=True)"/>
                                     </td>
-                                    <td class="celdaDetail" width="6.66%">
-                                        <span t-esc="formatLang(cl.am_id.amount, digits=2, grouping=3, monetary=True)"/>
+                                    <td class="celdaDetailLeft" width="25.66%">
+                                        <span t-esc="cl.invoice_id.partner_id.display_name.upper()"/>
                                     </td>
 
-                                    <td class="celdaDetailLeft" width="25.66%">
-                                        <span t-esc="cl.invoice_id.partner_id.name.upper()"/>
+                                    <td class="celdaDetail" width="6.66%">
+                                        <span t-esc="formatLang(cl.am_id.amount, digits=2, grouping=3, monetary=True)"/>
                                     </td>
                                     <td class="celdaDetail" width="4.66%">
                                         <span t-esc="cl.invoice_id.date_invoice"/>
