@@ -193,10 +193,10 @@
                                         <span t-esc="cl.am_id.name.upper()"/>
                                     </td>
                                     <td class="celdaAbstractTotal" width="6.66%">
-                                        <span t-esc="cl.am_id.date"/>
+                                        <span t-esc="formatLang(cl.am_id.date, date=True)"/>
                                     </td>
                                     <td class="celdaAbstractTotal" width="6.66%">
-                                        <span t-esc="cl.am_id.amount"/>
+                                        <span t-esc="formatLang(cl.am_id.amount, digits=2, grouping=3, monetary=True)"/>
                                     </td>
 
                                     <td class="celdaAbstractTotal" width="6.66%">
@@ -209,33 +209,32 @@
                                         <span t-esc="cl.invoice_id.number.upper()"/>
                                     </td>
                                     <td class="celdaAbstractTotal" width="6.66%">
-                                        <span t-esc="cl.invoice_id.amount_untaxed"/>
+                                        <span t-esc="formatLang(cl.invoice_id.amount_untaxed, digits=2, grouping=3, monetary=True)"/>
                                     </td>
                                     <td class="celdaAbstractTotal" width="6.66%">
-                                        <span t-esc="((cl.invoice_id.amount_total / cl.invoice_id.amount_untaxed)-1)*100"/>
+                                        <span t-esc="formatLang(((cl.invoice_id.amount_total / cl.invoice_id.amount_untaxed)-1)*100, digits=2, grouping=3, monetary=True)"/>
                                     </td>
                                     <td class="celdaAbstractTotal" width="6.66%">
-                                        <span t-esc="cl.invoice_id.amount_total"/>
+                                        <span t-esc="formatLang(cl.invoice_id.amount_total, digits=2, grouping=3, monetary=True)"/>
                                     </td>
                                     <td class="celdaAbstractTotal" width="6.66%">
-                                        <span t-esc="cl.pay_inv"/>
+                                        <span t-esc="formatLang(cl.pay_inv, digits=2, grouping=3, monetary=True)"/>
+                                    </td>
 
-                                    </td>
-
                                     <td class="celdaAbstractTotal" width="6.66%">
-                                        <span t-esc="cl.rate_number"/>
+                                        <span t-esc="formatLang(cl.rate_number, digits=2, grouping=3, monetary=True)"/>
                                     </td>
                                     <td class="celdaAbstractTotal" width="6.66%">
-                                        <span t-esc="cl.days"/>
+                                        <span t-esc="formatLang(cl.days, digits=0)"/>
                                     </td>
                                     <td class="celdaAbstractTotal" width="6.66%">
-                                        <span t-esc="cl.timespan"/>
+                                        <span t-esc="formatLang(cl.timespan, digits=0)"/>
                                     </td>
                                     <td class="celdaAbstractTotal" width="6.66%">
-                                        <span t-esc="cl.baremo_comm"/>
+                                        <span t-esc="formatLang(cl.baremo_comm, digits=2, grouping=3, monetary=True)"/>
                                     </td>
                                     <td class="celdaAbstractTotal" width="6.66%">
-                                        <span t-esc="cl.commission_currency"/>
+                                        <span t-esc="formatLang(cl.commission_currency, digits=2, grouping=3, monetary=True)"/>
                                     </td>
                                 </tr>
                             </tbody>
