@@ -213,7 +213,6 @@ class account_voucher(osv.Model):
         else:
             if reference_amount < 0:
                 debit_line_vals.pop('analytic_account_id')
-                debit_line_vals.pop('tax_id_secondary')
             else:
                 credit_line_vals.pop('analytic_account_id')
 
