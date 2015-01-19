@@ -83,6 +83,13 @@ table {
     background-color:#F5F5F5;
     }
 
+    .celdaDetailLeft{
+    font-size:10pt;
+    font-family: monospace;
+    text-align:left;
+    background-color:#F5F5F5;
+    }
+
     .celdaAbstractTotal{
     font-size:11pt;
     text-align:left;
