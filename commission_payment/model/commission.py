@@ -3,6 +3,7 @@ import mx.DateTime
 from openerp.addons.decimal_precision import decimal_precision as dp
 import datetime
 from openerp.tools.translate import _
+from pandas import DataFrame
 
 COMMISSION_STATES = [
     ('draft', 'Draft'),
@@ -782,41 +783,33 @@ class commission_payment(osv.Model):
             sale_comm = {}
             # ordena en un arbol todas las lineas de comisiones de producto
             total_comm = 0
-            for comm_line in commission.comm_line_ids:
-                vendor_id = comm_line.salesman_id.id
-                currency_id = comm_line.currency_id.id
+            cl_fields = ['id', 'salesman_id', 'currency_id', 'commission',
+                         'commission_currency']
 
-                if vendor_id not in sale_comm.keys():
-                    sale_comm[vendor_id] = {}
+            cl_ids = commission.comm_line_ids.read(cl_fields, load=None)
 
-                if currency_id not in sale_comm[vendor_id].keys():
-                    sale_comm[vendor_id][currency_id] = {
-                        'comm_total': 0.0,
-                        'comm_total_currency': 0.0,
-                        'comm_lines_ids': [],
-                    }
+            cl_data = DataFrame(cl_ids).set_index('id')
+            cl_data_grouped = cl_data.groupby(['salesman_id', 'currency_id'])
 
-                sale_comm[vendor_id][currency_id]['comm_total'] += \
-                    comm_line.commission
-                sale_comm[vendor_id][currency_id]['comm_total_currency'] += \
-                    comm_line.commission_currency
-                sale_comm[vendor_id][currency_id]['comm_lines_ids'] += \
-                    [comm_line.id]
-                total_comm += comm_line.commission
+            cl_data_agg = cl_data_grouped.sum()
+            sale_comm_data = cl_data_agg.to_dict()
+            sale_comm_cl = cl_data_grouped.groups
 
-            for salesman_id, salesman_values in sale_comm.iteritems():
-                for currency_id, value in salesman_values.iteritems():
-                    vendor_id = salesman_ids.create(cr, uid, {
-                        'commission_id': commission.id,
-                        'salesman_id': salesman_id,
-                        'currency_id': currency_id,
-                        'comm_total': value['comm_total'],
-                        'comm_total_currency': value['comm_total_currency'],
-                    }, context=context)
+            sale_comm = sale_comm_data.get('commission')
+            sale_comm_curr = sale_comm_data.get('commission_currency')
+            for key, value in sale_comm.iteritems():
+                salesman_id, currency_id = key
+                vendor_id = salesman_ids.create(cr, uid, {
+                    'commission_id': commission.id,
+                    'salesman_id': salesman_id,
+                    'currency_id': currency_id,
+                    'comm_total': value,
+                    'comm_total_currency': sale_comm_curr[key],
+                }, context=context)
 
-                    comm_line_obj.write(cr, uid, value['comm_lines_ids'],
-                                        {'comm_salespeople_id': vendor_id},
-                                        context=context)
+                comm_line_obj.write(cr, uid, sale_comm_cl[key],
+                                    {'comm_salespeople_id': vendor_id},
+                                    context=context)
 
             commission.write({'total_comm': total_comm})
         return True
