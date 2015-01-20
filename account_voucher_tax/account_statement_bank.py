@@ -199,7 +199,7 @@ class account_bank_statement_line(osv.osv):
                     })
         return dat
 
-    def _get_retention(self, cr, uid, account_group={}, tax=[]):
+    def _get_retention(self, cr, uid, account_group=None, tax=None):
         ''' Get retention of same type of category tax
             @param account_group: Dictionary with grouped by key of account_id
                 and value amount fox example {1: 1.0}

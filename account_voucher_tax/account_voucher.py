@@ -419,7 +419,7 @@ class account_voucher(osv.Model):
                 line.update({'tax_line_ids': lista_tax_to_add})
         return lines
 
-    def _get_retention_voucher(self, cr, uid, invoice=[], tax=[]):
+    def _get_retention_voucher(self, cr, uid, invoice=None, tax=None):
         invoice_obj = self.pool.get('account.invoice')
         amount_retention_tax = 0
         for inv in invoice_obj.browse(cr, uid, [invoice.id]):
