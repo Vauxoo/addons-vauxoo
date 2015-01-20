@@ -89,7 +89,6 @@ class account_move_line(osv.Model):
             res[aml_id] = rec_aml
 
         return res
-        return True
 
     def _rec_aml_search(self, cursor, user, obj, name, args, context=None):
         if not args:
@@ -129,7 +128,7 @@ class account_move_line(osv.Model):
             qu1 = ' AND' + ' AND'.join(qu1)
         else:
             qu1 = ''
-        cursor.execute(QUERY_REC_INVOICE + qu1, qu2)
+        cursor.execute(QUERY_REC_AML + qu1, qu2)
         res = cursor.fetchall()
         if not res:
             return [('id', '=', '0')]
