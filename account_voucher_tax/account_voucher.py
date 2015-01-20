@@ -213,7 +213,6 @@ class account_voucher(osv.Model):
         else:
             if reference_amount < 0:
                 debit_line_vals.pop('analytic_account_id')
-                debit_line_vals.pop('tax_id_secondary')
             else:
                 credit_line_vals.pop('analytic_account_id')
 
@@ -267,9 +266,8 @@ class account_voucher(osv.Model):
         if line_tax and line_tax.tax_category_id\
                 and line_tax.tax_category_id.name in \
                 ('IVA', 'IVA-EXENTO', 'IVA-RET', 'IVA-PART'):
-            amount_base = line_tax.tax_category_id.value_tax and\
-                reference_amount / line_tax.tax_category_id.value_tax\
-                or amount_base_tax
+            amount_base = line_tax.amount and\
+                reference_amount / line_tax.amount or amount_base_tax
             tax_secondary = line_tax.id
         return [amount_base, tax_secondary]
 
@@ -323,7 +321,9 @@ class account_voucher(osv.Model):
                             cr, uid, invoice_ids, context=context):
                         for tax in invoice.tax_line:
                             if tax.tax_id.tax_voucher_ok:
-                                base_amount = tax.amount
+                                base_amount = tax.amount +\
+                                    self._get_retention_voucher(
+                                        cr, uid, invoice, tax)
                                 account = tax.tax_id.\
                                     account_collected_voucher_id.id
                                 credit_amount = float('%.*f' % (2, (
@@ -419,6 +419,20 @@ class account_voucher(osv.Model):
                 line.update({'tax_line_ids': lista_tax_to_add})
         return lines
 
+    def _get_retention_voucher(self, cr, uid, invoice=[], tax=[]):
+        invoice_obj = self.pool.get('account.invoice')
+        amount_retention_tax = 0
+        for inv in invoice_obj.browse(cr, uid, [invoice.id]):
+            for tax_inv in inv.tax_line:
+                if tax.amount > 0:
+                    if not tax_inv.tax_id.tax_voucher_ok and\
+                        tax_inv.tax_id.tax_category_id.code ==\
+                        tax.tax_id.tax_category_id.code and\
+                            tax_inv.tax_id.amount < 0:
+
+                        amount_retention_tax += tax_inv.amount
+        return amount_retention_tax
+
 
 class account_voucher_line(osv.Model):
     _inherit = 'account.voucher.line'
@@ -461,7 +475,9 @@ class account_voucher_line(osv.Model):
                     cr, uid, invoice_ids, context=context):
                 for tax in invoice.tax_line:
                     if tax.tax_id.tax_voucher_ok:
-                        base_amount = tax.amount
+                        base_amount = tax.amount +\
+                            voucher_obj._get_retention_voucher(
+                                cr, uid, invoice, tax)
                         account = tax.tax_id.account_collected_voucher_id.id
                         credit_amount = float('%.*f' %
                                               (2, (base_amount * factor)))
