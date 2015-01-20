@@ -91,6 +91,50 @@ class account_move_line(osv.Model):
         return res
         return True
 
+    def _rec_aml_search(self, cursor, user, obj, name, args, context=None):
+        if not args:
+            return []
+        aml_obj = self.pool.get('account.move.line')
+        i = 0
+        while i < len(args):
+            fargs = args[i][0].split('.', 1)
+            if len(fargs) > 1:
+                args[i] = (fargs[0], 'in', aml_obj.search(
+                    cursor, user, [(fargs[1], args[i][1], args[i][2])]))
+                i += 1
+                continue
+            if isinstance(args[i][2], basestring):
+                res_ids = aml_obj.name_search(
+                    cursor, user, args[i][2], [], args[i][1])
+                args[i] = (args[i][0], 'in', [xxx[0] for xxx in res_ids])
+            i += 1
+        qu1, qu2 = [], []
+        for xxx in args:
+            if xxx[1] != 'in':
+                if (xxx[2] is False) and (xxx[1] == '='):
+                    qu1.append('(id IS NULL)')
+                elif (xxx[2] is False) and (xxx[1] == '<>' or xxx[1] == '!='):
+                    qu1.append('(id IS NOT NULL)')
+                else:
+                    qu1.append('(id %s %s)' % (xxx[1], '%s'))
+                    qu2.append(xxx[2])
+            elif xxx[1] == 'in':
+                if len(xxx[2]) > 0:
+                    qu1.append('(id IN (%s))' % (
+                        ','.join(['%s'] * len(xxx[2]))))
+                    qu2 += xxx[2]
+                else:
+                    qu1.append(' (False)')
+        if qu1:
+            qu1 = ' AND' + ' AND'.join(qu1)
+        else:
+            qu1 = ''
+        cursor.execute(QUERY_REC_INVOICE + qu1, qu2)
+        res = cursor.fetchall()
+        if not res:
+            return [('id', '=', '0')]
+        return [('id', 'in', [x[0] for x in res])]
+
     def _get_reconciling_invoice(self, cr, uid, ids, fieldname, arg,
                                  context=None):
         res = {}.fromkeys(ids, None)
@@ -164,7 +208,7 @@ class account_move_line(osv.Model):
             string='Reconciling Journal Item',
             type="many2one",
             relation="account.move.line",
-            # fnct_search=_rec_invoice_search,
+            fnct_search=_rec_aml_search,
         ),
     }
     _defaults = {
