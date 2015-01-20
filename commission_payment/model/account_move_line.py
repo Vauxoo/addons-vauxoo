@@ -1,5 +1,42 @@
 from openerp.osv import osv, fields
 
+QUERY_REC_AML = '''
+SELECT id, aml_id
+FROM
+    (SELECT
+        l.id
+        , l.reconcile_id AS p_reconcile_id
+        , l.reconcile_partial_id AS p_reconcile_partial_id
+    FROM account_move_line l
+    INNER JOIN account_journal j ON l.journal_id = j.id
+    INNER JOIN account_account a ON l.account_id = a.id
+    WHERE
+        l.state = 'valid'
+        AND l.credit != 0.0
+        AND a.type = 'receivable'
+        AND j.type IN ('cash', 'bank')
+        AND (l.reconcile_id IS NOT NULL OR l.reconcile_partial_id IS NOT NULL)
+    ) AS PAY_VIEW,
+    (SELECT
+        l.id AS aml_id
+        , l.reconcile_id AS i_reconcile_id
+        , l.reconcile_partial_id AS i_reconcile_partial_id
+    FROM account_move_line l
+    INNER JOIN account_account a ON l.account_id = a.id
+    INNER JOIN account_journal j ON l.journal_id = j.id
+    WHERE
+        l.state = 'valid'
+        AND l.debit != 0.0
+        AND a.type = 'receivable'
+        AND j.type IN ('sale')
+        AND (l.reconcile_id IS NOT NULL OR l.reconcile_partial_id IS NOT NULL)
+    ) AS INV_VIEW
+WHERE
+    (p_reconcile_id = i_reconcile_id
+    OR
+    p_reconcile_partial_id = i_reconcile_partial_id)
+'''
+
 QUERY_REC_INVOICE = '''
 SELECT id, invoice_id
 FROM
@@ -40,6 +77,19 @@ WHERE
 
 
 class account_move_line(osv.Model):
+
+    def _get_reconciling_aml(self, cr, uid, ids, fieldname, arg, context=None):
+        res = {}.fromkeys(ids, None)
+        context = context or {}
+        sub_query = 'AND id IN (%s)' % ', '.join([str(idx) for idx in ids])
+        cr.execute(QUERY_REC_AML + sub_query)
+        rex = cr.fetchall()
+
+        for aml_id, rec_aml in rex:
+            res[aml_id] = rec_aml
+
+        return res
+        return True
 
     def _get_reconciling_invoice(self, cr, uid, ids, fieldname, arg,
                                  context=None):
@@ -108,6 +158,13 @@ class account_move_line(osv.Model):
             type="many2one",
             relation="account.invoice",
             fnct_search=_rec_invoice_search,
+        ),
+        'rec_aml': fields.function(
+            _get_reconciling_aml,
+            string='Reconciling Journal Item',
+            type="many2one",
+            relation="account.move.line",
+            # fnct_search=_rec_invoice_search,
         ),
     }
     _defaults = {
