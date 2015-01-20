@@ -251,6 +251,9 @@ class account_voucher(osv.Model):
             debit_line_vals['debit'] = cur_obj.compute(
                 cr, uid, reference_currency_id, dest_main_currency_id,
                 reference_amount, context=context)
+            debit_line_vals['amount_base'] = cur_obj.compute(
+                cr, uid, reference_currency_id, dest_main_currency_id,
+                abs(amount_base), context=context)
             if (not dest_acct.currency_id)\
                     or dest_acct.currency_id.id == reference_currency_id:
                 debit_line_vals.update(
