@@ -238,10 +238,16 @@ class commission_payment(osv.Model):
                     ('journal_id.type', 'in', ('bank', 'cash')),
                     ('credit', '>', 0.0),
                     ('paid_comm', '=', False),
-                    ('rec_invoice', '!=', False),
                     ]
             aml_ids = aml_obj.search(
-                cr, uid, args, context=context)
+                cr, uid, args + [('rec_invoice', '!=', False)],
+                context=context)
+
+            aml_ids += aml_obj.search(
+                cr, uid, args + [('rec_aml', '!=', False)],
+                context=context)
+
+            aml_ids = list(set(aml_ids))
 
             comm_brw.write({
                 'aml_ids': [(6, comm_brw.id, aml_ids)]})
@@ -741,6 +747,8 @@ class commission_payment(osv.Model):
 
                 # Verificar si esta linea tiene factura
                 if not aml_brw.rec_invoice:
+                    # TODO: Here we have to deal with the lines that comes from
+                    # another system
                     uninvoice_payment_ids.append(aml_brw.id)
                     continue
 
