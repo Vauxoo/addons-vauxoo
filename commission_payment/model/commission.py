@@ -367,9 +367,16 @@ class commission_payment(osv.Model):
         aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
         date = False
         if comm_brw.commission_policy_date_start == 'invoice_emission_date':
-            date = aml_brw.rec_invoice.date_invoice
+            if aml_brw.rec_invoice.date_invoice:
+                date = aml_brw.rec_invoice.date_invoice
+            else:
+                date = aml_brw.date
+
         elif comm_brw.commission_policy_date_start == 'invoice_due_date':
-            date = aml_brw.rec_invoice.date_due
+            if aml_brw.rec_invoice.date_invoice:
+                date = aml_brw.rec_invoice.date_due
+            else:
+                date = aml_brw.date_maturity
         return date
 
     def _get_commission_policy_end_date(self, cr, uid, ids, pay_id,
@@ -713,6 +720,68 @@ class commission_payment(osv.Model):
 
         return True
 
+    def _get_commission_payment_on_aml(self, cr, uid, ids, aml_id,
+                                       context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        context = context or {}
+        comm_brw = self.browse(cr, uid, ids[0], context=context)
+
+        aml_obj = self.pool.get('account.move.line')
+        comm_line_ids = self.pool.get('commission.lines')
+
+        aml_brw = aml_obj.browse(cr, uid, aml_id, context=context)
+        if not aml_brw.credit:
+            return True
+
+        commission_policy_date_start = \
+            self._get_commission_policy_start_date(cr, uid, ids, aml_id,
+                                                   context=context)
+
+        commission_policy_date_end = \
+            self._get_commission_policy_end_date(cr, uid, ids, aml_id,
+                                                 context=context)
+
+        commission_policy_baremo = \
+            self._get_commission_policy_baremo(cr, uid, ids, aml_id,
+                                               context=context)
+
+        commission_params = self._get_commission_rate(
+            cr, uid, comm_brw.id,
+            commission_policy_date_end,
+            commission_policy_date_start, dcto=0.0,
+            bar_brw=commission_policy_baremo)
+
+        bar_day = commission_params['bar_day']
+        bar_dcto_comm = commission_params['bar_dcto_comm']
+        bardctdsc = commission_params['bardctdsc']
+        emission_days = commission_params['emission_days']
+
+        # Generar las lineas de comision por cada factura
+        comm_line_ids.create(
+            cr, uid, {
+                'commission_id': comm_brw.id,
+                'aml_id': aml_brw.id,
+                'name': aml_brw.move_id.name and aml_brw.move_id.name or '/',
+                'pay_date': commission_policy_date_end,
+                'pay_off': aml_brw.credit,
+                'partner_id': aml_brw.partner_id.id,
+                'salesman_id': None,
+                'pay_inv': aml_brw.credit,
+                'inv_date': commission_policy_date_start,
+                'days': emission_days,
+                'inv_subtotal': None,
+                'perc_iva': None,
+                'rate_number': bardctdsc,
+                'timespan': bar_day,
+                'baremo_comm': bar_dcto_comm,
+                'commission': 0.0,
+                'commission_currency': None,
+                'currency_id': aml_brw.currency_id and aml_brw.currency_id.id
+                or aml_brw.company_id.currency_id.id,
+            }, context=context)
+
+        return True
+
     def _get_commission_payment(self, cr, uid, ids, aml_id, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
@@ -767,6 +836,11 @@ class commission_payment(osv.Model):
                 # se procede con la preparacion de las comisiones.
                 self._get_commission_payment(cr, uid, ids, pay_id,
                                              context=context)
+
+            for aml_id in uninvoice_payment_ids:
+                # se procede con la preparacion de las comisiones.
+                self._get_commission_payment_on_aml(cr, uid, ids, aml_id,
+                                                    context=context)
 
         return True
 
@@ -941,6 +1015,8 @@ class commission_payment(osv.Model):
         aml_obj = self.pool.get('account.move.line')
         # escribir en el aml el estado buleano de paid_comm a True para indicar
         # que ya esta comision se esta pagando
+        # TODO: prior to write anything here paid_comm field has to be check
+        # first if any of the line has being paid arise a warning
         for comm_brw in self.browse(cr, user, ids, context=context):
             aml_obj.write(cr, user,
                           [line.aml_id.id for line in comm_brw.comm_line_ids],
@@ -1019,7 +1095,8 @@ class commission_lines(osv.Model):
             string='Reconciling Invoice', relation='account.invoice',
             type='many2one', store=True, readonly=True),
         'partner_id': fields.many2one('res.partner', 'Empresa'),
-        'salesman_id': fields.many2one('res.users', 'Salesman', required=True),
+        'salesman_id': fields.many2one('res.users', 'Salesman',
+                                       required=False),
         'comm_salespeople_id': fields.many2one(
             'commission.salesman', 'Salespeople Commission', required=False),
         'comm_voucher_id': fields.many2one(
@@ -1093,7 +1170,7 @@ class commission_salesman(osv.Model):
     _columns = {
         'commission_id': fields.many2one('commission.payment',
                                          'Commission Document'),
-        'salesman_id': fields.many2one('res.users', 'Salesman', required=True),
+        'salesman_id': fields.many2one('res.users', 'Salesman', required=False),
         'comm_total': fields.float(
             'Commission Amount',
             digits_compute=dp.get_precision('Commission')),
