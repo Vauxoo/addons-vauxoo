@@ -213,7 +213,6 @@ class account_bank_statement_line(osv.osv):
                 tax_ids = tax_obj.search(
                     cr, uid,
                     [('account_collected_id', '=', move_account_tax),
-                     ('tax_voucher_ok', '=', False),
                      ('tax_category_id.code', '=', tax.tax_category_id.code),
                      ('amount', '<', 0), ('id', '<>', tax.id),
                      ], limit=1)
