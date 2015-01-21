@@ -1,10 +1,10 @@
 from openerp.osv import osv, fields
 
 QUERY_REC_AML = '''
-SELECT id, aml_id
+SELECT aml_id, id
 FROM
     (SELECT
-        l.id
+        l.id AS aml_id
         , l.reconcile_id AS p_reconcile_id
         , l.reconcile_partial_id AS p_reconcile_partial_id
     FROM account_move_line l
@@ -18,7 +18,7 @@ FROM
         AND (l.reconcile_id IS NOT NULL OR l.reconcile_partial_id IS NOT NULL)
     ) AS PAY_VIEW,
     (SELECT
-        l.id AS aml_id
+        l.id
         , l.reconcile_id AS i_reconcile_id
         , l.reconcile_partial_id AS i_reconcile_partial_id
     FROM account_move_line l
@@ -81,7 +81,7 @@ class account_move_line(osv.Model):
     def _get_reconciling_aml(self, cr, uid, ids, fieldname, arg, context=None):
         res = {}.fromkeys(ids, None)
         context = context or {}
-        sub_query = 'AND id IN (%s)' % ', '.join([str(idx) for idx in ids])
+        sub_query = 'AND aml_id IN (%s)' % ', '.join([str(idx) for idx in ids])
         cr.execute(QUERY_REC_AML + sub_query)
         rex = cr.fetchall()
 
