@@ -2,7 +2,7 @@
 ##############################################################################
 #
 # Copyright (c) 2010 Vauxoo C.A. (http://openerp.com.ve/) All Rights Reserved.
-#                    Javier Duran <javier@vauxoo.com>
+#                    Humberto Arocha <hbto@vauxoo.com>
 #
 #
 # WARNING: This program as such is intended to be used by professional
@@ -28,4 +28,6 @@
 #
 ##############################################################################
 
-from . import report
+from . import commission
+from . import account_move_line
+from . import account_invoice

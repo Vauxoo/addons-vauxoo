@@ -7,6 +7,7 @@
 
     <record id="group_comm_payment_manager" model="res.groups">
         <field name="name">Commision Payment / Manager</field>
+        <field name="implied_ids" eval="[(4, ref('commission_payment.group_comm_payment_user'))]"/>
     </record>
 
 </data>

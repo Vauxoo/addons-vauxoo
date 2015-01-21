@@ -31,9 +31,9 @@ class account_invoice_refund(osv.osv_memory):
 
     _inherit = "account.invoice.refund"
 
-    filter_refund = \
+    filter_refund_inh = \
         air.account_invoice_refund._columns.get('filter_refund').__dict__
-    REFUND_METHOD = filter_refund.get('selection')
+    REFUND_METHOD = filter_refund_inh.get('selection')
     REFUND_METHOD.append(('early_payment',
                          'Early payment: Discount early payment'))
 
@@ -61,11 +61,11 @@ class account_invoice_refund(osv.osv_memory):
 
         return res
 
-    def default_get(self, cur, uid, fields, context=None):
+    def default_get(self, cur, uid, fields_data, context=None):
         if context is None:
             context = {}
         ret = super(account_invoice_refund, self).default_get(cur, uid,
-                                                              fields,
+                                                              fields_data,
                                                               context=context)
         active_id = context.get('active_id', False)
         if active_id:
@@ -80,17 +80,16 @@ class account_invoice_refund(osv.osv_memory):
         inv = inv_obj.browse(cur, uid, active_id, context=context)
         return {
             'value': {
-                'amount_total': percent * (inv.amount_total / 100),
+                'amount_total': inv.amount_total * (percent / 100),
             }
         }
-        return {}
 
     _columns = {
-        'filter_refund': fields.selection(REFUND_METHOD,
-                                          "Refund Method",
-                                          required=True,
-                                          help=filter_refund.get('_args')
-                                                            .get('help')),
+        'filter_refund': fields.selection(
+            REFUND_METHOD,
+            "Refund Method",
+            required=True,
+            help=filter_refund_inh.get('_args').get('help')),
         'percent': fields.float('Percent'),
         'product_id': fields.many2one('product.product', string='Product'),
         'amount_total': fields.float('Amount'),
@@ -112,40 +111,74 @@ class account_invoice_refund(osv.osv_memory):
         refund_id = result.get('domain')[1][2]
 
         wizard_brw = self.browse(cur, uid, ids, context=context)
+        percent = wizard_brw.percent / 100
 
         for inv in inv_obj.browse(cur, uid, context.get('active_ids'),
                                   context=context):
-            if mode in ('early_payment'):
+
+            if mode in 'early_payment':
+
                 refund = inv_obj.browse(cur, uid, refund_id, context=context)
                 refund_lines_brw = refund.invoice_line
-                percent = wizard_brw.percent / 100
                 line_data_dict = {}
-                for refund_line in refund_lines_brw:
-                    tax_tuple = refund_line.\
-                        invoice_line_tax_id.\
-                        __dict__.get('_ids')
 
-                    price_unit_discount = refund_line.price_unit * percent
+                if wizard_brw.amount_total == \
+                        round(inv.amount_total * percent, 2):
+                    for refund_line in refund_lines_brw:
+                        tax_tuple = refund_line.\
+                            invoice_line_tax_id.\
+                            __dict__.get('_ids')
 
-                    if line_data_dict.get(tax_tuple):
-                        line_data_dict[tax_tuple]['price_unit'] +=\
-                            price_unit_discount
-                    else:
-                        line_data_dict[tax_tuple] =\
+                        price_unit_discount = refund_line.price_unit *\
+                            percent * refund_line.quantity
+
+                        if line_data_dict.get(tax_tuple):
+                            line_data_dict[tax_tuple]['price_unit'] +=\
+                                price_unit_discount
+                        else:
+                            line_data_dict[tax_tuple] =\
+                                inv_line_obj.copy_data(cur,
+                                                       uid,
+                                                       refund_line.id)
+                            line_data_dict[tax_tuple]['product_id'] =\
+                                wizard_brw.product_id.id
+                            line_data_dict[tax_tuple]['name'] =\
+                                wizard_brw.product_id.name
+                            line_data_dict[tax_tuple]['price_unit'] =\
+                                price_unit_discount
+                            line_data_dict[tax_tuple]['quantity'] =\
+                                1
+
+                        inv_line_obj.unlink(cur, uid, [refund_line.id])
+                    for new_refund_line in line_data_dict.values():
+                        inv_line_obj.create(cur,
+                                            uid,
+                                            new_refund_line,
+                                            context=context)
+
+                else:
+                    if refund_lines_brw:
+                        refund_line = refund_lines_brw[0]
+                        new_refund_line =\
                             inv_line_obj.copy_data(cur, uid, refund_line.id)
-                        line_data_dict[tax_tuple]['product_id'] =\
+                        new_refund_line['product_id'] =\
                             wizard_brw.product_id.id
-                        line_data_dict[tax_tuple]['name'] =\
+                        new_refund_line['name'] =\
                             wizard_brw.product_id.name
-                        line_data_dict[tax_tuple]['price_unit'] =\
-                            price_unit_discount
+                        new_refund_line['price_unit'] =\
+                            wizard_brw.amount_total
+                        new_refund_line['quantity'] =\
+                            1
+                        new_refund_line['invoice_line_tax_id'] =\
+                            False
 
-                    inv_line_obj.unlink(cur, uid, [refund_line.id])
-                for new_refund_line in line_data_dict.values():
-                    inv_line_obj.cureate(cur,
-                                         uid,
-                                         new_refund_line,
-                                         context=context)
+                        for refund_line in refund_lines_brw:
+                            inv_line_obj.unlink(cur, uid, [refund_line.id])
+
+                        inv_line_obj.create(cur,
+                                            uid,
+                                            new_refund_line,
+                                            context=context)
 
                 refund.button_reset_taxes()
                 movelines = inv.move_id.line_id
@@ -166,8 +199,8 @@ class account_invoice_refund(osv.osv_memory):
                 for account in to_reconcile_ids:
                     account_m_line_obj.reconcile_partial(cur,
                                                          uid,
-                                                         to_reconcile_ids[
-                                                             account],
+                                                         to_reconcile_ids
+                                                         [account],
                                                          context=context)
         return result
 

@@ -56,8 +56,7 @@ class sale_order_line(osv.osv):
                 cr, uid, product, context=context)
             prod_category = product_id.categ_id and product_id.categ_id.name
             name_description = res.get('value', {}).pop('name', '')
-            prod_category = prod_category.encode('ascii', 'replace')
-            name_description = '[{}]'.format(prod_category) + name_description
+            name_description = '[%s]' % (prod_category) + name_description
             res.get('value', {}).update({'name': name_description})
         return res
 
@@ -94,16 +93,19 @@ class sale_order(osv.osv):
         if isinstance(ids, (int, long)):
             ids = [ids]
 
-        cr.execute(
-            """ SELECT id, name FROM sale_order_line
-            WHERE order_id IN %s
-            ORDER BY name  """, (tuple(ids), ))
-        dat = cr.dictfetchall()
+        for order_id in ids:
 
-        o_sequence = 0
-        for o_line in dat:
-            o_line_obj.write(cr, uid, o_line['id'],
-                             {'sequence': o_sequence+1})
-            o_sequence += 1
+            cr.execute(
+                """ SELECT id, name FROM sale_order_line
+                WHERE order_id = %s
+                ORDER BY name  """, (order_id, ))
+            dat = cr.dictfetchall()
+
+            o_sequence = 0
+
+            for o_line in dat:
+                o_line_obj.write(cr, uid, o_line['id'],
+                                 {'sequence': o_sequence+1})
+                o_sequence += 1
 
         return True
