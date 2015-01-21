@@ -414,7 +414,7 @@
             <field name="name">commission.salesman.tree</field>
             <field name="model">commission.salesman</field>
             <field name="arch" type="xml">
-                <tree string="Pago de Comisiones">
+                <tree string="Salespeople Commissions" colors="red:salesman_id is False">
                     <field name="salesman_id"/>
                     <field name="comm_total" sum="Commission Amount"/>
                     <field name="comm_total_currency"/>
@@ -428,34 +428,39 @@
             <field name="model">commission.salesman</field>
             <field name="arch" type="xml">
                 <form string="Pago de Comisiones" version="7.0">
-                    <field name="salesman_id"/>
-                    <field name="comm_total"/>
-                    <field name="comm_total_currency"/>
-                    <field name="currency_id"/>
-                    <field name="comm_lines_ids">
-                        <tree>
-                            <field name="name"/>
-                            <field name="pay_date"/>
-                            <field name="pay_off"/>
-                            <field name="partner_id"/>
-                            <field name="salesman_id"/>
-                            <field name="pay_inv"/>
-                            <field name="invoice_id"/>
-                            <field name="inv_date"/>
-                            <field name="days"/>
-                            <field name="inv_subtotal"/>
-                            <field name="product_id"/>
-                            <field name="price_unit"/>
-                            <field name="price_subtotal"/>
-                            <field name="price_list"/>
-                            <field name="price_date"/>
-                            <field name="rate_item"/>
-                            <field name="rate_number"/>
-                            <field name="timespan"/>
-                            <field name="baremo_comm"/>
-                            <field name="commission" sum=""/>
-                            <field name="commission_currency" sum=""/>
-                            <field name="currency_id"/>
+                    <group>
+                        <field name="salesman_id"/>
+                        <field name="currency_id"/>
+                        <field name="comm_total"/>
+                        <field name="comm_total_currency"/>
+                    </group>
+                    <field
+                        name="comm_lines_ids"
+                        attrs="{'readonly':[('salesman_id','!=',False)]}"
+                        >
+                        <tree editable='top'>
+                            <field name="name" readonly='1'/>
+                            <field name="pay_date" readonly='1'/>
+                            <field name="pay_off" readonly='1'/>
+                            <field name="partner_id" required='1' readonly='0'/>
+                            <field name="salesman_id" required='1' readonly='0'/>
+                            <field name="pay_inv" readonly='1'/>
+                            <field name="invoice_id" readonly='1'/>
+                            <field name="inv_date" readonly='1'/>
+                            <field name="days" readonly='1'/>
+                            <field name="inv_subtotal" readonly='1'/>
+                            <field name="product_id" readonly='1'/>
+                            <field name="price_unit" readonly='1'/>
+                            <field name="price_subtotal" readonly='1'/>
+                            <field name="price_list" readonly='1'/>
+                            <field name="price_date" readonly='1'/>
+                            <field name="rate_item" readonly='1'/>
+                            <field name="rate_number" readonly='1'/>
+                            <field name="timespan" readonly='1'/>
+                            <field name="baremo_comm" readonly='1'/>
+                            <field name="commission" sum="" readonly='1'/>
+                            <field name="commission_currency" sum="" readonly='1'/>
+                            <field name="currency_id" readonly='1'/>
                         </tree>
                     </field>
                 </form>

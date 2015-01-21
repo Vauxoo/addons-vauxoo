@@ -1168,12 +1168,13 @@ class commission_salesman(osv.Model):
     _rec_name = 'salesman_id'
 
     _columns = {
-        'commission_id': fields.many2one('commission.payment',
-                                         'Commission Document'),
-        'salesman_id': fields.many2one('res.users', 'Salesman', required=False),
+        'commission_id': fields.many2one(
+            'commission.payment', 'Commission Document', readonly=True),
+        'salesman_id': fields.many2one(
+            'res.users', 'Salesman', required=False, readonly=True),
         'comm_total': fields.float(
             'Commission Amount',
-            digits_compute=dp.get_precision('Commission')),
+            digits_compute=dp.get_precision('Commission'), readonly=True),
         'comm_voucher_ids': fields.one2many(
             'commission.voucher',
             'comm_sale_id', 'Vouchers Affected in this commission',
@@ -1183,10 +1184,10 @@ class commission_salesman(osv.Model):
             'comm_salespeople_id', 'Salespeople Commission Details',
             required=False),
         'currency_id':
-            fields.many2one('res.currency', 'Currency'),
+            fields.many2one('res.currency', 'Currency', readonly=True),
         'comm_total_currency': fields.float(
             'Currency Amount',
-            digits_compute=dp.get_precision('Commission')),
+            digits_compute=dp.get_precision('Commission'), readonly=True),
         'company_id': fields.related(
             'commission_id', 'company_id',
             string='Company',
