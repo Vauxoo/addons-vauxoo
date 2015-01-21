@@ -267,6 +267,7 @@ class commission_payment(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
         inv_obj = self.pool.get('account.invoice')
+        aml_obj = self.pool.get('account.move.line')
 
         for comm_brw in self.browse(cr, uid, ids, context=context):
             comm_brw.write({'aml_ids': []})
@@ -279,18 +280,35 @@ class commission_payment(osv.Model):
                 cr, uid, [('state', '=', 'paid'),
                           ('type', '=', 'out_invoice'),
                           ('date_last_payment', '>=', date_start),
-                          ('date_last_payment', '<=', date_stop)])
+                          ('date_last_payment', '<=', date_stop),
+                          ], context=context)
 
             comm_brw.write({
                 'invoice_ids': [(6, comm_brw.id, invoice_ids)]})
-
-            comm_brw.refresh()
 
             aml_ids = [aml_brw.id for inv_brw in comm_brw.invoice_ids
                        for aml_brw in inv_brw.payment_ids
                        if aml_brw.journal_id.type in ('bank', 'cash')
                        ]
 
+            aml_ids2 = aml_obj.search(
+                cr, uid, [('state', '=', 'valid'),
+                          ('reconcile_id', '!=', False),
+                          ('journal_id.type', '=', 'sale'),
+                          # ('date_last_payment', '>=', date_start),
+                          # ('date_last_payment', '<=', date_stop),
+                          ], context=context)
+
+            aml_ids2 = aml_obj.search(
+                cr, uid, [('state', '=', 'valid'),
+                          ('reconcile_id', '!=', False),
+                          ('journal_id.type', 'in', ('bank', 'cash')),
+                          ('rec_aml', 'in', aml_ids2),
+                          # ('date_last_payment', '>=', date_start),
+                          # ('date_last_payment', '<=', date_stop),
+                          ], context=context)
+
+            aml_ids = list(set(aml_ids + aml_ids2))
             comm_brw.write({'aml_ids': [(6, comm_brw.id, aml_ids)]})
 
         return True
