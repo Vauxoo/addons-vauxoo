@@ -857,6 +857,10 @@ class commission_payment(osv.Model):
         # vendedor para mayor facilidad de uso
 
         for commission in self.browse(cr, uid, ids, context=context):
+            # Erasing what was previously set as Commission per Salesman
+            commission.salesman_ids.unlink()
+            commission.comm_invoice_ids.unlink()
+            commission.comm_voucher_ids.unlink()
 
             # recoge todos los vendedores y suma el total de sus comisiones
             sale_comm = {}
@@ -961,6 +965,23 @@ class commission_payment(osv.Model):
         self._post_processing(cr, uid, ids, context=context)
 
         self.write(cr, uid, ids, {'state': 'open'}, context=context)
+        return True
+
+    def _recompute_commission(self, cr, uid, ids, context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        context = context or {}
+        for comm_brw in self.browse(cr, uid, ids, context=context):
+            for cs_brw in comm_brw.salesman_ids:
+                if cs_brw.salesman_id:
+                    continue
+                for cl_brw in cs_brw.comm_lines_ids:
+                    cl_brw._recompute_commission()
+        return True
+
+    def action_fix_and_recompute(self, cr, uid, ids, context=None):
+
+        self._recompute_commission(cr, uid, ids, context=context)
+        self._post_processing(cr, uid, ids, context=context)
         return True
 
     def action_draft(self, cr, user, ids, context=None):
@@ -1156,6 +1177,72 @@ class commission_lines(osv.Model):
     _defaults = {
         'name': lambda *a: None,
     }
+
+    def _recompute_commission(self, cr, uid, ids, context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        context = context or {}
+        cl_brw = self.browse(cr, uid, ids[0], context=context)
+        comm_brw = cl_brw.commission_id
+
+        aml_brw = cl_brw.aml_id
+        aml_id = cl_brw.aml_id.id
+        if not aml_brw.credit:
+            return True
+
+        commission_policy_date_start = \
+            comm_brw._get_commission_policy_start_date(aml_id)
+
+        commission_policy_date_end = \
+            comm_brw._get_commission_policy_end_date(aml_id)
+
+        commission_policy_baremo = \
+            comm_brw._get_commission_policy_baremo(aml_id)
+
+        commission_params = comm_brw._get_commission_rate(
+            commission_policy_date_end,
+            commission_policy_date_start, dcto=0.0,
+            bar_brw=commission_policy_baremo)
+
+        bar_day = commission_params['bar_day']
+        bar_dcto_comm = commission_params['bar_dcto_comm']
+        bardctdsc = commission_params['bardctdsc']
+        emission_days = commission_params['emission_days']
+
+        ###############################
+        # CALCULO DE COMISION POR AML #
+        ###############################
+
+        # Right now I have not figure out a way to know how much was taxed
+        perc_iva = 0.0
+
+        comm_line = aml_brw.credit * (bar_dcto_comm / 100)
+
+        if aml_brw.currency_id and aml_brw.amount_currency:
+            commission_currency = abs(aml_brw.amount_currency) * (bar_dcto_comm
+                                                                  / 100)
+        elif aml_brw.currency_id and not aml_brw.amount_currency:
+            return True
+        else:
+            commission_currency = comm_line
+
+        # Generar las lineas de comision por cada factura
+        cl_brw.write({
+            'pay_date': commission_policy_date_end,
+            'pay_off': aml_brw.credit,
+            'pay_inv': aml_brw.credit,
+            'inv_date': commission_policy_date_start,
+            'days': emission_days,
+            'inv_subtotal': None,
+            'perc_iva': perc_iva,
+            'rate_number': bardctdsc,
+            'timespan': bar_day,
+            'baremo_comm': bar_dcto_comm,
+            'commission': comm_line,
+            'commission_currency': commission_currency,
+            'currency_id': aml_brw.currency_id and aml_brw.currency_id.id
+            or aml_brw.company_id.currency_id.id,
+            })
+        return True
 
 
 class commission_salesman(osv.Model):
