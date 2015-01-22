@@ -264,6 +264,7 @@
                             </page>
                             <page
                                 string="Invoices"
+                                invisible="1"
                                 >
                                 <field
                                     name="invoice_ids"
