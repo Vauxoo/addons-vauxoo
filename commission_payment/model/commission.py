@@ -696,6 +696,7 @@ class commission_payment(osv.Model):
                         cr, uid, {
                             'commission_id': comm_brw.id,
                             'aml_id': aml_brw.id,
+                            'am_rec': inv_brw.move_id.id,
                             'name':
                             aml_brw.move_id.name and
                             aml_brw.move_id.name or '/',
@@ -825,6 +826,7 @@ class commission_payment(osv.Model):
             cr, uid, {
                 'commission_id': comm_brw.id,
                 'aml_id': aml_brw.id,
+                'am_rec': inv_brw.move_id.id,
                 'name':
                 aml_brw.move_id.name and
                 aml_brw.move_id.name or '/',
@@ -891,6 +893,7 @@ class commission_payment(osv.Model):
             cr, uid, {
                 'commission_id': comm_brw.id,
                 'aml_id': aml_brw.id,
+                'am_rec': aml_brw.rec_aml.move_id.id,
                 'name': aml_brw.move_id.name and aml_brw.move_id.name or '/',
                 'pay_date': aml_brw.date,
                 'pay_off': aml_brw.credit,
@@ -1236,6 +1239,7 @@ class commission_lines(osv.Model):
             digits_compute=dp.get_precision('Commission')),
 
         'aml_id': fields.many2one('account.move.line', 'Entry Line'),
+        'am_rec': fields.many2one('account.move', 'Reconciling Entry'),
         'am_id': fields.related(
             'aml_id', 'move_id',
             string='Journal Entry', relation='account.move',

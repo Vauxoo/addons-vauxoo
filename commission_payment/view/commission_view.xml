@@ -56,6 +56,7 @@
                     <field name="salesman_id" required='1' readonly='0'/>
                     <field name="pay_inv" readonly='1'/>
                     <field name="invoice_id" readonly='1'/>
+                    <field name="am_rec" readonly='1'/>
                     <field name="inv_date" readonly='1'/>
                     <field name="date_start" readonly='1'/>
                     <field name="date_stop" readonly='1'/>
@@ -385,6 +386,7 @@
                                         <field name="salesman_id"/>
                                         <field name="pay_inv"/>
                                         <field name="invoice_id"/>
+                                        <field name="am_rec"/>
                                         <field name="inv_date"/>
                                         <field name="date_start"/>
                                         <field name="date_stop"/>
@@ -422,6 +424,7 @@
                                         <field name="salesman_id"/>
                                         <field name="pay_inv"/>
                                         <field name="invoice_id"/>
+                                        <field name="am_rec"/>
                                         <field name="inv_date"/>
                                         <field name="date_start"/>
                                         <field name="date_stop"/>
@@ -547,6 +550,7 @@
                             <field name="salesman_id" required='1' readonly='0'/>
                             <field name="pay_inv" readonly='1'/>
                             <field name="invoice_id" readonly='1'/>
+                            <field name="am_rec" readonly='1'/>
                             <field name="inv_date" readonly='1'/>
                             <field name="date_start" readonly='1'/>
                             <field name="date_stop" readonly='1'/>
@@ -593,6 +597,7 @@
                     <field name="salesman_id"/>
                     <field name="pay_inv"/>
                     <field name="invoice_id"/>
+                    <field name="am_rec"/>
                     <field name="inv_date"/>
                     <field name="date_start"/>
                     <field name="date_stop"/>
