@@ -406,7 +406,6 @@ class commission_payment(osv.Model):
         aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
         date = False
         if comm_brw.commission_policy_date_end == 'last_payment_date':
-            date = aml_brw.rec_invoice.date_last_payment
             if aml_brw.rec_invoice:
                 date = aml_brw.rec_invoice.date_last_payment
             else:
