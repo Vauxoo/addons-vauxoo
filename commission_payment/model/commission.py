@@ -243,10 +243,7 @@ class commission_payment(osv.Model):
             result['domain'] = "[('id','in',["+','.join(map(str,
                                                             aml_ids))+"])]"
         else:
-            res = mod_obj.get_object_reference(cr, uid, 'account',
-                                               'view_move_line_form')
-            result['views'] = [(res and res[1] or False, 'form')]
-            result['res_id'] = aml_ids and aml_ids[0] or False
+            result['domain'] = "[('id','in',[])]"
         return result
 
     def action_view_invoice(self, cr, uid, ids, context=None):
@@ -271,10 +268,7 @@ class commission_payment(osv.Model):
             result['domain'] = "[('id','in',["+','.join(map(str,
                                                             inv_ids))+"])]"
         else:
-            res = mod_obj.get_object_reference(cr, uid, 'account',
-                                               'invoice_form')
-            result['views'] = [(res and res[1] or False, 'form')]
-            result['res_id'] = inv_ids and inv_ids[0] or False
+            result['domain'] = "[('id','in',[])]"
         return result
 
     def _prepare_based_on_payments(self, cr, uid, ids, context=None):
@@ -949,6 +943,11 @@ class commission_payment(osv.Model):
         # que necesitan correccion se procede a agrupar las comisiones por
         # vendedor para mayor facilidad de uso
 
+        cl_fields = ['id', 'salesman_id', 'currency_id', 'commission',
+                     'commission_currency', 'am_id', 'invoice_id',
+                     'comm_salespeople_id', 'comm_voucher_id', ]
+
+
         for commission in self.browse(cr, uid, ids, context=context):
             # Erasing what was previously set as Commission per Salesman
             commission.salesman_ids.unlink()
@@ -958,11 +957,9 @@ class commission_payment(osv.Model):
             # recoge todos los vendedores y suma el total de sus comisiones
             sale_comm = {}
             # ordena en un arbol todas las lineas de comisiones de producto
-            cl_fields = ['id', 'salesman_id', 'currency_id', 'commission',
-                         'commission_currency', 'am_id', 'invoice_id',
-                         'comm_salespeople_id', 'comm_voucher_id', ]
-
             cl_ids = commission.comm_line_ids.read(cl_fields, load=None)
+            if not cl_ids:
+                continue
 
             cl_data = DataFrame(cl_ids).set_index('id')
             cl_data_grouped = cl_data.groupby(['salesman_id', 'currency_id'])
