@@ -1245,7 +1245,7 @@ class commission_lines(osv.Model):
         'comm_voucher_id': fields.many2one(
             'commission.voucher', 'Voucher Commission', required=False),
         'pay_inv': fields.float(
-            'Abono Fact.',
+            'Pay. to Doc.',
             digits_compute=dp.get_precision('Commission')),
 
         'inv_date': fields.date('Invoice Date'),
