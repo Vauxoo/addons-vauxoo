@@ -416,7 +416,9 @@ class commission_payment(osv.Model):
         return date
 
     def _get_commission_salesman_policy(self, cr, uid, ids, pay_id,
-                                        context=None):
+                                        salesman_id=None, context=None):
+        if salesman_id:
+            return salesman_id
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
         aml_obj = self.pool.get('account.move.line')
@@ -446,6 +448,7 @@ class commission_payment(osv.Model):
         return res
 
     def _get_commission_policy_baremo(self, cr, uid, ids, pay_id,
+                                      partner_id=None, salesman_id=None,
                                       context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
@@ -455,19 +458,22 @@ class commission_payment(osv.Model):
         aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
         res = None
         if comm_brw.commission_baremo_policy == 'onCompany':
-            res = aml_brw.company_id.partner_id.baremo_id
+            partner_id = comm_brw.company_id.partner_id
         elif comm_brw.commission_baremo_policy == 'onPartner':
-            res = aml_brw.rec_invoice.partner_id.baremo_id
+            partner_id = partner_id or aml_brw.rec_invoice.partner_id
         elif comm_brw.commission_baremo_policy == 'onAccountingPartner':
-            res = rp_obj._find_accounting_partner(
-                aml_brw.rec_invoice.partner_id).baremo_id
+            partner_id = partner_id or rp_obj._find_accounting_partner(
+                aml_brw.rec_invoice.partner_id)
         elif comm_brw.commission_baremo_policy == 'onUser':
-            res = self._get_commission_salesman_policy(
-                cr, uid, ids[0], pay_id, context=context).baremo_id
+            partner_id = self._get_commission_salesman_policy(
+                cr, uid, ids[0], pay_id, salesman_id=salesman_id,
+                context=context)
         elif comm_brw.commission_baremo_policy == 'onCommission':
             res = comm_brw.baremo_id
         # Fall back to baremo in Commission
-        if not res:
+        if partner_id:
+            res = partner_id.baremo_id
+        else:
             res = comm_brw.baremo_id
         return res
 
@@ -1227,7 +1233,9 @@ class commission_lines(osv.Model):
             comm_brw._get_commission_policy_end_date(aml_id)
 
         commission_policy_baremo = \
-            comm_brw._get_commission_policy_baremo(aml_id)
+            comm_brw._get_commission_policy_baremo(
+                aml_id, partner_id=cl_brw.partner_id,
+                salesman_id=cl_brw.salesman_id)
 
         commission_params = comm_brw._get_commission_rate(
             commission_policy_date_end,
