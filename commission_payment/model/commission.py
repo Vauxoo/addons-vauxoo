@@ -232,7 +232,7 @@ class commission_payment(osv.Model):
         act_obj = self.pool.get('ir.actions.act_window')
 
         result = mod_obj.get_object_reference(cr, uid, 'commission_payment',
-                                              'comm_line_invoice_ids_all_act')
+                                              'comm_line_fix_act')
         id = result and result[1] or False
         result = act_obj.read(cr, uid, [id], context=context)[0]
         # compute the number of payments to display

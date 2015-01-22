@@ -28,6 +28,61 @@
             </field>
         </record>
 
+        <!-- Creating and Action to open the View LIST for the object commission.lines to fix-->
+        <record model="ir.actions.act_window" id="comm_line_fix_act">
+            <field name="name">Commissions on Products</field>
+            <field name="res_model">commission.lines</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                No commissions for Products have been computed
+              </p><p>
+                It could be due to the fact that there are some missing
+                parameters in computation or just this Commissions is void
+              </p>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="commission_lines_fix_tree">
+            <field name="name">commission.lines.fix.tree</field>
+            <field name="model">commission.lines</field>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <tree editable='top'>
+                    <field name="name" readonly='1'/>
+                    <field name="pay_date" readonly='1'/>
+                    <field name="pay_off" readonly='1'/>
+                    <field name="partner_id" required='1' readonly='0'/>
+                    <field name="salesman_id" required='1' readonly='0'/>
+                    <field name="pay_inv" readonly='1'/>
+                    <field name="invoice_id" readonly='1'/>
+                    <field name="inv_date" readonly='1'/>
+                    <field name="date_start" readonly='1'/>
+                    <field name="date_stop" readonly='1'/>
+                    <field name="days" readonly='1'/>
+                    <field name="inv_subtotal" readonly='1'/>
+                    <field name="product_id" readonly='1'/>
+                    <field name="price_unit" readonly='1'/>
+                    <field name="price_subtotal" readonly='1'/>
+                    <field name="price_list" readonly='1'/>
+                    <field name="price_date" readonly='1'/>
+                    <field name="rate_item" readonly='1'/>
+                    <field name="rate_number" readonly='1'/>
+                    <field name="timespan" readonly='1'/>
+                    <field name="baremo_comm" readonly='1'/>
+                    <field name="commission" sum="" readonly='1'/>
+                    <field name="commission_currency" sum="" readonly='1'/>
+                    <field name="currency_id" readonly='1'/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window.view" id="comm_line_fix_act_view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="commission_lines_fix_tree"/>
+            <field name="act_window_id" ref="comm_line_fix_act"/>
+        </record>
+
         <!-- Creating and Action to open the View LIST for the object commission.lines -->
         <record model="ir.actions.act_window" id="comm_line_product_ids_all_act">
             <field name="name">Commissions on Products</field>
