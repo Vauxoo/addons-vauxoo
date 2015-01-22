@@ -233,8 +233,8 @@ class commission_payment(osv.Model):
 
         result = mod_obj.get_object_reference(cr, uid, 'commission_payment',
                                               'comm_line_fix_act')
-        id = result and result[1] or False
-        result = act_obj.read(cr, uid, [id], context=context)[0]
+        idx = result and result[1] or False
+        result = act_obj.read(cr, uid, [idx], context=context)[0]
         # compute the number of payments to display
         cl_ids = []
         for cp_brw in self.browse(cr, uid, ids, context=context):
@@ -244,8 +244,9 @@ class commission_payment(osv.Model):
                        ]
         # choose the view_mode accordingly
         if len(cl_ids) > 1:
-            result['domain'] = "[('id','in',["+','.join(map(str,
-                                                            cl_ids))+"])]"
+            result['domain'] = "[('id','in',["+','.join(
+                [str(cl_id) for cl_id in cl_ids]
+            )+"])]"
         else:
             result['domain'] = "[('id','in',[])]"
         return result
@@ -261,16 +262,17 @@ class commission_payment(osv.Model):
 
         result = mod_obj.get_object_reference(cr, uid, 'commission_payment',
                                               'action_account_moves_all_tree')
-        id = result and result[1] or False
-        result = act_obj.read(cr, uid, [id], context=context)[0]
+        idx = result and result[1] or False
+        result = act_obj.read(cr, uid, [idx], context=context)[0]
         # compute the number of payments to display
         aml_ids = []
         for cp_brw in self.browse(cr, uid, ids, context=context):
             aml_ids += [aml_brw.id for aml_brw in cp_brw.aml_ids]
         # choose the view_mode accordingly
         if len(aml_ids) > 1:
-            result['domain'] = "[('id','in',["+','.join(map(str,
-                                                            aml_ids))+"])]"
+            result['domain'] = "[('id','in',["+','.join(
+                [str(aml_id) for aml_id in aml_ids]
+            )+"])]"
         else:
             result['domain'] = "[('id','in',[])]"
         return result
@@ -286,16 +288,17 @@ class commission_payment(osv.Model):
 
         result = mod_obj.get_object_reference(cr, uid, 'account',
                                               'action_invoice_tree1')
-        id = result and result[1] or False
-        result = act_obj.read(cr, uid, [id], context=context)[0]
+        idx = result and result[1] or False
+        result = act_obj.read(cr, uid, [idx], context=context)[0]
         # compute the number of invoices to display
         inv_ids = []
         for cp_brw in self.browse(cr, uid, ids, context=context):
             inv_ids += [invoice.id for invoice in cp_brw.invoice_ids]
         # choose the view_mode accordingly
         if len(inv_ids) > 1:
-            result['domain'] = "[('id','in',["+','.join(map(str,
-                                                            inv_ids))+"])]"
+            result['domain'] = "[('id','in',["+','.join(
+                [str(inv_id) for inv_id in inv_ids]
+            )+"])]"
         else:
             result['domain'] = "[('id','in',[])]"
         return result
