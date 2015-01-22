@@ -221,9 +221,37 @@ class commission_payment(osv.Model):
         'company_id': _get_default_company,
     }
 
+    def action_view_fixlines(self, cr, uid, ids, context=None):
+        '''
+        This function returns an action that display existing Commissions of
+        given commission payment ids that are required for some details to
+        provide a proper computation of commissions.
+        '''
+        mod_obj = self.pool.get('ir.model.data')
+        act_obj = self.pool.get('ir.actions.act_window')
+
+        result = mod_obj.get_object_reference(cr, uid, 'commission_payment',
+                                              'comm_line_invoice_ids_all_act')
+        id = result and result[1] or False
+        result = act_obj.read(cr, uid, [id], context=context)[0]
+        # compute the number of payments to display
+        cl_ids = []
+        for cp_brw in self.browse(cr, uid, ids, context=context):
+            cl_ids += [cl_brw.id for cs_brw in cp_brw.salesman_ids
+                       if not cs_brw.salesman_id
+                       for cl_brw in cs_brw.comm_lines_ids
+                       ]
+        # choose the view_mode accordingly
+        if len(cl_ids) > 1:
+            result['domain'] = "[('id','in',["+','.join(map(str,
+                                                            cl_ids))+"])]"
+        else:
+            result['domain'] = "[('id','in',[])]"
+        return result
+
     def action_view_payment(self, cr, uid, ids, context=None):
         '''
-        This function returns an action that display existing invoices of given
+        This function returns an action that display existing Payments of given
         commission payment ids. It can either be a in a list or in a form view,
         if there is only one invoice to show.
         '''
@@ -563,7 +591,7 @@ class commission_payment(osv.Model):
 
         # Obtener el vendedor del partner
         salesman = self._get_commission_salesman_policy(cr, uid, ids, pay_id,
-                                                       context=context)
+                                                        context=context)
 
         commission_policy_baremo = \
             self._get_commission_policy_baremo(cr, uid, ids, pay_id,
@@ -751,7 +779,7 @@ class commission_payment(osv.Model):
 
         # Obtener el vendedor del partner
         salesman = self._get_commission_salesman_policy(cr, uid, ids, aml_id,
-                                                       context=context)
+                                                        context=context)
 
         commission_policy_baremo = \
             self._get_commission_policy_baremo(cr, uid, ids, aml_id,
@@ -947,7 +975,6 @@ class commission_payment(osv.Model):
                      'commission_currency', 'am_id', 'invoice_id',
                      'comm_salespeople_id', 'comm_voucher_id', ]
 
-
         for commission in self.browse(cr, uid, ids, context=context):
             # Erasing what was previously set as Commission per Salesman
             commission.salesman_ids.unlink()
@@ -1068,7 +1095,7 @@ class commission_payment(osv.Model):
                     cl_brw._recompute_commission()
         return True
 
-    def action_fix_and_recompute(self, cr, uid, ids, context=None):
+    def action_recompute(self, cr, uid, ids, context=None):
 
         self._recompute_commission(cr, uid, ids, context=context)
         self._post_processing(cr, uid, ids, context=context)

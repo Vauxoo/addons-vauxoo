@@ -154,9 +154,17 @@
                             </button>
 
                             <button
-                                name="action_fix_and_recompute"
+                                name="action_view_fixlines"
                                 states="open"
-                                string="Fix &amp; Recompute"
+                                string="Fix Commissions"
+                                type="object"
+                                class="oe_inline oe_stat_button"
+                                icon="fa-wrench"
+                                />
+                            <button
+                                name="action_recompute"
+                                states="open"
+                                string="Recompute"
                                 type="object"
                                 class="oe_inline oe_stat_button"
                                 icon="fa-pencil-square-o"
