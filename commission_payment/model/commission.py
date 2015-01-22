@@ -1164,10 +1164,15 @@ class commission_payment(osv.Model):
         # TODO: prior to write anything here paid_comm field has to be check
         # first if any of the line has being paid arise a warning
         for comm_brw in self.browse(cr, user, ids, context=context):
+            if comm_brw.comm_fix:
+                raise osv.except_osv(_('Error!'), _('There are items to fix'))
+
             aml_obj.write(cr, user,
                           [line.aml_id.id for line in comm_brw.comm_line_ids],
                           {'paid_comm': True}, context=context)
 
+        # TODO: write the real list of payments and invoices that were taken
+        # into account
         self.write(cr, user, ids, {'state': 'done', }, context=context)
         return True
 
