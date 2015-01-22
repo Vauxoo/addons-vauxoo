@@ -155,7 +155,7 @@
 
                             <button
                                 name="action_view_fixlines"
-                                states="open"
+                                attrs="{'invisible':['|',('comm_fix','=',False),('state','=','draft')]}"
                                 string="Fix Commissions"
                                 type="object"
                                 class="oe_inline oe_stat_button"
@@ -163,7 +163,7 @@
                                 />
                             <button
                                 name="action_recompute"
-                                states="open"
+                                attrs="{'invisible':['|',('comm_fix','=',False),('state','=','draft')]}"
                                 string="Recompute"
                                 type="object"
                                 class="oe_inline oe_stat_button"
@@ -300,6 +300,10 @@
                                         />
                                     <field
                                         name="currency_id"
+                                        />
+                                    <field
+                                        name="comm_fix"
+                                        invisible="1"
                                         />
                                 </group>
                             </page>

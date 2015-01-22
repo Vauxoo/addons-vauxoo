@@ -213,6 +213,7 @@ class commission_payment(osv.Model):
                                                             respect to the\
                                                             currency of the\
                                                             company')),
+        'comm_fix': fields.boolean('Fix Commissions?'),
     }
     _defaults = {
         'name': lambda *a: None,
@@ -1010,7 +1011,11 @@ class commission_payment(osv.Model):
                                     {'comm_salespeople_id': vendor_id},
                                     context=context)
 
-            commission.write({'total_comm': cl_data.sum().get('commission')})
+            commission.write({
+                'total_comm': cl_data.sum().get('commission'),
+                'comm_fix': not all(
+                    cl_data.groupby('salesman_id').groups.keys()),
+            })
 
             cl_ids = commission.comm_line_ids.read(cl_fields, load=None)
             cl_data = DataFrame(cl_ids).set_index('id')
