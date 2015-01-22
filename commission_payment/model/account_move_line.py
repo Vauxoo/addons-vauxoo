@@ -195,6 +195,8 @@ class account_move_line(osv.Model):
         res = {}.fromkeys(ids, None)
         context = context or {}
         for aml_brw in self.browse(cr, uid, ids, context=context):
+            if aml_brw.rec_aml:
+                continue
             if aml_brw.reconcile_id:
                 rec_aml_brws = aml_brw.reconcile_id.line_id
             elif aml_brw.reconcile_partial_id:
@@ -203,8 +205,10 @@ class account_move_line(osv.Model):
                 continue
             date_last_payment = aml_brw.date_last_payment
             for raml_brw in rec_aml_brws:
-                date_last_payment = aml_brw.date > date_last_payment and \
-                    aml_brw.date or date_last_payment
+                if aml_brw.id == raml_brw.id:
+                    continue
+                date_last_payment = raml_brw.date > date_last_payment and \
+                    raml_brw.date or date_last_payment
             res[aml_brw.id] = date_last_payment
 
         return res
