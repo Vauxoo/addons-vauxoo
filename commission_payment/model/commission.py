@@ -295,8 +295,8 @@ class commission_payment(osv.Model):
                 cr, uid, [('state', '=', 'valid'),
                           ('reconcile_id', '!=', False),
                           ('journal_id.type', '=', 'sale'),
-                          # ('date_last_payment', '>=', date_start),
-                          # ('date_last_payment', '<=', date_stop),
+                          ('date_last_payment', '>=', date_start),
+                          ('date_last_payment', '<=', date_stop),
                           ], context=context)
 
             aml_ids2 = aml_obj.search(
@@ -385,16 +385,16 @@ class commission_payment(osv.Model):
         aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
         date = False
         if comm_brw.commission_policy_date_start == 'invoice_emission_date':
-            if aml_brw.rec_invoice.date_invoice:
+            if aml_brw.rec_invoice:
                 date = aml_brw.rec_invoice.date_invoice
             else:
-                date = aml_brw.date
+                date = aml_brw.rec_aml.date
 
         elif comm_brw.commission_policy_date_start == 'invoice_due_date':
-            if aml_brw.rec_invoice.date_invoice:
+            if aml_brw.rec_invoice:
                 date = aml_brw.rec_invoice.date_due
             else:
-                date = aml_brw.date_maturity
+                date = aml_brw.rec_aml.date_maturity
         return date
 
     def _get_commission_policy_end_date(self, cr, uid, ids, pay_id,
@@ -407,6 +407,10 @@ class commission_payment(osv.Model):
         date = False
         if comm_brw.commission_policy_date_end == 'last_payment_date':
             date = aml_brw.rec_invoice.date_last_payment
+            if aml_brw.rec_invoice:
+                date = aml_brw.rec_invoice.date_last_payment
+            else:
+                date = aml_brw.rec_aml.date_last_payment
         elif comm_brw.commission_policy_date_end == 'date_on_payment':
             date = aml_brw.date
         return date
