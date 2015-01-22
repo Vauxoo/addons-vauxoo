@@ -451,6 +451,7 @@ class commission_payment(osv.Model):
                                       context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
+        partner_id = partner_id or None
         aml_obj = self.pool.get('account.move.line')
         rp_obj = self.pool.get('res.partner')
         comm_brw = self.browse(cr, uid, ids[0], context=context)
@@ -459,14 +460,20 @@ class commission_payment(osv.Model):
         if comm_brw.commission_baremo_policy == 'onCompany':
             partner_id = comm_brw.company_id.partner_id
         elif comm_brw.commission_baremo_policy == 'onPartner':
-            partner_id = partner_id or aml_brw.rec_invoice.partner_id
+            if aml_brw.rec_invoice:
+                partner_id = partner_id or aml_brw.rec_invoice.partner_id
+            else:
+                partner_id = partner_id or aml_brw.rec_aml.partner_id
         elif comm_brw.commission_baremo_policy == 'onAccountingPartner':
-            partner_id = partner_id or rp_obj._find_accounting_partner(
-                aml_brw.rec_invoice.partner_id)
+            if aml_brw.rec_invoice:
+                partner_id = partner_id or aml_brw.rec_invoice.partner_id
+            else:
+                partner_id = partner_id or aml_brw.rec_aml.partner_id
+            partner_id = rp_obj._find_accounting_partner(partner_id)
         elif comm_brw.commission_baremo_policy == 'onUser':
             partner_id = self._get_commission_salesman_policy(
                 cr, uid, ids[0], pay_id, salesman_id=salesman_id,
-                context=context)
+                context=context).partner_id
         elif comm_brw.commission_baremo_policy == 'onCommission':
             res = comm_brw.baremo_id
         # Fall back to baremo in Commission
