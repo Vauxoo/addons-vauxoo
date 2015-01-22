@@ -839,12 +839,8 @@ class commission_payment(osv.Model):
 
         for comm_brw in self.browse(cr, uid, ids, context=context):
 
-            # Obtener la lista de asesores/vendedores a los cuales se les hara
-            # el calculo de comisiones
-            user_ids = [line.id for line in comm_brw.user_ids]
-
-            payment_ids = []
-            uninvoice_payment_ids = []
+            payment_ids = set([])
+            uninvoice_payment_ids = set([])
 
             # Read each Journal Entry Line
             for aml_brw in comm_brw.aml_ids:
@@ -856,19 +852,10 @@ class commission_payment(osv.Model):
                 if not aml_brw.rec_invoice:
                     # TODO: Here we have to deal with the lines that comes from
                     # another system
-                    uninvoice_payment_ids.append(aml_brw.id)
+                    uninvoice_payment_ids.add(aml_brw.id)
                     continue
 
-                commission_salesman_policy = \
-                    self._get_commission_salesman_policy(
-                        cr, uid, ids, aml_brw.id, context=context)
-
-                if commission_salesman_policy is None:
-                    # TODO: Some Warnings have to be done here
-                    continue
-
-                if commission_salesman_policy.id in user_ids:
-                    payment_ids.append(aml_brw.id)
+                payment_ids.add(aml_brw.id)
 
             for pay_id in payment_ids:
                 # se procede con la preparacion de las comisiones.
