@@ -48,7 +48,7 @@
             <field name="model">commission.lines</field>
             <field name="priority">20</field>
             <field name="arch" type="xml">
-                <tree editable='top'>
+                <tree create='false' delete='false' editable='top'>
                     <field name="name" readonly='1'/>
                     <field name="pay_date" readonly='1'/>
                     <field name="pay_off" readonly='1'/>
@@ -306,7 +306,7 @@
                             <page string="Salespeople">
                                 <group col="2" colspan="2">
                                     <field name="user_ids" nolabel="1">
-                                        <tree>
+                                        <tree edit='false' create='false' delete='false' >
                                             <field name="name" string="Asesor"/>
                                         </tree>
                                     </field>
@@ -321,7 +321,7 @@
                                     readonly="1"
                                     nolabel="1"
                                     >
-                                    <tree string="Journal Items">
+                                    <tree edit='false' create='false' delete='false'  string="Journal Items">
                                         <field name="journal_id"/>
                                         <field name="date"/>
                                         <field name="name"/>
@@ -378,7 +378,7 @@
                                     widget="one2many_list"
                                     colspan="4"
                                     >
-                                    <tree>
+                                    <tree edit='false' create='false' delete='false' >
                                         <field name="name"/>
                                         <field name="pay_date"/>
                                         <field name="pay_off"/>
@@ -417,7 +417,7 @@
                                     widget="one2many_list"
                                     colspan="4"
                                     >
-                                    <tree>
+                                    <tree edit='false' create='false' delete='false' >
                                         <field name="name"/>
                                         <field name="pay_date"/>
                                         <field name="partner_id"/>
@@ -444,7 +444,7 @@
                                 attrs="{'invisible':[('commission_scope','!=','product_invoiced')]}"
                                 >
                                 <field name="noprice_ids" nolabel="1">
-                                    <tree>
+                                    <tree edit='false' create='false' delete='false' >
                                         <field name="invoice_num"/>
                                         <field name="date"/>
                                         <field name="product_id"/>
@@ -456,7 +456,7 @@
                                 attrs="{'invisible':[('commission_scope','!=','product_invoiced')]}"
                                 >
                                 <field name="sale_noids" nolabel="1">
-                                    <tree>
+                                    <tree edit='false' create='false' delete='false' >
                                         <field name="inv_line_id"/>
                                     </tree>
                                 </field>
@@ -476,7 +476,7 @@
             <field name="name">commission.payment.tree</field>
             <field name="model">commission.payment</field>
             <field name="arch" type="xml">
-                <tree string="Pago de Comisiones">
+                <tree edit='false' create='false' delete='false'  string="Pago de Comisiones">
                     <field name="name"/>
                     <field name="total_comm"/>
                     <field name="date_start"/>
@@ -518,7 +518,7 @@
             <field name="name">commission.salesman.tree</field>
             <field name="model">commission.salesman</field>
             <field name="arch" type="xml">
-                <tree string="Salespeople Commissions" colors="red:salesman_id is False">
+                <tree edit='false' create='false' delete='false'  string="Salespeople Commissions" colors="red:salesman_id is False">
                     <field name="salesman_id"/>
                     <field name="comm_total" sum="Commission Amount"/>
                     <field name="comm_total_currency"/>
@@ -542,7 +542,7 @@
                         name="comm_lines_ids"
                         attrs="{'readonly':[('salesman_id','!=',False)]}"
                         >
-                        <tree editable='top'>
+                        <tree create='false' delete='false'  editable='top'>
                             <field name="name" readonly='1'/>
                             <field name="pay_date" readonly='1'/>
                             <field name="pay_off" readonly='1'/>
@@ -589,7 +589,7 @@
             <field name="name">commission.lines.tree</field>
             <field name="model">commission.lines</field>
             <field name="arch" type="xml">
-                <tree string="Aqui se muestran todos los productos y sus respectivas comisiones">
+                <tree edit='false' create='false' delete='false'  string="Aqui se muestran todos los productos y sus respectivas comisiones">
                                         <field name="name"/>
                     <field name="pay_date"/>
                     <field name="pay_off"/>
