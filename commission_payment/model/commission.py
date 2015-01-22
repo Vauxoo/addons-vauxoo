@@ -221,11 +221,39 @@ class commission_payment(osv.Model):
         'company_id': _get_default_company,
     }
 
+    def action_view_payment(self, cr, uid, ids, context=None):
+        '''
+        This function returns an action that display existing invoices of given
+        commission payment ids. It can either be a in a list or in a form view,
+        if there is only one invoice to show.
+        '''
+        mod_obj = self.pool.get('ir.model.data')
+        act_obj = self.pool.get('ir.actions.act_window')
+
+        result = mod_obj.get_object_reference(cr, uid, 'commission_payment',
+                                              'action_account_moves_all_tree')
+        id = result and result[1] or False
+        result = act_obj.read(cr, uid, [id], context=context)[0]
+        # compute the number of payments to display
+        aml_ids = []
+        for cp_brw in self.browse(cr, uid, ids, context=context):
+            aml_ids += [aml_brw.id for aml_brw in cp_brw.aml_ids]
+        # choose the view_mode accordingly
+        if len(aml_ids) > 1:
+            result['domain'] = "[('id','in',["+','.join(map(str,
+                                                            aml_ids))+"])]"
+        else:
+            res = mod_obj.get_object_reference(cr, uid, 'account',
+                                               'view_move_line_form')
+            result['views'] = [(res and res[1] or False, 'form')]
+            result['res_id'] = aml_ids and aml_ids[0] or False
+        return result
+
     def action_view_invoice(self, cr, uid, ids, context=None):
         '''
         This function returns an action that display existing invoices of given
-        sales order ids. It can either be a in a list or in a form view, if
-        there is only one invoice to show.
+        commission payment ids. It can either be a in a list or in a form view,
+        if there is only one invoice to show.
         '''
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
@@ -236,8 +264,8 @@ class commission_payment(osv.Model):
         result = act_obj.read(cr, uid, [id], context=context)[0]
         # compute the number of invoices to display
         inv_ids = []
-        for so in self.browse(cr, uid, ids, context=context):
-            inv_ids += [invoice.id for invoice in so.invoice_ids]
+        for cp_brw in self.browse(cr, uid, ids, context=context):
+            inv_ids += [invoice.id for invoice in cp_brw.invoice_ids]
         # choose the view_mode accordingly
         if len(inv_ids) > 1:
             result['domain'] = "[('id','in',["+','.join(map(str,
