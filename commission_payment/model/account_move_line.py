@@ -217,10 +217,10 @@ class account_move_line(osv.Model):
         move = {}
         amr_obj = self.pool.get('account.move.reconcile')
         aml_obj = self.pool.get('account.move.line')
-        for r in amr_obj.browse(cr, uid, ids, context=context):
-            for line in r.line_partial_ids:
+        for amr_brw in amr_obj.browse(cr, uid, ids, context=context):
+            for line in amr_brw.line_partial_ids:
                 move[line.move_id.id] = True
-            for line in r.line_id:
+            for line in amr_brw.line_id:
                 move[line.move_id.id] = True
         move_line_ids = []
         if move:
