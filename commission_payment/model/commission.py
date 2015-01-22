@@ -221,6 +221,34 @@ class commission_payment(osv.Model):
         'company_id': _get_default_company,
     }
 
+    def action_view_invoice(self, cr, uid, ids, context=None):
+        '''
+        This function returns an action that display existing invoices of given
+        sales order ids. It can either be a in a list or in a form view, if
+        there is only one invoice to show.
+        '''
+        mod_obj = self.pool.get('ir.model.data')
+        act_obj = self.pool.get('ir.actions.act_window')
+
+        result = mod_obj.get_object_reference(cr, uid, 'account',
+                                              'action_invoice_tree1')
+        id = result and result[1] or False
+        result = act_obj.read(cr, uid, [id], context=context)[0]
+        # compute the number of invoices to display
+        inv_ids = []
+        for so in self.browse(cr, uid, ids, context=context):
+            inv_ids += [invoice.id for invoice in so.invoice_ids]
+        # choose the view_mode accordingly
+        if len(inv_ids) > 1:
+            result['domain'] = "[('id','in',["+','.join(map(str,
+                                                            inv_ids))+"])]"
+        else:
+            res = mod_obj.get_object_reference(cr, uid, 'account',
+                                               'invoice_form')
+            result['views'] = [(res and res[1] or False, 'form')]
+            result['res_id'] = inv_ids and inv_ids[0] or False
+        return result
+
     def _prepare_based_on_payments(self, cr, uid, ids, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}

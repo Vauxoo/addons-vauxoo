@@ -135,6 +135,16 @@
                             </button>
 
                             <button
+                                string="View Invoices"
+                                class="oe_inline oe_stat_button"
+                                type="object"
+                                name="action_view_invoice"
+                                attrs="{'invisible':[('state','=','draft')]}"
+                                icon="fa-book"
+                                >
+                            </button>
+
+                            <button
                                 name="action_fix_and_recompute"
                                 states="open"
                                 string="Fix &amp; Recompute"
