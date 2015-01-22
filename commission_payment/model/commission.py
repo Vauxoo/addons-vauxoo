@@ -595,12 +595,14 @@ class commission_payment(osv.Model):
                             'name':
                             aml_brw.move_id.name and
                             aml_brw.move_id.name or '/',
-                            'pay_date': commission_policy_date_end,
+                            'pay_date': aml_brw.date,
                             'pay_off': aml_brw.credit,
                             'partner_id': inv_brw.partner_id.id,
                             'salesman_id': salesman and salesman.id,
                             'pay_inv': aml_brw.credit,
-                            'inv_date': commission_policy_date_start,
+                            'inv_date': inv_brw.date_invoice,
+                            'date_start': commission_policy_date_start,
+                            'date_stop': commission_policy_date_end,
                             'days': emission_days,
                             'inv_subtotal': inv_brw.amount_untaxed,
                             'product_id': inv_lin.product_id.id,
@@ -722,12 +724,14 @@ class commission_payment(osv.Model):
                 'name':
                 aml_brw.move_id.name and
                 aml_brw.move_id.name or '/',
-                'pay_date': commission_policy_date_end,
+                'pay_date': aml_brw.date,
                 'pay_off': aml_brw.credit,
                 'partner_id': inv_brw.partner_id.id,
                 'salesman_id': salesman and salesman.id,
                 'pay_inv': aml_brw.credit,
-                'inv_date': commission_policy_date_start,
+                'inv_date': inv_brw.date_invoice,
+                'date_start': commission_policy_date_start,
+                'date_stop': commission_policy_date_end,
                 'days': emission_days,
                 'inv_subtotal': inv_brw.amount_untaxed,
                 'perc_iva': perc_iva,
@@ -784,12 +788,14 @@ class commission_payment(osv.Model):
                 'commission_id': comm_brw.id,
                 'aml_id': aml_brw.id,
                 'name': aml_brw.move_id.name and aml_brw.move_id.name or '/',
-                'pay_date': commission_policy_date_end,
+                'pay_date': aml_brw.date,
                 'pay_off': aml_brw.credit,
                 'partner_id': aml_brw.partner_id.id,
                 'salesman_id': None,
                 'pay_inv': aml_brw.credit,
-                'inv_date': commission_policy_date_start,
+                'inv_date': aml_brw.rec_aml.date,
+                'date_start': commission_policy_date_start,
+                'date_stop': commission_policy_date_end,
                 'days': emission_days,
                 'inv_subtotal': None,
                 'perc_iva': None,
@@ -1101,7 +1107,7 @@ class commission_noprice(osv.Model):
         'name': fields.char('Comentario', size=256),
         'commission_id': fields.many2one('commission.payment', 'Comision'),
         'product_id': fields.many2one('product.product', 'Producto'),
-        'date': fields.date('Fecha'),
+        'date': fields.date('Date'),
         'invoice_num': fields.char('Invoice Number', size=256),
     }
     _defaults = {
@@ -1122,7 +1128,7 @@ class commission_lines(osv.Model):
         'commission_id': fields.many2one(
             'commission.payment', 'Commission Document', required=True),
         'name': fields.char('Transaccion', size=256, required=True),
-        'pay_date': fields.date('Fecha', required=True),
+        'pay_date': fields.date('Payment Date', required=True),
         'pay_off': fields.float(
             'Pago',
             digits_compute=dp.get_precision('Commission')),
@@ -1137,7 +1143,7 @@ class commission_lines(osv.Model):
             'aml_id', 'rec_invoice',
             string='Reconciling Invoice', relation='account.invoice',
             type='many2one', store=True, readonly=True),
-        'partner_id': fields.many2one('res.partner', 'Empresa'),
+        'partner_id': fields.many2one('res.partner', 'Partner'),
         'salesman_id': fields.many2one('res.users', 'Salesman',
                                        required=False),
         'comm_salespeople_id': fields.many2one(
@@ -1149,8 +1155,14 @@ class commission_lines(osv.Model):
             digits_compute=dp.get_precision('Commission')),
 
         'inv_date': fields.date('Invoice Date'),
+        'date_start': fields.date(
+            'Start Date', required=False, readonly=True,
+        ),
+        'date_stop': fields.date(
+            'End Date', required=False, readonly=True,
+        ),
         'days': fields.float(
-            'Days',
+            'Comm. Days',
             digits_compute=dp.get_precision('Commission')),
 
         'inv_subtotal': fields.float(
@@ -1249,10 +1261,12 @@ class commission_lines(osv.Model):
 
         # Generar las lineas de comision por cada factura
         cl_brw.write({
-            'pay_date': commission_policy_date_end,
+            'pay_date': aml_brw.date,
             'pay_off': aml_brw.credit,
             'pay_inv': aml_brw.credit,
-            'inv_date': commission_policy_date_start,
+            'inv_date': aml_brw.rec_aml.date,
+            'date_start': commission_policy_date_start,
+            'date_stop': commission_policy_date_end,
             'days': emission_days,
             'inv_subtotal': None,
             'perc_iva': perc_iva,

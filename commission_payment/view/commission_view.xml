@@ -298,6 +298,8 @@
                                         <field name="pay_inv"/>
                                         <field name="invoice_id"/>
                                         <field name="inv_date"/>
+                                        <field name="date_start"/>
+                                        <field name="date_stop"/>
                                         <field name="days"/>
                                         <field name="inv_subtotal"/>
                                         <field name="product_id"/>
@@ -333,6 +335,8 @@
                                         <field name="pay_inv"/>
                                         <field name="invoice_id"/>
                                         <field name="inv_date"/>
+                                        <field name="date_start"/>
+                                        <field name="date_stop"/>
                                         <field name="days"/>
                                         <field name="inv_subtotal"/>
                                         <field name="rate_item"/>
@@ -456,6 +460,8 @@
                             <field name="pay_inv" readonly='1'/>
                             <field name="invoice_id" readonly='1'/>
                             <field name="inv_date" readonly='1'/>
+                            <field name="date_start" readonly='1'/>
+                            <field name="date_stop" readonly='1'/>
                             <field name="days" readonly='1'/>
                             <field name="inv_subtotal" readonly='1'/>
                             <field name="product_id" readonly='1'/>
@@ -500,6 +506,8 @@
                     <field name="pay_inv"/>
                     <field name="invoice_id"/>
                     <field name="inv_date"/>
+                    <field name="date_start"/>
+                    <field name="date_stop"/>
                     <field name="days"/>
                     <field name="inv_subtotal"/>
                     <field name="price_unit"/>
