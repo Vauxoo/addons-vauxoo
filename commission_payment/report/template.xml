@@ -196,26 +196,26 @@
                                         <span t-esc="formatLang(cl.am_id.date, date=True)"/>
                                     </td>
                                     <td class="celdaDetailLeft" width="25.66%">
-                                        <span t-esc="cl.invoice_id.partner_id.display_name.upper()"/>
+                                        <span t-esc="cl.partner_id.display_name.upper()"/>
                                     </td>
 
                                     <td class="celdaDetail" width="6.66%">
                                         <span t-esc="formatLang(cl.am_id.amount, digits=2, grouping=3, monetary=True)"/>
                                     </td>
                                     <td class="celdaDetail" width="4.66%">
-                                        <span t-esc="cl.invoice_id.date_invoice"/>
+                                        <span t-esc="formatLang(cl.inv_date, date=True)"/>
                                     </td>
                                     <td class="celdaDetailLeft" width="6.66%">
-                                        <span t-esc="cl.invoice_id.number.upper()"/>
+                                        <span t-esc="cl.am_rec.name.upper()"/>
                                     </td>
                                     <td class="celdaDetail" width="6.66%">
-                                        <span t-esc="formatLang(cl.invoice_id.amount_untaxed, digits=2, grouping=3, monetary=True)"/>
+                                        <span t-esc="formatLang(cl.inv_subtotal, digits=2, grouping=3, monetary=True)"/>
                                     </td>
                                     <td class="celdaDetail" width="3.66%">
-                                        <span t-esc="formatLang(((cl.invoice_id.amount_total / cl.invoice_id.amount_untaxed)-1)*100, digits=2, grouping=3, monetary=True)"/>
+                                        <span t-esc="formatLang(cl.perc_iva, digits=2, grouping=3, monetary=True)"/>
                                     </td>
                                     <td class="celdaDetail" width="6.66%">
-                                        <span t-esc="formatLang(cl.invoice_id.amount_total, digits=2, grouping=3, monetary=True)"/>
+                                        <span t-esc="formatLang(cl.invoice_id and cl.invoice_id.amount_total or 0.0, digits=2, grouping=3, monetary=True)"/>
                                     </td>
                                     <td class="celdaDetail" width="6.66%">
                                         <span t-esc="formatLang(cl.pay_inv, digits=2, grouping=3, monetary=True)"/>

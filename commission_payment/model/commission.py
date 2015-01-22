@@ -1355,13 +1355,19 @@ class commission_lines(osv.Model):
         ###############################
 
         # Right now I have not figure out a way to know how much was taxed
-        perc_iva = 0.0
+        perc_iva = comm_brw.company_id.comm_tax
 
-        comm_line = aml_brw.credit * (bar_dcto_comm / 100)
+        penbxlinea = aml_brw.credit
+        fact_sup = 1 - 0.0 / 100 - 0.0 / 100
+        fact_inf = 1 + (perc_iva / 100) * (1 - 0.0 / 100) - \
+            0.0 / 100 - 0.0 / 100
+
+        comm_line = penbxlinea * fact_sup * (
+            bar_dcto_comm / 100) / fact_inf
 
         if aml_brw.currency_id and aml_brw.amount_currency:
-            commission_currency = abs(aml_brw.amount_currency) * (bar_dcto_comm
-                                                                  / 100)
+            commission_currency = abs(aml_brw.amount_currency) * fact_sup * (
+                bar_dcto_comm / 100) / fact_inf
         elif aml_brw.currency_id and not aml_brw.amount_currency:
             return True
         else:
@@ -1376,7 +1382,7 @@ class commission_lines(osv.Model):
             'date_start': commission_policy_date_start,
             'date_stop': commission_policy_date_end,
             'days': emission_days,
-            'inv_subtotal': None,
+            'inv_subtotal': (aml_brw.rec_aml.debit / (1 + perc_iva / 100)),
             'perc_iva': perc_iva,
             'rate_number': bardctdsc,
             'timespan': bar_day,
@@ -1492,4 +1498,13 @@ class commission_lines_2(osv.Model):
     _columns = {
         'comm_invoice_id': fields.many2one('commission.invoice',
                                            'Invoice Commission'),
+    }
+
+
+class res_company(osv.Model):
+    _inherit = "res.company"
+    _description = 'Companies'
+
+    _columns = {
+        'comm_tax': fields.float('Default Tax for Commissions'),
     }
