@@ -89,7 +89,8 @@ class account_invoice_refund(osv.osv_memory):
             REFUND_METHOD,
             "Refund Method",
             required=True,
-            help=filter_refund_inh.get('_args').get('help')),
+            help='Refund base on this type. You can not\
+                  Modify and Cancel if the invoice is already reconciled'),
         'percent': fields.float('Percent'),
         'product_id': fields.many2one('product.product', string='Product'),
         'amount_total': fields.float('Amount'),
