@@ -99,7 +99,6 @@ class account_bank_statement_line(osv.osv):
                     move_line_obj.create(
                         cr, uid, move_line_tax, context=context
                         ))
-
         res = super(account_bank_statement_line, self).process_reconciliation(
             cr, uid, id, mv_line_dicts, context=context)
         move_line_obj.write(cr, uid, move_line_ids,
@@ -210,14 +209,16 @@ class account_bank_statement_line(osv.osv):
 
         if account_group and tax:
             for move_account_tax in account_group:
-                tax_ids = tax_obj.search(
-                    cr, uid,
-                    [('account_collected_id', '=', move_account_tax),
-                     ('tax_category_id.code', '=', tax.tax_category_id.code),
-                     ('amount', '<', 0), ('id', '<>', tax.id),
-                     ], limit=1)
-                if tax_ids:
-                    amount_retention_tax += account_group[move_account_tax]
+                if tax.amount > 0:
+                    tax_ids = tax_obj.search(
+                        cr, uid,
+                        [('account_collected_id', '=', move_account_tax),
+                         ('tax_category_id.code', '=',
+                            tax.tax_category_id.code),
+                         ('amount', '<', 0), ('id', '<>', tax.id),
+                         ], limit=1)
+                    if tax_ids:
+                        amount_retention_tax += account_group[move_account_tax]
 
         return amount_retention_tax
 

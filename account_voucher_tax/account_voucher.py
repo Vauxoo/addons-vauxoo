@@ -428,8 +428,7 @@ class account_voucher(osv.Model):
         for inv in invoice_obj.browse(cr, uid, [invoice.id]):
             for tax_inv in inv.tax_line:
                 if tax.amount > 0:
-                    if not tax_inv.tax_id.tax_voucher_ok and\
-                        tax_inv.tax_id.tax_category_id.code ==\
+                    if tax_inv.tax_id.tax_category_id.code ==\
                         tax.tax_id.tax_category_id.code and\
                             tax_inv.tax_id.amount < 0:
 
