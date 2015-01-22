@@ -191,6 +191,54 @@ class account_move_line(osv.Model):
             return [('id', '=', '0')]
         return [('id', 'in', [x[0] for x in res])]
 
+    def _date_last_payment(self, cr, uid, ids, fieldname, arg, context=None):
+        res = {}.fromkeys(ids, None)
+        context = context or {}
+        for aml_brw in self.browse(cr, uid, ids, context=context):
+            if aml_brw.reconcile_id:
+                rec_aml_brws = aml_brw.reconcile_id.line_id
+            elif aml_brw.reconcile_partial_id:
+                rec_aml_brws = aml_brw.reconcile_partial_id.line_partial_ids
+            else:
+                continue
+            date_last_payment = aml_brw.date_last_payment
+            for raml_brw in rec_aml_brws:
+                date_last_payment = aml_brw.date > date_last_payment and \
+                    aml_brw.date or date_last_payment
+            res[aml_brw.id] = date_last_payment
+
+        return res
+
+    def _get_move_from_reconcilex(self, cr, uid, ids, context=None):
+        move = {}
+        amr_obj = self.pool.get('account.move.reconcile')
+        aml_obj = self.pool.get('account.move.line')
+        for r in amr_obj.browse(cr, uid, ids, context=context):
+            for line in r.line_partial_ids:
+                move[line.move_id.id] = True
+            for line in r.line_id:
+                move[line.move_id.id] = True
+        move_line_ids = []
+        if move:
+            move_line_ids = aml_obj.search(
+                cr, uid, [('move_id', 'in', move.keys())], context=context)
+        return move_line_ids
+
+    def _get_aml_related_date(self, cr, uid, ids, context=None):
+        res = set([])
+        context = context or {}
+        for aml_brw in self.browse(cr, uid, ids, context=context):
+            if aml_brw.account_id.type != 'receivable':
+                continue
+            if aml_brw.journal_id.type not in ('bank', 'cash'):
+                continue
+            if aml_brw.credit == 0.0:
+                continue
+            if aml_brw.rec_aml:
+                res.add(aml_brw.rec_aml.id)
+            res.add(aml_brw.id)
+        return res
+
     _inherit = 'account.move.line'
 
     _columns = {
@@ -209,6 +257,15 @@ class account_move_line(osv.Model):
             relation="account.move.line",
             fnct_search=_rec_aml_search,
         ),
+        'date_last_payment': fields.function(
+            _date_last_payment, string='Last Payment Date', type="date",
+            store={
+                _inherit: (_get_aml_related_date,
+                           ['reconcile_id', 'reconcile_partial_id',
+                            'reconcile_ref'], 15),
+                'account.move.reconcile': (
+                    _get_move_from_reconcilex, None, 50),
+            }),
     }
     _defaults = {
         'paid_comm': lambda *a: False,
