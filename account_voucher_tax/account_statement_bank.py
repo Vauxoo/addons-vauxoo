@@ -167,6 +167,7 @@ class account_bank_statement_line(osv.osv):
             if move_line_id.account_id.type not in ('receivable', 'payable'):
                 account_group.setdefault(move_line_id.account_id.id, 0)
                 account_group[move_line_id.account_id.id] +=\
+                    move_line_id.amount_currency or\
                     move_line_id.debit > 0 and\
                     move_line_id.debit*factor[0] or\
                     move_line_id.credit*factor[1]
@@ -206,7 +207,6 @@ class account_bank_statement_line(osv.osv):
 
         tax_obj = self.pool.get('account.tax')
         amount_retention_tax = 0
-
         if account_group and tax:
             for move_account_tax in account_group:
                 if tax.amount > 0:
