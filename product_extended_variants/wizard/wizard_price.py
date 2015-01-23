@@ -40,7 +40,6 @@ class wizard_price(models.TransientModel):
             context = {}
         rec_id = context and context.get('active_id', False)
         assert rec_id, _('Active ID is not set in Context.')
-        print context
         if context.get('active_model') == 'product.template':
             res['info_field'] = \
                 str(tmpl_obj.
