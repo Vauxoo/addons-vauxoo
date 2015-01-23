@@ -1114,6 +1114,17 @@ class commission_payment(osv.Model):
 
     def action_draft(self, cr, user, ids, context=None):
 
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        aml_obj = self.pool.get('account.move.line')
+
+        for comm_brw in self.browse(cr, user, ids, context=context):
+            if comm_brw.state == 'done':
+                aml_obj.write(
+                    cr, user,
+                    [line.aml_id.id for line in comm_brw.comm_line_ids],
+                    {'paid_comm': False}, context=context)
+
         self.clear(cr, user, ids, context=context)
         self.write(cr, user, ids, {'state': 'draft', 'total_comm': None},
                    context=context)
