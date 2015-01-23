@@ -1120,45 +1120,23 @@ class commission_payment(osv.Model):
         return True
 
     def clear(self, cr, user, ids, context=None):
-
+        '''
+        Deletes all associated record from Commission Payment
+        '''
+        context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
-        sale_noids = self.pool.get('commission.sale.noid')
-        noprice_ids = self.pool.get('commission.noprice')
-        comm_line_ids = self.pool.get('commission.lines')
-        salesman_ids = self.pool.get('commission.salesman')
-        comm_voucher_ids = self.pool.get('commission.voucher')
-        comm_invoice_ids = self.pool.get('commission.invoice')
-
-        for commission in self.browse(cr, user, ids, context=context):
-            ###
-            # Desvincular todos los elementos que esten conectados a este
-            # calculo de comisiones
-            # * Desvinculando los articulos sin id
-            sale_noids.unlink(cr, user, [
-                              line.id for line in commission.sale_noids])
-            # * Desvinculando los productos sin fecha
-            noprice_ids.unlink(cr, user, [
-                               line.id for line in commission.noprice_ids])
-            # * Desvinculando las lineas de comisiones
-            comm_line_ids.unlink(
-                cr, user, [line.id for line in commission.comm_line_ids])
-            # * Desvinculando los totales por vendedor
-            salesman_ids.unlink(
-                cr, user, [line.id for line in commission.salesman_ids])
-            ###
-            # * Desvinculando los vouchers afectados
-            comm_voucher_ids.unlink(
-                cr, user, [line.id for line in commission.comm_voucher_ids])
-            # * Desvinculando las facturas afectadas
-            comm_invoice_ids.unlink(
-                cr, user, [line.id for line in commission.comm_invoice_ids])
-            ###
-            commission.write(
-                {'aml_ids': [(3, aml_brw.id) for aml_brw in
-                             commission.aml_ids],
-                 'invoice_ids': [(3, inv_brw.id) for inv_brw in
-                                 commission.invoice_ids]})
+        for comm_brw in self.browse(cr, user, ids, context=context):
+            comm_brw.sale_noids.unlink()
+            comm_brw.noprice_ids.unlink()
+            comm_brw.comm_line_ids.unlink()
+            comm_brw.salesman_ids.unlink()
+            comm_brw.comm_voucher_ids.unlink()
+            comm_brw.comm_invoice_ids.unlink()
+            comm_brw.write(
+                {'aml_ids': [(3, aml_brw.id) for aml_brw in comm_brw.aml_ids],
+                 'invoice_ids': [
+                     (3, inv_brw.id) for inv_brw in comm_brw.invoice_ids]})
 
     def validate(self, cr, user, ids, context=None):
         aml_obj = self.pool.get('account.move.line')
