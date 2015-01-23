@@ -47,17 +47,17 @@ class test_commission(TransactionCase):
     def test_basic_commission(self):
         cur, uid = self.cr, self.uid
         cp_id = self.ref('commission_payment.commission_1'),
-        demo_id = self.ref('base.demo_user'),
+        demo_id = self.ref('base.user_demo'),
 
         cp_brw = self.cp_model.browse(cur, uid, cp_id)
         self.assertEquals(cp_brw.state, 'open')
 
         self.assertEquals(len(cp_brw.salesman_ids) > 0, True,
-                          'Salesman shall be "Demo User"')
+                          'There should be at least one computation')
         for cs_brw in cp_brw.salesman_ids:
             if not cs_brw.salesman_id:
                 continue
-            self.assertEquals(cs_brw.salesman_id.id, demo_id,
+            self.assertEquals(cs_brw.salesman_id.id, demo_id[0],
                               'Salesman shall be "Demo User"')
             self.assertEquals(cs_brw.comm_total, 660.00,
                               'Wrong Quantity on commission')
