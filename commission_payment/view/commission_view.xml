@@ -476,7 +476,7 @@
             <field name="name">commission.payment.tree</field>
             <field name="model">commission.payment</field>
             <field name="arch" type="xml">
-                <tree edit='false' create='false' delete='false'  string="Pago de Comisiones">
+                <tree edit='true' create='true' delete='true'  string="Commission Payments">
                     <field name="name"/>
                     <field name="total_comm"/>
                     <field name="date_start"/>
