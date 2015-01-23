@@ -251,6 +251,9 @@ class account_voucher(osv.Model):
             debit_line_vals['debit'] = cur_obj.compute(
                 cr, uid, reference_currency_id, dest_main_currency_id,
                 reference_amount, context=context)
+            debit_line_vals['amount_base'] = cur_obj.compute(
+                cr, uid, reference_currency_id, dest_main_currency_id,
+                abs(amount_base), context=context)
             if (not dest_acct.currency_id)\
                     or dest_acct.currency_id.id == reference_currency_id:
                 debit_line_vals.update(
@@ -419,14 +422,13 @@ class account_voucher(osv.Model):
                 line.update({'tax_line_ids': lista_tax_to_add})
         return lines
 
-    def _get_retention_voucher(self, cr, uid, invoice=[], tax=[]):
+    def _get_retention_voucher(self, cr, uid, invoice=None, tax=None):
         invoice_obj = self.pool.get('account.invoice')
         amount_retention_tax = 0
         for inv in invoice_obj.browse(cr, uid, [invoice.id]):
             for tax_inv in inv.tax_line:
                 if tax.amount > 0:
-                    if not tax_inv.tax_id.tax_voucher_ok and\
-                        tax_inv.tax_id.tax_category_id.code ==\
+                    if tax_inv.tax_id.tax_category_id.code ==\
                         tax.tax_id.tax_category_id.code and\
                             tax_inv.tax_id.amount < 0:
 
