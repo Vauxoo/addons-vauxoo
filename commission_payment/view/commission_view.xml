@@ -28,6 +28,62 @@
             </field>
         </record>
 
+        <!-- Creating and Action to open the View LIST for the object commission.lines to fix-->
+        <record model="ir.actions.act_window" id="comm_line_fix_act">
+            <field name="name">Commissions on Products</field>
+            <field name="res_model">commission.lines</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                No commissions for Products have been computed
+              </p><p>
+                It could be due to the fact that there are some missing
+                parameters in computation or just this Commissions is void
+              </p>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="commission_lines_fix_tree">
+            <field name="name">commission.lines.fix.tree</field>
+            <field name="model">commission.lines</field>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <tree create='false' delete='false' editable='top'>
+                    <field name="name" readonly='1'/>
+                    <field name="pay_date" readonly='1'/>
+                    <field name="pay_off" readonly='1'/>
+                    <field name="partner_id" required='1' readonly='0'/>
+                    <field name="salesman_id" required='1' readonly='0'/>
+                    <field name="pay_inv" readonly='1'/>
+                    <field name="invoice_id" readonly='1'/>
+                    <field name="am_rec" readonly='1'/>
+                    <field name="inv_date" readonly='1'/>
+                    <field name="date_start" readonly='1'/>
+                    <field name="date_stop" readonly='1'/>
+                    <field name="days" readonly='1'/>
+                    <field name="inv_subtotal" readonly='1'/>
+                    <field name="product_id" readonly='1'/>
+                    <field name="price_unit" readonly='1'/>
+                    <field name="price_subtotal" readonly='1'/>
+                    <field name="price_list" readonly='1'/>
+                    <field name="price_date" readonly='1'/>
+                    <field name="rate_item" readonly='1'/>
+                    <field name="rate_number" readonly='1'/>
+                    <field name="timespan" readonly='1'/>
+                    <field name="baremo_comm" readonly='1'/>
+                    <field name="commission" sum="" readonly='1'/>
+                    <field name="commission_currency" sum="" readonly='1'/>
+                    <field name="currency_id" readonly='1'/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window.view" id="comm_line_fix_act_view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="commission_lines_fix_tree"/>
+            <field name="act_window_id" ref="comm_line_fix_act"/>
+        </record>
+
         <!-- Creating and Action to open the View LIST for the object commission.lines -->
         <record model="ir.actions.act_window" id="comm_line_product_ids_all_act">
             <field name="name">Commissions on Products</field>
@@ -133,6 +189,42 @@
                                 icon="fa-strikethrough"
                                 >
                             </button>
+
+                            <button
+                                string="View Invoices"
+                                class="oe_inline oe_stat_button"
+                                type="object"
+                                name="action_view_invoice"
+                                attrs="{'invisible':[('state','=','draft')]}"
+                                icon="fa-book"
+                                >
+                            </button>
+                            <button
+                                string="View Payments"
+                                class="oe_inline oe_stat_button"
+                                type="object"
+                                name="action_view_payment"
+                                attrs="{'invisible':[('state','=','draft')]}"
+                                icon="fa-money"
+                                >
+                            </button>
+
+                            <button
+                                name="action_view_fixlines"
+                                attrs="{'invisible':['|',('comm_fix','=',False),('state','=','draft')]}"
+                                string="Fix Commissions"
+                                type="object"
+                                class="oe_inline oe_stat_button"
+                                icon="fa-wrench"
+                                />
+                            <button
+                                name="action_recompute"
+                                attrs="{'invisible':['|',('comm_fix','=',False),('state','=','draft')]}"
+                                string="Recompute"
+                                type="object"
+                                class="oe_inline oe_stat_button"
+                                icon="fa-pencil-square-o"
+                                />
                         </div>
                         <group col="4" colspan="2">
                             <group col="2" colspan="2">
@@ -214,7 +306,7 @@
                             <page string="Salespeople">
                                 <group col="2" colspan="2">
                                     <field name="user_ids" nolabel="1">
-                                        <tree>
+                                        <tree edit='false' create='false' delete='false' >
                                             <field name="name" string="Asesor"/>
                                         </tree>
                                     </field>
@@ -222,13 +314,14 @@
                             </page>
                             <page
                                 string="Payments"
+                                invisible="1"
                                 >
                                 <field
                                     name="aml_ids"
                                     readonly="1"
                                     nolabel="1"
                                     >
-                                    <tree string="Journal Items">
+                                    <tree edit='false' create='false' delete='false'  string="Journal Items">
                                         <field name="journal_id"/>
                                         <field name="date"/>
                                         <field name="name"/>
@@ -245,6 +338,7 @@
                             </page>
                             <page
                                 string="Invoices"
+                                invisible="1"
                                 >
                                 <field
                                     name="invoice_ids"
@@ -263,6 +357,10 @@
                                     <field
                                         name="currency_id"
                                         />
+                                    <field
+                                        name="comm_fix"
+                                        invisible="1"
+                                        />
                                 </group>
                             </page>
                         </notebook>
@@ -280,7 +378,7 @@
                                     widget="one2many_list"
                                     colspan="4"
                                     >
-                                    <tree>
+                                    <tree edit='false' create='false' delete='false' >
                                         <field name="name"/>
                                         <field name="pay_date"/>
                                         <field name="pay_off"/>
@@ -288,7 +386,10 @@
                                         <field name="salesman_id"/>
                                         <field name="pay_inv"/>
                                         <field name="invoice_id"/>
+                                        <field name="am_rec"/>
                                         <field name="inv_date"/>
+                                        <field name="date_start"/>
+                                        <field name="date_stop"/>
                                         <field name="days"/>
                                         <field name="inv_subtotal"/>
                                         <field name="product_id"/>
@@ -316,14 +417,17 @@
                                     widget="one2many_list"
                                     colspan="4"
                                     >
-                                    <tree>
+                                    <tree edit='false' create='false' delete='false' >
                                         <field name="name"/>
                                         <field name="pay_date"/>
                                         <field name="partner_id"/>
                                         <field name="salesman_id"/>
                                         <field name="pay_inv"/>
                                         <field name="invoice_id"/>
+                                        <field name="am_rec"/>
                                         <field name="inv_date"/>
+                                        <field name="date_start"/>
+                                        <field name="date_stop"/>
                                         <field name="days"/>
                                         <field name="inv_subtotal"/>
                                         <field name="rate_item"/>
@@ -340,7 +444,7 @@
                                 attrs="{'invisible':[('commission_scope','!=','product_invoiced')]}"
                                 >
                                 <field name="noprice_ids" nolabel="1">
-                                    <tree>
+                                    <tree edit='false' create='false' delete='false' >
                                         <field name="invoice_num"/>
                                         <field name="date"/>
                                         <field name="product_id"/>
@@ -352,7 +456,7 @@
                                 attrs="{'invisible':[('commission_scope','!=','product_invoiced')]}"
                                 >
                                 <field name="sale_noids" nolabel="1">
-                                    <tree>
+                                    <tree edit='false' create='false' delete='false' >
                                         <field name="inv_line_id"/>
                                     </tree>
                                 </field>
@@ -372,7 +476,7 @@
             <field name="name">commission.payment.tree</field>
             <field name="model">commission.payment</field>
             <field name="arch" type="xml">
-                <tree string="Pago de Comisiones">
+                <tree edit='true' create='true' delete='true'  string="Commission Payments">
                     <field name="name"/>
                     <field name="total_comm"/>
                     <field name="date_start"/>
@@ -414,7 +518,7 @@
             <field name="name">commission.salesman.tree</field>
             <field name="model">commission.salesman</field>
             <field name="arch" type="xml">
-                <tree string="Pago de Comisiones">
+                <tree edit='false' create='false' delete='false'  string="Salespeople Commissions" colors="red:salesman_id is False">
                     <field name="salesman_id"/>
                     <field name="comm_total" sum="Commission Amount"/>
                     <field name="comm_total_currency"/>
@@ -428,34 +532,42 @@
             <field name="model">commission.salesman</field>
             <field name="arch" type="xml">
                 <form string="Pago de Comisiones" version="7.0">
-                    <field name="salesman_id"/>
-                    <field name="comm_total"/>
-                    <field name="comm_total_currency"/>
-                    <field name="currency_id"/>
-                    <field name="comm_lines_ids">
-                        <tree>
-                            <field name="name"/>
-                            <field name="pay_date"/>
-                            <field name="pay_off"/>
-                            <field name="partner_id"/>
-                            <field name="salesman_id"/>
-                            <field name="pay_inv"/>
-                            <field name="invoice_id"/>
-                            <field name="inv_date"/>
-                            <field name="days"/>
-                            <field name="inv_subtotal"/>
-                            <field name="product_id"/>
-                            <field name="price_unit"/>
-                            <field name="price_subtotal"/>
-                            <field name="price_list"/>
-                            <field name="price_date"/>
-                            <field name="rate_item"/>
-                            <field name="rate_number"/>
-                            <field name="timespan"/>
-                            <field name="baremo_comm"/>
-                            <field name="commission" sum=""/>
-                            <field name="commission_currency" sum=""/>
-                            <field name="currency_id"/>
+                    <group>
+                        <field name="salesman_id"/>
+                        <field name="currency_id"/>
+                        <field name="comm_total"/>
+                        <field name="comm_total_currency"/>
+                    </group>
+                    <field
+                        name="comm_lines_ids"
+                        attrs="{'readonly':[('salesman_id','!=',False)]}"
+                        >
+                        <tree create='false' delete='false'  editable='top'>
+                            <field name="name" readonly='1'/>
+                            <field name="pay_date" readonly='1'/>
+                            <field name="pay_off" readonly='1'/>
+                            <field name="partner_id" required='1' readonly='0'/>
+                            <field name="salesman_id" required='1' readonly='0'/>
+                            <field name="pay_inv" readonly='1'/>
+                            <field name="invoice_id" readonly='1'/>
+                            <field name="am_rec" readonly='1'/>
+                            <field name="inv_date" readonly='1'/>
+                            <field name="date_start" readonly='1'/>
+                            <field name="date_stop" readonly='1'/>
+                            <field name="days" readonly='1'/>
+                            <field name="inv_subtotal" readonly='1'/>
+                            <field name="product_id" readonly='1'/>
+                            <field name="price_unit" readonly='1'/>
+                            <field name="price_subtotal" readonly='1'/>
+                            <field name="price_list" readonly='1'/>
+                            <field name="price_date" readonly='1'/>
+                            <field name="rate_item" readonly='1'/>
+                            <field name="rate_number" readonly='1'/>
+                            <field name="timespan" readonly='1'/>
+                            <field name="baremo_comm" readonly='1'/>
+                            <field name="commission" sum="" readonly='1'/>
+                            <field name="commission_currency" sum="" readonly='1'/>
+                            <field name="currency_id" readonly='1'/>
                         </tree>
                     </field>
                 </form>
@@ -477,7 +589,7 @@
             <field name="name">commission.lines.tree</field>
             <field name="model">commission.lines</field>
             <field name="arch" type="xml">
-                <tree string="Aqui se muestran todos los productos y sus respectivas comisiones">
+                <tree edit='false' create='false' delete='false'  string="Aqui se muestran todos los productos y sus respectivas comisiones">
                                         <field name="name"/>
                     <field name="pay_date"/>
                     <field name="pay_off"/>
@@ -485,7 +597,10 @@
                     <field name="salesman_id"/>
                     <field name="pay_inv"/>
                     <field name="invoice_id"/>
+                    <field name="am_rec"/>
                     <field name="inv_date"/>
+                    <field name="date_start"/>
+                    <field name="date_stop"/>
                     <field name="days"/>
                     <field name="inv_subtotal"/>
                     <field name="price_unit"/>
@@ -522,6 +637,23 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='move_id']" position="after">
                     <field name="date_last_payment"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="action_account_moves_all_tree" model="ir.actions.act_window">
+            <field name="name">Journal Items</field>
+            <field name="res_model">account.move.line</field>
+            <field name="context">{}</field>
+            <field name="view_id" ref="account.view_move_line_tree"/>
+        </record>
+
+        <record id="res_company_view_comm_tax" model="ir.ui.view">
+            <field name="name">res.company.view.comm_tax</field>
+            <field name="inherit_id" ref="baremo.res_company_view_baremo"/>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='baremo_grp']" position="inside">
+                    <field name="comm_tax"/>
                 </xpath>
             </field>
         </record>

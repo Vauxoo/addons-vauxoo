@@ -18,9 +18,9 @@ COMMISSION_TYPES = [
 ]
 
 COMMISSION_SALESMAN_POLICY = [
-    ('salesmanOnInvoice', 'Invoice'),
-    ('salesmanOnInvoicedPartner', 'Partner'),
-    ('salesmanOnAccountingPartner', 'Commercial Entity'),
+    ('on_invoice', 'Invoice'),
+    ('on_invoiced_partner', 'Partner'),
+    ('on_accounting_partner', 'Commercial Entity'),
 ]
 
 COMMISSION_SCOPES = [
@@ -213,6 +213,7 @@ class commission_payment(osv.Model):
                                                             respect to the\
                                                             currency of the\
                                                             company')),
+        'comm_fix': fields.boolean('Fix Commissions?'),
     }
     _defaults = {
         'name': lambda *a: None,
@@ -220,6 +221,87 @@ class commission_payment(osv.Model):
         'state': lambda *a: 'draft',
         'company_id': _get_default_company,
     }
+
+    def action_view_fixlines(self, cr, uid, ids, context=None):
+        '''
+        This function returns an action that display existing Commissions of
+        given commission payment ids that are required for some details to
+        provide a proper computation of commissions.
+        '''
+        mod_obj = self.pool.get('ir.model.data')
+        act_obj = self.pool.get('ir.actions.act_window')
+
+        result = mod_obj.get_object_reference(cr, uid, 'commission_payment',
+                                              'comm_line_fix_act')
+        idx = result and result[1] or False
+        result = act_obj.read(cr, uid, [idx], context=context)[0]
+        # compute the number of payments to display
+        cl_ids = []
+        for cp_brw in self.browse(cr, uid, ids, context=context):
+            cl_ids += [cl_brw.id for cs_brw in cp_brw.salesman_ids
+                       if not cs_brw.salesman_id
+                       for cl_brw in cs_brw.comm_lines_ids
+                       ]
+        # choose the view_mode accordingly
+        if len(cl_ids) > 1:
+            result['domain'] = "[('id','in',["+','.join(
+                [str(cl_id) for cl_id in cl_ids]
+            )+"])]"
+        else:
+            result['domain'] = "[('id','in',[])]"
+        return result
+
+    def action_view_payment(self, cr, uid, ids, context=None):
+        '''
+        This function returns an action that display existing Payments of given
+        commission payment ids. It can either be a in a list or in a form view,
+        if there is only one invoice to show.
+        '''
+        mod_obj = self.pool.get('ir.model.data')
+        act_obj = self.pool.get('ir.actions.act_window')
+
+        result = mod_obj.get_object_reference(cr, uid, 'commission_payment',
+                                              'action_account_moves_all_tree')
+        idx = result and result[1] or False
+        result = act_obj.read(cr, uid, [idx], context=context)[0]
+        # compute the number of payments to display
+        aml_ids = []
+        for cp_brw in self.browse(cr, uid, ids, context=context):
+            aml_ids += [aml_brw.id for aml_brw in cp_brw.aml_ids]
+        # choose the view_mode accordingly
+        if len(aml_ids) > 1:
+            result['domain'] = "[('id','in',["+','.join(
+                [str(aml_id) for aml_id in aml_ids]
+            )+"])]"
+        else:
+            result['domain'] = "[('id','in',[])]"
+        return result
+
+    def action_view_invoice(self, cr, uid, ids, context=None):
+        '''
+        This function returns an action that display existing invoices of given
+        commission payment ids. It can either be a in a list or in a form view,
+        if there is only one invoice to show.
+        '''
+        mod_obj = self.pool.get('ir.model.data')
+        act_obj = self.pool.get('ir.actions.act_window')
+
+        result = mod_obj.get_object_reference(cr, uid, 'account',
+                                              'action_invoice_tree1')
+        idx = result and result[1] or False
+        result = act_obj.read(cr, uid, [idx], context=context)[0]
+        # compute the number of invoices to display
+        inv_ids = []
+        for cp_brw in self.browse(cr, uid, ids, context=context):
+            inv_ids += [invoice.id for invoice in cp_brw.invoice_ids]
+        # choose the view_mode accordingly
+        if len(inv_ids) > 1:
+            result['domain'] = "[('id','in',["+','.join(
+                [str(inv_id) for inv_id in inv_ids]
+            )+"])]"
+        else:
+            result['domain'] = "[('id','in',[])]"
+        return result
 
     def _prepare_based_on_payments(self, cr, uid, ids, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -238,10 +320,16 @@ class commission_payment(osv.Model):
                     ('journal_id.type', 'in', ('bank', 'cash')),
                     ('credit', '>', 0.0),
                     ('paid_comm', '=', False),
-                    ('rec_invoice', '!=', False),
                     ]
             aml_ids = aml_obj.search(
-                cr, uid, args, context=context)
+                cr, uid, args + [('rec_invoice', '!=', False)],
+                context=context)
+
+            aml_ids += aml_obj.search(
+                cr, uid, args + [('rec_aml', '!=', False)],
+                context=context)
+
+            aml_ids = list(set(aml_ids))
 
             comm_brw.write({
                 'aml_ids': [(6, comm_brw.id, aml_ids)]})
@@ -261,6 +349,7 @@ class commission_payment(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
         inv_obj = self.pool.get('account.invoice')
+        aml_obj = self.pool.get('account.move.line')
 
         for comm_brw in self.browse(cr, uid, ids, context=context):
             comm_brw.write({'aml_ids': []})
@@ -273,18 +362,35 @@ class commission_payment(osv.Model):
                 cr, uid, [('state', '=', 'paid'),
                           ('type', '=', 'out_invoice'),
                           ('date_last_payment', '>=', date_start),
-                          ('date_last_payment', '<=', date_stop)])
+                          ('date_last_payment', '<=', date_stop),
+                          ], context=context)
 
             comm_brw.write({
                 'invoice_ids': [(6, comm_brw.id, invoice_ids)]})
-
-            comm_brw.refresh()
 
             aml_ids = [aml_brw.id for inv_brw in comm_brw.invoice_ids
                        for aml_brw in inv_brw.payment_ids
                        if aml_brw.journal_id.type in ('bank', 'cash')
                        ]
 
+            aml_ids2 = aml_obj.search(
+                cr, uid, [('state', '=', 'valid'),
+                          ('reconcile_id', '!=', False),
+                          ('journal_id.type', '=', 'sale'),
+                          ('date_last_payment', '>=', date_start),
+                          ('date_last_payment', '<=', date_stop),
+                          ], context=context)
+
+            aml_ids2 = aml_obj.search(
+                cr, uid, [('state', '=', 'valid'),
+                          ('reconcile_id', '!=', False),
+                          ('journal_id.type', 'in', ('bank', 'cash')),
+                          ('rec_aml', 'in', aml_ids2),
+                          # ('date_last_payment', '>=', date_start),
+                          # ('date_last_payment', '<=', date_stop),
+                          ], context=context)
+
+            aml_ids = list(set(aml_ids + aml_ids2))
             comm_brw.write({'aml_ids': [(6, comm_brw.id, aml_ids)]})
 
         return True
@@ -361,9 +467,16 @@ class commission_payment(osv.Model):
         aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
         date = False
         if comm_brw.commission_policy_date_start == 'invoice_emission_date':
-            date = aml_brw.rec_invoice.date_invoice
+            if aml_brw.rec_invoice:
+                date = aml_brw.rec_invoice.date_invoice
+            else:
+                date = aml_brw.rec_aml.date
+
         elif comm_brw.commission_policy_date_start == 'invoice_due_date':
-            date = aml_brw.rec_invoice.date_due
+            if aml_brw.rec_invoice:
+                date = aml_brw.rec_invoice.date_due
+            else:
+                date = aml_brw.rec_aml.date_maturity
         return date
 
     def _get_commission_policy_end_date(self, cr, uid, ids, pay_id,
@@ -375,13 +488,18 @@ class commission_payment(osv.Model):
         aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
         date = False
         if comm_brw.commission_policy_date_end == 'last_payment_date':
-            date = aml_brw.rec_invoice.date_last_payment
+            if aml_brw.rec_invoice:
+                date = aml_brw.rec_invoice.date_last_payment
+            else:
+                date = aml_brw.rec_aml.date_last_payment
         elif comm_brw.commission_policy_date_end == 'date_on_payment':
             date = aml_brw.date
         return date
 
     def _get_commission_salesman_policy(self, cr, uid, ids, pay_id,
-                                        context=None):
+                                        salesman_id=None, context=None):
+        if salesman_id:
+            return salesman_id
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
         aml_obj = self.pool.get('account.move.line')
@@ -389,40 +507,61 @@ class commission_payment(osv.Model):
         comm_brw = self.browse(cr, uid, ids[0], context=context)
         aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
         res = None
-        if comm_brw.commission_salesman_policy == 'salesmanOnInvoice':
-            res = aml_brw.rec_invoice.user_id
-        elif comm_brw.commission_salesman_policy == \
-                'salesmanOnInvoicedPartner':
-            res = aml_brw.rec_invoice.partner_id.user_id
-        elif comm_brw.commission_salesman_policy == \
-                'salesmanOnAccountingPartner':
-            res = rp_obj._find_accounting_partner(
-                aml_brw.rec_invoice.partner_id).user_id
+        if aml_brw.rec_invoice:
+            if comm_brw.commission_salesman_policy == 'on_invoice':
+                res = aml_brw.rec_invoice.user_id
+            elif comm_brw.commission_salesman_policy == \
+                    'on_invoiced_partner':
+                res = aml_brw.rec_invoice.partner_id.user_id
+            elif comm_brw.commission_salesman_policy == \
+                    'on_accounting_partner':
+                res = rp_obj._find_accounting_partner(
+                    aml_brw.rec_invoice.partner_id).user_id
+        else:
+            if comm_brw.commission_salesman_policy in \
+                    ('on_invoiced_partner', 'on_invoice'):
+                res = aml_brw.rec_aml.partner_id.user_id
+            elif comm_brw.commission_salesman_policy == \
+                    'on_accounting_partner':
+                res = rp_obj._find_accounting_partner(
+                    aml_brw.rec_aml.partner_id).user_id
+
         return res
 
     def _get_commission_policy_baremo(self, cr, uid, ids, pay_id,
+                                      partner_id=None, salesman_id=None,
                                       context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
+        partner_id = partner_id or None
         aml_obj = self.pool.get('account.move.line')
         rp_obj = self.pool.get('res.partner')
         comm_brw = self.browse(cr, uid, ids[0], context=context)
         aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
         res = None
         if comm_brw.commission_baremo_policy == 'onCompany':
-            res = aml_brw.company_id.partner_id.baremo_id
+            partner_id = comm_brw.company_id.partner_id
         elif comm_brw.commission_baremo_policy == 'onPartner':
-            res = aml_brw.rec_invoice.partner_id.baremo_id
+            if aml_brw.rec_invoice:
+                partner_id = partner_id or aml_brw.rec_invoice.partner_id
+            else:
+                partner_id = partner_id or aml_brw.rec_aml.partner_id
         elif comm_brw.commission_baremo_policy == 'onAccountingPartner':
-            res = rp_obj._find_accounting_partner(
-                aml_brw.rec_invoice.partner_id).baremo_id
+            if aml_brw.rec_invoice:
+                partner_id = partner_id or aml_brw.rec_invoice.partner_id
+            else:
+                partner_id = partner_id or aml_brw.rec_aml.partner_id
+            partner_id = rp_obj._find_accounting_partner(partner_id)
         elif comm_brw.commission_baremo_policy == 'onUser':
-            res = self._get_commission_salesman_policy(
-                cr, uid, ids[0], pay_id, context=context).baremo_id
+            partner_id = self._get_commission_salesman_policy(
+                cr, uid, ids[0], pay_id, salesman_id=salesman_id,
+                context=context).partner_id
         elif comm_brw.commission_baremo_policy == 'onCommission':
             res = comm_brw.baremo_id
         # Fall back to baremo in Commission
-        if not res:
+        if partner_id:
+            res = partner_id.baremo_id
+        else:
             res = comm_brw.baremo_id
         return res
 
@@ -456,7 +595,7 @@ class commission_payment(osv.Model):
 
         # Obtener el vendedor del partner
         salesman = self._get_commission_salesman_policy(cr, uid, ids, pay_id,
-                                                       context=context)
+                                                        context=context)
 
         commission_policy_baremo = \
             self._get_commission_policy_baremo(cr, uid, ids, pay_id,
@@ -557,15 +696,18 @@ class commission_payment(osv.Model):
                         cr, uid, {
                             'commission_id': comm_brw.id,
                             'aml_id': aml_brw.id,
+                            'am_rec': inv_brw.move_id.id,
                             'name':
                             aml_brw.move_id.name and
                             aml_brw.move_id.name or '/',
-                            'pay_date': commission_policy_date_end,
+                            'pay_date': aml_brw.date,
                             'pay_off': aml_brw.credit,
                             'partner_id': inv_brw.partner_id.id,
                             'salesman_id': salesman and salesman.id,
                             'pay_inv': aml_brw.credit,
-                            'inv_date': commission_policy_date_start,
+                            'inv_date': inv_brw.date_invoice,
+                            'date_start': commission_policy_date_start,
+                            'date_stop': commission_policy_date_end,
                             'days': emission_days,
                             'inv_subtotal': inv_brw.amount_untaxed,
                             'product_id': inv_lin.product_id.id,
@@ -642,7 +784,7 @@ class commission_payment(osv.Model):
 
         # Obtener el vendedor del partner
         salesman = self._get_commission_salesman_policy(cr, uid, ids, aml_id,
-                                                       context=context)
+                                                        context=context)
 
         commission_policy_baremo = \
             self._get_commission_policy_baremo(cr, uid, ids, aml_id,
@@ -684,15 +826,18 @@ class commission_payment(osv.Model):
             cr, uid, {
                 'commission_id': comm_brw.id,
                 'aml_id': aml_brw.id,
+                'am_rec': inv_brw.move_id.id,
                 'name':
                 aml_brw.move_id.name and
                 aml_brw.move_id.name or '/',
-                'pay_date': commission_policy_date_end,
+                'pay_date': aml_brw.date,
                 'pay_off': aml_brw.credit,
                 'partner_id': inv_brw.partner_id.id,
                 'salesman_id': salesman and salesman.id,
                 'pay_inv': aml_brw.credit,
-                'inv_date': commission_policy_date_start,
+                'inv_date': inv_brw.date_invoice,
+                'date_start': commission_policy_date_start,
+                'date_stop': commission_policy_date_end,
                 'days': emission_days,
                 'inv_subtotal': inv_brw.amount_untaxed,
                 'perc_iva': perc_iva,
@@ -703,6 +848,71 @@ class commission_payment(osv.Model):
                 'commission_currency': commission_currency,
                 'currency_id': inv_brw.currency_id and inv_brw.currency_id.id
                 or inv_brw.company_id.currency_id.id,
+            }, context=context)
+
+        return True
+
+    def _get_commission_payment_on_aml(self, cr, uid, ids, aml_id,
+                                       context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        context = context or {}
+        comm_brw = self.browse(cr, uid, ids[0], context=context)
+
+        aml_obj = self.pool.get('account.move.line')
+        comm_line_ids = self.pool.get('commission.lines')
+
+        aml_brw = aml_obj.browse(cr, uid, aml_id, context=context)
+        if not aml_brw.credit:
+            return True
+
+        commission_policy_date_start = \
+            self._get_commission_policy_start_date(cr, uid, ids, aml_id,
+                                                   context=context)
+
+        commission_policy_date_end = \
+            self._get_commission_policy_end_date(cr, uid, ids, aml_id,
+                                                 context=context)
+
+        commission_policy_baremo = \
+            self._get_commission_policy_baremo(cr, uid, ids, aml_id,
+                                               context=context)
+
+        commission_params = self._get_commission_rate(
+            cr, uid, comm_brw.id,
+            commission_policy_date_end,
+            commission_policy_date_start, dcto=0.0,
+            bar_brw=commission_policy_baremo)
+
+        bar_day = commission_params['bar_day']
+        bar_dcto_comm = commission_params['bar_dcto_comm']
+        bardctdsc = commission_params['bardctdsc']
+        emission_days = commission_params['emission_days']
+
+        # Generar las lineas de comision por cada factura
+        comm_line_ids.create(
+            cr, uid, {
+                'commission_id': comm_brw.id,
+                'aml_id': aml_brw.id,
+                'am_rec': aml_brw.rec_aml.move_id.id,
+                'name': aml_brw.move_id.name and aml_brw.move_id.name or '/',
+                'pay_date': aml_brw.date,
+                'pay_off': aml_brw.credit,
+                'partner_id': aml_brw.partner_id.id,
+                'salesman_id': None,
+                'pay_inv': aml_brw.credit,
+                'inv_date': aml_brw.rec_aml.date,
+                'date_start': commission_policy_date_start,
+                'date_stop': commission_policy_date_end,
+                'days': emission_days,
+                'inv_subtotal': None,
+                'perc_iva': None,
+                'rate_number': bardctdsc,
+                'timespan': bar_day,
+                'baremo_comm': bar_dcto_comm,
+                'commission': 0.0,
+                'commission_currency': None,
+                'currency_id': aml_brw.currency_id and aml_brw.currency_id.id
+                or aml_brw.company_id.currency_id.id,
             }, context=context)
 
         return True
@@ -726,12 +936,8 @@ class commission_payment(osv.Model):
 
         for comm_brw in self.browse(cr, uid, ids, context=context):
 
-            # Obtener la lista de asesores/vendedores a los cuales se les hara
-            # el calculo de comisiones
-            user_ids = [line.id for line in comm_brw.user_ids]
-
-            payment_ids = []
-            uninvoice_payment_ids = []
+            payment_ids = set([])
+            uninvoice_payment_ids = set([])
 
             # Read each Journal Entry Line
             for aml_brw in comm_brw.aml_ids:
@@ -741,24 +947,22 @@ class commission_payment(osv.Model):
 
                 # Verificar si esta linea tiene factura
                 if not aml_brw.rec_invoice:
-                    uninvoice_payment_ids.append(aml_brw.id)
+                    # TODO: Here we have to deal with the lines that comes from
+                    # another system
+                    uninvoice_payment_ids.add(aml_brw.id)
                     continue
 
-                commission_salesman_policy = \
-                    self._get_commission_salesman_policy(
-                        cr, uid, ids, aml_brw.id, context=context)
-
-                if commission_salesman_policy is None:
-                    # TODO: Some Warnings have to be done here
-                    continue
-
-                if commission_salesman_policy.id in user_ids:
-                    payment_ids.append(aml_brw.id)
+                payment_ids.add(aml_brw.id)
 
             for pay_id in payment_ids:
                 # se procede con la preparacion de las comisiones.
                 self._get_commission_payment(cr, uid, ids, pay_id,
                                              context=context)
+
+            for aml_id in uninvoice_payment_ids:
+                # se procede con la preparacion de las comisiones.
+                self._get_commission_payment_on_aml(cr, uid, ids, aml_id,
+                                                    context=context)
 
         return True
 
@@ -774,16 +978,22 @@ class commission_payment(osv.Model):
         # que necesitan correccion se procede a agrupar las comisiones por
         # vendedor para mayor facilidad de uso
 
+        cl_fields = ['id', 'salesman_id', 'currency_id', 'commission',
+                     'commission_currency', 'am_id', 'invoice_id',
+                     'comm_salespeople_id', 'comm_voucher_id', ]
+
         for commission in self.browse(cr, uid, ids, context=context):
+            # Erasing what was previously set as Commission per Salesman
+            commission.salesman_ids.unlink()
+            commission.comm_invoice_ids.unlink()
+            commission.comm_voucher_ids.unlink()
 
             # recoge todos los vendedores y suma el total de sus comisiones
             sale_comm = {}
             # ordena en un arbol todas las lineas de comisiones de producto
-            cl_fields = ['id', 'salesman_id', 'currency_id', 'commission',
-                         'commission_currency', 'am_id', 'invoice_id',
-                         'comm_salespeople_id', 'comm_voucher_id', ]
-
             cl_ids = commission.comm_line_ids.read(cl_fields, load=None)
+            if not cl_ids:
+                continue
 
             cl_data = DataFrame(cl_ids).set_index('id')
             cl_data_grouped = cl_data.groupby(['salesman_id', 'currency_id'])
@@ -807,7 +1017,11 @@ class commission_payment(osv.Model):
                                     {'comm_salespeople_id': vendor_id},
                                     context=context)
 
-            commission.write({'total_comm': cl_data.sum().get('commission')})
+            commission.write({
+                'total_comm': cl_data.sum().get('commission'),
+                'comm_fix': not all(
+                    cl_data.groupby('salesman_id').groups.keys()),
+            })
 
             cl_ids = commission.comm_line_ids.read(cl_fields, load=None)
             cl_data = DataFrame(cl_ids).set_index('id')
@@ -881,7 +1095,35 @@ class commission_payment(osv.Model):
         self.write(cr, uid, ids, {'state': 'open'}, context=context)
         return True
 
+    def _recompute_commission(self, cr, uid, ids, context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        context = context or {}
+        for comm_brw in self.browse(cr, uid, ids, context=context):
+            for cs_brw in comm_brw.salesman_ids:
+                if cs_brw.salesman_id:
+                    continue
+                for cl_brw in cs_brw.comm_lines_ids:
+                    cl_brw._recompute_commission()
+        return True
+
+    def action_recompute(self, cr, uid, ids, context=None):
+
+        self._recompute_commission(cr, uid, ids, context=context)
+        self._post_processing(cr, uid, ids, context=context)
+        return True
+
     def action_draft(self, cr, user, ids, context=None):
+
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        aml_obj = self.pool.get('account.move.line')
+
+        for comm_brw in self.browse(cr, user, ids, context=context):
+            if comm_brw.state == 'done':
+                aml_obj.write(
+                    cr, user,
+                    [line.aml_id.id for line in comm_brw.comm_line_ids],
+                    {'paid_comm': False}, context=context)
 
         self.clear(cr, user, ids, context=context)
         self.write(cr, user, ids, {'state': 'draft', 'total_comm': None},
@@ -889,55 +1131,40 @@ class commission_payment(osv.Model):
         return True
 
     def clear(self, cr, user, ids, context=None):
-
+        '''
+        Deletes all associated record from Commission Payment
+        '''
+        context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
-        sale_noids = self.pool.get('commission.sale.noid')
-        noprice_ids = self.pool.get('commission.noprice')
-        comm_line_ids = self.pool.get('commission.lines')
-        salesman_ids = self.pool.get('commission.salesman')
-        comm_voucher_ids = self.pool.get('commission.voucher')
-        comm_invoice_ids = self.pool.get('commission.invoice')
-
-        for commission in self.browse(cr, user, ids, context=context):
-            ###
-            # Desvincular todos los elementos que esten conectados a este
-            # calculo de comisiones
-            # * Desvinculando los articulos sin id
-            sale_noids.unlink(cr, user, [
-                              line.id for line in commission.sale_noids])
-            # * Desvinculando los productos sin fecha
-            noprice_ids.unlink(cr, user, [
-                               line.id for line in commission.noprice_ids])
-            # * Desvinculando las lineas de comisiones
-            comm_line_ids.unlink(
-                cr, user, [line.id for line in commission.comm_line_ids])
-            # * Desvinculando los totales por vendedor
-            salesman_ids.unlink(
-                cr, user, [line.id for line in commission.salesman_ids])
-            ###
-            # * Desvinculando los vouchers afectados
-            comm_voucher_ids.unlink(
-                cr, user, [line.id for line in commission.comm_voucher_ids])
-            # * Desvinculando las facturas afectadas
-            comm_invoice_ids.unlink(
-                cr, user, [line.id for line in commission.comm_invoice_ids])
-            ###
-            commission.write(
-                {'aml_ids': [(3, aml_brw.id) for aml_brw in
-                             commission.aml_ids],
-                 'invoice_ids': [(3, inv_brw.id) for inv_brw in
-                                 commission.invoice_ids]})
+        for comm_brw in self.browse(cr, user, ids, context=context):
+            comm_brw.sale_noids.unlink()
+            comm_brw.noprice_ids.unlink()
+            comm_brw.comm_line_ids.unlink()
+            comm_brw.salesman_ids.unlink()
+            comm_brw.comm_voucher_ids.unlink()
+            comm_brw.comm_invoice_ids.unlink()
+            comm_brw.write(
+                {'aml_ids': [(3, aml_brw.id) for aml_brw in comm_brw.aml_ids],
+                 'invoice_ids': [
+                     (3, inv_brw.id) for inv_brw in comm_brw.invoice_ids]})
 
     def validate(self, cr, user, ids, context=None):
         aml_obj = self.pool.get('account.move.line')
         # escribir en el aml el estado buleano de paid_comm a True para indicar
         # que ya esta comision se esta pagando
+        # TODO: prior to write anything here paid_comm field has to be check
+        # first if any of the line has being paid arise a warning
         for comm_brw in self.browse(cr, user, ids, context=context):
+            if comm_brw.comm_fix:
+                raise osv.except_osv(_('Error!'), _('There are items to fix'))
+
             aml_obj.write(cr, user,
                           [line.aml_id.id for line in comm_brw.comm_line_ids],
                           {'paid_comm': True}, context=context)
 
+        # TODO: write the real list of payments and invoices that were taken
+        # into account
         self.write(cr, user, ids, {'state': 'done', }, context=context)
         return True
 
@@ -974,7 +1201,7 @@ class commission_noprice(osv.Model):
         'name': fields.char('Comentario', size=256),
         'commission_id': fields.many2one('commission.payment', 'Comision'),
         'product_id': fields.many2one('product.product', 'Producto'),
-        'date': fields.date('Fecha'),
+        'date': fields.date('Date'),
         'invoice_num': fields.char('Invoice Number', size=256),
     }
     _defaults = {
@@ -995,12 +1222,13 @@ class commission_lines(osv.Model):
         'commission_id': fields.many2one(
             'commission.payment', 'Commission Document', required=True),
         'name': fields.char('Transaccion', size=256, required=True),
-        'pay_date': fields.date('Fecha', required=True),
+        'pay_date': fields.date('Payment Date', required=True),
         'pay_off': fields.float(
             'Pago',
             digits_compute=dp.get_precision('Commission')),
 
         'aml_id': fields.many2one('account.move.line', 'Entry Line'),
+        'am_rec': fields.many2one('account.move', 'Reconciling Entry'),
         'am_id': fields.related(
             'aml_id', 'move_id',
             string='Journal Entry', relation='account.move',
@@ -1010,19 +1238,26 @@ class commission_lines(osv.Model):
             'aml_id', 'rec_invoice',
             string='Reconciling Invoice', relation='account.invoice',
             type='many2one', store=True, readonly=True),
-        'partner_id': fields.many2one('res.partner', 'Empresa'),
-        'salesman_id': fields.many2one('res.users', 'Salesman', required=True),
+        'partner_id': fields.many2one('res.partner', 'Partner'),
+        'salesman_id': fields.many2one('res.users', 'Salesman',
+                                       required=False),
         'comm_salespeople_id': fields.many2one(
             'commission.salesman', 'Salespeople Commission', required=False),
         'comm_voucher_id': fields.many2one(
             'commission.voucher', 'Voucher Commission', required=False),
         'pay_inv': fields.float(
-            'Abono Fact.',
+            'Pay. to Doc.',
             digits_compute=dp.get_precision('Commission')),
 
         'inv_date': fields.date('Invoice Date'),
+        'date_start': fields.date(
+            'Start Date', required=False, readonly=True,
+        ),
+        'date_stop': fields.date(
+            'End Date', required=False, readonly=True,
+        ),
         'days': fields.float(
-            'Days',
+            'Comm. Days',
             digits_compute=dp.get_precision('Commission')),
 
         'inv_subtotal': fields.float(
@@ -1072,6 +1307,82 @@ class commission_lines(osv.Model):
         'name': lambda *a: None,
     }
 
+    def _recompute_commission(self, cr, uid, ids, context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        context = context or {}
+        cl_brw = self.browse(cr, uid, ids[0], context=context)
+        comm_brw = cl_brw.commission_id
+
+        aml_brw = cl_brw.aml_id
+        aml_id = cl_brw.aml_id.id
+        if not aml_brw.credit:
+            return True
+
+        commission_policy_date_start = \
+            comm_brw._get_commission_policy_start_date(aml_id)
+
+        commission_policy_date_end = \
+            comm_brw._get_commission_policy_end_date(aml_id)
+
+        commission_policy_baremo = \
+            comm_brw._get_commission_policy_baremo(
+                aml_id, partner_id=cl_brw.partner_id,
+                salesman_id=cl_brw.salesman_id)
+
+        commission_params = comm_brw._get_commission_rate(
+            commission_policy_date_end,
+            commission_policy_date_start, dcto=0.0,
+            bar_brw=commission_policy_baremo)
+
+        bar_day = commission_params['bar_day']
+        bar_dcto_comm = commission_params['bar_dcto_comm']
+        bardctdsc = commission_params['bardctdsc']
+        emission_days = commission_params['emission_days']
+
+        ###############################
+        # CALCULO DE COMISION POR AML #
+        ###############################
+
+        # Right now I have not figure out a way to know how much was taxed
+        perc_iva = comm_brw.company_id.comm_tax
+
+        penbxlinea = aml_brw.credit
+        fact_sup = 1 - 0.0 / 100 - 0.0 / 100
+        fact_inf = 1 + (perc_iva / 100) * (1 - 0.0 / 100) - \
+            0.0 / 100 - 0.0 / 100
+
+        comm_line = penbxlinea * fact_sup * (
+            bar_dcto_comm / 100) / fact_inf
+
+        if aml_brw.currency_id and aml_brw.amount_currency:
+            commission_currency = abs(aml_brw.amount_currency) * fact_sup * (
+                bar_dcto_comm / 100) / fact_inf
+        elif aml_brw.currency_id and not aml_brw.amount_currency:
+            return True
+        else:
+            commission_currency = comm_line
+
+        # Generar las lineas de comision por cada factura
+        cl_brw.write({
+            'pay_date': aml_brw.date,
+            'pay_off': aml_brw.credit,
+            'pay_inv': aml_brw.credit,
+            'inv_date': aml_brw.rec_aml.date,
+            'date_start': commission_policy_date_start,
+            'date_stop': commission_policy_date_end,
+            'days': emission_days,
+            'inv_subtotal': (aml_brw.rec_aml.debit / (1 + perc_iva / 100)),
+            'perc_iva': perc_iva,
+            'rate_number': bardctdsc,
+            'timespan': bar_day,
+            'baremo_comm': bar_dcto_comm,
+            'commission': comm_line,
+            'commission_currency': commission_currency,
+            'currency_id': aml_brw.currency_id and aml_brw.currency_id.id
+            or aml_brw.company_id.currency_id.id,
+            })
+        return True
+
 
 class commission_salesman(osv.Model):
 
@@ -1083,12 +1394,13 @@ class commission_salesman(osv.Model):
     _rec_name = 'salesman_id'
 
     _columns = {
-        'commission_id': fields.many2one('commission.payment',
-                                         'Commission Document'),
-        'salesman_id': fields.many2one('res.users', 'Salesman', required=True),
+        'commission_id': fields.many2one(
+            'commission.payment', 'Commission Document', readonly=True),
+        'salesman_id': fields.many2one(
+            'res.users', 'Salesman', required=False, readonly=True),
         'comm_total': fields.float(
             'Commission Amount',
-            digits_compute=dp.get_precision('Commission')),
+            digits_compute=dp.get_precision('Commission'), readonly=True),
         'comm_voucher_ids': fields.one2many(
             'commission.voucher',
             'comm_sale_id', 'Vouchers Affected in this commission',
@@ -1098,10 +1410,10 @@ class commission_salesman(osv.Model):
             'comm_salespeople_id', 'Salespeople Commission Details',
             required=False),
         'currency_id':
-            fields.many2one('res.currency', 'Currency'),
+            fields.many2one('res.currency', 'Currency', readonly=True),
         'comm_total_currency': fields.float(
             'Currency Amount',
-            digits_compute=dp.get_precision('Commission')),
+            digits_compute=dp.get_precision('Commission'), readonly=True),
         'company_id': fields.related(
             'commission_id', 'company_id',
             string='Company',
@@ -1175,4 +1487,13 @@ class commission_lines_2(osv.Model):
     _columns = {
         'comm_invoice_id': fields.many2one('commission.invoice',
                                            'Invoice Commission'),
+    }
+
+
+class res_company(osv.Model):
+    _inherit = "res.company"
+    _description = 'Companies'
+
+    _columns = {
+        'comm_tax': fields.float('Default Tax for Commissions'),
     }
