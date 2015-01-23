@@ -74,7 +74,6 @@ class wizard_report(osv.osv_memory):
             context = {}
         res = super(wizard_report, self).print_report(
             cr, uid, ids, data=data, context=context)
-
         res.get('datas')['ids'] = ids
         report_name = ''
         if res.get('report_name') == 'afr.1cols':
@@ -133,8 +132,110 @@ class wizard_report(osv.osv_memory):
         res = dict(res, report_name=report_name, model=self._name)
         return res
 
+HeaderFooterTextWebKitParser('report.afr_report_col5',
+                             'wizard.report',
+                             'addons/afr_webkit/report/'
+                             + 'afr_report_webkit_cols5.mako',
+                             parser=Parser.account_balance, header="external")
+
+HeaderFooterTextWebKitParser('report.afr_report_col5_html',
+                             'wizard.report',
+                             'addons/afr_webkit/report/'
+                             + 'afr_report_webkit_cols5.mako',
+                             parser=Parser.account_balance, header="external")
+
+HeaderFooterTextWebKitParser('report.afr_report_col1',
+                             'wizard.report',
+                             'addons/afr_webkit/report/'
+                             + 'afr_report_webkit_cols1.mako',
+                             parser=Parser.account_balance, header="external")
+
+HeaderFooterTextWebKitParser('report.afr_report_col1_html',
+                             'wizard.report',
+                             'addons/afr_webkit/report/'
+                             + 'afr_report_webkit_cols1.mako',
+                             parser=Parser.account_balance, header="external")
+
+HeaderFooterTextWebKitParser('report.afr_report_col2',
+                             'wizard.report',
+                             'addons/afr_webkit/report/'
+                             + 'afr_report_webkit_cols2.mako',
+                             parser=Parser.account_balance, header="external")
+
+HeaderFooterTextWebKitParser('report.afr_report_col2_html',
+                             'wizard.report',
+                             'addons/afr_webkit/report/'
+                             + 'afr_report_webkit_cols2.mako',
+                             parser=Parser.account_balance, header="external")
+
+HeaderFooterTextWebKitParser('report.afr_report_col4',
+                             'wizard.report',
+                             'addons/afr_webkit/report/'
+                             + 'afr_report_webkit_cols4.mako',
+                             parser=Parser.account_balance, header="external")
+
+HeaderFooterTextWebKitParser('report.afr_report_col4_html',
+                             'wizard.report',
+                             'addons/afr_webkit/report/'
+                             + 'afr_report_webkit_cols4.mako',
+                             parser=Parser.account_balance, header="external")
+
+HeaderFooterTextWebKitParser('report.afr_report_journal_ledger',
+                             'wizard.report',
+                             'addons/afr_webkit/report/'
+                             + 'afr_report_webkit_journal_ledger.mako',
+                             parser=Parser.account_balance, header="external")
+
+HeaderFooterTextWebKitParser('report.afr_report_journal_ledger_html',
+                             'wizard.report',
+                             'addons/afr_webkit/report/'
+                             + 'afr_report_webkit_journal_ledger.mako',
+                             parser=Parser.account_balance, header="external")
+
+HeaderFooterTextWebKitParser('report.afr_report_qtr',
+                             'wizard.report',
+                             'addons/afr_webkit/report/'
+                             + 'afr_report_webkit_qtr.mako',
+                             parser=Parser.account_balance, header="external")
+
+HeaderFooterTextWebKitParser('report.afr_report_qtr_html',
+                             'wizard.report',
+                             'addons/afr_webkit/report/'
+                             + 'afr_report_webkit_qtr.mako',
+                             parser=Parser.account_balance, header="external")
+
 HeaderFooterTextWebKitParser('report.afr_report_col13',
                              'wizard.report',
                              'addons/afr_webkit/report/'
                              + 'afr_report_webkit_cols13.mako',
+                             parser=Parser.account_balance, header="external")
+
+HeaderFooterTextWebKitParser('report.afr_report_col13_html',
+                             'wizard.report',
+                             'addons/afr_webkit/report/'
+                             + 'afr_report_webkit_cols13.mako',
+                             parser=Parser.account_balance, header="external")
+
+HeaderFooterTextWebKitParser('report.afr_report_analytic_ledger',
+                             'wizard.report',
+                             'addons/afr_webkit/report/'
+                             + 'afr_report_webkit_analytic_ledger.mako',
+                             parser=Parser.account_balance, header="external")
+
+HeaderFooterTextWebKitParser('report.afr_report_analytic_ledger_html',
+                             'wizard.report',
+                             'addons/afr_webkit/report/'
+                             + 'afr_report_webkit_analytic_ledger.mako',
+                             parser=Parser.account_balance, header="external")
+
+HeaderFooterTextWebKitParser('report.afr_report_partner_balance',
+                             'wizard.report',
+                             'addons/afr_webkit/report/'
+                             + 'afr_report_webkit_partner_balance.mako',
+                             parser=Parser.account_balance, header="external")
+
+HeaderFooterTextWebKitParser('report.afr_report_partner_balance_html',
+                             'wizard.report',
+                             'addons/afr_webkit/report/'
+                             + 'afr_report_webkit_partner_balance.mako',
                              parser=Parser.account_balance, header="external")

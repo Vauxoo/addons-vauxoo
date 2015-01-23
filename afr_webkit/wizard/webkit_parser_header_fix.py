@@ -193,8 +193,6 @@ class HeaderFooterTextWebKitParser(webkit_report.WebKitParser):
                          ).create_single_pdf(cursor, uid, ids, data,
                                              report_xml, context=context)
 
-        import pdb;pdb.set_trace()
-
         parser_instance = self.parser(cursor,
                                       uid,
                                       self.name2,
