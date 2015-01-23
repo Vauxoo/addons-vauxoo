@@ -23,7 +23,7 @@
     "version": "1.0",
     "author": "Vauxoo",
     'website': 'https://www.vauxoo.com',
-    "depends": ['product', 'product_extended'],
+    "depends": ['product', 'stock_account', 'product_extended'],
     "category": "Generic Modules/Inventory Control",
     "description": """
 Product extension. This module adds:
