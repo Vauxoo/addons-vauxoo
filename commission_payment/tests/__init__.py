@@ -29,7 +29,3 @@ Init file for the test in the bdp_purchase_requistion Odoo module.
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 from . import test_commission_payment
-
-fast_suite = [
-    test_commission_payment,
-]
