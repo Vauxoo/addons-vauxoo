@@ -4,7 +4,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
-############# Credits #########################################################
+#  ############ Credits #######################################################
 #    Coded by: Yanina Aular <yani@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
@@ -22,11 +22,12 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
+
 {
-    "name": "AFR Webkit", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Accounting", 
+    "name": "AFR Webkit",
+    "version": "1.0",
+    "author": "Vauxoo",
+    "category": "Accounting",
     "description": """
 AFR Webkit
 ==========
@@ -39,27 +40,27 @@ Main Features
 account_financial_report module reports are now printed using webkit.
 
 
-""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "", 
+    """,
+    "website": "http://www.vauxoo.com/",
+    "license": "",
     "depends": [
-        "base", 
-        "mail", 
-        "account_accountant", 
-        "account_financial_report", 
+        "base",
+        "mail",
+        "account_accountant",
+        "account_financial_report",
         "report_webkit"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "data/html_css_afr.xml", 
-        "report/report_afr.xml", 
+        "data/html_css_afr.xml",
+        "report/report_afr.xml",
         "view/account_financial_report_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }

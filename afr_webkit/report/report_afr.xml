@@ -264,7 +264,7 @@
             multi="True"
             menu="False"/>
         <record id="afr_report_col13_html" model="ir.actions.report.xml">
-            <field name="webkit_debug">True</field>
+            <field name="webkit_debug">False</field>
             <field name="precise_mode">True</field>            
         </record>
         <record id="property_afr_report_webkit8_html" model="ir.property">

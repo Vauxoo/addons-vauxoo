@@ -4,7 +4,7 @@
     <record id="ir_header_webkit_afrreport_analytic_ledger" model="ir.header_webkit">
         <field name="name">Reports AFR WebKit</field>
         <field name="footer_html">
-<![CDATA[<html>
+<![CDATA[<!DOCTYPE><html>
     <head>
         <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
         <script>
@@ -23,7 +23,7 @@
     <body style="border:0; margin: 0;" onload="subst()">
         <table style="border-top: 1px solid black; width: 100%">
             <tr>
-                <td style="float:right;text-align:left;font-size:10;" width="30%">
+                <td style="float:right;text-align:left;font-size:8;" width="30%">
                    <script type="text/javascript">
                         var date = new Date();
                         var d  = date.getDate();
@@ -40,15 +40,14 @@
                                       "\t\t" + hours+":" + minutes );
                         </script>
                 </td>
-                <td style="text-align:right;font-size:10;" width="65%">Page <span class="page"/></td><td style="text-align:left;font-size:10;">  of <span class="topage"/></td>
+                <td style="text-align:right;font-size:8;" width="65%">Page <span class="page"/></td><td style="text-align:left;font-size:8;">  of <span class="topage"/></td>
             </tr>
         </table>
     </body>
 </html>]]></field>
             <field name="orientation">Landscape</field>
             <field name="format">Letter</field>
-            <field name="html">
-<![CDATA[<html>
+            <field name="html"><![CDATA[<!DOCTYPE><html>
     <head>
         <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
         <script>
@@ -172,7 +171,7 @@ font-family:Arial,Helvetica,sans-serif;
     <record id="ir_header_webkit_afrreport_col13" model="ir.header_webkit">
         <field name="name">Reports AFR WebKit</field>
         <field name="footer_html">
-<![CDATA[<html>
+<![CDATA[<!DOCTYPE><html>
     <head>
         <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
         <script>
@@ -191,7 +190,7 @@ font-family:Arial,Helvetica,sans-serif;
     <body style="border:0; margin: 0;" onload="subst()">
         <table style="border-top: 1px solid black; width: 100%">
             <tr>
-                <td style="float:right;text-align:left;font-size:10;" width="30%">
+                <td style="float:right;text-align:left;font-size:8;" width="30%">
                    <script type="text/javascript">
                         var date = new Date();
                         var d  = date.getDate();
@@ -208,7 +207,7 @@ font-family:Arial,Helvetica,sans-serif;
                                       "\t\t" + hours+":" + minutes );
                         </script>
                 </td>
-                <td style="text-align:right;font-size:10;" width="65%">Page <span class="page"/></td><td style="text-align:left;font-size:10;">  of <span class="topage"/></td>
+                <td style="text-align:right;font-size:8;" width="65%">Page <span class="page"/></td><td style="text-align:left;font-size:8;">  of <span class="topage"/></td>
             </tr>
         </table>
     </body>
@@ -216,7 +215,7 @@ font-family:Arial,Helvetica,sans-serif;
             <field name="orientation">Landscape</field>
             <field name="format">Letter</field>
             <field name="html">
-<![CDATA[<html>
+<![CDATA[<!DOCTYPE><html>
     <head>
         <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
         <script>
@@ -342,7 +341,7 @@ font-family:Arial,Helvetica,sans-serif;
     <record id="ir_header_webkit_afrreport_qtr" model="ir.header_webkit">
         <field name="name">Reports AFR WebKit</field>
   <field name="footer_html">
-<![CDATA[<html>
+<![CDATA[<!DOCTYPE><html>
     <head>
         <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
         <script>
@@ -361,7 +360,7 @@ font-family:Arial,Helvetica,sans-serif;
     <body style="border:0; margin: 0;" onload="subst()">
         <table style="border-top: 1px solid black; width: 100%">
             <tr>
-                <td style="float:right;text-align:left;font-size:10;" width="30%">
+                <td style="float:right;text-align:left;font-size:8;" width="30%">
                    <script type="text/javascript">
                         var date = new Date();
                         var d  = date.getDate();
@@ -378,7 +377,7 @@ font-family:Arial,Helvetica,sans-serif;
                                       "\t\t" + hours+":" + minutes );
                         </script>
                 </td>
-                <td style="text-align:right;font-size:10;" width="65%">Page <span class="page"/></td><td style="text-align:left;font-size:10;">  of <span class="topage"/></td>
+                <td style="text-align:right;font-size:8;" width="65%">Page <span class="page"/></td><td style="text-align:left;font-size:8;">  of <span class="topage"/></td>
             </tr>
         </table>
     </body>
@@ -386,7 +385,7 @@ font-family:Arial,Helvetica,sans-serif;
             <field name="orientation">Landscape</field>
             <field name="format">Letter</field>
                         <field name="html">
-<![CDATA[<html>
+<![CDATA[<!DOCTYPE><html>
     <head>
         <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
         <script>
@@ -511,7 +510,7 @@ font-family:Arial,Helvetica,sans-serif;
     <record id="ir_header_webkit_afrreport_journal_ledger" model="ir.header_webkit">
         <field name="name">Reports AFR WebKit</field>
           <field name="footer_html">
-<![CDATA[<html>
+<![CDATA[<!DOCTYPE><html>
     <head>
         <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
         <script>
@@ -530,7 +529,7 @@ font-family:Arial,Helvetica,sans-serif;
     <body style="border:0; margin: 0;" onload="subst()">
         <table style="border-top: 1px solid black; width: 100%">
             <tr>
-                <td style="float:right;text-align:left;font-size:10;" width="30%">
+                <td style="float:right;text-align:left;font-size:8;" width="30%">
                    <script type="text/javascript">
                         var date = new Date();
                         var d  = date.getDate();
@@ -547,7 +546,7 @@ font-family:Arial,Helvetica,sans-serif;
                                       "\t\t" + hours+":" + minutes );
                         </script>
                 </td>
-                <td style="text-align:right;font-size:10;" width="65%">Page <span class="page"/></td><td style="text-align:left;font-size:10;">  of <span class="topage"/></td>
+                <td style="text-align:right;font-size:8;" width="65%">Page <span class="page"/></td><td style="text-align:left;font-size:8;">  of <span class="topage"/></td>
             </tr>
         </table>
     </body>
@@ -555,7 +554,7 @@ font-family:Arial,Helvetica,sans-serif;
              <field name="orientation">Landscape</field>
             <field name="format">Letter</field>
             <field name="html">
-<![CDATA[<html>
+<![CDATA[<!DOCTYPE><html>
     <head>
         <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
         <script>
@@ -690,7 +689,7 @@ font-family:Arial,Helvetica,sans-serif;
     <record id="ir_header_webkit_afrreport_four_colums" model="ir.header_webkit">
         <field name="name">Reports AFR WebKit</field>
         <field name="footer_html">
-<![CDATA[<html>
+<![CDATA[<!DOCTYPE><html>
     <head>
         <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
         <script>
@@ -709,7 +708,7 @@ font-family:Arial,Helvetica,sans-serif;
     <body style="border:0; margin: 0;" onload="subst()">
         <table style="border-top: 1px solid black; width: 100%">
             <tr>
-                <td style="float:right;text-align:left;font-size:10;" width="30%">
+                <td style="float:right;text-align:left;font-size:8;" width="30%">
                    <script type="text/javascript">
                         var date = new Date();
                         var d  = date.getDate();
@@ -726,7 +725,7 @@ font-family:Arial,Helvetica,sans-serif;
                                       "\t\t" + hours+":" + minutes );
                         </script>
                 </td>
-                <td style="text-align:right;font-size:10;" width="65%">Page <span class="page"/></td><td style="text-align:left;font-size:10;">  of <span class="topage"/></td>
+                <td style="text-align:right;font-size:8;" width="65%">Page <span class="page"/></td><td style="text-align:left;font-size:8;">  of <span class="topage"/></td>
             </tr>
         </table>
     </body>
@@ -734,7 +733,7 @@ font-family:Arial,Helvetica,sans-serif;
             <field name="orientation">Portrait</field>
             <field name="format">Letter</field>
             <field name="html">
-<![CDATA[<html>
+<![CDATA[<!DOCTYPE><html>
     <head>
         <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
         <script>
@@ -859,7 +858,7 @@ font-family:Arial,Helvetica,sans-serif;
     <record id="ir_header_webkit_afrreport_two_colums" model="ir.header_webkit">
         <field name="name">Reports AFR WebKit</field>
         <field name="footer_html">
-<![CDATA[<html>
+<![CDATA[<!DOCTYPE><html>
     <head>
         <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
         <script>
@@ -878,7 +877,7 @@ font-family:Arial,Helvetica,sans-serif;
     <body style="border:0; margin: 0;" onload="subst()">
         <table style="border-top: 1px solid black; width: 100%">
             <tr>
-                <td style="float:right;text-align:left;font-size:10;" width="30%">
+                <td style="float:right;text-align:left;font-size:8;" width="30%">
                    <script type="text/javascript">
                         var date = new Date();
                         var d  = date.getDate();
@@ -895,7 +894,7 @@ font-family:Arial,Helvetica,sans-serif;
                                       "\t\t" + hours+":" + minutes );
                         </script>
                 </td>
-                <td style="text-align:right;font-size:10;" width="65%">Page <span class="page"/></td><td style="text-align:left;font-size:10;">  of <span class="topage"/></td>
+                <td style="text-align:right;font-size:8;" width="65%">Page <span class="page"/></td><td style="text-align:left;font-size:8;">  of <span class="topage"/></td>
             </tr>
         </table>
     </body>
@@ -903,7 +902,7 @@ font-family:Arial,Helvetica,sans-serif;
             <field name="orientation">Portrait</field>
             <field name="format">Letter</field>
             <field name="html">
-<![CDATA[<html>
+<![CDATA[<!DOCTYPE><html>
     <head>
         <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
         <script>
@@ -1028,7 +1027,7 @@ font-family:Arial,Helvetica,sans-serif;
     <record id="ir_header_webkit_afrreport_one_colums" model="ir.header_webkit">
         <field name="name">Reports AFR WebKit</field>
         <field name="footer_html">
-<![CDATA[<html>
+<![CDATA[<!DOCTYPE><html>
     <head>
         <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
         <script>
@@ -1047,7 +1046,7 @@ font-family:Arial,Helvetica,sans-serif;
     <body style="border:0; margin: 0;" onload="subst()">
         <table style="border-top: 1px solid black; width: 100%">
             <tr>
-                <td style="float:right;text-align:left;font-size:10;" width="30%">
+                <td style="float:right;text-align:left;font-size:8;" width="30%">
                    <script type="text/javascript">
                         var date = new Date();
                         var d  = date.getDate();
@@ -1064,7 +1063,7 @@ font-family:Arial,Helvetica,sans-serif;
                                       "\t\t" + hours+":" + minutes );
                         </script>
                 </td>
-                <td style="text-align:right;font-size:10;" width="65%">Page <span class="page"/></td><td style="text-align:left;font-size:10;">  of <span class="topage"/></td>
+                <td style="text-align:right;font-size:8;" width="65%">Page <span class="page"/></td><td style="text-align:left;font-size:8;">  of <span class="topage"/></td>
             </tr>
         </table>
     </body>
@@ -1072,7 +1071,7 @@ font-family:Arial,Helvetica,sans-serif;
             <field name="orientation">Portrait</field>
             <field name="format">Letter</field>
             <field name="html">
-<![CDATA[<html>
+<![CDATA[<!DOCTYPE><html>
     <head>
         <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
         <script>
@@ -1197,7 +1196,7 @@ font-family:Arial,Helvetica,sans-serif;
     <record id="ir_header_webkit_afrreport_five_colums" model="ir.header_webkit">
         <field name="name">Reports AFR WebKit Five Columns</field>
            <field name="footer_html">
-<![CDATA[<html>
+<![CDATA[<!DOCTYPE><html>
     <head>
         <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
         <script>
@@ -1216,7 +1215,7 @@ font-family:Arial,Helvetica,sans-serif;
     <body style="border:0; margin: 0;" onload="subst()">
         <table style="border-top: 1px solid black; width: 100%">
             <tr>
-                <td style="float:right;text-align:left;font-size:10;" width="30%">
+                <td style="float:right;text-align:left;font-size:8;" width="30%">
                    <script type="text/javascript">
                         var date = new Date();
                         var d  = date.getDate();
@@ -1233,7 +1232,7 @@ font-family:Arial,Helvetica,sans-serif;
                                       "\t\t" + hours+":" + minutes );
                         </script>
                 </td>
-                <td style="text-align:right;font-size:10;" width="65%">Page <span class="page"/></td><td style="text-align:left;font-size:10;">  of <span class="topage"/></td>
+                <td style="text-align:right;font-size:8;" width="65%">Page <span class="page"/></td><td style="text-align:left;font-size:8;">  of <span class="topage"/></td>
             </tr>
         </table>
     </body>
@@ -1241,7 +1240,7 @@ font-family:Arial,Helvetica,sans-serif;
             <field name="orientation">Portrait</field>
             <field name="format">Letter</field>
             <field name="html">
-<![CDATA[<html>
+<![CDATA[<!DOCTYPE><html>
     <head>
         <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
         <script>
@@ -1362,11 +1361,6 @@ font-family:Arial,Helvetica,sans-serif;
 ]]>
             </field>
     </record>
-        
-        <record id="ir_header_img_companylogo0" model="ir.header_img">
-            <field eval="&quot;&quot;&quot;jpg&quot;&quot;&quot;" name="type"/>
-            <field eval="&quot;&quot;&quot;company_logo&quot;&quot;&quot;" name="name"/>
-        </record>
         
 	</data>
 </openerp>

@@ -1,13 +1,12 @@
-<!DOCTYPE html SYSTEM                                                                                                                            
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE>
+<html>
 <head>
 <style type="text/css">                                                                         
     ${css}
 </style>
 </head>
 
-<body style="border:0; margin: 0;" onload="subst()" >
+<body>
 <!--
 <h1><center>12 Months | YTD</center></h1> 
 -->
@@ -19,9 +18,9 @@
             </td>
             <td width="70%">
                 <table style="width: 100%; text-align:center;">
-                    <tr><td><div class="td_company_title">${obj.company_id.name or ''|entity}</div></td></tr>
-                    <tr><td><div class="td_company">${obj.get_parser_method('get_vat_by_country',data['form']) or ''|entity}</div></td></tr>
-                    <tr><td><div class="td_company">${obj.get_parser_method('get_informe_text',data['form']) or ''| entity}</div></td></tr>
+                    <tr><td><div class="td_company_title">${obj.company_id.name or ''}</div></td></tr>
+                    <tr><td><div class="td_company">${obj.get_parser_method('get_vat_by_country',data['form']) or ''}</div></td></tr>
+                    <tr><td><div class="td_company">${obj.get_parser_method('get_informe_text',data['form']) or ''}</div></td></tr>
                     <tr><td><div class="td_company_date"> ${data['form'] and obj.get_parser_method('get_month',data['form']) or ''}</div></td></tr>
                 </table>
             </td>
@@ -30,7 +29,7 @@
     <table width="100%">
         <thead>
             <tr>
-                <td class="celdaTituloTabla" style="width: 100%; text-align:left;" colspan="15">${_('Expressed in: %s') % (obj.get_parser_method('exchange_name',data['form'])) or ''|entity}</td>
+                <td class="celdaTituloTabla" style="width: 100%; text-align:left;" colspan="15">${_('Expressed in: %s') % (obj.get_parser_method('exchange_name',data['form'])) or ''}</td>
             </tr>
         </thead>
         <tbody>
