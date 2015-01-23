@@ -39,6 +39,7 @@ Salespeople Commission based on Payments
     "website": "http://www.vauxoo.com",
     "license": "",
     "depends": [
+        "base",
         "account",
         "account_voucher",
         "product_historical_price",
@@ -47,7 +48,9 @@ Salespeople Commission based on Payments
         "message_post_model",
         "report",
     ],
-    "demo": [],
+    "demo": [
+        "demo/account_invoice_demo.xml",
+    ],
     "data": [
         "security/commission_payment_security.xml",
         "security/ir.model.access.csv",
