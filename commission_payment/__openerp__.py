@@ -41,7 +41,6 @@ Salespeople Commission based on Payments
     "depends": [
         "base",
         "account",
-        "account_voucher",
         "product_historical_price",
         "mail",
         "baremo",
