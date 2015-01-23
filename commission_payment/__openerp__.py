@@ -28,25 +28,28 @@
 #
 ##############################################################################
 {
-    "name": "Cálculo de Pago de Comisiones por producto pagado",
+    "name": "Salespeople Commission based on Payments",
     "version": "0.1",
     "author": "Vauxoo",
     "category": "Generic Modules/Others",
     "description": """
-Cálculo de Pago de Comisiones por producto pagado
+Salespeople Commission based on Payments
+========================================
 """,
     "website": "http://www.vauxoo.com",
     "license": "",
     "depends": [
+        "base",
         "account",
-        "account_voucher",
         "product_historical_price",
         "mail",
         "baremo",
         "message_post_model",
         "report",
     ],
-    "demo": [],
+    "demo": [
+        "demo/account_invoice_demo.xml",
+    ],
     "data": [
         "security/commission_payment_security.xml",
         "security/ir.model.access.csv",
@@ -54,7 +57,8 @@ Cálculo de Pago de Comisiones por producto pagado
         "report/template.xml",
         "data/report_paperformat.xml",
         "view/commission_report.xml",
-        "view/commission_view.xml"
+        "view/commission_view.xml",
+        "view/account_view.xml",
     ],
     "test": [],
     "js": [],
