@@ -18,9 +18,9 @@ COMMISSION_TYPES = [
 ]
 
 COMMISSION_SALESMAN_POLICY = [
-    ('salesmanOnInvoice', 'Invoice'),
-    ('salesmanOnInvoicedPartner', 'Partner'),
-    ('salesmanOnAccountingPartner', 'Commercial Entity'),
+    ('on_invoice', 'Invoice'),
+    ('on_invoiced_partner', 'Partner'),
+    ('on_accounting_partner', 'Commercial Entity'),
 ]
 
 COMMISSION_SCOPES = [
@@ -508,21 +508,21 @@ class commission_payment(osv.Model):
         aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
         res = None
         if aml_brw.rec_invoice:
-            if comm_brw.commission_salesman_policy == 'salesmanOnInvoice':
+            if comm_brw.commission_salesman_policy == 'on_invoice':
                 res = aml_brw.rec_invoice.user_id
             elif comm_brw.commission_salesman_policy == \
-                    'salesmanOnInvoicedPartner':
+                    'on_invoiced_partner':
                 res = aml_brw.rec_invoice.partner_id.user_id
             elif comm_brw.commission_salesman_policy == \
-                    'salesmanOnAccountingPartner':
+                    'on_accounting_partner':
                 res = rp_obj._find_accounting_partner(
                     aml_brw.rec_invoice.partner_id).user_id
         else:
             if comm_brw.commission_salesman_policy in \
-                    ('salesmanOnInvoicedPartner', 'salesmanOnInvoice'):
+                    ('on_invoiced_partner', 'on_invoice'):
                 res = aml_brw.rec_aml.partner_id.user_id
             elif comm_brw.commission_salesman_policy == \
-                    'salesmanOnAccountingPartner':
+                    'on_accounting_partner':
                 res = rp_obj._find_accounting_partner(
                     aml_brw.rec_aml.partner_id).user_id
 
