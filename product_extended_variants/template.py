@@ -19,12 +19,31 @@
 ##############################################################################
 
 
-from openerp import models,  _
-from openerp.osv import osv
+from openerp import models,  _, fields
+
+
+class product_category(models.Model):
+    _inherit = 'product.category'
+
+    property_difference_price_account_id = fields.\
+        Many2one('account.account',
+                 'Price Diference Account',
+                 company_dependent=True,
+                 help='Account used to create the '
+                 'journal item changes in the '
+                 'Standard Price')
 
 
 class product_template(models.Model):
     _inherit = 'product.template'
+
+    property_difference_price_account_id = fields.\
+        Many2one('account.account',
+                 'Price Diference Account',
+                 company_dependent=True,
+                 help='Account used to create the '
+                 'journal item changes in the '
+                 'Standard Price')
 
     def compute_price(self, cr, uid, product_ids, template_ids=False,
                       recursive=False, test=False, real_time_accounting=False,
