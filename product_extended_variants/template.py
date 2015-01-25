@@ -160,13 +160,11 @@ class product_template(models.Model):
                             amount_diff = qty * diff
                             debit_account_id = datas['stock_account_input']
                             credit_account_id = \
-                                datas['property_difference_price_account_id'] or \
                                 datas['property_stock_valuation_account_id']
 
                         else:
                             amount_diff = qty * -diff
                             debit_account_id = \
-                                datas['property_difference_price_account_id'] or \
                                 datas['property_stock_valuation_account_id']
                             credit_account_id = datas['stock_account_output']
 
