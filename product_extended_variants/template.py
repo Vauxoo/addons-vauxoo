@@ -45,6 +45,22 @@ class product_template(models.Model):
                  'journal item changes in the '
                  'Standard Price')
 
+    def get_product_accounts(self, cr, uid, product_id, context=None):
+        context = context or {}
+        res = super(product_template, self)\
+            .get_product_accounts(cr, uid, product_id,
+                                  context=context)
+        product_obj = self.pool.get('product.product')
+        product_brw = product_obj.browse(cr, uid, product_id)
+        diff_acc_id = product_brw.property_difference_price_account_id and  \
+            product_brw.property_difference_price_account_id.id or False
+        if not diff_acc_id:
+            diff_acc_id = product_brw.categ_id.property_difference_price_account_id and  \
+                product_brw.categ_id.property_difference_price_account_id.id or\
+                False
+        res.update({'property_difference_price_account_id': diff_acc_id})
+        return res
+
     def compute_price(self, cr, uid, product_ids, template_ids=False,
                       recursive=False, test=False, real_time_accounting=False,
                       context=None):
@@ -144,11 +160,11 @@ class product_template(models.Model):
                             amount_diff = qty * diff
                             debit_account_id = datas['stock_account_input']
                             credit_account_id = \
-                                datas['property_stock_valuation_account_id']
+                                datas['property_difference_price_account_id']
                         else:
                             amount_diff = qty * -diff
                             debit_account_id = \
-                                datas['property_stock_valuation_account_id']
+                                datas['property_difference_price_account_id']
                             credit_account_id = datas['stock_account_output']
 
                         move_line_obj.create(cr, uid, {
