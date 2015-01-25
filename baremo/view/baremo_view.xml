@@ -137,6 +137,28 @@
             <xpath expr="//field[@name='user_id']" position="after">
                 <field name="baremo_id"/>
             </xpath>
+            <xpath expr="//page[@string='Contacts']//form[@string='Contact']/sheet/field[@name='customer']" position="after">
+                <div class="oe_left" style="width: 100%;">
+                    <div>
+                        <label for="baremo_id"/>
+                    </div>
+                    <h3 style="width: 100%;">
+                        <field
+                            name="baremo_id"
+                            widget="selection"
+                            />
+                    </h3>
+                    <div>
+                        <label for="user_id"/>
+                    </div>
+                    <h3 style="width: 100%;">
+                        <field
+                            name="user_id"
+                            widget="selection"
+                            />
+                    </h3>
+                </div>
+            </xpath>
         </field>
     </record>
 
