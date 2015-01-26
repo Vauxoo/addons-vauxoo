@@ -9,6 +9,13 @@
             <field name="type">other</field>
             <field name="user_type" ref="account.data_account_type_liability"/>
         </record>
+        <record id="account_iva_voucher_16" model="account.account">
+            <field name="code">X11121_voucher_1</field>
+            <field name="name">Input VAT Voucher 16% - (test)</field>
+            <field ref="account.cli" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_liability"/>
+        </record>
         <record id="account_voucher_tax_purchase_iva16" model="account.tax">
             <field name="company_id" ref="base.main_company"/>
             <field name="name">IVA 16% with purchase voucher accounts - Test</field>
@@ -17,8 +24,8 @@
             <field name="type">percent</field>
             <field name="amount">0.1600</field>
             <field name="description">IVA 16% with purchase voucher account for Test</field>
-            <field name="account_collected_id" ref="account.iva"/>
-            <field name="account_paid_id" ref="account.iva"/>
+            <field name="account_collected_id" ref="account_iva_voucher_16"/>
+            <field name="account_paid_id" ref="account_iva_voucher_16"/>
             <field name="account_collected_voucher_id" ref="account_iva_voucher"/>
             <field name="account_paid_voucher_id" ref="account_iva_voucher"/>
         </record>
@@ -26,6 +33,13 @@
         <record id="account_ova_voucher" model="account.account">
             <field name="code">X11003_voucher</field>
             <field name="name">Output VAT Voucher - (test)</field>
+            <field ref="account.cas" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_asset"/>
+        </record>
+        <record id="account_ova_voucher_16" model="account.account">
+            <field name="code">X11003_voucher_1</field>
+            <field name="name">Output VAT Voucher 16% - (test)</field>
             <field ref="account.cas" name="parent_id"/>
             <field name="type">other</field>
             <field name="user_type" ref="account.data_account_type_asset"/>
@@ -38,14 +52,21 @@
             <field name="type">percent</field>
             <field name="amount">0.1600</field>
             <field name="description">IVA 16% with sale voucher account for Test</field>
-            <field name="account_collected_id" ref="account.ova"/>
-            <field name="account_paid_id" ref="account.ova"/>
+            <field name="account_collected_id" ref="account_ova_voucher_16"/>
+            <field name="account_paid_id" ref="account_ova_voucher_16"/>
             <field name="account_collected_voucher_id" ref="account_ova_voucher"/>
             <field name="account_paid_voucher_id" ref="account_ova_voucher"/>
         </record>
         <record id="account_iva_voucher11" model="account.account">
             <field name="code">X1113_voucher</field>
             <field name="name">Input VAT 11 Voucher - (test)</field>
+            <field ref="account.cli" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_liability"/>
+        </record>
+        <record id="account_iva_voucher_11" model="account.account">
+            <field name="code">X1113_voucher_1</field>
+            <field name="name">Input VAT Voucher 11% - (test)</field>
             <field ref="account.cli" name="parent_id"/>
             <field name="type">other</field>
             <field name="user_type" ref="account.data_account_type_liability"/>
@@ -58,8 +79,8 @@
             <field name="type">percent</field>
             <field name="amount">0.1100</field>
             <field name="description">IVA 11% with purchase voucher account for Test</field>
-            <field name="account_collected_id" ref="account.iva"/>
-            <field name="account_paid_id" ref="account.iva"/>
+            <field name="account_collected_id" ref="account_iva_voucher_11"/>
+            <field name="account_paid_id" ref="account_iva_voucher_11"/>
             <field name="account_collected_voucher_id" ref="account_iva_voucher11"/>
             <field name="account_paid_voucher_id" ref="account_iva_voucher11"/>
         </record>
@@ -67,6 +88,13 @@
         <record id="account_ova_voucher11" model="account.account">
             <field name="code">X11004_voucher</field>
             <field name="name">Output VAT 11 Voucher - (test)</field>
+            <field ref="account.cas" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_asset"/>
+        </record>
+        <record id="account_ova_voucher_11" model="account.account">
+            <field name="code">X11004_voucher_1</field>
+            <field name="name">Output VAT Voucher 11% - (test)</field>
             <field ref="account.cas" name="parent_id"/>
             <field name="type">other</field>
             <field name="user_type" ref="account.data_account_type_asset"/>
@@ -79,8 +107,8 @@
             <field name="type">percent</field>
             <field name="amount">0.1100</field>
             <field name="description">IVA 11% with sale voucher account for Test</field>
-            <field name="account_collected_id" ref="account.ova"/>
-            <field name="account_paid_id" ref="account.ova"/>
+            <field name="account_collected_id" ref="account_ova_voucher_11"/>
+            <field name="account_paid_id" ref="account_ova_voucher_11"/>
             <field name="account_collected_voucher_id" ref="account_ova_voucher11"/>
             <field name="account_paid_voucher_id" ref="account_ova_voucher11"/>
         </record>
@@ -154,6 +182,13 @@
             <field name="type">other</field>
             <field name="user_type" ref="account.data_account_type_liability"/>
         </record>
+        <record id="account_iva_voucher_retencion_iva_1067" model="account.account">
+            <field name="code">X1117_voucher_1</field>
+            <field name="name">Input VAT RETENCION IVA Voucher 10.67% - (test)</field>
+            <field ref="account.cli" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_liability"/>
+        </record>
         <record id="account_voucher_tax_purchase_iva1067_retencion_iva" model="account.tax">
             <field name="company_id" ref="base.main_company"/>
             <field name="name">RETENCION IVA 10.67% - Test</field>
@@ -162,8 +197,8 @@
             <field name="type">percent</field>
             <field name="amount">-0.10670</field>
             <field name="description">RETENCION IVA 10.67% Test</field>
-            <field name="account_collected_id" ref="account.iva"/>
-            <field name="account_paid_id" ref="account.iva"/>
+            <field name="account_collected_id" ref="account_iva_voucher_retencion_iva_1067"/>
+            <field name="account_paid_id" ref="account_iva_voucher_retencion_iva_1067"/>
             <field name="account_collected_voucher_id" ref="account_iva_voucher1067_retencion_iva"/>
             <field name="account_paid_voucher_id" ref="account_iva_voucher1067_retencion_iva"/>
         </record>
