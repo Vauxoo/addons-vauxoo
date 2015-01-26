@@ -20,6 +20,7 @@
 
 
 from openerp import models,  _
+from openerp.osv import osv
 
 
 class product_template(models.Model):
@@ -124,14 +125,23 @@ class product_template(models.Model):
 
                 diff = product.standard_price - new_price
                 if not diff:
-                    continue
+                    raise osv.except_osv(_('Error!'),
+                                         _("No difference between standard "
+                                           "price %s and new price %s "
+                                           "in the product %s!" %
+                                           (product.standard_price, new_price,
+                                            product.name)))
                 for prod_variant in product.product_variant_ids:
                     qty = prod_variant.qty_available
                     if qty:
                         # Accounting Entries
+                        ref = '[{code}] {name}'.\
+                            format(code=prod_variant.default_code,
+                                   name=prod_variant.name)
                         move_vals = {
                             'journal_id': datas['stock_journal'],
                             'company_id': location.company_id.id,
+                            'ref': ref,
                         }
                         move_id = move_obj.create(cr, uid, move_vals,
                                                   context=context)
@@ -154,18 +164,14 @@ class product_template(models.Model):
                             'name': _('Standard Price changed'),
                             'account_id': debit_account_id,
                             'debit': amount_diff,
-                            'ref': '[{code}] {name}'.
-                            format(code=prod_variant.default_code,
-                                   name=prod_variant.name),
+                            'ref': ref,
                             'credit': 0,
                             'move_id': move_id, }, context=context)
                         move_line_obj.create(cr, uid, {
                             'name': _('Standard Price changed'),
                             'account_id': credit_account_id,
                             'debit': 0,
-                            'ref': '[{code}] {name}'.
-                            format(code=prod_variant.default_code,
-                                   name=prod_variant.name),
+                            'ref': ref,
                             'credit': amount_diff,
                             'move_id': move_id
                             }, context=context)
