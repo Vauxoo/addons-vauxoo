@@ -38,8 +38,7 @@ class product_template(models.Model):
             product_brw.categ_id.property_account_creditor_price_difference_categ.id or \
             False
 
-        if not diff_acc_id:
-            res.update({'property_difference_price_account_id': diff_acc_id})
+        res.update({'property_difference_price_account_id': diff_acc_id})
         return res
 
     def compute_price(self, cr, uid, product_ids, template_ids=False,
@@ -139,7 +138,8 @@ class product_template(models.Model):
 
                         if diff*qty > 0:
                             amount_diff = qty * diff
-                            debit_account_id = datas['stock_account_input']
+                            debit_account_id = \
+                                datas['property_difference_price_account_id']
                             credit_account_id = \
                                 datas['property_stock_valuation_account_id']
 
@@ -147,7 +147,8 @@ class product_template(models.Model):
                             amount_diff = qty * -diff
                             debit_account_id = \
                                 datas['property_stock_valuation_account_id']
-                            credit_account_id = datas['stock_account_output']
+                            credit_account_id = \
+                                datas['property_difference_price_account_id']
 
                         move_line_obj.create(cr, uid, {
                             'name': _('Standard Price changed'),
