@@ -19,31 +19,11 @@
 ##############################################################################
 
 
-from openerp import models,  _, fields
-
-
-class product_category(models.Model):
-    _inherit = 'product.category'
-
-    property_difference_price_account_id = fields.\
-        Many2one('account.account',
-                 'Price Diference Account',
-                 company_dependent=True,
-                 help='Account used to create the '
-                 'journal item changes in the '
-                 'Standard Price')
+from openerp import models,  _
 
 
 class product_template(models.Model):
     _inherit = 'product.template'
-
-    property_difference_price_account_id = fields.\
-        Many2one('account.account',
-                 'Price Diference Account',
-                 company_dependent=True,
-                 help='Account used to create the '
-                 'journal item changes in the '
-                 'Standard Price')
 
     def get_product_accounts(self, cr, uid, product_id, context=None):
         context = context or {}
@@ -52,13 +32,14 @@ class product_template(models.Model):
                                   context=context)
         product_obj = self.pool.get('product.product')
         product_brw = product_obj.browse(cr, uid, product_id)
-        diff_acc_id = product_brw.property_difference_price_account_id and  \
-            product_brw.property_difference_price_account_id.id or False
+        diff_acc_id = product_brw.property_account_creditor_price_difference and \
+            product_brw.property_account_creditor_price_difference.id or \
+            product_brw.categ_id.property_account_creditor_price_difference_categ and \
+            product_brw.categ_id.property_account_creditor_price_difference_categ.id or \
+            False
+
         if not diff_acc_id:
-            diff_acc_id = product_brw.categ_id.property_difference_price_account_id and  \
-                product_brw.categ_id.property_difference_price_account_id.id or\
-                False
-        res.update({'property_difference_price_account_id': diff_acc_id})
+            res.update({'property_difference_price_account_id': diff_acc_id})
         return res
 
     def compute_price(self, cr, uid, product_ids, template_ids=False,
