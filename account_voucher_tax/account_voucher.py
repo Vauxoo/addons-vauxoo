@@ -309,8 +309,8 @@ class account_voucher(osv.Model):
                         'credit': move.debit,
                         'debit': move.credit,
                         'name': move.name}]
-                    factor_type = [1, -1]
-                    context['factor_type'] = factor_type
+                    absl_obj._get_factor_type(
+                        cr, uid, False, ttype, context=context)
                     dict_tax = absl_obj._get_move_line_tax(
                         cr, uid, mv_line_dicts, context=context)
                     for tax in dict_tax:
@@ -388,8 +388,8 @@ class account_voucher_line(osv.Model):
                 'credit': move.debit,
                 'debit': move.credit,
                 'name': move.name}]
-            factor_type = [1, -1]
-            context['factor_type'] = factor_type
+            absl_obj._get_factor_type(
+                cr, uid, False, context.get('type', False), context=context)
             dict_tax = absl_obj._get_move_line_tax(
                 cr, uid, mv_line_dicts, context=context)
             for tax in dict_tax:
