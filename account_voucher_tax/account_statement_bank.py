@@ -175,7 +175,13 @@ class account_bank_statement_line(osv.osv):
                 cr, uid, [('move_id', '=', move_line.move_id.id)]))
 
         for move_line_id in move_line_obj.browse(cr, uid, move_line_ids):
-            if move_line_id.account_id.type not in ('receivable', 'payable'):
+            # En cada "aml" de poliza buscamos las que son referente a los
+            # impuesto, validando que no sea una cuenta por pagar/cobrar y que
+            # los movimientos no pertenescan a un diario de banco/efectivo
+            # por que puede ser una poliza con iva efecttivamente pagado
+            if move_line_id.account_id.type not in\
+                    ('receivable', 'payable') and\
+                    move_line_id.journal_id.type not in ('cash', 'bank'):
                 account_group.setdefault(move_line_id.account_id.id, 0)
                 # Validacion del debit/credit cuando la poliza contiene
                 # impuesto 0 o EXENTO toma el monto base de la linea de poliza
@@ -183,8 +189,13 @@ class account_bank_statement_line(osv.osv):
                     account_group[move_line_id.account_id.id] +=\
                         move_line_id.amount_base or 0.0
                 else:
+                    # @factor puede ser 1 o -1 depende de tipo de transaccion
+                    # si es venta, compra, nota de credito/debito, retenciones
+                    # Esto para poder hacer la sumatoria de varios "aml" en un
+                    # solo monto dependiendo de valor que quede +/- determina
+                    # si se escribe por el lado del credit/debit
                     account_group[move_line_id.account_id.id] +=\
-                        move_line_id.amount_currency or\
+                        move_line_id.amount_currency*factor[0] or\
                         move_line_id.debit > 0 and\
                         move_line_id.debit*factor[0] or\
                         move_line_id.credit*factor[1]
@@ -210,7 +221,6 @@ class account_bank_statement_line(osv.osv):
                 else:
                     amount_total_tax =\
                         account_group.get(move_account_tax)+amount_ret_tax
-
                 dat.append({
                     'account_tax_voucher':
                         tax_id.account_paid_voucher_id.id,
