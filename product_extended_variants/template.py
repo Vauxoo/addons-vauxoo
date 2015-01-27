@@ -119,9 +119,10 @@ class product_template(models.Model):
             datas = self.get_product_accounts(cr, uid, rec_id, context=context)
             for location in location_obj.browse(cr, uid, loc_ids,
                                                 context=context):
-                c = context.copy()
-                c.update({'location': location.id, 'compute_child': False})
-                product = self.browse(cr, uid, rec_id, context=c)
+                contextc = context.copy()
+                contextc.update({'location': location.id,
+                                 'compute_child': False})
+                product = self.browse(cr, uid, rec_id, context=contextc)
 
                 diff = product.standard_price - new_price
                 if not diff:
