@@ -3,17 +3,13 @@
     <data>
         <!-- This is an inherited report only file is intented to be change
              because we want to use a new template all remaining attributes
-             will be kept-->
-        <report
-            id="product.action_report_pricelist"
-            file="product_pricelist_report_qweb.report_template"
-            />
-        <!--
-            We want to used Letter for this report
+             will be kept
+             We want to used Letter for this report
              -->
 
         <record id="product.action_report_pricelist" model="ir.actions.report.xml">
             <field name="paperformat_id" ref="report.paperformat_us"/>
+            <field name="file">product_pricelist_report_qweb.report_template</field>
         </record>
     </data>
 </openerp>

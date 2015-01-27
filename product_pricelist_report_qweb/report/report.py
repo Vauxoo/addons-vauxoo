@@ -21,7 +21,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 from openerp.osv import osv
-from openerp.addons.product.report import product_pricelist
 
 
 class product_pricelist_report_qweb(osv.AbstractModel):
@@ -35,10 +34,12 @@ class product_pricelist_report_qweb(osv.AbstractModel):
     _name = 'report.product.report_pricelist'
 
     # this inheritance will allow to render this particular report
-    _inherit = 'report.abstract_report'
+    # here old report class is being reused
+    _inherit = 'report.product.report_pricelist'
     # new template will be used this because we want something more customized
     _template = 'product_pricelist_report_qweb.report_template'
     # old wrapper class from original report will be used
-    _wrapped_report_class = product_pricelist.product_pricelist
+    # so we can comment this attribute
+    # _wrapped_report_class = product_pricelist.product_pricelist
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
