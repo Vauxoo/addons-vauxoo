@@ -52,12 +52,10 @@ class account_bank_statement_line(osv.osv):
             }
         move_id_old = move_obj.create(cr, uid, vals_move, context)
 
+        self._get_factor_type(cr, uid, st_line.amount, False, context=context)
         type = 'sale'
-        factor_type = [-1, 1]
         if st_line.amount < 0:
             type = 'payment'
-            factor_type = [1, -1]
-        context['factor_type'] = factor_type
 
         move_amount_counterpart = self._get_move_line_counterpart(
             cr, uid, mv_line_dicts, context=context)
@@ -115,6 +113,15 @@ class account_bank_statement_line(osv.osv):
         st_line.journal_id.write({'update_posted': update_ok})
         move_obj.unlink(cr, uid, move_id_old)
         return res
+
+    def _get_factor_type(self, cr, uid, amount=False, ttype=False, context=None):
+        if context is None:
+            context = {}
+        factor_type = [-1, 1]
+        if (amount and amount < 0) or (ttype and ttype == 'payment'):
+            factor_type = [1, -1]
+        context['factor_type'] = factor_type
+        return True
 
     def _get_move_line_counterpart(self, cr, uid, mv_line_dicts, context=None):
 
