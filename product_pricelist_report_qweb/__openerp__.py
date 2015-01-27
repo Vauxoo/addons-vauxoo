@@ -43,6 +43,7 @@ This module inherit the original xml_id report on product
     "demo": [],
     "data": [
         "view/report.xml",
+        "view/wizard.xml",
         "report/layouts.xml",
         "report/template.xml",
     ],
