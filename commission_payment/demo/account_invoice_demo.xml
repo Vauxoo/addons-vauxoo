@@ -1,0 +1,107 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <record id="base.res_partner_23" model="res.partner">
+            <field name="user_id" ref="base.user_demo"/>
+        </record>
+        <record id="invoice_1" model="account.invoice">
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="journal_id" ref="account.sales_journal"/>
+            <field name="state">draft</field>
+            <field name="type">out_invoice</field>
+            <field name="account_id" ref="account.a_recv"/>
+            <field name="partner_id" ref="base.res_partner_23"/>
+            <field eval="time.strftime('%Y-%m') + '-05'" name="date_invoice"/>
+        </record>
+        <record id="invoice_1_line_1" model="account.invoice.line">
+            <field name="name">Vauxoo Specialties</field>
+            <field name="invoice_id" ref="invoice_1"/>
+            <field name="price_unit">2000</field>
+            <field name="quantity">5</field>
+            <field name="account_id" ref="account.a_sale"/>
+        </record>
+        <record id="invoice_1_line_2" model="account.invoice.line">
+            <field name="name">VX Consultancy</field>
+            <field name="invoice_id" ref="invoice_1"/>
+            <field name="price_unit">4000</field>
+            <field name="quantity">3</field>
+            <field name="account_id" ref="account.a_sale"/>
+        </record>
+        <workflow action="invoice_open" model="account.invoice" ref="invoice_1"/>
+        <function model="account.invoice" name="pay_and_reconcile">
+            <!-- ids = -->                    <value eval="[ref('invoice_1')]"/>
+            <!-- pay_amount = -->            <value eval="22000"/>
+            <!-- pay_account_id = -->        <value eval="ref('account.cash')"/>
+            <!-- period_id = -->            <value eval="ref('account.period_' + str(int(time.strftime('%m'))))"/>
+            <!-- pay_journal_id = -->        <value eval="ref('account.bank_journal')"/>
+            <!-- writeoff_acc_id = -->        <value eval="ref('account.cash')"/>
+            <!-- writeoff_period_id = -->    <value eval="ref('account.period_' + str(int(time.strftime('%m'))))"/>
+            <!-- writeoff_journal_id = -->    <value eval="ref('account.bank_journal')"/>
+            <!-- context = -->              <value eval="{}"/>
+            <!-- name = -->                 <value eval="str('Payment from Vauxoo')"/>
+        </function>
+
+        <record id="baremo_book_01" model="baremo.book">
+            <field name="name">3% Commission No Discounts 30 days</field>
+        </record>
+
+        <record id="baremo_01" model="baremo">
+            <field name="name">Up to 30 days delay in payment</field>
+            <field name="number">30</field>
+            <field name="baremo_id" ref="baremo_book_01"/>
+        </record>
+
+        <record id="baremo_discount_01" model="baremo.discount">
+            <field name="porc_com">3.0</field>
+            <field name="porc_disc">0.0</field>
+            <field name="disc_id" ref="baremo_01"/>
+        </record>
+
+        <record id="baremo_02" model="baremo">
+            <field name="name">Up to 60 days delay in payment</field>
+            <field name="number">60</field>
+            <field name="baremo_id" ref="baremo_book_01"/>
+        </record>
+
+        <record id="baremo_discount_02" model="baremo.discount">
+            <field name="porc_com">1.5</field>
+            <field name="porc_disc">0.0</field>
+            <field name="disc_id" ref="baremo_02"/>
+        </record>
+
+        <record id="baremo_03" model="baremo">
+            <field name="name">Up to 90 days delay in payment</field>
+            <field name="number">90</field>
+            <field name="baremo_id" ref="baremo_book_01"/>
+        </record>
+
+        <record id="baremo_discount_03" model="baremo.discount">
+            <field name="porc_com">0.75</field>
+            <field name="porc_disc">0.0</field>
+            <field name="disc_id" ref="baremo_03"/>
+        </record>
+
+        <record id="commission_1" model="commission.payment">
+            <field name="name">Commission Concept #1</field>
+            <field name="currency_id" ref="base.EUR"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="date_start" eval="time.strftime('%Y-%m') + '-01'"/>
+            <field name="date_stop" eval="time.strftime('%Y-%m-%d')"/>
+            <field name="state">draft</field>
+            <field name="commission_type">fully_paid_invoice</field>
+            <field name="commission_scope">whole_invoice</field>
+            <field name="commission_policy_date_start">invoice_due_date</field>
+            <field name="commission_policy_date_end">last_payment_date</field>
+            <field name="commission_salesman_policy">on_invoiced_partner</field>
+            <field name="commission_baremo_policy">onCommission</field>
+            <field name="baremo_id" ref="baremo_book_01"/>
+            <field name="user_ids" eval="[(4, ref('base.user_demo'))]"/>
+        </record>
+
+        <function model="commission.payment" name="prepare">
+            <!-- ids = -->                    <value eval="[ref('commission_1')]"/>
+        </function>
+
+    </data>
+</openerp>
