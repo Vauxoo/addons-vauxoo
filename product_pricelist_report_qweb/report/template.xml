@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_document">
+            <t t-call="product_pricelist_report_qweb.external_layout">
+                <!--VARIABLES TO BE USED LATER-->
+
+                <!-- CALLING HEADER and FOOTER -->
+                <t t-call="product_pricelist_report_qweb.external_layout_header"/>
+                <t t-call="product_pricelist_report_qweb.external_layout_footer"/>
+
+                <div class="page">
+                    <table class="basic_table"  width="100%" id="table_body">
+                    </table>
+                </div>
+            </t>
+        </template>
+
+        <template id="report_template">
+            <t t-call="product_pricelist_report_qweb.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'company_id.partner_id.lang', 'product_pricelist_report_qweb.report_document')"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>

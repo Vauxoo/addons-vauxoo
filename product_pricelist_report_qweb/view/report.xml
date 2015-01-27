@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+            auto="False"
+            id="product.action_report_pricelist"
+            model="product.product"
+            name="product_pricelist_report_qweb.report_template"
+            file="product_pricelist_report_qweb.report_template"
+            string="Pricelist"
+            report_type="qweb-pdf"
+            multi="True"
+            attachment_use="0"
+            attachment=""
+            menu="True"
+            />
+
+        <record id="product.action_report_pricelist" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="report.paperformat_us"/>
+        </record>
+    </data>
+</openerp>
