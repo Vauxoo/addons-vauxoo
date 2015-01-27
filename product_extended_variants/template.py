@@ -31,8 +31,7 @@ class product_template(models.Model):
         res = super(product_template, self)\
             .get_product_accounts(cr, uid, product_id,
                                   context=context)
-        product_obj = self.pool.get('product.product')
-        product_brw = product_obj.browse(cr, uid, product_id)
+        product_brw = self.browse(cr, uid, product_id)
         diff_acc_id = product_brw.property_account_creditor_price_difference and \
             product_brw.property_account_creditor_price_difference.id or \
             product_brw.categ_id.property_account_creditor_price_difference_categ and \
