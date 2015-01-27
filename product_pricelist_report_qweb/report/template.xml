@@ -73,9 +73,8 @@
 
         <template id="report_template">
             <t t-call="product_pricelist_report_qweb.html_container">
-                <t t-foreach="doc_ids" t-as="doc_id">
-                    <t t-raw="translate_doc(doc_id, doc_model, 'company_id.partner_id.lang', 'product_pricelist_report_qweb.report_document')"/>
-                </t>
+                <t t-set="doc_id" t-value="doc_ids[0]"/>
+                <t t-raw="translate_doc(doc_id, doc_model, 'company_id.partner_id.lang', 'product_pricelist_report_qweb.report_document')"/>
             </t>
         </template>
     </data>
