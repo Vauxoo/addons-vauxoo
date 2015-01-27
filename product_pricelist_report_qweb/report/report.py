@@ -20,39 +20,25 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-import time
-
 from openerp.osv import osv
-from openerp.report import report_sxw
-
-
-class parser(report_sxw.rml_parse):
-    _name = 'product.pricelist.report.parser'
-
-    def __init__(self, cr, uid, name, context=None):
-        super(parser, self).__init__(cr, uid, name, context=context)
-        self.localcontext.update({
-            'time': time,
-        })
-        self.context = context
-
-    def set_context(self, objects, data, ids, report_type=None):
-        # This is a way of capturing objects as depicted in
-        # odoo/addons/account/report/account_balance.py
-        new_ids = ids
-        return super(parser, self).set_context(objects, data, new_ids,
-                                               report_type=report_type)
+from openerp.addons.product.report import product_pricelist
 
 
 class product_pricelist_report_qweb(osv.AbstractModel):
 
-    # _name = `report.` + `report_name`
-    # report_name="product_pricelist_report_qweb.comm_salespeople_template"
-    _name = 'report.product_pricelist_report_qweb.comm_salespeople_template'
+    # As we are inheriting a report that was previously a particular report we
+    # have to keep it like that, i.e., we will keep _name the same than the
+    # original
+
+    # _name = `report.` + `report_name` (FQN)
+    # report_name="product.report_pricelist"
+    _name = 'report.product.report_pricelist'
 
     # this inheritance will allow to render this particular report
     _inherit = 'report.abstract_report'
-    _template = 'product_pricelist_report_qweb.comm_salespeople_template'
-    _wrapped_report_class = parser
+    # new template will be used this because we want something more customized
+    _template = 'product_pricelist_report_qweb.report_template'
+    # old wrapper class from original report will be used
+    _wrapped_report_class = product_pricelist.product_pricelist
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
