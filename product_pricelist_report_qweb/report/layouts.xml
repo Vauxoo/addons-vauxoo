@@ -153,13 +153,16 @@ table {
               </td>
               <td width="70%">
                   <table style="width: 100%; text-align:center;" id="table_header">
-                      <tr><td><div class="td_company_title"><span t-field="o.company_id.name"/></div></td></tr>
-                      <tr><td><div class="td_company">
-                      </div></td></tr>
-                      <tr><td><div class="td_company">
-                      </div></td></tr>
-                      <tr><td><div class="td_company">
-                      </div></td></tr>
+                      <tr><td><h4><strong><span t-field="o.company_id.name"/></strong></h4></td></tr>
+                      <tr><td>
+                        <strong>Price List Name</strong>: <span t-esc="get_pricelist(data['form']['price_list'])"/>
+                      </td></tr>
+                      <tr><td>
+                        <strong>Currency</strong>: <span t-esc="get_currency(data['form']['price_list'])"/>
+                      </td></tr>
+                      <tr><td>
+                        <strong>Print date</strong>: <t t-esc="formatLang(time.strftime('%Y-%m-%d'), date=True)"/>
+                      </td></tr>
                   </table>
               </td>
           </tr>
