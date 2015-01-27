@@ -98,6 +98,25 @@
                             </tree>
                         </field>
                      </xpath>
+                     <xpath expr="//field[@name='line_cr_ids']" position="replace">
+                        <field name="line_cr_ids" attrs="{'invisible': [('pre_line','=',False)]}" context="{'journal_id':journal_id, 'partner_id':partner_id}"
+                            on_change="onchange_line_ids(line_dr_ids, line_cr_ids, amount, currency_id, type, context)">>
+                            <tree string="Credits" colors="gray:amount==0">
+                                <field name="move_line_id" context="{'journal_id':parent.journal_id, 'partner_id':parent.partner_id}"
+                                    on_change="onchange_move_line_id(move_line_id)"
+                                    domain="[('account_id.type','=','payable'), ('reconcile_id','=', False), ('partner_id','=',parent.partner_id)]"
+                                    required="1"/>
+                                <field name="account_id" groups="base.group_no_one" domain="[('type','=','payable')]"/>
+                                <field name="date_original" readonly="1"/>
+                                <field name="date_due" readonly="1"/>
+                                <field name="amount_original" readonly="1"/>
+                                <field name="amount_unreconciled" readonly="1" groups="account.group_account_user"/>
+                                <field name="reconcile" on_change="onchange_reconcile(reconcile, amount, amount_unreconciled, context)" groups="account.group_account_user"/>
+                                <field name="amount" sum="Total Allocation" on_change="onchange_amount(amount, amount_unreconciled, context)"/>
+                                <field name="tax_line_ids"/>
+                            </tree>
+                        </field>
+                     </xpath>
                 </field>
         </record>
 
