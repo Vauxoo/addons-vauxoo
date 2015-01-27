@@ -340,7 +340,8 @@ class account_voucher(osv.Model):
                                     'move_line_id': move_line_id,
                                     'analytic_account_id': tax.get(
                                         'tax_analytic_id', False),
-                                    'amount_base': base_amount}])
+                                    'amount_base': tax.get(
+                                        'amount_base_secondary', 0.0)}])
                 lista_tax_to_add = [[5, False, False]]
                 for tax in list_tax:
                     lista_tax_to_add.append(tax)
@@ -419,7 +420,8 @@ class account_voucher_line(osv.Model):
                             'move_line_id': move_line_id2,
                             'analytic_account_id': tax.get(
                                 'tax_analytic_id', False),
-                            'amount_base': base_amount}])
+                            'amount_base': tax.get(
+                                'amount_base_secondary', 0.0)}])
             lista_tax_to_add = [[5, False, False]]
             for tax in list_tax:
                 lista_tax_to_add.append(tax)
