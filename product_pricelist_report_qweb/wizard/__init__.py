@@ -20,43 +20,4 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-from openerp.osv import fields, osv
-
-
-class product_price_list(osv.osv_memory):
-    _inherit = 'product.price_list'
-    _description = 'Price List'
-    _rec_name = 'price_list'
-
-    _columns = {
-        'report_format': fields.selection([
-            ('pdf', 'PDF'),
-            ('xls', 'Spreadsheet')], 'Report Format'),
-        'cost': fields.integer('Cost'),
-        'margin_cost': fields.integer('Margin Over Cost'),
-        'margin_sale': fields.integer('Margin Over Sale'),
-    }
-    _defaults = {
-        'report_format': lambda *args: 'pdf',
-        'cost': 0.0,
-        'margin_cost': 0.0,
-        'margin_sale': 0.0,
-    }
-
-    def print_report(self, cr, uid, ids, context=None):
-        """
-        To get the date and print the report
-        @return : return report
-        """
-        if context is None:
-            context = {}
-        res = self.read(cr, uid, ids, ['report_format'], load=None,
-                        context=context)
-        res = [True for rex in res if rex.get('report_format') == 'xls']
-
-        context['xls_report'] = any(res)
-
-        return super(product_price_list, self).print_report(cr, uid, ids,
-                                                            context=context)
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+from . import product_pricelist
