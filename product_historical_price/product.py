@@ -39,15 +39,15 @@ class product_historical(osv.Model):
         context = context or {}
         res = {}
         product_hist = self.pool.get('product.historic.price')
-        for id in ids:
-            if self.browse(cr, uid, id).list_price != self.browse(cr, uid,
-                                                                  id).\
+        for r_id in ids:
+            if self.browse(cr, uid, r_id).list_price != self.browse(cr, uid,
+                                                                    r_id).\
                     list_price_historical:
-                res[id] = self.browse(cr, uid, id).list_price
+                res[r_id] = self.browse(cr, uid, r_id).list_price
                 product_hist.create(cr, uid, {
-                    'product_id': id,
+                    'product_id': r_id,
                     'name': time.strftime('%Y-%m-%d %H:%M:%S'),
-                    'price': self.browse(cr, uid, id).list_price,
+                    'price': self.browse(cr, uid, r_id).list_price,
                 }, context)
         return res
 
@@ -56,14 +56,15 @@ class product_historical(osv.Model):
         context = context or {}
         res = {}
         product_hist = self.pool.get('product.historic.cost')
-        for id in ids:
-            if self.browse(cr, uid, id).\
-                    standard_price != self.browse(cr, uid, id).cost_historical:
-                res[id] = self.browse(cr, uid, id).standard_price
+        for r_id in ids:
+            if self.browse(cr, uid, r_id).\
+                    standard_price != self.browse(cr, uid,
+                                                  r_id).cost_historical:
+                res[r_id] = self.browse(cr, uid, r_id).standard_price
                 product_hist.create(cr, uid, {
-                    'product_id': id,
+                    'product_id': r_id,
                     'name': time.strftime('%Y-%m-%d %H:%M:%S'),
-                    'price': self.browse(cr, uid, id).standard_price,
+                    'price': self.browse(cr, uid, r_id).standard_price,
                 }, context)
         return res
 
