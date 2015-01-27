@@ -24,7 +24,7 @@
 from openerp import models,  _
 
 
-class wizard_price(models.TransientModel):
+class wizard_price(models.Model):
     _inherit = "wizard.price"
 
     def default_get(self, cr, uid, field, context=None):
