@@ -28,6 +28,16 @@ class parser(product_pricelist.product_pricelist):
     def __init__(self, cr, uid, name, context):
         super(parser, self).__init__(cr, uid, name, context=context)
 
+    def _get_titles(self, form):
+        res = super(parser, self)._get_titles(form)
+        if form.get('margin_cost') or form.get('margin_sale'):
+            res.append({'cost': 'Cost'})
+        if form.get('margin_cost'):
+            res.append({'margin_cost': 'Exp. Marg. Cost'})
+        if form.get('margin_sale'):
+            res.append({'margin_sale': 'Exp. Marg. Sale'})
+        return res
+
     def _get_price(self, pricelist_id, product_id, qty):
         context = self.localcontext
         if not context.get('xls_report'):

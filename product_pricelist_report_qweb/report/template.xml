@@ -22,6 +22,9 @@
                                     <td t-if="k.has_key('qty3')"><strong t-esc="k['qty3']"/></td>
                                     <td t-if="k.has_key('qty4')"><strong t-esc="k['qty4']"/></td>
                                     <td t-if="k.has_key('qty5')"><strong t-esc="k['qty5']"/></td>
+                                    <td t-if="k.has_key('cost')"><strong t-esc="k['cost']"/></td>
+                                    <td t-if="k.has_key('margin_cost')"><strong t-esc="k['margin_cost']"/></td>
+                                    <td t-if="k.has_key('margin_sale')"><strong t-esc="k['margin_sale']"/></td>
                                 </t>
                             </tr>
                         </thead>
