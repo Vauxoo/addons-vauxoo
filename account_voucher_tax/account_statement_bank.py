@@ -114,7 +114,14 @@ class account_bank_statement_line(osv.osv):
         move_obj.unlink(cr, uid, move_id_old)
         return res
 
-    def _get_factor_type(self, cr, uid, amount=False, ttype=False, context=None):
+    def _get_factor_type(
+            self, cr, uid, amount=False, ttype=False, context=None):
+        '''
+        This when the payment have retentiones or in refound debit/credit,
+        and is used to indicate if the debit be subtracted to
+        credit or credit to debit.
+        1 is to debit and -1 to credit
+        '''
         if context is None:
             context = {}
         factor_type = [-1, 1]
