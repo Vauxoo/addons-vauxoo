@@ -27,6 +27,22 @@ from openerp import models,  _
 class wizard_price(models.Model):
     _inherit = "wizard.price"
 
+    def execute_cron(self, cr, uid, ids=None, context=None):
+        ids = ids or []
+        context = context or {}
+        product_obj = self.pool.get('product.product')
+        product_ids = product_obj.search(cr, uid, [('bom_ids', '!=', False)])
+        for product in product_ids:
+            print 'siii'
+            context.update({'active_model': 'product.product',
+                            'active_id': product})
+            price_id = self.create(cr, uid,
+                                   {'real_time_accounting': True,
+                                    'recursive': True},
+                                   context=context)
+            self.compute_from_bom(cr, uid, [price_id], context=context)
+        return True
+
     def default_get(self, cr, uid, field, context=None):
         res = super(wizard_price, self).default_get(cr,
                                                     uid,
