@@ -37,10 +37,12 @@
                                 </tr>
                                 <tr t-foreach="c['products']" t-as="p">
                                     <td>
-                                        <t t-if="p.get('code')">
-                                            [<span t-esc="p['code']"/>]
+                                        <t t-if="not p.get('code')">
+                                            <span t-esc="p['name']"/>
                                         </t>
-                                        <span t-esc="p['name']"/>
+                                        <t t-if="p.get('code')">
+                                            [<span t-esc="p['code']"/>] <span t-esc="p['name']"/>
+                                        </t>
                                     </td>
                                     <td t-if="p.has_key('qty1') and p['qty1']"><strong t-esc="formatLang(p['qty1'], digits=2, grouping=3)"/></td>
                                     <td t-if="p.has_key('qty2') and p['qty2']"><strong t-esc="formatLang(p['qty2'], digits=2, grouping=3)"/></td>
