@@ -47,15 +47,28 @@ class product_price_list(osv.osv_memory):
         To get the date and print the report
         @return : return report
         """
-        if context is None:
-            context = {}
-        res = self.read(cr, uid, ids, ['report_format'], load=None,
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        datas = {'ids': context.get('active_ids', [])}
+
+        field_list = ['price_list', 'qty1',
+                      'qty2', 'qty3', 'qty4', 'qty5', 'report_format',
+                      'margin_cost', 'margin_sale']
+
+        res = self.read(cr, uid, ids, field_list, load=None,
                         context=context)
-        res = [True for rex in res if rex.get('report_format') == 'xls']
+        res = res and res[0] or {}
 
-        context['xls_report'] = any(res)
+        if res.get('margin_cost') or res.get('margin_sale'):
+            for idx in range(2,6):
+                res['qty%d'%idx] = 0.0
 
-        return super(product_price_list, self).print_report(cr, uid, ids,
-                                                            context=context)
+        context['xls_report'] = res.get('report_format') == 'xls'
+
+        datas['form'] = res
+
+        return self.pool['report'].get_action(
+            cr, uid, [], 'product.report_pricelist', data=datas,
+            context=context)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
