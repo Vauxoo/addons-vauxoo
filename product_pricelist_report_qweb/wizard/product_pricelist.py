@@ -31,16 +31,14 @@ class product_price_list(osv.osv_memory):
     _columns = {
         'report_format': fields.selection([
             ('pdf', 'PDF'),
+            ('html', 'HTML'),
             ('xls', 'Spreadsheet')], 'Report Format'),
-        'cost': fields.integer('Cost'),
-        'margin_cost': fields.integer('Margin Over Cost'),
-        'margin_sale': fields.integer('Margin Over Sale'),
+        'cost': fields.boolean('Cost'),
+        'margin_cost': fields.boolean('Expected Margin / Cost'),
+        'margin_sale': fields.boolean('Expected Margin / Sale'),
     }
     _defaults = {
-        'report_format': lambda *args: 'pdf',
-        'cost': 0.0,
-        'margin_cost': 0.0,
-        'margin_sale': 0.0,
+        'report_format': lambda *args: 'xls',
     }
 
     def print_report(self, cr, uid, ids, context=None):
