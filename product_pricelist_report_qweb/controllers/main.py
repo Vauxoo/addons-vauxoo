@@ -22,7 +22,7 @@ class ReportController(main.ReportController):
                     continue
                 col = 0
                 for td in cols:
-                    text = u"%s" % td.text.encode('utf-8')
+                    text = "%s" % td.text.encode('ascii', 'ignore')
                     text = text.replace("&nbsp;", " ")
                     text = text.strip()
                     try:
