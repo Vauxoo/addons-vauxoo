@@ -20,7 +20,6 @@
 
 
 from openerp import models,  _
-from openerp.osv import osv
 
 
 class product_template(models.Model):
@@ -125,12 +124,7 @@ class product_template(models.Model):
 
                 diff = product.standard_price - new_price
                 if not diff:
-                    raise osv.except_osv(_('Error!'),
-                                         _("No difference between standard "
-                                           "price %s and new price %s "
-                                           "in the product %s!" %
-                                           (product.standard_price, new_price,
-                                            product.name)))
+                    continue
                 for prod_variant in product.product_variant_ids:
                     qty = prod_variant.qty_available
                     if qty:
