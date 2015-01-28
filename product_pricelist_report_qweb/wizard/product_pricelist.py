@@ -32,7 +32,7 @@ class product_price_list(osv.osv_memory):
         'report_format': fields.selection([
             ('pdf', 'PDF'),
             # TODO: enable print on controller to HTML
-            ('html', 'HTML'),
+            # ('html', 'HTML'),
             ('xls', 'Spreadsheet')], 'Report Format'),
         'cost': fields.boolean('Cost'),
         'margin_cost': fields.boolean('Exp. Marg. Cost'),
