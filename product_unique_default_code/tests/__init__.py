@@ -1,9 +1,3 @@
-# -*- encoding: utf-8 -*-
-###########################################################################
-#    Module Writen to OpenERP, Open Source Management Solution
-#
-#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
-#    All Rights Reserved.
 #    info@vauxoo.com
 ############################################################################
 #    Coded by: julio (julio@vauxoo.com)
@@ -24,4 +18,8 @@
 #
 ##############################################################################
 
-from . import model
+from . import test_for_unique_ref
+
+fast_suite = [
+    test_for_unique_ref,
+]
