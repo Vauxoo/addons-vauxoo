@@ -91,7 +91,8 @@ class account_invoice_tax(osv.Model):
         tax_invoice_ids = self.search(cr, uid, [
             ('invoice_id', '=', invoice_id)], context=context)
         for inv_t in self.browse(cr, uid, tax_invoice_ids, context=context):
-            if not inv_t.amount and not inv_t.tax_code_id and not inv_t.tax_amount:
+            if not inv_t.base_amount and not inv_t.tax_code_id and not\
+                    inv_t.tax_amount:
                 continue
             res.append({
                 'type': 'tax',

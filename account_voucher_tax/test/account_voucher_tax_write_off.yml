@@ -74,7 +74,7 @@
             assert move.account_id.id == ref('account.a_pay'), "Wrong account Creditors in Journal Item"
         elif move.debit == 0.46:
             print move.account_id.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name ,'\t',move.name
-            assert move.account_id.id == ref('account.iva'), "Wrong account IVA Voucher in Journal Item"
+            assert move.account_id.id == ref('account_iva_voucher_16'), "Wrong account IVA Voucher in Journal Item"
         elif move.debit == 2.88:
             print move.account_id.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name ,'\t',move.name
             assert move.account_id.id == ref('account.a_expense'), "Wrong bank account in Journal Item"
@@ -98,7 +98,7 @@
         if move.tax_id:
             if move.credit == 0.46:
                 print move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name,'\t',move.account_id.name,'\t',move.name 
-                assert move.account_id.id == ref('account.iva'), "Wrong account Creditors in Journal Item"
+                assert move.account_id.id == ref('account_iva_voucher_16'), "Wrong account Creditors in Journal Item"
             elif move.debit == 0.46:
                 print move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name,'\t',move.account_id.name,'\t',move.name 
                 assert move.account_id.id == ref('account_iva_voucher'), "Wrong account IVA Voucher in Journal Item"

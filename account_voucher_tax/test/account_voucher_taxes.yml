@@ -71,7 +71,7 @@
     voucher_id = self.browse(cr, uid, ref('account_voucher_tax1'))
     for move_line in voucher_id.move_id.line_id:
         if round(move_line.credit, 2) == 852.80:
-            assert move_line.account_id.id == ref('account.iva'), "Wrong account IVA in Journal Item"
+            assert move_line.account_id.id == ref('account_iva_voucher_16'), "Wrong account IVA in Journal Item"
         elif round(move_line.debit, 2) == 852.80:
             assert move_line.account_id.id == ref('account_iva_voucher'), "Wrong account IVA Voucher in Journal Item"
         elif round(move_line.credit, 2) == 6182.80:
