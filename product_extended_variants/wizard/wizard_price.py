@@ -33,7 +33,6 @@ class wizard_price(models.Model):
         product_obj = self.pool.get('product.product')
         product_ids = product_obj.search(cr, uid, [('bom_ids', '!=', False)])
         for product in product_ids:
-            print 'siii'
             context.update({'active_model': 'product.product',
                             'active_id': product})
             price_id = self.create(cr, uid,
