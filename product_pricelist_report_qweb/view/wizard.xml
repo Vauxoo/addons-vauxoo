@@ -18,6 +18,9 @@
                         <field name="report_format" widget="selection" required='1'/>
                     </group>
                 </xpath>
+                <xpath expr="//field[@name='qty1']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|',('margin_sale','=',True),('margin_cost','=',True)],'invisible': ['|',('margin_sale','=',True),('margin_cost','=',True)]}</attribute>
+                </xpath>
                 <xpath expr="//field[@name='qty2']" position="attributes">
                     <attribute name="attrs">{'readonly': ['|',('margin_sale','=',True),('margin_cost','=',True)],'invisible': ['|',('margin_sale','=',True),('margin_cost','=',True)]}</attribute>
                 </xpath>

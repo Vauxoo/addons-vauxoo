@@ -60,6 +60,7 @@ class product_price_list(osv.osv_memory):
         res = res and res[0] or {}
 
         if res.get('margin_cost') or res.get('margin_sale'):
+            res['qty1'] = 1.0
             for idx in range(2, 6):
                 res['qty%d' % idx] = 0.0
 
