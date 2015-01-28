@@ -21,6 +21,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 from openerp.osv import osv
+from openerp.addons.product.report import product_pricelist
+
+
+class parser(product_pricelist.product_pricelist):
+    def __init__(self, cr, uid, name, context):
+        super(parser, self).__init__(cr, uid, name, context=context)
 
 
 class product_pricelist_report_qweb(osv.AbstractModel):
@@ -40,6 +46,6 @@ class product_pricelist_report_qweb(osv.AbstractModel):
     _template = 'product_pricelist_report_qweb.report_template'
     # old wrapper class from original report will be used
     # so we can comment this attribute
-    # _wrapped_report_class = product_pricelist.product_pricelist
+    _wrapped_report_class = parser
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
