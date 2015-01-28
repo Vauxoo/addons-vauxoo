@@ -47,6 +47,7 @@
                                     <td t-if="p.has_key('qty3') and p['qty3']"><strong t-esc="p['qty3']"/></td>
                                     <td t-if="p.has_key('qty4') and p['qty4']"><strong t-esc="p['qty4']"/></td>
                                     <td t-if="p.has_key('qty5') and p['qty5']"><strong t-esc="p['qty5']"/></td>
+                                    <td t-if="p.has_key('cost') and p['cost']"><strong t-esc="p['cost']"/></td>
                                 </tr>
                             </t>
                         </tbody>

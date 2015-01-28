@@ -38,6 +38,27 @@ class parser(product_pricelist.product_pricelist):
             res.append({'margin_sale': 'Exp. Marg. Sale'})
         return res
 
+    def _get_categories(self, products, form):
+
+        res = super(parser, self)._get_categories(products, form)
+        if not form.get('margin_cost') and not form.get('margin_sale'):
+            return res
+        prod_obj = self.pool.get('product.product')
+        cr, uid = self.cr, self.uid
+        context = self.localcontext
+        new_res = []
+        for cat in res:
+            new_products = []
+            for pro_dict in cat['products']:
+                new_val = pro_dict.copy()
+                prod_read = prod_obj.read(
+                    cr, uid, pro_dict['id'], ['standard_price'], load=None,
+                    context=context)
+                new_val['cost'] = prod_read['standard_price']
+                new_products.append(new_val)
+            new_res.append({'name': cat['name'], 'products': new_products})
+        return new_res
+
     def _get_price(self, pricelist_id, product_id, qty):
         context = self.localcontext
         if not context.get('xls_report'):
