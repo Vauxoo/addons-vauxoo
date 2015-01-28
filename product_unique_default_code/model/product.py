@@ -43,26 +43,7 @@ class product_product(osv.Model):
         return super(product_product, self).copy(cr, uid, id, default=default,
                                                  context=context)
 
-    def _unique_internal_reference(self, cr, uid, ids):
-        """
-        Python Constraint to check if default code for
-        products are really unique
-        """
-        all_product_ids = self.search(cr, uid, [])
-        all_def_codes = [prod.default_code for prod in self.browse(cr, uid, all_product_ids)]
-        for product in self.browse(cr, uid, ids):
-            if product.default_code in all_def_codes:
-                return False
-        return True
-
-    #~ _sql_constraints = [
-        #~ ('default_code_unique', 'unique (default_code)',
-         #~ 'The code of Product must be unique !'),
-    #~ ]
-
-    _constraints = [
-        (_unique_internal_reference,
-         "You can't have more than one product with the"
-         "same internal reference",
-         ['default_code']),
+    _sql_constraints = [
+        ('default_code_unique', 'unique (default_code)',
+         'The code of Product must be unique !'),
     ]
