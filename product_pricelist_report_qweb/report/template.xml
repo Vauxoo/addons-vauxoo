@@ -48,6 +48,8 @@
                                     <td t-if="p.has_key('qty4') and p['qty4']"><strong t-esc="p['qty4']"/></td>
                                     <td t-if="p.has_key('qty5') and p['qty5']"><strong t-esc="p['qty5']"/></td>
                                     <td t-if="p.has_key('cost') and p['cost']"><strong t-esc="p['cost']"/></td>
+                                    <td t-if="p.has_key('margin_cost') and p['margin_cost']"><strong t-esc="p['margin_cost']"/></td>
+                                    <td t-if="p.has_key('margin_sale') and p['margin_sale']"><strong t-esc="p['margin_sale']"/></td>
                                 </tr>
                             </t>
                         </tbody>

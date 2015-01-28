@@ -39,7 +39,6 @@ class parser(product_pricelist.product_pricelist):
         return res
 
     def _get_categories(self, products, form):
-
         res = super(parser, self)._get_categories(products, form)
         if not form.get('margin_cost') and not form.get('margin_sale'):
             return res
@@ -47,6 +46,7 @@ class parser(product_pricelist.product_pricelist):
         cr, uid = self.cr, self.uid
         context = self.localcontext
         new_res = []
+
         for cat in res:
             new_products = []
             for pro_dict in cat['products']:
@@ -55,27 +55,33 @@ class parser(product_pricelist.product_pricelist):
                     cr, uid, pro_dict['id'], ['standard_price'], load=None,
                     context=context)
                 new_val['cost'] = prod_read['standard_price']
+
+                if form.get('margin_cost'):
+                    new_val['margin_cost'] = (
+                        new_val['qty1'] and (((new_val['qty1'] -
+                                               new_val['cost']) * 100 /
+                                              new_val['qty1'])) or 0.0)
+                if form.get('margin_sale'):
+                    new_val['margin_sale'] = (
+                        new_val['cost'] and (((new_val['qty1'] -
+                                               new_val['cost']) * 100 /
+                                              new_val['cost'])) or 0.0)
+
                 new_products.append(new_val)
             new_res.append({'name': cat['name'], 'products': new_products})
         return new_res
 
     def _get_price(self, pricelist_id, product_id, qty):
         context = self.localcontext
-        if not context.get('xls_report'):
-            return super(parser, self)._get_price(pricelist_id, product_id,
-                                                  qty)
-        sale_price_digits = self.get_digits(dp='Product Price')
         price_dict = self.pool.get('product.pricelist').price_get(
             self.cr, self.uid, [pricelist_id], product_id, qty,
             context=context)
         if price_dict[pricelist_id]:
-            price = self.formatLang(price_dict[pricelist_id],
-                                    digits=sale_price_digits)
+            price = price_dict[pricelist_id]
         else:
             res = self.pool.get('product.product').read(self.cr, self.uid,
                                                         [product_id])
-            price = self.formatLang(res[0]['list_price'],
-                                    digits=sale_price_digits)
+            price = res[0]['list_price']
         return price
 
 
