@@ -28,6 +28,25 @@ class parser(product_pricelist.product_pricelist):
     def __init__(self, cr, uid, name, context):
         super(parser, self).__init__(cr, uid, name, context=context)
 
+    def _get_price(self, pricelist_id, product_id, qty):
+        context = self.localcontext
+        if not context.get('xls_report'):
+            return super(parser, self)._get_price(pricelist_id, product_id,
+                                                  qty)
+        sale_price_digits = self.get_digits(dp='Product Price')
+        price_dict = self.pool.get('product.pricelist').price_get(
+            self.cr, self.uid, [pricelist_id], product_id, qty,
+            context=context)
+        if price_dict[pricelist_id]:
+            price = self.formatLang(price_dict[pricelist_id],
+                                    digits=sale_price_digits)
+        else:
+            res = self.pool.get('product.product').read(self.cr, self.uid,
+                                                        [product_id])
+            price = self.formatLang(res[0]['list_price'],
+                                    digits=sale_price_digits)
+        return price
+
 
 class product_pricelist_report_qweb(osv.AbstractModel):
 

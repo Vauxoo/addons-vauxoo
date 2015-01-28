@@ -13,15 +13,15 @@
                     <table class="basic_table"  width="100%" id="table_body">
                         <thead>
                             <tr>
-                                <th>
+                                <td>
                                     <strong>Description</strong>
-                                </th>
+                                </td>
                                 <t t-foreach="get_titles(data['form'])" t-as="k">
-                                    <th t-if="k.has_key('qty1')"><strong t-esc="k['qty1']"/></th>
-                                    <th t-if="k.has_key('qty2')"><strong t-esc="k['qty2']"/></th>
-                                    <th t-if="k.has_key('qty3')"><strong t-esc="k['qty3']"/></th>
-                                    <th t-if="k.has_key('qty4')"><strong t-esc="k['qty4']"/></th>
-                                    <th t-if="k.has_key('qty5')"><strong t-esc="k['qty5']"/></th>
+                                    <td t-if="k.has_key('qty1')"><strong t-esc="k['qty1']"/></td>
+                                    <td t-if="k.has_key('qty2')"><strong t-esc="k['qty2']"/></td>
+                                    <td t-if="k.has_key('qty3')"><strong t-esc="k['qty3']"/></td>
+                                    <td t-if="k.has_key('qty4')"><strong t-esc="k['qty4']"/></td>
+                                    <td t-if="k.has_key('qty5')"><strong t-esc="k['qty5']"/></td>
                                 </t>
                             </tr>
                         </thead>
