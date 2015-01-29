@@ -96,5 +96,6 @@ class wizard_price(models.Model):
                               real_time_accounting=res[0].real_time_accounting,
                               recursive=res[0].recursive,
                               test=False, context=context)
+        return True
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
