@@ -47,7 +47,7 @@ class ReportController(main.ReportController):
         cr, uid, context = request.cr, request.uid, request.context
 
         if docids:
-            docids = [int(i) for i in docids.split(',')]
+            docids = [int(idx) for idx in docids.split(',')]
         options_data = None
         if data.get('options'):
             options_data = simplejson.loads(data['options'])
