@@ -33,9 +33,9 @@ class parser(product_pricelist.product_pricelist):
         if form.get('margin_cost') or form.get('margin_sale'):
             res.append({'cost': 'Cost'})
         if form.get('margin_cost'):
-            res.append({'margin_cost': 'Exp. Marg. Cost'})
+            res.append({'margin_cost': 'Exp. Marg. Cost (%)'})
         if form.get('margin_sale'):
-            res.append({'margin_sale': 'Exp. Marg. Sale'})
+            res.append({'margin_sale': 'Exp. Marg. Sale (%)'})
         return res
 
     def _get_categories(self, products, form):

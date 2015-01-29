@@ -35,8 +35,8 @@ class product_price_list(osv.osv_memory):
             # ('html', 'HTML'),
             ('xls', 'Spreadsheet')], 'Report Format'),
         'cost': fields.boolean('Cost'),
-        'margin_cost': fields.boolean('Exp. Marg. Cost'),
-        'margin_sale': fields.boolean('Exp. Marg. Sale'),
+        'margin_cost': fields.boolean('Exp. Marg. Cost (%)'),
+        'margin_sale': fields.boolean('Exp. Marg. Sale (%)'),
     }
     _defaults = {
         'report_format': lambda *args: 'xls',
