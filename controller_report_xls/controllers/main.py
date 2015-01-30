@@ -1,7 +1,5 @@
 from openerp.addons.report.controllers import main
 from openerp.addons.web.http import route, request
-from openerp.addons.web.controllers.main import _serialize_exception
-from openerp.tools import html_escape
 from werkzeug import url_decode
 import simplejson
 from bs4 import BeautifulSoup
