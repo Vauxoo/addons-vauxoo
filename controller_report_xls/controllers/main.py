@@ -45,7 +45,7 @@ class ReportController(main.ReportController):
     def report_routes(self, reportname, docids=None, converter=None, **data):
         report_obj = request.registry['report']
         cr, uid, context = request.cr, request.uid, request.context
-
+        origin_docids = docids
         if docids:
             docids = [int(idx) for idx in docids.split(',')]
         options_data = None
@@ -63,7 +63,7 @@ class ReportController(main.ReportController):
 
         if not context.get('xls_report'):
             return super(ReportController, self).report_routes(
-                reportname, docids=docids, converter=converter, **data)
+                reportname, docids=origin_docids, converter=converter, **data)
 
         html = report_obj.get_html(cr, uid, docids, reportname,
                                    data=options_data, context=context)
