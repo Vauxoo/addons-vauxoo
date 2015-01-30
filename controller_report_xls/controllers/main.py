@@ -1,5 +1,8 @@
 from openerp.addons.report.controllers import main
 from openerp.addons.web.http import route, request
+from openerp.addons.web.controllers.main import _serialize_exception
+from openerp.tools import html_escape
+from werkzeug import url_decode
 import simplejson
 from bs4 import BeautifulSoup
 import xlwt
@@ -7,6 +10,44 @@ import StringIO
 
 
 class ReportController(main.ReportController):
+
+    @route(['/report/download'], type='http', auth="user")
+    def report_download(self, data, token):
+        """
+        This is an override of original method in ReportController class in
+        report module
+        What is intended here is to properly assign to the extension to XLS
+        """
+        response = super(ReportController, self).report_download(data, token)
+        if response is None:
+            return response
+
+        requestcontent = simplejson.loads(data)
+        url = requestcontent[0]
+
+        # decoding the args represented in JSON
+        new_data = url_decode(url.split('?')[1]).items()
+
+        new_data = dict(new_data)
+        if new_data.get('context'):
+            context = simplejson.loads(new_data['context']) or {}
+
+        if not context.get('xls_report'):
+            return response
+
+        reportname = url.split('/report/pdf/')[1].split('?')[0]
+        # As headers have been implement as as list there are no unique headers
+        # adding them just result into duplicated headers that are not
+        # unique will convert them into dict update the required header and
+        # then will be assigned back into headers
+        headers = dict(response.headers.items())
+        headers.update(
+            {'Content-Disposition':
+                'attachment; filename=%s.xls;' % reportname})
+        response.headers.clear()
+        for key, value in headers.iteritems():
+            response.headers.add(key, value)
+        return response
 
     def get_xls(self, html):
         wb = xlwt.Workbook()
@@ -70,5 +111,5 @@ class ReportController(main.ReportController):
         xls_stream = self.get_xls(html)
         xlshttpheaders = [('Content-Type', 'application/vnd.ms-excel'),
                           ('Content-Length', len(xls_stream)),
-                          ('filename', 'Report.xls')]
+                          ]
         return request.make_response(xls_stream, headers=xlshttpheaders)
