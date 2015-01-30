@@ -20,7 +20,6 @@
 
 
 from openerp import models,  _
-from openerp.osv import osv
 
 
 class product_template(models.Model):
@@ -31,8 +30,7 @@ class product_template(models.Model):
         res = super(product_template, self)\
             .get_product_accounts(cr, uid, product_id,
                                   context=context)
-        product_obj = self.pool.get('product.product')
-        product_brw = product_obj.browse(cr, uid, product_id)
+        product_brw = self.browse(cr, uid, product_id)
         diff_acc_id = product_brw.property_account_creditor_price_difference and \
             product_brw.property_account_creditor_price_difference.id or \
             product_brw.categ_id.property_account_creditor_price_difference_categ and \
@@ -126,12 +124,7 @@ class product_template(models.Model):
 
                 diff = product.standard_price - new_price
                 if not diff:
-                    raise osv.except_osv(_('Error!'),
-                                         _("No difference between standard "
-                                           "price %s and new price %s "
-                                           "in the product %s!" %
-                                           (product.standard_price, new_price,
-                                            product.name)))
+                    continue
                 for prod_variant in product.product_variant_ids:
                     qty = prod_variant.qty_available
                     if qty:

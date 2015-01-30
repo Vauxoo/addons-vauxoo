@@ -33,7 +33,8 @@ Product extension. This module adds:
     on the materials in the BoM and the work centers.  It can create the
     necessary accounting entries when necessary.
 """,
-    "data": ['product_view.xml'],
+    "data": ['view/product_view.xml',
+             'data/update_price_data.xml'],
     "active": False,
     "installable": True
 }

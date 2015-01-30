@@ -52,12 +52,10 @@ class account_bank_statement_line(osv.osv):
             }
         move_id_old = move_obj.create(cr, uid, vals_move, context)
 
+        self._get_factor_type(cr, uid, st_line.amount, False, context=context)
         type = 'sale'
-        factor_type = [-1, 1]
         if st_line.amount < 0:
             type = 'payment'
-            factor_type = [1, -1]
-        context['factor_type'] = factor_type
 
         move_amount_counterpart = self._get_move_line_counterpart(
             cr, uid, mv_line_dicts, context=context)
@@ -70,8 +68,12 @@ class account_bank_statement_line(osv.osv):
 
         for move_line_tax in move_line_tax_dict:
             line_tax_id = move_line_tax.get('tax_id')
+            # Cuando el impuesto (@tax_id) tiene @amount = 0 es un impuesto
+            # de compra 0% o EXENTO y necesitamos enviar el monto base
             amount_base_secondary =\
-                move_amount_counterpart[1] / (1+line_tax_id.amount)
+                line_tax_id.amount and\
+                move_amount_counterpart[1] / (1+line_tax_id.amount) or\
+                move_line_tax.get('amount_base_secondary')
             account_tax_voucher =\
                 move_line_tax.get('account_tax_voucher')
             account_tax_collected =\
@@ -111,6 +113,15 @@ class account_bank_statement_line(osv.osv):
         st_line.journal_id.write({'update_posted': update_ok})
         move_obj.unlink(cr, uid, move_id_old)
         return res
+
+    def _get_factor_type(self, cr, uid, amount=False, ttype=False, context=None):
+        if context is None:
+            context = {}
+        factor_type = [-1, 1]
+        if (amount and amount < 0) or (ttype and ttype == 'payment'):
+            factor_type = [1, -1]
+        context['factor_type'] = factor_type
+        return True
 
     def _get_move_line_counterpart(self, cr, uid, mv_line_dicts, context=None):
 
@@ -164,13 +175,33 @@ class account_bank_statement_line(osv.osv):
                 cr, uid, [('move_id', '=', move_line.move_id.id)]))
 
         for move_line_id in move_line_obj.browse(cr, uid, move_line_ids):
-            if move_line_id.account_id.type not in ('receivable', 'payable'):
+            # En cada "aml" de poliza buscamos las que son referente a los
+            # impuesto, validando que no sea una cuenta por pagar/cobrar y que
+            # los movimientos no pertenescan a un diario de banco/efectivo
+            # por que puede ser una poliza con iva efecttivamente pagado
+            if move_line_id.account_id.type not in\
+                    ('receivable', 'payable') and\
+                    move_line_id.journal_id.type not in ('cash', 'bank'):
                 account_group.setdefault(move_line_id.account_id.id, 0)
-                account_group[move_line_id.account_id.id] +=\
-                    move_line_id.debit > 0 and\
-                    move_line_id.debit*factor[0] or\
-                    move_line_id.credit*factor[1]
+                # Validacion del debit/credit cuando la poliza contiene
+                # impuesto 0 o EXENTO toma el monto base de la linea de poliza
+                if not move_line_id.debit and not move_line_id.credit:
+                    account_group[move_line_id.account_id.id] +=\
+                        move_line_id.amount_base or 0.0
+                else:
+                    # @factor puede ser 1 o -1 depende de tipo de transaccion
+                    # si es venta, compra, nota de credito/debito, retenciones
+                    # Esto para poder hacer la sumatoria de varios "aml" en un
+                    # solo monto dependiendo de valor que quede +/- determina
+                    # si se escribe por el lado del credit/debit
+                    account_group[move_line_id.account_id.id] +=\
+                        move_line_id.amount_currency*factor[0] or\
+                        move_line_id.debit > 0 and\
+                        move_line_id.debit*factor[0] or\
+                        move_line_id.credit*factor[1]
+
         for move_account_tax in account_group:
+            amount_base_secondary = 0
             tax_ids = tax_obj.search(
                 cr, uid,
                 [('account_collected_id', '=', move_account_tax),
@@ -181,10 +212,15 @@ class account_bank_statement_line(osv.osv):
 
                 amount_ret_tax = self._get_retention(
                     cr, uid, account_group, tax_id)
-
-                amount_total_tax =\
-                    account_group.get(move_account_tax)+amount_ret_tax
-
+                # Validacion especial para cuando la poliza contiene impuestos
+                # 0% o EXENTO en lugar de tomar debit/credit toma el monto base
+                # para reporta a la DIOT validando el @amount del impuesto
+                if tax_id.amount == 0:
+                    amount_total_tax = 0
+                    amount_base_secondary = account_group.get(move_account_tax)
+                else:
+                    amount_total_tax =\
+                        account_group.get(move_account_tax)+amount_ret_tax
                 dat.append({
                     'account_tax_voucher':
                         tax_id.account_paid_voucher_id.id,
@@ -195,6 +231,7 @@ class account_bank_statement_line(osv.osv):
                     'tax_analytic_id':
                         tax_id.account_analytic_collected_id and
                         tax_id.account_analytic_collected_id.id or False,
+                    'amount_base_secondary': amount_base_secondary
                     })
         return dat
 
@@ -206,7 +243,6 @@ class account_bank_statement_line(osv.osv):
 
         tax_obj = self.pool.get('account.tax')
         amount_retention_tax = 0
-
         if account_group and tax:
             for move_account_tax in account_group:
                 if tax.amount > 0:

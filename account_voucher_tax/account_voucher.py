@@ -69,17 +69,15 @@ class account_voucher(osv.Model):
             cr, uid, ids, res, ttype, date, context=context)
         return res_compute
 
-    def get_rate(self, cr, uid, move_id, context=None):
-        move_obj = self.pool.get('account.move')
+    def get_rate_line(self, cr, uid, move_line, context=None):
         if not context:
             context = {}
-        for move in move_obj.browse(cr, uid, [move_id], context):
-            for line in move.line_id:
-                amount_base = line.debit or line.credit or 0
-                rate = 1
-                if amount_base and line.amount_currency:
-                    rate = amount_base / line.amount_currency
-                    return rate
+        for line in move_line:
+            amount_base = line.debit or line.credit or 0
+            rate = 1
+            if amount_base and line.amount_currency:
+                rate = amount_base / line.amount_currency
+                return rate
         return rate
 
     def get_percent_pay_vs_invoice(self, cr, uid, amount_original, amount,
@@ -290,20 +288,8 @@ class account_voucher(osv.Model):
         if context is None:
             context = {}
         context = dict(context)
-        invoice_obj = self.pool.get('account.invoice')
-        currency_obj = self.pool.get('res.currency')
         move_obj = self.pool.get('account.move.line')
-        company_user = self.pool.get('res.users').browse(
-            cr, uid, uid, context=context).company_id.id
-        company_obj = self.pool.get('res.company')
-        if ids:
-            current_currency = self._get_current_currency(
-                cr, uid, ids[0], context)
-        else:
-            current_currency = company_obj.browse(
-                cr, uid, company_user, context=context).currency_id.id
-        company_currency = company_obj.browse(
-            cr, uid, company_user, context=context).currency_id.id
+        absl_obj = self.pool.get('account.bank.statement.line')
         lines_ids = []
         if lines and lines.get('value', False):
             lines_ids.extend(lines['value'].get('line_cr_ids', []))
@@ -315,107 +301,47 @@ class account_voucher(osv.Model):
                     'amount_original'], line['amount'], context=context)
                 list_tax = []
                 if line['amount'] > 0:
-                    move_id = move_obj.browse(
+                    move = move_obj.browse(
                         cr, uid, line['move_line_id'],
-                        context=context).move_id.id
-                    invoice_ids = invoice_obj.search(
-                        cr, uid, [('move_id', '=', move_id)], context=context)
-                    for invoice in invoice_obj.browse(
-                            cr, uid, invoice_ids, context=context):
-                        for tax in invoice.tax_line:
-                            if tax.tax_id.tax_voucher_ok:
-                                base_amount = tax.amount +\
-                                    self._get_retention_voucher(
-                                        cr, uid, invoice, tax)
-                                account = tax.tax_id.\
-                                    account_collected_voucher_id.id
-                                credit_amount = float('%.*f' % (2, (
-                                    base_amount * factor)))
-                                credit_amount_original = (base_amount * factor)
-                                amount_unround = float(base_amount * factor)
-                                diff_amount_tax = 0.0
-                                diff_account_id = False
-                                base_amount_curr = base_amount
-                                if company_currency == current_currency:
-                                    rate_move = self.get_rate(
-                                        cr, uid, move_id, context=context)
-                                    credit_amount = credit_amount * rate_move
-                                    amount_unround = amount_unround * rate_move
-                                else:
-                                    credit_amount = currency_obj.compute(
-                                        cr, uid, invoice.currency_id.id,
-                                        current_currency, float('%.*f' % (
-                                            2, credit_amount)), round=False,
-                                        context=context)
-                                    amount_unround = currency_obj.compute(
-                                        cr, uid, invoice.currency_id.id,
-                                        current_currency, float(
-                                            amount_unround), round=False,
-                                        context=context)
-                                    base_amount_curr = currency_obj.compute(
-                                        cr, uid, invoice.currency_id.id,
-                                        current_currency,
-                                        float('%.*f' % (2, base_amount)),
-                                        round=False,
-                                        context=context)
-                                    context['date'] = invoice.date_invoice
-                                    credit_orig = currency_obj.compute(
-                                        cr, uid, current_currency,
-                                        company_currency,
-                                        float('%.*f' % (2, credit_amount)),
-                                        round=False, context=context)
-                                    context['date'] = date
-                                    credit_diff = currency_obj.compute(
-                                        cr, uid, current_currency,
-                                        company_currency,
-                                        float('%.*f' % (2, credit_amount)),
-                                        round=False, context=context)
-
-                                    diff_amount_tax = currency_obj.compute(
-                                        cr, uid, company_currency,
-                                        current_currency,
-                                        float('%.*f' % (2, (credit_orig -
-                                                            credit_diff))),
-                                        round=False, context=context)
-                                    if credit_orig > credit_diff:
-                                        if ttype and ttype == 'receipt':
-                                            diff_account_id = tax.tax_id.\
-                                                account_expense_voucher_id.id
-                                        else:
-                                            diff_account_id = tax.tax_id.\
-                                                account_income_voucher_id.id
-                                    if credit_orig < credit_diff:
-                                        if ttype and ttype == 'receipt':
-                                            diff_account_id = tax.tax_id.\
-                                                account_income_voucher_id.id
-                                        else:
-                                            diff_account_id = tax.tax_id.\
-                                                account_expense_voucher_id.id
-                                move_line_id = False
-                                line_ids = move_obj.browse(cr, uid, line[
-                                    'move_line_id'], context=context).move_id.\
-                                    line_id
-                                for move_lines in line_ids:
-                                    if move_lines.account_id.id == account:
-                                        move_line_id = move_lines.id
-                                        break
-                                list_tax.append([
-                                    0, False, {
-                                        'tax_id': tax.tax_id.id,
-                                        'account_id': account,
-                                        'amount_tax': credit_amount_original,
-                                        'amount_tax_unround': amount_unround,
-                                        'tax': credit_amount,
-                                        'original_tax': base_amount_curr,
-                                        'diff_account_id': diff_account_id,
-                                        'diff_amount_tax':
-                                            abs(diff_amount_tax),
-                                        'move_line_id': move_line_id,
-                                        'analytic_account_id': tax.
-                                        account_analytic_id and tax.
-                                        account_analytic_id.id or False,
-                                        'amount_base': tax.base_amount}])
-                                # Check why need move_line_id
+                        context=context)
+                    mv_line_dicts = [{
+                        'counterpart_move_line_id': move.id,
+                        'credit': move.debit,
+                        'debit': move.credit,
+                        'name': move.name}]
+                    absl_obj._get_factor_type(
+                        cr, uid, False, ttype, context=context)
+                    dict_tax = absl_obj._get_move_line_tax(
+                        cr, uid, mv_line_dicts, context=context)
+                    for tax in dict_tax:
+                        if tax:
+                            tax_br = tax.get('tax_id', False)
+                            base_amount = tax.get('amount', 0.0)
+                            account = tax.get('account_tax_collected', False)
+                            credit_amount = float('%.*f' % (2, (
+                                base_amount * factor)))
+                            credit_amount_original = (base_amount * factor)
+                            amount_unround = float(base_amount * factor)
+                            base_amount_curr = base_amount
+                            move_line_id = False
+                            line_ids = move.move_id.line_id
+                            for move_lines in line_ids:
+                                if move_lines.account_id.id == account:
+                                    move_line_id = move_lines.id
+                                    break
+                            list_tax.append([
+                                0, False, {
+                                    'tax_id': tax_br.id,
+                                    'account_id': account,
+                                    'amount_tax': credit_amount_original,
+                                    'amount_tax_unround': amount_unround,
+                                    'tax': credit_amount,
+                                    'original_tax': base_amount_curr,
+                                    'move_line_id': move_line_id,
+                                    'analytic_account_id': tax.get(
+                                        'tax_analytic_id', False),
+                                    'amount_base': tax.get(
+                                        'amount_base_secondary', 0.0)}])
                 lista_tax_to_add = [[5, False, False]]
                 for tax in list_tax:
                     lista_tax_to_add.append(tax)
@@ -445,22 +371,10 @@ class account_voucher_line(osv.Model):
                         amount_original=False):
         if not context:
             context = {}
-        currency_obj = self.pool.get('res.currency')
+        context = dict(context)
         voucher_obj = self.pool.get('account.voucher')
         move_obj = self.pool.get('account.move.line')
-        invoice_obj = self.pool.get('account.invoice')
-        company_obj = self.pool.get('res.company')
-        company_user = self.pool.get('res.users').browse(
-            cr, uid, uid, context=context).company_id.id
-        company_currency = company_obj.browse(
-            cr, uid, company_user, context=context).currency_id.id
-        if voucher_id:
-            current_currency = voucher_obj._get_current_currency(
-                cr, uid, voucher_id, context=context)
-            voucher = voucher_obj.browse(cr, uid, voucher_id, context=context)
-        else:
-            current_currency = company_obj.browse(
-                cr, uid, company_user, context=context).currency_id.id
+        absl_obj = self.pool.get('account.bank.statement.line')
         factor = voucher_obj.get_percent_pay_vs_invoice(
             cr, uid, amount_original, amount, context=context)
         res = super(account_voucher_line, self).onchange_amount(
@@ -469,106 +383,45 @@ class account_voucher_line(osv.Model):
             return res
         if amount > 0:
             list_tax = []
-            move_id = move_obj.browse(cr, uid, move_line_id, context=context).\
-                move_id.id
-            invoice_ids = invoice_obj.search(
-                cr, uid, [('move_id', '=', move_id)], context=context)
-            for invoice in invoice_obj.browse(
-                    cr, uid, invoice_ids, context=context):
-                for tax in invoice.tax_line:
-                    if tax.tax_id.tax_voucher_ok:
-                        base_amount = tax.amount +\
-                            voucher_obj._get_retention_voucher(
-                                cr, uid, invoice, tax)
-                        account = tax.tax_id.account_collected_voucher_id.id
-                        credit_amount = float('%.*f' %
-                                              (2, (base_amount * factor)))
-                        credit_amount_original = (base_amount * factor)
-                        amount_unround = float(credit_amount_original)
-                        diff_amount_tax = 0.0
-                        diff_account_id = False
-                        base_amount_curr = base_amount
-                        if company_currency == current_currency:
-                            rate_move = voucher_obj.get_rate(
-                                cr, uid, move_id, context=context)
-                            credit_amount = credit_amount * rate_move
-                            amount_unround = amount_unround * rate_move
-                        else:
-                            credit_amount = currency_obj.compute(
-                                cr, uid, invoice.currency_id.id,
-                                current_currency,
-                                float('%.*f' % (2, credit_amount)),
-                                round=False, context=context)
-                            amount_unround = currency_obj.compute(
-                                cr, uid, invoice.currency_id.id,
-                                current_currency,
-                                float(amount_unround), round=False,
-                                context=context)
-                            base_amount_curr = currency_obj.compute(
-                                cr, uid, invoice.currency_id.id,
-                                current_currency,
-                                float('%.*f' % (2, base_amount)), round=False,
-                                context=context)
-                            context['date'] = invoice.date_invoice
-                            credit_orig = currency_obj.compute(
-                                cr, uid, current_currency, company_currency,
-                                float('%.*f' % (2, credit_amount)),
-                                round=False, context=context)
-                            context['date'] = voucher.date
-                            credit_diff = currency_obj.compute(
-                                cr, uid, current_currency, company_currency,
-                                float('%.*f' % (2, credit_amount)),
-                                round=False, context=context)
-
-                            diff_amount_tax = currency_obj.compute(
-                                cr, uid, company_currency, current_currency,
-                                float('%.*f' % (2,
-                                                (credit_orig - credit_diff))),
-                                round=False, context=context)
-                            acc_expense_voucher_id = tax and tax.tax_id and\
-                                tax.tax_id.account_expense_voucher_id\
-                                and tax.tax_id.account_expense_voucher_id.id\
-                                or False
-                            acc_income_voucher_id = tax and tax.tax_id and\
-                                tax.tax_id.account_income_voucher_id\
-                                and tax.tax_id.account_income_voucher_id.id\
-                                or False
-                            if credit_orig > credit_diff:
-                                if voucher.type == 'receipt':
-                                    diff_account_id = acc_expense_voucher_id
-                                else:
-                                    diff_account_id = acc_income_voucher_id
-                            elif credit_orig < credit_diff:
-                                if voucher.type == 'receipt':
-                                    diff_account_id = acc_income_voucher_id
-                                else:
-                                    diff_account_id = acc_expense_voucher_id
-                        move_line_id2 = False
-                        line_ids = move_obj.browse(
-                            cr, uid, move_line_id, context=context).\
-                            move_id.line_id
-                        for move_lines in line_ids:
-                            if move_lines.account_id.id == account:
-                                move_line_id2 = move_lines.id
-                                break
-
-                        list_tax.append([
-                            0, False, {
-                                'tax_id': tax.tax_id.id,
-                                'account_id': account,
-                                'amount_tax': credit_amount_original,
-                                'amount_tax_unround': amount_unround,
-                                'tax': credit_amount,
-                                'original_tax': base_amount_curr,
-                                'diff_account_id': diff_account_id,
-                                'diff_amount_tax': abs(diff_amount_tax),
-                                'move_line_id': move_line_id2,
-                                'analytic_account_id': tax.
-                                account_analytic_id and tax.
-                                account_analytic_id.id or False,
-                                'amount_base': tax.base_amount or 0.0,
-                            }])
-
+            move = move_obj.browse(cr, uid, move_line_id, context=context)
+            mv_line_dicts = [{
+                'counterpart_move_line_id': move.id,
+                'credit': move.debit,
+                'debit': move.credit,
+                'name': move.name}]
+            absl_obj._get_factor_type(
+                cr, uid, False, context.get('type', False), context=context)
+            dict_tax = absl_obj._get_move_line_tax(
+                cr, uid, mv_line_dicts, context=context)
+            for tax in dict_tax:
+                if tax:
+                    tax_br = tax.get('tax_id', False)
+                    base_amount = tax.get('amount', 0.0)
+                    account = tax.get('account_tax_collected', False)
+                    credit_amount = float('%.*f' % (2, (
+                        base_amount * factor)))
+                    credit_amount_original = (base_amount * factor)
+                    amount_unround = float(base_amount * factor)
+                    base_amount_curr = base_amount
+                    move_line_id2 = False
+                    line_ids = move.move_id.line_id
+                    for move_lines in line_ids:
+                        if move_lines.account_id.id == account:
+                            move_line_id2 = move_lines.id
+                            break
+                    list_tax.append([
+                        0, False, {
+                            'tax_id': tax_br.id,
+                            'account_id': account,
+                            'amount_tax': credit_amount_original,
+                            'amount_tax_unround': amount_unround,
+                            'tax': credit_amount,
+                            'original_tax': base_amount_curr,
+                            'move_line_id': move_line_id2,
+                            'analytic_account_id': tax.get(
+                                'tax_analytic_id', False),
+                            'amount_base': tax.get(
+                                'amount_base_secondary', 0.0)}])
             lista_tax_to_add = [[5, False, False]]
             for tax in list_tax:
                 lista_tax_to_add.append(tax)
