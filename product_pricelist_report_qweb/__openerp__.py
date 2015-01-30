@@ -39,6 +39,7 @@ This module inherit the original xml_id report on product
     "depends": [
         "report",
         "product",
+        "controller_report_xls",
     ],
     "demo": [],
     "data": [
