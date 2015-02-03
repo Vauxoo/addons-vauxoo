@@ -17,6 +17,7 @@ class ReportController(main.ReportController):
         What is intended here is to properly assign to the extension to XLS
         """
         response = super(ReportController, self).report_download(data, token)
+        context = request.context
         if response is None:
             return response
 
@@ -24,7 +25,9 @@ class ReportController(main.ReportController):
         url = requestcontent[0]
 
         # decoding the args represented in JSON
-        new_data = url_decode(url.split('?')[1]).items()
+        url_split = url.split('?')
+        index = len(url_split) > 1 and 1 or 0
+        new_data = url_decode(url_split[index]).items()
 
         new_data = dict(new_data)
         if new_data.get('context'):
