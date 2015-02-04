@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_account_invoice_line_partnert_tax_form">
+            <field name="name">view.account.invoice.line.inherit.account.id.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_line']//tree/field[@name='invoice_line_tax_id']" position="after">
+                    <field name="tax_partner_id" string="Tax partner"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
