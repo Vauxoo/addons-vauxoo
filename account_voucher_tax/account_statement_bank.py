@@ -33,50 +33,75 @@ class account_bank_statement_line(osv.osv):
 
     _inherit = 'account.bank.statement.line'
 
-    def _get_exchange_lines(self, cr, uid, parent, move_line_counterpart, move_line_payment_tax, amount_residual, company_currency, current_currency, context=None):
+    def _get_exchange_lines(
+            self, cr, uid, parent,
+            move_line_counterpart, move_line_payment_tax, amount_residual,
+            company_currency, current_currency, context=None):
         '''
-        Prepare the two lines in company currency due to currency rate difference.
+        Prepare to taxes the two lines in company currency due to currency rate
+        difference.
 
-        :param line: browse record of the voucher.line for which we want to create currency rate difference accounting
-            entries
-        :param move_id: Account move wher the move lines will be.
-        :param amount_residual: Amount to be posted.
-        :param company_currency: id of currency of the company to which the voucher belong
-        :param current_currency: id of currency of the voucher
-        :return: the account move line and its counterpart to create, depicted as mapping between fieldname and value
+        :param @parent: browse record of the voucher.line
+            and bank.statement.line for which we want to create currency rate
+            difference accounting entries
+        :param @move_line_counterpart: aml of counterpart tax
+        :param @move_line_payment_tax: aml of tax made in payment
+        :param @amount_residual: Amount to be posted.
+        :param @company_currency: id of currency of the company to which
+            the payment belong
+        :param current_currency: id of currency of the payment
+        :return: the account move line and its counterpart to create,
+            depicted as mapping between fieldname and value
         :rtype: tuple of dict
         '''
         if amount_residual > 0:
-            account_id = parent.company_id.expense_currency_exchange_account_id # modelo parent
+            account_id = parent.company_id.expense_currency_exchange_account_id
             if not account_id:
-                model, action_id = self.pool['ir.model.data'].get_object_reference(cr, uid, 'account', 'action_account_form')
-                msg = _("You should configure the 'Loss Exchange Rate Account' to manage automatically the booking of accounting entries related to differences between exchange rates.")
-                raise openerp.exceptions.RedirectWarning(msg, action_id, _('Go to the configuration panel'))
+                model, action_id = self.pool['ir.model.data'].\
+                    get_object_reference(
+                        cr, uid, 'account', 'action_account_form')
+                msg = _("""
+                    You should configure the 'Loss Exchange Rate Account'
+                    to manage automatically the booking of accounting entries
+                    related to differences between exchange rates.""")
+                raise openerp.exceptions.RedirectWarning(
+                    msg, action_id, _('Go to the configuration panel'))
         else:
-            account_id = parent.company_id.income_currency_exchange_account_id # modelo parent
+            account_id = parent.company_id.income_currency_exchange_account_id
             if not account_id:
-                model, action_id = self.pool['ir.model.data'].get_object_reference(cr, uid, 'account', 'action_account_form')
-                msg = _("You should configure the 'Gain Exchange Rate Account' to manage automatically the booking of accounting entries related to differences between exchange rates.")
-                raise openerp.exceptions.RedirectWarning(msg, action_id, _('Go to the configuration panel'))
-        # Even if the amount_currency is never filled, we need to pass the foreign currency because otherwise
-        # the receivable/payable account may have a secondary currency, which render this field mandatory
+                model, action_id = self.pool['ir.model.data'].\
+                    get_object_reference(
+                        cr, uid, 'account', 'action_account_form')
+                msg = _("""
+                    You should configure the 'Gain Exchange Rate Account' to
+                    manage automatically the booking of accounting entries
+                    related to differences between exchange rates.""")
+                raise openerp.exceptions.RedirectWarning(
+                    msg, action_id, _('Go to the configuration panel'))
+        # Even if the amount_currency is never filled, we need to pass
+        # the foreign currency because otherwise
+        # The receivable/payable account may have a secondary currency, which
+        # render this field mandatory
         if move_line_counterpart.account_id.currency_id:
-            account_currency_id = move_line_counterpart.account_id.currency_id.id
+            account_currency_id =\
+                move_line_counterpart.account_id.currency_id.id
         else:
-            account_currency_id = company_currency <> current_currency and current_currency or False
+            account_currency_id =\
+                company_currency != current_currency and\
+                current_currency or False
         move_line = {
             'journal_id': move_line_payment_tax.journal_id.id,
             'period_id': move_line_payment_tax.period_id.id,
             'name': _('change')+': '+(move_line_counterpart.ref or '/'),
-            'account_id': move_line_counterpart.account_id.id, # move_line
+            'account_id': move_line_counterpart.account_id.id,
             'move_id': move_line_payment_tax.move_id.id,
-            'partner_id': move_line_payment_tax.partner_id.id, # modelo parent
+            'partner_id': move_line_payment_tax.partner_id.id,
             'currency_id': account_currency_id,
             'amount_currency': 0.0,
             'quantity': 1,
             'credit': amount_residual > 0 and amount_residual or 0.0,
             'debit': amount_residual < 0 and -amount_residual or 0.0,
-            'date': parent.date, # modelo parent
+            'date': parent.date,
         }
         move_line_counterpart = {
             'journal_id': move_line_payment_tax.journal_id.id,
@@ -172,6 +197,11 @@ class account_bank_statement_line(osv.osv):
                         cr, uid, move_line_dict_tax, context=context
                         )
                     move_line_ids.append(move_tax)
+
+                    # En esta lista solo interesa conservar las aml que se
+                    # estan generando por cada iteracion en el ciclo for de
+                    # move_line_tax_dict para enviar solo las aml que se van a
+                    # conciliar por impuesto
                     move_line_rec.append(move_tax)
 
                 move_rec_exch = self._get_exchange_reconcile(
@@ -208,6 +238,27 @@ class account_bank_statement_line(osv.osv):
             amount_rec_payable, amount_unreconcile_rec_pay,
             parent, company_currency, statement_currency, context=None):
 
+        ''' This function create reconcile of taxes and validate
+            if there is rate exchange difference to called function that create
+            the two lines of adjust
+
+            param @move_line_tax: dictionary with value to get aml to reconcile
+                of move counterpart
+            param @move_line_rec: dictionary with aml made in payment of tax
+            param @amount_rec_payable: amount recivable/payable of payment,
+                this aml is generated in voucher or statement
+            param @amount_unreconcile_rec_pay: amount residual of aml
+                to payment with voucher or statement
+            param @parent: model parent for example account.bank.statement or
+                account.voucher borwse record
+            param @company_currency: id of currency of the company to which
+                the payment belong
+            param statement_currency: id of currency of the payment
+            return: list with position [0] all moves created and position [1]
+                just aml to reconcile
+            rtype: tuple of list
+            '''
+
         move_line_obj = self.pool.get('account.move.line')
         currency_obj = self.pool.get('res.currency')
 
@@ -218,29 +269,38 @@ class account_bank_statement_line(osv.osv):
             cr, uid, move_counterpart)[0]
         rec_ids.append(move_line_counterpart.id)
 
-        for move_id_tax_payment in move_line_obj.browse(cr, uid, move_line_rec):
-            if move_line_counterpart.account_id.id == move_id_tax_payment.account_id.id:
+        for move_id_tax_payment in move_line_obj.browse(
+                cr, uid, move_line_rec):
+            if move_line_counterpart.account_id.id ==\
+                    move_id_tax_payment.account_id.id:
                 move_line_payment_tax = move_id_tax_payment
                 rec_ids.append(move_id_tax_payment.id)
 
+        # Monto pendiete por consiliar del move del impusto que se esta pagando
         amount_tax_counterpart = move_line_counterpart.amount_residual
 
-        prec = self.pool.get('decimal.precision').precision_get(
-            cr, uid, 'Account')
-
+        # Monto que se esta pagando de impuesto
         amount_tax_payment = abs(
             move_line_payment_tax.debit - move_line_payment_tax.credit)
 
-        factor = context.get('factor_type', [1, 1])
-
         amount_residual = abs(amount_tax_counterpart)-abs(amount_tax_payment)
 
+        factor = context.get('factor_type', [1, 1])
+        prec = self.pool.get('decimal.precision').precision_get(
+            cr, uid, 'Account')
+
+        # Siguiendo la misma regla de account voucher de no hacer poliza de
+        # diferencial cambiario en pagos cuando son parciales, validamos
+        # que la cuenta recivable/payable se este consiliando completa en este
+        # pago, para hacer nuestra poliza de impuestos con diferencial
         if float_compare(amount_rec_payable, amount_unreconcile_rec_pay,
                          precision_digits=prec):
             amount_residual = 0.0
         else:
             amount_residual = amount_residual*factor[0]
 
+        # Si el amount_residual no es igual a cero y la aml tiene
+        # moneda secundaria se crea las aml de diferencial
         if not currency_obj.is_zero(
             cr, uid, parent.company_id.currency_id, amount_residual) and\
                 move_line_payment_tax.currency_id:
@@ -254,7 +314,7 @@ class account_bank_statement_line(osv.osv):
             move_line_exch_id = move_line_obj.create(
                 cr, uid, exch_lines[1], context)
             rec_ids.append(new_id)
-
+            # @rec_ids tiene los aml que se reconcilian
             return [[new_id, move_line_exch_id], rec_ids]
         return [[], rec_ids]
 
@@ -346,6 +406,7 @@ class account_bank_statement_line(osv.osv):
                 if not move_line_id.debit and not move_line_id.credit:
                     account_group[move_line_id.account_id.id][0] +=\
                         move_line_id.amount_base or 0.0
+                    account_group[move_line_id.account_id.id][1] = move_line_id.id
                 else:
                     # @factor puede ser 1 o -1 depende de tipo de transaccion
                     # si es venta, compra, nota de credito/debito, retenciones
@@ -357,6 +418,9 @@ class account_bank_statement_line(osv.osv):
                         move_line_id.debit > 0 and\
                         move_line_id.debit*factor[0] or\
                         move_line_id.credit*factor[1]
+                    # En la posicion [1] agregamos el ID de la aml que contiene
+                    # el impuesto para ser pagado y conciliado con la aml del
+                    # pago en voucher o bank statement
                     account_group[move_line_id.account_id.id][1] = move_line_id.id
 
         for move_account_tax in account_group:
@@ -376,7 +440,8 @@ class account_bank_statement_line(osv.osv):
                 # para reporta a la DIOT validando el @amount del impuesto
                 if tax_id.amount == 0:
                     amount_total_tax = 0
-                    amount_base_secondary = account_group.get(move_account_tax)[0]
+                    amount_base_secondary = account_group.get(
+                        move_account_tax)[0]
                 else:
                     amount_total_tax =\
                         account_group.get(move_account_tax)[0]+amount_ret_tax
@@ -391,7 +456,8 @@ class account_bank_statement_line(osv.osv):
                         tax_id.account_analytic_collected_id and
                         tax_id.account_analytic_collected_id.id or False,
                     'amount_base_secondary': amount_base_secondary,
-                    'move_line_reconcile': [account_group.get(move_account_tax)[1]]
+                    'move_line_reconcile': [account_group.get(
+                        move_account_tax)[1]]
                     })
         return dat
 
@@ -414,7 +480,8 @@ class account_bank_statement_line(osv.osv):
                          ('amount', '<', 0), ('id', '<>', tax.id),
                          ], limit=1)
                     if tax_ids:
-                        amount_retention_tax += account_group[move_account_tax][0]
+                        amount_retention_tax +=\
+                            account_group[move_account_tax][0]
 
         return amount_retention_tax
 

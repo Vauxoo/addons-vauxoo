@@ -142,16 +142,24 @@ class account_voucher(osv.Model):
                         move_ids.append(move_create)
                         move_line_rec.append(move_create)
 
+                    # ID de la aml del impuesto que se esta pagando
+                    # es necesario tenerlo en este momento para enviarlo
+                    # a la funcion que concilia los impuestos en el pago
                     move_counterpart_line_tax = {
                         'move_line_reconcile': [line_tax.move_line_id.id]}
 
+                    # Se actuliza context con el factor que le corresponde
+                    # dependiendo compra/venta para determinar credit/debit
+                    # de las aml creadas para el diferencial cambiario
                     bank_statement_line_obj._get_factor_type(
                         cr, uid, False, voucher.type, context=context)
 
-                    move_rec_exch = bank_statement_line_obj._get_exchange_reconcile(
-                        cr, uid, move_counterpart_line_tax, move_line_rec, line.amount, line.amount_unreconciled,
-                        voucher, company_currency,
-                        current_currency, context=context)
+                    move_rec_exch = bank_statement_line_obj.\
+                        _get_exchange_reconcile(
+                            cr, uid, move_counterpart_line_tax, move_line_rec,
+                            line.amount, line.amount_unreconciled,
+                            voucher, company_currency,
+                            current_currency, context=context)
                     move_reconcile_id.append(move_rec_exch[1])
 
         for rec_ids in move_reconcile_id:
@@ -294,15 +302,13 @@ class account_voucher(osv.Model):
             tax_secondary = line_tax.id
         return [amount_base, tax_secondary]
 
-    def voucher_move_line_create(self, cr, uid, voucher_id, line_total,
-                                 move_id, company_currency, current_currency,
-                                 context=None):
-        res = super(account_voucher, self).voucher_move_line_create(
-            cr, uid, voucher_id, line_total, move_id, company_currency,
-            current_currency, context=None)
-        self.voucher_move_line_tax_create(
-            cr, uid, voucher_id, move_id, context=context)
-        # res[1] and res[1][0]+new
+    def action_move_line_create(self, cr, uid, ids, context=None):
+        res = super(account_voucher, self).action_move_line_create(
+            cr, uid, ids, context=context)
+        for acc_voucher in self.browse(cr, uid, ids, context=context):
+            self.voucher_move_line_tax_create(
+                cr, uid, acc_voucher.id, acc_voucher.move_id.id,
+                context=context)
         return res
 
     def onchange_compute_tax(self, cr, uid, ids, lines=None, ttype=False,
