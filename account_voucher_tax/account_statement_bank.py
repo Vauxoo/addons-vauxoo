@@ -150,6 +150,8 @@ class account_bank_statement_line(osv.osv):
         if st_line.amount < 0:
             type = 'payment'
 
+        self._check_moves_to_concile(
+            cr, uid, id, mv_line_dicts, context=context)
         for move_line_dict in mv_line_dicts:
             move_amount_counterpart = self._get_move_line_counterpart(
                 cr, uid, [move_line_dict], company_currency,
@@ -231,6 +233,61 @@ class account_bank_statement_line(osv.osv):
         st_line.journal_id.write({'update_posted': update_ok})
         move_obj.unlink(cr, uid, move_id_old)
         return res
+
+    def _check_moves_to_concile(
+            self, cr, uid, id, mv_line_dicts, context=None):
+        '''
+        Method to send to validate lines to statement to check that not try
+        reconcile a invoice refound with a invoice in a statment.
+        param @mv_line_dicts: dict with data of lines to statement
+        '''
+        if context is None:
+            context = {}
+        move_line_obj = self.pool.get('account.move.line')
+        st_line = self.browse(cr, uid, id, context=context)
+        type_lines_mov = {'cr': [], 'dr': []}
+        type_mv = 'receipt'
+        if st_line.amount < 0:
+            type_mv = 'payment'
+        for mv_line in mv_line_dicts:
+            countepart_mv_id = mv_line.get('counterpart_move_line_id', False)
+            if countepart_mv_id:
+                count_mv_id = move_line_obj.browse(
+                    cr, uid, countepart_mv_id, context=context)
+                if mv_line.get('credit', 0.0) > 0 and count_mv_id.move_id and\
+                        count_mv_id.move_id.journal_id:
+                    type_lines_mov.get('cr').append(
+                        count_mv_id.move_id.journal_id)
+                if mv_line.get('debit', 0.0) > 0 and count_mv_id.move_id and\
+                        count_mv_id.move_id.journal_id:
+                    type_lines_mov.get('dr').append(
+                        count_mv_id.move_id.journal_id)
+        self._validate_not_refund(
+            cr, uid, type_mv, type_lines_mov, context=context)
+        return True
+
+    def _validate_not_refund(self, cr, uid, t_move, t_lines, context=None):
+        '''
+        This method not does allow reconcile a invoice refund with a
+        invoice in a payment.
+        param @t_move: Type of payment to make (payment or receipt)
+        param @t_lines: dict with 2 keys (cr, dr), and each of this with a
+        list that contain the objects from the journals of lines to pay.
+        '''
+        raise_ok = False
+        if 'cr' in t_lines and 'dr' in t_lines:
+            if t_move == 'payment':
+                for line in t_lines.get('cr'):
+                    if line.type in ('sale_refund', 'purchase_refund'):
+                        raise_ok = True
+            elif t_move == 'receipt':
+                for line in t_lines.get('dr'):
+                    if line.type in ('sale_refund', 'purchase_refund'):
+                        raise_ok = True
+        if raise_ok:
+            raise osv.except_osv(_('Invalid Action!'), _(
+                'No se puede conciliar'))
+        return True
 
     def _get_exchange_reconcile(
             self, cr, uid,
