@@ -91,12 +91,14 @@ class account_voucher(osv.Model):
 
     def voucher_move_line_tax_create(self, cr, uid, voucher_id, move_id,
                                      context=None):
+        bank_statement_line_obj = self.pool.get('account.bank.statement.line')
         move_line_obj = self.pool.get('account.move.line')
         company_currency = self._get_company_currency(
             cr, uid, voucher_id, context)
         current_currency = self._get_current_currency(
             cr, uid, voucher_id, context)
         move_ids = []
+        move_reconcile_id = []
         context = dict(context)
         for voucher in self.browse(cr, uid, [voucher_id], context=context):
             context.update({'amount_voucher': voucher.amount or 0.0})
@@ -109,6 +111,8 @@ class account_voucher(osv.Model):
                     factor = \
                         ((amount_to_paid * 100) / line.amount_original) / 100
                 for line_tax in line.tax_line_ids:
+
+                    move_line_rec = []
                     amount_tax_unround = line_tax.amount_tax_unround
 
                     if voucher.type in ('sale', 'receipt'):
@@ -136,6 +140,24 @@ class account_voucher(osv.Model):
                         move_create = move_line_obj.create(
                             cr, uid, move_line_tax, context=context)
                         move_ids.append(move_create)
+                        move_line_rec.append(move_create)
+
+                    move_counterpart_line_tax = {
+                        'move_line_reconcile': [line_tax.move_line_id.id]}
+
+                    bank_statement_line_obj._get_factor_type(
+                        cr, uid, False, voucher.type, context=context)
+
+                    move_rec_exch = bank_statement_line_obj._get_exchange_reconcile(
+                        cr, uid, move_counterpart_line_tax, move_line_rec, line.amount, line.amount_unreconciled,
+                        voucher, company_currency,
+                        current_currency, context=context)
+                    move_reconcile_id.append(move_rec_exch[1])
+
+        for rec_ids in move_reconcile_id:
+            if len(rec_ids) >= 2:
+                move_line_obj.reconcile_partial(cr, uid, rec_ids)
+
         return move_ids
 
     # pylint: disable=W0622
@@ -323,12 +345,7 @@ class account_voucher(osv.Model):
                             credit_amount_original = (base_amount * factor)
                             amount_unround = float(base_amount * factor)
                             base_amount_curr = base_amount
-                            move_line_id = False
-                            line_ids = move.move_id.line_id
-                            for move_lines in line_ids:
-                                if move_lines.account_id.id == account:
-                                    move_line_id = move_lines.id
-                                    break
+                            move_line_id = tax.get('move_line_reconcile')
                             list_tax.append([
                                 0, False, {
                                     'tax_id': tax_br.id,
@@ -337,7 +354,7 @@ class account_voucher(osv.Model):
                                     'amount_tax_unround': amount_unround,
                                     'tax': credit_amount,
                                     'original_tax': base_amount_curr,
-                                    'move_line_id': move_line_id,
+                                    'move_line_id': move_line_id[0],
                                     'analytic_account_id': tax.get(
                                         'tax_analytic_id', False),
                                     'amount_base': tax.get(
@@ -403,12 +420,7 @@ class account_voucher_line(osv.Model):
                     credit_amount_original = (base_amount * factor)
                     amount_unround = float(base_amount * factor)
                     base_amount_curr = base_amount
-                    move_line_id2 = False
-                    line_ids = move.move_id.line_id
-                    for move_lines in line_ids:
-                        if move_lines.account_id.id == account:
-                            move_line_id2 = move_lines.id
-                            break
+                    move_line_id = tax.get('move_line_reconcile')
                     list_tax.append([
                         0, False, {
                             'tax_id': tax_br.id,
@@ -417,7 +429,7 @@ class account_voucher_line(osv.Model):
                             'amount_tax_unround': amount_unround,
                             'tax': credit_amount,
                             'original_tax': base_amount_curr,
-                            'move_line_id': move_line_id2,
+                            'move_line_id': move_line_id[0],
                             'analytic_account_id': tax.get(
                                 'tax_analytic_id', False),
                             'amount_base': tax.get(
