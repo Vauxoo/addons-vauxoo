@@ -39,6 +39,28 @@ class account_voucher(osv.Model):
     #
     # }
 
+    def proforma_voucher(self, cr, uid, ids, context=None):
+        bank_st_obj = self.pool.get('account.bank.statement.line')
+        for voucher in self.browse(cr, uid, ids, context=context):
+            type_mov = voucher.type
+            type_lines_mov = {'cr': [], 'dr': []}
+            for line in voucher.line_dr_ids:
+                if line.amount > 0.0 and line.move_line_id and\
+                        line.move_line_id.move_id and\
+                        line.move_line_id.move_id.journal_id:
+                    type_lines_mov.get('dr').append(
+                        line.move_line_id.move_id.journal_id)
+            for line in voucher.line_cr_ids:
+                if line.amount > 0.0 and line.move_line_id and\
+                        line.move_line_id.move_id and\
+                        line.move_line_id.move_id.journal_id:
+                    type_lines_mov.get('cr').append(
+                        line.move_line_id.move_id.journal_id)
+        bank_st_obj._validate_not_refund(
+            cr, uid, type_mov, type_lines_mov, context=context)
+        return super(account_voucher, self).proforma_voucher(
+            cr, uid, ids, context=context)
+
     def onchange_amount(self, cr, uid, ids, amount, rate, partner_id,
                         journal_id, currency_id, ttype, date,
                         payment_rate_currency_id,

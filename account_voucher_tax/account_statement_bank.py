@@ -24,6 +24,7 @@
 
 from openerp.osv import osv
 import time
+from openerp.tools.translate import _
 
 
 class account_bank_statement_line(osv.osv):
@@ -35,13 +36,29 @@ class account_bank_statement_line(osv.osv):
 
         if context is None:
             context = {}
-
         move_line_obj = self.pool.get('account.move.line')
         move_obj = self.pool.get('account.move')
         voucher_obj = self.pool.get('account.voucher')
+        st_line = self.browse(cr, uid, id, context=context)
+        type_lines_mov = {'cr': [], 'dr': []}
+        if st_line.amount <= 0:
+            type_mv = 'payment'
+        else:
+            type_mv = 'receipt'
+        for mv_line in mv_line_dicts:
+            countepart_mv_id = mv_line.get('counterpart_move_line_id')
+            count_mv_id = move_line_obj.browse(
+                cr, uid, countepart_mv_id, context=context)
+            if mv_line.get('credit', 0.0) > 0 and count_mv_id.move_id and\
+                    count_mv_id.move_id.journal_id:
+                type_lines_mov.get('cr').append(count_mv_id.move_id.journal_id)
+            if mv_line.get('debit', 0.0) > 0 and count_mv_id.move_id and\
+                    count_mv_id.move_id.journal_id:
+                type_lines_mov.get('dr').append(count_mv_id.move_id.journal_id)
+        self._validate_not_refund(
+            cr, uid, type_mv, type_lines_mov, context=context)
         move_line_ids = []
 
-        st_line = self.browse(cr, uid, id, context=context)
         company_currency = st_line.journal_id.company_id.currency_id.id
         statement_currency = st_line.journal_id.currency.id or company_currency
 
@@ -257,6 +274,22 @@ class account_bank_statement_line(osv.osv):
                         amount_retention_tax += account_group[move_account_tax]
 
         return amount_retention_tax
+
+    def _validate_not_refund(self, cr, uid, t_move, t_lines, context=None):
+        raise_ok = False
+        if 'cr' in t_lines and 'dr' in t_lines:
+            if t_move == 'payment':
+                for line in t_lines.get('cr'):
+                    if line.type in ('sale_refund', 'purchase_refund'):
+                        raise_ok = True
+            elif t_move == 'receipt':
+                for line in t_lines.get('dr'):
+                    if line.type in ('sale_refund', 'purchase_refund'):
+                        raise_ok = True
+        if raise_ok:
+            raise osv.except_osv(_('Invalid Action!'), _(
+                'No se puede conciliar'))
+        return True
 
 
 class account_bank_statement(osv.osv):
