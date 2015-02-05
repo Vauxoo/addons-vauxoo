@@ -275,7 +275,7 @@ class account_bank_statement_line(osv.osv):
         list that contain the objects from the journals of lines to pay.
         '''
         raise_ok = False
-        if 'cr' in t_lines and 'dr' in t_lines:
+        if t_lines.get('cr', False) and t_lines.get('dr', False):
             if t_move == 'payment':
                 for line in t_lines.get('cr'):
                     if line.type in ('sale_refund', 'purchase_refund'):
