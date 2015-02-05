@@ -286,7 +286,11 @@ class account_bank_statement_line(osv.osv):
                         raise_ok = True
         if raise_ok:
             raise osv.except_osv(_('Invalid Action!'), _(
-                'No se puede conciliar'))
+                'You are trying reconciling in the payment a refund credit / '
+                'debit, this can cause conflicts to processes as payment tax '
+                'and / or commissions, you should first make a conciliation '
+                'manual process to the refund credit / debit with your '
+                'invoice and return to make the payment.'))
         return True
 
     def _get_exchange_reconcile(
