@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-05 00:59+0000\n"
-"PO-Revision-Date: 2015-02-05 00:59+0000\n"
+"POT-Creation-Date: 2015-02-05 20:12+0000\n"
+"PO-Revision-Date: 2015-02-05 20:12+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -168,7 +168,7 @@ msgid "IVA RETENIDO"
 msgstr "IVA RETENIDO"
 
 #. module: account_voucher_tax
-#: code:addons/account_voucher_tax/account_statement_bank.py:288
+#: code:addons/account_voucher_tax/account_statement_bank.py:286
 #, python-format
 msgid "Invalid Action!"
 msgstr "Invalid Action!"
@@ -275,10 +275,14 @@ msgid "Voucher Lines"
 msgstr "Líneas de comprobante"
 
 #. module: account_voucher_tax
-#: code:addons/account_voucher_tax/account_statement_bank.py:288
+#: code:addons/account_voucher_tax/account_statement_bank.py:292
 #, python-format
-msgid "You are trying reconciling in the payment a refund credit / debit, this can cause conflicts to processes as payment tax and / or commissions, you should first make a conciliation manual process to the refund credit / debit with your invoice and return to make the payment."
-msgstr "Usted esta intentando conciliar en el pago un nota de crédito/débito, esto podría causar conflictos para procesos como iva efectivamente pagado y/o comisiones, usted deberia primero hacer un proceso de conciliación manual de la nota de crédito/débito con su correspondiente factura y regresar a hacer el pago."
+msgid "You are trying reconciling in the payment a refund credit / debit, this can cause conflicts to processes as payment tax and / or commissions, you should first make a conciliation manual process to the refund credit / debit with your invoice and return here to make the payment. \n"
+" Refunds credit / debit: \n"
+" %s"
+msgstr "Usted esta intentando conciliar en el pago un nota de crédito/débito, esto podría causar conflictos para procesos como iva efectivamente pagado y/o comisiones, usted deberia primero hacer un proceso de conciliación manual de la nota de crédito/débito con su correspondiente factura y regresar aquí a hacer el pago. \n"
+" Notas de crédito / débito: \n"
+" %s"
 
 #. module: account_voucher_tax
 #: code:addons/account_voucher_tax/account_statement_bank.py:95
