@@ -6,7 +6,7 @@
                 <div class="container">
                     <div class="row lead">
                         <div id="stars-existing" class="starrr" data-rating='0' name="rating"></div>
-                        <input id="count-existing" name="rating" class="form-control"/>
+                        <input type="hidden" id="count-existing" name="rating" class="form-control"/>
                     </div>
                 </div>
             </xpath>
