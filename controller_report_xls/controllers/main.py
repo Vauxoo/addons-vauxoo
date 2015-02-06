@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from openerp.addons.report.controllers import main
 from openerp.addons.web.http import route, request
 from werkzeug import url_decode
