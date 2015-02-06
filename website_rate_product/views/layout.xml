@@ -6,7 +6,7 @@
             </xpath>
         </template>
 
-        <template id="assets_backend" name="web_comment_approval_assets" inherit_id="web.assets_backend">
+        <template id="assets_backend_approval" name="web_comment_approval_assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
                 <script type="text/javascript" src="/website_rate_product/static/src/js/mail_rate.js"></script>
             </xpath>
