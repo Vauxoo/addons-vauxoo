@@ -185,7 +185,7 @@ class account_invoice_refund(osv.osv_memory):
                 movelines = inv.move_id.line_id
                 to_reconcile_ids = {}
                 for line in movelines:
-                    if line.account_id.id == inv.account_id.id:
+                    if line.account_id.reconcile:
                         to_reconcile_ids.setdefault(line.account_id.id,
                                                     []).append(line.id)
                     if line.reconcile_id:
@@ -194,7 +194,7 @@ class account_invoice_refund(osv.osv_memory):
                 refund = inv_obj.browse(cur, uid, refund_id[0],
                                         context=context)
                 for tmpline in refund.move_id.line_id:
-                    if tmpline.account_id.id == inv.account_id.id:
+                    if tmpline.account_id.reconcile:
                         to_reconcile_ids[tmpline.
                                          account_id.id].append(tmpline.id)
                 for account in to_reconcile_ids:
