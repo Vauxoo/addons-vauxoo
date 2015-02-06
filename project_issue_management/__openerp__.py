@@ -47,9 +47,11 @@ project_issue module.
     "depends": [
         "project",
         "project_issue",
+        "project_issue_sheet",
     ],
     "demo": [],
     "data": [
+        "security/groups.xml",
         "view/project_issue_view.xml",
     ],
     "test": [],

@@ -20,13 +20,22 @@
             <field name="arch" type="xml">
                 <xpath expr='//button[@name="case_cancel"]' position="after">
                     <button string="Take for Me"
+                        attrs="{'invisible':[('state', '=', 'done')]}"
                         class="oe_highlight"
                         name="take_for_me"
                         help="Assign this issue to yourself"
                         type="object"/>
                 </xpath>
                 <xpath expr='//field[@name="state"]' position="after">
-                    <field name="analytic_account_id"/>
+                    <separator string="Management Information" groups="project_issue_management.project_auditor"/>
+                    <newline/>
+                    <field name="analytic_account_id" groups="project_issue_management.project_auditor" class="oe_inline"/>
+                    <button class="oe_link oe_inline"
+                        string="Set Analytic Account"
+                        groups="project_issue_management.project_auditor"
+                        name="update_project"
+                        type="object"
+                        help="Set this analytic account to the task and timesheet related to this issue"/>
                 </xpath>
             </field>
         </record>

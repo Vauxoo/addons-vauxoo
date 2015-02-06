@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -31,7 +31,8 @@ class project_issue(osv.Model):
                                                'Analytic Account',
                                                help='Project to load '
                                                'the work in case you '
-                                               'want set timesheet for this.')
+                                               'want set timesheet on the task'
+                                               ' related to this issue.')
     }
 
     def take_for_me(self, cr, uid, ids, context=None):
@@ -39,7 +40,16 @@ class project_issue(osv.Model):
         return True
 
     def update_project(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
         for i in ids:
             issue = self.browse(cr, uid, i, context=context)
-            issue.task_id.write({'project_id': issue.analytic_account_id.id})
+            if issue.task_id and issue.analytic_account_id:
+                issue.task_id.write({
+                    'project_id': issue.analytic_account_id.id})
+            else:
+                raise osv.except_osv(
+                    'Error!',
+                    'In order to be consistent, you must set a task and an '
+                    'analytic account to be consistent on this action.')
         return True
