@@ -254,14 +254,10 @@ class account_bank_statement_line(osv.osv):
             if countepart_mv_id:
                 count_mv_id = move_line_obj.browse(
                     cr, uid, countepart_mv_id, context=context)
-                if mv_line.get('credit', 0.0) > 0 and count_mv_id.move_id and\
-                        count_mv_id.move_id.journal_id:
-                    type_lines_mov.get('cr').append(
-                        count_mv_id.move_id.journal_id)
-                if mv_line.get('debit', 0.0) > 0 and count_mv_id.move_id and\
-                        count_mv_id.move_id.journal_id:
-                    type_lines_mov.get('dr').append(
-                        count_mv_id.move_id.journal_id)
+                if mv_line.get('credit', 0.0) > 0 and count_mv_id.move_id:
+                    type_lines_mov.get('cr').append(count_mv_id.move_id)
+                if mv_line.get('debit', 0.0) > 0 and count_mv_id.move_id:
+                    type_lines_mov.get('dr').append(count_mv_id.move_id)
         self._validate_not_refund(
             cr, uid, type_mv, type_lines_mov, context=context)
         return True
@@ -274,23 +270,26 @@ class account_bank_statement_line(osv.osv):
         param @t_lines: dict with 2 keys (cr, dr), and each of this with a
         list that contain the objects from the journals of lines to pay.
         '''
-        raise_ok = False
+        inc_moves = []
         if t_lines.get('cr', False) and t_lines.get('dr', False):
             if t_move == 'payment':
                 for line in t_lines.get('cr'):
-                    if line.type in ('sale_refund', 'purchase_refund'):
-                        raise_ok = True
+                    if line.journal_id and line.journal_id.type in (
+                            'sale_refund', 'purchase_refund'):
+                        inc_moves.append(line.name)
             elif t_move == 'receipt':
                 for line in t_lines.get('dr'):
-                    if line.type in ('sale_refund', 'purchase_refund'):
-                        raise_ok = True
-        if raise_ok:
+                    if line.journal_id and line.journal_id.type in (
+                            'sale_refund', 'purchase_refund'):
+                        inc_moves.append(line.name)
+        if inc_moves:
             raise osv.except_osv(_('Invalid Action!'), _(
                 'You are trying reconciling in the payment a refund credit / '
                 'debit, this can cause conflicts to processes as payment tax '
                 'and / or commissions, you should first make a conciliation '
                 'manual process to the refund credit / debit with your '
-                'invoice and return to make the payment.'))
+                'invoice and return here to make the payment. \n Refunds '
+                'credit / debit: \n %s' % ('\n'.join(inc_moves))))
         return True
 
     def _get_exchange_reconcile(

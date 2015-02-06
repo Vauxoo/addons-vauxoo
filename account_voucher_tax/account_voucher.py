@@ -45,16 +45,14 @@ class account_voucher(osv.Model):
             type_lines_mov = {'cr': [], 'dr': []}
             for line in voucher.line_dr_ids:
                 if line.amount > 0.0 and line.move_line_id and\
-                        line.move_line_id.move_id and\
-                        line.move_line_id.move_id.journal_id:
+                        line.move_line_id.move_id:
                     type_lines_mov.get('dr').append(
-                        line.move_line_id.move_id.journal_id)
+                        line.move_line_id.move_id)
             for line in voucher.line_cr_ids:
                 if line.amount > 0.0 and line.move_line_id and\
-                        line.move_line_id.move_id and\
-                        line.move_line_id.move_id.journal_id:
+                        line.move_line_id.move_id:
                     type_lines_mov.get('cr').append(
-                        line.move_line_id.move_id.journal_id)
+                        line.move_line_id.move_id)
             bank_st_obj._validate_not_refund(
                 cr, uid, voucher.type, type_lines_mov, context=context)
         return super(account_voucher, self).proforma_voucher(
