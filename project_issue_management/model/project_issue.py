@@ -25,14 +25,16 @@ from openerp.osv import osv, fields
 class project_issue(osv.Model):
 
     _inherit = 'project.issue'
-
+    _track = {
+        'project_issue.mt_issue_new': lambda self, cr, uid, obj, ctx=None: obj['project_invoice_id'] is not False,
+    }
     _columns = {
-        'analytic_account_id': fields.many2one('project.project',
-                                               'Analytic Account',
-                                               help='Project to load '
-                                               'the work in case you '
-                                               'want set timesheet on the task'
-                                               ' related to this issue.')
+        'project_invoice_id': fields.many2one('project.project',
+                                              'Analytic Account',
+                                              help='Project to load '
+                                              'the work in case you '
+                                              'want set timesheet on the task'
+                                              ' related to this issue.')
     }
 
     def take_for_me(self, cr, uid, ids, context=None):
@@ -44,9 +46,9 @@ class project_issue(osv.Model):
             context = {}
         for i in ids:
             issue = self.browse(cr, uid, i, context=context)
-            if issue.task_id and issue.analytic_account_id:
+            if issue.task_id and issue.project_invoice_id:
                 issue.task_id.write({
-                    'project_id': issue.analytic_account_id.id})
+                    'project_id': issue.project_invoice_id.id})
             else:
                 raise osv.except_osv(
                     'Error!',
