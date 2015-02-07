@@ -16,7 +16,6 @@
             <field name="name">Project Issue Tracker Form</field>
             <field name="model">project.issue</field>
             <field name="inherit_id" ref="project_issue.project_issue_form_view"/>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <xpath expr='//button[@name="case_cancel"]' position="after">
                     <button string="Take for Me"
@@ -43,7 +42,6 @@
             <field name="name">Project Issue Tracker Form</field>
             <field name="model">project.issue</field>
             <field name="inherit_id" ref="project_issue.project_issue_tree_view"/>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <xpath expr='/tree/field[@name="project_id"]' position="before">
                 </xpath>
