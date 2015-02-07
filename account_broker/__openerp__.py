@@ -34,10 +34,11 @@
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
-        "account"
+        "account_invoice_tax"
     ],
     "demo": [],
     "data": [
+        "view/res_partner_view.xml",
         "view/account_invoice_view.xml"],
     "test": [],
     "js": [],

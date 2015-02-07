@@ -6,7 +6,7 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: Luis Ernesto García Medina (ernesto_gm@vauxoo.com)
+#    Coded by: Luis Torres (luis_t@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,5 +24,11 @@
 #
 ##############################################################################
 
-from . import res_partner
-from . import account_invoice
+from openerp import models, fields
+
+
+class res_partner(models.Model):
+    _inherit = 'res.partner'
+
+    is_broker_ok = fields.Boolean(
+        'Is broker OK?', help='Mark this field if this partner is a broker')
