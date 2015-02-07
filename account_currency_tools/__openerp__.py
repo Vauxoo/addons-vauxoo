@@ -36,7 +36,9 @@ Account Currency Tools
         "base",
         "account",
     ],
-    "demo": [],
+    "demo": [
+        'demo/account_move.xml',
+    ],
     "data": [
         'view/view.xml',
         'view/wizard.xml',
