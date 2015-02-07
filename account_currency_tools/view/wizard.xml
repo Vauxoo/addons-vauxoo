@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data>
+        <record id="view_foreign_exchange_realization" model="ir.ui.view">
+            <field name="name">Foreign Currency Exchange Realization</field>
+            <field name="model">foreign.exchange.realization</field>
+            <field name="arch" type="xml">
+                <form string="Foreign Currency Exchange Realization">
+                    <header>
+                        <button
+                            name="create_move"
+                            string="Create Journal Entry"
+                            type="object"
+                            class="oe_highlight" />
+                        or
+                        <button
+                            type='special'
+                            special='cancel'
+                            string='_Cancel'
+                            class="oe_link" />
+                    </header>
+                    <group>
+                        <group string="Company Info">
+                            <label for="company_id"/>
+                            <field
+                                name="company_id"
+                                on_change='onchange_company_id(company_id)'
+                                nolabel="1"/>
+                            <field name="currency_id"/>
+                        </group>
+                        <group string="Realization Info">
+                            <field name="period_from"/>
+                            <field name="period_to"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id='action_foreign_exchange_realization' model='ir.actions.act_window'>
+            <field name='name'>Foreign Currency Exchange Realization</field>
+            <field name='res_model'>foreign.exchange.realization</field>
+            <field name='view_type'>form</field>
+            <field name='view_mode'>form</field>
+            <field name='view_id' ref='view_foreign_exchange_realization'/>
+            <field name='target'>inline</field>
+        </record>
+
+        <menuitem
+            id='menu_currency_tools_root'
+            name='Currency Tools'
+            parent='account.menu_finance_periodical_processing'
+            sequence='9'
+            groups='account.group_account_user,account.group_account_manager'
+            />
+        <menuitem
+            id='menu_foreign_exchange_realization'
+            parent='menu_currency_tools_root'
+            sequence='9'
+            groups='account.group_account_user,account.group_account_manager'
+            action='action_foreign_exchange_realization'
+            />
+
+    </data>
+</openerp>

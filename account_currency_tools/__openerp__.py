@@ -38,7 +38,8 @@ Account Currency Tools
     ],
     "demo": [],
     "data": [
-        'view/view.xml'
+        'view/view.xml',
+        'view/wizard.xml',
     ],
     "test": [],
     "js": [],
