@@ -49,7 +49,9 @@ project_issue module.
         "project_issue",
         "project_issue_sheet",
     ],
-    "demo": [],
+    "demo": [
+        "demo/demo.xml",
+    ],
     "data": [
         "security/groups.xml",
         "view/project_issue_view.xml",
