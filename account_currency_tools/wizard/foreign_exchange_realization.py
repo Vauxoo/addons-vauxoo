@@ -82,8 +82,16 @@ class foreign_exchange_realization(osv.osv_memory):
                     "('parent_id','child_of',root_id),"
                     "('currency_id','!=',False)]"),
             help=('Select your Payable Accounts')),
+        'fiscalyear_id': fields.many2one(
+            'account.fiscalyear', 'Fiscal Year',
+            required=True,
+            help='Fiscal Year'),
         'period_id': fields.many2one(
-            'account.period', 'Period', required=True),
+            'account.period', 'Period',
+            required=True,
+            domain=("[('fiscalyear_id','=',fiscalyear_id),"
+                    "('special','=',False)]"),
+            help=('Select your Payable Accounts')),
         'company_id': fields.many2one(
             'res.company', 'Company', required=True),
         'currency_id': fields.many2one(
@@ -93,6 +101,8 @@ class foreign_exchange_realization(osv.osv_memory):
 
     _defaults = {
         'company_id': _get_default_company,
+        'fiscalyear_id': lambda s, c, u, cx:
+        s.pool.get('account.fiscalyear').find(c, u, exception=False),
     }
 
     def create_move(self, cr, uid, ids, context=None):
