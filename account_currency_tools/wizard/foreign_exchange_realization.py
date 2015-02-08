@@ -346,6 +346,10 @@ class foreign_exchange_realization(osv.osv_memory):
             exchange_rate = cur_obj._get_current_rate(
                 cr, uid, [values['currency_id']], context=context)
             values['exchange_rate'] = exchange_rate.get(values['currency_id'])
+            values['adjusted_balance'] = \
+                values['foreign_balance'] / values['exchange_rate']
+            values['unrealized_gain_loss'] = \
+                values['adjusted_balance'] - values['balance']
             ferl_obj.create(cr, uid, values, context=context)
         return True
 
