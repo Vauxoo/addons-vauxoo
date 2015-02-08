@@ -31,6 +31,7 @@
                             <field name="currency_id"/>
                         </group>
                         <group string="Realization Info">
+                            <field name="fiscalyear_id"/>
                             <field name="period_id"/>
                         </group>
                         <group string="Accounting Info">
