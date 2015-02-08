@@ -79,6 +79,7 @@ class foreign_exchange_realization_line(osv.osv_memory):
 class foreign_exchange_realization(osv.osv_memory):
 
     _name = 'foreign.exchange.realization'
+    _rec_name = 'root_id'
 
     def _get_fiscalyear(self, cr, uid, context=None):
         """Return default Fiscalyear value"""
@@ -162,9 +163,14 @@ class foreign_exchange_realization(osv.osv_memory):
             help=('Select your Payable Accounts')),
         'company_id': fields.many2one(
             'res.company', 'Company', required=True),
-        'currency_id': fields.many2one(
-            'res.currency', 'Company Currency',
-            help="This is currency used to post Journal Entry Lines"),
+        'currency_id': fields.related(
+            'company_id', 'currency_id',
+            type='many2one',
+            relation='res.currency',
+            required=False,
+            readonly=True,
+            string='Company Currency',
+            help="This is currency used to post Exchange Rate Difference"),
         'period_ids': fields.many2many(
             'account.period', 'act_period_acc_rel',
             'period_id', 'act_id', 'Affected Periods',
@@ -174,6 +180,7 @@ class foreign_exchange_realization(osv.osv_memory):
             'period_id', 'date_stop',
             string='Posting Date',
             type='date',
+            readonly=True,
             required=False),
         'journal_id': fields.many2one(
             'account.journal', 'Posting Journal',
@@ -313,6 +320,7 @@ class foreign_exchange_realization(osv.osv_memory):
 
     def action_get_unrecognized_lines(self, cr, uid, ids, context=None):
         context = context or {}
+        cur_obj = self.pool.get('res.currency')
         ferl_obj = self.pool.get('foreign.exchange.realization.line')
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
@@ -332,10 +340,13 @@ class foreign_exchange_realization(osv.osv_memory):
         )
 
         res = self.get_values_from_aml(cr, uid, args, context=context)
+        context['date'] = wzd_brw.date
         for values in res:
             values['wizard_id'] = wzd_brw.id
+            exchange_rate = cur_obj._get_current_rate(
+                cr, uid, [values['currency_id']], context=context)
+            values['exchange_rate'] = exchange_rate.get(values['currency_id'])
             ferl_obj.create(cr, uid, values, context=context)
-
         return True
 
     def create_move(self, cr, uid, ids, context=None):
