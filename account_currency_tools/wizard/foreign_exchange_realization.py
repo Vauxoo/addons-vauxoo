@@ -52,6 +52,8 @@ class foreign_exchange_realization(osv.osv_memory):
         return res
 
     _columns = {
+        'help': fields.boolean(
+            'Show Help', help='Allows you to toggle the help in the form'),
         'root_id': fields.many2one(
             'account.account', 'Root Account',
             domain=('[("company_id", "=", company_id), ("type", "=", "view"),'
