@@ -13,6 +13,21 @@
                             type="object"
                             class="oe_highlight" />
                         <button
+                            name="action_get_rec_accounts"
+                            string="Retrieve Receivable Accounts"
+                            type="object"
+                            class="oe_highlight" />
+                        <button
+                            name="action_get_pay_accounts"
+                            string="Retrieve Payable Accounts"
+                            type="object"
+                            class="oe_highlight" />
+                        <button
+                            name="action_get_bank_accounts"
+                            string="Retrieve Bank &amp; Cash Accounts"
+                            type="object"
+                            class="oe_highlight" />
+                        <button
                             name="create_move"
                             string="Create Journal Entry"
                             type="object"

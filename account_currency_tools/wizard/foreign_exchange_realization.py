@@ -120,6 +120,46 @@ class foreign_exchange_realization(osv.osv_memory):
         'fiscalyear_id': _get_fiscalyear,
     }
 
+    def action_get_accounts(self, cr, uid, ids, acc_type, fieldname,
+                            context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        aa_obj = self.pool.get('account.account')
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        root_id = wzd_brw.root_id.id
+        company_id = wzd_brw.company_id.id
+        res = aa_obj.search(
+            cr, uid, [
+                ('type', '=', acc_type),
+                ('currency_id', '!=', False),
+                ('parent_id', 'child_of', root_id),
+                ('company_id', '=', company_id),
+            ])
+
+        # TODO: SQL to get accounts from aml with currency_id not NULL
+
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+
+        if res:
+            wzd_brw.write({fieldname: [(6, wzd_brw.id, res)]})
+        else:
+            wzd_brw.write(
+                {fieldname: [(3, aa_brw.id) for aa_brw in
+                             getattr(wzd_brw, fieldname)]})
+        return True
+
+    def action_get_rec_accounts(self, cr, uid, ids, context=None):
+        return self.action_get_accounts(
+            cr, uid, ids, 'receivable', 'rec_ids', context=context)
+
+    def action_get_pay_accounts(self, cr, uid, ids, context=None):
+        return self.action_get_accounts(
+            cr, uid, ids, 'payable', 'pay_ids', context=context)
+
+    def action_get_bank_accounts(self, cr, uid, ids, context=None):
+        return self.action_get_accounts(
+            cr, uid, ids, 'liquidity', 'bk_ids', context=context)
+
     def action_get_periods(self, cr, uid, ids, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
