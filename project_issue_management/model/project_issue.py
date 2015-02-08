@@ -25,30 +25,48 @@ from openerp.osv import osv, fields
 class project_issue(osv.Model):
 
     _inherit = 'project.issue'
-    _track = {
-        'project_issue.mt_issue_new': lambda self, cr, uid, obj, ctx=None: obj['project_invoice_id'] is not False,
-    }
+
     _columns = {
-        'project_invoice_id': fields.many2one('project.project',
-                                              'Analytic Account',
-                                              help='Project to load '
-                                              'the work in case you '
-                                              'want set timesheet on the task'
-                                              ' related to this issue.')
+        'analytic_account_id': fields.many2one('account.analytic.account',
+                                               'Analytic Account',
+                                                track_visibility='onchange',
+                                                help='Analytic account to '
+                                                     'load the work in '
+                                                     'case you want set '
+                                                     'timesheet on the task'
+                                                     ' related to this issue.'),
     }
 
     def take_for_me(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'user_id': uid}, context=context)
         return True
 
+    def _get_project_id(self, cr, uid, ids, context=None):
+        project_obj = self.pool.get('project.project')
+        res = project_obj.search(cr, uid, [('analytic_account_id', '=',
+                                     context.get('analytic_account_id'))])
+        if not res:
+            raise osv.except_osv(
+                'Error!',
+                'In order to be consistent, you must set an analytic account '
+                'which belong to a project')
+        return res and res[0] or False
+
     def update_project(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
+        # Setting task
         for i in ids:
             issue = self.browse(cr, uid, i, context=context)
-            if issue.task_id and issue.project_invoice_id:
+            if issue.task_id and issue.analytic_account_id:
+                context.update({'analytic_account_id':
+                                issue.analytic_account_id.id})
                 issue.task_id.write({
-                    'project_id': issue.project_invoice_id.id})
+                    'project_id': self._get_project_id(cr, uid, ids,
+                                                       context=context)})
+                for t in issue.timesheet_ids:
+                    t.write({'account_id': issue.analytic_account_id.id})
+
             else:
                 raise osv.except_osv(
                     'Error!',

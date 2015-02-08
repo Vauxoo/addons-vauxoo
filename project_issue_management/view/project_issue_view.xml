@@ -8,6 +8,7 @@
             <field name="inherit_id" ref="project_issue.view_project_issue_filter"/>
             <field name="arch" type="xml">
                <xpath expr='/search/group[@string="Group By..."]/filter[@string="Responsible"]' position="before">
+                    <filter string="Project to invoice" icon="terp-partner" domain="[]" context="{'group_by':'project_invoice_id'}"/>
                </xpath>
             </field>
         </record>
@@ -24,14 +25,20 @@
                         help="Assign this issue to yourself"
                         type="object"/>
                 </xpath>
-                <xpath expr='//group[@string="Statistics"]' position="after">
+            </field>
+        </record>
+        <record model="ir.ui.view" id="project_issue_form_view2">
+            <field name="name">Project Issue Tracker Form</field>
+            <field name="model">project.issue</field>
+            <field name="inherit_id" ref="project_issue_sheet.project_issue_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr='//field[@name="analytic_account_id"]' position="after">
                     <group string="Management Information" groups="project_issue_management.project_auditor">
-                        <field name="project_invoice_id" class="oe_inline"/>
                         <button class="oe_link oe_inline"
-                            string="Set Analytic Account"
+                            string="Set Analytic Account Consistently on all timesheet and tasks"
                             name="update_project"
                             type="object"
-                            help="Set this analytic account to the task and timesheet related to this issue"/>
+                            help="It will write this analytic account to the task and timesheet related to this issue"/>
                     </group>
                 </xpath>
             </field>
