@@ -56,7 +56,7 @@ class foreign_exchange_realization_line(osv.osv_memory):
             help=("Total amount (in Company currency) for transactions held "
                   "in secondary currency for this account.")),
         'unrealized_gain_loss': fields.float(
-            'Unrealized Gain or Loss',
+            'Unrealized Gain(+) or Loss(-)',
             digits_compute=dp.get_precision('Account'),
             help=("Value of Loss or Gain due to changes in exchange rate when "
                   "doing multi-currency transactions.")),
@@ -72,7 +72,6 @@ class foreign_exchange_realization_line(osv.osv_memory):
                   "different types of accounts: "
                   "payable/receivable are for partners accounts (for "
                   "debit/credit computations), liquidity for bank & cash")),
-
     }
 
 
