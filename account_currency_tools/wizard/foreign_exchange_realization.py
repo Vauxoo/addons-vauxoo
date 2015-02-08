@@ -28,6 +28,17 @@ class foreign_exchange_realization(osv.osv_memory):
 
     _name = 'foreign.exchange.realization'
 
+    def _get_fiscalyear(self, cr, uid, context=None):
+        """Return default Fiscalyear value"""
+        return self.pool.get('account.fiscalyear').find(
+            cr, uid, exception=False, context=context)
+
+    def onchange_fiscalyear(self, cr, uid, ids, fiscalyear_id=False,
+                            context=None):
+        res = {}
+        res['value'] = {'period_id': False, 'period_ids': []}
+        return res
+
     def _get_default_company(self, cr, uid, context=None):
         company_id = self.pool.get('res.users')._get_company(cr, uid,
                                                              context=context)
@@ -62,22 +73,22 @@ class foreign_exchange_realization(osv.osv_memory):
             help=('Root Account, the account that plays as a'
                   'Chart of Accounts')),
         'bk_ids': fields.many2many(
-            'account.account', 'acp_bk_acc_rel',
-            'account_id', 'acp_id', 'Bank & Cash Accounts',
+            'account.account', 'act_bk_acc_rel',
+            'account_id', 'act_id', 'Bank & Cash Accounts',
             domain=("[('type','=','liquidity'),"
                     "('parent_id','child_of',root_id),"
                     "('currency_id','!=',False)]"),
             help=('Select your Bank Accounts')),
         'rec_ids': fields.many2many(
-            'account.account', 'acp_rec_acc_rel',
-            'account_id', 'acp_id', 'Receivable Accounts',
+            'account.account', 'act_rec_acc_rel',
+            'account_id', 'act_id', 'Receivable Accounts',
             domain=("[('type','=','receivable'),"
                     "('parent_id','child_of',root_id),"
                     "('currency_id','!=',False)]"),
             help=('Select your Receivable Accounts')),
         'pay_ids': fields.many2many(
-            'account.account', 'acp_pay_acc_rel',
-            'account_id', 'acp_id', 'Payable Accounts',
+            'account.account', 'act_pay_acc_rel',
+            'account_id', 'act_id', 'Payable Accounts',
             domain=("[('type','=','payable'),"
                     "('parent_id','child_of',root_id),"
                     "('currency_id','!=',False)]"),
@@ -97,13 +108,36 @@ class foreign_exchange_realization(osv.osv_memory):
         'currency_id': fields.many2one(
             'res.currency', 'Company Currency',
             help="This is currency used to post Journal Entry Lines"),
+        'period_ids': fields.many2many(
+            'account.period', 'act_period_acc_rel',
+            'period_id', 'act_id', 'Affected Periods',
+            readonly=True,
+            help=('List of Affected Periods')),
     }
 
     _defaults = {
         'company_id': _get_default_company,
-        'fiscalyear_id': lambda s, c, u, cx:
-        s.pool.get('account.fiscalyear').find(c, u, exception=False),
+        'fiscalyear_id': _get_fiscalyear,
     }
+
+    def action_get_periods(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        ap_obj = self.pool.get('account.period')
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        date_start = wzd_brw.fiscalyear_id.date_start
+        date_stop = wzd_brw.period_id.date_stop
+        res = ap_obj.search(
+            cr, uid, [
+                ('date_start', '>=', date_start),
+                ('date_stop', '<=', date_stop)])
+        if res:
+            wzd_brw.write({'period_ids': [(6, wzd_brw.id, res)]})
+        else:
+            wzd_brw.write(
+                {'period_ids': [(3, ap_brw.id) for ap_brw in
+                                wzd_brw.period_ids]})
+        return True
 
     def create_move(self, cr, uid, ids, context=None):
         return True
