@@ -29,8 +29,17 @@
                             <field name="currency_id"/>
                         </group>
                         <group string="Realization Info">
-                            <field name="period_from"/>
-                            <field name="period_to"/>
+                            <field name="period_id"/>
+                        </group>
+                        <group string="Accounting Info">
+                            <label for="root_id"/>
+                            <field
+                                name="root_id"
+                                nolabel="1"
+                                required="1"
+                                />
+                        </group>
+                        <group string="Other Info">
                         </group>
                     </group>
                 </form>

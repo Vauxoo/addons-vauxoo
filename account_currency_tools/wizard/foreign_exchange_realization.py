@@ -52,10 +52,15 @@ class foreign_exchange_realization(osv.osv_memory):
         return res
 
     _columns = {
-        'period_from': fields.many2one(
-            'account.period', 'Closing Period', required=True),
-        'period_to': fields.many2one(
-            'account.period', 'Opening Period', required=True),
+        'root_id': fields.many2one(
+            'account.account', 'Root Account',
+            domain=('[("company_id", "=", company_id), ("type", "=", "view"),'
+                    '("parent_id", "=", None)]'),
+            required=False,
+            help=('Root Account, the account that plays as a'
+                  'Chart of Accounts')),
+        'period_id': fields.many2one(
+            'account.period', 'Period', required=True),
         'company_id': fields.many2one(
             'res.company', 'Company', required=True),
         'currency_id': fields.many2one(
