@@ -189,8 +189,10 @@ class foreign_exchange_realization(osv.osv_memory):
         'line_ids': fields.one2many(
             'foreign.exchange.realization.line',
             'wizard_id',
-            'Suggested Recognition Lines',
-        )
+            'Suggested Recognition Lines'),
+         'move_id': fields.many2one(
+             'account.move', 'Journal Entry',
+             required=False),
     }
 
     _defaults = {
@@ -450,6 +452,7 @@ class foreign_exchange_realization(osv.osv_memory):
         lines = self.move_line_get(cr, uid, ids, context=context)
         import pdb; pdb.set_trace()
         am_obj.write(cr, uid, [move_id], {'line_id': lines}, context=context)
+        wzd_brw.write({'move_id': move_id})
 
         if wzd_brw.journal_id.entry_posted:
             am_obj.button_validate(cr, uid, [move_id], context)
