@@ -8,6 +8,7 @@
             <field name="inherit_id" ref="project_issue.view_project_issue_filter"/>
             <field name="arch" type="xml">
                <xpath expr='/search/group[@string="Group By..."]/filter[@string="Responsible"]' position="before">
+                    <filter string="Project to invoice" icon="terp-partner" domain="[]" context="{'group_by':'project_invoice_id'}"/>
                </xpath>
             </field>
         </record>
