@@ -61,6 +61,27 @@ class foreign_exchange_realization(osv.osv_memory):
             required=False,
             help=('Root Account, the account that plays as a'
                   'Chart of Accounts')),
+        'bk_ids': fields.many2many(
+            'account.account', 'acp_bk_acc_rel',
+            'account_id', 'acp_id', 'Bank & Cash Accounts',
+            domain=("[('type','=','liquidity'),"
+                    "('parent_id','child_of',root_id),"
+                    "('currency_id','!=',False)]"),
+            help=('Select your Bank Accounts')),
+        'rec_ids': fields.many2many(
+            'account.account', 'acp_rec_acc_rel',
+            'account_id', 'acp_id', 'Receivable Accounts',
+            domain=("[('type','=','receivable'),"
+                    "('parent_id','child_of',root_id),"
+                    "('currency_id','!=',False)]"),
+            help=('Select your Receivable Accounts')),
+        'pay_ids': fields.many2many(
+            'account.account', 'acp_pay_acc_rel',
+            'account_id', 'acp_id', 'Payable Accounts',
+            domain=("[('type','=','payable'),"
+                    "('parent_id','child_of',root_id),"
+                    "('currency_id','!=',False)]"),
+            help=('Select your Payable Accounts')),
         'period_id': fields.many2one(
             'account.period', 'Period', required=True),
         'company_id': fields.many2one(

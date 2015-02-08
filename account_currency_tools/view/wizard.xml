@@ -43,6 +43,141 @@
                         </group>
                         <group string="Other Info">
                         </group>
+                        <!-- ELEMENTS VISIBLE ONLY IN STAGE X - BANK ACCOUNTS -->
+                        <group>
+                            <group string="Bank &amp; Cash Accounts" cols="2">
+                                <group colspan='4'>
+                                    <h4>
+                                    <label
+                                        colspan='4'
+                                        string="We are not yet done! Let us keep moving!"
+                                        />
+                                    </h4>
+                                    <label
+                                        colspan='4'
+                                        string="These are your Bank &amp; Cash Accounts that need Exchange Currency Rate Difference Realization."
+                                        />
+                                </group>
+                                <label
+                                    colspan='2'
+                                    string="It is mandatory that you fill the field in the right with the accounts that hold your Bank &amp; Cash in Foreign Currency."
+                                    />
+                            </group>
+                        </group>
+                        <group cols="2">
+                            <group colspan='4'>
+                                <label
+                                    colspan='2'
+                                    string="It is likely wrongfully set Accounts got attribute 'Liquidity' Type. Be warned that you should address this issue before proceeding With 'FILL WITH NEXT STEP' step."
+                                    />
+                                <label
+                                    colspan='2'
+                                    string="Check that those Accounts being presented here to you are really 'Liquidity' Type and Multicurrency"
+                                    />
+                                <label
+                                    colspan='2'
+                                    string="If one of your accounts does not appear here. Open a new Windows Fix your missing account and try to add it again."
+                                    />
+                            </group>
+                            <group colspan='4'>
+                                <field name='bk_ids' nolabel="1">
+                                    <tree>
+                                        <field name='code'/>
+                                        <field name='name'/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </group>
+                        <!-- ELEMENTS VISIBLE ONLY IN STAGE X - RECEIVABLE ACCOUNTS -->
+                        <group>
+                            <group string="Receivable Accounts" cols="2">
+                                <group colspan='4'>
+                                    <h4>
+                                    <label
+                                        colspan='4'
+                                        string="We are not yet done! Let us keep moving!"
+                                        />
+                                    </h4>
+                                    <label
+                                        colspan='4'
+                                        string="These are your Receivable Accounts that need Exchange Currency Rate Difference Realization."
+                                        />
+                                </group>
+                                <label
+                                    colspan='2'
+                                    string="It is mandatory that you fill the field in the right with the accounts that hold your Receivables in Foreign Currency."
+                                    />
+                            </group>
+                        </group>
+                        <group cols="2">
+                            <group colspan='4'>
+                                <label
+                                    colspan='2'
+                                    string="It is likely wrongfully set Accounts got attribute 'Receivable' Type. Be warned that you should address this issue before proceeding With 'FILL WITH NEXT STEP' step."
+                                    />
+                                <label
+                                    colspan='2'
+                                    string="Check that those Accounts being presented here to you are really 'Receivable' Type and Multicurrency"
+                                    />
+                                <label
+                                    colspan='2'
+                                    string="If one of your accounts does not appear here. Open a new Windows Fix your missing account and try to add it again."
+                                    />
+                            </group>
+                            <group colspan='4'>
+                                <field name='rec_ids' nolabel="1">
+                                    <tree>
+                                        <field name='code'/>
+                                        <field name='name'/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </group>
+                        <!-- ELEMENTS VISIBLE ONLY IN STAGE X - PAYABLE ACCOUNTS -->
+                        <group>
+                            <group string="Payable Accounts" cols="2">
+                                <group colspan='4'>
+                                    <h4>
+                                    <label
+                                        colspan='4'
+                                        string="We are not yet done! Let us keep moving!"
+                                        />
+                                    </h4>
+                                    <label
+                                        colspan='4'
+                                        string="These are your Payable Accounts that need Exchange Currency Rate Difference Realization."
+                                        />
+                                </group>
+                                <label
+                                    colspan='2'
+                                    string="It is mandatory that you fill the field in the right with the accounts that hold your Payable in Foreign Currency."
+                                    />
+                            </group>
+                        </group>
+                        <group cols="2">
+                            <group colspan='4'>
+                                <label
+                                    colspan='2'
+                                    string="It is likely wrongfully set Accounts got attribute 'Payable' Type. Be warned that you should address this issue before proceeding With 'FILL WITH NEXT STEP' step."
+                                    />
+                                <label
+                                    colspan='2'
+                                    string="Check that those Accounts being presented here to you are really 'Payable' Type and Multicurrency"
+                                    />
+                                <label
+                                    colspan='2'
+                                    string="If one of your accounts does not appear here. Open a new Windows Fix your missing account and try to add it again."
+                                    />
+                            </group>
+                            <group colspan='4'>
+                                <field name='pay_ids' nolabel="1">
+                                    <tree>
+                                        <field name='code'/>
+                                        <field name='name'/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </group>
                     </group>
                 </form>
             </field>
