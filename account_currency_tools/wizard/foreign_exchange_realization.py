@@ -60,13 +60,14 @@ class foreign_exchange_realization_line(osv.osv_memory):
             digits_compute=dp.get_precision('Account'),
             help=("Value of Loss or Gain due to changes in exchange rate when "
                   "doing multi-currency transactions.")),
-        'type': fields.selection([
-            ('receivable', 'Receivable'),
-            ('payable', 'Payable'),
-            ('liquidity', 'Liquidity'),
-        ],
-            'Internal Type',
-            required=True,
+        'type': fields.related(
+            'account_id', 'type',
+            type='selection',
+            selection=[('receivable', 'Receivable'),
+                       ('payable', 'Payable'),
+                       ('liquidity', 'Liquidity')],
+            string='Internal Type',
+            required=False,
             help=("The 'Internal Type' is used for features available on "
                   "different types of accounts: "
                   "payable/receivable are for partners accounts (for "
