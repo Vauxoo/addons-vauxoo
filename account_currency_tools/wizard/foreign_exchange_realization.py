@@ -129,14 +129,13 @@ class foreign_exchange_realization(osv.osv_memory):
             INNER JOIN account_account AS aa ON aa.id = aml.account_id
             INNER JOIN account_period AS ap ON ap.id = aml.period_id
             WHERE
-                aa.type = '{account_type}' AND
+                aa.type = '%(account_type)s' AND
                 aml.currency_id IS NOT NULL AND
-                aml.company_id = {company_id} AND
-                aa.id BETWEEN {parent_left} AND {parent_right} AND
-                ap.id IN ({period_ids})
+                aml.company_id = %(company_id)d AND
+                aa.id BETWEEN %(parent_left)d AND %(parent_right)d AND
+                ap.id IN (%(period_ids)s)
             GROUP BY aml.account_id
-        '''.format(**args)
-        # TODO: find a way to unpack **args in order to avoid pylint complains
+        ''' % args
         cr.execute(query)
         res = cr.fetchall()
         if res:
