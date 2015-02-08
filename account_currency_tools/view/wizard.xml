@@ -74,6 +74,7 @@
                                 />
                             <field name="journal_id" required="1"/>
                             <field name="date"/>
+                            <field name="move_id" readonly="1"/>
                         </group>
                         <group string="Other Info">
                         </group>
