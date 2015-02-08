@@ -113,6 +113,14 @@ class foreign_exchange_realization(osv.osv_memory):
             'period_id', 'act_id', 'Affected Periods',
             readonly=True,
             help=('List of Affected Periods')),
+        'date': fields.related(
+            'period_id', 'date_stop',
+            string='Posting Date',
+            type='date',
+            required=False),
+        'journal_id': fields.many2one(
+            'account.journal', 'Posting Journal',
+            required=False),
     }
 
     _defaults = {

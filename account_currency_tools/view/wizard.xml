@@ -67,6 +67,8 @@
                                 nolabel="1"
                                 required="1"
                                 />
+                            <field name="journal_id"/>
+                            <field name="date"/>
                         </group>
                         <group string="Other Info">
                         </group>
