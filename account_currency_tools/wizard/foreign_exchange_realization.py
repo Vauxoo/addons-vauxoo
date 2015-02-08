@@ -360,14 +360,14 @@ class foreign_exchange_realization(osv.osv_memory):
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
-        ref = _("Exchange Currency Rate Difference Recognition for %s") %\
+        ref = _("Exch. Curr. Rate Diff. for %s") %\
             (wzd_brw.period_id.name,)
         return self.pool.get('account.move').account_move_prepare(
             cr, uid, wzd_brw.journal_id.id, date=wzd_brw.date, ref=ref,
             company_id=wzd_brw.company_id.id, context=context)
 
     def line_get(self, cr, uid, line_brw, context=None):
-        name = (_("Exch. Curr. Rate Diff. Recognition for %s in %s")
+        name = (_("Exch. Curr. Rate Diff. for %s in %s")
                 % (line_brw.account_id.name, line_brw.currency_id.name))
         account_id = line_brw.account_id.id
         currency_id = line_brw.currency_id.id
@@ -443,6 +443,10 @@ class foreign_exchange_realization(osv.osv_memory):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        if wzd_brw.move_id:
+            raise osv.except_osv(
+                _('Error!'),
+                _('Gain & Loss Recognition already booked'))
 
         am_obj = self.pool.get('account.move')
         self.check_gain_loss_account_company(cr, uid, ids, context=context)
