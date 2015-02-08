@@ -129,6 +129,7 @@ class foreign_exchange_realization(osv.osv_memory):
             'account_id', 'act_id', 'Bank & Cash Accounts',
             domain=("[('type','=','liquidity'),"
                     "('parent_id','child_of',root_id),"
+                    "('company_id','=',company_id),"
                     "('currency_id','!=',False)]"),
             help=('Select your Bank Accounts')),
         'rec_ids': fields.many2many(
@@ -136,6 +137,7 @@ class foreign_exchange_realization(osv.osv_memory):
             'account_id', 'act_id', 'Receivable Accounts',
             domain=("[('type','=','receivable'),"
                     "('parent_id','child_of',root_id),"
+                    "('company_id','=',company_id),"
                     "('currency_id','!=',False)]"),
             help=('Select your Receivable Accounts')),
         'pay_ids': fields.many2many(
@@ -143,16 +145,19 @@ class foreign_exchange_realization(osv.osv_memory):
             'account_id', 'act_id', 'Payable Accounts',
             domain=("[('type','=','payable'),"
                     "('parent_id','child_of',root_id),"
+                    "('company_id','=',company_id),"
                     "('currency_id','!=',False)]"),
             help=('Select your Payable Accounts')),
         'fiscalyear_id': fields.many2one(
             'account.fiscalyear', 'Fiscal Year',
             required=True,
+            domain="[('company_id','=',company_id)]",
             help='Fiscal Year'),
         'period_id': fields.many2one(
             'account.period', 'Period',
             required=True,
             domain=("[('fiscalyear_id','=',fiscalyear_id),"
+                    "('company_id','=',company_id),"
                     "('special','=',False)]"),
             help=('Select your Payable Accounts')),
         'company_id': fields.many2one(
@@ -172,6 +177,7 @@ class foreign_exchange_realization(osv.osv_memory):
             required=False),
         'journal_id': fields.many2one(
             'account.journal', 'Posting Journal',
+            domain="[('company_id','=',company_id)]",
             required=False),
         'line_ids': fields.one2many(
             'foreign.exchange.realization.line',
