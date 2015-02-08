@@ -23,6 +23,7 @@
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 import openerp.addons.decimal_precision as dp
+import openerp
 
 
 class foreign_exchange_realization_line(osv.osv_memory):
@@ -352,5 +353,104 @@ class foreign_exchange_realization(osv.osv_memory):
             ferl_obj.create(cr, uid, values, context=context)
         return True
 
+    def account_move_get(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        ref = _("Exchange Currency Rate Difference Recognition for %s") %\
+            (wzd_brw.period_id.name,)
+        return self.pool.get('account.move').account_move_prepare(
+            cr, uid, wzd_brw.journal_id.id, date=wzd_brw.date, ref=ref,
+            company_id=wzd_brw.company_id.id, context=context)
+
+    def line_get(self, cr, uid, line_brw, context=None):
+        name = (_("Exch. Curr. Rate Diff. Recognition for %s in %s")
+                % (line_brw.account_id.name, line_brw.currency_id.name))
+        account_id = line_brw.account_id.id
+        currency_id = line_brw.currency_id.id
+        amount = line_brw.unrealized_gain_loss
+        res_a = {
+            'name': name[:64],
+            'debit': amount > 0 and amount,
+            'credit': amount < 0 and -amount,
+            'account_id': account_id,
+            'amount_currency': 0,
+            'currency_id': currency_id,
+        }
+        company_brw = line_brw.wizard_id.company_id
+        account_id = None
+        if amount > 0:
+            account_id = company_brw.income_currency_exchange_account_id and \
+                company_brw.income_currency_exchange_account_id.id
+        else:
+            account_id = company_brw.expense_currency_exchange_account_id and \
+                company_brw.expense_currency_exchange_account_id.id
+
+        res_b = {
+            'name': name[:64],
+            'debit': amount < 0 and -amount,
+            'credit': amount > 0 and amount,
+            'account_id': account_id,
+            'amount_currency': 0,
+            'currency_id': currency_id,
+        }
+        return res_a, res_b
+
+    def move_line_get(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        res = []
+        for line_brw in wzd_brw.line_ids:
+            res_a, res_b = self.line_get(cr, uid, line_brw, context=context)
+            res.append((0, 0, res_a))
+            res.append((0, 0, res_b))
+        return res
+
+    def check_gain_loss_account_company(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        company_brw = self.browse(cr, uid, ids[0], context=context).company_id
+
+        model, action_id = self.pool['ir.model.data'].get_object_reference(
+            cr, uid, 'account', 'action_account_form')
+
+        account_id = company_brw.income_currency_exchange_account_id and \
+            company_brw.income_currency_exchange_account_id.id
+        if not account_id:
+            msg = _("You should configure the 'Loss Exchange Rate Account'"
+                    " to manage automatically the booking of accounting "
+                    "entries related to differences between exchange "
+                    "rates.")
+            raise openerp.exceptions.RedirectWarning(
+                msg, action_id, _('Go to the configuration panel'))
+
+        account_id = company_brw.expense_currency_exchange_account_id and \
+            company_brw.expense_currency_exchange_account_id.id
+        if not account_id:
+            msg = _("You should configure the 'Gain Exchange Rate Account'"
+                    "to manage automatically the booking of accounting "
+                    "entries related to differences between exchange "
+                    "rates.")
+            raise openerp.exceptions.RedirectWarning(
+                msg, action_id, _('Go to the configuration panel'))
+        return True
+
     def create_move(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+
+        am_obj = self.pool.get('account.move')
+        self.check_gain_loss_account_company(cr, uid, ids, context=context)
+
+        move_vals = self.account_move_get(cr, uid, ids, context=context)
+        move_id = am_obj.create(cr, uid, move_vals, context=context)
+        lines = self.move_line_get(cr, uid, ids, context=context)
+        import pdb; pdb.set_trace()
+        am_obj.write(cr, uid, [move_id], {'line_id': lines}, context=context)
+
+        if wzd_brw.journal_id.entry_posted:
+            am_obj.button_validate(cr, uid, [move_id], context)
         return True
