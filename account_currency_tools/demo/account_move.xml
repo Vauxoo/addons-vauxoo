@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="1">
+    <data noupdate="0">
+
+        <!--
+        Accounts
+        -->
+
+        <record id="equities_view" model="account.account">
+            <field name="name">Equities - (test)</field>
+            <field name="code">X12</field>
+            <field name="type">view</field>
+            <field name="user_type" ref="account.account_type_cash_equity"/>
+            <field name="reconcile" eval="False"/>
+            <field name="parent_id" ref="account.bal"/>
+        </record>
+
+        <record id="a_equity" model="account.account">
+            <field name="name">Equity - (test)</field>
+            <field name="code">X1201</field>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.account_type_cash_equity"/>
+            <field name="reconcile" eval="False"/>
+            <field name="parent_id" ref="equities_view"/>
+        </record>
 
         <!--
         Fiscal year
@@ -127,6 +149,39 @@
         <!--
         Journal Entries
         -->
+
+       <record id="act_am_00" model="account.move">
+            <field name="journal_id" ref="account.bank_journal_usd"/>
+            <field name="period_id" ref="period_12"/>
+            <field name="date" eval="'%s' %(datetime.now().year-1)+'-12-24'"/>
+            <field name="ref">Shareholders Money</field>
+       </record>
+
+       <record id="act_aml_00_a" model="account.move.line">
+            <field name="move_id" ref="act_am_00"/>
+            <field name="journal_id" ref="account.bank_journal_usd"/>
+            <field name="period_id" ref="period_12"/>
+            <field name="date" eval="'%s' %(datetime.now().year-1)+'-12-24'"/>
+            <field name="name">Shareholders Money</field>
+            <field name="account_id" ref="account.usd_bnk"/>
+            <field name="debit">1000.0</field>
+            <field name="credit">0.0</field>
+            <field name="amount_currency">1000.0</field>
+            <field name="currency_id" ref="base.USD"/>
+       </record>
+
+       <record id="act_aml_00_b" model="account.move.line">
+            <field name="move_id" ref="act_am_00"/>
+            <field name="journal_id" ref="account.bank_journal_usd"/>
+            <field name="period_id" ref="period_12"/>
+            <field name="date" eval="'%s' %(datetime.now().year-1)+'-12-24'"/>
+            <field name="name">Shareholders Money</field>
+            <field name="account_id" ref="a_equity"/>
+            <field name="debit">0.0</field>
+            <field name="credit">1000.0</field>
+            <field name="amount_currency">-1000.0</field>
+            <field name="currency_id" ref="base.USD"/>
+       </record>
 
        <record id="act_am_01" model="account.move">
             <field name="journal_id" ref="account.sales_journal"/>
@@ -333,44 +388,44 @@
 
        <record id="act_am_06" model="account.move">
             <field name="journal_id" ref="account.bank_journal_usd"/>
-            <field name="period_id" ref="account.period_1"/>
-            <field name="date" eval="time.strftime('%Y')+'-01-29'"/>
+            <field name="period_id" ref="account.period_2"/>
+            <field name="date" eval="time.strftime('%Y')+'-02-20'"/>
             <field name="ref">Payment to Vauxoo Supplier Invoice</field>
         </record>
 
        <record id="act_aml_06_a" model="account.move.line">
             <field name="move_id" ref="act_am_06"/>
             <field name="journal_id" ref="account.bank_journal_usd"/>
-            <field name="period_id" ref="account.period_1"/>
-            <field name="date" eval="time.strftime('%Y')+'-01-29'"/>
+            <field name="period_id" ref="account.period_2"/>
+            <field name="date" eval="time.strftime('%Y')+'-02-20'"/>
             <field name="name">Bank Payment USD</field>
             <field name="partner_id" ref="base.res_partner_23"/>
             <field name="account_id" ref="account.a_pay"/>
             <field name="debit">1600.0</field>
             <field name="credit">0.0</field>
-            <field name="amount_currency">700.0</field>
+            <field name="amount_currency">1700.0</field>
             <field name="currency_id" ref="base.USD"/>
         </record>
 
        <record id="act_aml_06_b" model="account.move.line">
             <field name="move_id" ref="act_am_06"/>
             <field name="journal_id" ref="account.bank_journal_usd"/>
-            <field name="period_id" ref="account.period_1"/>
-            <field name="date" eval="time.strftime('%Y')+'-01-29'"/>
+            <field name="period_id" ref="account.period_2"/>
+            <field name="date" eval="time.strftime('%Y')+'-02-20'"/>
             <field name="name">Invoice Payment</field>
             <field name="partner_id" ref="base.res_partner_23"/>
             <field name="account_id" ref="account.usd_bnk"/>
             <field name="debit">0.0</field>
             <field name="credit">1600.0</field>
-            <field name="amount_currency">-700.0</field>
+            <field name="amount_currency">-1700.0</field>
             <field name="currency_id" ref="base.USD"/>
         </record>
 
        <record id="act_aml_06_c" model="account.move.line">
             <field name="move_id" ref="act_am_06"/>
             <field name="journal_id" ref="account.bank_journal_usd"/>
-            <field name="period_id" ref="account.period_1"/>
-            <field name="date" eval="time.strftime('%Y')+'-01-29'"/>
+            <field name="period_id" ref="account.period_2"/>
+            <field name="date" eval="time.strftime('%Y')+'-02-20'"/>
             <field name="name">Gain on Invoice Payment</field>
             <field name="partner_id" ref="base.res_partner_23"/>
             <field name="account_id" ref="account.a_pay"/>
@@ -383,8 +438,8 @@
        <record id="act_aml_06_d" model="account.move.line">
             <field name="move_id" ref="act_am_06"/>
             <field name="journal_id" ref="account.bank_journal_usd"/>
-            <field name="period_id" ref="account.period_1"/>
-            <field name="date" eval="time.strftime('%Y')+'-01-29'"/>
+            <field name="period_id" ref="account.period_2"/>
+            <field name="date" eval="time.strftime('%Y')+'-02-20'"/>
             <field name="name">Gain on Invoice Payment</field>
             <field name="partner_id" ref="base.res_partner_23"/>
             <field name="account_id" ref="account.income_fx_income"/>
