@@ -450,7 +450,6 @@ class foreign_exchange_realization(osv.osv_memory):
         move_vals = self.account_move_get(cr, uid, ids, context=context)
         move_id = am_obj.create(cr, uid, move_vals, context=context)
         lines = self.move_line_get(cr, uid, ids, context=context)
-        import pdb; pdb.set_trace()
         am_obj.write(cr, uid, [move_id], {'line_id': lines}, context=context)
         wzd_brw.write({'move_id': move_id})
 
