@@ -206,23 +206,13 @@ class foreign_exchange_realization(osv.osv_memory):
             res = [idx[0] for idx in res]
         return res
 
-    def action_get_accounts(self, cr, uid, ids, account_type, fieldname,
-                            context=None):
+    def get_params(self, cr, uid, ids, account_type, fieldname, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
-        aa_obj = self.pool.get('account.account')
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
-        root_id = wzd_brw.root_id.id
         parent_left = wzd_brw.root_id.parent_left
         parent_right = wzd_brw.root_id.parent_right
         company_id = wzd_brw.company_id.id
-        res = aa_obj.search(
-            cr, uid, [
-                ('type', '=', account_type),
-                ('currency_id', '!=', False),
-                ('parent_id', 'child_of', root_id),
-                ('company_id', '=', company_id),
-            ])
 
         # Searching for other accounts that could be used as multicurrency
         period_ids = [str(ap_brw.id) for ap_brw in wzd_brw.period_ids]
@@ -233,6 +223,27 @@ class foreign_exchange_realization(osv.osv_memory):
             parent_right=parent_right,
             period_ids=', '.join(period_ids)
         )
+        return args
+
+    def action_get_accounts(self, cr, uid, ids, account_type, fieldname,
+                            context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        aa_obj = self.pool.get('account.account')
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        root_id = wzd_brw.root_id.id
+        company_id = wzd_brw.company_id.id
+        res = aa_obj.search(
+            cr, uid, [
+                ('type', '=', account_type),
+                ('currency_id', '!=', False),
+                ('parent_id', 'child_of', root_id),
+                ('company_id', '=', company_id),
+            ])
+
+        # Searching for other accounts that could be used as multicurrency
+        args = self.get_params(cr, uid, ids, account_type, fieldname,
+                               context=context)
         res += self.get_accounts_from_aml(cr, uid, args, context=context)
         res = list(set(res))
 
@@ -257,6 +268,25 @@ class foreign_exchange_realization(osv.osv_memory):
             cr, uid, ids, 'liquidity', 'bk_ids', context=context)
 
     def action_get_periods(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        ap_obj = self.pool.get('account.period')
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        date_start = wzd_brw.fiscalyear_id.date_start
+        date_stop = wzd_brw.period_id.date_stop
+        res = ap_obj.search(
+            cr, uid, [
+                ('date_start', '>=', date_start),
+                ('date_stop', '<=', date_stop)])
+        if res:
+            wzd_brw.write({'period_ids': [(6, wzd_brw.id, res)]})
+        else:
+            wzd_brw.write(
+                {'period_ids': [(3, ap_brw.id) for ap_brw in
+                                wzd_brw.period_ids]})
+        return True
+
+    def action_get_unrecognized_lines(self, cr, uid, ids, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         ap_obj = self.pool.get('account.period')
