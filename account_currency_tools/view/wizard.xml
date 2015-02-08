@@ -8,6 +8,11 @@
                 <form string="Foreign Currency Exchange Realization">
                     <header>
                         <button
+                            name="action_get_periods"
+                            string="Retrieve Periods"
+                            type="object"
+                            class="oe_highlight" />
+                        <button
                             name="create_move"
                             string="Create Journal Entry"
                             type="object"
@@ -31,8 +36,14 @@
                             <field name="currency_id"/>
                         </group>
                         <group string="Realization Info">
-                            <field name="fiscalyear_id"/>
+                            <field name="fiscalyear_id" on_change='onchange_fiscalyear(fiscalyear_id)'/>
                             <field name="period_id"/>
+                            <field name="period_ids">
+                                <tree>
+                                    <field name='code'/>
+                                    <field name='name'/>
+                                </tree>
+                            </field>
                         </group>
                         <group string="Accounting Info">
                             <label for="root_id"/>
