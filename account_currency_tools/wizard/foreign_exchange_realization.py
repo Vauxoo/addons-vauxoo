@@ -120,25 +120,58 @@ class foreign_exchange_realization(osv.osv_memory):
         'fiscalyear_id': _get_fiscalyear,
     }
 
-    def action_get_accounts(self, cr, uid, ids, acc_type, fieldname,
+
+    def get_accounts_from_aml(self, cr, uid, args, context=None):
+        query = '''
+            SELECT
+                aml.account_id
+            FROM account_move_line AS aml
+            INNER JOIN account_account AS aa ON aa.id = aml.account_id
+            INNER JOIN account_period AS ap ON ap.id = aml.period_id
+            WHERE
+                aa.type = '{account_type}' AND
+                aml.currency_id IS NOT NULL AND
+                aml.company_id = {company_id} AND
+                aa.id BETWEEN {parent_left} AND {parent_right} AND
+                ap.id IN ({period_ids})
+            GROUP BY aml.account_id
+        '''.format(**args)
+        # TODO: find a way to unpack **args in order to avoid pylint complains
+        cr.execute(query)
+        res = cr.fetchall()
+        if res:
+            res = [idx[0] for idx in res]
+        return res
+
+    def action_get_accounts(self, cr, uid, ids, account_type, fieldname,
                             context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         aa_obj = self.pool.get('account.account')
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         root_id = wzd_brw.root_id.id
+        parent_left = wzd_brw.root_id.parent_left
+        parent_right = wzd_brw.root_id.parent_right
         company_id = wzd_brw.company_id.id
         res = aa_obj.search(
             cr, uid, [
-                ('type', '=', acc_type),
+                ('type', '=', account_type),
                 ('currency_id', '!=', False),
                 ('parent_id', 'child_of', root_id),
                 ('company_id', '=', company_id),
             ])
 
-        # TODO: SQL to get accounts from aml with currency_id not NULL
-
-        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        # Searching for other accounts that could be used as multicurrency
+        period_ids = [str(ap_brw.id) for ap_brw in wzd_brw.period_ids]
+        args = dict(
+            account_type=account_type,
+            company_id=company_id,
+            parent_left=parent_left,
+            parent_right=parent_right,
+            period_ids=', '.join(period_ids)
+        )
+        res += self.get_accounts_from_aml(cr, uid, args, context=context)
+        res = list(set(res))
 
         if res:
             wzd_brw.write({fieldname: [(6, wzd_brw.id, res)]})
