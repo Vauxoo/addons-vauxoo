@@ -185,6 +185,24 @@ class foreign_exchange_realization(osv.osv_memory):
         'fiscalyear_id': _get_fiscalyear,
     }
 
+    def get_values_from_aml(self, cr, uid, args, context=None):
+        query = '''
+            SELECT
+                aml.account_id,
+                aml.currency_id,
+                SUM(aml.amount_currency) AS foreign_balance,
+                SUM(aml.debit - aml.credit) AS balance
+            FROM account_move_line AS aml
+            INNER JOIN account_period AS ap ON ap.id = aml.period_id
+            WHERE
+                aml.account_id IN (%(account_ids)s) AND
+                aml.currency_id IS NOT NULL AND
+                ap.id IN (%(period_ids)s)
+            GROUP BY aml.account_id, aml.currency_id
+        ''' % args
+        cr.execute(query)
+        res = cr.dictfetchall()
+        return res
 
     def get_accounts_from_aml(self, cr, uid, args, context=None):
         query = '''
@@ -289,21 +307,29 @@ class foreign_exchange_realization(osv.osv_memory):
 
     def action_get_unrecognized_lines(self, cr, uid, ids, context=None):
         context = context or {}
+        ferl_obj = self.pool.get('foreign.exchange.realization.line')
         ids = isinstance(ids, (int, long)) and [ids] or ids
-        ap_obj = self.pool.get('account.period')
+
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
-        date_start = wzd_brw.fiscalyear_id.date_start
-        date_stop = wzd_brw.period_id.date_stop
-        res = ap_obj.search(
-            cr, uid, [
-                ('date_start', '>=', date_start),
-                ('date_stop', '<=', date_stop)])
-        if res:
-            wzd_brw.write({'period_ids': [(6, wzd_brw.id, res)]})
-        else:
-            wzd_brw.write(
-                {'period_ids': [(3, ap_brw.id) for ap_brw in
-                                wzd_brw.period_ids]})
+        wzd_brw.line_ids.unlink()
+
+        account_ids = []
+        for fn in ('bk_ids', 'rec_ids', 'pay_ids'):
+            account_ids += [aa_brw.id for aa_brw in getattr(wzd_brw, fn)]
+        account_ids = [str(idx) for idx in account_ids]
+
+        period_ids = [str(ap_brw.id) for ap_brw in wzd_brw.period_ids]
+
+        args = dict(
+            account_ids=', '.join(account_ids),
+            period_ids=', '.join(period_ids),
+        )
+
+        res = self.get_values_from_aml(cr, uid, args, context=context)
+        for values in res:
+            values['wizard_id'] = wzd_brw.id
+            ferl_obj.create(cr, uid, values, context=context)
+
         return True
 
     def create_move(self, cr, uid, ids, context=None):

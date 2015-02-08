@@ -28,6 +28,11 @@
                             type="object"
                             class="oe_highlight" />
                         <button
+                            name="action_get_unrecognized_lines"
+                            string="Get Unrecognized G &amp; L on Accounts"
+                            type="object"
+                            class="oe_highlight" />
+                        <button
                             name="create_move"
                             string="Create Journal Entry"
                             type="object"
