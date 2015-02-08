@@ -22,6 +22,57 @@
 ###############################################################################
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
+import openerp.addons.decimal_precision as dp
+
+
+class foreign_exchange_realization_line(osv.osv_memory):
+
+    _name = 'foreign.exchange.realization.line'
+    _columns = {
+        'wizard_id': fields.many2one(
+            'foreign.exchange.realization',
+            string='Wizard',
+            required=True,),
+        'account_id': fields.many2one(
+            'account.account', 'Account',
+            required=True,),
+        'currency_id': fields.many2one(
+            'res.currency', 'Currency',
+            required=True,),
+        'exchange_rate': fields.float(
+            'Exchange Rate',
+            digits=(12, 6)),
+        'balance': fields.float(
+            'Balance',
+            digits_compute=dp.get_precision('Account')),
+        'foreign_balance': fields.float(
+            'Foreign Balance',
+            digits_compute=dp.get_precision('Account'),
+            help=("Total amount (in Secondary currency) for transactions held "
+                  "in secondary currency for this account.")),
+        'adjusted_balance': fields.float(
+            'Adjusted Balance',
+            digits_compute=dp.get_precision('Account'),
+            help=("Total amount (in Company currency) for transactions held "
+                  "in secondary currency for this account.")),
+        'unrealized_gain_loss': fields.float(
+            'Unrealized Gain or Loss',
+            digits_compute=dp.get_precision('Account'),
+            help=("Value of Loss or Gain due to changes in exchange rate when "
+                  "doing multi-currency transactions.")),
+        'type': fields.selection([
+            ('receivable', 'Receivable'),
+            ('payable', 'Payable'),
+            ('liquidity', 'Liquidity'),
+        ],
+            'Internal Type',
+            required=True,
+            help=("The 'Internal Type' is used for features available on "
+                  "different types of accounts: "
+                  "payable/receivable are for partners accounts (for "
+                  "debit/credit computations), liquidity for bank & cash")),
+
+    }
 
 
 class foreign_exchange_realization(osv.osv_memory):
@@ -121,6 +172,11 @@ class foreign_exchange_realization(osv.osv_memory):
         'journal_id': fields.many2one(
             'account.journal', 'Posting Journal',
             required=False),
+        'line_ids': fields.one2many(
+            'foreign.exchange.realization.line',
+            'wizard_id',
+            'Suggested Recognition Lines',
+        )
     }
 
     _defaults = {

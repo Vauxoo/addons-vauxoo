@@ -207,6 +207,21 @@
                                 </field>
                             </group>
                         </group>
+                        <!-- ELEMENTS VISIBLE ONLY IN STAGE X - UNREALIZED GAINS OR LOSSES -->
+                        <group string="Unrealized Gains or Losses" cols="2" colspan='4'>
+                            <field name='line_ids' nolabel="1">
+                                <tree>
+                                    <field name='type'/>
+                                    <field name='account_id'/>
+                                    <field name='currency_id'/>
+                                    <field name='exchange_rate'/>
+                                    <field name='foreign_balance'/>
+                                    <field name='adjusted_balance'/>
+                                    <field name='balance'/>
+                                    <field name='unrealized_gain_loss'/>
+                                </tree>
+                            </field>
+                        </group>
                     </group>
                 </form>
             </field>
