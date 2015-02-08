@@ -415,8 +415,8 @@ class foreign_exchange_realization(osv.osv_memory):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         company_brw = self.browse(cr, uid, ids[0], context=context).company_id
 
-        model, action_id = self.pool['ir.model.data'].get_object_reference(
-            cr, uid, 'account', 'action_account_form')
+        action_id = self.pool['ir.model.data'].get_object_reference(
+            cr, uid, 'account', 'action_account_form')[1]
 
         account_id = company_brw.income_currency_exchange_account_id and \
             company_brw.income_currency_exchange_account_id.id
