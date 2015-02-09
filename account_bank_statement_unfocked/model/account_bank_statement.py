@@ -33,6 +33,11 @@ class account_bank_statement_line(osv.osv):
             self, cr, uid, st_line, excluded_ids=None, str=False, offset=0,
             limit=None, count=False, additional_domain=None, context=None):
         """
+        This function is overwrite to solve the follow issue of Odoo v8.0:
+            when refund debit/credit is create first that invoice and
+            after reconciled two aml en bank statement widget show counterpart
+            reference to refund debit/credit
+            issue: https://github.com/odoo/odoo/issues/5129
         """
         mv_line_pool = self.pool.get('account.move.line')
         domain = self._domain_move_lines_for_reconciliation(
@@ -51,6 +56,10 @@ class account_bank_statement_line(osv.osv):
             lines = mv_line_pool.browse(cr, uid, line_ids, context=context)
             make_one_more_loop = False
             for line in lines:
+                # We validate that move to show in bank statement
+                # the line.amount_residual < 0
+                # This change is reference to
+                # issue:https://github.com/odoo/odoo/issues/5129
                 if line.reconcile_partial_id and\
                     line.reconcile_partial_id.id in\
                         reconcile_partial_ids or line.amount_residual < 0:
