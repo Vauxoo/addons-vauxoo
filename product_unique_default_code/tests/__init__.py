@@ -19,7 +19,3 @@
 ##############################################################################
 
 from . import test_for_unique_ref
-
-fast_suite = [
-    test_for_unique_ref,
-]
