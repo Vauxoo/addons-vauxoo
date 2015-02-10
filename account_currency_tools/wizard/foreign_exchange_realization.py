@@ -463,7 +463,15 @@ class foreign_exchange_realization(osv.osv_memory):
     def line_get(self, cr, uid, line_brw, context=None):
         name = (_("Exch. Curr. Rate Diff. for %s in %s")
                 % (line_brw.account_id.name, line_brw.currency_id.name))
-        account_id = line_brw.account_id.id
+        account_id = None
+        if line_brw.type == 'liquidity':
+            account_id = line_brw.wizard_id.bank_gain_loss_exchange_account_id
+        elif line_brw.type == 'receivable':
+            account_id = line_brw.wizard_id.rec_gain_loss_exchange_account_id
+        elif line_brw.type == 'payable':
+            account_id = line_brw.wizard_id.pay_gain_loss_exchange_account_id
+
+        account_id = account_id and account_id.id or line_brw.account_id.id
         currency_id = line_brw.currency_id.id
         amount = line_brw.unrealized_gain_loss
         res_a = {
