@@ -22,7 +22,7 @@
 ###############################################################################
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-import openerp.addons.decimal_precision as dp # pylint: disable=F0401
+import openerp.addons.decimal_precision as dp  # pylint: disable=F0401
 import openerp
 
 
@@ -140,7 +140,7 @@ class foreign_exchange_realization(osv.osv_memory):
                     '("parent_id","child_of",root_id)]'),
             required=False,
             help=('Bank Gain or Loss Exchange Rate Account for booking '
-            'Difference')),
+                  'Difference')),
         'rec_ids': fields.many2many(
             'account.account', 'act_rec_acc_rel',
             'account_id', 'act_id', 'Receivable Accounts',
@@ -156,7 +156,7 @@ class foreign_exchange_realization(osv.osv_memory):
                     '("parent_id","child_of",root_id)]'),
             required=False,
             help=('Receivable Gain or Loss Exchange Rate Account for booking '
-            'Difference')),
+                  'Difference')),
         'pay_ids': fields.many2many(
             'account.account', 'act_pay_acc_rel',
             'account_id', 'act_id', 'Payable Accounts',
@@ -172,7 +172,7 @@ class foreign_exchange_realization(osv.osv_memory):
                     '("parent_id","child_of",root_id)]'),
             required=False,
             help=('Payable Gain or Loss Exchange Rate Account for booking '
-            'Difference')),
+                  'Difference')),
         'fiscalyear_id': fields.many2one(
             'account.fiscalyear', 'Fiscal Year',
             required=True,
@@ -214,34 +214,38 @@ class foreign_exchange_realization(osv.osv_memory):
             'foreign.exchange.realization.line',
             'wizard_id',
             'Suggested Recognition Lines'),
-         'move_id': fields.many2one(
-             'account.move', 'Journal Entry',
-             required=False),
+        'move_id': fields.many2one(
+            'account.move',
+            'Journal Entry',
+            required=False),
         'target_move': fields.selection(
             [('posted', 'All Posted Entries'),
-            ('all', 'All Entries')],
+             ('all', 'All Entries')],
             'Entries to Include',
             required=True,
             help='All Journal Entries or just Posted Journal Entries'),
         'state': fields.selection(
-            [('draft', 'Draft'),
-            ('open_fiscalyear', 'Open Fiscal Year'),
-            ('missing_opening', 'Missing Opening Journal Entry'),
-            ('prepare', 'Preparing Data'),
-            ('in_progress', 'In Progress'),
-            ('exception', 'Exception'),
-            ('posted', 'Posted Journal'),
+            [
+                ('draft', 'Draft'),
+                ('open_fiscalyear', 'Open Fiscal Year'),
+                ('missing_opening', 'Missing Opening Journal Entry'),
+                ('prepare', 'Preparing Data'),
+                ('in_progress', 'In Progress'),
+                ('exception', 'Exception'),
+                ('posted', 'Posted Journal'),
             ],
             'Entries to Include',
             required=True,
             help=(
-            'Draft: Begin to fill required data to get Unrealized Values,\n'
-            'Open Fiscal Year: Previous Fiscal Year is Open,\n'
-            'Missing Opening Journal Entry: No Opening Journal Entry,\n'
-            'Preparing Data: Data to Fetch Unrealized Values has been set,\n'
-            'In Progress: Unrealized Values has been fetched, ready to book,\n'
-            'Exception: There are no Unrealized Values to book,\n'
-            'Posted Journal: Unrealized Values have been booked'
+                'Draft: Fill required data to get Unrealized Values,\n'
+                'Open Fiscal Year: Previous Fiscal Year is Open,\n'
+                'Missing Opening Journal Entry: No Opening Journal Entry,\n'
+                'Preparing Data: Data to Fetch Unrealized Values has been'
+                ' set,\n'
+                'In Progress: Unrealized Values has been fetched, ready to '
+                'book,\n'
+                'Exception: There are no Unrealized Values to book,\n'
+                'Posted Journal: Unrealized Values have been booked'
             )),
     }
 
