@@ -199,11 +199,30 @@ class foreign_exchange_realization(osv.osv_memory):
             'Entries to Include',
             required=True,
             help='All Journal Entries or just Posted Journal Entries'),
+        'state': fields.selection(
+            [('draft', 'Draft'),
+            ('open_fiscalyear', 'Open Fiscal Year'),
+            ('missing_opening', 'Missing Opening Journal Entry'),
+            ('in_progress', 'In Progress'),
+            ('exception', 'Exception'),
+            ('posted', 'Posted Journal'),
+            ],
+            'Entries to Include',
+            required=True,
+            help=(
+            'Draft: Begin to fill required data to get Unrealized Values,\n'
+            'Open Fiscal Year: Previous Fiscal Year is Open,\n'
+            'Missing Opening Journal Entry: No Opening Journal Entry,\n'
+            'In Progress: Unrealized Values has been fetched, ready to book,\n'
+            'Exception: There are no Unrealized Values to book,\n'
+            'Posted Journal: Unrealized Values have been booked'
+            )),
     }
 
     _defaults = {
         'company_id': _get_default_company,
         'fiscalyear_id': _get_fiscalyear,
+        'state': 'draft',
     }
 
     def get_values_from_aml(self, cr, uid, args, context=None):
