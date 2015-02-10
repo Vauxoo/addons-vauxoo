@@ -21,7 +21,7 @@
 #
 ##############################################################################
 {
-    "name": "account_bank_statement_unfocked",
+    "name": "account_bank_statement_unfucked",
     "version": "1.0",
     "author": "Vauxoo",
     "category": "Localization/Mexico",
