@@ -8,34 +8,22 @@
                 <form string="Foreign Currency Exchange Realization">
                     <header>
                         <button
-                            name="action_get_periods"
-                            string="Retrieve Periods"
+                            name="action_prepare"
+                            string="Prepare Data"
                             type="object"
+                            states='draft'
                             class="oe_highlight" />
                         <button
-                            name="action_get_rec_accounts"
-                            string="Retrieve Receivable Accounts"
-                            type="object"
-                            class="oe_highlight" />
-                        <button
-                            name="action_get_pay_accounts"
-                            string="Retrieve Payable Accounts"
-                            type="object"
-                            class="oe_highlight" />
-                        <button
-                            name="action_get_bank_accounts"
-                            string="Retrieve Bank &amp; Cash Accounts"
-                            type="object"
-                            class="oe_highlight" />
-                        <button
-                            name="action_get_unrecognized_lines"
+                            name="action_progress"
                             string="Get Unrecognized G &amp; L on Accounts"
                             type="object"
+                            states='prepare'
                             class="oe_highlight" />
                         <button
-                            name="create_move"
+                            name="action_create_move"
                             string="Create Journal Entry"
                             type="object"
+                            states='in_progress'
                             class="oe_highlight" />
                         or
                         <button
@@ -49,22 +37,21 @@
                             name="state"
                             widget="statusbar"
                             nolabel="1"
-                            statusbar_visible="draft,in_progress,posted"
+                            statusbar_visible="draft,prepare,in_progress,posted"
                             />
                     </header>
                     <group>
                         <group string="Company Info">
-                            <label for="company_id"/>
                             <field
                                 name="company_id"
                                 on_change='onchange_company_id(company_id)'
-                                nolabel="1"/>
+                                readonly="1"/>
                             <field name="currency_id"/>
                         </group>
                         <group string="Realization Info">
                             <field name="fiscalyear_id" on_change='onchange_fiscalyear(fiscalyear_id)'/>
                             <field name="period_id"/>
-                            <field name="period_ids">
+                            <field name="period_ids" widget="many2many_tags">
                                 <tree>
                                     <field name='code'/>
                                     <field name='name'/>

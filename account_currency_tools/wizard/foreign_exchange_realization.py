@@ -203,6 +203,7 @@ class foreign_exchange_realization(osv.osv_memory):
             [('draft', 'Draft'),
             ('open_fiscalyear', 'Open Fiscal Year'),
             ('missing_opening', 'Missing Opening Journal Entry'),
+            ('prepare', 'Preparing Data'),
             ('in_progress', 'In Progress'),
             ('exception', 'Exception'),
             ('posted', 'Posted Journal'),
@@ -213,6 +214,7 @@ class foreign_exchange_realization(osv.osv_memory):
             'Draft: Begin to fill required data to get Unrealized Values,\n'
             'Open Fiscal Year: Previous Fiscal Year is Open,\n'
             'Missing Opening Journal Entry: No Opening Journal Entry,\n'
+            'Preparing Data: Data to Fetch Unrealized Values has been set,\n'
             'In Progress: Unrealized Values has been fetched, ready to book,\n'
             'Exception: There are no Unrealized Values to book,\n'
             'Posted Journal: Unrealized Values have been booked'
@@ -223,6 +225,7 @@ class foreign_exchange_realization(osv.osv_memory):
         'company_id': _get_default_company,
         'fiscalyear_id': _get_fiscalyear,
         'state': 'draft',
+        'target_move': 'all',
     }
 
     def get_values_from_aml(self, cr, uid, args, context=None):
@@ -507,4 +510,37 @@ class foreign_exchange_realization(osv.osv_memory):
 
         if wzd_brw.journal_id.entry_posted:
             am_obj.button_validate(cr, uid, [move_id], context)
+        return True
+
+    def action_prepare(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+
+        self.action_get_periods(cr, uid, ids, context=context)
+        self.action_get_rec_accounts(cr, uid, ids, context=context)
+        self.action_get_pay_accounts(cr, uid, ids, context=context)
+        self.action_get_bank_accounts(cr, uid, ids, context=context)
+
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        wzd_brw.write({'state': 'prepare'})
+        return True
+
+    def action_progress(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+
+        self.action_get_unrecognized_lines(cr, uid, ids, context=context)
+
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        wzd_brw.write({'state': 'in_progress'})
+        return True
+
+    def action_create_move(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+
+        self.create_move(cr, uid, ids, context=context)
+
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        wzd_brw.write({'state': 'posted'})
         return True
