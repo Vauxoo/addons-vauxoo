@@ -63,7 +63,25 @@
                             <field name="move_id" readonly="1" attrs="{'invisible': [('state','!=', 'posted')]}"/>
                         </group>
                         <notebook colspan='4'>
-                            <page string='Unrealized Gains or Losses' attrs="{'invisible': [('state','not in', ('in_progress','posted'))]}" autofocus="autofocus">
+                            <page string='Exceptional State' attrs="{'invisible': [('state','not in', ('exception',))]}" autofocus="autofocus">
+                                <group>
+                                    <p>
+                                        <label
+                                            colspan='4'
+                                            string="As there were no Unrealized Gains or Losses to book."
+                                            />
+                                    </p>
+                                </group>
+                                <group>
+                                    <p>
+                                        <label
+                                            colspan='4'
+                                            string="You have been redirected to this state"
+                                            />
+                                    </p>
+                                </group>
+                            </page>
+                            <page string='Unrealized Gains or Losses' attrs="{'invisible': [('state','not in', ('exception','in_progress','posted'))]}" autofocus="autofocus">
                                 <!-- ELEMENTS VISIBLE ONLY IN STAGE X - UNREALIZED GAINS OR LOSSES -->
                                 <group>
                                     <group string="Unrealized Gains or Losses" cols="2">
