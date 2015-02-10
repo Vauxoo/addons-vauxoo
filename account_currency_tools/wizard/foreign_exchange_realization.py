@@ -110,8 +110,23 @@ class foreign_exchange_realization(osv.osv_memory):
         if not company_id:
             return res
 
-        cur_id = self.pool.get('res.company').browse(
-            cr, uid, company_id, context=context).currency_id.id
+        rc_brw = self.pool.get('res.company').browse(
+            cr, uid, company_id, context=context)
+        cur_id = rc_brw.currency_id.id
+
+        if rc_brw.bank_gain_loss_exchange_account_id:
+            res['value'].update(
+                {'bank_gain_loss_exchange_account_id':
+                 rc_brw.bank_gain_loss_exchange_account_id.id})
+        if rc_brw.rec_gain_loss_exchange_account_id:
+            res['value'].update(
+                {'rec_gain_loss_exchange_account_id':
+                 rc_brw.rec_gain_loss_exchange_account_id.id})
+        if rc_brw.pay_gain_loss_exchange_account_id:
+            res['value'].update(
+                {'pay_gain_loss_exchange_account_id':
+                 rc_brw.pay_gain_loss_exchange_account_id.id})
+
         res['value'].update({'currency_id': cur_id})
         return res
 

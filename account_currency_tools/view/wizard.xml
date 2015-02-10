@@ -156,7 +156,7 @@
                                     <group colspan='4'>
                                         <field
                                             name='bank_gain_loss_exchange_account_id'
-                                            attrs="{'readonly': [('state','!=', 'prepare')]}"
+                                            attrs="{'readonly': [('state','not in', ('prepare','draft'))]}"
                                             />
                                         <field name='bk_ids' readonly="1" nolabel="1" colspan='4'>
                                             <tree>
@@ -207,7 +207,7 @@
                                     <group colspan='4'>
                                         <field
                                             name='rec_gain_loss_exchange_account_id'
-                                            attrs="{'readonly': [('state','!=', 'prepare')]}"
+                                            attrs="{'readonly': [('state','not in', ('prepare','draft'))]}"
                                             />
                                         <field name='rec_ids' readonly="1" nolabel="1" colspan='4'>
                                             <tree>
@@ -258,7 +258,7 @@
                                     <group colspan='4'>
                                         <field
                                             name='pay_gain_loss_exchange_account_id'
-                                            attrs="{'readonly': [('state','!=', 'prepare')]}"
+                                            attrs="{'readonly': [('state','not in', ('prepare','draft'))]}"
                                             />
                                         <field name='pay_ids' readonly="1" nolabel="1" colspan='4'>
                                             <tree>
