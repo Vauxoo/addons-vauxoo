@@ -268,7 +268,7 @@ class foreign_exchange_realization(osv.osv_memory):
         'company_id': _get_default_company,
         'fiscalyear_id': _get_fiscalyear,
         'state': 'draft',
-        'target_move': 'all',
+        'target_move': 'posted',
     }
 
     def get_values_from_aml(self, cr, uid, args, context=None):
