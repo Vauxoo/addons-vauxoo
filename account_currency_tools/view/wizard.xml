@@ -50,7 +50,6 @@
                             <field name="target_move" attrs="{'readonly': [('state','!=', 'draft')]}"/>
                             <field name="journal_id" required="1" attrs="{'readonly': [('state','!=', 'draft')]}"/>
                             <field name="date"/>
-                            <field name="move_id" readonly="1"/>
                         </group>
                         <group string="Realization Info">
                             <field name="fiscalyear_id" on_change='onchange_fiscalyear(fiscalyear_id)' attrs="{'readonly': [('state','!=', 'draft')]}"/>
@@ -61,9 +60,10 @@
                                     <field name='name'/>
                                 </tree>
                             </field>
+                            <field name="move_id" readonly="1" attrs="{'invisible': [('state','!=', 'posted')]}"/>
                         </group>
                         <notebook colspan='4'>
-                            <page string='Unrealized Gains or Losses' attrs="{'invisible': [('state','not in', ('in_progress','posted'))]}">
+                            <page string='Unrealized Gains or Losses' attrs="{'invisible': [('state','not in', ('in_progress','posted'))]}" autofocus="autofocus">
                                 <!-- ELEMENTS VISIBLE ONLY IN STAGE X - UNREALIZED GAINS OR LOSSES -->
                                 <group>
                                     <group string="Unrealized Gains or Losses" cols="2">
@@ -98,7 +98,7 @@
                                     </tree>
                                 </field>
                             </page>
-                            <page string='Bank &amp; Cash Accounts' attrs="{'invisible': [('state','not in', ('prepare','in_progress','posted'))]}">
+                            <page string='Bank &amp; Cash Accounts' attrs="{'invisible': [('state','not in', ('prepare','in_progress','posted'))]}" autofocus="autofocus">
                                 <!-- ELEMENTS VISIBLE ONLY IN STAGE X - BANK ACCOUNTS -->
                                 <group>
                                     <group string="Bank &amp; Cash Accounts" cols="2">
