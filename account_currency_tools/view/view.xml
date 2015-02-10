@@ -1,6 +1,19 @@
 <?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
-
+        <record id="res_company_view_act" model="ir.ui.view">
+            <field name="name">res.company.view.baremo</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='account_grp']" position="after">
+                    <group name="account_act" string="Accounts for Redirection of Exchange Rate Difference">
+                        <field name='bank_gain_loss_exchange_account_id'/>
+                        <field name='rec_gain_loss_exchange_account_id'/>
+                        <field name='pay_gain_loss_exchange_account_id'/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
