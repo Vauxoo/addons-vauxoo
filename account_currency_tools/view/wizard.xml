@@ -45,6 +45,12 @@
                             class="oe_link" />
                         <label for='help'/>
                         <field name='help'/>
+                        <field
+                            name="state"
+                            widget="statusbar"
+                            nolabel="1"
+                            statusbar_visible="draft,in_progress,posted"
+                            />
                     </header>
                     <group>
                         <group string="Company Info">
