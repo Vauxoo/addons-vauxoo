@@ -20,5 +20,30 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
+from openerp.osv import fields, osv
 
-from . import res_company
+
+class res_company(osv.Model):
+    _inherit = "res.company"
+    _description = 'Companies'
+
+    _columns = {
+        'bank_gain_loss_exchange_account_id': fields.many2one(
+            'account.account', 'Bank Gain or Loss Exchange Rate Account',
+            domain=('[("type", "!=", "view")]'),
+            required=False,
+            help=('Bank Gain or Loss Exchange Rate Account for booking '
+                  'Difference')),
+        'rec_gain_loss_exchange_account_id': fields.many2one(
+            'account.account', 'Receivable Gain or Loss Exchange Rate Account',
+            domain=('[("type", "!=", "view")]'),
+            required=False,
+            help=('Receivable Gain or Loss Exchange Rate Account for booking '
+                  'Difference')),
+        'pay_gain_loss_exchange_account_id': fields.many2one(
+            'account.account', 'Payable Gain or Loss Exchange Rate Account',
+            domain=('[("type", "!=", "view")]'),
+            required=False,
+            help=('Payable Gain or Loss Exchange Rate Account for booking '
+                  'Difference')),
+    }
