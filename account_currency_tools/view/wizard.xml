@@ -41,16 +41,20 @@
                             />
                     </header>
                     <group>
-                        <group string="Company Info">
+                        <group string="Accounting Info">
                             <field
-                                name="company_id"
-                                on_change='onchange_company_id(company_id)'
-                                readonly="1"/>
-                            <field name="currency_id"/>
+                                name="root_id"
+                                attrs="{'readonly': [('state','!=', 'draft')]}"
+                                required="1"
+                                />
+                            <field name="target_move" attrs="{'readonly': [('state','!=', 'draft')]}"/>
+                            <field name="journal_id" required="1" attrs="{'readonly': [('state','!=', 'draft')]}"/>
+                            <field name="date"/>
+                            <field name="move_id" readonly="1"/>
                         </group>
                         <group string="Realization Info">
-                            <field name="fiscalyear_id" on_change='onchange_fiscalyear(fiscalyear_id)'/>
-                            <field name="period_id"/>
+                            <field name="fiscalyear_id" on_change='onchange_fiscalyear(fiscalyear_id)' attrs="{'readonly': [('state','!=', 'draft')]}"/>
+                            <field name="period_id" attrs="{'readonly': [('state','!=', 'draft')]}"/>
                             <field name="period_ids" widget="many2many_tags">
                                 <tree>
                                     <field name='code'/>
@@ -58,170 +62,193 @@
                                 </tree>
                             </field>
                         </group>
-                        <group string="Accounting Info">
-                            <label for="root_id"/>
-                            <field
-                                name="root_id"
-                                nolabel="1"
-                                required="1"
-                                />
-                            <field name="target_move"/>
-                            <field name="journal_id" required="1"/>
-                            <field name="date"/>
-                            <field name="move_id" readonly="1"/>
-                        </group>
-                        <group string="Other Info">
-                        </group>
-                        <!-- ELEMENTS VISIBLE ONLY IN STAGE X - BANK ACCOUNTS -->
-                        <group>
-                            <group string="Bank &amp; Cash Accounts" cols="2">
-                                <group colspan='4'>
-                                    <h4>
-                                    <label
-                                        colspan='4'
-                                        string="We are not yet done! Let us keep moving!"
-                                        />
-                                    </h4>
-                                    <label
-                                        colspan='4'
-                                        string="These are your Bank &amp; Cash Accounts that need Exchange Currency Rate Difference Realization."
-                                        />
+                        <notebook colspan='4'>
+                            <page string='Unrealized Gains or Losses' attrs="{'invisible': [('state','not in', ('in_progress','posted'))]}">
+                                <!-- ELEMENTS VISIBLE ONLY IN STAGE X - UNREALIZED GAINS OR LOSSES -->
+                                <group>
+                                    <group string="Unrealized Gains or Losses" cols="2">
+                                        <group colspan='4'>
+                                            <h4>
+                                            <label
+                                                colspan='4'
+                                                string="Mauris vestibulum lectus vitae arcu posuere ornare. Maecenas eu tristique mi, vitae efficitur diam. In faucibus cursus lorem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas."
+                                                />
+                                            </h4>
+                                            <label
+                                                colspan='4'
+                                                string="Etiam vehicula velit mi, et bibendum odio posuere eu. Nullam magna quam, imperdiet at eros at, hendrerit gravida tortor"
+                                                />
+                                        </group>
+                                        <label
+                                            colspan='2'
+                                            string="Proin tempus, ante et commodo finibus, dolor orci sagittis libero, eget placerat nibh odio sed sem. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
+                                            />
+                                    </group>
                                 </group>
-                                <label
-                                    colspan='2'
-                                    string="It is mandatory that you fill the field in the right with the accounts that hold your Bank &amp; Cash in Foreign Currency."
-                                    />
-                            </group>
-                        </group>
-                        <group cols="2">
-                            <group colspan='4'>
-                                <label
-                                    colspan='2'
-                                    string="It is likely wrongfully set Accounts got attribute 'Liquidity' Type. Be warned that you should address this issue before proceeding With 'FILL WITH NEXT STEP' step."
-                                    />
-                                <label
-                                    colspan='2'
-                                    string="Check that those Accounts being presented here to you are really 'Liquidity' Type and Multicurrency"
-                                    />
-                                <label
-                                    colspan='2'
-                                    string="If one of your accounts does not appear here. Open a new Windows Fix your missing account and try to add it again."
-                                    />
-                            </group>
-                            <group colspan='4'>
-                                <field name='bk_ids' nolabel="1">
+                                <field name='line_ids' nolabel="1">
                                     <tree>
-                                        <field name='code'/>
-                                        <field name='name'/>
+                                        <field name='type'/>
+                                        <field name='account_id'/>
+                                        <field name='currency_id'/>
+                                        <field name='exchange_rate'/>
+                                        <field name='foreign_balance'/>
+                                        <field name='adjusted_balance'/>
+                                        <field name='balance'/>
+                                        <field name='unrealized_gain_loss'/>
                                     </tree>
                                 </field>
-                            </group>
-                        </group>
-                        <!-- ELEMENTS VISIBLE ONLY IN STAGE X - RECEIVABLE ACCOUNTS -->
-                        <group>
-                            <group string="Receivable Accounts" cols="2">
-                                <group colspan='4'>
-                                    <h4>
-                                    <label
-                                        colspan='4'
-                                        string="We are not yet done! Let us keep moving!"
-                                        />
-                                    </h4>
-                                    <label
-                                        colspan='4'
-                                        string="These are your Receivable Accounts that need Exchange Currency Rate Difference Realization."
-                                        />
+                            </page>
+                            <page string='Bank &amp; Cash Accounts' attrs="{'invisible': [('state','not in', ('prepare','in_progress','posted'))]}">
+                                <!-- ELEMENTS VISIBLE ONLY IN STAGE X - BANK ACCOUNTS -->
+                                <group>
+                                    <group string="Bank &amp; Cash Accounts" cols="2">
+                                        <group colspan='4'>
+                                            <h4>
+                                            <label
+                                                colspan='4'
+                                                string="We are not yet done! Let us keep moving!"
+                                                />
+                                            </h4>
+                                            <label
+                                                colspan='4'
+                                                string="These are your Bank &amp; Cash Accounts that need Exchange Currency Rate Difference Realization."
+                                                />
+                                        </group>
+                                        <label
+                                            colspan='2'
+                                            string="It is mandatory that you fill the field in the right with the accounts that hold your Bank &amp; Cash in Foreign Currency."
+                                            />
+                                    </group>
                                 </group>
-                                <label
-                                    colspan='2'
-                                    string="It is mandatory that you fill the field in the right with the accounts that hold your Receivables in Foreign Currency."
-                                    />
-                            </group>
-                        </group>
-                        <group cols="2">
-                            <group colspan='4'>
-                                <label
-                                    colspan='2'
-                                    string="It is likely wrongfully set Accounts got attribute 'Receivable' Type. Be warned that you should address this issue before proceeding With 'FILL WITH NEXT STEP' step."
-                                    />
-                                <label
-                                    colspan='2'
-                                    string="Check that those Accounts being presented here to you are really 'Receivable' Type and Multicurrency"
-                                    />
-                                <label
-                                    colspan='2'
-                                    string="If one of your accounts does not appear here. Open a new Windows Fix your missing account and try to add it again."
-                                    />
-                            </group>
-                            <group colspan='4'>
-                                <field name='rec_ids' nolabel="1">
-                                    <tree>
-                                        <field name='code'/>
-                                        <field name='name'/>
-                                    </tree>
-                                </field>
-                            </group>
-                        </group>
-                        <!-- ELEMENTS VISIBLE ONLY IN STAGE X - PAYABLE ACCOUNTS -->
-                        <group>
-                            <group string="Payable Accounts" cols="2">
-                                <group colspan='4'>
-                                    <h4>
-                                    <label
-                                        colspan='4'
-                                        string="We are not yet done! Let us keep moving!"
-                                        />
-                                    </h4>
-                                    <label
-                                        colspan='4'
-                                        string="These are your Payable Accounts that need Exchange Currency Rate Difference Realization."
-                                        />
+                                <group cols="2">
+                                    <group colspan='4'>
+                                        <label
+                                            colspan='2'
+                                            string="It is likely wrongfully set Accounts got attribute 'Liquidity' Type. Be warned that you should address this issue before proceeding With 'FILL WITH NEXT STEP' step."
+                                            />
+                                        <label
+                                            colspan='2'
+                                            string="Check that those Accounts being presented here to you are really 'Liquidity' Type and Multicurrency"
+                                            />
+                                        <label
+                                            colspan='2'
+                                            string="If one of your accounts does not appear here. Open a new Windows Fix your missing account and try to add it again."
+                                            />
+                                    </group>
+                                    <group colspan='4'>
+                                        <field name='bk_ids' readonly="1" nolabel="1">
+                                            <tree>
+                                                <field name='code'/>
+                                                <field name='name'/>
+                                            </tree>
+                                        </field>
+                                    </group>
                                 </group>
-                                <label
-                                    colspan='2'
-                                    string="It is mandatory that you fill the field in the right with the accounts that hold your Payable in Foreign Currency."
-                                    />
-                            </group>
-                        </group>
-                        <group cols="2">
-                            <group colspan='4'>
-                                <label
-                                    colspan='2'
-                                    string="It is likely wrongfully set Accounts got attribute 'Payable' Type. Be warned that you should address this issue before proceeding With 'FILL WITH NEXT STEP' step."
-                                    />
-                                <label
-                                    colspan='2'
-                                    string="Check that those Accounts being presented here to you are really 'Payable' Type and Multicurrency"
-                                    />
-                                <label
-                                    colspan='2'
-                                    string="If one of your accounts does not appear here. Open a new Windows Fix your missing account and try to add it again."
-                                    />
-                            </group>
-                            <group colspan='4'>
-                                <field name='pay_ids' nolabel="1">
-                                    <tree>
-                                        <field name='code'/>
-                                        <field name='name'/>
-                                    </tree>
-                                </field>
-                            </group>
-                        </group>
-                        <!-- ELEMENTS VISIBLE ONLY IN STAGE X - UNREALIZED GAINS OR LOSSES -->
-                        <group string="Unrealized Gains or Losses" cols="2" colspan='4'>
-                            <field name='line_ids' nolabel="1">
-                                <tree>
-                                    <field name='type'/>
-                                    <field name='account_id'/>
-                                    <field name='currency_id'/>
-                                    <field name='exchange_rate'/>
-                                    <field name='foreign_balance'/>
-                                    <field name='adjusted_balance'/>
-                                    <field name='balance'/>
-                                    <field name='unrealized_gain_loss'/>
-                                </tree>
-                            </field>
-                        </group>
+                            </page>
+                            <page string='Receivable Accounts' attrs="{'invisible': [('state','not in', ('prepare','in_progress','posted'))]}">
+                                <!-- ELEMENTS VISIBLE ONLY IN STAGE X - RECEIVABLE ACCOUNTS -->
+                                <group>
+                                    <group string="Receivable Accounts" cols="2">
+                                        <group colspan='4'>
+                                            <h4>
+                                            <label
+                                                colspan='4'
+                                                string="We are not yet done! Let us keep moving!"
+                                                />
+                                            </h4>
+                                            <label
+                                                colspan='4'
+                                                string="These are your Receivable Accounts that need Exchange Currency Rate Difference Realization."
+                                                />
+                                        </group>
+                                        <label
+                                            colspan='2'
+                                            string="It is mandatory that you fill the field in the right with the accounts that hold your Receivables in Foreign Currency."
+                                            />
+                                    </group>
+                                </group>
+                                <group cols="2">
+                                    <group colspan='4'>
+                                        <label
+                                            colspan='2'
+                                            string="It is likely wrongfully set Accounts got attribute 'Receivable' Type. Be warned that you should address this issue before proceeding With 'FILL WITH NEXT STEP' step."
+                                            />
+                                        <label
+                                            colspan='2'
+                                            string="Check that those Accounts being presented here to you are really 'Receivable' Type and Multicurrency"
+                                            />
+                                        <label
+                                            colspan='2'
+                                            string="If one of your accounts does not appear here. Open a new Windows Fix your missing account and try to add it again."
+                                            />
+                                    </group>
+                                    <group colspan='4'>
+                                        <field name='rec_ids' readonly="1" nolabel="1">
+                                            <tree>
+                                                <field name='code'/>
+                                                <field name='name'/>
+                                            </tree>
+                                        </field>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string='Payable Accounts' attrs="{'invisible': [('state','not in', ('prepare','in_progress','posted'))]}">
+                                <!-- ELEMENTS VISIBLE ONLY IN STAGE X - PAYABLE ACCOUNTS -->
+                                <group>
+                                    <group string="Payable Accounts" cols="2">
+                                        <group colspan='4'>
+                                            <h4>
+                                            <label
+                                                colspan='4'
+                                                string="We are not yet done! Let us keep moving!"
+                                                />
+                                            </h4>
+                                            <label
+                                                colspan='4'
+                                                string="These are your Payable Accounts that need Exchange Currency Rate Difference Realization."
+                                                />
+                                        </group>
+                                        <label
+                                            colspan='2'
+                                            string="It is mandatory that you fill the field in the right with the accounts that hold your Payable in Foreign Currency."
+                                            />
+                                    </group>
+                                </group>
+                                <group cols="2">
+                                    <group colspan='4'>
+                                        <label
+                                            colspan='2'
+                                            string="It is likely wrongfully set Accounts got attribute 'Payable' Type. Be warned that you should address this issue before proceeding With 'FILL WITH NEXT STEP' step."
+                                            />
+                                        <label
+                                            colspan='2'
+                                            string="Check that those Accounts being presented here to you are really 'Payable' Type and Multicurrency"
+                                            />
+                                        <label
+                                            colspan='2'
+                                            string="If one of your accounts does not appear here. Open a new Windows Fix your missing account and try to add it again."
+                                            />
+                                    </group>
+                                    <group colspan='4'>
+                                        <field name='pay_ids' readonly="1" nolabel="1">
+                                            <tree>
+                                                <field name='code'/>
+                                                <field name='name'/>
+                                            </tree>
+                                        </field>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string='Other Info'>
+                                <group string="Company Info">
+                                    <field
+                                        name="company_id"
+                                        on_change='onchange_company_id(company_id)'
+                                        readonly="1"/>
+                                    <field name="currency_id"/>
+                                </group>
+                            </page>
+                        </notebook>
                     </group>
                 </form>
             </field>
