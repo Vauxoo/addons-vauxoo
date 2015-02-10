@@ -29,19 +29,19 @@ class res_company(osv.Model):
 
     _columns = {
         'bank_gain_loss_exchange_account_id': fields.many2one(
-            'account.account', 'Bank Gain or Loss Exchange Rate Account',
+            'account.account', 'Bank Gain or Loss Account',
             domain=('[("type", "!=", "view")]'),
             required=False,
             help=('Bank Gain or Loss Exchange Rate Account for booking '
                   'Difference')),
         'rec_gain_loss_exchange_account_id': fields.many2one(
-            'account.account', 'Receivable Gain or Loss Exchange Rate Account',
+            'account.account', 'Receivable Gain or Loss Account',
             domain=('[("type", "!=", "view")]'),
             required=False,
             help=('Receivable Gain or Loss Exchange Rate Account for booking '
                   'Difference')),
         'pay_gain_loss_exchange_account_id': fields.many2one(
-            'account.account', 'Payable Gain or Loss Exchange Rate Account',
+            'account.account', 'Payable Gain or Loss Account',
             domain=('[("type", "!=", "view")]'),
             required=False,
             help=('Payable Gain or Loss Exchange Rate Account for booking '
