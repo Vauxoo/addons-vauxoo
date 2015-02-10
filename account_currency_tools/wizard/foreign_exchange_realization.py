@@ -193,6 +193,12 @@ class foreign_exchange_realization(osv.osv_memory):
          'move_id': fields.many2one(
              'account.move', 'Journal Entry',
              required=False),
+        'target_move': fields.selection(
+            [('posted', 'All Posted Entries'),
+            ('all', 'All Entries')],
+            'Entries to Include',
+            required=True,
+            help='All Journal Entries or just Posted Journal Entries'),
     }
 
     _defaults = {
@@ -209,9 +215,12 @@ class foreign_exchange_realization(osv.osv_memory):
                 SUM(aml.debit - aml.credit) AS balance
             FROM account_move_line AS aml
             INNER JOIN account_period AS ap ON ap.id = aml.period_id
+            INNER JOIN account_move AS am ON am.id = aml.move_id
             WHERE
                 aml.account_id IN (%(account_ids)s) AND
                 aml.currency_id IS NOT NULL AND
+                aml.state <> 'draft' AND
+                am.state IN (%(states)s) AND
                 ap.id IN (%(period_ids)s)
             GROUP BY aml.account_id, aml.currency_id
         ''' % args
@@ -226,9 +235,12 @@ class foreign_exchange_realization(osv.osv_memory):
             FROM account_move_line AS aml
             INNER JOIN account_account AS aa ON aa.id = aml.account_id
             INNER JOIN account_period AS ap ON ap.id = aml.period_id
+            INNER JOIN account_move AS am ON am.id = aml.move_id
             WHERE
                 aa.type = '%(account_type)s' AND
                 aml.currency_id IS NOT NULL AND
+                aml.state <> 'draft' AND
+                am.state IN (%(states)s) AND
                 aml.company_id = %(company_id)d AND
                 aa.id BETWEEN %(parent_left)d AND %(parent_right)d AND
                 ap.id IN (%(period_ids)s)
@@ -249,13 +261,21 @@ class foreign_exchange_realization(osv.osv_memory):
         company_id = wzd_brw.company_id.id
 
         # Searching for other accounts that could be used as multicurrency
+        states = ["'posted'"]
+        if wzd_brw.target_move == 'all':
+            states.append("'draft'")
         period_ids = [str(ap_brw.id) for ap_brw in wzd_brw.period_ids]
+        if not period_ids:
+            raise osv.except_osv(
+                _('Error!'),
+                _('There are no Periods selected'))
         args = dict(
             account_type=account_type,
             company_id=company_id,
             parent_left=parent_left,
             parent_right=parent_right,
-            period_ids=', '.join(period_ids)
+            period_ids=', '.join(period_ids),
+            states=', '.join(states),
         )
         return args
 
@@ -332,13 +352,22 @@ class foreign_exchange_realization(osv.osv_memory):
         account_ids = []
         for fn in ('bk_ids', 'rec_ids', 'pay_ids'):
             account_ids += [aa_brw.id for aa_brw in getattr(wzd_brw, fn)]
+        if not account_ids:
+            raise osv.except_osv(
+                _('Error!'),
+                _('There are no accounts to compute'))
+
         account_ids = [str(idx) for idx in account_ids]
 
+        states = ["'posted'"]
+        if wzd_brw.target_move == 'all':
+            states.append("'draft'")
         period_ids = [str(ap_brw.id) for ap_brw in wzd_brw.period_ids]
 
         args = dict(
             account_ids=', '.join(account_ids),
             period_ids=', '.join(period_ids),
+            states=', '.join(states),
         )
 
         res = self.get_values_from_aml(cr, uid, args, context=context)

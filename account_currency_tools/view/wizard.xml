@@ -72,6 +72,7 @@
                                 nolabel="1"
                                 required="1"
                                 />
+                            <field name="target_move"/>
                             <field name="journal_id" required="1"/>
                             <field name="date"/>
                             <field name="move_id" readonly="1"/>
