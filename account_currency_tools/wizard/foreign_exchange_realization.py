@@ -58,7 +58,7 @@ class foreign_exchange_realization_line(osv.osv_memory):
                   "in secondary currency for this account.")),
         'unrealized_gain_loss': fields.float(
             'Unrealized Gain(+) or Loss(-)',
-            digits_compute=dp.get_precision('Account'),
+            digits=(2, 2),
             help=("Value of Loss or Gain due to changes in exchange rate when "
                   "doing multi-currency transactions.")),
         'type': fields.related(
@@ -456,6 +456,8 @@ class foreign_exchange_realization(osv.osv_memory):
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         res = []
         for line_brw in wzd_brw.line_ids:
+            if not abs(line_brw.unrealized_gain_loss):
+                continue
             res_a, res_b = self.line_get(cr, uid, line_brw, context=context)
             res.append((0, 0, res_a))
             res.append((0, 0, res_b))
@@ -502,9 +504,11 @@ class foreign_exchange_realization(osv.osv_memory):
         am_obj = self.pool.get('account.move')
         self.check_gain_loss_account_company(cr, uid, ids, context=context)
 
+        lines = self.move_line_get(cr, uid, ids, context=context)
+        if not lines:
+            return False
         move_vals = self.account_move_get(cr, uid, ids, context=context)
         move_id = am_obj.create(cr, uid, move_vals, context=context)
-        lines = self.move_line_get(cr, uid, ids, context=context)
         am_obj.write(cr, uid, [move_id], {'line_id': lines}, context=context)
         wzd_brw.write({'move_id': move_id})
 
@@ -539,8 +543,11 @@ class foreign_exchange_realization(osv.osv_memory):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
-        self.create_move(cr, uid, ids, context=context)
+        res = self.create_move(cr, uid, ids, context=context)
 
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
-        wzd_brw.write({'state': 'posted'})
+        if not res:
+            wzd_brw.write({'state': 'exception'})
+        else:
+            wzd_brw.write({'state': 'posted'})
         return True
