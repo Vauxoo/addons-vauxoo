@@ -133,6 +133,14 @@ class foreign_exchange_realization(osv.osv_memory):
                     "('company_id','=',company_id),"
                     "('currency_id','!=',False)]"),
             help=('Select your Bank Accounts')),
+        'bank_gain_loss_exchange_account_id': fields.many2one(
+            'account.account', 'Bank Gain or Loss Exchange Rate Account',
+            domain=('[("company_id", "=", company_id),'
+                    '("type", "!=", "view"),'
+                    '("parent_id","child_of",root_id)]'),
+            required=False,
+            help=('Bank Gain or Loss Exchange Rate Account for booking '
+            'Difference')),
         'rec_ids': fields.many2many(
             'account.account', 'act_rec_acc_rel',
             'account_id', 'act_id', 'Receivable Accounts',
@@ -141,6 +149,14 @@ class foreign_exchange_realization(osv.osv_memory):
                     "('company_id','=',company_id),"
                     "('currency_id','!=',False)]"),
             help=('Select your Receivable Accounts')),
+        'rec_gain_loss_exchange_account_id': fields.many2one(
+            'account.account', 'Receivable Gain or Loss Exchange Rate Account',
+            domain=('[("company_id", "=", company_id),'
+                    '("type", "!=", "view"),'
+                    '("parent_id","child_of",root_id)]'),
+            required=False,
+            help=('Receivable Gain or Loss Exchange Rate Account for booking '
+            'Difference')),
         'pay_ids': fields.many2many(
             'account.account', 'act_pay_acc_rel',
             'account_id', 'act_id', 'Payable Accounts',
@@ -149,6 +165,14 @@ class foreign_exchange_realization(osv.osv_memory):
                     "('company_id','=',company_id),"
                     "('currency_id','!=',False)]"),
             help=('Select your Payable Accounts')),
+        'pay_gain_loss_exchange_account_id': fields.many2one(
+            'account.account', 'Payable Gain or Loss Exchange Rate Account',
+            domain=('[("company_id", "=", company_id),'
+                    '("type", "!=", "view"),'
+                    '("parent_id","child_of",root_id)]'),
+            required=False,
+            help=('Payable Gain or Loss Exchange Rate Account for booking '
+            'Difference')),
         'fiscalyear_id': fields.many2one(
             'account.fiscalyear', 'Fiscal Year',
             required=True,
