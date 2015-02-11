@@ -1,0 +1,8 @@
+<openerp>
+    <data>
+        <record id="group_invoice_hide_datetime" model="res.groups">
+            <field name="name">Show Datetime field in invoice electronic</field>
+        </record>
+    </data>
+</openerp>
+
