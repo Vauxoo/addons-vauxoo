@@ -86,27 +86,22 @@ class account_invoice_tax(osv.Model):
     _inherit = "account.invoice.tax"
 
     def move_line_get(self, cr, uid, invoice_id, context=None):
-        res = []
-        super(account_invoice_tax, self).move_line_get(cr, uid, invoice_id)
+        res = super(account_invoice_tax, self).move_line_get(
+            cr, uid, invoice_id, context=context)
         tax_invoice_ids = self.search(cr, uid, [
             ('invoice_id', '=', invoice_id)], context=context)
         for inv_t in self.browse(cr, uid, tax_invoice_ids, context=context):
             if not inv_t.base_amount and not inv_t.tax_code_id and not\
                     inv_t.tax_amount:
                 continue
-            res.append({
-                'type': 'tax',
-                'name': inv_t.name,
-                'price_unit': inv_t.amount,
-                'quantity': 1,
-                'price': inv_t.amount or 0.0,
-                'account_id': inv_t.account_id.id or False,
-                'tax_code_id': inv_t.tax_code_id.id or False,
-                'tax_amount': inv_t.tax_amount or False,
-                'account_analytic_id': inv_t.account_analytic_id.id or False,
-                'amount_base': abs(inv_t.base_amount) or 0.0,
-                'tax_id_secondary': inv_t.tax_id.id or False,
-            })
+            tax_name = inv_t.name or ''
+            tax_acc = inv_t.account_id.id or False
+            for tax in res:
+                if tax.get('name', '') == tax_name and tax.get(
+                        'account_id', False) == tax_acc:
+                    tax.update({
+                        'amount_base': abs(inv_t.base_amount) or 0.0,
+                        'tax_id_secondary': inv_t.tax_id.id or False})
         return res
 
 

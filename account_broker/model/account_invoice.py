@@ -44,13 +44,6 @@ class AccountInvoiceLine(models.Model):
         'Partner Broker', compute='_get_partner_broker_ok',
         help='Indicate if the partner to invoice is broker')
 
-    @api.model
-    def move_line_get_item(self, line):
-        res = super(AccountInvoiceLine, self).move_line_get_item(line)
-        res = dict(
-            res, partner_id=line.invoice_broker_id.partner_id.id or None)
-        return res
-
     @api.one
     @api.depends('invoice_id.partner_id')
     def _get_partner_broker_ok(self):
@@ -59,27 +52,65 @@ class AccountInvoiceLine(models.Model):
             self.invoice_id.partner_id.is_broker_ok
 
 
-    class account_invoice_tax(models.Model):
-        _inherit = "account.invoice.tax"
-    
-        @api.v8
-        def compute(self, invoice):
-            currency = invoice.currency_id.with_context(
-                date=invoice.date_invoice or fields.Date.context_today(invoice))
-            res = super(account_invoice_tax, self).compute(invoice)
-            for line in invoice.invoice_line:
-                if line.invoice_broker_id:
-                    taxes = line.invoice_line_tax_id.compute_all(
-                        (line.price_unit * (1 - (line.discount or 0.0) / 100.0)),
-                        1.0, line.product_id, invoice.partner_id)['taxes']
-                    for tax in taxes:
-                        if res.get(tax.get('id', False), False):
-                            am_base = res.get(tax.get('id')).get('base', 0.0)
-                            res.get(tax.get('id')).update({
-                                'base': am_base + currency.round(
-                                    tax.get('price_unit', 0.0)),
-                                'tax_partner_id': line.invoice_broker_id.\
-                                    partner_id and line.invoice_broker_id.\
-                                    partner_id.id or False,
-                                'amount': tax.get('amount', 0.0)})
-            return res
+class account_invoice_tax(models.Model):
+    _inherit = "account.invoice.tax"
+
+    @api.v8
+    def compute(self, invoice):
+        currency = invoice.currency_id.with_context(
+            date=invoice.date_invoice or
+            fields.Date.context_today(invoice))
+        company_currency = invoice.company_id.currency_id
+        res = super(account_invoice_tax, self).compute(invoice)
+        for line in invoice.invoice_line:
+            if line.invoice_broker_id and line.quantity == 0:
+                taxes = line.invoice_line_tax_id.compute_all(
+                    (line.price_unit * (1 - (line.discount or 0.0) / 100.0)),
+                    1.0, line.product_id, invoice.partner_id)['taxes']
+                for tax in taxes:
+                    if res.get(tax.get('id', False), False):
+                        am_base = res.get(tax.get('id')).get('base', 0.0)
+                        tot_am_base = am_base + currency.round(
+                            tax.get('price_unit', 0.0))
+                        res.get(tax.get('id')).update({
+                            'base': tot_am_base,
+                            'tax_partner_id':
+                                line.invoice_broker_id.partner_id and
+                                line.invoice_broker_id.partner_id.id or
+                                False,
+                            'amount': tax.get('amount', 0.0),
+                            'base_amount': currency.compute(
+                                tot_am_base * tax.get('base_sign', 0.0),
+                                company_currency, round=False),
+                            'tax_amount': currency.compute(
+                                tax.get('amount', 0.0) *
+                                tax.get('tax_sign', 0.0), company_currency,
+                                round=False)})
+        return res
+
+    def move_line_get(self, cr, uid, invoice_id, context=None):
+        res = super(account_invoice_tax, self).move_line_get(
+            cr, uid, invoice_id, context=context)
+        tax_invoice_ids = self.search(cr, uid, [
+            ('invoice_id', '=', invoice_id)], context=context)
+        for inv_t in self.browse(cr, uid, tax_invoice_ids, context=context):
+            tax_name = inv_t.name or ''
+            tax_acc = inv_t.account_id.id or False
+            if inv_t.tax_partner_id:
+                for tax in res:
+                    if tax.get('name', '') == tax_name and tax.get(
+                            'account_id', False) == tax_acc:
+                        tax.update({
+                            'partner_id': inv_t.tax_partner_id.id or False})
+        return res
+
+
+class account_invoice(models.Model):
+    _inherit = 'account.invoice'
+
+    @api.model
+    def line_get_convert(self, line, part, date):
+        res = super(account_invoice, self).line_get_convert(
+            line, part, date)
+        res = dict(res, partner_id=line.get('partner_id', False) or part)
+        return res
