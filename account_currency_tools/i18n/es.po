@@ -599,7 +599,7 @@ msgstr ""
 msgid "These are your Bank & Cash Accounts that need Exchange Currency Rate Difference Realization."
 msgstr ""
 "Estas son sus cuentas de Banco & Caja que necesitan Realización por "
-"Diferencia en Tasa de Cambio"
+"Diferencia en Tasa de Cambio."
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
