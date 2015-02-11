@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-11 09:07+0000\n"
-"PO-Revision-Date: 2015-02-11 10:22+0000\n"
+"PO-Revision-Date: 2015-02-11 10:27+0000\n"
 "Last-Translator: Humberto Arocha <hbto@vauxoo.com>\n"
 "Language-Team: Spanish <http://example.com/projects/addons-"
 "vauxoo/account_currency_tools/es/>\n"
@@ -449,7 +449,7 @@ msgstr "Fecha de Posteo"
 #: field:foreign.exchange.realization,journal_id:0
 #: field:res.company,journal_id:0
 msgid "Posting Journal"
-msgstr "Asiento de Posteo"
+msgstr "Diario de Posteo"
 
 #. module: account_currency_tools
 #: selection:foreign.exchange.realization,state:0
