@@ -9,7 +9,7 @@
                     <header>
                         <button
                             name="action_prepare"
-                            string="Prepare Data"
+                            string="Retrieve Multi Currency Accounts"
                             type="object"
                             states='draft'
                             class="oe_highlight" />
@@ -102,6 +102,16 @@
                                             string="Proin tempus, ante et commodo finibus, dolor orci sagittis libero, eget placerat nibh odio sed sem. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
                                             />
                                     </group>
+                                </group>
+                                <group>
+                                    <field
+                                        name='income_currency_exchange_account_id'
+                                        attrs="{'required': [('state','in', ('in_progress'))], 'readonly': [('state','not in', ('draft','in_progress'))]}"
+                                        />
+                                    <field
+                                        name='expense_currency_exchange_account_id'
+                                        attrs="{'required': [('state','in', ('in_progress'))], 'readonly': [('state','not in', ('draft','in_progress'))]}"
+                                        />
                                 </group>
                                 <field name='line_ids' nolabel="1">
                                     <tree>

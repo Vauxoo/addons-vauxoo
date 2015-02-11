@@ -46,4 +46,8 @@ class res_company(osv.Model):
             required=False,
             help=('Payable Gain or Loss Exchange Rate Account for booking '
                   'Difference')),
+        'journal_id': fields.many2one(
+            'account.journal', 'Posting Journal',
+            domain=("[('type','=','general')]"),
+            required=False),
     }
