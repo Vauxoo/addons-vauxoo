@@ -501,15 +501,16 @@ class foreign_exchange_realization(osv.osv_memory):
             company_id=wzd_brw.company_id.id, context=context)
 
     def line_get(self, cr, uid, line_brw, context=None):
+        wzd_brw = line_brw.wizard_id
         name = (_("Exch. Curr. Rate Diff. for %s in %s")
                 % (line_brw.account_id.name, line_brw.currency_id.name))
         account_id = None
         if line_brw.type == 'liquidity':
-            account_id = line_brw.wizard_id.bank_gain_loss_exchange_account_id
+            account_id = wzd_brw.bank_gain_loss_exchange_account_id
         elif line_brw.type == 'receivable':
-            account_id = line_brw.wizard_id.rec_gain_loss_exchange_account_id
+            account_id = wzd_brw.rec_gain_loss_exchange_account_id
         elif line_brw.type == 'payable':
-            account_id = line_brw.wizard_id.pay_gain_loss_exchange_account_id
+            account_id = wzd_brw.pay_gain_loss_exchange_account_id
 
         account_id = account_id and account_id.id or line_brw.account_id.id
         currency_id = line_brw.currency_id.id
@@ -522,14 +523,14 @@ class foreign_exchange_realization(osv.osv_memory):
             'amount_currency': 0,
             'currency_id': currency_id,
         }
-        company_brw = line_brw.wizard_id.company_id
+        company_brw = wzd_brw.company_id
         account_id = None
         if amount > 0:
-            account_id = company_brw.income_currency_exchange_account_id and \
-                company_brw.income_currency_exchange_account_id.id
+            account_id = wzd_brw.income_currency_exchange_account_id and \
+                wzd_brw.income_currency_exchange_account_id.id
         else:
-            account_id = company_brw.expense_currency_exchange_account_id and \
-                company_brw.expense_currency_exchange_account_id.id
+            account_id = wzd_brw.expense_currency_exchange_account_id and \
+                wzd_brw.expense_currency_exchange_account_id.id
 
         res_b = {
             'name': name[:64],
