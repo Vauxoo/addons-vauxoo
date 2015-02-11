@@ -11,7 +11,7 @@
                             name="action_prepare"
                             string="Retrieve Multi Currency Accounts"
                             type="object"
-                            states='draft'
+                            states='draft,open_fiscalyear,missing_opening'
                             class="oe_highlight" />
                         <button
                             name="action_progress"
@@ -25,7 +25,10 @@
                             type="object"
                             states='in_progress'
                             class="oe_highlight" />
-                        or
+                        <label
+                            string='or'
+                            attrs="{'invisible': [('state', 'in', ('exception','posted'))]}"
+                            />
                         <button
                             type='special'
                             special='cancel'
@@ -39,6 +42,17 @@
                             nolabel="1"
                             statusbar_visible="draft,prepare,in_progress,posted"
                             />
+                        <group cols='4'>
+                            <field
+                                name='skip_close_fiscalyear'
+                                attrs="{'invisible': [('skip_close_fiscalyear', '!=', True), ('state', '!=', 'open_fiscalyear')], 'required': [('state','in', ('open_fiscalyear',))], 'required': [('state','in', ('open_fiscalyear',))], 'readonly': [('state','not in', ('open_fiscalyear',))]}"
+                                />
+                            <field
+                                name='skip_opening_entry'
+                                attrs="{'invisible': [('skip_opening_entry', '!=', True), ('state', '!=', 'missing_opening')], 'required': [('state','in', ('missing_opening',))], 'required': [('state','in', ('missing_opening',))], 'readonly': [('state','not in', ('missing_opening',))]}"
+                                />
+
+                        </group>
                     </header>
                     <group>
                         <group string="Accounting Info">

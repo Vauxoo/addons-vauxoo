@@ -302,6 +302,10 @@ class foreign_exchange_realization(osv.osv_memory):
             'account.account',
             string="Loss Exchange Rate Account",
             domain="[('type', '=', 'other')]"),
+        'skip_close_fiscalyear': fields.boolean(
+            'Skip Close Fiscal Year Check'),
+        'skip_opening_entry': fields.boolean(
+            'Skip Opening Journal Entry Check'),
     }
 
     _defaults = {
@@ -613,10 +617,14 @@ class foreign_exchange_realization(osv.osv_memory):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
 
-        if not self.check_previous_fiscalyear(cr, uid, ids, context=context):
+        if not wzd_brw.skip_close_fiscalyear and \
+                not self.check_previous_fiscalyear(cr, uid, ids,
+                                                   context=context):
             return wzd_brw.write({'state': 'open_fiscalyear'})
 
-        if not self.check_opening_journal_entry(cr, uid, ids, context=context):
+        if not wzd_brw.skip_opening_entry and \
+                not self.check_opening_journal_entry(cr, uid, ids,
+                                                     context=context):
             return wzd_brw.write({'state': 'missing_opening'})
 
         self.action_get_periods(cr, uid, ids, context=context)
@@ -666,7 +674,6 @@ class foreign_exchange_realization(osv.osv_memory):
             args.append(('state', '=', 'posted'))
 
         return am_obj.search(cr, uid, args, context=context)
-
 
     def check_previous_fiscalyear(self, cr, uid, ids, context=None):
         context = context or {}
