@@ -24,6 +24,7 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 import openerp.addons.decimal_precision as dp  # pylint: disable=F0401
 import openerp
+from datetime import datetime, timedelta
 
 
 class foreign_exchange_realization_line(osv.osv_memory):
@@ -609,13 +610,16 @@ class foreign_exchange_realization(osv.osv_memory):
     def action_prepare(self, cr, uid, ids, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+
+        if not self.check_previous_fiscalyear(cr, uid, ids, context=context):
+            return wzd_brw.write({'state': 'open_fiscalyear'})
 
         self.action_get_periods(cr, uid, ids, context=context)
         self.action_get_rec_accounts(cr, uid, ids, context=context)
         self.action_get_pay_accounts(cr, uid, ids, context=context)
         self.action_get_bank_accounts(cr, uid, ids, context=context)
 
-        wzd_brw = self.browse(cr, uid, ids[0], context=context)
         wzd_brw.write({'state': 'prepare'})
         return True
 
@@ -628,6 +632,23 @@ class foreign_exchange_realization(osv.osv_memory):
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         wzd_brw.write({'state': 'in_progress'})
         return True
+
+    def check_previous_fiscalyear(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        fy_obj = self.pool.get('account.fiscalyear')
+
+        date_start = wzd_brw.fiscalyear_id.date_start
+        date_stop = (datetime.strptime(date_start, '%Y-%m-%d') -
+                     timedelta(days=1))
+        date_stop = date_stop.strftime('%Y-%m-%d')
+        fy_id = fy_obj.find(
+            cr, uid, dt=date_stop, exception=False, context=context)
+        if not fy_id:
+            return True
+        return fy_obj.browse(cr, uid, fy_id, context=context).state == 'done'
 
     def action_create_move(self, cr, uid, ids, context=None):
         context = context or {}
