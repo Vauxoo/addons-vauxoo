@@ -34,7 +34,7 @@ class foreign_exchange_realization_line(osv.osv_memory):
         'wizard_id': fields.many2one(
             'foreign.exchange.realization',
             string='Wizard',
-            required=True,),
+            required=False,),
         'account_id': fields.many2one(
             'account.account', 'Account',
             required=True,),
