@@ -45,15 +45,27 @@
                             <field
                                 name="root_id"
                                 attrs="{'readonly': [('state','!=', 'draft')]}"
+                                widget="selection"
                                 required="1"
                                 />
                             <field name="target_move" attrs="{'readonly': [('state','!=', 'draft')]}"/>
-                            <field name="journal_id" required="1" attrs="{'readonly': [('state','!=', 'draft')]}"/>
+                            <field
+                                name="journal_id"
+                                widget="selection"
+                                required="1"
+                                attrs="{'readonly': [('state','!=', 'draft')]}"/>
                             <field name="date"/>
                         </group>
                         <group string="Realization Info">
-                            <field name="fiscalyear_id" on_change='onchange_fiscalyear(fiscalyear_id)' attrs="{'readonly': [('state','!=', 'draft')]}"/>
-                            <field name="period_id" attrs="{'readonly': [('state','!=', 'draft')]}"/>
+                            <field
+                                name="fiscalyear_id"
+                                widget="selection"
+                                on_change='onchange_fiscalyear(fiscalyear_id)'
+                                attrs="{'readonly': [('state','!=', 'draft')]}"/>
+                            <field
+                                name="period_id"
+                                widget="selection"
+                                attrs="{'readonly': [('state','!=', 'draft')]}"/>
                             <field name="period_ids" widget="many2many_tags">
                                 <tree>
                                     <field name='code'/>
