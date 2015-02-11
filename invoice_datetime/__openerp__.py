@@ -42,7 +42,8 @@
     "demo": [],
     "data": [
         "account_invoice_view.xml",
-        "res_config_acc_view.xml"
+        "res_config_acc_view.xml",
+        "security/security.xml",
     ],
     "test": [],
     "js": [],
