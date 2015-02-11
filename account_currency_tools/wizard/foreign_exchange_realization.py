@@ -89,7 +89,18 @@ class foreign_exchange_realization(osv.osv_memory):
     def onchange_fiscalyear(self, cr, uid, ids, fiscalyear_id=False,
                             context=None):
         res = {}
-        res['value'] = {'period_id': False, 'period_ids': []}
+        period_id = False
+        fy_obj = self.pool.get('account.fiscalyear')
+        if fiscalyear_id:
+            new_fy_id = fy_obj.find(cr, uid, exception=False, context=context)
+            if fiscalyear_id == new_fy_id:
+                ctx = dict(context or {})
+                ctx['account_period_prefer_normal'] = True
+                period_id = self.pool.get('account.period').find(
+                    cr, uid, context=ctx)
+                period_id = period_id and period_id[0]
+
+        res['value'] = {'period_id': period_id, 'period_ids': []}
         return res
 
     def _get_default_company(self, cr, uid, context=None):
@@ -110,6 +121,12 @@ class foreign_exchange_realization(osv.osv_memory):
         if not company_id:
             return res
 
+        acc_obj = self.pool.get('account.account')
+        args = [("company_id", "=", company_id),
+                ("type", "=", "view"),
+                ("parent_id", "=", None)]
+        root_id = acc_obj.search(cr, uid, args, context=context)
+
         rc_brw = self.pool.get('res.company').browse(
             cr, uid, company_id, context=context)
         cur_id = rc_brw.currency_id.id
@@ -126,8 +143,21 @@ class foreign_exchange_realization(osv.osv_memory):
             res['value'].update(
                 {'pay_gain_loss_exchange_account_id':
                  rc_brw.pay_gain_loss_exchange_account_id.id})
+        if rc_brw.income_currency_exchange_account_id:
+            res['value'].update(
+                {'income_currency_exchange_account_id':
+                 rc_brw.income_currency_exchange_account_id.id})
+        if rc_brw.expense_currency_exchange_account_id:
+            res['value'].update(
+                {'expense_currency_exchange_account_id':
+                 rc_brw.expense_currency_exchange_account_id.id})
+        if rc_brw.journal_id:
+            res['value'].update(
+                {'journal_id':
+                 rc_brw.journal_id.id})
 
         res['value'].update({'currency_id': cur_id})
+        res['value'].update({'root_id': root_id and root_id[0]})
         return res
 
     _columns = {
@@ -223,7 +253,8 @@ class foreign_exchange_realization(osv.osv_memory):
             required=False),
         'journal_id': fields.many2one(
             'account.journal', 'Posting Journal',
-            domain="[('company_id','=',company_id)]",
+            domain=("[('company_id','=',company_id),"
+                    "('type','=','general')]"),
             required=False),
         'line_ids': fields.one2many(
             'foreign.exchange.realization.line',
@@ -262,6 +293,14 @@ class foreign_exchange_realization(osv.osv_memory):
                 'Exception: There are no Unrealized Values to book,\n'
                 'Posted Journal: Unrealized Values have been booked'
             )),
+        'income_currency_exchange_account_id': fields.many2one(
+            'account.account',
+            string="Gain Exchange Rate Account",
+            domain="[('type', '=', 'other')]"),
+        'expense_currency_exchange_account_id': fields.many2one(
+            'account.account',
+            string="Loss Exchange Rate Account",
+            domain="[('type', '=', 'other')]"),
     }
 
     _defaults = {
