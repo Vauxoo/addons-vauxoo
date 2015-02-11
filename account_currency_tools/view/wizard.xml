@@ -112,20 +112,14 @@
                                 <group>
                                     <group string="Unrealized Gains or Losses" cols="2">
                                         <group colspan='4'>
-                                            <h4>
                                             <label
                                                 colspan='4'
-                                                string="Mauris vestibulum lectus vitae arcu posuere ornare. Maecenas eu tristique mi, vitae efficitur diam. In faucibus cursus lorem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas."
-                                                />
-                                            </h4>
-                                            <label
-                                                colspan='4'
-                                                string="Etiam vehicula velit mi, et bibendum odio posuere eu. Nullam magna quam, imperdiet at eros at, hendrerit gravida tortor"
+                                                string="These are the Unrecognized Gains or Losses that have not yet been realized in your Liquidity, Receivables &amp; Payable Accounts"
                                                 />
                                         </group>
                                         <label
                                             colspan='2'
-                                            string="Proin tempus, ante et commodo finibus, dolor orci sagittis libero, eget placerat nibh odio sed sem. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
+                                            string="Only Unrecognized Gains or Losses that are different than zero will be booked. If all of the lines below are zero and you try to Create Journal Entry then you will be taken to a State of Exception where no further steps can be taken."
                                             />
                                     </group>
                                 </group>
@@ -138,6 +132,14 @@
                                         name='expense_currency_exchange_account_id'
                                         attrs="{'required': [('state','in', ('in_progress'))], 'readonly': [('state','not in', ('draft','in_progress'))]}"
                                         />
+                                </group>
+                                <group colspan='4'>
+                                    <i>
+                                    <label
+                                        colspan='4'
+                                        string="Set the fields above if you want that Unrecognized Gains or Losses below be redirected to the above accounts when posting Realization Journal Entry"
+                                        />
+                                    </i>
                                 </group>
                                 <field name='line_ids' nolabel="1">
                                     <tree>
@@ -157,12 +159,6 @@
                                 <group>
                                     <group string="Bank &amp; Cash Accounts" cols="2">
                                         <group colspan='4'>
-                                            <h4>
-                                            <label
-                                                colspan='4'
-                                                string="We are not yet done! Let us keep moving!"
-                                                />
-                                            </h4>
                                             <label
                                                 colspan='4'
                                                 string="These are your Bank &amp; Cash Accounts that need Exchange Currency Rate Difference Realization."
@@ -170,7 +166,7 @@
                                         </group>
                                         <label
                                             colspan='2'
-                                            string="It is mandatory that you fill the field in the right with the accounts that hold your Bank &amp; Cash in Foreign Currency."
+                                            string="It is mandatory that you fill the field below with the accounts that hold your Bank &amp; Cash in Foreign Currency."
                                             />
                                     </group>
                                 </group>
@@ -178,7 +174,7 @@
                                     <group colspan='4'>
                                         <label
                                             colspan='2'
-                                            string="It is likely wrongfully set Accounts got attribute 'Liquidity' Type. Be warned that you should address this issue before proceeding With 'FILL WITH NEXT STEP' step."
+                                            string="It is likely wrongfully set Accounts got attribute 'Liquidity' Type. Be warned that you should address this issue before proceeding With 'Get Unrecognized G &amp; L on Accounts' step."
                                             />
                                         <label
                                             colspan='2'
@@ -188,12 +184,24 @@
                                             colspan='2'
                                             string="If one of your accounts does not appear here. Open a new Windows Fix your missing account and try to add it again."
                                             />
+                                        <label
+                                            colspan='2'
+                                            string="Accounts that are not set as multicurrency, i.e., they were not set with a secondary currency, but were involved in multicurrency transactions will appear here"
+                                            />
                                     </group>
                                     <group colspan='4'>
                                         <field
                                             name='bank_gain_loss_exchange_account_id'
                                             attrs="{'readonly': [('state','not in', ('prepare','draft'))]}"
                                             />
+                                        <group colspan='4'>
+                                            <i>
+                                            <label
+                                                colspan='4'
+                                                string="Set the field above if you want that accounts below be redirected to the above account when posting Realization Journal Entry"
+                                                />
+                                            </i>
+                                        </group>
                                         <field name='bk_ids' readonly="1" nolabel="1" colspan='4'>
                                             <tree>
                                                 <field name='code'/>
@@ -208,12 +216,6 @@
                                 <group>
                                     <group string="Receivable Accounts" cols="2">
                                         <group colspan='4'>
-                                            <h4>
-                                            <label
-                                                colspan='4'
-                                                string="We are not yet done! Let us keep moving!"
-                                                />
-                                            </h4>
                                             <label
                                                 colspan='4'
                                                 string="These are your Receivable Accounts that need Exchange Currency Rate Difference Realization."
@@ -229,7 +231,7 @@
                                     <group colspan='4'>
                                         <label
                                             colspan='2'
-                                            string="It is likely wrongfully set Accounts got attribute 'Receivable' Type. Be warned that you should address this issue before proceeding With 'FILL WITH NEXT STEP' step."
+                                            string="It is likely wrongfully set Accounts got attribute 'Receivable' Type. Be warned that you should address this issue before proceeding With 'Get Unrecognized G &amp; L on Accounts' step."
                                             />
                                         <label
                                             colspan='2'
@@ -239,12 +241,24 @@
                                             colspan='2'
                                             string="If one of your accounts does not appear here. Open a new Windows Fix your missing account and try to add it again."
                                             />
+                                        <label
+                                            colspan='2'
+                                            string="Accounts that are not set as multicurrency, i.e., they were not set with a secondary currency, but were involved in multicurrency transactions will appear here"
+                                            />
                                     </group>
                                     <group colspan='4'>
                                         <field
                                             name='rec_gain_loss_exchange_account_id'
                                             attrs="{'readonly': [('state','not in', ('prepare','draft'))]}"
                                             />
+                                        <group colspan='4'>
+                                            <i>
+                                            <label
+                                                colspan='4'
+                                                string="Set the field above if you want that accounts below be redirected to the above account when posting Realization Journal Entry"
+                                                />
+                                            </i>
+                                        </group>
                                         <field name='rec_ids' readonly="1" nolabel="1" colspan='4'>
                                             <tree>
                                                 <field name='code'/>
@@ -259,12 +273,6 @@
                                 <group>
                                     <group string="Payable Accounts" cols="2">
                                         <group colspan='4'>
-                                            <h4>
-                                            <label
-                                                colspan='4'
-                                                string="We are not yet done! Let us keep moving!"
-                                                />
-                                            </h4>
                                             <label
                                                 colspan='4'
                                                 string="These are your Payable Accounts that need Exchange Currency Rate Difference Realization."
@@ -280,7 +288,7 @@
                                     <group colspan='4'>
                                         <label
                                             colspan='2'
-                                            string="It is likely wrongfully set Accounts got attribute 'Payable' Type. Be warned that you should address this issue before proceeding With 'FILL WITH NEXT STEP' step."
+                                            string="It is likely wrongfully set Accounts got attribute 'Payable' Type. Be warned that you should address this issue before proceeding With 'Get Unrecognized G &amp; L on Accounts' step."
                                             />
                                         <label
                                             colspan='2'
@@ -290,12 +298,24 @@
                                             colspan='2'
                                             string="If one of your accounts does not appear here. Open a new Windows Fix your missing account and try to add it again."
                                             />
+                                        <label
+                                            colspan='2'
+                                            string="Accounts that are not set as multicurrency, i.e., they were not set with a secondary currency, but were involved in multicurrency transactions will appear here"
+                                            />
                                     </group>
                                     <group colspan='4'>
                                         <field
                                             name='pay_gain_loss_exchange_account_id'
                                             attrs="{'readonly': [('state','not in', ('prepare','draft'))]}"
                                             />
+                                        <group colspan='4'>
+                                            <i>
+                                            <label
+                                                colspan='4'
+                                                string="Set the field above if you want that accounts below be redirected to the above account when posting Realization Journal Entry"
+                                                />
+                                            </i>
+                                        </group>
                                         <field name='pay_ids' readonly="1" nolabel="1" colspan='4'>
                                             <tree>
                                                 <field name='code'/>

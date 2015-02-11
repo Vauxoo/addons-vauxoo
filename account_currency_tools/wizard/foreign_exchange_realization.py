@@ -263,7 +263,7 @@ class foreign_exchange_realization(osv.osv_memory):
             'Suggested Recognition Lines'),
         'move_id': fields.many2one(
             'account.move',
-            'Journal Entry',
+            'Realization Journal Entry',
             required=False),
         'target_move': fields.selection(
             [('posted', 'All Posted Entries'),
