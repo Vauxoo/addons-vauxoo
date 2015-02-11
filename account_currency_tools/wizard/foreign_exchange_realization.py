@@ -615,6 +615,9 @@ class foreign_exchange_realization(osv.osv_memory):
         if not self.check_previous_fiscalyear(cr, uid, ids, context=context):
             return wzd_brw.write({'state': 'open_fiscalyear'})
 
+        if not self.check_opening_journal_entry(cr, uid, ids, context=context):
+            return wzd_brw.write({'state': 'missing_opening'})
+
         self.action_get_periods(cr, uid, ids, context=context)
         self.action_get_rec_accounts(cr, uid, ids, context=context)
         self.action_get_pay_accounts(cr, uid, ids, context=context)
@@ -632,6 +635,37 @@ class foreign_exchange_realization(osv.osv_memory):
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         wzd_brw.write({'state': 'in_progress'})
         return True
+
+    def check_opening_journal_entry(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        ap_obj = self.pool.get('account.period')
+        am_obj = self.pool.get('account.move')
+
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        date_start = wzd_brw.fiscalyear_id.date_start
+        company_id = wzd_brw.company_id.id
+
+        period_id = ap_obj.search(
+            cr, uid, [('date_start', '=', date_start),
+                      ('special', '=', True)], context=context)
+
+        period_id = period_id and period_id[0]
+
+        if not period_id:
+            return True
+
+        args = [('date', '=', date_start),
+                ('journal_id.type', '=', 'situation'),
+                ('period_id', '=', period_id),
+                ('company_id', '=', company_id),
+                ]
+
+        if wzd_brw.target_move == 'posted':
+            args.append(('state', '=', 'posted'))
+
+        return am_obj.search(cr, uid, args, context=context)
+
 
     def check_previous_fiscalyear(self, cr, uid, ids, context=None):
         context = context or {}
