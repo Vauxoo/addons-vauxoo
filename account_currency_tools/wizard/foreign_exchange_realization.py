@@ -229,6 +229,7 @@ class foreign_exchange_realization(osv.osv_memory):
             required=True,
             domain=("[('fiscalyear_id','=',fiscalyear_id),"
                     "('company_id','=',company_id),"
+                    "('state','=','draft'),"
                     "('special','=',False)]"),
             help=('Select your Payable Accounts')),
         'company_id': fields.many2one(
