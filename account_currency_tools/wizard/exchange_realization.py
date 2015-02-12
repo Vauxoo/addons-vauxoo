@@ -132,18 +132,30 @@ class foreign_exchange_realization(osv.osv_memory):
             cr, uid, company_id, context=context)
         cur_id = rc_brw.currency_id.id
 
-        if rc_brw.bank_gain_loss_exchange_account_id:
+        if rc_brw.bank_gain_exchange_account_id:
             res['value'].update(
-                {'bank_gain_loss_exchange_account_id':
-                 rc_brw.bank_gain_loss_exchange_account_id.id})
-        if rc_brw.rec_gain_loss_exchange_account_id:
+                {'bank_gain_exchange_account_id':
+                 rc_brw.bank_gain_exchange_account_id.id})
+        if rc_brw.bank_loss_exchange_account_id:
             res['value'].update(
-                {'rec_gain_loss_exchange_account_id':
-                 rc_brw.rec_gain_loss_exchange_account_id.id})
-        if rc_brw.pay_gain_loss_exchange_account_id:
+                {'bank_loss_exchange_account_id':
+                 rc_brw.bank_loss_exchange_account_id.id})
+        if rc_brw.rec_gain_exchange_account_id:
             res['value'].update(
-                {'pay_gain_loss_exchange_account_id':
-                 rc_brw.pay_gain_loss_exchange_account_id.id})
+                {'rec_gain_exchange_account_id':
+                 rc_brw.rec_gain_exchange_account_id.id})
+        if rc_brw.rec_loss_exchange_account_id:
+            res['value'].update(
+                {'rec_loss_exchange_account_id':
+                 rc_brw.rec_loss_exchange_account_id.id})
+        if rc_brw.pay_gain_exchange_account_id:
+            res['value'].update(
+                {'pay_gain_exchange_account_id':
+                 rc_brw.pay_gain_exchange_account_id.id})
+        if rc_brw.pay_loss_exchange_account_id:
+            res['value'].update(
+                {'pay_loss_exchange_account_id':
+                 rc_brw.pay_loss_exchange_account_id.id})
         if rc_brw.income_currency_exchange_account_id:
             res['value'].update(
                 {'income_currency_exchange_account_id':
@@ -179,13 +191,21 @@ class foreign_exchange_realization(osv.osv_memory):
                     "('company_id','=',company_id),"
                     "('currency_id','!=',False)]"),
             help=('Select your Bank Accounts')),
-        'bank_gain_loss_exchange_account_id': fields.many2one(
-            'account.account', 'Bank Gain or Loss Exchange Rate Account',
+        'bank_gain_exchange_account_id': fields.many2one(
+            'account.account', 'Bank Gain Exchange Rate Account',
             domain=('[("company_id", "=", company_id),'
                     '("type", "!=", "view"),'
                     '("parent_id","child_of",root_id)]'),
             required=False,
-            help=('Bank Gain or Loss Exchange Rate Account for booking '
+            help=('Bank Gain Exchange Rate Account for booking '
+                  'Difference')),
+        'bank_loss_exchange_account_id': fields.many2one(
+            'account.account', 'Bank Loss Exchange Rate Account',
+            domain=('[("company_id", "=", company_id),'
+                    '("type", "!=", "view"),'
+                    '("parent_id","child_of",root_id)]'),
+            required=False,
+            help=('Bank Loss Exchange Rate Account for booking '
                   'Difference')),
         'rec_ids': fields.many2many(
             'account.account', 'act_rec_acc_rel',
@@ -195,13 +215,21 @@ class foreign_exchange_realization(osv.osv_memory):
                     "('company_id','=',company_id),"
                     "('currency_id','!=',False)]"),
             help=('Select your Receivable Accounts')),
-        'rec_gain_loss_exchange_account_id': fields.many2one(
-            'account.account', 'Receivable Gain or Loss Exchange Rate Account',
+        'rec_gain_exchange_account_id': fields.many2one(
+            'account.account', 'Receivable Gain Exchange Rate Account',
             domain=('[("company_id", "=", company_id),'
                     '("type", "!=", "view"),'
                     '("parent_id","child_of",root_id)]'),
             required=False,
-            help=('Receivable Gain or Loss Exchange Rate Account for booking '
+            help=('Receivable Gain Exchange Rate Account for booking '
+                  'Difference')),
+        'rec_loss_exchange_account_id': fields.many2one(
+            'account.account', 'Receivable Loss Exchange Rate Account',
+            domain=('[("company_id", "=", company_id),'
+                    '("type", "!=", "view"),'
+                    '("parent_id","child_of",root_id)]'),
+            required=False,
+            help=('Receivable Loss Exchange Rate Account for booking '
                   'Difference')),
         'pay_ids': fields.many2many(
             'account.account', 'act_pay_acc_rel',
@@ -211,13 +239,21 @@ class foreign_exchange_realization(osv.osv_memory):
                     "('company_id','=',company_id),"
                     "('currency_id','!=',False)]"),
             help=('Select your Payable Accounts')),
-        'pay_gain_loss_exchange_account_id': fields.many2one(
-            'account.account', 'Payable Gain or Loss Exchange Rate Account',
+        'pay_gain_exchange_account_id': fields.many2one(
+            'account.account', 'Payable Gain Exchange Rate Account',
             domain=('[("company_id", "=", company_id),'
                     '("type", "!=", "view"),'
                     '("parent_id","child_of",root_id)]'),
             required=False,
-            help=('Payable Gain or Loss Exchange Rate Account for booking '
+            help=('Payable Gain Exchange Rate Account for booking '
+                  'Difference')),
+        'pay_loss_exchange_account_id': fields.many2one(
+            'account.account', 'Payable Loss Exchange Rate Account',
+            domain=('[("company_id", "=", company_id),'
+                    '("type", "!=", "view"),'
+                    '("parent_id","child_of",root_id)]'),
+            required=False,
+            help=('Payable Loss Exchange Rate Account for booking '
                   'Difference')),
         'fiscalyear_id': fields.many2one(
             'account.fiscalyear', 'Fiscal Year',
