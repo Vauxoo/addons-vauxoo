@@ -20,4 +20,4 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-from . import foreign_exchange_realization
+from . import exchange_realization
