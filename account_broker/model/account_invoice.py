@@ -30,7 +30,7 @@ from openerp import models, fields, api
 class account_invoice_tax(models.Model):
     _inherit = 'account.invoice.tax'
 
-    tax_partner_id = fields.Many2one('res.partner', 'Partner')
+    tax_partner_id = fields.Many2one('res.partner', 'Partner', readonly=True)
 
 
 class AccountInvoiceLine(models.Model):
@@ -47,6 +47,10 @@ class AccountInvoiceLine(models.Model):
     @api.one
     @api.depends('invoice_id.partner_id')
     def _get_partner_broker_ok(self):
+        '''
+        If the partner to invoice is broker this field is True, is to only can
+        load a invoice broker in lines to invoice with broker ok == True.
+        '''
         self.partner_broker_ok = self.invoice_id and\
             self.invoice_id.partner_id and\
             self.invoice_id.partner_id.is_broker_ok
@@ -57,6 +61,10 @@ class account_invoice_tax(models.Model):
 
     @api.v8
     def compute(self, invoice):
+        """
+        Super to this method, to calculate values to taxes from lines that your
+        quantity is 0, and have invoice_broker_id.
+        """
         currency = invoice.currency_id.with_context(
             date=invoice.date_invoice or
             fields.Date.context_today(invoice))
@@ -89,6 +97,11 @@ class account_invoice_tax(models.Model):
         return res
 
     def move_line_get(self, cr, uid, invoice_id, context=None):
+        '''
+        Super to function, to add partner_id in dict, this to create the
+        line corresponding to tax with the partner to this, this when the
+        line of tax is to register cost of to broker
+        '''
         res = super(account_invoice_tax, self).move_line_get(
             cr, uid, invoice_id, context=context)
         tax_invoice_ids = self.search(cr, uid, [
@@ -110,6 +123,9 @@ class account_invoice(models.Model):
 
     @api.model
     def line_get_convert(self, line, part, date):
+        '''
+        Super to write in the line of move the partner from tax
+        '''
         res = super(account_invoice, self).line_get_convert(
             line, part, date)
         res = dict(res, partner_id=line.get('partner_id', False) or part)
