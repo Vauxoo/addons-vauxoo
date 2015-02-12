@@ -62,7 +62,9 @@ class TestForUniqueRef(TransactionCase):
         }
         new_product_created = product_obj.create(product_data_1)
         # 'default_code' is set False in duplicated product
-        product_duplicated = new_product_created.copy()
+        #  Used in copy params "{}" to fix next issue:
+        #   https://github.com/odoo/odoo/pull/5236
+        product_duplicated = new_product_created.copy({})
         with self.assertRaisesRegexp(
             IntegrityError,
             r'duplicate key value violates unique constraint '
