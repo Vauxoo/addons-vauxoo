@@ -2,16 +2,9 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
-############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    modified by carlosecv74@gmail.com
-#    Launchpad Project Manager for Publication:
-#   Nhomar Hernandez - nhomar@vauxoo.com
-############################################################################
-#
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
 #    published by the Free Software Foundation, either version 3 of the
@@ -21,30 +14,27 @@
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU Affero General Public License for more details.
+#    This program is distributed in the hope that it will be useful,
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 {
-    "name": "invoice_datetime",
+    "name": "account_bank_statement_unfucked",
     "version": "1.0",
     "author": "Vauxoo",
     "category": "Localization/Mexico",
-    "description": """Add new field invoice_datetime for electronic invoice data
-            and add hour & minute to field date_invoice
+    "description": """
+This module solved errors in bank statement that will not be solved by Odoo
+in V8.0
     """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
-        "account"
+        "account",
     ],
-    "demo": [],
-    "data": [
-        "account_invoice_view.xml",
-        "res_config_acc_view.xml",
-        "security/security.xml",
-    ],
+    "data": [],
     "test": [],
     "js": [],
     "css": [],
