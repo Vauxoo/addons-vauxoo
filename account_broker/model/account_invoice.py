@@ -30,7 +30,7 @@ from openerp import models, fields, api
 class account_invoice_tax(models.Model):
     _inherit = 'account.invoice.tax'
 
-    tax_partner_id = fields.Many2one('res.partner', 'Partner', readonly=True)
+    tax_partner_id = fields.Many2one('res.partner', 'Supplier', readonly=True)
 
 
 class AccountInvoiceLine(models.Model):
@@ -38,7 +38,7 @@ class AccountInvoiceLine(models.Model):
 
     invoice_broker_id = fields.Many2one(
         'account.invoice', 'Invoice Broker', help='If this invoice line is to '
-        'the payment to a broker, indicate the original invoice that must be'
+        'the payment to a broker, indicate the original invoice that must be '
         'generated the broker partner', domain=[('type', '=', 'in_invoice')])
     partner_broker_ok = fields.Boolean(
         'Partner Broker', compute='_get_partner_broker_ok',
