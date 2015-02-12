@@ -545,17 +545,26 @@ class foreign_exchange_realization(osv.osv_memory):
         wzd_brw = line_brw.wizard_id
         name = (_("Exch. Curr. Rate Diff. for %s in %s")
                 % (line_brw.account_id.name, line_brw.currency_id.name))
+        amount = line_brw.unrealized_gain_loss
         account_id = None
         if line_brw.type == 'liquidity':
-            account_id = wzd_brw.bank_gain_loss_exchange_account_id
+            if amount > 0:
+                account_id = wzd_brw.bank_gain_exchange_account_id
+            else:
+                account_id = wzd_brw.bank_loss_exchange_account_id
         elif line_brw.type == 'receivable':
-            account_id = wzd_brw.rec_gain_loss_exchange_account_id
+            if amount > 0:
+                account_id = wzd_brw.rec_gain_exchange_account_id
+            else:
+                account_id = wzd_brw.rec_loss_exchange_account_id
         elif line_brw.type == 'payable':
-            account_id = wzd_brw.pay_gain_loss_exchange_account_id
+            if amount > 0:
+                account_id = wzd_brw.pay_gain_exchange_account_id
+            else:
+                account_id = wzd_brw.pay_loss_exchange_account_id
 
         account_id = account_id and account_id.id or line_brw.account_id.id
         currency_id = line_brw.currency_id.id
-        amount = line_brw.unrealized_gain_loss
         res_a = {
             'name': name[:64],
             'debit': amount > 0 and amount,
