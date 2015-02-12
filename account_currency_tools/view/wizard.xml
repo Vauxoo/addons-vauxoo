@@ -191,7 +191,11 @@
                                     </group>
                                     <group colspan='4'>
                                         <field
-                                            name='bank_gain_loss_exchange_account_id'
+                                            name='bank_gain_exchange_account_id'
+                                            attrs="{'readonly': [('state','not in', ('prepare','draft'))]}"
+                                            />
+                                        <field
+                                            name='bank_loss_exchange_account_id'
                                             attrs="{'readonly': [('state','not in', ('prepare','draft'))]}"
                                             />
                                         <group colspan='4'>
@@ -248,7 +252,11 @@
                                     </group>
                                     <group colspan='4'>
                                         <field
-                                            name='rec_gain_loss_exchange_account_id'
+                                            name='rec_gain_exchange_account_id'
+                                            attrs="{'readonly': [('state','not in', ('prepare','draft'))]}"
+                                            />
+                                        <field
+                                            name='rec_loss_exchange_account_id'
                                             attrs="{'readonly': [('state','not in', ('prepare','draft'))]}"
                                             />
                                         <group colspan='4'>
@@ -305,7 +313,11 @@
                                     </group>
                                     <group colspan='4'>
                                         <field
-                                            name='pay_gain_loss_exchange_account_id'
+                                            name='pay_gain_exchange_account_id'
+                                            attrs="{'readonly': [('state','not in', ('prepare','draft'))]}"
+                                            />
+                                        <field
+                                            name='pay_loss_exchange_account_id'
                                             attrs="{'readonly': [('state','not in', ('prepare','draft'))]}"
                                             />
                                         <group colspan='4'>
