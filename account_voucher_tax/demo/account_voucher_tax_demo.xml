@@ -14,6 +14,7 @@
             <field name="name">Input VAT Voucher 16% - (test)</field>
             <field ref="account.cli" name="parent_id"/>
             <field name="type">other</field>
+            <field name="reconcile">True</field>
             <field name="user_type" ref="account.data_account_type_liability"/>
         </record>
         <record id="account_voucher_tax_purchase_iva16" model="account.tax">
@@ -35,6 +36,7 @@
             <field name="name">Output VAT Voucher - (test)</field>
             <field ref="account.cas" name="parent_id"/>
             <field name="type">other</field>
+            <field name="reconcile">True</field>
             <field name="user_type" ref="account.data_account_type_asset"/>
         </record>
         <record id="account_ova_voucher_16" model="account.account">
@@ -69,6 +71,7 @@
             <field name="name">Input VAT Voucher 11% - (test)</field>
             <field ref="account.cli" name="parent_id"/>
             <field name="type">other</field>
+            <field name="reconcile">True</field>
             <field name="user_type" ref="account.data_account_type_liability"/>
         </record>
         <record id="account_voucher_tax_purchase_iva11" model="account.tax">
@@ -97,6 +100,7 @@
             <field name="name">Output VAT Voucher 11% - (test)</field>
             <field ref="account.cas" name="parent_id"/>
             <field name="type">other</field>
+            <field name="reconcile">True</field>
             <field name="user_type" ref="account.data_account_type_asset"/>
         </record>
         <record id="account_voucher_tax_sale_ova11" model="account.tax">
@@ -187,6 +191,7 @@
             <field name="name">Input VAT RETENCION IVA Voucher 10.67% - (test)</field>
             <field ref="account.cli" name="parent_id"/>
             <field name="type">other</field>
+            <field name="reconcile">True</field>
             <field name="user_type" ref="account.data_account_type_liability"/>
         </record>
         <record id="account_voucher_tax_purchase_iva1067_retencion_iva" model="account.tax">
@@ -214,6 +219,7 @@
             <field name="name">Input VAT EXENTO Voucher - (test)</field>
             <field ref="account.cli" name="parent_id"/>
             <field name="type">other</field>
+            <field name="reconcile">True</field>
             <field name="user_type" ref="account.data_account_type_liability"/>
         </record>
         <record id="account_voucher_tax_purchase_iva_excento_iva" model="account.tax">
@@ -242,6 +248,7 @@
             <field name="name">Input VAT 0 Voucher - (test)</field>
             <field ref="account.cli" name="parent_id"/>
             <field name="type">other</field>
+            <field name="reconcile">True</field>
             <field name="user_type" ref="account.data_account_type_liability"/>
         </record>
         <record id="account_voucher_tax_purchase_0iva" model="account.tax">
@@ -269,6 +276,7 @@
             <field name="name">Output VAT 0 Voucher - (test)</field>
             <field ref="account.cas" name="parent_id"/>
             <field name="type">other</field>
+            <field name="reconcile">True</field>
             <field name="user_type" ref="account.data_account_type_asset"/>
         </record>
         <record id="account_voucher_tax_sale_0ova" model="account.tax">
