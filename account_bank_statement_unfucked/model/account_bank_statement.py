@@ -29,6 +29,7 @@ class account_bank_statement_line(osv.osv):
 
     _inherit = 'account.bank.statement.line'
 
+    # pylint: disable=W0622
     def get_move_lines_for_reconciliation(
             self, cr, uid, st_line, excluded_ids=None, str=False, offset=0,
             limit=None, count=False, additional_domain=None, context=None):
