@@ -353,6 +353,28 @@ class foreign_exchange_realization(osv.osv_memory):
         'target_move': 'posted',
     }
 
+    def get_account_balance(self, cr, uid, args, context=None):
+        query = '''
+            SELECT
+                aml.account_id,
+                aml.currency_id,
+                SUM(aml.debit - aml.credit) AS balance
+            FROM account_move_line AS aml
+            INNER JOIN account_period AS ap ON ap.id = aml.period_id
+            INNER JOIN account_move AS am ON am.id = aml.move_id
+            WHERE
+                aml.account_id IN (%(account_ids)s) AND
+                aml.currency_id IN (%(currency_ids)s) AND
+                aml.currency_id IS NOT NULL AND
+                aml.state <> 'draft' AND
+                am.state IN (%(states)s) AND
+                ap.id IN (%(period_ids)s)
+            GROUP BY aml.account_id, aml.currency_id
+        ''' % args
+        cr.execute(query)
+        res = cr.dictfetchall()
+        return res
+
     def get_values_from_aml(self, cr, uid, args, context=None):
         query = '''
             SELECT
@@ -650,12 +672,30 @@ class foreign_exchange_realization(osv.osv_memory):
         }
         gal_acc = self.get_gain_loss_account_company(cr, uid, wzd_brw.id,
                                                      context=context)
+        period_ids = [str(ap_brw.id) for ap_brw in wzd_brw.period_ids]
+        states = ["'posted'"]
+        if wzd_brw.target_move == 'all':
+            states.append("'draft'")
+        argx = {
+            'account_ids': None,
+            'currency_ids': None,
+            'states': ', '.join(states),
+            'period_ids': ', '.join(period_ids),
+        }
 
         for key, val in gal_val.iteritems():
             internal_type, currency_id = key
             curr_brw = cur_obj.browse(cr, uid, currency_id, context=context)
             acc = dict_acc[internal_type]
             account_a = val > 0 and acc['gain'] or acc['loss']
+            argx['account_ids'] = str(account_a)
+            argx['currency_ids'] = str(currency_id)
+
+            res_acc = self.get_account_balance(cr, uid, argx, context=context)
+            res_acc = [rec for rec in res_acc
+                       if rec.get('account_id') == account_a]
+            val_acc = res_acc and res_acc[0]['balance'] or 0.0
+            val -= val_acc
 
             args = {
                 'name': name % (mapping[internal_type], curr_brw.name),
