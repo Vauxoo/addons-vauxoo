@@ -81,6 +81,10 @@
                     </span>
                     <span t-if="!widget.options.readonly" class='oe_subtle'>•</span>
                     <t t-if="!widget.options.readonly" t-call="mail.thread.message.vote"/>
+                    <span class='oe_subtle'>•</span>
+                    <p>test</p>
+                    <t t-esc="widget.website_published" widget="website_published"/>
+
                 </div>
             </div>
         </div>

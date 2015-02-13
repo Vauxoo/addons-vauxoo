@@ -8,7 +8,8 @@
 #    Developed by Oscar Alcala <oszckar@gmail.com>
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Lesser General Public License as published by
+#    it under the terms of the GNU Lesser General Public License as
+#    published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
@@ -22,10 +23,6 @@
 #
 ##############################################################################
 from openerp.osv import osv
-from openerp.osv import fields
-from openerp.tools.translate import _
-from openerp import models, api
-from openerp.exceptions import ValidationError
 
 
 class mail_message(osv.Model):
@@ -33,3 +30,12 @@ class mail_message(osv.Model):
     _defaults = {
         'website_published': False,
     }
+
+    def _message_read_dict(self, cr, uid, message, parent_id=False,
+                           context=None):
+        r = super(mail_message, self)._message_read_dict(cr, uid,
+                                                         message,
+                                                         parent_id=parent_id,
+                                                         context=context)
+        r['website_published'] = message.website_published
+        return r
