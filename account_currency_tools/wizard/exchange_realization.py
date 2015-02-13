@@ -25,6 +25,7 @@ from openerp.tools.translate import _
 import openerp.addons.decimal_precision as dp  # pylint: disable=F0401
 import openerp
 from datetime import datetime, timedelta
+from pandas import DataFrame
 
 
 class foreign_exchange_realization_line(osv.osv_memory):
@@ -541,54 +542,55 @@ class foreign_exchange_realization(osv.osv_memory):
             cr, uid, wzd_brw.journal_id.id, date=wzd_brw.date, ref=ref,
             company_id=wzd_brw.company_id.id, context=context)
 
+    def line_get_dict(self, cr, uid, args, context=None):
+        return {
+            'name': args['name'][:64],
+            'debit': args['amount'] > 0 and args['amount'],
+            'credit': args['amount'] < 0 and -args['amount'],
+            'account_id': args['account_id'],
+            'amount_currency': 0,
+            'currency_id': args['currency_id'],
+        }
+
+    def get_gain_loss_account_company(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        gain = wzd_brw.income_currency_exchange_account_id and \
+            wzd_brw.income_currency_exchange_account_id.id
+        loss = wzd_brw.expense_currency_exchange_account_id and \
+            wzd_brw.expense_currency_exchange_account_id.id
+        return {'gain': gain, 'loss': loss}
+
     def line_get(self, cr, uid, line_brw, context=None):
+        context = context or {}
         wzd_brw = line_brw.wizard_id
         name = (_("Exch. Curr. Rate Diff. for %s in %s")
                 % (line_brw.account_id.name, line_brw.currency_id.name))
         amount = line_brw.unrealized_gain_loss
-        account_id = None
-        if line_brw.type == 'liquidity':
-            if amount > 0:
-                account_id = wzd_brw.bank_gain_exchange_account_id
-            else:
-                account_id = wzd_brw.bank_loss_exchange_account_id
-        elif line_brw.type == 'receivable':
-            if amount > 0:
-                account_id = wzd_brw.rec_gain_exchange_account_id
-            else:
-                account_id = wzd_brw.rec_loss_exchange_account_id
-        elif line_brw.type == 'payable':
-            if amount > 0:
-                account_id = wzd_brw.pay_gain_exchange_account_id
-            else:
-                account_id = wzd_brw.pay_loss_exchange_account_id
-
-        account_id = account_id and account_id.id or line_brw.account_id.id
         currency_id = line_brw.currency_id.id
-        res_a = {
-            'name': name[:64],
-            'debit': amount > 0 and amount,
-            'credit': amount < 0 and -amount,
-            'account_id': account_id,
-            'amount_currency': 0,
-            'currency_id': currency_id,
-        }
-        account_id = None
-        if amount > 0:
-            account_id = wzd_brw.income_currency_exchange_account_id and \
-                wzd_brw.income_currency_exchange_account_id.id
-        else:
-            account_id = wzd_brw.expense_currency_exchange_account_id and \
-                wzd_brw.expense_currency_exchange_account_id.id
 
-        res_b = {
-            'name': name[:64],
-            'debit': amount < 0 and -amount,
-            'credit': amount > 0 and amount,
-            'account_id': account_id,
-            'amount_currency': 0,
+        account_a = line_brw.account_id.id
+        gal_acc = self.get_gain_loss_account_company(cr, uid, wzd_brw.id,
+                                                     context=context)
+        if amount > 0:
+            account_b = gal_acc['gain']
+        else:
+            account_b = gal_acc['loss']
+
+        args = {
+            'name': name,
+            'amount': amount,
+            'account_id': account_a,
             'currency_id': currency_id,
         }
+        res_a = self.line_get_dict(cr, uid, args, context=context)
+
+        args['amount'] = -amount
+        args['account_id'] = account_b
+        res_b = self.line_get_dict(cr, uid, args, context=context)
+
         return res_a, res_b
 
     def move_line_get(self, cr, uid, ids, context=None):
@@ -596,12 +598,80 @@ class foreign_exchange_realization(osv.osv_memory):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         res = []
+
+        dict_acc = self.get_gain_loss_accounts(cr, uid, ids, context=context)
+        common_lines = []
         for line_brw in wzd_brw.line_ids:
             if not abs(line_brw.unrealized_gain_loss):
+                continue
+            if line_brw.account_id.type in dict_acc.keys():
+                common_lines.append(line_brw.id)
                 continue
             res_a, res_b = self.line_get(cr, uid, line_brw, context=context)
             res.append((0, 0, res_a))
             res.append((0, 0, res_b))
+        res += self.move_line_redirect_get(cr, uid, ids, context=context)
+        return res
+
+    def move_line_redirect_get(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        res = []
+
+        dict_acc = self.get_gain_loss_accounts(cr, uid, ids, context=context)
+        if dict_acc.get('fix'):
+            dict_acc.pop('fix')
+        if not dict_acc:
+            return res
+
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+
+        fieldnames = ['currency_id', 'type', 'unrealized_gain_loss']
+        gal = wzd_brw.line_ids.read(fieldnames, load=None)
+        gal = [rec for rec in gal if rec.get('type') in dict_acc.keys()]
+        if not gal:
+            return res
+
+        cur_obj = self.pool.get('res.currency')
+
+        gal_df = DataFrame(gal)
+        gal_grouped = gal_df.groupby(['type', 'currency_id'])
+
+        gal_agg = gal_grouped.sum()
+        gal_dict = gal_agg.to_dict()
+
+        gal_val = gal_dict.get('unrealized_gain_loss')
+
+        name = _(u"Exch. Curr. Rate Diff. for %s in %s")
+        mapping = {
+            'liquidity': _('Liquidity'),
+            'receivable': _('Receivable'),
+            'payable': _('Payable'),
+        }
+        gal_acc = self.get_gain_loss_account_company(cr, uid, wzd_brw.id,
+                                                     context=context)
+
+        for key, val in gal_val.iteritems():
+            internal_type, currency_id = key
+            curr_brw = cur_obj.browse(cr, uid, currency_id, context=context)
+            acc = dict_acc[internal_type]
+            account_a = val > 0 and acc['gain'] or acc['loss']
+
+            args = {
+                'name': name % (mapping[internal_type], curr_brw.name),
+                'amount': val,
+                'account_id': account_a,
+                'currency_id': currency_id,
+            }
+            res_a = self.line_get_dict(cr, uid, args, context=context)
+
+            args['amount'] = -val
+            args['account_id'] = val > 0 and gal_acc['gain'] or gal_acc['loss']
+            res_b = self.line_get_dict(cr, uid, args, context=context)
+
+            res.append((0, 0, res_a))
+            res.append((0, 0, res_b))
+
         return res
 
     def get_gain_loss_accounts(self, cr, uid, ids, context=None):
@@ -616,21 +686,21 @@ class foreign_exchange_realization(osv.osv_memory):
         if any([bank_gain, bank_loss]) and not all([bank_gain, bank_loss]):
             res['fix'].append(_('Bank'))
         elif all([bank_gain, bank_loss]):
-            res['bank'] = {'gain': bank_gain, 'loss': bank_loss}
+            res['liquidity'] = {'gain': bank_gain.id, 'loss': bank_loss.id}
 
         rec_gain = wzd_brw.rec_gain_exchange_account_id
         rec_loss = wzd_brw.rec_loss_exchange_account_id
         if any([rec_gain, rec_loss]) and not all([rec_gain, rec_loss]):
             res['fix'].append(_('Receivable'))
         elif all([rec_gain, rec_loss]):
-            res['rec'] = {'gain': rec_gain, 'loss': rec_loss}
+            res['receivable'] = {'gain': rec_gain.id, 'loss': rec_loss.id}
 
         pay_gain = wzd_brw.pay_gain_exchange_account_id
         pay_loss = wzd_brw.pay_loss_exchange_account_id
         if any([pay_gain, pay_loss]) and not all([pay_gain, pay_loss]):
             res['fix'].append(_('Payable'))
         elif all([pay_gain, pay_loss]):
-            res['pay'] = {'gain': pay_gain, 'loss': pay_loss}
+            res['payable'] = {'gain': pay_gain.id, 'loss': pay_loss.id}
 
         return res
 
