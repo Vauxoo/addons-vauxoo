@@ -108,11 +108,13 @@ class account_invoice_tax(models.Model):
             ('invoice_id', '=', invoice_id)], context=context)
         for inv_t in self.browse(cr, uid, tax_invoice_ids, context=context):
             tax_name = inv_t.name or ''
-            tax_acc = inv_t.account_id.id or False
+            tax_acc_id = inv_t.account_id.id
+            tax_code_id = inv_t.tax_code_id.id
             if inv_t.tax_partner_id:
                 for tax in res:
                     if tax.get('name', '') == tax_name and tax.get(
-                            'account_id', False) == tax_acc:
+                            'account_id', False) == tax_acc_id and tax.get(
+                            'tax_code_id': False) == tax_code_id:
                         tax.update({
                             'partner_id': inv_t.tax_partner_id.id or False})
         return res

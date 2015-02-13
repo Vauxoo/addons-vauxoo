@@ -94,11 +94,13 @@ class account_invoice_tax(osv.Model):
             if not inv_t.base_amount and not inv_t.tax_code_id and not\
                     inv_t.tax_amount:
                 continue
-            tax_name = inv_t.name or ''
-            tax_acc = inv_t.account_id.id or False
+            tax_name = inv_t.name
+            tax_acc_id = inv_t.account_id.id
+            tax_code_id = inv_t.tax_code_id.id
             for tax in res:
                 if tax.get('name', '') == tax_name and tax.get(
-                        'account_id', False) == tax_acc:
+                        'account_id', False) == tax_acc_id and tax.get(
+                        'tax_code_id', False) == tax_code_id:
                     tax.update({
                         'amount_base': abs(inv_t.base_amount) or 0.0,
                         'tax_id_secondary': inv_t.tax_id.id or False})
