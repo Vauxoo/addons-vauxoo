@@ -604,6 +604,52 @@ class foreign_exchange_realization(osv.osv_memory):
             res.append((0, 0, res_b))
         return res
 
+    def get_gain_loss_accounts(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        res = {'fix': []}
+
+        # TODO: Improve code can be done with getattr
+        bank_gain = wzd_brw.bank_gain_exchange_account_id
+        bank_loss = wzd_brw.bank_loss_exchange_account_id
+        if any([bank_gain, bank_loss]) and not all([bank_gain, bank_loss]):
+            res['fix'].append(_('Bank'))
+        elif all([bank_gain, bank_loss]):
+            res['bank'] = {'gain': bank_gain, 'loss': bank_loss}
+
+        rec_gain = wzd_brw.rec_gain_exchange_account_id
+        rec_loss = wzd_brw.rec_loss_exchange_account_id
+        if any([rec_gain, rec_loss]) and not all([rec_gain, rec_loss]):
+            res['fix'].append(_('Receivable'))
+        elif all([rec_gain, rec_loss]):
+            res['rec'] = {'gain': rec_gain, 'loss': rec_loss}
+
+        pay_gain = wzd_brw.pay_gain_exchange_account_id
+        pay_loss = wzd_brw.pay_loss_exchange_account_id
+        if any([pay_gain, pay_loss]) and not all([pay_gain, pay_loss]):
+            res['fix'].append(_('Payable'))
+        elif all([pay_gain, pay_loss]):
+            res['pay'] = {'gain': pay_gain, 'loss': pay_loss}
+
+        return res
+
+    def check_gain_loss_accounts(self, cr, uid, ids, exception=False,
+                                 context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        res = self.get_gain_loss_accounts(
+            cr, uid, ids, context=context).get('fix')
+        if res and not exception:
+            if exception:
+                return False
+            raise osv.except_osv(
+                _('Error!'),
+                _('Both Gain & Loss Accounts for %s have to be filled, \n'
+                  'You can not fill one without filling the other') %
+                (' and '.join(res)))
+        return True
+
     def check_gain_loss_account_company(self, cr, uid, ids, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -691,6 +737,7 @@ class foreign_exchange_realization(osv.osv_memory):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
+        self.check_gain_loss_accounts(cr, uid, ids, context=context)
         self.action_get_unrecognized_lines(cr, uid, ids, context=context)
 
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
