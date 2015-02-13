@@ -10,8 +10,8 @@
 #    Audited by: Nhomar Hernandez <nhomar@vauxoo.com>
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
@@ -42,7 +42,8 @@ class aging_parser(report_sxw.rml_parse):
             'get_aged_lines': self._get_aged_lines,
             'get_invoice_by_currency': self._get_invoice_by_currency,
             'get_invoice_by_partner_group': self._get_invoice_by_partner_group,
-            'get_invoice_by_currency_group': self._get_invoice_by_currency_group,
+            'get_invoice_by_currency_group':
+            self._get_invoice_by_currency_group,
         })
 
     def _get_aml(self, ids, inv_type='out_invoice', currency_id=None):
@@ -58,8 +59,9 @@ class aging_parser(report_sxw.rml_parse):
             for i in aml_gen:
                 res += i
         else:
-            aml_gen = (aml_brw.debit and (aml_brw.debit * sign) or aml_brw.credit *
-                       (-1 * sign) for aml_brw in aml_obj.browse(self.cr, self.uid, ids))
+            aml_gen = (aml_brw.debit and (aml_brw.debit * sign) or
+                       aml_brw.credit * (-1 * sign) for aml_brw in
+                       aml_obj.browse(self.cr, self.uid, ids))
             for i in aml_gen:
                 res += i
         return res
@@ -78,7 +80,8 @@ class aging_parser(report_sxw.rml_parse):
                 'rp_brw'].user_id.id or False
 
             if usr_dict.get((usr_id, ixp['cur_brw'].id), False):
-                usr_dict[(usr_id, ixp['cur_brw'].id)]['total'] += ixp['due_total']
+                usr_dict[(usr_id, ixp['cur_brw'].id)]['total'] += \
+                    ixp['due_total']
             else:
                 usr_dict[(usr_id, ixp['cur_brw'].id)] = {
                     'cur_brw': ixp['cur_brw'],
@@ -117,7 +120,10 @@ class aging_parser(report_sxw.rml_parse):
         for rp_brw in rp_brws:
             inv_ids = inv_obj.search(
                 self.cr, self.uid, [('partner_id', '=', rp_brw.id),
-                                    ('type', '=', inv_type), ('residual', '!=', 0), ('state', 'not in', ('cancel', 'draft'))])
+                                    ('type', '=', inv_type),
+                                    ('residual', '!=', 0),
+                                    ('state', 'not in',
+                                    ('cancel', 'draft'))])
             if not inv_ids:
                 continue
 
@@ -139,49 +145,67 @@ class aging_parser(report_sxw.rml_parse):
                     'due_total': 0.0,
                 }
 
-                for inv_brw in inv_obj.browse(self.cr, self.uid,
+                for inv_brw in inv_obj.browse(
+                    self.cr, self.uid,
                         inv_by_currency[currency_id]):
 
                     currency_data = dict(
                         invoice=inv_brw.currency_id.id,
                         company=inv_brw.company_id.currency_id.id)
                     currency_data.update(
-                        transaction=None if len(set(currency_data.values())) == 1
+                        transaction=None if
+                        len(set(currency_data.values())) == 1
                         else currency_data['invoice'])
 
                     pay_ids = [aml.id for aml in inv_brw.payment_ids]
-                    #~ VAT
+                    # ~ VAT
                     pay_vat_ids = []
-                    #~ ISLR
+                    # ~ ISLR
                     pay_islr_ids = []
-                   #~  MUNI
+                    # ~  MUNI
                     pay_muni_ids = []
-                    #~  TODO: SRC
+                    # ~  TODO: SRC
 
-                    #~ N/C
-                    #~ refund_ids = inv_obj.search(self.cr,self.uid,[('parent_id','=',inv_brw.id),('type','=','out_refund'),('state','not in',('draft','cancel')),('move_id','!=',False)])
-                    #~ refund_ids = inv_obj.search(self.cr,self.uid,[('parent_id','=',inv_brw.id),('type','=','out_refund'),('state','not in',('draft','cancel')),('move_id','!=',False)])
+                    # ~ N/C
+                    # ~ refund_ids = inv_obj.search(self.cr,self.uid,
+                    # [('parent_id','=',inv_brw.id),('type','=','out_refund'),
+                    # ('state','not in',('draft','cancel')),
+                    # ('move_id','!=',False)])
+                    # ~ refund_ids = inv_obj.search(self.cr,self.uid,
+                    # [('parent_id','=',inv_brw.id),('type','=','out_refund'),
+                    # ('state','not in',('draft','cancel')),
+                    # ('move_id','!=',False)])
                     refund_brws = []
-                    #~ refund_brws = refund_ids and inv_obj.browse(self.cr,self.uid,refund_ids) or []
-                    #~ aml_gen = (refund_brw.move_id.line_id for refund_brw in refund_brws)
+                    # ~ refund_brws = refund_ids and inv_obj.browse(
+                    # self.cr,self.uid,refund_ids) or []
+                    # ~ aml_gen = (refund_brw.move_id.line_id for
+                    # refund_brw in refund_brws)
                     pay_refund_ids = []
-                    #~ for aml_brws in aml_gen:
-                    #~ pay_refund_ids += [aml.id for aml in aml_brws if aml.account_id.id == inv_brw.account_id.id]
+                    # ~ for aml_brws in aml_gen:
+                    # ~ pay_refund_ids += [aml.id for aml in aml_brws
+                    # if aml.account_id.id == inv_brw.account_id.id]
 
-                    #~  TODO: N/D
-                    #~  ACUMULACION DE LOS NOPAGOS, OBTENCION DEL PAGO
+                    # ~  TODO: N/D
+                    # ~  ACUMULACION DE LOS NOPAGOS, OBTENCION DEL PAGO
                     pay_left_ids = list(set(pay_ids).difference(
                         pay_vat_ids +
                         pay_islr_ids +
                         pay_muni_ids +
                         pay_refund_ids))
-                    wh_vat = self._get_aml(pay_vat_ids, inv_type, currency_data['transaction'])
-                    wh_islr = self._get_aml(pay_islr_ids, inv_type, currency_data['transaction'])
-                    wh_muni = self._get_aml(pay_muni_ids, inv_type, currency_data['transaction'])
-                    wh_src = self._get_aml([], inv_type, currency_data['transaction'])
-                    debit_note = self._get_aml([], inv_type, currency_data['transaction'])
-                    credit_note = self._get_aml(pay_refund_ids, inv_type, currency_data['transaction'])
-                    payment_left = self._get_aml(pay_left_ids, inv_type, currency_data['transaction'])
+                    wh_vat = self._get_aml(
+                        pay_vat_ids, inv_type, currency_data['transaction'])
+                    wh_islr = self._get_aml(
+                        pay_islr_ids, inv_type, currency_data['transaction'])
+                    wh_muni = self._get_aml(
+                        pay_muni_ids, inv_type, currency_data['transaction'])
+                    wh_src = self._get_aml(
+                        [], inv_type, currency_data['transaction'])
+                    debit_note = self._get_aml(
+                        [], inv_type, currency_data['transaction'])
+                    credit_note = self._get_aml(
+                        pay_refund_ids, inv_type, currency_data['transaction'])
+                    payment_left = self._get_aml(
+                        pay_left_ids, inv_type, currency_data['transaction'])
                     payment = wh_vat + wh_islr + wh_muni + \
                         wh_src + debit_note + credit_note + payment_left
                     residual = inv_brw.amount_total + payment
@@ -190,10 +214,10 @@ class aging_parser(report_sxw.rml_parse):
                     today = mx.DateTime.now()
                     due_days = (today - date_due).day
 
-                    #~ TODO: Si se incluye un reporte de revisiones
-                    #~ no se eliminara la factura
-                    #~ si la factura no tiene saldo entonces
-                    #~ no incluirla en el reporte
+                    # ~ TODO: Si se incluye un reporte de revisiones
+                    # ~ no se eliminara la factura
+                    # ~ si la factura no tiene saldo entonces
+                    # ~ no incluirla en el reporte
                     if not residual:
                         continue
 
@@ -211,22 +235,24 @@ class aging_parser(report_sxw.rml_parse):
                         'residual': residual,
                         'due_days': due_days
                     })
-                    res[rp_brw.id][currency_id]['inv_total'] += inv_brw.amount_total
+                    res[rp_brw.id][currency_id]['inv_total'] += \
+                        inv_brw.amount_total
                     res[rp_brw.id][currency_id]['wh_vat'] += wh_vat
                     res[rp_brw.id][currency_id]['wh_islr'] += wh_islr
                     res[rp_brw.id][currency_id]['wh_muni'] += wh_muni
                     res[rp_brw.id][currency_id]['credit_note'] += credit_note
-                    res[rp_brw.id][currency_id]['pay_left_total'] += payment_left
+                    res[rp_brw.id][currency_id]['pay_left_total'] += \
+                        payment_left
                     res[rp_brw.id][currency_id]['pay_total'] += payment
                     res[rp_brw.id][currency_id]['due_total'] += residual
 
-            #~ TODO: Report donde no se elimine esta clave del diccionario
-            #~ y se use para revisiones internas
-            #~ Si no tiene saldo, sacarlo del reporte
+            # ~ TODO: Report donde no se elimine esta clave del diccionario
+            # ~ y se use para revisiones internas
+            # ~ Si no tiene saldo, sacarlo del reporte
             not res[rp_brw.id][currency_id]['due_total'] and res.pop(rp_brw.id)
 
-        #~ ordenando los registros en orden alfabetico
-        #~ si llegaran a existir
+        # ~ ordenando los registros en orden alfabetico
+        # ~ si llegaran a existir
         res2 = []
         if res.keys():
             rp_ids = rp_obj.search(self.cr, self.uid, [(
@@ -278,7 +304,8 @@ class aging_parser(report_sxw.rml_parse):
         return res
 
     def _get_aged_lines(self, rp_brws, span=30,
-            date_from=time.strftime('%Y-%m-%d'), inv_type='out_invoice'):
+                        date_from=time.strftime('%Y-%m-%d'),
+                        inv_type='out_invoice'):
         """
         @return
         """
@@ -354,36 +381,48 @@ class aging_parser(report_sxw.rml_parse):
                     currency_id = ixp['cur_brw'].id
                     if not res_total_by_currency.get(currency_id, False):
                         res_total_by_currency[currency_id] = res_total.copy()
-                        res_total_by_currency[currency_id]['cur_brw'] = ixp['cur_brw']
+                        res_total_by_currency[currency_id]['cur_brw'] = \
+                            ixp['cur_brw']
 
                     res['total'] += inv['residual']
-                    res_total_by_currency[currency_id]['total'] += inv['residual']
+                    res_total_by_currency[currency_id]['total'] += \
+                        inv['residual']
 
                     if inv['due_days'] <= 0:
                         res['not_due'] += inv['residual']
-                        res_total_by_currency[currency_id]['not_due'] += inv['residual']
+                        res_total_by_currency[currency_id]['not_due'] += \
+                            inv['residual']
                     elif inv['due_days'] > 0 and inv['due_days'] <= spans[1]:
                         res['1to30'] += inv['residual']
-                        res_total_by_currency[currency_id]['1to30'] += inv['residual']
-                    elif inv['due_days'] > spans[1] and inv['due_days'] <= spans[2]:
+                        res_total_by_currency[currency_id]['1to30'] += \
+                            inv['residual']
+                    elif inv['due_days'] > spans[1] and inv['due_days'] <= \
+                            spans[2]:
                         res['31to60'] += inv['residual']
-                        res_total_by_currency[currency_id]['31to60'] += inv['residual']
-                    elif inv['due_days'] > spans[2] and inv['due_days'] <= spans[3]:
+                        res_total_by_currency[currency_id]['31to60'] += \
+                            inv['residual']
+                    elif inv['due_days'] > spans[2] and inv['due_days'] <= \
+                            spans[3]:
                         res['61to90'] += inv['residual']
-                        res_total_by_currency[currency_id]['61to90'] += inv['residual']
-                    elif inv['due_days'] > spans[3] and inv['due_days'] <= spans[4]:
+                        res_total_by_currency[currency_id]['61to90'] += \
+                            inv['residual']
+                    elif inv['due_days'] > spans[3] and inv['due_days'] <= \
+                            spans[4]:
                         res['91to120'] += inv['residual']
-                        res_total_by_currency[currency_id]['91to120'] += inv['residual']
+                        res_total_by_currency[currency_id]['91to120'] += \
+                            inv['residual']
                     else:
                         res['120+'] += inv['residual']
-                        res_total_by_currency[currency_id]['120+'] += inv['residual']
+                        res_total_by_currency[currency_id]['120+'] += \
+                            inv['residual']
                 result.append(res)
 
         result.extend(res_total_by_currency.values())
 
         # calculate the provisions totals over the totals rows
         res_prov = dict()
-        total_col_sum = ['not_due', '1to30', '31to60', '61to90', '91to120', '120+']
+        total_col_sum = ['not_due', '1to30', '31to60',
+                         '61to90', '91to120', '120+']
         for (key, value) in res_total_by_currency.iteritems():
             res_prov[key] = value.copy()
 
