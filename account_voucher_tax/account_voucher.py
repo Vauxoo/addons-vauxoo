@@ -585,6 +585,9 @@ class account_move_line(osv.Model):
             writeoff_period_id=writeoff_period_id,
             writeoff_journal_id=writeoff_journal_id, context=context)
 #        if not writeoff_acc_id:
+        if context is None:
+            context = {}
+
         if context.get('apply_round', False):
             dat = []
         else:
