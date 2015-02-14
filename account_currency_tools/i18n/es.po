@@ -10,6 +10,7 @@ msgstr ""
 "PO-Revision-Date: 2015-02-14 07:48+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -17,8 +18,9 @@ msgstr ""
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization.line,account_id:0
+#, fuzzy
 msgid "Account"
-msgstr ""
+msgstr "Account"
 
 #. module: account_currency_tools
 #: model:ir.model,name:account_currency_tools.model_account_period
@@ -27,58 +29,72 @@ msgstr ""
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "Accounting Info"
-msgstr ""
+msgstr "Información Contable"
 
 #. module: account_currency_tools
 #: view:res.company:account_currency_tools.res_company_view_act
+#, fuzzy
 msgid "Accounts for Redirection of Exchange Rate Difference"
-msgstr ""
+msgstr "Cuentas para Redireccionar por Diferencia en Tasa Cambiaria"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "Accounts that are not set as multicurrency, i.e., they were not set with a secondary currency, but were involved in multicurrency transactions will appear here"
 msgstr ""
+"Las Cuentas que no son multi-moneda, esto es, no fueron configuradas con una "
+"moneda secundaria, pero que estuvieron involucradas en transacciones multi-"
+"moneda aparecerán aquí"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization.line,adjusted_balance:0
+#, fuzzy
 msgid "Adjusted Balance"
-msgstr ""
+msgstr "Saldo Ajustado"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization,period_ids:0
+#, fuzzy
 msgid "Affected Periods"
-msgstr ""
+msgstr "Períodos Afectados"
 
 #. module: account_currency_tools
 #: selection:foreign.exchange.realization,target_move:0
+#, fuzzy
 msgid "All Entries"
-msgstr ""
+msgstr "Todos los Asientos"
 
 #. module: account_currency_tools
 #: help:foreign.exchange.realization,target_move:0
+#, fuzzy
 msgid "All Journal Entries or just Posted Journal Entries"
-msgstr ""
+msgstr "Todos Los Asientos o sólo los Asientos Posteados"
 
 #. module: account_currency_tools
 #: selection:foreign.exchange.realization,target_move:0
+#, fuzzy
 msgid "All Posted Entries"
-msgstr ""
+msgstr "Todos los Asientos Posteados"
 
 #. module: account_currency_tools
 #: help:foreign.exchange.realization,help:0
+#, fuzzy
 msgid "Allows you to toggle the help in the form"
-msgstr ""
+msgstr "Le permite activar la ayuda en el formulario"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "As there were no Unrealized Gains or Losses to book."
-msgstr ""
+msgstr "Dado que no hay Ganancias o Pérdida sin considerar para contabilizar."
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization.line,balance:0
+#, fuzzy
 msgid "Balance"
-msgstr ""
+msgstr "Saldo"
 
 #. module: account_currency_tools
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:728
@@ -89,8 +105,9 @@ msgstr ""
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
 #: field:foreign.exchange.realization,bk_ids:0
+#, fuzzy
 msgid "Bank & Cash Accounts"
-msgstr ""
+msgstr "Cuentas de Banco & Caja"
 
 #. module: account_currency_tools
 #: field:res.company,bank_gain_exchange_account_id:0
@@ -133,73 +150,93 @@ msgstr ""
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "Check that those Accounts being presented here to you are really 'Liquidity' Type and Multicurrency"
 msgstr ""
+"Revise que esas Cuentas que se le presentan aquí sean realmente de Tipo "
+"'Liquidez' y Multi-moneda"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "Check that those Accounts being presented here to you are really 'Payable' Type and Multicurrency"
 msgstr ""
+"Revise que esas Cuentas que se le presentan aquí sean realmente de Tipo 'A "
+"Pagar' y Multi-moneda"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "Check that those Accounts being presented here to you are really 'Receivable' Type and Multicurrency"
 msgstr ""
+"Revise que esas Cuentas que se le presentan aquí sean realmente de Tipo 'A "
+"Cobrar' y Multi-moneda"
 
 #. module: account_currency_tools
 #: model:ir.model,name:account_currency_tools.model_res_company
+#, fuzzy
 msgid "Companies"
-msgstr ""
+msgstr "Compañías"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization,company_id:0
+#, fuzzy
 msgid "Company"
-msgstr ""
+msgstr "Compañía"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization,currency_id:0
+#, fuzzy
 msgid "Company Currency"
-msgstr ""
+msgstr "Moneda de la Compañía"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "Company Info"
-msgstr ""
+msgstr "Información de la Compañía"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "Create Journal Entry"
-msgstr ""
+msgstr "Crear Asiento Contable"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization,create_uid:0
 #: field:foreign.exchange.realization.line,create_uid:0
+#, fuzzy
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization,create_date:0
 #: field:foreign.exchange.realization.line,create_date:0
+#, fuzzy
 msgid "Created on"
-msgstr ""
+msgstr "Creado el"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization.line,currency_id:0
+#, fuzzy
 msgid "Currency"
-msgstr ""
+msgstr "Moneda"
 
 #. module: account_currency_tools
 #: model:ir.ui.menu,name:account_currency_tools.menu_currency_tools_root
+#, fuzzy
 msgid "Currency Tools"
-msgstr ""
+msgstr "Herramientas Monetarias"
 
 #. module: account_currency_tools
 #: selection:foreign.exchange.realization,state:0
+#, fuzzy
 msgid "Draft"
-msgstr ""
+msgstr "Borrador"
 
 #. module: account_currency_tools
 #: help:foreign.exchange.realization,state:0
+#, fuzzy
 msgid "Draft: Fill required data to get Unrealized Values,\n"
 "Open Fiscal Year: Previous Fiscal Year is Open,\n"
 "Missing Opening Journal Entry: No Opening Journal Entry,\n"
@@ -208,12 +245,23 @@ msgid "Draft: Fill required data to get Unrealized Values,\n"
 "Exception: There are no Unrealized Values to book,\n"
 "Posted Journal: Unrealized Values have been booked"
 msgstr ""
+"Borrador: Rellene los datos requeridos para obtener los Valores no "
+"Realizados,\n"
+"Ejercicio Fiscal Abierto: El Ejercicio Fiscal Anterior está abierto,\n"
+"Asiento de Apertura Faltante: No hay Asiento de Apertura,\n"
+"Preparar Datos: Los Datos para obtener los Valores no Realizados se han "
+"configurado,\n"
+"En Progreso: Los Valores no Realizados se han obtenido, listo para "
+"contabilizar,\n"
+"Excepción: No hay Valores no Realizados para contabilizar,\n"
+"Asiento Posteado: Los Valores no Realizados se han contabilizado"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization,state:0
 #: field:foreign.exchange.realization,target_move:0
+#, fuzzy
 msgid "Entries to Include"
-msgstr ""
+msgstr "Asientos a Incluir"
 
 #. module: account_currency_tools
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:113
@@ -222,192 +270,240 @@ msgstr ""
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:758
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:806
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:831
-#, python-format
+#, fuzzy, python-format
 msgid "Error!"
-msgstr ""
+msgstr "Error!"
 
 #. module: account_currency_tools
 #: selection:foreign.exchange.realization,state:0
+#, fuzzy
 msgid "Exception"
-msgstr ""
+msgstr "Excepción"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "Exceptional State"
-msgstr ""
+msgstr "Estado Excepcional"
 
 #. module: account_currency_tools
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:563
-#, python-format
+#, fuzzy, python-format
 msgid "Exch. Curr. Rate Diff. for %s"
-msgstr ""
+msgstr "Diff. Cambiaria para %s"
 
 #. module: account_currency_tools
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:593
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:669
-#, python-format
+#, fuzzy, python-format
 msgid "Exch. Curr. Rate Diff. for %s in %s"
-msgstr ""
+msgstr "Diff. Cambiaria para %s en %s"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization.line,exchange_rate:0
+#, fuzzy
 msgid "Exchange Rate"
-msgstr ""
+msgstr "Tasa de Cambio"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization,fiscalyear_id:0
 #: help:foreign.exchange.realization,fiscalyear_id:0
+#, fuzzy
 msgid "Fiscal Year"
-msgstr ""
+msgstr "Ejercicio Fiscal"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization.line,foreign_balance:0
+#, fuzzy
 msgid "Foreign Balance"
-msgstr ""
+msgstr "Saldo Foráneo"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
 #: model:ir.actions.act_window,name:account_currency_tools.action_foreign_exchange_realization
 #: model:ir.ui.menu,name:account_currency_tools.menu_foreign_exchange_realization
+#, fuzzy
 msgid "Foreign Currency Exchange Realization"
-msgstr ""
+msgstr "Realización de Cambio en Moneda Foránea"
 
 #. module: account_currency_tools
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:807
-#, python-format
+#, fuzzy, python-format
 msgid "Gain & Loss Recognition already booked"
-msgstr ""
+msgstr "Reconocimiento de Ganancia & Pérdida ya contabilizada"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization,income_currency_exchange_account_id:0
+#, fuzzy
 msgid "Gain Exchange Rate Account"
-msgstr ""
+msgstr "Cuenta de Ganancia en Tasa de Cambio"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "Get Unrecognized G & L on Accounts"
-msgstr ""
+msgstr "Obtener G & P No Reconocidas en Cuentas"
 
 #. module: account_currency_tools
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:783
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:797
-#, python-format
+#, fuzzy, python-format
 msgid "Go to the configuration panel"
-msgstr ""
+msgstr "Ir al panel de configuración"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization,id:0
 #: field:foreign.exchange.realization.line,id:0
+#, fuzzy
 msgid "ID"
-msgstr ""
+msgstr "Id"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "If one of your accounts does not appear here. Open a new Windows Fix your missing account and try to add it again."
 msgstr ""
+"Si una de sus cuentas no aparece aquí. Abra una nueva ventana arregle su "
+"cuenta faltante e intente agregarla otra vez."
 
 #. module: account_currency_tools
 #: selection:foreign.exchange.realization,state:0
+#, fuzzy
 msgid "In Progress"
-msgstr ""
+msgstr "En progreso"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization.line,type:0
+#, fuzzy
 msgid "Internal Type"
-msgstr ""
+msgstr "Tipo Interno"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "It is likely wrongfully set Accounts got attribute 'Liquidity' Type. Be warned that you should address this issue before proceeding With 'Get Unrecognized G & L on Accounts' step."
 msgstr ""
+"Es probable que Cuentas mal configuradas tengan el atributo Tipo 'Liquidez'. "
+"Considérese advertido que usted debe atender este asunto antes de proceder "
+"con el paso 'Obtener G & Pérdidas No Reconocidas en Cuentas'."
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "It is likely wrongfully set Accounts got attribute 'Payable' Type. Be warned that you should address this issue before proceeding With 'Get Unrecognized G & L on Accounts' step."
 msgstr ""
+"Es probable que Cuentas mal configuradas tengan el atributo Tipo 'a Pagar'. "
+"Considérese advertido que usted debe atender este asunto antes de proceder "
+"con el paso 'Obtener G & Pérdidas No Reconocidas en Cuentas'."
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "It is likely wrongfully set Accounts got attribute 'Receivable' Type. Be warned that you should address this issue before proceeding With 'Get Unrecognized G & L on Accounts' step."
 msgstr ""
+"Es probable que Cuentas mal configuradas tengan el atributo Tipo 'a Cobrar'. "
+"Considérese advertido que usted debe atender este asunto antes de proceder "
+"con el paso 'Obtener G & Pérdidas No Reconocidas en Cuentas'."
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "It is mandatory that you fill the field below with the accounts that hold your Bank & Cash in Foreign Currency."
 msgstr ""
+"Es obligatorio que llene el campo de abajo con las cuentas que constituyen "
+"sus Bancos & Cajas en Moneda Foránea."
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "It is mandatory that you fill the field in the right with the accounts that hold your Payable in Foreign Currency."
 msgstr ""
+"Es obligatorio que llene el campo de abajo con las cuentas que constituyen "
+"sus Cuentas por Pagar en Moneda Foránea."
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "It is mandatory that you fill the field in the right with the accounts that hold your Receivables in Foreign Currency."
 msgstr ""
+"Es obligatorio que llene el campo de abajo con las cuentas que constituyen "
+"sus Cuentas por Cobrar en Moneda Foránea."
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization,write_uid:0
 #: field:foreign.exchange.realization.line,write_uid:0
+#, fuzzy
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última Actualización por"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization,write_date:0
 #: field:foreign.exchange.realization.line,write_date:0
+#, fuzzy
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última Actualización el"
 
 #. module: account_currency_tools
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:671
 #: selection:foreign.exchange.realization.line,type:0
-#, python-format
+#, fuzzy, python-format
 msgid "Liquidity"
-msgstr ""
+msgstr "Liquidez"
 
 #. module: account_currency_tools
 #: help:foreign.exchange.realization,period_ids:0
+#, fuzzy
 msgid "List of Affected Periods"
-msgstr ""
+msgstr "Lista de Períodos Afectados"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization,expense_currency_exchange_account_id:0
+#, fuzzy
 msgid "Loss Exchange Rate Account"
-msgstr ""
+msgstr "Cuenta de Pérdida en Tasa de Cambio"
 
 #. module: account_currency_tools
 #: selection:foreign.exchange.realization,state:0
+#, fuzzy
 msgid "Missing Opening Journal Entry"
-msgstr ""
+msgstr "Falta Asiento de Apertura"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "Only Unrecognized Gains or Losses that are different than zero will be booked. If all of the lines below are zero and you try to Create Journal Entry then you will be taken to a State of Exception where no further steps can be taken."
 msgstr ""
+"Sólo las Ganancias o Pérdidas No Reconocidas que son diferentes de cero "
+"serán contabilizadas. Si todas las líneas de abajo son cero y usted intenta "
+"Crear el Asiento Contable entonces se le llevará a un Estado de Excepción y "
+"no podrá toman más pasos posteriores."
 
 #. module: account_currency_tools
 #: selection:foreign.exchange.realization,state:0
+#, fuzzy
 msgid "Open Fiscal Year"
-msgstr ""
+msgstr "Ejercicio Fiscal Abierto"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "Other Info"
-msgstr ""
+msgstr "Otra Información"
 
 #. module: account_currency_tools
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:673
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:742
 #: selection:foreign.exchange.realization.line,type:0
-#, python-format
+#, fuzzy, python-format
 msgid "Payable"
-msgstr ""
+msgstr "A Pagar"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
 #: field:foreign.exchange.realization,pay_ids:0
+#, fuzzy
 msgid "Payable Accounts"
-msgstr ""
+msgstr "Cuentas por Pagar"
 
 #. module: account_currency_tools
 #: field:res.company,pay_gain_exchange_account_id:0
@@ -443,54 +539,62 @@ msgstr ""
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization,period_id:0
+#, fuzzy
 msgid "Period"
-msgstr ""
+msgstr "Período"
 
 #. module: account_currency_tools
 #: selection:foreign.exchange.realization,state:0
+#, fuzzy
 msgid "Posted Journal"
-msgstr ""
+msgstr "Asiento Posteado"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization,date:0
+#, fuzzy
 msgid "Posting Date"
-msgstr ""
+msgstr "Fecha de Posteo"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization,journal_id:0
 #: field:res.company,journal_id:0
+#, fuzzy
 msgid "Posting Journal"
-msgstr ""
+msgstr "Diario de Posteo"
 
 #. module: account_currency_tools
 #: selection:foreign.exchange.realization,state:0
+#, fuzzy
 msgid "Preparing Data"
-msgstr ""
+msgstr "Preparando Datos"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "Realization Info"
-msgstr ""
+msgstr "Información de Realización"
 
 #. module: account_currency_tools
 #: field:account.period,move_id:0
 #: field:foreign.exchange.realization,move_id:0
+#, fuzzy
 msgid "Realization Journal Entry"
-msgstr ""
+msgstr "Asiento Contable de Realización"
 
 #. module: account_currency_tools
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:672
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:735
 #: selection:foreign.exchange.realization.line,type:0
-#, python-format
+#, fuzzy, python-format
 msgid "Receivable"
-msgstr ""
+msgstr "A Cobrar"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
 #: field:foreign.exchange.realization,rec_ids:0
+#, fuzzy
 msgid "Receivable Accounts"
-msgstr ""
+msgstr "Cuentas por Cobrar"
 
 #. module: account_currency_tools
 #: field:res.company,rec_gain_exchange_account_id:0
@@ -526,81 +630,102 @@ msgstr ""
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "Retrieve Multi Currency Accounts"
-msgstr ""
+msgstr "Obtener Cuentas Multi-Monedas"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization,root_id:0
+#, fuzzy
 msgid "Root Account"
-msgstr ""
+msgstr "Cuenta Raíz"
 
 #. module: account_currency_tools
 #: help:foreign.exchange.realization,root_id:0
+#, fuzzy
 msgid "Root Account, the account that plays as aChart of Accounts"
-msgstr ""
+msgstr "Cuenta Raíz, la cuenta que funge como Catálogo de Cuentas"
 
 #. module: account_currency_tools
 #: help:foreign.exchange.realization,bk_ids:0
+#, fuzzy
 msgid "Select your Bank Accounts"
-msgstr ""
+msgstr "Seleccione sus Cuentas de Banco"
 
 #. module: account_currency_tools
 #: help:foreign.exchange.realization,pay_ids:0
 #: help:foreign.exchange.realization,period_id:0
+#, fuzzy
 msgid "Select your Payable Accounts"
-msgstr ""
+msgstr "Seleccione sus Cuentas por Pagar"
 
 #. module: account_currency_tools
 #: help:foreign.exchange.realization,rec_ids:0
+#, fuzzy
 msgid "Select your Receivable Accounts"
-msgstr ""
+msgstr "Seleccione sus Cuentas por Cobrar"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "Set the field above if you want that accounts below be redirected to the above account when posting Realization Journal Entry"
 msgstr ""
+"Configure el campo de arriba si desea que las cuentas de abajo se redirijan "
+"a la cuenta de arriba cuando se postee el Asiento de Realización"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "Set the fields above if you want that Unrecognized Gains or Losses below be redirected to the above accounts when posting Realization Journal Entry"
 msgstr ""
+"Configure el campo de arriba si desea que las Ganancias o Pérdidas No "
+"Reconocidas de abajo se redirijan a la cuenta de arriba cuando se postee el "
+"Asiento de Realización"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization,help:0
+#, fuzzy
 msgid "Show Help"
-msgstr ""
+msgstr "Mostrar Ayuda"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization,skip_close_fiscalyear:0
+#, fuzzy
 msgid "Skip Close Fiscal Year Check"
-msgstr ""
+msgstr "Saltar Validación de Ejercicio Fiscal Cerrado"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization,skip_opening_entry:0
+#, fuzzy
 msgid "Skip Opening Journal Entry Check"
-msgstr ""
+msgstr "Saltar Validación de Asiento de Apertura"
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization,line_ids:0
+#, fuzzy
 msgid "Suggested Recognition Lines"
-msgstr ""
+msgstr "Líneas de Reconocimiento Sugeridas"
 
 #. module: account_currency_tools
 #: help:foreign.exchange.realization.line,type:0
+#, fuzzy
 msgid "The 'Internal Type' is used for features available on different types of accounts: payable/receivable are for partners accounts (for debit/credit computations), liquidity for bank & cash"
 msgstr ""
+"El 'tipo interno' se usa para funcionalidad disponible en distintos tipos de "
+"cuentas:  a Cobrar/a Pagar son para cuentas de clientes (para cálculos de "
+"débito/crédito), liquidez para banco y caja"
 
 #. module: account_currency_tools
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:442
-#, python-format
+#, fuzzy, python-format
 msgid "There are no Periods selected"
-msgstr ""
+msgstr "No hay Períodos seleccionados"
 
 #. module: account_currency_tools
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:529
-#, python-format
+#, fuzzy, python-format
 msgid "There are no accounts to compute"
-msgstr ""
+msgstr "No hay cuentas para calcular"
 
 #. module: account_currency_tools
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:832
@@ -610,89 +735,123 @@ msgstr ""
 
 #. module: account_currency_tools
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:114
-#, python-format
+#, fuzzy, python-format
 msgid "There is no default company for the current user!"
-msgstr ""
+msgstr "No hay compañía predeterminada para el usuario actual!"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "These are the Unrecognized Gains or Losses that have not yet been realized in your Liquidity, Receivables & Payable Accounts"
 msgstr ""
+"Estas son las Ganancias o Pérdidas No Reconocidas que no se han realizado en "
+"sus cuentas de Liquidez, a Cobrar & a Pagar"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "These are your Bank & Cash Accounts that need Exchange Currency Rate Difference Realization."
 msgstr ""
+"Estas son sus cuentas de Banco & Caja que necesitan Realización por "
+"Diferencia en Tasa de Cambio."
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "These are your Payable Accounts that need Exchange Currency Rate Difference Realization."
 msgstr ""
+"Estas son sus Cuentas por Pagar que necesitan Realización por Diferencia en "
+"Tasa de Cambio."
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "These are your Receivable Accounts that need Exchange Currency Rate Difference Realization."
 msgstr ""
+"Estas son sus Cuentas por Cobrar que necesitan Realización por Diferencia en "
+"Tasa de Cambio."
 
 #. module: account_currency_tools
 #: help:foreign.exchange.realization,currency_id:0
+#, fuzzy
 msgid "This is currency used to post Exchange Rate Difference"
 msgstr ""
+"Esta es la moneda que se usa para postear las Diferencias en Tasa de Cambio"
 
 #. module: account_currency_tools
 #: help:foreign.exchange.realization.line,adjusted_balance:0
+#, fuzzy
 msgid "Total amount (in Company currency) for transactions held in secondary currency for this account."
 msgstr ""
+"Cantidad total (en moneda de la compañía) para transacciones mantenidas en "
+"moneda secundaria para esta cuenta."
 
 #. module: account_currency_tools
 #: help:foreign.exchange.realization.line,foreign_balance:0
+#, fuzzy
 msgid "Total amount (in Secondary currency) for transactions held in secondary currency for this account."
 msgstr ""
+"Cantidad total (en moneda de la compañía) para transacciones mantenidas en "
+"moneda secundaria para esta cuenta."
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization.line,unrealized_gain_loss:0
+#, fuzzy
 msgid "Unrealized Gain(+) or Loss(-)"
-msgstr ""
+msgstr "Ganancia (+) o Pérdida(-) No Realizada"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "Unrealized Gains or Losses"
-msgstr ""
+msgstr "Ganancias o Pérdidas No Realizadas"
 
 #. module: account_currency_tools
 #: help:foreign.exchange.realization.line,unrealized_gain_loss:0
+#, fuzzy
 msgid "Value of Loss or Gain due to changes in exchange rate when doing multi-currency transactions."
 msgstr ""
+"Valor de Ganancia o Pérdida debido cambios en la tasa de cambio cuando se "
+"realizan transacción en multi-moneda."
 
 #. module: account_currency_tools
 #: field:foreign.exchange.realization.line,wizard_id:0
+#, fuzzy
 msgid "Wizard"
-msgstr ""
+msgstr "Asistente"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "You have been redirected to this state"
-msgstr ""
+msgstr "Se le ha redirigido a este estado"
 
 #. module: account_currency_tools
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:792
-#, python-format
+#, fuzzy, python-format
 msgid "You should configure the 'Gain Exchange Rate Account'to manage automatically the booking of accounting entries related to differences between exchange rates."
 msgstr ""
+"Deberá configurar la Cuenta de Ganancia en Tasa de Cambio para administrar "
+"automáticamente la contabilización de los asientos contables relacionados "
+"con diferencias entre tasas de cambio."
 
 #. module: account_currency_tools
 #: code:addons/account_currency_tools/wizard/exchange_realization.py:778
-#, python-format
+#, fuzzy, python-format
 msgid "You should configure the 'Loss Exchange Rate Account' to manage automatically the booking of accounting entries related to differences between exchange rates."
 msgstr ""
+"Deberá configurar la Cuenta de Pérdida en Tasa de Cambio para administrar "
+"automáticamente la contabilización de los asientos contables relacionados "
+"con diferencias entre tasas de cambio."
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "_Cancel"
-msgstr ""
+msgstr "_Cancelar"
 
 #. module: account_currency_tools
 #: view:foreign.exchange.realization:account_currency_tools.view_foreign_exchange_realization
+#, fuzzy
 msgid "or"
-msgstr ""
-
+msgstr "o"
