@@ -299,9 +299,12 @@ class foreign_exchange_realization(osv.osv_memory):
             'foreign.exchange.realization.line',
             'wizard_id',
             'Suggested Recognition Lines'),
-        'move_id': fields.many2one(
-            'account.move',
-            'Realization Journal Entry',
+        'move_id': fields.related(
+            'period_id', 'move_id',
+            type='many2one',
+            relation='account.move',
+            string='Realization Journal Entry',
+            readonly=True,
             required=False),
         'target_move': fields.selection(
             [('posted', 'All Posted Entries'),
@@ -822,6 +825,12 @@ class foreign_exchange_realization(osv.osv_memory):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
+
+        if wzd_brw.move_id:
+            raise osv.except_osv(
+                _('Error!'),
+                _('There is already a Realization Journal Entry in %s!') %
+                wzd_brw.period_id.name)
 
         if not wzd_brw.skip_close_fiscalyear and \
                 not self.check_previous_fiscalyear(cr, uid, ids,

@@ -86,7 +86,7 @@
                                     <field name='name'/>
                                 </tree>
                             </field>
-                            <field name="move_id" readonly="1" attrs="{'invisible': [('state','!=', 'posted')]}"/>
+                            <field name="move_id" readonly="1" attrs="{'invisible': [('move_id','=', False), ('state','!=', 'posted')]}"/>
                         </group>
                         <notebook colspan='4'>
                             <page string='Exceptional State' attrs="{'invisible': [('state','not in', ('exception',))]}" autofocus="autofocus">
