@@ -41,19 +41,8 @@ class AccountInvoiceLine(models.Model):
         'the payment to a broker, indicate the original invoice that must be '
         'generated the broker partner', domain=[('type', '=', 'in_invoice')])
     partner_broker_ok = fields.Boolean(
-        'Partner Broker', compute='_get_partner_broker_ok',
-        help='Indicate if the partner to invoice is broker')
-
-    @api.one
-    @api.depends('invoice_id.partner_id')
-    def _get_partner_broker_ok(self):
-        '''
-        If the partner to invoice is broker this field is True, is to only can
-        load a invoice broker in lines to invoice with broker ok == True.
-        '''
-        self.partner_broker_ok = self.invoice_id and\
-            self.invoice_id.partner_id and\
-            self.invoice_id.partner_id.is_broker_ok
+        string='Partner Broker', related='invoice_id.partner_id.is_broker_ok',
+        store=False, help='Indicate if the partner to invoice is broker')
 
 
 class account_invoice_tax(models.Model):
@@ -114,7 +103,7 @@ class account_invoice_tax(models.Model):
                 for tax in res:
                     if tax.get('name', '') == tax_name and tax.get(
                             'account_id', False) == tax_acc_id and tax.get(
-                            'tax_code_id': False) == tax_code_id:
+                            'tax_code_id', False) == tax_code_id:
                         tax.update({
                             'partner_id': inv_t.tax_partner_id.id or False})
         return res
