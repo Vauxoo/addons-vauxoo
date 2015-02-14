@@ -356,7 +356,6 @@ class foreign_exchange_realization(osv.osv_memory):
     def get_account_balance(self, cr, uid, args, context=None):
         query = '''
             SELECT
-                aml.account_id,
                 aml.currency_id,
                 SUM(aml.debit - aml.credit) AS balance
             FROM account_move_line AS aml
@@ -369,7 +368,7 @@ class foreign_exchange_realization(osv.osv_memory):
                 aml.state <> 'draft' AND
                 am.state IN (%(states)s) AND
                 ap.id IN (%(period_ids)s)
-            GROUP BY aml.account_id, aml.currency_id
+            GROUP BY aml.currency_id
         ''' % args
         cr.execute(query)
         res = cr.dictfetchall()
@@ -688,12 +687,11 @@ class foreign_exchange_realization(osv.osv_memory):
             curr_brw = cur_obj.browse(cr, uid, currency_id, context=context)
             acc = dict_acc[internal_type]
             account_a = val > 0 and acc['gain'] or acc['loss']
-            argx['account_ids'] = str(account_a)
+            argx['account_ids'] = '%s, %s' % (
+                str(acc['gain']), str(acc['loss']))
             argx['currency_ids'] = str(currency_id)
 
             res_acc = self.get_account_balance(cr, uid, argx, context=context)
-            res_acc = [rec for rec in res_acc
-                       if rec.get('account_id') == account_a]
             val_acc = res_acc and res_acc[0]['balance'] or 0.0
             val -= val_acc
 
