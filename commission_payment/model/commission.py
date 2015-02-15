@@ -243,7 +243,7 @@ class commission_payment(osv.Model):
                        for cl_brw in cs_brw.comm_lines_ids
                        ]
         # choose the view_mode accordingly
-        if len(cl_ids) > 1:
+        if len(cl_ids) > 0:
             result['domain'] = "[('id','in',["+','.join(
                 [str(cl_id) for cl_id in cl_ids]
             )+"])]"
