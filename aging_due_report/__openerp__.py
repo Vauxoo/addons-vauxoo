@@ -48,6 +48,9 @@ A Supplier's Aging Due Report.
         "views/customer_aging_due_report_qweb.xml",
         "views/customer_formal_due_report_qweb.xml",
         "views/customer_detail_due_report_qweb.xml",
+        "views/supplier_aging_due_report_qweb.xml",
+        "views/supplier_detail_due_report_qweb.xml",
+        "views/supplier_formal_due_report_qweb.xml",
         "views/aging_due_report.xml"
         # "report/ing_due_report.xml",
         # "data/aging_due_webkit_header.xml",

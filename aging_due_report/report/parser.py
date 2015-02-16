@@ -561,4 +561,25 @@ class detail_parser_qweb_pdf_report(osv.AbstractModel):
     _template = 'aging_due_report.detail_due_report_qweb'
     _wrapped_report_class = aging_parser
 
+
+class supplier_aging_parser_qweb_pdf_report(osv.AbstractModel):
+    _name = 'report.aging_due_report.supplier_aging_due_report_qweb'
+    _inherit = 'report.abstract_report'
+    _template = 'aging_due_report.supplier_aging_due_report_qweb'
+    _wrapped_report_class = aging_parser
+
+
+class supplier_detail_parser_qweb_pdf_report(osv.AbstractModel):
+    _name = 'report.aging_due_report.supplier_detail_due_report_qweb'
+    _inherit = 'report.abstract_report'
+    _template = 'aging_due_report.supplier_detail_due_report_qweb'
+    _wrapped_report_class = aging_parser
+
+
+class supplier_formal_parser_qweb_pdf_report(osv.AbstractModel):
+    _name = 'report.aging_due_report.supplier_formal_due_report_qweb'
+    _inherit = 'report.abstract_report'
+    _template = 'aging_due_report.supplier_formal_due_report_qweb'
+    _wrapped_report_class = aging_parser
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

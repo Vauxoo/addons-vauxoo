@@ -45,5 +45,60 @@
         <record id="aging_due_report.report_detail_due_report_qweb" model="ir.actions.report.xml">
             <field name="paperformat_id" ref="aging_due_report.aging_due_report_paperformat_euro"/>
         </record>
+
+<!--
+Supplier Aging
+-->
+        <report auto="False"
+                id="report_supplier_aging_due_report_qweb"
+                model="res.partner"
+                name="aging_due_report.supplier_aging_due_report_qweb"
+                file="aging_due_report.supplier_aging_due_report_qweb"
+                string="Supplier Aging Report of Debts Webkit"
+                report_type="qweb-pdf"
+                attachment_use="0"
+                attachment=""
+                menu="True"/>
+
+        <record id="aging_due_report.report_supplier_aging_due_report_qweb" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="aging_due_report.aging_due_report_paperformat_euro"/>
+        </record>
+
+<!--
+Supplier Detail
+-->
+        <report auto="False"
+                id="report_supplier_detail_due_report_qweb"
+                model="res.partner"
+                name="aging_due_report.supplier_detail_due_report_qweb"
+                file="aging_due_report.supplier_detail_due_report_qweb"
+                string="Supplier Detail Report of Debts Webkit"
+                report_type="qweb-pdf"
+                attachment_use="0"
+                attachment=""
+                menu="True"/>
+
+        <record id="aging_due_report.report_supplier_detail_due_report_qweb" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="aging_due_report.aging_due_report_paperformat_euro"/>
+        </record>
+
+<!--
+Supplier Formal
+-->
+        <report auto="False"
+                id="report_supplier_formal_due_report_qweb"
+                model="res.partner"
+                name="aging_due_report.supplier_formal_due_report_qweb"
+                file="aging_due_report.supplier_formal_due_report_qweb"
+                string="Supplier Formal Report of Debts Webkit"
+                report_type="qweb-pdf"
+                attachment_use="0"
+                attachment=""
+                menu="True"/>
+
+        <record id="aging_due_report.report_supplier_formal_due_report_qweb" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="aging_due_report.aging_due_report_paperformat_euro"/>
+        </record>
+
     </data>
 </openerp>
