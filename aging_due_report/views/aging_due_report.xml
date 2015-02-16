@@ -2,9 +2,9 @@
 <openerp>
     <data>
         <report auto="False"
-                id="aging_due_report_qweb"
+                id="report_aging_due_report_qweb"
                 model="res.partner"
-                name="aging_due_report_qweb"
+                name="aging_due_report.aging_due_report_qweb"
                 file="aging_due_report.aging_due_report_qweb"
                 string="Customer Aging Report of Debts"
                 report_type="qweb-pdf"
@@ -12,17 +12,38 @@
                 attachment=""
                 menu="True"/>
                 
-        <record id="aging_due_report.aging_due_report_qweb" model="ir.actions.report.xml">
+        <record id="aging_due_report.report_aging_due_report_qweb" model="ir.actions.report.xml">
             <field name="paperformat_id" ref="aging_due_report.aging_due_report_paperformat_euro"/>
         </record>
-    </data>
-    
-    <data noupdate="1">
 
-       <record id="report_qweb_lodigroup_registrer0" model="report.multicompany">
-            <field name="company_id"></field>
-            <field name="report_id" ref="l10n_mx_facturae_report_lodigroup.account_invoice_facturae_qweb_lodigroup"/>
-            <field name="model" search="[('model','=','ir.attachment.facturae.mx')]" model="ir.model"/>
+        <report auto="False"
+                id="report_formal_due_report_qweb"
+                model="res.partner"
+                name="aging_due_report.formal_due_report_qweb"
+                file="aging_due_report.formal_due_report_qweb"
+                string="Customer Formal Report of Debts"
+                report_type="qweb-pdf"
+                attachment_use="0"
+                attachment=""
+                menu="True"/>
+                
+        <record id="aging_due_report.report_formal_due_report_qweb" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="aging_due_report.aging_due_report_paperformat_euro"/>
+        </record>
+
+        <report auto="False"
+                id="report_detail_due_report_qweb"
+                model="res.partner"
+                name="aging_due_report.detail_due_report_qweb"
+                file="aging_due_report.detail_due_report_qweb"
+                string="Customer Detail Report of Debts"
+                report_type="qweb-pdf"
+                attachment_use="0"
+                attachment=""
+                menu="True"/>
+                
+        <record id="aging_due_report.report_detail_due_report_qweb" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="aging_due_report.aging_due_report_paperformat_euro"/>
         </record>
     </data>
 </openerp>

@@ -28,6 +28,8 @@ import time
 from openerp.report import report_sxw
 import mx.DateTime
 from openerp.addons.report_webkit import webkit_report
+from openerp.osv import osv
+from datetime import datetime
 
 
 class aging_parser(report_sxw.rml_parse):
@@ -44,6 +46,7 @@ class aging_parser(report_sxw.rml_parse):
             'get_invoice_by_partner_group': self._get_invoice_by_partner_group,
             'get_invoice_by_currency_group':
             self._get_invoice_by_currency_group,
+            'datetime': datetime,
         })
 
     def _get_aml(self, ids, inv_type='out_invoice', currency_id=None):
@@ -536,4 +539,26 @@ webkit_report.WebKitParser(
     parser=aging_parser,
     header=True
 )
+
+
+class aging_parser_qweb_pdf_report(osv.AbstractModel):
+    _name = 'report.aging_due_report.aging_due_report_qweb'
+    _inherit = 'report.abstract_report'
+    _template = 'aging_due_report.aging_due_report_qweb'
+    _wrapped_report_class = aging_parser
+
+
+class formal_parser_qweb_pdf_report(osv.AbstractModel):
+    _name = 'report.aging_due_report.formal_due_report_qweb'
+    _inherit = 'report.abstract_report'
+    _template = 'aging_due_report.formal_due_report_qweb'
+    _wrapped_report_class = aging_parser
+
+
+class detail_parser_qweb_pdf_report(osv.AbstractModel):
+    _name = 'report.aging_due_report.detail_due_report_qweb'
+    _inherit = 'report.abstract_report'
+    _template = 'aging_due_report.detail_due_report_qweb'
+    _wrapped_report_class = aging_parser
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

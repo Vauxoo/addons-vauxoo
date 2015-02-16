@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <openerp>
+        <data>
+            <template id="report_aging_due_report_qweb_document">
+                <div class="page">
+                    <table class="basic_table" width="100%">
+                        <tr>
+                            <td width="30%">
+                                <div  style="float:left;">
+                                    <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 100; max-width: auto;"/>
+                                </div>
+                            </td>
+                            <td style="text-align: left;">
+                                <strong>Customer Aging Report of Debts</strong>
+                            </td>
+                       </tr>
+                    </table>
+                    <t t-set="cur_group" t-value="get_aged_lines( objects, inv_type='out_invoice')"></t>
+
+                    <t t-foreach="cur_group" t-as="table">
+                        <table class="table_column_border table_alter_color_row table_title_bg_color" width="100%">
+                            <tr>
+                                <th width="12%" class="ITEMSTITLELEFT">TIN</th>
+                                <th width="18%" class="ITEMSTITLELEFT">PARTNER</th>
+                                <th width="10%" class="ITEMSTITLERIGHT">NOT DUE</th>
+                                <th width="10%" class="ITEMSTITLERIGHT">01-30 DAYS</th>
+                                <th width="10%" class="ITEMSTITLERIGHT">31-60 DAYS</th>
+                                <th width="10%" class="ITEMSTITLERIGHT">61-90 DAYS</th>
+                                <th width="10%" class="ITEMSTITLERIGHT">91-120 DAYS</th>
+                                <th width="10%" class="ITEMSTITLERIGHT">+ 120 DAYS</th>
+                                <th width="10%" class="ITEMSTITLERIGHT">TOT./AR <span t-esc="'(' + table[0].get('cur_brw', False).name+ ')' "/></th>
+                            </tr>
+                            <t t-foreach="table" t-as="line">
+                                <tr>
+                                    <td class="ITEMSLEFT">
+                                        <span t-esc="(line.get('type')=='partner' and line.get('rp_brw').vat and '%s-%s-%s'%(line.get('rp_brw').vat[2],line.get('rp_brw').vat[3:-1],line.get('rp_brw').vat[-1]) or '').upper()"/>
+                                    </td>
+                                    <td class="ITEMSLEFT">
+                                        <b><span t-esc="line.get('type')=='partner' and line.get('rp_brw').name or line.get('type')=='total' and 'TOTAL IN ' + line.get('cur_brw').name or line.get('type')=='provision' and 'PROVISION IN ' + line.get('cur_brw').name"/></b>
+                                    </td>
+                                    <td class="ITEMSRIGHT"><span t-esc="formatLang(line.get('not_due'), digits=2, grouping=True)"/></td>
+                                    <td class="ITEMSRIGHT"><span t-esc="formatLang(line.get('1to30'), digits=2, grouping=True)"/></td>
+                                    <td class="ITEMSRIGHT"><span t-esc="formatLang(line.get('31to60'), digits=2, grouping=True)"/></td>
+                                    <td class="ITEMSRIGHT"><span t-esc="formatLang(line.get('61to90'), digits=2, grouping=True)"/></td>
+                                    <td class="ITEMSRIGHT"><span t-esc="formatLang(line.get('91to120'), digits=2, grouping=True)"/></td>
+                                    <td class="ITEMSRIGHT"><span t-esc="formatLang(line.get('120+'), digits=2, grouping=True)"/></td>
+                                    <td class="ITEMSRIGHT"><span t-esc="formatLang(line.get('total'), digits=2, grouping=True)"/></td>
+                                </tr>
+                            </t>
+                        </table>
+                    </t>
+                    <p style="word-wrap:break-word;"></p>
+                    <p style="page-break-before: always;"></p> 
+                </div>
+            </template>
+
+            <template id="aging_due_report_qweb">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'lang','aging_due_report.report_aging_due_report_qweb_document')"/>
+                </t>
+            </template>
+        </data>
+    </openerp>
+
