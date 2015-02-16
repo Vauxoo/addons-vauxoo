@@ -29,6 +29,10 @@ class account_bank_statement_line(osv.osv):
 
     _inherit = 'account.bank.statement.line'
 
+    #Disable pylint W0622 because it is overwriting the original function
+    #of the account_bank_statement class
+    #odoo/addons/account/account_bank_statement.py#L639
+
     # pylint: disable=W0622
     def get_move_lines_for_reconciliation(
             self, cr, uid, st_line, excluded_ids=None, str=False, offset=0,
