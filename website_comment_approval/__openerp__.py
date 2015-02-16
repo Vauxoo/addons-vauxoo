@@ -14,14 +14,13 @@ Website Comment Approval
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
-        "website_sale"
+        "website_sale",
     ],
     "demo": [],
     "data": [
+        "views/layout.xml"
     ],
     "test": [],
-    "js": [],
-    "css": [],
     "qweb": [
         "static/src/xml/mail.xml",
              ],
