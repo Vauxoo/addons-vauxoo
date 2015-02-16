@@ -28,23 +28,41 @@ class res_company(osv.Model):
     _description = 'Companies'
 
     _columns = {
-        'bank_gain_loss_exchange_account_id': fields.many2one(
-            'account.account', 'Bank Gain or Loss Account',
+        'bank_gain_exchange_account_id': fields.many2one(
+            'account.account', 'Bank Gain Account',
             domain=('[("type", "!=", "view")]'),
             required=False,
-            help=('Bank Gain or Loss Exchange Rate Account for booking '
+            help=('Bank Gain Exchange Rate Account for booking '
                   'Difference')),
-        'rec_gain_loss_exchange_account_id': fields.many2one(
-            'account.account', 'Receivable Gain or Loss Account',
+        'rec_gain_exchange_account_id': fields.many2one(
+            'account.account', 'Receivable Gain Account',
             domain=('[("type", "!=", "view")]'),
             required=False,
-            help=('Receivable Gain or Loss Exchange Rate Account for booking '
+            help=('Receivable Gain Exchange Rate Account for booking '
                   'Difference')),
-        'pay_gain_loss_exchange_account_id': fields.many2one(
-            'account.account', 'Payable Gain or Loss Account',
+        'pay_gain_exchange_account_id': fields.many2one(
+            'account.account', 'Payable Gain Account',
             domain=('[("type", "!=", "view")]'),
             required=False,
-            help=('Payable Gain or Loss Exchange Rate Account for booking '
+            help=('Payable Gain Exchange Rate Account for booking '
+                  'Difference')),
+        'bank_loss_exchange_account_id': fields.many2one(
+            'account.account', 'Bank Loss Account',
+            domain=('[("type", "!=", "view")]'),
+            required=False,
+            help=('Bank Loss Exchange Rate Account for booking '
+                  'Difference')),
+        'rec_loss_exchange_account_id': fields.many2one(
+            'account.account', 'Receivable Loss Account',
+            domain=('[("type", "!=", "view")]'),
+            required=False,
+            help=('Receivable Loss Exchange Rate Account for booking '
+                  'Difference')),
+        'pay_loss_exchange_account_id': fields.many2one(
+            'account.account', 'Payable Loss Account',
+            domain=('[("type", "!=", "view")]'),
+            required=False,
+            help=('Payable Loss Exchange Rate Account for booking '
                   'Difference')),
         'journal_id': fields.many2one(
             'account.journal', 'Posting Journal',

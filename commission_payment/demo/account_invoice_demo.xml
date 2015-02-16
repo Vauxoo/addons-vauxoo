@@ -12,7 +12,7 @@
             <field name="type">out_invoice</field>
             <field name="account_id" ref="account.a_recv"/>
             <field name="partner_id" ref="base.res_partner_23"/>
-            <field eval="time.strftime('%Y-%m') + '-05'" name="date_invoice"/>
+            <field eval="time.strftime('%Y-%m') + '-01'" name="date_invoice"/>
         </record>
         <record id="invoice_1_line_1" model="account.invoice.line">
             <field name="name">Vauxoo Specialties</field>
