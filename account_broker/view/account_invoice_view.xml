@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="account.invoice_supplier_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='invoice_line']//tree/field[@name='invoice_line_tax_id']" position="after">
-                    <field name="invoice_broker_id" attrs="{'invisible':[('partner_broker_ok','=',False)]}"/>
+                    <field name="invoice_broker_id" attrs="{'invisible':[('partner_broker_ok','=',False)]}" domain="[('id','!=',parent.id)]"/>
                     <field name="partner_broker_ok" invisible='1'/>
                 </xpath>
             </field>

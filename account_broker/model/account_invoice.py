@@ -69,6 +69,10 @@ class account_invoice_tax(models.Model):
                         am_base = res.get(tax.get('id')).get('base', 0.0)
                         tot_am_base = am_base + currency.round(
                             tax.get('price_unit', 0.0))
+                        base_amount = res.get(tax.get('id')).get(
+                            'base_amount', 0.0) + currency.compute(
+                            tot_am_base * tax.get('base_sign', 0.0),
+                            company_currency, round=False)
                         res.get(tax.get('id')).update({
                             'base': tot_am_base,
                             'tax_partner_id':
@@ -76,9 +80,7 @@ class account_invoice_tax(models.Model):
                                 line.invoice_broker_id.partner_id.id or
                                 False,
                             'amount': tax.get('amount', 0.0),
-                            'base_amount': currency.compute(
-                                tot_am_base * tax.get('base_sign', 0.0),
-                                company_currency, round=False),
+                            'base_amount': base_amount,
                             'tax_amount': currency.compute(
                                 tax.get('amount', 0.0) *
                                 tax.get('tax_sign', 0.0), company_currency,
