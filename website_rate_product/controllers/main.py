@@ -21,9 +21,7 @@ class website_sale(website_sale):
                 type='comment',
                 subtype='mt_comment',
                 context=dict(context, mail_create_nosubscribe=True))
-        print post, mid
         if post.get('rating') and post.get('comment'):
-            print "Enters"
             data = {
                 'rating': int(post.get('rating')),
             }
