@@ -131,8 +131,9 @@ class aging_parser(report_sxw.rml_parse):
 
             inv_by_currency = self._get_invoice_by_currency(inv_ids)
             res[rp_brw.id] = {}.fromkeys(inv_by_currency.keys())
-
-            for currency_id in res[rp_brw.id].keys():
+            currency_id = False
+            for currency in res[rp_brw.id].keys():
+                currency_id = currency
                 res[rp_brw.id][currency_id] = {
                     'rp_brw': rp_brw,
                     'cur_brw': cur_obj.browse(self.cr, self.uid, currency_id),
@@ -251,6 +252,8 @@ class aging_parser(report_sxw.rml_parse):
             # ~ TODO: Report donde no se elimine esta clave del diccionario
             # ~ y se use para revisiones internas
             # ~ Si no tiene saldo, sacarlo del reporte
+
+            # pylint: disable=W0106
             not res[rp_brw.id][currency_id]['due_total'] and res.pop(rp_brw.id)
 
         # ~ ordenando los registros en orden alfabetico
@@ -324,32 +327,6 @@ class aging_parser(report_sxw.rml_parse):
 
         if not ixp_gen:
             return []
-
-        '''
-        [
-            {
-            'rp_brw':rp_brw,
-            'inv_ids':[{
-                    'residual':residual,
-                    'due_days':due_days
-                }],
-            'due_total':due_total,
-            }
-        ]
-        '''
-
-        '''
-            [{
-                'id'        : ixp['rp_brw'].id,
-                'rp_brw'    : ixp['rp_brw'],
-                'not_due'   : 0.00,
-                '1to30'     : 0.00,
-                '31to60'    : 0.00,
-                '61to90'    : 0.00,
-                '91to120'   : 0.00,
-                '120+'      : 0.00,
-            }]
-        '''
 
         res_total_by_currency = dict()
         res_total = {
