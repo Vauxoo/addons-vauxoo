@@ -1,0 +1,253 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* aging_due_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-17 18:57+0000\n"
+"PO-Revision-Date: 2015-02-17 18:57+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_aging_due_report_qweb_document
+msgid "+ 120 DAYS"
+msgstr "+ 120 DÍAS"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_aging_due_report_qweb_document
+msgid "01-30 DAYS"
+msgstr "01-30 DÍAS"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_aging_due_report_qweb_document
+msgid "31-60 DAYS"
+msgstr "31-60 DÍAS"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_aging_due_report_qweb_document
+msgid "61-90 DAYS"
+msgstr "61-90 DÍAS"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_aging_due_report_qweb_document
+msgid "91-120 DAYS"
+msgstr "91-120 DÍAS"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
+#: view:website:aging_due_report.report_formal_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_detail_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
+msgid "BALANCE"
+msgstr "BALANCE"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
+#: view:website:aging_due_report.report_formal_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_detail_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
+msgid "BASE"
+msgstr "BASE"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_formal_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
+msgid "Best Regards,"
+msgstr "Atentamente,"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_formal_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
+msgid "C: C/N"
+msgstr "C: C/N"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
+#: view:website:aging_due_report.report_formal_due_report_qweb_document
+msgid "COLLECTS"
+msgstr "ABONOS"
+
+#. module: aging_due_report
+#: model:ir.actions.report.xml,name:aging_due_report.report_aging_due_report_qweb
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+msgid "Customer Aging Report of Debts"
+msgstr "Reporte Antiguedad de Deudas de Clientes"
+
+#. module: aging_due_report
+#: model:ir.actions.report.xml,name:aging_due_report.report_detail_due_report_qweb
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
+msgid "Customer Detail Report of Debts"
+msgstr "Reporte Detallado de Deudas de Clientes"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_formal_due_report_qweb_document
+msgid "Customer Financial Statement"
+msgstr "Estado Financiero del Cliente"
+
+#. module: aging_due_report
+#: model:ir.actions.report.xml,name:aging_due_report.report_formal_due_report_qweb
+#: view:website:aging_due_report.report_formal_due_report_qweb_document
+msgid "Customer Formal Report of Debts"
+msgstr "Reporte Formal de Deudas de Clientes"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_formal_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
+msgid "D: D/N"
+msgstr "D: D/N"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_formal_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
+msgid "DOCUMENT"
+msgstr "DOCUMENTO"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
+#: view:website:aging_due_report.report_formal_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_detail_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
+msgid "DUE DATE"
+msgstr "F/VENC."
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
+#: view:website:aging_due_report.report_formal_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_detail_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
+msgid "DUE DAYS"
+msgstr "DIAS/VENC."
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
+#: view:website:aging_due_report.report_formal_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_detail_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
+msgid "EMIS DATE"
+msgstr "F/EMISION"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_formal_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
+msgid "I: INVOICE"
+msgstr "F: FACTURA"
+
+#. module: aging_due_report
+#: field:report.aging_due_report.aging_due_report_qweb,id:0
+#: field:report.aging_due_report.detail_due_report_qweb,id:0
+#: field:report.aging_due_report.formal_due_report_qweb,id:0
+#: field:report.aging_due_report.supplier_aging_due_report_qweb,id:0
+#: field:report.aging_due_report.supplier_detail_due_report_qweb,id:0
+#: field:report.aging_due_report.supplier_formal_due_report_qweb,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_detail_due_report_qweb_document
+msgid "INVOICE"
+msgstr "FACTURA"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_aging_due_report_qweb_document
+msgid "NOT DUE"
+msgstr "NO VENCIDO"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_aging_due_report_qweb_document
+msgid "PARTNER"
+msgstr "EMPRESA"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_supplier_detail_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
+msgid "PAYMENTS"
+msgstr "PAGOS"
+
+#. module: aging_due_report
+#: model:ir.actions.report.xml,name:aging_due_report.report_supplier_aging_due_report_qweb
+#: view:website:aging_due_report.report_supplier_aging_due_report_qweb_document
+msgid "Supplier Aging Report of Debts"
+msgstr "Reporte Antiguedad de Deudas de Proveedores"
+
+#. module: aging_due_report
+#: model:ir.actions.report.xml,name:aging_due_report.report_supplier_detail_due_report_qweb
+#: view:website:aging_due_report.report_supplier_detail_due_report_qweb_document
+msgid "Supplier Detail Report of Debts"
+msgstr "Reporte Detallado de Deudas de Proveedores"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
+msgid "Supplier Financial Statement"
+msgstr "Estado Financiero del Proveedor"
+
+#. module: aging_due_report
+#: model:ir.actions.report.xml,name:aging_due_report.report_supplier_formal_due_report_qweb
+#: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
+msgid "Supplier Formal Report of Debts"
+msgstr "Reporte Formal de Deudas de Proveedores"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
+#: view:website:aging_due_report.report_formal_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_detail_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
+msgid "TAX"
+msgstr "IMP."
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_aging_due_report_qweb_document
+msgid "TIN"
+msgstr "VAT"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_supplier_aging_due_report_qweb_document
+msgid "TOT./AP"
+msgstr "TOT./AP"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+msgid "TOT./AR"
+msgstr "TOT./AR"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_detail_due_report_qweb_document
+msgid "TOT/INV."
+msgstr "TOT/FAC."
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
+#: view:website:aging_due_report.report_formal_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_detail_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
+msgid "TOTAL EN"
+msgstr "TOTAL IN"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_formal_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
+msgid "TOTAL/DOC."
+msgstr "TOTAL/DOC."
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_formal_due_report_qweb_document
+#: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
+msgid "Without any further reference,"
+msgstr "Sin ningún tipo de referencia,"
+
