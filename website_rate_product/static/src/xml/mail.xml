@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+    <t t-extend="mail.thread.message">
+        <t t-jquery=".oe_msg_footer" t-operation="after">
+            Rating: <t t-esc="widget.rating"/>
+        </t>
+    </t>
+</template>

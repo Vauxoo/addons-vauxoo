@@ -17,14 +17,16 @@ Website Product Rate
     ],
     "demo": [],
     "data": [
-        "website_rate_product/views/layout.xml",
+        "views/layout.xml",
+        "views/star_rate.xml",
     ],
     "test": [],
     "js": [],
     "css": [],
     "qweb": [
         "static/src/xml/rate.xml",
-             ],
+        "static/src/xml/mail.xml",
+        ],
     "installable": True,
     "auto_install": False,
     "active": False

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="discussion_rate" inherit_id="website_sale.product_comment" active="False" customize_show="True" name="Allow Rate Product">
+            <xpath  expr="//form[@id='comment']" position="inside">
+                <div class="container">
+                    <div class="row lead">
+                        <div id="stars-existing" class="starrr" data-rating='0' name="rating"></div>
+                        <input id="count-existing" name="rating" class="form-control"/>
+                    </div>
+                </div>
+            </xpath>
+            <xpath  expr="//div[@class='media-body oe_msg_content']" position="inside">
+                <div class="row lead pull-right">
+                    <div id="stars" class="starrr" t-att-data-rating='message.rating' style="margin-right: 20px;"></div>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</openerp>

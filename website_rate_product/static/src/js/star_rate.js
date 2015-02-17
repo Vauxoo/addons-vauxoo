@@ -110,7 +110,7 @@ $( document ).ready(function() {
   });
 
   $('#stars-existing').on('starrr:change', function(e, value){
-    $('#count-existing').html(value);
+    $('#count-existing').val(value);
   });
 });
 
