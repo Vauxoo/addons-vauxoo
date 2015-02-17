@@ -45,6 +45,7 @@ A Supplier's Aging Due Report.
     "demo": [],
     "data": [
         "data/aging_due_report_paper_format.xml",
+        "data/aging_due_report_style.xml",
         "views/customer_aging_due_report_qweb.xml",
         "views/customer_formal_due_report_qweb.xml",
         "views/customer_detail_due_report_qweb.xml",

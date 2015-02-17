@@ -2,6 +2,9 @@
     <openerp>
         <data>
             <template id="report_formal_due_report_qweb_document">
+                <style type="text/css">
+                    <t t-call="aging_due_report.style_formal_due_report"/>
+                </style>
                 <div class="page">
                     <t t-set="datas" t-value="get_invoice_by_partner_group(objects, inv_type='out_invoice')"></t>
 
@@ -26,7 +29,7 @@
                             <div class="CUSTOMEROTHER"><span t-esc="data[0].get('rp_brw').street2 and data[0].get('rp_brw').street2.title() or ''"/></div>
                             <div class="CUSTOMEROTHER"><span t-esc="data[0].get('rp_brw').state_id and data[0].get('rp_brw').state_id.name.title() or ''"/></div>
                             <div>Customer Financial Statement</div>
-                            <div><pre class="CUSTOMERTEXT"><span t-esc="company.overdue_msg"/></pre></div>
+                            <div style="background-color: #FFFFFF; border-style: #FFFFFF;"><pre class="CUSTOMERTEXT"><span t-esc="company.overdue_msg"/></pre></div>
                         </em>
                         <!-- TABLA DE CABECERA -->
                         <t t-foreach="data" t-as="line">

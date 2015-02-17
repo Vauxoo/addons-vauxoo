@@ -2,6 +2,9 @@
     <openerp>
         <data>
             <template id="report_aging_due_report_qweb_document">
+                <style type="text/css">
+                    <t t-call="aging_due_report.style_aging_due_report"/>
+                </style>
                 <div class="page">
                     <table class="basic_table" width="100%">
                         <tr>
@@ -55,9 +58,8 @@
             </template>
 
             <template id="aging_due_report_qweb">
-                <t t-foreach="doc_ids" t-as="doc_id">
-                    <t t-raw="translate_doc(doc_id, doc_model, 'lang','aging_due_report.report_aging_due_report_qweb_document')"/>
-                </t>
+                <t t-set="doc_id" t-value="doc_ids[0]"/>
+                <t t-raw="translate_doc(doc_id, doc_model, 'company_id.partner_id.lang','aging_due_report.report_aging_due_report_qweb_document')"/>
             </template>
         </data>
     </openerp>

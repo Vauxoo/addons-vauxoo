@@ -2,6 +2,9 @@
     <openerp>
         <data>
             <template id="report_supplier_formal_due_report_qweb_document">
+                <style type="text/css">
+                    <t t-call="aging_due_report.style_supplier_formal_due_report"/>
+                </style>
                 <div class="page">
                     <t t-set="datas" t-value="get_invoice_by_partner_group(objects, inv_type='in_invoice')"></t>
                     <table class="basic_table" width="100%">
