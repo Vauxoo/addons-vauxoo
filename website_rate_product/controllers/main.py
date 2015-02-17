@@ -21,7 +21,7 @@ class website_sale(website_sale):
                 type='comment',
                 subtype='mt_comment',
                 context=dict(context, mail_create_nosubscribe=True))
-        if post.get('rating') and post.get('comment'):
+        if post.get('rating'):
             data = {
                 'rating': int(post.get('rating')),
             }
