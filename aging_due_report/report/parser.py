@@ -27,7 +27,6 @@
 import time
 from openerp.report import report_sxw
 import mx.DateTime
-from openerp.addons.report_webkit import webkit_report
 from openerp.osv import osv
 from datetime import datetime
 
@@ -448,97 +447,6 @@ class aging_parser(report_sxw.rml_parse):
                 result2[currency_id] = [item]
 
         return result2.values()
-
-report_sxw.report_sxw(
-    'report.formal_due_report',
-    'res.partner',
-    'addons/aging_due_report/report/formal_due_report.rml',
-    parser=aging_parser,
-    header=False
-)
-report_sxw.report_sxw(
-    'report.supplier_formal_due_report',
-    'res.partner',
-    'addons/aging_due_report/report/supplier_formal_due_report.rml',
-    parser=aging_parser,
-    header=False
-)
-report_sxw.report_sxw(
-    'report.detail_due_report',
-    'res.partner',
-    'addons/aging_due_report/report/detail_due_report.rml',
-    parser=aging_parser,
-    header=False
-)
-report_sxw.report_sxw(
-    'report.supplier_detail_due_report',
-    'res.partner',
-    'addons/aging_due_report/report/supplier_detail_due_report.rml',
-    parser=aging_parser,
-    header=False
-)
-report_sxw.report_sxw(
-    'report.aging_due_report',
-    'res.partner',
-    'addons/aging_due_report/report/aging_due_report.rml',
-    parser=aging_parser,
-    header=False
-)
-report_sxw.report_sxw(
-    'report.supplier_aging_due_report',
-    'res.partner',
-    'addons/aging_due_report/report/supplier_aging_due_report.rml',
-    parser=aging_parser,
-    header=False
-)
-
-webkit_report.WebKitParser(
-    'report.aging_due_report_webkit',
-    'res.partner',
-    'addons/aging_due_report/report/aging_due_report_html.mako',
-    parser=aging_parser,
-    header=True
-)
-
-webkit_report.WebKitParser(
-    'report.formal_due_report_webkit',
-    'res.partner',
-    'addons/aging_due_report/report/formal_due_report_html.mako',
-    parser=aging_parser,
-    header=True
-)
-
-webkit_report.WebKitParser(
-    'report.detail_due_report_webkit',
-    'res.partner',
-    'addons/aging_due_report/report/detail_due_report_html.mako',
-    parser=aging_parser,
-    header=True
-)
-
-webkit_report.WebKitParser(
-    'report.supplier_aging_due_report_html',
-    'res.partner',
-    'addons/aging_due_report/report/supplier_aging_due_report_html.mako',
-    parser=aging_parser,
-    header=True
-)
-
-webkit_report.WebKitParser(
-    'report.supplier_formal_due_report_html',
-    'res.partner',
-    'addons/aging_due_report/report/supplier_formal_due_report_html.mako',
-    parser=aging_parser,
-    header=True
-)
-
-webkit_report.WebKitParser(
-    'report.supplier_detail_due_report_html',
-    'res.partner',
-    'addons/aging_due_report/report/supplier_detail_due_report_html.mako',
-    parser=aging_parser,
-    header=True
-)
 
 
 class aging_parser_qweb_pdf_report(osv.AbstractModel):
