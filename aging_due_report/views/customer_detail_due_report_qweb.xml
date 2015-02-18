@@ -20,56 +20,63 @@
                        </tr>
                     </table>
                     <t t-set="cur_group" t-value="get_invoice_by_partner(objects)"></t>
-                    <t t-foreach="cur_group" t-as="o">
-                    	<table class="table_column_border table_alter_color_row table_title_bg_color" width="100%">
-				            <tr style="border-top: 1px solid #000000;">
-				                <td class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="(o.get('rp_brw').vat and '%s-%s-%s'%( o.get('rp_brw').vat [2], o.get('rp_brw').vat[3:-1], o.get('rp_brw').vat[-1]) or '').upper()"/></td>
-				                <td colspan="4" class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="o.get('rp_brw').name or ''"/> (<span t-esc=" o.get('cur_brw').name or '' "/>)</td>
-				                <td colspan="1" class="ITEMSLEFT ITEMBOLD" style="background-color:
-				                lightgrey;"><span t-esc="o.get('rp_brw').ref or ''"/><span t-esc="o.get('rp_brw').user_id.name or '' "/></td>
-				                <td colspan="3" class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="'Amounts expressed in' + ' ('+o.get('cur_brw').name+')' "/></td>
-				            </tr>
-				            <tr>
-				                <th width="14%" class="ITEMSTITLELEFT">INVOICE</th>
-				                <th width="8%" class="ITEMSTITLELEFT">EMIS DATE</th>
-				                <th width="8%" class="ITEMSTITLELEFT">DUE DATE</th>
-				                <th width="7%" class="ITEMSTITLELEFT">DUE DAYS</th>
-				                <th width="7%" class="ITEMSTITLERIGHT">BASE</th>
-				                <th width="7%" class="ITEMSTITLERIGHT">TAX</th>
-				                <th width="7%" class="ITEMSTITLERIGHT">TOT/INV.</th>
-				                <th width="7%" class="ITEMSTITLERIGHT">COLLECTS</th>
-				                <th width="7%" class="ITEMSTITLERIGHT">BALANCE</th>
-				            </tr>
-				            <t t-foreach="o['inv_ids']" t-as="inv">
-				            	<tr>
-				                    <td class="ITEMSLEFT"><span t-esc="inv['inv_brw'].number"/></td>
-				                    <td class="ITEMSLEFT"><span t-esc="inv.get('inv_brw', False).date_invoice and datetime.strptime(inv.get('inv_brw', False).date_invoice.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
-				                    <td class="ITEMSLEFT"><span t-esc="inv.get('inv_brw', False).date_due and datetime.strptime(inv.get('inv_brw', False).date_due.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
-				                    <td class="ITEMSLEFT"><span t-esc="inv.get('due_days') and '%s DAYS' %inv.get('due_days') or '0 DAYS' "/></td>
-				                    <td class="ITEMSRIGHT"><span t-esc="formatLang(inv['inv_brw'].amount_untaxed) or '0.00' "/></td>
-				                    <td class="ITEMSRIGHT"><span t-esc="formatLang(inv['inv_brw'].amount_tax) or '0.00'"/></td>
-				                    <td class="ITEMSRIGHT"><span t-esc="formatLang(inv['inv_brw'].amount_total) or '0.00'"/></td>
-				                    <td class="ITEMSRIGHT"><span t-esc="formatLang(inv.get('payment_left')) or '0.00'"/></td>
-				                    <td class="ITEMSRIGHT"><span t-esc="formatLang(inv.get('residual')) or '0.00'"/></td>
-				                </tr>
-				            </t>
-				            <tr>
-			                    <td class="ITEMSRIGHT ITEMBOLD" colspan="6" style="background-color: lightgrey;"><span t-esc="'TOTAL'"/></td>
-			                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(o.get('inv_total')) or '0.00' "/></td>
-			                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(o.get('pay_left_total')) or '0.00'"/></td>
-			                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(o.get('due_total')) or '0.00'"/></td>
-				            </tr>
-				        </table>
-                    </t>
-                    <t t-set="lista" t-value="get_total_by_comercial(objects)"></t>
-			        <table style="border: 1px solid #A41D35; border-collapse: collapse;" width="100%">
-			            <t t-foreach="lista" t-as="p">
-				            <tr>
-				                <td width="80%" class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;border: 1px solid #A41D35;">TOTAL IN <span t-esc="p['currency']"/></td>
-				                <td width="20%" class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;border: 1px solid #A41D35;"><span t-esc="formatLang(p['total']) or '0.00'"/></td>
-				            </tr>
-			            </t>
-			        </table>
+                    <table class="table_column_border table_alter_color_row table_title_bg_color" width="100%" id='table_body'>
+                    	<t t-foreach="cur_group" t-as="o">
+                    		<thead>
+					            <tr style="border-top: 1px solid #000000;">
+					                <td class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="(o.get('rp_brw').vat and '%s-%s-%s'%( o.get('rp_brw').vat [2], o.get('rp_brw').vat[3:-1], o.get('rp_brw').vat[-1]) or '').upper()"/></td>
+					                <td colspan="4" class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="o.get('rp_brw').name or ''"/> (<span t-esc=" o.get('cur_brw').name or '' "/>)</td>
+					                <td colspan="1" class="ITEMSLEFT ITEMBOLD" style="background-color:
+					                lightgrey;"><span t-esc="o.get('rp_brw').ref or ''"/><span t-esc="o.get('rp_brw').user_id.name or '' "/></td>
+					                <td colspan="3" class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="'Amounts expressed in' + ' ('+o.get('cur_brw').name+')' "/></td>
+					            </tr>
+					            <tr>
+					                <th width="14%" class="ITEMSTITLELEFT">INVOICE</th>
+					                <th width="8%" class="ITEMSTITLELEFT">EMIS DATE</th>
+					                <th width="8%" class="ITEMSTITLELEFT">DUE DATE</th>
+					                <th width="7%" class="ITEMSTITLELEFT">DUE DAYS</th>
+					                <th width="7%" class="ITEMSTITLERIGHT">BASE</th>
+					                <th width="7%" class="ITEMSTITLERIGHT">TAX</th>
+					                <th width="7%" class="ITEMSTITLERIGHT">TOT/INV.</th>
+					                <th width="7%" class="ITEMSTITLERIGHT">COLLECTS</th>
+					                <th width="7%" class="ITEMSTITLERIGHT">BALANCE</th>
+					            </tr>
+				        	</thead>
+				        	<tbody>
+				            	<t t-foreach="o['inv_ids']" t-as="inv">
+					            	<tr>
+					                    <td class="ITEMSLEFT"><span t-esc="inv['inv_brw'].number"/></td>
+					                    <td class="ITEMSLEFT"><span t-esc="inv.get('inv_brw', False).date_invoice and datetime.strptime(inv.get('inv_brw', False).date_invoice.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
+					                    <td class="ITEMSLEFT"><span t-esc="inv.get('inv_brw', False).date_due and datetime.strptime(inv.get('inv_brw', False).date_due.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
+					                    <td class="ITEMSLEFT"><span t-esc="inv.get('due_days') and '%s DAYS' %inv.get('due_days') or '0 DAYS' "/></td>
+					                    <td class="ITEMSRIGHT"><span t-esc="formatLang(inv['inv_brw'].amount_untaxed) or '0.00' "/></td>
+					                    <td class="ITEMSRIGHT"><span t-esc="formatLang(inv['inv_brw'].amount_tax) or '0.00'"/></td>
+					                    <td class="ITEMSRIGHT"><span t-esc="formatLang(inv['inv_brw'].amount_total) or '0.00'"/></td>
+					                    <td class="ITEMSRIGHT"><span t-esc="formatLang(inv.get('payment_left')) or '0.00'"/></td>
+					                    <td class="ITEMSRIGHT"><span t-esc="formatLang(inv.get('residual')) or '0.00'"/></td>
+					                </tr>
+					            </t>
+					            <tr>
+				                    <td class="ITEMSRIGHT ITEMBOLD" colspan="6" style="background-color: lightgrey;"><span t-esc="'TOTAL'"/></td>
+				                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(o.get('inv_total')) or '0.00' "/></td>
+				                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(o.get('pay_left_total')) or '0.00'"/></td>
+				                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(o.get('due_total')) or '0.00'"/></td>
+					            </tr>
+					            <tr>
+					            	<td colspan="9" style="height: 8px;"></td>
+					            </tr>
+				        	</tbody>
+                    	</t>
+                    	<tbody>
+                    		<t t-set="lista" t-value="get_total_by_comercial(objects)"></t>
+                    		<t t-foreach="lista" t-as="p">
+					            <tr>
+					                <td colspan="7" class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;border: 1px solid #A41D35;">TOTAL IN <span t-esc="p['currency']"/></td>
+					                <td colspan="2" class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;border: 1px solid #A41D35;"><span t-esc="formatLang(p['total']) or '0.00'"/></td>
+					            </tr>
+			            	</t>
+                    	</tbody>
+                    </table>
 				    <p style="word-wrap:break-word;"></p>
 				    <p style="page-break-before: always;"></p>
 				</div>

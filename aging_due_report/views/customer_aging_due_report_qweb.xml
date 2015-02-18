@@ -19,7 +19,6 @@
                        </tr>
                     </table>
                     <t t-set="cur_group" t-value="get_aged_lines( objects, inv_type='out_invoice')"></t>
-
                     <t t-foreach="cur_group" t-as="table">
                         <table class="table_column_border table_alter_color_row table_title_bg_color" width="100%">
                             <tr>

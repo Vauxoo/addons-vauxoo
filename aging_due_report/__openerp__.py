@@ -40,7 +40,7 @@ A Supplier's Aging Due Report.
     "license": "",
     "depends": [
         "account",
-        "report_webkit"
+        "controller_report_xls",
     ],
     "demo": [],
     "data": [
