@@ -33,20 +33,28 @@ class wizard_report_aged_partner_balance(osv.osv_memory):
         res = {}
         acc_ag_obj = self.pool.get('account.aged.trial.balance')
         if context.get('active_model') == 'account.aged.trial.balance':
-            partners_dict = acc_ag_obj._get_partners(cr, uid, context.get('active_ids'),
+            partners_dict = acc_ag_obj._get_partners(
+                cr, uid, context.get('active_ids'),
                 context.get('data'), context=context)
             partner_ids = [partner.get('id') for partner in partners_dict]
-            res.update({'partner_ids_default': partner_ids, 'aged_trial_report_id': context.get('active_id', False)})
+            res.update({'partner_ids_default': partner_ids,
+                        'aged_trial_report_id':
+                        context.get('active_id', False)})
         return res
 
     _columns = {
-        'group_user': fields.boolean('Group by User', help='¿Group report by user?'),
-        'show_aml': fields.boolean('Show Journal Entries', help='In the report was show the '
+        'group_user': fields.boolean(
+            'Group by User', help='¿Group report by user?'),
+        'show_aml': fields.boolean(
+            'Show Journal Entries', help='In the report was show the '
             'journal entries'),
-        'partner_ids': fields.many2many('res.partner', 'partner_in_report_aged', 'wizard_id',
+        'partner_ids': fields.many2many(
+            'res.partner', 'partner_in_report_aged', 'wizard_id',
             'partner_id', 'Partners', help='Partners to show in Report'),
-        'partner_ids_default': fields.many2many('res.partner', 'partner_in_report_aged_default',
-            'wizard_id', 'partner_id', 'Partners Default', help='Partners to show in Report by default'),
+        'partner_ids_default': fields.many2many(
+            'res.partner', 'partner_in_report_aged_default',
+            'wizard_id', 'partner_id', 'Partners Default',
+            help='Partners to show in Report by default'),
         'aged_trial_report_id': fields.many2one('account.aged.trial.balance',)
     }
 

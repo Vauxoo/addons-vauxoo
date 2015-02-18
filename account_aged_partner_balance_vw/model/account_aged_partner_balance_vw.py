@@ -25,7 +25,6 @@
 #
 
 from openerp.osv import fields, osv
-
 import time
 import mx.DateTime
 
@@ -47,8 +46,9 @@ class account_aged_partner_balance_vw(osv.TransientModel):
         'company_id': fields.many2one('res.company', u'Company'),
         'currency_company_id':
         fields.many2one('res.currency', u'Company Currency'),
-        'aatb_id': fields.many2one('account.aged.trial.balance', ('Aged Trial '
-                                                                  'Balance'), help='Aged Trail Balance Document'),
+        'aatb_id': fields.many2one(
+            'account.aged.trial.balance', ('Aged Trial Balance'),
+            help='Aged Trail Balance Document'),
     }
 
 
@@ -64,14 +64,16 @@ class account_aged_partner_document(osv.TransientModel):
         'date_due': fields.date('Due Date', help='Due Date'),
         'due_days': fields.integer(u'Due Days'),
         'residual': fields.float(u'Residual'),
-        'aatb_id': fields.many2one('account.aged.trial.balance', ('Aged Trial '
-                                                                  'Balance'), help='Aged Trail Balance Document'),
-        'document_id': fields.reference('Document',
-                                        [('account.invoice', 'Invoice'),
-                                         ('account.voucher', 'Voucher'),
-                                            ('account.move.line', 'Journal Entry Line')],
-                                        size=128,
-                                        required=False),
+        'aatb_id': fields.many2one(
+            'account.aged.trial.balance', ('Aged Trial Balance'),
+            help='Aged Trail Balance Document'),
+        'document_id': fields.reference(
+            'Document',
+            [('account.invoice', 'Invoice'),
+             ('account.voucher', 'Voucher'),
+                ('account.move.line', 'Journal Entry Line')],
+            size=128,
+            required=False),
     }
 
 
@@ -84,22 +86,27 @@ class account_aged_trial_balance(osv.TransientModel):
     query = None
     target = None
     direction_selection = None
-    target_move =None
+    target_move = None
 
     _columns = {
-        'partner_doc_ids': fields.one2many('account.aged.partner.document',
-                                           'aatb_id', 'Partner Aged Trail Balance',
-                                           help='Partner Aged Trail Balance'),
-        'partner_line_ids': fields.one2many('account.aged.partner.balance.vw',
-                                            'aatb_id', 'Partner Aged Trail Balance',
-                                            help='Partner Aged Trail Balance'),
-        'type': fields.selection([('variation', 'Balance Variation in Periods'),
-                                  ('distributed', 'Distributed Payments over Debts'),
-                                  ('by_document', 'Documents spread in Periods'),
-                                  ], 'Type of Report', help='Reporte Type'),
-        'state': fields.selection([('draft', 'New'), ('open', 'Open'), ('done', 'Done'),
-                                   ], 'Status', help='Document State'),
-        'wizard_ids': fields.one2many('wizard.report.aged.partner.balance', 'aged_trial_report_id')
+        'partner_doc_ids': fields.one2many(
+            'account.aged.partner.document',
+            'aatb_id', 'Partner Aged Trail Balance',
+            help='Partner Aged Trail Balance'),
+        'partner_line_ids': fields.one2many(
+            'account.aged.partner.balance.vw',
+            'aatb_id', 'Partner Aged Trail Balance',
+            help='Partner Aged Trail Balance'),
+        'type': fields.selection(
+            [('variation', 'Balance Variation in Periods'),
+             ('distributed', 'Distributed Payments over Debts'),
+             ('by_document', 'Documents spread in Periods'),
+             ], 'Type of Report', help='Reporte Type'),
+        'state': fields.selection(
+            [('draft', 'New'), ('open', 'Open'), ('done', 'Done')],
+            'Status', help='Document State'),
+        'wizard_ids': fields.one2many(
+            'wizard.report.aged.partner.balance', 'aged_trial_report_id')
     }
 
     _defaults = {
@@ -186,18 +193,23 @@ class account_aged_trial_balance(osv.TransientModel):
             move_state = ['posted']
         cr.execute('SELECT DISTINCT res_partner.id AS id,\
                     res_partner.name AS name \
-                FROM res_partner,account_move_line AS l, account_account, account_move am\
+                FROM res_partner,account_move_line AS l, \
+                account_account, account_move am\
                 WHERE (l.account_id=account_account.id) \
                     AND (l.move_id=am.id) \
                     AND (am.state IN %s)\
                     AND (account_account.type IN %s)\
                     AND account_account.active\
                     AND ((reconcile_id IS NULL)\
-                       OR (reconcile_id IN (SELECT recon.id FROM account_move_reconcile AS recon WHERE recon.create_date > %s )))\
+                       OR (reconcile_id IN (SELECT recon.id FROM \
+                        account_move_reconcile AS recon \
+                        WHERE recon.create_date > %s )))\
                     AND (l.partner_id=res_partner.id)\
                     AND (l.date <= %s)\
                     AND ' + self.query + ' \
-                ORDER BY res_partner.name', (tuple(move_state), tuple(self.account_type), self.date_from, self.date_from,))
+                ORDER BY res_partner.name',
+                   (tuple(move_state), tuple(self.account_type),
+                    self.date_from, self.date_from,))
         return cr.dictfetchall()
 
     def _get_lines(self, cr, uid, ids, form, context=None):
@@ -234,17 +246,23 @@ class account_aged_trial_balance(osv.TransientModel):
         totals = {}
         cr.execute('SELECT l.partner_id, SUM(l.debit-l.credit) \
                     ' + type_query + '\
-                    FROM account_move_line AS l, account_account, account_move am \
-                    WHERE (l.account_id = account_account.id) AND (l.move_id=am.id) \
+                    FROM account_move_line AS l, \
+                    account_account, account_move am \
+                    WHERE (l.account_id = account_account.id) \
+                    AND (l.move_id=am.id) \
                     AND (am.state IN %s)\
                     AND (account_account.type IN %s)\
                     AND (l.partner_id IN %s)\
                     AND ((l.reconcile_id IS NULL)\
-                    OR (l.reconcile_id IN (SELECT recon.id FROM account_move_reconcile AS recon WHERE recon.create_date > %s )))\
+                    OR (l.reconcile_id IN (SELECT recon.id \
+                    FROM account_move_reconcile AS recon WHERE \
+                    recon.create_date > %s )))\
                     AND ' + self.query + '\
                     AND account_account.active\
                     AND (l.date <= %s)\
-                    GROUP BY l.partner_id ', (tuple(move_state), tuple(self.account_type), tuple(partner_ids), self.date_from, self.date_from,))
+                    GROUP BY l.partner_id ',
+                   (tuple(move_state), tuple(self.account_type),
+                    tuple(partner_ids), self.date_from, self.date_from,))
         t_var = cr.fetchall()
         for i in t_var:
             totals[i[0]] = i[1]
@@ -256,18 +274,25 @@ class account_aged_trial_balance(osv.TransientModel):
         future_past = {}
         if self.direction_selection == 'future':
             cr.execute('SELECT l.partner_id, SUM(l.debit-l.credit) \
-                        FROM account_move_line AS l, account_account, account_move am \
-                        WHERE (l.account_id=account_account.id) AND (l.move_id=am.id) \
+                        FROM account_move_line AS l, \
+                        account_account, account_move am \
+                        WHERE (l.account_id=account_account.id) \
+                        AND (l.move_id=am.id) \
                         AND (am.state IN %s)\
                         AND (account_account.type IN %s)\
                         AND (COALESCE(l.date_maturity, l.date) < %s)\
                         AND (l.partner_id IN %s)\
                         AND ((l.reconcile_id IS NULL)\
-                        OR (l.reconcile_id IN (SELECT recon.id FROM account_move_reconcile AS recon WHERE recon.create_date > %s )))\
+                        OR (l.reconcile_id IN (SELECT recon.id \
+                        FROM account_move_reconcile AS \
+                        recon WHERE recon.create_date > %s )))\
                         AND ' + self.query + '\
                         AND account_account.active\
                     AND (l.date <= %s)\
-                        GROUP BY l.partner_id', (tuple(move_state), tuple(self.account_type), self.date_from, tuple(partner_ids), self.date_from, self.date_from,))
+                        GROUP BY l.partner_id',
+                       (tuple(move_state), tuple(self.account_type),
+                        self.date_from, tuple(partner_ids),
+                        self.date_from, self.date_from,))
             t_var = cr.fetchall()
             for i in t_var:
                 future_past[i[0]] = i[1]
@@ -275,23 +300,31 @@ class account_aged_trial_balance(osv.TransientModel):
         elif self.direction_selection == 'past':
             cr.execute('SELECT l.partner_id, SUM(l.debit-l.credit) \
                     ' + type_query_r + '\
-                    FROM account_move_line AS l, account_account, account_move am \
-                    WHERE (l.account_id=account_account.id) AND (l.move_id=am.id)\
+                    FROM account_move_line AS l,\
+                    account_account, account_move am \
+                    WHERE (l.account_id=account_account.id)\
+                    AND (l.move_id=am.id)\
                         AND (am.state IN %s)\
                         AND (account_account.type IN %s)\
                         AND (COALESCE(l.date_maturity,l.date) > %s)\
                         AND (l.partner_id IN %s)\
                         AND ((l.reconcile_id IS NULL)\
-                        OR (l.reconcile_id IN (SELECT recon.id FROM account_move_reconcile AS recon WHERE recon.create_date > %s )))\
+                        OR (l.reconcile_id IN (SELECT recon.id FROM\
+                        account_move_reconcile AS recon WHERE \
+                        recon.create_date > %s )))\
                         AND ' + self.query + '\
                         AND account_account.active\
                     AND (l.date <= %s)\
-                        GROUP BY l.partner_id', (tuple(move_state), tuple(self.account_type), self.date_from, tuple(partner_ids), self.date_from, self.date_from,))
+                        GROUP BY l.partner_id',
+                       (tuple(move_state), tuple(self.account_type),
+                        self.date_from, tuple(partner_ids),
+                        self.date_from, self.date_from,))
             t_var = cr.fetchall()
             if wzd_brw.type == 'distributed':
                 if wzd_brw.result_selection in ('customer', 'supplier'):
                     for i in t_var:
-                        future_past[i[0]] = wzd_brw.result_selection == 'customer' \
+                        future_past[i[0]] = \
+                            wzd_brw.result_selection == 'customer' \
                             and i[2] or -(i[2])
                 else:
                     for i in t_var:
@@ -300,7 +333,8 @@ class account_aged_trial_balance(osv.TransientModel):
                 for i in t_var:
                     future_past[i[0]] = i[1]
 
-        # Use one query per period and store results in history (a list variable)
+        # Use one query per period and store results in
+        # history (a list variable)
         # Each history will contain: history[1] = {'<partner_id>':
         # <partner_debit-credit>}
         history = []
@@ -324,13 +358,17 @@ class account_aged_trial_balance(osv.TransientModel):
             args_list += (self.date_from,)
             cr.execute('''SELECT l.partner_id, SUM(l.debit-l.credit)
                     ''' + type_query_r + '''
-                    FROM account_move_line AS l, account_account, account_move am
-                    WHERE (l.account_id = account_account.id) AND (l.move_id=am.id)
+                    FROM account_move_line AS l, account_account, \
+                    account_move am
+                    WHERE (l.account_id = account_account.id) AND \
+                    (l.move_id=am.id)
                         AND (am.state IN %s)
                         AND (account_account.type IN %s)
                         AND (l.partner_id IN %s)
                         AND ((l.reconcile_id IS NULL)
-                          OR (l.reconcile_id IN (SELECT recon.id FROM account_move_reconcile AS recon WHERE recon.create_date > %s )))
+                          OR (l.reconcile_id IN (SELECT recon.id FROM \
+                          account_move_reconcile AS recon WHERE \
+                          recon.create_date > %s )))
                         AND ''' + self.query + '''
                         AND account_account.active
                         AND ''' + dates_query + '''
@@ -345,12 +383,14 @@ class account_aged_trial_balance(osv.TransientModel):
                             d_var[i[0]] = 0.0
                             advances[i[0]] -= i[2]
                         elif advances[i[0]] < i[2] and advances[i[0]]:
-                            d_var[i[0]] = wzd_brw.result_selection == 'customer' \
+                            d_var[i[0]] = \
+                                wzd_brw.result_selection == 'customer' \
                                 and i[2] - advances[i[0]] or \
                                 -(i[2] - advances[i[0]])
                             advances[i[0]] = 0.0
                         else:
-                            d_var[i[0]] = wzd_brw.result_selection == 'customer' \
+                            d_var[i[0]] = \
+                                wzd_brw.result_selection == 'customer' \
                                 and i[2] or -(i[2])
                 else:
                     for i in t_var:
@@ -385,21 +425,30 @@ class account_aged_trial_balance(osv.TransientModel):
                 self.total_account[6] = self.total_account[
                     6] + (after and after[0] or 0.0)
                 if wzd_brw.type == 'distributed':
-                    if wzd_brw.result_selection in ('customer', 'supplier') and advances.get(partner['id'], 0.0):
-                        if advances.get(partner['id'], 0.0) >= (after and after[0] or 0.0):
+                    if wzd_brw.result_selection in \
+                       ('customer', 'supplier') and \
+                       advances.get(partner['id'], 0.0):
+                        if advances.get(partner['id'], 0.0) >= \
+                           (after and after[0] or 0.0):
                             values['direction'] = 0.0
                             advances[partner['id']] -= after and after[
                                 0] or 0.0
-                        elif advances.get(partner['id'], 0.0) < (after and after[0] or 0.0) and advances.get(partner['id'], 0.0):
-                            values['direction'] = wzd_brw.result_selection == 'customer' \
-                                and after and after[0] - advances[partner['id']] or \
+                        elif advances.get(partner['id'], 0.0) < \
+                                (after and after[0] or 0.0) and \
+                                advances.get(partner['id'], 0.0):
+                            values['direction'] = \
+                                wzd_brw.result_selection == 'customer' \
+                                and after and \
+                                after[0] - advances[partner['id']] or \
                                 - \
                                 (after and after[
                                     0] - advances[partner['id']])
                             advances[partner['id']] = 0.0
                         else:
-                            values['direction'] = wzd_brw.result_selection == 'customer' \
-                                and after and after[0] or 0.0 or -(after and after[0] or 0.0)
+                            values['direction'] = \
+                                wzd_brw.result_selection == 'customer' \
+                                and after and after[0] or 0.0 \
+                                or -(after and after[0] or 0.0)
                     else:
                         values['direction'] = after and after[0] or 0.0
                 else:
@@ -470,13 +519,17 @@ class account_aged_trial_balance(osv.TransientModel):
         for r_var in res:
             if form['0']['stop'] >= r_var['date_due']:
                 r_var['days_due_121togr'] = r_var['residual']
-            elif form['1']['start'] <= r_var['date_due'] and form['1']['stop'] >= r_var['date_due']:
+            elif form['1']['start'] <= r_var['date_due'] and \
+                    form['1']['stop'] >= r_var['date_due']:
                 r_var['days_due_91to120'] = r_var['residual']
-            elif form['2']['start'] <= r_var['date_due'] and form['2']['stop'] >= r_var['date_due']:
+            elif form['2']['start'] <= r_var['date_due'] and \
+                    form['2']['stop'] >= r_var['date_due']:
                 r_var['days_due_61to90'] = r_var['residual']
-            elif form['3']['start'] <= r_var['date_due'] and form['3']['stop'] >= r_var['date_due']:
+            elif form['3']['start'] <= r_var['date_due'] and \
+                    form['3']['stop'] >= r_var['date_due']:
                 r_var['days_due_31to60'] = r_var['residual']
-            elif form['4']['start'] <= r_var['date_due'] and form['4']['stop'] >= r_var['date_due']:
+            elif form['4']['start'] <= r_var['date_due'] and \
+                    form['4']['stop'] >= r_var['date_due']:
                 r_var['days_due_01to30'] = r_var['residual']
             else:
                 r_var['not_due'] = r_var['residual']
@@ -535,8 +588,9 @@ class account_aged_trial_balance(osv.TransientModel):
         acc_move_line = self.pool.get('account.move.line')
         inv_obj = self.pool.get('account.invoice')
         acc_journal_obj = self.pool.get('account.journal')
-        company_id = self.pool.get('res.company')._company_default_get(cr, uid,
-                                                                       'account.diot.report', context=context)
+        company_id = self.pool.get(
+            'res.company')._company_default_get(
+            cr, uid, 'account.diot.report', context=context)
         moves_invoice_ids = []
         inv_company = inv_obj.search(
             cr, uid, [('company_id', '=', company_id)], context=context)
@@ -547,7 +601,8 @@ class account_aged_trial_balance(osv.TransientModel):
             cr, uid, [('company_id', '=', company_id),
                       ('type', 'in', ['bank', 'cash'])], context=context)
         accounts_journal = []
-        for journal in acc_journal_obj.browse(cr, uid, journal_comp, context=context):
+        for journal in \
+                acc_journal_obj.browse(cr, uid, journal_comp, context=context):
             if journal.default_debit_account_id:
                 accounts_journal.append(journal.default_debit_account_id.id)
             if journal.default_credit_account_id:
@@ -575,7 +630,8 @@ class account_aged_trial_balance(osv.TransientModel):
             return []
         move_lines_ret = acc_move_line.search(cr, uid, args, context=context)
         today = mx.DateTime.strptime(wzd_brw.date_from, '%Y-%m-%d')
-        for line in acc_move_line.browse(cr, uid, move_lines_ret, context=context):
+        for line in \
+                acc_move_line.browse(cr, uid, move_lines_ret, context=context):
             date_due = mx.DateTime.strptime(line.date, '%Y-%m-%d')
             due_days = (today - date_due).day
             residual = line.credit or line.debit or False
