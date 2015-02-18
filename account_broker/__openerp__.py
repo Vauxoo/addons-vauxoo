@@ -34,9 +34,14 @@
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
-        "account_invoice_tax"
+        "account_invoice_tax",
+        "account_voucher_tax",
     ],
-    "demo": [],
+    "demo": [
+        "demo/account_tax_demo.xml",
+        "demo/product_broker_demo.xml",
+        "demo/partner_broker.xml",
+    ],
     "data": [
         "view/res_partner_view.xml",
         "view/account_invoice_view.xml"],

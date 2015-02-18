@@ -6,14 +6,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-12 00:03+0000\n"
-"PO-Revision-Date: 2015-02-12 00:03+0000\n"
+"POT-Creation-Date: 2015-02-17 20:54+0000\n"
+"PO-Revision-Date: 2015-02-17 20:54+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: account_broker
+#: code:addons/account_broker/model/account_invoice.py:133
+#, python-format
+msgid "Error!"
+msgstr "Error!"
 
 #. module: account_broker
 #: help:account.invoice.line,invoice_broker_id:0
@@ -43,7 +49,7 @@ msgstr "Impuesto de factura"
 #. module: account_broker
 #: field:res.partner,is_broker_ok:0
 msgid "Is broker OK?"
-msgstr "Es agente aduanal OK?"
+msgstr "Es agente aduanal?"
 
 #. module: account_broker
 #: help:res.partner,is_broker_ok:0
@@ -51,8 +57,18 @@ msgid "Mark this field if this partner is a broker"
 msgstr "Marque este campo si el poveedor es un agente aduanal"
 
 #. module: account_broker
-#: field:account.invoice.tax,tax_partner_id:0
 #: model:ir.model,name:account_broker.model_res_partner
 msgid "Partner"
 msgstr "Partner"
+
+#. module: account_broker
+#: field:account.invoice.tax,tax_partner_id:0
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: account_broker
+#: code:addons/account_broker/model/account_invoice.py:133
+#, python-format
+msgid "You can´t add a line with quantity = 0 if the product have valuation equal to real time, because the line try created a journal entry, and this can´t be create with quantity = 0."
+msgstr "No se puede agregar una linea con cantidad = 0 si el producto tiene valoración en tiempo real, porque la linea intenta crear una póliza y esta no se pude creaer con una cantidad = 0."
 

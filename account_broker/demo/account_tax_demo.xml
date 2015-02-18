@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        
+        <record id="account_tax_purchase_iva16_broker" model="account.tax">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="name">IVA(16%) COMPRAS Broker</field>
+            <field name="tax_voucher_ok" eval="True"/>
+            <field name="type_tax_use">purchase</field>
+            <field name="type">percent</field>
+            <field name="amount">0.1600</field>
+            <field name="description">IVA 16% with purchase voucher account for broker</field>
+            <field name="account_collected_id" ref="account_voucher_tax.account_iva_voucher_16"/>
+            <field name="account_paid_id" ref="account_voucher_tax.account_iva_voucher_16"/>
+            <field name="account_collected_voucher_id" ref="account_voucher_tax.account_iva_voucher"/>
+            <field name="account_paid_voucher_id" ref="account_voucher_tax.account_iva_voucher"/>
+        </record>
+        
+    </data>
+</openerp>

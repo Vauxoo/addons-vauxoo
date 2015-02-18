@@ -24,7 +24,8 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api
+from openerp import models, fields, api, _
+from openerp.exceptions import except_orm
 
 
 class account_invoice_tax(models.Model):
@@ -113,6 +114,26 @@ class account_invoice_tax(models.Model):
 
 class account_invoice(models.Model):
     _inherit = 'account.invoice'
+
+    @api.multi
+    def invoice_validate(self):
+        '''
+        Inherit function to add raise if the partner is broker_ok and the line
+        have valuation as real_time, because try create a journal entry and
+        this generates an error, by try made a division by zero
+        '''
+        for inv in self:
+            if inv.partner_id.is_broker_ok:
+                for line in inv.invoice_line:
+                    print 'line.product_id.valuation'
+                    if not line.quantity and\
+                            line.product_id.valuation == 'real_time':
+                        raise except_orm(_('Error!'), _(
+                            'You can´t add a line with quantity = 0 if the '
+                            'product have valuation equal to real time, '
+                            'because the line try created a journal entry, '
+                            'and this can´t be create with quantity = 0.'))
+        return super(account_invoice, self).invoice_validate()
 
     @api.model
     def line_get_convert(self, line, part, date):
