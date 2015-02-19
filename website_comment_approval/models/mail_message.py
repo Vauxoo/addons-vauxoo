@@ -5,7 +5,7 @@
 #    Copyright (C)2010-  OpenERP SA (<http://openerp.com>). All Rights Reserved
 #    App Author: Vauxoo
 #
-#    Developed by Oscar Alcala <oszckar@gmail.com>
+#    Developed by Oscar Alcala
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Lesser General Public License as
