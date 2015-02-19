@@ -80,13 +80,13 @@ class account_aged_partner_document(osv.TransientModel):
 class account_aged_trial_balance(osv.TransientModel):
     _inherit = 'account.aged.trial.balance'
 
-    account_type = None
-    date_from = None
-    total_account = None
-    query = None
-    target = None
-    direction_selection = None
-    target_move = None
+    # account_type = None
+    # date_from = None
+    # total_account = None
+    # query = None
+    # target = None
+    # direction_selection = None
+    # target_move = None
 
     _columns = {
         'partner_doc_ids': fields.one2many(
@@ -127,7 +127,7 @@ class account_aged_trial_balance(osv.TransientModel):
         datas = {'ids': ids}
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         res = self.check_report(cr, uid, ids, context=context)
-        data = res['datas']
+        data = res['data']
         datas['form'] = data['form']
         context.update({'data': data, 'datas': datas})
         if wzd_brw.type == 'by_document':
@@ -152,8 +152,7 @@ class account_aged_trial_balance(osv.TransientModel):
         wzd_brw.write({'state': 'open', 'partner_line_ids': [(6, 0, [])],
                        'partner_doc_ids': [(6, 0, [])]})
         res = self.check_report(cr, uid, ids, context=context)
-
-        data = res['datas']
+        data = res['data']
         form = data['form']
         self.set_context(cr, uid, ids, data, context=context)
         if wzd_brw.type in ('variation', 'distributed'):
@@ -173,8 +172,9 @@ class account_aged_trial_balance(osv.TransientModel):
         context = data['form'].get('used_context', {})
         context.update({'fiscalyear': False, 'all_fiscalyear': True})
         self.query = obj_move._query_get(cr, uid, obj='l', context=context)
-        self.direction_selection = data[
-            'form'].get('direction_selection', 'past')
+        self.direction_selection = \
+            data['form'].get('direction_selection', 'past')
+
         self.target_move = data['form'].get('target_move', 'all')
         self.date_from = data['form'].get(
             'date_from',
