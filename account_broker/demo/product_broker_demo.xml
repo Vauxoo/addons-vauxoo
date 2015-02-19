@@ -13,7 +13,7 @@
         
         <record id="product_product_broker_payment" model="product.product">
             <field name="product_tmpl_id" ref="product_template_broker_payment"/>
-            <field name="taxes_id" eval="[(6,0,[ref('account_broker.account_tax_purchase_iva16_broker')])]"/>
+            <field name="supplier_taxes_id" eval="[(6,0,[ref('account_broker.account_tax_purchase_iva16_broker')])]"/>
             <field name="default_code">Importation</field>
             <field name="uom_id" ref="product.product_uom_unit"/>
             <field name="type">service</field>
