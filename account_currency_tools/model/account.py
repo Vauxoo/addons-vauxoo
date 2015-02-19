@@ -20,4 +20,15 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-from . import exchange_realization
+from openerp.osv import fields, osv
+
+
+class account_period(osv.osv):
+    _inherit = "account.period"
+    _columns = {
+        'move_id': fields.many2one(
+            'account.move',
+            'Realization Journal Entry',
+            readonly=False,
+            required=False),
+    }
