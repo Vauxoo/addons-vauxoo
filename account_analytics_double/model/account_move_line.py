@@ -27,35 +27,21 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 ##############################################################################
-{
-    "name": "Account Analytics Double",
-    "version": "0.1",
-    "author": "Vauxoo",
-    "category": "Generic Modules/Others",
-    "description": """
-Account Analytics Double
-========================
-    This Module allows to have both Analytic Account and Analytic Distribution
-    as attributes that can be used in a Journal Entry Line.
-    A validation has been added as both attributes cannot be used at once
-""",
-    "website": "http://www.vauxoo.com",
-    "license": "",
-    "depends": [
-        "analytic",
-        "account",
-        "account_analytic_plans",
-    ],
-    "demo": [
-    ],
-    "data": [
-        'view/account_move_line_view.xml',
-    ],
-    "test": [],
-    "js": [],
-    "css": [],
-    "qweb": [],
-    "installable": True,
-    "auto_install": False,
-    "active": False
-}
+from openerp.osv import osv
+
+
+class account_move_line(osv.osv):
+    _inherit = "account.move.line"
+
+    def _check_analytics(self, cr, uid, ids, context=None):
+        for aml_brw in self.browse(cr, uid, ids, context=context):
+            if all([aml_brw.analytic_account_id, aml_brw.analytics_id]):
+                return False
+        return True
+
+    _constraints = [
+        (_check_analytics,
+         '\nYou cannot create journal items with both Analytic Distribution '
+         'and Analytic Accounts. \nYou can only use one of them',
+         ['analytic_account_id', 'analytics_id']),
+    ]

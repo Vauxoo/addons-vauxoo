@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data>
+        <record id="view_move_form_inherit" model="ir.ui.view">
+           <field name="name">account.move.form.inherit</field>
+           <field name="model">account.move</field>
+           <field name="inherit_id" ref="account.view_move_form"/>
+           <field name="arch" type="xml">
+               <xpath expr="/form/notebook/page/field[@name='line_id']/tree/field[@name='credit']" position="after">
+                    <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
+               </xpath>
+               <xpath expr="/form/notebook/page/field[@name='line_id']/form//group[@string='Analytic']" position="inside">
+                    <field name="analytic_account_id"/>
+               </xpath>
+           </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_move_line_form_inherit">
+            <field name="name">account.move.line.form.inherit</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_move_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr='//group[@string="Analytic"]' position="inside">
+                    <field
+                        name="analytic_account_id"
+                        domain="[('type','in',('normal','contract'))]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_move_line_form_1_inherit">
+            <field name="name">account.move.line.form.inherit1</field>
+            <field name="model">account.move.line</field>
+            <field name="priority">2</field>
+            <field name="inherit_id" ref="account.view_move_line_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr='//field[@name="account_tax_id"]' position="after">
+                    <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_move_line_tree_inherit">
+            <field name="name">account.move.line.tree.inherit</field>
+            <field name="model">account.move.line</field>
+            <field name="priority">2</field>
+            <field name="inherit_id" ref="account.view_move_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr='//field[@name="account_tax_id"]' position="after">
+                    <field
+                        name="analytic_account_id"
+                        groups="analytic.group_analytic_accounting"
+                        domain="[('type','not in',['view','template'])]"
+                        invisible="not context.get('analytic_journal_id',False)"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
+
