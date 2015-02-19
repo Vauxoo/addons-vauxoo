@@ -23,7 +23,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import fields, osv
+from openerp.osv import fields,osv
+from .webkit_parser_header_fix import HeaderFooterTextWebKitParser
+
 
 
 class wizard_report_aged_partner_balance(osv.osv_memory):
@@ -67,3 +69,9 @@ class wizard_report_aged_partner_balance(osv.osv_memory):
             'report_name': 'account_aged_partner_balance_report',
             'datas': datas,
         }
+
+HeaderFooterTextWebKitParser('report.account_aged_partner_balance_report',
+                             'account.aged.trial.balance',
+                             'account_aged_partner_balance_vw/report/'
+                             'account_aged_partner_balance.mako',
+                             header="external")

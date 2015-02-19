@@ -26,3 +26,5 @@
 
 # import wizard_open_move_line
 from . import wizard_print_report
+from . import webkit_parser_header_fix
+

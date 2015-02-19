@@ -80,13 +80,13 @@ class account_aged_partner_document(osv.TransientModel):
 class account_aged_trial_balance(osv.TransientModel):
     _inherit = 'account.aged.trial.balance'
 
-    # account_type = None
-    # date_from = None
-    # total_account = None
-    # query = None
-    # target = None
-    # direction_selection = None
-    # target_move = None
+    account_type_gbl = None
+    date_from_gbl = None
+    total_account_gbl = None
+    query_sql = None
+    target_gbl = None
+    direction_selection_gbl = None
+    target_move_gbl = None
 
     _columns = {
         'partner_doc_ids': fields.one2many(
@@ -167,29 +167,29 @@ class account_aged_trial_balance(osv.TransientModel):
 
     def set_context(self, cr, uid, ids, data, context=None):
         context = context or {}
-        self.total_account = []
+        self.total_account_gbl = []
         obj_move = self.pool.get('account.move.line')
         context = data['form'].get('used_context', {})
         context.update({'fiscalyear': False, 'all_fiscalyear': True})
-        self.query = obj_move._query_get(cr, uid, obj='l', context=context)
-        self.direction_selection = \
+        self.query_sql = obj_move._query_get(cr, uid, obj='l', context=context)
+        self.direction_selection_gbl = \
             data['form'].get('direction_selection', 'past')
 
-        self.target_move = data['form'].get('target_move', 'all')
-        self.date_from = data['form'].get(
+        self.target_move_gbl = data['form'].get('target_move', 'all')
+        self.date_from_gbl = data['form'].get(
             'date_from',
             time.strftime('%Y-%m-%d'))
         if data['form']['result_selection'] == 'customer':
-            self.account_type = ['receivable']
+            self.account_type_gbl = ['receivable']
         elif data['form']['result_selection'] == 'supplier':
-            self.account_type = ['payable']
+            self.account_type_gbl = ['payable']
         else:
-            self.account_type = ['payable', 'receivable']
+            self.account_type_gbl = ['payable', 'receivable']
 
     def _get_partners(self, cr, uid, ids, form, context=None):
         context = context or {}
         move_state = ['draft', 'posted']
-        if self.target_move == 'posted':
+        if self.target_move_gbl == 'posted':
             move_state = ['posted']
         cr.execute('SELECT DISTINCT res_partner.id AS id,\
                     res_partner.name AS name \
@@ -206,10 +206,10 @@ class account_aged_trial_balance(osv.TransientModel):
                         WHERE recon.create_date > %s )))\
                     AND (l.partner_id=res_partner.id)\
                     AND (l.date <= %s)\
-                    AND ' + self.query + ' \
+                    AND ' + self.query_sql + ' \
                 ORDER BY res_partner.name',
-                   (tuple(move_state), tuple(self.account_type),
-                    self.date_from, self.date_from,))
+                   (tuple(move_state), tuple(self.account_type_gbl),
+                    self.date_from_gbl, self.date_from_gbl,))
         return cr.dictfetchall()
 
     def _get_lines(self, cr, uid, ids, form, context=None):
@@ -217,12 +217,12 @@ class account_aged_trial_balance(osv.TransientModel):
         res = []
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         move_state = ['draft', 'posted']
-        if self.target_move == 'posted':
+        if self.target_move_gbl == 'posted':
             move_state = ['posted']
         partners = self._get_partners(cr, uid, ids, form, context=context)
         # mise a 0 du total
         for i in range(7):
-            self.total_account.append(0)
+            self.total_account_gbl.append(0)
         #
         # Build a string like (1,2,3) for easy use in SQL query
         partner_ids = [x['id'] for x in partners]
@@ -257,12 +257,13 @@ class account_aged_trial_balance(osv.TransientModel):
                     OR (l.reconcile_id IN (SELECT recon.id \
                     FROM account_move_reconcile AS recon WHERE \
                     recon.create_date > %s )))\
-                    AND ' + self.query + '\
+                    AND ' + self.query_sql + '\
                     AND account_account.active\
                     AND (l.date <= %s)\
                     GROUP BY l.partner_id ',
-                   (tuple(move_state), tuple(self.account_type),
-                    tuple(partner_ids), self.date_from, self.date_from,))
+                   (tuple(move_state), tuple(self.account_type_gbl),
+                    tuple(partner_ids), self.date_from_gbl,
+                    self.date_from_gbl,))
         t_var = cr.fetchall()
         for i in t_var:
             totals[i[0]] = i[1]
@@ -272,7 +273,7 @@ class account_aged_trial_balance(osv.TransientModel):
 
         # This dictionary will store the future or past of all partners
         future_past = {}
-        if self.direction_selection == 'future':
+        if self.direction_selection_gbl == 'future':
             cr.execute('SELECT l.partner_id, SUM(l.debit-l.credit) \
                         FROM account_move_line AS l, \
                         account_account, account_move am \
@@ -286,18 +287,18 @@ class account_aged_trial_balance(osv.TransientModel):
                         OR (l.reconcile_id IN (SELECT recon.id \
                         FROM account_move_reconcile AS \
                         recon WHERE recon.create_date > %s )))\
-                        AND ' + self.query + '\
+                        AND ' + self.query_sql + '\
                         AND account_account.active\
                     AND (l.date <= %s)\
                         GROUP BY l.partner_id',
-                       (tuple(move_state), tuple(self.account_type),
-                        self.date_from, tuple(partner_ids),
-                        self.date_from, self.date_from,))
+                       (tuple(move_state), tuple(self.account_type_gbl),
+                        self.date_from_gbl, tuple(partner_ids),
+                        self.date_from_gbl, self.date_from_gbl,))
             t_var = cr.fetchall()
             for i in t_var:
                 future_past[i[0]] = i[1]
         # Using elif so people could extend without this breaking
-        elif self.direction_selection == 'past':
+        elif self.direction_selection_gbl == 'past':
             cr.execute('SELECT l.partner_id, SUM(l.debit-l.credit) \
                     ' + type_query_r + '\
                     FROM account_move_line AS l,\
@@ -312,13 +313,13 @@ class account_aged_trial_balance(osv.TransientModel):
                         OR (l.reconcile_id IN (SELECT recon.id FROM\
                         account_move_reconcile AS recon WHERE \
                         recon.create_date > %s )))\
-                        AND ' + self.query + '\
+                        AND ' + self.query_sql + '\
                         AND account_account.active\
                     AND (l.date <= %s)\
                         GROUP BY l.partner_id',
-                       (tuple(move_state), tuple(self.account_type),
-                        self.date_from, tuple(partner_ids),
-                        self.date_from, self.date_from,))
+                       (tuple(move_state), tuple(self.account_type_gbl),
+                        self.date_from_gbl, tuple(partner_ids),
+                        self.date_from_gbl, self.date_from_gbl,))
             t_var = cr.fetchall()
             if wzd_brw.type == 'distributed':
                 if wzd_brw.result_selection in ('customer', 'supplier'):
@@ -341,9 +342,9 @@ class account_aged_trial_balance(osv.TransientModel):
         for i in range(5):
             args_list = (
                 tuple(move_state),
-                tuple(self.account_type),
+                tuple(self.account_type_gbl),
                 tuple(partner_ids),
-                self.date_from,
+                self.date_from_gbl,
             )
             dates_query = '(COALESCE(l.date_maturity,l.date)'
             if form[str(i)]['start'] and form[str(i)]['stop']:
@@ -355,7 +356,7 @@ class account_aged_trial_balance(osv.TransientModel):
             else:
                 dates_query += ' < %s)'
                 args_list += (form[str(i)]['stop'],)
-            args_list += (self.date_from,)
+            args_list += (self.date_from_gbl,)
             cr.execute('''SELECT l.partner_id, SUM(l.debit-l.credit)
                     ''' + type_query_r + '''
                     FROM account_move_line AS l, account_account, \
@@ -369,7 +370,7 @@ class account_aged_trial_balance(osv.TransientModel):
                           OR (l.reconcile_id IN (SELECT recon.id FROM \
                           account_move_reconcile AS recon WHERE \
                           recon.create_date > %s )))
-                        AND ''' + self.query + '''
+                        AND ''' + self.query_sql + '''
                         AND account_account.active
                         AND ''' + dates_query + '''
                     AND (l.date <= %s)
@@ -403,18 +404,18 @@ class account_aged_trial_balance(osv.TransientModel):
         for partner in partners:
             values = {}
             # If choise selection is in the future
-            if self.direction_selection == 'future':
+            if self.direction_selection_gbl == 'future':
                 # Query here is replaced by one query which gets the all the
                 # partners their 'before' value
                 before = False
                 if partner['id'] in future_past:
                     before = [future_past[partner['id']]]
-                self.total_account[6] = self.total_account[
+                self.total_account_gbl[6] = self.total_account_gbl[
                     6] + (before and before[0] or 0.0)
                 values['direction'] = before and before[0] or 0.0
             # Changed this so people could in the future create new
             # direction_selections
-            elif self.direction_selection == 'past':
+            elif self.direction_selection_gbl == 'past':
                 # Query here is replaced by one query which gets the all the
                 # partners their 'after' value
                 after = False
@@ -422,7 +423,7 @@ class account_aged_trial_balance(osv.TransientModel):
                 if partner['id'] in future_past:
                     after = [future_past[partner['id']]]
 
-                self.total_account[6] = self.total_account[
+                self.total_account_gbl[6] = self.total_account_gbl[
                     6] + (after and after[0] or 0.0)
                 if wzd_brw.type == 'distributed':
                     if wzd_brw.result_selection in \
@@ -459,7 +460,7 @@ class account_aged_trial_balance(osv.TransientModel):
                 if partner['id'] in history[i]:
                     during = [history[i][partner['id']]]
                 # Ajout du compteur
-                self.total_account[(i)] = self.total_account[
+                self.total_account_gbl[(i)] = self.total_account_gbl[
                     (i)] + (during and during[0] or 0)
                 values[str(i)] = during and during[0] or 0.0
             total = False
@@ -467,7 +468,7 @@ class account_aged_trial_balance(osv.TransientModel):
                 total = [totals[partner['id']]]
             values['total'] = total and total[0] or 0.0
             # Add for total
-            self.total_account[(i + 1)] = self.total_account[
+            self.total_account_gbl[(i + 1)] = self.total_account_gbl[
                 (i + 1)] + (total and total[0] or 0.0)
             values['name'] = partner['name']
             values['partner_id'] = partner['id']
