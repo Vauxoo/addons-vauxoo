@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_default_inherit_form">
+            <field name="name">account.analytic.default.form.plans</field>
+            <field name="model">account.analytic.default</field>
+            <field name="inherit_id" ref="account_analytic_default.view_account_analytic_default_form"/>
+            <field name="arch" type="xml">
+                <xpath  expr="//field[@name='sequence']" position="after">
+                    <field name="analytic_id" required="0" groups="analytic.group_analytic_accounting"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_default_inherit_tree">
+            <field name="name">account.analytic.default.tree.plans</field>
+            <field name="model">account.analytic.default</field>
+            <field name="inherit_id" ref="account_analytic_default.view_account_analytic_default_tree"/>
+            <field name="arch" type="xml">
+                <xpath  expr="//field[@name='sequence']" position="before">
+                    <field name="analytic_id" required="0" groups="analytic.group_analytic_accounting"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_default_inherit_form2">
+            <field name="name">account.analytic.default.form.plans2</field>
+            <field name="model">account.analytic.default</field>
+            <field name="inherit_id" ref="account_analytic_plans.view_default_inherit_form"/>
+            <field name="arch" type="xml">
+                <xpath  expr="//field[@name='analytics_id']" position="attributes">
+                    <attribute name='required'>0</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
+
