@@ -91,12 +91,12 @@ class account_invoice_tax(osv.Model):
         tax_invoice_ids = self.search(cr, uid, [
             ('invoice_id', '=', invoice_id)], context=context)
         for inv_t in self.browse(cr, uid, tax_invoice_ids, context=context):
-            if not all(
-                    [inv_t.base_amount, inv_t.tax_code_id, inv_t.tax_amount]):
+            if not inv_t.base_amount and not inv_t.tax_code_id and not\
+                    inv_t.tax_amount:
                 continue
             tax_name = inv_t.name
             tax_acc_id = inv_t.account_id.id
-            tax_code_id = inv_t.tax_code_id.id
+            tax_code_id = inv_t.tax_code_id.id or None
             for tax in res:
                 if tax.get('name', '') == tax_name and tax.get(
                         'account_id', False) == tax_acc_id and tax.get(

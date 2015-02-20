@@ -101,7 +101,7 @@ class account_invoice_tax(models.Model):
         for inv_t in self.browse(cr, uid, tax_invoice_ids, context=context):
             tax_name = inv_t.name or ''
             tax_acc_id = inv_t.account_id.id
-            tax_code_id = inv_t.tax_code_id.id
+            tax_code_id = inv_t.tax_code_id.id or None
             if inv_t.tax_partner_id:
                 for tax in res:
                     if tax.get('name', '') == tax_name and tax.get(
@@ -125,7 +125,6 @@ class account_invoice(models.Model):
         for inv in self:
             if inv.partner_id.is_broker_ok:
                 for line in inv.invoice_line:
-                    print 'line.product_id.valuation'
                     if not line.quantity and\
                             line.product_id.valuation == 'real_time':
                         raise except_orm(_('Error!'), _(
