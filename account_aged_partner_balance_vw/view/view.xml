@@ -40,7 +40,6 @@
                 </xpath>
                 <xpath expr='//field[@name="direction_selection"]' position='after'>
                     <field name='type' required='1'/>
-                    <field name='target_move' required='1'/>
                 </xpath>
                 <xpath expr='//field[@name="journal_ids"]' position='after'>
                     <field 
