@@ -23,10 +23,10 @@
                                 <th class="celdaTituloTabla" style="text-align:center;" width="10%">${_('Target Moves')}</th>
                             </tr>
                             <tr>
-                                <th class="celdaBoxUp" style="text-align:center;" width="10%">${obj.chart_account_id.name or ''|entity}</th>
-                                <th class="celdaBoxUp" style="text-align:center;" width="10%">${obj.fiscalyear_id.name or ''|entity}</th>
-                                <th class="celdaBoxUp" style="text-align:center;" width="10%">${obj.date_from or ''|entity}</th>
-                                <th class="celdaBoxUp" style="text-align:center;" width="10%">${obj.period_length or ''|entity}</th>
+                                <th class="celdaBoxUp" style="text-align:center;" width="10%">${obj.chart_account_id.name or ''}</th>
+                                <th class="celdaBoxUp" style="text-align:center;" width="10%">${obj.fiscalyear_id.name or ''}</th>
+                                <th class="celdaBoxUp" style="text-align:center;" width="10%">${obj.date_from or ''}</th>
+                                <th class="celdaBoxUp" style="text-align:center;" width="10%">${obj.period_length or ''}</th>
                                 
                                 %if obj.result_selection == 'customer':
                                     <th class="celdaBoxUp" style="text-align:center;" width="10%">${_('Receivable Accounts')}</th>
@@ -55,7 +55,7 @@
             <table class="list_table"  width="100%" border="0">
                 <thead>
                     <tr>
-                        <th class="celdaTituloTablaCompany" width="100%">${obj.company_id.name or ''|entity} (Expressed in ${obj.company_id.currency_id.name |entity} )</th>
+                        <th class="celdaTituloTablaCompany" width="100%">${obj.company_id.name or ''} (Expressed in ${obj.company_id.currency_id.name } )</th>
                     </tr>
                 </thead>
             </table>
