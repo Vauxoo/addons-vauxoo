@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="purchase_order_line_form_inherit">
+            <field name="name">purchase.order.line.form.inherit</field>
+            <field name="model">purchase.order.line</field>
+            <field name="inherit_id" ref="purchase_analytic_plans.purchase_order_line_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr='//field[@name="analytics_id"]' position="after">
+                    <field name="account_analytic_id" colspan="2" groups="purchase.group_analytic_accounting"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="purchase_order_form_analytic_inherit">
+            <field name="name">purchase.order.form.analytic.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase_analytic_plans.purchase_order_form_analytic_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr='//field[@name="analytics_id"]' position="after">
+                    <field name="account_analytic_id" groups="purchase.group_analytic_accounting" domain="[('type','not in',('view','template'))]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="invoice_supplier_form_inherit">
+            <field name="name">account.invoice.supplier.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="purchase_analytic_plans.invoice_supplier_form_inherit"/>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <xpath expr='//field[@name="analytics_id"]' position="after">
+                    <field
+                        name="account_analytic_id"
+                        groups="analytic.group_analytic_accounting"
+                        domain="[('type','!=','view'), ('company_id', '=', parent.company_id), ('state','not in',('close','cancelled'))]"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
+
