@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_invoice_line_form_inherit">
+            <field name="name">account.invoice.line.form.inherit</field>
+            <field name="model">account.invoice.line</field>
+            <field name="inherit_id" ref="sale_analytic_plans.view_invoice_line_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr='//field[@name="analytics_id"]' position="after">
+                    <field
+                        domain="[('type','&lt;&gt;','view'), ('company_id', '=', parent.company_id)], ('state','not in',('close','cancelled'))]"
+                        name="account_analytic_id"
+                        groups="analytic.group_analytic_accounting"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_invoice_form_analytic_inherit">
+            <field name="name">account.invoice.form.analytic.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="sale_analytic_plans.view_invoice_form_analytic_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr='//field[@name="analytics_id"]' position="after">
+                    <field
+                        name="account_analytic_id"
+                        groups="analytic.group_analytic_accounting"
+                        domain="[('type','!=','view'), ('company_id', '=', parent.company_id), ('state','not in',('close','cancelled'))]"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
