@@ -120,72 +120,91 @@ class account_voucher(osv.Model):
         move_reconcile_id = []
         context = dict(context)
         for voucher in self.browse(cr, uid, [voucher_id], context=context):
+            move_tax_advance = self._get_reconcile_tax_advance(
+                cr, uid, voucher, context=context)
+            move_reconcile_id = [
+                move_rec for move_rec in move_tax_advance.values()]
+            print move_reconcile_id,"qqqqqqqqqqqqqqqqq"
             context.update({'amount_voucher': voucher.amount or 0.0})
-            for line in voucher.line_ids:
-                if line.tax_line_ids:
-                    if line.amount > line.amount_original:
-                        amount_to_paid = line.amount_original
-                    else:
-                        amount_to_paid = line.amount
-                    factor = \
-                        ((amount_to_paid * 100) / line.amount_original) / 100
-                for line_tax in line.tax_line_ids:
+            if 0:
+                for line in voucher.line_ids:
+                    if line.tax_line_ids:
+                        if line.amount > line.amount_original:
+                            amount_to_paid = line.amount_original
+                        else:
+                            amount_to_paid = line.amount
+                        factor = \
+                            ((amount_to_paid * 100) / line.amount_original) / 100
+                    for line_tax in line.tax_line_ids:
 
-                    move_line_rec = []
-                    amount_tax_unround = line_tax.amount_tax_unround
+                        move_line_rec = []
+                        amount_tax_unround = line_tax.amount_tax_unround
 
-                    if voucher.type in ('sale', 'receipt'):
-                        account_tax_voucher = \
-                            line_tax.tax_id.account_collected_voucher_id.id
-                    else:
-                        account_tax_voucher = \
-                            line_tax.tax_id.account_paid_voucher_id.id
-                    account_tax_collected = \
-                        line_tax.tax_id.account_collected_id.id
-                    context['date'] = voucher.date
-                    reference_amount = line_tax.amount_tax
-                    move_lines_tax = self._preparate_move_line_tax(
-                        cr, uid, account_tax_voucher, account_tax_collected,
-                        move_id, voucher.type, voucher.partner_id.id,
-                        voucher.period_id.id, voucher.journal_id.id,
-                        voucher.date, company_currency, reference_amount,
-                        amount_tax_unround, current_currency,
-                        line_tax.id, line_tax.tax_id,
-                        line_tax.analytic_account_id and
-                        line_tax.analytic_account_id.id or False,
-                        line_tax.amount_base,
-                        factor, context=context)
-                    for move_line_tax in move_lines_tax:
-                        move_create = move_line_obj.create(
-                            cr, uid, move_line_tax, context=context)
-                        move_ids.append(move_create)
-                        move_line_rec.append(move_create)
+                        if voucher.type in ('sale', 'receipt'):
+                            account_tax_voucher = \
+                                line_tax.tax_id.account_collected_voucher_id.id
+                        else:
+                            account_tax_voucher = \
+                                line_tax.tax_id.account_paid_voucher_id.id
+                        account_tax_collected = \
+                            line_tax.tax_id.account_collected_id.id
+                        context['date'] = voucher.date
+                        reference_amount = line_tax.amount_tax
+                        move_lines_tax = self._preparate_move_line_tax(
+                            cr, uid, account_tax_voucher, account_tax_collected,
+                            move_id, voucher.type, voucher.partner_id.id,
+                            voucher.period_id.id, voucher.journal_id.id,
+                            voucher.date, company_currency, reference_amount,
+                            amount_tax_unround, current_currency,
+                            line_tax.id, line_tax.tax_id,
+                            line_tax.analytic_account_id and
+                            line_tax.analytic_account_id.id or False,
+                            line_tax.amount_base,
+                            factor, context=context)
+                        for move_line_tax in move_lines_tax:
+                            move_create = move_line_obj.create(
+                                cr, uid, move_line_tax, context=context)
+                            move_ids.append(move_create)
+                            move_line_rec.append(move_create)
 
-                    # ID de la aml del impuesto que se esta pagando
-                    # es necesario tenerlo en este momento para enviarlo
-                    # a la funcion que concilia los impuestos en el pago
-                    move_counterpart_line_tax = {
-                        'move_line_reconcile': [line_tax.move_line_id.id]}
+                        # ID de la aml del impuesto que se esta pagando
+                        # es necesario tenerlo en este momento para enviarlo
+                        # a la funcion que concilia los impuestos en el pago
+                        move_counterpart_line_tax = {
+                            'move_line_reconcile': [line_tax.move_line_id.id]}
 
-                    # Se actuliza context con el factor que le corresponde
-                    # dependiendo compra/venta para determinar credit/debit
-                    # de las aml creadas para el diferencial cambiario
-                    bank_statement_line_obj._get_factor_type(
-                        cr, uid, False, voucher.type, context=context)
+                        # Se actuliza context con el factor que le corresponde
+                        # dependiendo compra/venta para determinar credit/debit
+                        # de las aml creadas para el diferencial cambiario
+                        bank_statement_line_obj._get_factor_type(
+                            cr, uid, False, voucher.type, context=context)
 
-                    move_rec_exch = bank_statement_line_obj.\
-                        _get_exchange_reconcile(
-                            cr, uid, move_counterpart_line_tax, move_line_rec,
-                            line.amount, line.amount_unreconciled,
-                            voucher, company_currency,
-                            current_currency, context=context)
-                    move_reconcile_id.append(move_rec_exch[1])
+                        move_rec_exch = bank_statement_line_obj.\
+                            _get_exchange_reconcile(
+                                cr, uid, move_counterpart_line_tax, move_line_rec,
+                                line.amount, line.amount_unreconciled,
+                                voucher, company_currency,
+                                current_currency, context=context)
+                        move_reconcile_id.append(move_rec_exch[1])
 
         for rec_ids in move_reconcile_id:
             if len(rec_ids) >= 2:
                 move_line_obj.reconcile_partial(cr, uid, rec_ids)
 
         return move_ids
+
+    def _get_reconcile_tax_advance(self, cr, uid, voucher, context=None):
+        account_tax_group = {}
+        for line in voucher.line_ids:
+            for move_line in line.move_line_id.move_id.line_id:
+                if move_line.account_id.reconcile and\
+                   move_line.account_id.type not in ('receivable', 'payable')\
+                   and not move_line.reconcile_id:
+                        account_tax_group.setdefault(
+                            move_line.account_id.id,
+                            []).append(move_line.id)
+        print account_tax_group
+        return account_tax_group
 
     # pylint: disable=W0622
     def _preparate_move_line_tax(self, cr, uid, src_account_id,
@@ -197,6 +216,7 @@ class account_voucher(osv.Model):
                                  # informacion de lineas de impuestos
                                  amount_base_tax,
                                  factor=0, context=None):
+
         if type == 'payment' or reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
         if type == 'payment' and reference_amount < 0:

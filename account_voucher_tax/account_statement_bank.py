@@ -163,6 +163,8 @@ class account_bank_statement_line(osv.osv):
                 cr, uid, move_amount_counterpart[1],
                 move_amount_counterpart[0], context=context)
 
+            print factor,"factor"
+
             for move_line_tax in move_line_tax_dict:
                 move_line_rec = []
                 line_tax_id = move_line_tax.get('tax_id')
@@ -187,8 +189,8 @@ class account_bank_statement_line(osv.osv):
                     st_line.statement_id.period_id.id,
                     st_line.statement_id.journal_id.id,
                     st_line.date, company_currency,
-                    amount_total_tax * factor,  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
-                    amount_total_tax * factor,  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
+                    amount_total_tax * abs(factor),  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
+                    amount_total_tax * abs(factor),  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
                     statement_currency, False,
                     move_line_tax.get('tax_id'),  # Impuesto
                     move_line_tax.get('tax_analytic_id'),  # Cuenta analitica del impuesto(aml)
@@ -325,6 +327,8 @@ class account_bank_statement_line(osv.osv):
         move_counterpart = move_line_tax.get('move_line_reconcile', None)
         rec_ids = []
 
+        if not move_counterpart:
+            return [[], rec_ids]
         move_line_counterpart = move_line_obj.browse(
             cr, uid, move_counterpart)[0]
         rec_ids.append(move_line_counterpart.id)
@@ -388,8 +392,8 @@ class account_bank_statement_line(osv.osv):
         return True
 
     def _get_move_line_counterpart(
-            self, cr, uid, mv_line_dicts, company_currency, statement_currency,
-            context=None):
+            self, cr, uid, mv_line_dicts, company_currency=None,
+            statement_currency=None, context=None):
 
         move_line_obj = self.pool.get('account.move.line')
         currency_obj = self.pool.get('res.currency')
@@ -398,6 +402,10 @@ class account_bank_statement_line(osv.osv):
         counterpart_amount = 0
         statement_amount = 0
         for move_line_dict in mv_line_dicts:
+
+            statement_amount += move_line_dict.get('credit') > 0 and\
+                move_line_dict.get('credit') or\
+                move_line_dict.get('debit')
 
             if move_line_dict.get('counterpart_move_line_id'):
                 move_counterpart_id =\
@@ -408,10 +416,6 @@ class account_bank_statement_line(osv.osv):
 
                 if move_line_id.journal_id.type not in (
                         'sale_refund', 'purchase_refund'):
-
-                    statement_amount += move_line_dict.get('credit') > 0 and\
-                        move_line_dict.get('credit') or\
-                        move_line_dict.get('debit')
 
                     counterpart_amount += move_line_id.amount_currency or\
                         move_line_id.credit > 0 and\
@@ -425,6 +429,8 @@ class account_bank_statement_line(osv.osv):
                             move_line_id.currency_id.id == statement_currency:
                         counterpart_unreconcile = abs(
                             move_line_id.amount_residual_currency)
+            else:
+                counterpart_amount = statement_amount
 
         return [statement_amount, counterpart_amount, counterpart_unreconcile]
 
@@ -441,6 +447,7 @@ class account_bank_statement_line(osv.osv):
         account_group = {}
         move_line_ids = []
 
+        print factor
         counterpart_move_line_ids = [
             mv_line_dict.get('counterpart_move_line_id')
             for mv_line_dict in mv_line_dicts
@@ -482,7 +489,7 @@ class account_bank_statement_line(osv.osv):
                     # el impuesto para ser pagado y conciliado con la aml del
                     # pago en voucher o bank statement
                     account_group[move_line_id.account_id.id][1] = move_line_id.id
-
+        print account_group,"wwwwwwwwwwwwwwwwwww"
         for move_account_tax in account_group:
             amount_base_secondary = 0
             tax_ids = tax_obj.search(
@@ -505,20 +512,19 @@ class account_bank_statement_line(osv.osv):
                 else:
                     amount_total_tax =\
                         account_group.get(move_account_tax)[0]+amount_ret_tax
-                dat.append({
-                    'account_tax_voucher':
-                        tax_id.account_paid_voucher_id.id,
-                    'account_tax_collected':
-                        tax_id.account_collected_id.id,
-                    'amount': amount_total_tax,
-                    'tax_id': tax_id,
-                    'tax_analytic_id':
-                        tax_id.account_analytic_collected_id and
-                        tax_id.account_analytic_collected_id.id or False,
+                res = self.preparate_dict_tax(
+                    tax_id=tax_id, amount=amount_total_tax)
+                res.update({
                     'amount_base_secondary': amount_base_secondary,
                     'move_line_reconcile': [account_group.get(
                         move_account_tax)[1]]
                     })
+                dat.append(res)
+        if not counterpart_move_line_ids:
+            tax_advance = self._get_tax_advance(
+                cr, uid, mv_line_dicts, context=context)
+            if tax_advance:
+                dat.append(tax_advance)
         return dat
 
     def _get_retention(self, cr, uid, account_group=None, tax=None):
@@ -544,6 +550,62 @@ class account_bank_statement_line(osv.osv):
                             account_group[move_account_tax][0]
 
         return amount_retention_tax
+
+    def _get_tax_advance(self, cr, uid, mv_line_dicts, context=None):
+        account_obj = self.pool.get('account.account')
+        account_tax_obj = self.pool.get('account.tax')
+        dict_tax_advance = None
+        advance_ok = False
+        for mv_line_dict in mv_line_dicts:
+            move_line_acc_id = mv_line_dict.get('account_id', False)
+
+            account_id = account_obj.browse(
+                cr, uid, move_line_acc_id, context=context)
+
+            if account_id.type == 'receivable' and account_id.reconcile:
+                type_tax = 'sale'
+                advance_ok = True
+            elif account_id.type == 'payable' and account_id.reconcile:
+                type_tax = 'purchase'
+                advance_ok = True
+
+            if advance_ok:
+                domain_tax = [
+                    ('tax_voucher_ok', '=', True),
+                    ('amount', '=', 0.16), ('type_tax_use', '=', type_tax)]
+
+                tax_ids = account_tax_obj.search(
+                    cr, uid, domain_tax, limit=1)
+
+                if tax_ids:
+                    tax_id = account_tax_obj.browse(
+                        cr, uid, tax_ids[0], context=context)
+                    amount_total_tax = self._get_move_line_counterpart(
+                        cr, uid, [mv_line_dict])[0]
+                    print (tax_id.amount*100.0)*amount_total_tax
+                    amount_total_tax =\
+                        (tax_id.amount * 100.0) * amount_total_tax / (100.0 + (
+                            tax_id.amount * 100.0))
+
+                    dict_tax_advance =\
+                        self.preparate_dict_tax(
+                            tax_id=tax_id, amount=amount_total_tax)
+
+        return dict_tax_advance
+
+    def preparate_dict_tax(self, tax_id=None, amount=0):
+        res = {
+            'account_tax_voucher':
+                tax_id.account_paid_voucher_id.id,
+            'account_tax_collected':
+                tax_id.account_collected_id.id,
+            'amount': amount,
+            'tax_id': tax_id,
+            'tax_analytic_id':
+                tax_id.account_analytic_collected_id and
+                tax_id.account_analytic_collected_id.id or False,
+            }
+        return res
 
 
 class account_bank_statement(osv.osv):
