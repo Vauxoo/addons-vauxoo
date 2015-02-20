@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <record id="product_normal_modelno_form_view" model="ir.ui.view">
+        <record id="product_modelno_form_view" model="ir.ui.view">
             <field name="name">product.product.modelno.form</field>
             <field name="model">product.product</field>
-            <field name="mode">primary</field>
-            <field eval="7" name="priority"/>
             <field name="inherit_id" ref="product.product_normal_form_view"/>
             <field name="arch" type="xml">
-                <field name="default_code" position="after">
+                <xpath expr="//field[@name='active']" position="after">
                     <field name="model_number"/>
-                </field>
+                </xpath>
             </field>
         </record>
     </data>
