@@ -19,6 +19,9 @@ class TestTaxCommon(common.TransactionCase):
         self.account_payable_id = self.registry(
             "ir.model.data").get_object_reference(
             self.cr, self.uid, "account", "a_pay")[1]
+        self.account_receivable_id = self.registry(
+            "ir.model.data").get_object_reference(
+            self.cr, self.uid, "account", "a_recv")[1]
         self.product_id = self.registry(
             "ir.model.data").get_object_reference(
             self.cr, self.uid, "product", "product_product_4")[1]
@@ -40,6 +43,10 @@ class TestTaxCommon(common.TransactionCase):
             "ir.model.data").get_object_reference(
             self.cr, self.uid, "account_voucher_tax",
             "account_voucher_tax_purchase_iva16")[1]
+        self.tax_16_customer = self.registry(
+            "ir.model.data").get_object_reference(
+            self.cr, self.uid, "account_voucher_tax",
+            "account_voucher_tax_sale_ova16")[1]
         self.tax_ret = self.registry(
             "ir.model.data").get_object_reference(
             self.cr, self.uid, "account_voucher_tax",
@@ -50,6 +57,10 @@ class TestTaxCommon(common.TransactionCase):
             "ir.model.data").get_object_reference(
             self.cr, self.uid, "account_voucher_tax",
             "account_iva_voucher_16")[1]
+        self.acc_tax16_customer = self.registry(
+            "ir.model.data").get_object_reference(
+            self.cr, self.uid, "account_voucher_tax",
+            "account_ova_voucher_16")[1]
         self.acc_ret1067 = self.registry(
             "ir.model.data").get_object_reference(
             self.cr, self.uid, "account_voucher_tax",
@@ -59,6 +70,10 @@ class TestTaxCommon(common.TransactionCase):
             "ir.model.data").get_object_reference(
             self.cr, self.uid, "account_voucher_tax",
             "account_iva_voucher")[1]
+        self.acc_tax_16_payment_customer = self.registry(
+            "ir.model.data").get_object_reference(
+            self.cr, self.uid, "account_voucher_tax",
+            "account_ova_voucher")[1]
         self.acc_ret1067_payment = self.registry(
             "ir.model.data").get_object_reference(
             self.cr, self.uid, "account_voucher_tax",
