@@ -13,12 +13,14 @@ Website Product Availability
     """,
     "website": "http://www.vauxoo.com/",
     "depends": [
-        "website_sale"
+        "purchase",
+        "website_sale",
     ],
     "demo": [],
     "data": [
         "views/layout.xml",
         "views/templates.xml",
+        "views/product_view.xml",
     ],
     "test": [],
     "js": [],
