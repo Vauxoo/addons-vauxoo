@@ -5,7 +5,7 @@
 #    Copyright (C)2010-  OpenERP SA (<http://openerp.com>). All Rights Reserved
 #    App Author: Vauxoo
 #
-#    Developed by Oscar Alcala <oszckar@gmail.com>
+#    Developed by Oscar Alcala
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Lesser General Public License as
@@ -27,18 +27,27 @@ from openerp.osv import osv, fields
 
 class mail_message(osv.Model):
     _inherit = 'mail.message'
-    _defaults = {
-        'comment_bought': False,
-    }
-    _columns = {
-        'comment_bought': fields.boolean('Comment Bought'),
-    }
 
-    def _message_read_dict(self, cr, uid, message, parent_id=False,
-                           context=None):
-        r = super(mail_message, self)._message_read_dict(cr, uid,
-                                                         message,
-                                                         parent_id=parent_id,
-                                                         context=context)
-        r['comment_bought'] = True
-        return r
+    def _comment_bought(self, cr, uid, ids, name, arg, context=None):
+        res = {}
+        sale_report_obj = self.pool.get('sale.report')
+        cr.execute("""
+            %s
+            FROM ( %s )
+            %s
+            """ % (sale_report_obj._select(), sale_report_obj._from(),
+                   sale_report_obj._group_by()))
+        mail_cache = self.browse(cr, uid, ids, context)[0]
+        for rep in cr.fetchall():
+            product_id = rep[1]
+            partner_id = rep[8]
+            if mail_cache.res_id == product_id and \
+               mail_cache.author_id.id == partner_id:
+                res[ids[0]] = 1
+        return res
+
+    _columns = {
+        'comment_bought': fields.function(_comment_bought, type='boolean',
+                                          string='Comment Bought',
+                                          store=True),
+    }

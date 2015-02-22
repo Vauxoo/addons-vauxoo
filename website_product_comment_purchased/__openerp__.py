@@ -11,7 +11,6 @@ Website Comments With Purchase
     customer purchased the item reviewed or not.
     """,
     "website": "http://www.vauxoo.com/",
-    "license": "LGPL",
     "depends": [
         "website_sale"
     ],
