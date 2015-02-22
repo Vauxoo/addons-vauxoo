@@ -114,7 +114,7 @@ class stock_move(osv.Model):
 
 
 class stock_picking_out(osv.Model):
-    _inherit = "stock.picking.out"
+    _inherit = "stock.picking"
 
     def show_entry_lines(self, cr, uid, ids, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -152,7 +152,7 @@ class stock_picking_out(osv.Model):
 
 
 class stock_picking_in(osv.Model):
-    _inherit = "stock.picking.in"
+    _inherit = "stock.picking"
 
     def show_entry_lines(self, cr, uid, ids, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
