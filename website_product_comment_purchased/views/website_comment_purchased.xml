@@ -3,8 +3,8 @@
     <data>
         <template id="discussion_purchased" inherit_id="website_sale.product_comment" active="False" customize_show="True" name="Bougth Item On Comments">
             <xpath  expr="//div[@class='media-body oe_msg_content']" position="after">
-                    <t t-if="message.comment_bought"> Customer bought the item</t>
-                    <t t-if="message.comment_bought != True"> Customer didnt't bought the item</t>
+                    <t t-if="message.comment_bought"><span class="label label-success">Customer bought the item</span></t>
+                    <t t-if="message.comment_bought != True"><span class="label label-danger">Customer didnt't bought the item</span></t>
             </xpath>
         </template>
     </data>
