@@ -37,6 +37,9 @@ class TestTaxCommon(common.TransactionCase):
         self.acc_loss_tax = self.registry(
             "ir.model.data").get_object_reference(
             self.cr, self.uid, "account", "income_fx_expense")[1]
+        self.acc_gain_tax = self.registry(
+            "ir.model.data").get_object_reference(
+            self.cr, self.uid, "account", "income_fx_income")[1]
 
         # Data to tax
         self.tax_16 = self.registry(
