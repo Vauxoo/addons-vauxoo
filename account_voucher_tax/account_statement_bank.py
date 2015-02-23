@@ -187,8 +187,8 @@ class account_bank_statement_line(osv.osv):
                     st_line.statement_id.period_id.id,
                     st_line.statement_id.journal_id.id,
                     st_line.date, company_currency,
-                    amount_total_tax * factor,  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
-                    amount_total_tax * factor,  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
+                    amount_total_tax * abs(factor),  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
+                    amount_total_tax * abs(factor),  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
                     statement_currency, False,
                     move_line_tax.get('tax_id'),  # Impuesto
                     move_line_tax.get('tax_analytic_id'),  # Cuenta analitica del impuesto(aml)
