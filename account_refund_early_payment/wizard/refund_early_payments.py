@@ -24,6 +24,7 @@
 
 from openerp.osv import fields, osv
 from openerp.addons.account.wizard import account_invoice_refund as air
+from openerp.tools import float_compare
 
 
 class account_invoice_refund(osv.osv_memory):
@@ -114,6 +115,8 @@ class account_invoice_refund(osv.osv_memory):
         wizard_brw = self.browse(cur, uid, ids, context=context)
         percent = wizard_brw.percent / 100
 
+        prec = self.pool.get('decimal.precision').precision_get(
+            cur, uid, 'Account')
         for inv in inv_obj.browse(cur, uid, context.get('active_ids'),
                                   context=context):
 
@@ -123,8 +126,9 @@ class account_invoice_refund(osv.osv_memory):
                 refund_lines_brw = refund.invoice_line
                 line_data_dict = {}
 
-                if wizard_brw.amount_total == \
-                        round(inv.amount_total * percent, 2):
+                if not float_compare(
+                        wizard_brw.amount_total, (inv.amount_total * percent),
+                        precision_digits=prec):
                     for refund_line in refund_lines_brw:
                         tax_tuple = refund_line.\
                             invoice_line_tax_id.\
@@ -185,7 +189,7 @@ class account_invoice_refund(osv.osv_memory):
                 movelines = inv.move_id.line_id
                 to_reconcile_ids = {}
                 for line in movelines:
-                    if line.account_id.id == inv.account_id.id:
+                    if line.account_id.reconcile:
                         to_reconcile_ids.setdefault(line.account_id.id,
                                                     []).append(line.id)
                     if line.reconcile_id:
@@ -194,7 +198,7 @@ class account_invoice_refund(osv.osv_memory):
                 refund = inv_obj.browse(cur, uid, refund_id[0],
                                         context=context)
                 for tmpline in refund.move_id.line_id:
-                    if tmpline.account_id.id == inv.account_id.id:
+                    if tmpline.account_id.reconcile:
                         to_reconcile_ids[tmpline.
                                          account_id.id].append(tmpline.id)
                 for account in to_reconcile_ids:
