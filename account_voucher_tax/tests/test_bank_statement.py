@@ -11,11 +11,13 @@ class TestPaymentTax(TestTaxCommon):
         cr, uid = self.cr, self.uid
         invoice_id = self.account_invoice_model.create(cr, uid, {
             'partner_id': self.partner_agrolait_id,
+            'journal_id': self.invoice_supplier_journal_id,
             'reference_type': 'none',
             'name': 'invoice to supplier',
             'account_id': self.account_payable_id,
             'type': 'in_invoice',
             'date_invoice': time.strftime('%Y')+'-07-01',
+            'check_total': 116
             })
         self.account_invoice_line_model.create(cr, uid, {
             'product_id': self.product_id,
@@ -78,11 +80,13 @@ class TestPaymentTax(TestTaxCommon):
         cr, uid = self.cr, self.uid
         invoice_id = self.account_invoice_model.create(cr, uid, {
             'partner_id': self.partner_agrolait_id,
+            'journal_id': self.invoice_supplier_journal_id,
             'reference_type': 'none',
             'name': 'invoice to supplier',
             'account_id': self.account_payable_id,
             'type': 'in_invoice',
             'date_invoice': time.strftime('%Y')+'-07-01',
+            'check_total': 105.33
             })
         self.account_invoice_line_model.create(cr, uid, {
             'product_id': self.product_id,
@@ -135,12 +139,14 @@ class TestPaymentTax(TestTaxCommon):
         cr, uid = self.cr, self.uid
         invoice_id = self.account_invoice_model.create(cr, uid, {
             'partner_id': self.partner_agrolait_id,
+            'journal_id': self.invoice_supplier_journal_id,
             'reference_type': 'none',
             'name': 'invoice to supplier',
             'account_id': self.account_payable_id,
             'type': 'in_invoice',
             'date_invoice': time.strftime('%Y')+'-06-01',
-            'currency_id': self.currency_usd_id
+            'currency_id': self.currency_usd_id,
+            'check_total': 116
             })
         self.account_invoice_line_model.create(cr, uid, {
             'product_id': self.product_id,

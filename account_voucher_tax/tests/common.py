@@ -25,6 +25,12 @@ class TestTaxCommon(common.TransactionCase):
         self.product_id = self.registry(
             "ir.model.data").get_object_reference(
             self.cr, self.uid, "product", "product_product_4")[1]
+        self.invoice_journal_id = self.registry(
+            "ir.model.data").get_object_reference(
+            self.cr, self.uid, "account", "sales_journal")[1]
+        self.invoice_supplier_journal_id = self.registry(
+            "ir.model.data").get_object_reference(
+            self.cr, self.uid, "account", "expenses_journal")[1]
         self.bank_journal_id = self.registry(
             "ir.model.data").get_object_reference(
             self.cr, self.uid, "account", "bank_journal")[1]

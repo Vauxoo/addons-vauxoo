@@ -11,6 +11,7 @@ class TestPaymentTaxCustomer(TestTaxCommon):
         cr, uid = self.cr, self.uid
         invoice_id = self.account_invoice_model.create(cr, uid, {
             'partner_id': self.partner_agrolait_id,
+            'journal_id': self.invoice_journal_id,
             'reference_type': 'none',
             'name': 'invoice to customer',
             'account_id': self.account_receivable_id,
@@ -57,6 +58,7 @@ class TestPaymentTaxCustomer(TestTaxCommon):
         cr, uid = self.cr, self.uid
         invoice_id = self.account_invoice_model.create(cr, uid, {
             'partner_id': self.partner_agrolait_id,
+            'journal_id': self.invoice_journal_id,
             'reference_type': 'none',
             'name': 'invoice to customer',
             'account_id': self.account_receivable_id,
