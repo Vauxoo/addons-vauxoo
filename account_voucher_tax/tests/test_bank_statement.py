@@ -32,9 +32,9 @@ class TestPaymentTax(TestTaxCommon):
             cr, uid, [invoice_id])
 
         # we search aml with account payable
-        for l in invoice_record.move_id.line_id:
-            if l.account_id.id == self.account_payable_id:
-                line_id = l
+        for line_invoice in invoice_record.move_id.line_id:
+            if line_invoice.account_id.id == self.account_payable_id:
+                line_id = line_invoice
                 break
 
         # create payment by half
@@ -99,9 +99,9 @@ class TestPaymentTax(TestTaxCommon):
             cr, uid, [invoice_id])
 
         # we search aml with account payable
-        for l in invoice_record.move_id.line_id:
-            if l.account_id.id == self.account_payable_id:
-                line_id = l
+        for line_invoice in invoice_record.move_id.line_id:
+            if line_invoice.account_id.id == self.account_payable_id:
+                line_id = line_invoice
                 break
 
         # create payment
@@ -157,9 +157,9 @@ class TestPaymentTax(TestTaxCommon):
             cr, uid, [invoice_id])
 
         # we search aml with account payable
-        for l in invoice_record.move_id.line_id:
-            if l.account_id.id == self.account_payable_id:
-                line_id = l
+        for line_invoice in invoice_record.move_id.line_id:
+            if line_invoice.account_id.id == self.account_payable_id:
+                line_id = line_invoice
                 break
 
         # create payment complete

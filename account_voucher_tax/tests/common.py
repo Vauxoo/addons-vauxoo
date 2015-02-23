@@ -40,6 +40,15 @@ class TestTaxCommon(common.TransactionCase):
         self.acc_gain_tax = self.registry(
             "ir.model.data").get_object_reference(
             self.cr, self.uid, "account", "income_fx_income")[1]
+        self.company_id = self.registry(
+            "ir.model.data").get_object_reference(
+            self.cr, self.uid, "base", "main_company")[1]
+        # set expense_currency_exchange_account_id and
+        # income_currency_exchange_account_id to a random account
+        self.registry("res.company").write(
+            self.cr, self.uid, [self.company_id],
+            {'expense_currency_exchange_account_id': self.acc_loss_tax,
+             'income_currency_exchange_account_id': self.acc_gain_tax})
 
         # Data to tax
         self.tax_16 = self.registry(
