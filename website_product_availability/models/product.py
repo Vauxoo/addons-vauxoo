@@ -47,7 +47,7 @@ class product_product(osv.Model):
             if product.qty_available > product.low_stock:
                 res[product.id] = 'available'
                 return res
-            elif product.qty_available <= product.low_stock:
+            elif 0 < product.qty_available <= product.low_stock:
                 res[product.id] = 'low_available'
                 return res
             elif product.qty_available <= 0:
