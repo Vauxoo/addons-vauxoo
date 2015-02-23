@@ -13,6 +13,7 @@ Website Product Availability
     """,
     "website": "http://www.vauxoo.com/",
     "depends": [
+        "stock",
         "purchase",
         "website_sale",
     ],

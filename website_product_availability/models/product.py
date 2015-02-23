@@ -32,18 +32,32 @@ SELECTION_LIST = [
 ]
 
 
+class stock_location_route(osv.Model):
+    _inherit = 'stock.location.route'
+    _columns = {
+        'consider_on_request': fields.boolean('Route On Request',
+                                              help="Checking this you will\
+                                              consider this route as an \
+                                              'On Request' route, this means\
+                                              that every product that has this\
+                                              route assigned will show on the\
+                                              website the legend 'On Request'\
+                                              on the availability field,\
+                                              please be careful to set up this\
+                                              route."),
+    }
+
+
 class product_product(osv.Model):
     _inherit = 'product.product'
 
     def _get_availability(self, cr, uid, ids, name, args, context=None):
         res = {}
-        imd = self.pool.get('ir.model.data')
         for product in self.browse(cr, uid, ids):
-            xmlid = 'route_warehouse0_mto'
-            route_id = imd.get_object(cr, uid, 'stock', xmlid)
-            if route_id in product.route_ids:
-                res[product.id] = 'on_request'
-                return res
+            for route in product.route_ids:
+                if route.consider_on_request:
+                    res[product.id] = 'on_request'
+                    return res
             if product.qty_available > product.low_stock:
                 res[product.id] = 'available'
                 return res
