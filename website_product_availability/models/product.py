@@ -24,13 +24,6 @@
 ##############################################################################
 from openerp.osv import osv, fields
 
-SELECTION_LIST = [
-    ('available', 'Available'),
-    ('not_available', 'Not Available'),
-    ('low_available', 'Low Availability'),
-    ('on_request', 'On Request'),
-]
-
 
 class stock_location_route(osv.Model):
     _inherit = 'stock.location.route'
@@ -50,22 +43,28 @@ class stock_location_route(osv.Model):
 
 class product_product(osv.Model):
     _inherit = 'product.product'
+    SELECTION_LIST = [
+        ('1', 'Available'),
+        ('2', 'Not Available'),
+        ('3', 'Low Availability'),
+        ('4', 'On Request'),
+    ]
 
     def _get_availability(self, cr, uid, ids, name, args, context=None):
         res = {}
         for product in self.browse(cr, uid, ids):
             for route in product.route_ids:
                 if route.consider_on_request:
-                    res[product.id] = 'on_request'
+                    res[product.id] = '4'
                     return res
             if product.qty_available > product.low_stock:
-                res[product.id] = 'available'
+                res[product.id] = '1'
                 return res
             elif 0 < product.qty_available <= product.low_stock:
-                res[product.id] = 'low_available'
+                res[product.id] = '3'
                 return res
             elif product.qty_available <= 0:
-                res[product.id] = 'not_available'
+                res[product.id] = '2'
                 return res
 
     _columns = {
@@ -74,7 +73,8 @@ class product_product(osv.Model):
     equals the value set or lower will show 'low avilability' on product "),
         'stock_state': fields.function(_get_availability, type='selection',
                                        method=True, selection=SELECTION_LIST,
-                                       string="Website Stock State"),
+                                       string="Website Stock State",
+                                       store=True),
     }
     _default = {
         'low_stock': 0,

@@ -1,5 +1,9 @@
 <openerp>
     <data>
-
+		<template id="assets_frontend" inherit_id="website.assets_frontend" name="Shop Stock State">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/website_product_availability/static/src/js/website_stock_state.js"></script>
+            </xpath>
+        </template>
     </data>
 </openerp>
