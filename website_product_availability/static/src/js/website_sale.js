@@ -103,6 +103,11 @@ $('.oe_website_sale').each(function () {
     });
 
     $(oe_website_sale).on('change', 'input.js_variant_change, select.js_variant_change', function (ev) {
+   /*     This method is the reason why everithing was copied from original, the final functionality is
+        to retrieve an extra value on the product variant and show wheter is available or not
+        this code was made by Oscar Alcala @oscarolar, please forgive the stupid thing I had to do, 
+        but since the assholes on Odoo did not created any inheritance mechanism, I had to fuck 
+        things up.*/
         var $ul = $(this).parents('ul.js_add_cart_variants:first');
         var $parent = $ul.closest('.js_product');
         var $product_id = $parent.find('input.product_id').first();
