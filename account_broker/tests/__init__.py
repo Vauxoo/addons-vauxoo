@@ -24,36 +24,4 @@
 #
 ##############################################################################
 
-{
-    "name": "account_broker",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Localization/Mexico",
-    "description": """
-    This module added functionality to supplier invoice to relate this with
-    other invoice to payment to tax importation to broker.
-""",
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
-    "depends": [
-        "account_invoice_tax",
-        "account_voucher_tax",
-    ],
-    "demo": [
-        "demo/account_tax_demo.xml",
-        "demo/product_broker_demo.xml",
-        "demo/partner_broker.xml",
-    ],
-    "data": [
-        "view/res_partner_view.xml",
-        "view/account_invoice_view.xml"],
-    "test": [
-        # "test/account_voucher_taxes.yml",
-    ],
-    "js": [],
-    "css": [],
-    "qweb": [],
-    "installable": True,
-    "auto_install": False,
-    "active": False
-}
+from . import test_invoice_broker

@@ -2,6 +2,23 @@
 <openerp>
     <data noupdate="1">
         
+        <record id="account_iva_voucher_broker" model="account.account">
+            <field name="code">X1112_voucher_broker</field>
+            <field name="name">Input VAT Voucher - (broker test)</field>
+            <field ref="account.cli" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_liability"/>
+        </record>
+
+        <record id="account_iva_voucher_16_broker" model="account.account">
+            <field name="code">X11121_voucher_1_broker</field>
+            <field name="name">Input VAT Voucher 16% - (broker test)</field>
+            <field ref="account.cli" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="reconcile">True</field>
+            <field name="user_type" ref="account.data_account_type_liability"/>
+        </record>
+
         <record id="account_tax_purchase_iva16_broker" model="account.tax">
             <field name="company_id" ref="base.main_company"/>
             <field name="name">IVA(16%) COMPRAS Broker</field>
@@ -10,10 +27,10 @@
             <field name="type">percent</field>
             <field name="amount">0.1600</field>
             <field name="description">IVA 16% with purchase voucher account for broker</field>
-            <field name="account_collected_id" ref="account_voucher_tax.account_iva_voucher_16"/>
-            <field name="account_paid_id" ref="account_voucher_tax.account_iva_voucher_16"/>
-            <field name="account_collected_voucher_id" ref="account_voucher_tax.account_iva_voucher"/>
-            <field name="account_paid_voucher_id" ref="account_voucher_tax.account_iva_voucher"/>
+            <field name="account_collected_id" ref="account_iva_voucher_16_broker"/>
+            <field name="account_paid_id" ref="account_iva_voucher_16_broker"/>
+            <field name="account_collected_voucher_id" ref="account_iva_voucher_broker"/>
+            <field name="account_paid_voucher_id" ref="account_iva_voucher_broker"/>
         </record>
         
     </data>

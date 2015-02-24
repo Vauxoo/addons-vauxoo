@@ -118,20 +118,19 @@ class account_invoice(models.Model):
     @api.multi
     def invoice_validate(self):
         '''
-        Inherit function to add raise if the partner is broker_ok and the line
-        have valuation as real_time, because try create a journal entry and
-        this generates an error, by try made a division by zero
+        Inherit function to add raise if the partner is broker_ok and the
+        product line not is type service, because is not is service can be
+        real time and this try create a journal entry and this generates an
+        error, by try made a division by zero
         '''
         for inv in self:
             if inv.partner_id.is_broker_ok:
                 for line in inv.invoice_line:
-                    if not line.quantity and\
-                            line.product_id.valuation == 'real_time':
+                    if not line.quantity and line.product_id.type != 'service':
                         raise except_orm(_('Error!'), _(
                             'You can´t add a line with quantity = 0 if the '
-                            'product have valuation equal to real time, '
-                            'because the line try created a journal entry, '
-                            'and this can´t be create with quantity = 0.'))
+                            'product not is service, the product must be type '
+                            'service.'))
         return super(account_invoice, self).invoice_validate()
 
     @api.model
