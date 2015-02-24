@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
- 
+ 		<template id="product_stock_state" inherit_id="website_sale.product">
+ 			<xpath expr="//form" position="after">
+ 				<h3><span class="label stock_state"></span></h3>
+ 			</xpath>
+ 		</template>
     </data>
 </openerp>

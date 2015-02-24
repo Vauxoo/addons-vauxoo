@@ -111,8 +111,6 @@ $('.oe_website_sale').each(function () {
         var variant_ids = $ul.data("attribute_value_ids");
         var $stock_state = $(".stock_state");
         var values = [];
-        console.log('original_parent');
-        console.log($parent);
         $parent.find('input.js_variant_change:checked, select.js_variant_change').each(function () {
             values.push(+$(this).val());
         });
@@ -129,7 +127,29 @@ $('.oe_website_sale').each(function () {
                 } else {
                     $default_price.closest('.oe_website_sale').removeClass("discount");
                 }
-                $stock_state.html(variant_ids[k][4]);
+                $stock_state.removeClass (function (index, css){
+                    return(css.match(/(^|\s)label-\S+/g) || []).join(' ');
+                });
+                switch(variant_ids[k][4]){
+                    case 1:
+                        new_class = 'label-success'
+                        text = 'Available' 
+                        break;
+                    case 2:
+                        new_class = 'label-danger'
+                        text = 'Not Available' 
+                        break;
+                    case 3:
+                        new_class = 'label-warning'
+                        text = 'Low Availability' 
+                        break;
+                    case 4:
+                        new_class = 'label-primary'
+                        text = 'On Request' 
+                        break;
+                }
+                $stock_state.addClass(new_class);
+                $stock_state.text(text);
                 product_id = variant_ids[k][0];
                 break;
             }
@@ -146,11 +166,9 @@ $('.oe_website_sale').each(function () {
             var $input = $(this);
             var id = +$input.val();
             var values = [id];
-            console.log(values);
 
             $parent.find("ul:not(:has(input.js_variant_change[value='" + id + "'])) input.js_variant_change:checked, select").each(function () {
                 values.push(+$(this).val());
-                console.log(values);
             });
 
             for (var k in variant_ids) {
