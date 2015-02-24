@@ -45,7 +45,6 @@ class TestPaymentTax(TestTaxCommon):
             self.bank_journal_id)
 
         self.assertEquals(len(move_line_ids), 4)
-        checked_line = 0
         for move_line in move_line_ids:
             if move_line.account_id.id == self.acc_tax16:
                 self.assertEquals(move_line.debit, 0.0)
@@ -68,12 +67,10 @@ class TestPaymentTax(TestTaxCommon):
                 self.assertEquals(move_line_complete.debit, 0.0)
                 self.assertEquals(move_line_complete.credit, 8)
                 self.assertEquals(move_line_complete.amount_residual, 0.0)
-                checked_line += 1
                 continue
             if move_line_complete.account_id.id == self.acc_tax_16_payment:
                 self.assertEquals(move_line_complete.debit, 8)
                 self.assertEquals(move_line_complete.credit, 0.0)
-                checked_line += 1
                 continue
 
     def test_iva_16_ret_supplier(self):
