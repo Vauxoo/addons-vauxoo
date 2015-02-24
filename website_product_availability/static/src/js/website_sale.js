@@ -132,6 +132,7 @@ $('.oe_website_sale').each(function () {
                 } else {
                     $default_price.closest('.oe_website_sale').removeClass("discount");
                 }
+                /*<oscar>*/
                 $stock_state.removeClass (function (index, css){
                     return(css.match(/(^|\s)label-\S+/g) || []).join(' ');
                 });
@@ -159,6 +160,7 @@ $('.oe_website_sale').each(function () {
                 }
                 $stock_state.addClass(new_class);
                 $stock_state.text(text);
+                /*</oscar>*/
                 product_id = variant_ids[k][0];
                 break;
             }
