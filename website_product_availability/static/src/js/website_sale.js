@@ -141,21 +141,25 @@ $('.oe_website_sale').each(function () {
                         new_class = 'label-success'
                         text = 'Available' 
                         $("#add_to_cart").removeClass('disabled')
+                        $("#similar_products_vx").addClass('hidden')
                         break;
                     case 2:
                         new_class = 'label-danger'
                         text = 'Not Available' 
                         $("#add_to_cart").addClass('disabled')
+                        $("#similar_products_vx").removeClass('hidden')
                         break;
                     case 3:
                         new_class = 'label-warning'
                         text = 'Low Availability' 
                         $("#add_to_cart").removeClass('disabled')
+                        $("#similar_products_vx").addClass('hidden')
                         break;
                     case 4:
                         new_class = 'label-primary'
                         text = 'On Request' 
                         $("#add_to_cart").removeClass('disabled')
+                        $("#similar_products_vx").addClass('hidden')
                         break;
                 }
                 $stock_state.addClass(new_class);
