@@ -113,8 +113,8 @@ class stock_move(osv.Model):
         return res
 
 
-class stock_picking_out(osv.Model):
-    _inherit = "stock.picking.out"
+class stock_picking(osv.Model):
+    _inherit = "stock.picking"
 
     def show_entry_lines(self, cr, uid, ids, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -149,10 +149,6 @@ class stock_picking_out(osv.Model):
             'view_id': False,
             'type': 'ir.actions.act_window'
         }
-
-
-class stock_picking_in(osv.Model):
-    _inherit = "stock.picking.in"
 
     def show_entry_lines(self, cr, uid, ids, context=None):
         ids = isinstance(ids, (int, long)) and [ids] or ids
