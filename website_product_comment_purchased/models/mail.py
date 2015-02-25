@@ -32,10 +32,10 @@ class mail_message(osv.Model):
         res = {}
         sale_report_obj = self.pool.get('sale.report')
         cr.execute("""
-            %s
-            FROM ( %s )
-            %s
-            """ % (sale_report_obj._select(), sale_report_obj._from(),
+            {0}
+            FROM ( {1} )
+            {2}
+            """.format(sale_report_obj._select(), sale_report_obj._from(),
                    sale_report_obj._group_by()))
         mail_cache = self.browse(cr, uid, ids, context)[0]
         for rep in cr.fetchall():
