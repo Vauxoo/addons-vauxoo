@@ -24,32 +24,33 @@
 #
 ##############################################################################
 {
-    "name": "Report Account Aged Partner Balance view", 
-    "version": "2.0", 
-    "author": "Vauxoo", 
-    "category": "Localization/Mexico", 
-    "description": """This module creates a sql view for Account Aged Partner Balance today.""", 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+    "name": "Report Account Aged Partner Balance view",
+    "version": "2.0",
+    "author": "Vauxoo",
+    "category": "Localization/Mexico",
+    "description": """This module creates a sql view for
+    Account Aged Partner Balance today.""",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "account", 
-        "board", 
+        "account",
+        "board",
         "report_webkit"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
-        "view/wizard.xml", 
-        "view/view.xml", 
-        "view/action_menues.xml", 
-        "view/wizard_print_report_view.xml", 
-        "data/data.xml", 
+        "view/wizard.xml",
+        "view/view.xml",
+        "view/action_menues.xml",
+        "view/wizard_print_report_view.xml",
+        "data/data.xml",
         "report/report.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }
