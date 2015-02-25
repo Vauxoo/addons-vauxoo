@@ -4,6 +4,14 @@
  		<template id="product_stock_state" inherit_id="website_sale.product">
  			<xpath expr="//h1[@itemprop='name']" position="after">
  				<h3><span class="label stock_state"></span></h3>
+ 				<div id="similar_products_vx" class="alert alert-success">
+ 				<a href="#rec_prod" class="alert-link">Similar Products</a>
+ 				</div>
+ 			</xpath>
+ 		</template>
+ 		<template id="product_rec_prod_name" inherit_id="website_sale.recommended_products">
+ 			<xpath expr="//h3" position="before">
+    			<a name="rec_prod"></a>
  			</xpath>
  		</template>
     </data>
