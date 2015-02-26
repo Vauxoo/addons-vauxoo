@@ -51,17 +51,17 @@ class account_move(osv.Model):
 
     def _get_sm(self, cr, uid, ids, field_name, args, context=None):
         res = {}
-        for id in ids:
+        for record_id in ids:
             cr.execute(
                 '''SELECT move_id,
                           sm_id
                    FROM account_move_line
-                   WHERE move_id = %s LIMIT 1 ''' % (id,))
+                   WHERE move_id = %s LIMIT 1 ''' % (record_id,))
             if cr.rowcount:
-                id, sm_id = cr.fetchall()[0]
-                res[id] = sm_id
+                record_id, sm_id = cr.fetchall()[0]
+                res[record_id] = sm_id
             else:
-                res[id] = False
+                res[record_id] = False
         return res
 
     _columns = {
@@ -79,17 +79,17 @@ class stock_move(osv.Model):
 
     def _get_am(self, cr, uid, ids, field_name, args, context=None):
         res = {}
-        for id in ids:
+        for record_id in ids:
             cr.execute(
                 '''SELECT sm_id,
                    move_id
                    FROM account_move_line
-                   WHERE sm_id = %s LIMIT 1 ''' % (id,))
+                   WHERE sm_id = %s LIMIT 1 ''' % (record_id,))
             if cr.rowcount:
-                id, am_id = cr.fetchall()[0]
-                res[id] = am_id
+                record_id, am_id = cr.fetchall()[0]
+                res[record_id] = am_id
             else:
-                res[id] = False
+                res[record_id] = False
         return res
 
     _columns = {
@@ -124,7 +124,7 @@ class stock_picking(osv.Model):
             res += [aml_brw.id for move in picking_brw.move_lines if move.am_id for aml_brw in move.am_id.line_id]
         return {
             'domain': "[('id','in',\
-                [" + ','.join(map(str, res)) + "])]",
+                [" + ','.join([str(item) for item in res]) + "])]",
             'name': _('Journal Entries'),
             'view_type': 'form',
             'view_mode': 'tree,form',
@@ -141,7 +141,7 @@ class stock_picking(osv.Model):
             res += [move.am_id.id for move in picking_brw.move_lines]
         return {
             'domain': "[('id','in',\
-                [" + ','.join(map(str, res)) + "])]",
+                [" + ','.join([str(item) for item in res]) + "])]",
             'name': _('Journal Entries'),
             'view_type': 'form',
             'view_mode': 'tree,form',
