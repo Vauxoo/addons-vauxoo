@@ -47,9 +47,7 @@
     "data": [
         "view/res_partner_view.xml",
         "view/account_invoice_view.xml"],
-    "test": [
-        # "test/account_voucher_taxes.yml",
-    ],
+    "test": [],
     "js": [],
     "css": [],
     "qweb": [],
