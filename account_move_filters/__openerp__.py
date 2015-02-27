@@ -39,7 +39,7 @@ This module add 5 filters to journal items
     "website": "http://www.vauxoo.com",
     "license": "",
     "depends": [
-        "account_voucher_tax"
+        "account"
     ],
     "demo": [],
     "data": [
