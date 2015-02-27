@@ -9,6 +9,10 @@
             <field name="model">account.move.line</field>
             <field name="arch" type="xml">
                 <xpath expr="//filter[@string='Unreconciled']" position="after">
+                    <filter icon="terp-dolar_ok!" string="Unreconciled AP/AR" domain="[('reconcile_id','=',False), ('account_id.reconcile','=',True), '|', ('account_id.type','=','receivable'), ('account_id.type','=','payable')]" help="Unreconciled AP/AR Journal Items" name="unreconciled_ap_ar"/>
+                    <separator/>
+                    <filter icon="terp-dolar_ok!" string="Unreconciled No AP/AR" domain="[('reconcile_id','=',False), ('account_id.reconcile','=',True), ('account_id.type','!=','receivable'), ('account_id.type','!=','payable')]" help="Unreconciled No AP/AR Journal Items" name="unreconciled_n_ap_ar"/>
+                    <separator/>
                     <filter icon="terp-document-new" string="Pay/Rec" domain="[('account_id.type','in',['receivable', 'payable'])]" help="Account type in payable or receivable"/>
                     <separator/>
                     <filter icon="terp-document-new" string="Payable" domain="[('account_id.type','=','payable')]" help="Account type in payable"/>
