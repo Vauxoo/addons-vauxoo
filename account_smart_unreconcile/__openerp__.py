@@ -24,10 +24,10 @@
 ################################################################################
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
-    "name": "Account Smart Unreconcile", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Accounting", 
+    "name": "Account Smart Unreconcile",
+    "version": "1.0",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Accounting",
     "description": """
         Allows send and account_move_reconcile and
         a list of aml_ids to be excluded from reconciliation,
@@ -37,19 +37,20 @@
         In Future this module is intended to grow adding a wizard
         that would allow an end user to do smart unreconciliations
 
-    """, 
-    "website": "http://vauxoo.com", 
-    "license": "", 
+    """,
+    "website": "http://vauxoo.com",
+    "license": "",
     "depends": [
-        "account"
-    ], 
-    "demo": [], 
-    "data": [], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+        "account",
+        "account_reconcile_grouping",
+    ],
+    "demo": [],
+    "data": [],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }
