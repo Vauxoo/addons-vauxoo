@@ -12,8 +12,6 @@ class TestTInvoiceBroker(TransactionCase):
         imd_model = self.registry("ir.model.data")
         self.inv_model = self.registry('account.invoice')
         self.voucher_model = self.registry('account.voucher')
-        _, self.account_inv = imd_model.get_object_reference(
-            cr, uid, "account", "a_pay")
         _, self.account_vou = imd_model.get_object_reference(
             cr, uid, "account", "cash")
         _, self.partner_id = imd_model.get_object_reference(
@@ -39,15 +37,19 @@ class TestTInvoiceBroker(TransactionCase):
             "account_voucher_tax_purchase_iva16")
         _, self.tax_inv_2_id = imd_model.get_object_reference(
             cr, uid, "account", "test_invoice_1")
+        _, self.account_receivable_id = imd_model.get_object_reference(
+            cr, uid, "account", "a_recv")
+        _, self.account_voucher_tax_16 = imd_model.get_object_reference(
+            cr, uid, "account_voucher_tax", "account_iva_voucher_16")
 
     def test_programmatic_tax(self):
         cr, uid = self.cr, self.uid
         # I create the invoice to broker
         context = {'default_type': 'in_invoice'}
         inv_id = self.inv_model.create(cr, uid, dict(
-            account_id=self.account_inv,
+            account_id=self.account_receivable_id,
             partner_id=self.partner_id,
-            check_total=160.0,
+            check_total=7694.20,
             company_id=self.company_id,
             currency_id=self.currency_id,
             journal_id=self.journal_inv_id,
@@ -73,37 +75,57 @@ class TestTInvoiceBroker(TransactionCase):
         # I try validate the invoice
         self.inv_model.signal_workflow(cr, uid, [inv_id], 'invoice_open')
 
+        # I check the total to invoice created
         self.assertEquals(self.inv_model.read(
             cr, uid, inv_id,
             ['amount_total']).get('amount_total', 0.0), 7694.20)
 
+        # I check the state of invoice is open
         self.assertEquals(self.inv_model.read(
             cr, uid, inv_id, ['state']).get('state', ''), 'open')
 
-        self.inv_model.signal_workflow(cr, uid, [inv_id], 'reconciled')
-
         # I try pay the invoice, I create the payment
-        # voucher_id = self.voucher_model.create(cr, uid, dict(
-        #     name='Payment invoice broker',
-        #     account_id=self.account_vou,
-        #     company_id=self.company_id,
-        #     amount=7694.20,
-        #     journal_id=self.journal_vou_id,
-        #     partner_id=self.partner_id,
-        #     date=time.strftime("%Y-%m-%d"),
-        #     type='payment'
-        # ))
+        move_line_id = False
+        move_tax = False
+        for move in self.inv_model.browse(cr, uid, inv_id).move_id.line_id:
+            if move.account_id.id == self.account_receivable_id:
+                move_line_id = move.id
+            elif move.debit == 1039.20:
+                move_tax = move.id
+        voucher_id = self.voucher_model.create(cr, uid, dict(
+            name='Payment invoice broker',
+            account_id=self.account_vou,
+            company_id=self.company_id,
+            amount=7694.20,
+            journal_id=self.journal_vou_id,
+            partner_id=self.partner_id,
+            date=time.strftime("%Y-%m-%d"),
+            type='payment',
+            line_dr_ids=[(0, 0, {
+                'amount': 7694.20,
+                'type': 'dr',
+                'partner_id': self.partner_id,
+                'account_id': self.account_receivable_id,
+                'move_line_id': move_line_id,
+                'tax_line_ids': [(0, 0, {
+                    'tax_id': self.tax_16_id,
+                    'account_id': self.account_voucher_tax_16,
+                    'amount_tax': 1039.20,
+                    'move_line_id': move_tax,
+                    'original_tax': 1039.20
+                })]
+            })]
+        ))
 
         # I try validate the payment
-        # self.voucher_model.signal_workflow(
-        #     cr, uid, [voucher_id], 'proforma_voucher')
+        self.voucher_model.signal_workflow(
+            cr, uid, [voucher_id], 'proforma_voucher')
 
-        # self.assertEquals(self.voucher_model.read(
-        #     cr, uid, voucher_id,
-        #     ['state']).get('state', ''), 'posted')
+        # I check that the payment state is posted
+        self.assertEquals(self.voucher_model.read(
+            cr, uid, voucher_id,
+            ['state']).get('state', ''), 'posted')
 
         # I check the status to invoice == 'paid'
-        #     cr, uid, inv_id, ['state']).get('state', '')
-        # self.assertEquals(self.inv_model.read(
-        #     cr, uid, inv_id, ['state']).get('state', ''), 'paid')
-
+        self.assertEquals(self.inv_model.read(
+            cr, uid, inv_id, ['state']).get('state', ''), 'paid')
