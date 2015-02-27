@@ -1,13 +1,13 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* account_move_filters
+#   * account_move_filters
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-26 01:16+0000\n"
-"PO-Revision-Date: 2015-02-26 01:16+0000\n"
+"POT-Creation-Date: 2015-02-27 04:17+0000\n"
+"PO-Revision-Date: 2015-02-27 04:17+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,32 +23,27 @@ msgstr "Tipo de cuenta a pagar"
 #. module: account_move_filters
 #: view:account.move.line:account_move_filters.view_account_move_line_filter_inh_pay_rec
 msgid "Account type in payable or receivable"
-msgstr "Tipo de cuenta en a pagar o a cobrar"
+msgstr "Tipo de cuenta a pagar o a cobrar"
 
 #. module: account_move_filters
 #: view:account.move.line:account_move_filters.view_account_move_line_filter_inh_pay_rec
 msgid "Account type in receivable"
-msgstr "Tipo de cuenta en a cobrar"
+msgstr "Tipo de cuenta a cobrar"
 
 #. module: account_move_filters
 #: view:account.move.line:account_move_filters.view_account_move_line_filter_inh_pay_rec
 msgid "Account type not in payable"
-msgstr "Tipo de cuenta no es a pagar"
-
-#. module: account_move_filters
-#: view:account.move.line:account_move_filters.view_account_move_line_filter_inh_pay_rec
-msgid "Account type not in payable"
-msgstr "Tipo de cuenta es no a pagar"
+msgstr "Tipo de cuenta diferente a pagar"
 
 #. module: account_move_filters
 #: view:account.move.line:account_move_filters.view_account_move_line_filter_inh_pay_rec
 msgid "Not Payable"
-msgstr "No a pagar"
+msgstr "Diferente a pagar"
 
 #. module: account_move_filters
 #: view:account.move.line:account_move_filters.view_account_move_line_filter_inh_pay_rec
 msgid "Not Receivable"
-msgstr "No a cobrar"
+msgstr "Diferente a cobrar"
 
 #. module: account_move_filters
 #: view:account.move.line:account_move_filters.view_account_move_line_filter_inh_pay_rec
@@ -64,4 +59,24 @@ msgstr "A pagar"
 #: view:account.move.line:account_move_filters.view_account_move_line_filter_inh_pay_rec
 msgid "Receivable"
 msgstr "A cobrar"
+
+#. module: account_move_filters
+#: view:account.move.line:account_move_filters.view_account_move_line_filter_inh_pay_rec
+msgid "Unreconciled AP/AR"
+msgstr "Sin conciliar AP/AR"
+
+#. module: account_move_filters
+#: view:account.move.line:account_move_filters.view_account_move_line_filter_inh_pay_rec
+msgid "Unreconciled AP/AR Journal Items"
+msgstr "Sin conciliar AP/AR apuntes contables"
+
+#. module: account_move_filters
+#: view:account.move.line:account_move_filters.view_account_move_line_filter_inh_pay_rec
+msgid "Unreconciled No AP/AR"
+msgstr "Sin conciliar No AP/AR"
+
+#. module: account_move_filters
+#: view:account.move.line:account_move_filters.view_account_move_line_filter_inh_pay_rec
+msgid "Unreconciled No AP/AR Journal Items"
+msgstr "Sin conciliar No AP/AR apuntes contables"
 
