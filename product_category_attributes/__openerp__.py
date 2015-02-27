@@ -28,9 +28,14 @@
 =============================================
     """,
     'author': 'Vauxoo',
-    'depends': ['base_action_rule'],
+    'depends': [
+        'base_action_rule',
+        'product',
+    ],
     'data': [
         'views/product_view.xml',
+        'data/server_actions.xml',
+        'data/action_rules.xml',
     ],
     'demo': [],
     'test': [],

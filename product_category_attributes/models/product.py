@@ -1,12 +1,12 @@
 # -*- encoding: utf-8 -*-
 #
-#    Module Writen to OpenERP, Open Source Management Solution
+#    Module Writen to Odoo, Open Source Management Solution
 #
 #    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 #
-#    Coded by: Jorge Angel Naranjo (jorge_nr@vauxoo.com)
+#    Coded by: Oalca (oscar@vauxoo.com)
 #
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -32,3 +32,7 @@ class product_category(osv.osv):
                                           string='Attributes'),
 
     }
+
+
+class product_template(osv.osv):
+    _inherit = 'product.template'
