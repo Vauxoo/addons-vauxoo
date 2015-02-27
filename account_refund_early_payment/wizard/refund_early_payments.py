@@ -189,11 +189,9 @@ class account_invoice_refund(osv.osv_memory):
                 movelines = inv.move_id.line_id
                 to_reconcile_ids = {}
                 for line in movelines:
-                    if line.account_id.reconcile:
+                    if line.account_id.reconcile and not line.reconcile_id:
                         to_reconcile_ids.setdefault(line.account_id.id,
                                                     []).append(line.id)
-                    if line.reconcile_id:
-                        line.reconcile_id.unlink()
                 refund.signal_workflow('invoice_open')
                 refund = inv_obj.browse(cur, uid, refund_id[0],
                                         context=context)
@@ -202,11 +200,10 @@ class account_invoice_refund(osv.osv_memory):
                         to_reconcile_ids[tmpline.
                                          account_id.id].append(tmpline.id)
                 for account in to_reconcile_ids:
-                    account_m_line_obj.reconcile_partial(cur,
-                                                         uid,
-                                                         to_reconcile_ids
-                                                         [account],
-                                                         context=context)
+                    if len(to_reconcile_ids[account]) > 1:
+                        account_m_line_obj.reconcile_partial(
+                            cur, uid, to_reconcile_ids[account],
+                            context=context)
         return result
 
     def _get_percent_default(self, cur, uid, ids, context=None):
