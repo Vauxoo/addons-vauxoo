@@ -25,7 +25,7 @@
     'category': 'Tools',
     'description': """
     Automated Action to Create Product Attributes
-=============================================
+    =============================================
     """,
     'author': 'Vauxoo',
     'depends': [
