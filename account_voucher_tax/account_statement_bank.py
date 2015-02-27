@@ -127,10 +127,6 @@ class account_bank_statement_line(osv.osv):
 
         move_line_obj = self.pool.get('account.move.line')
         move_obj = self.pool.get('account.move')
-        voucher_obj = self.pool.get('account.voucher')
-
-        move_line_ids = []
-        move_reconcile_id = []
 
         st_line = self.browse(cr, uid, id, context=context)
         company_currency = st_line.journal_id.company_id.currency_id.id
@@ -152,12 +148,54 @@ class account_bank_statement_line(osv.osv):
 
         self._check_moves_to_concile(
             cr, uid, id, mv_line_dicts, context=context)
+
+        move_line_rec_ids = self.create_move_line_tax_payment(
+            cr, uid, mv_line_dicts, st_line.partner_id.id,
+            st_line.statement_id.period_id.id,
+            st_line.statement_id.journal_id.id,
+            st_line.date, type, st_line.statement_id, company_currency,
+            statement_currency, move_id=move_id_old, context=context)
+
+        res = super(account_bank_statement_line, self).process_reconciliation(
+            cr, uid, id, mv_line_dicts, context=context)
+
+        move_line_obj.write(cr, uid, move_line_rec_ids[0],
+                            {'move_id': st_line.journal_entry_id.id,
+                             'statement_id': st_line.statement_id.id})
+
+        for rec_ids in move_line_rec_ids[1]:
+            if len(rec_ids) >= 2:
+                move_line_obj.reconcile_partial(cr, uid, rec_ids)
+
+        update_ok = st_line.journal_id.update_posted
+        if not update_ok:
+            st_line.journal_id.write({'update_posted': True})
+        move_obj.button_cancel(cr, uid, [move_id_old])
+        st_line.journal_id.write({'update_posted': update_ok})
+        move_obj.unlink(cr, uid, move_id_old)
+        return res
+
+    def create_move_line_tax_payment(
+        self, cr, uid, mv_line_dicts, partner_id, period_id, journal_id,
+            date_st, type_payment, parent, company_currency,
+            statement_currency, move_id=None, context=None):
+
+        if context is None:
+            context = {}
+
+        move_line_obj = self.pool.get('account.move.line')
+        voucher_obj = self.pool.get('account.voucher')
+
+        move_line_ids = []
+        move_reconcile_id = []
+
         for move_line_dict in mv_line_dicts:
             move_amount_counterpart = self._get_move_line_counterpart(
                 cr, uid, [move_line_dict], company_currency,
                 statement_currency, context=context)
             move_line_tax_dict = self._get_move_line_tax(
                 cr, uid, [move_line_dict], context=context)
+            print move_line_dict,"move_line_dict"
 
             factor = voucher_obj.get_percent_pay_vs_invoice(
                 cr, uid, move_amount_counterpart[1],
@@ -184,11 +222,8 @@ class account_bank_statement_line(osv.osv):
                     cr, uid,
                     account_tax_voucher,  # cuenta del impuesto(account.tax)
                     account_tax_collected,  # cuenta del impuesto para notas de credito/debito(account.tax)
-                    move_id_old, type,
-                    st_line.partner_id.id,
-                    st_line.statement_id.period_id.id,
-                    st_line.statement_id.journal_id.id,
-                    st_line.date, company_currency,
+                    move_id, type_payment, partner_id, period_id, journal_id,
+                    date_st, company_currency,
                     amount_total_tax * abs(factor),  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
                     amount_total_tax * abs(factor),  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
                     statement_currency, False,
@@ -211,30 +246,13 @@ class account_bank_statement_line(osv.osv):
                 move_rec_exch = self._get_exchange_reconcile(
                     cr, uid, move_line_tax, move_line_rec,
                     move_amount_counterpart[0], move_amount_counterpart[2],
-                    st_line.statement_id, company_currency,
+                    parent, company_currency,
                     statement_currency, context=context)
 
                 move_line_ids.extend(move_rec_exch[0])
                 move_reconcile_id.append(move_rec_exch[1])
 
-        res = super(account_bank_statement_line, self).process_reconciliation(
-            cr, uid, id, mv_line_dicts, context=context)
-
-        move_line_obj.write(cr, uid, move_line_ids,
-                            {'move_id': st_line.journal_entry_id.id,
-                             'statement_id': st_line.statement_id.id})
-
-        for rec_ids in move_reconcile_id:
-            if len(rec_ids) >= 2:
-                move_line_obj.reconcile_partial(cr, uid, rec_ids)
-
-        update_ok = st_line.journal_id.update_posted
-        if not update_ok:
-            st_line.journal_id.write({'update_posted': True})
-        move_obj.button_cancel(cr, uid, [move_id_old])
-        st_line.journal_id.write({'update_posted': update_ok})
-        move_obj.unlink(cr, uid, move_id_old)
-        return res
+        return [move_line_ids, move_reconcile_id]
 
     def _check_moves_to_concile(
             self, cr, uid, id, mv_line_dicts, context=None):
@@ -464,9 +482,11 @@ class account_bank_statement_line(osv.osv):
             # impuesto, validando que no sea una cuenta por pagar/cobrar y que
             # los movimientos no pertenescan a un diario de banco/efectivo
             # por que puede ser una poliza con iva efecttivamente pagado
+            # if move_line_id.account_id.type not in\
+            #         ('receivable', 'payable') and\
+            #         move_line_id.journal_id.type not in ('cash', 'bank'):
             if move_line_id.account_id.type not in\
-                    ('receivable', 'payable') and\
-                    move_line_id.journal_id.type not in ('cash', 'bank'):
+                    ('receivable', 'payable'):
                 account_group.setdefault(move_line_id.account_id.id, [0, 0])
                 # Validacion del debit/credit cuando la poliza contiene
                 # impuesto 0 o EXENTO toma el monto base de la linea de poliza

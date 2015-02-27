@@ -8,6 +8,8 @@ class TestTaxCommon(common.TransactionCase):
 
     def setUp(self):
         super(TestTaxCommon, self).setUp()
+        self.account_voucher_model = self.registry('account.voucher')
+        self.account_voucher_line_model = self.registry('account.voucher.line')
         self.account_invoice_model = self.registry('account.invoice')
         self.account_invoice_line_model = self.registry('account.invoice.line')
         self.acc_bank_stmt_model = self.registry('account.bank.statement')
@@ -98,7 +100,7 @@ class TestTaxCommon(common.TransactionCase):
             "account_iva_voucher1067_retencion_iva")[1]
 
     def create_statement(self, cr, uid, line_invoice, partner, amount, journal,
-                         date_bank=None):
+                         date_bank=None, account_id=None):
         bank_stmt_id = self.acc_bank_stmt_model.create(cr, uid, {
             'journal_id': journal,
             'date': date_bank or time.strftime('%Y')+'-07-01',
@@ -111,12 +113,18 @@ class TestTaxCommon(common.TransactionCase):
             'amount': amount,
             'date': date_bank or time.strftime('%Y')+'-07-01'})
 
+        val = {
+            'counterpart_move_line_id':
+                line_invoice and line_invoice.id or None,
+            'credit': amount > 0 and amount or 0,
+            'debit': amount < 0 and amount*-1 or 0,
+            'name': line_invoice and line_invoice.name or 'cash flow'}
+
+        if account_id:
+            val.update({'account_id': account_id})
+
         self.acc_bank_stmt_line_model.process_reconciliation(
-            cr, uid, bank_stmt_line_id, [{
-                'counterpart_move_line_id': line_invoice.id,
-                'credit': amount > 0 and amount or 0,
-                'debit': amount < 0 and amount*-1 or 0,
-                'name': line_invoice.name}])
+            cr, uid, bank_stmt_line_id, [val])
 
         move_line_ids_complete = self.acc_bank_stmt_model.browse(
             cr, uid, bank_stmt_id).move_line_ids
