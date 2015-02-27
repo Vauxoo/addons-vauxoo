@@ -29,40 +29,38 @@ from openerp.osv import osv
 class account_move_line(osv.Model):
     _inherit = "account.move.line"
 
-    def _remove_move_reconcile(self, cr, uid, move_ids=[], opening_reconciliation=False, context=None):
-        # Function remove move rencocile ids related with moves
-        if context is None:
-            context = {}
-        obj_move_line = self.pool.get('account.move.line')
-        obj_move_rec = self.pool.get('account.move.reconcile')
+    def _remove_move_reconcile(self, cr, uid, move_ids=None,
+                               opening_reconciliation=False, context=None):
+        # Function remove move reconcile ids related with moves
+        if opening_reconciliation:
+            # We will return original method
+            super(account_move_line, self)._remove_move_reconcile(
+                cr, uid, move_ids=move_ids,
+                opening_reconciliation=opening_reconciliation, context=context)
+        context = dict(context or {})
+        aml_obj = self.pool.get('account.move.line')
+        amr_obj = self.pool.get('account.move.reconcile')
         if not move_ids:
             return True
-        recs = obj_move_line.read(cr, uid, move_ids, [
-                                  'reconcile_id', 'reconcile_partial_id'])
-        full_recs = filter(lambda x: x['reconcile_id'], recs)
-        rec_ids = [rec['reconcile_id'][0] for rec in full_recs]
-        part_recs = filter(lambda x: x['reconcile_partial_id'], recs)
-        part_rec_ids = [rec['reconcile_partial_id'][0] for rec in part_recs]
+        aml_brws = aml_obj.browse(cr, uid, move_ids, context=context)
+        rec_dict = {}
+        for aml_brw in aml_brws:
+            rec_id = aml_brw.reconcile_id or aml_brw.reconcile_partial_id
+            # We will not unreconcile something that is not reconciled
+            if not rec_id:
+                continue
+            if rec_id.id not in rec_dict.keys():
+                rec_dict[rec_id.id] = set([aml_brw.id])
+            else:
+                rec_dict[rec_id.id].add(aml_brw.id)
 
-        for rec_brw in obj_move_rec.browse(cr, uid, rec_ids, context=context):
-            aml_ids = list(set([rec_line.id for rec_line in rec_brw.line_id]) -
-                           set(move_ids))
-            if len(aml_ids) >= 2:
-                obj_move_line.reconcile_partial(
-                    cr, uid, aml_ids, 'auto', context=context)
-
-        if rec_ids:
-            obj_move_rec.unlink(cr, uid, rec_ids)
-
-        for part_rec_brw in obj_move_rec.browse(cr, uid, part_rec_ids,
-                                                context=context):
-            aml_ids = list(set([rec_line.id
-                            for rec_line in part_rec_brw.line_partial_ids]) -
-                           set(move_ids))
-            if len(aml_ids) >= 2:
-                obj_move_line.reconcile_partial(
-                    cr, uid, aml_ids, 'auto', context=context)
-
-        if part_rec_ids:
-            obj_move_rec.unlink(cr, uid, part_rec_ids)
+        for amr_brw in amr_obj.browse(cr, uid, rec_dict.keys(),
+                                      context=context):
+            full_ids = [fbrw.id for fbrw in amr_brw.line_id]
+            part_ids = [pbrw.id for pbrw in amr_brw.line_partial_ids]
+            aml_ids = set(full_ids + part_ids) - rec_dict[amr_brw.id]
+            amr_brw.unlink()
+            if len(aml_ids) > 1:
+                aml_obj.reconcile_partial(cr, uid, list(aml_ids),
+                                          'auto', context=context)
         return True
