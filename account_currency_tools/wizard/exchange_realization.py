@@ -115,8 +115,7 @@ class foreign_exchange_realization(osv.osv_memory):
         return company_id
 
     def onchange_company_id(self, cr, uid, ids, company_id, context=None):
-        if context is None:
-            context = {}
+        context = context and dict(context) or {}
         context['company_id'] = company_id
         res = {'value': {}}
 
@@ -512,7 +511,7 @@ class foreign_exchange_realization(osv.osv_memory):
         return True
 
     def action_get_unrecognized_lines(self, cr, uid, ids, context=None):
-        context = context or {}
+        context = context and dict(context) or {}
         cur_obj = self.pool.get('res.currency')
         ferl_obj = self.pool.get('foreign.exchange.realization.line')
         ids = isinstance(ids, (int, long)) and [ids] or ids
