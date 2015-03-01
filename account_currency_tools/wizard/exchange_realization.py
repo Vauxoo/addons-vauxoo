@@ -96,7 +96,7 @@ class foreign_exchange_realization(osv.osv_memory):
         if fiscalyear_id:
             new_fy_id = fy_obj.find(cr, uid, exception=False, context=context)
             if fiscalyear_id == new_fy_id:
-                ctx = dict(context or {})
+                ctx = dict(dict(context or {}))
                 ctx['account_period_prefer_normal'] = True
                 period_id = self.pool.get('account.period').find(
                     cr, uid, context=ctx)
@@ -424,7 +424,7 @@ class foreign_exchange_realization(osv.osv_memory):
         return res
 
     def get_params(self, cr, uid, ids, account_type, fieldname, context=None):
-        context = context or {}
+        context = dict(context or {})
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         parent_left = wzd_brw.root_id.parent_left
@@ -452,7 +452,7 @@ class foreign_exchange_realization(osv.osv_memory):
 
     def action_get_accounts(self, cr, uid, ids, account_type, fieldname,
                             context=None):
-        context = context or {}
+        context = dict(context or {})
         ids = isinstance(ids, (int, long)) and [ids] or ids
         aa_obj = self.pool.get('account.account')
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
@@ -493,7 +493,7 @@ class foreign_exchange_realization(osv.osv_memory):
             cr, uid, ids, 'liquidity', 'bk_ids', context=context)
 
     def action_get_periods(self, cr, uid, ids, context=None):
-        context = context or {}
+        context = dict(context or {})
         ids = isinstance(ids, (int, long)) and [ids] or ids
         ap_obj = self.pool.get('account.period')
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
@@ -512,7 +512,7 @@ class foreign_exchange_realization(osv.osv_memory):
         return True
 
     def action_get_unrecognized_lines(self, cr, uid, ids, context=None):
-        context = context or {}
+        context = dict(context or {})
         cur_obj = self.pool.get('res.currency')
         ferl_obj = self.pool.get('foreign.exchange.realization.line')
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -556,7 +556,7 @@ class foreign_exchange_realization(osv.osv_memory):
         return True
 
     def account_move_get(self, cr, uid, ids, context=None):
-        context = context or {}
+        context = dict(context or {})
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
@@ -577,7 +577,7 @@ class foreign_exchange_realization(osv.osv_memory):
         }
 
     def get_gain_loss_account_company(self, cr, uid, ids, context=None):
-        context = context or {}
+        context = dict(context or {})
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
@@ -588,7 +588,7 @@ class foreign_exchange_realization(osv.osv_memory):
         return {'gain': gain, 'loss': loss}
 
     def line_get(self, cr, uid, line_brw, context=None):
-        context = context or {}
+        context = dict(context or {})
         wzd_brw = line_brw.wizard_id
         name = (_("Exch. Curr. Rate Diff. for %s in %s")
                 % (line_brw.account_id.name, line_brw.currency_id.name))
@@ -618,7 +618,7 @@ class foreign_exchange_realization(osv.osv_memory):
         return res_a, res_b
 
     def move_line_get(self, cr, uid, ids, context=None):
-        context = context or {}
+        context = dict(context or {})
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         res = []
@@ -638,7 +638,7 @@ class foreign_exchange_realization(osv.osv_memory):
         return res
 
     def move_line_redirect_get(self, cr, uid, ids, context=None):
-        context = context or {}
+        context = dict(context or {})
         ids = isinstance(ids, (int, long)) and [ids] or ids
         res = []
 
@@ -716,7 +716,7 @@ class foreign_exchange_realization(osv.osv_memory):
         return res
 
     def get_gain_loss_accounts(self, cr, uid, ids, context=None):
-        context = context or {}
+        context = dict(context or {})
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         res = {'fix': []}
@@ -747,7 +747,7 @@ class foreign_exchange_realization(osv.osv_memory):
 
     def check_gain_loss_accounts(self, cr, uid, ids, exception=False,
                                  context=None):
-        context = context or {}
+        context = dict(context or {})
         ids = isinstance(ids, (int, long)) and [ids] or ids
         res = self.get_gain_loss_accounts(
             cr, uid, ids, context=context).get('fix')
@@ -762,7 +762,7 @@ class foreign_exchange_realization(osv.osv_memory):
         return True
 
     def check_gain_loss_account_company(self, cr, uid, ids, context=None):
-        context = context or {}
+        context = dict(context or {})
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         company_brw = wzd_brw.company_id
@@ -798,7 +798,7 @@ class foreign_exchange_realization(osv.osv_memory):
         return True
 
     def create_move(self, cr, uid, ids, context=None):
-        context = context or {}
+        context = dict(context or {})
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         if wzd_brw.move_id:
@@ -822,7 +822,7 @@ class foreign_exchange_realization(osv.osv_memory):
         return True
 
     def action_prepare(self, cr, uid, ids, context=None):
-        context = context or {}
+        context = dict(context or {})
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
 
@@ -851,7 +851,7 @@ class foreign_exchange_realization(osv.osv_memory):
         return True
 
     def action_progress(self, cr, uid, ids, context=None):
-        context = context or {}
+        context = dict(context or {})
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
         self.check_gain_loss_accounts(cr, uid, ids, context=context)
@@ -862,7 +862,7 @@ class foreign_exchange_realization(osv.osv_memory):
         return True
 
     def check_opening_journal_entry(self, cr, uid, ids, context=None):
-        context = context or {}
+        context = dict(context or {})
         ids = isinstance(ids, (int, long)) and [ids] or ids
         ap_obj = self.pool.get('account.period')
         am_obj = self.pool.get('account.move')
@@ -892,7 +892,7 @@ class foreign_exchange_realization(osv.osv_memory):
         return am_obj.search(cr, uid, args, context=context)
 
     def check_previous_fiscalyear(self, cr, uid, ids, context=None):
-        context = context or {}
+        context = dict(context or {})
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
@@ -909,7 +909,7 @@ class foreign_exchange_realization(osv.osv_memory):
         return fy_obj.browse(cr, uid, fy_id, context=context).state == 'done'
 
     def action_create_move(self, cr, uid, ids, context=None):
-        context = context or {}
+        context = dict(context or {})
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
         res = self.create_move(cr, uid, ids, context=context)
