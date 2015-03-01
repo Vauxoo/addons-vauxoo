@@ -96,7 +96,7 @@ class foreign_exchange_realization(osv.osv_memory):
         if fiscalyear_id:
             new_fy_id = fy_obj.find(cr, uid, exception=False, context=context)
             if fiscalyear_id == new_fy_id:
-                ctx = dict(dict(context or {}))
+                ctx = dict(context or {})
                 ctx['account_period_prefer_normal'] = True
                 period_id = self.pool.get('account.period').find(
                     cr, uid, context=ctx)
