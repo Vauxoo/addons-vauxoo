@@ -115,8 +115,7 @@ class foreign_exchange_realization(osv.osv_memory):
         return company_id
 
     def onchange_company_id(self, cr, uid, ids, company_id, context=None):
-        if context is None:
-            context = {}
+        context = context and dict(context) or {}
         context['company_id'] = company_id
         res = {'value': {}}
 
