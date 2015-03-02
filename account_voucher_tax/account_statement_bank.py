@@ -325,6 +325,9 @@ class account_bank_statement_line(osv.osv):
         move_counterpart = move_line_tax.get('move_line_reconcile', None)
         rec_ids = []
 
+        if not move_counterpart[0]:
+            return [[], rec_ids]
+
         move_line_counterpart = move_line_obj.browse(
             cr, uid, move_counterpart)[0]
         rec_ids.append(move_line_counterpart.id)
@@ -466,7 +469,7 @@ class account_bank_statement_line(osv.osv):
                 if not move_line_id.debit and not move_line_id.credit:
                     account_group[move_line_id.account_id.id][0] +=\
                         move_line_id.amount_base or 0.0
-                    account_group[move_line_id.account_id.id][1] = move_line_id.id
+                    account_group[move_line_id.account_id.id][1] = False
                 else:
                     # @factor puede ser 1 o -1 depende de tipo de transaccion
                     # si es venta, compra, nota de credito/debito, retenciones
