@@ -165,10 +165,29 @@ class TestPaymentTax(TestTaxCommon):
                 line_id = line_invoice
                 break
 
+        # create payment half
+
+        move_line_ids_complete = self.create_statement(
+            cr, uid, line_id, self.partner_agrolait_id, -60,
+            self.bank_journal_usd_id, time.strftime('%Y')+'-06-01')
+        for move_line in move_line_ids_complete:
+            if move_line.account_id.id == self.acc_tax16 and\
+                    move_line.amount_currency:
+                self.assertEquals(move_line.debit, 0.0)
+                self.assertEquals(move_line.credit, 6.45)
+                self.assertEquals(round(move_line.amount_residual, 2), -6.02)
+                self.assertEquals(move_line.amount_currency, -8.28)
+                continue
+            if move_line.account_id.id == self.acc_tax_16_payment:
+                self.assertEquals(move_line.debit, 6.45)
+                self.assertEquals(move_line.credit, 0.0)
+                self.assertEquals(move_line.amount_currency, 8.28)
+                continue
+
         # create payment complete
 
         move_line_ids_complete = self.create_statement(
-            cr, uid, line_id, self.partner_agrolait_id, -116,
+            cr, uid, line_id, self.partner_agrolait_id, -56,
             self.bank_journal_usd_id, time.strftime('%Y')+'-06-30')
 
         checked_line = 0
@@ -176,27 +195,117 @@ class TestPaymentTax(TestTaxCommon):
             if move_line_complete.account_id.id == self.acc_tax16 and\
                     move_line_complete.amount_currency == 0:
                 self.assertEquals(move_line_complete.debit, 0.0)
-                self.assertEquals(move_line_complete.credit, 2)
+                self.assertEquals(move_line_complete.credit, 0.97)
                 self.assertEquals(move_line_complete.amount_residual, 0.0)
                 checked_line += 1
                 continue
             if move_line_complete.account_id.id == self.acc_tax16 and\
                     move_line_complete.amount_currency:
                 self.assertEquals(move_line_complete.debit, 0.0)
-                self.assertEquals(move_line_complete.credit, 10.47)
+                self.assertEquals(move_line_complete.credit, 5.05)
                 self.assertEquals(move_line_complete.amount_residual, 0.0)
-                self.assertEquals(move_line_complete.amount_currency, -16)
+                self.assertEquals(move_line_complete.amount_currency, -7.72)
                 checked_line += 1
                 continue
             if move_line_complete.account_id.id == self.acc_tax_16_payment:
-                self.assertEquals(move_line_complete.debit, 10.47)
+                self.assertEquals(move_line_complete.debit, 5.05)
                 self.assertEquals(move_line_complete.credit, 0.0)
-                self.assertEquals(move_line_complete.amount_currency, 16)
+                self.assertEquals(move_line_complete.amount_currency, 7.72)
                 checked_line += 1
                 continue
             if move_line_complete.account_id.id == self.acc_loss_tax:
-                self.assertEquals(move_line_complete.debit, 2)
+                self.assertEquals(move_line_complete.debit, 0.97)
                 self.assertEquals(move_line_complete.credit, 0.0)
+                self.assertEquals(move_line_complete.amount_currency, 0)
+                checked_line += 1
+                continue
+        self.assertEquals(checked_line, 4)
+
+
+    def test_iva_16_currency_supplier_almost_complete(self):
+        cr, uid = self.cr, self.uid
+        invoice_id = self.account_invoice_model.create(cr, uid, {
+            'partner_id': self.partner_agrolait_id,
+            'journal_id': self.invoice_supplier_journal_id,
+            'reference_type': 'none',
+            'name': 'invoice to supplier',
+            'account_id': self.account_payable_id,
+            'type': 'in_invoice',
+            'date_invoice': time.strftime('%Y')+'-06-30',
+            'currency_id': self.currency_usd_id,
+            'check_total': 116
+            })
+        self.account_invoice_line_model.create(cr, uid, {
+            'product_id': self.product_id,
+            'quantity': 1,
+            'price_unit': 100,
+            'invoice_line_tax_id': [(6, 0, [self.tax_16])],
+            'invoice_id': invoice_id,
+            'name': 'product that cost 100'})
+
+        # validate invoice
+        self.registry('account.invoice').signal_workflow(
+            cr, uid, [invoice_id], 'invoice_open')
+        invoice_record = self.account_invoice_model.browse(
+            cr, uid, [invoice_id])
+
+        # we search aml with account payable
+        for line_invoice in invoice_record.move_id.line_id:
+            if line_invoice.account_id.id == self.account_payable_id:
+                line_id = line_invoice
+                break
+
+        # create payment almost complete
+
+        move_line_ids_complete = self.create_statement(
+            cr, uid, line_id, self.partner_agrolait_id, -115,
+            self.bank_journal_usd_id, time.strftime('%Y')+'-06-01')
+        for move_line in move_line_ids_complete:
+            if move_line.account_id.id == self.acc_tax16 and\
+                    move_line.amount_currency:
+                self.assertEquals(move_line.debit, 0.0)
+                self.assertEquals(move_line.credit, 12.36)
+                self.assertEquals(round(move_line.amount_residual, 2), 1.89)
+                self.assertEquals(round(move_line.amount_currency, 2), -15.86)
+                continue
+            if move_line.account_id.id == self.acc_tax_16_payment:
+                self.assertEquals(move_line.debit, 12.36)
+                self.assertEquals(move_line.credit, 0.0)
+                self.assertEquals(round(move_line.amount_currency, 2), 15.86)
+                continue
+
+        # create payment complete
+
+        move_line_ids_complete = self.create_statement(
+            cr, uid, line_id, self.partner_agrolait_id, -1,
+            self.bank_journal_usd_id, time.strftime('%Y')+'-06-30')
+
+        checked_line = 0
+        for move_line_complete in move_line_ids_complete:
+            if move_line_complete.account_id.id == self.acc_tax16 and\
+                    move_line_complete.amount_currency == 0:
+                self.assertEquals(move_line_complete.debit, 1.98)
+                self.assertEquals(move_line_complete.credit, 0.0)
+                self.assertEquals(move_line_complete.amount_residual, 0.0)
+                checked_line += 1
+                continue
+            if move_line_complete.account_id.id == self.acc_tax16 and\
+                    move_line_complete.amount_currency:
+                self.assertEquals(move_line_complete.debit, 0.0)
+                self.assertEquals(move_line_complete.credit, 0.09)
+                self.assertEquals(move_line_complete.amount_residual, 0.0)
+                self.assertEquals(move_line_complete.amount_currency, -0.14)
+                checked_line += 1
+                continue
+            if move_line_complete.account_id.id == self.acc_tax_16_payment:
+                self.assertEquals(move_line_complete.debit, 0.09)
+                self.assertEquals(move_line_complete.credit, 0.0)
+                self.assertEquals(move_line_complete.amount_currency, 0.14)
+                checked_line += 1
+                continue
+            if move_line_complete.account_id.id == self.acc_gain_tax:
+                self.assertEquals(move_line_complete.debit, 0.0)
+                self.assertEquals(move_line_complete.credit, 1.98)
                 self.assertEquals(move_line_complete.amount_currency, 0)
                 checked_line += 1
                 continue
