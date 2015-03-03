@@ -129,3 +129,27 @@ class TestTInvoiceBroker(TransactionCase):
         # I check the status to invoice == 'paid'
         self.assertEquals(self.inv_model.read(
             cr, uid, inv_id, ['state']).get('state', ''), 'paid')
+
+        # I check the journal entry to the invoice
+        move_inv = self.inv_model.browse(cr, uid, inv_id).move_id
+        error = False
+        for line in move_inv.line_id:
+            if line.partner_id.id != self.partner_id:
+                if not line.amount_base and not line.tax_id_secondary:
+                    error = True
+        if error:
+            self.assertEquals(0, 1, "The invoice have not line to report in "
+                              "DIOT to supplier broker")
+
+        # I check the hournal entro from payment
+        move_pay = self.voucher_model.browse(cr, uid, voucher_id).move_id
+        total_lines = 0
+        for line in move_pay.line_id:
+            if line.partner_id.id == self.partner_id:
+                total_lines += 1
+            else:
+                self.assertEquals(1, 0, "Only must be lines wth the same "
+                                  "supplier that the invoice")
+        self.assertEquals(
+            4, total_lines, "The move payment must be have 4 lines to the same"
+            " supplier of invoice")
