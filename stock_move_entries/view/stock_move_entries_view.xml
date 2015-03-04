@@ -31,10 +31,10 @@
         </field>
     </record>
 
-    <record id="view_stock_move_entries_picking_in_form" model="ir.ui.view">
+    <record id="view_stock_move_entries_picking_form" model="ir.ui.view">
         <field name="name">stock.picking.in.entries</field>
-        <field name="model">stock.picking.in</field>
-        <field name="inherit_id" ref="stock.view_picking_in_form"/>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
             <xpath expr="//page[@string='Additional Info']" position="inside">
                 <group>
@@ -47,20 +47,5 @@
         </field>
     </record>
 
-    <record id="view_stock_move_entries_picking_out_form" model="ir.ui.view">
-        <field name="name">stock.picking.out.entries</field>
-        <field name="model">stock.picking.out</field>
-        <field name="inherit_id" ref="stock.view_picking_out_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//page[@string='Additional Info']" position="inside">
-                <group>
-                    <group>
-                        <button string="Show Journal Entries" name="show_journal_entries" type="object" states="done"/>
-                        <button string="Show Entry Lines" name="show_entry_lines" type="object" states="done"/>
-                    </group>
-                </group>
-            </xpath>
-        </field>
-    </record>
   </data>
 </openerp>

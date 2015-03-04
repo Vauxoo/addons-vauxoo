@@ -61,9 +61,12 @@ class purchase_requisition(osv.Model):
         """
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
+        func = self.make_purchase_order
         for req_brw in self.browse(cr, uid, ids, context=context):
-            map(
-                lambda partner_brw: self.make_purchase_order(
-                    cr, uid, [req_brw.id], partner_brw.id, context=context),
-                req_brw.supplier_ids)
+            partner_ids = [po_brw.partner_id.id for po_brw in
+                           req_brw.purchase_ids]
+            for partner_brw in req_brw.supplier_ids:
+                if partner_brw.id in partner_ids:
+                    continue
+                func(cr, uid, [req_brw.id], partner_brw.id, context=context)
         return True
