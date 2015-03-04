@@ -3,11 +3,20 @@ import time
 
 
 class TestPaymentTaxCustomer(TestTaxCommon):
+    """
+        These Tests were made based on this document,
+        https://docs.google.com/a/vauxoo.com/spreadsheets/d/1O82bBb-mySbpH7SiY1KQILsIIRMgcO5E0ddNuCGC0N8/edit#gid=1786137206
+        to test successful creation of taxes efectivamente pagado/cobrado
+        to customer in payment from bank statement
+    """
 
     def setUp(self):
         super(TestPaymentTaxCustomer, self).setUp()
 
     def test_iva_16_customer(self):
+        """
+            Tests Customer with tax IVA 16% and one payment
+        """
         cr, uid = self.cr, self.uid
         invoice_id = self.account_invoice_model.create(cr, uid, {
             'partner_id': self.partner_agrolait_id,
@@ -57,6 +66,9 @@ class TestPaymentTaxCustomer(TestTaxCommon):
                 continue
 
     def test_iva_16_currency_customer(self):
+        """
+            Tests Customer with currency USD and tax IVA 16% and two payment
+        """
         cr, uid = self.cr, self.uid
         invoice_id = self.account_invoice_model.create(cr, uid, {
             'partner_id': self.partner_agrolait_id,
@@ -152,6 +164,12 @@ class TestPaymentTaxCustomer(TestTaxCommon):
         self.assertEquals(checked_line, 4)
 
     def test_iva_16_currency_customer_almost_complete(self):
+        """
+            Tests Customer with currency USD and tax 16% and two payments
+            First payment almost complete and exchange rate
+                greater then invoice
+            Second payment with exchange rate same that invoice
+        """
         cr, uid = self.cr, self.uid
         invoice_id = self.account_invoice_model.create(cr, uid, {
             'partner_id': self.partner_agrolait_id,
