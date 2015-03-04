@@ -50,6 +50,8 @@ class TestPaymentTax(TestTaxCommon):
                 self.assertEquals(move_line.debit, 0.0)
                 self.assertEquals(move_line.credit, 8)
                 self.assertEquals(move_line.amount_residual, -8)
+                self.assertTrue(move_line.reconcile_partial_id,
+                                "Partial Reconcile should be created.")
                 continue
             if move_line.account_id.id == self.acc_tax_16_payment:
                 self.assertEquals(move_line.debit, 8)
@@ -67,6 +69,8 @@ class TestPaymentTax(TestTaxCommon):
                 self.assertEquals(move_line_complete.debit, 0.0)
                 self.assertEquals(move_line_complete.credit, 8)
                 self.assertEquals(move_line_complete.amount_residual, 0.0)
+                self.assertTrue(move_line_complete.reconcile_id,
+                                "Reconcile should be created.")
                 continue
             if move_line_complete.account_id.id == self.acc_tax_16_payment:
                 self.assertEquals(move_line_complete.debit, 8)
@@ -115,6 +119,8 @@ class TestPaymentTax(TestTaxCommon):
                 self.assertEquals(move_line_complete.debit, 0.0)
                 self.assertEquals(move_line_complete.credit, 5.33)
                 self.assertEquals(move_line_complete.amount_residual, -10.67)
+                self.assertTrue(move_line_complete.reconcile_partial_id,
+                                "Partial Reconcile should be created.")
                 continue
             if move_line_complete.account_id.id == self.acc_tax_16_payment:
                 self.assertEquals(move_line_complete.debit, 5.33)
@@ -126,6 +132,8 @@ class TestPaymentTax(TestTaxCommon):
                 self.assertEquals(move_line_complete.debit, 10.67)
                 self.assertEquals(move_line_complete.credit, 0.0)
                 self.assertEquals(move_line_complete.amount_residual, 0.0)
+                self.assertTrue(move_line_complete.reconcile_id,
+                                "Reconcile should be created.")
                 continue
             if move_line_complete.account_id.id == self.acc_ret1067_payment:
                 self.assertEquals(move_line_complete.debit, 0.0)
@@ -177,6 +185,8 @@ class TestPaymentTax(TestTaxCommon):
                 self.assertEquals(move_line.credit, 6.45)
                 self.assertEquals(round(move_line.amount_residual, 2), -6.02)
                 self.assertEquals(move_line.amount_currency, -8.28)
+                self.assertTrue(move_line.reconcile_partial_id,
+                                "Partial Reconcile should be created.")
                 continue
             if move_line.account_id.id == self.acc_tax_16_payment:
                 self.assertEquals(move_line.debit, 6.45)
@@ -197,6 +207,8 @@ class TestPaymentTax(TestTaxCommon):
                 self.assertEquals(move_line_complete.debit, 0.0)
                 self.assertEquals(move_line_complete.credit, 0.97)
                 self.assertEquals(move_line_complete.amount_residual, 0.0)
+                self.assertTrue(move_line_complete.reconcile_id,
+                                "Reconcile should be created.")
                 checked_line += 1
                 continue
             if move_line_complete.account_id.id == self.acc_tax16 and\
@@ -205,6 +217,8 @@ class TestPaymentTax(TestTaxCommon):
                 self.assertEquals(move_line_complete.credit, 5.05)
                 self.assertEquals(move_line_complete.amount_residual, 0.0)
                 self.assertEquals(move_line_complete.amount_currency, -7.72)
+                self.assertTrue(move_line_complete.reconcile_id,
+                                "Reconcile should be created.")
                 checked_line += 1
                 continue
             if move_line_complete.account_id.id == self.acc_tax_16_payment:
@@ -267,6 +281,8 @@ class TestPaymentTax(TestTaxCommon):
                 self.assertEquals(move_line.credit, 12.36)
                 self.assertEquals(round(move_line.amount_residual, 2), 1.89)
                 self.assertEquals(round(move_line.amount_currency, 2), -15.86)
+                self.assertTrue(move_line.reconcile_partial_id,
+                                "Partial Reconcile should be created.")
                 continue
             if move_line.account_id.id == self.acc_tax_16_payment:
                 self.assertEquals(move_line.debit, 12.36)
@@ -287,6 +303,8 @@ class TestPaymentTax(TestTaxCommon):
                 self.assertEquals(move_line_complete.debit, 1.98)
                 self.assertEquals(move_line_complete.credit, 0.0)
                 self.assertEquals(move_line_complete.amount_residual, 0.0)
+                self.assertTrue(move_line_complete.reconcile_id,
+                                "Reconcile should be created.")
                 checked_line += 1
                 continue
             if move_line_complete.account_id.id == self.acc_tax16 and\
@@ -295,6 +313,8 @@ class TestPaymentTax(TestTaxCommon):
                 self.assertEquals(move_line_complete.credit, 0.09)
                 self.assertEquals(move_line_complete.amount_residual, 0.0)
                 self.assertEquals(move_line_complete.amount_currency, -0.14)
+                self.assertTrue(move_line_complete.reconcile_id,
+                                "Reconcile should be created.")
                 checked_line += 1
                 continue
             if move_line_complete.account_id.id == self.acc_tax_16_payment:
