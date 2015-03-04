@@ -346,7 +346,7 @@ class account_bank_statement_line(osv.osv):
         amount_tax_payment = abs(
             move_line_payment_tax.debit - move_line_payment_tax.credit)
 
-        amount_residual = abs(amount_tax_counterpart)-abs(amount_tax_payment)
+        amount_residual = amount_tax_counterpart-abs(amount_tax_payment)
 
         factor = context.get('factor_type', [1, 1])
         prec = self.pool.get('decimal.precision').precision_get(
