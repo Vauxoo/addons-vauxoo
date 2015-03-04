@@ -54,6 +54,8 @@
                             string="How many hours do I 'Think' it can take?"/>
                         <field name="effective_hours"
                             string="How many hour has been used on this Story?"/>
+                        <field name="invoiceable_hours"
+                            string="How many hours will be charged?"/>
                         <field name="sk_id" context="{'current_model3': 'sprint.kanban'}" />
                         <field name="priority_level" widget="selection"
                             string="How Important is This for you?"/>

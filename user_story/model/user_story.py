@@ -197,6 +197,26 @@ class user_story(osv.Model):
             res[us_brw.id] = hours.get(us_brw.id, 0.0)
         return res
 
+    def _expended_hours_get(self, cr, uid, ids, field_names, args, context=None):
+        res = {}
+        cr.execute('''
+            SELECT us.id, array_agg(ptw.hr_analytic_timesheet_id)
+            FROM project_task_work ptw
+            INNER JOIN project_task pt ON pt.id = ptw.task_id
+            INNER JOIN user_story us ON us.id = pt.userstory_id
+            WHERE us.id IN %s
+            GROUP BY us.id
+        ''', (tuple(ids),))
+        hours = dict(cr.fetchall())
+        time_obj = self.pool.get('hr.analytic.timesheet')
+        for us_brw in self.browse(cr, uid, ids, context=context):
+            hours_t = 0.0
+            for time_id in hours.get(us_brw.id, ()):
+                time_brw = time_obj.browse(cr, uid, time_id)
+                hours_t += time_brw.invoiceables_hours
+            res[us_brw.id] = hours_t
+        return res
+
     def _get_user_story_from_ptw(self, cr, uid, ids, context=None):
         result = {}
         task_ids = {}
@@ -208,6 +228,21 @@ class user_story(osv.Model):
             if task.userstory_id:
                 result[task.userstory_id.id] = True
         return result.keys()
+
+    def _get_user_story_from_ts(self, cr, uid, ids, context=None):
+        result = {}
+        task_ids = {}
+        time_obj = self.pool.get('hr.analytic.timesheet')
+        task_obj = self.pool.get('project.task')
+        work_obj = self.pool.get('project.task.work')
+        us_obj = self.pool.get('user.story')
+        work_ids = work_obj.search(cr, uid,
+                                   [('hr_analytic_timesheet_id', 'in', ids)])
+        task_ids = task_obj.search(cr, uid,
+                                   [('work_ids', 'in', work_ids)])
+        us_ids = us_obj.search(cr, uid,
+                               [('task_ids', 'in', task_ids)])
+        return us_ids
 
     def _get_user_story_from_pt(self, cr, uid, ids, context=None):
         result = {}
@@ -228,16 +263,23 @@ class user_story(osv.Model):
         return res
 
     _columns = {
-        'name': fields.char('Title', size=255, required=True, readonly=False, translate=True, track_visibility='onchange'),
+        'name': fields.char('Title', size=255, required=True, readonly=False,
+                            translate=True, track_visibility='onchange'),
         'owner_id': fields.many2one('res.users', 'Owner',
-                                    help="User Story's Owner, generally the person which asked to develop this feature",
+                                    help="User Story's Owner, generally the "
+                                    "person which asked to develop "
+                                    "this feature",
                                     track_visibility='always'),
-        'approval_user_id': fields.many2one('res.users', 'Approver', help="User which approve this USer Story"),
+        'approval_user_id': fields.many2one('res.users',
+                                            'Approver',
+                                            help="User which approve "
+                                            "this USer Story"),
         'code': fields.char('Code', size=64, readonly=False),
         'planned_hours': fields.float('Planned Hours'),
         'project_id': fields.many2one('project.project', 'Project',
                                       required=True),
-        'description': fields.text('Description', translate=True, track_visibility='onchange'),
+        'description': fields.text('Description', translate=True,
+                                   track_visibility='onchange'),
         'accep_crit_ids': fields.one2many('acceptability.criteria',
                                           'accep_crit_id',
                                           'Acceptability Criteria',
@@ -257,19 +299,49 @@ class user_story(osv.Model):
                   " in some cases also the supervisor for the correct"
                   " execution of the user story."), track_visibility='always'),
         'user_execute_id': fields.many2one('res.users', 'Execution Responsible',
-                                           help="Person responsible for user story takes place, either by delegating work to other human resource or running it by itself. For delegate work should monitor the proper implementation of associated activities.",
+                                           help="Person responsible for user "
+                                           "story takes place, either by "
+                                           "delegating work to other human "
+                                           "resource or running it by itself."
+                                           " For delegate work should monitor "
+                                           "the proper implementation of "
+                                           "associated activities.",
                                            track_visibility='always'),
         'sk_id': fields.many2one('sprint.kanban', 'Sprint Kanban'),
-        'state': fields.selection(_US_STATE, 'State', readonly=True, track_visibility='onchange'),
+        'state': fields.selection(_US_STATE, 'State', readonly=True,
+                                  track_visibility='onchange'),
         'task_ids': fields.one2many(
             'project.task', 'userstory_id',
             string="Tasks",
             help=("Draft procurement of the product and location of that"
                   " orderpoint")),
-        'categ_ids': fields.many2many('project.category', 'project_category_user_story_rel', 'userstory_id', 'categ_id', string="Tags"),
-        'implementation': fields.text('Implementation Conclusions', translate=True),
-        'help': fields.boolean('Show Help', help='Allows you to show the help in the form'),
-        'approved': fields.boolean('Approved', help='Has been this user story approved by customer', track_visibility='onchange'),
+        'categ_ids': fields.many2many('project.category',
+                                      'project_category_user_story_rel',
+                                      'userstory_id', 'categ_id',
+                                      string="Tags"),
+        'implementation': fields.text('Implementation Conclusions',
+                                      translate=True),
+        'help': fields.boolean('Show Help',
+                               help='Allows you to show the help in the form'),
+        'approved': fields.boolean('Approved',
+                                   help='Has been this user story '
+                                   'approved by customer',
+                                   track_visibility='onchange'),
+        'invoiceable_hours': fields.function(_expended_hours_get,
+                                             type='float',
+                                             string='Hours Spent',
+                                             help="Computed using the sum "
+                                             "of the task work done.",
+                                             store = {
+                                                 _name: (lambda s, c, u, ids,
+                                                       cx={}: ids,
+                                                       ['task_ids'], 10),
+                                               'project.task': (_get_user_story_from_pt, ['work_ids', 'userstory_id'], 10),
+                                               'hr.analytic.timesheet': (_get_user_story_from_ts,
+                                                                         ['unit_amount',
+                                                                          'to_invoice'], 10),
+                                               'project.task.work': (_get_user_story_from_ptw, ['hours'], 10),
+                                           }),
         'effective_hours': fields.function(_hours_get, string='Hours Spent', help="Computed using the sum of the task work done.",
                                            store = {
                                                _name: (lambda s, c, u, ids, cx={}: ids, ['task_ids'], 10),
