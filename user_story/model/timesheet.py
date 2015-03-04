@@ -41,6 +41,12 @@ class hr_timesheet(osv.Model):
     _columns = {
         'invoiceables_hours': fields.function(_get_invoiceables_hours,
                                               type='float',
+                                              store = {
+                                                  _inherit: (lambda s, c, u,
+                                                             ids, cx={}: ids,
+                                                             ['unit_amount',
+                                                              'to_invoice'],
+                                                             10)},
                                               string='Invoiceable Hours',
                                               help='Total hours to charge')
     }
