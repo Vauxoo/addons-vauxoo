@@ -20,29 +20,74 @@
 ##############################################################################
 
 from openerp.osv import fields, osv
-
 from openerp.tools.sql import drop_view_if_exists
 
 
+class hr_timesheet(osv.Model):
+    _inherit = "hr.analytic.timesheet"
+
+    def _get_invoiceables_hours(self, cr, uid, ids, args, fields, context=None):
+        context = context or {}
+        res = {}
+        for time_brw in self.browse(cr, uid, ids, context=context):
+            hours = time_brw.unit_amount
+            if time_brw.to_invoice:
+                hours = time_brw.unit_amount - \
+                    (time_brw.unit_amount * \
+                    (time_brw.to_invoice.factor / 100))
+            res.update({time_brw.id: hours})
+        return res
+
+    _columns = {
+        'invoiceables_hours': fields.function(_get_invoiceables_hours,
+                                              type='float',
+                                              string='Invoiceable Hours',
+                                              help='Total hours to charge')
+    }
 class custom_timesheet(osv.Model):
     _name = "custom.timesheet"
     _order = "date desc"
     _auto = False
+
+    def _get_invoiceables_hours(self, cr, uid, ids, args, fields, context=None):
+        context = context or {}
+        res = {}
+        for time_brw in self.browse(cr, uid, ids, context=context):
+            hours = time_brw.unit_amount
+            if time_brw.to_invoice:
+                hours = time_brw.unit_amount - \
+                    (time_brw.unit_amount * \
+                    (time_brw.to_invoice.factor / 100))
+            res.update({time_brw.id: hours})
+        return res
+
     _columns = {
         'date': fields.date('Date', readonly=True),
-        'user_id': fields.many2one('res.users', 'User',
-                readonly=True, select=True),
+        'user_id': fields.many2one('res.users', 'User', readonly=True,
+                                   select=True),
         'userstory': fields.integer('User Story', readonly=True),
         'analytic_id': fields.many2one('account.analytic.account', 'Project',
-                readonly=True, select=True),
+                                       readonly=True, select=True),
         'task_title': fields.char('Task Tittle', 128,
-                                 help='Name of task related'),
+                                  help='Name of task related'),
         'userstory_id': fields.many2one('user.story', 'User Story',
-                              help='Code of User Story related to this '
-                                   'analytic'),
+                                        help='Code of User Story related '
+                                        'to this analytic'),
         'name': fields.char('Description', 264, help='Description of the work'),
 
         'unit_amount': fields.float('Duration', readonly=True),
+        'timesheet_id': fields.many2one('hr.analytic.timesheet',
+                                        'TimeSheet', readonly=True,
+                                        select=True),
+        'to_invoice': fields.related('timesheet_id',
+                                     'to_invoice',
+                                     relation='hr_timesheet_invoice.factor',
+                                     type='many2one',
+                                     string='Invoiceable'),
+        'invoiceables_hours': fields.function(_get_invoiceables_hours,
+                                              type='float',
+                                              string='Invoiceable Hours',
+                                              help='Total hours to charge')
     }
 
     def init(self, cr):
@@ -58,8 +103,10 @@ class custom_timesheet(osv.Model):
                       analytic.id AS analytic_id,
                       task.name AS task_title,
                       work.name AS name,
-                      work.hours AS unit_amount
+                      work.hours AS unit_amount,
+                      tsheet.id AS timesheet_id
                 FROM project_task_work AS work
+                LEFT JOIN hr_analytic_timesheet AS tsheet ON tsheet.id = work.hr_analytic_timesheet_id
                 INNER JOIN project_task AS task ON task.id = work.task_id
                 INNER JOIN user_story AS us ON us.id = task.userstory_id
                 INNER JOIN project_project AS project ON project.id = task.project_id

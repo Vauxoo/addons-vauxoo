@@ -6,7 +6,7 @@
             <field name="name">custom.timesheet.tree</field>
             <field name="model">custom.timesheet</field>
             <field name="arch" type="xml">
-                <tree editable="top" create='false' edit='false' string="Timesheet Activities">                  
+                <tree editable="top" create='false' edit='false' string="Timesheet Activities">
                     <field name="date" on_change="on_change_date(date)"/>
                     <field name="user_id" on_change="on_change_user_id(user_id)" required="1" options='{"no_open": True}'/>
                     <field name="userstory_id" invisible='1'/>
@@ -15,6 +15,9 @@
                     <field name="name"/>
                     <field name="unit_amount" string="Duration" on_change="on_change_unit_amount(product_id, unit_amount, False, product_uom_id,journal_id)" sum="Total time" widget="float_time"/>
                     <field name="analytic_id" invisible='1'/>
+                    <field name="timesheet_id" invisible='1'/>
+                    <field name="to_invoice"/>
+                    <field name="invoiceables_hours" widget="float_time"/>
                 </tree>
             </field>
         </record>
@@ -43,8 +46,17 @@
             </field>
         </record>
 
+        <record id="hr_timesheet_line_tree" model="ir.ui.view">
+            <field name="name">hr.analytic.timesheet.tree</field>
+            <field name="model">hr.analytic.timesheet</field>
+            <field name="inherit_id" ref="hr_timesheet_invoice.hr_timesheet_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='to_invoice']" position="after">
+                    <field name="invoiceables_hours" widget="float_time"/>
+                </xpath>
+            </field>
+        </record>
 
- 
 
         <record id="act_hr_timesheet_line_evry1_all_form_user_story" model="ir.actions.act_window">
             <field name="name">Timesheet Activities Report</field>
