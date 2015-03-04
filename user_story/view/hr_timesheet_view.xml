@@ -17,7 +17,7 @@
                     <field name="analytic_id" invisible='1'/>
                     <field name="timesheet_id" invisible='1'/>
                     <field name="to_invoice"/>
-                    <field name="invoiceables_hours" widget="float_time"/>
+                    <field name="invoiceables_hours" sum="Total invoiceable time" widget="float_time"/>
                 </tree>
             </field>
         </record>
@@ -52,7 +52,7 @@
             <field name="inherit_id" ref="hr_timesheet_invoice.hr_timesheet_line_tree"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='to_invoice']" position="after">
-                    <field name="invoiceables_hours" widget="float_time"/>
+                    <field name="invoiceables_hours" sum="Total invoiceable time" widget="float_time"/>
                 </xpath>
             </field>
         </record>

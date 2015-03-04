@@ -329,7 +329,7 @@ class user_story(osv.Model):
                                    track_visibility='onchange'),
         'invoiceable_hours': fields.function(_expended_hours_get,
                                              type='float',
-                                             string='Hours Spent',
+                                             string='Invoiceable Hours',
                                              help="Computed using the sum "
                                              "of the task work done.",
                                              store = {

@@ -201,6 +201,7 @@
           <field name="priority_level" />
           <field name="planned_hours" sum="Total hours"/>
           <field name="effective_hours" sum="Total hours"/>
+          <field name="invoiceable_hours" sum="Total invoiceable hours"/>
           <field name="project_id" />
           <field name="user_id" />
           <field name="sk_id" select="True" />
