@@ -213,7 +213,7 @@ class user_story(osv.Model):
             hours_t = 0.0
             for time_id in hours.get(us_brw.id, ()):
                 time_brw = time_obj.browse(cr, uid, time_id)
-                hours_t += time_brw.invoiceables_hours
+                hours_t += time_brw.invoiceables_hours or 0.0
             res[us_brw.id] = hours_t
         return res
 
