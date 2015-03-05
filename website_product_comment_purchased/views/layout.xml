@@ -1,0 +1,10 @@
+<openerp>
+    <data>
+        <template id="assets_backend" name="web_comment_purchased_assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/website_product_comment_purchased/static/src/js/comment_purchased.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>
+
