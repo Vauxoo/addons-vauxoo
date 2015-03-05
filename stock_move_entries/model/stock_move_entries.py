@@ -113,6 +113,20 @@ class stock_move(osv.Model):
         return res
 
 
+class stock_quant(osv.Model):
+    _inherit = "stock.quant"
+
+    def _prepare_account_move_line(self, cr, uid, move, qty, cost,
+                                   credit_account_id, debit_account_id,
+                                   context=None):
+        res = super(stock_quant, self)._prepare_account_move_line(
+            cr, uid, move, qty, cost, credit_account_id, debit_account_id,
+            context)
+        for line in res:
+            line[2]['sm_id'] = move.id
+        return res
+
+
 class stock_picking(osv.Model):
     _inherit = "stock.picking"
 
