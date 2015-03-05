@@ -38,18 +38,70 @@ class hr_timesheet(osv.Model):
             res.update({time_brw.id: hours})
         return res
 
+    def _get_user_story(self, cr, uid, ids, args, fields, context=None):
+        context = context or {}
+        res = {}
+        task_obj = self.pool.get('project.task')
+        for time_brw in self.browse(cr, uid, ids, context=context):
+            us_id = False
+            task_ids = task_obj.\
+                search(cr, uid,
+                       [('work_ids.hr_analytic_timesheet_id', '=',
+                         time_brw.id)])
+            if task_ids:
+                task_read = task_obj.read(cr, uid, task_ids[0],
+                                          ['userstory_id'],
+                                          load='_classic_write')
+                us_id = task_read.get('userstory_id')
+            res.update({time_brw.id: us_id})
+        return res
+
+    def _get_analytic_from_task(self, cr, uid, ids, context=None):
+        context = context or {}
+        cr.execute('''
+                   SELECT array_agg(work.hr_analytic_timesheet_id) as a_id
+                   FROM project_task AS task
+                   INNER JOIN project_task_work AS work ON work.task_id=task.id
+                   WHERE task.id {op} {tids}
+                   '''.format(op=(len(ids) == 1) and '=' or 'in',
+                              tids=(len(ids) == 1) and ids[0] or tuple(ids)))
+        res = cr.dictfetchall()
+        if res:
+            res = res[0].get('a_id', [])
+        return res
+
     _columns = {
         'invoiceables_hours': fields.function(_get_invoiceables_hours,
                                               type='float',
-                                              store = {
+                                              store={
                                                   _inherit: (lambda s, c, u,
                                                              ids, cx={}: ids,
                                                              ['unit_amount',
                                                               'to_invoice'],
                                                              10)},
                                               string='Invoiceable Hours',
-                                              help='Total hours to charge')
+                                              help='Total hours to charge'),
+
+        'userstory_id': fields.function(_get_user_story,
+                                        type='many2one',
+                                        relation='user.story',
+                                        string='User Story',
+                                        store={
+                                            'project.task': \
+                                            (_get_analytic_from_task,
+                                             ['userstory_id'],
+                                             10)
+                                        },
+                                        help="User Story set in the "
+                                        "task of this TimeSheet"),
+        'us_id': fields.related('userstory_id',
+                                'id',
+                                type='integer',
+                                store=True,
+                                string='User Story Code')
     }
+
+
 class custom_timesheet(osv.Model):
     _name = "custom.timesheet"
     _order = "date desc"
