@@ -42,8 +42,25 @@ class AccountInvoiceLine(models.Model):
         'the payment to a broker, indicate the original invoice that must be '
         'generated the broker partner', domain=[('type', '=', 'in_invoice')])
     partner_broker_ok = fields.Boolean(
-        string='Partner Broker', related='invoice_id.partner_id.is_broker_ok',
-        store=False, help='Indicate if the partner to invoice is broker')
+        string='Partner Broker',
+        help='Indicate if the partner to invoice is broker')
+
+    @api.multi
+    def product_id_change(
+            self, product, uom_id, qty=0, name='', type='out_invoice',
+            partner_id=False, fposition_id=False, price_unit=False,
+            currency_id=False, company_id=None):
+        partner_obj = self.env['res.partner']
+        res = super(AccountInvoiceLine, self).product_id_change(
+            product, uom_id, qty=qty, name=name, type='out_invoice',
+            partner_id=partner_id, fposition_id=fposition_id,
+            price_unit=price_unit, currency_id=currency_id,
+            company_id=company_id)
+        if partner_id:
+            partner_br = partner_obj.browse(partner_id)
+            res.get('value', {}).update(
+                {'partner_broker_ok': partner_br.is_broker_ok})
+        return res
 
 
 class account_invoice_tax(models.Model):
@@ -61,7 +78,8 @@ class account_invoice_tax(models.Model):
         company_currency = invoice.company_id.currency_id
         res = super(account_invoice_tax, self).compute(invoice)
         for line in invoice.invoice_line:
-            if line.invoice_broker_id and line.quantity == 0:
+            if line.invoice_broker_id and line.quantity == 0 and\
+                    line.partner_broker_ok:
                 taxes = line.invoice_line_tax_id.compute_all(
                     (line.price_unit * (1 - (line.discount or 0.0) / 100.0)),
                     1.0, line.product_id, invoice.partner_id)['taxes']
