@@ -10,8 +10,8 @@
                 report_type="qweb-pdf"
                 attachment_use="0"
                 attachment=""
-                menu="True"/>
-                
+                menu="False"/>
+
         <record id="aging_due_report.report_aging_due_report_qweb" model="ir.actions.report.xml">
             <field name="paperformat_id" ref="aging_due_report.aging_due_report_paperformat_landscape_euro"/>
         </record>
@@ -25,8 +25,8 @@
                 report_type="qweb-pdf"
                 attachment_use="0"
                 attachment=""
-                menu="True"/>
-                
+                menu="False"/>
+
         <record id="aging_due_report.report_formal_due_report_qweb" model="ir.actions.report.xml">
             <field name="paperformat_id" ref="aging_due_report.aging_due_report_paperformat_euro"/>
         </record>
@@ -40,8 +40,8 @@
                 report_type="qweb-pdf"
                 attachment_use="0"
                 attachment=""
-                menu="True"/>
-                
+                menu="False"/>
+
         <record id="aging_due_report.report_detail_due_report_qweb" model="ir.actions.report.xml">
             <field name="paperformat_id" ref="aging_due_report.aging_due_report_paperformat_euro"/>
         </record>
@@ -58,7 +58,7 @@ Supplier Aging
                 report_type="qweb-pdf"
                 attachment_use="0"
                 attachment=""
-                menu="True"/>
+                menu="False"/>
 
         <record id="aging_due_report.report_supplier_aging_due_report_qweb" model="ir.actions.report.xml">
             <field name="paperformat_id" ref="aging_due_report.aging_due_report_paperformat_landscape_euro"/>
@@ -76,7 +76,7 @@ Supplier Detail
                 report_type="qweb-pdf"
                 attachment_use="0"
                 attachment=""
-                menu="True"/>
+                menu="False"/>
 
         <record id="aging_due_report.report_supplier_detail_due_report_qweb" model="ir.actions.report.xml">
             <field name="paperformat_id" ref="aging_due_report.aging_due_report_paperformat_euro"/>
@@ -94,7 +94,7 @@ Supplier Formal
                 report_type="qweb-pdf"
                 attachment_use="0"
                 attachment=""
-                menu="True"/>
+                menu="False"/>
 
         <record id="aging_due_report.report_supplier_formal_due_report_qweb" model="ir.actions.report.xml">
             <field name="paperformat_id" ref="aging_due_report.aging_due_report_paperformat_euro"/>
