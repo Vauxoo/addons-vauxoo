@@ -31,6 +31,7 @@ class mail_message(osv.Model):
     def _comment_bought(self, cr, uid, ids, name, arg, context=None):
         res = {}
         sale_report_obj = self.pool.get('sale.report')
+        product_obj = self.pool.get('product.product')
         cr.execute("""
             {0}
             FROM ( {1} )
@@ -41,7 +42,11 @@ class mail_message(osv.Model):
         for rep in cr.fetchall():
             product_id = rep[1]
             partner_id = rep[8]
-            if mail_cache.res_id == product_id and \
+            if product_id:
+                product_tmpl_id = \
+                    product_obj.browse(cr, uid,
+                                       [product_id])[0].product_tmpl_id.id
+            if mail_cache.res_id == product_tmpl_id and \
                mail_cache.author_id.id == partner_id:
                 res[ids[0]] = 1
         return res
