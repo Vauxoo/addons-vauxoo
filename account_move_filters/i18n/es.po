@@ -63,15 +63,15 @@ msgstr "A cobrar"
 #. module: account_move_filters
 #: view:account.move.line:account_move_filters.view_account_move_line_filter_inh_pay_rec
 msgid "Unreconciled AP/AR Journal Items"
-msgstr "Sin conciliar AP/AR apuntes contables"
+msgstr "Apuntes contables Sin conciliar CxC/CxP "
 
 #. module: account_move_filters
 #: view:account.move.line:account_move_filters.view_account_move_line_filter_inh_pay_rec
 msgid "Unreconciled No AP/AR"
-msgstr "Sin conciliar No AP/AR"
+msgstr "Apuntes Sin conciliar No CxC/CxP"
 
 #. module: account_move_filters
 #: view:account.move.line:account_move_filters.view_account_move_line_filter_inh_pay_rec
 msgid "Unreconciled No AP/AR Journal Items"
-msgstr "Sin conciliar No AP/AR apuntes contables"
+msgstr "Apuntes Sin conciliar No CxC/CxP"
 
