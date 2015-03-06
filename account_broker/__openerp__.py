@@ -45,6 +45,7 @@
         "demo/partner_broker.xml",
     ],
     "data": [
+        "data/account_tax_category_data.xml",
         "view/res_partner_view.xml",
         "view/account_invoice_view.xml"],
     "test": [],
