@@ -85,10 +85,12 @@ class TestInvoiceVoucherBroker(TestTaxCommon):
         self.voucher_model.signal_workflow(
             cr, uid, [voucher_id], 'proforma_voucher')
 
+        cr.commit()
         # I check that the payment state is posted
         self.assertEquals(self.voucher_model.read(
             cr, uid, voucher_id,
             ['state']).get('state', ''), 'posted')
+        cr.commit()
 
         # I check the status to invoice == 'paid'
         self.assertEquals(self.inv_model.read(
