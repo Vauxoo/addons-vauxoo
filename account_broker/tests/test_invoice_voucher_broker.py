@@ -44,9 +44,11 @@ class TestInvoiceVoucherBroker(TestTaxCommon):
                 'invoice_line_tax_id': [(6, 0, [self.tax_16_id])]
             })]
         ), context=context)
+        cr.commit()
 
         # I try validate the invoice
         self.inv_model.signal_workflow(cr, uid, [inv_id], 'invoice_open')
+        cr.commit()
 
         # I check the total to invoice created
         self.assertEquals(self.inv_model.read(
