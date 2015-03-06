@@ -14,7 +14,7 @@ class TestInvoiceVoucherBroker(TestTaxCommon):
 
     def test_programmatic_tax(self):
         """
-        This method test the feature wuth account.voucher
+        This method test the feature with account.voucher
         """
         cr, uid = self.cr, self.uid
         # I create the invoice to broker
@@ -103,7 +103,7 @@ class TestInvoiceVoucherBroker(TestTaxCommon):
             self.assertEquals(0, 1, "The invoice have not line to report in "
                               "DIOT to supplier broker")
 
-        # I check the hournal entro from payment
+        # I check the journal entry from payment
         move_pay = self.voucher_model.browse(cr, uid, voucher_id).move_id
         total_lines = 0
         for line in move_pay.line_id:
@@ -115,5 +115,3 @@ class TestInvoiceVoucherBroker(TestTaxCommon):
         self.assertEquals(
             4, total_lines, "The move payment must be have 4 lines to the same"
             " supplier of invoice")
-
-        cr.commit()

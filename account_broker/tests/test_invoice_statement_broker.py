@@ -1,8 +1,7 @@
 from openerp.addons.account_broker.tests.common import TestTaxCommon
-import time
 
 
-class TestInvoiceVoucherBroker(TestTaxCommon):
+class TestInvoiceStatementBroker(TestTaxCommon):
     """
     This test is to check that when I create a invoice to 'Reposicion de
     gastos' this invoice not create 'Iva efectivamente pagado' to this invoice,
@@ -10,17 +9,17 @@ class TestInvoiceVoucherBroker(TestTaxCommon):
     """
 
     def setUp(self):
-        super(TestInvoiceVoucherBroker, self).setUp()
+        super(TestInvoiceStatementBroker, self).setUp()
 
     def test_programmatic_tax(self):
         """
-        This method test the feature wuth account.voucher
+        This method test the feature with bank.statement
         """
         cr, uid = self.cr, self.uid
         # I create the invoice to broker
         context = {'default_type': 'in_invoice'}
         inv_id = self.inv_model.create(cr, uid, dict(
-            account_id=self.account_receivable_id,
+            account_id=self.account_inv,
             partner_id=self.partner_id,
             check_total=7694.20,
             company_id=self.company_id,
@@ -57,41 +56,16 @@ class TestInvoiceVoucherBroker(TestTaxCommon):
         self.assertEquals(self.inv_model.read(
             cr, uid, inv_id, ['state']).get('state', ''), 'open')
 
-        # I try pay the invoice, I create the payment
-        move_line_id = False
-        move_tax = False
-        for move in self.inv_model.browse(cr, uid, inv_id).move_id.line_id:
-            if move.account_id.id == self.account_receivable_id:
-                move_line_id = move.id
-            elif move.debit == 1039.20:
-                move_tax = move.id
-        voucher_id = self.voucher_model.create(cr, uid, dict(
-            name='Payment invoice broker',
-            account_id=self.account_vou,
-            company_id=self.company_id,
-            amount=0.0,
-            journal_id=self.journal_vou_id,
-            partner_id=self.partner_id,
-            date=time.strftime("%Y-%m-%d"),
-            type='payment',
-        ))
+        invoice_record = self.inv_model.browse(cr, uid, [inv_id])
 
-        # I call onchange to amount to load lines to voucher
-        res_onch = self.voucher_model.onchange_amount(
-            cr, uid, [voucher_id], 7694.20, 1.0, self.partner_id,
-            self.journal_vou_id, self.currency_id,
-            'payment', time.strftime("%Y-%m-%d"),
-            self.currency_id, self.company_id)
-        print 'res_onch', res_onch
-
-        # I try validate the payment
-        self.voucher_model.signal_workflow(
-            cr, uid, [voucher_id], 'proforma_voucher')
-
-        # I check that the payment state is posted
-        self.assertEquals(self.voucher_model.read(
-            cr, uid, voucher_id,
-            ['state']).get('state', ''), 'posted')
+        # We search aml with account payable
+        for line_invoice in invoice_record.move_id.line_id:
+            if line_invoice.account_id.id == self.account_inv:
+                line_id = line_invoice
+                break
+        move_line_ids = self.create_statement(
+            cr, uid, line_id, self.partner_id, -7694.20,
+            self.journal_vou_id)
 
         # I check the status to invoice == 'paid'
         self.assertEquals(self.inv_model.read(
@@ -108,15 +82,5 @@ class TestInvoiceVoucherBroker(TestTaxCommon):
             self.assertEquals(0, 1, "The invoice have not line to report in "
                               "DIOT to supplier broker")
 
-        # I check the hournal entro from payment
-        move_pay = self.voucher_model.browse(cr, uid, voucher_id).move_id
-        total_lines = 0
-        for line in move_pay.line_id:
-            if line.partner_id.id == self.partner_id:
-                total_lines += 1
-            else:
-                self.assertEquals(1, 0, "Only must be lines wth the same "
-                                  "supplier that the invoice")
-        self.assertEquals(
-            4, total_lines, "The move payment must be have 4 lines to the same"
-            " supplier of invoice")
+        # I check the journal entry from payment
+        self.assertEquals(len(move_line_ids), 4)

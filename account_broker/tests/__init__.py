@@ -25,3 +25,4 @@
 ##############################################################################
 
 from . import test_invoice_voucher_broker
+from . import test_invoice_statement_broker
