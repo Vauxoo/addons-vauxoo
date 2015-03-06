@@ -7,7 +7,11 @@
             <field name="inherit_id" ref="product.product_category_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//group" position="after">
-                    <field name="attribute_ids"/>
+                    <field name="attribute_ids">
+                        <tree>
+                            <field name="name" string="Attributes"/>
+                        </tree>
+                    </field>
                 </xpath>
             </field>
         </record>
