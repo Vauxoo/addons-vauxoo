@@ -4,7 +4,9 @@ import time
 
 class TestInvoiceVoucherBroker(TestTaxCommon):
     """
-    TODO
+    This test is to check that when I create a invoice to 'Reposicion de
+    gastos' this invoice not create 'Iva efectivamente pagado' to this invoice,
+    only to invoice that send me the broker from mi supplier.
     """
 
     def setUp(self):
@@ -12,13 +14,13 @@ class TestInvoiceVoucherBroker(TestTaxCommon):
 
     def test_programmatic_tax(self):
         """
-        todo
+        This method test the feature wuth account.voucher
         """
         cr, uid = self.cr, self.uid
         # I create the invoice to broker
         context = {'default_type': 'in_invoice'}
         inv_id = self.inv_model.create(cr, uid, dict(
-            account_id=self.account_receivable_id,
+            account_id=self.account_inv,
             partner_id=self.partner_id,
             check_total=7694.20,
             company_id=self.company_id,
@@ -56,13 +58,6 @@ class TestInvoiceVoucherBroker(TestTaxCommon):
             cr, uid, inv_id, ['state']).get('state', ''), 'open')
 
         # I try pay the invoice, I create the payment
-        move_line_id = False
-        move_tax = False
-        for move in self.inv_model.browse(cr, uid, inv_id).move_id.line_id:
-            if move.account_id.id == self.account_receivable_id:
-                move_line_id = move.id
-            elif move.debit == 1039.20:
-                move_tax = move.id
         voucher_id = self.voucher_model.create(cr, uid, dict(
             name='Payment invoice broker',
             account_id=self.account_vou,
@@ -72,21 +67,17 @@ class TestInvoiceVoucherBroker(TestTaxCommon):
             partner_id=self.partner_id,
             date=time.strftime("%Y-%m-%d"),
             type='payment',
-            line_dr_ids=[(0, 0, {
-                'amount': 7694.20,
-                'type': 'dr',
-                'partner_id': self.partner_id,
-                'account_id': self.account_receivable_id,
-                'move_line_id': move_line_id,
-                'tax_line_ids': [(0, 0, {
-                    'tax_id': self.tax_16_id,
-                    'account_id': self.account_voucher_tax_16,
-                    'amount_tax': 1039.20,
-                    'move_line_id': move_tax,
-                    'original_tax': 1039.20
-                })]
-            })]
         ))
+
+        # I call onchange to amount to load lines to voucher
+        res_onch = self.voucher_model.onchange_amount(
+            cr, uid, [voucher_id], 7694.20, 1.0, self.partner_id,
+            self.journal_vou_id, self.currency_id,
+            'payment', time.strftime("%Y-%m-%d"),
+            self.currency_id, self.company_id)
+        line_dr = res_onch.get('value', {}).get('line_dr_ids', [{}])[0]
+        line_dr.update({'voucher_id': voucher_id})
+        self.voucher_model_line.create(cr, uid, line_dr)
 
         # I try validate the payment
         self.voucher_model.signal_workflow(
@@ -124,3 +115,5 @@ class TestInvoiceVoucherBroker(TestTaxCommon):
         self.assertEquals(
             4, total_lines, "The move payment must be have 4 lines to the same"
             " supplier of invoice")
+
+        cr.commit()

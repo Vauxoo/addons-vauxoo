@@ -69,26 +69,20 @@ class TestInvoiceVoucherBroker(TestTaxCommon):
             name='Payment invoice broker',
             account_id=self.account_vou,
             company_id=self.company_id,
-            amount=7694.20,
+            amount=0.0,
             journal_id=self.journal_vou_id,
             partner_id=self.partner_id,
             date=time.strftime("%Y-%m-%d"),
             type='payment',
-            line_dr_ids=[(0, 0, {
-                'amount': 7694.20,
-                'type': 'dr',
-                'partner_id': self.partner_id,
-                'account_id': self.account_receivable_id,
-                'move_line_id': move_line_id,
-                'tax_line_ids': [(0, 0, {
-                    'tax_id': self.tax_16_id,
-                    'account_id': self.account_voucher_tax_16,
-                    'amount_tax': 1039.20,
-                    'move_line_id': move_tax,
-                    'original_tax': 1039.20
-                })]
-            })]
         ))
+
+        # I call onchange to amount to load lines to voucher
+        res_onch = self.voucher_model.onchange_amount(
+            cr, uid, [voucher_id], 7694.20, 1.0, self.partner_id,
+            self.journal_vou_id, self.currency_id,
+            'payment', time.strftime("%Y-%m-%d"),
+            self.currency_id, self.company_id)
+        print 'res_onch', res_onch
 
         # I try validate the payment
         self.voucher_model.signal_workflow(

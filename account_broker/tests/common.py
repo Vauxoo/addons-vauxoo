@@ -10,8 +10,11 @@ class TestTaxCommon(common.TransactionCase):
         imd_model = self.registry("ir.model.data")
         self.inv_model = self.registry('account.invoice')
         self.voucher_model = self.registry('account.voucher')
+        self.voucher_model_line = self.registry('account.voucher.line')
         _, self.account_vou = imd_model.get_object_reference(
             cr, uid, "account", "cash")
+        _, self.account_inv = imd_model.get_object_reference(
+            cr, uid, "account", "a_pay")
         _, self.partner_id = imd_model.get_object_reference(
             cr, uid, "account_broker", "res_partner_supplier_broker")
         _, self.company_id = imd_model.get_object_reference(
