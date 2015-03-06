@@ -24,4 +24,4 @@
 #
 ##############################################################################
 
-from . import test_invoice_broker
+from . import test_invoice_voucher_broker
