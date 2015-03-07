@@ -112,12 +112,14 @@ class account_aging_partner_wizard(osv.osv_memory):
 
         wzd_brw.document_ids.unlink()
 
-        for itr in rex[0]:
-            for key, val in itr.iteritems():
-                if key == 'inv_ids':
-                    import pdb; pdb.set_trace()
-                    for each in val:
-                        res.append(each)
+        # TODO: We have to resolve the issue of multipartners
+        for itx in rex:
+            for itr in itx:
+                import pdb; pdb.set_trace()
+                for key, val in itr.iteritems():
+                    if key == 'inv_ids':
+                        for each in val:
+                            res.append(each)
 
         res = [(0, 0, line) for line in res]
         wzd_brw.write({'document_ids': res})
