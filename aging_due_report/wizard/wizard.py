@@ -112,11 +112,12 @@ class account_aging_partner_wizard(osv.osv_memory):
 
         wzd_brw.document_ids.unlink()
 
-        for key, val in rex[0][0].iteritems():
-            if key == 'inv_ids':
-                import pdb; pdb.set_trace()
-                for each in val:
-                    res.append(each)
+        for itr in rex[0]:
+            for key, val in itr.iteritems():
+                if key == 'inv_ids':
+                    import pdb; pdb.set_trace()
+                    for each in val:
+                        res.append(each)
 
         res = [(0, 0, line) for line in res]
         wzd_brw.write({'document_ids': res})

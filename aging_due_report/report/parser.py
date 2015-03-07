@@ -225,7 +225,12 @@ class aging_parser(report_sxw.rml_parse):
                         continue
 
                     res[rp_brw.id][currency_id]['inv_ids'].append({
+                        # TODO: inv_brw shall be deprecated in favor of
+                        # invoice_id
                         'inv_brw': inv_brw,
+                        'invoice_id': inv_brw.id,
+                        # TODO: This needs fixing should be accounting partner
+                        'partner_id': inv_brw.partner_id.id,
                         'wh_vat': wh_vat,
                         'wh_islr': wh_islr,
                         'wh_muni': wh_muni,
