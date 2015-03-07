@@ -22,8 +22,6 @@ class TestTaxCommon(common.TransactionCase):
             cr, uid, "account_broker", "res_partner_supplier_broker")
         _, self.company_id = imd_model.get_object_reference(
             cr, uid, "base", "main_company")
-        _, self.currency_id = imd_model.get_object_reference(
-            cr, uid, "base", "MXN")
         _, self.journal_inv_id = imd_model.get_object_reference(
             cr, uid, "account", "expenses_journal")
         _, self.journal_vou_id = imd_model.get_object_reference(

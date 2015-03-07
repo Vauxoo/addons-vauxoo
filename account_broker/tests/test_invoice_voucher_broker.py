@@ -24,7 +24,6 @@ class TestInvoiceVoucherBroker(TestTaxCommon):
             partner_id=self.partner_id,
             check_total=7694.20,
             company_id=self.company_id,
-            currency_id=self.currency_id,
             journal_id=self.journal_inv_id,
             reference_type='none',
             invoice_line=[(0, 0, {
