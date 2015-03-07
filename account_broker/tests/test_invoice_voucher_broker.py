@@ -73,7 +73,7 @@ class TestInvoiceVoucherBroker(TestTaxCommon):
         # I call onchange to amount to load lines to voucher
         res_onch = self.voucher_model.onchange_amount(
             cr, uid, [voucher_id], 7694.20, 1.0, self.partner_id,
-            self.journal_vou_id, self.currency_id,
+            self.journal_vou_id, False,
             'payment', time.strftime("%Y-%m-%d"),
             self.currency_id, self.company_id)
         line_dr = res_onch.get('value', {}).get('line_dr_ids', [{}])[0]
