@@ -236,7 +236,8 @@ class aging_parser(report_sxw.rml_parse):
                         'payment': payment,
                         'payment_left': payment_left,
                         'residual': residual,
-                        'due_days': due_days
+                        'due_days': due_days,
+                        'currency_id': currency_id,
                     })
                     res[rp_brw.id][currency_id]['inv_total'] += \
                         inv_brw.amount_total

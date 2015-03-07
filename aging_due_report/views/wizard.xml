@@ -3,7 +3,7 @@
     <data>
         <record id="view_account_aging_partner_report" model="ir.ui.view">
             <field name="name">Aging Partner Reports</field>
-            <field name="model">account.aging.partner.wizard</field>
+            <field name="model">account.aging.wizard</field>
             <field name="arch" type="xml">
                 <form string='Aging Partner Reports'>
                     <group string="Aging Partner Reports">
@@ -22,7 +22,7 @@
         <act_window id="action_account_aging_partner_report"
             key2="client_print_multi"
             name="Aging Partner Reports"
-            res_model="account.aging.partner.wizard"
+            res_model="account.aging.wizard"
             src_model="res.partner"
             view_mode="form"
             target="new"
