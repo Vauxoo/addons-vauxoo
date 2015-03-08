@@ -117,6 +117,7 @@ class aging_parser(report_sxw.rml_parse):
         """
         res = {}
         rp_obj = self.pool.get('res.partner')
+        fap_fnc = rp_obj._find_accounting_partner
         inv_obj = self.pool.get('account.invoice')
         cur_obj = self.pool.get('res.currency')
         for rp_brw in rp_brws:
@@ -230,7 +231,7 @@ class aging_parser(report_sxw.rml_parse):
                         'inv_brw': inv_brw,
                         'invoice_id': inv_brw.id,
                         # TODO: This needs fixing should be accounting partner
-                        'partner_id': inv_brw.partner_id.id,
+                        'partner_id': fap_fnc(inv_brw.partner_id).id,
                         'wh_vat': wh_vat,
                         'wh_islr': wh_islr,
                         'wh_muni': wh_muni,
