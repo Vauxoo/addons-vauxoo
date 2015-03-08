@@ -33,9 +33,12 @@ class account_aging_wizard_document(osv.TransientModel):
         'partner_id': fields.many2one('res.partner', u'Partner'),
         'invoice_id': fields.many2one('account.invoice', 'Invoice'),
         'residual': fields.float('Residual'),
+        'base': fields.float('Base'),
+        'tax': fields.float('Tax'),
         'total': fields.float('Total'),
         'payment': fields.float('Payment'),
         'due_days': fields.float('Due Days'),
+        'date_due': fields.date('Due Date'),
         'company_id': fields.many2one('res.company', u'Company'),
         'currency_id': fields.many2one('res.currency', 'Currency'),
         'aaw_id': fields.many2one(
@@ -115,7 +118,6 @@ class account_aging_partner_wizard(osv.osv_memory):
         # TODO: We have to resolve the issue of multipartners
         for itx in rex:
             for itr in itx:
-                import pdb; pdb.set_trace()
                 for key, val in itr.iteritems():
                     if key == 'inv_ids':
                         for each in val:

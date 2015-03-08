@@ -245,6 +245,7 @@ class aging_parser(report_sxw.rml_parse):
                         'currency_id': currency_id,
 
                         'total': inv_brw.amount_total,
+                        'date_due': date_due,
                     })
                     res[rp_brw.id][currency_id]['inv_total'] += \
                         inv_brw.amount_total
