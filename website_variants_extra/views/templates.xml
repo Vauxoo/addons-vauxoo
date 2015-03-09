@@ -4,11 +4,16 @@
 		<template id="product_variants_description_3columns" inherit_id="website_sale.product" active="False" customize_show="True" name="Variants with 3 columns description">
 		  <xpath expr="//div[@class='col-sm-7 col-md-7 col-lg-7']" position="before">
 		  	<div class="col-sm-3 col-md-4 col-lg-4">
-		  		<div id="extra_info_placeholder"></div>
+			    <t t-foreach="product.attribute_line_ids" t-as="variant_id">
+	            	<t t-foreach="variant_id.value_ids" t-as="value_id">
+	  					<div t-att-class="'hidden oe_variant_description oe_variant_description_' + str(value_id.id)" t-raw="value_id.description">
+	  					</div>
+			    	</t>
+			    </t>
 		  	</div>
 		  </xpath>
 		  <xpath expr="//div[@class='col-sm-7 col-md-7 col-lg-7']" position="attributes">
-		  	<attribute name="class">col-sm-4 col-md-3 col-lg-3</attribute>
+		  	<attribute name="class">col-sm-2 col-md-2 col-lg-2</attribute>
 		  </xpath>
 		</template>
 		<template id="product_variants_description" inherit_id="website_sale.product" active="False" customize_show="True" name="Variants with description">
