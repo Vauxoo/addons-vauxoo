@@ -26,6 +26,11 @@ import openerp.addons.decimal_precision as dp  # pylint: disable=F0401
 import openerp
 from datetime import datetime, timedelta
 from pandas import DataFrame
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
+import pytz
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class foreign_exchange_realization_line(osv.osv_memory):
@@ -541,7 +546,33 @@ class foreign_exchange_realization(osv.osv_memory):
         )
 
         res = self.get_values_from_aml(cr, uid, args, context=context)
-        context['date'] = wzd_brw.date
+
+        # parse from string to datetime, Added 23:59:59 Because the rate to be
+        # used is the last one on the date not the first
+        # This date is at User's TimeZone it will later be converted onto UTC
+        dt = datetime.strptime(wzd_brw.date + ' 23:59:59',
+                               DEFAULT_SERVER_DATETIME_FORMAT)
+
+        # convert back from user's timezone to UTC
+        tz_name = (context.get('tz') or
+                   self.pool['res.users'].read(
+                       cr, openerp.SUPERUSER_ID, uid, ['tz'],
+                       context=context)['tz'])
+        if tz_name:
+            try:
+                user_tz = pytz.timezone(tz_name)
+                utc = pytz.utc
+
+                dt = user_tz.localize(dt).astimezone(utc)
+            except Exception:
+                logger.warn(
+                    "Failed to convert the value for a field of the model"
+                    " %s back from the user's timezone (%s) to UTC",
+                    wzd_brw._name, tz_name,
+                    exc_info=True)
+
+        # format back to string
+        context['date'] = dt.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
         for values in res:
             values['wizard_id'] = wzd_brw.id
             exchange_rate = cur_obj._get_current_rate(
