@@ -43,11 +43,9 @@ class TestInvoiceVoucherBroker(TestTaxCommon):
                 'invoice_line_tax_id': [(6, 0, [self.tax_16_id])]
             })]
         ), context=context)
-        cr.commit()
 
         # I try validate the invoice
         self.inv_model.signal_workflow(cr, uid, [inv_id], 'invoice_open')
-        cr.commit()
 
         # I check the total to invoice created
         self.assertEquals(self.inv_model.read(
@@ -84,12 +82,10 @@ class TestInvoiceVoucherBroker(TestTaxCommon):
         self.voucher_model.signal_workflow(
             cr, uid, [voucher_id], 'proforma_voucher')
 
-        cr.commit()
         # I check that the payment state is posted
         self.assertEquals(self.voucher_model.read(
             cr, uid, voucher_id,
             ['state']).get('state', ''), 'posted')
-        cr.commit()
 
         # I check the status to invoice == 'paid'
         self.assertEquals(self.inv_model.read(
