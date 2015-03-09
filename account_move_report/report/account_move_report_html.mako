@@ -109,8 +109,9 @@
             </tr>
             
         </table>
-<p style="page-break-after:always"></p> 
+        %if len(loop._iterable) != 1 and loop.index != len(loop._iterable)-1:
+            <p style="page-break-after:always"></p>
+        %endif
     %endfor
-
     </body>
 </html>

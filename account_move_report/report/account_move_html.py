@@ -21,7 +21,7 @@
 ################################################################################
 from openerp.report import report_sxw
 import time
-from openerp.addons.report_webkit import webkit_report
+from .webkit_parser_header_fix import HeaderFooterTextWebKitParser
 
 
 class account_move_report_html(report_sxw.rml_parse):
@@ -42,7 +42,7 @@ class account_move_report_html(report_sxw.rml_parse):
             sum_tot_credit += (line.credit)
         return {'sum_tot_debit': sum_tot_debit, 'sum_tot_credit': sum_tot_credit}
 
-webkit_report.WebKitParser('report.account.move.report.webkit',
+HeaderFooterTextWebKitParser('report.account.move.report.webkit',
                       'account.move',
                       'addons/report_account_move/report/account_move_report_html.mako',
                       parser=account_move_report_html)
