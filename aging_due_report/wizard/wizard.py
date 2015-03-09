@@ -20,6 +20,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
+from openerp.tools.translate import _
 from openerp.osv import fields, osv
 from openerp.addons.aging_due_report.report.parser import aging_parser as ag
 
@@ -95,6 +96,15 @@ class account_aging_partner_wizard(osv.osv_memory):
     _description = 'Price List'
     _rec_name = 'result_selection'
 
+    def _get_default_company(self, cr, uid, context=None):
+        company_id = self.pool.get('res.users')._get_company(cr, uid,
+                                                             context=context)
+        if not company_id:
+            raise osv.except_osv(
+                _('Error!'),
+                _('There is no default company for the current user!'))
+        return company_id
+
     _columns = {
         'report_format': fields.selection([
             ('pdf', 'PDF'),
@@ -126,11 +136,15 @@ class account_aging_partner_wizard(osv.osv_memory):
             'account.aging.wizard.partner',
             'aaw_id', 'Partners',
             help='Partners'),
+        'company_id': fields.many2one(
+            'res.company', 'Company', required=True),
     }
+
     _defaults = {
         'report_format': lambda *args: 'xls',
         'result_selection': lambda *args: 'customer',
         'type': lambda *args: 'aging',
+        'company_id': _get_default_company,
     }
 
     def compute_lines(self, cr, uid, ids, partner_ids, context=None):
