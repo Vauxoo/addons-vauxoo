@@ -2,25 +2,47 @@
 <openerp>
     <data>
 		<template id="product_variants_description_3columns" inherit_id="website_sale.product" active="False" customize_show="True" name="Variants with 3 columns description">
-		  <xpath expr="//div[@class='col-sm-7 col-md-7 col-lg-7']" position="before">
-		  	<div class="col-sm-3 col-md-4 col-lg-4">
+		  <xpath expr="//div[@class='col-sm-5 col-md-5 col-lg-4 col-lg-offset-1']" position="after">
+		  	<div class="col-sm-2 col-md-2 col-lg-2 descriptions_column">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+			  		<h6>Actual Configuration</h6>
+			  	</div>
 			    <t t-foreach="product.attribute_line_ids" t-as="variant_id">
-	            	<t t-foreach="variant_id.value_ids" t-as="value_id">
-	  					<div t-att-class="'hidden oe_variant_description oe_variant_description_' + str(value_id.id)" t-raw="value_id.description">
-	  					</div>
-			    	</t>
+		        	<ul class="list-group">
+			        	<t t-foreach="variant_id.value_ids" t-as="value_id">
+							<li t-att-class="'list-group-item hidden oe_variant_description oe_variant_description_' + str(value_id.id)">
+								<strong><t t-raw="value_id.name"></t></strong><br/>
+								<t t-raw="value_id.description"/>
+							</li>
+				    	</t>
+					</ul>
 			    </t>
+			</div>
 		  	</div>
 		  </xpath>
+		  <xpath expr="//h1[@itemprop='name']" position="replace">
+          	<h4><strong itemprop="name" t-field="product.name"></strong></h4>
+            <hr t-if="product.description_sale"/>
+            <div><p t-field="product.description_sale" class="text-muted"/></div>
+            <p  class="pull-right"><small><a href="#product_full_description" class="btn btn-link scroll">View full description</a></small></p>
+          </xpath>
+		  <xpath expr="//hr[@t-if='product.description_sale']" position="replace">
+          </xpath>
+		  <xpath expr="//p[@t-field='product.description_sale']" position="replace">
+          </xpath>
 		  <xpath expr="//div[@class='col-sm-7 col-md-7 col-lg-7']" position="attributes">
-		  	<attribute name="class">col-sm-2 col-md-2 col-lg-2</attribute>
+		  	<attribute name="class">col-sm-5 col-md-5 col-lg-5 images_column</attribute>
+		  </xpath>
+		  <xpath expr="//div[@class='col-sm-5 col-md-5 col-lg-4 col-lg-offset-1']" position="attributes">
+		  	<attribute name="class">col-sm-5 col-md-5 col-lg-4 col-lg-offset-1 variants_column</attribute>
 		  </xpath>
 		</template>
 		<template id="product_variants_description" inherit_id="website_sale.product" active="False" customize_show="True" name="Variants with description">
 		  <xpath expr="//t[@t-placeholder='select']" position="replace">
 		    <input type="hidden" t-if="len(product.product_variant_ids) == 1" name="product_id" t-att-value="product.product_variant_ids[0].id"/>
               <t t-call="website_variants_extra.variants">
-                <t t-set="ul_class" t-value="'nav-stacked'"/>
+              	<t t-set="ul_class" t-value="'nav-stacked'"/>
               </t>
 		  </xpath>
 		</template>
