@@ -21,6 +21,9 @@
 			</div>
 		  	</div>
 		  </xpath>
+		  <xpath expr="//section[@id='product_detail']//p[last()]" position="replace">
+		  	<p class="text-muted"></p>
+		  </xpath>
 		  <xpath expr="//h1[@itemprop='name']" position="replace">
           	<h4><strong itemprop="name" t-field="product.name"></strong></h4>
             <hr t-if="product.description_sale"/>
