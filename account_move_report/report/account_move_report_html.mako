@@ -74,7 +74,7 @@
                     <div>${line.name or '' |entity}</div>
                 </td>
                 <td width='14%' class='basic_td'>
-                    <div>${line.partner_id.name}</div>
+                    <div>${line.partner_id.name or ''}</div>
                 </td>
                 <td width='27%' class='basic_td'>
                     <div>${line.account_id.code or '' |entity} - ${line.account_id.name or '' |entity}</div>
