@@ -45,12 +45,39 @@ class account_aging_wizard_document(osv.TransientModel):
             'account.aging.wizard',
             'Account Aging Wizard',
             help='Account Aging Wizard Holder'),
+        'aawp_id': fields.many2one(
+            'account.aging.wizard.partner',
+            'Account Aging Wizard Partner',
+            help='Account Aging Wizard Partner'),
+    }
+
+
+class account_aging_wizard_partner(osv.osv_memory):
+    _name = 'account.aging.wizard.partner'
+    _description = 'Account Aging Wizard Partner'
+    _rec_name = 'partner_id'
+    _columns = {
+        'partner_id': fields.many2one(
+            'res.partner', 'Partner',
+            required=True,),
+        'aaw_id': fields.many2one(
+            'account.aging.wizard',
+            'Account Aging Wizard',
+            help='Account Aging Wizard Holder'),
+        'document_ids': fields.one2many(
+            'account.aging.wizard.document',
+            'aawp_id', 'Documents',
+            help='Balance by Currency'),
+        'aml_ids': fields.many2many(
+            'account.move.line',
+            'aaw_id', 'Journal Items',
+            help='Journal Items'),
     }
 
 
 class account_aging_wizard_currency(osv.osv_memory):
     _name = 'account.aging.wizard.currency'
-    _description = 'Price List'
+    _description = 'Account Aging Wizard Currency'
     _rec_name = 'currency_id'
     _columns = {
         'currency_id': fields.many2one(
@@ -95,6 +122,10 @@ class account_aging_partner_wizard(osv.osv_memory):
             'account.aging.wizard.document',
             'aaw_id', 'Balance by Currency',
             help='Balance by Currency'),
+        'partner_ids': fields.one2many(
+            'account.aging.wizard.partner',
+            'aaw_id', 'Partners',
+            help='Partners'),
     }
     _defaults = {
         'report_format': lambda *args: 'xls',
@@ -106,6 +137,7 @@ class account_aging_partner_wizard(osv.osv_memory):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         rp_obj = self.pool.get('res.partner')
+        aawp_obj = self.pool.get('account.aging.wizard.partner')
 
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         rp_brws = rp_obj.browse(cr, uid, partner_ids, context=context)
@@ -114,6 +146,8 @@ class account_aging_partner_wizard(osv.osv_memory):
         res = []
 
         wzd_brw.document_ids.unlink()
+        wzd_brw.partner_ids.unlink()
+        aawp_ids = {}
 
         # TODO: We have to resolve the issue of multipartners
         for itx in rex:
@@ -121,6 +155,14 @@ class account_aging_partner_wizard(osv.osv_memory):
                 for key, val in itr.iteritems():
                     if key == 'inv_ids':
                         for each in val:
+                            partner_id = each['partner_id']
+                            if not aawp_ids.get(partner_id):
+                                aawp_id = aawp_obj.create(cr, uid, {
+                                    'aaw_id': wzd_brw.id,
+                                    'partner_id': partner_id,
+                                }, context=context)
+                                aawp_ids[partner_id] = aawp_id
+                            each['aawp_id'] = aawp_ids[partner_id]
                             res.append(each)
 
         res = [(0, 0, line) for line in res]
