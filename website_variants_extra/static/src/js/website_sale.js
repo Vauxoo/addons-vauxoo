@@ -1,6 +1,7 @@
 $(document).ready(function () {
     /**
     This will be in a web module to be able to use in 100% of odoo.
+    source: https://css-tricks.com/snippets/jquery/smooth-scrolling/
     */
     $(function() {
       $('a[href*=#]:not([href=#])').click(function() {
