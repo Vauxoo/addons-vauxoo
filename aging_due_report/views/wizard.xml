@@ -10,6 +10,7 @@
                         <field name="report_format"/>
                         <field name="result_selection"/>
                         <field name="type"/>
+                        <field name="company_id" invisible='1'/>
                     </group>
                     <footer>
                         <button name="print_report" string="Print"  type="object" class="oe_highlight"  />
