@@ -75,7 +75,7 @@ class TestInvoiceVoucherBroker(TestTaxCommon):
             cr, uid, [voucher_id], 7694.20, 1.0, self.partner_id,
             self.journal_vou_id, False,
             'payment', time.strftime("%Y-%m-%d"),
-            self.currency_id, self.company_id)
+            False, self.company_id)
         line_dr = res_onch.get('value', {}).get('line_dr_ids', [{}])[0]
         line_dr.update({'voucher_id': voucher_id})
         self.voucher_model_line.create(cr, uid, line_dr)
