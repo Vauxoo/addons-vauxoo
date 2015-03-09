@@ -147,6 +147,37 @@ class account_aging_partner_wizard(osv.osv_memory):
         'company_id': _get_default_company,
     }
 
+    def _get_lines_by_partner_without_invoice(
+            self, cr, uid, ids, rp_ids, context=None):
+        context = dict(context or {})
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        acc_move_line = self.pool.get('account.move.line')
+        company_id = wzd_brw.company_id.id
+
+        moves_invoice_ids = [aawd_brw.invoice_id.move_id.id
+                             for aawp_brw in wzd_brw.partner_ids
+                             for aawd_brw in aawp_brw.document_ids
+                             if aawd_brw.invoice_id]
+
+        items_invoice_ids = [
+            aml_brw.id for aawp_brw in wzd_brw.partner_ids
+            for aawd_brw in aawp_brw.document_ids
+            for aml_brw in aawd_brw.invoice_id.payment_ids
+            if aawd_brw.invoice_id]
+
+        args = [
+            ('reconcile_id', '=', False),
+            ('move_id', 'not in', moves_invoice_ids),
+            ('id', 'not in', items_invoice_ids),
+            ('company_id', '=', company_id),
+            ('partner_id', 'in', rp_ids)
+        ]
+        if wzd_brw.result_selection == 'customer':
+            args += [('account_id.type', '=', 'receivable')]
+        elif wzd_brw.result_selection == 'supplier':
+            args += [('account_id.type', '=', 'payable')]
+        return acc_move_line.search(cr, uid, args, context=context)
+
     def compute_lines(self, cr, uid, ids, partner_ids, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -181,6 +212,9 @@ class account_aging_partner_wizard(osv.osv_memory):
 
         res = [(0, 0, line) for line in res]
         wzd_brw.write({'document_ids': res})
+        import pdb; pdb.set_trace()
+        rex = self._get_lines_by_partner_without_invoice(
+            cr, uid, ids, partner_ids, context=context)
         return True
 
     def print_report(self, cr, uid, ids, context=None):
