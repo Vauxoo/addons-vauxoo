@@ -30,7 +30,7 @@ from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 import pytz
 import logging
 
-logger = logging.getLogger(__name__)
+_logger = logging.getLogger(__name__)
 
 
 class foreign_exchange_realization_line(osv.osv_memory):
@@ -564,8 +564,8 @@ class foreign_exchange_realization(osv.osv_memory):
                 utc = pytz.utc
 
                 dt = user_tz.localize(dt).astimezone(utc)
-            except Exception:
-                logger.warn(
+            except ImportError:
+                _logger.warn(
                     "Failed to convert the value for a field of the model"
                     " %s back from the user's timezone (%s) to UTC",
                     wzd_brw._name, tz_name,
