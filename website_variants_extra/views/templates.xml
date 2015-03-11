@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+		<!-- Variants with description template and 3 columns. -->
 		<template id="product_variants_description_3columns" inherit_id="website_sale.product" active="False" customize_show="True" name="Variants with 3 columns description">
 		  <xpath expr="//div[@class='col-sm-5 col-md-5 col-lg-4 col-lg-offset-1']" position="after">
-		  	<div class="col-sm-2 col-md-2 col-lg-2 descriptions_column">
+		  	<div class="col-sm-3 col-md-3 col-lg-3 descriptions_column">
 		  	<t t-if="product.attribute_line_ids">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
@@ -36,17 +37,24 @@
           	<h4><strong itemprop="name" t-field="product.name"></strong></h4>
             <hr t-if="product.description_sale"/>
             <div itemprop="description" t-field="product.description_sale" class='text-muted'></div>
-            <a href="#product_full_description" class="btn btn-link pull-right"><i class="fa fa-arrow-circle-down"></i>
-Full description</a>
+            <a href="#product_full_description" class="btn btn-link pull-right"><i class="fa fa-arrow-circle-down"></i>Full description</a>
             <hr t-if="product.description_sale"/>
           </xpath>
 		  <xpath expr="//div[@class='col-sm-7 col-md-7 col-lg-7']" position="attributes">
 		  	<attribute name="class">col-sm-5 col-md-5 col-lg-5 images_column</attribute>
 		  </xpath>
 		  <xpath expr="//div[@class='col-sm-5 col-md-5 col-lg-4 col-lg-offset-1']" position="attributes">
-		  	<attribute name="class">col-sm-5 col-md-5 col-lg-4 col-lg-offset-1 variants_column</attribute>
+		  	<attribute name="class">col-sm-4 col-md-4 col-lg-3 col-lg-offset-1 variants_column</attribute>
+		  </xpath>
+		  <xpath expr="//t[@t-placeholder='select']" position="replace">
+		    <input type="hidden" t-if="len(product.product_variant_ids) == 1" name="product_id" t-att-value="product.product_variant_ids[0].id"/>
+              <t t-call="website_variants_extra.variants">
+              	<t t-set="ul_class" t-value="'nav-stacked'"/>
+              </t>
 		  </xpath>
 		</template>
+
+		<!-- Variants with description template. -->
 		<template id="product_variants_description" inherit_id="website_sale.product" active="False" customize_show="True" name="Variants with description">
 		  <xpath expr="//t[@t-placeholder='select']" position="replace">
 		    <input type="hidden" t-if="len(product.product_variant_ids) == 1" name="product_id" t-att-value="product.product_variant_ids[0].id"/>
@@ -55,11 +63,16 @@ Full description</a>
               </t>
 		  </xpath>
 		</template>
+		<!-- Variants -->
 		<template id="variants">
 		  <t t-set="attribute_value_ids" t-value="get_attribute_value_ids(product)"/>
-		  <ul t-attf-class="list-unstyled js_add_cart_variants #{ul_class}" t-att-data-attribute_value_ids="attribute_value_ids">
+		  <div t-if="product.attribute_line_ids" class="panel panel-info panel-configure">
+			<div t-if="product.attribute_line_ids" class="panel-heading">
+		  		<h6>Configure</h6>
+		  	</div>
+		  <ul t-attf-class="list-group js_add_cart_variants #{ul_class}" t-att-data-attribute_value_ids="attribute_value_ids">
 		    <t t-foreach="product.attribute_line_ids" t-as="variant_id">
-		      <li t-if="len(variant_id.value_ids) > 1">
+		      <li class="list-group-item" t-if="len(variant_id.value_ids) > 1">
 
 		        <strong t-field="variant_id.attribute_id.name"/>
 
@@ -75,9 +88,6 @@ Full description</a>
 		                               "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
 		                           }'/>
 		                  </span>
-		                  <t t-if="value_id.description">
-		  				  	<p><span t-raw="value_id.description"/></p>
-		  				  </t>
 		              </option>
 		            </t>
 		          </select>
@@ -98,9 +108,6 @@ Full description</a>
 		                                      "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
 		                                   }'/>
 		                          </span>
-				                  <t t-if="value_id.description">
-				  				  	<p><span t-raw="value_id.description"/></p>
-				  				  </t>
 		                      </label>
 		                  </li>
 		                  <t t-set="inc" t-value="inc+1"/>
@@ -128,6 +135,7 @@ Full description</a>
 		      </li>
 		    </t>
 		  </ul>
+		</div>
 		</template>
     </data>
 </openerp>
