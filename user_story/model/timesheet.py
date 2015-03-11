@@ -67,7 +67,7 @@ class hr_timesheet(osv.Model):
                               tids=(len(ids) == 1) and ids[0] or tuple(ids)))
         res = cr.dictfetchall()
         if res:
-            res = res[0].get('a_id', [])
+            res = res[0].get('a_id', []) or []
         return res
 
     _columns = {
