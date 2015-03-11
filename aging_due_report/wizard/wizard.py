@@ -151,7 +151,7 @@ class account_aging_partner_wizard(osv.osv_memory):
             self, cr, uid, ids, rp_ids, context=None):
         context = dict(context or {})
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
-        acc_move_line = self.pool.get('account.move.line')
+        aml_obj = self.pool.get('account.move.line')
         company_id = wzd_brw.company_id.id
 
         moves_invoice_ids = [aawd_brw.invoice_id.move_id.id
@@ -172,11 +172,40 @@ class account_aging_partner_wizard(osv.osv_memory):
             ('company_id', '=', company_id),
             ('partner_id', 'in', rp_ids)
         ]
-        if wzd_brw.result_selection == 'customer':
+
+        sel = wzd_brw.result_selection
+        if sel == 'customer':
             args += [('account_id.type', '=', 'receivable')]
-        elif wzd_brw.result_selection == 'supplier':
+        elif sel == 'supplier':
             args += [('account_id.type', '=', 'payable')]
-        return acc_move_line.search(cr, uid, args, context=context)
+        aml_ids = aml_obj.search(cr, uid, args, context=context)
+        res = []
+        for aml_brw in aml_obj.browse(cr, uid, aml_ids, context=context):
+            # TODO: When currency_id is not None then convert values or use
+            # other values like amount_currency
+            currency_id = (aml_brw.currency_id and aml_brw.currency_id.id or
+                           aml_brw.company_id.currency_id.id)
+            total = (sel == 'customer' and aml_brw.debit or
+                     sel == 'supplier' and aml_brw.credit or 0.0)
+            payment = (sel == 'customer' and aml_brw.credit or
+                       sel == 'supplier' and aml_brw.debit or 0.0)
+            res.append({
+                'partner_id': aml_brw.partner_id.id,
+                # 'wh_vat': wh_vat,
+                # 'wh_islr': wh_islr,
+                # 'wh_muni': wh_muni,
+                # 'wh_src': wh_src,
+                # 'debit_note': debit_note,
+                # 'credit_note': credit_note,
+                # 'refund_brws': refund_brws,
+                'payment': payment,
+                # 'payment_left': payment_left,
+                # 'residual': residual,
+                # 'due_days': due_days,
+                'currency_id': currency_id,
+                'total': total,
+                'date_due': aml_brw.date_maturity or aml_brw.date})
+        return res
 
     def compute_lines(self, cr, uid, ids, partner_ids, context=None):
         context = context or {}
@@ -212,9 +241,22 @@ class account_aging_partner_wizard(osv.osv_memory):
 
         res = [(0, 0, line) for line in res]
         wzd_brw.write({'document_ids': res})
-        import pdb; pdb.set_trace()
-        rex = self._get_lines_by_partner_without_invoice(
-            cr, uid, ids, partner_ids, context=context)
+        res = []
+
+        for line in self._get_lines_by_partner_without_invoice(
+                cr, uid, ids, partner_ids, context=context):
+            partner_id = line['partner_id']
+            if not aawp_ids.get(partner_id):
+                aawp_id = aawp_obj.create(cr, uid, {
+                    'aaw_id': wzd_brw.id,
+                    'partner_id': partner_id,
+                }, context=context)
+                aawp_ids[partner_id] = aawp_id
+            line['aawp_id'] = aawp_ids[partner_id]
+            res.append(line)
+        res = [(0, 0, line) for line in res]
+        wzd_brw.write({'document_ids': res})
+
         return True
 
     def print_report(self, cr, uid, ids, context=None):
