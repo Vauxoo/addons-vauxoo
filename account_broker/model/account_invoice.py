@@ -38,9 +38,10 @@ class AccountInvoiceLine(models.Model):
     _inherit = 'account.invoice.line'
 
     invoice_broker_id = fields.Many2one(
-        'account.invoice', 'Invoice Broker', help='If this invoice line is to '
-        'the payment to a broker, indicate the original invoice that must be '
-        'generated the broker partner', domain=[('type', '=', 'in_invoice')])
+        'account.invoice', 'Overseas Invoice', help='If this invoice line is '
+        'to the payment to a broker, indicate the original invoice that must '
+        'be generated the broker partner',
+        domain=[('type', '=', 'in_invoice')])
     partner_broker_ok = fields.Boolean(
         string='Partner Broker', related='invoice_id.partner_id.is_broker_ok',
         store=False, readonly=True,

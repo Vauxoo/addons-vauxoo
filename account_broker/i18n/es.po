@@ -33,8 +33,8 @@ msgstr "Factura"
 
 #. module: account_broker
 #: field:account.invoice.line,invoice_broker_id:0
-msgid "Invoice Broker"
-msgstr "Factura agente aduanal"
+msgid "Overseas Invoice"
+msgstr "Factura Extranjero"
 
 #. module: account_broker
 #: model:ir.model,name:account_broker.model_account_invoice_line
