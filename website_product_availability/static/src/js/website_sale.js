@@ -168,7 +168,7 @@ $('.oe_website_sale').each(function () {
                         break;
                 }
                 if (variant_ids[k][5]) {
-                    $stock_delay.text(variant_ids[k][5])
+                    $stock_delay.text("Product Available within "+variant_ids[k][5]+" Days")
                 }
                 $stock_state.addClass(new_class);
                 $stock_state.text(text);
