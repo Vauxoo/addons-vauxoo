@@ -476,7 +476,8 @@ class commission_payment(osv.Model):
             if aml_brw.rec_invoice:
                 date = aml_brw.rec_invoice.date_due
             else:
-                date = aml_brw.rec_aml.date_maturity
+                date = (aml_brw.rec_aml.date_maturity or
+                        aml_brw.rec_aml.date)
         return date
 
     def _get_commission_policy_end_date(self, cr, uid, ids, pay_id,
