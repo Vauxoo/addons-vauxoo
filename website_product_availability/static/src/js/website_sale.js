@@ -115,6 +115,7 @@ $('.oe_website_sale').each(function () {
         var $default_price = $parent.find(".oe_default_price:first .oe_currency_value");
         var variant_ids = $ul.data("attribute_value_ids");
         var $stock_state = $(".stock_state");
+        var $stock_delay = $(".stock_delay");
         var values = [];
         $parent.find('input.js_variant_change:checked, select.js_variant_change').each(function () {
             values.push(+$(this).val());
@@ -142,25 +143,32 @@ $('.oe_website_sale').each(function () {
                         text = 'Available' 
                         $("#add_to_cart").removeClass('disabled')
                         $("#similar_products_vx").addClass('hidden')
+                        $stock_delay.addClass('hidden')
                         break;
                     case 2:
                         new_class = 'label-danger'
                         text = 'Not Available' 
                         $("#add_to_cart").addClass('disabled')
                         $("#similar_products_vx").removeClass('hidden')
+                        $stock_delay.removeClass('hidden')
                         break;
                     case 3:
                         new_class = 'label-warning'
                         text = 'Low Availability' 
                         $("#add_to_cart").removeClass('disabled')
                         $("#similar_products_vx").addClass('hidden')
+                        $stock_delay.addClass('hidden')
                         break;
                     case 4:
                         new_class = 'label-primary'
                         text = 'On Request' 
                         $("#add_to_cart").removeClass('disabled')
                         $("#similar_products_vx").addClass('hidden')
+                        $stock_delay.removeClass('hidden')
                         break;
+                }
+                if (variant_ids[k][5]) {
+                    $stock_delay.text("Product Available within "+variant_ids[k][5]+" Days")
                 }
                 $stock_state.addClass(new_class);
                 $stock_state.text(text);
