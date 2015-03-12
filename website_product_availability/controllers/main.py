@@ -17,9 +17,10 @@ class website_sale(website_sale):
             stock_state = product_cache.stock_state
             r.append(int(stock_state))
             new_res.append(r)
+            p_tmpl_id = product_cache.product_tmpl_id.id
             supplier_ids = supplier_obj.search(cr, uid,
                                                [('product_tmpl_id', '=',
-                                                 product_cache.id)],
+                                                 p_tmpl_id)],
                                                limit=1,
                                                order='sequence asc')
             if supplier_ids:
