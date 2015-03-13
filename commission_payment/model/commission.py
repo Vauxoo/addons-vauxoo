@@ -541,7 +541,7 @@ class commission_payment(osv.Model):
                 res = rp_obj._find_accounting_partner(
                     aml_brw.rec_aml.partner_id).user_id
 
-        return self._get_commission_saleman(cr, uid, ids, res, context=context)
+        return res
 
     def _get_commission_policy_baremo(self, cr, uid, ids, pay_id,
                                       partner_id=None, salesman_id=None,
@@ -599,7 +599,9 @@ class commission_payment(osv.Model):
         # Retrieve Partner's Salesman
         salesman = self._get_commission_salesman_policy(cr, uid, ids, pay_id,
                                                         context=context)
-        if not salesman:
+        salesman_ok = self._get_commission_saleman(cr, uid, ids, salesman,
+                                                   context=context)
+        if not comm_brw.unknown_salespeople and not salesman_ok:
             return True
 
         commission_policy_date_start = \
@@ -785,7 +787,9 @@ class commission_payment(osv.Model):
         # Retrieve Partner's Salesman
         salesman = self._get_commission_salesman_policy(cr, uid, ids, aml_id,
                                                         context=context)
-        if not salesman:
+        salesman_ok = self._get_commission_saleman(cr, uid, ids, salesman,
+                                                   context=context)
+        if not comm_brw.unknown_salespeople and not salesman_ok:
             return True
 
         commission_policy_date_start = \
