@@ -487,7 +487,6 @@ class commission_payment(osv.Model):
         aml_obj = self.pool.get('account.move.line')
         comm_brw = self.browse(cr, uid, ids[0], context=context)
         aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
-        print ">>>>>>>>>>>>>>>>> %s" % aml_brw.id
         date = False
         if comm_brw.commission_policy_date_end == 'last_payment_date':
             date = aml_brw.rec_aml.date_last_payment
