@@ -499,6 +499,20 @@ class commission_payment(osv.Model):
             date = aml_brw.date
         return date
 
+    def _get_commission_saleman(self, cr, uid, ids, salesman_brw,
+                                context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        context = context or {}
+        if not salesman_brw:
+            return False
+        comm_brw = self.browse(cr, uid, ids[0], context=context)
+        user_ids = [usr_brw.id for usr_brw in comm_brw.user_ids]
+        if not user_ids:
+            return salesman_brw
+        if salesman_brw.id not in user_ids:
+            return False
+        return salesman_brw
+
     def _get_commission_salesman_policy(self, cr, uid, ids, pay_id,
                                         salesman_id=None, context=None):
         if salesman_id:
@@ -529,7 +543,7 @@ class commission_payment(osv.Model):
                 res = rp_obj._find_accounting_partner(
                     aml_brw.rec_aml.partner_id).user_id
 
-        return res
+        return self._get_commission_saleman(cr, uid, ids, res, context=context)
 
     def _get_commission_policy_baremo(self, cr, uid, ids, pay_id,
                                       partner_id=None, salesman_id=None,
@@ -584,6 +598,12 @@ class commission_payment(osv.Model):
         if not aml_brw.credit:
             return True
 
+        # Retrieve Partner's Salesman
+        salesman = self._get_commission_salesman_policy(cr, uid, ids, pay_id,
+                                                        context=context)
+        if not salesman:
+            return True
+
         commission_policy_date_start = \
             self._get_commission_policy_start_date(cr, uid, ids, pay_id,
                                                    context=context)
@@ -595,10 +615,6 @@ class commission_payment(osv.Model):
         # Si esta aqui dentro es porque esta linea tiene una id valida
         # de una factura.
         inv_brw = aml_brw.rec_invoice
-
-        # Obtener el vendedor del partner
-        salesman = self._get_commission_salesman_policy(cr, uid, ids, pay_id,
-                                                        context=context)
 
         commission_policy_baremo = \
             self._get_commission_policy_baremo(cr, uid, ids, pay_id,
@@ -768,6 +784,12 @@ class commission_payment(osv.Model):
         if not aml_brw.credit:
             return True
 
+        # Retrieve Partner's Salesman
+        salesman = self._get_commission_salesman_policy(cr, uid, ids, aml_id,
+                                                        context=context)
+        if not salesman:
+            return True
+
         commission_policy_date_start = \
             self._get_commission_policy_start_date(cr, uid, ids, aml_id,
                                                    context=context)
@@ -784,10 +806,6 @@ class commission_payment(osv.Model):
         # =======================================================
         # =======================================================
         perc_iva = (inv_brw.amount_total / inv_brw.amount_untaxed - 1) * 100
-
-        # Obtener el vendedor del partner
-        salesman = self._get_commission_salesman_policy(cr, uid, ids, aml_id,
-                                                        context=context)
 
         commission_policy_baremo = \
             self._get_commission_policy_baremo(cr, uid, ids, aml_id,
