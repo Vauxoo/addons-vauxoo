@@ -214,7 +214,7 @@ class commission_payment(osv.Model):
                                                             currency of the\
                                                             company')),
         'comm_fix': fields.boolean('Fix Commissions?'),
-        'unknown_salespeople': fields.boolean('Allow Unknow Salespeople?'),
+        'unknown_salespeople': fields.boolean('Allow Unknown Salespeople?'),
     }
     _defaults = {
         'name': lambda *a: None,
