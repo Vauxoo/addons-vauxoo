@@ -598,8 +598,10 @@ class commission_payment(osv.Model):
                                                         context=context)
         salesman_ok = self._get_commission_saleman(cr, uid, ids, salesman,
                                                    context=context)
-        if not comm_brw.unknown_salespeople and not salesman_ok:
-            return True
+
+        if not salesman_ok:
+            if not (comm_brw.unknown_salespeople and not salesman):
+                return True
 
         commission_policy_date_start = \
             self._get_commission_policy_start_date(cr, uid, ids, pay_id,
@@ -786,8 +788,10 @@ class commission_payment(osv.Model):
                                                         context=context)
         salesman_ok = self._get_commission_saleman(cr, uid, ids, salesman,
                                                    context=context)
-        if not comm_brw.unknown_salespeople and not salesman_ok:
-            return True
+
+        if not salesman_ok:
+            if not (comm_brw.unknown_salespeople and not salesman):
+                return True
 
         commission_policy_date_start = \
             self._get_commission_policy_start_date(cr, uid, ids, aml_id,
