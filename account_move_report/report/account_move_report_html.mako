@@ -6,13 +6,13 @@
     </head>
     <body>
         %for o in objects :
-        <table width = '100%' class='table'>
+        <table width = '100%' class='td_company_title'>
             <tr>
-                <td style="vertical-align: top;">
+                <td style="vertical-align: top;max-height: 45px;">
                     ${helper.embed_image('jpeg',str(o.company_id.logo),180, 85)}
                 </td>
-                <td class='dir_font'>
-                    <div class='company_font'>${o.company_id.name or ''|entity}</div>
+                <td>
+                    <div>${o.company_id.name or ''|entity}</div>
                     <br>${o.company_id.partner_id.street or ''|entity} No. 
                                                 ${o.company_id.partner_id.street2 or ''|entity}
                                                 ${o.company_id.partner_id.zip or ''|entity}
@@ -20,92 +20,148 @@
                                                 , ${o.company_id.partner_id.state_id.name or ''|entity}
                                                 , ${o.company_id.partner_id.country_id.name or ''|entity}
                 </td>
-                <td class='date_font'>
+                <td>
                     <div>${_("Printing Date:")} ${time.strftime('%Y-%m-%d %H:%M:%S')}</div>
                 </td>
-
             </tr>
         </table>                                   
 
-        <table>
+        <table class='celdaDetailTitulo'>
             <tr>
-                    <div>${_("Journal Entries: ")} ${o.name or '' |entity}</div>
-
+                <div>
+                    <td>${_("Journal Entries: ")} ${o.name or '' |entity}</td>
+                </div>
             </tr>
             <tr>
-                    <div>${_("Reference: ")} ${o.ref or '' |entity}</div>
+                <div>
+                    <td>${_("Reference: ")} ${o.ref or '' |entity}</td>
+                </div>
+            </tr>
+            <tr width= '100%'>
+                <div>
+                    <td width= '50%'>
+                        ${_("Period: ")} ${o.period_id.name or '' |entity}
+                    </td>
+                    <td width= '50%'>
+                        ${_("Date: ")} ${o.date or '' |entity}
+                    </td>  
+                </div>
             </tr>
             <tr>
-                    <div>${_("Date: ")} ${o.date or '' |entity}</div>
+                <div>
+                    <td>${_("To Review: ")} ${o.to_check or '' |entity}</td>
+                </div>
             </tr>
-            
         </table>
         
-        <table width= '100%' class='title'>
-            <tr>
-                <td width='14%'>
+        <table width= '100%' style="border-collapse: collapse;">
+            <tr class='celdaTituloTabla'>
+                <td width='5%'>
+                    <div>${_("Invoice")}</div>
+                </td>
+                <td width='6%'>
                     <div>${_("Name")}</div>
                 </td>
-                <td width='14%'>
+                <td width='7%'>
                     <div>${_("Partner")}</div>
                 </td>
-            <td width='27%'>
+                <td width='8%'>
                     <div>${_("Account")}</div>
                 </td>
-                <td width='7%'>
+                <td width='6%'>
                     <div>${_("Due date")}</div>
                 </td>
-                <td width='12%'>
+                <td width='5%'>
                     <div>${_("Debit")}</div>
                 </td>
-                <td width='12%'>
+                <td width='5%'>
                     <div>${_("Credit")}</div>
                 </td>
-                <td width='14%'>
+                <td width='6%'>
                     <div>${_("Analytic Account")}</div>
                 </td>
+                <td width='6%'>
+                    <div>${_("Amount Currency")}</div>
+                </td>
+                <td width='6%'>
+                    <div>${_("Currency")}</div>
+                </td>
+                <td width='6%'>
+                    <div>${_("Tax Account")}</div>
+                </td>
+                <td width='6%'>
+                    <div>${_("Tax Amount")}</div>
+                </td>
+                <td width='6%'>
+                    <div>${_("Not Consider in Diot")}</div>
+                </td>
+                <td width='6%'>
+                    <div>${_("Status")}</div>
+                </td>
+                <td width='6%'>
+                    <div>${_("Reconcile")}</div>
+                </td>
             </tr>
-        </table>
-
-        <table width= '100%' class='table'>
             %for line in o.line_id:
-            <tr>
-                <td width='14%' class='basic_td'>
+            <tr class='celdaDetail'>
+                <td width='5%'>
+                    <div>${line.invoice.number or '' |entity}</div>
+                </td>
+                <td width='6%' style="word-wrap: break-word">
                     <div>${line.name or '' |entity}</div>
                 </td>
-                <td width='14%' class='basic_td'>
+                <td width='7%'>
                     <div>${line.partner_id.name or ''}</div>
                 </td>
-                <td width='27%' class='basic_td'>
+                <td width='8%'>
                     <div>${line.account_id.code or '' |entity} - ${line.account_id.name or '' |entity}</div>
                 </td>
-                <td width='7%' class='basic_td'>
+                <td width='6%'>
                     <div>${line.date_maturity or '' |entity}</div>
                 </td>
-                <td width='12%' class='basic_td' style="text-align:right;">
+                <td width='5%' style="text-align:right;">
                     <div>${line.debit or '0.00' |entity}</div>
                 </td>
-                <td width='12%' class='basic_td' style="text-align:right;">
+                <td width='5%' style="text-align:right;">
                     <div>${line.credit or '0.00' |entity}</div>
                 </td>
-                <td width='14%' class='basic_td'>
+                <td width='6%'>
                     <div>${line.analytic_account_id.name or '' |entity}</div>
+                </td>
+                <td width='6%' style="text-align:right;">
+                    <div>${line.amount_currency or '' |entity}</div>
+                </td>
+                <td width='6%'>
+                    <div>${line.currency_id.name or '' |entity}</div>
+                </td>
+                <td width='6%'>
+                    <div>${line.tax_code_id.name or '' |entity}</div>
+                </td>
+                <td width='6%' style="text-align:right;">
+                    <div>${line.tax_amount or '' |entity}</div>
+                </td>
+                <td width='6%' style="text-align:center;">
+                    %if line.not_move_diot:
+                        <p>&#10004;</p>
+                    %endif
+                </td>
+                <td width='6%' style="text-align:center;">
+                    <div>${line.state or '' |entity}</div>
+                </td>
+                <td width='6%'>
+                    <div>${line.reconcile_id or '' |entity}</div>
                 </td>
             </tr>
             %endfor
-        </table>
-        <table width= '100%' class='table'>
-            <tr>
-                <td width='14%'></td>
-                <td width='37%'></td>
-                <td width='7%'></td>
-                <td style="border-top:1px solid #000000; text-align:right;" class='basic_td'>
-                    <div width='14%' >${formatLang(get_total_debit_credit(o.line_id)['sum_tot_debit']) or '0.00' |entity}</div>
+            <tr class='celdaTotal'>
+                <td colspan="5"></td>
+                <td>
+                    <div width='6%' >${formatLang(get_total_debit_credit(o.line_id)['sum_tot_debit']) or '0.00' |entity}</div>
                 </td>
-                <td style="border-top:1px solid #000000; text-align:right;" class='basic_td'>
-                    <div width='14%'>${formatLang(get_total_debit_credit(o.line_id)['sum_tot_credit']) or '0.00' |entity}</div>
+                <td>
+                    <div width='6%'>${formatLang(get_total_debit_credit(o.line_id)['sum_tot_credit']) or '0.00' |entity}</div>
                 </td>
-                <td width='14%'></td>
+                <td colspan="8"></td>
             </tr>
             
         </table>
