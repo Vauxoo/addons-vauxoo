@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- enconding: utf-8 -*-
 {
     "name": "Sprint Kanban", 
