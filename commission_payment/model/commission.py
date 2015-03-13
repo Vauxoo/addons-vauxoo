@@ -490,10 +490,7 @@ class commission_payment(osv.Model):
         print ">>>>>>>>>>>>>>>>> %s" % aml_brw.id
         date = False
         if comm_brw.commission_policy_date_end == 'last_payment_date':
-            if aml_brw.rec_invoice:
-                date = aml_brw.rec_invoice.date_last_payment
-            else:
-                date = aml_brw.rec_aml.date_last_payment
+            date = aml_brw.rec_aml.date_last_payment
         elif comm_brw.commission_policy_date_end == 'date_on_payment':
             date = aml_brw.date
         return date
