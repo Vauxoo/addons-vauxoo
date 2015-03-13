@@ -42,3 +42,46 @@ class mail_message(osv.Model):
                                                          context=context)
         r['rating'] = message.rating
         return r
+
+
+class product_template(osv.Model):
+    _inherit = 'product.template'
+    _defaults = {
+        'rating': 3,
+    }
+
+    def _get_rating(self, cr, uid, ids, field_name, arg, context):
+        res = {}
+        total = 0
+        message_obj = self.pool.get('mail.message')
+        for pid in ids:
+            message_ids = message_obj.search(cr, uid, [('res_id', '=', pid),
+                                                       ('model', '=',
+                                                        'product.template'),
+                                                       ('rating', '>', 0)])
+            if message_ids:
+                total = sum([i.rating for i in
+                             message_obj.browse(cr, uid, message_ids)]) /\
+                    len(message_ids)
+            res[pid] = total
+        return res
+
+    def _get_message_ids(self, cr, uid, ids, context=None):
+        product_ids = []
+        message_obj = self.pool.get('mail.message')
+        message_group = message_obj.read_group(cr, uid, [('model', '=',
+                                                          'product.template'),
+                                                         ('id', 'in', ids)],
+                                               ('res_id'),
+                                               ('res_id'))
+        for message in message_group:
+            product_ids.append(message.get('res_id'))
+        return product_ids
+
+    _columns = {
+        'rating': fields.function(_get_rating, type="integer", method=True,
+                                  string="Rating",
+                                  store={'mail.message':
+                                         (_get_message_ids, ['res_id',
+                                                             'model'], 10)}),
+    }

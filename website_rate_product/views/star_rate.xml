@@ -5,7 +5,7 @@
             <xpath  expr="//form[@id='comment']" position="inside">
                 <div class="container">
                     <div class="row lead">
-                        <div id="stars-existing" class="starrr" data-rating='0' name="rating"></div>
+                        <div id="stars-existing" class="starrr" data-rating='3' name="rating"></div>
                         <input type="hidden" id="count-existing" name="rating" class="form-control"/>
                     </div>
                 </div>
