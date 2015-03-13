@@ -474,7 +474,8 @@ class commission_payment(osv.Model):
 
         elif comm_brw.commission_policy_date_start == 'invoice_due_date':
             if aml_brw.rec_invoice:
-                date = aml_brw.rec_invoice.date_due
+                date = (aml_brw.rec_invoice.date_due or
+                        aml_brw.rec_invoice.date_invoice)
             else:
                 date = (aml_brw.rec_aml.date_maturity or
                         aml_brw.rec_aml.date)
