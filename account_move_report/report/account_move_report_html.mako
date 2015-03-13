@@ -49,7 +49,16 @@
             </tr>
             <tr>
                 <div>
-                    <td>${_("To Review: ")} ${o.to_check or '' |entity}</td>
+                    <tr>
+                        <td>
+                            ${_("To Review: ")} 
+                        </td>
+                        <td>
+                            %if o.to_check:
+                                <p>&#10004;</p>
+                            %endif
+                        </td>
+                    </tr>
                 </div>
             </tr>
         </table>
@@ -93,13 +102,16 @@
                     <div>${_("Tax Amount")}</div>
                 </td>
                 <td width='6%'>
-                    <div>${_("Not Consider in Diot")}</div>
+                    <div>${_("Tax Secondary")}</div>
                 </td>
                 <td width='6%'>
                     <div>${_("Status")}</div>
                 </td>
                 <td width='6%'>
                     <div>${_("Reconcile")}</div>
+                </td>
+                <td width='6%'>
+                    <div>${_("Partial Reconcile")}</div>
                 </td>
             </tr>
             %for line in o.line_id:
@@ -120,16 +132,16 @@
                     <div>${line.date_maturity or '' |entity}</div>
                 </td>
                 <td width='5%' style="text-align:right;">
-                    <div>${line.debit or '0.00' |entity}</div>
+                    <div>${formatLang(line.debit or 0.0) |entity}</div>
                 </td>
                 <td width='5%' style="text-align:right;">
-                    <div>${line.credit or '0.00' |entity}</div>
+                    <div>${formatLang(line.credit or 0.0) |entity}</div>
                 </td>
                 <td width='6%'>
                     <div>${line.analytic_account_id.name or '' |entity}</div>
                 </td>
                 <td width='6%' style="text-align:right;">
-                    <div>${line.amount_currency or '' |entity}</div>
+                    <div>${formatLang(line.amount_currency or 0.0) |entity}</div>
                 </td>
                 <td width='6%'>
                     <div>${line.currency_id.name or '' |entity}</div>
@@ -138,30 +150,35 @@
                     <div>${line.tax_code_id.name or '' |entity}</div>
                 </td>
                 <td width='6%' style="text-align:right;">
-                    <div>${line.tax_amount or '' |entity}</div>
+                    <div>${formatLang(line.tax_amount or 0.0) |entity}</div>
                 </td>
                 <td width='6%' style="text-align:center;">
-                    %if line.not_move_diot:
-                        <p>&#10004;</p>
+                    <div>${line.tax_id_secondary.name or '' |entity}</div>
+                </td>
+                <td width='6%' style="text-align:center;">
+                    %if line.state == "valid":
+                        ${_("Balanced")}
+                    %elif line.state == "draft":
+                        ${_("Unbalanced")}
                     %endif
                 </td>
-                <td width='6%' style="text-align:center;">
-                    <div>${line.state or '' |entity}</div>
+                <td width='6%'>
+                    <div>${line.reconcile_id.name or '' |entity}</div>
                 </td>
                 <td width='6%'>
-                    <div>${line.reconcile_id or '' |entity}</div>
+                    <div>${line.reconcile_partial_id.name or '' |entity}</div>
                 </td>
             </tr>
             %endfor
             <tr class='celdaTotal'>
                 <td colspan="5"></td>
                 <td>
-                    <div width='6%' >${formatLang(get_total_debit_credit(o.line_id)['sum_tot_debit']) or '0.00' |entity}</div>
+                    <div width='6%' >${formatLang(get_total_debit_credit(o.line_id)['sum_tot_debit'] or 0.0) |entity}</div>
                 </td>
                 <td>
-                    <div width='6%'>${formatLang(get_total_debit_credit(o.line_id)['sum_tot_credit']) or '0.00' |entity}</div>
+                    <div width='6%'>${formatLang(get_total_debit_credit(o.line_id)['sum_tot_credit'] or 0.0) |entity}</div>
                 </td>
-                <td colspan="8"></td>
+                <td colspan="9"></td>
             </tr>
             
         </table>
