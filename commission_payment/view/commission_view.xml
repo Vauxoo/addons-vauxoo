@@ -305,6 +305,9 @@
                         <notebook colspan="6">
                             <page string="Salespeople">
                                 <group col="2" colspan="2">
+                                    <field name="unknown_salespeople"/>
+                                </group>
+                                <group col="2" colspan="2">
                                     <field name="user_ids" nolabel="1">
                                         <tree edit='false' create='false' delete='false' >
                                             <field name="name" string="Asesor"/>
