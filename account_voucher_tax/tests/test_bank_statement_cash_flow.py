@@ -62,8 +62,8 @@ class TestCashFlowTaxCustomer(TestTaxCommon):
         # create reconciliation with account voucher
         voucher_id = self.account_voucher_model.create(cr, uid, {
             'partner_id': self.partner_agrolait_id,
-            'journal_id': self.invoice_journal_id,
-            'account_id': self.account_receivable_id,
+            'journal_id': self.bank_journal_id,
+            'account_id': self.account_bnk_id,
             'date': time.strftime('%Y')+'-06-01',
             'type': 'sale',
             'amount': 0
@@ -85,19 +85,25 @@ class TestCashFlowTaxCustomer(TestTaxCommon):
             'amount': 58
             })
 
-        for voucher_line in self.account_voucher_model.browse(cr, uid, voucher_id).line_ids:
-            print voucher_line,"wwwwwwwwwwwwwwww"
-
         self.account_voucher_model.proforma_voucher(cr, uid, voucher_id, {})
+        print len(self.account_voucher_model.browse(cr, uid, voucher_id).move_id.line_id)
+        for voucher_line in self.account_voucher_model.browse(cr, uid, voucher_id).move_id.line_id:
+            print voucher_line.account_id.name,"voucher_line"
+            print voucher_line.debit,"debit"
+            print voucher_line.credit,"credit"
 
-        for line_invoice in invoice_record.move_id.line_id:
-            if line_invoice.account_id.id == self.acc_tax16_customer:
-                print line_invoice.id,"line_invoice"
-                print line_invoice.amount_residual
-                print line_invoice.reconcile_id
-                print line_invoice.reconcile_partial_id
+        # for line_invoice in invoice_record.move_id.line_id:
+        #     print line_invoice,"line_invoice"
+        #     if line_invoice.account_id.id == self.acc_tax16_customer:
+        #         print line_invoice.id,"line_invoice"
+        #         print line_invoice.amount_residual
+        #         print line_invoice.reconcile_id
+        #         print line_invoice.reconcile_partial_id
 
-                self.assertEquals(move_line.debit, 16)
-                self.assertEquals(move_line.credit, 0.0)
-                self.assertEquals(move_line.amount_residual, 0)
-                continue
+        #         self.assertEquals(move_line.debit, 16)
+        #         self.assertEquals(move_line.credit, 0.0)
+        #         self.assertEquals(move_line.amount_residual, 0)
+        #         continue
+        print "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq"
+        cr.commit() 
+

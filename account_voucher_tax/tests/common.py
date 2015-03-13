@@ -24,6 +24,9 @@ class TestTaxCommon(common.TransactionCase):
         self.account_receivable_id = self.registry(
             "ir.model.data").get_object_reference(
             self.cr, self.uid, "account", "a_recv")[1]
+        self.account_bnk_id = self.registry(
+            "ir.model.data").get_object_reference(
+            self.cr, self.uid, "account", "bnk")[1]
         self.product_id = self.registry(
             "ir.model.data").get_object_reference(
             self.cr, self.uid, "product", "product_product_4")[1]

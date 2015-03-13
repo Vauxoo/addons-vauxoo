@@ -344,8 +344,8 @@ class account_bank_statement_line(osv.osv):
 
         move_counterpart = move_line_tax.get('move_line_reconcile', None)
         rec_ids = []
-
-        if not move_counterpart[0]:
+        print move_counterpart,"move_counterpart" 
+        if not (move_counterpart and move_counterpart[0]):
             return [[], rec_ids]
 
         move_line_counterpart = move_line_obj.browse(
