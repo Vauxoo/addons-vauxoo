@@ -18,44 +18,118 @@ msgstr ""
 "X-Generator: Launchpad (build 17252)\n"
 
 #. module: account_move_report
-#: report:addons/account_move_report/report/account_move_report_html.mako:55
+#: report:addons/account_move_report/report/account_move_report_html.mako:69
 msgid "Account"
 msgstr "Cuenta"
 
 #. module: account_move_report
-#: report:addons/account_move_report/report/account_move_report_html.mako:49
-msgid "Name"
-msgstr "Nombre"
+#: report:addons/account_move_report/report/account_move_report_html.mako:84
+msgid "Amount Currency"
+msgstr "Importe divisa"
 
 #. module: account_move_report
-#: report:addons/account_move_report/report/account_move_report_html.mako:58
-msgid "Due date"
-msgstr "Fecha Vencimiento"
-
-#. module: account_move_report
-#: report:addons/account_move_report/report/account_move_report_html.mako:41
-msgid "Date: "
-msgstr "Fecha: "
-
-#. module: account_move_report
-#: report:addons/account_move_report/report/account_move_report_html.mako:38
-msgid "Reference: "
-msgstr "Referencia: "
-
-#. module: account_move_report
-#: report:addons/account_move_report/report/account_move_report_html.mako:67
+#: report:addons/account_move_report/report/account_move_report_html.mako:81
 msgid "Analytic Account"
 msgstr "Cuenta Analítica"
 
 #. module: account_move_report
-#: report:addons/account_move_report/report/account_move_report_html.mako:64
+#: report:addons/account_move_report/report/account_move_report_html.mako:151
+msgid "Balanced"
+msgstr "Cuadrado"
+
+#. module: account_move_report
+#: report:addons/account_move_report/report/account_move_report_html.mako:78
 msgid "Credit"
 msgstr "Haber"
 
 #. module: account_move_report
-#: report:addons/account_move_report/report/account_move_report_html.mako:26
+#: report:addons/account_move_report/report/account_move_report_html.mako:87
+msgid "Currency"
+msgstr "Divisa"
+
+#. module: account_move_report
+#: report:addons/account_move_report/report/account_move_report_html.mako:46
+msgid "Date: "
+msgstr "Fecha: "
+
+#. module: account_move_report
+#: report:addons/account_move_report/report/account_move_report_html.mako:75
+msgid "Debit"
+msgstr "Debe"
+
+#. module: account_move_report
+#: report:addons/account_move_report/report/account_move_report_html.mako:72
+msgid "Due date"
+msgstr "Fecha Vencimiento"
+
+#. module: account_move_report
+#: code:addons/account_move_report/report/webkit_parser_header_fix.py:217
+#, python-format
+msgid "Error!"
+msgstr "Error!"
+
+#. module: account_move_report
+#: report:addons/account_move_report/report/account_move_report_html.mako:60
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: account_move_report
+#: report:addons/account_move_report/report/account_move_report_html.mako:32
+msgid "Journal Entries: "
+msgstr "Póliza: "
+
+#. module: account_move_report
+#: report:addons/account_move_report/report/account_move_report_html.mako:63
+msgid "Name"
+msgstr "Nombre"
+
+#. module: account_move_report
+#: code:addons/account_move_report/report/webkit_parser_header_fix.py:161
+#, python-format
+msgid "No diagnosis message was provided"
+msgstr "No diagnosis message was provided"
+
+#. module: account_move_report
+#: code:addons/account_move_report/report/webkit_parser_header_fix.py:222
+#, python-format
+msgid "No header defined for this Webkit report!"
+msgstr "No header defined for this Webkit report!"
+
+#. module: account_move_report
+#: report:addons/account_move_report/report/account_move_report_html.mako:105
+msgid "Partial Reconcile"
+msgstr "Conciliación parcial"
+
+#. module: account_move_report
+#: report:addons/account_move_report/report/account_move_report_html.mako:66
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: account_move_report
+#: report:addons/account_move_report/report/account_move_report_html.mako:43
+msgid "Period: "
+msgstr "Periodo: "
+
+#. module: account_move_report
+#: code:addons/account_move_report/report/webkit_parser_header_fix.py:223
+#, python-format
+msgid "Please set a header in company settings."
+msgstr "Please set a header in company settings."
+
+#. module: account_move_report
+#: report:addons/account_move_report/report/account_move_report_html.mako:24
 msgid "Printing Date:"
 msgstr "Fecha de impresión:"
+
+#. module: account_move_report
+#: report:addons/account_move_report/report/account_move_report_html.mako:102
+msgid "Reconcile"
+msgstr "Conciliar"
+
+#. module: account_move_report
+#: report:addons/account_move_report/report/account_move_report_html.mako:37
+msgid "Reference: "
+msgstr "Referencia: "
 
 #. module: account_move_report
 #: model:ir.actions.report.xml,name:account_move_report.account_move_report_webkit
@@ -63,16 +137,66 @@ msgid "Report Journal Entries"
 msgstr "Reporte de Póliza"
 
 #. module: account_move_report
-#: report:addons/account_move_report/report/account_move_report_html.mako:61
-msgid "Debit"
-msgstr "Debe"
+#: report:addons/account_move_report/report/account_move_report_html.mako:99
+msgid "Status"
+msgstr "Estado"
+
+#. module: account_move_report
+#: report:addons/account_move_report/report/account_move_report_html.mako:90
+msgid "Tax Account"
+msgstr "Cuenta impuesto"
+
+#. module: account_move_report
+#: report:addons/account_move_report/report/account_move_report_html.mako:93
+msgid "Tax Amount"
+msgstr "Importe impuestos/base"
+
+#. module: account_move_report
+#: report:addons/account_move_report/report/account_move_report_html.mako:96
+msgid "Tax Secondary"
+msgstr "Impuesto Secundario"
+
+#. module: account_move_report
+#: code:addons/account_move_report/report/webkit_parser_header_fix.py:168
+#, python-format
+msgid "The command 'wkhtmltopdf' failed with                                  error code = %s. Message: %s"
+msgstr "The command 'wkhtmltopdf' failed with                                  error code = %s. Message: %s"
+
+#. module: account_move_report
+#: code:addons/account_move_report/report/webkit_parser_header_fix.py:163
+#, python-format
+msgid "The following diagnosis message was provided:\n"
+""
+msgstr "The following diagnosis message was provided:\n"
+""
 
 #. module: account_move_report
 #: report:addons/account_move_report/report/account_move_report_html.mako:52
-msgid "Partner"
-msgstr "Partner"
+msgid "To Review: "
+msgstr "A revisar: "
 
 #. module: account_move_report
-#: report:addons/account_move_report/report/account_move_report_html.mako:34
-msgid "Journal Entries: "
-msgstr "Póliza: "
+#: report:addons/account_move_report/report/account_move_report_html.mako:153
+msgid "Unbalanced"
+msgstr "Descuadrado"
+
+#. module: account_move_report
+#: code:addons/account_move_report/report/webkit_parser_header_fix.py:217
+#, python-format
+msgid "Webkit Report template not found !"
+msgstr "Webkit Report template not found !"
+
+#. module: account_move_report
+#: code:addons/account_move_report/report/webkit_parser_header_fix.py:167
+#, python-format
+msgid "Webkit error"
+msgstr "Webkit error"
+
+#. module: account_move_report
+#: code:addons/account_move_report/report/webkit_parser_header_fix.py:247
+#: code:addons/account_move_report/report/webkit_parser_header_fix.py:258
+#: code:addons/account_move_report/report/webkit_parser_header_fix.py:274
+#, python-format
+msgid "Webkit render"
+msgstr "Webkit render"
+
