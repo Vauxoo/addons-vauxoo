@@ -62,33 +62,108 @@ class account_invoice_tax(models.Model):
             fields.Date.context_today(invoice))
         company_currency = invoice.company_id.currency_id
         res = super(account_invoice_tax, self).compute(invoice)
+        tax_by_partner = {}
         for line in invoice.invoice_line:
             if line.invoice_broker_id and line.quantity == 0 and\
                     line.partner_broker_ok:
                 taxes = line.invoice_line_tax_id.compute_all(
                     (line.price_unit * (1 - (line.discount or 0.0) / 100.0)),
                     1.0, line.product_id, invoice.partner_id)['taxes']
+                partner_l_id = line.invoice_broker_id.partner_id.id
                 for tax in taxes:
-                    if res.get(tax.get('id', False), False):
-                        am_base = res.get(tax.get('id')).get('base', 0.0)
-                        tot_am_base = am_base + currency.round(
-                            tax.get('price_unit', 0.0))
-                        base_amount = res.get(tax.get('id')).get(
-                            'base_amount', 0.0) + currency.compute(
-                            tot_am_base * tax.get('base_sign', 0.0),
+                    base = currency.round(tax.get('price_unit', 0.0))
+                    amount = tax.get('amount', 0.0)
+                    if invoice.type in ('out_invoice', 'in_invoice'):
+                        tx_bs_am = currency.compute(base * tax.get(
+                            'base_sign', 0.0), company_currency, round=False)
+                        tx_am = currency.compute(
+                            tax.get('amount', 0.0) * tax.get('tax_sign', 0.0),
                             company_currency, round=False)
-                        res.get(tax.get('id')).update({
-                            'base': tot_am_base,
-                            'tax_partner_id':
-                                line.invoice_broker_id.partner_id and
-                                line.invoice_broker_id.partner_id.id or
-                                False,
-                            'amount': tax.get('amount', 0.0),
-                            'base_amount': base_amount,
-                            'tax_amount': currency.compute(
-                                tax.get('amount', 0.0) *
-                                tax.get('tax_sign', 0.0), company_currency,
-                                round=False)})
+                        base_code_id = tax.get('base_code_id', False)
+                        tax_code_id = tax.get('tax_code_id', False)
+                        account_id = tax.get(
+                            'account_collected_id', line.account_id.id)
+                        account_analytic_id = tax.get(
+                            'account_analytic_collected_id', False)
+                    else:
+                        tx_bs_am = currency.compute(
+                            base * tax.get('ref_base_sign', 0.0),
+                            company_currency, round=False)
+                        tx_am = currency.compute(
+                            tax.get('amount', 0.0) * tax.get(
+                                'ref_tax_sign', 0.0), company_currency,
+                            round=False)
+                        base_code_id = tax.get('ref_base_code_id', False)
+                        tax_code_id = tax.get('ref_tax_code_id', False)
+                        account_id = tax.get(
+                            'account_paid_id', line.account_id.id)
+                        account_analytic_id = tax.get(
+                            'account_analytic_paid_id', False)
+
+                    if tax.get('id', False) in tax_by_partner:
+                        if partner_l_id in tax_by_partner.get(tax.get('id')):
+                            tax_by_partner.get(
+                                tax.get('id')).get(partner_l_id).update({
+                                    'base': tax_by_partner.get(
+                                        tax.get('id')).get(partner_l_id).get(
+                                            'base', 0.0) + base,
+                                    'amount': tax_by_partner.get(
+                                        tax.get('id')).get(partner_l_id).get(
+                                            'amount', 0.0) + amount,
+                                    'base_amount': tax_by_partner.get(
+                                        tax.get('id')).get(partner_l_id).get(
+                                            'base_amount', 0.0) + tx_bs_am,
+                                    'tax_amount': tax_by_partner.get(
+                                        tax.get('id')).get(partner_l_id).get(
+                                            'tax_amount', 0.0) + tx_am
+                                })
+                        else:
+                            tax_by_partner.get(tax.get('id')).update({
+                                partner_l_id: {
+                                    'base': base,
+                                    'amount': amount,
+                                    'base_amount': tx_bs_am,
+                                    'tax_amount': tx_am,
+                                    'base_code_id': base_code_id,
+                                    'tax_code_id': tax_code_id,
+                                    'account_id': account_id,
+                                    'account_analytic_id': account_analytic_id,
+                                    'invoice_id': invoice.id,
+                                    'name': tax.get('name', ''),
+                                    'manual': False,
+                                    'sequence': tax.get('sequence', False),
+                                    'tax_id': tax.get('id'),
+                                    'tax_partner_id': partner_l_id
+                                }
+                            })
+                    else:
+                        tax_by_partner.update({
+                            tax.get('id'): {
+                                partner_l_id: {
+                                    'base': base,
+                                    'amount': amount,
+                                    'base_amount': tx_bs_am,
+                                    'tax_amount': tx_am,
+                                    'base_code_id': base_code_id,
+                                    'tax_code_id': tax_code_id,
+                                    'account_id': account_id,
+                                    'account_analytic_id': account_analytic_id,
+                                    'invoice_id': invoice.id,
+                                    'name': tax.get('name', ''),
+                                    'manual': False,
+                                    'sequence': tax.get('sequence', False),
+                                    'tax_id': tax.get('id'),
+                                    'tax_partner_id': partner_l_id
+                                }
+                            }
+                        })
+        for tax in res:
+            if tax not in tax_by_partner:
+                tax_by_partner.update({
+                    tax: {
+                        invoice.partner_id.id: res.get(tax)}})
+        for tax in tax_by_partner:
+            res.update({tax: tax_by_partner.get(tax)})
         return res
 
     def move_line_get(self, cr, uid, invoice_id, context=None):
@@ -117,6 +192,25 @@ class account_invoice_tax(models.Model):
 
 class account_invoice(models.Model):
     _inherit = 'account.invoice'
+
+    @api.multi
+    def button_reset_taxes(self):
+        account_invoice_tax = self.env['account.invoice.tax']
+        ctx = dict(self._context)
+        for invoice in self:
+            self._cr.execute(
+                "DELETE FROM account_invoice_tax "
+                "WHERE invoice_id=%s AND manual is False", (invoice.id,))
+            self.invalidate_cache()
+            partner = invoice.partner_id
+            if partner.lang:
+                ctx['lang'] = partner.lang
+            for taxe in account_invoice_tax.compute(
+                    invoice.with_context(ctx)).values():
+                for ltaxe in taxe:
+                    account_invoice_tax.create(taxe.get(ltaxe))
+        # dummy write on self to trigger recomputations
+        return self.with_context(ctx).write({'invoice_line': []})
 
     @api.multi
     def invoice_validate(self):
