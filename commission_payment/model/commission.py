@@ -502,13 +502,13 @@ class commission_payment(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         context = context or {}
         if not salesman_brw:
-            return False
+            return None
         comm_brw = self.browse(cr, uid, ids[0], context=context)
         user_ids = [usr_brw.id for usr_brw in comm_brw.user_ids]
         if not user_ids:
             return salesman_brw
         if salesman_brw.id not in user_ids:
-            return False
+            return None
         return salesman_brw
 
     def _get_commission_salesman_policy(self, cr, uid, ids, pay_id,
