@@ -52,7 +52,7 @@ class account_invoice_tax(models.Model):
     _inherit = "account.invoice.tax"
 
     @api.v8
-    def compute(self, invoice):
+    def compute_broker(self, invoice):
         """
         Super to this method, to calculate values to taxes from lines that your
         quantity is 0, and have invoice_broker_id.
@@ -61,7 +61,7 @@ class account_invoice_tax(models.Model):
             date=invoice.date_invoice or
             fields.Date.context_today(invoice))
         company_currency = invoice.company_id.currency_id
-        res = super(account_invoice_tax, self).compute(invoice)
+        res = self.compute(invoice)
         tax_by_partner = {}
         for line in invoice.invoice_line:
             if line.invoice_broker_id and line.quantity == 0 and\
@@ -197,20 +197,25 @@ class account_invoice(models.Model):
     def button_reset_taxes(self):
         account_invoice_tax = self.env['account.invoice.tax']
         ctx = dict(self._context)
+        res = super(account_invoice, self).button_reset_taxes()
         for invoice in self:
-            self._cr.execute(
-                "DELETE FROM account_invoice_tax "
-                "WHERE invoice_id=%s AND manual is False", (invoice.id,))
-            self.invalidate_cache()
             partner = invoice.partner_id
-            if partner.lang:
-                ctx['lang'] = partner.lang
-            for taxe in account_invoice_tax.compute(
-                    invoice.with_context(ctx)).values():
-                for ltaxe in taxe:
-                    account_invoice_tax.create(taxe.get(ltaxe))
+            if not partner.is_broker_ok:
+                continue
+            else:
+                self._cr.execute(
+                    "DELETE FROM account_invoice_tax "
+                    "WHERE invoice_id=%s AND manual is False", (invoice.id,))
+                self.invalidate_cache()
+                partner = invoice.partner_id
+                if partner.lang:
+                    ctx['lang'] = partner.lang
+                for taxe in account_invoice_tax.compute_broker(
+                        invoice.with_context(ctx)).values():
+                    for ltaxe in taxe:
+                        account_invoice_tax.create(taxe.get(ltaxe))
         # dummy write on self to trigger recomputations
-        return self.with_context(ctx).write({'invoice_line': []})
+        return res
 
     @api.multi
     def invoice_validate(self):
@@ -239,3 +244,50 @@ class account_invoice(models.Model):
             line, part, date)
         res = dict(res, partner_id=line.get('partner_id', False) or part)
         return res
+
+    @api.multi
+    def check_tax_lines(self, compute_taxes):
+        account_invoice_tax_var = self.env['account.invoice.tax']
+        if not self.partner_id.is_broker_ok:
+            super(account_invoice, self).check_tax_lines(compute_taxes)
+        else:
+            for tax in compute_taxes.values():
+                invoice_id = tax.get('invoice_id', False)
+                break
+            if invoice_id:
+                compute_taxes = account_invoice_tax_var.compute_broker(
+                    self.browse(invoice_id))
+            company_currency = self.company_id.currency_id
+            if not self.tax_line:
+                for tax in compute_taxes.values():
+                    for ltaxe in tax:
+                        account_invoice_tax_var.create(tax.get(ltaxe))
+            else:
+                tax_key = []
+                for tax in self.tax_line:
+                    if tax.manual:
+                        continue
+                    # start custom change
+                    key = (tax.tax_id.id)
+                    # end custom change
+                    tax_key.append(key)
+                    if key not in compute_taxes:
+                        raise except_orm(
+                            _('Warning!'), _(
+                                'Global taxes defined, but they are not in '
+                                'invoice lines !'))
+                    base = 0.0
+                    for ctax in compute_taxes.get(key).values():
+                        if ctax.get('tax_partner_id', False) ==\
+                                tax.tax_partner_id.id:
+                            base = ctax.get('base', 0.0)
+                            if abs(base - tax.base) >\
+                                    company_currency.rounding:
+                                raise except_orm(
+                                    _('Warning!'),
+                                    _('Tax base different!\nClick on compute '
+                                        'to update the tax base.'))
+                for key in compute_taxes:
+                    if key not in tax_key:
+                        raise except_orm(_('Warning!'), _(
+                            'Taxes are missing!\nClick on compute button.'))
