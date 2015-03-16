@@ -26,7 +26,7 @@
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 {
     "name": "Product Default Code Unique", 
-    "version": "1.1", 
+    "version": "2.0",
     "author": "Vauxoo", 
     "category": "", 
     "description": """
@@ -40,7 +40,7 @@
     "demo": [
         'demo/test_unique_ref_demo.xml',
     ], 
-    "data": [], 
+    "data": [],
     "test": [], 
     "js": [], 
     "css": [], 
