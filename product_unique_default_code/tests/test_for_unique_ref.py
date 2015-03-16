@@ -57,5 +57,6 @@ class TestForUniqueRef(TransactionCase):
         }
         product = self.product_model.create(product_data)
         self.assertTrue(
-            product.copy().default_code == '%s (copy)' % product.default_code,
-            "ERROR: New product has not a unique internal reference ...")
+            product.copy().default_code != product.default_code,
+            "ERROR: New product has not a unique internal reference ..."
+        )

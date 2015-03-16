@@ -50,19 +50,16 @@ class ProductTemplate(osv.Model):
 class ProductProduct(osv.Model):
     _inherit = "product.product"
 
-    def copy(self, cr, uid, id_, default=None, context=None):
+    @api.one
+    def copy(self, default=None):
 
         if not default:
             default = {}
 
-        product_default_code = self.browse(cr, uid, id_, context=context)
-
         default['default_code'] = (
-            product_default_code.default_code
-            and product_default_code.default_code + ' (copy)'
+            self.default_code
+            and self.default_code + ' (copy)'
             or False
         )
 
-        return super(product_product, self).copy(
-            cr, uid, id, default=default, context=context
-        )
+        return super(ProductProduct, self).copy(default=default)
