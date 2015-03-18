@@ -21,19 +21,20 @@
 
 
 {
-    'name': 'Lodi Number attachments in account_invoice',
+    'name': 'Supplier invoice - Quantity attachments',
     'version': '1.0',
     'author': 'Vauxoo',
     'category': '',
     'depends': [
-        'base',
         'account',
     ],
     'demo': [],
     'website': 'https://www.vauxoo.com',
     'description': """
-This module add  a field into account_invoice to show the
-Number of attachments by record in the tree view
+    This module was developed by request of the customer,
+    consisting visualize the amount of attachments on each invoice.
+    The module add a field into invoice to show the
+    number of attachments by record in the tree view.
     """,
     'data': [
         'views/account_invoice.xml',
