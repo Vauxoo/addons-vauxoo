@@ -43,7 +43,7 @@ class AccountInvoice(models.Model):
             record.qty_attachments = obj_attachment.search_count(
                 [('res_model', '=', 'account.invoice'),
                  ('res_id', '=', record.id)])
-
+"""
     @api.model
     def fields_view_get(self, view_id='account.invoice_tree',
                         view_type='tree', toolbar=False, submenu=False):
@@ -61,6 +61,6 @@ class AccountInvoice(models.Model):
                 doc.remove(node)
             res['arch'] = etree.tostring(doc)
         return res
-
+"""
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
