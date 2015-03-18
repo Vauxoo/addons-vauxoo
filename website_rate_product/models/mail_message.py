@@ -53,16 +53,13 @@ class product_template(osv.Model):
     def _get_rating(self, cr, uid, ids, field_name, arg, context):
         res = {}
         total = 0
-        message_obj = self.pool.get('mail.message')
+        cr.commit()
         for pid in ids:
-            message_ids = message_obj.search(cr, uid, [('res_id', '=', pid),
-                                                       ('model', '=',
-                                                        'product.template'),
-                                                       ('rating', '>', 0)])
-            if message_ids:
-                total = sum([i.rating for i in
-                             message_obj.browse(cr, uid, message_ids)]) /\
-                    len(message_ids)
+            cr.execute("select avg(rating) from mail_message where res_id = %s\
+                        and model = 'product.template' and rating > 0;" %
+                       (pid))
+            fall = cr.fetchall()
+            total = fall[0][0] if fall else total
             res[pid] = total
         return res
 

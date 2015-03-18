@@ -104,6 +104,9 @@ $(function() {
 });
 
 $( document ).ready(function() {
+  $('#stars_global').on('starrr:change', function(e, value){
+    $('#count').html(value);
+  });
 
   $('#stars').on('starrr:change', function(e, value){
     $('#count').html(value);

@@ -16,5 +16,10 @@
                 </div>
             </xpath>
         </template>
+        <template id="rating_product" inherit_id="website_sale.product" active="True" customize_show="True" name="Show Product Rating">
+            <xpath expr="//h1[@itemprop='name']" position="after">
+                <div id="stars_global" class="starrr" t-att-data-rating="product.rating"></div>
+            </xpath>
+        </template>
     </data>
 </openerp>
