@@ -21,8 +21,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-#
+
 from openerp.osv import osv, fields
 
 
@@ -30,6 +29,10 @@ class sale_order_line(osv.osv):
     _inherit = 'sale.order.line'
 
     _columns = {
-        'sequence2': fields.related('sequence', type='integer', relation='sale.order.line',
-            string='Sequence', help='Field to show the number of sequence in line')
+        'sequence2': fields.related(
+            'sequence',
+            type='integer',
+            relation='sale.order.line',
+            string='Sequence',
+            help='Field to show the number of sequence in line')
     }
