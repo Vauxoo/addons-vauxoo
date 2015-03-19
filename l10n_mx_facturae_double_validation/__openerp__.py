@@ -21,22 +21,32 @@
 
 
 {
-    'name': 'Add double account_invoice validation',
+    'name': 'Double validation in account_invoice',
     'version': '1.0',
     'author': 'Vauxoo',
     'category': '',
     'depends': [
-        'base',
         'account',
     ],
     'demo': [],
     'website': 'https://www.vauxoo.com',
     'description': """
-This module add  a field into account_invoice to show the
-Number of attachments by record in the tree view
+    This module :
+    * Add a group "group_validator"
+    * Hide the Validate button to the Draft invoice status
+    * Add a button "By Validate" visible to all.
+    * Add a state "By validating" to filter the invoices in the "By Validate"
+      (Create the filter)
+    * Add the button "validate" so that only users with the group
+      "group_validator" can press it.
+    * Users with the group "group_validator" will be able to validate
+      the facura e.
+    * Consider that states and buttons need to be done by workflow.
+
     """,
     'data': [
-        #'views/account_invoice.xml',
+        'security/two_validations_security.xml',
+        'views/two_validations_invoice_view.xml',
     ],
     'test': [],
     'installable': True,
