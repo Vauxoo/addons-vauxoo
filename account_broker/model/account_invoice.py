@@ -28,12 +28,6 @@ from openerp import models, fields, api, _
 from openerp.exceptions import except_orm
 
 
-class account_invoice_tax(models.Model):
-    _inherit = 'account.invoice.tax'
-
-    tax_partner_id = fields.Many2one('res.partner', 'Supplier', readonly=True)
-
-
 class AccountInvoiceLine(models.Model):
     _inherit = 'account.invoice.line'
 
@@ -50,6 +44,8 @@ class AccountInvoiceLine(models.Model):
 
 class account_invoice_tax(models.Model):
     _inherit = "account.invoice.tax"
+
+    tax_partner_id = fields.Many2one('res.partner', 'Supplier', readonly=True)
 
     @api.v8
     def compute_broker(self, invoice):
@@ -172,21 +168,28 @@ class account_invoice_tax(models.Model):
         line corresponding to tax with the partner to this, this when the
         line of tax is to register cost of to broker
         '''
-        res = super(account_invoice_tax, self).move_line_get(
-            cr, uid, invoice_id, context=context)
+        res = []
+        super(account_invoice_tax, self).move_line_get(cr, uid, invoice_id)
         tax_invoice_ids = self.search(cr, uid, [
             ('invoice_id', '=', invoice_id)], context=context)
         for inv_t in self.browse(cr, uid, tax_invoice_ids, context=context):
-            tax_name = inv_t.name or ''
-            tax_acc_id = inv_t.account_id.id
-            tax_code_id = inv_t.tax_code_id.id or None
-            if inv_t.tax_partner_id:
-                for tax in res:
-                    if tax.get('name', '') == tax_name and tax.get(
-                            'account_id', False) == tax_acc_id and tax.get(
-                            'tax_code_id', False) == tax_code_id:
-                        tax.update({
-                            'partner_id': inv_t.tax_partner_id.id or False})
+            if not inv_t.base_amount and not inv_t.tax_code_id and not\
+                    inv_t.tax_amount:
+                continue
+            res.append({
+                'type': 'tax',
+                'name': inv_t.name,
+                'price_unit': inv_t.amount,
+                'quantity': 1,
+                'price': inv_t.amount or 0.0,
+                'account_id': inv_t.account_id.id or False,
+                'tax_code_id': inv_t.tax_code_id.id or False,
+                'tax_amount': inv_t.tax_amount or False,
+                'account_analytic_id': inv_t.account_analytic_id.id or False,
+                'amount_base': abs(inv_t.base_amount) or 0.0,
+                'tax_id_secondary': inv_t.tax_id.id or False,
+                'partner_id': inv_t.tax_partner_id.id or False
+            })
         return res
 
 
