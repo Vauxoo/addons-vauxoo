@@ -35,12 +35,11 @@ class AccountInvoice(models.Model):
                                      compute="count_attachments",
                                      store=False)
 
-    @api.multi
+    @api.one
     def count_attachments(self):
         obj_attachment = self.env['ir.attachment']
-        for record in self:
-            record.qty_attachments = obj_attachment.search_count(
-                [('res_model', '=', 'account.invoice'),
-                 ('res_id', '=', record.id)])
+        self.qty_attachments = obj_attachment.search_count(
+            [('res_model', '=', 'account.invoice'),
+             ('res_id', '=', self.id,)])
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
