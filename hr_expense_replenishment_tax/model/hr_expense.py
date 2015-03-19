@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- encoding: utf-8 -*-
 # #############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
@@ -43,8 +42,8 @@ class hr_expense_expense(osv.Model):
         default = default.copy()
         default.update({'fully_applied_vat': False,
                         })
-        return super(hr_expense_expense, self).copy(
-            cr, uid, ids, default, context=context)
+        return super(hr_expense_expense, self).copy(cr, uid, ids, default,
+                                                    context=context)
 
     def payment_reconcile(self, cr, uid, ids, context=None):
         """ It reconcile the expense advance and expense invoice account move
@@ -67,8 +66,8 @@ class hr_expense_expense(osv.Model):
                 if voucher_brw.state == 'posted':
                     context.update({'payment_amount': voucher_brw.amount,
                                     'date_voucher': voucher_brw.date})
-                    self.create_her_tax(
-                        cr, uid, exp.id, aml={}, context=context)
+                    self.create_her_tax(cr, uid, exp.id, aml={},
+                                        context=context)
             self.apply_round_tax(cr, uid, exp.id, context=context)
         return True
 
@@ -81,11 +80,9 @@ class hr_expense_expense(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         exp = self.browse(cr, uid, ids, context=context)[0]
 
-        company_currency = self._get_company_currency(
-            cr, uid, exp.id, context)
+        company_currency = self._get_company_currency(cr, uid, exp.id, context)
 
-        current_currency = self._get_current_currency(
-            cr, uid, exp.id, context)
+        current_currency = self._get_current_currency(cr, uid, exp.id, context)
 
         # if exp.fully_applied_vat:
         #     return True
@@ -108,15 +105,17 @@ class hr_expense_expense(osv.Model):
         percent_pay = expense_amount and advance_amount / expense_amount or 1
 
         # amount_tax_inv = sum(
-        # [invoice.amount_tax for invoice in exp.invoice_ids] )
-        # amount_tax_pay = sum( [move_line_tax.debit for move_line_tax in\
-        #                          aml_obj.browse(cr, uid,
-        # self.move_tax_expense(cr, uid, exp, context=context))] )
-
-        # print amount_tax_inv,'amount_tax_invamount_tax_inv'
-        # print amount_tax_pay,'amount_tax_payamount_tax_payamount_tax_pay'
+        #   [invoice.amount_tax for invoice in exp.invoice_ids] )
         #
-        # if amount_tax_inv > amount_tax_pay:
+        # amount_tax_pay = sum(
+        #     [move_line_tax.debit for move_line_tax in aml_obj.browse(
+        #          cr, uid, self.move_tax_expense(
+        #              cr, uid, exp, context=context))] )
+        #       print amount_tax_inv,'amount_tax_invamount_tax_inv'
+        #       print amount_tax_pay,
+        #       'amount_tax_payamount_tax_payamount_tax_pay'
+        #
+        #    if amount_tax_inv > amount_tax_pay:
 
         for invoice in exp.invoice_ids:
             for tax in invoice.tax_line:
@@ -125,12 +124,14 @@ class hr_expense_expense(osv.Model):
                     account_tax_collected = tax.tax_id.account_collected_id.id
                     factor = acc_voucher_obj.get_percent_pay_vs_invoice(
                         cr, uid, tax.amount * percent_pay,
-                        tax.amount * percent_pay, context=context)
+                        tax.amount * percent_pay,
+                        context=context)
                     move_lines_tax = acc_voucher_obj.\
                         _preparate_move_line_tax(
                             cr, uid, account_tax_voucher,
-                            account_tax_collected, exp.account_move_id.id,
-                            'payment', invoice.partner_id.id,
+                            account_tax_collected,
+                            exp.account_move_id.id, 'payment',
+                            invoice.partner_id.id,
                             exp.account_move_id.period_id.id,
                             exp.account_move_id.journal_id.id,
                             move_date, company_currency,
@@ -239,7 +240,7 @@ class account_voucher(osv.Model):
 class account_move_line(osv.osv):
     _inherit = "account.move.line"
 
-    # pylint: disable=W0622
+    # pylint: disable = W0622
     def reconcile(self, cr, uid, ids, type='auto', writeoff_acc_id=False,
                   writeoff_period_id=False, writeoff_journal_id=False,
                   context=None):
@@ -254,11 +255,9 @@ class account_move_line(osv.osv):
                                               context=context):
                 context['apply_round'] = True
                 res = super(account_move_line, self).reconcile(
-                    cr, uid, ids, type=type,
-                    writeoff_acc_id=writeoff_acc_id,
+                    cr, uid, ids, type=type, writeoff_acc_id=writeoff_acc_id,
                     writeoff_period_id=writeoff_period_id,
-                    writeoff_journal_id=writeoff_journal_id,
-                    context=context)
+                    writeoff_journal_id=writeoff_journal_id, context=context)
                 if expense.state == "paid":
                     expense_obj.apply_round_tax(cr, uid, expense.id,
                                                 context=context)
@@ -268,5 +267,4 @@ class account_move_line(osv.osv):
         return super(account_move_line, self).reconcile(
             cr, uid, ids, type=type, writeoff_acc_id=writeoff_acc_id,
             writeoff_period_id=writeoff_period_id,
-            writeoff_journal_id=writeoff_journal_id,
-            context=context)
+            writeoff_journal_id=writeoff_journal_id, context=context)

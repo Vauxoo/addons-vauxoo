@@ -18,7 +18,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+# #############################################################################
 
 from openerp.osv import osv
 from openerp.tools.translate import _
@@ -45,5 +45,5 @@ class sale_order_line(osv.Model):
                 'target': 'current',
                 'nodestroy': True, }
         else:
-            raise osv.except_osv(_('Error!'), _(
-                "This sale order is not in draft state"))
+            raise osv.except_osv(_('Error!'),
+                                 _("This sale order is not in draft state"))
