@@ -19,7 +19,6 @@
             <field name="categ_id" ref="product.product_category_all"/>
             <field name="sale_ok" eval="False"/>
             <field name="purchase_ok" eval="True"/>
-            <field name="is_broker_ok" eval="True"/>
         </record>
 
     </data>
