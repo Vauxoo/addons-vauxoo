@@ -24,7 +24,7 @@ from openerp import models, fields
 class ProductAttributeValue(models.Model):
     _inherit = 'product.attribute.value'
 
-    description = fields.Text(string='Attribute Description', index=True,
+    description = fields.Html(string='Attribute Description', index=True,
                               help="Description on Module from the descriptor "
                               "file and/or README.md")
 
