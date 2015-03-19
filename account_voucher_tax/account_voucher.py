@@ -25,7 +25,6 @@
 # #############################################################################
 
 from openerp.osv import osv, fields
-
 from openerp.addons import decimal_precision as dp
 
 
@@ -72,8 +71,8 @@ class account_voucher(osv.Model):
     def onchange_partner_id(self, cr, uid, ids, partner_id, journal_id,
                             amount, currency_id, ttype, date, context=None):
         res = super(account_voucher, self).onchange_partner_id(
-            cr, uid, ids, partner_id, journal_id, amount, currency_id,
-            ttype, date, context=context)
+            cr, uid, ids, partner_id, journal_id, amount,
+            currency_id, ttype, date, context=context)
         res_compute = self.onchange_compute_tax(
             cr, uid, ids, res, ttype, date, context=context)
         return res_compute
@@ -582,8 +581,9 @@ class account_voucher_line_tax(osv.Model):
 
     def onchange_amount_tax(self, cr, uid, ids, amount, tax):
         res = {}
-        res['value'] = {'amount_tax': amount, 'amount_tax_unround': amount,
-                        'diff_amount_tax': abs(tax - amount)}
+        res['value'] = \
+            {'amount_tax': amount, 'amount_tax_unround': amount,
+             'diff_amount_tax': abs(tax - amount)}
         return res
 
     _columns = {

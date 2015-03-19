@@ -11,7 +11,7 @@
                     <field name="purchaser_id"/>
                 </xpath>
             </field>
-        </record> 
+        </record>
 
         <record id="purchase_requisition_ca_tree" model="ir.ui.view">
             <field name="name">purchase.requisition.contract.analyst.tree</field>
@@ -22,7 +22,7 @@
                     <field name="purchaser_id"/>
                 </xpath>
             </field>
-        </record> 
+        </record>
 
         <record id="purchase_requisition_ca_search" model="ir.ui.view">
             <field name="name">purchase.requisition.contract.analyst.search</field>
@@ -39,7 +39,18 @@
                 </xpath>
 
             </field>
-        </record> 
+        </record>
+
+        <record id="res_users_purchaser_form" model="ir.ui.view">
+            <field name="name">res.users.purchaser.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='tz']" position="after">
+                    <field name="is_purchaser"/>
+                </xpath>
+            </field>
+        </record>
 
     </data>
 </openerp>

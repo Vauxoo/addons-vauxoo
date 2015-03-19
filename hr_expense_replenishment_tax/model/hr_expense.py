@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- encoding: utf-8 -*-
 # #############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
@@ -239,7 +238,7 @@ class account_voucher(osv.Model):
 class account_move_line(osv.osv):
     _inherit = "account.move.line"
 
-    # pylint: disable=W0622
+    # pylint: disable = W0622
     def reconcile(self, cr, uid, ids, type='auto', writeoff_acc_id=False,
                   writeoff_period_id=False, writeoff_journal_id=False,
                   context=None):
