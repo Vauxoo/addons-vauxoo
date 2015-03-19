@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- encoding: utf-8 -*-
 # #############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
@@ -125,12 +124,14 @@ class hr_expense_expense(osv.Model):
                     account_tax_collected = tax.tax_id.account_collected_id.id
                     factor = acc_voucher_obj.get_percent_pay_vs_invoice(
                         cr, uid, tax.amount * percent_pay,
-                        tax.amount * percent_pay, context=context)
+                        tax.amount * percent_pay,
+                        context=context)
                     move_lines_tax = acc_voucher_obj.\
                         _preparate_move_line_tax(
                             cr, uid, account_tax_voucher,
-                            account_tax_collected, exp.account_move_id.id,
-                            'payment', invoice.partner_id.id,
+                            account_tax_collected,
+                            exp.account_move_id.id, 'payment',
+                            invoice.partner_id.id,
                             exp.account_move_id.period_id.id,
                             exp.account_move_id.journal_id.id,
                             move_date, company_currency,
@@ -239,7 +240,7 @@ class account_voucher(osv.Model):
 class account_move_line(osv.osv):
     _inherit = "account.move.line"
 
-    # pylint: disable=W0622
+    # pylint: disable = W0622
     def reconcile(self, cr, uid, ids, type='auto', writeoff_acc_id=False,
                   writeoff_period_id=False, writeoff_journal_id=False,
                   context=None):
