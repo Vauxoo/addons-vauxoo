@@ -36,6 +36,12 @@ msgid "Set to validate"
 msgstr "Establecer para validar"
 
 #. module: l10n_mx_facturae_double_validation
+#: code:addons/l10n_mx_facturae_double_validation/models/two_validations_invoice.py:36
+#, python-format
+msgid "By validating"
+msgstr "Por Validar"
+
+#. module: l10n_mx_facturae_double_validation
 #: view:account.invoice:0
 msgid "l10n_mx_facturae_double_validation.group_validator"
 msgstr "l10n_mx_facturae_double_validation.group_validator"

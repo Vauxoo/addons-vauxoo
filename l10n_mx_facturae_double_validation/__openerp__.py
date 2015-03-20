@@ -31,7 +31,8 @@
     'demo': [],
     'website': 'https://www.vauxoo.com',
     'description': """
-    This module :
+    This module performs twice Account invoice validation,
+    performing the following.
     * Add a group "group_validator"
     * Hide the Validate button to the Draft invoice status
     * Add a button "By Validate" visible to all.

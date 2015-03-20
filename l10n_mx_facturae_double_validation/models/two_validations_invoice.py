@@ -25,6 +25,7 @@
 ##############################################################################
 
 from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 
 class AccountInvoice(osv.Model):
@@ -32,7 +33,7 @@ class AccountInvoice(osv.Model):
 
     _columns = {
         'state': fields.selection([
-            ('validate', 'By validating'),
+            ('validate', _('By validating')),
             ('draft', 'Draft'),
             ('proforma', 'Pro-forma'),
             ('proforma2', 'Pro-forma'),
@@ -43,6 +44,8 @@ class AccountInvoice(osv.Model):
             track_visibility='onchange',
             help=' * The \'Draft\' status is used when a user is \
             encoding a new and unconfirmed Invoice. \
+            * The \'By validating\' status is used when an invoice is \
+            ready to be validate. \
             \n* The \'Pro-forma\' when invoice is in Pro-forma \
             status,invoice does not have an invoice number. \
             \n* The \'Open\' status is used when user create invoice,\
