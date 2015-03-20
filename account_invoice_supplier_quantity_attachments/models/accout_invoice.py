@@ -32,6 +32,7 @@ class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
     qty_attachments = fields.Integer("Attachments",
+                                     help='Number of attachments per invoice',
                                      compute="count_attachments",
                                      store=False)
 
