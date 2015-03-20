@@ -41,17 +41,13 @@ class AccountInvoice(osv.Model):
             ('cancel', 'Cancelled'), ],
             'Status', select=True, readonly=True,
             track_visibility='onchange',
-            help=' * The \'Draft\' status is used when a user is encoding a new and unconfirmed Invoice. \
-            \n* The \'Pro-forma\' when invoice is in Pro-forma status,invoice does not have an invoice number. \
-            \n* The \'Open\' status is used when user create invoice,a invoice number is generated.Its in open status till user does not pay invoice. \
-            \n* The \'Paid\' status is set automatically when the invoice is paid. Its related journal entries may or may not be reconciled. \
+            help=' * The \'Draft\' status is used when a user is \
+            encoding a new and unconfirmed Invoice. \
+            \n* The \'Pro-forma\' when invoice is in Pro-forma \
+            status,invoice does not have an invoice number. \
+            \n* The \'Open\' status is used when user create invoice,\
+            a invoice number is generated.Its in open status till user \
+            does not pay invoice. \
+            \n* The \'Paid\' status is set automatically when the invoice \
+            is paid. Its related journal entries may or may not be reconciled.\
             \n* The \'Cancelled\' status is used when user cancel invoice.')}
-
-    # go from canceled state to draft state
-    def action_cancel_draft(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'state': 'draft'})
-        wf_service = netsvc.LocalService("workflow")
-        for inv_id in ids:
-            wf_service.trg_delete(uid, 'account.invoice', inv_id, cr)
-            wf_service.trg_create(uid, 'account.invoice', inv_id, cr)
-        return True
