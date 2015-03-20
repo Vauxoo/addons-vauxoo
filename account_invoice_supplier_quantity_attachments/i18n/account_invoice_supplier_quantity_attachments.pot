@@ -18,10 +18,10 @@ msgstr ""
 #. module: account_invoice_supplier_quantity_attachments
 #: view:account.invoice:account_invoice_supplier_quantity_attachments.view_account_invoice_tree_qty_attachments
 msgid "Attachments"
-msgstr ""
+msgstr "Archivos Adjuntos"
 
 #. module: account_invoice_supplier_quantity_attachments
 #: model:ir.model,name:account_invoice_supplier_quantity_attachments.model_account_invoice
 msgid "Invoice"
-msgstr ""
+msgstr "Factura"
 
