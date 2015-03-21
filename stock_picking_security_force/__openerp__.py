@@ -1,9 +1,14 @@
 {
-    "name": "stock_picking_security_force", 
-    "version": "1.1", 
+    "name": "Force Availabity Secure",
+    "summary": "Add security to the button Force Availability", 
+    "version": "1.1.1", 
     "author": "Vauxoo", 
     "category": "Stock", 
-    "description": """ Add security to the button Force Availability, module stock.picking """, 
+    "description": """
+Force availability is a button to dangerous to be available for everybody.
+
+This module adds security to such feature.
+""", 
     "website": "www.vauxoo.com", 
     "license": "", 
     "depends": [

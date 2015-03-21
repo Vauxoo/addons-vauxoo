@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- encoding: utf-8 -*-
 # #############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
@@ -114,6 +113,53 @@ class hr_expense_expense(osv.Model):
             res[exp.id] = ail_ids
         return res
 
+    def her_entries(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        res = {}.fromkeys(ids, [])
+        for exp in self.browse(cr, uid, ids, context=context):
+            res[exp.id] += exp.account_move_id \
+                and [move.id for move in exp.account_move_id.line_id] or []
+            res[exp.id] += [line.id for line in exp.advance_ids]
+            res[exp.id] += [line2.id for pay in exp.payment_ids
+                            for line2 in pay.move_ids]
+            for inv in exp.invoice_ids:
+                if not inv.move_id:
+                    continue
+                for move2 in inv.move_id.line_id:
+                    res[exp.id] += [move2.id]
+        return res
+
+    def _her_entries(self, cr, uid, ids, field_name, arg, context=None):
+        context = context or {}
+        return self.her_entries(cr, uid, ids, context=context)
+
+    def _get_payment_status(self, cr, uid, ids, field_name, arg, context=None):
+        context = context or {}
+        res = {}.fromkeys(ids, False)
+        rex = {}.fromkeys(ids, [])
+        aml_obj = self.pool.get('account.move.line')
+        for id_entrie, aml_ids in self.her_entries(
+                cr, uid, ids, context=context).iteritems():
+            if not aml_ids:
+                continue
+            for aml_brw in aml_obj.browse(cr, uid, aml_ids, context=context):
+                if aml_brw.account_id.type not in ('payable', 'receivable'):
+                    continue
+                if aml_brw.reconcile_id:
+                    continue
+                rex[id_entrie] += [aml_brw.id]
+        for id_item, aml_ids in rex.iteritems():
+            exp_brw = self.browse(cr, uid, id_item, context=context)
+            if exp_brw.state == 'paid' and not aml_ids:
+                res[id_item] = True
+            elif exp_brw.state == 'paid' and aml_ids:
+                exp_brw.write({'state': 'process'})
+            elif exp_brw.state == 'process' and not aml_ids:
+                res[id_item] = True
+                exp_brw.write({'state': 'paid'})
+        return res
+
     _columns = {
         'partner_id': fields.related(
             'employee_id', 'address_home_id',
@@ -143,9 +189,20 @@ class hr_expense_expense(osv.Model):
             'account.move.line', 'expense_advance_rel',
             'expense_id', 'aml_id', string='Employee Advances',
             help="Advances associated to the expense employee."),
+        'payment_status': fields.function(
+            _get_payment_status, type='boolean',
+            string = 'Expense Payment Status',
+            store = {
+                _inherit: (lambda c, u, ids, cx: ids, ['aml_ids'], 50)
+            },),
+
+
+
+        'aml_ids': fields.function(
+            _her_entries, type='one2many', obj='account.move.line',
+            string='Expense Journal Entry Lines'),
         'payment_ids': fields.many2many(
-            'account.voucher', 'expense_pay_rel',
-            'expense_id', 'av_id',
+            'account.voucher', 'expense_pay_rel', 'expense_id', 'av_id',
             string=_('Expense Payments'),
             help=_('This table is a summary of the payments done to reconcile '
                    'the expense invoices, lines and advances. This is an only '
@@ -354,6 +411,13 @@ class hr_expense_expense(osv.Model):
         for exp in self.browse(cr, uid, ids, context=context):
             self.check_advance_no_empty_condition(cr, uid, exp.id,
                                                   context=context)
+            if not exp.account_move_id:
+                raise osv.except_osv(
+                    _('Warning Data Integrity Failure!!!'),
+                    _('Journal Entry for this Expense has been previously '
+                      'deleted, please cancel document and go through the '
+                      'previous steps up to this current step to recreate it!'
+                      ))
 
             # manage the expense move lines
             exp_aml_brws = exp.account_move_id and \
@@ -433,6 +497,15 @@ class hr_expense_expense(osv.Model):
             period_id = per_obj.find(cr, uid, dt=date_post)
             period_id = period_id and period_id[0]
             exp.write({'date_post': date_post})
+
+            if not exp.account_move_id:
+                raise osv.except_osv(
+                    _('Warning Data Integrity Failure!!!'),
+                    _('Journal Entry for this Expense has been previously '
+                      'deleted, please cancel document and go through the '
+                      'previous steps up to this current step to recreate it!'
+                      ))
+
             x_aml_ids = [aml_brw.id for aml_brw in exp.account_move_id.line_id]
 
             vals = {'date': date_post, 'period_id': period_id}
@@ -582,6 +655,15 @@ class hr_expense_expense(osv.Model):
             exp.employee_id.address_home_id.property_account_payable.id
         partner_id = partner_id or exp.employee_id.address_home_id and \
             exp.employee_id.address_home_id.id
+
+        if not exp.account_move_id:
+            raise osv.except_osv(
+                _('Warning Data Integrity Failure!!!'),
+                _('Journal Entry for this Expense has been previously '
+                  'deleted, please cancel document and go through the '
+                  'previous steps up to this current step to recreate it!'
+                  ))
+
         vals = {
             'move_id': am_id,
             'journal_id': exp.account_move_id.journal_id.id,
@@ -984,20 +1066,13 @@ class hr_expense_expense(osv.Model):
                                                     context=context)
 
     def show_entries(self, cr, uid, ids, context=None):
-        for exp in self.browse(cr, uid, ids, context=context):
-            res_exp = [move.id for move in exp.account_move_id.line_id]
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        res = self.her_entries(cr, uid, ids, context=context)
 
-            res_adv = [line.id for line in exp.advance_ids]
-
-            res_pay = [line2.id for pay in exp.payment_ids
-                       for line2 in pay.move_ids]
-
-            res_inv = [move2.id for inv in exp.invoice_ids
-                       for move2 in inv.move_id.line_id]
         return {
             'domain': "[('id','in',\
-                [" + ','.join([str(dat) for dat in res_exp +
-                               res_adv + res_pay + res_inv]) + "])]",
+                ["+','.join([str(res_id) for res_id in res[ids[0]]])+"])]",
             'name': _('Entries'),
             'view_type': 'form',
             'view_mode': 'tree,form',
@@ -1046,6 +1121,30 @@ class hr_expense_expense(osv.Model):
         if res:
             aml_obj.unlink(cr, uid, res, context=context)
         return True
+
+    def account_move_get(self, cr, uid, expense_id, context=None):
+        '''
+        This method prepare the creation of the account move related to the
+        given expense.
+
+        For this case it will override the date_confirm using date_post
+
+        :param expense_id: Id of voucher for which we are creating
+                           account_move.
+        :return: mapping between fieldname and value of account move to create
+        :rtype: dict
+        '''
+        context = context or {}
+        period_obj = self.pool.get('account.period')
+        expense = self.browse(cr, uid, expense_id, context=context)
+        date = expense.date_post
+        res = super(hr_expense_expense, self).account_move_get(
+            cr, uid, expense_id, context=context)
+        res.update({
+            'date': date,
+            'period_id': period_obj.find(cr, uid, date, context=context)[0],
+        })
+        return res
 
 
 class account_voucher(osv.Model):
