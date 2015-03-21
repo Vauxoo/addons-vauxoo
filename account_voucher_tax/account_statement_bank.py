@@ -522,6 +522,20 @@ class account_bank_statement_line(osv.osv):
                     'move_line_reconcile': [account_group.get(
                         move_account_tax)[1]]
                     })
+                if amount_ret_tax:
+                    dat.append({
+                        'account_tax_voucher':
+                            tax_id.account_retention_voucher_id.id,
+                        'account_tax_collected':
+                            tax_id.account_collected_id.id,
+                        'amount': abs(amount_ret_tax),
+                        'tax_id': tax_id,
+                        'tax_analytic_id':
+                            tax_id.account_analytic_collected_id and
+                            tax_id.account_analytic_collected_id.id or False,
+                        'move_line_reconcile': [account_group.get(
+                            move_account_tax)[1]],
+                    })
         return dat
 
     def _get_retention(self, cr, uid, account_group=None, tax=None):
