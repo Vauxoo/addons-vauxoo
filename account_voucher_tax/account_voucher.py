@@ -122,38 +122,71 @@ class account_voucher(osv.Model):
         for voucher in self.browse(cr, uid, [voucher_id], context=context):
             context.update({'amount_voucher': voucher.amount or 0.0})
             for line in voucher.line_ids:
-                if line.tax_line_ids:
-                    if line.amount > line.amount_original:
-                        amount_to_paid = line.amount_original
-                    else:
-                        amount_to_paid = line.amount
-                    factor = \
-                        ((amount_to_paid * 100) / line.amount_original) / 100
-                for line_tax in line.tax_line_ids:
+
+                if not line.amount:
+                    continue
+
+                factor = self.get_percent_pay_vs_invoice(
+                    cr, uid, line.amount_original, line.amount,
+                    context=context)
+
+                move = line.move_line_id
+                mv_line_dicts = [{
+                    'counterpart_move_line_id': move.id,
+                    'credit': move.debit,
+                    'debit': move.credit,
+                    'name': move.name}]
+
+                bank_statement_line_obj._get_factor_type(
+                    cr, uid, False, voucher.type, context=context)
+
+                dict_tax = bank_statement_line_obj._get_move_line_tax(
+                    cr, uid, mv_line_dicts, context=context)
+
+                for move_line_tax_dict in dict_tax:
+
+                    line_tax_id = move_line_tax_dict.get('tax_id')
+                    amount_base_secondary =\
+                        line_tax_id.amount and\
+                        line.amount_original / (1+line_tax_id.amount) or\
+                        move_line_tax_dict.get('amount_base_secondary')
+                    account_tax_voucher =\
+                        move_line_tax_dict.get('account_tax_voucher')
+                    account_tax_collected =\
+                        move_line_tax_dict.get('account_tax_collected')
+                    amount_total_tax = move_line_tax_dict.get('amount', 0)
+
+                # if line.tax_line_ids:
+                #     if line.amount > line.amount_original:
+                #         amount_to_paid = line.amount_original
+                #     else:
+                #         amount_to_paid = line.amount
+                #     factor = \
+                #         ((amount_to_paid * 100) / line.amount_original) / 100
+                # for line_tax in line.tax_line_ids:
 
                     move_line_rec = []
-                    amount_tax_unround = line_tax.amount_tax_unround
+                #     amount_tax_unround = line_tax.amount_tax_unround
 
-                    if voucher.type in ('sale', 'receipt'):
-                        account_tax_voucher = \
-                            line_tax.tax_id.account_collected_voucher_id.id
-                    else:
-                        account_tax_voucher = \
-                            line_tax.tax_id.account_paid_voucher_id.id
-                    account_tax_collected = \
-                        line_tax.tax_id.account_collected_id.id
+                    # if voucher.type in ('sale', 'receipt'):
+                    #     account_tax_voucher = \
+                    #         line_tax.tax_id.account_collected_voucher_id.id
+                    # else:
+                    #     account_tax_voucher = \
+                    #         line_tax.tax_id.account_paid_voucher_id.id
+                    # account_tax_collected = \
+                    #     line_tax.tax_id.account_collected_id.id
                     context['date'] = voucher.date
-                    reference_amount = line_tax.amount_tax
+                    reference_amount = amount_total_tax * abs(factor)
                     move_lines_tax = self._preparate_move_line_tax(
                         cr, uid, account_tax_voucher, account_tax_collected,
                         move_id, voucher.type, voucher.partner_id.id,
                         voucher.period_id.id, voucher.journal_id.id,
                         voucher.date, company_currency, reference_amount,
-                        amount_tax_unround, current_currency,
-                        line_tax.id, line_tax.tax_id,
-                        line_tax.analytic_account_id and
-                        line_tax.analytic_account_id.id or False,
-                        line_tax.amount_base,
+                        reference_amount, current_currency, False,
+                        move_line_tax_dict.get('tax_id'),
+                        move_line_tax_dict.get('tax_analytic_id'),
+                        amount_base_secondary,
                         factor, context=context)
                     for move_line_tax in move_lines_tax:
                         move_create = move_line_obj.create(
@@ -161,21 +194,21 @@ class account_voucher(osv.Model):
                         move_ids.append(move_create)
                         move_line_rec.append(move_create)
 
-                    # ID de la aml del impuesto que se esta pagando
-                    # es necesario tenerlo en este momento para enviarlo
-                    # a la funcion que concilia los impuestos en el pago
-                    move_counterpart_line_tax = {
-                        'move_line_reconcile': [line_tax.move_line_id.id]}
+                    # # ID de la aml del impuesto que se esta pagando
+                    # # es necesario tenerlo en este momento para enviarlo
+                    # # a la funcion que concilia los impuestos en el pago
+                    # move_counterpart_line_tax = {
+                    #     'move_line_reconcile': [line_tax.move_line_id.id]}
 
-                    # Se actuliza context con el factor que le corresponde
-                    # dependiendo compra/venta para determinar credit/debit
-                    # de las aml creadas para el diferencial cambiario
-                    bank_statement_line_obj._get_factor_type(
-                        cr, uid, False, voucher.type, context=context)
+                    # # Se actuliza context con el factor que le corresponde
+                    # # dependiendo compra/venta para determinar credit/debit
+                    # # de las aml creadas para el diferencial cambiario
+                    # bank_statement_line_obj._get_factor_type(
+                    #     cr, uid, False, voucher.type, context=context)
 
                     move_rec_exch = bank_statement_line_obj.\
                         _get_exchange_reconcile(
-                            cr, uid, move_counterpart_line_tax, move_line_rec,
+                            cr, uid, move_line_tax_dict, move_line_rec,
                             line.amount, line.amount_unreconciled,
                             voucher, company_currency,
                             current_currency, context=context)
