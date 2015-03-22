@@ -23,6 +23,7 @@
 from openerp.tools.translate import _
 from openerp.osv import fields, osv
 from openerp.addons.aging_due_report.report.parser import aging_parser as ag
+from pandas import DataFrame
 
 
 class account_aging_wizard_document(osv.TransientModel):
@@ -180,7 +181,26 @@ class account_aging_partner_wizard(osv.osv_memory):
             args += [('account_id.type', '=', 'payable')]
         aml_ids = aml_obj.search(cr, uid, args, context=context)
         res = []
+
+        # From here on create a new method that consumes the aml_ids
+        # This method make the groupings and return the results ready to be
+        # used in the original place where the method was called
+        if not aml_ids:
+            return []
+        aml_rd = aml_obj.read(
+            cr, uid, aml_ids, ['partner_id', 'reconcile_partial_id', 'debit',
+                               'credit', 'amount_currency', 'currency_id'],
+            load=None, context=context)
+        aml_data = DataFrame(aml_rd).set_index('id')
+        aml_data_grouped = aml_data.groupby(['partner_id',
+                                            'reconcile_partial_id'])
+
+        aml_data_groups = aml_data_grouped.groups
+        import pdb; pdb.set_trace()
+
         for aml_brw in aml_obj.browse(cr, uid, aml_ids, context=context):
+            # ask in this step a read for the aml_ids, this will allow to group
+            # later the data
             # TODO: When currency_id is not None then convert values or use
             # other values like amount_currency
             currency_id = (aml_brw.currency_id and aml_brw.currency_id.id or
