@@ -198,19 +198,10 @@ class account_aging_partner_wizard(osv.osv_memory):
         aml_data_groups = aml_data_grouped.groups
         import pdb; pdb.set_trace()
 
-        for aml_brw in aml_obj.browse(cr, uid, aml_ids, context=context):
-            # ask in this step a read for the aml_ids, this will allow to group
-            # later the data
-            # TODO: When currency_id is not None then convert values or use
-            # other values like amount_currency
-            currency_id = (aml_brw.currency_id and aml_brw.currency_id.id or
-                           aml_brw.company_id.currency_id.id)
-            total = (sel == 'customer' and aml_brw.debit or
-                     sel == 'supplier' and aml_brw.credit or 0.0)
-            payment = (sel == 'customer' and aml_brw.credit or
-                       sel == 'supplier' and aml_brw.debit or 0.0)
-            res.append({
-                'partner_id': aml_brw.partner_id.id,
+        for key, val in aml_data_groups.iteritems():
+            partner_id, reconcile_id = key
+            doc = {
+                'partner_id': partner_id,
                 # 'wh_vat': wh_vat,
                 # 'wh_islr': wh_islr,
                 # 'wh_muni': wh_muni,
@@ -218,13 +209,48 @@ class account_aging_partner_wizard(osv.osv_memory):
                 # 'debit_note': debit_note,
                 # 'credit_note': credit_note,
                 # 'refund_brws': refund_brws,
-                'payment': payment,
+                'payment': 0.0,
                 # 'payment_left': payment_left,
-                # 'residual': residual,
+                'residual': 0.0,
                 # 'due_days': due_days,
-                'currency_id': currency_id,
-                'total': total,
-                'date_due': aml_brw.date_maturity or aml_brw.date})
+                'currency_id': False,
+                'total': 0.0,
+                # 'date_due': aml_brw.date_maturity or aml_brw.date}
+                'date_due': False}
+            for aml_brw in aml_obj.browse(cr, uid, aml_ids, context=context):
+                # ask in this step a read for the aml_ids, this will allow to
+                # group later the data
+                # TODO: When currency_id is not None then convert values or use
+                # other values like amount_currency
+                currency_id = (aml_brw.currency_id and aml_brw.currency_id.id or
+                            aml_brw.company_id.currency_id.id)
+                total = (sel == 'customer' and aml_brw.debit or
+                        sel == 'supplier' and aml_brw.credit or 0.0)
+                payment = (sel == 'customer' and aml_brw.credit or
+                        sel == 'supplier' and aml_brw.debit or 0.0)
+                if not reconcile_id:
+                    res.append({
+                        'partner_id': aml_brw.partner_id.id,
+                        # 'wh_vat': wh_vat,
+                        # 'wh_islr': wh_islr,
+                        # 'wh_muni': wh_muni,
+                        # 'wh_src': wh_src,
+                        # 'debit_note': debit_note,
+                        # 'credit_note': credit_note,
+                        # 'refund_brws': refund_brws,
+                        'payment': payment,
+                        # 'payment_left': payment_left,
+                        'residual': (total - payment),
+                        # 'due_days': due_days,
+                        'currency_id': currency_id,
+                        'total': total,
+                        'date_due': aml_brw.date_maturity or aml_brw.date})
+                else:
+                    doc['payment'] += payment
+                    doc['total'] += total
+                    doc['residual'] += (total - payment)
+            if reconcile_id:
+                res.append(doc)
         return res
 
     def compute_lines(self, cr, uid, ids, partner_ids, context=None):
