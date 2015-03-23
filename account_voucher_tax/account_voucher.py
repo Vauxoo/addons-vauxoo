@@ -110,6 +110,8 @@ class account_voucher(osv.Model):
 
     def voucher_move_line_tax_create(self, cr, uid, voucher_id, move_id,
                                      context=None):
+        if context is None:
+            context = {}
         bank_statement_line_obj = self.pool.get('account.bank.statement.line')
         move_line_obj = self.pool.get('account.move.line')
         company_currency = self._get_company_currency(
