@@ -23,12 +23,14 @@
 from openerp.osv import osv, fields
 from lxml import etree
 from openerp import tools
+from openerp.tools import _
 
 
 class merge_fuse_wizard(osv.TransientModel):
     _name = 'merge.fuse.wizard'
 
-    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form',
+                        context=None, toolbar=False, submenu=False):
         result = super(merge_fuse_wizard, self).fields_view_get(
             cr, uid, view_id, view_type, context, toolbar, submenu)
         if context.get('merge_fuse_object'):
@@ -38,9 +40,8 @@ class merge_fuse_wizard(osv.TransientModel):
             all_fields = {}
             xml_form = etree.Element(
                 'form', {'string': tools.ustr(fuse_data.name)})
-            xml_group = etree.SubElement(xml_form, 'group', {'colspan': '4'})
             etree.SubElement(xml_form, 'separator', {
-                             'string': 'About to consolidate the selected records in one', 'colspan': '6'})
+                             'string': _('Records to be consolidated'), 'colspan': '6'})
             # TODO Creating a tree with the selected records, allowing to
             # select which record will be the main
             xml_group3 = etree.SubElement(
@@ -48,14 +49,15 @@ class merge_fuse_wizard(osv.TransientModel):
             etree.SubElement(xml_group3, 'button', {
                              'string': 'Close', 'icon': "gtk-close", 'special': 'cancel'})
             etree.SubElement(xml_group3, 'button', {
-                             'string': 'Apply', 'icon': "gtk-execute", 'type': 'object', 'name': "action_apply"})
+                             'string': 'Apply', 'icon': "gtk-execute",
+                             'type': 'object', 'name': "action_apply"})
             root = xml_form.getroottree()
             result['arch'] = etree.tostring(root)
             result['fields'] = all_fields
-            print result
         return result
 
     def create(self, cr, uid, vals, context=None):
+        # TODO: migrate to new api, context will brake everything.
         if context.get('active_model') and context.get('active_ids'):
             active_ids = context.get('active_ids')
             base_id = active_ids[0]
@@ -64,7 +66,8 @@ class merge_fuse_wizard(osv.TransientModel):
             property_obj = self.pool.get('ir.property')
             related_ids = models_obj.search(cr, uid, [('ttype', 'in', ('many2one', 'one2many',
                                                                        'many2many')),
-                                                      ('relation', '=', str(context.get('active_model')))])  # get the models related to the one to fuse
+                                                      ('relation', '=',
+                                                       str(context.get('active_model')))])
             can = True
             for related in models_obj.browse(cr, uid, related_ids):
                 cr.commit()
@@ -80,7 +83,8 @@ class merge_fuse_wizard(osv.TransientModel):
                             context.get('active_model'), field_id)
                         property_ids += property_obj.search(cr, uid,
                                                             [('fields_id', '=', related.id),
-                                                             ('value_reference', '=', v_reference)],
+                                                             ('value_reference',
+                                                              '=', v_reference)],
                                                             context=context)
 
                     if property_ids:
@@ -132,7 +136,8 @@ class merge_fuse_wizard(osv.TransientModel):
 class merge_editing_wizard(osv.TransientModel):
     _name = 'merge.editing.wizard'
 
-    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form',
+                        context=None, toolbar=False, submenu=False):
         result = super(merge_editing_wizard, self).fields_view_get(
             cr, uid, view_id, view_type, context, toolbar, submenu)
         if context.get('merge_editing_object'):
@@ -152,75 +157,116 @@ class merge_editing_wizard(osv.TransientModel):
                     field_info = model_obj.fields_get(
                         cr, uid, [field.name], context)
                     all_fields[field.name] = field_info[field.name]
-                    all_fields["selection_" + field.name] = {'type': 'selection', 'string': field_info[field.name][
-                        'string'], 'selection': [('set', 'Set'), ('remove_m2m', 'Remove'), ('add', 'Add')]}
+                    all_fields["selection_" + field.name] = {'type': 'selection',
+                                                             'string':
+                                                             field_info[field.name]['string'],
+                                                             'selection': [('set', 'Set'),
+                                                                           ('remove_m2m',
+                                                                            'Remove'),
+                                                                           ('add', 'Add')]}
                     xml_group = etree.SubElement(
                         xml_group, 'group', {'colspan': '4'})
                     etree.SubElement(xml_group, 'separator', {
                                      'string': field_info[field.name]['string'], 'colspan': '2'})
                     etree.SubElement(xml_group, 'field', {
-                                     'name': "selection_" + field.name, 'colspan': '2', 'nolabel': '1'})
+                                     'name': "selection_" + field.name, 'colspan': '2',
+                                     'nolabel': '1'})
                     etree.SubElement(xml_group, 'field', {
-                                     'name': field.name, 'colspan': '4', 'nolabel': '1', 'attrs': "{'invisible':[('selection_" + field.name + "','=','remove_m2m')]}"})
+                                     'name': field.name, 'colspan': '4',
+                                     'nolabel': '1',
+                                     'attrs': "{'invisible':[('selection_" + field.name + "','=','remove_m2m')]}"})  # noqa
                 elif field.ttype == "many2one":
                     field_info = model_obj.fields_get(
                         cr, uid, [field.name], context)
                     if field_info:
-                        all_fields["selection_" + field.name] = {'type': 'selection', 'string': field_info[
-                            field.name]['string'], 'selection': [('set', 'Set'), ('remove', 'Remove')]}
+                        all_fields["selection_" + field.name] = {'type': 'selection',
+                                                                 'string': field_info[field.name]['string'],  # noqa
+                                                                 'selection': [('set', 'Set'),
+                                                                               ('remove',
+                                                                                'Remove')]}
                         all_fields[field.name] = {
-                            'type': field.ttype, 'string': field.field_description, 'relation': field.relation}
+                            'type': field.ttype,
+                            'string': field.field_description,
+                            'relation': field.relation
+                        }
                         etree.SubElement(
-                            xml_group, 'field', {'name': "selection_" + field.name, 'colspan': '2'})
+                            xml_group, 'field',
+                            {'name': "selection_" + field.name, 'colspan': '2'})
                         etree.SubElement(xml_group, 'field', {
-                                         'name': field.name, 'nolabel': '1', 'colspan': '2', 'attrs': "{'invisible':[('selection_" + field.name + "','=','remove')]}"})
+                                         'name': field.name,
+                                         'nolabel': '1',
+                                         'colspan': '2',
+                                         'attrs': "{'invisible':[('selection_" + field.name + "','=','remove')]}"})  # noqa
                 elif field.ttype == "char":
                     field_info = model_obj.fields_get(
                         cr, uid, [field.name], context)
-                    all_fields["selection_" + field.name] = {'type': 'selection', 'string': field_info[
-                        field.name]['string'], 'selection': [('set', 'Set'), ('remove', 'Remove')]}
+                    all_fields["selection_" + field.name] = {'type': 'selection',
+                                                             'string': field_info[field.name]['string'],  # noqa
+                                                             'selection': [('set', 'Set'), ('remove', 'Remove')]}  # noqa
                     all_fields[field.name] = {
-                        'type': field.ttype, 'string': field.field_description, 'size': field.size or 256}
+                        'type': field.ttype,
+                        'string': field.field_description,
+                        'size': field.size or 256
+                    }
                     etree.SubElement(xml_group, 'field', {
-                                     'name': "selection_" + field.name, 'colspan': '2', 'colspan': '2'})
+                                     'name': "selection_" + field.name,
+                                     'colspan': '2',
+                                     'colspan': '2'})
                     etree.SubElement(xml_group, 'field', {
-                                     'name': field.name, 'nolabel': '1', 'attrs': "{'invisible':[('selection_" + field.name + "','=','remove')]}", 'colspan': '2'})
+                                     'name': field.name, 'nolabel': '1',
+                        'attrs': "{'invisible':[('selection_" + field.name + "','=','remove')]}", 'colspan': '2'})  # noqa : TODO This kind of dicts should be real dicts converted to string not concatenated strings, really ugly and error propen
                 elif field.ttype == 'selection':
                     field_info = model_obj.fields_get(
                         cr, uid, [field.name], context)
-                    all_fields["selection_" + field.name] = {'type': 'selection', 'string': field_info[
-                        field.name]['string'], 'selection': [('set', 'Set'), ('remove', 'Remove')]}
+                    all_fields["selection_" + field.name] = {'type': 'selection',
+                                                             'string': field_info[field.name]['string'],  # noqa
+                                                             'selection': [('set', 'Set'), ('remove', 'Remove')]}  # noqa
                     field_info = model_obj.fields_get(
                         cr, uid, [field.name], context)
                     etree.SubElement(
                         xml_group, 'field', {'name': "selection_" + field.name, 'colspan': '2'})
                     etree.SubElement(xml_group, 'field', {
-                                     'name': field.name, 'nolabel': '1', 'colspan': '2', 'attrs': "{'invisible':[('selection_" + field.name + "','=','remove')]}"})
+                                     'name': field.name, 'nolabel': '1', 'colspan': '2', 'attrs': "{'invisible':[('selection_" + field.name + "','=','remove')]}"})  # noqa
                     all_fields[field.name] = {
-                        'type': field.ttype, 'string': field.field_description, 'selection': field_info[field.name]['selection']}
+                        'type': field.ttype, 'string': field.field_description,
+                        'selection': field_info[field.name]['selection']}
                 else:
                     field_info = model_obj.fields_get(
                         cr, uid, [field.name], context)
                     all_fields[field.name] = {
                         'type': field.ttype, 'string': field.field_description}
-                    all_fields["selection_" + field.name] = {'type': 'selection', 'string': field_info[
-                        field.name]['string'], 'selection': [('set', 'Set'), ('remove', 'Remove')]}
+                    all_fields["selection_" + field.name] = {'type': 'selection',
+                                                             'string': field_info[field.name]['string'],  # noqa
+                                                             'selection': [('set', 'Set'),
+                                                                           ('remove', 'Remove')]}
                     if field.ttype == 'text':
                         xml_group = etree.SubElement(
                             xml_group, 'group', {'colspan': '6'})
                         etree.SubElement(xml_group, 'separator', {
-                                         'string': all_fields[field.name]['string'], 'colspan': '2'})
+                                         'string': all_fields[field.name]['string'],
+                                         'colspan': '2'})
                         etree.SubElement(xml_group, 'field', {
-                                         'name': "selection_" + field.name, 'colspan': '2', 'nolabel': '1'})
+                                         'name': "selection_" + field.name,
+                                         'colspan': '2', 'nolabel': '1'})
                         etree.SubElement(xml_group, 'field', {
-                                         'name': field.name, 'colspan': '4', 'nolabel': '1', 'attrs': "{'invisible':[('selection_" + field.name + "','=','remove')]}"})
+                                         'name': field.name,
+                                         'colspan': '4',
+                                         'nolabel': '1',
+                                         'attrs': "{'invisible':[('selection_" + field.name + "','=','remove')]}"})  # noqa
                     else:
-                        all_fields["selection_" + field.name] = {'type': 'selection', 'string': field_info[
-                            field.name]['string'], 'selection': [('set', 'Set'), ('remove', 'Remove')]}
+                        all_fields["selection_" + field.name] = {'type': 'selection',
+                                                                 'string': field_info[field.name]['string'],  # noqa
+                                                                 'selection': [('set', 'Set'),
+                                                                               ('remove',
+                                                                                'Remove')]}
                         etree.SubElement(
-                            xml_group, 'field', {'name': "selection_" + field.name, 'colspan': '2', })
+                            xml_group, 'field', {'name': "selection_" + field.name,
+                                                 'colspan': '2', })
                         etree.SubElement(xml_group, 'field', {
-                                         'name': field.name, 'nolabel': '1', 'attrs': "{'invisible':[('selection_" + field.name + "','=','remove')]}", 'colspan': '2', })
+                                         'name': field.name,
+                                         'nolabel': '1',
+                                         'attrs': "{'invisible':[('selection_" + field.name + "','=','remove')]}",  # noqa
+                                         'colspan': '2', })
 
             etree.SubElement(
                 xml_form, 'separator', {'string': '', 'colspan': '6'})
@@ -229,7 +275,10 @@ class merge_editing_wizard(osv.TransientModel):
             etree.SubElement(xml_group3, 'button', {
                              'string': 'Close', 'icon': "gtk-close", 'special': 'cancel'})
             etree.SubElement(xml_group3, 'button', {
-                             'string': 'Apply', 'icon': "gtk-execute", 'type': 'object', 'name': "action_apply"})
+                             'string': 'Apply',
+                             'icon': "gtk-execute",
+                             'type': 'object',
+                             'name': "action_apply"})
 
             root = xml_form.getroottree()
             result['arch'] = etree.tostring(root)
@@ -238,7 +287,6 @@ class merge_editing_wizard(osv.TransientModel):
 
     def create(self, cr, uid, vals, context=None):
         if context.get('active_model') and context.get('active_ids'):
-            print "Modelo activo", context.get('active_model')
             model_obj = self.pool.get(context.get('active_model'))
             dict = {}
             for key, val in vals.items():
