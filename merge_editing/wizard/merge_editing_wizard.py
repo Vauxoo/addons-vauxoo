@@ -23,7 +23,8 @@
 from openerp.osv import osv, fields
 from lxml import etree
 from openerp import tools
-from openerp.tools import _
+from openerp.tools.translate import _
+
 
 
 class merge_fuse_wizard(osv.TransientModel):
