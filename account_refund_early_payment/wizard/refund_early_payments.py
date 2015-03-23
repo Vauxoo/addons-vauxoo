@@ -22,21 +22,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp.osv import fields, osv
-from openerp.addons.account.wizard import account_invoice_refund as air
+from openerp import fields, api, models
 from openerp.tools import float_compare
 
 
-class account_invoice_refund(osv.osv_memory):
+class account_invoice_refund(models.TransientModel):
     """Refunds invoice"""
 
     _inherit = "account.invoice.refund"
-
-    filter_refund_inh = \
-        air.account_invoice_refund._columns.get('filter_refund').__dict__
-    REFUND_METHOD = filter_refund_inh.get('selection')
-    REFUND_METHOD.append(('early_payment',
-                         'Early payment: Discount early payment'))
 
     def _search_xml_id(self, cur, uid, model, record_xml_id, context=None):
         if context is None:
@@ -85,18 +78,20 @@ class account_invoice_refund(osv.osv_memory):
             }
         }
 
-    _columns = {
-        'filter_refund': fields.selection(
-            REFUND_METHOD,
-            "Refund Method",
-            required=True,
-            help='Refund base on this type. You can not\
-                  Modify and Cancel if the invoice is already reconciled'),
-        'percent': fields.float('Percent'),
-        'product_id': fields.many2one('product.product', string='Product'),
-        'amount_total': fields.float('Amount'),
-        'active_id': fields.integer('Active ID'),
-    }
+    @api.model
+    def _get_percent_default(self):
+        """
+        It is a hook method. In order to put some smart computation.
+        """
+        return 5.0
+
+
+    filter_refund = fields.Selection(selection_add=[('early_payment',
+                                                     'Early payment: Discount early payment')])
+    percent = fields.Float('Percent', default=_get_percent_default)
+    product_id = fields.Many2one('product.product', string='Product')
+    amount_total = fields.Float('Amount')
+    active_id = fields.Integer('Active ID')
 
     def compute_refund(self, cur, uid, ids, mode='refund', context=None):
         if context is None:
@@ -206,14 +201,6 @@ class account_invoice_refund(osv.osv_memory):
                             context=context)
         return result
 
-    def _get_percent_default(self, cur, uid, ids, context=None):
-        """
-        It is a hook method. In order to put some smart computation.
-        """
-        if context is None:
-            context = {}
-        return 5.0
-
     _defaults = {
         'product_id': lambda self, cur,
         uid, c: self._search_xml_id(cur,
@@ -221,6 +208,5 @@ class account_invoice_refund(osv.osv_memory):
                                     'account_refund_early_payment',
                                     'product_discount_early_payment',
                                     context=c),
-        'percent': _get_percent_default,
 
     }
