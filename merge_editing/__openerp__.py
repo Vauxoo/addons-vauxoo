@@ -22,11 +22,11 @@
 
 
 {
-    "name" : "Mass Editing",
-    "version" : "1.1",
-    "author" : "Serpent Consulting Services",
-    "category" : "Tools",
-    "website" : "http://www.serpentcs.com",
+    "name": "Mass Editing",
+    "version": "1.1",
+    "author": "Serpent Consulting Services",
+    "category": "Tools",
+    "website": "http://www.serpentcs.com",
     "description": """This module provides the functionality to add, update or remove the values of more than one records on the fly at the same time.
         You can configure merge editing for any OpenERP model. 
         The video explaining the features is available at http://t.co/wukYMx1A
