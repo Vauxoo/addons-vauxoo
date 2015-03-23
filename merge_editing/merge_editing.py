@@ -31,15 +31,21 @@ class merge_object(osv.Model):
     _columns = {
         'name': fields.char("Name", size=64, required=True, select=1),
         'model_id': fields.many2one('ir.model', 'Model', required=True, select=1),
-        'field_ids': fields.many2many('ir.model.fields', 'merge_field_rel', 'merge_id', 'field_id', 'Fields'),
-        'ref_ir_act_window': fields.many2one('ir.actions.act_window', 'Sidebar action', readonly=True,
-                                             help="Sidebar action to make this template available on records "
+        'field_ids': fields.many2many('ir.model.fields', 'merge_field_rel',
+                                      'merge_id', 'field_id', 'Fields'),
+        'ref_ir_act_window': fields.many2one('ir.actions.act_window',
+                                             'Sidebar action', readonly=True,
+                                             help="Sidebar action to make this"
+                                             " template available on records "
                                              "of the related document model"),
         'ref_ir_value': fields.many2one('ir.values', 'Sidebar button', readonly=True,
                                         help="Sidebar button to open the sidebar action"),
-        'ref_ir_act_window_fuse': fields.many2one('ir.actions.act_window', 'Sidebar fuse action', readonly=True,
-                                                  help="Sidebar action to make this template available on records "
-                                                  "of the related document model"),
+        'ref_ir_act_window_fuse': fields.many2one('ir.actions.act_window',
+                                                  'Sidebar fuse action',
+                                                  readonly=True,
+                                                  help="Sidebar action to make"
+                                                  " this template available on"
+                                                  " records of the related document model"),
         'ref_ir_value_fuse': fields.many2one('ir.values', 'Sidebar fuse button', readonly=True,
                                              help="Sidebar button to open the sidebar action"),
         'model_list': fields.char('Model List', size=256),
@@ -65,7 +71,6 @@ class merge_object(osv.Model):
     def create_action_fuse(self, cr, uid, ids, context=None):
         vals = {}
         action_obj = self.pool.get('ir.actions.act_window')
-        data_obj = self.pool.get('ir.model.data')
         for data in self.browse(cr, uid, ids, context=context):
             src_obj = data.model_id.model
             button_name = _('Mass Fuse (%s)') % data.name
@@ -96,7 +101,6 @@ class merge_object(osv.Model):
     def create_action(self, cr, uid, ids, context=None):
         vals = {}
         action_obj = self.pool.get('ir.actions.act_window')
-        data_obj = self.pool.get('ir.model.data')
         for data in self.browse(cr, uid, ids, context=context):
             src_obj = data.model_id.model
             button_name = _('Mass Editing (%s)') % data.name
