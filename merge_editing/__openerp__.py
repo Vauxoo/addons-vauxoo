@@ -2,8 +2,10 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2012 Serpent Consulting Services (<http://www.serpentcs.com>)
 #    Copyright (C) 2010-Today OpenERP SA (<http://www.openerp.com>)
+#
+#    programmed by: Oscar Alcala: oscar@vauxoo.com
+#    programmed by: Jose Morales: jose@vauxoo.com
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -22,18 +24,14 @@
 
 
 {
-    "name": "Mass Editing",
-    "version": "1.1",
-    "author": "Serpent Consulting Services",
+    "name": "AutoMerge Records",
+    "version": "1.2",
+    "author": "Vauxoo",
     "category": "Tools",
     "website": "http://www.serpentcs.com",
-    "description": """This module provides the functionality to add, update or remove the values of more than one records on the fly at the same time.
-        You can configure merge editing for any OpenERP model. 
-        The video explaining the features is available at http://t.co/wukYMx1A
-        The menu is now Under Settings/Configuration.
-        For more details/customization/feedback contact us on contact@serpentcs.com. 
-    """,
-    'depends': ['base'],
+    'depends': [
+        'base'
+    ],
     'data': [
         'security/merge_security.xml',
         'security/ir.model.access.csv',
