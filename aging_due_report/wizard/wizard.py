@@ -207,6 +207,13 @@ class account_aging_partner_wizard(osv.osv_memory):
         context = dict(context or {})
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         aml_obj = self.pool.get('account.move.line')
+        rp_obj = self.pool.get('res.partner')
+
+        # Filtering Partners by Unique Accounting Partners
+        fap_fnc = rp_obj._find_accounting_partner
+        rp_brws = rp_obj.browse(cr, uid, rp_ids, context=context)
+        rp_ids = [fap_fnc(rp_brw).id for rp_brw in rp_brws]
+        rp_ids = list(set(rp_ids))
         company_id = wzd_brw.company_id.id
 
         moves_invoice_ids = [aawd_brw.invoice_id.move_id.id
