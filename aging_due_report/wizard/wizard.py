@@ -226,12 +226,13 @@ class account_aging_partner_wizard(osv.osv_memory):
                 # group later the data
                 # TODO: When currency_id is not None then convert values or use
                 # other values like amount_currency
-                currency_id = (aml_brw.currency_id and aml_brw.currency_id.id or
-                            aml_brw.company_id.currency_id.id)
+                currency_id = (aml_brw.currency_id and
+                               aml_brw.currency_id.id or
+                               aml_brw.company_id.currency_id.id)
                 total = (sel == 'customer' and aml_brw.debit or
-                        sel == 'supplier' and aml_brw.credit or 0.0)
+                         sel == 'supplier' and aml_brw.credit or 0.0)
                 payment = (sel == 'customer' and aml_brw.credit or
-                        sel == 'supplier' and aml_brw.debit or 0.0)
+                           sel == 'supplier' and aml_brw.debit or 0.0)
                 if not reconcile_id:
                     res.append({
                         'partner_id': aml_brw.partner_id.id,
