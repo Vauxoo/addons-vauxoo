@@ -18,6 +18,7 @@ Website Product Manufacturer URL
     ],
     "demo": [],
     "data": [
+        "views/templates.xml",
     ],
     "test": [],
     "js": [],
