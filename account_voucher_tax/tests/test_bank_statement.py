@@ -65,6 +65,8 @@ class TestPaymentTax(TestTaxCommon):
             if move_line.account_id.id == self.acc_tax_16_payment:
                 self.assertEquals(move_line.debit, 8)
                 self.assertEquals(move_line.credit, 0.0)
+                self.assertEquals(move_line.amount_base, 50.0)
+                self.assertNotEqual(move_line.tax_id_secondary, False)
                 continue
 
         # create payment complete
@@ -84,6 +86,8 @@ class TestPaymentTax(TestTaxCommon):
             if move_line_complete.account_id.id == self.acc_tax_16_payment:
                 self.assertEquals(move_line_complete.debit, 8)
                 self.assertEquals(move_line_complete.credit, 0.0)
+                self.assertEquals(move_line_complete.amount_base, 50.0)
+                self.assertNotEqual(move_line_complete.tax_id_secondary, False)
                 continue
 
     def test_iva_16_ret_supplier(self):
@@ -138,6 +142,8 @@ class TestPaymentTax(TestTaxCommon):
             if move_line_complete.account_id.id == self.acc_tax_16_payment:
                 self.assertEquals(move_line_complete.debit, 5.33)
                 self.assertEquals(move_line_complete.credit, 0.0)
+                self.assertEquals(move_line_complete.amount_base, 33.31)
+                self.assertNotEqual(move_line_complete.tax_id_secondary, False)
                 continue
 
             # retention tax validation
@@ -208,6 +214,8 @@ class TestPaymentTax(TestTaxCommon):
                 self.assertEquals(move_line.debit, 6.45)
                 self.assertEquals(move_line.credit, 0.0)
                 self.assertEquals(move_line.amount_currency, 8.28)
+                self.assertEquals(move_line.amount_base, 40.30)
+                self.assertNotEqual(move_line.tax_id_secondary, False)
                 continue
 
         # create payment complete
@@ -241,6 +249,8 @@ class TestPaymentTax(TestTaxCommon):
                 self.assertEquals(move_line_complete.debit, 5.05)
                 self.assertEquals(move_line_complete.credit, 0.0)
                 self.assertEquals(move_line_complete.amount_currency, 7.72)
+                self.assertEquals(move_line_complete.amount_base, 31.58)
+                self.assertNotEqual(move_line_complete.tax_id_secondary, False)
                 checked_line += 1
                 continue
             if move_line_complete.account_id.id == self.acc_loss_tax:
@@ -309,6 +319,8 @@ class TestPaymentTax(TestTaxCommon):
                 self.assertEquals(move_line.debit, 12.36)
                 self.assertEquals(move_line.credit, 0.0)
                 self.assertEquals(round(move_line.amount_currency, 2), 15.86)
+                self.assertEquals(move_line.amount_base, 77.25)
+                self.assertNotEqual(move_line.tax_id_secondary, False)
                 continue
 
         # create payment complete
@@ -342,6 +354,8 @@ class TestPaymentTax(TestTaxCommon):
                 self.assertEquals(move_line_complete.debit, 0.09)
                 self.assertEquals(move_line_complete.credit, 0.0)
                 self.assertEquals(move_line_complete.amount_currency, 0.14)
+                self.assertEquals(move_line_complete.amount_base, 0.56)
+                self.assertNotEqual(move_line_complete.tax_id_secondary, False)
                 checked_line += 1
                 continue
             if move_line_complete.account_id.id == self.acc_gain_tax:
