@@ -1,7 +1,14 @@
 <?xml version="1.0" ?>
 <openerp>
     <data noupdate="1">
-        
+
+        <record id="account_iva_voucher_pending_apply" model="account.account">
+            <field name="code">X1112_voucher_pending</field>
+            <field name="name">Input VAT Pending for Apply Voucher - (test)</field>
+            <field ref="account.cli" name="parent_id"/>
+            <field name="type">other</field>
+            <field name="user_type" ref="account.data_account_type_liability"/>
+        </record>
         <record id="account_iva_voucher" model="account.account">
             <field name="code">X1112_voucher</field>
             <field name="name">Input VAT Voucher - (test)</field>
@@ -27,6 +34,7 @@
             <field name="description">IVA 16% with purchase voucher account for Test</field>
             <field name="account_collected_id" ref="account_iva_voucher_16"/>
             <field name="account_paid_id" ref="account_iva_voucher_16"/>
+            <field name="account_retention_voucher_id" ref="account_iva_voucher_pending_apply"/>
             <field name="account_collected_voucher_id" ref="account_iva_voucher"/>
             <field name="account_paid_voucher_id" ref="account_iva_voucher"/>
             <field model="account.tax.category" name="tax_category_id" search="[('name','=','IVA')]"/>
