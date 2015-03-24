@@ -30,7 +30,8 @@ from openerp.osv import fields
 class product_template(osv.osv):
     _inherit = 'product.template'
 
-    def _get_purchased(self, cr, uid, ids, field_names, arg=None, context=None):
+    def _get_purchased(self, cr, uid, ids, field_names, arg=None,
+                       context=None):
         """
         This method gets all the products that were purchased in the
         same sale order og the current product.
