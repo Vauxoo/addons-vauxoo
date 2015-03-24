@@ -58,9 +58,9 @@
 					            </t>
 					            <tr>
 				                    <td class="ITEMSRIGHT ITEMBOLD" colspan="6" style="background-color: lightgrey;"><span t-esc="'TOTAL'"/></td>
-				                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="'0.00' "/></td>
-				                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="'0.00'"/></td>
-				                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="'0.00'"/></td>
+				                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(p_obj.total)"/></td>
+				                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(p_obj.payment)"/></td>
+				                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(p_obj.residual)"/></td>
 					            </tr>
 					            <tr>
 					            	<td colspan="9" style="height: 8px;"></td>

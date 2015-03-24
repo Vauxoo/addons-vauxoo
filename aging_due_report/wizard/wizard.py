@@ -58,6 +58,28 @@ class account_aging_wizard_partner(osv.osv_memory):
     _name = 'account.aging.wizard.partner'
     _description = 'Account Aging Wizard Partner'
     _rec_name = 'partner_id'
+
+    def _get_amount(self, cr, uid, ids, field_names, arg, context=None):
+        context = dict(context or {})
+        res = {}
+        for line in self.browse(cr, uid, ids, context=context):
+            res[line.id] = dict((fn, 0.0) for fn in field_names)
+            for doc in line.document_ids:
+                if 'residual' in field_names:
+                    res[line.id]['residual'] += doc.residual
+                if 'payment' in field_names:
+                    res[line.id]['payment'] += doc.payment
+                if 'total' in field_names:
+                    res[line.id]['total'] += doc.total
+        return res
+
+    def _get_aawp(self, cr, uid, ids, context=None):
+        context = dict(context or {})
+        res = {}
+        for line in self.browse(cr, uid, ids, context=context):
+            res[line.aawp_id.id] = True
+        return res.keys()
+
     _columns = {
         'partner_id': fields.many2one(
             'res.partner', 'Partner',
@@ -79,6 +101,33 @@ class account_aging_wizard_partner(osv.osv_memory):
             required=False,),
         # TODO: make it required
         # required=True,),
+        'total': fields.function(
+            _get_amount,
+            string='Total',
+            store={
+                _name: (lambda self, cr, uid, ids, cx: ids, [], 15),
+                'account.aging.wizard.document': (_get_aawp, [], 15),
+            },
+            multi='amounts',
+            type='float'),
+        'payment': fields.function(
+            _get_amount,
+            string='Payment',
+            store={
+                _name: (lambda self, cr, uid, ids, cx: ids, [], 15),
+                'account.aging.wizard.document': (_get_aawp, [], 15),
+            },
+            multi='amounts',
+            type='float'),
+        'residual': fields.function(
+            _get_amount,
+            string='Residual',
+            store={
+                _name: (lambda self, cr, uid, ids, cx: ids, [], 15),
+                'account.aging.wizard.document': (_get_aawp, [], 15),
+            },
+            multi='amounts',
+            type='float'),
     }
 
 
