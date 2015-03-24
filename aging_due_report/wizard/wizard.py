@@ -201,7 +201,6 @@ class account_aging_partner_wizard(osv.osv_memory):
                                             'reconcile_partial_id'])
 
         aml_data_groups = aml_data_grouped.groups
-        import pdb; pdb.set_trace()
 
         for key, val in aml_data_groups.iteritems():
             partner_id, reconcile_id = key
