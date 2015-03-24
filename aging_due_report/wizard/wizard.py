@@ -74,6 +74,11 @@ class account_aging_wizard_partner(osv.osv_memory):
             'account.move.line',
             'aaw_id', 'Journal Items',
             help='Journal Items'),
+        'currency_id': fields.many2one(
+            'res.currency', 'Currency',
+            required=False,),
+        # TODO: make it required
+        # required=True,),
     }
 
 
@@ -276,13 +281,16 @@ class account_aging_partner_wizard(osv.osv_memory):
                     if key == 'inv_ids':
                         for each in val:
                             partner_id = each['partner_id']
-                            if not aawp_ids.get(partner_id):
+                            currency_id = each['currency_id']
+                            key_pair = (partner_id, currency_id)
+                            if not aawp_ids.get(key_pair, False):
                                 aawp_id = aawp_obj.create(cr, uid, {
                                     'aaw_id': wzd_brw.id,
                                     'partner_id': partner_id,
+                                    'currency_id': currency_id,
                                 }, context=context)
-                                aawp_ids[partner_id] = aawp_id
-                            each['aawp_id'] = aawp_ids[partner_id]
+                                aawp_ids[partner_id, currency_id] = aawp_id
+                            each['aawp_id'] = aawp_ids[partner_id, currency_id]
                             res.append(each)
 
         res = [(0, 0, line) for line in res]
@@ -292,13 +300,16 @@ class account_aging_partner_wizard(osv.osv_memory):
         for line in self._get_lines_by_partner_without_invoice(
                 cr, uid, ids, partner_ids, context=context):
             partner_id = line['partner_id']
-            if not aawp_ids.get(partner_id):
+            currency_id = line['currency_id']
+            key_pair = (partner_id, currency_id)
+            if not aawp_ids.get(key_pair, False):
                 aawp_id = aawp_obj.create(cr, uid, {
                     'aaw_id': wzd_brw.id,
                     'partner_id': partner_id,
+                    'currency_id': currency_id,
                 }, context=context)
-                aawp_ids[partner_id] = aawp_id
-            line['aawp_id'] = aawp_ids[partner_id]
+                aawp_ids[partner_id, currency_id] = aawp_id
+            line['aawp_id'] = aawp_ids[partner_id, currency_id]
             res.append(line)
         res = [(0, 0, line) for line in res]
         wzd_brw.write({'document_ids': res})
