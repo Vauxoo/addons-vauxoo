@@ -277,7 +277,7 @@ class account_aging_partner_wizard(osv.osv_memory):
                 'total': 0.0,
                 # 'date_due': aml_brw.date_maturity or aml_brw.date}
                 'date_due': False}
-            for aml_brw in aml_obj.browse(cr, uid, aml_ids, context=context):
+            for aml_brw in aml_obj.browse(cr, uid, val, context=context):
                 # ask in this step a read for the aml_ids, this will allow to
                 # group later the data
                 # TODO: When currency_id is not None then convert values or use
