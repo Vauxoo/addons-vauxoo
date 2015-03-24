@@ -19,16 +19,16 @@
                             <td class="CUSTOMERNAME" style="text-align:right;"><span t-esc="formatLang(time.strftime('%Y-%m-%d'), date=True)"/></td>
                        </tr>
                     </table>
-                    <t t-set="cur_group" t-value="get_invoice_by_partner(objects)"></t>
                     <table class="table_column_border table_alter_color_row table_title_bg_color" width="100%" id='table_body'>
-                    	<t t-foreach="cur_group" t-as="o">
+                    	<t t-foreach="objects" t-as="o">
+                          <t t-foreach="o.partner_ids" t-as="p_obj">
                     		<thead>
 					            <tr style="border-top: 1px solid #000000;">
-					                <td class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="(o.get('rp_brw').vat and '%s-%s-%s'%( o.get('rp_brw').vat[2], o.get('rp_brw').vat[3:-1], o.get('rp_brw').vat[-1]) or '').upper()"/></td>
-					                <td colspan="4" class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="o.get('rp_brw').name or ''"/> (<span t-esc=" o.get('cur_brw').name or '' "/>)</td>
+					                <td class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="(p_obj.partner_id.vat and '%s-%s-%s'%(p_obj.partner_id.vat[2], p_obj.partner_id.vat[3:-1], p_obj.partner_id.vat[-1]) or '').upper()"/></td>
+					                <td colspan="4" class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="p_obj.partner_id.name or ''"/> (<span t-esc=" p_obj.currency_id.name or '' "/>)</td>
 					                <td colspan="1" class="ITEMSLEFT ITEMBOLD" style="background-color:
-					                lightgrey;"><span t-esc="o.get('rp_brw').ref or ''"/><span t-esc="o.get('rp_brw').user_id.name or '' "/></td>
-					                <td colspan="3" class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="'Amounts expressed in' + ' ('+o.get('cur_brw').name+')' "/></td>
+					                lightgrey;"><span t-esc="p_obj.partner_id.ref or ''"/><span t-esc="p_obj.partner_id.user_id.name or '' "/></td>
+                                <td colspan="3" class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="'Amounts expressed in' + ' ('+(p_obj.currency_id and p_obj.currency_id.name or 'N/A')+')' "/></td>
 					            </tr>
 					            <tr>
 					                <th width="14%" class="ITEMSTITLELEFT">INVOICE</th>
@@ -43,29 +43,30 @@
 					            </tr>
 				        	</thead>
 				        	<tbody>
-				            	<t t-foreach="o['inv_ids']" t-as="inv">
+				            	<t t-foreach="p_obj.document_ids" t-as="doc">
 					            	<tr>
-					                    <td class="ITEMSLEFT"><span t-esc="inv['inv_brw'].number"/></td>
-					                    <td class="ITEMSLEFT"><span t-esc="inv.get('inv_brw', False).date_invoice and datetime.strptime(inv.get('inv_brw', False).date_invoice.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
-					                    <td class="ITEMSLEFT"><span t-esc="inv.get('inv_brw', False).date_due and datetime.strptime(inv.get('inv_brw', False).date_due.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
-					                    <td class="ITEMSLEFT"><span t-esc="inv.get('due_days') and '%s DAYS' %inv.get('due_days') or '0 DAYS' "/></td>
-					                    <td class="ITEMSRIGHT"><span t-esc="formatLang(inv['inv_brw'].amount_untaxed) or '0.00' "/></td>
-					                    <td class="ITEMSRIGHT"><span t-esc="formatLang(inv['inv_brw'].amount_tax) or '0.00'"/></td>
-					                    <td class="ITEMSRIGHT"><span t-esc="formatLang(inv['inv_brw'].amount_total) or '0.00'"/></td>
-					                    <td class="ITEMSRIGHT"><span t-esc="formatLang(inv.get('payment_left')) or '0.00'"/></td>
-					                    <td class="ITEMSRIGHT"><span t-esc="formatLang(inv.get('residual')) or '0.00'"/></td>
+                                        <td class="ITEMSLEFT"><span t-esc="doc.invoice_id and doc.invoice_id.number or 'N/A'"/></td>
+					                    <td class="ITEMSLEFT"><span t-esc="doc.invoice_id and doc.invoice_id.date_invoice and datetime.strptime(doc.invoice_id.date_invoice.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
+					                    <td class="ITEMSLEFT"><span t-esc="doc.invoice_id and doc.invoice_id.date_due and datetime.strptime(doc.invoice_id.date_due.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
+					                    <td class="ITEMSLEFT"><span t-esc="doc.due_days and '%s DAYS' %doc.due_days or '0 DAYS' "/></td>
+					                    <td class="ITEMSRIGHT"><span t-esc="'0.00' "/></td>
+					                    <td class="ITEMSRIGHT"><span t-esc="'0.00'"/></td>
+					                    <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.total) or '0.00'"/></td>
+					                    <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.payment) or '0.00'"/></td>
+					                    <td class="ITEMSRIGHT"><span t-esc="formatLang(doc.residual) or '0.00'"/></td>
 					                </tr>
 					            </t>
 					            <tr>
 				                    <td class="ITEMSRIGHT ITEMBOLD" colspan="6" style="background-color: lightgrey;"><span t-esc="'TOTAL'"/></td>
-				                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(o.get('inv_total')) or '0.00' "/></td>
-				                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(o.get('pay_left_total')) or '0.00'"/></td>
-				                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="formatLang(o.get('due_total')) or '0.00'"/></td>
+				                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="'0.00' "/></td>
+				                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="'0.00'"/></td>
+				                    <td class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="'0.00'"/></td>
 					            </tr>
 					            <tr>
 					            	<td colspan="9" style="height: 8px;"></td>
 					            </tr>
 				        	</tbody>
+                    	  </t>
                     	</t>
                     	<tbody>
                     		<t t-set="lista" t-value="get_total_by_comercial(objects)"></t>

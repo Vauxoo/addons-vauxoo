@@ -33,7 +33,7 @@
 
         <report auto="False"
                 id="report_detail_due_report_qweb"
-                model="res.partner"
+                model="account.aging.wizard"
                 name="aging_due_report.detail_due_report_qweb"
                 file="aging_due_report.detail_due_report_qweb"
                 string="Customer Detail Report of Debts"

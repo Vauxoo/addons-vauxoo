@@ -327,7 +327,9 @@ class account_aging_partner_wizard(osv.osv_memory):
         self.compute_lines(cr, uid, ids, context.get('active_ids', []),
                            context=context)
 
-        datas = {'active_ids': context.get('active_ids', [])}
+        datas = {'active_ids': ids}
+        context['active_ids'] = ids
+        context['active_model'] = 'account.aging.wizard'
 
         context['xls_report'] = wzd_brw.report_format == 'xls'
         name = 'aging_due_report.aging_due_report_qweb'
