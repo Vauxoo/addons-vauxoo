@@ -523,6 +523,12 @@ class account_bank_statement_line(osv.osv):
                         move_account_tax)[1]]
                     })
                 if amount_ret_tax:
+                    if not tax_id.account_retention_voucher_id:
+                        msg = _("""
+                            You should configure
+                            'VAT pending for apply Account'
+                            in tax [%s]""") % tax_id.name
+                        raise osv.except_osv(_('Error'), msg)
                     dat.append({
                         'account_tax_voucher':
                             tax_id.account_retention_voucher_id.id,
