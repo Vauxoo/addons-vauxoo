@@ -489,10 +489,7 @@ class commission_payment(osv.Model):
         aml_brw = aml_obj.browse(cr, uid, pay_id, context=context)
         date = False
         if comm_brw.commission_policy_date_end == 'last_payment_date':
-            if aml_brw.rec_invoice:
-                date = aml_brw.rec_invoice.date_last_payment
-            else:
-                date = aml_brw.rec_aml.date_last_payment
+            date = aml_brw.rec_aml.date_last_payment
         elif comm_brw.commission_policy_date_end == 'date_on_payment':
             date = aml_brw.date
         return date
@@ -601,8 +598,10 @@ class commission_payment(osv.Model):
                                                         context=context)
         salesman_ok = self._get_commission_saleman(cr, uid, ids, salesman,
                                                    context=context)
-        if not comm_brw.unknown_salespeople and not salesman_ok:
-            return True
+
+        if not salesman_ok:
+            if not (comm_brw.unknown_salespeople and not salesman):
+                return True
 
         commission_policy_date_start = \
             self._get_commission_policy_start_date(cr, uid, ids, pay_id,
@@ -789,8 +788,10 @@ class commission_payment(osv.Model):
                                                         context=context)
         salesman_ok = self._get_commission_saleman(cr, uid, ids, salesman,
                                                    context=context)
-        if not comm_brw.unknown_salespeople and not salesman_ok:
-            return True
+
+        if not salesman_ok:
+            if not (comm_brw.unknown_salespeople and not salesman):
+                return True
 
         commission_policy_date_start = \
             self._get_commission_policy_start_date(cr, uid, ids, aml_id,
