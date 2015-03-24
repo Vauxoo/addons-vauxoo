@@ -18,11 +18,11 @@
 #
 ##############################################################################
 
+import time
+
+from openerp import SUPERUSER_ID
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-from openerp import SUPERUSER_ID
-
-import time
 
 _US_STATE = [('draft', 'New'), ('open', 'In Progress'), (
     'pending', 'Pending'), ('done', 'Done'), ('cancelled', 'Cancelled')]
@@ -231,9 +231,7 @@ class user_story(osv.Model):
         return result.keys()
 
     def _get_user_story_from_ts(self, cr, uid, ids, context=None):
-        result = {}
         task_ids = {}
-        time_obj = self.pool.get('hr.analytic.timesheet')
         task_obj = self.pool.get('project.task')
         work_obj = self.pool.get('project.task.work')
         us_obj = self.pool.get('user.story')
@@ -337,12 +335,12 @@ class user_story(osv.Model):
                                                  _name: (lambda s, c, u, ids,
                                                        cx={}: ids,
                                                        ['task_ids'], 10),
-                                               'project.task': (_get_user_story_from_pt, ['work_ids', 'userstory_id'], 10),
-                                               'hr.analytic.timesheet': (_get_user_story_from_ts,
+                                                 'project.task': (_get_user_story_from_pt, ['work_ids', 'userstory_id'], 10),
+                                                 'hr.analytic.timesheet': (_get_user_story_from_ts,
                                                                          ['unit_amount',
                                                                           'to_invoice'], 10),
-                                               'project.task.work': (_get_user_story_from_ptw, ['hours'], 10),
-                                           }),
+                                                 'project.task.work': (_get_user_story_from_ptw, ['hours'], 10),
+                                             }),
         'effective_hours': fields.function(_hours_get, string='Hours Spent', help="Computed using the sum of the task work done.",
                                            store = {
                                                _name: (lambda s, c, u, ids, cx={}: ids, ['task_ids'], 10),
@@ -522,12 +520,12 @@ class acceptability_criteria(osv.Model):
         template = data_obj.get_object(cr, uid, 'user_story', 'template_approve_aceptabilty_criterial')
         mail = self.pool.get('email.template').generate_email(cr, SUPERUSER_ID, template.id, ids[0])
         compose_id = compose_obj.create(cr, uid, {
-                        'res_model': 'user.story',
-                        'model': 'user.story',
-                        'res_id': user_story_brw.id,
-                        'partner_ids': [(6, 0, partner_ids)],
-                        'partner_id':0,
-                        'body': mail.get('body'),
+            'res_model': 'user.story',
+            'model': 'user.story',
+            'res_id': user_story_brw.id,
+            'partner_ids': [(6, 0, partner_ids)],
+            'partner_id': 0,
+            'body': mail.get('body'),
         })
         criterial_brw2.write({'accepted': True})
         compose_obj.send_mail(cr, uid, [compose_id])
@@ -551,24 +549,24 @@ class acceptability_criteria(osv.Model):
                                          'email_compose_message_wizard_inherit_form_without_partner')
         res_id = data_obj.browse(cr, uid, model_data_id, context=context).res_id
         ction = {
-                'type': 'ir.actions.act_window',
-                'res_model': 'mail.compose.message',
-                'src_model': 'user.story',
-                'view_mode': 'form',
-                'view_mode':'form,tree',
-                'view_id': res_id,
-                'view_type': 'form',
-                'views': [[res_id, 'form']],
-                'target': 'new',
-                'context': {
-                        'default_res_model': 'user.story',
-                        'default_mail_compose_log': True,
-                        'default_model': 'user.story',
-                        'default_res_id': user_story_brw.id,
-                        'default_partner_ids': [(6, 0, partner_ids)],
-                        'default_body': _('<b>Description the cause of disapproval</b>'),
-                                   }
-                            }
+            'type': 'ir.actions.act_window',
+            'res_model': 'mail.compose.message',
+            'src_model': 'user.story',
+            'view_mode': 'form',
+            'view_mode': 'form,tree',
+            'view_id': res_id,
+            'view_type': 'form',
+            'views': [[res_id, 'form']],
+            'target': 'new',
+            'context': {
+                    'default_res_model': 'user.story',
+                    'default_mail_compose_log': True,
+                    'default_model': 'user.story',
+                    'default_res_id': user_story_brw.id,
+                    'default_partner_ids': [(6, 0, partner_ids)],
+                    'default_body': _('<b>Description the cause of disapproval</b>'),
+            }
+        }
         return ction
 
     def ask_review(self, cr, uid, ids, context=None):
@@ -589,12 +587,12 @@ class acceptability_criteria(osv.Model):
         template = data_obj.get_object(cr, uid, 'user_story', 'template_ask_aceptabilty_criterial')
         mail = self.pool.get('email.template').generate_email(cr, SUPERUSER_ID, template.id, ids[0])
         compose_id = compose_obj.create(cr, uid, {
-                        'res_model': 'user.story',
-                        'model': 'user.story',
-                        'res_id': user_story_brw.id,
-                        'partner_ids': [(6, 0, partner_ids)],
-                        'partner_id':0,
-                        'body': mail.get('body'),
+            'res_model': 'user.story',
+            'model': 'user.story',
+            'res_id': user_story_brw.id,
+            'partner_ids': [(6, 0, partner_ids)],
+            'partner_id': 0,
+            'body': mail.get('body'),
         })
         compose_obj.send_mail(cr, uid, [compose_id])
         return True

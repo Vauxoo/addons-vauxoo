@@ -33,7 +33,7 @@ class hr_timesheet(osv.Model):
             hours = time_brw.unit_amount
             if time_brw.to_invoice:
                 hours = time_brw.unit_amount - \
-                    (time_brw.unit_amount * \
+                    (time_brw.unit_amount *
                     (time_brw.to_invoice.factor / 100))
             res.update({time_brw.id: hours})
         return res
@@ -87,7 +87,7 @@ class hr_timesheet(osv.Model):
                                         relation='user.story',
                                         string='User Story',
                                         store={
-                                            'project.task': \
+                                            'project.task':
                                             (_get_analytic_from_task,
                                              ['userstory_id'],
                                              10)
@@ -114,7 +114,7 @@ class custom_timesheet(osv.Model):
             hours = time_brw.unit_amount
             if time_brw.to_invoice:
                 hours = time_brw.unit_amount - \
-                    (time_brw.unit_amount * \
+                    (time_brw.unit_amount *
                     (time_brw.to_invoice.factor / 100))
             res.update({time_brw.id: hours})
         return res
