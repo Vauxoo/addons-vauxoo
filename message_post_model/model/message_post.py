@@ -41,8 +41,8 @@ class message_post_show_all(osv.Model):
     _inherit = ['mail.thread']
 
     # pylint: disable=W0622
-    def get_last_value(self, cr, uid, ids, model=None, field=None, type=None,
-                       context=None):
+    def get_last_value(self, cr, uid, ids, model=None, field=None,
+                       field_type=None, context=None):
         '''
         Return the last value of a record in the model to show a post with the
         change
