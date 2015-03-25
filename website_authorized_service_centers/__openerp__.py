@@ -15,10 +15,11 @@ Autorized Service Centers
         """,
     'author': 'Vauxoo',
     'depends': [
+        'sale',
         'website',
     ],
     'data': [
-
+        'views/product_brand_view.xml'
     ],
     'demo': [
 

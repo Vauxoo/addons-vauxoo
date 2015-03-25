@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="prioduct_brand_form_view" model="ir.ui.view">
+            <field name="name">product.brand.form</field>
+            <field name="model">product.brand</field>
+            <field name="arch" type="xml">
+	            <form string="Product Brand">
+	                <sheet>
+                    <field name="image" widget="image" class="oe_left oe_avatar"/>
+                        <div class="oe_title oe_left">
+	                    	<h1><field name="name" placeholder="Name"/></h1>
+	                    </div>
+	                        <group string="Authorized Service Centers">
+	                            <field name="authorized_partner_ids" nolabel="1"/>
+	                        </group>
+	                </sheet>
+	            </form>
+            </field>
+        </record>
+    <record id="product_brand_action" model="ir.actions.act_window">
+        <field name="name">Product Brands</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.brand</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" eval="False"/>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to define a new Brand.
+          </p><p>
+            Brands are used to browse your products through the
+            touchscreen interface.
+          </p><p>
+            If you put a photo on the Brand, the layout of the
+            websute interface will automatically. We suggest not to put
+            a photo on categories for small (1024x768) screens.
+          </p>
+        </field>
+    </record>
+    <menuitem action="product_brand_action" id="menu_product_brand" parent="product.prod_config_main" sequence="11" />
+    </data>
+</openerp>
