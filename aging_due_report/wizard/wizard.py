@@ -140,9 +140,7 @@ class account_aging_wizard_partner(osv.osv_memory):
             help='Journal Items'),
         'currency_id': fields.many2one(
             'res.currency', 'Currency',
-            required=False,),
-        # TODO: make it required
-        # required=True,),
+            required=True,),
         'total': fields.function(
             _get_amount,
             string='Total',
