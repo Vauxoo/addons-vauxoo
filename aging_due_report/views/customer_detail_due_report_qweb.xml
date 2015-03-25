@@ -65,16 +65,15 @@
 					            </tr>
 				        	</tbody>
                     	  </t>
-                    	</t>
                     	<tbody>
-                    		<t t-set="lista" t-value="get_total_by_comercial(objects)"></t>
-                    		<t t-foreach="lista" t-as="p">
+                            <t t-foreach="o.currency_ids" t-as="c_obj">
 					            <tr>
-					                <td colspan="7" class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;border: 1px solid #A41D35;">TOTAL IN <span t-esc="p['currency']"/></td>
-					                <td colspan="2" class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;border: 1px solid #A41D35;"><span t-esc="formatLang(p['total']) or '0.00'"/></td>
+					                <td colspan="7" class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;border: 1px solid #A41D35;">TOTAL IN <span t-esc="c_obj.currency_id.name"/></td>
+					                <td colspan="2" class="ITEMSRIGHT ITEMBOLD" style="background-color: lightgrey;border: 1px solid #A41D35;"><span t-esc="formatLang(c_obj.residual)"/></td>
 					            </tr>
 			            	</t>
                     	</tbody>
+                    	</t>
                     </table>
 				    <p style="word-wrap:break-word;"></p>
 				    <p style="page-break-before: always;"></p>

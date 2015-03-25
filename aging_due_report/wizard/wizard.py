@@ -150,6 +150,10 @@ class account_aging_wizard_partner(osv.osv_memory):
             },
             multi='amounts',
             type='float'),
+        'aawc_id': fields.many2one(
+            'account.aging.wizard.currency',
+            'Account Aging Wizard Currency',
+            help='Account Aging Wizard Currency Holder'),
     }
 
 
@@ -157,6 +161,17 @@ class account_aging_wizard_currency(osv.osv_memory):
     _name = 'account.aging.wizard.currency'
     _description = 'Account Aging Wizard Currency'
     _rec_name = 'currency_id'
+
+    def _get_amount(self, cr, uid, ids, field_names, arg, context=None):
+        context = dict(context or {})
+        res = {}
+        for line in self.browse(cr, uid, ids, context=context):
+            res[line.id] = dict((fn, 0.0) for fn in field_names)
+            for part in line.partner_ids:
+                if 'residual' in field_names:
+                    res[line.id]['residual'] += part.residual
+        return res
+
     _columns = {
         'currency_id': fields.many2one(
             'res.currency', 'Currency',
@@ -165,6 +180,15 @@ class account_aging_wizard_currency(osv.osv_memory):
             'account.aging.wizard',
             'Account Aging Wizard',
             help='Account Aging Wizard Holder'),
+        'partner_ids': fields.one2many(
+            'account.aging.wizard.partner',
+            'aawc_id', 'Partner by Currency',
+            help='Partner by Currency'),
+        'residual': fields.function(
+            _get_amount,
+            string='Residual',
+            multi='amounts',
+            type='float'),
     }
 
 
@@ -207,8 +231,8 @@ class account_aging_partner_wizard(osv.osv_memory):
             help='Balance by Currency'),
         'document_ids': fields.one2many(
             'account.aging.wizard.document',
-            'aaw_id', 'Balance by Currency',
-            help='Balance by Currency'),
+            'aaw_id', 'Document',
+            help='Document'),
         'partner_ids': fields.one2many(
             'account.aging.wizard.partner',
             'aaw_id', 'Partners',
@@ -389,17 +413,20 @@ class account_aging_partner_wizard(osv.osv_memory):
         partner_ids = [fap_fnc(rp_brw).id for rp_brw in rp_brws]
         partner_ids = list(set(partner_ids))
 
+        aawc_obj = self.pool.get('account.aging.wizard.currency')
         aawp_obj = self.pool.get('account.aging.wizard.partner')
+        aawd_obj = self.pool.get('account.aging.wizard.document')
 
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         rp_brws = rp_obj.browse(cr, uid, partner_ids, context=context)
         ag_obj = ag(cr, uid, None, context=context)
         rex = ag_obj._get_invoice_by_currency_group(rp_brws)
-        res = []
 
         wzd_brw.document_ids.unlink()
         wzd_brw.partner_ids.unlink()
+        wzd_brw.currency_ids.unlink()
         aawp_ids = {}
+        aawc_ids = {}
 
         # TODO: We have to resolve the issue of multipartners
         for itx in rex:
@@ -410,36 +437,46 @@ class account_aging_partner_wizard(osv.osv_memory):
                             partner_id = each['partner_id']
                             currency_id = each['currency_id']
                             key_pair = (partner_id, currency_id)
+                            if not aawc_ids.get(currency_id, False):
+                                aawc_id = aawc_obj.create(cr, uid, {
+                                    'aaw_id': wzd_brw.id,
+                                    'currency_id': currency_id,
+                                }, context=context)
+                                aawc_ids[currency_id] = aawc_id
                             if not aawp_ids.get(key_pair, False):
                                 aawp_id = aawp_obj.create(cr, uid, {
                                     'aaw_id': wzd_brw.id,
                                     'partner_id': partner_id,
                                     'currency_id': currency_id,
+                                    'aawc_id': aawc_ids[currency_id],
                                 }, context=context)
                                 aawp_ids[partner_id, currency_id] = aawp_id
                             each['aawp_id'] = aawp_ids[partner_id, currency_id]
-                            res.append(each)
-
-        res = [(0, 0, line) for line in res]
-        wzd_brw.write({'document_ids': res})
-        res = []
+                            each['aaw_id'] = wzd_brw.id
+                            aawd_obj.create(cr, uid, each, context=context)
 
         for line in self._get_lines_by_partner_without_invoice(
                 cr, uid, ids, partner_ids, context=context):
             partner_id = line['partner_id']
             currency_id = line['currency_id']
             key_pair = (partner_id, currency_id)
+            if not aawc_ids.get(currency_id, False):
+                aawc_id = aawc_obj.create(cr, uid, {
+                    'aaw_id': wzd_brw.id,
+                    'currency_id': currency_id,
+                }, context=context)
+                aawc_ids[currency_id] = aawc_id
             if not aawp_ids.get(key_pair, False):
                 aawp_id = aawp_obj.create(cr, uid, {
                     'aaw_id': wzd_brw.id,
                     'partner_id': partner_id,
                     'currency_id': currency_id,
+                    'aawc_id': aawc_ids[currency_id],
                 }, context=context)
                 aawp_ids[partner_id, currency_id] = aawp_id
             line['aawp_id'] = aawp_ids[partner_id, currency_id]
-            res.append(line)
-        res = [(0, 0, line) for line in res]
-        wzd_brw.write({'document_ids': res})
+            line['aaw_id'] = wzd_brw.id
+            aawd_obj.create(cr, uid, line, context=context)
 
         return True
 
