@@ -290,8 +290,8 @@ class account_aging_partner_wizard(osv.osv_memory):
                                  if amz_brw.journal_id.type in (
                                      'sale', 'purchase')]
                 date_emission = (date_emission and min(date_emission) or
-                                 min([amy_brw.date
-                                      for amy_brw in aml_obj.browse(
+                                 min([amw_brw.date
+                                      for amw_brw in aml_obj.browse(
                                           cr, uid, val, context=context)]))
                 doc = {
                     'partner_id': partner_id,
