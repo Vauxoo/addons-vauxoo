@@ -275,22 +275,40 @@ class account_aging_partner_wizard(osv.osv_memory):
 
         for key, val in aml_data_groups.iteritems():
             partner_id, reconcile_id = key
-            doc = {
-                'partner_id': partner_id,
-                # 'wh_vat': wh_vat,
-                # 'wh_islr': wh_islr,
-                # 'wh_muni': wh_muni,
-                # 'wh_src': wh_src,
-                # 'debit_note': debit_note,
-                # 'credit_note': credit_note,
-                # 'refund_brws': refund_brws,
-                'payment': 0.0,
-                # 'payment_left': payment_left,
-                'residual': 0.0,
-                'currency_id': False,
-                'total': 0.0,
-                # 'date_due': aml_brw.date_maturity or aml_brw.date}
-                'date_due': False}
+            if reconcile_id:
+                date_due = [amx_brw.date_maturity or amx_brw.date
+                            for amx_brw in aml_obj.browse(
+                                cr, uid, val, context=context)
+                            if amx_brw.journal_id.type in ('sale', 'purchase')]
+                date_due = (date_due and min(date_due) or
+                            min([amy_brw.date_maturity or amy_brw.date
+                                 for amy_brw in aml_obj.browse(
+                                     cr, uid, val, context=context)]))
+                date_emission = [amz_brw.date
+                                 for amz_brw in aml_obj.browse(
+                                     cr, uid, val, context=context)
+                                 if amz_brw.journal_id.type in (
+                                     'sale', 'purchase')]
+                date_emission = (date_emission and min(date_emission) or
+                                 min([amy_brw.date
+                                      for amy_brw in aml_obj.browse(
+                                          cr, uid, val, context=context)]))
+                doc = {
+                    'partner_id': partner_id,
+                    # 'wh_vat': wh_vat,
+                    # 'wh_islr': wh_islr,
+                    # 'wh_muni': wh_muni,
+                    # 'wh_src': wh_src,
+                    # 'debit_note': debit_note,
+                    # 'credit_note': credit_note,
+                    # 'refund_brws': refund_brws,
+                    'payment': 0.0,
+                    # 'payment_left': payment_left,
+                    'residual': 0.0,
+                    'currency_id': False,
+                    'total': 0.0,
+                    'date_emission': date_emission,
+                    'date_due': date_due}
             for aml_brw in aml_obj.browse(cr, uid, val, context=context):
                 if aml_brw.currency_id:
                     currency_id = aml_brw.currency_id.id
