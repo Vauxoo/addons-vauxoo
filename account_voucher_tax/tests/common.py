@@ -13,6 +13,7 @@ class TestTaxCommon(common.TransactionCase):
         self.acc_bank_stmt_model = self.registry('account.bank.statement')
         self.acc_bank_stmt_line_model = self.registry(
             'account.bank.statement.line')
+        self.precision_obj = self.registry('decimal.precision')
         self.partner_agrolait_id = self.ref("base.res_partner_2")
         self.account_payable_id = self.ref("account.a_pay")
         self.account_receivable_id = self.ref("account.a_recv")
