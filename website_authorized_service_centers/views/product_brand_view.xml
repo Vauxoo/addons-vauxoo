@@ -10,6 +10,8 @@
                     <field name="image" widget="image" class="oe_left oe_avatar"/>
                         <div class="oe_title oe_left">
 	                    	<h1><field name="name" placeholder="Name"/></h1>
+                            <label for="url" string="URL"/>
+                                <field name="url" widget="url"/>
 	                    </div>
 	                        <group string="Authorized Service Centers">
 	                            <field name="authorized_partner_ids" nolabel="1"/>

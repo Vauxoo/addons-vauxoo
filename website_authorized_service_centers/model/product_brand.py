@@ -28,3 +28,4 @@ class ProductBrand(models.Model):
     name = fields.Char(string="Name")
     authorized_partner_ids = fields.Many2many('res.partner')
     image = fields.Binary()
+    url = fields.Char(string="URL")

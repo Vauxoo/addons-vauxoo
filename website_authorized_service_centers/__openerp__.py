@@ -19,6 +19,7 @@ Autorized Service Centers
         'website',
     ],
     'data': [
+        'views/layout.xml',
         'views/product_brand_view.xml',
         'views/authorized_service_centers.xml',
     ],
