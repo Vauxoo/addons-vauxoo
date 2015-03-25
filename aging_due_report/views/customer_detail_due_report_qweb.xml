@@ -22,7 +22,7 @@
                     <table class="table_column_border table_alter_color_row table_title_bg_color" width="100%" id='table_body'>
                     	<t t-foreach="objects" t-as="o">
                           <t t-foreach="o.partner_ids" t-as="p_obj">
-                    		<thead>
+				        	<tbody>
 					            <tr style="border-top: 1px solid #000000;">
 					                <td class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="(p_obj.partner_id.vat and '%s-%s-%s'%(p_obj.partner_id.vat[2], p_obj.partner_id.vat[3:-1], p_obj.partner_id.vat[-1]) or '').upper()"/></td>
 					                <td colspan="4" class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="p_obj.partner_id.name or ''"/> (<span t-esc=" p_obj.currency_id.name or '' "/>)</td>
@@ -41,8 +41,6 @@
 					                <th width="7%" class="ITEMSTITLERIGHT">COLLECTS</th>
 					                <th width="7%" class="ITEMSTITLERIGHT">BALANCE</th>
 					            </tr>
-				        	</thead>
-				        	<tbody>
 				            	<t t-foreach="p_obj.document_ids" t-as="doc">
 					            	<tr>
                                         <td class="ITEMSLEFT"><span t-esc="doc.invoice_id and doc.invoice_id.number or doc.aml_id and doc.aml_id.move_id and doc.aml_id.move_id.name or 'N/A'"/></td>
