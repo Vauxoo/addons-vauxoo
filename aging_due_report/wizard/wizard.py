@@ -22,7 +22,6 @@
 ###############################################################################
 from openerp.tools.translate import _
 from openerp.osv import fields, osv
-from openerp.addons.aging_due_report.report.parser import aging_parser as ag
 from pandas import DataFrame
 import mx.DateTime
 
@@ -519,6 +518,73 @@ class account_aging_partner_wizard(osv.osv_memory):
                 res.append(doc)
         return res
 
+    def _get_aml(self, cr, uid, ids, inv_type='out_invoice', currency_id=None):
+        aml_obj = self.pool.get('account.move.line')
+        res = 0.0
+        sign = 1 if inv_type == 'out_invoice' else -1
+        if not ids:
+            return res
+        if currency_id:
+            aml_gen = (
+                aml_brw.amount_currency * sign
+                for aml_brw in aml_obj.browse(cr, uid, ids))
+            for iii in aml_gen:
+                res += iii
+        else:
+            aml_gen = (
+                aml_brw.debit and (aml_brw.debit * sign) or
+                aml_brw.credit * (-1 * sign)
+                for aml_brw in aml_obj.browse(cr, uid, ids))
+            for iii in aml_gen:
+                res += iii
+        return res
+
+    def _get_invoice_by_partner(self, cr, uid, rp_brws,
+                                inv_type='out_invoice', context=None):
+        """
+        return a dictionary of dictionaries.
+            { partner_id: { values and invoice list } }
+        """
+        context = dict(context or {})
+        res = []
+        inv_obj = self.pool.get('account.invoice')
+        rp_obj = self.pool.get('res.partner')
+        # Filtering Partners by Unique Accounting Partners
+        fap_fnc = rp_obj._find_accounting_partner
+        inv_ids = []
+        # TODO: try to pass all partner in the search to avoid this loop
+        for rp_brw in rp_brws:
+            inv_ids += inv_obj.search(
+                cr, uid, [('partner_id', 'child_of', rp_brw.id),
+                          ('type', '=', inv_type),
+                          ('residual', '!=', 0),
+                          ('state', 'not in', ('cancel', 'draft'))])
+        if not inv_ids:
+            return res
+
+        for inv_brw in inv_obj.browse(cr, uid, inv_ids):
+            payment = self._get_aml(
+                cr, uid,
+                [aml.id for aml in inv_brw.payment_ids],
+                inv_type, inv_brw.currency_id.id)
+            residual = inv_brw.amount_total + payment
+
+            if not residual:
+                continue
+
+            res.append({
+                'invoice_id': inv_brw.id,
+                'currency_id': inv_brw.currency_id.id,
+                'partner_id': fap_fnc(inv_brw.partner_id).id,
+                'payment': payment,
+                'residual': residual,
+                'total': inv_brw.amount_total,
+                'date_due': inv_brw.date_due or inv_brw.date_invoice,
+                'date_emission': inv_brw.date_invoice,
+            })
+
+        return res
+
     def compute_lines(self, cr, uid, ids, partner_ids, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -536,7 +602,6 @@ class account_aging_partner_wizard(osv.osv_memory):
 
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         rp_brws = rp_obj.browse(cr, uid, partner_ids, context=context)
-        ag_obj = ag(cr, uid, None, context=context)
 
         wzd_brw.document_ids.unlink()
         wzd_brw.partner_ids.unlink()
@@ -544,7 +609,8 @@ class account_aging_partner_wizard(osv.osv_memory):
         aawp_ids = {}
         aawc_ids = {}
 
-        for each in ag_obj._get_invoice_by_partner(rp_brws):
+        for each in self._get_invoice_by_partner(cr, uid, rp_brws,
+                                                 context=context):
             partner_id = each['partner_id']
             currency_id = each['currency_id']
             key_pair = (partner_id, currency_id)

@@ -37,7 +37,6 @@ class aging_parser(report_sxw.rml_parse):
         self.localcontext.update({
             'time': time,
             'int': int,
-            'get_invoice_by_partner': self._get_invoice_by_partner,
             'get_total_by_comercial': self._get_total_by_comercial,
             'get_aged_lines': self._get_aged_lines,
             'get_invoice_by_currency': self._get_invoice_by_currency,
@@ -46,26 +45,6 @@ class aging_parser(report_sxw.rml_parse):
             self._get_invoice_by_currency_group,
             'datetime': datetime,
         })
-
-    def _get_aml(self, ids, inv_type='out_invoice', currency_id=None):
-        aml_obj = self.pool.get('account.move.line')
-        res = 0.0
-        sign = 1 if inv_type == 'out_invoice' else -1
-        if not ids:
-            return res
-        if currency_id:
-            aml_gen = (
-                aml_brw.amount_currency * sign
-                for aml_brw in aml_obj.browse(self.cr, self.uid, ids))
-            for i in aml_gen:
-                res += i
-        else:
-            aml_gen = (aml_brw.debit and (aml_brw.debit * sign) or
-                       aml_brw.credit * (-1 * sign) for aml_brw in
-                       aml_obj.browse(self.cr, self.uid, ids))
-            for i in aml_gen:
-                res += i
-        return res
 
     def _get_total_by_comercial(self, rp_brws, inv_type='out_invoice'):
         """
@@ -108,49 +87,6 @@ class aging_parser(report_sxw.rml_parse):
         if not res:
             return []
         return res.values()
-
-    def _get_invoice_by_partner(self, rp_brws, inv_type='out_invoice'):
-        """
-        return a dictionary of dictionaries.
-            { partner_id: { values and invoice list } }
-        """
-        res = []
-        inv_obj = self.pool.get('account.invoice')
-        rp_obj = self.pool.get('res.partner')
-        # Filtering Partners by Unique Accounting Partners
-        fap_fnc = rp_obj._find_accounting_partner
-        inv_ids = []
-        for rp_brw in rp_brws:
-            inv_ids += inv_obj.search(
-                self.cr, self.uid, [('partner_id', 'child_of', rp_brw.id),
-                                    ('type', '=', inv_type),
-                                    ('residual', '!=', 0),
-                                    ('state', 'not in',
-                                    ('cancel', 'draft'))])
-        if not inv_ids:
-            return res
-
-        for inv_brw in inv_obj.browse(self.cr, self.uid, inv_ids):
-            payment = self._get_aml(
-                [aml.id for aml in inv_brw.payment_ids],
-                inv_type, inv_brw.currency_id.id)
-            residual = inv_brw.amount_total + payment
-
-            if not residual:
-                continue
-
-            res.append({
-                'invoice_id': inv_brw.id,
-                'currency_id': inv_brw.currency_id.id,
-                'partner_id': fap_fnc(rp_brw).id,
-                'payment': payment,
-                'residual': residual,
-                'total': inv_brw.amount_total,
-                'date_due': inv_brw.date_due or inv_brw.date_invoice,
-                'date_emission': inv_brw.date_invoice,
-            })
-
-        return res
 
     def _get_invoice_by_partner_group(self, rp_brws, inv_type='out_invoice'):
         """
