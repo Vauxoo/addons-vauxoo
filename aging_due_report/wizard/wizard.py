@@ -276,6 +276,8 @@ class account_aging_partner_wizard(osv.osv_memory):
         for key, val in aml_data_groups.iteritems():
             partner_id, reconcile_id = key
             if reconcile_id:
+                # TODO: This process can be improve by using the approach reach
+                # in commission_payment
                 date_due = [amx_brw.date_maturity or amx_brw.date
                             for amx_brw in aml_obj.browse(
                                 cr, uid, val, context=context)
@@ -293,8 +295,20 @@ class account_aging_partner_wizard(osv.osv_memory):
                                  min([amw_brw.date
                                       for amw_brw in aml_obj.browse(
                                           cr, uid, val, context=context)]))
+                aml_id = [amv_brw.id
+                          for amv_brw in aml_obj.browse(
+                              cr, uid, val, context=context)
+                          if (amv_brw.journal_id.type in (
+                              'sale', 'purchase') and
+                              amv_brw.date == date_emission)]
+                aml_id = (aml_id or [
+                    amu_brw.id for amu_brw in aml_obj.browse(
+                        cr, uid, val, context=context)
+                    if amu_brw.date == date_emission])
+
                 doc = {
                     'partner_id': partner_id,
+                    'aml_id': aml_id[0],
                     # 'wh_vat': wh_vat,
                     # 'wh_islr': wh_islr,
                     # 'wh_muni': wh_muni,
