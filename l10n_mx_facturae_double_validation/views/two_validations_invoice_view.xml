@@ -13,8 +13,12 @@
                 <xpath expr="//button[@name='invoice_open']" position="attributes">
                    <attribute name="groups">l10n_mx_facturae_double_validation.group_validator</attribute>
                    <attribute name="states">proforma2,validate</attribute>
-
                 </xpath>
+
+                <xpath expr="//field[@name='state']" position="attributes">
+                  <attribute name="statusbar_visible">draft,validate,open,paid</attribute>
+                </xpath>
+
             </field>
         </record>
 

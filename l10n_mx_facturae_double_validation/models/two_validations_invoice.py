@@ -31,15 +31,19 @@ from openerp.tools.translate import _
 class AccountInvoice(osv.Model):
     _inherit = 'account.invoice'
 
-    _columns = {
-        'state': fields.selection([
-            ('validate', _('By validating')),
+    def get_states(self, cr, uid, context):
+        return [
             ('draft', 'Draft'),
             ('proforma', 'Pro-forma'),
             ('proforma2', 'Pro-forma'),
+            ('validate', _('By validating')),
             ('open', 'Open'),
             ('paid', 'Paid'),
-            ('cancel', 'Cancelled'), ],
+            ('cancel', 'Cancelled'), ]
+
+    _columns = {
+        'state': fields.selection(
+            get_states,
             'Status', select=True, readonly=True,
             track_visibility='onchange',
             help=' * The \'Draft\' status is used when a user is \
