@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+		<template id="yoytec_authorized_service_providers" page="True" name="Authorized Service Providers">
+            <t t-call="website.layout">
+              <div id="wrap">
+                <section class="vx_wrapper_white" style="background: #333;">
+                    <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 mt16" style="color:#FFFFFF;">
+                            <h2>We have an app for every need, search what you are looking for</h2>
+                            <p>Your next step y search, then select, read the doc and buy services to help you extend/understand what you need.</p>
+                        </div>
+                        <div class="col-md-6 mt16">
+                        <img class="img img-responsive shadow mb16" src="/website_vauxoo_apps/static/img/feedback.png"/>
+                        </div>
+                    </div>
+                    </div>
+                </section>
+                <section class="mt16 mb16">
+                  <div class="container">
+                    <t t-set="providers" t-value="env['product.brand'].search([], order='name desc')"/>
+                    <t t-foreach="providers" t-as="provider">
+                        <t t-call="website_authorized_service_centers.yoytec_centers"/>
+                    </t>
+                  </div>
+                </section>
+              </div>
+            </t>
+        </template>
+        <template id="yoytec_centers" name="Authorized Centers">
+            <div class="col-md-6">
+              <h4 class="mt16"><t t-esc="provider.name"/></h4>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><t t-esc="provider.name"/></h3>
+                </div>
+                <t t-foreach="provider.authorized_partner_ids" t-as="partner">
+                	<div class="panel-body"><t t-esc="partner.name"/></div>
+                	<div class="panel-body"><t t-esc="partner.street"/></div>
+                	<div class="panel-body"><t t-esc="partner.phone"/></div>
+                	<div class="panel-body"><t t-esc="partner.email"/></div>
+               	</t>
+              </div>
+            </div>
+        </template>
+        <template id="footer_providers" inherit_id="website.footer_default" customize_show="True" name="Automatic Footer">
+            <xpath expr="//ul[@id='products']" position="inside">
+                <li><a href="/page/website_authorized_service_centers.yoytec_authorized_service_providers">Authorized Service providers</a></li>
+            </xpath>
+        </template>
+
+    </data>
+</openerp>

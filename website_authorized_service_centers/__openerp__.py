@@ -19,7 +19,8 @@ Autorized Service Centers
         'website',
     ],
     'data': [
-        'views/product_brand_view.xml'
+        'views/product_brand_view.xml',
+        'views/authorized_service_centers.xml',
     ],
     'demo': [
 
