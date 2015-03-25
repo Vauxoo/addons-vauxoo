@@ -302,6 +302,7 @@ class account_aging_partner_wizard(osv.osv_memory):
                 if not reconcile_id:
                     res.append({
                         'partner_id': aml_brw.partner_id.id,
+                        'aml_id': aml_brw.id,
                         # 'wh_vat': wh_vat,
                         # 'wh_islr': wh_islr,
                         # 'wh_muni': wh_muni,
