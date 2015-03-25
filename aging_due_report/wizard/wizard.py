@@ -299,7 +299,7 @@ class account_aging_partner_wizard(osv.osv_memory):
                         # 'debit_note': debit_note,
                         # 'credit_note': credit_note,
                         # 'refund_brws': refund_brws,
-                        'payment': payment,
+                        'payment': -payment,
                         # 'payment_left': payment_left,
                         'residual': (total - payment),
                         # 'due_days': due_days,
@@ -307,7 +307,7 @@ class account_aging_partner_wizard(osv.osv_memory):
                         'total': total,
                         'date_due': aml_brw.date_maturity or aml_brw.date})
                 else:
-                    doc['payment'] += payment
+                    doc['payment'] -= payment
                     doc['total'] += total
                     doc['residual'] += (total - payment)
             if reconcile_id:
