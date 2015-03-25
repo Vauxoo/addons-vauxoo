@@ -26,7 +26,7 @@ from openerp.tools.sql import drop_view_if_exists
 class hr_timesheet(osv.Model):
     _inherit = "hr.analytic.timesheet"
 
-    def _get_invoiceables_hours(self, cr, uid, ids, args, fields, context=None):
+    def _get_invoiceables_hours(self, cr, uid, ids, args, fields, context=None):  # pylint: disable=W0621
         context = context or {}
         res = {}
         for time_brw in self.browse(cr, uid, ids, context=context):
@@ -38,7 +38,7 @@ class hr_timesheet(osv.Model):
             res.update({time_brw.id: hours})
         return res
 
-    def _get_user_story(self, cr, uid, ids, args, fields, context=None):
+    def _get_user_story(self, cr, uid, ids, args, fields, context=None):  # pylint: disable=W0621
         context = context or {}
         res = {}
         task_obj = self.pool.get('project.task')
@@ -107,7 +107,7 @@ class custom_timesheet(osv.Model):
     _order = "date desc"
     _auto = False
 
-    def _get_invoiceables_hours(self, cr, uid, ids, args, fields, context=None):
+    def _get_invoiceables_hours(self, cr, uid, ids, args, fields, context=None):  # pylint: disable=W0621
         context = context or {}
         res = {}
         for time_brw in self.browse(cr, uid, ids, context=context):

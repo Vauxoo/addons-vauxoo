@@ -33,7 +33,7 @@ from openerp.tools.translate import _
 _logger = logging.getLogger("SignYouTube")
 try:
     from gdata.youtube import service
-except:
+except ImportError:
     _logger.error("You need the gdata library ---> sudo pip install gdata")
 
 
@@ -137,10 +137,10 @@ class sign_youtube_conf(osv.Model):
                     index += max_results
 
                 entry_datas = []
-            except Exception, e:
+            except BaseException, e:
                 _logger.error(
-                    """Connection error, login to Youtube we got this error %s please veriry the
-                    parameters and try again""" % e)
+                    "Connection error, login to Youtube we got this " + \
+                    "error %s please verify the parameters and try again", e)
             for entry in userfeed_entry:
                 item = self.get_items(entry)
                 line_ids = line.search(
@@ -268,12 +268,12 @@ class sign_youtube_conf_line(osv.Model):
         for wzr in self.browse(cr, uid, ids, context=context):
             attachment_ids = [i.id for i in wzr.attachment_ids]
             try:
-                (model, mail_group_id) = data_obj.get_object_reference(cr, uid, 'portal_gallery',
+                (dummy, mail_group_id) = data_obj.get_object_reference(cr, uid, 'portal_gallery',
                                                                        'company_gallery_feed')
-            except:
-                (model, mail_group_id) = data_obj.get_object_reference(cr, uid, 'mail',
+            except BaseException:
+                (dummy, mail_group_id) = data_obj.get_object_reference(cr, uid, 'mail',
                                                                        'group_all_employees')
-            message_id = message_obj.message_post(cr, uid, [mail_group_id],
+            dummy = message_obj.message_post(cr, uid, [mail_group_id],
                                                   body=wzr.message, subject=wzr.name,
                                                   attachment_ids=attachment_ids,
                                                   subtype='mail.mt_comment', context=context)

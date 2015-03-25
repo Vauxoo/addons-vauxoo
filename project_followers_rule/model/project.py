@@ -31,12 +31,12 @@ class project(osv.Model):
 
     def _get_followers(self, cr, uid, ids, field_name, arg, context=None):
         result = {}
-        for project in self.browse(cr, uid, ids, context=context):
+        for project_pool in self.browse(cr, uid, ids, context=context):
             task_ids = self.pool.get('project.task').search(
-                cr, uid, [('project_id', '=', project.id)])
+                cr, uid, [('project_id', '=', project_pool.id)])
             for task in self.pool.get('project.task').browse(cr, uid, task_ids):
                 if task.message_follower_ids:
-                    result[project.id] = [
+                    result[project_pool.id] = [
                         follower.id for follower in task.message_follower_ids]
         return result
 
