@@ -34,6 +34,10 @@ class account_aging_wizard_document(osv.TransientModel):
     _columns = {
         'partner_id': fields.many2one('res.partner', u'Partner'),
         'invoice_id': fields.many2one('account.invoice', 'Invoice'),
+        'aml_id': fields.many2one(
+            'account.move.line',
+            'Journal Items',
+            help='Journal Item'),
         'residual': fields.float('Residual'),
         'base': fields.float('Base'),
         'tax': fields.float('Tax'),
