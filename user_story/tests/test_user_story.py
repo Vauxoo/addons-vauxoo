@@ -242,4 +242,3 @@ class TestUserStory(TransactionCase):
                                             ('body', 'ilike', mes)])
                 self.assertTrue(m_id, "The message was not created")
             i+=1
->>>>>>> MERGE-SOURCE
