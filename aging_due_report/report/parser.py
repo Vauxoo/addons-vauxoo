@@ -114,89 +114,43 @@ class aging_parser(report_sxw.rml_parse):
         return a dictionary of dictionaries.
             { partner_id: { values and invoice list } }
         """
-        res = {}
-        rp_obj = self.pool.get('res.partner')
+        res = []
         inv_obj = self.pool.get('account.invoice')
-        cur_obj = self.pool.get('res.currency')
+        rp_obj = self.pool.get('res.partner')
+        # Filtering Partners by Unique Accounting Partners
+        fap_fnc = rp_obj._find_accounting_partner
+        inv_ids = []
         for rp_brw in rp_brws:
-            inv_ids = inv_obj.search(
+            inv_ids += inv_obj.search(
                 self.cr, self.uid, [('partner_id', 'child_of', rp_brw.id),
                                     ('type', '=', inv_type),
                                     ('residual', '!=', 0),
                                     ('state', 'not in',
                                     ('cancel', 'draft'))])
-            if not inv_ids:
+        if not inv_ids:
+            return res
+
+        for inv_brw in inv_obj.browse(self.cr, self.uid, inv_ids):
+            payment = self._get_aml(
+                [aml.id for aml in inv_brw.payment_ids],
+                inv_type, inv_brw.currency_id.id)
+            residual = inv_brw.amount_total + payment
+
+            if not residual:
                 continue
 
-            inv_by_currency = self._get_invoice_by_currency(inv_ids)
-            res[rp_brw.id] = {}.fromkeys(inv_by_currency.keys())
-            currency_id = False
-            for currency in res[rp_brw.id].keys():
-                currency_id = currency
-                res[rp_brw.id][currency_id] = {
-                    'rp_brw': rp_brw,
-                    'cur_brw': cur_obj.browse(self.cr, self.uid, currency_id),
-                    'inv_ids': [],
-                    'inv_total': 0.0,
-                    'pay_left_total': 0.0,
-                    'pay_total': 0.0,
-                    'due_total': 0.0,
-                }
+            res.append({
+                'invoice_id': inv_brw.id,
+                'currency_id': inv_brw.currency_id.id,
+                'partner_id': fap_fnc(rp_brw).id,
+                'payment': payment,
+                'residual': residual,
+                'total': inv_brw.amount_total,
+                'date_due': inv_brw.date_due or inv_brw.date_invoice,
+                'date_emission': inv_brw.date_invoice,
+            })
 
-                for inv_brw in inv_obj.browse(
-                    self.cr, self.uid,
-                        inv_by_currency[currency_id]):
-
-                    currency_data = dict(
-                        invoice=inv_brw.currency_id.id,
-                        company=inv_brw.company_id.currency_id.id)
-                    currency_data.update(
-                        transaction=None if
-                        len(set(currency_data.values())) == 1
-                        else currency_data['invoice'])
-
-                    pay_ids = [aml.id for aml in inv_brw.payment_ids]
-                    payment_left = self._get_aml(
-                        pay_ids, inv_type, currency_data['transaction'])
-                    payment = payment_left
-                    residual = inv_brw.amount_total + payment
-
-                    if not residual:
-                        continue
-
-                    res[rp_brw.id][currency_id]['inv_ids'].append({
-                        'invoice_id': inv_brw.id,
-                        'currency_id': inv_brw.currency_id.id,
-                        'partner_id': rp_brw.id,
-                        'payment': payment,
-                        'residual': residual,
-                        'currency_id': currency_id,
-                        'total': inv_brw.amount_total,
-                        'date_due': inv_brw.date_due or inv_brw.date_invoice,
-                        'date_emission': inv_brw.date_invoice,
-                    })
-                    res[rp_brw.id][currency_id]['inv_total'] += \
-                        inv_brw.amount_total
-                    res[rp_brw.id][currency_id]['pay_total'] += payment
-                    res[rp_brw.id][currency_id]['due_total'] += residual
-
-            # ~ TODO: Report donde no se elimine esta clave del diccionario
-            # ~ y se use para revisiones internas
-            # ~ Si no tiene saldo, sacarlo del reporte
-
-            # pylint: disable=W0106
-            not res[rp_brw.id][currency_id]['due_total'] and res.pop(rp_brw.id)
-
-        # ~ ordenando los registros en orden alfabetico
-        # ~ si llegaran a existir
-        res2 = []
-        if res.keys():
-            rp_ids = rp_obj.search(self.cr, self.uid, [(
-                'id', 'in', res.keys())], order='name asc')
-            for rp_id in rp_ids:
-                for currency_id in res[rp_id].keys():
-                    res2.append(res[rp_id][currency_id])
-        return res2
+        return res
 
     def _get_invoice_by_partner_group(self, rp_brws, inv_type='out_invoice'):
         """

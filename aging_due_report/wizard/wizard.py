@@ -537,7 +537,6 @@ class account_aging_partner_wizard(osv.osv_memory):
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         rp_brws = rp_obj.browse(cr, uid, partner_ids, context=context)
         ag_obj = ag(cr, uid, None, context=context)
-        rex = ag_obj._get_invoice_by_currency_group(rp_brws)
 
         wzd_brw.document_ids.unlink()
         wzd_brw.partner_ids.unlink()
@@ -545,32 +544,27 @@ class account_aging_partner_wizard(osv.osv_memory):
         aawp_ids = {}
         aawc_ids = {}
 
-        # TODO: Refactorize this loop is AWFUL
-        for itx in rex:
-            for itr in itx:
-                for key, val in itr.iteritems():
-                    if key == 'inv_ids':
-                        for each in val:
-                            partner_id = each['partner_id']
-                            currency_id = each['currency_id']
-                            key_pair = (partner_id, currency_id)
-                            if not aawc_ids.get(currency_id, False):
-                                aawc_id = aawc_obj.create(cr, uid, {
-                                    'aaw_id': wzd_brw.id,
-                                    'currency_id': currency_id,
-                                }, context=context)
-                                aawc_ids[currency_id] = aawc_id
-                            if not aawp_ids.get(key_pair, False):
-                                aawp_id = aawp_obj.create(cr, uid, {
-                                    'aaw_id': wzd_brw.id,
-                                    'partner_id': partner_id,
-                                    'currency_id': currency_id,
-                                    'aawc_id': aawc_ids[currency_id],
-                                }, context=context)
-                                aawp_ids[partner_id, currency_id] = aawp_id
-                            each['aawp_id'] = aawp_ids[partner_id, currency_id]
-                            each['aaw_id'] = wzd_brw.id
-                            aawd_obj.create(cr, uid, each, context=context)
+        for each in ag_obj._get_invoice_by_partner(rp_brws):
+            partner_id = each['partner_id']
+            currency_id = each['currency_id']
+            key_pair = (partner_id, currency_id)
+            if not aawc_ids.get(currency_id, False):
+                aawc_id = aawc_obj.create(cr, uid, {
+                    'aaw_id': wzd_brw.id,
+                    'currency_id': currency_id,
+                }, context=context)
+                aawc_ids[currency_id] = aawc_id
+            if not aawp_ids.get(key_pair, False):
+                aawp_id = aawp_obj.create(cr, uid, {
+                    'aaw_id': wzd_brw.id,
+                    'partner_id': partner_id,
+                    'currency_id': currency_id,
+                    'aawc_id': aawc_ids[currency_id],
+                }, context=context)
+                aawp_ids[partner_id, currency_id] = aawp_id
+            each['aawp_id'] = aawp_ids[partner_id, currency_id]
+            each['aaw_id'] = wzd_brw.id
+            aawd_obj.create(cr, uid, each, context=context)
 
         for line in self._get_lines_by_partner_without_invoice(
                 cr, uid, ids, partner_ids, context=context):
