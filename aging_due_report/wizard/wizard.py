@@ -539,7 +539,7 @@ class account_aging_partner_wizard(osv.osv_memory):
                 res += iii
         return res
 
-    def _get_invoice_by_partner(self, cr, uid, rp_brws,
+    def _get_invoice_by_partner(self, cr, uid, partner_ids,
                                 inv_type='out_invoice', context=None):
         """
         return a dictionary of dictionaries.
@@ -551,14 +551,12 @@ class account_aging_partner_wizard(osv.osv_memory):
         rp_obj = self.pool.get('res.partner')
         # Filtering Partners by Unique Accounting Partners
         fap_fnc = rp_obj._find_accounting_partner
-        inv_ids = []
-        # TODO: try to pass all partner in the search to avoid this loop
-        for rp_brw in rp_brws:
-            inv_ids += inv_obj.search(
-                cr, uid, [('partner_id', 'child_of', rp_brw.id),
-                          ('type', '=', inv_type),
-                          ('residual', '!=', 0),
-                          ('state', 'not in', ('cancel', 'draft'))])
+        inv_ids = set(inv_obj.search(
+            cr, uid, [('partner_id', 'child_of', partner_ids),
+                      ('type', '=', inv_type),
+                      ('residual', '!=', 0),
+                      ('state', 'not in', ('cancel', 'draft'))]))
+        inv_ids = list(inv_ids)
         if not inv_ids:
             return res
 
@@ -609,7 +607,7 @@ class account_aging_partner_wizard(osv.osv_memory):
         aawp_ids = {}
         aawc_ids = {}
 
-        for each in self._get_invoice_by_partner(cr, uid, rp_brws,
+        for each in self._get_invoice_by_partner(cr, uid, partner_ids,
                                                  context=context):
             partner_id = each['partner_id']
             currency_id = each['currency_id']
