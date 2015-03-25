@@ -552,7 +552,6 @@ class acceptability_criteria(osv.Model):
             'type': 'ir.actions.act_window',
             'res_model': 'mail.compose.message',
             'src_model': 'user.story',
-            'view_mode': 'form',
             'view_mode': 'form,tree',
             'view_id': res_id,
             'view_type': 'form',

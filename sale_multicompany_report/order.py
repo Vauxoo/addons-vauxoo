@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-
+from openerp.osv.osv import except_osv
 
 class sale_order_line(osv.Model):
 
@@ -23,7 +23,9 @@ class sale_order(osv.Model):
     """
     _inherit = 'sale.order'
 
-    def print_with_attachment(self, cr, user, ids, context={}):
+    def print_with_attachment(self, cr, user, ids, context=None):
+        if context is None:
+            context = {}
         for o in self.browse(cr, user, ids, context):
             for ol in o.order_line:
                 if ol.att_bro:

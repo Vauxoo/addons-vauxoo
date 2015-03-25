@@ -30,35 +30,35 @@ _logger = logging.getLogger(__name__)
 try:
     pass
 except ImportError, e:
-    _logger.warning('You should declare branch with webkit or migrate this module %s' % __name__)
+    _logger.warning('You should declare branch with webkit or migrate this module %s', __name__)
 
-''' TODO: Migrate to new report system
-class user_story_report(report_sxw.rml_parse):
+#  TODO: Migrate to new report system
+# class user_story_report(report_sxw.rml_parse):
 
-    def __init__(self, cr, uid, name, context=None):
-        if context is None:
-            context = {}
-        super(user_story_report, self).__init__(
-            cr, uid, name, context=context)
-        self.localcontext.update({
-            'parse_html_field' : self._parse_html_field,
-        })
-        self.context = context
+#     def __init__(self, cr, uid, name, context=None):
+#         if context is None:
+#             context = {}
+#         super(user_story_report, self).__init__(
+#             cr, uid, name, context=context)
+#         self.localcontext.update({
+#             'parse_html_field' : self._parse_html_field,
+#         })
+#         self.context = context
 
-    def _parse_html_field(self, data):
-        if data:
-            data_str = data.encode('ascii', 'xmlcharrefreplace')
-            data_str = data_str.replace('<br>', '\n')
-            root = html.fromstring(data_str)
-            text_data = html.tostring(root, encoding='unicode', method='text')
-            text_data = text_data.encode('ascii', 'xmlcharrefreplace')
-            return text_data
-        return ''
+#     def _parse_html_field(self, data):
+#         if data:
+#             data_str = data.encode('ascii', 'xmlcharrefreplace')
+#             data_str = data_str.replace('<br>', '\n')
+#             root = html.fromstring(data_str)
+#             text_data = html.tostring(root, encoding='unicode', method='text')
+#             text_data = text_data.encode('ascii', 'xmlcharrefreplace')
+#             return text_data
+#         return ''
 
-webkit_report.WebKitParser('report.user.story.report',
-            'user.story',
-            'addons/user_story/report/user_story_report.mako',
-            parser=user_story_report)
+# webkit_report.WebKitParser('report.user.story.report',
+#             'user.story',
+#             'addons/user_story/report/user_story_report.mako',
+#             parser=user_story_report)
 
-'''
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -36,7 +36,6 @@ class hr_payslip(osv.osv):
             context = {}
         result = {}
         for payslip in self.browse(cr, uid, ids, context=context):
-            nb_inv_in_partial_rec = max_invoice_id = 0
             result[payslip.id] = 0.0
             if payslip.move_id:
                 for aml in payslip.move_id.line_id:
@@ -62,10 +61,10 @@ class hr_payslip(osv.osv):
 
     def _get_payslip_from_reconcile(self, cr, uid, ids, context=None):
         move = {}
-        for r in self.pool.get('account.move.reconcile').browse(cr, uid, ids, context=context):
-            for line in r.line_partial_ids:
+        for move_reconcile_pool in self.pool.get('account.move.reconcile').browse(cr, uid, ids, context=context):
+            for line in move_reconcile_pool.line_partial_ids:
                 move[line.move_id.id] = True
-            for line in r.line_id:
+            for line in move_reconcile_pool.line_id:
                 move[line.move_id.id] = True
 
         payslip_ids = []

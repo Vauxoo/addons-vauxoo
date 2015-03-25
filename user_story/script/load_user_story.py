@@ -105,7 +105,6 @@ def __main__():
     for user_story in user_story_dict:
         accep_crit_ids = user_story.get('accep_crit_ids')
         user_id = user_story.get('user_id')[0]
-        dummy = user_story.get('user_id')[1]
         user_story_name = user_story.get('name')
 
         sys.stdout.write('Evaluando la historia %s\n' % (user_story_name))

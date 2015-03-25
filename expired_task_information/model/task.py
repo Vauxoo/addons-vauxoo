@@ -19,18 +19,16 @@
 #
 #
 
-from datetime import *
+from datetime import date, timedelta
 
 from openerp.osv import fields, osv
 
 
 class task_expired_config(osv.Model):
 
-    """
-    """
     _name = 'task.expired.config'
 
-    def default_get(self, cr, uid, fields, context=None):
+    def default_get(self, cr, uid, fields, context=None):  # pylint: disable=W0621
         if context is None:
             context = {}
         res = super(task_expired_config, self).default_get(cr, uid, fields,
