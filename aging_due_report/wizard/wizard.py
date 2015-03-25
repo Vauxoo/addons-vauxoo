@@ -428,7 +428,7 @@ class account_aging_partner_wizard(osv.osv_memory):
         aawp_ids = {}
         aawc_ids = {}
 
-        # TODO: We have to resolve the issue of multipartners
+        # TODO: Refactorize this loop is AWFUL
         for itx in rex:
             for itr in itx:
                 for key, val in itr.iteritems():
