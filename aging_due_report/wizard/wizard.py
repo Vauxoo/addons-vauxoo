@@ -334,8 +334,8 @@ class account_aging_partner_wizard(osv.osv_memory):
             required=True),
         'type': fields.selection(
             [('aging', 'Aging Report'),
-             ('detail', 'Detailed Report'),
-             ('formal', 'Formal Report')],
+             ('detail', 'Detailed Report'), ],
+            # ('formal', 'Formal Report')],
             "Type",
             required=True),
         'currency_ids': fields.one2many(
