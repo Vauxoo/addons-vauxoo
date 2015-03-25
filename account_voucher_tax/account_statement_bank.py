@@ -541,6 +541,24 @@ class account_bank_statement_line(osv.osv):
                         move_account_tax)[1]]
                     })
                 dat.append(res)
+
+                if amount_ret_tax:
+                    if not tax_id.account_retention_voucher_id:
+                        msg = _("""
+                            You should configure
+                            'VAT pending for apply Account'
+                            in tax [%s]""") % tax_id.name
+                        raise osv.except_osv(_('Error'), msg)
+                    retention_dict = self.preparate_dict_tax(
+                        tax_id=tax_id, amount=abs(amount_ret_tax))
+                    retention_dict.update({
+                        'account_tax_voucher':
+                            tax_id.account_retention_voucher_id.id,
+                        'move_line_reconcile': [account_group.get(
+                            move_account_tax)[1]]
+                        })
+                    dat.append(retention_dict)
+
         if not counterpart_move_line_ids:
             tax_advance = self._get_tax_advance(
                 cr, uid, mv_line_dicts, context=context)

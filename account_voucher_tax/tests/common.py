@@ -50,6 +50,8 @@ class TestTaxCommon(common.TransactionCase):
             "account_voucher_tax.account_ova_voucher_16")
         self.acc_ret1067 = self.ref(
             "account_voucher_tax.account_iva_voucher_retencion_iva_1067")
+        self.acc_tax_pending_apply = self.ref(
+            "account_voucher_tax.account_iva_voucher_pending_apply")
 
         self.acc_tax_16_payment = self.ref(
             "account_voucher_tax.account_iva_voucher")
