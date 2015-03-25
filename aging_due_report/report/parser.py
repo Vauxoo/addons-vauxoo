@@ -122,7 +122,7 @@ class aging_parser(report_sxw.rml_parse):
         cur_obj = self.pool.get('res.currency')
         for rp_brw in rp_brws:
             inv_ids = inv_obj.search(
-                self.cr, self.uid, [('partner_id', '=', rp_brw.id),
+                self.cr, self.uid, [('partner_id', 'child_of', rp_brw.id),
                                     ('type', '=', inv_type),
                                     ('residual', '!=', 0),
                                     ('state', 'not in',
