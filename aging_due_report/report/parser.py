@@ -116,7 +116,6 @@ class aging_parser(report_sxw.rml_parse):
         """
         res = {}
         rp_obj = self.pool.get('res.partner')
-        fap_fnc = rp_obj._find_accounting_partner
         inv_obj = self.pool.get('account.invoice')
         cur_obj = self.pool.get('res.currency')
         for rp_brw in rp_brws:
@@ -139,10 +138,6 @@ class aging_parser(report_sxw.rml_parse):
                     'cur_brw': cur_obj.browse(self.cr, self.uid, currency_id),
                     'inv_ids': [],
                     'inv_total': 0.0,
-                    'wh_vat': 0.0,
-                    'wh_islr': 0.0,
-                    'wh_muni': 0.0,
-                    'credit_note': 0.0,
                     'pay_left_total': 0.0,
                     'pay_total': 0.0,
                     'due_total': 0.0,
@@ -161,96 +156,27 @@ class aging_parser(report_sxw.rml_parse):
                         else currency_data['invoice'])
 
                     pay_ids = [aml.id for aml in inv_brw.payment_ids]
-                    # ~ VAT
-                    pay_vat_ids = []
-                    # ~ ISLR
-                    pay_islr_ids = []
-                    # ~  MUNI
-                    pay_muni_ids = []
-                    # ~  TODO: SRC
-
-                    # ~ N/C
-                    # ~ refund_ids = inv_obj.search(self.cr,self.uid,
-                    # [('parent_id','=',inv_brw.id),('type','=','out_refund'),
-                    # ('state','not in',('draft','cancel')),
-                    # ('move_id','!=',False)])
-                    # ~ refund_ids = inv_obj.search(self.cr,self.uid,
-                    # [('parent_id','=',inv_brw.id),('type','=','out_refund'),
-                    # ('state','not in',('draft','cancel')),
-                    # ('move_id','!=',False)])
-                    refund_brws = []
-                    # ~ refund_brws = refund_ids and inv_obj.browse(
-                    # self.cr,self.uid,refund_ids) or []
-                    # ~ aml_gen = (refund_brw.move_id.line_id for
-                    # refund_brw in refund_brws)
-                    pay_refund_ids = []
-                    # ~ for aml_brws in aml_gen:
-                    # ~ pay_refund_ids += [aml.id for aml in aml_brws
-                    # if aml.account_id.id == inv_brw.account_id.id]
-
-                    # ~  TODO: N/D
-                    # ~  ACUMULACION DE LOS NOPAGOS, OBTENCION DEL PAGO
-                    pay_left_ids = list(set(pay_ids).difference(
-                        pay_vat_ids +
-                        pay_islr_ids +
-                        pay_muni_ids +
-                        pay_refund_ids))
-                    wh_vat = self._get_aml(
-                        pay_vat_ids, inv_type, currency_data['transaction'])
-                    wh_islr = self._get_aml(
-                        pay_islr_ids, inv_type, currency_data['transaction'])
-                    wh_muni = self._get_aml(
-                        pay_muni_ids, inv_type, currency_data['transaction'])
-                    wh_src = self._get_aml(
-                        [], inv_type, currency_data['transaction'])
-                    debit_note = self._get_aml(
-                        [], inv_type, currency_data['transaction'])
-                    credit_note = self._get_aml(
-                        pay_refund_ids, inv_type, currency_data['transaction'])
                     payment_left = self._get_aml(
-                        pay_left_ids, inv_type, currency_data['transaction'])
-                    payment = wh_vat + wh_islr + wh_muni + \
-                        wh_src + debit_note + credit_note + payment_left
+                        pay_ids, inv_type, currency_data['transaction'])
+                    payment = payment_left
                     residual = inv_brw.amount_total + payment
 
-                    # ~ TODO: Si se incluye un reporte de revisiones
-                    # ~ no se eliminara la factura
-                    # ~ si la factura no tiene saldo entonces
-                    # ~ no incluirla en el reporte
                     if not residual:
                         continue
 
                     res[rp_brw.id][currency_id]['inv_ids'].append({
-                        # TODO: inv_brw shall be deprecated in favor of
-                        # invoice_id
-                        'inv_brw': inv_brw,
                         'invoice_id': inv_brw.id,
-                        # TODO: This needs fixing should be accounting partner
-                        'partner_id': fap_fnc(inv_brw.partner_id).id,
-                        'wh_vat': wh_vat,
-                        'wh_islr': wh_islr,
-                        'wh_muni': wh_muni,
-                        'wh_src': wh_src,
-                        'debit_note': debit_note,
-                        'credit_note': credit_note,
-                        'refund_brws': refund_brws,
+                        'currency_id': inv_brw.currency_id.id,
+                        'partner_id': rp_brw.id,
                         'payment': payment,
-                        'payment_left': payment_left,
                         'residual': residual,
                         'currency_id': currency_id,
-
                         'total': inv_brw.amount_total,
                         'date_due': inv_brw.date_due or inv_brw.date_invoice,
                         'date_emission': inv_brw.date_invoice,
                     })
                     res[rp_brw.id][currency_id]['inv_total'] += \
                         inv_brw.amount_total
-                    res[rp_brw.id][currency_id]['wh_vat'] += wh_vat
-                    res[rp_brw.id][currency_id]['wh_islr'] += wh_islr
-                    res[rp_brw.id][currency_id]['wh_muni'] += wh_muni
-                    res[rp_brw.id][currency_id]['credit_note'] += credit_note
-                    res[rp_brw.id][currency_id]['pay_left_total'] += \
-                        payment_left
                     res[rp_brw.id][currency_id]['pay_total'] += payment
                     res[rp_brw.id][currency_id]['due_total'] += residual
 
