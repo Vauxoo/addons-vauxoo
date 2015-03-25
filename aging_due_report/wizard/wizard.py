@@ -29,7 +29,7 @@ from pandas import DataFrame
 class account_aging_wizard_document(osv.TransientModel):
     _name = 'account.aging.wizard.document'
     _rec_name = 'partner_id'
-    _order = 'partner_id'
+    _order = 'partner_id, due_days'
 
     _columns = {
         'partner_id': fields.many2one('res.partner', u'Partner'),
