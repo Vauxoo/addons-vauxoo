@@ -1,6 +1,5 @@
-#!/usr/bin/python
 # -*- encoding: utf-8 -*-
-###########################################################################
+# ##########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
@@ -8,10 +7,10 @@
 #    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
-#############################################################################
+# ############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
-#    by #    the Free Software Foundation, either version 3 of the License, or
+#    by the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
@@ -21,7 +20,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-##########################################################################
+# #########################################################################
 
 from openerp.osv import osv
 from openerp.tools.translate import _
@@ -41,8 +40,9 @@ class message_post_show_all(osv.Model):
     _name = 'message.post.show.all'
     _inherit = ['mail.thread']
 
-    def get_last_value(self, cr, uid, ids, model=None, field=None,
-                       field_type=None, context=None):
+    # pylint: disable=W0622
+    def get_last_value(self, cr, uid, ids, model=None, field=None, type=None,
+                       context=None):
         '''
         Return the last value of a record in the model to show a post with the
         change
@@ -102,7 +102,6 @@ class message_post_show_all(osv.Model):
                     add = _('Added')
                     delete = _('Deleted')
                     if lastv and not new:
-
                         dele = [obj.name_get(cr, uid, [i])[0][1]
                                 for i in lastv]
                         mes = ' - '.join(dele)
@@ -192,6 +191,7 @@ class message_post_show_all(osv.Model):
                  vals[field])
         return message
 
+    # pylint: disable=W0106
     def write(self, cr, uid, ids, vals, context=None):
         context = context or {}
         for idx in ids:
@@ -211,6 +211,7 @@ class message_post_show_all(osv.Model):
                         last_value, context)
                     body = len(message.split('\n')) > 2 and '%s\n%s: %s' % (
                         body, field_str, message)
+
                 elif self._columns[field]._type == 'many2one':
                     message = self.prepare_many2one_info(cr, uid, idx,
                                                          self._name,

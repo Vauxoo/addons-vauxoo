@@ -25,32 +25,36 @@
 #
 ##############################################################################
 {
-    "name": "user_wzd", 
-    "version": "1.0", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Human Resources", 
+    "name": "Employee from User",
+    "summary": "Create an Employee from the User Form",
+    "version": "1.0.1",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Human Resources",
     "description": """
 Add wizard for create employee from users
-===============================================
+=========================================
 
-Module that adds a wizard in res.users model and generated employee from one or many users, only
-and only if there is no other record of employee assigned to the user in question.
+In order to load timesheet correctly is necesary an employee per user.
 
-    """, 
-    "website": "http://www.vauxoo.com/", 
-    "license": "AGPL-3", 
+This wizard enable a technical wizard to create an employee one time the user exists.
+
+The Wizard is added in uses vies model and generate an employee from one or many users,
+only if there is no other record of employee assigned to the user in question.
+""", 
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
         "hr"
-    ], 
-    "demo": [], 
+    ],
+    "demo": [],
     "data": [
         "wizard/res_users_view.xml"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
-    "active": False
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
+    "active": False,
 }

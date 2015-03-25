@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <openerp>
-    <data noupdate="1">
-        
+    <data>
+
         <record id="product_historical_price_tree" model="ir.ui.view">
             <field name="name">product.historical.price.tree</field>
             <field name="model">product.historic.price</field>
@@ -36,7 +36,7 @@
                 </tree>
             </field>
         </record>
-            
+
         <record id="product_historical_cost_form" model="ir.ui.view">
             <field name="name">product.historical.cost.form</field>
             <field name="model">product.historic.cost</field>
@@ -48,12 +48,12 @@
                 </form>
             </field>
         </record>
-        
-        
+
+        <!--
         <record model="ir.ui.view" id="product_historical_price">
             <field name="name">product.historical.price</field>
-            <field name="model">product.product</field>
-            <field name="inherit_id" ref="account.product_normal_form_view"/>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="account.product_template_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//page[@string='Accounting']" position="after">
                     <page string="Historical Cost Price">
@@ -72,5 +72,6 @@
                 </xpath>
             </field>
         </record>
+        -->
     </data>
 </openerp>

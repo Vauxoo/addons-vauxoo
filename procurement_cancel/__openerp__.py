@@ -26,20 +26,28 @@
 
 {
     "name": "Procurement Cancel",
-    "version": "1.0",
-    "author": "Vauxoo ( Federico Manuel Echeverri Choux ) ",
+    "version": "1.1",
+    "author": "Vauxoo",
     "category": "",
-    "description": """ This module can cancel massively Procurements   """,
+    "description": """
+Allow cancel massively Procurements.
+
+When it is necesary:
+
+When you configure stock rules and trigger the schedulers sometimes
+you maybe will not be agreed with some of the procurements it will
+allow you cancel them by groups one time you make filters.
+    """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
-            "base",
-            "procurement",
+        "base",
+        "procurement",
     ],
     "demo": [],
     "data": [
-            "security/procurement_cancel.xml",
-            "wizard/procurement_cancel_view.xml",
+        "security/procurement_cancel.xml",
+        "wizard/procurement_cancel_view.xml",
     ],
     "installable": True,
     "active": False,

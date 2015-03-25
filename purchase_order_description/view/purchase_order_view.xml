@@ -11,6 +11,8 @@
                 <xpath expr="//field[@name='notes']" position="before">
                     <separator string="Description"/>
                     <field name="description"/>
+                    <separator string="RFQ Terms and Conditions"/>
+                    <field name="rfq_notes"/>
                     <separator string="Terms and Conditions"/>
                 </xpath>
 

@@ -37,7 +37,9 @@
     "depends": [
         "product"
     ], 
-    "demo": [], 
+    "demo": [
+        'demo/test_unique_ref_demo.xml',
+    ], 
     "data": [], 
     "test": [], 
     "js": [], 

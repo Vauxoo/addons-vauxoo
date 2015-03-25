@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- encoding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
@@ -24,32 +23,33 @@
 ################################################################################
 #                    "security/groups.xml",
 {
-    "name": "Product Historical Price", 
-    "version": "0.2", 
-    "author": "Vauxoo", 
-    "category": "Generic Modules/Product", 
+    "name": "Product Historical Price",
+    "version": "0.2",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Product",
     "description": """
     What do this module:
     This module gets the historical price of a product
-                    """, 
-    "website": "http://Vauxoo.com", 
-    "license": "", 
+                    """,
+    "website": "http://Vauxoo.com",
+    "license": "",
     "depends": [
-        "product", 
-        "decimal_precision", 
-        "account"
-    ], 
-    "demo": [], 
+        "product",
+        "decimal_precision",
+        "account",
+        "sale",
+    ],
+    "demo": [],
     "data": [
-        "view/product_view.xml", 
-        "data/product_data.xml", 
+        "view/product_view.xml",
+        "data/product_data.xml",
         "security/ir.model.access.csv"
-    ], 
-    "test": [], 
-    "js": [], 
-    "css": [], 
-    "qweb": [], 
-    "installable": True, 
-    "auto_install": False, 
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
     "active": False
 }
