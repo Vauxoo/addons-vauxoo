@@ -292,10 +292,6 @@ class account_aging_partner_wizard(osv.osv_memory):
                 # 'date_due': aml_brw.date_maturity or aml_brw.date}
                 'date_due': False}
             for aml_brw in aml_obj.browse(cr, uid, val, context=context):
-                # ask in this step a read for the aml_ids, this will allow to
-                # group later the data
-                # TODO: When currency_id is not None then convert values or use
-                # other values like amount_currency
                 if aml_brw.currency_id:
                     currency_id = aml_brw.currency_id.id
                     total = (sel == 'customer' and
@@ -338,6 +334,10 @@ class account_aging_partner_wizard(osv.osv_memory):
                         'date_emission': aml_brw.date,
                         'date_due': date_due})
                 else:
+                    # TODO: When currency_id is not None then convert values or
+                    # use other values like amount_currency
+                    # Problem here is that in a single reconciliation there
+                    # could be more than one currency
                     doc['currency_id'] = currency_id
                     doc['payment'] -= payment
                     doc['total'] += total
