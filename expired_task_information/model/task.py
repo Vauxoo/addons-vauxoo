@@ -19,8 +19,9 @@
 #
 #
 
-from openerp.osv import fields, osv
 from datetime import *
+
+from openerp.osv import fields, osv
 
 
 class task_expired_config(osv.Model):

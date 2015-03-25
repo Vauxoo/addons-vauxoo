@@ -26,11 +26,11 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
+import base64
+
+import openerp.netsvc as netsvc
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-
-import base64
-import openerp.netsvc as netsvc
 
 
 class print_sale_order_report(osv.TransientModel):

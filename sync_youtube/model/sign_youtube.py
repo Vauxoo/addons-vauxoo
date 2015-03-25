@@ -24,10 +24,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-from openerp.osv import osv, fields
-from openerp.tools.translate import _
 import logging
 import urlparse
+
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 _logger = logging.getLogger("SignYouTube")
 try:
     from gdata.youtube import service

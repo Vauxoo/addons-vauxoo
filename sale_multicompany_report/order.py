@@ -27,12 +27,11 @@ class sale_order(osv.Model):
         for o in self.browse(cr, user, ids, context):
             for ol in o.order_line:
                 if ol.att_bro:
-                    print "Im Here i will go to print %s " % ol.name
+                    pass  # Im here i will go to print ol.name
         return True
 
     def __get_company_object(self, cr, uid):
         user = self.pool.get('res.users').browse(cr, uid, uid)
-        print user
         if not user.company_id:
             raise except_osv(_('ERROR !'), _(
                 'There is no company configured for this user'))
