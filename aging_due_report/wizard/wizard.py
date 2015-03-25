@@ -85,6 +85,7 @@ class account_aging_wizard_partner(osv.osv_memory):
         context = dict(context or {})
         res = {}
         for line in self.browse(cr, uid, ids, context=context):
+            spans = [line.aaw_id.period_length * x for x in range(5)]
             res[line.id] = dict((fn, 0.0) for fn in field_names)
             for doc in line.document_ids:
                 if 'residual' in field_names:
@@ -93,6 +94,25 @@ class account_aging_wizard_partner(osv.osv_memory):
                     res[line.id]['payment'] += doc.payment
                 if 'total' in field_names:
                     res[line.id]['total'] += doc.total
+                if 'not_due' in field_names:
+                    if doc.due_days <= 0:
+                        res[line.id]['not_due'] += doc.residual
+                if 'span01' in field_names:
+                    if doc.due_days > 0 and doc.due_days <= spans[1]:
+                        res[line.id]['span01'] += doc.residual
+                if 'span02' in field_names:
+                    if doc.due_days > spans[1] and doc.due_days <= spans[2]:
+                        res[line.id]['span02'] += doc.residual
+                if 'span03' in field_names:
+                    if doc.due_days > spans[2] and doc.due_days <= spans[3]:
+                        res[line.id]['span03'] += doc.residual
+                if 'span04' in field_names:
+                    if doc.due_days > spans[3] and doc.due_days <= spans[4]:
+                        res[line.id]['span04'] += doc.residual
+                if 'span05' in field_names:
+                    if doc.due_days > spans[4]:
+                        res[line.id]['span05'] += doc.residual
+
         return res
 
     def _get_aawp(self, cr, uid, ids, context=None):
@@ -150,6 +170,60 @@ class account_aging_wizard_partner(osv.osv_memory):
             },
             multi='amounts',
             type='float'),
+        'not_due': fields.function(
+            _get_amount,
+            string='Not Due',
+            store={
+                _name: (lambda self, cr, uid, ids, cx: ids, [], 15),
+                'account.aging.wizard.document': (_get_aawp, [], 15),
+            },
+            multi='amounts',
+            type='float'),
+        'span01': fields.function(
+            _get_amount,
+            string='span01',
+            store={
+                _name: (lambda self, cr, uid, ids, cx: ids, [], 15),
+                'account.aging.wizard.document': (_get_aawp, [], 15),
+            },
+            multi='amounts',
+            type='float'),
+        'span02': fields.function(
+            _get_amount,
+            string='span02',
+            store={
+                _name: (lambda self, cr, uid, ids, cx: ids, [], 15),
+                'account.aging.wizard.document': (_get_aawp, [], 15),
+            },
+            multi='amounts',
+            type='float'),
+        'span03': fields.function(
+            _get_amount,
+            string='span03',
+            store={
+                _name: (lambda self, cr, uid, ids, cx: ids, [], 15),
+                'account.aging.wizard.document': (_get_aawp, [], 15),
+            },
+            multi='amounts',
+            type='float'),
+        'span04': fields.function(
+            _get_amount,
+            string='span04',
+            store={
+                _name: (lambda self, cr, uid, ids, cx: ids, [], 15),
+                'account.aging.wizard.document': (_get_aawp, [], 15),
+            },
+            multi='amounts',
+            type='float'),
+        'span05': fields.function(
+            _get_amount,
+            string='span05',
+            store={
+                _name: (lambda self, cr, uid, ids, cx: ids, [], 15),
+                'account.aging.wizard.document': (_get_aawp, [], 15),
+            },
+            multi='amounts',
+            type='float'),
         'aawc_id': fields.many2one(
             'account.aging.wizard.currency',
             'Account Aging Wizard Currency',
@@ -170,6 +244,18 @@ class account_aging_wizard_currency(osv.osv_memory):
             for part in line.partner_ids:
                 if 'residual' in field_names:
                     res[line.id]['residual'] += part.residual
+                if 'not_due' in field_names:
+                    res[line.id]['not_due'] += part.not_due
+                if 'span01' in field_names:
+                    res[line.id]['span01'] += part.span01
+                if 'span02' in field_names:
+                    res[line.id]['span02'] += part.span02
+                if 'span03' in field_names:
+                    res[line.id]['span03'] += part.span03
+                if 'span04' in field_names:
+                    res[line.id]['span04'] += part.span04
+                if 'span05' in field_names:
+                    res[line.id]['span05'] += part.span05
         return res
 
     _columns = {
@@ -187,6 +273,36 @@ class account_aging_wizard_currency(osv.osv_memory):
         'residual': fields.function(
             _get_amount,
             string='Residual',
+            multi='amounts',
+            type='float'),
+        'not_due': fields.function(
+            _get_amount,
+            string='Not Due',
+            multi='amounts',
+            type='float'),
+        'span01': fields.function(
+            _get_amount,
+            string='span01',
+            multi='amounts',
+            type='float'),
+        'span02': fields.function(
+            _get_amount,
+            string='span02',
+            multi='amounts',
+            type='float'),
+        'span03': fields.function(
+            _get_amount,
+            string='span03',
+            multi='amounts',
+            type='float'),
+        'span04': fields.function(
+            _get_amount,
+            string='span04',
+            multi='amounts',
+            type='float'),
+        'span05': fields.function(
+            _get_amount,
+            string='span05',
             multi='amounts',
             type='float'),
     }
