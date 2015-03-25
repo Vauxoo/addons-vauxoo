@@ -44,6 +44,7 @@ class account_aging_wizard_document(osv.TransientModel):
         'total': fields.float('Total'),
         'payment': fields.float('Payment'),
         'due_days': fields.float('Due Days'),
+        'date_emission': fields.date('Emission Date'),
         'date_due': fields.date('Due Date'),
         'company_id': fields.many2one('res.company', u'Company'),
         'currency_id': fields.many2one('res.currency', 'Currency'),
@@ -316,6 +317,7 @@ class account_aging_partner_wizard(osv.osv_memory):
                         # 'due_days': due_days,
                         'currency_id': currency_id,
                         'total': total,
+                        'date_emission': aml_brw.date,
                         'date_due': aml_brw.date_maturity or aml_brw.date})
                 else:
                     doc['currency_id'] = currency_id
