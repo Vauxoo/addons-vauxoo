@@ -45,9 +45,9 @@
 				        	<tbody>
 				            	<t t-foreach="p_obj.document_ids" t-as="doc">
 					            	<tr>
-                                        <td class="ITEMSLEFT"><span t-esc="doc.invoice_id and doc.invoice_id.number or 'N/A'"/></td>
-					                    <td class="ITEMSLEFT"><span t-esc="doc.invoice_id and doc.invoice_id.date_invoice and datetime.strptime(doc.invoice_id.date_invoice.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
-					                    <td class="ITEMSLEFT"><span t-esc="doc.invoice_id and doc.invoice_id.date_due and datetime.strptime(doc.invoice_id.date_due.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
+                                        <td class="ITEMSLEFT"><span t-esc="doc.invoice_id and doc.invoice_id.number or doc.aml_id and doc.aml_id.move_id and doc.aml_id.move_id.name or 'N/A'"/></td>
+					                    <td class="ITEMSLEFT"><span t-esc="doc.date_emission and datetime.strptime(doc.date_emission.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
+					                    <td class="ITEMSLEFT"><span t-esc="doc.date_due and datetime.strptime(doc.date_due.encode('ascii','replace'), '%Y-%m-%d').strftime('%d/%m/%Y') or ''"/></td>
 					                    <td class="ITEMSLEFT"><span t-esc="doc.due_days and '%s DAYS' %doc.due_days or '0 DAYS' "/></td>
 					                    <td class="ITEMSRIGHT"><span t-esc="'0.00' "/></td>
 					                    <td class="ITEMSRIGHT"><span t-esc="'0.00'"/></td>
