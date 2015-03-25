@@ -24,12 +24,23 @@ from openerp.tools.translate import _
 from openerp.osv import fields, osv
 from openerp.addons.aging_due_report.report.parser import aging_parser as ag
 from pandas import DataFrame
+import mx.DateTime
 
 
 class account_aging_wizard_document(osv.TransientModel):
     _name = 'account.aging.wizard.document'
     _rec_name = 'partner_id'
     _order = 'partner_id, due_days'
+
+    def _get_due_days(self, cr, uid, ids, field_names, arg, context=None):
+        context = dict(context or {})
+        res = {}.fromkeys(ids, False)
+        today = mx.DateTime.now()
+        for line in self.browse(cr, uid, ids, context=context):
+            if line.date_due:
+                date_due = mx.DateTime.strptime(line.date_due, '%Y-%m-%d')
+                res[line.id] = (today - date_due).day
+        return res
 
     _columns = {
         'partner_id': fields.many2one('res.partner', u'Partner'),
@@ -43,7 +54,13 @@ class account_aging_wizard_document(osv.TransientModel):
         'tax': fields.float('Tax'),
         'total': fields.float('Total'),
         'payment': fields.float('Payment'),
-        'due_days': fields.float('Due Days'),
+        'due_days': fields.function(
+            _get_due_days,
+            string='Due Days',
+            store={
+                _name: (lambda self, cr, uid, ids, cx: ids, [], 15),
+            },
+            type='integer'),
         'date_emission': fields.date('Emission Date'),
         'date_due': fields.date('Due Date'),
         'company_id': fields.many2one('res.company', u'Company'),
@@ -270,7 +287,6 @@ class account_aging_partner_wizard(osv.osv_memory):
                 'payment': 0.0,
                 # 'payment_left': payment_left,
                 'residual': 0.0,
-                # 'due_days': due_days,
                 'currency_id': False,
                 'total': 0.0,
                 # 'date_due': aml_brw.date_maturity or aml_brw.date}
@@ -314,7 +330,6 @@ class account_aging_partner_wizard(osv.osv_memory):
                         'payment': -payment,
                         # 'payment_left': payment_left,
                         'residual': (total - payment),
-                        # 'due_days': due_days,
                         'currency_id': currency_id,
                         'total': total,
                         'date_emission': aml_brw.date,

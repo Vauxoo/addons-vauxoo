@@ -26,7 +26,6 @@
 
 import time
 from openerp.report import report_sxw
-import mx.DateTime
 from openerp.osv import osv
 from datetime import datetime
 
@@ -213,10 +212,6 @@ class aging_parser(report_sxw.rml_parse):
                     payment = wh_vat + wh_islr + wh_muni + \
                         wh_src + debit_note + credit_note + payment_left
                     residual = inv_brw.amount_total + payment
-                    date_due = mx.DateTime.strptime(
-                        inv_brw.date_due or inv_brw.date_invoice, '%Y-%m-%d')
-                    today = mx.DateTime.now()
-                    due_days = (today - date_due).day
 
                     # ~ TODO: Si se incluye un reporte de revisiones
                     # ~ no se eliminara la factura
@@ -242,11 +237,10 @@ class aging_parser(report_sxw.rml_parse):
                         'payment': payment,
                         'payment_left': payment_left,
                         'residual': residual,
-                        'due_days': due_days,
                         'currency_id': currency_id,
 
                         'total': inv_brw.amount_total,
-                        'date_due': date_due,
+                        'date_due': inv_brw.date_due or inv_brw.date_invoice,
                         'date_emission': inv_brw.date_invoice,
                     })
                     res[rp_brw.id][currency_id]['inv_total'] += \
