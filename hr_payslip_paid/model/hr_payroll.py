@@ -23,8 +23,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-from openerp.osv import fields, osv
 from openerp import netsvc
+from openerp.osv import fields, osv
 
 
 class hr_payslip(osv.osv):
@@ -36,14 +36,14 @@ class hr_payslip(osv.osv):
             src = []
             lines = []
             if payslip.move_id:
-                for p in payslip.move_id.line_id:
+                for p_line_id in payslip.move_id.line_id:
                     temp_lines = []
-                    if p.reconcile_id:
-                        temp_lines = map(lambda x: x.id, p.reconcile_id.line_id)
-                    elif p.reconcile_partial_id:
-                        temp_lines = map(lambda x: x.id, p.reconcile_partial_id.line_partial_ids)
+                    if p_line_id.reconcile_id:
+                        temp_lines = map(lambda x: x.id, p_line_id.reconcile_id.line_id)
+                    elif p_line_id.reconcile_partial_id:
+                        temp_lines = map(lambda x: x.id, p_line_id.reconcile_partial_id.line_partial_ids)
                     lines += [x for x in temp_lines if x not in lines]
-                    src.append(p.id)
+                    src.append(p_line_id.id)
 
             lines = filter(lambda x: x not in src, lines)
             result[payslip.id] = lines

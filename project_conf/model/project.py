@@ -26,8 +26,9 @@ class project_task(osv.osv):
 
     _inherit = 'project.task'
 
-    def _message_get_auto_subscribe_fields(self, cr, uid, updated_fields, auto_follow_fields=['user_id'], context=None):
-
+    def _message_get_auto_subscribe_fields(self, cr, uid, updated_fields, auto_follow_fields=None, context=None):
+        if auto_follow_fields is None:
+            auto_follow_fields = ['user_id']
         res = super(project_task, self)._message_get_auto_subscribe_fields(cr, uid, updated_fields, auto_follow_fields=auto_follow_fields, context=context)
         res.append('project_leader_id')
         return res
@@ -39,10 +40,10 @@ class project_task(osv.osv):
         context = context or {}
         # Dont send context to dont get language of user in read method
         if ids.stage_id:
-            type = ids.stage_id.name or ''
-            if type == 'Backlog':
+            type_stage = ids.stage_id.name or ''
+            if type_stage == 'Backlog':
                 self.send_mail_task(cr, uid, ids, 'template_send_email_task_new', context)
-            elif type == 'Testing Leader':
+            elif type_stage == 'Testing Leader':
                 self.send_mail_task(cr, uid, ids, 'template_send_email_task_end', context)
 
     def send_mail_task(self, cr, uid, ids, template, context=None):
@@ -65,16 +66,16 @@ class project_task(osv.osv):
                             'active_model': 'project.task',
                             'default_partner_ids': followers,
                             'mail_post_autofollow_partner_ids': followers,
-                            'active_id': ids and type(ids) is list and
+                            'active_id': ids and isinstance(ids, list) and
                             ids[0] or ids,
-                            'active_ids': ids and type(ids) is list and
+                            'active_ids': ids and isinstance(ids, list) and
                             ids or [ids],
                             })
 
             mail_obj = self.pool.get('mail.compose.message')
-            fields = mail_obj.fields_get(cr, uid)
+            mail_fields = mail_obj.fields_get(cr, uid)
             mail_ids = mail_obj.default_get(
-                cr, uid, fields.keys(), context=context)
+                cr, uid, mail_fields.keys(), context=context)
             mail_ids.update(
                 {'model': 'project.task', 'body': body_html, 'composition_mode': 'mass_mail', 'partner_ids': [(6, 0, followers)]})
             mail_ids = mail_obj.create(cr, uid, mail_ids, context=context)

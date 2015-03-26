@@ -187,8 +187,8 @@ class account_bank_statement_line(osv.osv):
                     st_line.statement_id.period_id.id,
                     st_line.statement_id.journal_id.id,
                     st_line.date, company_currency,
-                    amount_total_tax * factor,  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
-                    amount_total_tax * factor,  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
+                    amount_total_tax * abs(factor),  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
+                    amount_total_tax * abs(factor),  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
                     statement_currency, False,
                     move_line_tax.get('tax_id'),  # Impuesto
                     move_line_tax.get('tax_analytic_id'),  # Cuenta analitica del impuesto(aml)
@@ -346,7 +346,7 @@ class account_bank_statement_line(osv.osv):
         amount_tax_payment = abs(
             move_line_payment_tax.debit - move_line_payment_tax.credit)
 
-        amount_residual = abs(amount_tax_counterpart)-abs(amount_tax_payment)
+        amount_residual = amount_tax_counterpart-abs(amount_tax_payment)
 
         factor = context.get('factor_type', [1, 1])
         prec = self.pool.get('decimal.precision').precision_get(

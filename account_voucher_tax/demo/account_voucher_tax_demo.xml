@@ -29,6 +29,7 @@
             <field name="account_paid_id" ref="account_iva_voucher_16"/>
             <field name="account_collected_voucher_id" ref="account_iva_voucher"/>
             <field name="account_paid_voucher_id" ref="account_iva_voucher"/>
+            <field model="account.tax.category" name="tax_category_id" search="[('name','=','IVA')]"/>
         </record>
         
         <record id="account_ova_voucher" model="account.account">
@@ -36,13 +37,13 @@
             <field name="name">Output VAT Voucher - (test)</field>
             <field ref="account.cas" name="parent_id"/>
             <field name="type">other</field>
-            <field name="reconcile">True</field>
             <field name="user_type" ref="account.data_account_type_asset"/>
         </record>
         <record id="account_ova_voucher_16" model="account.account">
             <field name="code">X11003_voucher_1</field>
             <field name="name">Output VAT Voucher 16% - (test)</field>
             <field ref="account.cas" name="parent_id"/>
+            <field name="reconcile">True</field>
             <field name="type">other</field>
             <field name="user_type" ref="account.data_account_type_asset"/>
         </record>
@@ -58,6 +59,7 @@
             <field name="account_paid_id" ref="account_ova_voucher_16"/>
             <field name="account_collected_voucher_id" ref="account_ova_voucher"/>
             <field name="account_paid_voucher_id" ref="account_ova_voucher"/>
+            <field model="account.tax.category" name="tax_category_id" search="[('name','=','IVA')]"/>
         </record>
         <record id="account_iva_voucher11" model="account.account">
             <field name="code">X1113_voucher</field>
@@ -206,7 +208,9 @@
             <field name="account_paid_id" ref="account_iva_voucher_retencion_iva_1067"/>
             <field name="account_collected_voucher_id" ref="account_iva_voucher1067_retencion_iva"/>
             <field name="account_paid_voucher_id" ref="account_iva_voucher1067_retencion_iva"/>
+            <field model="account.tax.category" name="tax_category_id" search="[('name','=','IVA-RET')]"/>
         </record>
+
         <record id="account_iva_voucher_excento" model="account.account">
             <field name="code">X1118_voucher_exento</field>
             <field name="name">Input VAT EXENTO Voucher - (test)</field>
