@@ -32,5 +32,30 @@
                 </field>
         </record>
 
+
+        <record id="view_account_journal_voucher" model="ir.ui.view">
+                <field name="name">view.account.journal.voucher</field>
+                <field name="model">account.journal</field>
+                <field name="inherit_id" ref="account.view_account_journal_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='allow_date']" position="after">
+                        <field name="special_journal"/>
+                    </xpath>
+                </field>
+        </record>
+
+
+        <record id="view_account_res_company_voucher" model="ir.ui.view">
+                <field name="name">view.account.res.company.voucher</field>
+                <field name="model">res.company</field>
+                <field name="inherit_id" ref="base.view_company_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='currency_id']" position="after">
+                        <field name="tax_provision_customer"/>
+                        <field name="tax_provision_supplier"/>
+                    </xpath>
+                </field>
+        </record>
+
     </data>
 </openerp>
