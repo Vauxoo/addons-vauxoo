@@ -6,7 +6,7 @@
                     <t t-call="aging_due_report.style_aging_due_report"/>
                 </style>
                 <div class="page">
-                    <table class="basic_table" width="100%">
+                    <table class="basic_table" width="100%" id="table_header">
                         <tr>
                             <td width="30%">
                                 <div  style="float:left;">
@@ -19,7 +19,7 @@
                        </tr>
                     </table>
                     <t t-foreach="objects" t-as="o">
-                      <table class="table_column_border table_alter_color_row table_title_bg_color" width="100%">
+                      <table class="table_column_border table_alter_color_row table_title_bg_color" width="100%" id="table_body">
                         <t t-foreach="o.currency_ids" t-as="c_obj">
                             <tr>
                                 <th width="12%" class="ITEMSTITLELEFT">TIN</th>
