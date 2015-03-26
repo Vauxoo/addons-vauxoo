@@ -25,7 +25,7 @@
 ##############################################################################
 
 {
-    "name": "account_broker",
+    "name": "Account tax importation",
     "version": "1.0",
     "author": "Vauxoo",
     "category": "Localization/Mexico",
