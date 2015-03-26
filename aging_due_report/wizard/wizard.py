@@ -606,6 +606,10 @@ class account_aging_partner_wizard(osv.osv_memory):
         aawd_obj = self.pool.get('account.aging.wizard.document')
 
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        if wzd_brw.result_selection == 'customer':
+            inv_type = 'out_invoice'
+        elif wzd_brw.result_selection == 'supplier':
+            inv_type = 'in_invoice'
         rp_brws = rp_obj.browse(cr, uid, partner_ids, context=context)
 
         wzd_brw.document_ids.unlink()
@@ -615,6 +619,7 @@ class account_aging_partner_wizard(osv.osv_memory):
         aawc_ids = {}
 
         for each in self._get_invoice_by_partner(cr, uid, partner_ids,
+                                                 inv_type=inv_type,
                                                  context=context):
             partner_id = each['partner_id']
             currency_id = each['currency_id']
