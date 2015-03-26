@@ -60,6 +60,24 @@ class TestTaxCommon(common.TransactionCase):
         self.acc_ret1067_payment = self.ref(
             "account_voucher_tax.account_iva_voucher1067_retencion_iva")
 
+        # Data to Provision tax
+        self.acc_provision_tax_16_customer = self.ref(
+            "account_voucher_tax.account_provision_iva_sale_16")
+        self.acc_provision_tax_16_supplier = self.ref(
+            "account_voucher_tax.account_provision_iva_purchase_16")
+        self.provision_tax16_supplier = self.ref(
+            "account_voucher_tax.account_provision_tax_purchase_ova16")
+        self.provision_tax16_customer = self.ref(
+            "account_voucher_tax.account_provision_tax_sale_ova16")
+        self.journal_bank_special = self.ref(
+            "account_voucher_tax.bank_journal_special")
+        # Set in company tax_provision_customer, tax_provision_supplier fields
+        self.registry("res.company").write(
+            self.cr, self.uid, [self.company_id],
+            {'tax_provision_customer': self.provision_tax16_customer,
+             'tax_provision_supplier': self.provision_tax16_supplier})
+
+
     def create_statement(self, cr, uid, line_invoice, partner, amount, journal,
                          date_bank=None, account_id=None):
         bank_stmt_id = self.acc_bank_stmt_model.create(cr, uid, {
@@ -75,11 +93,12 @@ class TestTaxCommon(common.TransactionCase):
             'date': date_bank or time.strftime('%Y')+'-07-01'})
 
         val = {
-            'counterpart_move_line_id':
-                line_invoice and line_invoice.id or None,
             'credit': amount > 0 and amount or 0,
             'debit': amount < 0 and amount*-1 or 0,
             'name': line_invoice and line_invoice.name or 'cash flow'}
+
+        if line_invoice:
+            val.update({'counterpart_move_line_id': line_invoice.id})
 
         if account_id:
             val.update({'account_id': account_id})
