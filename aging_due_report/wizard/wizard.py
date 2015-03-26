@@ -334,8 +334,9 @@ class account_aging_partner_wizard(osv.osv_memory):
             'Report Format',
             required=True),
         'result_selection': fields.selection(
-            [('customer', 'Receivable'),
-             ('supplier', 'Payable')],
+            [
+                # ('supplier', 'Payable'),
+                ('customer', 'Receivable')],
             "Target",
             required=True),
         'type': fields.selection(
