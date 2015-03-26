@@ -18,8 +18,10 @@ class TestMessagePost(TransactionCase):
         line_ids_field = self.message_test._columns.get('line_ids').string
         user_ids_field = self.message_test._columns.get('user_ids').string
         check_field = self.message_test._columns.get('check').string
-        user_1 = self.user.create(cr, uid, {'name': 'Test 1', 'login': 'test1'})
-        user_2 = self.user.create(cr, uid, {'name': 'Test 2', 'login': 'test2'})
+        user_1 = self.user.create(cr, uid, {'name': 'Test 1',
+                                            'login': 'test1'})
+        user_2 = self.user.create(cr, uid, {'name': 'Test 2',
+                                            'login': 'test2'})
         message_test_id = self.message_test.create(cr, uid, {
             'name': 'Test Message',
             'user_id': SUPERUSER_ID,
@@ -34,27 +36,29 @@ class TestMessagePost(TransactionCase):
             ],
         })
         # Added new lines and modifitying simples fields
-        self.message_test.write(cr, uid, [message_test_id], {'check': False,
-                                                             'number': 78,
-                                                             'user_id': user_1,
-                                             'line_ids': [
-                                                 (0, 0, {'name': 'Test 5'}),
-                                                 (0, 0, {'name': 'Test 6'}),
-                                             ]})
+        self.message_test.write(cr, uid, [message_test_id], {
+            'check': False,
+            'number': 78,
+            'user_id': user_1,
+            'line_ids': [
+                (0, 0, {'name': 'Test 5'}),
+                (0, 0, {'name': 'Test 6'}),
+            ]})
 
-        message_ids = self.message.search(cr, uid,
-                                 [('res_id', '=', message_test_id),
-                                  ('model', '=', 'message.post.test'),
-                                  ('body', 'ilike', '%' + check_field + '%'),
-                                  ('body', 'ilike', '%' + number_field + '%'),
-                                  ('body', 'ilike', '%' + user_id_field + '%'),
-                                  ('body', 'ilike', '%' + line_ids_field + '%Created New Line%'),
-                                  ('body', 'ilike', '%' + 'False' + '%'),
-                                  ('body', 'ilike', '%' + '78' + '%'),
-                                  ('body', 'ilike', '%' + 'Test 1' + '%'),
-                                  ('body', 'ilike', '%' + 'Test 5' + '%'),
-                                  ('body', 'ilike', '%' + 'Test 6' + '%'),
-                                  ])
+        message_ids = self.message.search(
+            cr, uid, [
+                ('res_id', '=', message_test_id),
+                ('model', '=', 'message.post.test'),
+                ('body', 'ilike', '%' + check_field + '%'),
+                ('body', 'ilike', '%' + number_field + '%'),
+                ('body', 'ilike', '%' + user_id_field + '%'),
+                ('body', 'ilike', '%' + line_ids_field + '%Created New Line%'),
+                ('body', 'ilike', '%' + 'False' + '%'),
+                ('body', 'ilike', '%' + '78' + '%'),
+                ('body', 'ilike', '%' + 'Test 1' + '%'),
+                ('body', 'ilike', '%' + 'Test 5' + '%'),
+                ('body', 'ilike', '%' + 'Test 6' + '%'),
+            ])
 
         self.assertGreaterEqual(len(message_ids),
                                 1,
@@ -67,12 +71,13 @@ class TestMessagePost(TransactionCase):
                 (2, line_ids[1]),
             ]})
 
-        message_ids = self.message.search(cr, uid,
-                                 [('res_id', '=', message_test_id),
-                                  ('model', '=', 'message.post.test'),
-                                  ('body', 'ilike', '%' + line_ids_field + '%'),
-                                  ('body', 'ilike', '%' + 'Test Update' + '%'),
-                                  ])
+        message_ids = self.message.search(
+            cr, uid, [
+                ('res_id', '=', message_test_id),
+                ('model', '=', 'message.post.test'),
+                ('body', 'ilike', '%' + line_ids_field + '%'),
+                ('body', 'ilike', '%' + 'Test Update' + '%'),
+            ])
 
         self.assertGreaterEqual(len(message_ids),
                                 1,
@@ -85,12 +90,13 @@ class TestMessagePost(TransactionCase):
                 (6, 0, [SUPERUSER_ID, user_2]),
             ]})
 
-        message_ids = self.message.search(cr, uid,
-                                 [('res_id', '=', message_test_id),
-                                  ('model', '=', 'message.post.test'),
-                                  ('body', 'ilike', '%' + user_ids_field + '%Deleted%'),
-                                  ('body', 'ilike', '%' + 'Test 1' + '%'),
-                                  ])
+        message_ids = self.message.search(
+            cr, uid, [
+                ('res_id', '=', message_test_id),
+                ('model', '=', 'message.post.test'),
+                ('body', 'ilike', '%' + user_ids_field + '%Deleted%'),
+                ('body', 'ilike', '%' + 'Test 1' + '%'),
+            ])
 
         self.assertGreaterEqual(len(message_ids),
                                 1,
