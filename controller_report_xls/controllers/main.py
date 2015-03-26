@@ -63,6 +63,8 @@ class ReportController(main.ReportController):
             for tr in rows:
                 cols = tr.findAll("td")
                 if not cols:
+                    cols = tr.findAll("th")
+                if not cols:
                     continue
                 col = 0
                 for td in cols:
