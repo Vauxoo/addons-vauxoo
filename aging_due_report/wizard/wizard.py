@@ -29,7 +29,7 @@ import mx.DateTime
 class account_aging_wizard_document(osv.TransientModel):
     _name = 'account.aging.wizard.document'
     _rec_name = 'partner_id'
-    _order = 'partner_id, due_days'
+    _order = 'due_days'
 
     def _get_due_days(self, cr, uid, ids, field_names, arg, context=None):
         context = dict(context or {})
@@ -79,6 +79,7 @@ class account_aging_wizard_partner(osv.osv_memory):
     _name = 'account.aging.wizard.partner'
     _description = 'Account Aging Wizard Partner'
     _rec_name = 'partner_id'
+    _order = 'name'
 
     def _get_amount(self, cr, uid, ids, field_names, arg, context=None):
         context = dict(context or {})
@@ -125,6 +126,11 @@ class account_aging_wizard_partner(osv.osv_memory):
         'partner_id': fields.many2one(
             'res.partner', 'Partner',
             required=True,),
+        'name': fields.related(
+            'partner_id', 'name',
+            string='Name',
+            type='char',
+            store=True),
         'aaw_id': fields.many2one(
             'account.aging.wizard',
             'Account Aging Wizard',
