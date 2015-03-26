@@ -261,6 +261,8 @@ class account_voucher(osv.Model):
                                  amount_base_tax,
                                  factor=0, context=None):
 
+        account_collected_id = dest_account_id
+
         if type == 'payment' or reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
         if type == 'payment' and reference_amount < 0:
@@ -370,6 +372,13 @@ class account_voucher(osv.Model):
                 debit_line_vals.update(
                     currency_id=reference_currency_id,
                     amount_currency=reference_amount)
+
+        if self.pool.get('account.journal').browse(
+                cr, uid, journal).special_journal:
+            return [
+                account_collected_id == debit_line_vals.get('account_id') and
+                debit_line_vals or credit_line_vals]
+
         return [debit_line_vals, credit_line_vals]
 
     def _get_base_amount_tax_secondary(self, cr, uid, line_tax,
