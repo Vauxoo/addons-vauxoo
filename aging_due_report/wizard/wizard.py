@@ -327,10 +327,10 @@ class account_aging_partner_wizard(osv.osv_memory):
 
     _columns = {
         'report_format': fields.selection([
-            ('pdf', 'PDF'),
+            ('pdf', 'PDF')],
             # TODO: enable print on controller to HTML
             # ('html', 'HTML'),
-            ('xls', 'Spreadsheet')],
+            # ('xls', 'Spreadsheet')],
             'Report Format',
             required=True),
         'result_selection': fields.selection(
@@ -364,7 +364,7 @@ class account_aging_partner_wizard(osv.osv_memory):
     }
 
     _defaults = {
-        'report_format': lambda *args: 'xls',
+        'report_format': lambda *args: 'pdf',
         'result_selection': lambda *args: 'customer',
         'type': lambda *args: 'aging',
         'company_id': _get_default_company,
