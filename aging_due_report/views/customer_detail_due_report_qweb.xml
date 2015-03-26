@@ -6,7 +6,7 @@
                     <t t-call="aging_due_report.style_detail_due_report"/>
                 </style>
             	<div class="page">
-                    <table class="basic_table" width="100%">
+                    <table class="basic_table" width="100%" id="table_header">
                         <tr>
                             <td width="30%">
                                 <div  style="float:left;">
