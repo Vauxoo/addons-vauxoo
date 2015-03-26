@@ -685,18 +685,14 @@ class account_aging_partner_wizard(osv.osv_memory):
 
         context['xls_report'] = wzd_brw.report_format == 'xls'
         name = 'aging_due_report.aging_due_report_qweb'
+        if wzd_brw.type == 'aging':
+            name = 'aging_due_report.aging_due_report_qweb'
+        if wzd_brw.type == 'detail':
+            name = 'aging_due_report.detail_due_report_qweb'
         if wzd_brw.result_selection == 'customer':
-            if wzd_brw.type == 'aging':
-                name = 'aging_due_report.aging_due_report_qweb'
-            if wzd_brw.type == 'detail':
-                name = 'aging_due_report.detail_due_report_qweb'
             if wzd_brw.type == 'formal':
                 name = 'aging_due_report.formal_due_report_qweb'
         elif wzd_brw.result_selection == 'supplier':
-            if wzd_brw.type == 'aging':
-                name = 'aging_due_report.supplier_aging_due_report_qweb'
-            if wzd_brw.type == 'detail':
-                name = 'aging_due_report.supplier_detail_due_report_qweb'
             if wzd_brw.type == 'formal':
                 name = 'aging_due_report.supplier_formal_due_report_qweb'
 

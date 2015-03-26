@@ -14,7 +14,7 @@
                                 </div>
                             </td>
                             <td style="text-align: left;">
-                                <strong>Customer Aging Report of Debts</strong>
+                                <strong><span t-esc="o.result_selection =='customer' and 'Customer' or o.result_selection =='supplier' and 'Supplier'"/> Detail Report of Debts</strong>
                             </td>
                        </tr>
                     </table>
@@ -30,7 +30,7 @@
                                 <th width="10%" class="ITEMSTITLERIGHT">61-90 DAYS</th>
                                 <th width="10%" class="ITEMSTITLERIGHT">91-120 DAYS</th>
                                 <th width="10%" class="ITEMSTITLERIGHT">+ 120 DAYS</th>
-                                <th width="10%" class="ITEMSTITLERIGHT">TOT./AR <span t-esc="'(' + c_obj.currency_id.name + ')'"/></th>
+                                <th width="10%" class="ITEMSTITLERIGHT"><span t-esc="o.result_selection =='customer' and 'TOT./AR' or o.result_selection =='supplier' and 'TOT./AP'"/><span t-esc="'(' + c_obj.currency_id.name + ')'"/></th>
                             </tr>
                             <t t-foreach="c_obj.partner_ids" t-as="p_obj">
                                 <tr>

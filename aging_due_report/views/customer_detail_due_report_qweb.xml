@@ -6,6 +6,7 @@
                     <t t-call="aging_due_report.style_detail_due_report"/>
                 </style>
             	<div class="page">
+                  <t t-foreach="objects" t-as="o">
                     <table class="basic_table" width="100%" id="table_header">
                         <tr>
                             <td width="30%">
@@ -14,13 +15,12 @@
                                 </div>
                             </td>
                             <td style="text-align: left;">
-                                <strong>Customer Detail Report of Debts</strong>
+                                <strong><span t-esc="o.result_selection =='customer' and 'Customer' or o.result_selection =='supplier' and 'Supplier'"/> Detail Report of Debts</strong>
                             </td>
                             <td class="CUSTOMERNAME" style="text-align:right;"><span t-esc="formatLang(time.strftime('%Y-%m-%d'), date=True)"/></td>
                        </tr>
                     </table>
                     <table class="table_column_border table_alter_color_row table_title_bg_color" width="100%" id='table_body'>
-                    	<t t-foreach="objects" t-as="o">
                           <t t-foreach="o.partner_ids" t-as="p_obj">
 				        	<tbody>
 					            <tr style="border-top: 1px solid #000000;">
@@ -31,14 +31,14 @@
                                 <td colspan="3" class="ITEMSLEFT ITEMBOLD" style="background-color: lightgrey;"><span t-esc="'Amounts expressed in' + ' ('+(p_obj.currency_id and p_obj.currency_id.name or 'N/A')+')' "/></td>
 					            </tr>
 					            <tr>
-					                <th width="14%" class="ITEMSTITLELEFT">INVOICE</th>
+					                <th width="14%" class="ITEMSTITLELEFT">DOCUMENT</th>
 					                <th width="8%" class="ITEMSTITLELEFT">EMIS DATE</th>
 					                <th width="8%" class="ITEMSTITLELEFT">DUE DATE</th>
 					                <th width="7%" class="ITEMSTITLELEFT">DUE DAYS</th>
 					                <th width="7%" class="ITEMSTITLERIGHT">BASE</th>
 					                <th width="7%" class="ITEMSTITLERIGHT">TAX</th>
 					                <th width="7%" class="ITEMSTITLERIGHT">TOT/INV.</th>
-					                <th width="7%" class="ITEMSTITLERIGHT">COLLECTS</th>
+					                <th width="7%" class="ITEMSTITLERIGHT"><span t-esc="o.result_selection =='customer' and 'COLLECTS' or o.result_selection =='supplier' and 'PAYMENTS'"/></th>
 					                <th width="7%" class="ITEMSTITLERIGHT">BALANCE</th>
 					            </tr>
 				            	<t t-foreach="p_obj.document_ids" t-as="doc">
@@ -73,10 +73,10 @@
 					            </tr>
 			            	</t>
                     	</tbody>
-                    	</t>
                     </table>
 				    <p style="word-wrap:break-word;"></p>
 				    <p style="page-break-before: always;"></p>
+                  </t>
 				</div>
             </template>
             <template id="detail_due_report_qweb">
