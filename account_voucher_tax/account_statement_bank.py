@@ -195,13 +195,10 @@ class account_bank_statement_line(osv.osv):
                 statement_currency, context=context)
             move_line_tax_dict = self._get_move_line_tax(
                 cr, uid, [move_line_dict], context=context)
-            print move_line_dict,"move_line_dict"
 
             factor = voucher_obj.get_percent_pay_vs_invoice(
                 cr, uid, move_amount_counterpart[1],
                 move_amount_counterpart[0], context=context)
-
-            print factor,"factor"
 
             for move_line_tax in move_line_tax_dict:
                 move_line_rec = []
@@ -344,7 +341,7 @@ class account_bank_statement_line(osv.osv):
 
         move_counterpart = move_line_tax.get('move_line_reconcile', None)
         rec_ids = []
-        print move_counterpart,"move_counterpart" 
+
         if not (move_counterpart and move_counterpart[0]):
             return [[], rec_ids]
 
@@ -466,7 +463,6 @@ class account_bank_statement_line(osv.osv):
         account_group = {}
         move_line_ids = []
 
-        print factor
         counterpart_move_line_ids = [
             mv_line_dict.get('counterpart_move_line_id')
             for mv_line_dict in mv_line_dicts
@@ -510,7 +506,7 @@ class account_bank_statement_line(osv.osv):
                     # el impuesto para ser pagado y conciliado con la aml del
                     # pago en voucher o bank statement
                     account_group[move_line_id.account_id.id][1] = move_line_id.id
-        print account_group,"wwwwwwwwwwwwwwwwwww"
+
         for move_account_tax in account_group:
             amount_base_secondary = 0
             tax_ids = tax_obj.search(
@@ -592,7 +588,7 @@ class account_bank_statement_line(osv.osv):
 
     def _get_tax_advance(self, cr, uid, mv_line_dicts, context=None):
         account_obj = self.pool.get('account.account')
-        account_tax_obj = self.pool.get('account.tax')
+        user_obj = self.pool.get('res.users')
         dict_tax_advance = None
         advance_ok = False
         for mv_line_dict in mv_line_dicts:
@@ -602,33 +598,40 @@ class account_bank_statement_line(osv.osv):
                 cr, uid, move_line_acc_id, context=context)
 
             if account_id.type == 'receivable' and account_id.reconcile:
-                type_tax = 'sale'
+                tax_id = user_obj.browse(
+                    cr, uid, uid,
+                    context=context).company_id.tax_provision_customer
+
+                if not tax_id:
+                    msg = _("""
+                            You should configure in company
+                            'Tax Provision by Customer' """)
+                    raise osv.except_osv(_('Error'), msg)
                 advance_ok = True
+
             elif account_id.type == 'payable' and account_id.reconcile:
-                type_tax = 'purchase'
+                tax_id = user_obj.browse(
+                    cr, uid, uid,
+                    context=context).company_id.tax_provision_supplier
+
+                if not tax_id:
+                    msg = _("""
+                            You should configure in company
+                            'Tax Provision by Supplier' """)
+                    raise osv.except_osv(_('Error'), msg)
                 advance_ok = True
 
             if advance_ok:
-                domain_tax = [
-                    ('tax_voucher_ok', '=', True),
-                    ('amount', '=', 0.16), ('type_tax_use', '=', type_tax)]
+                amount_total_tax = self._get_move_line_counterpart(
+                    cr, uid, [mv_line_dict])[0]
+                print (tax_id.amount*100.0)*amount_total_tax
+                amount_total_tax =\
+                    (tax_id.amount * 100.0) * amount_total_tax / (100.0 + (
+                        tax_id.amount * 100.0))
 
-                tax_ids = account_tax_obj.search(
-                    cr, uid, domain_tax, limit=1)
-
-                if tax_ids:
-                    tax_id = account_tax_obj.browse(
-                        cr, uid, tax_ids[0], context=context)
-                    amount_total_tax = self._get_move_line_counterpart(
-                        cr, uid, [mv_line_dict])[0]
-                    print (tax_id.amount*100.0)*amount_total_tax
-                    amount_total_tax =\
-                        (tax_id.amount * 100.0) * amount_total_tax / (100.0 + (
-                            tax_id.amount * 100.0))
-
-                    dict_tax_advance =\
-                        self.preparate_dict_tax(
-                            tax_id=tax_id, amount=amount_total_tax)
+                dict_tax_advance =\
+                    self.preparate_dict_tax(
+                        tax_id=tax_id, amount=amount_total_tax)
 
         return dict_tax_advance
 
