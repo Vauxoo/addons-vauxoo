@@ -19,8 +19,8 @@
                        </tr>
                     </table>
                     <t t-foreach="objects" t-as="o">
-                      <t t-foreach="o.currency_ids" t-as="c_obj">
-                        <table class="table_column_border table_alter_color_row table_title_bg_color" width="100%">
+                      <table class="table_column_border table_alter_color_row table_title_bg_color" width="100%">
+                        <t t-foreach="o.currency_ids" t-as="c_obj">
                             <tr>
                                 <th width="12%" class="ITEMSTITLELEFT">TIN</th>
                                 <th width="18%" class="ITEMSTITLELEFT">PARTNER</th>
@@ -64,8 +64,8 @@
                             <tr>
                                 <td/>
                             </tr>
-                        </table>
-                      </t>
+                        </t>
+                      </table>
                     </t>
                     <p style="word-wrap:break-word;"></p>
                     <p style="page-break-before: always;"></p>
