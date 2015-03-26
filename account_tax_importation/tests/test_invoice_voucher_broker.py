@@ -1,4 +1,4 @@
-from openerp.addons.account_broker.tests.common import TestTaxCommon
+from openerp.addons.account_tax_importation.tests.common import TestTaxCommon
 import time
 
 
