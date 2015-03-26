@@ -49,3 +49,35 @@ class account_tax(osv.Model):
              ('tax_ret', 'IVA RETENIDO')],
             'Tax to affect in DIOT'),
     }
+
+
+class account_journal(osv.Model):
+    _inherit = 'account.journal'
+
+    _columns = {
+        'special_journal': fields.boolean(
+            'Is special Journal?',
+            help="Mark this field when the journal is used to make taxes"
+                 " in advance payment or partial payment in voucher.\n"
+                 "This journal always should be used with amount = 0.0")
+    }
+
+
+class res_company(osv.Model):
+    _inherit = 'res.company'
+
+    _columns = {
+        'tax_provision_customer': fields.many2one(
+            'account.tax',
+            'Provision tax Customer',
+            domain=[('type_tax_use', '=', 'sale')],
+            help="Tax to use when create taxes from advance payment "
+                 "to Customer"),
+        'tax_provision_supplier': fields.many2one(
+            'account.tax',
+            'Provision tax Supplier',
+            domain=[('type_tax_use', '=', 'purchase')],
+            help="Tax to use when create taxes from advance payment "
+                 "to Supplier")
+
+    }
