@@ -12,7 +12,7 @@ class TestInvoiceVoucherBroker(TestTaxCommon):
     def setUp(self):
         super(TestInvoiceVoucherBroker, self).setUp()
 
-    def test_programmatic_tax(self):
+    def test_programmatic_tax_voucher(self):
         """
         This method test the feature with account.voucher
         """

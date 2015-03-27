@@ -198,7 +198,7 @@ class account_invoice(models.Model):
 
     @api.multi
     def button_reset_taxes(self):
-        account_invoice_tax = self.env['account.invoice.tax']
+        account_invoice_tax_obj = self.env['account.invoice.tax']
         ctx = dict(self._context)
         res = super(account_invoice, self).button_reset_taxes()
         for invoice in self:
@@ -213,10 +213,10 @@ class account_invoice(models.Model):
                 partner = invoice.partner_id
                 if partner.lang:
                     ctx['lang'] = partner.lang
-                for taxe in account_invoice_tax.compute_broker(
+                for taxe in account_invoice_tax_obj.compute_broker(
                         invoice.with_context(ctx)).values():
                     for ltaxe in taxe:
-                        account_invoice_tax.create(taxe.get(ltaxe))
+                        account_invoice_tax_obj.create(taxe.get(ltaxe))
         # dummy write on self to trigger recomputations
         return res
 

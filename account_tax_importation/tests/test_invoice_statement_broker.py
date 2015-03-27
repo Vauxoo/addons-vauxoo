@@ -11,7 +11,7 @@ class TestInvoiceStatementBroker(TestTaxCommon):
     def setUp(self):
         super(TestInvoiceStatementBroker, self).setUp()
 
-    def test_programmatic_tax(self):
+    def test_programmatic_tax_statement(self):
         """
         This method test the feature with bank.statement
         """
