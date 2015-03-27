@@ -159,26 +159,8 @@ class account_voucher(osv.Model):
                         move_line_tax_dict.get('account_tax_collected')
                     amount_total_tax = move_line_tax_dict.get('amount', 0)
 
-                # if line.tax_line_ids:
-                #     if line.amount > line.amount_original:
-                #         amount_to_paid = line.amount_original
-                #     else:
-                #         amount_to_paid = line.amount
-                #     factor = \
-                #         ((amount_to_paid * 100) / line.amount_original) / 100
-                # for line_tax in line.tax_line_ids:
-
                     move_line_rec = []
-                #     amount_tax_unround = line_tax.amount_tax_unround
 
-                    # if voucher.type in ('sale', 'receipt'):
-                    #     account_tax_voucher = \
-                    #         line_tax.tax_id.account_collected_voucher_id.id
-                    # else:
-                    #     account_tax_voucher = \
-                    #         line_tax.tax_id.account_paid_voucher_id.id
-                    # account_tax_collected = \
-                    #     line_tax.tax_id.account_collected_id.id
                     context['date'] = voucher.date
                     reference_amount = amount_total_tax * abs(factor)
                     move_lines_tax = self._preparate_move_line_tax(
@@ -197,18 +179,6 @@ class account_voucher(osv.Model):
                         move_ids.append(move_create)
                         move_line_rec.append(move_create)
 
-                    # # ID de la aml del impuesto que se esta pagando
-                    # # es necesario tenerlo en este momento para enviarlo
-                    # # a la funcion que concilia los impuestos en el pago
-                    # move_counterpart_line_tax = {
-                    #     'move_line_reconcile': [line_tax.move_line_id.id]}
-
-                    # # Se actuliza context con el factor que le corresponde
-                    # # dependiendo compra/venta para determinar credit/debit
-                    # # de las aml creadas para el diferencial cambiario
-                    # bank_statement_line_obj._get_factor_type(
-                    #     cr, uid, False, voucher.type, context=context)
-
                     move_rec_exch = bank_statement_line_obj.\
                         _get_exchange_reconcile(
                             cr, uid, move_line_tax_dict, move_line_rec,
@@ -217,7 +187,6 @@ class account_voucher(osv.Model):
                             current_currency, context=context)
                     move_reconcile_id.append(move_rec_exch[1])
 
-        print move_ids, move_reconcile_id,"qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq"
         for rec_ids in move_reconcile_id:
             if len(rec_ids) >= 2:
                 move_line_obj.reconcile_partial(cr, uid, rec_ids)
