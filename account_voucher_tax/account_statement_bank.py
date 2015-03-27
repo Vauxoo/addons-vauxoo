@@ -624,7 +624,6 @@ class account_bank_statement_line(osv.osv):
             if advance_ok:
                 amount_total_tax = self._get_move_line_counterpart(
                     cr, uid, [mv_line_dict])[0]
-                print (tax_id.amount*100.0)*amount_total_tax
                 amount_total_tax =\
                     (tax_id.amount * 100.0) * amount_total_tax / (100.0 + (
                         tax_id.amount * 100.0))

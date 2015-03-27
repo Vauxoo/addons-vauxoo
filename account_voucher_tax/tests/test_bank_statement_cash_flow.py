@@ -140,7 +140,6 @@ class TestCashFlowTaxCustomer(TestTaxCommon):
         checked_line = 0
 
         for move_line in move_line_ids:
-            print move_line.account_id.name, move_line.account_id.id
             if move_line.account_id.id == self.acc_provision_tax_16_customer:
                 self.assertEquals(move_line.debit, 20)
                 self.assertEquals(move_line.credit, 0.0)
