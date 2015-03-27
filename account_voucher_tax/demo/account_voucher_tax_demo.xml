@@ -352,8 +352,8 @@
             <field name="description">IVA 16% with purchase provision account for Test</field>
             <field name="account_collected_id" ref="account_provision_iva_purchase_16"/>
             <field name="account_paid_id" ref="account_provision_iva_purchase_16"/>
-            <field name="account_collected_voucher_id" ref="account_ova_voucher"/>
-            <field name="account_paid_voucher_id" ref="account_ova_voucher"/>
+            <field name="account_collected_voucher_id" ref="account_iva_voucher"/>
+            <field name="account_paid_voucher_id" ref="account_iva_voucher"/>
             <field model="account.tax.category" name="tax_category_id" search="[('name','=','IVA')]"/>
         </record>
 
