@@ -1,4 +1,8 @@
 id,group_id/id,name,model_id/id,perm_read,perm_write,perm_create,perm_unlink
+account_financial_report group_ua,group_account_user_audit,account_financial_report group_ua,account_financial_report.model_afr,1,0,0,0
+ifrs_report_line group_ua,group_account_user_audit,ifrs_report_line group_ua,ifrs_report.model_ifrs_lines,1,1,0,0
+ifrs_report group_ua,group_account_user_audit,ifrs_report group_ua,ifrs_report.model_ifrs_ifrs,1,0,0,0
+account_asset group_ua,group_account_user_audit,account_asset group_ua,account_asset.model_account_asset_asset,1,0,0,0
 ir_attachment group_ua,group_account_user_audit,ir_attachment group_ua,l10n_mx_ir_attachment_facturae.model_ir_attachment_facturae_mx,1,0,0,0
 ir_attachment group_user_ro,group_account_user_audit,ir_attachment group_user.ro,base.model_ir_attachment,1,0,0,0
 ir_cron user_ro,group_account_user_audit,ir_cron user.ro,base.model_ir_cron,1,0,0,0
@@ -11,7 +15,6 @@ res_partner_category group_user_ro,group_account_user_audit,res_partner_category
 res_bank user_ro,group_account_user_audit,res_bank user.ro,base.model_res_bank,1,0,0,0
 ir_filters employee_ro,group_account_user_audit,ir_filters employee.ro,base.model_ir_filters,1,0,0,0
 account_tax internal user_ro,group_account_user_audit,account.tax internal user.ro,account.model_account_tax,1,0,0,0
-account_account user_ro,group_account_user_audit,account.account user.ro,account.model_account_account,1,0,0,0
 account_analytic_journal_ro,group_account_user_audit,account.analytic.journal.ro,account.model_account_analytic_journal,1,0,0,0
 account_fiscalyear employee_ro,group_account_user_audit,account.fiscalyear employee.ro,account.model_account_fiscalyear,1,0,0,0
 account_invoice_line user_ro,group_account_user_audit,account.invoice.line user.ro,account.model_account_invoice_line,1,0,0,0
