@@ -19,13 +19,11 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api
+from openerp import models, fields
 
 
 class ProductBrand(models.Model):
-    _name = 'product.brand'
+    _inherit = 'product.brand'
 
-    name = fields.Char(string="Name")
     authorized_partner_ids = fields.Many2many('res.partner')
-    image = fields.Binary()
     url = fields.Char(string="URL")

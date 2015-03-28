@@ -12,11 +12,14 @@ Autorized Service Centers
     service providers to be displayed on the 'Authorized
     Service Centers' page.
 
+    + For in order to install this module download this repo
+        - https://github.com/JayVora-SerpentCS/SerpentCS_Contributions-v8.git
+    and install the `website_product_brand` module.
+
         """,
     'author': 'Vauxoo',
     'depends': [
-        'sale',
-        'website',
+        'website_product_brand',
     ],
     'data': [
         'views/layout.xml',
