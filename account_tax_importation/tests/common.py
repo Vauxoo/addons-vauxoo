@@ -72,3 +72,30 @@ class TestTaxCommon(common.TransactionCase):
             cr, uid, bank_stmt_id).move_line_ids
 
         return move_line_ids_complete
+
+    def create_invoice(self, cr, uid, context=None):
+        inv_id = self.inv_model.create(cr, uid, dict(
+            account_id=self.account_inv,
+            partner_id=self.partner_id,
+            check_total=7694.20,
+            company_id=self.company_id,
+            journal_id=self.journal_inv_id,
+            reference_type='none',
+            invoice_line=[(0, 0, {
+                'name': '[Importation]Product for importation',
+                'account_id': self.acc_line_id,
+                'price_unit': 1000.0,
+                'product_id': self.prod_line1,
+                'quantity': 0,
+                'invoice_line_tax_id': [(6, 0, [self.tax_brok16_id])],
+                'invoice_broker_id': self.tax_inv_2_id
+            }), (0, 0, {
+                'name': '[Importation]Product for importation',
+                'account_id': self.acc_line_id,
+                'price_unit': 1299.0,
+                'product_id': self.prod_line2,
+                'quantity': 5,
+                'invoice_line_tax_id': [(6, 0, [self.tax_16_id])]
+            })]
+        ), context=context)
+        return inv_id
