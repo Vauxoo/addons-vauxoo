@@ -114,6 +114,7 @@ class account_voucher(osv.Model):
             context = {}
         bank_statement_line_obj = self.pool.get('account.bank.statement.line')
         move_line_obj = self.pool.get('account.move.line')
+        cur_obj = self.pool.get('res.currency')
         company_currency = self._get_company_currency(
             cr, uid, voucher_id, context)
         current_currency = self._get_current_currency(
@@ -121,6 +122,7 @@ class account_voucher(osv.Model):
         move_ids = []
         move_reconcile_id = []
         context = dict(context)
+        amount_tax_currency = 0.0
         for voucher in self.browse(cr, uid, [voucher_id], context=context):
             context.update({'amount_voucher': voucher.amount or 0.0})
 
@@ -143,6 +145,8 @@ class account_voucher(osv.Model):
                 bank_statement_line_obj._get_factor_type(
                     cr, uid, False, voucher.type, context=context)
 
+                context['journal_special'] = voucher.journal_id.special_journal
+
                 dict_tax = bank_statement_line_obj._get_move_line_tax(
                     cr, uid, mv_line_dicts, context=context)
 
@@ -163,6 +167,11 @@ class account_voucher(osv.Model):
 
                     context['date'] = voucher.date
                     reference_amount = amount_total_tax * abs(factor)
+
+                    amount_tax_currency += cur_obj.compute(
+                        cr, uid, current_currency, company_currency,
+                        reference_amount, context=context)
+
                     move_lines_tax = self._preparate_move_line_tax(
                         cr, uid, account_tax_voucher, account_tax_collected,
                         move_id, voucher.type, voucher.partner_id.id,
@@ -187,6 +196,16 @@ class account_voucher(osv.Model):
                             current_currency, context=context)
                     move_reconcile_id.append(move_rec_exch[1])
 
+        if voucher.journal_id.special_journal:
+            move_line_writeoff_tax = self.writeoff_move_line_get(
+                cr, uid, voucher_id, amount_tax_currency, move_id,
+                voucher.number, company_currency, current_currency,
+                context=context)
+            if move_line_writeoff_tax:
+                move_line_writeoff_tax['account_id'] = account_tax_collected
+                move_line_writeoff_tax['amount_currency'] = None
+                move_line_obj.create(
+                    cr, uid, move_line_writeoff_tax, context=context)
         for rec_ids in move_reconcile_id:
             if len(rec_ids) >= 2:
                 move_line_obj.reconcile_partial(cr, uid, rec_ids)
