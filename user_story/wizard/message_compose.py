@@ -19,7 +19,8 @@
 #
 ##############################################################################
 
-from openerp.osv import osv, fields
+from openerp.osv import fields, osv
+
 
 class mail_compose_message(osv.TransientModel):
     _inherit = 'mail.compose.message'
@@ -33,7 +34,6 @@ class mail_compose_message(osv.TransientModel):
         else:
             return super(mail_compose_message, self)._get_templates(cr, uid, context=context)
         return []
-
 
     _columns = {
         # incredible hack of the day: size=-1 means we want an int db column instead of an str one
