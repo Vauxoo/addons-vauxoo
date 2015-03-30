@@ -363,9 +363,10 @@ class account_bank_statement_line(osv.osv):
         amount_tax_payment = abs(
             move_line_payment_tax.debit - move_line_payment_tax.credit)
 
-        amount_residual = amount_tax_counterpart-abs(amount_tax_payment)
+        factor = move_line_payment_tax.debit > 0 and -1 or 1
 
-        factor = context.get('factor_type', [1, 1])
+        amount_residual = amount_tax_counterpart-amount_tax_payment
+
         prec = self.pool.get('decimal.precision').precision_get(
             cr, uid, 'Account')
 
@@ -377,7 +378,7 @@ class account_bank_statement_line(osv.osv):
                          precision_digits=prec):
             amount_residual = 0.0
         else:
-            amount_residual = amount_residual*factor[0]
+            amount_residual = amount_residual*factor
 
         # Si el amount_residual no es igual a cero y la aml tiene
         # moneda secundaria se crea las aml de diferencial
@@ -479,11 +480,10 @@ class account_bank_statement_line(osv.osv):
             # impuesto, validando que no sea una cuenta por pagar/cobrar y que
             # los movimientos no pertenescan a un diario de banco/efectivo
             # por que puede ser una poliza con iva efecttivamente pagado
-            # if move_line_id.account_id.type not in\
-            #         ('receivable', 'payable') and\
-            #         move_line_id.journal_id.type not in ('cash', 'bank'):
             if move_line_id.account_id.type not in\
-                    ('receivable', 'payable'):
+                    ('receivable', 'payable') and\
+                    move_line_id.journal_id.type not in ('cash', 'bank') or\
+                    context.get('journal_special', False):
                 account_group.setdefault(move_line_id.account_id.id, [0, 0])
                 # Validacion del debit/credit cuando la poliza contiene
                 # impuesto 0 o EXENTO toma el monto base de la linea de poliza
