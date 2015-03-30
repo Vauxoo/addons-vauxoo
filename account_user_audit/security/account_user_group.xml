@@ -112,9 +112,9 @@
 
     <record model="res.users" id="res_auditor_user">
       <field name="name">Auditor user</field>
-      <field name="login">a</field>
+      <field name="login">auditor</field>
       <field name="tz">America/Mexico_City</field>
-      <field name="password">a</field>
+      <field name="password">lodi-@uditor</field>
       <field name="alias_name">auditor</field>
       <field name="company_id"
         eval="ref('base.main_company')"/> 
