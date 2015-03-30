@@ -42,6 +42,8 @@ models.
     "license": "",
     "depends": [
         "account_asset",
+        "ifrs_report",
+        "l10n_mx_ir_attachment_facturae",
     ],
     "demo": [],
     "data": [
