@@ -41,7 +41,6 @@ models.
     "website": "http://www.vauxoo.com",
     "license": "",
     "depends": [
-        "account",
         "account_asset",
     ],
     "demo": [],
