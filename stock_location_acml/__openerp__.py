@@ -2,12 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2015 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
 #    info@vauxoo.com
 ############################################################################
-#    Coded by: julio (julio@vauxoo.com)
-#              Luis Ernesto García Medina (ernesto_gm@vauxoo.com)
+#    Coded by: Luis Ernesto García Medina (ernesto_gm@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,41 +23,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import fields, osv
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+{
+    "name": "Stock Location ACML",
+    "version": "1.1",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Account",
+    "description": """
+Stock Location on Account move lines
+====================================
 
-
-class AccountMoveLine(osv.Model):
-    _inherit = "account.move.line"
-
-    """
-    """
-
-    _columns = {
-        'sm_id': fields.many2one('stock.move', 'Stock move'),
-    }
-
-
-class StockMove(osv.Model):
-    _inherit = "stock.move"
-
-    """
-    """
-
-    _columns = {
-        'am_id': fields.one2many(
-            'account.move.line', 'sm_id', 'Account move Lines'),
-    }
-
-
-class StockQuant(osv.Model):
-    _inherit = "stock.quant"
-
-    def _prepare_account_move_line(self, cr, uid, move, qty, cost,
-                                   credit_account_id, debit_account_id,
-                                   context=None):
-        res = super(StockQuant, self)._prepare_account_move_line(
-            cr, uid, move, qty, cost, credit_account_id, debit_account_id,
-            context)
-        for line in res:
-            line[2]['sm_id'] = move.id
-        return res
+Show the location of account move lines from stock move
+    """,
+    "website": "http://www.vauxoo.com/",
+    "license": "",
+    "depends": [
+        "stock_move_entries",
+    ],
+    "demo": [],
+    "data": [
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
+    "active": False
+}
