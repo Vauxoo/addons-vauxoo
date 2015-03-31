@@ -152,6 +152,10 @@ class account_bank_statement_line(osv.osv):
 
         self._check_moves_to_concile(
             cr, uid, id, mv_line_dicts, context=context)
+
+        prec = self.pool.get('decimal.precision').precision_get(
+            cr, uid, 'Account')
+
         for move_line_dict in mv_line_dicts:
             move_amount_counterpart = self._get_move_line_counterpart(
                 cr, uid, [move_line_dict], company_currency,
@@ -178,6 +182,14 @@ class account_bank_statement_line(osv.osv):
                     move_line_tax.get('account_tax_collected')
                 amount_total_tax = move_line_tax.get('amount', 0)
 
+                if float_compare(move_amount_counterpart[0],
+                                 move_amount_counterpart[2],
+                                 precision_digits=prec) == 0:
+                    amount_residual = self._get_move_line_tax_counterpart(
+                        cr, uid, id, move_line_tax.get(
+                            'move_line_reconcile', []), context=context)
+                else:
+                    amount_residual = amount_total_tax * abs(factor)
                 lines_tax = voucher_obj._preparate_move_line_tax(
                     cr, uid,
                     account_tax_voucher,  # cuenta del impuesto(account.tax)
@@ -187,8 +199,8 @@ class account_bank_statement_line(osv.osv):
                     st_line.statement_id.period_id.id,
                     st_line.statement_id.journal_id.id,
                     st_line.date, company_currency,
-                    amount_total_tax * abs(factor),  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
-                    amount_total_tax * abs(factor),  # Monto del impuesto por el factor(cuanto le corresponde)(aml)
+                    amount_residual,  # Monto del impuesto por el factor(cuanto le corresponde)(aml) o el resto por pagar de impuestos
+                    amount_residual,  # Monto del impuesto por el factor(cuanto le corresponde)(aml) o el resto por pagar de impuestos
                     statement_currency, False,
                     move_line_tax.get('tax_id'),  # Impuesto
                     move_line_tax.get('tax_analytic_id'),  # Cuenta analitica del impuesto(aml)
@@ -233,6 +245,14 @@ class account_bank_statement_line(osv.osv):
         st_line.journal_id.write({'update_posted': update_ok})
         move_obj.unlink(cr, uid, move_id_old)
         return res
+
+    def _get_move_line_tax_counterpart(
+            self, cr, uid, ids, mvs_tax, context=None):
+        aml_obj = self.pool.get('account.move.line')
+        amount_residual = 0
+        for move in aml_obj.browse(cr, uid, mvs_tax, context=context):
+            amount_residual += move.amount_residual
+        return amount_residual
 
     def _check_moves_to_concile(
             self, cr, uid, id, mv_line_dicts, context=None):
