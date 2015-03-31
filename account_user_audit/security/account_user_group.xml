@@ -32,6 +32,7 @@
                 ref('account.menu_account_supplier')
                 )]"/>
         </record>
+        <!-- The code , was not formatted like the others lines behind, because in that way, the menus_access aren't added correctly. more information in the issue https://github.com/odoo/odoo/issues/6076-->
 
         <record id="group_account_user_audit" model="res.groups">
             <field name="menu_access" eval="[(4, ref('account.menu_action_account_moves_all'))]"/>
