@@ -92,6 +92,7 @@
             <field name="type">percent</field>
             <field name="amount">0.1100</field>
             <field name="description">IVA 11% with purchase voucher account for Test</field>
+            <field name="account_retention_voucher_id" ref="account_iva_voucher_pending_apply"/>
             <field name="account_collected_id" ref="account_iva_voucher_11"/>
             <field name="account_paid_id" ref="account_iva_voucher_11"/>
             <field name="account_collected_voucher_id" ref="account_iva_voucher11"/>
