@@ -168,9 +168,12 @@ class account_voucher(osv.Model):
                     context['date'] = voucher.date
                     reference_amount = amount_total_tax * abs(factor)
 
-                    amount_tax_currency += cur_obj.compute(
-                        cr, uid, current_currency, company_currency,
-                        reference_amount, context=context)
+                    if current_currency != company_currency:
+                        amount_tax_currency += cur_obj.compute(
+                            cr, uid, current_currency, company_currency,
+                            reference_amount, context=context)
+                    else:
+                        amount_tax_currency += reference_amount
 
                     move_lines_tax = self._preparate_move_line_tax(
                         cr, uid, account_tax_voucher, account_tax_collected,
@@ -197,14 +200,11 @@ class account_voucher(osv.Model):
                     move_reconcile_id.append(move_rec_exch[1])
 
             if voucher.journal_id.special_journal:
-                move_line_writeoff_tax = self.writeoff_move_line_get(
-                    cr, uid, voucher_id, amount_tax_currency, move_id,
+                move_line_writeoff_tax = self.writeoff_move_line_tax_get(
+                    cr, uid, voucher, amount_tax_currency, move_id,
                     voucher.number, company_currency, current_currency,
-                    context=context)
+                    account_tax_collected, context=context)
                 if move_line_writeoff_tax:
-                    move_line_writeoff_tax['account_id'] =\
-                        account_tax_collected
-                    move_line_writeoff_tax['amount_currency'] = None
                     move_line_obj.create(
                         cr, uid, move_line_writeoff_tax, context=context)
 
@@ -213,6 +213,51 @@ class account_voucher(osv.Model):
                 move_line_obj.reconcile_partial(cr, uid, rec_ids)
 
         return move_ids
+
+    def writeoff_move_line_tax_get(
+            self, cr, uid, voucher, line_total, move_id, name,
+            company_currency, current_currency, account_id, context=None):
+        '''
+        Set a dict to be use to create the writeoff move line.
+
+        :param voucher_id: Id of voucher what we are creating account_move.
+        :param line_total: Amount remaining to be allocated on lines.
+        :param move_id: Id of account move where this line will be added.
+        :param name: Description of account move line.
+        :param company_currency: id of currency of the company to which
+            the voucher belong
+        :param current_currency: id of currency of the voucher
+        :param account_id: account_id of provision account
+        :return: mapping between fieldname and value of account move line to
+            create
+        :rtype: dict
+        '''
+        currency_obj = self.pool.get('res.currency')
+        move_line = {}
+
+        current_currency_obj = voucher.currency_id or\
+            voucher.journal_id.company_id.currency_id
+
+        if not currency_obj.is_zero(cr, uid, current_currency_obj, line_total)\
+                or (company_currency == current_currency and line_total):
+            diff = line_total
+
+            move_line = {
+                'name': name,
+                'account_id': account_id,
+                'move_id': move_id,
+                'partner_id': voucher.partner_id.id,
+                'date': voucher.date,
+                'credit': diff > 0 and diff or 0.0,
+                'debit': diff < 0 and -diff or 0.0,
+                'currency_id':
+                    company_currency != current_currency and
+                    current_currency or False,
+                'analytic_account_id':
+                    voucher.analytic_id and voucher.analytic_id.id or False,
+            }
+
+        return move_line
 
     def _get_reconcile_tax_advance(
             self, cr, uid, voucher, move_id, context=None):
