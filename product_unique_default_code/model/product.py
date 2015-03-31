@@ -26,24 +26,30 @@
 from openerp.osv import osv
 
 
-class product_product(osv.Model):
+class Product(osv.Model):
     _inherit = "product.product"
 
-    def copy(self, cr, uid, id, default=None, context=None):
-
-        if not default:
+    def copy(self, cr, uid,
+             id,  # pylint: disable=W0622
+             default=None, context=None):
+        """
+        Set default_code equal to False if
+        not is defined in default variable
+        to allow duplicate record with unique constraint
+        """
+        if default is None:
             default = {}
-
-        product_default_code = self.browse(cr, uid, id, context=context)
-
-        default[
-            'default_code'] = product_default_code.default_code and\
-            product_default_code.default_code + ' (copy)' or False
-
-        return super(product_product, self).copy(cr, uid, id, default=default,
-                                                 context=context)
+        if 'default_code' not in default:
+            default['default_code'] = False
+        return super(Product, self).copy(
+            cr, uid, id, default, context=context)
 
     _sql_constraints = [
+        #  Add unique default_code constraint.
+        #  Not is per company, because product
+        #  can use "False" company_id for global product.
+        #  Then this may cause has product with
+        #  "default code" duplicated.
         ('default_code_unique', 'unique (default_code)',
-         'The code of Product must be unique !'),
+         'The code of product must be unique !'),
     ]
