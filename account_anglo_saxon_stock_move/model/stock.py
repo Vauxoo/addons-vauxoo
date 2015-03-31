@@ -21,19 +21,3 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-
-from openerp.osv import osv
-
-
-class stock_picking(osv.osv):
-    _inherit = "stock.picking"
-    _description = "Picking List"
-
-    def _prepare_invoice_line(self, cr, uid, group, picking, move_line, invoice_id,
-            invoice_vals, context=None):
-        """Overwrite to add move_id reference"""
-        res = super(stock_picking, self)._prepare_invoice_line(cr, uid, group, picking, move_line, invoice_id, invoice_vals, context=context)
-        res.update({
-            'move_id': move_line.id,
-        })
-        return res
