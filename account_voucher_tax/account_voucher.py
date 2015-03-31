@@ -196,16 +196,18 @@ class account_voucher(osv.Model):
                             current_currency, context=context)
                     move_reconcile_id.append(move_rec_exch[1])
 
-        if voucher.journal_id.special_journal:
-            move_line_writeoff_tax = self.writeoff_move_line_get(
-                cr, uid, voucher_id, amount_tax_currency, move_id,
-                voucher.number, company_currency, current_currency,
-                context=context)
-            if move_line_writeoff_tax:
-                move_line_writeoff_tax['account_id'] = account_tax_collected
-                move_line_writeoff_tax['amount_currency'] = None
-                move_line_obj.create(
-                    cr, uid, move_line_writeoff_tax, context=context)
+            if voucher.journal_id.special_journal:
+                move_line_writeoff_tax = self.writeoff_move_line_get(
+                    cr, uid, voucher_id, amount_tax_currency, move_id,
+                    voucher.number, company_currency, current_currency,
+                    context=context)
+                if move_line_writeoff_tax:
+                    move_line_writeoff_tax['account_id'] =\
+                        account_tax_collected
+                    move_line_writeoff_tax['amount_currency'] = None
+                    move_line_obj.create(
+                        cr, uid, move_line_writeoff_tax, context=context)
+
         for rec_ids in move_reconcile_id:
             if len(rec_ids) >= 2:
                 move_line_obj.reconcile_partial(cr, uid, rec_ids)
