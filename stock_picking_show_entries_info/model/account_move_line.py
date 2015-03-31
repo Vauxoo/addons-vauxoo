@@ -36,12 +36,12 @@ class StockPicking(osv.Model):
         res = []
         for picking_brw in self.browse(cr, uid, ids, context=context):
             res += [
-                aml_brw.id for move in picking_brw.move_lines if move.am_id
-                for aml_brw in move.am_id.line_id]
+                aml_brw.id for move in picking_brw.move_lines if move.aml_ids
+                for aml_brw in move.aml_ids]
         return {
             'domain': "[('id','in',\
                 [" + ','.join([str(item) for item in res]) + "])]",
-            'name': _('Journal Entries'),
+            'name': _('Journal Items'),
             'view_type': 'form',
             'view_mode': 'tree,form',
             'res_model': 'account.move.line',
@@ -54,10 +54,12 @@ class StockPicking(osv.Model):
         context = context or {}
         res = []
         for picking_brw in self.browse(cr, uid, ids, context=context):
-            res += [move.am_id.id for move in picking_brw.move_lines]
+            res += [
+                aml_brw.move_id for move in picking_brw.move_lines
+                if move.aml_ids for aml_brw in move.aml_ids]
         return {
             'domain': "[('id','in',\
-                [" + ','.join([str(item) for item in res]) + "])]",
+                [" + ','.join([str(item.id) for item in res]) + "])]",
             'name': _('Journal Entries'),
             'view_type': 'form',
             'view_mode': 'tree,form',

@@ -45,7 +45,7 @@ class StockMove(osv.Model):
     """
 
     _columns = {
-        'am_id': fields.one2many(
+        'aml_ids': fields.one2many(
             'account.move.line', 'sm_id', 'Account move Lines'),
     }
 
