@@ -4,7 +4,6 @@ account_financial_report group_ua,group_account_user_audit,account_financial_rep
 ifrs_report_line group_ua,group_account_user_audit,ifrs_report_line group_ua,ifrs_report.model_ifrs_lines,1,1,0,0
 ifrs_report group_ua,group_account_user_audit,ifrs_report group_ua,ifrs_report.model_ifrs_ifrs,1,0,0,0
 account_asset group_ua,group_account_user_audit,account_asset group_ua,account_asset.model_account_asset_asset,1,0,0,0
-ir_attachment group_ua,group_account_user_audit,ir_attachment group_ua,l10n_mx_ir_attachment_facturae.model_ir_attachment_facturae_mx,1,0,0,0
 ir_attachment group_user_ro,group_account_user_audit,ir_attachment group_user.ro,base.model_ir_attachment,1,0,0,0
 ir_cron user_ro,group_account_user_audit,ir_cron user.ro,base.model_ir_cron,1,0,0,0
 ir_exports group_system_ro,group_account_user_audit,ir_exports group_system.ro,base.model_ir_exports,1,0,0,0
