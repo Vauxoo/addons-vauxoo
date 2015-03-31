@@ -67,6 +67,13 @@
         )]"/>
 </record>
 
+<!--ASSETS REPORTS-->
+<record id="group_account_user_audit" model="res.groups">
+    <field name="menu_access" eval="[(4,
+        ref('account.menu_finance_reporting'),
+        )]"/>
+</record>
+
 
 <!--IFRS Reports-->
 <record id="group_account_user_audit" model="res.groups">
