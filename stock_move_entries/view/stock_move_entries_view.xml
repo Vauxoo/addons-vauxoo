@@ -14,7 +14,7 @@
             
                 <xpath expr="//group[@name='quants_grp']" position="after">
                     <group name="aml_grp" string="Journal Items" colspan="4">
-                            <field name="am_id" nolabel="1"/>
+                            <field name="aml_ids" nolabel="1"/>
                     </group>
                 </xpath>
         </field>
