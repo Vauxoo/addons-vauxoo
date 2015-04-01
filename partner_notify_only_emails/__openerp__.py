@@ -28,17 +28,12 @@
     "version": "1.0",
     "author": "Vauxoo",
     "category": "Localization/Mexico",
-    "description": """
-Partner Notify Only Message
-===========================
-
-
-    """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
     "depends": [
         "base",
-        "account"
+        "account",
+        "mail"
     ],
     "demo": [],
     "data": [

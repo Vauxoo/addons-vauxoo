@@ -26,9 +26,9 @@
 from openerp.osv import osv
 
 
-class mail_followers(osv.Model):
+class mail_notification(osv.Model):
 
-    _inherit = 'mail.followers'
+    _inherit = 'mail.notification'
 
     def get_partners_to_email(self, cr, uid, ids, message, context=None):
         """ Return the list of partners to notify, based on their preferences.
@@ -36,8 +36,6 @@ class mail_followers(osv.Model):
             :param list partners_to_notify: optional list of partner ids
             restricting the notifications to process
         """
-        super(mail_followers, self).get_partners_to_email(
-            cr, uid, ids, message, context=context)
         notify_pids = []
         for notification in self.browse(cr, uid, ids, context=context):
             if notification.is_read:
