@@ -22,6 +22,18 @@
 ##############################################################################
 
 from openerp.osv import osv
+from openerp import models, api
+
+
+class account_invoice(models.Model):
+    _inherit = "account.invoice"
+
+    @api.model
+    def line_get_convert(self, line, part, date):
+        res = super(account_invoice, self).line_get_convert(line, part, date)
+        if line.get('sm_id', False):
+            res['sm_id'] = line['sm_id']
+        return res
 
 
 class account_invoice_line(osv.osv):
@@ -30,7 +42,7 @@ class account_invoice_line(osv.osv):
     def _anglo_saxon_purchase_stock_move_lines(self, cr, uid, res,
                                                context=None):
         ail_obj = self.pool.get('account.invoice.line')
-        fp_obj = self.pool.get('account.invoice.line')
+        fp_obj = self.pool.get('account.fiscal.position')
         rex = []
         for line in res:
             if line.get('invl_id', False):
