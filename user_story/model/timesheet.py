@@ -26,19 +26,19 @@ from openerp.tools.sql import drop_view_if_exists
 class hr_timesheet(osv.Model):
     _inherit = "hr.analytic.timesheet"
 
-    def _get_invoiceables_hours(self, cr, uid, ids, args, fields, context=None):
+    def _get_invoiceables_hours(self, cr, uid, ids, args, fields, context=None):  # pylint: disable=W0621
         context = context or {}
         res = {}
         for time_brw in self.browse(cr, uid, ids, context=context):
             hours = time_brw.unit_amount
             if time_brw.to_invoice:
                 hours = time_brw.unit_amount - \
-                    (time_brw.unit_amount * \
+                    (time_brw.unit_amount *
                     (time_brw.to_invoice.factor / 100))
             res.update({time_brw.id: hours})
         return res
 
-    def _get_user_story(self, cr, uid, ids, args, fields, context=None):
+    def _get_user_story(self, cr, uid, ids, args, fields, context=None):  # pylint: disable=W0621
         context = context or {}
         res = {}
         task_obj = self.pool.get('project.task')
@@ -87,7 +87,7 @@ class hr_timesheet(osv.Model):
                                         relation='user.story',
                                         string='User Story',
                                         store={
-                                            'project.task': \
+                                            'project.task':
                                             (_get_analytic_from_task,
                                              ['userstory_id'],
                                              10)
@@ -107,14 +107,14 @@ class custom_timesheet(osv.Model):
     _order = "date desc"
     _auto = False
 
-    def _get_invoiceables_hours(self, cr, uid, ids, args, fields, context=None):
+    def _get_invoiceables_hours(self, cr, uid, ids, args, fields, context=None):  # pylint: disable=W0621
         context = context or {}
         res = {}
         for time_brw in self.browse(cr, uid, ids, context=context):
             hours = time_brw.unit_amount
             if time_brw.to_invoice:
                 hours = time_brw.unit_amount - \
-                    (time_brw.unit_amount * \
+                    (time_brw.unit_amount *
                     (time_brw.to_invoice.factor / 100))
             res.update({time_brw.id: hours})
         return res

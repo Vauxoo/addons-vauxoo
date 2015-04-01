@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+		<template id="yoytec_authorized_service_providers" page="True" name="Authorized Service Providers">
+            <t t-call="website.layout">
+              <div id="wrap">
+                <section class="vx_wrapper_white" style="background: #333;">
+                    <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 mt16">
+                            <h2>The best service providers</h2>
+                            <p>Here you will find our certified service providers for all the brands we sell.</p>
+                        </div>
+                    </div>
+                    </div>
+                </section>
+                <section class="mt16 mb16">
+                  <div class="container">
+                    <t t-set="providers" t-value="env['product.brand'].search([], order='name desc')"/>
+                    <t t-foreach="providers" t-as="provider">
+                        <t t-call="website_authorized_service_centers.yoytec_centers"/>
+
+                    </t>
+                  </div>
+                </section>
+              </div>
+            </t>
+        </template>
+
+        <template id="yoytec_centers" name="Authorized Centers">
+
+            <div class="container" style="margin-top: 20px; margin-bottom: 20px;">
+                <div class="row panel">
+                    <div class="col-md-4 bg_blur">
+                        <img t-att-src="website.image_url(provider, 'logo')" class="img shadow img-rounded img-thumbnail picture hidden-xs" height="90"/>
+                        <img t-att-src="website.image_url(provider, 'logo')" class="img shadow img-rounded img-thumbnail visible-xs picture_mob" height="90"/>
+
+                        <h2><a t-att-href="provider.url"><t t-esc="provider.name" /></a></h2>
+                    </div>
+                <t t-foreach="provider.authorized_partner_ids" t-as="partner">
+                    <div class="col-md-8  col-xs-12">
+                       <img t-att-src="website.image_url(partner, 'image_medium')" class="img shadow img-rounded img-thumbnail picture hidden-xs"/>
+                       <img t-att-src="website.image_url(partner, 'image_medium')" class="img shadow img-rounded img-thumbnail visible-xs picture_mob"/>
+                       <div class="header">
+                            <h1><t t-esc="partner.name"/></h1>
+                            <h4><t t-esc="partner.street"/></h4>
+                            <h4><t t-esc="partner.phone"/></h4>
+                            <h4><t t-esc="partner.email"/></h4>
+                            <h4><a t-att-href="partner.website">Website</a></h4>
+                       </div>
+                    </div>
+                </t>
+                </div>   
+            </div>
+        </template>
+        <template id="footer_providers" inherit_id="website.footer_default" customize_show="True" name="Automatic Footer">
+            <xpath expr="//ul[@id='products']" position="inside">
+                <li><a href="/page/website_authorized_service_centers.yoytec_authorized_service_providers">Authorized Service providers</a></li>
+            </xpath>
+        </template>
+
+    </data>
+</openerp>

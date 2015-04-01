@@ -27,13 +27,12 @@
     "author": "Vauxoo",
     "category": "Generic Modules/Others",
     "description": """
-This module will allow you to get:
+This module will allow you to get in Multicurrency:
+A Customer & Supplier Detail Due Report,
+A Customer & Supplier Aging Due Report,
+    Comming Soon:
 A Customer's Formal Due Report,
-A Customer's Detail Due Report,
-A Customer's Aging Due Report.
 A Supplier's Formal Due Report,
-A Supplier's Detail Due Report,
-A Supplier's Aging Due Report.
 """,
     "website": "http://www.vauxoo.com/",
     "license": "",
@@ -45,11 +44,10 @@ A Supplier's Aging Due Report.
     "data": [
         "data/aging_due_report_paper_format.xml",
         "data/aging_due_report_style.xml",
+        "views/wizard.xml",
         "views/customer_aging_due_report_qweb.xml",
         "views/customer_formal_due_report_qweb.xml",
         "views/customer_detail_due_report_qweb.xml",
-        "views/supplier_aging_due_report_qweb.xml",
-        "views/supplier_detail_due_report_qweb.xml",
         "views/supplier_formal_due_report_qweb.xml",
         "views/aging_due_report.xml"
     ],
