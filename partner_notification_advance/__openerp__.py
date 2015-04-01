@@ -24,7 +24,7 @@
 #
 #
 {
-    "name": "Partner Notify Only Message",
+    "name": "Partner Notification Advance",
     "version": "1.0",
     "author": "Vauxoo",
     "category": "Localization/Mexico",
