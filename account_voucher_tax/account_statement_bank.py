@@ -181,7 +181,6 @@ class account_bank_statement_line(osv.osv):
                 account_tax_collected =\
                     move_line_tax.get('account_tax_collected')
                 amount_total_tax = move_line_tax.get('amount', 0)
-
                 if float_compare(move_amount_counterpart[0],
                                  move_amount_counterpart[2],
                                  precision_digits=prec) == 0:
@@ -251,7 +250,7 @@ class account_bank_statement_line(osv.osv):
         aml_obj = self.pool.get('account.move.line')
         amount_residual = 0
         for move in aml_obj.browse(cr, uid, mvs_tax, context=context):
-            amount_residual += move.amount_residual
+            amount_residual += move.amount_residual_currency
         return amount_residual
 
     def _check_moves_to_concile(
