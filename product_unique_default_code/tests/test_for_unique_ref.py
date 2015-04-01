@@ -24,8 +24,6 @@
 #
 ###############################################################################
 
-from psycopg2 import IntegrityError
-
 from openerp.tests.common import TransactionCase
 from openerp.exceptions import except_orm
 
@@ -40,6 +38,8 @@ class TestForUniqueRef(TransactionCase):
 
     def setUp(self):
         super(TestForUniqueRef, self).setUp()
+        self.product_model = self.env['product.product']
+        self.product_template_model = self.env['product.template']
 
     def test_1_copied_product_unique_default_code(self):
         """
@@ -55,36 +55,8 @@ class TestForUniqueRef(TransactionCase):
             'standard_price': 100.90,
             'list_price': 123.50
         }
-        product = self.env['product.product'].create(product_data)
+        product = self.product_model.create(product_data)
         self.assertTrue(
-            product.copy().default_code == '%s (copy)' % product.default_code,
-            "ERROR: New product has not a unique internal reference ...")
-
-    def test_2_constraint_unique_internal_reference(self):
-        """
-        Test 2: This test will prove the new constraint added to this module
-        to can store only product with unique default_codes (internal refs):
-        - Create two products with the same internal reference
-        - Check if expected constraint exception is raised
-        """
-        product_data_1 = {
-            'name': 'Test Cellphone 1',
-            'default_code': '101001000',
-            'categ_id': self.env.ref('product.product_category_all').id,
-            'standard_price': 100.90,
-            'list_price': 123.50
-        }
-        product_data_2 = {
-            'name': 'Test Cellphone 2',
-            'default_code': '101001000',
-            'categ_id': self.env.ref('product.product_category_all').id,
-            'standard_price': 200.80,
-            'list_price': 241.70
-        }
-        product_obj = self.env['product.product']
-        product_obj.create(product_data_1)
-        with self.assertRaisesRegexp(
-                IntegrityError,
-                r'duplicate key value violates unique constraint "product'
-                r'_product_default_code_unique"'):
-            product_obj.create(product_data_2)
+            product.copy().default_code != product.default_code,
+            "ERROR: New product has not a unique internal reference ..."
+        )
