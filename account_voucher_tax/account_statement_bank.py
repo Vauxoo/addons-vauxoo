@@ -247,6 +247,12 @@ class account_bank_statement_line(osv.osv):
 
     def _get_move_line_tax_counterpart(
             self, cr, uid, ids, mvs_tax, context=None):
+        '''
+        Method used in the last payment of a journal item, this to pay all
+        amount taxes, because if are many payments this can have difference by
+        round.
+        param @mvs_tax: list of movements of provision
+        '''
         aml_obj = self.pool.get('account.move.line')
         amount_residual = 0
         for move in aml_obj.browse(cr, uid, mvs_tax, context=context):
