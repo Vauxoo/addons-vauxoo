@@ -33,7 +33,7 @@
                 <attribute name="groups">purchase_requisition_for_everybody.purchase_requisition_manager_ev_groups</attribute>
             </xpath>
             
-            <xpath expr="//button[@name='tender_cancel']" position="attributes">
+            <xpath expr="//button[@name='cancel_requisition']" position="attributes">
                 <attribute name="groups">purchase_requisition_for_everybody.purchase_requisition_manager_ev_groups</attribute>
             </xpath>
             
