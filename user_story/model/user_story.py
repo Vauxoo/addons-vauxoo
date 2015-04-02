@@ -367,14 +367,14 @@ class user_story(osv.Model):
     def do_progress(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'open'}, context=context)
 
-    def get_body_disapproval(self, cr, uid, i, context=None):
+    def get_body_disapproval(self, cr, uid, ids, context=None):
         '''
-        TODO: This body must be verified to give the information regarding the answers in
-        the do_disaproval method.
+        TODO: This body must be verified to give the information regarding the
+        answers in the do_disaproval method.
         '''
-        usname = self.browse(cr, uid, i).name
+        usname = self.browse(cr, uid, ids).name
         username = self.pool.get('res.users').browse(cr, uid, uid).name
-        link = '#id={i}&view_type=form&model=user.story'.format(i=i)
+        link = '#id={i}&view_type=form&model=user.story'.format(i=ids)
         return _(u'''<html><div>
                  <h2>{usname}</h2>
                  <p>The user {user} has approved the user Story
@@ -492,13 +492,14 @@ class acceptability_criteria(osv.Model):
             cr, uid, [('accep_crit_id', 'in', us_ids)], context=context)
         return ac_ids
 
-    def get_body_disapproval(self, cr, uid, i, context=None):
+    def get_body_disapproval(self, cr, uid, ids, context=None):
         '''
-        TODO: This body must be verified to give the information regarding the answers in
-        the do_disaproval method.
+        TODO: This body must be verified to give the information regarding the
+        answers in the do_disaproval method.
         '''
-        model_brw = self.browse(cr, uid, i[0])
-        link = '#id={i}&view_type=form&model=user.story'.format(i=model_brw.accep_crit_id and model_brw.accep_crit_id.id)
+        model_brw = self.browse(cr, uid, ids[0])
+        link = '#id={i}&view_type=form&model=user.story'.\
+            format(i=model_brw.accep_crit_id and model_brw.accep_crit_id.id)
         return link
 
     def approve(self, cr, uid, ids, context=None):
