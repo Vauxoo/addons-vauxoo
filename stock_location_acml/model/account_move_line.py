@@ -6,8 +6,7 @@
 #    All Rights Reserved.
 #    info@vauxoo.com
 ############################################################################
-#    Coded by: julio (julio@vauxoo.com)
-#              Luis Ernesto García Medina (ernesto_gm@vauxoo.com)
+#    Coded by: Luis Ernesto García Meidna (ernesto_gm@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -34,31 +33,12 @@ class AccountMoveLine(osv.Model):
     """
 
     _columns = {
-        'sm_id': fields.many2one('stock.move', 'Stock move'),
+        'location_id': fields.related(
+            'sm_id', 'location_id', string='Source Location',
+            type='many2one', relation='stock.location', store=True,
+            help='Location Move Source'),
+        'location_dest_id': fields.related(
+            'sm_id', 'location_dest_id', type='many2one',
+            string='Destination Location', relation='stock.location',
+            store=True, help="Location Move Destination")
     }
-
-
-class StockMove(osv.Model):
-    _inherit = "stock.move"
-
-    """
-    """
-
-    _columns = {
-        'aml_ids': fields.one2many(
-            'account.move.line', 'sm_id', 'Account move Lines'),
-    }
-
-
-class StockQuant(osv.Model):
-    _inherit = "stock.quant"
-
-    def _prepare_account_move_line(self, cr, uid, move, qty, cost,
-                                   credit_account_id, debit_account_id,
-                                   context=None):
-        res = super(StockQuant, self)._prepare_account_move_line(
-            cr, uid, move, qty, cost, credit_account_id, debit_account_id,
-            context)
-        for line in res:
-            line[2]['sm_id'] = move.id
-        return res
