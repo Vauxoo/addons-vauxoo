@@ -7,8 +7,8 @@
         <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
         <field name="arch" type="xml">
             
-            <xpath expr="//separator[@string='Quotations']" position="replace">
-                <separator string="Quotations" groups="purchase_requisition_for_everybody.purchase_requisition_manager_ev_groups"/>
+            <xpath expr="//separator[@string='Requests for Quotation']" position="replace">
+                <separator string="Requests for Quotation" groups="purchase_requisition_for_everybody.purchase_requisition_manager_ev_groups"/>
             </xpath>
             
             <xpath expr="//field[@name='purchase_ids']" position="replace">
@@ -29,7 +29,7 @@
                 </field>
             </xpath>
             
-            <xpath expr="//button[@name='tender_in_progress']" position="attributes">
+            <xpath expr="//button[@name='sent_suppliers']" position="attributes">
                 <attribute name="groups">purchase_requisition_for_everybody.purchase_requisition_manager_ev_groups</attribute>
             </xpath>
             
