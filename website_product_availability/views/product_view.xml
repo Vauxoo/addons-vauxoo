@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="product_stock_status_form_view" model="ir.ui.view">
+            <field name="name">product.product.stock.status.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='website_sequence']" position="after">
+                    <field name="low_stock"/>
+                    <field name="stock_state"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="stock_location_route_onrequest_form_view" model="ir.ui.view">
+            <field name="name">stock.location.route.onrequest.form</field>
+            <field name="model">stock.location.route</field>
+            <field name="inherit_id" ref="stock.stock_location_route_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sequence']" position="after">
+                    <field name="consider_on_request"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
