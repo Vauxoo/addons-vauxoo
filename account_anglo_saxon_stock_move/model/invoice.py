@@ -56,7 +56,7 @@ class account_invoice_line(osv.osv):
                 rex.append(line)
                 continue
 
-            a = None
+            aa = None
             if ttype == 'supplier':
                 oa = pp_brw.property_stock_account_input and \
                     pp_brw.property_stock_account_input.id or \
@@ -70,8 +70,8 @@ class account_invoice_line(osv.osv):
 
             if oa:
                 fpos = ail_brw.invoice_id.fiscal_position or False
-                a = fp_obj.map_account(cr, uid, fpos, oa)
-            if a == line['account_id'] and ail_brw.move_id:
+                aa = fp_obj.map_account(cr, uid, fpos, oa)
+            if aa == line['account_id'] and ail_brw.move_id:
                 line['sm_id'] = ail_brw.move_id.id
 
             rex.append(line)
