@@ -38,7 +38,9 @@ that were created because of accrual accounts for Stock In with Anglo Saxon
         "account_anglo_saxon_stock_move",
     ],
     "demo": [],
-    "data": [],
+    "data": [
+        'view/purchase_view.xml',
+    ],
     "test": [],
     "js": [],
     "css": [],
