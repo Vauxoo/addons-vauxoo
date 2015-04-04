@@ -1,8 +1,4 @@
 # -*- encoding: utf-8 -*-
-'''
-This module allows to gather Journal Item in a Purchase Order
-that were created because of accrual accounts for Stock In with Anglo Saxon
-'''
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
