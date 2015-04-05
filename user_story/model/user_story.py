@@ -521,11 +521,9 @@ class acceptability_criteria(osv.Model):
         template = data_obj.get_object(cr, uid, 'user_story', 'template_approve_aceptabilty_criterial')
         mail = self.pool.get('email.template').generate_email(cr, SUPERUSER_ID, template.id, ids[0])
         compose_id = compose_obj.create(cr, uid, {
-            'res_model': 'user.story',
             'model': 'user.story',
             'res_id': user_story_brw.id,
             'partner_ids': [(6, 0, partner_ids)],
-            'partner_id': 0,
             'body': mail.get('body'),
         })
         criterial_brw2.write({'accepted': True})
@@ -587,11 +585,9 @@ class acceptability_criteria(osv.Model):
         template = data_obj.get_object(cr, uid, 'user_story', 'template_ask_aceptabilty_criterial')
         mail = self.pool.get('email.template').generate_email(cr, SUPERUSER_ID, template.id, ids[0])
         compose_id = compose_obj.create(cr, uid, {
-            'res_model': 'user.story',
             'model': 'user.story',
             'res_id': user_story_brw.id,
             'partner_ids': [(6, 0, partner_ids)],
-            'partner_id': 0,
             'body': mail.get('body'),
         })
         compose_obj.send_mail(cr, uid, [compose_id])
