@@ -74,10 +74,13 @@ class project_task(osv.osv):
 
             mail_obj = self.pool.get('mail.compose.message')
             mail_fields = mail_obj.fields_get(cr, uid)
+            mail_render = mail_obj.render_template_batch(
+                cr, uid, body_html, 'project.task', ids, context=context)
+            mail_render = mail_render[ids[0]]
             mail_ids = mail_obj.default_get(
                 cr, uid, mail_fields.keys(), context=context)
             mail_ids.update(
-                {'model': 'project.task', 'body': body_html, 'composition_mode': 'mass_mail', 'partner_ids': [(6, 0, followers)]})
+                {'model': 'project.task', 'body': mail_render, 'composition_mode': 'comment', 'partner_ids': [(6, 0, followers)]})
             mail_ids = mail_obj.create(cr, uid, mail_ids, context=context)
             mail_obj.send_mail(cr, uid, [mail_ids], context=context)
 
