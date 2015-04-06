@@ -6,8 +6,7 @@
 #    All Rights Reserved.
 #    info@vauxoo.com
 ############################################################################
-#    Coded by: julio (julio@vauxoo.com)
-#              Luis Ernesto García Medina (ernesto_gm@vauxoo.com)
+#    Coded by: Luis Ernesto García Medina (ernesto_gm@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,41 +23,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import fields, osv
-
-
-class AccountMoveLine(osv.Model):
-    _inherit = "account.move.line"
-
-    """
-    """
-
-    _columns = {
-        'sm_id': fields.many2one('stock.move', 'Stock move'),
-    }
-
-
-class StockMove(osv.Model):
-    _inherit = "stock.move"
-
-    """
-    """
-
-    _columns = {
-        'aml_ids': fields.one2many(
-            'account.move.line', 'sm_id', 'Account move Lines'),
-    }
-
-
-class StockQuant(osv.Model):
-    _inherit = "stock.quant"
-
-    def _prepare_account_move_line(self, cr, uid, move, qty, cost,
-                                   credit_account_id, debit_account_id,
-                                   context=None):
-        res = super(StockQuant, self)._prepare_account_move_line(
-            cr, uid, move, qty, cost, credit_account_id, debit_account_id,
-            context)
-        for line in res:
-            line[2]['sm_id'] = move.id
-        return res
+from . import model
