@@ -26,7 +26,6 @@
 
 from psycopg2 import IntegrityError
 
-from openerp.exceptions import except_orm
 from openerp.tests.common import TransactionCase
 from openerp.tools import mute_logger
 
@@ -61,7 +60,9 @@ class TestForUniqueRef(TransactionCase):
             product.copy().default_code == '%s (copy)' % product.default_code,
             "ERROR: New product has not a unique internal reference ...")
 
-    @mute_logger('openerp.addons.product_unique_default_code.tests.test_for_unique_ref',
+    @mute_logger(
+        'openerp.addons.product_unique_default_code' +
+        '.tests.test_for_unique_ref',
         'openerp.sql_db')
     def test_2_constraint_unique_internal_reference(self):
         """
