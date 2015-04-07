@@ -25,6 +25,37 @@ from openerp.osv import osv
 from openerp import models, api
 
 
+class AccountInvoice(osv.osv):
+    _inherit = "account.invoice"
+
+    def invoice_validate(self, cr, uid, ids, context=None):
+        aml_obj = self.pool['account.move.line']
+        res = super(AccountInvoice, self).invoice_validate(
+            cr, uid, ids, context=context)
+        for inv_brw in self.browse(cr, uid, ids, context=context):
+            for ail_brw in inv_brw.invoice_line:
+                res = {}
+                if ail_brw.move_id:
+                    for brw in ail_brw.move_id.aml_ids:
+                        if brw.account_id.reconcile:
+                            if res.get(brw.account_id.id, False):
+                                res[brw.account_id.id]['debit'] += brw.debit
+                                res[brw.account_id.id]['credit'] += brw.credit
+                                res[brw.account_id.id]['ids'].append(brw.id)
+                            else:
+                                res[brw.account_id.id] = {
+                                    'debit': brw.debit,
+                                    'credit': brw.credit,
+                                    'ids': [brw.id],
+                                }
+                for key, val in res.iteritems():
+                    if val['debit'] == val['credit']:
+                        aml_obj.reconcile(cr, uid, val['ids'])
+                    elif len(val['ids']) > 1:
+                        aml_obj.reconcile_partial(cr, uid, val['ids'])
+        return res
+
+
 class account_invoice(models.Model):
     _inherit = "account.invoice"
 
