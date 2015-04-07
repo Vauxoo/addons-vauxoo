@@ -75,6 +75,9 @@
                             <field name='aml_ids'
                             attrs="{'readonly':[('state','!=','draft')]}"
                                    />
+                            <field name='aml_iva_ids'
+                            attrs="{'readonly':[('state','!=','draft')]}"
+                                   />
                         </group>
                     </group>
                 </form>

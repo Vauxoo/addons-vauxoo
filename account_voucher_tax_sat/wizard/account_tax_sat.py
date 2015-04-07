@@ -42,19 +42,46 @@ class account_voucher_tax_assigned(osv.TransientModel):
     def action_account_assigned(self, cr, uid, ids, context=None):
         aml_obj = self.pool.get('account.move.line')
         acc_voucher_tax_sat_obj = self.pool.get('account.voucher.tax.sat')
+        account_tax_obj = self.pool.get('account.tax')
         if context is None:
             context = {}
         for tax_assigned in self.browse(cr, uid, ids, context=context):
             acc_vocuher_tax_sat = acc_voucher_tax_sat_obj.browse(cr, uid,
                                             context.get('active_id', False))
+
+            tax_ids = account_tax_obj.search(cr, uid, [
+                ('type_tax_use', '=', 'purchase')])
+
+            account_iva_assigned = [
+                account_tax.account_retention_voucher_id.id
+                for account_tax in account_tax_obj.browse(
+                    cr, uid, tax_ids, context=context)]
+            print account_iva_assigned,"account_iva_assignedaccount_iva_assignedaccount_iva_assigned"
+
             taxe_assigned = [taxes.id for taxes in tax_assigned.tax_ids]
             account_assigned = [acc.id for acc in tax_assigned.account_ids]
-            move_line_to_close = aml_obj.search(cr, uid, ['|',
-                        ('tax_id_secondary', 'in', taxe_assigned),
+            move_line_to_close = aml_obj.search(cr, uid, [
+                '|', ('tax_id_secondary', 'in', taxe_assigned),
                 ('account_id', 'in', account_assigned),
                 ('credit', '>', 0.0),
+                ('period_id', '=', acc_vocuher_tax_sat.period_id.id),
+                ('journal_id.type', 'in', ('bank', 'cash')),
+                ('reconcile_id', '=', False),
+                ('reconcile_partial_id', '=', False)
+            ])
+
+            move_line_iva_to_close = aml_obj.search(cr, uid, [
+                ('account_id', 'in', account_iva_assigned),
+                ('debit', '>', 0.0),
                 ('period_id', '=', acc_vocuher_tax_sat.period_id.id)
             ])
-            acc_voucher_tax_sat_obj.write(cr, uid, acc_vocuher_tax_sat.id,
-                {'aml_ids': [(4, move_id) for move_id in move_line_to_close]})
+
+            acc_voucher_tax_sat_obj.write(
+                cr, uid, acc_vocuher_tax_sat.id,
+                {
+                    'aml_ids': [
+                        (4, move_id) for move_id in move_line_to_close],
+                    'aml_iva_ids': [
+                        (4, move_iva_id) for move_iva_id in move_line_iva_to_close]
+                    })
         return True

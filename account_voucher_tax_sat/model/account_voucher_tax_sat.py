@@ -42,6 +42,10 @@ class account_voucher_tax_sat(osv.Model):
                             'voucher_tax_sat_id', 'move_line_id',
                             'Move Lines', help='Entries to close',
                                     ),
+        'aml_iva_ids': fields.many2many('account.move.line', 'voucher_tax_sat_rel_iva',
+                            'voucher_sat_id', 'move_line_id',
+                            'Move Lines', help='Entries IVA to close',
+                                    ),
         'journal_id': fields.many2one('account.journal', 'Journal',
                             help='Accounting Journal where Entries will be posted',
                                       ),
@@ -149,9 +153,8 @@ class account_voucher_tax_sat(osv.Model):
         aml_obj = self.pool.get('account.move.line')
         av_obj = self.pool.get('account.voucher')
         period_obj = self.pool.get('account.period')
-        for move_line in voucher_tax_sat.aml_ids:
-            if move_line.tax_id_secondary and\
-                    move_line.tax_id_secondary.tax_sat_ok:
+        for move_line in voucher_tax_sat.aml_iva_ids:
+            if move_line.tax_id_secondary:
                 amount_base, tax_secondary = av_obj._get_base_amount_tax_secondary(cr,
                             uid, move_line.tax_id_secondary,
                             move_line.amount_base, move_line.credit,
@@ -163,13 +166,13 @@ class account_voucher_tax_sat(osv.Model):
                     'period_id': period_obj.find(cr, uid,
                                                  voucher_tax_sat.date,
                                                  context=context)[0],
-                    'debit': move_line.credit,
+                    'debit': move_line.debit,
                     'name': _('Close of IVA Retained'),
                     'partner_id': move_line.partner_id.id,
-                    'account_id': move_line.tax_id_secondary.account_id_creditable.id,
+                    'account_id': move_line.tax_id_secondary.account_collected_voucher_id.id,
                     'credit': 0.0,
                     'amount_base': amount_base,
-                    'tax_id_secondary': move_line.tax_id_secondary.tax_reference.id
+                    'tax_id_secondary': tax_secondary
                 }
                 move_line_cr = {
                     'move_id': voucher_tax_sat.move_id.id,
@@ -181,8 +184,8 @@ class account_voucher_tax_sat(osv.Model):
                     'debit': 0.0,
                     'name': _('Close of IVA Retained'),
                     'partner_id': move_line.partner_id.id,
-                    'account_id': move_line.tax_id_secondary.account_id_by_creditable.id,
-                    'credit': move_line.credit,
+                    'account_id': move_line.account_id.id,
+                    'credit': move_line.debit,
                 }
                 for line_dt_cr in [move_line_dt, move_line_cr]:
                     aml_obj.create(cr, uid, line_dt_cr, context=context)
