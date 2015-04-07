@@ -28,10 +28,8 @@ from openerp import models, api
 class AccountInvoice(osv.osv):
     _inherit = "account.invoice"
 
-    def invoice_validate(self, cr, uid, ids, context=None):
+    def reconcile_stock_accrual(self, cr, uid, ids, context=None):
         aml_obj = self.pool['account.move.line']
-        res = super(AccountInvoice, self).invoice_validate(
-            cr, uid, ids, context=context)
         for inv_brw in self.browse(cr, uid, ids, context=context):
             for ail_brw in inv_brw.invoice_line:
                 res = {}
@@ -53,6 +51,13 @@ class AccountInvoice(osv.osv):
                         aml_obj.reconcile(cr, uid, val['ids'])
                     elif len(val['ids']) > 1:
                         aml_obj.reconcile_partial(cr, uid, val['ids'])
+
+        return True
+
+    def invoice_validate(self, cr, uid, ids, context=None):
+        res = super(AccountInvoice, self).invoice_validate(
+            cr, uid, ids, context=context)
+        self.reconcile_stock_accrual(cr, uid, ids, context=context)
         return res
 
 
