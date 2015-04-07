@@ -1,12 +1,12 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2015 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
 #    info@vauxoo.com
 ############################################################################
-#    Coded by: julio (julio@vauxoo.com)
+#    Coded by: Luis Ernesto García Medina (ernesto_gm@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,28 +23,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import osv
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+{
+    "name": "Show Entries Information in Stock Picking",
+    "version": "1.1",
+    "author": "Vauxoo",
+    "category": "Generic Modules/Account",
+    "description": """
+Show Entries Information in Stock Picking
+=========================================
 
-
-class product_product(osv.Model):
-    _inherit = "product.product"
-
-    def copy(self, cr, uid,
-             id, default=None, context=None):  # pylint: disable=W0622
-
-        if not default:
-            default = {}
-
-        product_default_code = self.browse(cr, uid, id, context=context)
-
-        default[
-            'default_code'] = product_default_code.default_code and\
-            product_default_code.default_code + ' (copy)' or False
-
-        return super(product_product, self).copy(cr, uid, id, default=default,
-                                                 context=context)
-
-    _sql_constraints = [
-        ('default_code_unique', 'unique (default_code)',
-         'The code of Product must be unique !'),
-    ]
+    """,
+    "website": "http://www.vauxoo.com/",
+    "license": "",
+    "depends": [
+        "stock_move_entries",
+    ],
+    "demo": [],
+    "data": [
+        "view/stock_picking_view.xml"
+    ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
+    "active": False
+}

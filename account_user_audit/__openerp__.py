@@ -1,12 +1,12 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info@vauxoo.com
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: julio (julio@vauxoo.com)
+#    Coded by: Hugo Francisco Adan Oliva (hugo@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,24 +23,35 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
 {
-    "name": "Product Default Code Unique",
-    "version": "1.1",
+    "name": "Add Read-Only Accounting Group",
+    "version": "0.1",
     "author": "Vauxoo",
-    "category": "",
+    "category": "Generic Modules",
     "description": """
-        Add Constraint for the default_code and change function copy
-    """,
-    "website": "",
+This module adds the following features:
+========================================
+
+* Odoo does not come with a read-only accountant group out of the box, which
+is inconvenient when you need to have an external accountant go through your
+accounting records in Odoo.  This module adds a group 'Auditor Read-Only' so
+it's easy to grant an external accountant access to your Odoo system.
+* This group inherits the group 'Employee', thus minimum level of
+create/write/delete rights will be granted for some non-accounting related
+models.
+""",
+    "website": "http://www.vauxoo.com",
     "license": "",
     "depends": [
-        "product"
+        "account_asset",
+        "ifrs_report",
     ],
-    "demo": [
-        'demo/test_unique_ref_demo.xml',
+    "demo": [],
+    "data": [
+        "security/account_user_group.xml",
+        'security/ir.model.access.csv',
     ],
-    "data": [],
     "test": [],
     "js": [],
     "css": [],

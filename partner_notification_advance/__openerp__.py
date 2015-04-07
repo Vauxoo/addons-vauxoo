@@ -1,13 +1,13 @@
-# -*- coding: utf-8 -*-
-###########################################################################
+# -*- encoding: utf-8 -*-
+#
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2014 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info@vauxoo.com
-############################################################################
-#    Coded by: julio (julio@vauxoo.com)
-############################################################################
+#    info Vauxoo (info@vauxoo.com)
+#
+#    Coded by: vauxoo consultores (info@vauxoo.com)
+#
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,30 +22,28 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+#
 {
-    "name": "Product Default Code Unique",
-    "version": "1.1",
+    "name": "Partner Notification Advance",
+    "version": "1.0",
     "author": "Vauxoo",
-    "category": "",
-    "description": """
-        Add Constraint for the default_code and change function copy
-    """,
-    "website": "",
-    "license": "",
+    "category": "Localization/Mexico",
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
     "depends": [
-        "product"
+        "base",
+        "account",
+        "mail"
     ],
-    "demo": [
-        'demo/test_unique_ref_demo.xml',
-    ],
-    "data": [],
+    "demo": [],
+    "data": [
+        "view/res_partner_view.xml"
+        ],
     "test": [],
     "js": [],
     "css": [],
     "qweb": [],
     "installable": True,
-    "auto_install": False,
-    "active": False
+    "auto_install": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
