@@ -169,3 +169,9 @@ The structure of all internal odoo stuff try to follow the rules under [OCA](htt
 and remember always do what we say and not what we do ;-) if you find things that do not comply such rules,
 it can be considered a bug, please share with us what you find and Pull Requests are welcome.
 
+Paid support and warranties.
+---
+
+Are you planning to use this modules in a production enviromnent that can hire some work from the team behind this work?
+
+#Better go with [Vauxoo](http://vauxoo.com)
