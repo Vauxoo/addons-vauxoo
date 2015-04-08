@@ -60,7 +60,6 @@ class TestAuditorGroup(TransactionCase):
                  # to use USD rate rateUSDbis
                  'date_invoice': time.strftime('%Y') + '-07-01',
                  })
-        # print "----CORRECTO : Factura no Creada", cm.exception
         # Create Journal Entries with Test user, most fail
         with self.assertRaises(except_orm):
             self.account_move.create(
@@ -72,7 +71,6 @@ class TestAuditorGroup(TransactionCase):
                  'line_id': [(0, 0, {'name': 'foo', 'debit': 10, }),
                              (0, 0, {'name': 'bar', 'credit': 10, })]
                  })
-        # print "----CORRECTO : Account_move no Creada", cm.exception
         # Create Journal Item with test user, most fail.
         move_id = self.account_move.create(
             cr, SUPERUSER_ID,
@@ -89,20 +87,15 @@ class TestAuditorGroup(TransactionCase):
                  'debit': 0,
                  'credit': 100,
                  'account_id': self.ref('account.a_sale')})
-        # print "----CORRECTO : Account_move_line no Creada", cm.exception
         # Create account.bank.statement with test user, most fail.
         with self.assertRaises(except_orm):
             self.bank_statement.create(
                 cr, utest[1],
                 {'journal_id': self.bank_journal_usd_id,
                  'date': time.strftime('%Y') + '-07-15', })
-        # print "----CORRECTO : bank_statement no Creada", cm.exception
-
         # Create Custumer or supplier (res.partner), most to fail
         with self.assertRaises(except_orm):
             self.partner.create(cr, utest[1], {'name': 'MyPartner1'})
-        # print "----CORRECTO : res.partner no Creado", cm.exception
-
         # Create Assets.Assets, most to fail
         with self.assertRaises(except_orm):
             self.asset_model.create(cr, utest[1], {
@@ -116,7 +109,6 @@ class TestAuditorGroup(TransactionCase):
                 'method_period': 'month',
                 'prorata': True,
             })
-        # print "----CORRECTO : Assets no Creado", cm.exception
 
     @mute_logger('openerp.addons.account_user_audit.tests.test_group',
                  'openerp.osv.orm',
@@ -141,13 +133,9 @@ class TestAuditorGroup(TransactionCase):
              'date_invoice': time.strftime('%Y') + '-07-01', })
         with self.assertRaises(except_orm):
             self.invoice.unlink(cr, utest[1], [invoice_id])
-        # print "----CORRECTO : Factura no Borrado", cm.exception
-
-        # Create Custumer or supplier (res.partner), most to fail
+        # unlink Custumer or supplier (res.partner), most to fail
         with self.assertRaises(except_orm):
             self.partner.unlink(cr, utest[1], [self.partner_agrolait_id])
-        # print "----CORRECTO : res.partner no Borrado", cm.exception
-
         # unlink Journal Entries with Test user, most fail
         move_id = self.account_move.create(
             cr, SUPERUSER_ID,
@@ -158,7 +146,6 @@ class TestAuditorGroup(TransactionCase):
              })
         with self.assertRaises(except_orm):
             self.account_move.unlink(cr, utest[1], [move_id])
-        # print "----CORRECTO : Account_move no Borrado", cm.exception
         # Unlik Journal Item with test user, most fail.
         move_line_id = self.move_line_obj.create(
             cr, SUPERUSER_ID,
@@ -169,8 +156,6 @@ class TestAuditorGroup(TransactionCase):
              'account_id': self.ref('account.a_sale')})
         with self.assertRaises(except_orm):
             self.move_line_obj.unlink(cr, utest[1], [move_line_id])
-        # print "----CORRECTO : Account_move_line no Borrada", cm.exception
-
         # Unlink Assets.Assets, most to fail
         assets_id = self.asset_model.create(cr, SUPERUSER_ID, {
             'name': 'test asset',
@@ -185,8 +170,6 @@ class TestAuditorGroup(TransactionCase):
         })
         with self.assertRaises(except_orm):
             self.asset_model.unlink(cr, utest[1], [assets_id])
-        # print "----CORRECTO : Assets no Borrado", cm.exception
-
         # Unlink account.bank.statement with test user, most fail.
         bank_statement_id = self.bank_statement.create(
             cr, SUPERUSER_ID,
@@ -194,7 +177,6 @@ class TestAuditorGroup(TransactionCase):
              'date': time.strftime('%Y') + '-07-15', })
         with self.assertRaises(except_orm):
             self.bank_statement.unlink(cr, utest[1], [bank_statement_id])
-        # print "----CORRECTO : bank_statement no Borrada", cm.exception
 
     @mute_logger('openerp.addons.account_user_audit.tests.test_group',
                  'openerp.osv.orm',
