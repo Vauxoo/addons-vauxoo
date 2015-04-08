@@ -127,17 +127,24 @@ class TestPaymentTax(TestTaxCommon):
             cr, uid, line_id, self.partner_agrolait_id, -105.33,
             self.bank_journal_id)
 
+        amount_iva16 = 0.0
+        checked_line = 0
         for move_line_complete in move_line_ids_complete:
             if move_line_complete.account_id.id == self.acc_tax16:
+                amount_iva16 += move_line_complete.credit
                 self.assertEquals(move_line_complete.debit, 0.0)
-                self.assertEquals(move_line_complete.credit, 5.33)
-                self.assertEquals(move_line_complete.amount_residual, -10.67)
-                self.assertTrue(move_line_complete.reconcile_partial_id,
-                                "Partial Reconcile should be created.")
+                if move_line_complete.credit == 10.67:
+                    checked_line += 1
+                if move_line_complete.credit == 5.33:
+                    checked_line += 1
+                self.assertEquals(move_line_complete.amount_residual, 0.0)
+                self.assertTrue(move_line_complete.reconcile_id,
+                                "Reconcile should be created.")
                 continue
             if move_line_complete.account_id.id == self.acc_tax_16_payment:
                 self.assertEquals(move_line_complete.debit, 5.33)
                 self.assertEquals(move_line_complete.credit, 0.0)
+                checked_line += 1
                 continue
 
             # retention tax validation
@@ -147,11 +154,22 @@ class TestPaymentTax(TestTaxCommon):
                 self.assertEquals(move_line_complete.amount_residual, 0.0)
                 self.assertTrue(move_line_complete.reconcile_id,
                                 "Reconcile should be created.")
+                checked_line += 1
                 continue
             if move_line_complete.account_id.id == self.acc_ret1067_payment:
                 self.assertEquals(move_line_complete.debit, 0.0)
                 self.assertEquals(move_line_complete.credit, 10.67)
+                checked_line += 1
                 continue
+
+            # iva pending for apply by retention
+            if move_line_complete.account_id.id == self.acc_tax_pending_apply:
+                self.assertEquals(move_line_complete.debit, 10.67)
+                self.assertEquals(move_line_complete.credit, 0.0)
+                checked_line += 1
+                continue
+        self.assertEquals(checked_line, 6)
+        self.assertEquals(amount_iva16, 16)
 
     def test_iva_16_currency_supplier(self):
         """

@@ -1,0 +1,24 @@
+language: python
+
+python:
+  - "2.7"
+
+env:
+  - LINT_CHECK="1"
+  - VERSION="8.0" ODOO_REPO="odoo/odoo" INCLUDE="account_invoice_tax" LINT_CHECK="0" UNIT_TEST="0"
+  # Just to validate if the repository can be declared in addons-path.
+  # Install only one base module in order to validate declaration is Ok!.
+
+virtualenv:
+  system_site_packages: true
+
+install:
+  - git clone https://github.com/vauxoo/maintainer-quality-tools.git -b master ${HOME}/maintainer-quality-tools
+  - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
+  - travis_install_nightly
+
+script:
+  - travis_run_tests ${VERSION}
+
+after_success:
+  coveralls
