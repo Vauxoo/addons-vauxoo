@@ -1,4 +1,5 @@
 id,group_id/id,name,model_id/id,perm_read,perm_write,perm_create,perm_unlink
+account_asset_history_group_ua,group_account_user_audit,account_asset_history group_ua,account_asset.model_account_asset_history,1,0,0,0
 account_asset_depreciation_line_group_ua,group_account_user_audit,account_asset_depreciation_line group_ua,account_asset.model_account_asset_depreciation_line,1,0,0,0
 asset_asset_report group_ua,group_account_user_audit,asset_asset_report group_ua,account_asset.model_asset_asset_report,1,0,0,0
 account_financial_report group_ua,group_account_user_audit,account_financial_report group_ua,account_financial_report.model_afr,1,0,0,0
@@ -10,7 +11,7 @@ ir_cron_user_ro,group_account_user_audit,ir_cron user.ro,base.model_ir_cron,1,0,
 ir_exports_group_system_ro,group_account_user_audit,ir_exports group_system.ro,base.model_ir_exports,1,0,0,0
 ir_exports_line_group_system_ro,group_account_user_audit,ir_exports_line group_system.ro,base.model_ir_exports_line,1,0,0,0
 ir_fields_converter_ro,group_account_user_audit,ir_fields_converter.ro,base.model_ir_fields_converter,1,0,0,0
-res_partner_group_user_ro,group_account_user_audit,res_partner group_user.ro,account.model_res_partner,1,0,0,0
+res_partner_group_user_ro,group_account_user_audit,res_partner group_user.ro,base.model_res_partner,1,0,0,0
 res_partner_bank_group_user_ro,group_account_user_audit,res_partner_bank group_user.ro,account.model_res_partner_bank,1,0,0,0
 res_partner_category_group_user_ro,group_account_user_audit,res_partner_category group_user.ro,base.model_res_partner_category,1,0,0,0
 res_bank_user_ro,group_account_user_audit,res_bank user.ro,base.model_res_bank,1,0,0,0
