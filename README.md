@@ -1,3 +1,6 @@
+[![Build Status](http://runbot.odoo.com/logo.png)](http://runbot.vauxoo.com/runbot/)
+[![Build Status](https://travis-ci.org/Vauxoo/addons-vauxoo.svg)](https://travis-ci.org/Vauxoo/addons-vauxoo)
+
 Vauxoo modules for Odoo
 ===
 
@@ -25,14 +28,6 @@ Naming convention.
 ---
 
 All modules must start with the name of meta functional area which they will work with, i.e: account_*, website_*, sale_*, etc.
-
-CI Status.
----
-
-[![Build Status](http://runbot.odoo.com/logo.png)](http://runbot.vauxoo.com/runbot/)
-
-[![Build Status](https://magnum.travis-ci.com/Vauxoo/addons-vauxoo.svg?token=VAty1EWicYm2yKQxZptp&branch=8.0)](https://magnum.travis-ci.com/Vauxoo/addons-vauxoo)
-
 
 Repositories which we depend from.
 ---
