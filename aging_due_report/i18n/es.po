@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-09 05:48+0000\n"
-"PO-Revision-Date: 2015-04-09 06:12+0000\n"
+"PO-Revision-Date: 2015-04-09 06:13+0000\n"
 "Last-Translator: Humberto Arocha <hbto@vauxoo.com>\n"
 "Language-Team: Spanish <http://example.com/projects/addons-"
 "vauxoo/aging_due_report/es/>\n"
@@ -197,14 +197,14 @@ msgstr "DOCUMENTO"
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "DUE DATE"
-msgstr "F/VENC."
+msgstr "F. VENC"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "DUE DAYS"
-msgstr "DIAS/VENC."
+msgstr "DIAS VENC"
 
 #. module: aging_due_report
 #: model:ir.actions.report.xml,name:aging_due_report.report_detail_due_report_qweb
@@ -342,7 +342,7 @@ msgstr "PDF"
 #: field:account.aging.wizard.document,partner_id:0
 #: field:account.aging.wizard.partner,partner_id:0
 msgid "Partner"
-msgstr "Partner"
+msgstr "Empresa"
 
 #. module: aging_due_report
 #: field:account.aging.wizard.currency,partner_ids:0
