@@ -7,14 +7,16 @@ msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-09 07:32+0000\n"
-"PO-Revision-Date: 2015-04-09 07:32+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2015-04-09 07:42+0000\n"
+"Last-Translator: Humberto Arocha <hbto@vauxoo.com>\n"
+"Language-Team: Spanish <http://example.com/projects/addons-"
+"vauxoo/aging_due_report/es_MX/>\n"
 "Language: es_MX\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.2-dev\n"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
@@ -169,12 +171,12 @@ msgstr "Moneda"
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
 msgid "Customer Aging Report of Debts"
-msgstr ""
+msgstr "Reporte de Vencimiento de Deudas de Clientes"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
 msgid "Customer Detailed Report of Debts"
-msgstr ""
+msgstr "Reporte Detallado de Deudas de Clientes"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
@@ -413,12 +415,12 @@ msgstr "Hoja de Cálculo"
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
 msgid "Supplier Aging Report of Debts"
-msgstr ""
+msgstr "Reporte de Vencimiento de Deudas a Proveedores"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
 msgid "Supplier Detailed Report of Debts"
-msgstr ""
+msgstr "Reporte Detallado de Deudas a Proveedores"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
@@ -491,7 +493,7 @@ msgstr "Tipo"
 #. module: aging_due_report
 #: field:account.aging.wizard,user_id:0
 msgid "User"
-msgstr ""
+msgstr "Usuario"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
