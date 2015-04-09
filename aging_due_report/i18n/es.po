@@ -10,6 +10,7 @@ msgstr ""
 "PO-Revision-Date: 2015-04-09 05:48+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -18,27 +19,27 @@ msgstr ""
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
 msgid "+ 120 DAYS"
-msgstr ""
+msgstr "+ 120 DÍAS"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
 msgid "01-30 DAYS"
-msgstr ""
+msgstr "01-30 DÍAS"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
 msgid "31-60 DAYS"
-msgstr ""
+msgstr "31-60 DÍAS"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
 msgid "61-90 DAYS"
-msgstr ""
+msgstr "61-90 DÍAS"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
 msgid "91-120 DAYS"
-msgstr ""
+msgstr "91-120 DÍAS"
 
 #. module: aging_due_report
 #: field:account.aging.wizard.currency,aaw_id:0
@@ -93,14 +94,14 @@ msgstr ""
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "BALANCE"
-msgstr ""
+msgstr "BALANCE"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "BASE"
-msgstr ""
+msgstr "BASE"
 
 #. module: aging_due_report
 #: field:account.aging.wizard,currency_ids:0
@@ -118,18 +119,18 @@ msgstr ""
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "Best Regards,"
-msgstr ""
+msgstr "Atentamente,"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "C: C/N"
-msgstr ""
+msgstr "C: C/N"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 msgid "COLLECTS"
-msgstr ""
+msgstr "ABONOS"
 
 #. module: aging_due_report
 #: view:account.aging.wizard:aging_due_report.view_account_aging_partner_report
@@ -168,40 +169,40 @@ msgstr ""
 #. module: aging_due_report
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 msgid "Customer Financial Statement"
-msgstr ""
+msgstr "Estado Financiero del Cliente"
 
 #. module: aging_due_report
 #: model:ir.actions.report.xml,name:aging_due_report.report_formal_due_report_qweb
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 msgid "Customer Formal Report of Debts"
-msgstr ""
+msgstr "Reporte Formal de Deudas de Clientes"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "D: D/N"
-msgstr ""
+msgstr "D: D/N"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "DOCUMENT"
-msgstr ""
+msgstr "DOCUMENTO"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "DUE DATE"
-msgstr ""
+msgstr "F/VENC."
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "DUE DAYS"
-msgstr ""
+msgstr "DIAS/VENC."
 
 #. module: aging_due_report
 #: model:ir.actions.report.xml,name:aging_due_report.report_detail_due_report_qweb
@@ -241,7 +242,7 @@ msgstr ""
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "EMIS DATE"
-msgstr ""
+msgstr "F/EMISION"
 
 #. module: aging_due_report
 #: field:account.aging.wizard.document,date_emission:0
@@ -258,7 +259,7 @@ msgstr ""
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "I: INVOICE"
-msgstr ""
+msgstr "F: FACTURA"
 
 #. module: aging_due_report
 #: field:account.aging.wizard,id:0
@@ -270,7 +271,7 @@ msgstr ""
 #: field:report.aging_due_report.formal_due_report_qweb,id:0
 #: field:report.aging_due_report.supplier_formal_due_report_qweb,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: aging_due_report
 #: field:account.aging.wizard.document,invoice_id:0
@@ -307,7 +308,7 @@ msgstr ""
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
 msgid "NOT DUE"
-msgstr ""
+msgstr "NO VENCIDO"
 
 #. module: aging_due_report
 #: field:account.aging.wizard.partner,name:0
@@ -323,12 +324,12 @@ msgstr ""
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
 msgid "PARTNER"
-msgstr ""
+msgstr "EMPRESA"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "PAYMENTS"
-msgstr ""
+msgstr "PAGOS"
 
 #. module: aging_due_report
 #: selection:account.aging.wizard,report_format:0
@@ -404,30 +405,30 @@ msgstr ""
 #. module: aging_due_report
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "Supplier Financial Statement"
-msgstr ""
+msgstr "Estado Financiero del Proveedor"
 
 #. module: aging_due_report
 #: model:ir.actions.report.xml,name:aging_due_report.report_supplier_formal_due_report_qweb
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "Supplier Formal Report of Debts"
-msgstr ""
+msgstr "Reporte Formal de Deudas de Proveedores"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "TAX"
-msgstr ""
+msgstr "IMP."
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
 msgid "TIN"
-msgstr ""
+msgstr "VAT"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
 msgid "TOT/INV."
-msgstr ""
+msgstr "TOT/FAC."
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
@@ -440,7 +441,7 @@ msgstr ""
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "TOTAL/DOC."
-msgstr ""
+msgstr "TOTAL/DOC."
 
 #. module: aging_due_report
 #: field:account.aging.wizard,result_selection:0
@@ -473,7 +474,7 @@ msgstr ""
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "Without any further reference,"
-msgstr ""
+msgstr "Sin ningún tipo de referencia,"
 
 #. module: aging_due_report
 #: view:account.aging.wizard:aging_due_report.view_account_aging_partner_report
@@ -514,4 +515,3 @@ msgstr ""
 #: field:account.aging.wizard.partner,aml_ids:0
 msgid "unknown"
 msgstr ""
-
