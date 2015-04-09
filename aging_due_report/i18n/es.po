@@ -362,7 +362,7 @@ msgstr "Partner por Moneda"
 #: field:account.aging.wizard,partner_ids:0
 #: help:account.aging.wizard,partner_ids:0
 msgid "Partners"
-msgstr "Partners"
+msgstr "Empresas"
 
 #. module: aging_due_report
 #: selection:account.aging.wizard,result_selection:0
