@@ -10,6 +10,7 @@ msgstr ""
 "PO-Revision-Date: 2015-04-09 05:48+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
+"Language: es_MX\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -514,4 +515,3 @@ msgstr ""
 #: field:account.aging.wizard.partner,aml_ids:0
 msgid "unknown"
 msgstr ""
-
