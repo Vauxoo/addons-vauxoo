@@ -29,10 +29,7 @@
         <record id="group_account_user_audit" model="res.groups">
             <field name="menu_access" eval="[(4, ref('account.menu_action_move_journal_line_form'))]"/>
         </record>
-        <!--IFRS Reports-->
-        <record id="group_account_user_audit" model="res.groups">
-            <field name="menu_access" eval="[(4, ref('ifrs_report.menu_ifrs_ifrs'))]"/>
-        </record>
+
         <!--AFR Reports-->
         <record id="group_account_user_audit" model="res.groups">
             <field name="menu_access" eval="[(4, ref('account_financial_report.menu_afr_root'))]"/>
