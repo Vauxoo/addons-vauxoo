@@ -48,7 +48,7 @@
             <field name="model">commission.lines</field>
             <field name="priority">20</field>
             <field name="arch" type="xml">
-                <tree create='false' delete='false' editable='top'>
+                <tree create='true' delete='true' editable='top'>
                     <field name="name" readonly='1'/>
                     <field name="pay_date" readonly='1'/>
                     <field name="pay_off" readonly='1'/>
