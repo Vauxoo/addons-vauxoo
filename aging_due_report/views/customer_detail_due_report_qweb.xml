@@ -81,7 +81,7 @@
             </template>
             <template id="detail_due_report_qweb">
                 <t t-set="doc_id" t-value="doc_ids[0]"/>
-                <t t-raw="translate_doc(doc_id, doc_model, 'company_id.partner_id.lang','aging_due_report.report_detail_due_report_qweb_document')"/>
+                <t t-raw="translate_doc(doc_id, doc_model, 'user_id.lang','aging_due_report.report_detail_due_report_qweb_document')"/>
             </template>
         </data>
     </openerp>
