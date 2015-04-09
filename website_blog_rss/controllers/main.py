@@ -1,0 +1,81 @@
+# -*- coding: utf-8 -*-
+import openerp
+from openerp.addons.web import http
+from openerp.addons.web.http import request
+#this are some stupid limits stored by grace of god.
+MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT = IMAGE_LIMITS = (1024, 768)
+LOC_PER_BLOG_RSS = 45000
+BLOG_RSS_CACHE_TIME = datetime.timedelta(hours=12)
+
+
+class WebsiteBlogRSS(http.Controller):
+
+    @http.route('/blog_rss.xml', type='http', auth="public", website=True)
+    def rss_xml_index(self):
+        cr, uid, context = request.cr, openerp.SUPERUSER_ID, request.context
+        ira = request.registry['ir.attachment']
+        iuv = request.registry['ir.ui.view']
+        mimetype = 'application/xml;charset=utf-8'
+        content = None
+
+        def create_blog_rss(url, content):
+            ira.create(cr, uid, dict(
+                datas=content.encode('base64'),
+                mimetype=mimetype,
+                type='binary',
+                name=url,
+                url=url,
+            ), context=context)
+
+        blog_rss = ira.search_read(cr, uid, [
+            ('url', '=', '/blog_rss.xml'),
+            ('type', '=', 'binary')],
+            ('datas', 'create_date'), context=context)
+        if blog_rss:
+            # Check if stored version is still valid
+            server_format = openerp.tools.misc.DEFAULT_SERVER_DATETIME_FORMAT
+            create_date = datetime.datetime.strptime(sitemap[0]['create_date'],
+                                                     server_format)
+            delta = datetime.datetime.now() - create_date
+            if delta < BLOG_RSS_CACHE_TIME:
+                content = sitemap[0]['datas'].decode('base64')
+
+        if not content:
+            # Remove all RSS in ir.attachments as we're going to regenerate
+            blog_rss_ids = ira.search(cr, uid, [
+                ('url', '=like', '/blog_rss%.xml'),
+                ('type', '=', 'binary')], context=context)
+            if blog_rss_ids:
+                ira.unlink(cr, uid, blog_rss_ids, context=context)
+
+            pages = 0
+            first_page = None
+            locs = request.website.enumerate_pages()
+            while True:
+                start = pages * LOC_PER_BLOG_RSS
+                values = {
+                    'locs': islice(locs, start, start + LOC_PER_BLOG_RSS),
+                    'url_root': request.httprequest.url_root[:-1],
+                }
+                urls = iuv.render(cr, uid, 'website.blog_rss_locs', values, context=context)
+                if urls.strip():
+                    page = iuv.render(cr, uid, 'website.blog_rss_xml', dict(content=urls), context=context)
+                    if not first_page:
+                        first_page = page
+                    pages += 1
+                    create_sitemap('/blog_rss-%d.xml' % pages, page)
+                else:
+                    break
+            if not pages:
+                return request.not_found()
+            elif pages == 1:
+                content = first_page
+            else:
+                # BLOGRSS must be split in several smaller files with a sitemap index
+                content = iuv.render(cr, uid, 'website.blog_rss_index_xml', dict(
+                    pages=range(1, pages + 1),
+                    url_root=request.httprequest.url_root,
+                ), context=context)
+            create_blog_rss('/blog_rss.xml', content)
+
+        return request.make_response(content, [('Conten
