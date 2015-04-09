@@ -34,11 +34,11 @@ class WebsiteBlogRSS(http.Controller):
         if blog_rss:
             # Check if stored version is still valid
             server_format = openerp.tools.misc.DEFAULT_SERVER_DATETIME_FORMAT
-            create_date = datetime.datetime.strptime(sitemap[0]['create_date'],
+            create_date = datetime.datetime.strptime(blog_rss[0]['create_date'],
                                                      server_format)
             delta = datetime.datetime.now() - create_date
             if delta < BLOG_RSS_CACHE_TIME:
-                content = sitemap[0]['datas'].decode('base64')
+                content = blog_rss[0]['datas'].decode('base64')
 
         if not content:
             # Remove all RSS in ir.attachments as we're going to regenerate
@@ -63,7 +63,7 @@ class WebsiteBlogRSS(http.Controller):
                     if not first_page:
                         first_page = page
                     pages += 1
-                    create_sitemap('/blog_rss-%d.xml' % pages, page)
+                    create_blog_rss('/blog_rss-%d.xml' % pages, page)
                 else:
                     break
             if not pages:
@@ -71,7 +71,7 @@ class WebsiteBlogRSS(http.Controller):
             elif pages == 1:
                 content = first_page
             else:
-                # BLOGRSS must be split in several smaller files with a sitemap index
+                # BLOGRSS must be split in several smaller files with a blog_rss index
                 content = iuv.render(cr, uid, 'website.blog_rss_index_xml', dict(
                     pages=range(1, pages + 1),
                     url_root=request.httprequest.url_root,
