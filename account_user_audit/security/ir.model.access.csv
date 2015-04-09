@@ -3,8 +3,6 @@ account_asset_history_group_ua,group_account_user_audit,account_asset_history gr
 account_asset_depreciation_line_group_ua,group_account_user_audit,account_asset_depreciation_line group_ua,account_asset.model_account_asset_depreciation_line,1,0,0,0
 asset_asset_report group_ua,group_account_user_audit,asset_asset_report group_ua,account_asset.model_asset_asset_report,1,0,0,0
 account_financial_report group_ua,group_account_user_audit,account_financial_report group_ua,account_financial_report.model_afr,1,0,0,0
-ifrs_report_line_group_ua,group_account_user_audit,ifrs_report_line group_ua,ifrs_report.model_ifrs_lines,1,1,0,0
-ifrs_report_group_ua,group_account_user_audit,ifrs_report group_ua,ifrs_report.model_ifrs_ifrs,1,0,0,0
 account_asset_group_ua,group_account_user_audit,account_asset group_ua,account_asset.model_account_asset_asset,1,0,0,0
 ir_attachment_group_user_ro,group_account_user_audit,ir_attachment group_user.ro,base.model_ir_attachment,1,0,0,0
 ir_cron_user_ro,group_account_user_audit,ir_cron user.ro,base.model_ir_cron,1,0,0,0

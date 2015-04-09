@@ -45,7 +45,6 @@ models.
     "license": "",
     "depends": [
         "account_asset",
-        "ifrs_report",
     ],
     "demo": [],
     "data": [
