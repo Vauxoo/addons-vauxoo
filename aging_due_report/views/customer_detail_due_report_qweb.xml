@@ -15,7 +15,12 @@
                                 </div>
                             </td>
                             <td style="text-align: left;">
-                                <strong><span t-esc="o.result_selection =='customer' and 'Customer' or o.result_selection =='supplier' and 'Supplier'"/> Detail Report of Debts</strong>
+                                <t t-if="o.result_selection =='customer'">
+                                    <strong>Customer Detailed Report of Debts</strong>
+                                </t>
+                                <t t-if="o.result_selection =='supplier'">
+                                    <strong>Supplier Detailed Report of Debts</strong>
+                                </t>
                             </td>
                             <td class="CUSTOMERNAME" style="text-align:right;"><span t-esc="formatLang(time.strftime('%Y-%m-%d'), date=True)"/></td>
                        </tr>

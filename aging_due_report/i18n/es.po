@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-09 05:48+0000\n"
-"PO-Revision-Date: 2015-04-09 06:13+0000\n"
+"POT-Creation-Date: 2015-04-09 07:32+0000\n"
+"PO-Revision-Date: 2015-04-09 07:41+0000\n"
 "Last-Translator: Humberto Arocha <hbto@vauxoo.com>\n"
 "Language-Team: Spanish <http://example.com/projects/addons-"
 "vauxoo/aging_due_report/es/>\n"
@@ -169,6 +169,16 @@ msgid "Currency"
 msgstr "Moneda"
 
 #. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+msgid "Customer Aging Report of Debts"
+msgstr "Reporte de Vencimiento de Deudas de Clientes"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
+msgid "Customer Detailed Report of Debts"
+msgstr "Reporte Detallado de Deudas de Clientes"
+
+#. module: aging_due_report
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 msgid "Customer Financial Statement"
 msgstr "Estado Financiero del Cliente"
@@ -208,8 +218,6 @@ msgstr "DIAS VENC"
 
 #. module: aging_due_report
 #: model:ir.actions.report.xml,name:aging_due_report.report_detail_due_report_qweb
-#: view:website:aging_due_report.report_aging_due_report_qweb_document
-#: view:website:aging_due_report.report_detail_due_report_qweb_document
 msgid "Detail Report of Debts"
 msgstr "Reporte Detallado de Deudas"
 
@@ -354,7 +362,7 @@ msgstr "Partner por Moneda"
 #: field:account.aging.wizard,partner_ids:0
 #: help:account.aging.wizard,partner_ids:0
 msgid "Partners"
-msgstr "Partners"
+msgstr "Empresas"
 
 #. module: aging_due_report
 #: selection:account.aging.wizard,result_selection:0
@@ -403,6 +411,16 @@ msgstr "Resto"
 #: selection:account.aging.wizard,report_format:0
 msgid "Spreadsheet"
 msgstr "Hoja de Cálculo"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+msgid "Supplier Aging Report of Debts"
+msgstr "Reporte de Vencimiento de Deudas a Proveedores"
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
+msgid "Supplier Detailed Report of Debts"
+msgstr "Reporte Detallado de Deudas a Proveedores"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
@@ -471,6 +489,11 @@ msgstr "Total"
 #: field:account.aging.wizard,type:0
 msgid "Type"
 msgstr "Tipo"
+
+#. module: aging_due_report
+#: field:account.aging.wizard,user_id:0
+msgid "User"
+msgstr "Usuario"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_formal_due_report_qweb_document

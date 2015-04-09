@@ -14,7 +14,12 @@
                                 </div>
                             </td>
                             <td style="text-align: left;">
-                                <strong><span t-esc="o.result_selection =='customer' and 'Customer' or o.result_selection =='supplier' and 'Supplier'"/> Detail Report of Debts</strong>
+                                <t t-if="o.result_selection =='customer'">
+                                    <strong>Customer Aging Report of Debts</strong>
+                                </t>
+                                <t t-if="o.result_selection =='supplier'">
+                                    <strong>Supplier Aging Report of Debts</strong>
+                                </t>
                             </td>
                        </tr>
                     </table>
