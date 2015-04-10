@@ -45,6 +45,7 @@ models.
     "license": "",
     "depends": [
         "account_asset",
+        "account_voucher",
     ],
     "demo": [],
     "data": [
