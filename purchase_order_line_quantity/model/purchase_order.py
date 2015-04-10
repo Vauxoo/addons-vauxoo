@@ -42,6 +42,8 @@ class purchase_order_line(osv.osv):
             dst = sm_brw.location_dest_id.usage
             sm_uom_id = sm_brw.product_uom
             qty = 0.0
+            if sm_brw.state != 'done':
+                continue
             if src == dst:
                 continue
             elif dst == 'internal':
