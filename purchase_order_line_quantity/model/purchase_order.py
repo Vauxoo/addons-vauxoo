@@ -28,6 +28,25 @@ import openerp.addons.decimal_precision as dp
 
 class purchase_order_line(osv.osv):
 
+    def _get_inv_quantity(self, cr, uid, ids, context=None):
+        context = dict(context or {})
+        res = 0.0
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+
+        uom_obj = self.pool.get('product.uom')
+        pol_brw = self.browse(cr, uid, ids[0], context=context)
+        pol_uom_id = pol_brw.product_uom
+
+        for ail_brw in pol_brw.invoice_lines:
+            ail_uom_id = ail_brw.uos_id
+            if ail_brw.invoice_id.state not in ('open', 'done'):
+                continue
+            res += uom_obj._compute_qty_obj(cr, uid, ail_uom_id,
+                                            ail_brw.quantity, pol_uom_id,
+                                            context=context)
+
+        return res
+
     def _get_move_quantity(self, cr, uid, ids, context=None):
         context = dict(context or {})
         res = 0.0
@@ -73,6 +92,10 @@ class purchase_order_line(osv.osv):
                 for idx in ids:
                     res[idx][fn] = self._get_move_quantity(cr, uid, idx,
                                                            context=context)
+            if fn == 'qty_invoiced':
+                for idx in ids:
+                    res[idx][fn] = self._get_inv_quantity(cr, uid, idx,
+                                                          context=context)
 
         return res
 
@@ -85,4 +108,11 @@ class purchase_order_line(osv.osv):
             digits_compute=dp.get_precision('Product Unit of Measure'),
             string='Quantity Delivered',
             help="Quantity Delivered"),
+        'qty_invoiced': fields.function(
+            _get_quantity,
+            multi='qty',
+            type='float',
+            digits_compute=dp.get_precision('Product Unit of Measure'),
+            string='Quantity Invoiced',
+            help="Quantity Invoiced"),
     }
