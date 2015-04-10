@@ -37,7 +37,7 @@ class TestAuditorGroup(TransactionCase):
         self.bank_journal_usd_id = self.data.get_object_reference(
             self.cr, self.uid, "account", "bank_journal_usd")[1]
 
-    @mute_logger('openerp.addons.account_user_audit.tests.test_group',
+    @mute_logger('openerp.addons.account_group_auditory.tests.test_group',
                  'openerp.osv.orm',
                  'openerp.addons.base.ir.ir_model',
                  'openerp.models')
@@ -46,7 +46,7 @@ class TestAuditorGroup(TransactionCase):
         cr, uid = self.cr, self.uid
         # Search Auditor user
         utest = self.data.get_object_reference(
-            cr, uid, "account_user_audit", "res_auditor_user")
+            cr, uid, "account_group_auditory", "res_auditor_user")
         # Create an invoice with Test user, most fail
         with self.assertRaises(except_orm):
             self.invoice.create(
@@ -110,7 +110,7 @@ class TestAuditorGroup(TransactionCase):
                 'prorata': True,
             })
 
-    @mute_logger('openerp.addons.account_user_audit.tests.test_group',
+    @mute_logger('openerp.addons.account_group_auditory.tests.test_group',
                  'openerp.osv.orm',
                  'openerp.addons.base.ir.ir_model',
                  'openerp.models')
@@ -119,7 +119,7 @@ class TestAuditorGroup(TransactionCase):
         cr, uid = self.cr, self.uid
         # Search Auditor user
         utest = self.data.get_object_reference(
-            cr, uid, "account_user_audit", "res_auditor_user")
+            cr, uid, "account_group_auditory", "res_auditor_user")
         # Unlink an invoice with Test user, most fail
         invoice_id = self.invoice.create(
             cr, SUPERUSER_ID,
@@ -178,7 +178,7 @@ class TestAuditorGroup(TransactionCase):
         with self.assertRaises(except_orm):
             self.bank_statement.unlink(cr, utest[1], [bank_statement_id])
 
-    @mute_logger('openerp.addons.account_user_audit.tests.test_group',
+    @mute_logger('openerp.addons.account_group_auditory.tests.test_group',
                  'openerp.osv.orm',
                  'openerp.addons.base.ir.ir_model',
                  'openerp.models')
@@ -187,7 +187,7 @@ class TestAuditorGroup(TransactionCase):
         cr, uid = self.cr, self.uid
         # Search Auditor user
         utest = self.data.get_object_reference(
-            cr, uid, "account_user_audit", "res_auditor_user")
+            cr, uid, "account_group_auditory", "res_auditor_user")
 
         invoice_id = self.invoice.create(
             cr, SUPERUSER_ID,
@@ -259,7 +259,7 @@ class TestAuditorGroup(TransactionCase):
                 cr, utest[1], [bank_statement_id],
                 {'date': time.strftime('%Y') + '-09-15'})
 
-    @mute_logger('openerp.addons.account_user_audit.tests.test_group',
+    @mute_logger('openerp.addons.account_group_auditory.tests.test_group',
                  'openerp.osv.orm',
                  'openerp.addons.base.ir.ir_model',
                  'openerp.models')
@@ -268,7 +268,7 @@ class TestAuditorGroup(TransactionCase):
         cr, uid = self.cr, self.uid
         # Search Auditor user
         utest = self.data.get_object_reference(
-            cr, uid, "account_user_audit", "res_auditor_user")
+            cr, uid, "account_group_auditory", "res_auditor_user")
 
         invoice_id = self.invoice.create(
             cr, SUPERUSER_ID,

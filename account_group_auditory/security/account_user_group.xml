@@ -60,7 +60,7 @@
             <field name="password">lodi-@uditor</field>
             <field name="alias_name">auditor</field>
             <field name="company_id" eval="ref('base.main_company')"/> 
-            <field name="groups_id"  eval="[(6,0,[ref('account_user_audit.group_account_user_audit')])]"/>
+            <field name="groups_id"  eval="[(6,0,[ref('account_group_auditory.group_account_user_audit')])]"/>
         </record>
     </data>
 </openerp>
