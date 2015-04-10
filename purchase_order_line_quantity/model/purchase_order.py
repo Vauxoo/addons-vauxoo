@@ -35,12 +35,12 @@ class purchase_order_line(osv.osv):
 
         uom_obj = self.pool.get('product.uom')
         pol_brw = self.browse(cr, uid, ids[0], context=context)
-        pol_uom_id = pol_brw.product_uom.id
+        pol_uom_id = pol_brw.product_uom
 
         for sm_brw in pol_brw.move_ids:
             src = sm_brw.location_id.usage
             dst = sm_brw.location_dest_id.usage
-            sm_uom_id = sm_brw.product_uom.id
+            sm_uom_id = sm_brw.product_uom
             qty = 0.0
             if src == dst:
                 continue
