@@ -34,13 +34,14 @@ class stock_partial_picking(osv.osv_memory):
         assert len(ids) == 1, ('Partial picking processing may only be done '
                                'one at a time.')
         uom_obj = self.pool.get('product.uom')
-        # rc_obj = self.pool.get('res.company')
+        ru_obj = self.pool.get('res.users')
         partial = self.browse(cr, uid, ids[0], context=context)
 
         fnc_super = super(stock_partial_picking, self).do_partial
         # TODO: Write method and fields in company to provide this feature
-        # if not rc_obj.check_fulfillment(cr, uid, uid, context=context):
-        #     return fnc_super(cr, uid, ids, context=context)
+        rc_brw = ru_obj.browse(cr, uid, uid, context=context).company_id
+        if not rc_brw.check_purchase_fulfillment:
+            return fnc_super(cr, uid, ids, context=context)
 
         do_raise = False
         msg_raise = ''
@@ -104,8 +105,10 @@ class stock_partial_picking(osv.osv_memory):
                                    receiving=qty,
                                    wz_uom=line_uom.name,
                                ))
+        # TODO: Check for user who can skip
         if do_raise:
             raise osv.except_osv(
                 _('Excess / Defect Detected!'),
                 msg_raise)
+        # TODO: dummy Method to pass message for multiple purposes
         return fnc_super(cr, uid, ids, context=context)
