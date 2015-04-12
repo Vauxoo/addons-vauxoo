@@ -42,6 +42,8 @@ class stock_partial_picking(osv.osv_memory):
         # if not rc_obj.check_fulfillment(cr, uid, uid, context=context):
         #     return fnc_super(cr, uid, ids, context=context)
 
+        do_raise = False
+        msg_raise = ''
         for wizard_line in partial.move_ids:
             sm_brw = wizard_line.move_id
 
@@ -79,13 +81,31 @@ class stock_partial_picking(osv.osv_memory):
             excess = pol_brw.qty_delivered + qty - pol_brw.product_qty > 0
             defect = pol_brw.qty_delivered + qty < 0
             if excess:
-                # TODO: Add a more detailed Explanation
-                raise osv.except_osv(
-                    _('Excess Detected!'),
-                    _('You can not receive more than ordered'))
+                do_raise = True
+                msg_raise += _(u'For {product}, it was ordered '
+                               '[{ordered} {uom}]'
+                               ' received [{received} {uom}] receiving '
+                               '[{receiving} {wz_uom}].\n'.format(
+                                   product=sm_brw.name,
+                                   ordered=pol_brw.product_qty,
+                                   uom=pol_uom_id.name,
+                                   received=pol_brw.qty_delivered,
+                                   receiving=qty,
+                                   wz_uom=line_uom.name,
+                               ))
             if defect:
-                # TODO: Add a more detailed Explanation
-                raise osv.except_osv(
-                    _('Defect Detected!'),
-                    _('You can not return more than received'))
+                do_raise = True
+                msg_raise += _(u'For {product}, it was received '
+                               '[{received} {uom}] returning '
+                               '[{receiving} {wz_uom}].\n'.format(
+                                   product=sm_brw.name,
+                                   uom=pol_uom_id.name,
+                                   received=pol_brw.qty_delivered,
+                                   receiving=qty,
+                                   wz_uom=line_uom.name,
+                               ))
+        if do_raise:
+            raise osv.except_osv(
+                _('Excess / Defect Detected!'),
+                msg_raise)
         return fnc_super(cr, uid, ids, context=context)
