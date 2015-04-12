@@ -47,7 +47,7 @@ class stock_partial_picking(osv.osv_memory):
         for wizard_line in partial.move_ids:
             sm_brw = wizard_line.move_id
 
-            # Quantiny must be Positive
+            # Quantity must be Positive
             if wizard_line.quantity < 0:
                 raise osv.except_osv(_('Warning!'),
                                      _('Please provide proper Quantity.'))
