@@ -38,8 +38,9 @@ class stock_partial_picking(osv.osv_memory):
         partial = self.browse(cr, uid, ids[0], context=context)
 
         fnc_super = super(stock_partial_picking, self).do_partial
-        # TODO: Write method and fields in company to provide this feature
-        rc_brw = ru_obj.browse(cr, uid, uid, context=context).company_id
+
+        ru_brw = ru_obj.browse(cr, uid, uid, context=context)
+        rc_brw = ru_brw.company_id
         if not rc_brw.check_purchase_fulfillment:
             return fnc_super(cr, uid, ids, context=context)
 
@@ -105,7 +106,10 @@ class stock_partial_picking(osv.osv_memory):
                                    receiving=qty,
                                    wz_uom=line_uom.name,
                                ))
-        # TODO: Check for user who can skip
+
+        if ru_brw.skip_purchase_fulfillment:
+            do_raise = False
+
         if do_raise:
             raise osv.except_osv(
                 _('Excess / Defect Detected!'),

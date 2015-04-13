@@ -33,3 +33,14 @@ class company(osv.osv):
             help=("Tick this option if you want to check for Purchase Order "
                   "Fulfillment")),
     }
+
+
+class res_partner(osv.Model):
+
+    _inherit = 'res.partner'
+    _columns = {
+        'skip_purchase_fulfillment': fields.boolean(
+            'Allow Skip Purchase Order Fulfillment',
+            help=("Tick this option if you want allow this user to received in"
+                  " Excess Quantities ordered in Purchase Order")),
+    }
