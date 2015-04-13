@@ -48,6 +48,7 @@ class stock_partial_picking(osv.osv_memory):
         msg_raise = ''
         for wizard_line in partial.move_ids:
             sm_brw = wizard_line.move_id
+            line_uom = wizard_line.product_uom
 
             # Quantity must be Positive
             if wizard_line.quantity < 0:
@@ -57,6 +58,14 @@ class stock_partial_picking(osv.osv_memory):
             # If line was newly created on wizard Shall we allow that?
             # TODO: We shall set a condition somewhere
             if not sm_brw:
+                do_raise = True
+                msg_raise += _(u'{product} is being received '
+                               '[{ordered} {wz_uom}] and was created from '
+                               'scratch.\n'.format(
+                                   product=wizard_line.name,
+                                   ordered=wizard_line.quantity,
+                                   wz_uom=line_uom.name,
+                               ))
                 continue
 
             # Check if this line is coming from a purchase_line_id
@@ -66,7 +75,6 @@ class stock_partial_picking(osv.osv_memory):
             pol_uom_id = pol_brw.product_uom
             src = wizard_line.location_id.usage
             dst = wizard_line.location_dest_id.usage
-            line_uom = wizard_line.product_uom
             qty = 0.0
             if src == dst:
                 continue
