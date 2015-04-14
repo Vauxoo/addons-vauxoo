@@ -40,7 +40,9 @@
     "demo": [
         'demo/test_unique_ref_demo.xml',
     ],
-    "data": [],
+    "data": [
+        'views/product_view.xml'
+    ],
     "test": [],
     "js": [],
     "css": [],
