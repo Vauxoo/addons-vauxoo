@@ -294,16 +294,6 @@ class TestAuditorGroup(TransactionCase):
              'debit': 0,
              'credit': 100,
              'account_id': self.ref('account.a_sale')})
-        assets_id = self.asset_model.create(cr, SUPERUSER_ID, {
-            'name': 'test asset',
-            'category_id': self.ref('account_asset.'
-                                    'account_asset_category_fixedassets0'),
-            'purchase_value': 3333,
-            'salvage_value': 0,
-            'date_start': time.strftime('%Y-07-07'),
-            'method_number': 5,
-            'method_period': 12,
-            'prorata': True, })
         bank_statement_id = self.bank_statement.create(
             cr, SUPERUSER_ID,
             {'journal_id': self.bank_journal_usd_id,
@@ -335,13 +325,6 @@ class TestAuditorGroup(TransactionCase):
         move_line_values, = self.move_line_obj.read(
             cr, utest[1], [move_line_id], ['name'])
         self.assertEqual(move_line.name, move_line_values['name'])
-
-        # Read assets
-        assets_obj = self.asset_model.browse(
-            cr, SUPERUSER_ID, [assets_id])
-        assets_values, = self.asset_model.read(
-            cr, utest[1], [assets_id], ['name'])
-        self.assertEqual(assets_obj.name, assets_values['name'])
 
         # Read bank statement
         bank_statement_obj = self.bank_statement.browse(
