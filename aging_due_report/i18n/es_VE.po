@@ -7,14 +7,16 @@ msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-14 02:24+0000\n"
-"PO-Revision-Date: 2015-04-14 02:24+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2015-04-14 02:34+0000\n"
+"Last-Translator: Humberto Arocha <hbto@vauxoo.com>\n"
+"Language-Team: Spanish <http://example.com/projects/addons-"
+"vauxoo/aging_due_report/es_VE/>\n"
 "Language: es_VE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.2-dev\n"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
@@ -92,7 +94,7 @@ msgstr "Reporte de Vencimiento de Deudas"
 #. module: aging_due_report
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
 msgid "Amounts expressed in ("
-msgstr ""
+msgstr "Montos expresados en ("
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
@@ -202,7 +204,7 @@ msgstr "D: D/N"
 #. module: aging_due_report
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
 msgid "DAY(S)"
-msgstr ""
+msgstr "Día(s)"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
@@ -458,12 +460,12 @@ msgstr "RIF"
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
 msgid "TOT./AP"
-msgstr ""
+msgstr "TOT./CxP"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
 msgid "TOT./AR"
-msgstr ""
+msgstr "TOT./CxC"
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
