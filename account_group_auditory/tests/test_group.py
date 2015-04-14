@@ -183,7 +183,7 @@ class TestAuditorGroup(TransactionCase):
                  'openerp.addons.base.ir.ir_model',
                  'openerp.models')
     def test_write(self):
-        """Test the unlink methods in account.invoice, account.move.line ..."""
+        """Test the WRITE methods in account.invoice, account.move.line ..."""
         cr, uid = self.cr, self.uid
         # Search Auditor user
         utest = self.data.get_object_reference(
