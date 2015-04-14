@@ -35,7 +35,9 @@ class stock_partial_picking(osv.osv_memory):
                                'one at a time.')
         uom_obj = self.pool.get('product.uom')
         ru_obj = self.pool.get('res.users')
+        sp_obj = self.pool.get('stock.picking')
         partial = self.browse(cr, uid, ids[0], context=context)
+        picking_id = partial.picking_id.id
 
         fnc_super = super(stock_partial_picking, self).do_partial
 
@@ -122,5 +124,19 @@ class stock_partial_picking(osv.osv_memory):
             raise osv.except_osv(
                 _('Excess / Defect Detected!'),
                 msg_raise)
-        # TODO: dummy Method to pass message for multiple purposes
-        return fnc_super(cr, uid, ids, context=context)
+
+        res = fnc_super(cr, uid, ids, context=context)
+
+        if 'res_id' in res:
+            picking_id = res['res_id']
+
+        # Message is to be sent when picking is done
+        if msg_raise:
+            sp_obj.message_post(
+                cr, uid, picking_id,
+                _('Excess / Defect Detected!'),
+                msg_raise,
+                subtype='mail.mt_comment',
+                context=context)
+
+        return res
