@@ -13,6 +13,7 @@
         'website_blog',
     ],
     'data': [
+        'views/website_templates.xml'
 
     ],
     'demo': [

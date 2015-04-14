@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import openerp
+import datetime
+from itertools import islice
 from openerp.addons.web import http
 from openerp.addons.web.http import request
 #this are some stupid limits stored by grace of god.
@@ -57,9 +59,9 @@ class WebsiteBlogRSS(http.Controller):
                     'locs': islice(locs, start, start + LOC_PER_BLOG_RSS),
                     'url_root': request.httprequest.url_root[:-1],
                 }
-                urls = iuv.render(cr, uid, 'website.blog_rss_locs', values, context=context)
+                urls = iuv.render(cr, uid, 'website_blog_rss.blog_rss_locs', values, context=context)
                 if urls.strip():
-                    page = iuv.render(cr, uid, 'website.blog_rss_xml', dict(content=urls), context=context)
+                    page = iuv.render(cr, uid, 'website_blog_rss.blog_rss_xml', dict(content=urls), context=context)
                     if not first_page:
                         first_page = page
                     pages += 1
@@ -72,10 +74,10 @@ class WebsiteBlogRSS(http.Controller):
                 content = first_page
             else:
                 # BLOGRSS must be split in several smaller files with a blog_rss index
-                content = iuv.render(cr, uid, 'website.blog_rss_index_xml', dict(
+                content = iuv.render(cr, uid, 'website_blog_rss.blog_rss_index_xml', dict(
                     pages=range(1, pages + 1),
                     url_root=request.httprequest.url_root,
                 ), context=context)
             create_blog_rss('/blog_rss.xml', content)
 
-        return request.make_response(content, [('Conten
+        return request.make_response(content, [('Content-Type', mimetype)])

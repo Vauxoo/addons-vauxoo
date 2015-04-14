@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+<template id="blog_rss_locs">
+    <url t-foreach="locs" t-as="page">
+        <loc><t t-esc="url_root"/><t t-esc="page['loc']"/></loc><t t-if="page.get('lastmod', False)">
+        <lastmod t-esc="page['lastmod']"/></t><t t-if="page.get('priority', False)">
+        <priority t-esc="page['priority']"/></t><t t-if="page.get('changefreq', False)">
+        <changefreq t-esc="page['changefreq']"/></t>
+    </url>
+</template>
+
+<template id="blog_rss_xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+<urlset t-attf-xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <t t-raw="content"/>
+</urlset>
+</template>
+
+<template id="blog_rss_index_xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+<sitemapindex t-attf-xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap t-translate="off" t-foreach="pages" t-as="page">
+    <loc><t t-esc="url_root"/>sitemap-<t t-esc="page"/>.xml</loc>
+  </sitemap>
+</sitemapindex>
+</template>
+
+    </data>
+</openerp>
