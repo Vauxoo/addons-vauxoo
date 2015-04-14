@@ -23,10 +23,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import osv
+from openerp import models, fields
 
 
-class product_product(osv.Model):
+class product_product(models.Model):
     _inherit = "product.product"
 
     def copy(self, cr, uid,
@@ -44,7 +44,21 @@ class product_product(osv.Model):
         return super(product_product, self).copy(cr, uid, id, default=default,
                                                  context=context)
 
+    manufacture_code = fields.Char('Manufacture Code',
+                                   help='Used to identify the origin of '
+                                   'the products from the manufacture')
+
     _sql_constraints = [
         ('default_code_unique', 'unique (default_code)',
          'The code of Product must be unique !'),
     ]
+
+
+class product_template(models.Model):
+    _inherit = "product.template"
+
+    manufacture_code = fields.\
+        Char('Manufacture Code',
+             related='product_variant_ids.manufacture_code',
+             help='Used to identify the origin of '
+             'the products from the manufacture')
