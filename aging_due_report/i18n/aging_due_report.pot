@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-09 07:32+0000\n"
-"PO-Revision-Date: 2015-04-09 07:32+0000\n"
+"POT-Creation-Date: 2015-04-14 02:24+0000\n"
+"PO-Revision-Date: 2015-04-14 02:24+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -90,6 +90,11 @@ msgstr ""
 
 #. module: aging_due_report
 #: view:website:aging_due_report.report_detail_due_report_qweb_document
+msgid "Amounts expressed in ("
+msgstr ""
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "BALANCE"
@@ -127,6 +132,7 @@ msgid "C: C/N"
 msgstr ""
 
 #. module: aging_due_report
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 msgid "COLLECTS"
 msgstr ""
@@ -190,6 +196,11 @@ msgstr ""
 #: view:website:aging_due_report.report_formal_due_report_qweb_document
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "D: D/N"
+msgstr ""
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
+msgid "DAY(S)"
 msgstr ""
 
 #. module: aging_due_report
@@ -334,6 +345,7 @@ msgid "PARTNER"
 msgstr ""
 
 #. module: aging_due_report
+#: view:website:aging_due_report.report_detail_due_report_qweb_document
 #: view:website:aging_due_report.report_supplier_formal_due_report_qweb_document
 msgid "PAYMENTS"
 msgstr ""
@@ -440,6 +452,16 @@ msgstr ""
 #. module: aging_due_report
 #: view:website:aging_due_report.report_aging_due_report_qweb_document
 msgid "TIN"
+msgstr ""
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+msgid "TOT./AP"
+msgstr ""
+
+#. module: aging_due_report
+#: view:website:aging_due_report.report_aging_due_report_qweb_document
+msgid "TOT./AR"
 msgstr ""
 
 #. module: aging_due_report
