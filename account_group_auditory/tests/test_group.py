@@ -18,7 +18,6 @@ class TestAuditorGroup(TransactionCase):
         self.account_move = self.registry('account.move')
         self.move_line_obj = self.registry('account.move.line')
         self.bank_statement = self.registry('account.bank.statement')
-        self.asset_model = self.registry('account.asset.asset')
         self.asset_category = self.registry('account.asset.category')
         self.partner = self.registry('res.partner')
         self.users = self.registry('res.users')
@@ -96,19 +95,6 @@ class TestAuditorGroup(TransactionCase):
         # Create Custumer or supplier (res.partner), most to fail
         with self.assertRaises(except_orm):
             self.partner.create(cr, utest[1], {'name': 'MyPartner1'})
-        # Create Assets.Assets, most to fail
-        with self.assertRaises(except_orm):
-            self.asset_model.create(cr, utest[1], {
-                'name': 'test asset',
-                'category_id': self.ref('account_asset.'
-                                        'account_asset_category_fixedassets0'),
-                'purchase_value': 3333,
-                'salvage_value': 0,
-                'date_start': time.strftime('%Y-07-07'),
-                'method_number': 5,
-                'method_period': 'month',
-                'prorata': True,
-            })
 
     @mute_logger('openerp.addons.account_group_auditory.tests.test_group',
                  'openerp.osv.orm',
@@ -156,21 +142,6 @@ class TestAuditorGroup(TransactionCase):
              'account_id': self.ref('account.a_sale')})
         with self.assertRaises(except_orm):
             self.move_line_obj.unlink(cr, utest[1], [move_line_id])
-        # Unlink Assets.Assets, most to fail
-        assets_id = self.asset_model.create(cr, SUPERUSER_ID, {
-            'name': 'test asset',
-            'category_id': self.ref('account_asset.'
-                                    'account_asset_category_fixedassets0'),
-            'purchase_value': 3333,
-            'salvage_value': 0,
-            'date_start': time.strftime('%Y-07-07'),
-            'method_number': 5,
-            'method_period': 12,
-            'prorata': True,
-        })
-        with self.assertRaises(except_orm):
-            self.asset_model.unlink(cr, utest[1], [assets_id])
-        # Unlink account.bank.statement with test user, most fail.
         bank_statement_id = self.bank_statement.create(
             cr, SUPERUSER_ID,
             {'journal_id': self.bank_journal_usd_id,
@@ -213,16 +184,6 @@ class TestAuditorGroup(TransactionCase):
              'debit': 0,
              'credit': 100,
              'account_id': self.ref('account.a_sale')})
-        assets_id = self.asset_model.create(cr, SUPERUSER_ID, {
-            'name': 'test asset',
-            'category_id': self.ref('account_asset.'
-                                    'account_asset_category_fixedassets0'),
-            'purchase_value': 3333,
-            'salvage_value': 0,
-            'date_start': time.strftime('%Y-07-07'),
-            'method_number': 5,
-            'method_period': 12,
-            'prorata': True, })
         bank_statement_id = self.bank_statement.create(
             cr, SUPERUSER_ID,
             {'journal_id': self.bank_journal_usd_id,
@@ -247,11 +208,6 @@ class TestAuditorGroup(TransactionCase):
         with self.assertRaises(except_orm):
             self.move_line_obj.write(
                 cr, utest[1], [move_line_id], {'name': '/'})
-
-        # write Assets.Assets, most to fail
-        with self.assertRaises(except_orm):
-            self.asset_model.write(
-                cr, utest[1], [assets_id], {'name': 'Assets Test'})
 
         # write account.bank.statement with test user, most fail.
         with self.assertRaises(except_orm):
