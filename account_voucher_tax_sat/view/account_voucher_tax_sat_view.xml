@@ -88,7 +88,8 @@
                 <tree string="Account Voucher Tax SAT">
                         <field name="name"/>
                         <field name="date"/>
-                        <field name="aml_ids"/>
+                        <field name="period_id"/>
+                        <field name="state"/>
                 </tree>
             </field>
         </record>
