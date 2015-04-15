@@ -27,45 +27,58 @@ class account_voucher_tax_sat(osv.Model):
 
     _name = 'account.voucher.tax.sat'
 
-    _columns = {
-        'name': fields.char('Name', size=128,
-                            help='Name of This Document',
-                            ),
-        'partner_id': fields.many2one('res.partner', 'Partner',
-                            domain="[('sat', '=', True)]",
-                            help='Partner of SAT',
-                                      ),
-        'date': fields.date('Accounting Date',
-                            help='Accounting date affected',
-                            ),
-        'aml_ids': fields.many2many('account.move.line', 'voucher_tax_sat_rel',
-                            'voucher_tax_sat_id', 'move_line_id',
-                            'Move Lines', help='Entries to close',
-                                    ),
-        'aml_iva_ids': fields.many2many('account.move.line', 'voucher_tax_sat_rel_iva',
-                            'voucher_sat_id', 'move_line_id',
-                            'Move Lines', help='Entries IVA to close',
-                                    ),
-        'journal_id': fields.many2one('account.journal', 'Journal',
-                            help='Accounting Journal where Entries will be posted',
-                                      ),
-        'move_id': fields.many2one('account.move', 'Journal Entry',
-                            help='Accounting Entry'),
-        'company_id': fields.many2one('res.company', 'Company', help='Company'),
-        'period_id': fields.many2one('account.period', 'Period', required=True,
-                            help='Period of Entries to find',
-                                     ),
-        'state': fields.selection([
-            ('draft', 'New'),
-            ('cancelled', 'Cancelled'),
-            ('done', 'Done')],
-            'Status', readonly=True, track_visibility='onchange'),
-    }
-    _defaults = {
-        'company_id': lambda s, c, u, cx: s.pool.get('res.users').browse(c, u,
-            u, cx).company_id.id,
-        'state': 'draft'
-    }
+    def _get_date_posted(self, cr, uid, ids, field_name, args, context=None):
+
+        period_obj = self.pool.get('account.period')
+
+        res = {}
+        for voucher_sat in self.browse(cr, uid, ids, context=context):
+
+            period_id = period_obj.next(
+                cr, uid, voucher_sat.period_id, step=1, context=context)
+
+            period_next = period_obj.browse(
+                cr, uid, period_id, context=context)
+
+            res[voucher_sat.id] = period_next.date_start
+
+        return res
+
+    name = fields.Char(
+        'Name', size=128, help='Name of This Document',)
+    partner_id = fields.Many2one(
+        'res.partner', 'Partner', domain="[('sat', '=', True)]",
+        help='Partner of SAT')
+    date = fields.Date(
+        compute='_get_date_posted',
+        string='Accounting Date Posted',
+        help='Accounting date affected')
+    aml_ids = fields.Many2many(
+        'account.move.line', 'voucher_tax_sat_rel',
+        'voucher_tax_sat_id', 'move_line_id',
+        'Move Lines', help='Entries to close')
+    aml_iva_ids = fields.Many2many(
+        'account.move.line', 'voucher_tax_sat_rel_iva',
+        'voucher_sat_id', 'move_line_id',
+        'Move Lines', help='Entries IVA to close')
+    journal_id = fields.Many2one(
+        'account.journal', 'Journal',
+        help='Accounting Journal where Entries will be posted')
+    move_id = fields.Many2one(
+        'account.move', 'Journal Entry',
+        help='Accounting Entry')
+    company_id = fields.Many2one(
+        'res.company', 'Company', help='Company',
+        default=lambda s, c, u, cx: s.pool.get('res.users').browse(
+            c, u, u, cx).company_id.id,)
+    period_id = fields.Many2one(
+        'account.period', 'Period', required=True,
+        help='Period of Entries to find')
+    state = fields.Selection([
+        ('draft', 'New'),
+        ('cancelled', 'Cancelled'),
+        ('done', 'Done')],
+        'Status', readonly=True, default='draft')
 
     def onchange_period(self, cr, uid, ids, period, context=None):
         res = {}
@@ -118,9 +131,9 @@ class account_voucher_tax_sat(osv.Model):
             move_line_copy = [aml_obj.copy(cr, uid, move_line_tax.id,
                 {
                     'move_id': move_id,
-                    'period_id': period_obj.find(cr, uid,
-                                    voucher_tax_sat.date,
-                                    context=context)[0],
+                    'period_id': period_obj.next(
+                        cr, uid, voucher_tax_sat.period_id, step=1,
+                        context=context),
                     'journal_id': voucher_tax_sat.journal_id.id,
                     'credit': 0.0,
                     'debit': move_line_tax.credit,
@@ -163,9 +176,10 @@ class account_voucher_tax_sat(osv.Model):
                     'move_id': voucher_tax_sat.move_id.id,
                     'journal_id': voucher_tax_sat.journal_id.id,
                     'date': voucher_tax_sat.date,
-                    'period_id': period_obj.find(cr, uid,
-                                                 voucher_tax_sat.date,
-                                                 context=context)[0],
+                    'period_id': period_obj.next(cr, uid,
+                                                 voucher_tax_sat.period_id,
+                                                 step=1,
+                                                 context=context),
                     'debit': move_line.debit,
                     'name': _('Close of IVA Retained'),
                     'partner_id': move_line.partner_id.id,
@@ -178,9 +192,10 @@ class account_voucher_tax_sat(osv.Model):
                     'move_id': voucher_tax_sat.move_id.id,
                     'journal_id': voucher_tax_sat.journal_id.id,
                     'date': voucher_tax_sat.date,
-                    'period_id': period_obj.find(cr, uid,
-                                                 voucher_tax_sat.date,
-                                                 context=context)[0],
+                    'period_id': period_obj.next(cr, uid,
+                                                 voucher_tax_sat.period_id,
+                                                 step=1,
+                                                 context=context),
                     'debit': 0.0,
                     'name': _('Close of IVA Retained'),
                     'partner_id': move_line.partner_id.id,
@@ -198,9 +213,10 @@ class account_voucher_tax_sat(osv.Model):
             'move_id': voucher_tax_sat.move_id.id,
             'journal_id': voucher_tax_sat.journal_id.id,
             'date': voucher_tax_sat.date,
-            'period_id': period_obj.find(cr, uid,
-                                         voucher_tax_sat.date,
-                                         context=context)[0],
+            'period_id': period_obj.next(cr, uid,
+                                         voucher_tax_sat.period_id,
+                                         step=1,
+                                         context=context),
             'debit': 0,
             'name': _('Payment to SAT'),
             'partner_id': voucher_tax_sat.partner_id.id,
@@ -214,10 +230,11 @@ class account_voucher_tax_sat(osv.Model):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         for move_tax_sat in self.browse(cr, uid, ids, context=context):
-            vals_move_tax = account_move_obj.account_move_prepare(cr, uid,
-                    move_tax_sat.journal_id.id,
-                    date=move_tax_sat.date,
-                    ref='Entry SAT', context=context)
+            vals_move_tax = account_move_obj.account_move_prepare(
+                cr, uid,
+                move_tax_sat.journal_id.id,
+                date=move_tax_sat.date,
+                ref='Entry SAT', context=context)
         return account_move_obj.create(cr, uid, vals_move_tax, context=context)
 
     def sat_pay(self, cr, uid, ids, context=None):
