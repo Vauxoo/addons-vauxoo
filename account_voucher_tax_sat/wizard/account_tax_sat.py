@@ -3,22 +3,22 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
-###############Credits######################################################
+# ##############Credits######################################################
 #    Coded by: Julio Cesar Serna Hernandez(julio@vauxoo.com)
 #############################################################################
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU Affero General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
 #
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+#   You should have received a copy of the GNU Affero General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+###############################################################################
 
 
 from openerp.osv import fields, osv
@@ -29,14 +29,16 @@ class account_voucher_tax_assigned(osv.TransientModel):
     _name = 'account.voucher.tax.assigned'
 
     _columns = {
-        'tax_ids': fields.many2many('account.tax', 'voucher_assgined_tax_rel',
-                                'wiz_id',
-                                'tax_id',
-                                'Taxes to Close'),
-        'account_ids': fields.many2many('account.account', 'assigned_account_rel',
-                                'wiz_id',
-                                'account_id',
-                                'Account to Close'),
+        'tax_ids': fields.many2many(
+            'account.tax', 'voucher_assgined_tax_rel',
+            'wiz_id',
+            'tax_id',
+            'Taxes to Close'),
+        'account_ids': fields.many2many(
+            'account.account', 'assigned_account_rel',
+            'wiz_id',
+            'account_id',
+            'Account to Close'),
     }
 
     def action_account_assigned(self, cr, uid, ids, context=None):
@@ -46,8 +48,8 @@ class account_voucher_tax_assigned(osv.TransientModel):
         if context is None:
             context = {}
         for tax_assigned in self.browse(cr, uid, ids, context=context):
-            acc_vocuher_tax_sat = acc_voucher_tax_sat_obj.browse(cr, uid,
-                                            context.get('active_id', False))
+            acc_vocuher_tax_sat = acc_voucher_tax_sat_obj.browse(
+                cr, uid, context.get('active_id', False))
 
             tax_ids = account_tax_obj.search(cr, uid, [
                 ('type_tax_use', '=', 'purchase')])
@@ -56,10 +58,10 @@ class account_voucher_tax_assigned(osv.TransientModel):
                 account_tax.account_retention_voucher_id.id
                 for account_tax in account_tax_obj.browse(
                     cr, uid, tax_ids, context=context)]
-            print account_iva_assigned,"account_iva_assignedaccount_iva_assignedaccount_iva_assigned"
 
             taxe_assigned = [taxes.id for taxes in tax_assigned.tax_ids]
             account_assigned = [acc.id for acc in tax_assigned.account_ids]
+
             move_line_to_close = aml_obj.search(cr, uid, [
                 '|', ('tax_id_secondary', 'in', taxe_assigned),
                 ('account_id', 'in', account_assigned),
@@ -82,6 +84,7 @@ class account_voucher_tax_assigned(osv.TransientModel):
                     'aml_ids': [
                         (4, move_id) for move_id in move_line_to_close],
                     'aml_iva_ids': [
-                        (4, move_iva_id) for move_iva_id in move_line_iva_to_close]
+                        (4, move_iva_id)
+                        for move_iva_id in move_line_iva_to_close]
                     })
         return True

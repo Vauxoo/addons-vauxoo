@@ -1,24 +1,24 @@
 # -*- encoding: utf-8 -*-
 ###########################################################################
-#    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) Vauxoo (<http://vauxoo.com>).
-#    All Rights Reserved
-###############Credits######################################################
-#    Coded by: Julio Cesar Serna Hernandez(julio@vauxoo.com)
+#   Module Writen to OpenERP, Open Source Management Solution
+#   Copyright (C) Vauxoo (<http://vauxoo.com>).
+#   All Rights Reserved
+# ##############Credits######################################################
+#   Coded by: Julio Cesar Serna Hernandez(julio@vauxoo.com)
 #############################################################################
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU Affero General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
 #
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+#   You should have received a copy of the GNU Affero General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+###############################################################################
 from openerp import models, fields, api, _
 from openerp.exceptions import except_orm
 
@@ -113,8 +113,9 @@ class account_voucher_tax_sat(models.Model):
         move_id = self.create_move_sat()
         self.write({'move_id': move_id.id})
 
-        amount_tax_sat = sum([move_line_tax_sat.credit
-                    for move_line_tax_sat in self.aml_ids])
+        amount_tax_sat = sum([
+            move_line_tax_sat.credit
+            for move_line_tax_sat in self.aml_ids])
 
         self.create_move_line_sat(self, amount_tax_sat)
 
@@ -166,7 +167,8 @@ class account_voucher_tax_sat(models.Model):
                     'debit': move_line.debit,
                     'name': _('Close of IVA Retained'),
                     'partner_id': move_line.partner_id.id,
-                    'account_id': move_line.tax_id_secondary.account_collected_voucher_id.id,
+                    'account_id':
+                    move_line.tax_id_secondary.account_collected_voucher_id.id,
                     'credit': 0.0,
                     'amount_base': amount_base,
                     'tax_id_secondary': tax_secondary
@@ -201,7 +203,8 @@ class account_voucher_tax_sat(models.Model):
             'debit': 0,
             'name': _('Payment to SAT'),
             'partner_id': voucher_tax_sat.partner_id.id,
-            'account_id': voucher_tax_sat.partner_id.property_account_payable.id,
+            'account_id':
+                voucher_tax_sat.partner_id.property_account_payable.id,
             'credit': amount,
         }
         return aml_obj.create(vals)
@@ -224,8 +227,9 @@ class account_voucher_tax_sat(models.Model):
         if not ids:
             return []
         dummy, view_id = self.pool.get('ir.model.data').\
-            get_object_reference(cr, uid,
-                             'account_voucher', 'view_vendor_payment_form')
+            get_object_reference(
+                cr, uid,
+                'account_voucher', 'view_vendor_payment_form')
         exp_brw = self.browse(cr, uid, ids[0], context=context)
         return {
             'name': _("Pay SAT"),
@@ -245,19 +249,3 @@ class account_voucher_tax_sat(models.Model):
                 'type': 'payment',
             }
         }
-
-
-# class account_tax(osv.Model):
-
-#     _inherit = 'account.tax'
-
-#     _columns = {
-#         'tax_sat_ok': fields.boolean('Create entries IVA to SAT'),
-#         'account_id_creditable': fields.many2one('account.account',
-#                                         'Account of entries SAT Acreditable'),
-#         'account_id_by_creditable': fields.many2one('account.account',
-#                                         'Account of entries SAT x Acreditable'),
-#         'tax_reference': fields.many2one('account.tax',
-#             'Tax Reference',
-#             help='Tax Reference to get data of DIOT/SAT')
-#     }
