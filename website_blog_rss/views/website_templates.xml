@@ -2,8 +2,10 @@
 <openerp>
     <data>
 <template id="blog_rss_locs">
-    <channel t-foreach="posts" t-as="post">
+    <channel>
+    <item t-foreach="posts" t-as="post">
         <title><t t-esc="post.name"/></title>
+    </item>
     </channel>
 </template>
 
