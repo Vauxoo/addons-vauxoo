@@ -7,7 +7,7 @@ from openerp.addons.web.http import request
 #this are some stupid limits stored by grace of god.
 MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT = IMAGE_LIMITS = (1024, 768)
 LOC_PER_BLOG_RSS = 45000
-BLOG_RSS_CACHE_TIME = datetime.timedelta(hours=12)
+BLOG_RSS_CACHE_TIME = datetime.timedelta(minutes=1)
 
 
 class WebsiteBlogRSS(http.Controller):
@@ -31,7 +31,7 @@ class WebsiteBlogRSS(http.Controller):
             ), context=context)
 
         blog_rss = ira.search_read(cr, uid, [
-            ('url', '=', '/blog_rss.xml'),
+            ('name', '=', '/blog_rss.xml'),
             ('type', '=', 'binary')],
             ('datas', 'create_date'), context=context)
         if blog_rss:
@@ -42,11 +42,11 @@ class WebsiteBlogRSS(http.Controller):
             delta = datetime.datetime.now() - create_date
             if delta < BLOG_RSS_CACHE_TIME:
                 content = blog_rss[0]['datas'].decode('base64')
-        print "something"
+
         if not content:
             # Remove all RSS in ir.attachments as we're going to regenerate
             blog_rss_ids = ira.search(cr, uid, [
-                ('url', '=like', '/blog_rss%.xml'),
+                ('name', '=like', '/blog_rss%.xml'),
                 ('type', '=', 'binary')], context=context)
             if blog_rss_ids:
                 ira.unlink(cr, uid, blog_rss_ids, context=context)

@@ -5,6 +5,8 @@
     <channel>
     <item t-foreach="posts" t-as="post">
         <title><t t-esc="post.name"/></title>
+        <description><t t-esc="post.subtitle"/></description>
+        <category><t t-esc="post.blog_id.name"/></category>
     </item>
     </channel>
 </template>
