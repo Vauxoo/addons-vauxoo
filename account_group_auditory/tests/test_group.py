@@ -142,7 +142,6 @@ class TestAuditorGroup(TransactionCase):
              'account_id': self.ref('account.a_sale')})
         with self.assertRaises(except_orm):
             self.move_line_obj.unlink(cr, utest[1], [move_line_id])
-        # Unlink Assets.Assets, most to fail
         bank_statement_id = self.bank_statement.create(
             cr, SUPERUSER_ID,
             {'journal_id': self.bank_journal_usd_id,
