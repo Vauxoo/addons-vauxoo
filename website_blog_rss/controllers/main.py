@@ -17,6 +17,7 @@ class WebsiteBlogRSS(http.Controller):
         cr, uid, context = request.cr, openerp.SUPERUSER_ID, request.context
         ira = request.registry['ir.attachment']
         iuv = request.registry['ir.ui.view']
+        blog_post_obj = request.registry['blog.post']
         mimetype = 'application/xml;charset=utf-8'
         content = None
 
@@ -41,7 +42,7 @@ class WebsiteBlogRSS(http.Controller):
             delta = datetime.datetime.now() - create_date
             if delta < BLOG_RSS_CACHE_TIME:
                 content = blog_rss[0]['datas'].decode('base64')
-
+        print "something"
         if not content:
             # Remove all RSS in ir.attachments as we're going to regenerate
             blog_rss_ids = ira.search(cr, uid, [
@@ -52,22 +53,22 @@ class WebsiteBlogRSS(http.Controller):
 
             pages = 0
             first_page = None
-            locs = request.website.enumerate_pages()
-            while True:
-                start = pages * LOC_PER_BLOG_RSS
-                values = {
-                    'locs': islice(locs, start, start + LOC_PER_BLOG_RSS),
-                    'url_root': request.httprequest.url_root[:-1],
-                }
-                urls = iuv.render(cr, uid, 'website_blog_rss.blog_rss_locs', values, context=context)
-                if urls.strip():
-                    page = iuv.render(cr, uid, 'website_blog_rss.blog_rss_xml', dict(content=urls), context=context)
-                    if not first_page:
-                        first_page = page
-                    pages += 1
-                    create_blog_rss('/blog_rss-%d.xml' % pages, page)
-                else:
-                    break
+            values = {}
+            post_ids = blog_post_obj.search(cr, uid, [
+                ('website_published', '=', True)])
+            if post_ids:
+                values['posts'] = blog_post_obj.browse(cr, uid, post_ids,
+                                                       context)
+            urls = iuv.render(cr, uid, 'website_blog_rss.blog_rss_locs',
+                              values, context=context)
+            print urls
+            if urls:
+                page = iuv.render(cr, uid, 'website_blog_rss.blog_rss_xml',
+                                  dict(content=urls), context=context)
+                if not first_page:
+                    first_page = page
+                pages += 1
+                create_blog_rss('/blog_rss-%d.xml' % pages, page)
             if not pages:
                 return request.not_found()
             elif pages == 1:

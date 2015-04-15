@@ -2,18 +2,15 @@
 <openerp>
     <data>
 <template id="blog_rss_locs">
-    <url t-foreach="locs" t-as="page">
-        <loc><t t-esc="url_root"/><t t-esc="page['loc']"/></loc><t t-if="page.get('lastmod', False)">
-        <lastmod t-esc="page['lastmod']"/></t><t t-if="page.get('priority', False)">
-        <priority t-esc="page['priority']"/></t><t t-if="page.get('changefreq', False)">
-        <changefreq t-esc="page['changefreq']"/></t>
-    </url>
+    <channel t-foreach="posts" t-as="post">
+        <title><t t-esc="post.name"/></title>
+    </channel>
 </template>
 
 <template id="blog_rss_xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-<urlset t-attf-xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<rss t-attf-xmlns="" version="2.0">
     <t t-raw="content"/>
-</urlset>
+</rss>
 </template>
 
 <template id="blog_rss_index_xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
