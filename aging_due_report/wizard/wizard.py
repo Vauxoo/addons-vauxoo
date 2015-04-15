@@ -361,6 +361,7 @@ class account_aging_partner_wizard(osv.osv_memory):
             'res.company', 'Company', required=True),
         'period_length': fields.integer(
             'Period Length (days)', required=True),
+        'user_id': fields.many2one('res.users', 'User'),
     }
 
     _defaults = {
@@ -369,6 +370,8 @@ class account_aging_partner_wizard(osv.osv_memory):
         'type': lambda *args: 'aging',
         'company_id': _get_default_company,
         'period_length': 30,
+        'user_id': lambda s, c, u, cx: s.pool.get('res.users').browse(c, u, u,
+                                                                      cx).id,
     }
 
     def _get_lines_by_partner_without_invoice(
