@@ -19,30 +19,20 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-from openerp.osv import fields, osv
-from openerp.tools.translate import _
+from openerp import models, fields, api, _
+from openerp.exceptions import except_orm
 
 
-class account_voucher_tax_sat(osv.Model):
+class account_voucher_tax_sat(models.Model):
 
     _name = 'account.voucher.tax.sat'
 
-    def _get_date_posted(self, cr, uid, ids, field_name, args, context=None):
+    @api.one
+    def _get_date_posted(self):
+        period_obj = self.env['account.period']
+        period_id = period_obj.next(self.period_id, step=1)
 
-        period_obj = self.pool.get('account.period')
-
-        res = {}
-        for voucher_sat in self.browse(cr, uid, ids, context=context):
-
-            period_id = period_obj.next(
-                cr, uid, voucher_sat.period_id, step=1, context=context)
-
-            period_next = period_obj.browse(
-                cr, uid, period_id, context=context)
-
-            res[voucher_sat.id] = period_next.date_start
-
-        return res
+        self.date = period_id.date_start
 
     name = fields.Char(
         'Name', size=128, help='Name of This Document',)
@@ -50,9 +40,8 @@ class account_voucher_tax_sat(osv.Model):
         'res.partner', 'Partner', domain="[('sat', '=', True)]",
         help='Partner of SAT')
     date = fields.Date(
-        compute='_get_date_posted',
-        string='Accounting Date Posted',
-        help='Accounting date affected')
+        compute='_get_date_posted', string='Accounting Date Posted',
+        readonly=True, help='Accounting date affected')
     aml_ids = fields.Many2many(
         'account.move.line', 'voucher_tax_sat_rel',
         'voucher_tax_sat_id', 'move_line_id',
@@ -69,8 +58,9 @@ class account_voucher_tax_sat(osv.Model):
         help='Accounting Entry')
     company_id = fields.Many2one(
         'res.company', 'Company', help='Company',
-        default=lambda s, c, u, cx: s.pool.get('res.users').browse(
-            c, u, u, cx).company_id.id,)
+        default=lambda self: self.env['res.company']._company_default_get(
+            'account.voucher.tax.sat')
+        )
     period_id = fields.Many2one(
         'account.period', 'Period', required=True,
         help='Period of Entries to find')
@@ -80,106 +70,99 @@ class account_voucher_tax_sat(osv.Model):
         ('done', 'Done')],
         'Status', readonly=True, default='draft')
 
-    def onchange_period(self, cr, uid, ids, period, context=None):
-        res = {}
-        if period:
-            res['value'] = {'aml_ids': []}
-        return res
+    @api.onchange('period_id')
+    def onchange_period(self):
+        self.aml_ids = []
+        self.aml_iva_ids = []
 
-    def validate_move_line(self, cr, uid, voucher_tax, context=None):
-        move_line_obj = self.pool.get('account.move.line')
-        cr.execute(""" SELECT DISTINCT move_line_id FROM voucher_tax_sat_rel
-                        WHERE voucher_tax_sat_id <> %s
-                        AND move_line_id IN %s """, (
-            voucher_tax.id,
-            tuple([move_lines.id
-                   for move_lines in voucher_tax.aml_ids]))
+    @api.multi
+    def validate_move_line(self):
+        move_line_obj = self.env['account.move.line']
+        self._cr.execute(
+            """ SELECT DISTINCT move_line_id
+                FROM            voucher_tax_sat_rel
+                WHERE           voucher_tax_sat_id <> %s
+                AND             move_line_id
+                IN              %s
+            """, (
+                self.id, tuple([move_lines.id for move_lines in self.aml_ids]))
         )
-        dat = cr.dictfetchall()
-        move_line_tax = list(set([move_tax['move_line_id'] for move_tax in dat]))
+        dat = self._cr.dictfetchall()
+
+        move_line_tax = list(
+            set([move_tax['move_line_id']
+                for move_tax in dat]))
+
         if dat:
-            raise osv.except_osv(_('Warning'),
+            raise except_orm(
+                _('Warning'),
                 _("You have this jornal items in other voucher tax sat '%s' ")
                 % ([move_line.name
-                    for move_line in move_line_obj.browse(cr, uid,
-                                            move_line_tax, context=context)]))
+                    for move_line in move_line_obj.browse(move_line_tax)]))
 
         return True
 
-    def action_close_tax(self, cr, uid, ids, context=None):
-        aml_obj = self.pool.get('account.move.line')
-        period_obj = self.pool.get('account.period')
-        context = context or {}
-        ids = isinstance(ids, (int, long)) and [ids] or ids
-        for voucher_tax_sat in self.browse(cr, uid, ids, context=context):
+    @api.multi
+    def action_close_tax(self):
+        period_obj = self.env['account.period']
 
-            self.validate_move_line(cr, uid,
-                                    voucher_tax_sat, context=context)
+        period_id = period_obj.next(self.period_id, step=1)
 
-            move_id = self.create_move_sat(cr, uid, ids, context=context)
-            self.write(cr, uid, ids, {'move_id': move_id})
+        self.validate_move_line()
 
-            amount_tax_sat = sum([move_line_tax_sat.credit
-                        for move_line_tax_sat in voucher_tax_sat.aml_ids])
+        move_id = self.create_move_sat()
+        self.write({'move_id': move_id.id})
 
-            self.create_move_line_sat(cr, uid, voucher_tax_sat,
-                                      amount_tax_sat, context=context)
+        amount_tax_sat = sum([move_line_tax_sat.credit
+                    for move_line_tax_sat in self.aml_ids])
 
-            self.create_entries_tax_iva_sat(cr, uid, voucher_tax_sat,
-                                            context=context)
+        self.create_move_line_sat(self, amount_tax_sat)
 
-            move_line_copy = [aml_obj.copy(cr, uid, move_line_tax.id,
-                {
-                    'move_id': move_id,
-                    'period_id': period_obj.next(
-                        cr, uid, voucher_tax_sat.period_id, step=1,
-                        context=context),
-                    'journal_id': voucher_tax_sat.journal_id.id,
-                    'credit': 0.0,
-                    'debit': move_line_tax.credit,
-                    'amount_base': None,
-                    'tax_id_secondary': None,
-                    'not_move_diot': True
-                }) for move_line_tax in voucher_tax_sat.aml_ids]
+        self.create_entries_tax_iva_sat()
 
-            cr.execute('UPDATE account_move_line '
-                       'SET amount_tax_unround = null '
-                       'WHERE id in %s ', (tuple(move_line_copy), ))
+        [move_line_tax.copy(
+            {
+                'move_id': move_id.id,
+                'period_id': period_id.id,
+                'journal_id': self.journal_id.id,
+                'credit': 0.0,
+                'debit': move_line_tax.credit,
+                'amount_base': None,
+                'tax_id_secondary': None,
+                'not_move_diot': True,
+                'amount_tax_unround': None
+            }) for move_line_tax in self.aml_ids]
 
-        return self.write(cr, uid, ids, {'state': 'done'}, context=context)
+        return self.write({'state': 'done'})
 
-    def action_cancel(self, cr, uid, ids, context=None):
-        obj_move_line = self.pool.get('account.move.line')
-        obj_move = self.pool.get('account.move')
-        for tax_sat in self.browse(cr, uid, ids, context=context):
-            if tax_sat.move_id:
-                obj_move_line._remove_move_reconcile(cr, uid,
-                    [move_line.id
-                        for move_line in tax_sat.move_id.line_id],
-                    context=context)
-                obj_move.unlink(cr, uid, [tax_sat.move_id.id],
-                                context=context)
-        return self.write(cr, uid, ids, {'state': 'draft'}, context=context)
+    @api.multi
+    def action_cancel(self):
+        obj_move_line = self.env['account.move.line']
+        if self.move_id:
+            obj_move_line._remove_move_reconcile(
+                [move_line.id for move_line in self.move_id.line_id])
+            self.move_id.button_cancel()
+            self.move_id.unlink()
+        return self.write({'state': 'draft'})
 
-    def create_entries_tax_iva_sat(self, cr, uid, voucher_tax_sat,
-                                   context=None):
-        aml_obj = self.pool.get('account.move.line')
-        av_obj = self.pool.get('account.voucher')
-        period_obj = self.pool.get('account.period')
-        for move_line in voucher_tax_sat.aml_iva_ids:
+    @api.multi
+    def create_entries_tax_iva_sat(self):
+        aml_obj = self.env['account.move.line']
+        av_obj = self.env['account.voucher']
+        period_obj = self.env['account.period']
+        for move_line in self.aml_iva_ids:
             if move_line.tax_id_secondary:
-                amount_base, tax_secondary = av_obj._get_base_amount_tax_secondary(cr,
-                            uid, move_line.tax_id_secondary,
-                            move_line.amount_base, move_line.credit,
-                            context=context)
+                amount_base, tax_secondary =\
+                    av_obj._get_base_amount_tax_secondary(
+                        move_line.tax_id_secondary,
+                        move_line.amount_base, move_line.credit)
+                period_id = period_obj.next(self.period_id, step=1)
+
                 move_line_dt = {
-                    'move_id': voucher_tax_sat.move_id.id,
-                    'journal_id': voucher_tax_sat.journal_id.id,
-                    'date': voucher_tax_sat.date,
-                    'period_id': period_obj.next(cr, uid,
-                                                 voucher_tax_sat.period_id,
-                                                 step=1,
-                                                 context=context),
+                    'move_id': self.move_id.id,
+                    'journal_id': self.journal_id.id,
+                    'date': self.date,
+                    'period_id': period_id.id,
                     'debit': move_line.debit,
                     'name': _('Close of IVA Retained'),
                     'partner_id': move_line.partner_id.id,
@@ -189,13 +172,10 @@ class account_voucher_tax_sat(osv.Model):
                     'tax_id_secondary': tax_secondary
                 }
                 move_line_cr = {
-                    'move_id': voucher_tax_sat.move_id.id,
-                    'journal_id': voucher_tax_sat.journal_id.id,
-                    'date': voucher_tax_sat.date,
-                    'period_id': period_obj.next(cr, uid,
-                                                 voucher_tax_sat.period_id,
-                                                 step=1,
-                                                 context=context),
+                    'move_id': self.move_id.id,
+                    'journal_id': self.journal_id.id,
+                    'date': self.date,
+                    'period_id': period_id.id,
                     'debit': 0.0,
                     'name': _('Close of IVA Retained'),
                     'partner_id': move_line.partner_id.id,
@@ -203,39 +183,38 @@ class account_voucher_tax_sat(osv.Model):
                     'credit': move_line.debit,
                 }
                 for line_dt_cr in [move_line_dt, move_line_cr]:
-                    aml_obj.create(cr, uid, line_dt_cr, context=context)
+                    aml_obj.create(line_dt_cr)
         return True
 
-    def create_move_line_sat(self, cr, uid, voucher_tax_sat, amount, context=None):
-        aml_obj = self.pool.get('account.move.line')
-        period_obj = self.pool.get('account.period')
+    @api.model
+    def create_move_line_sat(self, voucher_tax_sat, amount):
+        aml_obj = self.env['account.move.line']
+        period_obj = self.env['account.period']
+
+        period_id = period_obj.next(voucher_tax_sat.period_id, step=1)
+
         vals = {
             'move_id': voucher_tax_sat.move_id.id,
             'journal_id': voucher_tax_sat.journal_id.id,
             'date': voucher_tax_sat.date,
-            'period_id': period_obj.next(cr, uid,
-                                         voucher_tax_sat.period_id,
-                                         step=1,
-                                         context=context),
+            'period_id': period_id.id,
             'debit': 0,
             'name': _('Payment to SAT'),
             'partner_id': voucher_tax_sat.partner_id.id,
             'account_id': voucher_tax_sat.partner_id.property_account_payable.id,
             'credit': amount,
         }
-        return aml_obj.create(cr, uid, vals, context=context)
+        return aml_obj.create(vals)
 
-    def create_move_sat(self, cr, uid, ids, context=None):
-        account_move_obj = self.pool.get('account.move')
-        context = context or {}
-        ids = isinstance(ids, (int, long)) and [ids] or ids
-        for move_tax_sat in self.browse(cr, uid, ids, context=context):
-            vals_move_tax = account_move_obj.account_move_prepare(
-                cr, uid,
-                move_tax_sat.journal_id.id,
-                date=move_tax_sat.date,
-                ref='Entry SAT', context=context)
-        return account_move_obj.create(cr, uid, vals_move_tax, context=context)
+    @api.multi
+    def create_move_sat(self):
+        account_move_obj = self.env['account.move']
+
+        vals_move_tax = account_move_obj.account_move_prepare(
+            self.journal_id.id,
+            date=self.date,
+            ref='Entry SAT')
+        return account_move_obj.create(vals_move_tax)
 
     def sat_pay(self, cr, uid, ids, context=None):
         """
@@ -268,17 +247,17 @@ class account_voucher_tax_sat(osv.Model):
         }
 
 
-class account_tax(osv.Model):
+# class account_tax(osv.Model):
 
-    _inherit = 'account.tax'
+#     _inherit = 'account.tax'
 
-    _columns = {
-        'tax_sat_ok': fields.boolean('Create entries IVA to SAT'),
-        'account_id_creditable': fields.many2one('account.account',
-                                        'Account of entries SAT Acreditable'),
-        'account_id_by_creditable': fields.many2one('account.account',
-                                        'Account of entries SAT x Acreditable'),
-        'tax_reference': fields.many2one('account.tax',
-            'Tax Reference',
-            help='Tax Reference to get data of DIOT/SAT')
-    }
+#     _columns = {
+#         'tax_sat_ok': fields.boolean('Create entries IVA to SAT'),
+#         'account_id_creditable': fields.many2one('account.account',
+#                                         'Account of entries SAT Acreditable'),
+#         'account_id_by_creditable': fields.many2one('account.account',
+#                                         'Account of entries SAT x Acreditable'),
+#         'tax_reference': fields.many2one('account.tax',
+#             'Tax Reference',
+#             help='Tax Reference to get data of DIOT/SAT')
+#     }
