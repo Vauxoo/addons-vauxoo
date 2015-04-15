@@ -18,7 +18,6 @@ class TestAuditorGroup(TransactionCase):
         self.account_move = self.registry('account.move')
         self.move_line_obj = self.registry('account.move.line')
         self.bank_statement = self.registry('account.bank.statement')
-        self.asset_category = self.registry('account.asset.category')
         self.partner = self.registry('res.partner')
         self.users = self.registry('res.users')
         self.partner_agrolait_id = self.data.get_object_reference(
