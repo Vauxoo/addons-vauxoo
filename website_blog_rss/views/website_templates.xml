@@ -4,8 +4,11 @@
 <template id="blog_rss_locs">
     <channel>
     <item t-foreach="posts" t-as="post">
+        <t t-set="url_x" t-value="url_root+'blog/'+slug(post.blog_id)+'/post/'+slug(post)"/>
         <title><t t-esc="post.name"/></title>
-        <description><t t-esc="post.subtitle"/></description>
+        <link><t t-raw="url_x"/></link>
+        <lastBuildDate><t t-esc="post.write_date"/></lastBuildDate>
+        <description><t t-esc="post.content"/></description>
         <category><t t-esc="post.blog_id.name"/></category>
     </item>
     </channel>

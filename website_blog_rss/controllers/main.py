@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 import openerp
 import datetime
-from itertools import islice
 from openerp.addons.web import http
 from openerp.addons.web.http import request
-#this are some stupid limits stored by grace of god.
+
 MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGHT = IMAGE_LIMITS = (1024, 768)
 LOC_PER_BLOG_RSS = 45000
 BLOG_RSS_CACHE_TIME = datetime.timedelta(minutes=1)
@@ -17,6 +16,7 @@ class WebsiteBlogRSS(http.Controller):
         cr, uid, context = request.cr, openerp.SUPERUSER_ID, request.context
         ira = request.registry['ir.attachment']
         iuv = request.registry['ir.ui.view']
+        print request.httprequest.url_root
         blog_post_obj = request.registry['blog.post']
         mimetype = 'application/xml;charset=utf-8'
         content = None
@@ -59,9 +59,10 @@ class WebsiteBlogRSS(http.Controller):
             if post_ids:
                 values['posts'] = blog_post_obj.browse(cr, uid, post_ids,
                                                        context)
+            values['url_root'] = request.httprequest.url_root
+            print "VALIUES",values
             urls = iuv.render(cr, uid, 'website_blog_rss.blog_rss_locs',
                               values, context=context)
-            print urls
             if urls:
                 page = iuv.render(cr, uid, 'website_blog_rss.blog_rss_xml',
                                   dict(content=urls), context=context)
