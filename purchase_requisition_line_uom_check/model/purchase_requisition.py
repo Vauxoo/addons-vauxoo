@@ -28,6 +28,8 @@ class purchase_requisition_line(osv.Model):
 
     def _check_same_uom_category(self, cr, uid, ids, context=None):
         for line_brw in self.browse(cr, uid, ids, context=context):
+            if not line_brw.product_uom_id:
+                return False
             if line_brw.product_id.uom_id.category_id.id != \
                     line_brw.product_uom_id.category_id.id:
                 return False
