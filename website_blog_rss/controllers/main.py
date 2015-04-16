@@ -16,7 +16,6 @@ class WebsiteBlogRSS(http.Controller):
         cr, uid, context = request.cr, openerp.SUPERUSER_ID, request.context
         ira = request.registry['ir.attachment']
         iuv = request.registry['ir.ui.view']
-        print request.httprequest.url_root
         blog_post_obj = request.registry['blog.post']
         mimetype = 'application/xml;charset=utf-8'
         content = None
@@ -37,8 +36,8 @@ class WebsiteBlogRSS(http.Controller):
         if blog_rss:
             # Check if stored version is still valid
             server_format = openerp.tools.misc.DEFAULT_SERVER_DATETIME_FORMAT
-            create_date = datetime.datetime.strptime(blog_rss[0]['create_date'],
-                                                     server_format)
+            create_date = datetime.datetime.strptime(
+                blog_rss[0]['create_date'], server_format)
             delta = datetime.datetime.now() - create_date
             if delta < BLOG_RSS_CACHE_TIME:
                 content = blog_rss[0]['datas'].decode('base64')
@@ -60,7 +59,6 @@ class WebsiteBlogRSS(http.Controller):
                 values['posts'] = blog_post_obj.browse(cr, uid, post_ids,
                                                        context)
             values['url_root'] = request.httprequest.url_root
-            print "VALIUES",values
             urls = iuv.render(cr, uid, 'website_blog_rss.blog_rss_locs',
                               values, context=context)
             if urls:
@@ -74,12 +72,4 @@ class WebsiteBlogRSS(http.Controller):
                 return request.not_found()
             elif pages == 1:
                 content = first_page
-            else:
-                # BLOGRSS must be split in several smaller files with a blog_rss index
-                content = iuv.render(cr, uid, 'website_blog_rss.blog_rss_index_xml', dict(
-                    pages=range(1, pages + 1),
-                    url_root=request.httprequest.url_root,
-                ), context=context)
-            create_blog_rss('/blog_rss.xml', content)
-
         return request.make_response(content, [('Content-Type', mimetype)])
