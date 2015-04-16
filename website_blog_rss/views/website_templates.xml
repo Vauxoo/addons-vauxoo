@@ -19,6 +19,10 @@
             <t t-raw="content"/>
         </rss>
     </template>
-
+    <template id="blog_rss_icon" inherit_id="website.footer_default" name="RSS Icon">
+        <xpath expr="//h2" position="inside">
+            <a href="/blog_rss.xml"><i class="fa fa-rss"/></a>
+        </xpath>
+    </template>
     </data>
 </openerp>
