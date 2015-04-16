@@ -11,6 +11,18 @@ BLOG_RSS_CACHE_TIME = datetime.timedelta(minutes=1)
 
 class WebsiteBlogRSS(http.Controller):
 
+    def create_blog_rss(self, url, content):
+        cr, uid, context = request.cr, openerp.SUPERUSER_ID, request.context
+        ira = request.registry['ir.attachment']
+        mimetype = 'application/xml;charset=utf-8'
+        ira.create(cr, uid, dict(
+            datas=content.encode('base64'),
+            mimetype=mimetype,
+            type='binary',
+            name=url,
+            url=url,
+        ), context=context)
+
     @http.route('/blog_rss.xml', type='http', auth="public", website=True)
     def rss_xml_index(self):
         cr, uid, context = request.cr, openerp.SUPERUSER_ID, request.context
@@ -19,16 +31,6 @@ class WebsiteBlogRSS(http.Controller):
         blog_post_obj = request.registry['blog.post']
         mimetype = 'application/xml;charset=utf-8'
         content = None
-
-        def create_blog_rss(url, content):
-            ira.create(cr, uid, dict(
-                datas=content.encode('base64'),
-                mimetype=mimetype,
-                type='binary',
-                name=url,
-                url=url,
-            ), context=context)
-
         blog_rss = ira.search_read(cr, uid, [
             ('name', '=', '/blog_rss.xml'),
             ('type', '=', 'binary')],
@@ -67,7 +69,7 @@ class WebsiteBlogRSS(http.Controller):
                 if not first_page:
                     first_page = page
                 pages += 1
-                create_blog_rss('/blog_rss-%d.xml' % pages, page)
+                self.create_blog_rss('/blog_rss-%d.xml' % pages, page)
             if not pages:
                 return request.not_found()
             elif pages == 1:
