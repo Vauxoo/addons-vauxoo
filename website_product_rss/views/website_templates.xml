@@ -4,7 +4,7 @@
     <template id="product_rss_locs">
         <channel>
         <item t-foreach="products" t-as="product">
-            <t t-set="url" t-value="'{0}blog/{1}/post/{2}'.format(url_root, slug(post.blog_id), slug(post))"/>
+            <t t-set="url" t-value="'{0}shop/product/{1}'.format(url_root, slug(product))"/>
             <title><t t-esc="product.name"/></title>
             <link><t t-raw="url"/></link>
             <lastBuildDate><t t-esc="product.write_date"/></lastBuildDate>
