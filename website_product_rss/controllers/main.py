@@ -11,7 +11,7 @@ PRODUCT_RSS_CACHE_TIME = datetime.timedelta(minutes=1)
 
 class WebsiteProductRSS(http.Controller):
 
-    def create_prodct_rss(self, url, content):
+    def create_product_rss(self, url, content):
         cr, uid, context = request.cr, openerp.SUPERUSER_ID, request.context
         ira = request.registry['ir.attachment']
         mimetype = 'application/xml;charset=utf-8'
