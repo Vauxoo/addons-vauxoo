@@ -70,7 +70,7 @@ class WebsiteProductRSS(http.Controller):
                 if not first_page:
                     first_page = page
                 pages += 1
-                self.create_blog_rss('/product_rss-%d.xml' % pages, page)
+                self.create_product_rss('/product_rss-%d.xml' % pages, page)
             if not pages:
                 return request.not_found()
             elif pages == 1:
