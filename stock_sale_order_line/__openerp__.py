@@ -22,21 +22,22 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Purchase Order Line Quantities",
+    "name": "Stock Sale Order Line",
     "version": "1.0",
     "author": "Vauxoo",
     "category": "sale",
     "description": """
-Sale Order Line Quantities
-==========================
+Stock Sale Order Line
+=====================
 
-    Adds two new fields in Sale Order Line that compute how much of a line
-    has already been delivery or how much has already been invoiced
+    Adds two new fields one in Sale Order Line to grab the stock.moves records
+    related to it, and another from stock.move to point to the related Sale
+    Order Line
 """,
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [
-        "stock_sale_order_line",
+        "sale_stock",
     ],
     "demo": [],
     "data": [

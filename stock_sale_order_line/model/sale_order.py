@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
-############# Credits #########################################################
+# Credits #####################################################################
 #    Coded by: Yanina Aular <yanina.aular@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
@@ -21,32 +21,32 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-{
-    "name": "Purchase Order Line Quantities",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "sale",
-    "description": """
-Sale Order Line Quantities
-==========================
 
-    Adds two new fields in Sale Order Line that compute how much of a line
-    has already been delivery or how much has already been invoiced
-""",
-    "website": "http://www.vauxoo.com/",
-    "license": "",
-    "depends": [
-        "stock_sale_order_line",
-    ],
-    "demo": [],
-    "data": [
-        "view/view.xml"
-    ],
-    "test": [],
-    "js": [],
-    "css": [],
-    "qweb": [],
-    "installable": True,
-    "auto_install": False,
-    "active": False
-}
+from openerp.osv import osv, fields
+
+
+class stock_move(osv.osv):
+
+    _inherit = 'stock.move'
+    _columns = {
+        'sale_line_id': fields.related(
+            'procurement_id',
+            'sale_line_id',
+            string='Sale Order Line',
+            type='many2one',
+            relation='sale.order.line',
+            readonly=True,
+            ondelete='set null'),
+    }
+
+
+class sale_order_line(osv.osv):
+
+    _inherit = 'sale.order.line'
+    _columns = {
+        'move_ids': fields.one2many(
+            'stock.move', 'sale_line_id',
+            'Reservation',
+            readonly=True,
+            ondelete='set null'),
+    }

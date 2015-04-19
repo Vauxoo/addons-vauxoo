@@ -34,15 +34,15 @@ class sale_order_line(osv.osv):
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
         uom_obj = self.pool.get('product.uom')
-        pol_brw = self.browse(cr, uid, ids[0], context=context)
-        pol_uom_id = pol_brw.product_uom
+        sol_brw = self.browse(cr, uid, ids[0], context=context)
+        sol_uom_id = sol_brw.product_uom
 
-        for ail_brw in pol_brw.invoice_lines:
+        for ail_brw in sol_brw.invoice_lines:
             ail_uom_id = ail_brw.uos_id
             if ail_brw.invoice_id.state not in ('open', 'done'):
                 continue
             res += uom_obj._compute_qty_obj(cr, uid, ail_uom_id,
-                                            ail_brw.quantity, pol_uom_id,
+                                            ail_brw.quantity, sol_uom_id,
                                             context=context)
 
         return res
@@ -53,10 +53,10 @@ class sale_order_line(osv.osv):
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
         uom_obj = self.pool.get('product.uom')
-        pol_brw = self.browse(cr, uid, ids[0], context=context)
-        pol_uom_id = pol_brw.product_uom
+        sol_brw = self.browse(cr, uid, ids[0], context=context)
+        sol_uom_id = sol_brw.product_uom
 
-        for sm_brw in pol_brw.move_ids:
+        for sm_brw in sol_brw.move_ids:
             src = sm_brw.location_id.usage
             dst = sm_brw.location_dest_id.usage
             sm_uom_id = sm_brw.product_uom
@@ -65,13 +65,13 @@ class sale_order_line(osv.osv):
                 continue
             if src == dst:
                 continue
-            elif dst == 'internal':
-                qty = uom_obj._compute_qty_obj(cr, uid, sm_uom_id,
-                                               sm_brw.product_qty, pol_uom_id,
-                                               context=context)
             elif src == 'internal':
+                qty = uom_obj._compute_qty_obj(cr, uid, sm_uom_id,
+                                               sm_brw.product_qty, sol_uom_id,
+                                               context=context)
+            elif dst == 'internal':
                 qty = -uom_obj._compute_qty_obj(cr, uid, sm_uom_id,
-                                                sm_brw.product_qty, pol_uom_id,
+                                                sm_brw.product_qty, sol_uom_id,
                                                 context=context)
             res += qty
 

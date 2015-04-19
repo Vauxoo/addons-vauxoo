@@ -21,32 +21,6 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-{
-    "name": "Purchase Order Line Quantities",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "sale",
-    "description": """
-Sale Order Line Quantities
-==========================
 
-    Adds two new fields in Sale Order Line that compute how much of a line
-    has already been delivery or how much has already been invoiced
-""",
-    "website": "http://www.vauxoo.com/",
-    "license": "",
-    "depends": [
-        "stock_sale_order_line",
-    ],
-    "demo": [],
-    "data": [
-        "view/view.xml"
-    ],
-    "test": [],
-    "js": [],
-    "css": [],
-    "qweb": [],
-    "installable": True,
-    "auto_install": False,
-    "active": False
-}
+from . import model
+from . import wizard
