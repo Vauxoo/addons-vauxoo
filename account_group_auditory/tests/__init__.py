@@ -23,40 +23,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-{
-    "name": "Add Read-Only Accounting Group",
-    "version": "0.1",
-    "author": "Vauxoo",
-    "category": "Generic Modules",
-    "description": """
-This module adds the following features:
-========================================
-
-* Odoo does not come with a read-only accountant group out of the box, which
-is inconvenient when you need to have an external accountant go through your
-accounting records in Odoo.  This module adds a group 'Auditor Read-Only' so
-it's easy to grant an external accountant access to your Odoo system.
-* This group inherits the group 'Employee', thus minimum level of
-create/write/delete rights will be granted for some non-accounting related
-models.
-""",
-    "website": "http://www.vauxoo.com",
-    "license": "",
-    "depends": [
-        "account_asset",
-        "ifrs_report",
-    ],
-    "demo": [],
-    "data": [
-        "security/account_user_group.xml",
-        'security/ir.model.access.csv',
-    ],
-    "test": [],
-    "js": [],
-    "css": [],
-    "qweb": [],
-    "installable": True,
-    "auto_install": False,
-    "active": False
-}
+from . import test_group

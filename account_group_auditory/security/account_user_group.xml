@@ -5,35 +5,15 @@
         <record id="group_account_user_audit" model="res.groups">
             <field name="name">Auditor (Read-Only)</field>
             <field name="category_id" ref="base.module_category_accounting_and_finance"/>
-            <field name="implied_ids" eval="[(6,0,[ref('base.group_user')])]"/>
             <field name="users" model="res.users" search="[('name', '=', 'auditor')]" />
         </record>
 
         <record id="group_account_user_audit" model="res.groups">
             <field name="menu_access" eval="[(4, ref('account.menu_finance'))]"/>
         </record>
-        <!--Customer-->
         <record id="group_account_user_audit" model="res.groups">
-            <field name="menu_access" eval="[(4,
-                ref('account.menu_finance_receivables'),
-                ref('account.menu_action_invoice_tree1'),
-                ref('account.menu_action_invoice_tree3'),
-                ref('account_voucher.menu_action_vendor_receipt'),
-                ref('account.menu_account_customer')
-                )]"/>
+            <field name="menu_access" eval="[(4, ref('account.menu_finance_receivables'))]"/>
         </record>
-        <!--Supplier-->
-        <record id="group_account_user_audit" model="res.groups">
-            <field name="menu_access" eval="[(4,
-                ref('account.menu_finance_payables'),
-                ref('account.menu_action_invoice_tree2'),
-                ref('account.menu_action_invoice_tree4'),
-                ref('account_voucher.menu_action_vendor_payment'),
-                ref('account.menu_account_supplier')
-                )]"/>
-        </record>
-        <!-- The code , was not formatted like the others lines behind, because in that way, the menus_access aren't added correctly. more information in the issue https://github.com/odoo/odoo/issues/6076-->
-
         <record id="group_account_user_audit" model="res.groups">
             <field name="menu_access" eval="[(4, ref('account.menu_action_account_moves_all'))]"/>
         </record>
@@ -48,36 +28,6 @@
         </record>
         <record id="group_account_user_audit" model="res.groups">
             <field name="menu_access" eval="[(4, ref('account.menu_action_move_journal_line_form'))]"/>
-        </record>
-        <!--ASSETS-->
-        <record id="group_account_user_audit" model="res.groups">
-            <field name="menu_access" eval="[(4,
-                ref('account_asset.menu_finance_assets'),
-                ref('account_asset.menu_action_account_asset_asset_form'),
-                )]"/>
-        </record>
-        <!--ASSETS REPORTS-->
-        <record id="group_account_user_audit" model="res.groups">
-            <field name="menu_access" eval="[(4,
-                ref('account.menu_finance_reporting'),
-                )]"/>
-        </record>
-        <!--IFRS Reports-->
-        <record id="group_account_user_audit" model="res.groups">
-            <field name="menu_access" eval="[(4, 
-                ref('ifrs_report.menu_ifrs_ifrs'),
-                ref('ifrs_report.sub_menu_ifrs_ifrs')
-                )]"/>
-        </record>
-        <!--AFR Reports-->
-        <record id="group_account_user_audit" model="res.groups">
-            <field name="menu_access" eval="[(4, ref('account_financial_report.menu_afr_root'))]"/>
-        </record>
-        <record id="group_account_user_audit" model="res.groups">
-            <field name="menu_access" eval="[(4, ref('account_financial_report.menu_wizard_report'))]"/>
-        </record>
-        <record id="group_account_user_audit" model="res.groups">
-            <field name="menu_access" eval="[(4, ref('account_financial_report.account_financial_report_menu'))]"/>
         </record>
 
         <record id="group_account_user_audit" model="res.groups">
@@ -99,6 +49,10 @@
             <field name="menu_access" eval="[(4, ref('account.menu_finance_reports'))]"/>
         </record>
 
+        <record id="group_account_user_audit" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
         <record model="res.users" id="res_auditor_user">
             <field name="name">Auditor user</field>
             <field name="login">auditor</field>
@@ -106,7 +60,7 @@
             <field name="password">lodi-@uditor</field>
             <field name="alias_name">auditor</field>
             <field name="company_id" eval="ref('base.main_company')"/> 
-            <field name="groups_id"  eval="[(6,0,[ref('account_user_audit.group_account_user_audit')])]"/>
+            <field name="groups_id"  eval="[(6,0,[ref('account_group_auditory.group_account_user_audit')])]"/>
         </record>
     </data>
 </openerp>
