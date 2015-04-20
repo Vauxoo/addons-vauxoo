@@ -43,7 +43,7 @@ var __slice = [].slice;
 
       _results = [];
       for (_i = 1, _ref = this.options.numStars; 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--) {
-        _results.push(this.$el.append("<span class='glyphicon .glyphicon-star-empty'></span>"));
+        _results.push(this.$el.append("<span class='fa fa-star-o'></span>"));
       }
       return _results;
     };
@@ -63,16 +63,16 @@ var __slice = [].slice;
       rating || (rating = this.options.rating);
       if (rating) {
         for (i = _i = 0, _ref = rating - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
-          this.$el.find('span').eq(i).removeClass('glyphicon-star-empty').addClass('glyphicon-star');
+          this.$el.find('span').eq(i).removeClass('fa-star-o').addClass('fa-star');
         }
       }
       if (rating && rating < 5) {
         for (i = _j = rating; rating <= 4 ? _j <= 4 : _j >= 4; i = rating <= 4 ? ++_j : --_j) {
-          this.$el.find('span').eq(i).removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+          this.$el.find('span').eq(i).removeClass('fa-star').addClass('fa-star-o');
         }
       }
       if (!rating) {
-        return this.$el.find('span').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+        return this.$el.find('span').removeClass('fa-star').addClass('fa-star-o');
       }
     };
 
@@ -100,19 +100,19 @@ var __slice = [].slice;
 })(window.jQuery, window);
 
 $(function() {
-  return $(".starrr").starrr();
+  return $(".fa-star-o").starrr();
 });
 
 $( document ).ready(function() {
-  $('#stars_global').on('starrr:change', function(e, value){
+  $('#stars_global').on('fa-star-o:change', function(e, value){
     $('#count').html(value);
   });
 
-  $('#stars').on('starrr:change', function(e, value){
+  $('#stars').on('fa-star-o:change', function(e, value){
     $('#count').html(value);
   });
 
-  $('#stars-existing').on('starrr:change', function(e, value){
+  $('#stars-existing').on('fa-star-o:change', function(e, value){
     $('#count-existing').val(value);
   });
 });
