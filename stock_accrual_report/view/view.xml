@@ -1,6 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+
+        <record id="view_wizard_stock_accrual" model="ir.ui.view">
+            <field name="name">Stock Accrual</field>
+            <field name="model">stock.accrual.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Choose your date">
+                    <p class="oe_gray">
+                        Choose the date for which you want to get the stock valuation of your products.
+
+                        This will filter the stock operation that weren't done at the selected date, to retreive the quantity
+                        you had, and gives you the inventory value according to the standard price used at that time.
+                    </p>
+                    <p class="oe_gray">
+                        Retrieve the stock valuation of your products at current day
+                    </p>
+                    <group>
+                        <field name="type"/>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Print Report" type="object"  class="oe_highlight"  />
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_wizard_stock_accrual" model="ir.actions.act_window">
+            <field name="name">Stock Accrual</field>
+            <field name="res_model">stock.accrual.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_wizard_stock_accrual"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            id="menu_action_wizard_valuation_history"
+            action="action_wizard_stock_accrual"
+            parent="stock.next_id_61"
+            sequence="20"/>
     </data>
 </openerp>
 

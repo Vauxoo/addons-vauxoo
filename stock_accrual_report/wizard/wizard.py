@@ -21,5 +21,44 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
+from openerp.osv import osv, fields
+SELECTION_TYPE = [
+    ('sale', 'Sale Order'),
+    ('purchase', 'Purchase Order'),
+]
 
-from . import wizard
+
+class stock_accrual_wizard(osv.osv_memory):
+    _name = 'stock.accrual.wizard'
+    _rec_name = 'type'
+    _columns = {
+        'type': fields.selection(
+            SELECTION_TYPE,
+            string='Type',
+            required=False,
+        )
+    }
+
+    def print_report(self, cr, uid, ids, context=None):
+        """
+        To get the date and print the report
+        @return : return report
+        """
+        context = dict(context or {})
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+
+        self.compute_lines(cr, uid, ids, context.get('active_ids', []),
+                           context=context)
+
+        datas = {'active_ids': ids}
+        context['active_ids'] = ids
+        context['active_model'] = 'stock.accrual.wizard'
+
+        context['xls_report'] = wzd_brw.report_format == 'xls'
+        if wzd_brw.type == 'aging':
+            name = None
+        if wzd_brw.type == 'detail':
+            name = None
+        return self.pool['report'].get_action(cr, uid, [], name, data=datas,
+                                              context=context)
