@@ -120,6 +120,22 @@ class stock_accrual_wizard(osv.osv_memory):
         )
     }
 
+    def _get_lines(self, cr, uid, wzd_brw, order_brw, line_brw, context=None):
+        if 'sale' in order_brw._name:
+            product_qty = line_brw.product_uom_qty
+        if 'purchase' in order_brw._name:
+            product_qty = line_brw.product_qty
+        res = {
+            'wzd_id': wzd_brw.id,
+            'order_id': '%s,%s' % (order_brw._name, order_brw.id),
+            'line_id': '%s,%s' % (line_brw._name, line_brw.id),
+            'product_qty': product_qty,
+            'product_uom': line_brw.product_uom.id,
+            'qty_delivered': line_brw.qty_delivered,
+            'qty_invoiced': line_brw.qty_invoiced,
+        }
+        return res
+
     def compute_purchase_lines(self, cr, uid, ids, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -134,15 +150,8 @@ class stock_accrual_wizard(osv.osv_memory):
                                               context=context)
         for record_brw in record_brws:
             for line_brw in record_brw.order_line:
-                res.append({
-                    'wzd_id': wzd_brw.id,
-                    'order_id': '%s,%s' % (record_brw._name, record_brw.id),
-                    'line_id': '%s,%s' % (line_brw._name, line_brw.id),
-                    'product_qty': line_brw.product_qty,
-                    'product_uom': line_brw.product_uom.id,
-                    'qty_delivered': line_brw.qty_delivered,
-                    'qty_invoiced': line_brw.qty_invoiced,
-                })
+                res.append(self._get_lines(cr, uid, wzd_brw, record_brw,
+                                           line_brw, context=context))
         return res
 
     def compute_sale_lines(self, cr, uid, ids, context=None):
@@ -158,15 +167,8 @@ class stock_accrual_wizard(osv.osv_memory):
             record_brws = sale_obj.browse(cr, uid, record_ids, context=context)
         for record_brw in record_brws:
             for line_brw in record_brw.order_line:
-                res.append({
-                    'wzd_id': wzd_brw.id,
-                    'order_id': '%s,%s' % (record_brw._name, record_brw.id),
-                    'line_id': '%s,%s' % (line_brw._name, line_brw.id),
-                    'product_qty': line_brw.product_uom_qty,
-                    'product_uom': line_brw.product_uom.id,
-                    'qty_delivered': line_brw.qty_delivered,
-                    'qty_invoiced': line_brw.qty_invoiced,
-                })
+                res.append(self._get_lines(cr, uid, wzd_brw, record_brw,
+                                           line_brw, context=context))
         return res
 
     def compute_lines(self, cr, uid, ids, context=None):
