@@ -43,7 +43,7 @@ var __slice = [].slice;
 
       _results = [];
       for (_i = 1, _ref = this.options.numStars; 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--) {
-        _results.push(this.$el.append("<span class='fa fa-star-o'></span>"));
+        _results.push(this.$el.append("<span class='fa .fa-star-o'></span>"));
       }
       return _results;
     };
@@ -100,19 +100,19 @@ var __slice = [].slice;
 })(window.jQuery, window);
 
 $(function() {
-  return $(".fa-star-o").starrr();
+  return $(".starrr").starrr();
 });
 
 $( document ).ready(function() {
-  $('#stars_global').on('fa-star-o:change', function(e, value){
+  $('#stars_global').on('starrr:change', function(e, value){
     $('#count').html(value);
   });
 
-  $('#stars').on('fa-star-o:change', function(e, value){
+  $('#stars').on('starrr:change', function(e, value){
     $('#count').html(value);
   });
 
-  $('#stars-existing').on('fa-star-o:change', function(e, value){
+  $('#stars-existing').on('starrr:change', function(e, value){
     $('#count-existing').val(value);
   });
 });
