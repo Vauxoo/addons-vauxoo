@@ -200,6 +200,8 @@ class stock_accrual_wizard(osv.osv_memory):
         elif wzd_brw.type == 'purchase':
             res = self.compute_purchase_lines(cr, uid, ids, context=context)
         for rex in res:
+            if not any([rex['debit'], rex['credit']]):
+                continue
             sawl_obj.create(cr, uid, rex, context=context)
 
         return True
@@ -213,6 +215,7 @@ class stock_accrual_wizard(osv.osv_memory):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
 
+        import pdb; pdb.set_trace()
         self.compute_lines(cr, uid, ids, context=context)
 
         datas = {'active_ids': ids}

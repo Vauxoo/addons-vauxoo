@@ -36,6 +36,7 @@ class stock_move(osv.osv):
             type='many2one',
             relation='sale.order.line',
             readonly=True,
+            store=True,
             ondelete='set null'),
     }
 
