@@ -49,6 +49,13 @@ SALE_STATES = [
     'done',
 ]
 
+PURCHASE_STATES = [
+    'approved',
+    'except_picking',
+    'except_invoice',
+    'done',
+]
+
 
 class stock_accrual_wizard_line(osv.osv_memory):
     _name = 'stock.accrual.wizard.line'
@@ -113,6 +120,31 @@ class stock_accrual_wizard(osv.osv_memory):
         )
     }
 
+    def compute_purchase_lines(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        purchase_obj = self.pool.get('purchase.order')
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        res = []
+        record_ids = purchase_obj.search(cr, uid,
+                                         [('state', 'in', PURCHASE_STATES)],
+                                         context=context)
+        if record_ids:
+            record_brws = purchase_obj.browse(cr, uid, record_ids,
+                                              context=context)
+        for record_brw in record_brws:
+            for line_brw in record_brw.order_line:
+                res.append({
+                    'wzd_id': wzd_brw.id,
+                    'order_id': '%s,%s' % (record_brw._name, record_brw.id),
+                    'line_id': '%s,%s' % (line_brw._name, line_brw.id),
+                    'product_qty': line_brw.product_qty,
+                    'product_uom': line_brw.product_uom.id,
+                    'qty_delivered': line_brw.qty_delivered,
+                    'qty_invoiced': line_brw.qty_invoiced,
+                })
+        return res
+
     def compute_sale_lines(self, cr, uid, ids, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -150,7 +182,7 @@ class stock_accrual_wizard(osv.osv_memory):
         if wzd_brw.type == 'sale':
             res = self.compute_sale_lines(cr, uid, ids, context=context)
         elif wzd_brw.type == 'purchase':
-            pass
+            res = self.compute_purchase_lines(cr, uid, ids, context=context)
         for rex in res:
             sawl_obj.create(cr, uid, rex, context=context)
 
