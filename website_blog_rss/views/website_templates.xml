@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    <template id="blog_rss_locs">
+        <channel>
+        <item t-foreach="posts" t-as="post">
+            <t t-set="url_x" t-value="'{0}blog/{1}/post/{2}'.format(url_root, slug(post.blog_id), slug(post))"/>
+            <title><t t-esc="post.name"/></title>
+            <link><t t-raw="url_x"/></link>
+            <lastBuildDate><t t-esc="post.write_date"/></lastBuildDate>
+            <description><t t-esc="post.content"/></description>
+            <category><t t-esc="post.blog_id.name"/></category>
+        </item>
+        </channel>
+    </template>
+
+    <template id="blog_rss_xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+        <rss t-attf-xmlns="" version="2.0">
+            <t t-raw="content"/>
+        </rss>
+    </template>
+    <template id="blog_rss_icon" inherit_id="website.footer_default" name="RSS Icon">
+        <xpath expr="//h2" position="inside">
+            <a href="/blog_rss.xml"><i class="fa fa-rss"/></a>
+        </xpath>
+    </template>
+    </data>
+</openerp>

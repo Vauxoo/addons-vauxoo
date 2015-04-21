@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-		<template id="yoytec_authorized_service_providers" page="True" name="Authorized Service Providers">
+		<template id="authorized_service_providers" page="True" name="Authorized Service Providers">
             <t t-call="website.layout">
               <div id="wrap">
                 <section class="vx_wrapper_white" style="background: #333;">
@@ -18,7 +18,7 @@
                   <div class="container">
                     <t t-set="providers" t-value="env['product.brand'].search([], order='name desc')"/>
                     <t t-foreach="providers" t-as="provider">
-                        <t t-call="website_authorized_service_centers.yoytec_centers"/>
+                        <t t-call="website_authorized_service_centers.authorized_centers"/>
 
                     </t>
                   </div>
@@ -27,7 +27,7 @@
             </t>
         </template>
 
-        <template id="yoytec_centers" name="Authorized Centers">
+        <template id="authorized_centers" name="Authorized Centers">
 
             <div class="container" style="margin-top: 20px; margin-bottom: 20px;">
                 <div class="row panel">
@@ -53,11 +53,5 @@
                 </div>   
             </div>
         </template>
-        <template id="footer_providers" inherit_id="website.footer_default" customize_show="True" name="Automatic Footer">
-            <xpath expr="//ul[@id='products']" position="inside">
-                <li><a href="/page/website_authorized_service_centers.yoytec_authorized_service_providers">Authorized Service providers</a></li>
-            </xpath>
-        </template>
-
     </data>
 </openerp>
