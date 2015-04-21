@@ -19,6 +19,7 @@
                     <group>
                         <field name="type"/>
                         <field name="report_format"/>
+                        <field name="period_id"/>
                     </group>
                     <footer>
                         <button name="print_report" string="Print Report" type="object"  class="oe_highlight"  />

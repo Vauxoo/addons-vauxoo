@@ -113,11 +113,17 @@ class stock_accrual_wizard(osv.osv_memory):
             'Report Format',
             required=True
         ),
+        'period_id': fields.many2one(
+            'account.period',
+            domain="[('special','=',False)]",
+            string='Period',
+            required=True,
+        ),
         'line_ids': fields.one2many(
             'stock.accrual.wizard.line',
             'wzd_id',
             'Lines',
-        )
+        ),
     }
 
     def _get_accrual(self, cr, uid, ids, line_brw, context=None):
@@ -171,13 +177,23 @@ class stock_accrual_wizard(osv.osv_memory):
     def compute_sale_lines(self, cr, uid, ids, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
+        sm_obj = self.pool.get('stock.move')
         sale_obj = self.pool.get('sale.order')
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        date_start = wzd_brw.period_id.date_start
+        date_stop = wzd_brw.period_id.date_stop
+        sm_ids = sm_obj.search(cr, uid, [
+            ('state', '=', 'done'),
+            ('date', '>=', date_start),
+            ('date', '<=', date_stop),
+            ('sale_line_id', '!=', False)],
+            context=context)
+        record_ids = set([])
+        for sm_brw in sm_obj.browse(cr, uid, sm_ids, context=context):
+            record_ids.add(sm_brw.sale_line_id.order_id.id)
         res = []
-        record_ids = sale_obj.search(cr, uid,
-                                     [('state', 'in', SALE_STATES)],
-                                     context=context)
         if record_ids:
+            record_ids = list(record_ids)
             record_brws = sale_obj.browse(cr, uid, record_ids, context=context)
         for record_brw in record_brws:
             for line_brw in record_brw.order_line:
@@ -200,8 +216,6 @@ class stock_accrual_wizard(osv.osv_memory):
         elif wzd_brw.type == 'purchase':
             res = self.compute_purchase_lines(cr, uid, ids, context=context)
         for rex in res:
-            if not any([rex['debit'], rex['credit']]):
-                continue
             sawl_obj.create(cr, uid, rex, context=context)
 
         return True
@@ -215,7 +229,6 @@ class stock_accrual_wizard(osv.osv_memory):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
 
-        import pdb; pdb.set_trace()
         self.compute_lines(cr, uid, ids, context=context)
 
         datas = {'active_ids': ids}
