@@ -120,7 +120,19 @@ class stock_accrual_wizard(osv.osv_memory):
         )
     }
 
+    def _get_accrual(self, cr, uid, ids, line_brw, context=None):
+        context = context or {}
+        res = {'debit': 0.0, 'credit': 0.0}
+        for move in line_brw.move_ids:
+            for aml_brw in move.aml_ids:
+                if not aml_brw.account_id.reconcile:
+                    continue
+                res['debit'] += aml_brw.debit
+                res['credit'] += aml_brw.credit
+        return res
+
     def _get_lines(self, cr, uid, wzd_brw, order_brw, line_brw, context=None):
+        context = context or {}
         if 'sale' in order_brw._name:
             product_qty = line_brw.product_uom_qty
         if 'purchase' in order_brw._name:
@@ -134,6 +146,8 @@ class stock_accrual_wizard(osv.osv_memory):
             'qty_delivered': line_brw.qty_delivered,
             'qty_invoiced': line_brw.qty_invoiced,
         }
+        res.update(self._get_accrual(cr, uid, wzd_brw.id, line_brw,
+                                     context=context))
         return res
 
     def compute_purchase_lines(self, cr, uid, ids, context=None):
