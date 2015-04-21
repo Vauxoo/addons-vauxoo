@@ -43,7 +43,7 @@ var __slice = [].slice;
 
       _results = [];
       for (_i = 1, _ref = this.options.numStars; 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--) {
-        _results.push(this.$el.append("<span class='fa .fa-star-o'></span>"));
+        _results.push(this.$el.append("<span class='fa fa-star-o'></span>"));
       }
       return _results;
     };
