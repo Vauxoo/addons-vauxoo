@@ -40,6 +40,15 @@ SELECT_LINE = [
     ('purchase.order.line', 'Purchase Order Line'),
 ]
 
+SALE_STATES = [
+    'waiting_date',
+    'progress',
+    'manual',
+    'shipping_except',
+    'invoice_except',
+    'done',
+]
+
 
 class stock_accrual_wizard_line(osv.osv_memory):
     _name = 'stock.accrual.wizard.line'
@@ -104,6 +113,50 @@ class stock_accrual_wizard(osv.osv_memory):
         )
     }
 
+    def compute_lines(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+
+        sale_obj = self.pool.get('sale.order')
+        purchase_obj = self.pool.get('purchase.order')
+        sawl_obj = self.pool.get('stock.accrual.wizard.line')
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        record_ids = []
+        record_brws = []
+        res = []
+
+        wzd_brw.line_ids.unlink()
+
+        if wzd_brw.type == 'sale':
+            record_ids = sale_obj.search(cr, uid,
+                                         [('state', 'in', SALE_STATES)],
+                                         context=context)
+            if record_ids:
+                record_brws = sale_obj.browse(cr, uid, record_ids,
+                                              context=context)
+        elif wzd_brw.type == 'purchase':
+            record_ids = purchase_obj.search(
+                cr, uid, [('state', 'in', ('open'))], context=context)
+            if record_ids:
+                record_brws = sale_obj.browse(cr, uid, record_ids,
+                                              context=context)
+        for record_brw in record_brws:
+            for line_brw in record_brw.order_line:
+                res.append({
+                    'wzd_id': wzd_brw.id,
+                    'order_id': '%s,%s' % (record_brw._name, record_brw.id),
+                    'line_id': '%s,%s' % (line_brw._name, line_brw.id),
+                    'product_qty': line_brw.product_uom_qty,
+                    'product_uom': line_brw.product_uom.id,
+                    'qty_delivered': line_brw.qty_delivered,
+                    'qty_invoiced': line_brw.qty_invoiced,
+
+                })
+        for rex in res:
+            sawl_obj.create(cr, uid, rex, context=context)
+
+        return True
+
     def print_report(self, cr, uid, ids, context=None):
         """
         To get the date and print the report
@@ -113,8 +166,7 @@ class stock_accrual_wizard(osv.osv_memory):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
 
-        self.compute_lines(cr, uid, ids, context.get('active_ids', []),
-                           context=context)
+        self.compute_lines(cr, uid, ids, context=context)
 
         datas = {'active_ids': ids}
         context['active_ids'] = ids
@@ -125,5 +177,6 @@ class stock_accrual_wizard(osv.osv_memory):
             name = None
         if wzd_brw.type == 'detail':
             name = None
+        return True
         return self.pool['report'].get_action(cr, uid, [], name, data=datas,
                                               context=context)
