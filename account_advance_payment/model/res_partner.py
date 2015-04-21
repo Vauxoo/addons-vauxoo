@@ -37,7 +37,6 @@ class res_partner(osv.Model):
 
     _columns = {
         'property_account_supplier_advance': fields.property(
-            'account.account',
             type='many2one',
             relation='account.account',
             string="Account Supplier Advance",
@@ -45,7 +44,6 @@ class res_partner(osv.Model):
             domain="[('type','=','payable')]",
             help="This account will be used for advance payment of suppliers"),
         'property_account_customer_advance': fields.property(
-            'account.account',
             type='many2one',
             relation='account.account',
             string="Account Customer Advance",
