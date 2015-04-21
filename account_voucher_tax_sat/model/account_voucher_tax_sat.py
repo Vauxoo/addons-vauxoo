@@ -106,7 +106,7 @@ class account_voucher_tax_sat(models.Model):
     def action_close_tax(self):
         period_obj = self.env['account.period']
 
-        period_id = period_obj.next(self.period_id, step=1)
+        period_id = period_obj.find(self.date)
 
         self.validate_move_line()
 
@@ -157,7 +157,7 @@ class account_voucher_tax_sat(models.Model):
                     av_obj._get_base_amount_tax_secondary(
                         move_line.tax_id_secondary,
                         move_line.amount_base, move_line.credit)
-                period_id = period_obj.next(self.period_id, step=1)
+                period_id = period_obj.find(self.date)
 
                 move_line_dt = {
                     'move_id': self.move_id.id,
@@ -193,7 +193,7 @@ class account_voucher_tax_sat(models.Model):
         aml_obj = self.env['account.move.line']
         period_obj = self.env['account.period']
 
-        period_id = period_obj.next(voucher_tax_sat.period_id, step=1)
+        period_id = period_obj.find(voucher_tax_sat.date)
 
         vals = {
             'move_id': voucher_tax_sat.move_id.id,
