@@ -185,12 +185,22 @@ class stock_accrual_wizard(osv.osv_memory):
     def compute_purchase_lines(self, cr, uid, ids, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
+        sm_obj = self.pool.get('stock.move')
         purchase_obj = self.pool.get('purchase.order')
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        date_start = wzd_brw.period_id.date_start
+        date_stop = wzd_brw.period_id.date_stop
+        sm_ids = sm_obj.search(cr, uid, [
+            ('state', '=', 'done'),
+            ('date', '>=', date_start),
+            ('date', '<=', date_stop),
+            ('purchase_line_id', '!=', False)],
+            context=context)
+        record_ids = set([])
+        for sm_brw in sm_obj.browse(cr, uid, sm_ids, context=context):
+            record_ids.add(sm_brw.purchase_line_id.order_id.id)
         res = []
-        record_ids = purchase_obj.search(cr, uid,
-                                         [('state', 'in', PURCHASE_STATES)],
-                                         context=context)
+        record_brws = []
         if record_ids:
             record_brws = purchase_obj.browse(cr, uid, record_ids,
                                               context=context)
@@ -243,6 +253,8 @@ class stock_accrual_wizard(osv.osv_memory):
         elif wzd_brw.type == 'purchase':
             res = self.compute_purchase_lines(cr, uid, ids, context=context)
         for rex in res:
+            # if not any([rex['debit'], rex['credit']]):
+            #     continue
             sawl_obj.create(cr, uid, rex, context=context)
 
         return True
@@ -262,7 +274,7 @@ class stock_accrual_wizard(osv.osv_memory):
         context['active_ids'] = ids
         context['active_model'] = 'stock.accrual.wizard'
 
-        # context['xls_report'] = wzd_brw.report_format == 'xls'
+        context['xls_report'] = wzd_brw.report_format == 'xls'
         name = 'stock_accrual_report.stock_accrual_report_name'
         return self.pool['report'].get_action(cr, uid, [], name, data=datas,
                                               context=context)
