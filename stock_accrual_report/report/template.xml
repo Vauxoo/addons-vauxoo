@@ -13,6 +13,22 @@
                     <!-- DEVELOPING PAGE/BODY -->
                     <div class="page">
                         <table class="basic_table"  width="100%" id='table_body'>
+                            <tr>
+                                <th width="10%" class="ITEMSTITLERIGHT">
+                                    <t t-if="o.type =='sale'">SALES ORDER</t>
+                                    <t t-if="o.type =='purchase'">PURCHASE ORDER</t>
+                                </th>
+                                <th width="12%" class="ITEMSTITLELEFT">DESCRIPTION</th>
+                                <th width="18%" class="ITEMSTITLELEFT">UOM</th>
+                                <th width="10%" class="ITEMSTITLERIGHT">ORDERED QTY</th>
+                                <th width="10%" class="ITEMSTITLERIGHT">
+                                    <t t-if="o.type =='sale'">DELIVERED QTY</t>
+                                    <t t-if="o.type =='purchase'">RECEIVED QTY</t>
+                                </th>
+                                <th width="10%" class="ITEMSTITLERIGHT">INVOICED QTY</th>
+                                <th width="10%" class="ITEMSTITLERIGHT">DEBIT</th>
+                                <th width="10%" class="ITEMSTITLERIGHT">CREDIT</th>
+                            </tr>
                         </table>
                     </div>
                 </div>
