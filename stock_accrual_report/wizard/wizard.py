@@ -57,7 +57,7 @@ PURCHASE_STATES = [
     'done',
 ]
 
-QUERY = '''
+QUERY_INVOICE = '''
 SELECT order_id
 FROM {ttype}_order_line AS ol
 INNER JOIN
@@ -66,12 +66,10 @@ INNER JOIN
     account_invoice_line AS ail ON ail.id = olir.invoice_id
 INNER JOIN
     account_invoice AS ai ON ai.id = ail.invoice_id
-INNER JOIN
-    res_company AS rc on rc.id = ai.company_id
 WHERE
     ai.state IN ('open', 'paid')
     AND (ai.date_invoice BETWEEN '{date_start}' AND '{date_stop}')
-    AND rc.id = {company_id}
+    AND ai.company_id = {company_id}
 '''
 
 
@@ -205,7 +203,7 @@ class stock_accrual_wizard(osv.osv_memory):
         res = []
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         ttype = 'sale' if wzd_brw.type == 'sale' else 'purchase'
-        query = QUERY.format(
+        query = QUERY_INVOICE.format(
             ttype=ttype,
             company_id=wzd_brw.company_id.id,
             date_start=wzd_brw.period_id.date_start,
