@@ -18,8 +18,8 @@
                                     <t t-if="o.type =='sale'">SALES ORDER</t>
                                     <t t-if="o.type =='purchase'">PURCHASE ORDER</t>
                                 </th>
-                                <th width="12%" class="ITEMSTITLELEFT">DESCRIPTION</th>
-                                <th width="18%" class="ITEMSTITLELEFT">UOM</th>
+                                <th width="30%" class="ITEMSTITLELEFT">DESCRIPTION</th>
+                                <th width="10%" class="ITEMSTITLELEFT">UOM</th>
                                 <th width="10%" class="ITEMSTITLERIGHT">ORDERED QTY</th>
                                 <th width="10%" class="ITEMSTITLERIGHT">
                                     <t t-if="o.type =='sale'">DELIVERED QTY</t>
@@ -29,6 +29,24 @@
                                 <th width="10%" class="ITEMSTITLERIGHT">DEBIT</th>
                                 <th width="10%" class="ITEMSTITLERIGHT">CREDIT</th>
                             </tr>
+                            <t t-foreach="o.line_ids" t-as="l">
+                                <tr>
+                                    <td class="ITEMSLEFT">
+                                        <span t-esc="l.order_id.name"/>
+                                    </td>
+                                    <td class="ITEMSLEFT">
+                                        <span t-esc="l.line_id.name"/>
+                                    </td>
+                                    <td class="ITEMSLEFT">
+                                        <span t-esc="l.product_uom.name"/>
+                                    </td>
+                                    <td class="ITEMSRIGHT"><span t-esc="formatLang(l.product_qty, digits=2, grouping=True)"/></td>
+                                    <td class="ITEMSRIGHT"><span t-esc="formatLang(l.qty_delivered, digits=2, grouping=True)"/></td>
+                                    <td class="ITEMSRIGHT"><span t-esc="formatLang(l.qty_invoiced, digits=2, grouping=True)"/></td>
+                                    <td class="ITEMSRIGHT"><span t-esc="formatLang(l.debit, digits=2, grouping=True)"/></td>
+                                    <td class="ITEMSRIGHT"><span t-esc="formatLang(l.credit, digits=2, grouping=True)"/></td>
+                                </tr>
+                            </t>
                         </table>
                     </div>
                 </div>
