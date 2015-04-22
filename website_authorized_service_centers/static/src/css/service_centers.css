@@ -1,4 +1,4 @@
-.asc .well {
+.authorized_scenters .well {
   margin-top: -20px;
   background-color: #007FBD;
   border: 2px solid #0077B2;
@@ -8,7 +8,7 @@
   padding: 15px;
   border-radius: 0px !important;
 }
-.asc .well:hover {
+.authorized_scenters .well:hover {
   margin-top: -20px;
   background-color: #0077B2;
   border: 2px solid #0077B2;
@@ -19,18 +19,18 @@
   border-radius: 0px !important;
   border-bottom: 2px solid rgba(97, 203, 255, 0.65);
 }
-.asc body {
+.authorized_scenters body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   color: #fff;
   background-color: #F1F1F1;
 }
-.asc .bg_blur {
+.authorized_scenters .bg_blur {
   height: 300px;
   background-size: cover;
 }
-.asc .follow_btn {
+.authorized_scenters .follow_btn {
   text-decoration: none;
   position: absolute;
   left: 35%;
@@ -45,7 +45,7 @@
   font-size: 20px;
   border: 4px solid #007FBE;
 }
-.asc .follow_btn:hover {
+.authorized_scenters .follow_btn:hover {
   text-decoration: none;
   position: absolute;
   left: 35%;
@@ -60,41 +60,41 @@
   font-size: 20px;
   border: 4px solid rgba(255, 255, 255, 0.8);
 }
-.asc .header {
+.authorized_scenters .header {
   color: #808080;
   margin-left: 10%;
   margin-top: 70px;
 }
-.asc .picture {
+.authorized_scenters .picture {
   height: 150px;
   width: 150px;
   position: absolute;
   top: 75px;
   left: -75px;
 }
-.asc .picture_mob {
+.authorized_scenters .picture_mob {
   position: absolute;
   width: 35%;
   left: 35%;
   bottom: 70%;
 }
-.asc .btn-style {
+.authorized_scenters .btn-style {
   color: #fff;
   background-color: #007FBE;
   border-color: #adadad;
   width: 33.3%;
 }
-.asc .btn-style:hover {
+.authorized_scenters .btn-style:hover {
   color: #333;
   background-color: #3D5DE0;
   border-color: #adadad;
   width: 33.3%;
 }
 @media (max-width: 767px) {
-  .asc .header {
+  .authorized_scenters .header {
     text-align: center;
   }
-  .asc .nav {
+  .authorized_scenters .nav {
     margin-top: 30px;
   }
 }

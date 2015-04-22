@@ -29,24 +29,25 @@
 
         <template id="authorized_centers" name="Authorized Centers">
 
-            <div class="container asc" style="margin-top: 20px; margin-bottom: 20px;">
+            <div class="container authorized_scenters" style="margin-top: 20px; margin-bottom: 20px;">
                 <div class="row panel">
                     <div class="col-md-4 bg_blur">
-                        <img t-att-src="website.image_url(provider, 'logo')" class="img shadow img-rounded img-thumbnail picture hidden-xs" height="90"/>
-                        <img t-att-src="website.image_url(provider, 'logo')" class="img shadow img-rounded img-thumbnail visible-xs picture_mob" height="90"/>
-
-                        <h2><a t-att-href="provider.url"><t t-esc="provider.name" /></a></h2>
+                        <a t-att-href="provider.url">
+                            <img t-att-src="website.image_url(provider, 'logo')" class="img shadow img-rounded img-thumbnail picture hidden-xs" height="90"/>
+                            <img t-att-src="website.image_url(provider, 'logo')" class="img shadow img-rounded img-thumbnail visible-xs picture_mob" height="90"/>
+                        </a>
                     </div>
                 <t t-foreach="provider.authorized_partner_ids" t-as="partner">
                     <div class="col-md-8  col-xs-12">
-                       <img t-att-src="website.image_url(partner, 'image_medium')" class="img shadow img-rounded img-thumbnail picture hidden-xs"/>
-                       <img t-att-src="website.image_url(partner, 'image_medium')" class="img shadow img-rounded img-thumbnail visible-xs picture_mob"/>
+                        <a href="partner.website">
+                           <img t-att-src="website.image_url(partner, 'image_medium')" class="img shadow img-rounded img-thumbnail picture hidden-xs"/>
+                           <img t-att-src="website.image_url(partner, 'image_medium')" class="img shadow img-rounded img-thumbnail visible-xs picture_mob"/>
+                        </a>
                        <div class="header">
                             <h1><t t-esc="partner.name"/></h1>
                             <h4><t t-esc="partner.street"/></h4>
                             <h4><t t-esc="partner.phone"/></h4>
                             <h4><t t-esc="partner.email"/></h4>
-                            <h4><a t-att-href="partner.website">Website</a></h4>
                        </div>
                     </div>
                 </t>
