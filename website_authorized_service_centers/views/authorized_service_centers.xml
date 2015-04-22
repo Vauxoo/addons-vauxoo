@@ -4,7 +4,7 @@
 		<template id="authorized_service_providers" page="True" name="Authorized Service Providers">
             <t t-call="website.layout">
               <div id="wrap">
-                <section class="vx_wrapper_white" style="background: #333;">
+                <section class="vx_wrapper_white">
                     <div class="container">
                     <div class="row">
                         <div class="col-md-6 mt16">
