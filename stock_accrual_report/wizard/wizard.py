@@ -57,8 +57,19 @@ PURCHASE_STATES = [
     'done',
 ]
 
+QUERY_MOVE = '''
+SELECT DISTINCT order_id
+FROM {ttype}_order_line AS ol
+INNER JOIN
+    stock_move AS sm ON sm.{ttype}_line_id = ol.id
+WHERE
+    sm.state IN ('done')
+    AND (sm.date BETWEEN '{date_start}' AND '{date_stop}')
+    AND sm.company_id = {company_id}
+'''
+
 QUERY_INVOICE = '''
-SELECT order_id
+SELECT DISTINCT order_id
 FROM {ttype}_order_line AS ol
 INNER JOIN
     {ttype}_order_line_invoice_rel AS olir ON olir.order_line_id = ol.order_id
@@ -197,6 +208,23 @@ class stock_accrual_wizard(osv.osv_memory):
                                      context=context))
         return res
 
+    def _get_records_from_stock(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        res = []
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        ttype = 'sale' if wzd_brw.type == 'sale' else 'purchase'
+        query = QUERY_MOVE.format(
+            ttype=ttype,
+            company_id=wzd_brw.company_id.id,
+            date_start=wzd_brw.period_id.date_start,
+            date_stop=wzd_brw.period_id.date_stop,
+        )
+        cr.execute(query)
+        res = cr.fetchall()
+        res = [val[0] for val in res]
+        return set(res)
+
     def _get_records_from_invoice(self, cr, uid, ids, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -211,33 +239,23 @@ class stock_accrual_wizard(osv.osv_memory):
         )
         cr.execute(query)
         res = cr.fetchall()
+        res = [val[0] for val in res]
         return set(res)
 
     def compute_purchase_lines(self, cr, uid, ids, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
-        sm_obj = self.pool.get('stock.move')
         purchase_obj = self.pool.get('purchase.order')
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
-        date_start = wzd_brw.period_id.date_start
-        date_stop = wzd_brw.period_id.date_stop
-        sm_ids = sm_obj.search(cr, uid, [
-            ('state', '=', 'done'),
-            ('date', '>=', date_start),
-            ('date', '<=', date_stop),
-            ('purchase_line_id', '!=', False)],
-            context=context)
-        record_ids = set([])
-        for sm_brw in sm_obj.browse(cr, uid, sm_ids, context=context):
-            record_ids.add(sm_brw.purchase_line_id.order_id.id)
         res = []
+        record_ids = self._get_records_from_stock(cr, uid, ids, context=context)
+        record_idx = self._get_records_from_invoice(cr, uid, ids,
+                                                    context=context)
+        record_ids = record_ids | record_idx
         record_brws = []
         if record_ids:
             record_brws = purchase_obj.browse(cr, uid, record_ids,
                                               context=context)
-        record_idx = self._get_records_from_invoice(cr, uid, ids,
-                                                    context=context)
-        record_ids = record_ids | record_idx
         for record_brw in record_brws:
             for line_brw in record_brw.order_line:
                 res.append(self._get_lines(cr, uid, wzd_brw, record_brw,
@@ -247,24 +265,13 @@ class stock_accrual_wizard(osv.osv_memory):
     def compute_sale_lines(self, cr, uid, ids, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
-        sm_obj = self.pool.get('stock.move')
         sale_obj = self.pool.get('sale.order')
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
-        date_start = wzd_brw.period_id.date_start
-        date_stop = wzd_brw.period_id.date_stop
-        sm_ids = sm_obj.search(cr, uid, [
-            ('state', '=', 'done'),
-            ('date', '>=', date_start),
-            ('date', '<=', date_stop),
-            ('sale_line_id', '!=', False)],
-            context=context)
-        record_ids = set([])
-        for sm_brw in sm_obj.browse(cr, uid, sm_ids, context=context):
-            record_ids.add(sm_brw.sale_line_id.order_id.id)
+        res = []
+        record_ids = self._get_records_from_stock(cr, uid, ids, context=context)
         record_idx = self._get_records_from_invoice(cr, uid, ids,
                                                     context=context)
         record_ids = record_ids | record_idx
-        res = []
         record_brws = []
         if record_ids:
             record_ids = list(record_ids)
