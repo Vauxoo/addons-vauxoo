@@ -20,6 +20,8 @@
                         <field name="type"/>
                         <field name="report_format"/>
                         <field name="period_id"/>
+                        <field name="company_id" invisible='1'/>
+                        <field name="user_id" invisible='1'/>
                     </group>
                     <footer>
                         <button name="print_report" string="Print Report" type="object"  class="oe_highlight"  />

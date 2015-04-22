@@ -23,6 +23,7 @@
 ###############################################################################
 from openerp.osv import osv, fields
 import openerp.addons.decimal_precision as dp
+from openerp.tools.translate import _
 
 SELECTION_TYPE = [
     ('sale', 'Sale Order'),
@@ -101,6 +102,16 @@ class stock_accrual_wizard_line(osv.osv_memory):
 class stock_accrual_wizard(osv.osv_memory):
     _name = 'stock.accrual.wizard'
     _rec_name = 'type'
+
+    def _get_default_company(self, cr, uid, context=None):
+        company_id = self.pool.get('res.users')._get_company(cr, uid,
+                                                             context=context)
+        if not company_id:
+            raise osv.except_osv(
+                _('Error!'),
+                _('There is no default company for the current user!'))
+        return company_id
+
     _columns = {
         'type': fields.selection(
             SELECTION_TYPE,
@@ -124,6 +135,21 @@ class stock_accrual_wizard(osv.osv_memory):
             'wzd_id',
             'Lines',
         ),
+        'company_id': fields.many2one(
+            'res.company',
+            'Company',
+            required=True),
+        'user_id': fields.many2one(
+            'res.users',
+            'User'),
+    }
+
+    _defaults = {
+        'report_format': lambda *args: 'pdf',
+        'type': lambda *args: 'sale',
+        'company_id': _get_default_company,
+        'user_id': lambda s, c, u, cx: s.pool.get('res.users').browse(c, u, u,
+                                                                      cx).id,
     }
 
     def _get_accrual(self, cr, uid, ids, line_brw, context=None):
@@ -192,6 +218,7 @@ class stock_accrual_wizard(osv.osv_memory):
         for sm_brw in sm_obj.browse(cr, uid, sm_ids, context=context):
             record_ids.add(sm_brw.sale_line_id.order_id.id)
         res = []
+        record_brws = []
         if record_ids:
             record_ids = list(record_ids)
             record_brws = sale_obj.browse(cr, uid, record_ids, context=context)
@@ -235,11 +262,7 @@ class stock_accrual_wizard(osv.osv_memory):
         context['active_ids'] = ids
         context['active_model'] = 'stock.accrual.wizard'
 
-        context['xls_report'] = wzd_brw.report_format == 'xls'
-        if wzd_brw.type == 'aging':
-            name = None
-        if wzd_brw.type == 'detail':
-            name = None
-        return True
+        # context['xls_report'] = wzd_brw.report_format == 'xls'
+        name = 'stock_accrual_report.stock_accrual_report_name'
         return self.pool['report'].get_action(cr, uid, [], name, data=datas,
                                               context=context)

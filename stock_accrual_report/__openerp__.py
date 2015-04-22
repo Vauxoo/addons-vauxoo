@@ -46,6 +46,8 @@ Stock Accrual Report
     "data": [
         "view/view.xml",
         "view/report.xml",
+        "report/layouts.xml",
+        "report/template.xml",
     ],
     "test": [],
     "js": [],
