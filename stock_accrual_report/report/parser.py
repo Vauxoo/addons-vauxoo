@@ -1,9 +1,10 @@
+#!/usr/bin/python
 # -*- encoding: utf-8 -*-
 ###############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
-############# Credits #########################################################
+# Credits #####################################################################
 #    Coded by: Yanina Aular <yanina.aular@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
@@ -21,37 +22,34 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-{
-    "name": "Stock Accrual Report",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "stock",
-    "description": """
-Stock Accrual Report
-====================
 
-    Allow to retrieves a report for Sale or Purchase fetching delivered &
-    invoiced quantities and how much was accrued.
-""",
-    "website": "http://www.vauxoo.com/",
-    "license": "",
-    "depends": [
-        "purchase_order_line_quantity",
-        "sale_order_line_quantity",
-        "account_anglo_saxon_stock_move_purchase",
-        "account_anglo_saxon_stock_move_sale",
-        "report",
-    ],
-    "demo": [],
-    "data": [
-        "view/view.xml",
-        "view/report.xml",
-    ],
-    "test": [],
-    "js": [],
-    "css": [],
-    "qweb": [],
-    "installable": True,
-    "auto_install": False,
-    "active": False
-}
+import time
+
+from openerp.osv import osv
+from openerp.report import report_sxw
+
+
+class stock_accrual_parser(report_sxw.rml_parse):
+    _name = 'stock.accrual.parser'
+
+    def __init__(self, cr, uid, name, context=None):
+        super(stock_accrual_parser, self).__init__(cr, uid, name,
+                                                   context=context)
+        self.localcontext.update({
+            'time': time,
+        })
+        self.context = context
+
+
+class ifrs_portrait_pdf_report(osv.AbstractModel):
+
+    # _name = `report.` + `report_name`
+    # report_name="stock_accrual_report.stock_accrual_report_name"
+    _name = 'report.stock_accrual_report.stock_accrual_report_name'
+
+    # this inheritance will allow to render this particular report
+    _inherit = 'report.abstract_report'
+    _template = 'stock_accrual_report.stock_accrual_report_template'
+    _wrapped_report_class = stock_accrual_parser
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

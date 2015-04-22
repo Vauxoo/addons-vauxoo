@@ -21,37 +21,5 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-{
-    "name": "Stock Accrual Report",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "stock",
-    "description": """
-Stock Accrual Report
-====================
 
-    Allow to retrieves a report for Sale or Purchase fetching delivered &
-    invoiced quantities and how much was accrued.
-""",
-    "website": "http://www.vauxoo.com/",
-    "license": "",
-    "depends": [
-        "purchase_order_line_quantity",
-        "sale_order_line_quantity",
-        "account_anglo_saxon_stock_move_purchase",
-        "account_anglo_saxon_stock_move_sale",
-        "report",
-    ],
-    "demo": [],
-    "data": [
-        "view/view.xml",
-        "view/report.xml",
-    ],
-    "test": [],
-    "js": [],
-    "css": [],
-    "qweb": [],
-    "installable": True,
-    "auto_install": False,
-    "active": False
-}
+from . import parser
