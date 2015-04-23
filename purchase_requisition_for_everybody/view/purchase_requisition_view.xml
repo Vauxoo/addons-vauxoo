@@ -59,5 +59,16 @@
         action="purchase_requisition.action_purchase_requisition"
         />
 
+    <record model="ir.ui.view" id="res_users_hide_requistion_group">
+        <field name="name">res.users.hide.requistion.group</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.user_groups_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sel_groups_54_55']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+        </field>
+    </record>
+
     </data>
 </openerp>
