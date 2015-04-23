@@ -77,42 +77,70 @@ class purchase_order_line(osv.osv):
 
         return res
 
-    def _get_quantity(self, cr, uid, ids, field_names=None, arg=False,
-                      context=None):
-        """ Finds quantity of product that has been delivered or invoiced.
+    def _get_qty_delivered(self, cr, uid, ids, field_names=None, arg=False,
+                           context=None):
+        """ Finds quantity of product that has been delivered.
         @return: Dictionary of values
         """
-        field_names = field_names or []
         context = dict(context or {})
-        res = {}
+        res = {}.fromkeys(ids, 0.0)
         for idx in ids:
-            res[idx] = {}.fromkeys(field_names, 0.0)
-        for fn in field_names:
-            if fn == 'qty_delivered':
-                for idx in ids:
-                    res[idx][fn] = self._get_move_quantity(cr, uid, idx,
-                                                           context=context)
-            if fn == 'qty_invoiced':
-                for idx in ids:
-                    res[idx][fn] = self._get_inv_quantity(cr, uid, idx,
-                                                          context=context)
+            res[idx] = self._get_move_quantity(cr, uid, idx, context=context)
 
         return res
+
+    def _get_ids_from_stock(self, cr, uid, ids, context=None):
+        res = set([])
+        sm_obj = self.pool.get('stock.move')
+        for sm_brw in sm_obj.browse(cr, uid, ids, context=context):
+            if not sm_brw.sale_line_id:
+                continue
+            res.add(sm_brw.sale_line_id.id)
+        return list(res)
+
+    def _get_qty_invoiced(self, cr, uid, ids, field_names=None, arg=False,
+                          context=None):
+        """ Finds quantity of product that has been invoiced.
+        @return: Dictionary of values
+        """
+        context = dict(context or {})
+        res = {}.fromkeys(ids, 0.0)
+        for idx in ids:
+            res[idx] = self._get_inv_quantity(cr, uid, idx, context=context)
+        return res
+
+    def _get_ids_from_invoice(self, cr, uid, ids, context=None):
+        res = set([])
+        ai_obj = self.pool.get('account.invoice')
+        for ai_brw in ai_obj.browse(cr, uid, ids, context=context):
+            if ai_brw.type not in ('in_invoice',):
+                continue
+            if ai_brw.state not in ('open', 'paid'):
+                continue
+            for ail_brw in ai_brw.invoice_line:
+                if not ail_brw.sale_line_id:
+                    continue
+                res.add(ail_brw.sale_line_id.id)
+        return list(res)
 
     _inherit = 'purchase.order.line'
     _columns = {
         'qty_delivered': fields.function(
-            _get_quantity,
-            multi='qty',
+            _get_qty_delivered,
             type='float',
             digits_compute=dp.get_precision('Product Unit of Measure'),
             string='Quantity Delivered',
+            store={
+                'stock.move': (_get_ids_from_stock, ['state'], 15),
+            },
             help="Quantity Delivered"),
         'qty_invoiced': fields.function(
-            _get_quantity,
-            multi='qty',
+            _get_qty_invoiced,
             type='float',
             digits_compute=dp.get_precision('Product Unit of Measure'),
             string='Quantity Invoiced',
+            store={
+                'account.invoice': (_get_ids_from_invoice, ['state'], 15),
+            },
             help="Quantity Invoiced"),
     }
