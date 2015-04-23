@@ -37,7 +37,7 @@ Sale Order Line Quantities
     "license": "",
     "depends": [
         "stock_sale_order_line",
-        "sale_stock_invoice_line",
+        "stock_sale_invoice_line",
     ],
     "demo": [],
     "data": [
