@@ -121,18 +121,19 @@ class account_voucher_tax_sat(models.Model):
 
         self.create_entries_tax_iva_sat()
 
-        [move_line_tax.copy(
-            {
-                'move_id': move_id.id,
-                'period_id': period_id.id,
-                'journal_id': self.journal_id.id,
-                'credit': 0.0,
-                'debit': move_line_tax.credit,
-                'amount_base': None,
-                'tax_id_secondary': None,
-                'not_move_diot': True,
-                'amount_tax_unround': None
-            }) for move_line_tax in self.aml_ids]
+        for move_line_tax in self.aml_ids:
+            move_line_tax.copy(
+                {
+                    'move_id': move_id.id,
+                    'period_id': period_id.id,
+                    'journal_id': self.journal_id.id,
+                    'credit': 0.0,
+                    'debit': move_line_tax.credit,
+                    'amount_base': None,
+                    'tax_id_secondary': None,
+                    'not_move_diot': True,
+                    'amount_tax_unround': None
+                })
 
         return self.write({'state': 'done'})
 
@@ -220,8 +221,6 @@ class account_voucher_tax_sat(models.Model):
         return account_move_obj.create(vals_move_tax)
 
     def sat_pay(self, cr, uid, ids, context=None):
-        """
-        """
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         if not ids:
