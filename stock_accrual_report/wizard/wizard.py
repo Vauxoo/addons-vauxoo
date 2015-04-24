@@ -26,12 +26,12 @@ import openerp.addons.decimal_precision as dp
 from openerp.tools.translate import _
 
 SELECTION_TYPE = [
-    ('sale', 'Sale Order'),
+    ('sale', 'Sales Order'),
     ('purchase', 'Purchase Order'),
 ]
 
 SELECT_ORDER = [
-    ('sale.order', 'Sale Order'),
+    ('sale.order', 'Sales Order'),
     ('purchase.order', 'Purchase Order'),
 ]
 
