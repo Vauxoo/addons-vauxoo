@@ -58,18 +58,18 @@ msgstr "Solicitudes de presupuesto"
 #. module: purchase_requisition_for_everybody
 #: model:res.groups,name:purchase_requisition_for_everybody.purchase_requisition_manager_ev_groups
 msgid "Requisition - Manager"
-msgstr "Cotizaciones de Compra - Administrador"
+msgstr "Requisición - Administrador"
 
 #. module: purchase_requisition_for_everybody
 #: model:res.groups,name:purchase_requisition_for_everybody.purchase_requisition_user_ev_groups
 msgid "Requisition - User"
-msgstr "Cotizaciones de Compra - Usuario"
+msgstr "Requisición - Usuario"
 
 #. module: purchase_requisition_for_everybody
 #: model:ir.ui.menu,name:purchase_requisition_for_everybody.menu_purchase_ev_requisition
 #: model:ir.ui.menu,name:purchase_requisition_for_everybody.parent_menu_purchase_ev_requisition
 msgid "Requisitions"
-msgstr "Cotizaciones de Compra"
+msgstr "Requisición"
 
 #. module: purchase_requisition_for_everybody
 #: view:res.users:purchase_requisition_for_everybody.res_users_hide_requistion_group
