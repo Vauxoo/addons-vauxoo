@@ -59,5 +59,9 @@
         action="purchase_requisition.action_purchase_requisition"
         />
 
+    <record id="purchase_requisition.menu_purchase_requisition_pro_mgt" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4,ref('base.group_no_one'))]"/>
+    </record>
+
     </data>
 </openerp>
