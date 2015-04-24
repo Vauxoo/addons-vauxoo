@@ -93,9 +93,9 @@ class purchase_order_line(osv.osv):
         res = set([])
         sm_obj = self.pool.get('stock.move')
         for sm_brw in sm_obj.browse(cr, uid, ids, context=context):
-            if not sm_brw.sale_line_id:
+            if not sm_brw.purchase_line_id:
                 continue
-            res.add(sm_brw.sale_line_id.id)
+            res.add(sm_brw.purchase_line_id.id)
         return list(res)
 
     def _get_qty_invoiced(self, cr, uid, ids, field_names=None, arg=False,
@@ -118,9 +118,9 @@ class purchase_order_line(osv.osv):
             if ai_brw.state not in ('open', 'paid'):
                 continue
             for ail_brw in ai_brw.invoice_line:
-                if not ail_brw.sale_line_id:
+                if not ail_brw.purchase_line_id:
                     continue
-                res.add(ail_brw.sale_line_id.id)
+                res.add(ail_brw.purchase_line_id.id)
         return list(res)
 
     _inherit = 'purchase.order.line'
