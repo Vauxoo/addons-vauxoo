@@ -208,7 +208,7 @@ class stock_accrual_wizard(osv.osv_memory):
                                      context=context))
         return res
 
-    def _get_records_from_stock(self, cr, uid, ids, context=None):
+    def _get_orders_from_stock(self, cr, uid, ids, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         res = []
@@ -225,7 +225,7 @@ class stock_accrual_wizard(osv.osv_memory):
         res = [val[0] for val in res]
         return set(res)
 
-    def _get_records_from_invoice(self, cr, uid, ids, context=None):
+    def _get_orders_from_invoice(self, cr, uid, ids, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         res = []
@@ -242,43 +242,23 @@ class stock_accrual_wizard(osv.osv_memory):
         res = [val[0] for val in res]
         return set(res)
 
-    def compute_purchase_lines(self, cr, uid, ids, context=None):
+    def compute_order_lines(self, cr, uid, ids, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
-        purchase_obj = self.pool.get('purchase.order')
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        order_obj = self.pool.get('%s.order' % wzd_brw.type)
         res = []
-        record_ids = self._get_records_from_stock(cr, uid, ids, context=context)
-        record_idx = self._get_records_from_invoice(cr, uid, ids,
-                                                    context=context)
+        record_ids = self._get_orders_from_stock(cr, uid, ids, context=context)
+        record_idx = self._get_orders_from_invoice(cr, uid, ids,
+                                                   context=context)
         record_ids = record_ids | record_idx
-        record_brws = []
-        if record_ids:
-            record_brws = purchase_obj.browse(cr, uid, record_ids,
-                                              context=context)
-        for record_brw in record_brws:
-            for line_brw in record_brw.order_line:
-                res.append(self._get_lines(cr, uid, wzd_brw, record_brw,
-                                           line_brw, context=context))
-        return res
-
-    def compute_sale_lines(self, cr, uid, ids, context=None):
-        context = context or {}
-        ids = isinstance(ids, (int, long)) and [ids] or ids
-        sale_obj = self.pool.get('sale.order')
-        wzd_brw = self.browse(cr, uid, ids[0], context=context)
-        res = []
-        record_ids = self._get_records_from_stock(cr, uid, ids, context=context)
-        record_idx = self._get_records_from_invoice(cr, uid, ids,
-                                                    context=context)
-        record_ids = record_ids | record_idx
-        record_brws = []
+        order_brws = []
         if record_ids:
             record_ids = list(record_ids)
-            record_brws = sale_obj.browse(cr, uid, record_ids, context=context)
-        for record_brw in record_brws:
-            for line_brw in record_brw.order_line:
-                res.append(self._get_lines(cr, uid, wzd_brw, record_brw,
+            order_brws = order_obj.browse(cr, uid, record_ids, context=context)
+        for order_brw in order_brws:
+            for line_brw in order_brw.order_line:
+                res.append(self._get_lines(cr, uid, wzd_brw, order_brw,
                                            line_brw, context=context))
         return res
 
@@ -292,10 +272,8 @@ class stock_accrual_wizard(osv.osv_memory):
 
         wzd_brw.line_ids.unlink()
 
-        if wzd_brw.type == 'sale':
-            res = self.compute_sale_lines(cr, uid, ids, context=context)
-        elif wzd_brw.type == 'purchase':
-            res = self.compute_purchase_lines(cr, uid, ids, context=context)
+        res = self.compute_order_lines(cr, uid, ids, context=context)
+
         for rex in res:
             # if not any([rex['debit'], rex['credit']]):
             #     continue
