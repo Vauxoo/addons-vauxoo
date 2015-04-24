@@ -11,9 +11,9 @@ class website_sale(website_sale):
         product_obj = pool['product.product']
         res = super(website_sale, self).get_attribute_value_ids(product)
         new_res = []
-        for re in res:
-            stock_state = product_obj.browse(cr, uid, [re[0]],
+        for ret in res:
+            stock_state = product_obj.browse(cr, uid, [ret[0]],
                                              context)[0].stock_state
-            re.append(int(stock_state))
-            new_res.append(re)
+            ret.append(int(stock_state))
+            new_res.append(ret)
         return new_res
