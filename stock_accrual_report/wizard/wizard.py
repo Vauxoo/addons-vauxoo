@@ -138,6 +138,22 @@ class stock_accrual_wizard(osv.osv_memory):
                 _('There is no default company for the current user!'))
         return company_id
 
+    def _get_debit_credit(self, cr, uid, ids, field_names=None, arg=False,
+                           context=None):
+        """ Finds Grand total on debits and credits on wizard.
+        @return: Dictionary of values
+        """
+        field_names = field_names or []
+        context = dict(context or {})
+        res = {}
+        for idx in ids:
+            res[idx] = {}.fromkeys(field_names, 0.0)
+        for brw in self.browse(cr, uid, ids, context=context):
+            for lbrw in brw.line_ids:
+                for fn in field_names:
+                        res[brw.id][fn] += getattr(lbrw, fn)
+        return res
+
     _columns = {
         'type': fields.selection(
             SELECTION_TYPE,
@@ -168,6 +184,20 @@ class stock_accrual_wizard(osv.osv_memory):
         'user_id': fields.many2one(
             'res.users',
             'User'),
+        'debit': fields.function(
+            _get_debit_credit,
+            type='float',
+            digits_compute=dp.get_precision('Account'),
+            string='Debit',
+            multi='debit_credit',
+            help="Debit"),
+        'credit': fields.function(
+            _get_debit_credit,
+            type='float',
+            digits_compute=dp.get_precision('Account'),
+            string='Credit',
+            multi='debit_credit',
+            help="Credit"),
     }
 
     _defaults = {

@@ -47,6 +47,16 @@
                                     <td class="ITEMSRIGHT"><span t-esc="formatLang(l.credit, digits=2, grouping=True)"/></td>
                                 </tr>
                             </t>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="ITEMSRIGHT"><span t-esc="formatLang(o.debit, digits=2, grouping=True)"/></td>
+                                <td class="ITEMSRIGHT"><span t-esc="formatLang(o.credit, digits=2, grouping=True)"/></td>
+                            </tr>
                         </table>
                     </div>
                 </div>
