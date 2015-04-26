@@ -61,6 +61,8 @@ class account_voucher(osv.Model):
             advance_account_id = partner.property_account_customer_advance.id
         else:
             advance_account_id = partner.property_account_supplier_advance.id
+        if len(res)==0:
+            return res
         res['value']['advance_account_id'] = advance_account_id
 
         return res
