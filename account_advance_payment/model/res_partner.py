@@ -40,14 +40,12 @@ class res_partner(osv.Model):
             type='many2one',
             relation='account.account',
             string="Account Supplier Advance",
-            view_load=True,
             domain="[('type','=','payable')]",
             help="This account will be used for advance payment of suppliers"),
         'property_account_customer_advance': fields.property(
             type='many2one',
             relation='account.account',
             string="Account Customer Advance",
-            view_load=True,
             domain="[('type','=','receivable')]",
             help="This account will be used for advance payment of custom"),
         #        'customer_advance': fields.function(
