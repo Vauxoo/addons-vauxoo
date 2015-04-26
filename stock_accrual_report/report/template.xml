@@ -5,6 +5,7 @@
             <t t-call="stock_accrual_report.external_layout">
                 <div t-foreach="objects" t-as="o">
                     <!--VARIABLES TO BE USED LATER-->
+                    <t t-set="order_id" t-value="False"/>
 
                     <!-- CALLING HEADER and FOOTER -->
                     <t t-call="stock_accrual_report.external_layout_header"/>
@@ -30,6 +31,17 @@
                                 <th width="10%" class="ITEMSTITLERIGHT">CREDIT</th>
                             </tr>
                             <t t-foreach="o.line_ids" t-as="l">
+                                <t t-if="order_id != l.order_id.id">
+                                    <t t-set="order_id" t-value="l.order_id.id"/>
+                                    <tr>
+                                        <th class="ITEMSLEFT">
+                                            <span t-esc="l.order_id.name"/>
+                                        </th>
+                                        <th class="ITEMSTITLELEFT">
+                                            <span t-esc="l.order_id.partner_id.display_name"/>
+                                        </th>
+                                    </tr>
+                                </t>
                                 <tr>
                                     <td class="ITEMSLEFT">
                                         <span t-esc="l.order_id.name"/>
