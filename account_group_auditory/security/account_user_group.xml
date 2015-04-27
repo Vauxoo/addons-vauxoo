@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <openerp>
-    <data>
+    <data noupdate="0">
         <record id="group_account_user_audit" model="res.groups">
             <field name="name">Auditor (Read-Only)</field>
             <field name="category_id" ref="base.module_category_accounting_and_finance"/>
@@ -53,7 +53,7 @@
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
     </data>
-    <data noupdate=1>
+    <data noupdate="1">
         <record model="res.users" id="res_auditor_user">
             <field name="name">Auditor user</field>
             <field name="login">auditor</field>
