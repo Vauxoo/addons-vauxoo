@@ -188,7 +188,7 @@ class stock_accrual_wizard(osv.osv_memory):
         'period_stop_id': fields.many2one(
             'account.period',
             domain=("[('special','=',False),"
-                    "('fiscalyear_id','=',fy_start_id),"
+                    "('fiscalyear_id','=',fy_stop_id),"
                     "('company_id','=',company_id)]"
                     ),
             string='To Period',
