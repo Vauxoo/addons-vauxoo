@@ -220,6 +220,8 @@ class TestUserStory(TransactionCase):
         story_id = self.story.search(cr, uid,
                                      [('name', '=', 'User Story Test')])
         user_brw = user_id and self.user.browse(cr, uid, user_id[0])
+        if not user_brw.email:
+            user_brw.write({'email': 'admin@test.com'})
         story_brw = story_id and self.story.browse(cr, uid, story_id[0])
         i = 0
         for criterial in user_brw and story_brw and story_brw.accep_crit_ids:

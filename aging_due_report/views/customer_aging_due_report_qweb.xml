@@ -14,7 +14,12 @@
                                 </div>
                             </td>
                             <td style="text-align: left;">
-                                <strong><span t-esc="o.result_selection =='customer' and 'Customer' or o.result_selection =='supplier' and 'Supplier'"/> Detail Report of Debts</strong>
+                                <t t-if="o.result_selection =='customer'">
+                                    <strong>Customer Aging Report of Debts</strong>
+                                </t>
+                                <t t-if="o.result_selection =='supplier'">
+                                    <strong>Supplier Aging Report of Debts</strong>
+                                </t>
                             </td>
                        </tr>
                     </table>
@@ -30,12 +35,16 @@
                                 <th width="10%" class="ITEMSTITLERIGHT">61-90 DAYS</th>
                                 <th width="10%" class="ITEMSTITLERIGHT">91-120 DAYS</th>
                                 <th width="10%" class="ITEMSTITLERIGHT">+ 120 DAYS</th>
-                                <th width="10%" class="ITEMSTITLERIGHT"><span t-esc="o.result_selection =='customer' and 'TOT./AR' or o.result_selection =='supplier' and 'TOT./AP'"/><span t-esc="'(' + c_obj.currency_id.name + ')'"/></th>
+                                <th width="10%" class="ITEMSTITLERIGHT">
+                                    <t t-if="o.result_selection =='customer'">TOT./AR</t>
+                                    <t t-if="o.result_selection =='supplier'">TOT./AP</t>
+                                    (<span t-esc="c_obj.currency_id.name"/>)
+                                </th>
                             </tr>
                             <t t-foreach="c_obj.partner_ids" t-as="p_obj">
                                 <tr>
                                     <td class="ITEMSLEFT">
-                                        <span t-esc="(p_obj.partner_id.vat and '%s-%s-%s'%(p_obj.partner_id.vat[2],p_obj.partner_id.vat[3:-1],p_obj.partner_id.vat[-1]) or '').upper()"/>
+                                        <span t-esc="(p_obj.partner_id.vat and p_obj.partner_id.vat[2:] or '').upper()"/>
                                     </td>
                                     <td class="ITEMSLEFT">
                                         <b><span t-esc="p_obj.partner_id.name"/></b>
@@ -74,7 +83,7 @@
 
             <template id="aging_due_report_qweb">
                 <t t-set="doc_id" t-value="doc_ids[0]"/>
-                <t t-raw="translate_doc(doc_id, doc_model, 'company_id.partner_id.lang','aging_due_report.report_aging_due_report_qweb_document')"/>
+                <t t-raw="translate_doc(doc_id, doc_model, 'user_id.lang','aging_due_report.report_aging_due_report_qweb_document')"/>
             </template>
         </data>
     </openerp>
