@@ -26,12 +26,32 @@
                         <group string="Time Options" col='4' colspan='4'>
                             <field name="filter"/>
                             <newline/>
-                            <field name="fy_start_id"/>
-                            <field name="fy_stop_id"/>
-                            <field name="period_start_id" on_change="onchange_period_id(period_start_id, True)"/>
-                            <field name="period_stop_id" on_change="onchange_period_id(period_stop_id, False)"/>
-                            <field name="date_start"/>
-                            <field name="date_stop"/>
+                            <field
+                                name="fy_start_id"
+                                attrs="{'invisible':[('filter','!=','byperiod')],'required':[('filter','=','byperiod')]}"
+                                />
+                            <field
+                                name="fy_stop_id"
+                                attrs="{'invisible':[('filter','!=','byperiod')],'required':[('filter','=','byperiod')]}"
+                                />
+                            <field
+                                name="period_start_id"
+                                on_change="onchange_period_id(period_start_id, True)"
+                                attrs="{'invisible':[('filter','!=','byperiod')],'required':[('filter','=','byperiod')]}"
+                                />
+                            <field
+                                name="period_stop_id"
+                                on_change="onchange_period_id(period_stop_id, False)"
+                                attrs="{'invisible':[('filter','!=','byperiod')],'required':[('filter','=','byperiod')]}"
+                                />
+                            <field
+                                name="date_start"
+                                attrs="{'invisible':[('filter','!=','bydate')]}"
+                                />
+                            <field
+                                name="date_stop"
+                                attrs="{'invisible':[('filter','!=','bydate')]}"
+                                />
                         </group>
                     </group>
                     <group col='4' colspan='4'>

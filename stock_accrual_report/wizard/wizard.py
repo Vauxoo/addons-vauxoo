@@ -170,11 +170,13 @@ class stock_accrual_wizard(osv.osv_memory):
             'account.fiscalyear',
             'From Fiscal Year',
             help='Fiscal Year',
+            required=False,
         ),
         'fy_stop_id': fields.many2one(
             'account.fiscalyear',
             'To Fiscal Year',
             help='Fiscal Year',
+            required=False,
         ),
         'period_start_id': fields.many2one(
             'account.period',
@@ -183,7 +185,7 @@ class stock_accrual_wizard(osv.osv_memory):
                     "('company_id','=',company_id)]"
                     ),
             string='From Period',
-            required=True,
+            required=False,
         ),
         'period_stop_id': fields.many2one(
             'account.period',
@@ -192,7 +194,7 @@ class stock_accrual_wizard(osv.osv_memory):
                     "('company_id','=',company_id)]"
                     ),
             string='To Period',
-            required=True,
+            required=False,
         ),
         'date_start': fields.date(
             'From Date',
