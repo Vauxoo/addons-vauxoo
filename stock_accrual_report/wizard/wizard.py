@@ -210,7 +210,8 @@ class stock_accrual_wizard(osv.osv_memory):
         'company_id': fields.many2one(
             'res.company',
             'Company',
-            required=True),
+            required=True,
+        ),
         'user_id': fields.many2one(
             'res.users',
             'User'),
@@ -228,10 +229,18 @@ class stock_accrual_wizard(osv.osv_memory):
             string='Credit',
             multi='debit_credit',
             help="Credit"),
+        'filter': fields.selection(
+            [('bydate', 'By Date'),
+             ('byperiod', 'By Period'),
+             ],
+            string='Date/Period Filter',
+            required=True,
+        ),
     }
 
     _defaults = {
         'report_format': lambda *args: 'pdf',
+        'filter': lambda *args: 'byperiod',
         'type': lambda *args: 'sale',
         'company_id': _get_default_company,
         'user_id': lambda s, c, u, cx: s.pool.get('res.users').browse(c, u, u,
