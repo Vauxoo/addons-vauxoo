@@ -22,8 +22,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from . import crm_claim_rma
 from . import res_partner
-from . import stock
-from . import account
-from . import res_company

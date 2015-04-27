@@ -23,7 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from openerp import fields, models
+from openerp import fields, models, api
 from openerp.tools.translate import _
 
 
@@ -31,45 +31,43 @@ class res_partner(models.Model):
 
     _inherit = 'res.partner'
 
-    def _get_location_options(self, cr, uid, context=None):
+    @api.model
+    def _get_location_options(self):
         """
         @return a list of tuples with the selection field options.
         """
-        context = context or {}
         return [('undefine', 'Undefine'),
                 ('international', 'International'),
                 ('national', 'National')]
 
-    def _get_partner_scope(self, cr, uid, ids, name, args, context=None):
+    @api.depends('country_id')
+    def _get_partner_scope(self):
         """
         @return dictionary {res.partner.id: selecction field value}
         """
-        context = context or {}
-        ids = isinstance(ids, (int, long)) and [ids] or ids
-        res = {}.fromkeys(ids, 'undefine')
-        company_country = self.pool.get('res.users').browse(
-            cr, uid, uid, context=context).company_id.country_id.id or False
-        if company_country:
-            for rp_brw in self.browse(cr, uid, ids, context=context):
-                res[rp_brw.id] = (rp_brw.country_id.id != company_country and
-                                  'international' or 'national')
-        return res
 
-    def _get_warning_message(self, cr, uid, ids, name, args, context=None):
+        for rp_brw in self:
+            rp_brw.international = 'undefine'
+
+        company_country = self.env['res.users'].browse(self._uid).\
+            company_id.country_id.id or False
+        if company_country:
+            for rp_brw in self:
+                rp_brw.international = rp_brw.country_id.id != company_country and \
+                    'international' or 'national'
+
+    @api.depends('international')
+    def _get_warning_message(self):
         """
         @return dictionary {res.partner id: message value}
         """
-        context = context or {}
-        ids = isinstance(ids, (int, long)) and [ids] or ids
-        res = {}.fromkeys(ids, False)
         msg = _('Missing Configuration: international/national partner'
                 ' data is set using your configurate company country.\n'
                 'Please configurate your company country in order to'
                 ' view your suppliers/customer information correctly')
-        for rp_brw in self.browse(cr, uid, ids, context=context):
+        for rp_brw in self:
             if rp_brw.international == 'undefine':
-                res[rp_brw.id] = msg
-        return res
+                rp_brw.message = msg
 
     international = \
         fields.Selection(_get_location_options,
@@ -82,5 +80,6 @@ class res_partner(models.Model):
                          "(same country as your company)."
                          " - International: the partner is in foreign country."
                          " - Undefined: your company country is not set so the"
-                         "   location type cannot be compute."),
+                         "   location type cannot be compute.")
+
     message = fields.Text(compute='_get_warning_message', string='Message')
