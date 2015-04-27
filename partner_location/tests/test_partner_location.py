@@ -32,24 +32,16 @@ class TestPartnerLocation(TransactionCase):
     def get_records(self):
         """
         """
-        cr, uid = self.cr, self.uid
-        import pdb; pdb.set_trace()
-
-        partner_id = self.registry("ir.model.data").\
-            get_object_reference(cr, uid, "base",
-                                 "main_partner")[1]
-
-        vauxoo_id = self.registry("ir.model.data").\
-            get_object_reference(cr, uid, "base",
-                                 "res_partner_23")[1]
-
-        vicking_id = self.registry("ir.model.data").\
-            get_object_reference(cr, uid, "base",
-                                 "res_partner_22")[1]
-
+        self.partner_rec = self.env.ref('base.main_partner')
+        self.vauxoo_rec = self.env.ref('base.res_partner_23')
+        self.vicking_rec = self.env.ref('base.res_partner_22')
 
     def test_company_location(self):
         """
+        Test if partners are national or international depends
+        of main partner
         """
-        import pdb; pdb.set_trace()
-
+        country_ve = self.env.ref('base.ve')
+        self.assertEquals(self.partner_rec.country_id.id, country_ve.id)
+        self.assertEquals(self.vauxoo_rec.international, 'national')
+        self.assertEquals(self.vicking_rec.international, 'international')
