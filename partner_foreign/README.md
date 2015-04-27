@@ -1,7 +1,7 @@
-Partner Location
-================
+Partner Foreign
+===============
 
-New partner_location module to know if a partner is national or international based in company location
+New partner_foreign module to know if a partner is national or international based in company location
 
 Features
 --------

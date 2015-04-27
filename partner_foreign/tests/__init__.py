@@ -22,4 +22,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from . import test_partner_location
+from . import test_partner_foreign

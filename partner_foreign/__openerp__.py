@@ -23,7 +23,7 @@
 ###############################################################################
 
 {
-    'name': 'Partner Location',
+    'name': 'Partner Foreign',
     'version': '1.0',
     'author': 'Vauxoo',
     'website': 'http://www.vauxoo.com/',

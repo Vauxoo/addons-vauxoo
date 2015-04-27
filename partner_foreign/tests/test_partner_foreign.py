@@ -36,7 +36,7 @@ class TestPartnerLocation(TransactionCase):
         self.vauxoo_rec = self.env.ref('base.res_partner_23')
         self.vicking_rec = self.env.ref('base.res_partner_22')
 
-    def test_company_location(self):
+    def test_company_foreign(self):
         """
         Test if partners are national or international depends
         of main partner
