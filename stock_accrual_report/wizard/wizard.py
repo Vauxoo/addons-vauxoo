@@ -188,6 +188,14 @@ class stock_accrual_wizard(osv.osv_memory):
             string='To Period',
             required=True,
         ),
+        'date_start': fields.date(
+            'From Date',
+            required=True,
+        ),
+        'date_stop': fields.date(
+            'To Date',
+            required=True,
+        ),
         'line_ids': fields.one2many(
             'stock.accrual.wizard.line',
             'wzd_id',
