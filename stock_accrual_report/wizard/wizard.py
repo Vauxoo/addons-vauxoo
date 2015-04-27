@@ -166,6 +166,16 @@ class stock_accrual_wizard(osv.osv_memory):
             'Report Format',
             required=True
         ),
+        'fy_start_id': fields.many2one(
+            'account.fiscalyear',
+            'From Fiscal Year',
+            help='Fiscal Year',
+        ),
+        'fy_stop_id': fields.many2one(
+            'account.fiscalyear',
+            'To Fiscal Year',
+            help='Fiscal Year',
+        ),
         'period_start_id': fields.many2one(
             'account.period',
             domain="[('special','=',False)]",
@@ -212,6 +222,10 @@ class stock_accrual_wizard(osv.osv_memory):
         'company_id': _get_default_company,
         'user_id': lambda s, c, u, cx: s.pool.get('res.users').browse(c, u, u,
                                                                       cx).id,
+        'fy_start_id': lambda s, c, u, cx: s.pool['account.fiscalyear'].find(
+            c, u, exception=False),
+        'fy_stop_id': lambda s, c, u, cx: s.pool['account.fiscalyear'].find(
+            c, u, exception=False),
     }
 
     def _get_accrual(self, cr, uid, ids, line_brw, context=None):
