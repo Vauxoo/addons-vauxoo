@@ -242,6 +242,19 @@ class stock_accrual_wizard(osv.osv_memory):
             c, u, exception=False),
     }
 
+    def _check_duration(self, cr, uid, ids, context=None):
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        obj_fy = self.browse(cr, uid, ids[0], context=context)
+        if obj_fy.date_stop < obj_fy.date_start:
+            return False
+        return True
+
+    _constraints = [
+        (_check_duration,
+         'Error!\nBeginning and Ending Dates in report are not logical.',
+         ['date_start', 'date_stop'])
+    ]
+
     def onchange_period_id(self, cr, uid, ids, period_id=False,
                            start=True, context=None):
         ap_obj = self.pool.get('account.period')
