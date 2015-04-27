@@ -20,10 +20,10 @@
                         <field name="type"/>
                         <field name="report_format"/>
                         <field name="fy_start_id"/>
-                        <field name="period_start_id"/>
+                        <field name="period_start_id" on_change="onchange_period_id(period_start_id, True)"/>
                         <field name="date_start"/>
                         <field name="fy_stop_id"/>
-                        <field name="period_stop_id"/>
+                        <field name="period_stop_id" on_change="onchange_period_id(period_stop_id, False)"/>
                         <field name="date_stop"/>
                         <field name="company_id" invisible='1'/>
                         <field name="user_id" invisible='1'/>

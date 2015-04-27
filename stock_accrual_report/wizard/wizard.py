@@ -242,6 +242,17 @@ class stock_accrual_wizard(osv.osv_memory):
             c, u, exception=False),
     }
 
+    def onchange_period_id(self, cr, uid, ids, period_id=False,
+                           start=True, context=None):
+        ap_obj = self.pool.get('account.period')
+        res = {}
+        if period_id:
+            ap_brw = ap_obj.browse(cr, uid, period_id, context=context)
+            res['value'] = {
+                start and 'date_start' or 'date_stop':
+                start and ap_brw.date_start or ap_brw.date_stop}
+        return res
+
     def _get_accrual(self, cr, uid, ids, line_brw, context=None):
         context = context or {}
         res = {'debit': 0.0, 'credit': 0.0}
