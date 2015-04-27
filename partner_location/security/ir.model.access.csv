@@ -1,0 +1,4 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_claim_bom_line_user","claim.bom.line.user","model_claim_bom_line","base.group_sale_salesman_all_leads","True","True","True",
+"access_claim_bom_line_manager","claim.bom.line.manager","model_claim_bom_line","base.group_sale_manager","True","True","True","True"
+"access_claim_bom_line_user","claim.bom.line.user","model_claim_bom_line","base.group_sale_salesman","True","True","True",
