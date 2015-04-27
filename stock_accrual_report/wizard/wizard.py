@@ -166,10 +166,16 @@ class stock_accrual_wizard(osv.osv_memory):
             'Report Format',
             required=True
         ),
-        'period_id': fields.many2one(
+        'period_start_id': fields.many2one(
             'account.period',
             domain="[('special','=',False)]",
-            string='Period',
+            string='From Period',
+            required=True,
+        ),
+        'period_stop_id': fields.many2one(
+            'account.period',
+            domain="[('special','=',False)]",
+            string='To Period',
             required=True,
         ),
         'line_ids': fields.one2many(
@@ -247,8 +253,8 @@ class stock_accrual_wizard(osv.osv_memory):
         query = QUERY_MOVE.format(
             ttype=ttype,
             company_id=wzd_brw.company_id.id,
-            date_start=wzd_brw.period_id.date_start,
-            date_stop=wzd_brw.period_id.date_stop,
+            date_start=wzd_brw.period_start_id.date_start,
+            date_stop=wzd_brw.period_stop_id.date_stop,
         )
         cr.execute(query)
         res = cr.fetchall()
@@ -264,8 +270,8 @@ class stock_accrual_wizard(osv.osv_memory):
         query = QUERY_INVOICE.format(
             ttype=ttype,
             company_id=wzd_brw.company_id.id,
-            date_start=wzd_brw.period_id.date_start,
-            date_stop=wzd_brw.period_id.date_stop,
+            date_start=wzd_brw.period_start_id.date_start,
+            date_stop=wzd_brw.period_stop_id.date_stop,
         )
         cr.execute(query)
         res = cr.fetchall()
