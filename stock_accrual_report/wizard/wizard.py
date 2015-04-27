@@ -305,8 +305,8 @@ class stock_accrual_wizard(osv.osv_memory):
         query = QUERY_MOVE.format(
             ttype=ttype,
             company_id=wzd_brw.company_id.id,
-            date_start=wzd_brw.period_start_id.date_start,
-            date_stop=wzd_brw.period_stop_id.date_stop,
+            date_start=wzd_brw.date_start,
+            date_stop=wzd_brw.date_stop,
         )
         cr.execute(query)
         res = cr.fetchall()
@@ -322,8 +322,8 @@ class stock_accrual_wizard(osv.osv_memory):
         query = QUERY_INVOICE.format(
             ttype=ttype,
             company_id=wzd_brw.company_id.id,
-            date_start=wzd_brw.period_start_id.date_start,
-            date_stop=wzd_brw.period_stop_id.date_stop,
+            date_start=wzd_brw.date_start,
+            date_stop=wzd_brw.date_stop,
         )
         cr.execute(query)
         res = cr.fetchall()
