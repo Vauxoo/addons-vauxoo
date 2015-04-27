@@ -7,15 +7,15 @@
             <field name="model">stock.accrual.wizard</field>
             <field name="arch" type="xml">
                 <form string="Choose your date">
-                    <p class="oe_gray">
-                        Choose the date for which you want to get the stock valuation of your products.
+                    <!-- <p class="oe_gray"> -->
+                    <!--     Choose the date for which you want to get the stock valuation of your products. -->
 
-                        This will filter the stock operation that weren't done at the selected date, to retreive the quantity
-                        you had, and gives you the inventory value according to the standard price used at that time.
-                    </p>
-                    <p class="oe_gray">
-                        Retrieve the stock valuation of your products at current day
-                    </p>
+                    <!--     This will filter the stock operation that weren't done at the selected date, to retreive the quantity -->
+                    <!--     you had, and gives you the inventory value according to the standard price used at that time. -->
+                    <!-- </p> -->
+                    <!-- <p class="oe_gray"> -->
+                    <!--     Retrieve the stock valuation of your products at current day -->
+                    <!-- </p> -->
                     <group col='4' colspan='4'>
                         <group string="Order Options" col='2' colspan='2'>
                             <field name="type"/>
