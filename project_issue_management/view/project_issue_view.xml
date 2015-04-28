@@ -35,12 +35,24 @@
             <field name="model">project.issue</field>
             <field name="inherit_id" ref="project_issue_sheet.project_issue_form_view"/>
             <field name="arch" type="xml">
-                <xpath expr='//field[@name="analytic_account_id"]' position="after">
-                    <group groups="project_issue_management.project_auditor">
-                        <field name="same_analytic"/>
-                        <field name="has_task"/>
-                        <field name="verify_partner"/>
+                <xpath expr='//group[@string="Statistics"]' position="replace">
+                    <group col="4" >
+                        <group string="Statistics" col="2" colspan="2">
+                            <field name="day_open"/>
+                            <field name="day_close"/>
+                            <field name="working_hours_open" widget="float_time"/>
+                            <field name="working_hours_close" widget="float_time"/>
+                            <field name="inactivity_days"/>
+                            <field name="days_since_creation"/>
+                        </group>
+                        <group col="2" colspan="2">
+                            <field name="same_analytic"/>
+                            <field name="has_task"/>
+                            <field name="verify_partner"/>
+                        </group>
                     </group>
+                </xpath>
+                <xpath expr='//field[@name="analytic_account_id"]' position="after">
                     <group string="Management Information" groups="project_issue_management.project_auditor">
                         <button class="oe_link oe_inline"
                             string="Set Analytic Account Consistently on all timesheet and tasks"
