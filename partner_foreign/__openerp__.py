@@ -35,7 +35,6 @@
         'view/res_partner_view.xml',
     ],
     'demo': [
-        'demo/res_partner.xml',
     ],
     'test': [],
     'qweb': [],
