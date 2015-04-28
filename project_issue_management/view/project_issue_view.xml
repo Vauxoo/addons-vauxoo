@@ -13,6 +13,11 @@
                     <filter string="Analytic Partner" icon="terp-partner" domain="[]" context="{'group_by':'verify_partner'}"/>
                     <filter string="Same Analytic" icon="terp-partner" domain="[]" context="{'group_by':'same_analytic'}"/>
                </xpath>
+               <xpath expr='//filter[@string="To Do"]' position="before">
+                    <filter string="With Task" icon="terp-partner" domain="[('has_task', '=', True)]"/>
+                    <filter string="Analytic Partner" icon="terp-partner" domain="[('verify_partner', '=', True)]"/>
+                    <filter string="Same Analytic" icon="terp-partner" domain="[('same_analytic', '=', True)]"/>
+               </xpath>
             </field>
         </record>
         <record model="ir.ui.view" id="project_issue_form_view">
@@ -69,9 +74,9 @@
             <field name="inherit_id" ref="project_issue.project_issue_tree_view"/>
             <field name="arch" type="xml">
                 <xpath expr='//field[@name="project_id"]' position="before">
-                        <field name="same_analytic" invisible="1"/>
-                        <field name="has_task" invisible="1"/>
-                        <field name="verify_partner" invisible="1"/>
+                        <field name="same_analytic"/>
+                        <field name="has_task"/>
+                        <field name="verify_partner"/>
                 </xpath>
             </field>
         </record>
