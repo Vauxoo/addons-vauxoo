@@ -25,6 +25,18 @@ from openerp.osv import fields, osv
 class account_analytic_account(osv.Model):
     _inherit = "account.analytic.account"
 
+    def _remaining_hours_calc(self, cr, uid, ids, name, arg, context=None):
+        res = {}
+        for account in self.browse(cr, uid, ids, context=context):
+            if account.quantity_max != 0:
+                res[account.id] = account.quantity_max - \
+                    account.invoiceables_hours
+            else:
+                res[account.id] = 0.0
+        for id in ids:
+            res[id] = round(res.get(id, 0.0), 2)
+        return res
+
     def _get_invoiceables_hours(self, cr, uid, ids, args,
                                 fields, context=None):
         if context is None:
@@ -35,20 +47,23 @@ class account_analytic_account(osv.Model):
             acl_obj = self.pool.get('account.analytic.line')
             acl_srch = acl_obj.search(cr, uid, [('account_id', '=', id)])
             acl_brw = acl_obj.browse(cr, uid, acl_srch)
-
             for acl in acl_brw:
                 if acl.to_invoice:
                     total = total + (acl.unit_amount -
                                      (acl.unit_amount *
                                       (acl.to_invoice.factor/100)))
-
         for id in ids:
-            res[id] = 0.00
+            res[id] = total
         return res
 
     _columns = {
         'invoiceables_hours': fields.function(_get_invoiceables_hours,
                                               type='float',
-                                              string='Invoiceable Hours',
-                                              help='Total hours to charge'),
+                                              string='Units Invoiceable',
+                                              help='Total units of hours to \
+                                              charge.'),
+        'remaining_hours': fields.function(_remaining_hours_calc, type='float',
+                                           string='Remaining Time',
+                                           help="Computed using the formula: \
+                                           Maximum Time - Total Worked Time"),
     }

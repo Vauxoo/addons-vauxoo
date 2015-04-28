@@ -9,7 +9,7 @@
       <field name="arch" type="xml">
         <xpath expr="//field[@name='quantity_max']" position="after">
           <div attrs="{'invisible': [('quantity_max','=',0)]}" class="oe_grey">
-            <field name="invoiceables_hours" class="oe_inline"/> Invoiceable Hours
+            <field name="invoiceables_hours" class="oe_inline"/> Units Invoiceable
           </div>
         </xpath>
       </field>
