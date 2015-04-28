@@ -9,6 +9,9 @@
             <field name="arch" type="xml">
                <xpath expr='/search/group[@string="Group By..."]/filter[@string="Responsible"]' position="before">
                     <filter string="Project to invoice" icon="terp-partner" domain="[]" context="{'group_by':'project_invoice_id'}"/>
+                    <filter string="With Task" icon="terp-partner" domain="[]" context="{'group_by':'has_task'}"/>
+                    <filter string="Analytic Partner" icon="terp-partner" domain="[]" context="{'group_by':'verify_partner'}"/>
+                    <filter string="Same Analytic" icon="terp-partner" domain="[]" context="{'group_by':'same_analytic'}"/>
                </xpath>
             </field>
         </record>
@@ -33,6 +36,11 @@
             <field name="inherit_id" ref="project_issue_sheet.project_issue_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr='//field[@name="analytic_account_id"]' position="after">
+                    <group groups="project_issue_management.project_auditor">
+                        <field name="same_analytic"/>
+                        <field name="has_task"/>
+                        <field name="verify_partner"/>
+                    </group>
                     <group string="Management Information" groups="project_issue_management.project_auditor">
                         <button class="oe_link oe_inline"
                             string="Set Analytic Account Consistently on all timesheet and tasks"
@@ -48,7 +56,10 @@
             <field name="model">project.issue</field>
             <field name="inherit_id" ref="project_issue.project_issue_tree_view"/>
             <field name="arch" type="xml">
-                <xpath expr='/tree/field[@name="project_id"]' position="before">
+                <xpath expr='//field[@name="project_id"]' position="before">
+                        <field name="same_analytic" invisible="1"/>
+                        <field name="has_task" invisible="1"/>
+                        <field name="verify_partner" invisible="1"/>
                 </xpath>
             </field>
         </record>
