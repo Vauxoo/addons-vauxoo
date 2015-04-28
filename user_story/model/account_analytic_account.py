@@ -33,8 +33,7 @@ class account_analytic_account(osv.Model):
                     account.invoiceables_hours
             else:
                 res[account.id] = 0.0
-        for id in ids:
-            res[id] = round(res.get(id, 0.0), 2)
+            res[account.id] = round(res.get(account.id, 0.0), 2)
         return res
 
     def _get_invoiceables_hours(self, cr, uid, ids, args,
@@ -52,7 +51,6 @@ class account_analytic_account(osv.Model):
                     total = total + (acl.unit_amount -
                                      (acl.unit_amount *
                                       (acl.to_invoice.factor/100)))
-        for id in ids:
             res[id] = total
         return res
 
