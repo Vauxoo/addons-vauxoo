@@ -6,7 +6,7 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 #
-#    Coded by: Hugo Francisco Adan Oliva (hugo@vauxoo.com)#
+#    Coded by: Hugo Francisco Adan Oliva (hugo@vauxoo.com)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
