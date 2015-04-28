@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <openerp>
-<data noupdate="0">
+<data noupdate="1">
     <record id="hr_contract_company" model="ir.rule">
         <field name="name">Contrats of my Company</field>
         <field name="model_id" ref="hr_contract.model_hr_contract"/>
