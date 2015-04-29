@@ -110,7 +110,9 @@ class project_issue(osv.Model):
                                           store={'project.issue': \
                                                  (lambda s, c, u, ids, cx={}:
                                                   ids,
-                                                  ['partner_id'], 10)},
+                                                  ['partner_id',
+                                                   'analytic_account_id'],
+                                                  10)},
                                           help='Checked if the partner is '
                                           'related to the analytic account '
                                           'in the issue'),
