@@ -20,6 +20,18 @@
                </xpath>
             </field>
         </record>
+          <record id="view_issue_kanban" model="ir.ui.view">
+            <field name="name">Issue Kanban</field>
+            <field name="model">project.issue</field>
+            <field name="inherit_id" ref="project_issue.project_issue_kanban_view"/>
+            <field name="arch" type="xml">
+                <xpath expr='//field[@name="partner_id"]' position="after">
+                    <li t-if="record.same_analytic"><b>Same Analytic:</b> <field name="same_analytic"/></li>
+                    <li t-if="record.has_task"><b>Has Task:</b> <field name="has_task"/></li>
+                    <li t-if="record.verify_partner"><b>Verify Partner:</b> <field name="verify_partner"/></li>
+               </xpath>
+            </field>
+        </record>
         <record model="ir.ui.view" id="project_issue_form_view">
             <field name="name">Project Issue Tracker Form</field>
             <field name="model">project.issue</field>
@@ -50,20 +62,18 @@
                             <field name="inactivity_days"/>
                             <field name="days_since_creation"/>
                         </group>
-                        <group col="2" colspan="2">
+                        <group string='Audit Information' groups="project_issue_management.project_auditor" col="2" colspan="2">
                             <field name="same_analytic"/>
                             <field name="has_task"/>
                             <field name="verify_partner"/>
-                        </group>
-                    </group>
-                </xpath>
-                <xpath expr='//field[@name="analytic_account_id"]' position="after">
-                    <group string="Management Information" groups="project_issue_management.project_auditor">
+                        <group  col="4" colspan="2">
                         <button class="oe_link oe_inline"
                             string="Set Analytic Account Consistently on all timesheet and tasks"
                             name="update_project"
                             type="object"
                             help="It will write this analytic account to the task and timesheet related to this issue"/>
+                        </group>
+                        </group>
                     </group>
                 </xpath>
             </field>
