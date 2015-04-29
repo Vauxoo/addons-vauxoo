@@ -26,15 +26,97 @@ class project_issue(osv.Model):
 
     _inherit = 'project.issue'
 
+    def _check_analytic_accounts(self, cr, uid, ids, args, fields, context=None):
+        context = context or {}
+        res = {}
+        for issue in self.browse(cr, uid, ids, context=context):
+            if issue.task_id and issue.task_id.project_id and \
+                    issue.analytic_account_id:
+                res[issue.id] = issue.analytic_account_id.id == \
+                    issue.task_id.project_id.analytic_account_id.id
+            else:
+                res[issue.id] = False
+        return res
+
+    def _check_task(self, cr, uid, ids, args, fields, context=None):
+        context = context or {}
+        res = {}
+        for issue in self.browse(cr, uid, ids, context=context):
+            res[issue.id] = issue.task_id and True or False
+        return res
+
+    def _check_partner(self, cr, uid, ids, args, fields, context=None):
+        context = context or {}
+        res = {}
+        for issue in self.browse(cr, uid, ids, context=context):
+            partner = []
+            if issue.partner_id and issue.analytic_account_id:
+                a_partner = issue.analytic_account_id.partner_id.id
+                parent = issue.partner_id.parent_id
+                partner.append(issue.partner_id.id)
+                while parent:
+                    partner.append(parent.id)
+                    parent = parent.parent_id
+                res[issue.id] = a_partner in partner
+            else:
+                res[issue.id] = False
+        return res
+
+    def _get_issue_ids_from_task(self, cr, uid, ids, context=None):
+        context = context or {}
+        issue_ids = self.pool.get('project.issue').\
+            search(cr, uid, [('task_id', 'in', ids)])
+        return issue_ids
+
+
     _columns = {
         'analytic_account_id': fields.many2one('account.analytic.account',
                                                'Analytic Account',
-                                                track_visibility='onchange',
-                                                help='Analytic account to '
-                                                     'load the work in '
-                                                     'case you want set '
-                                                     'timesheet on the task'
-                                                     ' related to this issue.'),
+                                               track_visibility='onchange',
+                                               help='Analytic account to '
+                                                    'load the work in '
+                                                    'case you want set '
+                                                    'timesheet on the task'
+                                                    ' related to this issue.'),
+        'same_analytic': fields.function(_check_analytic_accounts,
+                                         type='boolean',
+                                         string='Same Analytics',
+                                         store={
+                                             'project.issue': \
+                                             (lambda s, c, u, ids, cx={}: ids,
+                                              ['analytic_account_id',
+                                               'task_id'], 10),
+                                             'project.task': \
+                                             (_get_issue_ids_from_task,
+                                              ['project_id'], 10)
+
+                                         },
+                                         help='Determines if the issue and '
+                                         'the task related in the issue has'
+                                         ' the same analytic account'),
+        'has_task': fields.function(_check_task,
+                                    type='boolean',
+                                    string='Task',
+                                    store={
+                                        'project.issue': \
+                                             (lambda s, c, u, ids, cx={}: ids,
+                                              ['task_id'], 10)
+                                    },
+                                    help='Selected if the issue '
+                                    'has a task set'),
+        'verify_partner': fields.function(_check_partner,
+                                          type='boolean',
+                                          string='Analytic Partner',
+                                          store={'project.issue': \
+                                                 (lambda s, c, u, ids, cx={}:
+                                                  ids,
+                                                  ['partner_id',
+                                                   'analytic_account_id'],
+                                                  10)},
+                                          help='Checked if the partner is '
+                                          'related to the analytic account '
+                                          'in the issue'),
+
     }
 
     def take_for_me(self, cr, uid, ids, context=None):
