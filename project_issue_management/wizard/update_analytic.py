@@ -29,7 +29,32 @@ class update_analytic(osv.TransientModel):
 
     _name = 'update.analytic'
 
+
+    def default_get(self, cr, uid, l_fields, context=None):
+        context = context or {}
+        issue_obj = self.pool.get('project.issue')
+        analytic_ids = set()
+        res = super(update_analytic, self).default_get(cr, uid, l_fields,
+                                                       context=context)
+        if context.get('active_ids'):
+            for issue in issue_obj.browse(cr, uid, context.get('active_ids')):
+                if issue.analytic_account_id:
+                    analytic_ids.add(issue.analytic_account_id.id)
+
+            if len(list(analytic_ids)) == 1:
+                res.update({'analytic_account_id': list(analytic_ids)[0]})
+
+        return res
+
     _columns = {
+        'analytic_account_id': fields.many2one('account.analytic.account',
+                                               'Analytic Account',
+                                               track_visibility='onchange',
+                                               help='Analytic account to '
+                                                    'load the work in '
+                                                    'case you want set '
+                                                    'timesheet on the task'
+                                                    ' related to this issue.'),
         'sure': fields.boolean('Sure', help="Are sure this operation"),
         'confirm': fields.boolean('Confirm', help="Are sure this operation"),
     }
@@ -41,6 +66,10 @@ class update_analytic(osv.TransientModel):
         for wzr_brw in self.browse(cr, uid, ids, context=context):
             if wzr_brw.sure and wzr_brw.confirm:
                 if context.get('active_ids'):
+                    issue_obj.write(cr, uid,
+                                    context.get('active_ids'),
+                                    {'analytic_account_id': \
+                                     wzr_brw.analytic_account_id.id})
                     issue_obj.update_project(cr, uid,
                                              context.get('active_ids'))
 

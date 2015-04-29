@@ -7,14 +7,16 @@
               <field name="model">update.analytic</field>
               <field name="arch" type="xml">
               <form string="Update Analytic" version="7.0">
+                    <field name="analytic_account_id" required='1'/>
                     <field name="sure"/>
                     <field name="confirm"/>
                     <p class="oe_view_nocontent_create">
-                            You need select both confirmation checkbox
+                            You must select both confirmation checkbox
                     </p>
                     <footer>
-                        <button icon="gtk-cancel" special="cancel" string="Close"/>
                         <button name="update_analytic" string="Update Analytic" type="object" class="oe_highlight"/>
+                        or
+                        <button class='oe_link' special="cancel" string="Close"/>
                     </footer>
                 </form>
               </field>
