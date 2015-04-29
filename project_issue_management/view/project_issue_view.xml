@@ -84,9 +84,9 @@
             <field name="inherit_id" ref="project_issue.project_issue_tree_view"/>
             <field name="arch" type="xml">
                 <xpath expr='//field[@name="project_id"]' position="before">
-                        <field name="same_analytic"/>
-                        <field name="has_task"/>
-                        <field name="verify_partner"/>
+                        <field name="same_analytic" groups="project_issue_management.project_auditor"/>
+                        <field name="has_task" groups="project_issue_management.project_auditor"/>
+                        <field name="verify_partner" groups="project_issue_management.project_auditor"/>
                 </xpath>
             </field>
         </record>
