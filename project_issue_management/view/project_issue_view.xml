@@ -23,6 +23,7 @@
           <record id="view_issue_kanban" model="ir.ui.view">
             <field name="name">Issue Kanban</field>
             <field name="model">project.issue</field>
+            <field eval="[(4, ref('project_issue_management.project_auditor'))]" name="groups_id"/>
             <field name="inherit_id" ref="project_issue.project_issue_kanban_view"/>
             <field name="arch" type="xml">
                 <xpath expr='//field[@name="partner_id"]' position="after">
