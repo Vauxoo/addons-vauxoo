@@ -9,6 +9,27 @@
             <field name="arch" type="xml">
                <xpath expr='/search/group[@string="Group By..."]/filter[@string="Responsible"]' position="before">
                     <filter string="Project to invoice" icon="terp-partner" domain="[]" context="{'group_by':'project_invoice_id'}"/>
+                    <filter string="With Task" icon="terp-partner" domain="[]" context="{'group_by':'has_task'}"/>
+                    <filter string="Analytic Partner" icon="terp-partner" domain="[]" context="{'group_by':'verify_partner'}"/>
+                    <filter string="Same Analytic" icon="terp-partner" domain="[]" context="{'group_by':'same_analytic'}"/>
+               </xpath>
+               <xpath expr='//filter[@string="To Do"]' position="before">
+                    <filter string="With Task" icon="terp-partner" domain="[('has_task', '=', True)]"/>
+                    <filter string="Analytic Partner" icon="terp-partner" domain="[('verify_partner', '=', True)]"/>
+                    <filter string="Same Analytic" icon="terp-partner" domain="[('same_analytic', '=', True)]"/>
+               </xpath>
+            </field>
+        </record>
+          <record id="view_issue_kanban" model="ir.ui.view">
+            <field name="name">Issue Kanban</field>
+            <field name="model">project.issue</field>
+            <field eval="[(4, ref('project_issue_management.project_auditor'))]" name="groups_id"/>
+            <field name="inherit_id" ref="project_issue.project_issue_kanban_view"/>
+            <field name="arch" type="xml">
+                <xpath expr='//field[@name="partner_id"]' position="after">
+                    <li t-if="record.same_analytic"><b>Same Analytic:</b> <field name="same_analytic"/></li>
+                    <li t-if="record.has_task"><b>Has Task:</b> <field name="has_task"/></li>
+                    <li t-if="record.verify_partner"><b>Verify Partner:</b> <field name="verify_partner"/></li>
                </xpath>
             </field>
         </record>
@@ -32,13 +53,28 @@
             <field name="model">project.issue</field>
             <field name="inherit_id" ref="project_issue_sheet.project_issue_form_view"/>
             <field name="arch" type="xml">
-                <xpath expr='//field[@name="analytic_account_id"]' position="after">
-                    <group string="Management Information" groups="project_issue_management.project_auditor">
+                <xpath expr='//group[@string="Statistics"]' position="replace">
+                    <group col="4" >
+                        <group string="Statistics" col="2" colspan="2">
+                            <field name="day_open"/>
+                            <field name="day_close"/>
+                            <field name="working_hours_open" widget="float_time"/>
+                            <field name="working_hours_close" widget="float_time"/>
+                            <field name="inactivity_days"/>
+                            <field name="days_since_creation"/>
+                        </group>
+                        <group string='Audit Information' groups="project_issue_management.project_auditor" col="2" colspan="2">
+                            <field name="same_analytic"/>
+                            <field name="has_task"/>
+                            <field name="verify_partner"/>
+                        <group  col="4" colspan="2">
                         <button class="oe_link oe_inline"
                             string="Set Analytic Account Consistently on all timesheet and tasks"
                             name="update_project"
                             type="object"
                             help="It will write this analytic account to the task and timesheet related to this issue"/>
+                        </group>
+                        </group>
                     </group>
                 </xpath>
             </field>
@@ -48,7 +84,10 @@
             <field name="model">project.issue</field>
             <field name="inherit_id" ref="project_issue.project_issue_tree_view"/>
             <field name="arch" type="xml">
-                <xpath expr='/tree/field[@name="project_id"]' position="before">
+                <xpath expr='//field[@name="project_id"]' position="before">
+                        <field name="same_analytic" groups="project_issue_management.project_auditor"/>
+                        <field name="has_task" groups="project_issue_management.project_auditor"/>
+                        <field name="verify_partner" groups="project_issue_management.project_auditor"/>
                 </xpath>
             </field>
         </record>

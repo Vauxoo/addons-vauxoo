@@ -16,6 +16,7 @@
         "base_status", 
         "product", 
         "analytic", 
+        "portal", 
         "board", 
         "mail", 
         "resource"
