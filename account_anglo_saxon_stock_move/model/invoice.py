@@ -21,13 +21,72 @@
 #
 ##############################################################################
 
-from openerp.osv import osv, fields
+from openerp.osv import osv
+from openerp import models, api
+
+
+class account_invoice(models.Model):
+    _inherit = "account.invoice"
+
+    @api.model
+    def line_get_convert(self, line, part, date):
+        res = super(account_invoice, self).line_get_convert(line, part, date)
+        if line.get('sm_id', False):
+            res['sm_id'] = line['sm_id']
+        return res
 
 
 class account_invoice_line(osv.osv):
     _inherit = "account.invoice.line"
 
-    _columns = {
-        'move_id': fields.many2one('stock.move', string="Move line", help="If the invoice was generated from a stock.picking, reference to the related move line."),
-    }
+    def _anglo_saxon_stock_move_lines(self, cr, uid, res, ttype='customer',
+                                      context=None):
+        ail_obj = self.pool.get('account.invoice.line')
+        fp_obj = self.pool.get('account.fiscal.position')
+        rex = []
+        for line in res:
+            if not line.get('invl_id', False):
+                rex.append(line)
+                continue
+
+            ail_brw = ail_obj.browse(cr, uid, line['invl_id'], context=context)
+            pp_brw = ail_brw.product_id
+            if not (pp_brw and pp_brw.valuation == 'real_time' and
+                    pp_brw.type != 'service'):
+                rex.append(line)
+                continue
+
+            a = None
+            if ttype == 'supplier':
+                oa = pp_brw.property_stock_account_input and \
+                    pp_brw.property_stock_account_input.id or \
+                    pp_brw.categ_id.property_stock_account_input_categ and\
+                    pp_brw.categ_id.property_stock_account_input_categ.id
+            elif ttype == 'customer':
+                oa = pp_brw.property_stock_account_output and \
+                    pp_brw.property_stock_account_output.id or \
+                    pp_brw.categ_id.property_stock_account_output_categ and\
+                    pp_brw.categ_id.property_stock_account_output_categ.id
+
+            if oa:
+                fpos = ail_brw.invoice_id.fiscal_position or False
+                a = fp_obj.map_account(cr, uid, fpos, oa)
+            if a == line['account_id'] and ail_brw.move_id:
+                line['sm_id'] = ail_brw.move_id.id
+
+            rex.append(line)
+        return rex
+
+    def move_line_get(self, cr, uid, invoice_id, context=None):
+        res = super(account_invoice_line,
+                    self).move_line_get(cr, uid, invoice_id, context=context)
+        inv = self.pool.get('account.invoice').browse(
+            cr, uid, invoice_id, context=context)
+        if inv.type in ('out_invoice', 'out_refund'):
+            res = self._anglo_saxon_stock_move_lines(
+                cr, uid, res, ttype='customer', context=context)
+        elif inv.type in ('in_invoice', 'in_refund'):
+            res = self._anglo_saxon_stock_move_lines(
+                cr, uid, res, ttype='supplier', context=context)
+        return res
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

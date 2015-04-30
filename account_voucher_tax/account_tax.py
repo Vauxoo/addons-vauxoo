@@ -32,11 +32,52 @@ class account_tax(osv.Model):
 
     _columns = {
         'tax_voucher_ok': fields.boolean('Tax Vocuher Ok', help='help'),
-        'account_collected_voucher_id': fields.many2one('account.account', 'Account Collected Voucher'),
-        'account_paid_voucher_id': fields.many2one('account.account', 'Account Paid Voucher'),
-        'account_expense_voucher_id': fields.many2one('account.account', 'Account Expense Voucher'),
-        'account_income_voucher_id': fields.many2one('account.account', 'Account Income Voucher'),
-        'tax_diot': fields.selection([('tax_16', 'IVA 16'), ('tax_11', 'IVA 11'),
-            ('tax_exe', 'IVA EXENTO'), ('tax0', 'IVA CERO'), ('tax_ret', 'IVA RETENIDO')],
+        'account_collected_voucher_id': fields.many2one(
+            'account.account', 'Account Collected Voucher'),
+        'account_paid_voucher_id': fields.many2one(
+            'account.account', 'Account Paid Voucher'),
+        'account_retention_voucher_id': fields.many2one(
+            'account.account', 'VAT pending for apply Account',
+            help='VAT pending for apply due to Withholding Tax'),
+        'account_expense_voucher_id': fields.many2one(
+            'account.account', 'Account Expense Voucher'),
+        'account_income_voucher_id': fields.many2one(
+            'account.account', 'Account Income Voucher'),
+        'tax_diot': fields.selection(
+            [('tax_16', 'IVA 16'), ('tax_11', 'IVA 11'),
+             ('tax_exe', 'IVA EXENTO'), ('tax0', 'IVA CERO'),
+             ('tax_ret', 'IVA RETENIDO')],
             'Tax to affect in DIOT'),
+    }
+
+
+class account_journal(osv.Model):
+    _inherit = 'account.journal'
+
+    _columns = {
+        'special_journal': fields.boolean(
+            'Is special Journal?',
+            help="Mark this field when the journal is used to make taxes"
+                 " in advance payment or partial payment in voucher.\n"
+                 "This journal always should be used with amount = 0.0")
+    }
+
+
+class res_company(osv.Model):
+    _inherit = 'res.company'
+
+    _columns = {
+        'tax_provision_customer': fields.many2one(
+            'account.tax',
+            'Provision tax Customer',
+            domain=[('type_tax_use', '=', 'sale')],
+            help="Tax to use when create taxes from advance payment "
+                 "to Customer"),
+        'tax_provision_supplier': fields.many2one(
+            'account.tax',
+            'Provision tax Supplier',
+            domain=[('type_tax_use', '=', 'purchase')],
+            help="Tax to use when create taxes from advance payment "
+                 "to Supplier")
+
     }

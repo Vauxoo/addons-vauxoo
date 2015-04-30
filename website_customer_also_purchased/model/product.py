@@ -46,8 +46,8 @@ class product_template(osv.osv):
             where product_tmpl_id = {0}
             """.format(ids[0]))
         pid = cr.fetchall()
-        for p in pid:
-            pids_t.append(p[0])
+        for pr in pid:
+            pids_t.append(pr[0])
         pids = '(%s)' % ', '.join(map(repr, tuple(pids_t)))
         cr.execute("\
             SELECT product_tmpl_id\
