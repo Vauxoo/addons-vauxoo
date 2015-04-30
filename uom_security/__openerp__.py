@@ -33,10 +33,12 @@
     "depends": [
         'product',
         "account",
+        "stock",
     ],
     "data": [
         "security/uom_groups.xml",
         "view/account_view.xml",
+        "view/stock_view.xml",
     ],
     "demo": [],
     "test": [],

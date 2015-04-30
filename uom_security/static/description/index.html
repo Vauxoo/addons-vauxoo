@@ -54,6 +54,29 @@
         </div>
     </div>
 
+    <!--
+
+    Product Template (Purchases Menu)
+
+    .. model: product.template
+    .. status: DONE (purchase)
+    .. view: stock.product_template_kanban_stock_view
+       <li t-if="record.type.raw_value != 'service'">On hand: <field name="qty_available"/> <field name="uom_id"/></li>
+       <li t-if="record.type.raw_value != 'service'">Forecasted: <field name="virtual_available"/> <field name="uom_id"/></li>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">Product Template Kanban (Purchases Menu)</h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="product.template.kanban.purchase.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="product.template.kanban.purchase.new.png">
+        </div>
+    </div>
+
 </section>
 
 <section class="oe_container">
@@ -129,12 +152,303 @@
         </div>
     </div>
 
+    <!--
+
+    Product Template (Sales Menu)
+
+    .. model: product.template
+    .. status: DONE (purchase)
+    .. view: stock.product_template_kanban_stock_view
+       <li t-if="record.type.raw_value != 'service'">On hand: <field name="qty_available"/> <field name="uom_id"/></li>
+       <li t-if="record.type.raw_value != 'service'">Forecasted: <field name="virtual_available"/> <field name="uom_id"/></li>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">Product Template Kanban (Sales Menu)</h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="product.template.kanban.sale.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="product.template.kanban.sale.new.png">
+        </div>
+    </div>
+
 </section>
 
 <section class="oe_container oe_dark">
     <h2 class="oe_slogan">Warehouse, Stock and MRP</h2>
+
+    <!--
+
+    Reordering Rules Form
+
+    .. model: stock.warehouse.orderpoint
+    .. status: TODO (warehouse)
+    .. view stock.view_warehouse_orderpoint_form
+       <field name="product_uom" groups="product.group_uom"/>
+    -->
+
     <div class="oe_row">
+        <h3 class="oe_slogan">Reordering Rules Form</h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="stock.warehouse.orderpoint.form.src.png">
+
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="stock.warehouse.orderpoint.form.new.png">
+        </div>
     </div>
+
+    <!--
+
+    Reordering Rules Tree
+
+    .. model: stock.warehouse.orderpoint
+    .. status: DONE (warehouse)
+    .. view stock.view_warehouse_orderpoint_tree
+       <field name="product_uom" groups="product.group_uom"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">Reordering Rules Tree</h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="stock.warehouse.orderpoint.tree.src.png">
+
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="stock.warehouse.orderpoint.tree.new.png">
+        </div>
+    </div>
+
+    <!--
+
+    Stock Inventory Form
+
+    .. model: stock.inventory
+    .. status: DONE (warehouse)
+    .. view stock.view_inventory_form
+       <field name="line_ids"> ... <tree> ... <field name="product_uom_id" groups="product.group_uom" string="UoM" on_change="onchange_createline(location_id, product_id, product_uom_id, package_id, prod_lot_id, partner_id)"/>
+    <field name="move_ids"> ... <tree> ... <field name="product_uom" string="Unit of Measure" groups="product.group_uom"/>
+
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">Inventory Adjustment Form</h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="stock.inventory.form.src.png">
+
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="stock.inventory.form.new.png">
+        </div>
+
+    </div>
+
+    <div class="oe_row">
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="stock.inventory.form2.src.png">
+
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="stock.inventory.form2.new.png">
+        </div>
+    </div>
+
+    <!--
+
+    Stock Move Form
+
+    .. model: stock.move
+
+    .. status: DONE (warehouse)
+    .. view: stock.view_move_picking_form
+    <field name="product_uom" string="Unit Of Measure" groups="product.group_uom" class="oe_inline"/>
+
+    .. status: DONE (warehouse)
+    .. view: stock.view_move_form
+    <field name="product_uom" groups="product.group_uom" class="oe_inline"/>
+
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">Stock Move Form</h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="stock.move.form.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="stock.move.form.new.png">
+        </div>
+
+    </div>
+
+    <div class="oe_row">
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="stock.move.form2.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="stock.move.form2.new.png">
+        </div>
+    </div>
+
+    <!--
+
+    Stock Move Tree
+
+    .. model stock.move
+
+    .. status: TODO (warehouse). Do but not working yet
+    .. view: stock.stock_move_tree
+       <field name="product_uom" string="Unit of Measure" groups="product.group_uom"/>
+
+    .. status: DONE (warehouse)
+    .. view: stock.view_move_tree
+       <field name="product_uom" string="Unit of Measure" groups="product.group_uom"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">Stock Move Tree</h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="stock.move.tree.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="stock.move.tree.new.png">
+        </div>
+
+    </div>
+
+    <!--
+
+    Stock Move Tree From Picking
+
+    .. model stock.move
+
+    .. status: DONE (warehouse)
+    .. view: stock.view_move_picking_tree
+       <field name="product_uom" string="Unit of Measure" groups="product.group_uom"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">Stock Move Tree From Picking</h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="stock.move.tree.from.picking.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="stock.move.tree.from.picking.new.png">
+        </div>
+
+    </div>
+
+    <!--
+
+    Procurement Request Form
+
+    .. model: make.procurement
+
+    .. status: DONE (warehouse)
+    .. view: stock.view_make_procurment_wizard
+       <field name="uom_id" groups="product.group_uom"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">Procurement Request Form</h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="make.procurement.form.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="make.procurement.form.new.png">
+        </div>
+    </div>
+
+    <!--
+
+    Stock Move Scrap Form (wizard)
+
+    .. model: stock.move.scrap
+
+    .. status: DONE (warehouse)
+    .. view: stock.view_stock_move_scrap_wizard
+       <field name="product_uom" class="oe_inline" readonly="1" groups="product.group_uom"/>
+
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">Stock Move Scrap Form (wizard)</h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="stock.move.scrap.form.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="stock.move.scrap.form.new.png">
+        </div>
+    </div>
+
+    <!--
+
+    Stock Picking Form
+
+    .. model stock.picking
+
+    .. status: TODO (warehouse) I change it but it do not work
+    .. view: stock.view_picking_form
+       <field name="pack_operation_ids"> ... <tree> ... <field name="product_uom_id" groups="product.group_uom"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">Stock Picking Form</h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="stock.picking.form.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="stock.picking.form.new.png">
+        </div>
+    </div>
+
+    <!--
+
+    Stock Transfer Details Form (wizard)
+
+    .. model stock.transfer_details
+
+    .. status: DONE (warehouse)
+    .. view: stock.view_stock_enter_transfer_details
+       <field name="product_uom_id" options="{&quot;no_open&quot;: True}" groups="product.group_uom"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">Stock Transfer Details Form (wizard)</h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="stock.transfer.details.form.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="stock.transfer.details.form.new.png">
+        </div>
+    </div>
+
 </section>
 
 <section class="oe_container">
