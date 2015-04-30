@@ -53,6 +53,9 @@
                                 attrs="{'invisible':[('filter','!=','bydate')]}"
                                 />
                         </group>
+                        <group string="Retrieval Options" col='2' colspan='2'>
+                            <field name="time_span"/>
+                        </group>
                     </group>
                     <group col='4' colspan='4'>
                         <field name="company_id" invisible='1'/>

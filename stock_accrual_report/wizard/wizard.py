@@ -57,6 +57,32 @@ PURCHASE_STATES = [
     'done',
 ]
 
+QUERY_LINE_MOVE = '''
+SELECT DISTINCT ol.id
+FROM {ttype}_order_line AS ol
+INNER JOIN
+    stock_move AS sm ON sm.{ttype}_line_id = ol.id
+WHERE
+    sm.state IN ('done')
+    AND (sm.date BETWEEN '{date_start}' AND '{date_stop}')
+    AND sm.company_id = {company_id}
+'''
+
+QUERY_LINE_INVOICE = '''
+SELECT DISTINCT ol.id
+FROM {ttype}_order_line AS ol
+INNER JOIN
+    {ttype}_order_line_invoice_rel AS olir ON olir.order_line_id = ol.order_id
+INNER JOIN
+    account_invoice_line AS ail ON ail.id = olir.invoice_id
+INNER JOIN
+    account_invoice AS ai ON ai.id = ail.invoice_id
+WHERE
+    ai.state IN ('open', 'paid')
+    AND (ai.date_invoice BETWEEN '{date_start}' AND '{date_stop}')
+    AND ai.company_id = {company_id}
+'''
+
 QUERY_MOVE = '''
 SELECT DISTINCT order_id
 FROM {ttype}_order_line AS ol
@@ -238,10 +264,18 @@ class stock_accrual_wizard(osv.osv_memory):
             string='Date/Period Filter',
             required=True,
         ),
+        'time_span': fields.selection(
+            [('all_periods', 'All Periods'),
+             ('this_period', 'This Period Only'),
+             ],
+            string='Retrieve Accrual on:',
+            required=True,
+        ),
     }
 
     _defaults = {
         'report_format': lambda *args: 'pdf',
+        'time_span': lambda *args: 'this_period',
         'filter': lambda *args: 'byperiod',
         'type': lambda *args: 'sale',
         'company_id': _get_default_company,
@@ -284,6 +318,7 @@ class stock_accrual_wizard(osv.osv_memory):
             for aml_brw in move.aml_ids:
                 if not aml_brw.account_id.reconcile:
                     continue
+                # TODO: Include a filter to retrieve only values from period
                 res['debit'] += aml_brw.debit
                 res['credit'] += aml_brw.credit
         return res
@@ -306,6 +341,40 @@ class stock_accrual_wizard(osv.osv_memory):
         res.update(self._get_accrual(cr, uid, wzd_brw.id, line_brw,
                                      context=context))
         return res
+
+    def _get_lines_from_stock(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        res = []
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        ttype = 'sale' if wzd_brw.type == 'sale' else 'purchase'
+        query = QUERY_LINE_MOVE.format(
+            ttype=ttype,
+            company_id=wzd_brw.company_id.id,
+            date_start=wzd_brw.date_start,
+            date_stop=wzd_brw.date_stop,
+        )
+        cr.execute(query)
+        res = cr.fetchall()
+        res = [val[0] for val in res]
+        return set(res)
+
+    def _get_lines_from_invoice(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        res = []
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+        ttype = 'sale' if wzd_brw.type == 'sale' else 'purchase'
+        query = QUERY_LINE_INVOICE.format(
+            ttype=ttype,
+            company_id=wzd_brw.company_id.id,
+            date_start=wzd_brw.date_start,
+            date_stop=wzd_brw.date_stop,
+        )
+        cr.execute(query)
+        res = cr.fetchall()
+        res = [val[0] for val in res]
+        return set(res)
 
     def _get_orders_from_stock(self, cr, uid, ids, context=None):
         context = context or {}
@@ -345,19 +414,37 @@ class stock_accrual_wizard(osv.osv_memory):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
-        order_obj = self.pool.get('%s.order' % wzd_brw.type)
         res = []
-        record_ids = self._get_orders_from_stock(cr, uid, ids, context=context)
-        record_idx = self._get_orders_from_invoice(cr, uid, ids,
-                                                   context=context)
-        record_ids = record_ids | record_idx
-        order_brws = []
-        if record_ids:
-            record_ids = list(record_ids)
-            order_brws = order_obj.browse(cr, uid, record_ids, context=context)
-        for order_brw in order_brws:
-            for line_brw in order_brw.order_line:
-                res.append(self._get_lines(cr, uid, wzd_brw, order_brw,
+        if wzd_brw.time_span == 'all_periods':
+            order_obj = self.pool.get('%s.order' % wzd_brw.type)
+            record_ids = self._get_orders_from_stock(cr, uid, ids,
+                                                     context=context)
+            record_idx = self._get_orders_from_invoice(cr, uid, ids,
+                                                       context=context)
+            record_ids = record_ids | record_idx
+            order_brws = []
+            if record_ids:
+                record_ids = list(record_ids)
+                order_brws = order_obj.browse(cr, uid, record_ids,
+                                              context=context)
+            for order_brw in order_brws:
+                for line_brw in order_brw.order_line:
+                    res.append(self._get_lines(cr, uid, wzd_brw, order_brw,
+                                               line_brw, context=context))
+        elif wzd_brw.time_span == 'this_period':
+            order_obj = self.pool.get('%s.order.line' % wzd_brw.type)
+            record_ids = self._get_lines_from_stock(cr, uid, ids,
+                                                    context=context)
+            record_idx = self._get_lines_from_invoice(cr, uid, ids,
+                                                      context=context)
+            record_ids = record_ids | record_idx
+            order_brws = []
+            if record_ids:
+                record_ids = list(record_ids)
+                order_brws = order_obj.browse(cr, uid, record_ids,
+                                              context=context)
+            for line_brw in order_brws:
+                res.append(self._get_lines(cr, uid, wzd_brw, line_brw.order_id,
                                            line_brw, context=context))
         return res
 
