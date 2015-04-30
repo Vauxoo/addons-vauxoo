@@ -32,9 +32,11 @@
     "category": "Security",
     "depends": [
         'product',
+        "account",
     ],
     "data": [
         "security/uom_groups.xml",
+        "view/account_view.xml",
     ],
     "demo": [],
     "test": [],
