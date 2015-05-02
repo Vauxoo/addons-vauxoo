@@ -187,10 +187,9 @@ class project_task(osv.Model):
                                     type='many2one',
                                     relation='project.issue',
                                     string='Issue',
-                                    store={
-                                        (_get_task_ids_from_issue,
-                                         ['task_id'], 10)
-                                    },
+                                    store={'project.issue':
+                                           (_get_task_ids_from_issue,
+                                            ['task_id'], 10)},
                                     help='Issue where this task is related'),
 
     }
