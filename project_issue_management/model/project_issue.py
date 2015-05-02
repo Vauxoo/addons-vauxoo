@@ -166,7 +166,7 @@ class project_task(osv.Model):
         res = {}
         issue_obj = self.pool.get('project.issue')
         for task in self.browse(cr, uid, ids, context=context):
-            issue_ids = issue_obj.search('project.issue',
+            issue_ids = issue_obj.search(cr, uid,
                                          [('task_id',  '=', task.id)])
 
             res[task.id] = issue_ids and issue_ids[0]
