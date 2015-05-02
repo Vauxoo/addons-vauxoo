@@ -169,7 +169,7 @@ class project_task(osv.Model):
             issue_ids = issue_obj.search('project.issue',
                                          [('task_id',  '=', task.id)])
 
-            res[task.id] = issue_ids and True or False
+            res[task.id] = issue_ids and issue_ids[0]
         return res
 
     def _get_task_ids_from_issue(self, cr, uid, ids, context=None):
@@ -183,14 +183,14 @@ class project_task(osv.Model):
         return task_ids
 
     _columns = {
-        'has_issue': fields.function(_check_issue,
-                                     type='boolean',
-                                     string='Issue',
-                                     store={
-                                         (_get_task_ids_from_issue,
-                                          ['task_id'], 10)
-                                     },
-                                     help='Selected if the task '
-                                     'has an issue related'),
+        'issue_id': fields.function(_check_issue,
+                                    type='many2one',
+                                    relation='project.issue',
+                                    string='Issue',
+                                    store={
+                                        (_get_task_ids_from_issue,
+                                         ['task_id'], 10)
+                                    },
+                                    help='Issue where this task is related'),
 
     }

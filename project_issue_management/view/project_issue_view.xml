@@ -102,7 +102,7 @@
         <field name="inherit_id" ref="project.view_task_form2"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='sequence']" position="after">
-            <field name="has_issue"/>
+            <field name="issue_id"/>
             </xpath>
         </field>
         </record>
@@ -115,10 +115,10 @@
             <field name="inherit_id" ref="project.view_task_search_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//filter[@string=&quot;Stage&quot;]" position="after">
-                    <filter string="With Issue" icon="terp-partner" domain="[]" context="{'group_by':'has_issue'}"/>
+                    <filter string="With Issue" icon="terp-partner" domain="[]" context="{'group_by':'issue_id'}"/>
                 </xpath>
                 <xpath expr='//filter[@string="Pending"]' position="before">
-                    <filter string="With Issue" icon="terp-partner" domain="[('has_issue', '=', True)]"/>
+                    <filter string="With Issue" icon="terp-partner" domain="[('issue_id', '=', True)]"/>
                 </xpath>
             </field>
         </record>
@@ -129,7 +129,7 @@
             <field name="inherit_id" ref="project.view_task_tree2"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name=&quot;stage_id&quot;]" position="after">
-                    <field name="has_issue"/>
+                    <field name="issue_id"/>
                 </xpath>
             </field>
         </record>
