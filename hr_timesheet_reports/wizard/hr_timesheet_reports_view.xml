@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+        <report auto="False"
+                id="hr_timesheet_reports_base"
+                model="hr.timesheet.reports.base"
+                name="hr.timesheet.reports.base"
+                file="hr_timesheet_reports/wizard/hr_timesheet_reports_base.mako"
+                string="Hr timesheet reports base"
+                report_type="webkit"
+                menu="True"/>
+
+        <record id="view_reports_base_form" model="ir.ui.view">
+            <field name="name">Timesheet Report</field>
+            <field name="model">hr.timesheet.reports.base</field>
+            <field name="arch" type="xml">
+                <form string="Invoice Line" version="7.0">
+                    <group>
+                        <field name="filter_id"/>
+                    </group>
+                    <footer>
+                        <button name="do_report"
+                                class="oe_highlight"
+                                string="Print and Send"
+                                type="object"/>
+                        or
+                        <button name="cancel"
+                                class="oe_link"
+                                string="Cancel"
+                                type="special"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_hr_report_base">
+            <field name="name">Timesheet Report</field>
+            <field name="res_model">hr.timesheet.reports.base</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        <menuitem name="Timesheet report"
+                  id="menu_hr_report_base"
+                  parent="base.menu_project_report"
+                  action="action_hr_report_base"
+                  sequence='100'/>
+    </data>
+</openerp>
