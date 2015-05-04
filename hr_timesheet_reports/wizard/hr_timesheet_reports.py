@@ -2,10 +2,32 @@
 from openerp.osv import osv, fields
 from openerp.tools.safe_eval import safe_eval
 
+def clean_name(name):
+    import re
+    exp = r'\[.*?\]'
+    text = name.strip()
+    found = re.findall(exp, text)
+    if found:
+        for f in found:
+            text = text.replace(f, '').strip()
+    words = text.split(' ')
+    if len(words) > 2:
+        text = ' '.join([words[0], words[2]])
+    return text
+
+
 class fiscal_book_wizard(osv.osv_memory):
 
     _name = "hr.timesheet.reports.base"
     _rec_name='filter_id'
+
+    def _prepare_data(self, record):
+        return {
+                'author': clean_name(record.user_id.name),
+                'description': record.name,
+                'duration': record.unit_amount,
+                'date': record.date,
+                }
 
     def _get_print_data(self, cr, uid, ids, name, args, context=None):
         res = {}
@@ -20,8 +42,9 @@ class fiscal_book_wizard(osv.osv_memory):
         timesheet_obj = self.pool.get('hr.analytic.timesheet')
         dom = [tuple(d) for d in safe_eval(domain)]
         timesheet_ids = timesheet_obj.search(cr, uid, dom, context=context)
-        timesheet_brws = timesheet_obj.browse(cr, uid, timesheet_ids, context=context)
-        res = timesheet_brws
+        timesheet_brws = timesheet_obj.browse(cr, uid, timesheet_ids,
+                                              context=context)
+        res = [self._prepare_data(tb) for tb in timesheet_brws]
         return res
 
     _columns = {

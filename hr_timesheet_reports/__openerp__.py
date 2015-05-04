@@ -29,6 +29,7 @@ report.
     ],
     "demo": [],
     "data": [
+        "wizard/hr_timesheet_reports_formats.xml",
         "wizard/hr_timesheet_reports_view.xml",
     ],
     "installable": True,

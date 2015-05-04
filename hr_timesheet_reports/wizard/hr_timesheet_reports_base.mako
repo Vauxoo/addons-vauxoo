@@ -9,6 +9,15 @@
             border: 1px solid grey;
             border-collapse: collapse;
             font-size: 12px;
+            text-align: center;
+        }
+        .duration {
+            font-size: 9px;
+            font-weight: bold;
+        }
+        .date {
+            font-size: 9px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -16,11 +25,14 @@
     %for obj in objects :
      <table width="100%" style="font-size: 14px;">
         <tr>
-            <th>
+            <th width="10%">
                <p>User</p>
             </th>
             <th>
                <p>Description</p>
+            </th>
+            <th>
+               <p>Date</p>
             </th>
             <th>
                <p>Duration</p>
@@ -28,14 +40,17 @@
         </tr>
         %for rec in obj.records :
         <tr>
-            <td>
-                <p>${rec.user_id.name}</p>
+            <td width="10%">
+                <p>${rec['author']}</p>
             </td>
             <td>
-                <p>${rec.name}</p>
+                <p>${rec['description']}</p>
             </td>
-            <td>
-                <p>${rec.unit_amount}</p>
+            <td class="date" width="10%">
+                <p>${rec['date']}</p>
+            </td>
+            <td class="duration">
+                <p>${formatLang(rec['duration'], digits=2)}</p>
             </td>
         </tr>
         %endfor
