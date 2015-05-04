@@ -107,22 +107,6 @@
         </field>
         </record>
 
-
-
-        <record id="view_task_search_form_issue" model="ir.ui.view">
-            <field name="name">project.task.search.form.issue</field>
-            <field name="model">project.task</field>
-            <field name="inherit_id" ref="project.view_task_search_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//filter[@string=&quot;Stage&quot;]" position="after">
-                    <filter string="With Issue" icon="terp-partner" domain="[]" context="{'group_by':'issue_id'}"/>
-                </xpath>
-                <xpath expr='//filter[@string="Pending"]' position="before">
-                    <filter string="With Issue" icon="terp-partner" domain="[('issue_id', '=', True)]"/>
-                </xpath>
-            </field>
-        </record>
-
         <record id="view_task_tree_issue" model="ir.ui.view">
             <field name="name">project.task.tree.issue</field>
             <field name="model">project.task</field>
@@ -130,6 +114,20 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name=&quot;stage_id&quot;]" position="after">
                     <field name="issue_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_task_search_form_issue" model="ir.ui.view">
+            <field name="name">project.task.search.form.issue</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_search_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@string=&quot;Stage&quot;]" position="after">
+                    <filter string="Issue" domain="[]" context="{'group_by':'issue_id'}"/>
+                </xpath>
+                <xpath expr='//filter[@string="Pending"]' position="before">
+                    <field string="Issue" name="issue_id"/>
                 </xpath>
             </field>
         </record>
