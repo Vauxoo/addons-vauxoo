@@ -169,7 +169,7 @@ class project_task(osv.Model):
             issue_ids = issue_obj.search(cr, uid,
                                          [('task_id',  '=', task.id)])
 
-            res[task.id] = issue_ids and issue_ids[0]
+            res[task.id] = issue_ids and issue_ids[0] or False
         return res
 
     def _get_task_ids_from_issue(self, cr, uid, ids, context=None):
