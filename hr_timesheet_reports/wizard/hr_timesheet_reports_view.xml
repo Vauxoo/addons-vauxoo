@@ -16,7 +16,8 @@
             <field name="arch" type="xml">
                 <form string="Invoice Line" version="7.0">
                     <group>
-                        <field name="filter_id"/>
+                        <field name="filter_id"
+                               widget="selection" required="1"/>
                     </group>
                     <footer>
                         <button name="do_report"
@@ -32,7 +33,6 @@
                 </form>
             </field>
         </record>
-
         <record model="ir.actions.act_window" id="action_hr_report_base">
             <field name="name">Timesheet Report</field>
             <field name="res_model">hr.timesheet.reports.base</field>
