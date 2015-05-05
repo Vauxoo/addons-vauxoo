@@ -32,7 +32,7 @@ _logger = logging.getLogger(__name__)
 try:
     from recaptcha.client import captcha
 except ImportError, e:
-    _logger.error("You must install recaptcha to use the recaptcha module")
+    _logger.warning("You must install recaptcha to use the recaptcha module")
 
 
 class res_captcha(osv.Model):
