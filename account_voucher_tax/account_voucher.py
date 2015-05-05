@@ -168,6 +168,10 @@ class account_voucher(osv.Model):
                     context['date'] = voucher.date
                     reference_amount = amount_total_tax * abs(factor)
 
+                    statement_currency_line = False
+                    if current_currency != line.currency_id.id:
+                        statement_currency_line = line.currency_id.id
+
                     if current_currency != company_currency:
                         amount_tax_currency += cur_obj.compute(
                             cr, uid, current_currency, company_currency,
@@ -183,8 +187,9 @@ class account_voucher(osv.Model):
                         reference_amount, current_currency, False,
                         move_line_tax_dict.get('tax_id'),
                         move_line_tax_dict.get('tax_analytic_id'),
-                        amount_base_secondary,
-                        factor, context=context)
+                        amount_base_secondary, factor,
+                        statement_currency_line=statement_currency_line,
+                        context=context)
                     for move_line_tax in move_lines_tax:
                         move_create = move_line_obj.create(
                             cr, uid, move_line_tax, context=context)
@@ -294,7 +299,8 @@ class account_voucher(osv.Model):
                                  line_tax, acc_a,
                                  # informacion de lineas de impuestos
                                  amount_base_tax,
-                                 factor=0, context=None):
+                                 factor=0, statement_currency_line=None,
+                                 context=None):
 
         account_collected_id = dest_account_id
 
@@ -302,6 +308,9 @@ class account_voucher(osv.Model):
             src_account_id, dest_account_id = dest_account_id, src_account_id
         if type == 'payment' and reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
+
+        reference_currency_id = statement_currency_line or\
+            reference_currency_id
 
         amount_base, tax_secondary = self._get_base_amount_tax_secondary(
             cr, uid, line_tax, amount_base_tax * factor, reference_amount,

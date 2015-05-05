@@ -131,6 +131,7 @@ class account_bank_statement_line(osv.osv):
         st_line = self.browse(cr, uid, id, context=context)
         company_currency = st_line.journal_id.company_id.currency_id.id
         statement_currency = st_line.journal_id.currency.id or company_currency
+        statement_currency_line = st_line.currency_id.id or False
 
         context['date'] = st_line.date
 
@@ -154,7 +155,8 @@ class account_bank_statement_line(osv.osv):
             st_line.statement_id.period_id.id,
             st_line.statement_id.journal_id.id,
             st_line.date, type, st_line.statement_id, company_currency,
-            statement_currency, move_id=move_id_old, context=context)
+            statement_currency, move_id=move_id_old,
+            statement_currency_line=statement_currency_line, context=context)
 
         res = super(account_bank_statement_line, self).process_reconciliation(
             cr, uid, id, mv_line_dicts, context=context)
@@ -178,7 +180,8 @@ class account_bank_statement_line(osv.osv):
     def create_move_line_tax_payment(
         self, cr, uid, mv_line_dicts, partner_id, period_id, journal_id,
             date_st, type_payment, parent, company_currency,
-            statement_currency, move_id=None, context=None):
+            statement_currency, move_id=None, statement_currency_line=None,
+            context=None):
 
         if context is None:
             context = {}
@@ -227,7 +230,8 @@ class account_bank_statement_line(osv.osv):
                     move_line_tax.get('tax_id'),  # Impuesto
                     move_line_tax.get('tax_analytic_id'),  # Cuenta analitica del impuesto(aml)
                     amount_base_secondary,  # Monto base(aml)
-                    factor, context=context)
+                    factor, statement_currency_line=statement_currency_line,
+                    context=context)
                 for move_line_dict_tax in lines_tax:
                     move_tax = move_line_obj.create(
                         cr, uid, move_line_dict_tax, context=context
@@ -438,9 +442,11 @@ class account_bank_statement_line(osv.osv):
                         move_line_id.credit > 0 and\
                         move_line_id.credit or move_line_id.debit
 
-                    counterpart_unreconcile = currency_obj.compute(
-                        cr, uid, company_currency, statement_currency,
-                        abs(move_line_id.amount_residual), context=context)
+                    # counterpart_unreconcile = currency_obj.compute(
+                    #     cr, uid, company_currency, statement_currency,
+                    #     abs(move_line_id.amount_residual), context=context)
+
+                    counterpart_unreconcile = move_line_id.amount_residual_currency
 
                     if move_line_id.currency_id and\
                             move_line_id.currency_id.id == statement_currency:
