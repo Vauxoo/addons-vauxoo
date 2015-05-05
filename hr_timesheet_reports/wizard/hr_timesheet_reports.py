@@ -27,6 +27,8 @@ class fiscal_book_wizard(osv.osv_memory):
                 'description': record.name,
                 'duration': record.unit_amount,
                 'date': record.date,
+                'analytic': record.account_id.name,
+                'id': record.id,
                 }
 
     def _get_print_data(self, cr, uid, ids, name, args, context=None):
@@ -35,17 +37,36 @@ class fiscal_book_wizard(osv.osv_memory):
             res[wzd.id] = self._get_result_ids(cr, uid, ids, context=context)
         return res
 
+    def _get_resumed_information(self, cr, uid, timesheet_brws, context=None):
+        res = {}
+        projects = set([tb.account_id for tb in timesheet_brws])
+        return res
+
     def _get_result_ids(self, cr, uid, ids, context=None):
         res = []
         wzr_brw = self.browse(cr, uid, ids, context=context)[0]
         domain = wzr_brw.filter_id.domain
         timesheet_obj = self.pool.get('hr.analytic.timesheet')
         dom = [tuple(d) for d in safe_eval(domain)]
-        timesheet_ids = timesheet_obj.search(cr, uid, dom, context=context)
+        timesheet_ids = timesheet_obj.search(cr, uid, dom,
+                                            order='account_id asc, date asc, user_id asc',
+                                            context=context)
+        # Group elements
         timesheet_brws = timesheet_obj.browse(cr, uid, timesheet_ids,
                                               context=context)
         res = [self._prepare_data(tb) for tb in timesheet_brws]
-        return res
+        grouped = timesheet_obj.read_group(cr, uid, dom, ['account_id', 'unit_amount'], ['account_id'], context=context)
+        grouped_month = timesheet_obj.read_group(cr, uid, dom, ['date', 'account_id', 'unit_amount'], ['date'], context=context)
+        # Separate per project (analytic)
+        projects = set([l['analytic'] for l in res])
+        information = {
+            'data': {},
+            'resume': grouped,
+            'resume_month': grouped_month,
+        }
+        for proj in projects:
+            information['data'][proj]=[r for r in res if r['analytic'] == proj]
+        return information
 
     _columns = {
         'filter_id': fields.many2one(
