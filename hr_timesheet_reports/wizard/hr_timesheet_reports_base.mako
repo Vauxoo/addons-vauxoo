@@ -14,11 +14,12 @@
             text-align: center;
             font-size: 9px;
             padding: 3px;
+            vertical-align: top;
         }
         th {
             border: 1px solid black;
         }
-        table.resume {
+        .resume {
             text-align: left;
             border: none;
         }
@@ -43,60 +44,61 @@
         <h3>
             Resumed Report.
         </h3>
-        <table class="resume">
-        <td>
-            <table>
-                <tr class="by_account">
-                    <td colspan="2">
-                        By Analytic
-                    </td>
-                </tr>
-                <tr class="title">
-                    <td>
-                        Account
-                    </td>
-                    <td>
-                        Hours
-                    </td>
-                </tr>
-                %for resume in obj.records['resume'] :
-                <tr class="by_account">
-                    <td style="text-align: left;">
-                    ${resume.get('account_id')[1]}
-                    </td>
-                    <td>
-                    <b>Total in Hours:</b> ${formatLang(resume.get('unit_amount', '0.00'))}
-                    </td>
-                </tr>
-                %endfor
-            </table>
-        </td>
-        <td>
-            <table>
-                <tr class="by_account">
-                    <td colspan="2">
-                        By Month
-                    </td>
-                </tr>
-                <tr class="title">
-                    <td>
-                        Month
-                    </td>
-                    <td>
-                        Hours
-                    </td>
-                </tr>
-                %for resume in obj.records['resume_month'] :
+        <table class="resume" style="border: none">
+            <td style="border: none">
+                <table>
                     <tr class="by_account">
-                        <td style="text-align: left;">
-                        ${resume.get('account_id')[1]}
-                        </td>
-                        <td>
+                        <td colspan="2">
+                        By Date
                         </td>
                     </tr>
-                %endfor
-            </table>
-        </td>
+                    <tr class="title">
+                        <td>
+                            Month
+                        </td>
+                        <td>
+                            Hours
+                        </td>
+                    </tr>
+                    %for resume in obj.records['resume_month'] :
+                        <tr class="by_account">
+                            <td style="text-align: left;">
+                            ${resume.get('date')}
+                            </td>
+                            <td>
+                            ${formatLang(resume.get('unit_amount'))}
+                            </td>
+                        </tr>
+                    %endfor
+                </table>
+            </td>
+            <td style="border: none">
+                <table>
+                    <tr class="by_account">
+                        <td colspan="2">
+                            By Analytic
+                        </td>
+                    </tr>
+                    <tr class="title">
+                        <td>
+                            Account
+                        </td>
+                        <td>
+                            Hours
+                        </td>
+                    </tr>
+                    %for resume in obj.records['resume'] :
+                    <tr class="by_account">
+                        <td style="text-align: left;">
+                        ${resume.get('account_id')[1].split('/')[-1]}
+                        </td>
+                        <td>
+                        ${formatLang(resume.get('unit_amount', '0.00'))}
+                        </td>
+                    </tr>
+                    %endfor
+                </table>
+            </td>
         </table>
         <h3>
             Detailed Report.

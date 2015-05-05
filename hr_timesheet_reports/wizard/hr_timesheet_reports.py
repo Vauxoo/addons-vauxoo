@@ -57,6 +57,7 @@ class fiscal_book_wizard(osv.osv_memory):
         res = [self._prepare_data(tb) for tb in timesheet_brws]
         grouped = timesheet_obj.read_group(cr, uid, dom, ['account_id', 'unit_amount'], ['account_id'], context=context)
         grouped_month = timesheet_obj.read_group(cr, uid, dom, ['date', 'account_id', 'unit_amount'], ['date'], context=context)
+        print grouped_month
         # Separate per project (analytic)
         projects = set([l['analytic'] for l in res])
         information = {
