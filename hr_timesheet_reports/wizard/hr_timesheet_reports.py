@@ -70,9 +70,17 @@ class fiscal_book_wizard(osv.osv_memory):
         return information
 
     _columns = {
+        'filter_invoice_id': fields.many2one(
+            'ir.filters', 'Invoices',
+            domain=[('model_id', 'ilike', 'account.invoice')],
+            help='Filter of Invoices to be shown TIP: Go to Accounting/Customer '
+            'Invoices in order to create the filter you want to show on this'
+            'report.',),
         'filter_id': fields.many2one(
-            'ir.filters', 'Filter', help='Filter',
-            domain=[('model_id', 'ilike', 'hr.analytic.timesheet')]),
+            'ir.filters', 'Filter',
+            domain=[('model_id', 'ilike', 'hr.analytic.timesheet')],
+            help="Filter should be by date, group_by is ignored, the model "
+            "which the filter should belong to is timesheet."),
         'records': fields.function(_get_print_data, string='Records', type="text")
     }
 
