@@ -36,12 +36,12 @@ class mail_message(osv.Model):
 
     def _message_read_dict(self, cr, uid, message, parent_id=False,
                            context=None):
-        r = super(mail_message, self)._message_read_dict(cr, uid,
-                                                         message,
-                                                         parent_id=parent_id,
-                                                         context=context)
-        r['rating'] = message.rating
-        return r
+        res = super(mail_message, self)._message_read_dict(cr, uid,
+                                                           message,
+                                                           parent_id=parent_id,
+                                                           context=context)
+        res['rating'] = message.rating
+        return res
 
 
 class product_template(osv.Model):

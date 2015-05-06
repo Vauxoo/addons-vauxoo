@@ -27,5 +27,6 @@ class website_sale(website_sale):
             }
             request.registry['mail.message'].write(cr, uid, [mid], data,
                                                    context)
-        r = werkzeug.utils.redirect(request.httprequest.referrer + "#comments")
-        return r
+        res = werkzeug.utils.redirect(request.httprequest.referrer +
+                                      "#comments")
+        return res

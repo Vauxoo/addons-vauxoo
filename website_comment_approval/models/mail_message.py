@@ -33,9 +33,9 @@ class mail_message(osv.Model):
 
     def _message_read_dict(self, cr, uid, message, parent_id=False,
                            context=None):
-        r = super(mail_message, self)._message_read_dict(cr, uid,
-                                                         message,
-                                                         parent_id=parent_id,
-                                                         context=context)
-        r['website_published'] = message.website_published
-        return r
+        ret = super(mail_message, self)._message_read_dict(cr, uid,
+                                                           message,
+                                                           parent_id=parent_id,
+                                                           context=context)
+        ret['website_published'] = message.website_published
+        return ret
