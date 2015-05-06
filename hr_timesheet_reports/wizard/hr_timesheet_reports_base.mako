@@ -100,6 +100,37 @@
                 </table>
             </td>
         </table>
+        % if obj.records.get('invoices', []):
+        <h3>
+            Total Invoiced.
+        </h3>
+        <p>${obj.records['invoices']}</p>
+        <table width="100%">
+        <tr class="title">
+            <td width="10%">
+                Currency
+            </td>
+            <td>
+                Amount
+            </td>
+        </tr>
+        %for invoice in obj.records['invoices'] :
+            <tr class="by_account">
+                <td width="10%" style="text-align: left;">
+                ${invoice.get('currency_id')[1]}
+                </td>
+                <td>
+                ${formatLang(invoice.get('amount_total', '0.00'))}
+                </td>
+            </tr>
+        %endfor
+        <tr class="by_account">
+            <td colspan="2">
+                Total invoiced until today in the project.
+            </td>
+        </tr>
+        </table>
+        % endif
         <h3>
             Detailed Report.
         </h3>

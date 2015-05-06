@@ -17,7 +17,7 @@
                 <form string="Invoice Line" version="7.0">
                     <group>
                         <field name="filter_invoice_id"
-                               widget="selection"/>
+                                widget="selection"/>
                         <field name="filter_id"
                                widget="selection" required="1"/>
                     </group>
