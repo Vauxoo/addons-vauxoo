@@ -63,15 +63,23 @@ class fiscal_book_wizard(osv.osv_memory):
                                                   'unit_amount'],
                                                  ['date'],
                                                  context=context)
+        # Preparing grouped invoices due to it is 2 levels it need a
+        # little extra Work.
         grouped_invoices = invoice_obj.read_group(cr, uid, dom_inv,
-                                                  ['currency_id',
-                                                   'date_invoice',
-                                                   'partner_id',
-                                                   'amount_total'],
-                                                  ['currency_id',
-                                                   'date_invoice',
-                                                   'partner_id'],
+                                                  ['period_id',
+                                                   'amount_total',
+                                                   'partner_id'
+                                                   ],
+                                                  ['period_id',
+                                                   'amount_total',
+                                                   ],
                                                   context=context)
+        #  TODO: This must be a better way to achieve this list directly from
+        #  search group on v8.0 for now the simplest way make a list with
+        #  everything an group in the report itself
+        invoice_ids = invoice_obj.search(cr, uid, dom_inv, context=context)
+        invoices_brw = invoice_obj.browse(cr, uid, invoice_ids, context=context)
+
         print grouped_invoices
         # Separate per project (analytic)
         projects = set([l['analytic'] for l in res])
@@ -79,7 +87,8 @@ class fiscal_book_wizard(osv.osv_memory):
             'data': {},
             'resume': grouped,
             'resume_month': grouped_month,
-            'invoices': grouped_invoices,
+            'periods': grouped_invoices,
+            'invoices': invo
         }
         for proj in projects:
             info['data'][proj] = [r for r in res if r['analytic'] == proj]

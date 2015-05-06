@@ -108,19 +108,36 @@
         <table width="100%">
         <tr class="title">
             <td width="10%">
-                Currency
+                Period
             </td>
             <td>
-                Amount
+                Number
             </td>
         </tr>
-        %for invoice in obj.records['invoices'] :
+        %for period in obj.records['periods'] :
             <tr class="by_account">
                 <td width="10%" style="text-align: left;">
-                ${invoice.get('currency_id')[1]}
+                ${period.get('period_id')[1]}
                 </td>
                 <td>
-                ${formatLang(invoice.get('amount_total', '0.00'))}
+                ${'( ' + str(period.get('period_id_count', '0')) + ' )'}
+                <table width="100%">
+                    <tr>
+                    <td>
+                    Invoice Number
+                    </td>
+                    <td>
+                    Total
+                    </td>
+                    <td>
+                    Currency
+                    </td>
+                    </tr>
+                    %for invoice in period['invoices'] :
+                    <tr>
+                    </tr>
+                    %endfor
+                </table>
                 </td>
             </tr>
         %endfor
