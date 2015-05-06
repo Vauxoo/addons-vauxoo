@@ -104,14 +104,25 @@
         <h3>
             Total Invoiced.
         </h3>
-        <p>${obj.records['invoices']}</p>
-        <table width="100%">
+        <table width="50%">
         <tr class="title">
             <td width="10%">
                 Period
             </td>
-            <td>
-                Number
+            <td style="padding: 0px;">
+                <table width="100%">
+                    <tr>
+                    <td width="33%">
+                    Invoice Number
+                    </td>
+                    <td width="33%">
+                    Total
+                    </td>
+                    <td width="33%">
+                    Currency
+                    </td>
+                    </tr>
+                </table>
             </td>
         </tr>
         %for period in obj.records['periods'] :
@@ -119,25 +130,24 @@
                 <td width="10%" style="text-align: left;">
                 ${period.get('period_id')[1]}
                 </td>
-                <td>
-                ${'( ' + str(period.get('period_id_count', '0')) + ' )'}
-                <table width="100%">
-                    <tr>
-                    <td>
-                    Invoice Number
-                    </td>
-                    <td>
-                    Total
-                    </td>
-                    <td>
-                    Currency
-                    </td>
-                    </tr>
-                    %for invoice in period['invoices'] :
-                    <tr>
-                    </tr>
-                    %endfor
-                </table>
+                <td  width="40%" style="padding: 0px;">
+                    <table width="100%" style="border: none">
+                        %for invoice in obj.records['invoices'] :
+                            % if invoice.period_id.id == period.get('period_id')[0]:
+                            <tr>
+                                <td>
+                                    ${invoice.number}
+                                </td>
+                                <td>
+                                    ${formatLang(invoice.amount_total)}
+                                </td>
+                                <td>
+                                    ${invoice.currency_id.name}
+                                </td>
+                            </tr>
+                            % endif
+                        %endfor
+                    </table>
                 </td>
             </tr>
         %endfor

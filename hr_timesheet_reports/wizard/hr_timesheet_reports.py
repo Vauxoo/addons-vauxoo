@@ -88,7 +88,7 @@ class fiscal_book_wizard(osv.osv_memory):
             'resume': grouped,
             'resume_month': grouped_month,
             'periods': grouped_invoices,
-            'invoices': invo
+            'invoices': invoices_brw,
         }
         for proj in projects:
             info['data'][proj] = [r for r in res if r['analytic'] == proj]
