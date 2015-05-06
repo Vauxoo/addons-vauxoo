@@ -381,6 +381,8 @@ class account_voucher(osv.Model):
             debit_line_vals.pop('is_tax_voucher')
 
         account_obj = self.pool.get('account.account')
+        cur_obj = self.pool.get('res.currency')
+
         reference_amount = abs(reference_amount)
         src_acct, dest_acct = account_obj.browse(
             cr, uid, [src_account_id, dest_account_id], context=context)
@@ -389,33 +391,42 @@ class account_voucher(osv.Model):
             or src_acct.company_id.currency_id.id
         dest_main_currency_id = dest_acct.currency_id\
             and dest_acct.currency_id.id or dest_acct.company_id.currency_id.id
-        cur_obj = self.pool.get('res.currency')
-        if reference_currency_id != src_main_currency_id:
-            # fix credit line:
-            credit_line_vals['credit'] = cur_obj.compute(
-                cr, uid, reference_currency_id, src_main_currency_id,
-                reference_amount, context=context)
-            credit_line_vals['amount_tax_unround'] = cur_obj.compute(
-                cr, uid, reference_currency_id, src_main_currency_id,
-                abs(reference_amount), round=False, context=context)
-            if (not src_acct.currency_id)\
-                    or src_acct.currency_id.id == reference_currency_id:
-                credit_line_vals.update(
-                    currency_id=reference_currency_id,
-                    amount_currency=-reference_amount)
-        if reference_currency_id != dest_main_currency_id:
-            # fix debit line:
-            debit_line_vals['debit'] = cur_obj.compute(
-                cr, uid, reference_currency_id, dest_main_currency_id,
-                reference_amount, context=context)
-            debit_line_vals['amount_base'] = cur_obj.compute(
-                cr, uid, reference_currency_id, dest_main_currency_id,
-                abs(amount_base), context=context)
-            if (not dest_acct.currency_id)\
-                    or dest_acct.currency_id.id == reference_currency_id:
-                debit_line_vals.update(
-                    currency_id=reference_currency_id,
-                    amount_currency=reference_amount)
+
+        # get rate of bank statement if rate is different to currency
+        if context.get('st_line_currency_rate') and\
+                statement_currency_line != company_currency:
+            credit_line_vals['credit'] = cur_obj.round(
+                cr, uid, src_acct.company_id.currency_id,
+                reference_amount/context.get('st_line_currency_rate'))
+            debit_line_vals['debit'] = cur_obj.round(
+                cr, uid, src_acct.company_id.currency_id,
+                reference_amount/context.get('st_line_currency_rate'))
+            debit_line_vals['amount_base'] = cur_obj.round(
+                cr, uid, src_acct.company_id.currency_id,
+                abs(amount_base)/context.get('st_line_currency_rate'))
+        else:
+            if reference_currency_id != src_main_currency_id:
+                # fix credit line:
+                credit_line_vals['credit'] = cur_obj.compute(
+                    cr, uid, reference_currency_id, src_main_currency_id,
+                    reference_amount, context=context)
+
+            if reference_currency_id != dest_main_currency_id:
+                # fix debit line:
+                debit_line_vals['debit'] = cur_obj.compute(
+                    cr, uid, reference_currency_id, dest_main_currency_id,
+                    reference_amount, context=context)
+                debit_line_vals['amount_base'] = cur_obj.compute(
+                    cr, uid, reference_currency_id, dest_main_currency_id,
+                    abs(amount_base), context=context)
+
+        if reference_currency_id != company_currency:
+            debit_line_vals.update(
+                currency_id=reference_currency_id,
+                amount_currency=reference_amount)
+            credit_line_vals.update(
+                currency_id=reference_currency_id,
+                amount_currency=-reference_amount)
 
         if self.pool.get('account.journal').browse(
                 cr, uid, journal).special_journal:

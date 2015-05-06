@@ -132,8 +132,11 @@ class account_bank_statement_line(osv.osv):
         company_currency = st_line.journal_id.company_id.currency_id.id
         statement_currency = st_line.journal_id.currency.id or company_currency
         statement_currency_line = st_line.currency_id.id or False
+        st_line_currency_rate = st_line.currency_id and\
+            (st_line.amount_currency / st_line.amount) or False
 
         context['date'] = st_line.date
+        context['st_line_currency_rate'] = st_line_currency_rate
 
         vals_move = {
             'date': time.strftime('%Y-%m-%d'),
