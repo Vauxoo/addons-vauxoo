@@ -53,8 +53,9 @@
                                 attrs="{'invisible':[('filter','!=','bydate')]}"
                                 />
                         </group>
-                        <group string="Retrieval Options" col='2' colspan='2'>
+                        <group string="Retrieval Options" col='4' colspan='4'>
                             <field name="time_span"/>
+                            <field name="accrual_filter"/>
                         </group>
                     </group>
                     <group col='4' colspan='4'>

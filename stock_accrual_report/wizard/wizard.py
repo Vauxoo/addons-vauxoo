@@ -268,7 +268,14 @@ class stock_accrual_wizard(osv.osv_memory):
             [('all_periods', 'All Periods'),
              ('this_period', 'This Period Only'),
              ],
-            string='Retrieve Accrual on:',
+            string='Lines on:',
+            required=True,
+        ),
+        'accrual_filter': fields.selection(
+            [('all_lines', 'Bring All Order Lines'),
+             ('with_accrual', 'Only with Accruals'),
+             ],
+            string='Accrual on Lines:',
             required=True,
         ),
     }
@@ -276,6 +283,7 @@ class stock_accrual_wizard(osv.osv_memory):
     _defaults = {
         'report_format': lambda *args: 'pdf',
         'time_span': lambda *args: 'this_period',
+        'accrual_filter': lambda *args: 'all_lines',
         'filter': lambda *args: 'byperiod',
         'type': lambda *args: 'sale',
         'company_id': _get_default_company,
@@ -461,8 +469,9 @@ class stock_accrual_wizard(osv.osv_memory):
         res = self.compute_order_lines(cr, uid, ids, context=context)
 
         for rex in res:
-            # if not any([rex['debit'], rex['credit']]):
-            #     continue
+            if (wzd_brw.accrual_filter == 'with_accrual' and not
+                    any([rex['debit'], rex['credit']])):
+                continue
             sawl_obj.create(cr, uid, rex, context=context)
 
         return True
