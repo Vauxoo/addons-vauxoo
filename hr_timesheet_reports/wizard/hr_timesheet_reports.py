@@ -2,9 +2,10 @@
 from openerp.osv import osv, fields
 from openerp.tools.safe_eval import safe_eval
 
+import re
+
 
 def clean_name(name):
-    import re
     exp = r'\[.*?\]'
     text = name.strip()
     found = re.findall(exp, text)
@@ -17,10 +18,10 @@ def clean_name(name):
     return text
 
 
-class fiscal_book_wizard(osv.osv_memory):
+class fiscal_book_wizard(osv.Model):
 
     _name = "hr.timesheet.reports.base"
-    _rec_name = 'filter_id'
+    _inherit = ['mail.thread']
 
     def _prepare_data(self, record):
         return {'author': clean_name(record.user_id.name),
@@ -80,7 +81,6 @@ class fiscal_book_wizard(osv.osv_memory):
         invoice_ids = invoice_obj.search(cr, uid, dom_inv, context=context)
         invoices_brw = invoice_obj.browse(cr, uid, invoice_ids, context=context)
 
-        print grouped_invoices
         # Separate per project (analytic)
         projects = set([l['analytic'] for l in res])
         info = {
@@ -95,6 +95,14 @@ class fiscal_book_wizard(osv.osv_memory):
         return info
 
     _columns = {
+        'name': fields.char('Report Title'),
+        'comment_invoices': fields.text('Comment about Invoices',
+                                        help="It will appear just above list of invoices."),
+        'comment_timesheet': fields.text('Comment about Timesheets',
+                                         help='It will appear just above the resumed timesheets.'),
+        'partner_id': fields.many2one(
+            'res.partner', 'Contact',
+            help='Contact which you will send this report.'),
         'filter_invoice_id': fields.many2one(
             'ir.filters', 'Invoices',
             domain=[('model_id', 'ilike', 'account.invoice')],
@@ -108,7 +116,11 @@ class fiscal_book_wizard(osv.osv_memory):
             help="Filter should be by date, group_by is ignored, the model "
             "which the filter should belong to is timesheet."),
         'records': fields.function(_get_print_data,
-                                   string='Records', type="text")
+                                   string='Records', type="text"),
+        'state': fields.selection([('draft', 'Draft'),
+                                   ('sent', 'Sent')],
+                                  'Status',
+                                  help='Message sent already to customer (it will block edition)'),
     }
 
     def do_report(self, cr, uid, ids, context=None):

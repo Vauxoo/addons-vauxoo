@@ -10,49 +10,73 @@
                 report_type="webkit"
                 menu="True"/>
 
+        <record id="view_reports_base_tree" model="ir.ui.view">
+            <field name="name">Timesheet Report</field>
+            <field name="model">hr.timesheet.reports.base</field>
+            <field name="arch" type="xml">
+                <tree string="Invoice Line" version="7.0">
+                    <button name="do_report"
+                            icon="STOCK_PRINT"
+                            string="Print and Send"
+                            type="object"/>
+                    <field name="name"/>
+                    <field name="filter_invoice_id"/>
+                    <field name="filter_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
         <record id="view_reports_base_form" model="ir.ui.view">
             <field name="name">Timesheet Report</field>
             <field name="model">hr.timesheet.reports.base</field>
             <field name="arch" type="xml">
                 <form string="Invoice Line" version="7.0">
-                    <group>
-                        <field name="filter_invoice_id"
-                                widget="selection"/>
-                        <field name="filter_id"
-                               widget="selection" required="1"/>
-                    </group>
-                    <footer>
+                    <header>
                         <button name="do_report"
                                 class="oe_highlight"
                                 string="Print and Send"
                                 type="object"/>
-                        or
-                        <button name="cancel"
-                                class="oe_link"
-                                string="Cancel"
-                                type="special"/>
-                    </footer>
+                        <button name="mark_sent"
+                                string="Send"
+                                type="object"
+                                help="Just print report and send a message with the report to followers."/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <h1><field name="name"/></h1>
+                        <group>
+                            <field name="comment_invoices"/>
+                            <field name="filter_invoice_id"
+                                    widget="selection"/>
+                            <field name="comment_timesheet"/>
+                            <field name="filter_id"
+                                widget="selection"
+                                required="1"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread" options="{'thread_level': 1}"/>
+                    </div>
                 </form>
             </field>
         </record>
-        <record model="ir.actions.act_window" id="action_hr_report_base">
+        <record model="ir.actions.act_window" id="action_hr_report_base_tree">
             <field name="name">Timesheet Report</field>
             <field name="res_model">hr.timesheet.reports.base</field>
-            <field name="type">ir.actions.act_window</field>
             <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-            <field name="target">new</field>
+            <field name="view_mode">tree,form</field>
         </record>
+        <menuitem name="Timesheet report"
+                  id="menu_hr_report_base"
+                  parent="base.menu_project_report"
+                  action="action_hr_report_base_tree"
+                  sequence='100'/>
         <record id="property_hr_report_base" model="ir.property">
             <field name="name">webkit_header</field>
             <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
             <field eval="'ir.header_webkit,'+str(ref('hr_timesheet_reports.ir_header_webkit_timesheet'))" model="ir.header_webkit" name="value"/>
             <field eval="'ir.actions.report.xml,'+str(ref('hr_timesheet_reports.hr_timesheet_reports_base'))" model="ir.actions.report.xml" name="res_id"/>
         </record>
-        <menuitem name="Timesheet report"
-                  id="menu_hr_report_base"
-                  parent="base.menu_project_report"
-                  action="action_hr_report_base"
-                  sequence='100'/>
     </data>
 </openerp>
