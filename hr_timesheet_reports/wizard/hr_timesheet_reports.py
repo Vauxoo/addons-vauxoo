@@ -123,6 +123,10 @@ class fiscal_book_wizard(osv.Model):
                                   help='Message sent already to customer (it will block edition)'),
     }
 
+    _defaults = {
+        'state': lambda * a: 'draft',
+    }
+
     def do_report(self, cr, uid, ids, context=None):
         return {'type': 'ir.actions.report.xml',
                 'name': 'hr.timesheet.reports.explain',

@@ -44,6 +44,9 @@
         <h3>
             Resumed Report.
         </h3>
+        <p>
+        ${obj.comment_timesheet}
+        </p>
         <table class="resume" style="border: none">
             <td style="border: none">
                 <table>
@@ -104,6 +107,9 @@
         <h3>
             Total Invoiced.
         </h3>
+        <p>
+        ${obj.comment_invoices}
+        </p>
         <table width="50%">
         <tr class="title">
             <td width="10%">

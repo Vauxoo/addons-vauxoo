@@ -44,14 +44,19 @@
                     </header>
                     <sheet>
                         <h1><field name="name"/></h1>
+                        <h3><field name="partner_id"/></h3>
                         <group>
-                            <field name="comment_invoices"/>
-                            <field name="filter_invoice_id"
-                                    widget="selection"/>
-                            <field name="comment_timesheet"/>
-                            <field name="filter_id"
-                                widget="selection"
-                                required="1"/>
+                            <group cols="3" string="Timesheet Section">
+                                <field name="filter_id"
+                                    widget="selection"
+                                    required="1"/>
+                                <field name="comment_timesheet"/>
+                            </group>
+                            <group cols="3"  string="Invoices Section">
+                                <field name="filter_invoice_id"
+                                        widget="selection"/>
+                                <field name="comment_invoices"/>
+                            </group>
                         </group>
                     </sheet>
                     <div class="oe_chatter">
