@@ -319,14 +319,18 @@ class stock_accrual_wizard(osv.osv_memory):
                 start and ap_brw.date_start or ap_brw.date_stop}
         return res
 
-    def _get_accrual(self, cr, uid, ids, line_brw, context=None):
+    def _get_accrual(self, cr, uid, wzd_brw, line_brw, context=None):
         context = context or {}
         res = {'debit': 0.0, 'credit': 0.0}
         for move in line_brw.move_ids:
             for aml_brw in move.aml_ids:
-                if not aml_brw.account_id.reconcile:
-                    continue
                 # TODO: Include a filter to retrieve only values from period
+                if (wzd_brw.time_span == 'this_period' and
+                        not (aml_brw.date >= wzd_brw.date_start and
+                             aml_brw.date <= wzd_brw.date_stop)):
+                    continue
+                # if not aml_brw.account_id.reconcile:
+                #     continue
                 res['debit'] += aml_brw.debit
                 res['credit'] += aml_brw.credit
         return res
@@ -346,7 +350,7 @@ class stock_accrual_wizard(osv.osv_memory):
             'qty_delivered': line_brw.qty_delivered,
             'qty_invoiced': line_brw.qty_invoiced,
         }
-        res.update(self._get_accrual(cr, uid, wzd_brw.id, line_brw,
+        res.update(self._get_accrual(cr, uid, wzd_brw, line_brw,
                                      context=context))
         return res
 
