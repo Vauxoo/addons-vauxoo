@@ -420,7 +420,6 @@ class account_bank_statement_line(osv.osv):
             statement_currency=None, context=None):
 
         move_line_obj = self.pool.get('account.move.line')
-        currency_obj = self.pool.get('res.currency')
 
         counterpart_unreconcile = 0
         counterpart_amount = 0
