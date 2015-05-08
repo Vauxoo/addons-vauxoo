@@ -427,9 +427,9 @@ class account_bank_statement_line(osv.osv):
         statement_amount = 0
         for move_line_dict in mv_line_dicts:
 
-            statement_amount += move_line_dict.get('credit') > 0 and\
-                move_line_dict.get('credit') or\
-                move_line_dict.get('debit')
+            statement_amount += move_line_dict.get('credit', 0) > 0 and\
+                move_line_dict.get('credit', 0) or\
+                move_line_dict.get('debit', 0)
 
             if move_line_dict.get('counterpart_move_line_id'):
                 move_counterpart_id =\
@@ -445,11 +445,8 @@ class account_bank_statement_line(osv.osv):
                         move_line_id.credit > 0 and\
                         move_line_id.credit or move_line_id.debit
 
-                    # counterpart_unreconcile = currency_obj.compute(
-                    #     cr, uid, company_currency, statement_currency,
-                    #     abs(move_line_id.amount_residual), context=context)
-
-                    counterpart_unreconcile = move_line_id.amount_residual_currency
+                    counterpart_unreconcile =\
+                        move_line_id.amount_residual_currency
 
                     if move_line_id.currency_id and\
                             move_line_id.currency_id.id == statement_currency:
