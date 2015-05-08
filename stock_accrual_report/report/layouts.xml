@@ -161,7 +161,7 @@ table {
                       <tr>
                         <td style="text-align: left;">
                           <div class="td_company">
-                              From: <span t-field="o.date_start"/> to: <span t-field="o.date_stop"/>
+                              From: <span t-esc="formatLang(o.date_start, date=True)"/> to: <span t-esc="formatLang(o.date_stop, date=True)"/>
                           </div>
                         </td>
                       </tr>
