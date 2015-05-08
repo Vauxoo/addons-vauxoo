@@ -5,7 +5,7 @@
                 id="hr_timesheet_reports_base"
                 model="hr.timesheet.reports.base"
                 name="hr.timesheet.reports.base"
-                file="hr_timesheet_reports/wizard/hr_timesheet_reports_base.mako"
+                file="hr_timesheet_reports/model/hr_timesheet_reports_base.mako"
                 string="Hr timesheet reports base"
                 report_type="webkit"
                 menu="True"/>
@@ -57,6 +57,18 @@
                                 <field name="filter_invoice_id"
                                         widget="selection"/>
                                 <field name="comment_invoices"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group cols="3" string="Issue Section">
+                                <field name="filter_issue_id"
+                                    widget="selection"/>
+                                <field name="comment_issues"/>
+                            </group>
+                            <group cols="3"  string="User Stories Section">
+                                <field name="filter_hu_id"
+                                        widget="selection"/>
+                                <field name="comment_hu"/>
                             </group>
                         </group>
                         <group string="Technical Information">

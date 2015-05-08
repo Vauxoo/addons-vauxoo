@@ -97,15 +97,33 @@ class fiscal_book_wizard(osv.Model):
     _columns = {
         'name': fields.char('Report Title'),
         'comment_invoices': fields.text('Comment about Invoices',
-                                        help="It will appear just above list of invoices."),
+                                        help="It will appear just above "
+                                        "list of invoices."),
         'comment_timesheet': fields.text('Comment about Timesheets',
-                                         help='It will appear just above the resumed timesheets.'),
+                                         help='It will appear just above '
+                                         'the resumed timesheets.'),
+        'comment_issues': fields.text('Comment about Timesheets',
+                                      help='It will appear just above '
+                                      'the resumed issues.'),
+        'comment_hu': fields.text('Comment about Timesheets',
+                                  help='It will appear just above '
+                                  'the resumed hu status.'),
         'user_id': fields.many2one(
             'res.users', 'Responsible',
             help='Owner of the report, generally the person that create it.'),
         'partner_id': fields.many2one(
             'res.partner', 'Contact',
             help='Contact which you will send this report.'),
+        'filter_hu_id': fields.many2one(
+            'ir.filters', 'User Stories',
+            domain=[('model_id', 'ilike', 'user.story')],
+            help='Set the filter for issues TIP: go to issues and look for '
+            'the filter that adjust to your needs of issues to be shown.'),
+        'filter_issue_id': fields.many2one(
+            'ir.filters', 'Issues',
+            domain=[('model_id', 'ilike', 'project.issue')],
+            help='Set the filter for issues TIP: go to issues and look for '
+            'the filter that adjust to your needs of issues to be shown.'),
         'filter_invoice_id': fields.many2one(
             'ir.filters', 'Invoices',
             domain=[('model_id', 'ilike', 'account.invoice')],
@@ -141,7 +159,7 @@ class fiscal_book_wizard(osv.Model):
                 'report_name': 'hr.timesheet.reports.base',
                 'report_type': "webkit",
                 'string': "Hr timesheet reports base",
-                'file': "hr_timesheet_reports/wizard/hr_timesheet_reports_base.mako",  # noqa
+                'file': "hr_timesheet_reports/model/hr_timesheet_reports_base.mako",  # noqa
                 'nodestroy': True,
                 }
 
