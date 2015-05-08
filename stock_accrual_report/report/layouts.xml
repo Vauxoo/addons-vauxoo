@@ -158,7 +158,52 @@ table {
                           </div>
                         </td>
                       </tr>
-                      <!-- <tr><td><div class="td_company"><span t-field="o.fiscalyear_id.name"/></div></td></tr> -->
+                      <tr>
+                        <td style="text-align: left;">
+                          <div class="td_company">
+                              From: <span t-field="o.date_start"/> to: <span t-field="o.date_stop"/>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="text-align: left;">
+                          <div class="td_company">
+                            <t t-if="o.time_span =='all_periods'">
+                              Lines from: All Periods
+                            </t>
+                            <t t-if="o.time_span =='this_period'">
+                              Lines from: This Period
+                            </t>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="text-align: left;">
+                          <div class="td_company">
+                            <t t-if="o.accrual_filter =='all_lines'">
+                              Accrual on Lines: Bring All Order Lines
+                            </t>
+                            <t t-if="o.accrual_filter =='with_accrual'">
+                              Accrual on Lines: Only with Accruals
+                            </t>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="text-align: left;">
+                          <div class="td_company">
+                            <t t-if="o.reconcile_filter =='all_lines'">
+                              Reconciliation: Bring All Accruals
+                            </t>
+                            <t t-if="o.reconcile_filter =='fully_reconcile'">
+                              Reconciliation: Only Fully Reconciled Accruals
+                            </t>
+                            <t t-if="o.reconcile_filter =='unreconciled'">
+                              Reconciliation: Unreconciled &amp; Partial Reconciled Accruals
+                            </t>
+                          </div>
+                        </td>
+                      </tr>
                   </table>
               </td>
           </tr>
