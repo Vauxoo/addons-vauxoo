@@ -278,12 +278,21 @@ class stock_accrual_wizard(osv.osv_memory):
             string='Accrual on Lines:',
             required=True,
         ),
+        'reconcile_filter': fields.selection(
+            [('all_lines', 'Bring All Accruals'),
+             ('fully_reconcile', 'Only Fully Reconciled Accruals'),
+             ('unreconciled', 'Unreconciled & Partial Reconciled Accruals'),
+             ],
+            string='Reconciliation:',
+            required=True,
+        ),
     }
 
     _defaults = {
         'report_format': lambda *args: 'pdf',
         'time_span': lambda *args: 'this_period',
         'accrual_filter': lambda *args: 'all_lines',
+        'reconcile_filter': lambda *args: 'all_lines',
         'filter': lambda *args: 'byperiod',
         'type': lambda *args: 'sale',
         'company_id': _get_default_company,
@@ -332,6 +341,13 @@ class stock_accrual_wizard(osv.osv_memory):
                         not (aml_brw.date >= wzd_brw.date_start and
                              aml_brw.date <= wzd_brw.date_stop)):
                     continue
+                if (wzd_brw.reconcile_filter == 'fully_reconcile' and
+                        not aml_brw.reconcile_id):
+                    continue
+                if (wzd_brw.reconcile_filter == 'unreconciled' and
+                        aml_brw.reconcile_id):
+                    continue
+
                 res['debit'] += aml_brw.debit
                 res['credit'] += aml_brw.credit
         return res

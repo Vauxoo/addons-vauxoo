@@ -56,6 +56,7 @@
                         <group string="Retrieval Options" col='4' colspan='4'>
                             <field name="time_span"/>
                             <field name="accrual_filter"/>
+                            <field name="reconcile_filter"/>
                         </group>
                     </group>
                     <group col='4' colspan='4'>
