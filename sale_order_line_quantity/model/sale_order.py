@@ -41,6 +41,11 @@ class sale_order_line(osv.osv):
             ail_uom_id = ail_brw.uos_id
             if ail_brw.invoice_id.state not in ('open', 'done'):
                 continue
+            if all([context.get('date_start'), context.get('date_stop')]):
+                ai_brw = ail_brw.invoice_id
+                if not (ai_brw.date_invoice >= context['date_start'] and
+                        ai_brw.date_invoice <= context['date_stop']):
+                    continue
             res += uom_obj._compute_qty_obj(cr, uid, ail_uom_id,
                                             ail_brw.quantity, sol_uom_id,
                                             context=context)
@@ -63,6 +68,10 @@ class sale_order_line(osv.osv):
             qty = 0.0
             if sm_brw.state != 'done':
                 continue
+            if all([context.get('date_start'), context.get('date_stop')]):
+                if not (sm_brw.date >= context['date_start'] and
+                        sm_brw.date <= context['date_stop']):
+                    continue
             if src == dst:
                 continue
             elif src == 'internal':
@@ -89,14 +98,14 @@ class sale_order_line(osv.osv):
 
         return res
 
-    def _get_ids_from_stock(self, cr, uid, ids, context=None):
-        res = set([])
-        sm_obj = self.pool.get('stock.move')
-        for sm_brw in sm_obj.browse(cr, uid, ids, context=context):
-            if not sm_brw.sale_line_id:
-                continue
-            res.add(sm_brw.sale_line_id.id)
-        return list(res)
+    # def _get_ids_from_stock(self, cr, uid, ids, context=None):
+    #     res = set([])
+    #     sm_obj = self.pool.get('stock.move')
+    #     for sm_brw in sm_obj.browse(cr, uid, ids, context=context):
+    #         if not sm_brw.sale_line_id:
+    #             continue
+    #         res.add(sm_brw.sale_line_id.id)
+    #     return list(res)
 
     def _get_qty_invoiced(self, cr, uid, ids, field_names=None, arg=False,
                           context=None):
@@ -109,19 +118,19 @@ class sale_order_line(osv.osv):
             res[idx] = self._get_inv_quantity(cr, uid, idx, context=context)
         return res
 
-    def _get_ids_from_invoice(self, cr, uid, ids, context=None):
-        res = set([])
-        ai_obj = self.pool.get('account.invoice')
-        for ai_brw in ai_obj.browse(cr, uid, ids, context=context):
-            if ai_brw.type not in ('out_invoice',):
-                continue
-            if ai_brw.state not in ('open', 'paid'):
-                continue
-            for ail_brw in ai_brw.invoice_line:
-                if not ail_brw.sale_line_id:
-                    continue
-                res.add(ail_brw.sale_line_id.id)
-        return list(res)
+    # def _get_ids_from_invoice(self, cr, uid, ids, context=None):
+    #     res = set([])
+    #     ai_obj = self.pool.get('account.invoice')
+    #     for ai_brw in ai_obj.browse(cr, uid, ids, context=context):
+    #         if ai_brw.type not in ('out_invoice',):
+    #             continue
+    #         if ai_brw.state not in ('open', 'paid'):
+    #             continue
+    #         for ail_brw in ai_brw.invoice_line:
+    #             if not ail_brw.sale_line_id:
+    #                 continue
+    #             res.add(ail_brw.sale_line_id.id)
+    #     return list(res)
 
     _inherit = 'sale.order.line'
     _columns = {
@@ -130,17 +139,17 @@ class sale_order_line(osv.osv):
             type='float',
             digits_compute=dp.get_precision('Product Unit of Measure'),
             string='Quantity Delivered',
-            store={
-                'stock.move': (_get_ids_from_stock, ['state'], 15),
-            },
+            # store={
+            #     'stock.move': (_get_ids_from_stock, ['state'], 15),
+            # },
             help="Quantity Delivered"),
         'qty_invoiced': fields.function(
             _get_qty_invoiced,
             type='float',
             digits_compute=dp.get_precision('Product Unit of Measure'),
             string='Quantity Invoiced',
-            store={
-                'account.invoice': (_get_ids_from_invoice, ['state'], 15),
-            },
+            # store={
+            #     'account.invoice': (_get_ids_from_invoice, ['state'], 15),
+            # },
             help="Quantity Invoiced"),
     }
