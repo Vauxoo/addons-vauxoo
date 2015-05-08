@@ -4,7 +4,7 @@
         <report auto="False"
                 id="hr_timesheet_reports_base"
                 model="hr.timesheet.reports.base"
-                name="hr.timesheet.reports.base"
+                name="Resumed Project Status"
                 file="hr_timesheet_reports/model/hr_timesheet_reports_base.mako"
                 string="Hr timesheet reports base"
                 report_type="webkit"
@@ -46,31 +46,22 @@
                     <sheet>
                         <h1><field name="name"/></h1>
                         <h3><field name="partner_id"/></h3>
-                        <group>
-                            <group cols="3" string="Timesheet Section">
-                                <field name="filter_id"
-                                    widget="selection"
-                                    required="1"/>
-                                <field name="comment_timesheet"/>
-                            </group>
-                            <group cols="3"  string="Invoices Section">
-                                <field name="filter_invoice_id"
-                                        widget="selection"/>
-                                <field name="comment_invoices"/>
-                            </group>
-                        </group>
-                        <group>
-                            <group cols="3" string="Issue Section">
-                                <field name="filter_issue_id"
-                                    widget="selection"/>
-                                <field name="comment_issues"/>
-                            </group>
-                            <group cols="3"  string="User Stories Section">
-                                <field name="filter_hu_id"
-                                        widget="selection"/>
-                                <field name="comment_hu"/>
-                            </group>
-                        </group>
+                        <separator string="Timesheet Section"/>
+                        <label for="filter_id"/>
+                        <field name="filter_id" widget="selection" required="1"/>
+                        <field name="comment_timesheet" nolabel="1" widget="html"/>
+                        <separator string="Invoices Section"/>
+                        <label for="filter_invoice_id"/>
+                        <field name="filter_invoice_id" widget="selection"/>
+                        <field name="comment_invoices" nolabel="1" widget="html"/>
+                        <separator  string="Issue Section"/>
+                        <label for="filter_issue_id"/>
+                        <field name="filter_issue_id" widget="selection"/>
+                        <field name="comment_issues" nolabel="1" widget="html"/>
+                        <separator string="User Stories Section"/>
+                        <label for="filter_hu_id"/>
+                        <field name="filter_hu_id" widget="selection"/>
+                        <field name="comment_hu" nolabel="1" widget="html"/>
                         <group string="Technical Information">
                             <field name="user_id" groups="base.group_user"/>
                             <field name="company_id" groups="base.group_multi_company" readonly="1"/>

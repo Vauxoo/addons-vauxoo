@@ -26,6 +26,8 @@ report.
     "depends": [
         "hr_timesheet_sheet",
         "report_webkit",
+        "user_story",
+        "project_issue",
     ],
     "demo": [],
     "data": [
