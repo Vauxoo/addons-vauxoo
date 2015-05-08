@@ -324,13 +324,14 @@ class stock_accrual_wizard(osv.osv_memory):
         res = {'debit': 0.0, 'credit': 0.0}
         for move in line_brw.move_ids:
             for aml_brw in move.aml_ids:
-                # TODO: Include a filter to retrieve only values from period
+                # Account must be reciliable in order to bring it back
+                if not aml_brw.account_id.reconcile:
+                    continue
+                # Include a filter to retrieve only values from period
                 if (wzd_brw.time_span == 'this_period' and
                         not (aml_brw.date >= wzd_brw.date_start and
                              aml_brw.date <= wzd_brw.date_stop)):
                     continue
-                # if not aml_brw.account_id.reconcile:
-                #     continue
                 res['debit'] += aml_brw.debit
                 res['credit'] += aml_brw.credit
         return res
@@ -423,7 +424,7 @@ class stock_accrual_wizard(osv.osv_memory):
         return set(res)
 
     def compute_order_lines(self, cr, uid, ids, context=None):
-        context = context or {}
+        context = dict(context or {})
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wzd_brw = self.browse(cr, uid, ids[0], context=context)
         res = []
@@ -444,6 +445,10 @@ class stock_accrual_wizard(osv.osv_memory):
                     res.append(self._get_lines(cr, uid, wzd_brw, order_brw,
                                                line_brw, context=context))
         elif wzd_brw.time_span == 'this_period':
+            context.update(dict(
+                date_start=wzd_brw.date_start,
+                date_stop=wzd_brw.date_stop,
+            ))
             order_obj = self.pool.get('%s.order.line' % wzd_brw.type)
             record_ids = self._get_lines_from_stock(cr, uid, ids,
                                                     context=context)
