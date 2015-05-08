@@ -32,10 +32,35 @@
         .date {
             font-weight: bold;
         }
-        h1, h2, h3, h4, h5 {
-            font-size: 10px;
-            line-height: auto;
+        .paid {
+            color: green;
         }
+        .unpaid {
+            color: red;
+        }
+        .invoices_content table,
+        .invoices_content th,
+        .invoices_content td {
+            border: none;
+            text-align: center;
+            font-size: 9px;
+            padding: 3px;
+            vertical-align: top;
+        }
+        .invoices_content td {
+            width: 50%;
+        }
+        .invoices_content td.amount {
+            text-align: right;
+        }
+        /**
+        Fonts Size
+        */
+        h1, h2, h3, h4, h5 { line-height: auto; }
+        h1 { font-size: 14px; }
+        h2 { font-size: 13px; }
+        h3 { font-size: 12px; }
+        h4, h5 { font-size: 11px; }
     </style>
 </head>
 <body style="border:0;">
@@ -92,44 +117,39 @@
             </td>
         </table>
         % if obj.records.get('invoices', []):
-        <h3>
-            Total Invoiced.
-        </h3>
+        <h3> Total Invoiced. </h3>
         <p>
         ${obj.comment_invoices}
         </p>
-        <table width="50%">
+        <table width="40%">
         <tr class="title">
             <td width="10%"> Period </td>
             <td style="padding: 0px;">
                 <table width="100%">
                     <tr>
-                    <td width="33%"> Invoice Number </td>
-                    <td width="33%"> Total </td>
-                    <td width="33%"> Currency </td>
+                    <td width="50%"> Invoice Number </td>
+                    <td width="50%"> Total (Currency)</td>
                     </tr>
                 </table>
             </td>
         </tr>
         %for period in obj.records['periods'] :
-            <tr class="by_account">
+            <tr>
                 <td width="10%" style="text-align: left;">
                 ${period.get('period_id')[1]}
                 </td>
-                <td  width="40%" style="padding: 0px;">
-                    <table width="100%" style="border: none">
+                <td  width="40%" class="invoices_content">
+                    <table width="100%">
                         %for invoice in obj.records['invoices'] :
                             % if invoice.period_id.id == period.get('period_id')[0]:
-                            <tr>
-                                <td>
-                                    ${invoice.number}
-                                </td>
-                                <td>
-                                    ${formatLang(invoice.amount_total)}
-                                </td>
-                                <td>
-                                    ${invoice.currency_id.name}
-                                </td>
+                            % if invoice.residual > 1.00:
+                            <tr class="unpaid">
+                            % endif
+                            % if invoice.residual < 1.00:
+                            <tr class="paid">
+                            % endif
+                                <td> ${invoice.number} </td>
+                                <td class="amount"> ${formatLang(invoice.amount_total)} ( ${invoice.currency_id.name} )</td>
                             </tr>
                             % endif
                         %endfor
@@ -138,13 +158,11 @@
             </tr>
         %endfor
         <tr class="by_account">
-            <td colspan="2"> Total invoiced until today in the project. </td>
+            <td colspan="2"> Status of your invoices until today in the project. </td>
         </tr>
         </table>
         % endif
-        <h3>
-            Detailed Report.
-        </h3>
+        <h3> Detailed Report. </h3>
         %for res in obj.records['data'] :
         <table width="100%" style="font-size: 14px;">
             <tr>
