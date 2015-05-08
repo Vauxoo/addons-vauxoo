@@ -156,7 +156,7 @@ class fiscal_book_wizard(osv.Model):
     def do_report(self, cr, uid, ids, context=None):
         return {'type': 'ir.actions.report.xml',
                 'name': 'hr.timesheet.reports.explain',
-                'report_name': 'hr.timesheet.reports.base',
+                'report_name': 'Resumed Project Status',
                 'report_type': "webkit",
                 'string': "Hr timesheet reports base",
                 'file': "hr_timesheet_reports/model/hr_timesheet_reports_base.mako",  # noqa
