@@ -51,17 +51,11 @@
             <td style="border: none">
                 <table>
                     <tr class="by_account">
-                        <td colspan="2">
-                        By Date
-                        </td>
+                        <td colspan="2"> By Date </td>
                     </tr>
                     <tr class="title">
-                        <td>
-                            Month
-                        </td>
-                        <td>
-                            Hours
-                        </td>
+                        <td> Month </td>
+                        <td> Hours </td>
                     </tr>
                     %for resume in obj.records['resume_month'] :
                         <tr class="by_account">
@@ -78,17 +72,11 @@
             <td style="border: none">
                 <table>
                     <tr class="by_account">
-                        <td colspan="2">
-                            By Analytic
-                        </td>
+                        <td colspan="2"> By Analytic </td>
                     </tr>
                     <tr class="title">
-                        <td>
-                            Account
-                        </td>
-                        <td>
-                            Hours
-                        </td>
+                        <td> Account </td>
+                        <td> Hours </td>
                     </tr>
                     %for resume in obj.records['resume'] :
                     <tr class="by_account">
@@ -112,21 +100,13 @@
         </p>
         <table width="50%">
         <tr class="title">
-            <td width="10%">
-                Period
-            </td>
+            <td width="10%"> Period </td>
             <td style="padding: 0px;">
                 <table width="100%">
                     <tr>
-                    <td width="33%">
-                    Invoice Number
-                    </td>
-                    <td width="33%">
-                    Total
-                    </td>
-                    <td width="33%">
-                    Currency
-                    </td>
+                    <td width="33%"> Invoice Number </td>
+                    <td width="33%"> Total </td>
+                    <td width="33%"> Currency </td>
                     </tr>
                 </table>
             </td>
@@ -158,9 +138,7 @@
             </tr>
         %endfor
         <tr class="by_account">
-            <td colspan="2">
-                Total invoiced until today in the project.
-            </td>
+            <td colspan="2"> Total invoiced until today in the project. </td>
         </tr>
         </table>
         % endif
@@ -175,21 +153,11 @@
                 </th>
             </tr>
             <tr>
-                <th width="5%">
-                ID
-                </th>
-                <th width="10%">
-                User
-                </th>
-                <th>
-                Description
-                </th>
-                <th>
-                Date
-                </th>
-                <th>
-                Duration
-                </th>
+                <th width="5%"> ID </th>
+                <th width="10%"> User </th>
+                <th> Description </th>
+                <th> Date </th>
+                <th> Duration </th>
             </tr>
             %for rec in obj.records['data'][res] :
             <tr>
