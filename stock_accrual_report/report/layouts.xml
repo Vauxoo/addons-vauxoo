@@ -231,6 +231,19 @@ table {
                 <li>/</li>
                 <li><span class="topage"/></li>
             </ul>
+            <ul class="list-inline">
+                <li>
+                    <span style="font-style:italic;">Printed</span>
+                </li>
+                <li>&amp;bull;</li>
+                <li>
+                    <span style="font-style:italic;" t-esc="formatLang(time.strftime('%Y-%m-%d'), date=True)"/>
+                </li>
+                <li>&amp;bull;</li>
+                <li>
+                    <span style="font-style:italic;" t-esc="time.strftime('%H:%M')"/>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
