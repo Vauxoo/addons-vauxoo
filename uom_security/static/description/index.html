@@ -77,6 +77,81 @@
         </div>
     </div>
 
+    <!--
+
+    Purchase Order Form
+
+    .. model purchase.order
+    .. status: TODO (purchase)
+    .. view: purchase.purchase_order_form
+        <field name="product_uom" groups="product.group_uom" on_change="onchange_product_uom(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,name,False,parent.state,context)"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">Purchase Order Form</h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="purchase.order.form.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="purchase.order.form.new.png">
+        </div>
+    </div>
+
+    <!--
+
+    Purchase Order Line Form
+
+    .. model: purchase.order.line
+
+    .. status: DONE (purchase)
+    .. view purchase.purchase_order_line_form
+        <field name="product_uom" groups="product.group_uom" on_change="onchange_product_uom(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,name,False,'draft',context)" class="oe_inline"/>
+
+    .. status: DONE (purchase)
+    .. view purchase.purchase_order_line_form2
+        <field name="product_uom" readonly="1" groups="product.group_uom" class="oe_inline"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">Purchase Order Form</h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="purchase.order.line.form.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="purchase.order.line.form.new.png">
+        </div>
+    </div>
+
+    <!--
+
+    Purchase Requisition Form
+
+    .. model: purchase.requisition
+    .. status: DONE (purchase)
+    .. view: purchase_requisition.view_purchase_requisition_form
+        <field name="line_ids"> ... <tree> ... <field name="product_uom_id"/>
+        <field name="line_ids"> ... <form> ... <field name="product_uom_id"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">
+            Purchase Requisition Form
+        </h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="purchase.requisition.form.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="purchase.requisition.form.new.png">
+        </div>
+    </div>
+
+
 </section>
 
 <section class="oe_container">
