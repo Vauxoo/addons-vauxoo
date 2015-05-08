@@ -501,6 +501,30 @@ class stock_accrual_wizard(osv.osv_memory):
 
         return True
 
+    def show_lines(self, cr, uid, ids, context=None):
+        context = dict(context or {})
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        wzd_brw = self.browse(cr, uid, ids[0], context=context)
+
+        self.compute_lines(cr, uid, ids, context=context)
+
+        res = [line.id for line in wzd_brw.line_ids]
+
+        if len(res) >= 1:
+            res = "[('id','in', [%s])]" % ','.join([str(rex) for rex in res])
+        else:
+            res = "[('id','in',[])]"
+
+        return {
+            'domain': res,
+            'name': _('Stock Accrual Lines'),
+            'view_type': 'form',
+            'view_mode': 'tree',
+            'res_model': 'stock.accrual.wizard.line',
+            'view_id': False,
+            'type': 'ir.actions.act_window'
+        }
+
     def print_report(self, cr, uid, ids, context=None):
         """
         To get the date and print the report
