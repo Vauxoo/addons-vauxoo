@@ -20,6 +20,7 @@
                             string="Print and Send"
                             type="object"/>
                     <field name="name"/>
+                    <field name="partner_id"/>
                     <field name="filter_invoice_id"/>
                     <field name="filter_id"/>
                     <field name="state"/>
