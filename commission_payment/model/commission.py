@@ -296,7 +296,7 @@ class commission_payment(osv.Model):
         for cp_brw in self.browse(cr, uid, ids, context=context):
             inv_ids += [invoice.id for invoice in cp_brw.invoice_ids]
         # choose the view_mode accordingly
-        if len(inv_ids) > 1:
+        if len(inv_ids) >= 1:
             result['domain'] = "[('id','in',["+','.join(
                 [str(inv_id) for inv_id in inv_ids]
             )+"])]"
