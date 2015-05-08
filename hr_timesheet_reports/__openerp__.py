@@ -31,6 +31,7 @@ report.
     "data": [
         "wizard/hr_timesheet_reports_formats.xml",
         "wizard/hr_timesheet_reports_view.xml",
+        "wizard/hr_timesheet_reports_email.xml",
     ],
     "installable": True,
     "active": False,

@@ -100,6 +100,9 @@ class fiscal_book_wizard(osv.Model):
                                         help="It will appear just above list of invoices."),
         'comment_timesheet': fields.text('Comment about Timesheets',
                                          help='It will appear just above the resumed timesheets.'),
+        'user_id': fields.many2one(
+            'res.users', 'Responsible',
+            help='Owner of the report, generally the person that create it.'),
         'partner_id': fields.many2one(
             'res.partner', 'Contact',
             help='Contact which you will send this report.'),
@@ -121,10 +124,15 @@ class fiscal_book_wizard(osv.Model):
                                    ('sent', 'Sent')],
                                   'Status',
                                   help='Message sent already to customer (it will block edition)'),
+        'company_id': fields.many2one(
+            'res.company', 'Company',
+            help='Company which this report belongs to'),
     }
 
     _defaults = {
         'state': lambda * a: 'draft',
+        'user_id': lambda obj, cr, uid, context: uid,
+        'company_id': lambda s, cr, uid, c: s.pool.get('res.company')._company_default_get(cr, uid, 'sale.shop', context=c),
     }
 
     def do_report(self, cr, uid, ids, context=None):
@@ -136,3 +144,34 @@ class fiscal_book_wizard(osv.Model):
                 'file': "hr_timesheet_reports/wizard/hr_timesheet_reports_base.mako",  # noqa
                 'nodestroy': True,
                 }
+
+    def send_by_email(self, cr, uid, ids, context=None, cdsm=None):
+        ir_model_data = self.pool.get('ir.model.data')
+        try:
+            template_id = ir_model_data.get_object_reference(cr, uid, 'hr_timesheet_reports', 'email_reports_base')[1]
+        except ValueError:
+            template_id = False
+        try:
+            compose_form_id = ir_model_data.get_object_reference(cr, uid, 'mail', 'email_compose_message_wizard_form')[1]
+        except ValueError:
+            compose_form_id = False
+        ctx = dict(context)
+        ctx.update({
+            'default_model': 'hr.timesheet.reports.base',
+            'default_res_id': ids[0],
+            'default_use_template': bool(template_id),
+            'default_template_id': template_id,
+            'default_composition_mode': 'comment',
+            'mark_so_as_sent': True
+        })
+        return {
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'views': [(compose_form_id, 'form')],
+            'view_id': compose_form_id,
+            'target': 'new',
+            'context': ctx,
+        }
+
