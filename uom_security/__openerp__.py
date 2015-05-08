@@ -34,11 +34,13 @@
         'product',
         "account",
         "stock",
+        "mrp",
     ],
     "data": [
         "security/uom_groups.xml",
         "view/account_view.xml",
         "view/stock_view.xml",
+        "view/mrp_view.xml",
     ],
     "demo": [],
     "test": [],

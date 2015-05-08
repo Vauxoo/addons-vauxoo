@@ -449,6 +449,226 @@
         </div>
     </div>
 
+    <!--
+
+    MRP Bom Form View
+
+    .. DONE (warehouse)
+    .. view: mrp.mrp_bom_form_view
+        <field name="product_uom" class="oe_inline" on_change="onchange_uom(product_tmpl_id, product_uom)" groups="product.group_uom"/>
+        <field name="bom_line_ids"> ... <tree> ... <field name="product_uom" on_change="onchange_uom(product_id, product_uom)" groups="product.group_uom"/>
+   -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">Bill of Materials Form</h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="mrp.bom.form.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="mrp.bom.form.new.png">
+        </div>
+    </div>
+
+    <!--
+
+    Bill Of Material Search
+
+    .. model: mrp.bom
+    .. status: DONE (warehouse)
+    .. view: mrp.view_mrp_bom_filter
+        <filter string="Default Unit of Measure" icon="terp-mrp" domain="[]" context="{'group_by' : 'product_uom'}"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">Bill of Materials Search</h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="mrp.bom.search.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="mrp.bom.search.new.png">
+        </div>
+    </div>
+
+    <!--
+
+    MRP Bom Line
+
+    .. model: mrp.bom.line
+
+    .. status: DONE (warehouse)
+    .. view: mrp.mrp_bom_component_tree_view
+        <field name="product_uom" on_change="onchange_uom(product_id, product_uom)" groups="product.group_uom"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">
+            Bill of Material Components Tree
+        </h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="mrp.bom.line.tree.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="mrp.bom.line.tree.new.png">
+        </div>
+    </div>
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">
+            Bill of Material Components Tree embeded into Bill of Materials Form View
+        </h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="mrp.bom.line.tree.embeded.bom.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="mrp.bom.line.tree.embeded.bom.new.png">
+        </div>
+    </div>
+
+    <!--
+
+    MRP Production Form View
+    Manufacturing Order
+
+    .. model: mrp.production
+
+    .. status: DONE (warehouse)
+    .. view: mrp.mrp_production_form_view
+       <field name="product_uom" groups="product.group_uom" class="oe_inline"/>
+       <field name="move_lines"> ... <tree> ... <field name="product_uom"/>
+       <field name="move_lines2"> ... <tree> ... <field name="product_uom"/>
+       <field name="move_created_ids"> ... <tree> ... <field name="product_uom"/>
+       <field name="move_created_ids2"> ... <tree> ... <field name="product_uom"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">Manufacturing Order Form</h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="mrp.production.consumed.products.form.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="mrp.production.consumed.products.form.new.png">
+        </div>
+    </div>
+
+    <div class="oe_row">
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="mrp.production.finished.products.form.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="mrp.production.finished.products.form.new.png">
+        </div>
+    </div>
+
+    <!--
+
+    MRP Production
+
+    .. model mrp.production
+    .. status: DONE (warehouse)
+    .. view: mrp.mrp_production_tree_view
+        <field name="product_uom" groups="product.group_uom"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">
+            Manufacturing Order Tree
+        </h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="mrp.production.tree.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="mrp.production.tree.new.png">
+        </div>
+    </div>
+
+    <!--
+
+    Production Scheduled Product Tree
+
+    .. model: mrp.production.product.line
+
+    .. status: DONE (warehouse)
+    .. view: mrp.mrp_production_product_tree_view
+       <field name="product_uom" groups="product.group_uom"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">
+            Production Scheduled Product Tree embeded into Manufacturing Order Form
+        </h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="mrp.production.product.line.tree.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="mrp.production.product.line.tree.new.png">
+        </div>
+    </div>
+
+    <!--
+
+    MRP Production Line Form
+
+    .. model: mrp.production.product.line
+    .. status DONE (warehouse)
+    .. view: mrp.mrp_production_product_form_view
+        <field name="product_uom" groups="product.group_uom"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">
+            Production Scheduled Product Form
+        </h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="mrp.production.product.line.form.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="mrp.production.product.line.form.new.png">
+        </div>
+    </div>
+
+    <!--
+    Consume Move Form (wizard)
+
+    .. model stock.move.consume
+
+    .. status: DONE (warehouse)
+    .. view: mrp.view_stock_move_consume_wizard
+    <field name="product_uom" class="oe_inline" readonly="1" groups="product.group_uom"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">
+            Consume Move Form (wizard)
+        </h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="stock.move.consume.form.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="stock.move.consume.form.new.png">
+        </div>
+    </div>
+
+
 </section>
 
 <section class="oe_container">
