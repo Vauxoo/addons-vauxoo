@@ -37,6 +37,7 @@
         "mrp",
         "purchase",
         "purchase_requisition",
+        "sale",
     ],
     "data": [
         "security/uom_groups.xml",
@@ -44,6 +45,7 @@
         "view/stock_view.xml",
         "view/mrp_view.xml",
         "view/purchase_view.xml",
+        "view/sale_view.xml",
     ],
     "demo": [],
     "test": [],
