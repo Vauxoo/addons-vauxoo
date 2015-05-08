@@ -1,2 +1,2 @@
-import wizard
+import model
 import report
