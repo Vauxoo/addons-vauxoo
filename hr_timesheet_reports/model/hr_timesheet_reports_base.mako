@@ -48,10 +48,11 @@
             vertical-align: top;
         }
         .invoices_content td {
-            width: 50%;
+            width: 30%;
         }
         .invoices_content td.amount {
             text-align: right;
+            width: 35%;
         }
         /**
         Fonts Size
@@ -127,8 +128,9 @@
             <td style="padding: 0px;">
                 <table width="100%">
                     <tr>
-                    <td width="50%"> Invoice Number </td>
-                    <td width="50%"> Total (Currency)</td>
+                    <td width="30%"> Invoice Number </td>
+                    <td width="35%"> Total (Currency)</td>
+                    <td width="35%"> Pending (Currency)</td>
                     </tr>
                 </table>
             </td>
@@ -150,6 +152,7 @@
                             % endif
                                 <td> ${invoice.number} </td>
                                 <td class="amount"> ${formatLang(invoice.amount_total)} ( ${invoice.currency_id.name} )</td>
+                                <td class="amount"> ${formatLang(invoice.residual)} ( ${invoice.currency_id.name} )</td>
                             </tr>
                             % endif
                         %endfor
@@ -158,7 +161,7 @@
             </tr>
         %endfor
         <tr class="by_account">
-            <td colspan="2"> Status of your invoices until today in the project. </td>
+            <td colspan="2">Status of invoices until today in the project.</td>
         </tr>
         </table>
         % endif

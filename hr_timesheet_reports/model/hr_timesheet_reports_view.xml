@@ -48,19 +48,19 @@
                         <h3><field name="partner_id"/></h3>
                         <separator string="Timesheet Section"/>
                         <label for="filter_id"/>
-                        <field name="filter_id" widget="selection" required="1"/>
+                        <field name="filter_id"  required="1"/>
                         <field name="comment_timesheet" nolabel="1" widget="html"/>
                         <separator string="Invoices Section"/>
                         <label for="filter_invoice_id"/>
-                        <field name="filter_invoice_id" widget="selection"/>
+                        <field name="filter_invoice_id"/>
                         <field name="comment_invoices" nolabel="1" widget="html"/>
                         <separator  string="Issue Section"/>
                         <label for="filter_issue_id"/>
-                        <field name="filter_issue_id" widget="selection"/>
+                        <field name="filter_issue_id"/>
                         <field name="comment_issues" nolabel="1" widget="html"/>
                         <separator string="User Stories Section"/>
                         <label for="filter_hu_id"/>
-                        <field name="filter_hu_id" widget="selection"/>
+                        <field name="filter_hu_id"/>
                         <field name="comment_hu" nolabel="1" widget="html"/>
                         <group string="Technical Information">
                             <field name="user_id" groups="base.group_user"/>
