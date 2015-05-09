@@ -165,6 +165,35 @@
         </tr>
         </table>
         % endif
+        % if obj.records.get('issues', []):
+        <h3> Issues. </h3>
+        <p>
+        ${obj.comment_issues}
+        </p>
+        <table width="40%">
+        <tr class="title">
+            <td width="10%"> Period </td>
+            <td style="padding: 0px;">
+                <table width="100%">
+                    <tr>
+                    <td width="30%"> Issue ID </td>
+                    <td width="35%"> Isue Title </td>
+                    <td width="35%"> Pending (Currency)</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td width="10%" style="text-align: left;">
+            </td>
+            <td  width="40%" class="invoices_content">
+            </td>
+        </tr>
+        <tr class="by_account">
+            <td colspan="2">Status of issues until today in the project.</td>
+        </tr>
+        </table>
+        % endif
         <h3> Detailed Report. </h3>
         %for res in obj.records['data'] :
         <table width="100%" style="font-size: 14px;">

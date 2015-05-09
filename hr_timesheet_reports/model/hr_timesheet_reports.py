@@ -43,10 +43,13 @@ class fiscal_book_wizard(osv.Model):
         wzr_brw = self.browse(cr, uid, ids, context=context)[0]
         domain = wzr_brw.filter_id.domain
         domain_inv = wzr_brw.filter_invoice_id.domain
+        domain_issues = wzr_brw.filter_issue_id.domain
         timesheet_obj = self.pool.get('hr.analytic.timesheet')
         invoice_obj = self.pool.get('account.invoice')
+        issue_obj = self.pool.get('project.issue')
         dom = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain)]
         dom_inv = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain_inv)]
+        dom_issues = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain_issues)]
         timesheet_ids = timesheet_obj.search(cr, uid, dom,
                                              order='account_id asc, user_id asc, date asc',  # noqa
                                              context=context)
@@ -81,6 +84,10 @@ class fiscal_book_wizard(osv.Model):
         invoice_ids = invoice_obj.search(cr, uid, dom_inv, context=context)
         invoices_brw = invoice_obj.browse(cr, uid, invoice_ids, context=context)
 
+        # Setting issues elements.
+        issue_ids = issue_obj.search(cr, uid, dom_issues, context=context)
+        issues_brw = issue_obj.browse(cr, uid, issue_ids, context=context)
+
         # Separate per project (analytic)
         projects = set([l['analytic'] for l in res])
         info = {
@@ -89,6 +96,7 @@ class fiscal_book_wizard(osv.Model):
             'resume_month': grouped_month,
             'periods': grouped_invoices,
             'invoices': invoices_brw,
+            'issues': issues_brw,
         }
         for proj in projects:
             info['data'][proj] = [r for r in res if r['analytic'] == proj]
