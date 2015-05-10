@@ -85,8 +85,21 @@ class fiscal_book_wizard(osv.Model):
         invoices_brw = invoice_obj.browse(cr, uid, invoice_ids, context=context)
 
         # Setting issues elements.
-        issue_ids = issue_obj.search(cr, uid, dom_issues, context=context)
-        issues_brw = issue_obj.browse(cr, uid, issue_ids, context=context)
+        issues_grouped = issue_obj.read_group(cr, uid, dom_issues,
+                                              ['analytic_account_id'],
+                                              ['analytic_account_id'],
+                                              context=context)
+
+        issues_all = []
+        for issue in issues_grouped:
+            analytic_id = issue.get('analytic_account_id')
+            new_issue_dom = dom_issues + [('analytic_account_id', '=', analytic_id and analytic_id[0] or analytic_id)]
+            issue['children_by_stage'] = issue_obj.read_group(cr, uid, new_issue_dom,
+                                                              ['stage_id'],
+                                                              ['stage_id'],
+                                                              orderby='stage_id asc',
+                                                              context=context)
+            issues_all.append(issue)
 
         # Separate per project (analytic)
         projects = set([l['analytic'] for l in res])
@@ -96,7 +109,7 @@ class fiscal_book_wizard(osv.Model):
             'resume_month': grouped_month,
             'periods': grouped_invoices,
             'invoices': invoices_brw,
-            'issues': issues_brw,
+            'issues': issues_all,
         }
         for proj in projects:
             info['data'][proj] = [r for r in res if r['analytic'] == proj]

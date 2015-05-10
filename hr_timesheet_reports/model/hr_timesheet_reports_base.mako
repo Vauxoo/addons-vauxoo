@@ -48,11 +48,11 @@
             vertical-align: top;
         }
         .invoices_content td {
-            width: 30%;
+            width: 20%;
         }
         .invoices_content td.amount {
             text-align: right;
-            width: 35%;
+            width: 40%;
         }
         /**
         Fonts Size
@@ -62,6 +62,10 @@
         h2 { font-size: 13px; }
         h3 { font-size: 12px; }
         h4, h5 { font-size: 11px; }
+        table.endpage
+        {
+            page-break-after: always;
+        }
     </style>
 </head>
 <body style="border:0;">
@@ -73,7 +77,7 @@
         <p>
         ${obj.comment_timesheet}
         </p>
-        <table class="resume" style="border: none">
+        <table class="resume endpage" style="border: none">
             <td style="border: none">
                 <table>
                     <tr class="by_account">
@@ -116,82 +120,82 @@
                     %endfor
                 </table>
             </td>
-        </table>
-        % if obj.records.get('invoices', []):
-        <h3> Total Invoiced. </h3>
-        <p>
-        ${obj.comment_invoices}
-        </p>
-        <table width="40%">
-        <tr class="title">
-            <td width="10%"> Period </td>
-            <td style="padding: 0px;">
-                <table width="100%">
-                    <tr>
-                    <td width="30%"> Invoice Number </td>
-                    <td width="35%"> Total (Currency)</td>
-                    <td width="35%"> Pending (Currency)</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        %for period in obj.records['periods'] :
-            <tr>
-                <td width="10%" style="text-align: left;">
-                ${period.get('period_id')[1]}
-                </td>
-                <td  width="40%" class="invoices_content">
-                    <table width="100%">
-                        %for invoice in obj.records['invoices'] :
-                            % if invoice.period_id.id == period.get('period_id')[0]:
-                            % if invoice.residual > 1.00:
-                            <tr class="unpaid">
-                            % endif
-                            % if invoice.residual < 1.00:
-                            <tr class="paid">
-                            % endif
-                                <td> ${invoice.number} </td>
-                                <td class="amount"> ${formatLang(invoice.amount_total)} ( ${invoice.currency_id.name} )</td>
-                                <td class="amount"> ${formatLang(invoice.residual)} ( ${invoice.currency_id.name} )</td>
+            <td style="border: none">
+                % if obj.records.get('invoices', []):
+                <table>
+                <tr class="by_account">
+                    <td colspan="2">Status of invoices until today in the project.</td>
+                </tr>
+                <tr class="title">
+                    <td width="10%"> Period </td>
+                    <td style="padding: 0px;">
+                        <table width="100%">
+                            <tr>
+                            <td width="30%"> Invoice Number </td>
+                            <td width="35%"> Total (Currency)</td>
+                            <td width="35%"> Pending (Currency)</td>
                             </tr>
-                            % endif
-                        %endfor
-                    </table>
-                </td>
-            </tr>
-        %endfor
-        <tr class="by_account">
-            <td colspan="2">Status of invoices until today in the project.</td>
-        </tr>
+                        </table>
+                    </td>
+                </tr>
+                %for period in obj.records['periods'] :
+                    <tr>
+                        <td width="10%" style="text-align: left;">
+                        ${period.get('period_id')[1]}
+                        </td>
+                        <td  width="40%" class="invoices_content">
+                            <table width="100%">
+                                %for invoice in obj.records['invoices'] :
+                                    % if invoice.period_id.id == period.get('period_id')[0]:
+                                    % if invoice.residual > 1.00:
+                                    <tr class="unpaid">
+                                    % endif
+                                    % if invoice.residual < 1.00:
+                                    <tr class="paid">
+                                    % endif
+                                        <td> ${invoice.number} </td>
+                                        <td class="amount"> ${formatLang(invoice.amount_total)} ( ${invoice.currency_id.name} )</td>
+                                        <td class="amount"> ${formatLang(invoice.residual)} ( ${invoice.currency_id.name} )</td>
+                                    </tr>
+                                    % endif
+                                %endfor
+                            </table>
+                        </td>
+                    </tr>
+                %endfor
+                </table>
+                % endif
+            </td>
         </table>
-        % endif
         % if obj.records.get('issues', []):
         <h3> Issues. </h3>
         <p>
         ${obj.comment_issues}
         </p>
-        <table width="40%">
-        <tr class="title">
-            <td width="10%"> Period </td>
-            <td style="padding: 0px;">
-                <table width="100%">
-                    <tr>
-                    <td width="30%"> Issue ID </td>
-                    <td width="35%"> Isue Title </td>
-                    <td width="35%"> Pending (Currency)</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td width="10%" style="text-align: left;">
-            </td>
-            <td  width="40%" class="invoices_content">
-            </td>
-        </tr>
-        <tr class="by_account">
-            <td colspan="2">Status of issues until today in the project.</td>
-        </tr>
+        <table width="50%" class="endpage">
+            <tr class="by_account">
+                <td colspan="3">Status of issues until today in the project.</td>
+            </tr>
+            <tr class="title">
+                <td width="30%"> Analytic Account </td>
+                <td width="10%"> Qty </td>
+                <td width="60%"> Status </td>
+            </tr>
+            %for issue in obj.records['issues'] :
+            <tr>
+                <td width="30%" style="text-align: left;">
+                    ${issue.get('analytic_account_id') and issue.get('analytic_account_id')[1] or 'Not analytic Setted.' }
+                </td>
+                <td  width="10%" class="invoices_content">
+                    ${issue['analytic_account_id_count']}
+                </td>
+                <td  width="60%" style="text-align: right;" class="invoices_content">
+                    %for stage in issue['children_by_stage'] :
+                    <span style="padding-top:2px;">${stage['stage_id'][1]} - ${stage['stage_id_count']}</span><br/>
+                    %endfor
+                </td>
+            </tr>
+            %endfor
         </table>
         % endif
         <h3> Detailed Report. </h3>
