@@ -8,6 +8,17 @@
         body {
             font-size: 9px;
         }
+        p {
+            font-size: 9px;
+            line-height: 11px;
+        }
+        table p {
+            font-size: 9px;
+            line-height: 9px;
+            padding: 0px;
+            padding-bottom: 1px;
+            margin: 0px;
+        }
         table, th, td {
             border: 1px solid grey;
             border-collapse: collapse;
@@ -191,7 +202,7 @@
                 </td>
                 <td  width="60%" style="text-align: right;" class="invoices_content">
                     %for stage in issue['children_by_stage'] :
-                    <span style="padding-top:2px;">${stage['stage_id'][1]} - ${stage['stage_id_count']}</span><br/>
+                    <p style="padding-top:2px;">${stage['stage_id'][1]} - ${stage['stage_id_count']}</p>
                     %endfor
                 </td>
             </tr>
