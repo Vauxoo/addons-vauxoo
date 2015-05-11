@@ -4,7 +4,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Humberto Arocha <hbto@vauxoo.com>
+#    Coded by: Yanina Aular <yanina.aular@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -22,22 +22,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Account Anglo-Saxon Stock Move",
+    "name": "Stock Sale Invoice Line",
     "version": "1.0",
     "author": "Vauxoo",
-    "category": "",
+    "category": "sale",
     "description": """
-Account Anglo-Saxon Stock Move
-------------------------------
+Stock Sale Invoice Line
+=======================
+
+    Adds a new field in invoice line to link sale_order_line to it
 """,
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [
-        "account_anglo_saxon_missing_key",
-        "stock_move_entries",
+        "stock_sale_order_line",
+        "account_anglo_saxon",
     ],
     "demo": [],
-    "data": [],
+    "data": [
+        "view/view.xml"
+    ],
     "test": [],
     "js": [],
     "css": [],

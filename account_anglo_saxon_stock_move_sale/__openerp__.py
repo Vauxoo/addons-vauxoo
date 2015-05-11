@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
-############# Credits #########################################################
+# Credits #####################################################################
 #    Coded by: Humberto Arocha <hbto@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
@@ -22,22 +22,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Account Anglo-Saxon Stock Move",
+    "name": "Account Anglo-Saxon Stock Move Sale",
     "version": "1.0",
     "author": "Vauxoo",
     "category": "",
     "description": """
-Account Anglo-Saxon Stock Move
-------------------------------
+Account Anglo-Saxon Stock Move Sale
+-----------------------------------
+This module allows to gather Journal Item in a Sale Order
+that were created because of accrual accounts for Stock In with Anglo Saxon
 """,
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [
-        "account_anglo_saxon_missing_key",
-        "stock_move_entries",
+        "account_anglo_saxon_stock_move",
     ],
     "demo": [],
-    "data": [],
+    "data": [
+        'view/sale_view.xml',
+    ],
     "test": [],
     "js": [],
     "css": [],
