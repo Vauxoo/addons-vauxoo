@@ -31,14 +31,10 @@
     "website": "http://www.vauxoo.com/",
     "category": "Security",
     "depends": [
-        "product",
         "account",
-        "stock",
         "mrp",
-        "purchase",
         "purchase_requisition",
         "sale",
-        "procurement",
         "hr_expense",
     ],
     "data": [
