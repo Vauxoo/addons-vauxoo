@@ -33,6 +33,7 @@
         .resume {
             text-align: left;
             border: none;
+            width: 100%;
         }
         .description {
             text-align: left;
@@ -81,10 +82,11 @@
 </head>
 <body style="border:0;">
     %for obj in objects :
-        <h2>Report Name: ${obj.filter_id.name}</h2>
+        <h2>Report Name: ${obj.name}</h2>
         <h3>
             Resumed Report.
         </h3>
+        <h4>Filter Name: ${obj.filter_id.name}</h4>
         <p>
         ${obj.comment_timesheet}
         </p>
