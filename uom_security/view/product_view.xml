@@ -113,5 +113,18 @@
             </field>
         </record>
 
+        <!-- Pricelist item -->
+
+        <record id="product_product_pricelist_item_group_uom_form_view" model="ir.ui.view">
+            <field name="name">product.product.pricelist.item.group.uom.form.view</field>
+            <field name="model">product.pricelist.item</field>
+            <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div" position="attributes">
+                    <attribute name="groups">uom_security.purchase_uom_group</attribute>
+                </xpath>
+            </field>
+        </record>
+
     </data>
 </openerp>
