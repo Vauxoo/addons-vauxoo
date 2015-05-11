@@ -24,8 +24,8 @@
 ###############################################################################
 
 {
-    "name": "UOM Security",
-    'summary': "Split UOM usability for Sales/Purchases/Warehouse",
+    "name": "Unit of Measure Security",
+    'summary': "Split Unit of measure usability for Sales/Purchases/Warehouse",
     "version": "1.0",
     "author": "Vauxoo",
     "website": "http://www.vauxoo.com/",
