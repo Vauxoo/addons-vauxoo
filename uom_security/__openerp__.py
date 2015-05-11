@@ -39,6 +39,7 @@
         "purchase_requisition",
         "sale",
         "procurement",
+        "hr_expense",
     ],
     "data": [
         "security/uom_groups.xml",
@@ -49,6 +50,7 @@
         "view/sale_view.xml",
         "view/procurement_view.xml",
         "view/product_view.xml",
+        "view/hr_expense_view.xml",
     ],
     "demo": [],
     "test": [],
