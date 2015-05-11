@@ -94,11 +94,12 @@
             <td style="border: none">
                 <table>
                     <tr class="by_account">
-                        <td colspan="2"> By Date </td>
+                        <td colspan="3"> By Date </td>
                     </tr>
                     <tr class="title">
                         <td> Month </td>
-                        <td> Hours </td>
+                        <td> Total Hours</td>
+                        <td> Billable Hours</td>
                     </tr>
                     %for resume in obj.records['resume_month'] :
                         <tr class="by_account">
@@ -108,6 +109,9 @@
                             <td>
                             ${formatLang(resume.get('unit_amount'))}
                             </td>
+                            <td>
+                            ${formatLang(resume.get('invoiceables_hours', '0.00'))}
+                            </td>
                         </tr>
                     %endfor
                 </table>
@@ -115,11 +119,12 @@
             <td style="border: none">
                 <table>
                     <tr class="by_account">
-                        <td colspan="2"> By Analytic </td>
+                        <td colspan="3"> By Analytic </td>
                     </tr>
                     <tr class="title">
                         <td> Account </td>
-                        <td> Hours </td>
+                        <td> Total Hours</td>
+                        <td> Billable Hours</td>
                     </tr>
                     %for resume in obj.records['resume'] :
                     <tr class="by_account">
@@ -128,6 +133,9 @@
                         </td>
                         <td>
                         ${formatLang(resume.get('unit_amount', '0.00'))}
+                        </td>
+                        <td>
+                        ${formatLang(resume.get('invoiceables_hours', '0.00'))}
                         </td>
                     </tr>
                     %endfor

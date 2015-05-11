@@ -61,13 +61,16 @@ class fiscal_book_wizard(osv.Model):
                                               context=context)
         res = [self._prepare_data(tb) for tb in timesheet_brws]
         grouped = timesheet_obj.read_group(cr, uid, dom,
-                                           ['account_id', 'unit_amount'],
+                                           ['account_id',
+                                            'unit_amount',
+                                            'invoiceables_hours'],
                                            ['account_id'],
                                            context=context)
         grouped_month = timesheet_obj.read_group(cr, uid, dom,
                                                  ['date',
                                                   'account_id',
-                                                  'unit_amount'],
+                                                  'unit_amount',
+                                                  'invoiceables_hours'],
                                                  ['date'],
                                                  context=context)
         # Preparing grouped invoices due to it is 2 levels it need a
