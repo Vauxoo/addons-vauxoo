@@ -24,6 +24,10 @@
                 In this way we can control when to show the unit of measure in certain areas
                 of the instance.
             </p>
+            <p>
+                Note: Neither of the qweb views where change so all the
+                reports remain the same and will print the unit of measures.
+            </p>
         </div>
     </div>
 </section>
@@ -1058,3 +1062,48 @@
     </div>
 
 </section>
+
+
+<!--
+
+Form Views
+
+- MRP WorkCenter Load Form
+.. image: https://docs.google.com/a/vauxoo.com/file/d/0B1UUUA6bRx8-ei1oQVd5eEViaEE/edit?usp=drivesdk
+.. TODO this field is a selection field for unit of measure of time. this was
+   not considerately to be change so will remains as the original
+.. status: TODO (warehouse)
+.. view: mrp.view_mrp_workcenter_load_wizard
+    <field name="measure_unit"/>
+
+- Sale Config Settings Form
+.. image: https://docs.google.com/a/vauxoo.com/file/d/0B1UUUA6bRx8-TzZ0VXlXeDVUV3c/edit?usp=drivesdk
+.. TODO this will not be change taking into account the agrement with the module reviewer
+.. view: sale.view_sales_config
+    <field name="group_uom" class="oe_inline"/>
+    <label for="group_uom"/>
+
+Tree Views
+
+- Account Analytic Line
+.. image: account.analytic.line.form.src.png
+          https://docs.google.com/a/vauxoo.com/file/d/0B1UUUA6bRx8-Wnp3QkxjRDJzU0E/edit?usp=drivesdk
+.. model: account.analytic.line
+.. TODO Is defined but not show it anywere <record id="action_account_analytic_line_form" model="ir.actions.act_window">
+.. view: account.view_account_analytic_line_tree
+    <field name="product_uom_id"/>
+
+- Account Entries Report
+.. image: https://docs.google.com/a/vauxoo.com/file/d/0B1UUUA6bRx8-WkdLZjlfWldJRzQ/edit?usp=drivesdk
+.. model: account.entries.report
+.. TODO Exist but do not show. used to print a xls file from a graph view
+.. view: account.view_account_entries_report_tree
+    <field name="product_uom_id" invisible="1"/>
+
+- Product Template
+.. TODO Not need to be change is invisible by default
+.. model: product.template
+.. status: TODO (?)
+.. view: product.product_template_tree_view
+    <field name="uom_id" invisible="1"/>
+-->
