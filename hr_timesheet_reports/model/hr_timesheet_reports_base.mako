@@ -209,6 +209,35 @@
             %endfor
         </table>
         % endif
+        % if obj.records.get('user_stories', []):
+        <h3> User Stories. </h3>
+        <p>
+        ${obj.comment_hu}
+        </p>
+        <table width="100%" class="endpage">
+            <tr class="by_account">
+                <td colspan="3">Status of issues until today in the project.</td>
+            </tr>
+            <tr class="title">
+                <td width="10%"> ID </td>
+                <td width="80%"> Title </td>
+                <td width="10%"> Status </td>
+            </tr>
+            %for hu in obj.records['user_stories'] :
+            <tr>
+                <td width="10%" style="text-align: left;">
+                    ${hu.id}
+                </td>
+                <td  width="80%" class="invoices_content">
+                    ${hu.name}
+                </td>
+                <td  width="10%" style="text-align: right;" class="invoices_content">
+                    ${hu.state}
+                </td>
+            </tr>
+            %endfor
+        </table>
+        % endif
         <h3> Detailed Report. </h3>
         %for res in obj.records['data'] :
         <table width="100%" style="font-size: 14px;">

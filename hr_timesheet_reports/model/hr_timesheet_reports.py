@@ -44,12 +44,15 @@ class fiscal_book_wizard(osv.Model):
         domain = wzr_brw.filter_id.domain
         domain_inv = wzr_brw.filter_invoice_id.domain
         domain_issues = wzr_brw.filter_issue_id.domain
+        domain_hu = wzr_brw.filter_hu_id.domain
         timesheet_obj = self.pool.get('hr.analytic.timesheet')
         invoice_obj = self.pool.get('account.invoice')
         issue_obj = self.pool.get('project.issue')
+        hu_obj = self.pool.get('user.story')
         dom = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain)]
         dom_inv = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain_inv)]
         dom_issues = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain_issues)]
+        dom_hu = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain_hu)]
         timesheet_ids = timesheet_obj.search(cr, uid, dom,
                                              order='account_id asc, user_id asc, date asc',  # noqa
                                              context=context)
@@ -100,7 +103,9 @@ class fiscal_book_wizard(osv.Model):
                                                               orderby='stage_id asc',
                                                               context=context)
             issues_all.append(issue)
-
+        # Setting the HU elements
+        hu_ids = hu_obj.search(cr, uid, dom_hu, order='state asc', context=context)
+        hu_brw = hu_obj.browse(cr, uid, hu_ids, context=context)
         # Separate per project (analytic)
         projects = set([l['analytic'] for l in res])
         info = {
@@ -110,6 +115,7 @@ class fiscal_book_wizard(osv.Model):
             'periods': grouped_invoices,
             'invoices': invoices_brw,
             'issues': issues_all,
+            'user_stories': hu_brw,
         }
         for proj in projects:
             info['data'][proj] = [r for r in res if r['analytic'] == proj]
