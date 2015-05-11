@@ -177,7 +177,7 @@ class stock_accrual_wizard(osv.osv_memory):
         for brw in self.browse(cr, uid, ids, context=context):
             for lbrw in brw.line_ids:
                 for fn in field_names:
-                        res[brw.id][fn] += getattr(lbrw, fn)
+                    res[brw.id][fn] += getattr(lbrw, fn)
         return res
 
     _columns = {
