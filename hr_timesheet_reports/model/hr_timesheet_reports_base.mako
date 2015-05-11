@@ -218,11 +218,15 @@
         </p>
         <table width="100%" class="endpage">
             <tr class="by_account">
-                <td colspan="3">Status of issues until today in the project.</td>
+                <td colspan="7">Status of User Stories until today in the project.</td>
             </tr>
             <tr class="title">
                 <td width="10%"> ID </td>
-                <td width="80%"> Title </td>
+                <td width="35%"> Title </td>
+                <td width="15%"> Asked By </td>
+                <td width="10%"> Planned </td>
+                <td width="10%"> Effective </td>
+                <td width="10%"> Invoiceable </td>
                 <td width="10%"> Status </td>
             </tr>
             %for hu in obj.records['user_stories'] :
@@ -230,8 +234,20 @@
                 <td width="10%" style="text-align: left;">
                     ${hu.id}
                 </td>
-                <td  width="80%" class="invoices_content">
+                <td  width="35%" class="invoices_content">
                     ${hu.name}
+                </td>
+                <td  width="15%" class="invoices_content" style="text-align: left;">
+                    ${hu.owner_id.name}
+                </td>
+                <td  width="10%" class="invoices_content">
+                    ${hu.planned_hours}
+                </td>
+                <td  width="10%" class="invoices_content">
+                    ${hu.effective_hours}
+                </td>
+                <td  width="10%" class="invoices_content">
+                    ${hu.invoiceable_hours}
                 </td>
                 <td  width="10%" style="text-align: right;" class="invoices_content">
                     ${hu.state}
