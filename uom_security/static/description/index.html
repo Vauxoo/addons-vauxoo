@@ -56,7 +56,7 @@
 
     <!--
 
-    Product Template (Purchases Menu)
+    Product Template Kanban (Purchase Menu)
 
     .. model: product.template
     .. status: DONE (purchase)
@@ -66,7 +66,9 @@
     -->
 
     <div class="oe_row">
-        <h3 class="oe_slogan">Product Template Kanban (Purchases Menu)</h3>
+        <h3 class="oe_slogan">
+            Product Template Kanban (Purchase Menu)
+        </h3>
         <div class="oe_span6">
             <h4 class="oe_slogan">Original</h4>
             <img class="oe_picture oe_screenshot" src="product.template.kanban.purchase.src.png">
@@ -151,6 +153,67 @@
         </div>
     </div>
 
+    <!--
+
+    Product Supplier Info Form
+
+    .. model: product.supplierinfo
+
+    .. status: DONE (purchase)
+    .. view: product.product_supplierinfo_form_view
+        <field name="product_uom" groups="product.group_uom"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">
+            Product Supplier Info Form
+        </h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="product.supplier.info.form.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="product.supplier.info.form.new.png">
+        </div>
+    </div>
+
+    <!--
+
+    Product Template Form (Purchase Menu)
+
+    .. model product.template
+
+    .. status: DONE (purchase)
+    .. view: product.product_template_form_view
+        <field name="uom_id" on_change="onchange_uom(uom_id,uom_po_id)" groups="product.group_uom"/>
+        <group name="procurement_uom" groups="product.group_uom" string="Purchase">
+        <field name="uom_po_id"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">
+            Product Template Form (Purchase Menu)
+        </h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="product.template.form1.purchase.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="product.template.form1.purchase.new.png">
+        </div>
+    </div>
+    <div class="oe_row">
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="product.template.form2.purchase.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="product.template.form2.purchase.new.png">
+        </div>
+    </div>
 
 </section>
 
@@ -229,17 +292,19 @@
 
     <!--
 
-    Product Template (Sales Menu)
+    Product Template Kanban (Sales Menu)
 
     .. model: product.template
-    .. status: DONE (purchase)
+    .. status: DONE (sale)
     .. view: stock.product_template_kanban_stock_view
        <li t-if="record.type.raw_value != 'service'">On hand: <field name="qty_available"/> <field name="uom_id"/></li>
        <li t-if="record.type.raw_value != 'service'">Forecasted: <field name="virtual_available"/> <field name="uom_id"/></li>
     -->
 
     <div class="oe_row">
-        <h3 class="oe_slogan">Product Template Kanban (Sales Menu)</h3>
+        <h3 class="oe_slogan">
+            Product Template Kanban (Sales Menu)
+        </h3>
         <div class="oe_span6">
             <h4 class="oe_slogan">Original</h4>
             <img class="oe_picture oe_screenshot" src="product.template.kanban.sale.src.png">
@@ -287,6 +352,56 @@
         <div class="oe_span6">
             <h4 class="oe_slogan">Modificated</h4>
             <img class="oe_picture oe_screenshot" src="sale.order.tree.new.png">
+        </div>
+    </div>
+
+    <!--
+    Product Template Form (Sales Menu)
+
+    .. model product.template
+
+    .. status: DONE (sale)
+    .. view: product.product_template_form_view
+        <field name="uom_id" on_change="onchange_uom(uom_id,uom_po_id)" groups="product.group_uom"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">
+            Product Template Form (Sales Menu)
+        </h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="product.template.form1.sale.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="product.template.form1.sale.new.png">
+        </div>
+    </div>
+
+    <!--
+
+    Product Variants
+    Product Product Tree (Sale sMenu)
+
+    .. model: product.product
+
+    .. status: DONE (sale)
+    .. view: product.product_product_tree_view
+        <field name="uom_id"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">
+            Product Variants Tree
+        </h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="product.product.tree.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="product.product.tree.new.png">
         </div>
     </div>
 
@@ -830,6 +945,55 @@
         </div>
     </div>
 
+    <!--
+
+    Product Template Form (Warehouse Menu)
+
+    .. model product.template
+
+    .. status: DONE (warehouse)
+    .. view: product.product_template_form_view
+        <field name="uom_id" on_change="onchange_uom(uom_id,uom_po_id)" groups="product.group_uom"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">
+            Product Template Form (Warehouse Menu)
+        </h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="product.template.form1.warehouse.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="product.template.form1.warehouse.new.png">
+        </div>
+    </div>
+
+    <!--
+
+    Product Template Search (Manufacturing Menu)
+
+    .. model: product.template
+
+    .. status: DONE (warehouse)
+    .. view: product.product_template_search_view
+        <filter string="Default Unit of Measure" icon="terp-mrp" domain="[]" context="{'group_by' : 'uom_id'}"/>
+    -->
+
+    <div class="oe_row">
+        <h3 class="oe_slogan">
+            Product Template Search (Manufacturing Menu)
+        </h3>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Original</h4>
+            <img class="oe_picture oe_screenshot" src="product.template.search.warehouse.src.png">
+        </div>
+        <div class="oe_span6">
+            <h4 class="oe_slogan">Modificated</h4>
+            <img class="oe_picture oe_screenshot" src="product.template.search.warehouse.new.png">
+        </div>
+    </div>
 
 </section>
 

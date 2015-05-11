@@ -209,45 +209,6 @@
             </field>
         </record>
 
-        <!-- Product Template -->
-
-        <record id="stock_product_template_kanban_stock_group_uom_view" model="ir.ui.view">
-            <field name="name">stock.product.template.kanban.stock.group.uom.view</field>
-            <field name="model">product.template</field>
-            <field name="inherit_id" ref="stock.product_template_kanban_stock_view"/>
-            <field name="arch" type="xml">
-                <xpath expr="//ul/li/field[@name='uom_id']" position="replace">
-                    <field name="uom_id" groups="uom_security.purchase_uom_group" invisible="not context.get('search_default_filter_to_purchase', False)"/>
-                    <field name="uom_id" groups="uom_security.sale_uom_group" invisible="not context.get('search_default_filter_to_sell', False)"/>
-                    <field name="uom_id" groups="uom_security.warehouse_uom_group" invisible="not context.get('search_default_filter_to_warehouse', False)"/>
-                </xpath>
-                <xpath expr="//ul/li[last()]/field[@name='uom_id']" position="replace">
-                    <field name="uom_id" groups="uom_security.purchase_uom_group" invisible="not context.get('search_default_filter_to_purchase', False)"/>
-                    <field name="uom_id" groups="uom_security.sale_uom_group" invisible="not context.get('search_default_filter_to_sell', False)"/>
-                    <field name="uom_id" groups="uom_security.warehouse_uom_group" invisible="not context.get('search_default_filter_to_warehouse', False)"/>
-                </xpath>
-            </field>
-        </record>
-
-        <!-- Sales and Warehouse product are the same action, need to create
-             a new action to pass a differ context to filter the waewhouse
-             and sale product menus by separate -->
-
-        <record id="warehouse_product_template_action" model="ir.actions.act_window">
-            <field name="name">Products</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">product.template</field>
-            <field name="view_mode">kanban,tree,form</field>
-            <field name="view_type">form</field>
-            <field name="view_id" ref="product.product_template_kanban_view"/>
-            <field name="context">{"search_default_filter_to_warehouse": 1}</field>
-        </record>
-
-        <menuitem
-            id="stock.menu_stock_products_menu"
-            action="warehouse_product_template_action"
-            parent="stock.menu_stock_product" sequence="1"/>
-
     </data>
 </openerp>
 

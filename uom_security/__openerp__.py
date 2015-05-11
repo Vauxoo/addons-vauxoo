@@ -31,7 +31,7 @@
     "website": "http://www.vauxoo.com/",
     "category": "Security",
     "depends": [
-        'product',
+        "product",
         "account",
         "stock",
         "mrp",
@@ -48,6 +48,7 @@
         "view/purchase_view.xml",
         "view/sale_view.xml",
         "view/procurement_view.xml",
+        "view/product_view.xml",
     ],
     "demo": [],
     "test": [],
