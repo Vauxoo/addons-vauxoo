@@ -35,16 +35,7 @@
 <section class="oe_container oe_dark">
     <h2 class="oe_slogan">Purchase</h2>
 
-    <!--
-
-    Account Invoice Form (Supplier)
-
-    .. model account.invoice
-    .. status: DONE (purchase)
-    .. view account.invoice_supplier_form
-        <field name="uos_id" groups="product.group_uom" on_change="uos_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, price_unit, parent.currency_id, parent.company_id, context)"/>
-
-    -->
+    <!-- account.invoice_supplier_form -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">Supplier Invoice Form</h3>
@@ -58,16 +49,7 @@
         </div>
     </div>
 
-    <!--
-
-    Product Template Kanban (Purchase Menu)
-
-    .. model: product.template
-    .. status: DONE (purchase)
-    .. view: stock.product_template_kanban_stock_view
-       <li t-if="record.type.raw_value != 'service'">On hand: <field name="qty_available"/> <field name="uom_id"/></li>
-       <li t-if="record.type.raw_value != 'service'">Forecasted: <field name="virtual_available"/> <field name="uom_id"/></li>
-    -->
+    <!-- stock.product_template_kanban_stock_view -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">
@@ -83,15 +65,7 @@
         </div>
     </div>
 
-    <!--
-
-    Purchase Order Form
-
-    .. model purchase.order
-    .. status: TODO (purchase)
-    .. view: purchase.purchase_order_form
-        <field name="product_uom" groups="product.group_uom" on_change="onchange_product_uom(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,name,False,parent.state,context)"/>
-    -->
+    <!-- purchase.purchase_order_form -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">Purchase Order Form</h3>
@@ -105,23 +79,11 @@
         </div>
     </div>
 
-    <!--
-
-    Purchase Order Line Form
-
-    .. model: purchase.order.line
-
-    .. status: DONE (purchase)
-    .. view purchase.purchase_order_line_form
-        <field name="product_uom" groups="product.group_uom" on_change="onchange_product_uom(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,name,False,'draft',context)" class="oe_inline"/>
-
-    .. status: DONE (purchase)
-    .. view purchase.purchase_order_line_form2
-        <field name="product_uom" readonly="1" groups="product.group_uom" class="oe_inline"/>
-    -->
+    <!-- purchase.purchase_order_line_form
+         purchase.purchase_order_line_form2 -->
 
     <div class="oe_row">
-        <h3 class="oe_slogan">Purchase Order Form</h3>
+        <h3 class="oe_slogan">Purchase Order Line Form</h3>
         <div class="oe_span6">
             <h4 class="oe_slogan">Original</h4>
             <img class="oe_picture oe_screenshot" src="purchase.order.line.form.src.png">
@@ -132,16 +94,7 @@
         </div>
     </div>
 
-    <!--
-
-    Purchase Requisition Form
-
-    .. model: purchase.requisition
-    .. status: DONE (purchase)
-    .. view: purchase_requisition.view_purchase_requisition_form
-        <field name="line_ids"> ... <tree> ... <field name="product_uom_id"/>
-        <field name="line_ids"> ... <form> ... <field name="product_uom_id"/>
-    -->
+    <!-- purchase_requisition.view_purchase_requisition_form -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">
@@ -157,16 +110,7 @@
         </div>
     </div>
 
-    <!--
-
-    Product Supplier Info Form
-
-    .. model: product.supplierinfo
-
-    .. status: DONE (purchase)
-    .. view: product.product_supplierinfo_form_view
-        <field name="product_uom" groups="product.group_uom"/>
-    -->
+    <!-- product.product_supplierinfo_form_view -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">
@@ -182,18 +126,7 @@
         </div>
     </div>
 
-    <!--
-
-    Product Template Form (Purchase Menu)
-
-    .. model product.template
-
-    .. status: DONE (purchase)
-    .. view: product.product_template_form_view
-        <field name="uom_id" on_change="onchange_uom(uom_id,uom_po_id)" groups="product.group_uom"/>
-        <group name="procurement_uom" groups="product.group_uom" string="Purchase">
-        <field name="uom_po_id"/>
-    -->
+    <!-- product.product_template_form_view -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">
@@ -219,18 +152,7 @@
         </div>
     </div>
 
-    <!--
-
-    Pricelist Item
-
-    .. model: product.pricelist.item
-
-    .. status: DONE (purchase)
-    .. view: product.product_pricelist_item_form_view
-        <div class="oe_grey" groups="product.group_uom">
-            <p>The computed price is expressed in the default Unit of Measure of the product.</p>
-        </div>
-    -->
+    <!-- product.product_pricelist_item_form_view -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">
@@ -251,16 +173,7 @@
 <section class="oe_container">
     <h2 class="oe_slogan">Sale</h2>
 
-    <!--
-
-    Account Invoice Form (Customer)
-
-    .. model account.invoice
-    .. status: TODO (sale)
-    .. view account.invoice_form
-        <field name="uos_id" groups="product.group_uom" on_change="uos_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, price_unit, parent.currency_id, parent.company_id, context)"/>
-
-    -->
+    <!-- account.invoice_form -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">Customer Invoice Form</h3>
@@ -275,18 +188,7 @@
         </div>
     </div>
 
-    <!--
-
-    Account Invoice Line Form
-
-    .. model: account.invoice.line
-    .. original: account.invoice.line.form.src.png
-
-    .. status: TODO (sale)
-    .. view account.view_invoice_line_form
-        <field name="uos_id" class="oe_inline" groups="product.group_uom" on_change="uos_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, price_unit, parent.currency_id, parent.company_id, context)"/>
-
-    -->
+    <!-- account.view_invoice_line_form -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">Account Invoice Line Form</h3>
@@ -300,14 +202,7 @@
         </div>
     </div>
 
-    <!--
-
-    Account Invoice Line Tree
-    .. model: account.invoice.line
-    .. status: DONE (sale)
-    .. view: account.view_invoice_line_tree
-       <field name="uos_id" groups="product.group_uom"/>
-    -->
+    <!-- account.view_invoice_line_tree -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">Sale > Sale Order > Sale Order Line > Invoice Line</h3>
@@ -321,16 +216,7 @@
         </div>
     </div>
 
-    <!--
-
-    Product Template Kanban (Sales Menu)
-
-    .. model: product.template
-    .. status: DONE (sale)
-    .. view: stock.product_template_kanban_stock_view
-       <li t-if="record.type.raw_value != 'service'">On hand: <field name="qty_available"/> <field name="uom_id"/></li>
-       <li t-if="record.type.raw_value != 'service'">Forecasted: <field name="virtual_available"/> <field name="uom_id"/></li>
-    -->
+    <!-- stock.product_template_kanban_stock_view -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">
@@ -346,17 +232,7 @@
         </div>
     </div>
 
-    <!--
-
-    Sale Order Form
-
-    .. model: sale.order
-
-    .. status: DONE (sale)
-    .. view: sale.view_order_form
-        <field name="order_line"> ... <form> ...  <field name="product_uom"/>
-        <field name="order_line"> ... <tree> ...  <field name="product_uom"/>
-    -->
+    <!-- sale.view_order_form -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">
@@ -386,15 +262,7 @@
         </div>
     </div>
 
-    <!--
-    Product Template Form (Sales Menu)
-
-    .. model product.template
-
-    .. status: DONE (sale)
-    .. view: product.product_template_form_view
-        <field name="uom_id" on_change="onchange_uom(uom_id,uom_po_id)" groups="product.group_uom"/>
-    -->
+    <!-- product.product_template_form_view -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">
@@ -410,17 +278,7 @@
         </div>
     </div>
 
-    <!--
-
-    Product Variants
-    Product Product Tree (Sale sMenu)
-
-    .. model: product.product
-
-    .. status: DONE (sale)
-    .. view: product.product_product_tree_view
-        <field name="uom_id"/>
-    -->
+    <!-- product.product_product_tree_view -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">
@@ -441,15 +299,7 @@
 <section class="oe_container oe_dark">
     <h2 class="oe_slogan">Warehouse, Stock and MRP</h2>
 
-    <!--
-
-    Reordering Rules Form
-
-    .. model: stock.warehouse.orderpoint
-    .. status: TODO (warehouse)
-    .. view stock.view_warehouse_orderpoint_form
-       <field name="product_uom" groups="product.group_uom"/>
-    -->
+    <!-- stock.view_warehouse_orderpoint_form -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">Reordering Rules Form</h3>
@@ -464,15 +314,7 @@
         </div>
     </div>
 
-    <!--
-
-    Reordering Rules Tree
-
-    .. model: stock.warehouse.orderpoint
-    .. status: DONE (warehouse)
-    .. view stock.view_warehouse_orderpoint_tree
-       <field name="product_uom" groups="product.group_uom"/>
-    -->
+    <!-- stock.view_warehouse_orderpoint_tree -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">Reordering Rules Tree</h3>
@@ -487,17 +329,7 @@
         </div>
     </div>
 
-    <!--
-
-    Stock Inventory Form
-
-    .. model: stock.inventory
-    .. status: DONE (warehouse)
-    .. view stock.view_inventory_form
-       <field name="line_ids"> ... <tree> ... <field name="product_uom_id" groups="product.group_uom" string="UoM" on_change="onchange_createline(location_id, product_id, product_uom_id, package_id, prod_lot_id, partner_id)"/>
-    <field name="move_ids"> ... <tree> ... <field name="product_uom" string="Unit of Measure" groups="product.group_uom"/>
-
-    -->
+    <!-- stock.view_inventory_form -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">Inventory Adjustment Form</h3>
@@ -525,21 +357,8 @@
         </div>
     </div>
 
-    <!--
-
-    Stock Move Form
-
-    .. model: stock.move
-
-    .. status: DONE (warehouse)
-    .. view: stock.view_move_picking_form
-    <field name="product_uom" string="Unit Of Measure" groups="product.group_uom" class="oe_inline"/>
-
-    .. status: DONE (warehouse)
-    .. view: stock.view_move_form
-    <field name="product_uom" groups="product.group_uom" class="oe_inline"/>
-
-    -->
+    <!-- stock.view_move_picking_form
+         stock.view_move_form -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">Stock Move Form</h3>
@@ -565,20 +384,8 @@
         </div>
     </div>
 
-    <!--
-
-    Stock Move Tree
-
-    .. model stock.move
-
-    .. status: TODO (warehouse). Do but not working yet
-    .. view: stock.stock_move_tree
-       <field name="product_uom" string="Unit of Measure" groups="product.group_uom"/>
-
-    .. status: DONE (warehouse)
-    .. view: stock.view_move_tree
-       <field name="product_uom" string="Unit of Measure" groups="product.group_uom"/>
-    -->
+    <!-- stock.stock_move_tree
+         stock.view_move_tree -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">Stock Move Tree</h3>
@@ -593,16 +400,7 @@
 
     </div>
 
-    <!--
-
-    Stock Move Tree From Picking
-
-    .. model stock.move
-
-    .. status: DONE (warehouse)
-    .. view: stock.view_move_picking_tree
-       <field name="product_uom" string="Unit of Measure" groups="product.group_uom"/>
-    -->
+    <!-- stock.view_move_picking_tree -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">Stock Move Tree From Picking</h3>
@@ -617,16 +415,7 @@
 
     </div>
 
-    <!--
-
-    Procurement Request Form
-
-    .. model: make.procurement
-
-    .. status: DONE (warehouse)
-    .. view: stock.view_make_procurment_wizard
-       <field name="uom_id" groups="product.group_uom"/>
-    -->
+    <!-- stock.view_make_procurment_wizard -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">Procurement Request Form</h3>
@@ -640,17 +429,7 @@
         </div>
     </div>
 
-    <!--
-
-    Stock Move Scrap Form (wizard)
-
-    .. model: stock.move.scrap
-
-    .. status: DONE (warehouse)
-    .. view: stock.view_stock_move_scrap_wizard
-       <field name="product_uom" class="oe_inline" readonly="1" groups="product.group_uom"/>
-
-    -->
+    <!-- stock.view_stock_move_scrap_wizard -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">Stock Move Scrap Form (wizard)</h3>
@@ -664,16 +443,7 @@
         </div>
     </div>
 
-    <!--
-
-    Stock Picking Form
-
-    .. model stock.picking
-
-    .. status: TODO (warehouse) I change it but it do not work
-    .. view: stock.view_picking_form
-       <field name="pack_operation_ids"> ... <tree> ... <field name="product_uom_id" groups="product.group_uom"/>
-    -->
+    <!-- stock.view_picking_form -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">Stock Picking Form</h3>
@@ -687,16 +457,7 @@
         </div>
     </div>
 
-    <!--
-
-    Stock Transfer Details Form (wizard)
-
-    .. model stock.transfer_details
-
-    .. status: DONE (warehouse)
-    .. view: stock.view_stock_enter_transfer_details
-       <field name="product_uom_id" options="{&quot;no_open&quot;: True}" groups="product.group_uom"/>
-    -->
+    <!-- stock.view_stock_enter_transfer_details -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">Stock Transfer Details Form (wizard)</h3>
@@ -710,15 +471,7 @@
         </div>
     </div>
 
-    <!--
-
-    MRP Bom Form View
-
-    .. DONE (warehouse)
-    .. view: mrp.mrp_bom_form_view
-        <field name="product_uom" class="oe_inline" on_change="onchange_uom(product_tmpl_id, product_uom)" groups="product.group_uom"/>
-        <field name="bom_line_ids"> ... <tree> ... <field name="product_uom" on_change="onchange_uom(product_id, product_uom)" groups="product.group_uom"/>
-   -->
+    <!-- mrp.mrp_bom_form_view -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">Bill of Materials Form</h3>
@@ -732,15 +485,7 @@
         </div>
     </div>
 
-    <!--
-
-    Bill Of Material Search
-
-    .. model: mrp.bom
-    .. status: DONE (warehouse)
-    .. view: mrp.view_mrp_bom_filter
-        <filter string="Default Unit of Measure" icon="terp-mrp" domain="[]" context="{'group_by' : 'product_uom'}"/>
-    -->
+    <!-- mrp.view_mrp_bom_filter -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">Bill of Materials Search</h3>
@@ -754,16 +499,7 @@
         </div>
     </div>
 
-    <!--
-
-    MRP Bom Line
-
-    .. model: mrp.bom.line
-
-    .. status: DONE (warehouse)
-    .. view: mrp.mrp_bom_component_tree_view
-        <field name="product_uom" on_change="onchange_uom(product_id, product_uom)" groups="product.group_uom"/>
-    -->
+    <!-- mrp.mrp_bom_component_tree_view -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">
@@ -793,21 +529,7 @@
         </div>
     </div>
 
-    <!--
-
-    MRP Production Form View
-    Manufacturing Order
-
-    .. model: mrp.production
-
-    .. status: DONE (warehouse)
-    .. view: mrp.mrp_production_form_view
-       <field name="product_uom" groups="product.group_uom" class="oe_inline"/>
-       <field name="move_lines"> ... <tree> ... <field name="product_uom"/>
-       <field name="move_lines2"> ... <tree> ... <field name="product_uom"/>
-       <field name="move_created_ids"> ... <tree> ... <field name="product_uom"/>
-       <field name="move_created_ids2"> ... <tree> ... <field name="product_uom"/>
-    -->
+    <!-- mrp.mrp_production_form_view -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">Manufacturing Order Form</h3>
@@ -832,15 +554,7 @@
         </div>
     </div>
 
-    <!--
-
-    MRP Production
-
-    .. model mrp.production
-    .. status: DONE (warehouse)
-    .. view: mrp.mrp_production_tree_view
-        <field name="product_uom" groups="product.group_uom"/>
-    -->
+    <!-- mrp.mrp_production_tree_view -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">
@@ -856,20 +570,11 @@
         </div>
     </div>
 
-    <!--
-
-    Production Scheduled Product Tree
-
-    .. model: mrp.production.product.line
-
-    .. status: DONE (warehouse)
-    .. view: mrp.mrp_production_product_tree_view
-       <field name="product_uom" groups="product.group_uom"/>
-    -->
+    <!-- mrp.mrp_production_product_tree_view -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">
-            Production Scheduled Product Tree embeded into Manufacturing Order Form
+            Production Scheduled Product Tree embeded inside Manufacturing Order Form
         </h3>
         <div class="oe_span6">
             <h4 class="oe_slogan">Original</h4>
@@ -881,15 +586,7 @@
         </div>
     </div>
 
-    <!--
-
-    MRP Production Line Form
-
-    .. model: mrp.production.product.line
-    .. status DONE (warehouse)
-    .. view: mrp.mrp_production_product_form_view
-        <field name="product_uom" groups="product.group_uom"/>
-    -->
+    <!-- mrp.mrp_production_product_form_view -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">
@@ -905,15 +602,7 @@
         </div>
     </div>
 
-    <!--
-    Consume Move Form (wizard)
-
-    .. model stock.move.consume
-
-    .. status: DONE (warehouse)
-    .. view: mrp.view_stock_move_consume_wizard
-    <field name="product_uom" class="oe_inline" readonly="1" groups="product.group_uom"/>
-    -->
+    <!-- mrp.view_stock_move_consume_wizard -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">
@@ -929,15 +618,7 @@
         </div>
     </div>
 
-    <!--
-
-    Procurement Order Form
-
-    .. model: procurement.order
-    .. status: DONE (warehouse)
-    .. view: procurement.procurement_form_view
-    <field name="product_uom" class="oe_inline" groups="product.group_uom"/>
-    -->
+    <!-- procurement.procurement_form_view -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">
@@ -953,14 +634,7 @@
         </div>
     </div>
 
-    <!-- Procurement Order Tree
-
-    .. model: procurement.order
-
-    .. status: DONE (warehouse)
-    .. view: procurement.procurement_tree_view
-        <field name="product_uom" string="Unit of Measure"/>
-   -->
+    <!-- procurement.procurement_tree_view -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">
@@ -976,16 +650,7 @@
         </div>
     </div>
 
-    <!--
-
-    Product Template Form (Warehouse Menu)
-
-    .. model product.template
-
-    .. status: DONE (warehouse)
-    .. view: product.product_template_form_view
-        <field name="uom_id" on_change="onchange_uom(uom_id,uom_po_id)" groups="product.group_uom"/>
-    -->
+    <!-- product.product_template_form_view -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">
@@ -1001,16 +666,7 @@
         </div>
     </div>
 
-    <!--
-
-    Product Template Search (Manufacturing Menu)
-
-    .. model: product.template
-
-    .. status: DONE (warehouse)
-    .. view: product.product_template_search_view
-        <filter string="Default Unit of Measure" icon="terp-mrp" domain="[]" context="{'group_by' : 'uom_id'}"/>
-    -->
+    <!-- product.product_template_search_view -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">
@@ -1026,18 +682,8 @@
         </div>
     </div>
 
-    <!--
-
-    HR Expense Form
-
-    .. model: hr.expense.expense
-
-    .. status: DONE (warehouse)
-    .. TODO evaluate the current security of this view.
-    .. view: hr_expense.view_expenses_form
-        <field name="line_ids"> ...  <form> ... <field name="uom_id"/>
-        <field name="line_ids"> ...  <tree> ... <field name="uom_id"/>
-    -->
+    <!-- hr_expense.view_expenses_form -->
+    <!-- TODO evaluate the current security of this view -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">
@@ -1059,22 +705,9 @@
 <section class="oe_container">
     <h2 class="oe_slogan">General Accountng Operations</h2>
 
-    <!--
-
-    Analytic Journal Entry Form
-
-    .. model: account.analytic.line
-    .. original: account.analytic.line.form.src.png
-    .. TODO check with nhomar about this field.
-
-    .. status: DONE (purchase)
-    .. view account.view_account_analytic_line_form
-        <field name="product_uom_id" on_change="on_change_unit_amount(product_id, unit_amount, company_id, product_uom_id)" class="oe_inline"/>
-
-    .. view account.account_analytic_line_extended_form
-        <field name="product_uom_id" on_change="on_change_unit_amount(product_id, unit_amount, company_id, product_uom_id)" class="oe_inline"/>
-
-    -->
+    <!-- account.view_account_analytic_line_form
+         account.account_analytic_line_extended_form -->
+    <!-- TODO check with reviewer about this field (purchase) -->
 
     <div class="oe_row">
         <h3 class="oe_slogan">Analytic Journal Entry Form</h3>
