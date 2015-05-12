@@ -332,7 +332,7 @@
         %for res in obj.records['data'] :
         <table width="100%" style="font-size: 14px;">
             <tr>
-                <th colspan="5">
+                <th colspan="6">
                 <h3><b>Analytic Account:</b> ${res}</h3>
                 </th>
             </tr>
@@ -342,6 +342,7 @@
                 <th> Description </th>
                 <th> Date </th>
                 <th> Duration </th>
+                <th> Invoiceables </th>
             </tr>
             %for rec in obj.records['data'][res] :
             <tr>
@@ -359,6 +360,9 @@
                 </td>
                 <td class="duration">
                     ${formatLang(rec['duration'], digits=2)}
+                </td>
+                <td class="duration">
+                    ${formatLang(rec['invoiceables_hours'], digits=2)}
                 </td>
             </tr>
             %endfor
