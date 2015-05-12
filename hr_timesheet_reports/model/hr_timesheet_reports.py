@@ -96,15 +96,37 @@ class fiscal_book_wizard(osv.Model):
         hu_brw = hu_obj.browse(cr, uid, hu_ids, context=context)
         return hu_brw
 
+    def _get_report_issue(self, cr, uid, ids, context=None):
+        issue_obj = self.pool.get('project.issue')
+        wzr_brw = self.browse(cr, uid, ids, context=context)[0]
+        domain_issues = wzr_brw.filter_issue_id and wzr_brw.filter_issue_id.domain or []
+        if not domain_issues:
+            return []
+        dom_issues = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain_issues)]
+        # Setting issues elements.
+        issues_grouped = issue_obj.read_group(cr, uid, dom_issues,
+                                              ['analytic_account_id'],
+                                              ['analytic_account_id'],
+                                              context=context)
+
+        issues_all = []
+        for issue in issues_grouped:
+            analytic_id = issue.get('analytic_account_id')
+            new_issue_dom = dom_issues + [('analytic_account_id', '=', analytic_id and analytic_id[0] or analytic_id)]
+            issue['children_by_stage'] = issue_obj.read_group(cr, uid, new_issue_dom,
+                                                              ['stage_id'],
+                                                              ['stage_id'],
+                                                              orderby='stage_id asc',
+                                                              context=context)
+            issues_all.append(issue)
+        return issues_all
+
     def _get_result_ids(self, cr, uid, ids, context=None):
         res = []
         wzr_brw = self.browse(cr, uid, ids, context=context)[0]
         domain = wzr_brw.filter_id.domain
-        domain_issues = wzr_brw.filter_issue_id and wzr_brw.filter_issue_id.domain or []
         timesheet_obj = self.pool.get('hr.analytic.timesheet')
-        issue_obj = self.pool.get('project.issue')
         dom = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain)]
-        dom_issues = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain_issues)]
         timesheet_ids = timesheet_obj.search(cr, uid, dom,
                                              order='account_id asc, user_id asc, date asc',  # noqa
                                              context=context)
@@ -125,22 +147,6 @@ class fiscal_book_wizard(osv.Model):
                                                   'invoiceables_hours'],
                                                  ['date'],
                                                  context=context)
-        # Setting issues elements.
-        issues_grouped = issue_obj.read_group(cr, uid, dom_issues,
-                                              ['analytic_account_id'],
-                                              ['analytic_account_id'],
-                                              context=context)
-
-        issues_all = []
-        for issue in issues_grouped:
-            analytic_id = issue.get('analytic_account_id')
-            new_issue_dom = dom_issues + [('analytic_account_id', '=', analytic_id and analytic_id[0] or analytic_id)]
-            issue['children_by_stage'] = issue_obj.read_group(cr, uid, new_issue_dom,
-                                                              ['stage_id'],
-                                                              ['stage_id'],
-                                                              orderby='stage_id asc',
-                                                              context=context)
-            issues_all.append(issue)
         # Separate per project (analytic)
         projects = set([l['analytic'] for l in res])
         gi, gbc, ibrw = self._get_report_inv(cr, uid, ids, context=context)
@@ -149,7 +155,8 @@ class fiscal_book_wizard(osv.Model):
             'resume': grouped,
             'resume_month': grouped_month,
             'invoices': ibrw,
-            'issues': issues_all,
+            'issues': self._get_report_issue(cr, uid,
+                                             ids, context=context),
             'user_stories': self._get_report_hus(cr, uid,
                                                  ids, context=context),
             'total_ts_bill_by_month': self._get_total_time(grouped,
