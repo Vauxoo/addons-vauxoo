@@ -41,6 +41,14 @@
                                 string="Send Report by Email"
                                 type="object"
                                 help="Just print report and send a message with the report to followers."/>
+                        <button name="mark_timesheet"
+                                string="Mark Timesheet as Invoiced"
+                                type="object"
+                                help="Mark timesheet elements as reported"/>
+                        <button name="clean_timesheet"
+                                string="Clean Timesheets"
+                                type="object"
+                                help="All timesheet must have a value fo billable time, this button trigger a write on them to ensure that."/>
                         <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
