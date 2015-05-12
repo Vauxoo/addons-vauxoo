@@ -38,6 +38,10 @@ class fiscal_book_wizard(osv.Model):
             res[wzd.id] = self._get_result_ids(cr, uid, ids, context=context)
         return res
 
+    def _get_total_time(self, grouped, field):
+        total_list = [g[field] for g in grouped]
+        return sum(total_list)
+
     def _get_result_ids(self, cr, uid, ids, context=None):
         res = []
         wzr_brw = self.browse(cr, uid, ids, context=context)[0]
@@ -78,12 +82,25 @@ class fiscal_book_wizard(osv.Model):
         grouped_invoices = invoice_obj.read_group(cr, uid, dom_inv,
                                                   ['period_id',
                                                    'amount_total',
+                                                   'residual',
                                                    'partner_id'
                                                    ],
                                                   ['period_id',
                                                    'amount_total',
+                                                   'residual',
                                                    ],
                                                   context=context)
+        grouped_by_currency = invoice_obj.read_group(cr, uid, dom_inv,
+                                                     ['currency_id',
+                                                     'amount_total',
+                                                     'residual',
+                                                     'partner_id'
+                                                     ],
+                                                     ['currency_id',
+                                                     'amount_total',
+                                                     'residual',
+                                                     ],
+                                                     context=context)
         #  TODO: This must be a better way to achieve this list directly from
         #  search group on v8.0 for now the simplest way make a list with
         #  everything an group in the report itself
@@ -115,10 +132,15 @@ class fiscal_book_wizard(osv.Model):
             'data': {},
             'resume': grouped,
             'resume_month': grouped_month,
-            'periods': grouped_invoices,
             'invoices': invoices_brw,
             'issues': issues_all,
             'user_stories': hu_brw,
+            'total_ts_bill_by_month': self._get_total_time(grouped,
+                                                           'invoiceables_hours'),
+            'total_ts_by_month': self._get_total_time(grouped,
+                                                      'unit_amount'),
+            'periods': grouped_invoices,
+            'total_invoices': grouped_by_currency,
         }
         for proj in projects:
             info['data'][proj] = [r for r in res if r['analytic'] == proj]
