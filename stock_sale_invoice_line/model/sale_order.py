@@ -3,8 +3,8 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
-############# Credits #########################################################
-#    Coded by: Humberto Arocha <hbto@vauxoo.com>
+# Credits #####################################################################
+#    Coded by: Yanina Aular <yanina.aular@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -21,28 +21,21 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-{
-    "name": "Account Anglo-Saxon Stock Move",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "",
-    "description": """
-Account Anglo-Saxon Stock Move
-------------------------------
-""",
-    "website": "http://www.vauxoo.com/",
-    "license": "",
-    "depends": [
-        "account_anglo_saxon_missing_key",
-        "stock_move_entries",
-    ],
-    "demo": [],
-    "data": [],
-    "test": [],
-    "js": [],
-    "css": [],
-    "qweb": [],
-    "installable": True,
-    "auto_install": False,
-    "active": False
-}
+
+from openerp.osv import osv, fields
+
+
+class account_invoice_line(osv.osv):
+    _inherit = "account.invoice.line"
+
+    _columns = {
+        'sale_line_id': fields.related(
+            'move_id',
+            'sale_line_id',
+            string='Sale Order Line',
+            type='many2one',
+            relation='sale.order.line',
+            readonly=True,
+            store=True,
+            ondelete='set null'),
+    }

@@ -3,10 +3,11 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
-############# Credits #########################################################
-#    Coded by: Humberto Arocha <hbto@vauxoo.com>
-#    Planified by: Humberto Arocha <hbto@vauxoo.com>
-#    Audited by: Humberto Arocha <hbto@vauxoo.com>
+###############################################################################
+#    Credits:
+#    Coded by: Katherine Zaoral <kathy@vauxoo.com>
+#    Planified by: Nhomar Hernandez <nhomar@vauxoo.com>
+#    Audited by: Nhomar Hernandez <nhomar@vauxoo.com>+
 ###############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -21,28 +22,5 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-{
-    "name": "Account Anglo-Saxon Stock Move",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "",
-    "description": """
-Account Anglo-Saxon Stock Move
-------------------------------
-""",
-    "website": "http://www.vauxoo.com/",
-    "license": "",
-    "depends": [
-        "account_anglo_saxon_missing_key",
-        "stock_move_entries",
-    ],
-    "demo": [],
-    "data": [],
-    "test": [],
-    "js": [],
-    "css": [],
-    "qweb": [],
-    "installable": True,
-    "auto_install": False,
-    "active": False
-}
+
+from . import model

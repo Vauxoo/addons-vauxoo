@@ -4,7 +4,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Humberto Arocha <hbto@vauxoo.com>
+#    Coded by: Yanina Aular <yanina.aular@vauxoo.com>
 #    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Humberto Arocha <hbto@vauxoo.com>
 ###############################################################################
@@ -22,22 +22,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Account Anglo-Saxon Stock Move",
+    "name": "Purchase Order Line Quantities",
     "version": "1.0",
     "author": "Vauxoo",
-    "category": "",
+    "category": "sale",
     "description": """
-Account Anglo-Saxon Stock Move
-------------------------------
+Sale Order Line Quantities
+==========================
+
+    Adds two new fields in Sale Order Line that compute how much of a line
+    has already been delivery or how much has already been invoiced
 """,
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [
-        "account_anglo_saxon_missing_key",
-        "stock_move_entries",
+        "stock_sale_order_line",
+        "stock_sale_invoice_line",
     ],
     "demo": [],
-    "data": [],
+    "data": [
+        "view/view.xml"
+    ],
     "test": [],
     "js": [],
     "css": [],

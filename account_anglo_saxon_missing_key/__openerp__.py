@@ -22,19 +22,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 {
-    "name": "Account Anglo-Saxon Stock Move",
+    "name": "Account Anglo-Saxon Missing Key",
     "version": "1.0",
     "author": "Vauxoo",
     "category": "",
     "description": """
-Account Anglo-Saxon Stock Move
-------------------------------
+Account Anglo-Saxon Missing Key
+-------------------------------
+    As pointed out in PR #6109
+    [IMP] Adding keys to hook from when performing post processing on
+    Anglo_saxon module records
+    https://github.com/odoo/odoo/pull/6109
+
 """,
     "website": "http://www.vauxoo.com/",
     "license": "",
     "depends": [
-        "account_anglo_saxon_missing_key",
-        "stock_move_entries",
+        "account_anglo_saxon",
     ],
     "demo": [],
     "data": [],
