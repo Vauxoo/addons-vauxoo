@@ -218,8 +218,8 @@
                 %for currency in obj.records['total_invoices'] :
                 <tr class="totals">
                     <td> Total in ${currency.get('currency_id')[1]} </td>
-                    <td>${currency.get('amount_total')} </td>
-                    <td>${currency.get('residual')} </td>
+                    <td>${formatLang(currency.get('amount_total'))} </td>
+                    <td>${formatLang(currency.get('residual'))} </td>
                 </tr>
                 %endfor
                 </table>
