@@ -31,9 +31,15 @@
             border: 1px solid black;
         }
         .resume {
+            width: 100%;
+            border: none;
+        }
+        .resume > tbody > tr > td{
             text-align: left;
             border: none;
-            width: 100%;
+        }
+        .resume > tbody > tr > td:first-child{
+            width: 40%;
         }
         .description {
             text-align: left;
@@ -87,11 +93,15 @@
             Resumed Report.
         </h3>
         <h4>Filter Name: ${obj.filter_id.name}</h4>
-        <p>
-        ${obj.comment_timesheet}
-        </p>
-        <table class="resume endpage" style="border: none">
-            <td style="border: none">
+        <table class="resume endpage">
+            <tbody>
+            <tr>
+            <td>
+                <p>
+                ${obj.comment_timesheet}
+                </p>
+            </td>
+            <td>
                 <table>
                     <tr class="by_account">
                         <td colspan="3"> By Date </td>
@@ -116,7 +126,7 @@
                     %endfor
                 </table>
             </td>
-            <td style="border: none">
+            <td>
                 <table>
                     <tr class="by_account">
                         <td colspan="3"> By Analytic </td>
@@ -141,9 +151,16 @@
                     %endfor
                 </table>
             </td>
-            <td style="border: none">
+            </tr>
+            <tr>
+            <td>
+                <p>
+                ${obj.comment_invoices}
+                </p>
+            </td>
+            <td colspan="2">
                 % if obj.records.get('invoices', []):
-                <table>
+                <table width="100%">
                 <tr class="by_account">
                     <td colspan="2">Status of invoices until today in the project.</td>
                 </tr>
@@ -187,81 +204,107 @@
                 </table>
                 % endif
             </td>
+            </tr>
+            </tbody>
         </table>
         % if obj.records.get('issues', []):
         <h3> Issues. </h3>
-        <p>
-        ${obj.comment_issues}
-        </p>
-        <table width="50%" class="endpage">
-            <tr class="by_account">
-                <td colspan="3">Status of issues until today in the project.</td>
-            </tr>
-            <tr class="title">
-                <td width="30%"> Analytic Account </td>
-                <td width="10%"> Qty </td>
-                <td width="60%"> Status </td>
-            </tr>
-            %for issue in obj.records['issues'] :
+        <h4>Filter Name: ${obj.filter_issue_id.name}</h4>
+        <table class="resume endpage">
+            <tbody>
             <tr>
-                <td width="30%" style="text-align: left;">
-                    ${issue.get('analytic_account_id') and issue.get('analytic_account_id')[1] or 'Not analytic Setted.' }
-                </td>
-                <td  width="10%" class="invoices_content">
-                    ${issue['analytic_account_id_count']}
-                </td>
-                <td  width="60%" style="text-align: right;" class="invoices_content">
-                    %for stage in issue['children_by_stage'] :
-                    <p style="padding-top:2px;">${stage['stage_id'][1]} - ${stage['stage_id_count']}</p>
+            <td>
+                <p>
+                ${obj.comment_issues}
+                </p>
+            </td>
+            <td>
+                <table width="100%">
+                    <tbody>
+                    <tr>
+                        <td colspan="3">Status of issues until today in the project.</td>
+                    </tr>
+                    <tr>
+                        <td width="30%"> Analytic Account </td>
+                        <td width="10%"> Qty </td>
+                        <td width="60%"> Status </td>
+                    </tr>
+                    %for issue in obj.records['issues'] :
+                    <tr>
+                        <td width="30%" style="text-align: left;">
+                            ${issue.get('analytic_account_id') and issue.get('analytic_account_id')[1] or 'Not analytic Setted.' }
+                        </td>
+                        <td  width="10%" class="invoices_content">
+                            ${issue['analytic_account_id_count']}
+                        </td>
+                        <td  width="60%" style="text-align: right;" class="invoices_content">
+                            %for stage in issue['children_by_stage'] :
+                            <p style="padding-top:2px;">${stage['stage_id'][1]} - ${stage['stage_id_count']}</p>
+                            %endfor
+                        </td>
+                    </tr>
                     %endfor
-                </td>
+                    </tbody>
+                </table>
+            </td>
             </tr>
-            %endfor
+            </tbody>
         </table>
         % endif
         % if obj.records.get('user_stories', []):
         <h3> User Stories. </h3>
-        <p>
-        ${obj.comment_hu}
-        </p>
-        <table width="100%" class="endpage">
-            <tr class="by_account">
-                <td colspan="7">Status of User Stories until today in the project.</td>
-            </tr>
-            <tr class="title">
-                <td width="10%"> ID </td>
-                <td width="35%"> Title </td>
-                <td width="15%"> Asked By </td>
-                <td width="10%"> Planned </td>
-                <td width="10%"> Effective </td>
-                <td width="10%"> Invoiceable </td>
-                <td width="10%"> Status </td>
-            </tr>
-            %for hu in obj.records['user_stories'] :
+        <h4>Filter Name: ${obj.filter_hu_id.name}</h4>
+        <table class="resume endpage">
+            <tbody>
             <tr>
-                <td width="10%" style="text-align: left;">
-                    ${hu.id}
-                </td>
-                <td  width="35%" class="invoices_content">
-                    ${hu.name}
-                </td>
-                <td  width="15%" class="invoices_content" style="text-align: left;">
-                    ${hu.owner_id.name}
-                </td>
-                <td  width="10%" class="invoices_content">
-                    ${hu.planned_hours}
-                </td>
-                <td  width="10%" class="invoices_content">
-                    ${hu.effective_hours}
-                </td>
-                <td  width="10%" class="invoices_content">
-                    ${hu.invoiceable_hours}
-                </td>
-                <td  width="10%" style="text-align: right;" class="invoices_content">
-                    ${hu.state}
-                </td>
+            <td>
+                <p>
+                    ${obj.comment_hu}
+                </p>
+            </td>
+            <td>
+            <table width="100%">
+                <tr class="by_account">
+                    <td colspan="7">Status of User Stories until today in the project.</td>
+                </tr>
+                <tr class="title">
+                    <td width="10%"> ID </td>
+                    <td width="35%"> Title </td>
+                    <td width="15%"> Asked By </td>
+                    <td width="10%"> Planned </td>
+                    <td width="10%"> Effective </td>
+                    <td width="10%"> Invoiceable </td>
+                    <td width="10%"> Status </td>
+                </tr>
+                %for hu in obj.records['user_stories'] :
+                <tr>
+                    <td width="10%" style="text-align: left;">
+                        ${hu.id}
+                    </td>
+                    <td  width="35%" class="invoices_content">
+                        ${hu.name}
+                    </td>
+                    <td  width="15%" class="invoices_content" style="text-align: left;">
+                        ${hu.owner_id.name}
+                    </td>
+                    <td  width="10%" class="invoices_content">
+                        ${hu.planned_hours}
+                    </td>
+                    <td  width="10%" class="invoices_content">
+                        ${hu.effective_hours}
+                    </td>
+                    <td  width="10%" class="invoices_content">
+                        ${hu.invoiceable_hours}
+                    </td>
+                    <td  width="10%" style="text-align: right;" class="invoices_content">
+                        ${hu.state}
+                    </td>
+                </tr>
+                %endfor
+            </table>
+            </td>
             </tr>
-            %endfor
+            </tbody>
         </table>
         % endif
         <h3> Detailed Report. </h3>
