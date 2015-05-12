@@ -83,18 +83,28 @@ class fiscal_book_wizard(osv.Model):
 
         return (elements, grouped_by_currency, invoices_brw)
 
+    def _get_report_hus(self, cr, uid, ids, context=None):
+        hu_obj = self.pool.get('user.story')
+        wzr_brw = self.browse(cr, uid, ids, context=context)[0]
+        domain_hu = wzr_brw.filter_hu_id and wzr_brw.filter_hu_id.domain or []
+        if not domain_hu:
+            return []
+        dom_hu = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain_hu)]
+        # Setting the HU elements
+        hu_ids = hu_obj.search(cr, uid, dom_hu,
+                               order='state asc', context=context)
+        hu_brw = hu_obj.browse(cr, uid, hu_ids, context=context)
+        return hu_brw
+
     def _get_result_ids(self, cr, uid, ids, context=None):
         res = []
         wzr_brw = self.browse(cr, uid, ids, context=context)[0]
         domain = wzr_brw.filter_id.domain
         domain_issues = wzr_brw.filter_issue_id and wzr_brw.filter_issue_id.domain or []
-        domain_hu = wzr_brw.filter_hu_id and wzr_brw.filter_hu_id.domain or []
         timesheet_obj = self.pool.get('hr.analytic.timesheet')
         issue_obj = self.pool.get('project.issue')
-        hu_obj = self.pool.get('user.story')
         dom = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain)]
         dom_issues = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain_issues)]
-        dom_hu = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain_hu)]
         timesheet_ids = timesheet_obj.search(cr, uid, dom,
                                              order='account_id asc, user_id asc, date asc',  # noqa
                                              context=context)
@@ -131,9 +141,6 @@ class fiscal_book_wizard(osv.Model):
                                                               orderby='stage_id asc',
                                                               context=context)
             issues_all.append(issue)
-        # Setting the HU elements
-        hu_ids = hu_obj.search(cr, uid, dom_hu, order='state asc', context=context)
-        hu_brw = hu_obj.browse(cr, uid, hu_ids, context=context)
         # Separate per project (analytic)
         projects = set([l['analytic'] for l in res])
         gi, gbc, ibrw = self._get_report_inv(cr, uid, ids, context=context)
@@ -143,7 +150,8 @@ class fiscal_book_wizard(osv.Model):
             'resume_month': grouped_month,
             'invoices': ibrw,
             'issues': issues_all,
-            'user_stories': hu_brw,
+            'user_stories': self._get_report_hus(cr, uid,
+                                                 ids, context=context),
             'total_ts_bill_by_month': self._get_total_time(grouped,
                                                            'invoiceables_hours'),
             'total_ts_by_month': self._get_total_time(grouped,
