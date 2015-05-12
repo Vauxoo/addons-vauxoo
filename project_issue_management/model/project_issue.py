@@ -26,7 +26,8 @@ class project_issue(osv.Model):
 
     _inherit = 'project.issue'
 
-    def _check_analytic_accounts(self, cr, uid, ids, args, fields, context=None):
+    def _check_analytic_accounts(self, cr, uid, ids, args, fields,
+                                 context=None):
         context = context or {}
         res = {}
         for issue in self.browse(cr, uid, ids, context=context):
@@ -68,7 +69,6 @@ class project_issue(osv.Model):
             search(cr, uid, [('task_id', 'in', ids)])
         return issue_ids
 
-
     _columns = {
         'analytic_account_id': fields.many2one('account.analytic.account',
                                                'Analytic Account',
@@ -82,11 +82,11 @@ class project_issue(osv.Model):
                                          type='boolean',
                                          string='Same Analytics',
                                          store={
-                                             'project.issue': \
+                                             'project.issue':
                                              (lambda s, c, u, ids, cx={}: ids,
                                               ['analytic_account_id',
                                                'task_id'], 10),
-                                             'project.task': \
+                                             'project.task':
                                              (_get_issue_ids_from_task,
                                               ['project_id'], 10)
 
@@ -98,16 +98,16 @@ class project_issue(osv.Model):
                                     type='boolean',
                                     string='Task',
                                     store={
-                                        'project.issue': \
-                                             (lambda s, c, u, ids, cx={}: ids,
-                                              ['task_id'], 10)
+                                        'project.issue':
+                                        (lambda s, c, u, ids, cx={}: ids,
+                                         ['task_id'], 10)
                                     },
                                     help='Selected if the issue '
                                     'has a task set'),
         'verify_partner': fields.function(_check_partner,
                                           type='boolean',
                                           string='Analytic Partner',
-                                          store={'project.issue': \
+                                          store={'project.issue':
                                                  (lambda s, c, u, ids, cx={}:
                                                   ids,
                                                   ['partner_id',
@@ -126,7 +126,7 @@ class project_issue(osv.Model):
     def _get_project_id(self, cr, uid, ids, context=None):
         project_obj = self.pool.get('project.project')
         res = project_obj.search(cr, uid, [('analytic_account_id', '=',
-                                     context.get('analytic_account_id'))])
+                                 context.get('analytic_account_id'))])
         if not res:
             raise osv.except_osv(
                 'Error!',
@@ -155,3 +155,41 @@ class project_issue(osv.Model):
                     'In order to be consistent, you must set a task and an '
                     'analytic account to be consistent on this action.')
         return True
+
+
+class project_task(osv.Model):
+
+    _inherit = 'project.task'
+
+    def _check_issue(self, cr, uid, ids, args, fields, context=None):
+        context = context or {}
+        res = {}
+        issue_obj = self.pool.get('project.issue')
+        for task in self.browse(cr, uid, ids, context=context):
+            issue_ids = issue_obj.search(cr, uid,
+                                         [('task_id',  '=', task.id)])
+
+            res[task.id] = issue_ids and issue_ids[0] or False
+        return res
+
+    def _get_task_ids_from_issue(self, cr, uid, ids, context=None):
+        context = context or {}
+        task_ids = []
+        issue_ids = self.search(cr, uid,
+                                [('task_id', '!=', False),
+                                 ('id', 'in', ids)])
+        for issue in self.browse(cr, uid, issue_ids):
+            task_ids.aapend(issue.task_id.id)
+        return task_ids
+
+    _columns = {
+        'issue_id': fields.function(_check_issue,
+                                    type='many2one',
+                                    relation='project.issue',
+                                    string='Issue',
+                                    store={'project.issue':
+                                           (_get_task_ids_from_issue,
+                                            ['task_id'], 10)},
+                                    help='Issue where this task is related'),
+
+    }
