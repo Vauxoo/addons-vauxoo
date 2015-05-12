@@ -245,7 +245,9 @@ class account_voucher(osv.Model):
 
         if not currency_obj.is_zero(cr, uid, current_currency_obj, line_total)\
                 or (company_currency == current_currency and line_total):
-            diff = line_total
+            sign = voucher.type in ('sale', 'receipt') and -1 or 1
+
+            diff = line_total * sign
 
             move_line = {
                 'name': name,
@@ -253,8 +255,8 @@ class account_voucher(osv.Model):
                 'move_id': move_id,
                 'partner_id': voucher.partner_id.id,
                 'date': voucher.date,
-                'credit': diff > 0 and diff or 0.0,
-                'debit': diff < 0 and -diff or 0.0,
+                'debit': diff > 0 and diff or 0.0,
+                'credit': diff < 0 and -diff or 0.0,
                 'currency_id':
                     company_currency != current_currency and
                     current_currency or False,
