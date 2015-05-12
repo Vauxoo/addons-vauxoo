@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+
+        <record id="sale_uom_group" model="res.groups">
+            <field name="name">Unit of Measure in Sale</field>
+        </record>
+
+        <record id="purchase_uom_group" model="res.groups">
+            <field name="name">Unit of Measure in Purchase</field>
+        </record>
+
+        <record id="warehouse_uom_group" model="res.groups">
+            <field name="name">Unit of Measure in Warehouse, Stock and MRP</field>
+        </record>
+
+    </data>
+</openerp>
