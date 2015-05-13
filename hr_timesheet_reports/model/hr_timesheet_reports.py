@@ -233,6 +233,12 @@ class fiscal_book_wizard(osv.Model):
         'company_id': fields.many2one(
             'res.company', 'Company',
             help='Company which this report belongs to'),
+        'product_id': fields.many2one(
+            'product.product', 'Product to Compute Totals',
+            help='This product will be used to compute totals'),
+        'currency_id': fields.many2one(
+            'res.currency', 'Currency',
+            help='This product will be used to compute totals'),
     }
 
     _defaults = {
