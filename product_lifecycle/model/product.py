@@ -35,3 +35,5 @@ class ProductTemplate(models.Model):
         string='Replacement Products',
         help="When a product is discontinued this list will be the possible"
              " alternative products that could replace it")
+
+    state = fields.Selection(default='draft')
