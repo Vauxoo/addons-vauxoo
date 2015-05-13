@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 from openerp.osv import osv, fields
 from openerp.tools.safe_eval import safe_eval
+from openerp import SUPERUSER_ID
 
 import re
 
@@ -27,6 +28,7 @@ class fiscal_book_wizard(osv.Model):
         return {'author': clean_name(record.user_id.name),
                 'description': record.name,
                 'duration': record.unit_amount,
+                'invoiceables_hours': record.invoiceables_hours,
                 'date': record.date,
                 'analytic': record.account_id.name,
                 'id': record.id,
@@ -42,25 +44,97 @@ class fiscal_book_wizard(osv.Model):
         total_list = [g[field] for g in grouped]
         return sum(total_list)
 
-    def _get_result_ids(self, cr, uid, ids, context=None):
-        res = []
+    def _get_report_inv(self, cr, uid, ids, context=None):
+        invoice_obj = self.pool.get('account.invoice')
+        wzr_brw = self.browse(cr, uid, ids, context=context)[0]
+        domain_inv = wzr_brw.filter_invoice_id and \
+            wzr_brw.filter_invoice_id.domain or []
+        if not domain_inv:
+            return ([], [], [])
+        dom_inv = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain_inv)]
+        # Preparing grouped invoices due to it is 2 levels it need a
+        # little extra Work.
+        elements = invoice_obj.read_group(cr, uid, dom_inv,
+                                          ['period_id',
+                                           'amount_total',
+                                           'residual',
+                                           'partner_id'
+                                           ],
+                                          ['period_id',
+                                           'amount_total',
+                                           'residual',
+                                           ],
+                                          context=context)
+        grouped_by_currency = invoice_obj.read_group(cr, uid, dom_inv,
+                                                     ['currency_id',
+                                                      'amount_total',
+                                                      'residual',
+                                                      'partner_id'
+                                                      ],
+                                                     ['currency_id',
+                                                      'amount_total',
+                                                      'residual',
+                                                      ],
+                                                     context=context)
+        #  TODO: This must be a better way to achieve this list directly from
+        #  search group on v8.0 for now the simplest way make a list with
+        #  everything an group in the report itself
+        invoice_ids = invoice_obj.search(cr, uid, dom_inv, context=context)
+        invoices_brw = invoice_obj.browse(cr, uid, invoice_ids,
+                                          context=context)
+
+        return (elements, grouped_by_currency, invoices_brw)
+
+    def _get_report_hus(self, cr, uid, ids, context=None):
+        hu_obj = self.pool.get('user.story')
+        wzr_brw = self.browse(cr, uid, ids, context=context)[0]
+        domain_hu = wzr_brw.filter_hu_id and wzr_brw.filter_hu_id.domain or []
+        if not domain_hu:
+            return []
+        dom_hu = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain_hu)]
+        # Setting the HU elements
+        hu_ids = hu_obj.search(cr, uid, dom_hu,
+                               order='state asc', context=context)
+        hu_brw = hu_obj.browse(cr, uid, hu_ids, context=context)
+        return hu_brw
+
+    def _get_report_issue(self, cr, uid, ids, context=None):
+        issue_obj = self.pool.get('project.issue')
+        wzr_brw = self.browse(cr, uid, ids, context=context)[0]
+        domain_issues = wzr_brw.filter_issue_id and \
+            wzr_brw.filter_issue_id.domain or []
+        if not domain_issues:
+            return []
+        dom_issues = [len(d) > 1 and tuple(d) or d
+                      for d in safe_eval(domain_issues)]
+        # Setting issues elements.
+        issues_grouped = issue_obj.read_group(cr, uid, dom_issues,
+                                              ['analytic_account_id'],
+                                              ['analytic_account_id'],
+                                              context=context)
+
+        issues_all = []
+        for issue in issues_grouped:
+            analytic_id = issue.get('analytic_account_id')
+            new_issue_dom = dom_issues + [('analytic_account_id', '=', analytic_id and analytic_id[0] or analytic_id)]  # noqa
+            issue['children_by_stage'] = issue_obj.read_group(cr, uid, new_issue_dom,  # noqa
+                                                              ['stage_id'],
+                                                              ['stage_id'],
+                                                              orderby='stage_id asc',  # noqa
+                                                              context=context)
+            issues_all.append(issue)
+        return issues_all
+
+    def _get_report_ts(self, cr, uid, ids, context=None):
+        timesheet_obj = self.pool.get('hr.analytic.timesheet')
         wzr_brw = self.browse(cr, uid, ids, context=context)[0]
         domain = wzr_brw.filter_id.domain
-        domain_inv = wzr_brw.filter_invoice_id.domain
-        domain_issues = wzr_brw.filter_issue_id.domain
-        domain_hu = wzr_brw.filter_hu_id.domain
-        timesheet_obj = self.pool.get('hr.analytic.timesheet')
-        invoice_obj = self.pool.get('account.invoice')
-        issue_obj = self.pool.get('project.issue')
-        hu_obj = self.pool.get('user.story')
         dom = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain)]
-        dom_inv = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain_inv)]
-        dom_issues = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain_issues)]
-        dom_hu = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain_hu)]
         timesheet_ids = timesheet_obj.search(cr, uid, dom,
                                              order='account_id asc, user_id asc, date asc',  # noqa
                                              context=context)
         # Group elements
+        res = []
         timesheet_brws = timesheet_obj.browse(cr, uid, timesheet_ids,
                                               context=context)
         res = [self._prepare_data(tb) for tb in timesheet_brws]
@@ -77,70 +151,31 @@ class fiscal_book_wizard(osv.Model):
                                                   'invoiceables_hours'],
                                                  ['date'],
                                                  context=context)
-        # Preparing grouped invoices due to it is 2 levels it need a
-        # little extra Work.
-        grouped_invoices = invoice_obj.read_group(cr, uid, dom_inv,
-                                                  ['period_id',
-                                                   'amount_total',
-                                                   'residual',
-                                                   'partner_id'
-                                                   ],
-                                                  ['period_id',
-                                                   'amount_total',
-                                                   'residual',
-                                                   ],
-                                                  context=context)
-        grouped_by_currency = invoice_obj.read_group(cr, uid, dom_inv,
-                                                     ['currency_id',
-                                                     'amount_total',
-                                                     'residual',
-                                                     'partner_id'
-                                                     ],
-                                                     ['currency_id',
-                                                     'amount_total',
-                                                     'residual',
-                                                     ],
-                                                     context=context)
-        #  TODO: This must be a better way to achieve this list directly from
-        #  search group on v8.0 for now the simplest way make a list with
-        #  everything an group in the report itself
-        invoice_ids = invoice_obj.search(cr, uid, dom_inv, context=context)
-        invoices_brw = invoice_obj.browse(cr, uid, invoice_ids, context=context)
-
-        # Setting issues elements.
-        issues_grouped = issue_obj.read_group(cr, uid, dom_issues,
-                                              ['analytic_account_id'],
-                                              ['analytic_account_id'],
-                                              context=context)
-
-        issues_all = []
-        for issue in issues_grouped:
-            analytic_id = issue.get('analytic_account_id')
-            new_issue_dom = dom_issues + [('analytic_account_id', '=', analytic_id and analytic_id[0] or analytic_id)]
-            issue['children_by_stage'] = issue_obj.read_group(cr, uid, new_issue_dom,
-                                                              ['stage_id'],
-                                                              ['stage_id'],
-                                                              orderby='stage_id asc',
-                                                              context=context)
-            issues_all.append(issue)
-        # Setting the HU elements
-        hu_ids = hu_obj.search(cr, uid, dom_hu, order='state asc', context=context)
-        hu_brw = hu_obj.browse(cr, uid, hu_ids, context=context)
         # Separate per project (analytic)
         projects = set([l['analytic'] for l in res])
+        return (grouped, grouped_month, projects, res)
+
+    def _get_result_ids(self, cr, uid, ids, context=None):
+        uid = SUPERUSER_ID
+        gi, gbc, ibrw = self._get_report_inv(cr, uid, ids, context=context)
+        grouped, grouped_month, projects, res = self._get_report_ts(cr, uid,
+                                                                    ids,
+                                                                    context=context)  # noqa
         info = {
             'data': {},
             'resume': grouped,
             'resume_month': grouped_month,
-            'invoices': invoices_brw,
-            'issues': issues_all,
-            'user_stories': hu_brw,
+            'invoices': ibrw,
+            'issues': self._get_report_issue(cr, uid,
+                                             ids, context=context),
+            'user_stories': self._get_report_hus(cr, uid,
+                                                 ids, context=context),
             'total_ts_bill_by_month': self._get_total_time(grouped,
-                                                           'invoiceables_hours'),
+                                                           'invoiceables_hours'),  # noqa
             'total_ts_by_month': self._get_total_time(grouped,
                                                       'unit_amount'),
-            'periods': grouped_invoices,
-            'total_invoices': grouped_by_currency,
+            'periods': gi,
+            'total_invoices': gbc,
         }
         for proj in projects:
             info['data'][proj] = [r for r in res if r['analytic'] == proj]

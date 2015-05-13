@@ -41,6 +41,14 @@
                                 string="Send Report by Email"
                                 type="object"
                                 help="Just print report and send a message with the report to followers."/>
+                        <button name="mark_timesheet"
+                                string="Mark Timesheet as Invoiced"
+                                type="object"
+                                help="Mark timesheet elements as reported"/>
+                        <button name="clean_timesheet"
+                                string="Clean Timesheets"
+                                type="object"
+                                help="All timesheet must have a value fo billable time, this button trigger a write on them to ensure that."/>
                         <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
@@ -48,19 +56,19 @@
                         <h3><field name="partner_id"/></h3>
                         <separator string="Timesheet Section"/>
                         <label for="filter_id"/>
-                        <field name="filter_id"  required="1"/>
+                        <field name="filter_id" domain="['|', ('user_id', '=', False), ('user_id', 'in', [uid])]" required="1"/>
                         <field name="comment_timesheet" nolabel="1" widget="html"/>
                         <separator string="Invoices Section"/>
                         <label for="filter_invoice_id"/>
-                        <field name="filter_invoice_id"/>
+                        <field name="filter_invoice_id" domain="['|', ('user_id', '=', False), ('user_id', 'in', [uid])]"/>
                         <field name="comment_invoices" nolabel="1" widget="html"/>
                         <separator  string="Issue Section"/>
                         <label for="filter_issue_id"/>
-                        <field name="filter_issue_id"/>
+                        <field name="filter_issue_id" domain="['|', ('user_id', '=', False), ('user_id', 'in', [uid])]"/>
                         <field name="comment_issues" nolabel="1" widget="html"/>
                         <separator string="User Stories Section"/>
                         <label for="filter_hu_id"/>
-                        <field name="filter_hu_id"/>
+                        <field name="filter_hu_id" domain="['|', ('user_id', '=', False), ('user_id', 'in', [uid])]"/>
                         <field name="comment_hu" nolabel="1" widget="html"/>
                         <group string="Technical Information">
                             <field name="user_id" groups="base.group_user"/>
