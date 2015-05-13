@@ -99,10 +99,12 @@ class fiscal_book_wizard(osv.Model):
     def _get_report_issue(self, cr, uid, ids, context=None):
         issue_obj = self.pool.get('project.issue')
         wzr_brw = self.browse(cr, uid, ids, context=context)[0]
-        domain_issues = wzr_brw.filter_issue_id and wzr_brw.filter_issue_id.domain or []
+        domain_issues = wzr_brw.filter_issue_id and \
+            wzr_brw.filter_issue_id.domain or []
         if not domain_issues:
             return []
-        dom_issues = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain_issues)]
+        dom_issues = [len(d) > 1 and tuple(d) or d
+                      for d in safe_eval(domain_issues)]
         # Setting issues elements.
         issues_grouped = issue_obj.read_group(cr, uid, dom_issues,
                                               ['analytic_account_id'],
@@ -112,25 +114,25 @@ class fiscal_book_wizard(osv.Model):
         issues_all = []
         for issue in issues_grouped:
             analytic_id = issue.get('analytic_account_id')
-            new_issue_dom = dom_issues + [('analytic_account_id', '=', analytic_id and analytic_id[0] or analytic_id)]
-            issue['children_by_stage'] = issue_obj.read_group(cr, uid, new_issue_dom,
+            new_issue_dom = dom_issues + [('analytic_account_id', '=', analytic_id and analytic_id[0] or analytic_id)]  # noqa
+            issue['children_by_stage'] = issue_obj.read_group(cr, uid, new_issue_dom,  # noqa
                                                               ['stage_id'],
                                                               ['stage_id'],
-                                                              orderby='stage_id asc',
+                                                              orderby='stage_id asc',  # noqa
                                                               context=context)
             issues_all.append(issue)
         return issues_all
 
-    def _get_result_ids(self, cr, uid, ids, context=None):
-        res = []
+    def _get_report_ts(self, cr, uid, ids, context=None):
+        timesheet_obj = self.pool.get('hr.analytic.timesheet')
         wzr_brw = self.browse(cr, uid, ids, context=context)[0]
         domain = wzr_brw.filter_id.domain
-        timesheet_obj = self.pool.get('hr.analytic.timesheet')
         dom = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain)]
         timesheet_ids = timesheet_obj.search(cr, uid, dom,
                                              order='account_id asc, user_id asc, date asc',  # noqa
                                              context=context)
         # Group elements
+        res = []
         timesheet_brws = timesheet_obj.browse(cr, uid, timesheet_ids,
                                               context=context)
         res = [self._prepare_data(tb) for tb in timesheet_brws]
@@ -149,7 +151,13 @@ class fiscal_book_wizard(osv.Model):
                                                  context=context)
         # Separate per project (analytic)
         projects = set([l['analytic'] for l in res])
+        return (grouped, grouped_month, projects, res)
+
+    def _get_result_ids(self, cr, uid, ids, context=None):
         gi, gbc, ibrw = self._get_report_inv(cr, uid, ids, context=context)
+        grouped, grouped_month, projects, res = self._get_report_ts(cr, uid,
+                                                                    ids,
+                                                                    context=context)
         info = {
             'data': {},
             'resume': grouped,
