@@ -179,7 +179,7 @@ class project_task(osv.Model):
                                 [('task_id', '!=', False),
                                  ('id', 'in', ids)])
         for issue in self.browse(cr, uid, issue_ids):
-            task_ids.aapend(issue.task_id.id)
+            task_ids.append(issue.task_id.id)
         return task_ids
 
     _columns = {
