@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 from openerp.osv import osv, fields
 from openerp.tools.safe_eval import safe_eval
+from openerp import SUPERUSER_ID
 
 import re
 
@@ -46,7 +47,8 @@ class fiscal_book_wizard(osv.Model):
     def _get_report_inv(self, cr, uid, ids, context=None):
         invoice_obj = self.pool.get('account.invoice')
         wzr_brw = self.browse(cr, uid, ids, context=context)[0]
-        domain_inv = wzr_brw.filter_invoice_id and wzr_brw.filter_invoice_id.domain or []
+        domain_inv = wzr_brw.filter_invoice_id and \
+            wzr_brw.filter_invoice_id.domain or []
         if not domain_inv:
             return ([], [], [])
         dom_inv = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain_inv)]
@@ -154,10 +156,11 @@ class fiscal_book_wizard(osv.Model):
         return (grouped, grouped_month, projects, res)
 
     def _get_result_ids(self, cr, uid, ids, context=None):
+        uid = SUPERUSER_ID
         gi, gbc, ibrw = self._get_report_inv(cr, uid, ids, context=context)
         grouped, grouped_month, projects, res = self._get_report_ts(cr, uid,
                                                                     ids,
-                                                                    context=context)
+                                                                    context=context)  # noqa
         info = {
             'data': {},
             'resume': grouped,
@@ -168,7 +171,7 @@ class fiscal_book_wizard(osv.Model):
             'user_stories': self._get_report_hus(cr, uid,
                                                  ids, context=context),
             'total_ts_bill_by_month': self._get_total_time(grouped,
-                                                           'invoiceables_hours'),
+                                                           'invoiceables_hours'),  # noqa
             'total_ts_by_month': self._get_total_time(grouped,
                                                       'unit_amount'),
             'periods': gi,
