@@ -12,6 +12,19 @@
             font-size: 9px;
             line-height: 11px;
         }
+        .red {
+            color: red;
+        }
+        .green {
+            color: green;
+        }
+        .blue {
+            color: blue;
+        }
+        .bold {
+            color: grey;
+            font-weight: bold;
+        }
         table p {
             font-size: 9px;
             line-height: 9px;
@@ -53,6 +66,7 @@
         }
         .date {
             font-weight: bold;
+            width: 10%;
         }
         .paid {
             color: green;
@@ -332,7 +346,7 @@
         %for res in obj.records['data'] :
         <table width="100%" style="font-size: 14px;">
             <tr>
-                <th colspan="6">
+                <th colspan="7">
                 <h3><b>Analytic Account:</b> ${res}</h3>
                 </th>
             </tr>
@@ -342,10 +356,19 @@
                 <th> Description </th>
                 <th> Date </th>
                 <th> Duration </th>
+                <th> Bill </th>
                 <th> Invoiceables </th>
             </tr>
             %for rec in obj.records['data'][res] :
-            <tr>
+                %if not rec['to_invoice'] :
+            <tr class="red">
+                % elif rec['to_invoice'].id == 1 :
+            <tr class="bold">
+                % elif rec['to_invoice'].id == 5 :
+            <tr class="green">
+                % else :
+            <tr class="blue">
+                % endif
                 <td width="5%">
                     ${rec['id']}
                 </td>
@@ -355,11 +378,14 @@
                 <td class="description">
                     ${rec['description']}
                 </td>
-                <td class="date" width="10%">
+                <td class="date">
                     ${rec['date']}
                 </td>
                 <td class="duration">
                     ${formatLang(rec['duration'], digits=2)}
+                </td>
+                <td>
+                    ${rec['to_invoice'] and rec['to_invoice'].name or 'No Setted'}
                 </td>
                 <td class="duration">
                     ${formatLang(rec['invoiceables_hours'], digits=2)}

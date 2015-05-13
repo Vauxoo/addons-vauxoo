@@ -29,6 +29,7 @@ class fiscal_book_wizard(osv.Model):
                 'description': record.name,
                 'duration': record.unit_amount,
                 'invoiceables_hours': record.invoiceables_hours,
+                'to_invoice': record.to_invoice,
                 'date': record.date,
                 'analytic': record.account_id.name,
                 'id': record.id,
