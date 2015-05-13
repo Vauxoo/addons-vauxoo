@@ -71,6 +71,23 @@ class account_invoice(models.Model):
             res['sm_id'] = line['sm_id']
         return res
 
+    @api.multi
+    def action_cancel(self):
+        aml_obj = self.env['account.move.line']
+        aml_ids = []
+        for inv in self:
+            if not inv.move_id:
+                continue
+            for aml_brw in inv.move_id.line_id:
+                # Unreconcile all non-receivable and non-payable lines
+                if aml_brw.account_id.reconcile and aml_brw.account_id.type \
+                        not in ('receivable', 'payable'):
+                    aml_ids.append(aml_brw.id)
+        if aml_ids:
+            aml_obj._remove_move_reconcile(aml_ids)
+
+        return super(account_invoice, self).action_cancel()
+
 
 class account_invoice_line(osv.osv):
     _inherit = "account.invoice.line"
