@@ -11,15 +11,15 @@ def clean_name(name):
     text = name.strip()
     found = re.findall(exp, text)
     if found:
-        for f in found:
-            text = text.replace(f, '').strip()
+        for fou in found:
+            text = text.replace(fou, '').strip()
     words = text.split(' ')
     if len(words) > 2:
         text = ' '.join([words[0], words[2]])
     return text
 
 
-class fiscal_book_wizard(osv.Model):
+class hr_timesheet_reports_base(osv.Model):
 
     _name = "hr.timesheet.reports.base"
     _inherit = ['mail.thread']
@@ -32,8 +32,7 @@ class fiscal_book_wizard(osv.Model):
                 'to_invoice': record.to_invoice,
                 'date': record.date,
                 'analytic': record.account_id.name,
-                'id': record.id,
-                }
+                'id': record.id}
 
     def _get_print_data(self, cr, uid, ids, name, args, context=None):
         res = {}
@@ -229,7 +228,8 @@ class fiscal_book_wizard(osv.Model):
         'state': fields.selection([('draft', 'Draft'),
                                    ('sent', 'Sent')],
                                   'Status',
-                                  help='Message sent already to customer (it will block edition)'),
+                                  help='Message sent already to customer '
+                                  '(it will block edition)'),
         'company_id': fields.many2one(
             'res.company', 'Company',
             help='Company which this report belongs to'),
@@ -244,7 +244,7 @@ class fiscal_book_wizard(osv.Model):
     _defaults = {
         'state': lambda * a: 'draft',
         'user_id': lambda obj, cr, uid, context: uid,
-        'company_id': lambda s, cr, uid, c: s.pool.get('res.company')._company_default_get(cr, uid, 'sale.shop', context=c),
+        'company_id': lambda s, cr, uid, c: s.pool.get('res.company')._company_default_get(cr, uid, 'sale.shop', context=c),  # noqa
     }
 
     def do_report(self, cr, uid, ids, context=None):
@@ -255,16 +255,16 @@ class fiscal_book_wizard(osv.Model):
                 'string': "Hr timesheet reports base",
                 'file': "hr_timesheet_reports/model/hr_timesheet_reports_base.mako",  # noqa
                 'nodestroy': True,
-                }
+               }
 
     def send_by_email(self, cr, uid, ids, context=None, cdsm=None):
         ir_model_data = self.pool.get('ir.model.data')
         try:
-            template_id = ir_model_data.get_object_reference(cr, uid, 'hr_timesheet_reports', 'email_reports_base')[1]
+            template_id = ir_model_data.get_object_reference(cr, uid, 'hr_timesheet_reports', 'email_reports_base')[1]  # noqa
         except ValueError:
             template_id = False
         try:
-            compose_form_id = ir_model_data.get_object_reference(cr, uid, 'mail', 'email_compose_message_wizard_form')[1]
+            compose_form_id = ir_model_data.get_object_reference(cr, uid, 'mail', 'email_compose_message_wizard_form')[1]  # noqa
         except ValueError:
             compose_form_id = False
         ctx = dict(context)
