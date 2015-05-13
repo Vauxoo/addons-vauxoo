@@ -280,3 +280,26 @@ class fiscal_book_wizard(osv.Model):
             'context': ctx,
         }
 
+    def mark_timesheet(self, cr, uid, ids, context=None):
+        return True
+
+    def clean_timesheet(self, cr, uid, ids, context=None):
+        '''
+        To be sure all timesheet lines are at least setted as billable
+        100% in order to show correct first approach of numbers.
+        '''
+        timesheet_obj = self.pool.get('hr.analytic.timesheet')
+        report = self.browse(cr, uid, ids, context=context)[0]
+        domain = report.filter_id.domain
+        dom = [len(d) > 1 and tuple(d) or d for d in safe_eval(domain)]
+        timesheet_ids = timesheet_obj.search(cr, uid,
+                                              dom + [('to_invoice', '=', False)],  # noqa
+                                              context=context)  # noqa
+        # By default 100% wired to the one by default in db.
+        # If you want another one overwrite this method or change the
+        # rate on such record.
+        timesheet_obj.write(cr, uid,
+                            timesheet_ids,
+                            {'to_invoice': 1},
+                            context=context)
+        return True

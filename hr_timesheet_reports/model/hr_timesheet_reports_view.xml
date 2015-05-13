@@ -48,8 +48,8 @@
                         <button name="clean_timesheet"
                                 string="Clean Timesheets"
                                 type="object"
-                                help="All timesheet must have a value fo billable time, this button trigger a write on them to ensure that."/>
-                        <field name="state" widget="statusbar"/>
+                                help="All timesheet must have a value for billable time, this button trigger a write on them to ensure that."/>
+                        <field name="state" widget="statusbar" clickable="True"/>
                     </header>
                     <sheet>
                         <h1><field name="name"/></h1>

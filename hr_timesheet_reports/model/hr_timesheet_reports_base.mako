@@ -166,6 +166,7 @@
                 </table>
             </td>
             </tr>
+            % if obj.records.get('invoices', []):
             <tr>
             <td>
                 <p>
@@ -173,7 +174,6 @@
                 </p>
             </td>
             <td colspan="2">
-                % if obj.records.get('invoices', []):
                 <table width="100%">
                 <tr class="by_account">
                     <td colspan="3">Status of invoices until today in the project.</td>
@@ -223,9 +223,9 @@
                 </tr>
                 %endfor
                 </table>
-                % endif
             </td>
             </tr>
+            % endif
             </tbody>
         </table>
         % if obj.records.get('issues', []):
