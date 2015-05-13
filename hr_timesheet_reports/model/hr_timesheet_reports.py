@@ -151,20 +151,26 @@ class hr_timesheet_reports_base(osv.Model):
                                                   'invoiceables_hours'],
                                                  ['date'],
                                                  context=context)
+        grouped_by_user = timesheet_obj.read_group(cr, uid, dom,
+                                                   ['user_id',
+                                                    'unit_amount',
+                                                    'invoiceables_hours'],
+                                                   ['user_id'],
+                                                   context=context)
         # Separate per project (analytic)
         projects = set([l['analytic'] for l in res])
-        return (grouped, grouped_month, projects, res)
+        return (grouped, grouped_month, projects, res, grouped_by_user)
 
     def _get_result_ids(self, cr, uid, ids, context=None):
         uid = SUPERUSER_ID
         gi, gbc, ibrw = self._get_report_inv(cr, uid, ids, context=context)
-        grouped, grouped_month, projects, res = self._get_report_ts(cr, uid,
-                                                                    ids,
-                                                                    context=context)  # noqa
+        grouped, gbm, projects, res, gbu = self._get_report_ts(cr, uid,
+                                                               ids, context=context)  # noqa
         info = {
             'data': {},
             'resume': grouped,
-            'resume_month': grouped_month,
+            'resume_month': gbm,
+            'resume_user': gbu,
             'invoices': ibrw,
             'issues': self._get_report_issue(cr, uid,
                                              ids, context=context),

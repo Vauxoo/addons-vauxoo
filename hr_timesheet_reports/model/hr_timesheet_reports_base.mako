@@ -183,12 +183,40 @@
             <tr>
                 <td>
                 </td>
-                <td>
+                <td colspan="2">
+                    <table>
+                        <tr class="by_account">
+                            <td colspan="3"> By User </td>
+                        </tr>
+                        <tr class="title">
+                            <td> User </td>
+                            <td> Total Hours</td>
+                            <td> Billable Hours</td>
+                        </tr>
+                        %for resume in obj.records['resume_user'] :
+                        <tr class="by_account">
+                            <td style="text-align: left;">
+                            ${resume.get('user_id')[1].split('/')[-1]}
+                            </td>
+                            <td>
+                            ${formatLang(resume.get('unit_amount', '0.00'))}
+                            </td>
+                            <td>
+                            ${formatLang(resume.get('invoiceables_hours', '0.00'))}
+                            </td>
+                        </tr>
+                        %endfor
+                        <tr class="totals">
+                            <td>Totals</td>
+                            <td>${formatLang(obj.records.get('total_ts_by_month'))}</td>
+                            <td>${formatLang(obj.records.get('total_ts_bill_by_month'))}</td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
             </tbody>
         </table>
-        <table class="endpage">
+        <table class="resume endpage">
             <tbody>
             % if obj.records.get('invoices', []):
             <tr>
