@@ -180,6 +180,10 @@
                 </table>
             </td>
             </tr>
+            </tbody>
+        </table>
+        <table class="endpage">
+            <tbody>
             % if obj.records.get('invoices', []):
             <tr>
             <td>
