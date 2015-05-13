@@ -33,7 +33,9 @@
     "depends": [
         "product",
     ],
-    "data": [],
+    "data": [
+        "view/product_view.xml",
+    ],
     "demo": [],
     "test": [],
     "qweb": [],

@@ -23,4 +23,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-from . import product
+from openerp import models, fields
+
+
+class ProductTemplate(models.Model):
+
+    _inherit = 'product.template'
+    replacement_product_ids = fields.Many2many(
+        'product.template',
+        'discontinued_product_id', 'replacement_product_id',
+        string='Replacement Products',
+        help="When a product is discontinued this list will be the possible"
+             " alternative products that could replace it")
