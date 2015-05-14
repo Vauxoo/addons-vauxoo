@@ -301,6 +301,20 @@
                 </table>
             </td>
             </tr>
+            % if obj.records.get('resume_product', []):
+                %for il in obj.records.get('resume_product', []):
+                <tr>
+                <td colspan="2">
+                    <p><b>${il}</b></p>
+                    %for curr in obj.records.get('resume_product', [])[il] :
+                        <p>Product ID: ${curr['product_id'][0]} - ${curr['product_id'][1]}</p>
+                        <p>count: ${curr['product_id_count']} Lines</p>
+                        <p>Total: ${formatLang(curr['price_subtotal'])} <p>
+                    %endfor
+                </td>
+                </tr>
+                %endfor
+            % endif
             % endif
             </tbody>
         </table>

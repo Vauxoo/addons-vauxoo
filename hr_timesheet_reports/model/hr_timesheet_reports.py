@@ -84,13 +84,32 @@ class hr_timesheet_reports_base(osv.Model):
                                                       'residual',
                                                       ],
                                                      context=context)
+        inv_line_obj = self.pool.get('account.invoice.line')
+        grouped_by_product = {}
+        for gbc in grouped_by_currency:
+            currency = gbc['currency_id']
+            inv_line_ids = invoice_obj.search(cr, uid,
+                                              dom_inv +  [('currency_id', 'in', [currency[0]])],
+                                              context=context)
+            grouped_by_product[gbc['currency_id'][1]] = inv_line_obj.read_group(cr, uid,
+                                                                                [('invoice_id',
+                                                                              'in',
+                                                                              inv_line_ids)],
+                                                                             ['product_id',
+                                                                            'price_subtotal',
+                                                                            ],
+                                                                            ['product_id',
+                                                                            'price_subtotal',
+                                                                            ],
+                                                                            context=context)
+
         #  TODO: This must be a better way to achieve this list directly from
         #  search group on v8.0 for now the simplest way make a list with
         #  everything an group in the report itself
         invoice_ids = invoice_obj.search(cr, uid, dom_inv, context=context)
         invoices_brw = invoice_obj.browse(cr, uid, invoice_ids,
                                           context=context)
-        return (elements, grouped_by_currency, invoices_brw)
+        return (elements, grouped_by_currency, invoices_brw, grouped_by_product)
 
     def _get_report_hus(self, cr, uid, ids, context=None):
         hu_obj = self.pool.get('user.story')
@@ -170,14 +189,16 @@ class hr_timesheet_reports_base(osv.Model):
 
     def _get_result_ids(self, cr, uid, ids, context=None):
         uid = SUPERUSER_ID
-        gi, gbc, ibrw = self._get_report_inv(cr, uid, ids, context=context)
+        gi, gbc, ibrw, gbp = self._get_report_inv(cr, uid, ids, context=context)  # noqa
         grouped, gbm, projects, res, gbu = self._get_report_ts(cr, uid,
                                                                ids, context=context)  # noqa
+        print gbp
         info = {
             'data': {},
             'resume': grouped,
             'resume_month': gbm,
             'resume_user': gbu,
+            'resume_product': gbp,
             'invoices': ibrw,
             'issues': self._get_report_issue(cr, uid,
                                              ids, context=context),
