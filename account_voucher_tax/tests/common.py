@@ -77,9 +77,9 @@ class TestTaxCommon(common.TransactionCase):
             {'tax_provision_customer': self.provision_tax16_customer,
              'tax_provision_supplier': self.provision_tax16_supplier})
 
-
     def create_statement(self, cr, uid, line_invoice, partner, amount, journal,
-                         date_bank=None, account_id=None):
+                         date_bank=None, account_id=None, currency=None,
+                         amount_currency=0):
         bank_stmt_id = self.acc_bank_stmt_model.create(cr, uid, {
             'journal_id': journal,
             'date': date_bank or time.strftime('%Y')+'-07-01',
@@ -90,7 +90,10 @@ class TestTaxCommon(common.TransactionCase):
             'statement_id': bank_stmt_id,
             'partner_id': partner,
             'amount': amount,
+            'currency_id': currency,
+            'amount_currency': amount_currency,
             'date': date_bank or time.strftime('%Y')+'-07-01'})
+        amount = amount_currency and amount_currency or amount
 
         val = {
             'credit': amount > 0 and amount or 0,
