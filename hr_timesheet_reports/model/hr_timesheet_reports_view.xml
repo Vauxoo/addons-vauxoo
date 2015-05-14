@@ -82,9 +82,9 @@
                                 </page>
                                 <page string="Product Information">
                                     <group>
-                                        <field name="prod_ent_ids"/>
-                                        <field name="prod_train_ids"/>
-                                        <field name="prod_cons_ids"/>
+                                        <field name="prod_ent_ids" widget="many2many_tags"/>
+                                        <field name="prod_train_ids" widget="many2many_tags"/>
+                                        <field name="prod_cons_ids" widget="many2many_tags"/>
                                     </group>
                                 </page>
                             </notebook>

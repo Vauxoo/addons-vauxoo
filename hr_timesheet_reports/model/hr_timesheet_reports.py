@@ -284,7 +284,7 @@ class hr_timesheet_reports_base(osv.Model):
         'prod_train_ids': fields.many2many('product.product',
                                            'prod_report_timesheet_rel2',
                                            'report_id', 'prod_train_id',
-                                           'Product for Training',
+                                           'Products for Training',
                                            help="All lines that have this "
                                            "products will "
                                            "Be ignored due to this is just "
@@ -292,7 +292,7 @@ class hr_timesheet_reports_base(osv.Model):
         'prod_cons_ids': fields.many2many('product.product',
                                           'prod_report_timesheet_rel3',
                                           'report_id', 'prod_cons_id',
-                                          'Product for Consultancy',
+                                          'Products for Consultancy',
                                           help="All products here will be "
                                           "considered as consultancy"
                                           "then it will be compared by "
