@@ -192,7 +192,6 @@ class hr_timesheet_reports_base(osv.Model):
         gi, gbc, ibrw, gbp = self._get_report_inv(cr, uid, ids, context=context)  # noqa
         grouped, gbm, projects, res, gbu = self._get_report_ts(cr, uid,
                                                                ids, context=context)  # noqa
-        print gbp
         info = {
             'data': {},
             'resume': grouped,
