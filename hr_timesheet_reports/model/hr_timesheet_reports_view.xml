@@ -71,12 +71,23 @@
                         <field name="filter_hu_id"/>
                         <field name="comment_hu" nolabel="1" widget="html"/>
                         <group string="Technical Information">
-                            <field class="oe_inline" name="product_id"
-                                domain="[('type','=', 'service')]"
-                                groups="base.group_user"/>
-                            <field class="oe_inline" name="currency_id" groups="base.group_user"/>
-                            <field name="user_id" groups="base.group_user"/>
-                            <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                            <notebook>
+                                <page string="Basic Information">
+                                    <field class="oe_inline" name="product_id"
+                                        domain="[('type','=', 'service')]"
+                                        groups="base.group_user"/>
+                                    <field class="oe_inline" name="currency_id" groups="base.group_user"/>
+                                    <field name="user_id" groups="base.group_user"/>
+                                    <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                                </page>
+                                <page string="Product Information">
+                                    <group>
+                                        <field name="prod_ent_ids"/>
+                                        <field name="prod_train_ids"/>
+                                        <field name="prod_cons_ids"/>
+                                    </group>
+                                </page>
+                            </notebook>
                         </group>
                     </sheet>
                     <div class="oe_chatter">

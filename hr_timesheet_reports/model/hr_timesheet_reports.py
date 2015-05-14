@@ -273,6 +273,33 @@ class hr_timesheet_reports_base(osv.Model):
         'currency_id': fields.many2one(
             'res.currency', 'Currency',
             help='This product will be used to compute totals'),
+        'prod_ent_ids': fields.many2many('product.product',
+                                         'prod_report_timesheet_rel1',
+                                         'report_id', 'prod_ent_id',
+                                         'Products for Enterprises',
+                                         help="All lines on invoices the "
+                                         "have this product will "
+                                         "be ignored as Effectivally "
+                                         "Invoiced time already invoiced"),
+        'prod_train_ids': fields.many2many('product.product',
+                                           'prod_report_timesheet_rel2',
+                                           'report_id', 'prod_train_id',
+                                           'Product for Training',
+                                           help="All lines that have this "
+                                           "products will "
+                                           "Be ignored due to this is just "
+                                           "for products"),
+        'prod_cons_ids': fields.many2many('product.product',
+                                          'prod_report_timesheet_rel3',
+                                          'report_id', 'prod_cons_id',
+                                          'Product for Consultancy',
+                                          help="All products here will be "
+                                          "considered as consultancy"
+                                          "then it will be compared by "
+                                          "currency and by "
+                                          "considering the product "
+                                          "in this reports to use "
+                                          "the unit_price and the currency"),
     }
 
     _defaults = {
