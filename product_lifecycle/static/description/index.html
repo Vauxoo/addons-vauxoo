@@ -1,0 +1,88 @@
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan">Product Lifecycle</h2>
+        <h3 class="oe_slogan">Replacement a Discontinued Product</h3>
+        <div class="oe_span6">
+            <p class='oe_mt32'>
+                This module apply a part of the product lifecycle management
+                concept by extending the logic of the fields status in odoo
+                and by adding a list of repaclement products that will be used
+                when a product is discontinued.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <h2 class="oe_slogan">Lifecycle Status</h2>
+
+    <div class="oe_row">
+        <div class="oe_span6">
+            <img class="oe_picture oe_screenshot" src="product.statusbar.png">
+        </div>
+        <div class="oe_span6">
+            <p class='oe_mt32'>
+                The Status of the product now is manage in the header of the
+                product form view as a clickable statusbar widget and with
+                default value `In Development`.
+            </p>
+        </div>
+    </div>
+    <div class="oe_row">
+        <div class="oe_span6">
+            <p class='oe_mt32'>
+                Also some search filters were added to search and group by
+                products lifecycle status.
+            </p>
+        </div>
+        <div class="oe_span6">
+            <img class="oe_picture oe_screenshot" src="product.lifecycle.filters.png">
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <h2 class="oe_slogan">Replacement Products</h2>
+
+    <div class="oe_row">
+        <div class="oe_span6">
+            <img class="oe_picture oe_screenshot" src="replacement.product.field.png">
+        </div>
+        <div class="oe_span6">
+            <p class='oe_mt32'>
+                A new field named `Replacement Products` were added to
+                hold a list of products that can be use as a replacement when
+                the current product is discontinued.
+            </p>
+        </div>
+    </div>
+
+    <div class="oe_row">
+        <div class="oe_span6">
+            <p class='oe_mt32'>
+                A wizard was created to be popup everytime you are going to
+                use a discontinued product so you can view and select a
+                replacement product.
+            </p>
+        </div>
+        <div class="oe_span6">
+            <img class="oe_picture oe_screenshot" src="replacement.product.wizard.png">
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <h2 class="oe_slogan">Product Edit Restriction</h2>
+    <div class="oe_row">
+        <div class="oe_span6">
+            <p class='oe_mt32'>
+                A new access rules over the `Products` and `Product Variants`
+                records were added. A product only can be edited by his
+                product manager.
+            </p>
+        </div>
+        <div class="oe_span6">
+            <img class="oe_picture oe_screenshot" src="product.manager.png">
+        </div>
+    </div>
+</section>
