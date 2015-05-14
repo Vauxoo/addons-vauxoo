@@ -32,39 +32,39 @@ class product_historical(osv.Model):
     """
     product_historical
     """
-
+    # TODO: This create stuff should be in server actions
     def _get_historical_price(self, cr, uid, ids, field_name, field_value,
                               arg, context=None):
         context = context or {}
         res = {}
-        product_hist = self.pool.get('product.historic.price')
+        # product_hist = self.pool.get('product.historic.price')
         for r_id in ids:
             if self.browse(cr, uid, r_id).list_price != self.browse(cr, uid,
                                                                     r_id).\
                     list_price_historical:
                 res[r_id] = self.browse(cr, uid, r_id).list_price
-                product_hist.create(cr, uid, {
-                    'product_id': r_id,
-                    'name': time.strftime('%Y-%m-%d %H:%M:%S'),
-                    'price': self.browse(cr, uid, r_id).list_price,
-                }, context)
+                # product_hist.create(cr, uid, {
+                #    'product_id': r_id,
+                #    'name': time.strftime('%Y-%m-%d %H:%M:%S'),
+                #    'price': self.browse(cr, uid, r_id).list_price,
+                # }, context)
         return res
 
     def _get_historical_cost(self, cr, uid, ids, field_name, field_value,
                              arg, context=None):
         context = context or {}
         res = {}
-        product_hist = self.pool.get('product.historic.cost')
+        # product_hist = self.pool.get('product.historic.cost')
         for r_id in ids:
             if self.browse(cr, uid, r_id).\
                     standard_price != self.browse(cr, uid,
                                                   r_id).cost_historical:
                 res[r_id] = self.browse(cr, uid, r_id).standard_price
-                product_hist.create(cr, uid, {
-                    'product_id': r_id,
-                    'name': time.strftime('%Y-%m-%d %H:%M:%S'),
-                    'price': self.browse(cr, uid, r_id).standard_price,
-                }, context)
+                # product_hist.create(cr, uid, {
+                #    'product_id': r_id,
+                #    'name': time.strftime('%Y-%m-%d %H:%M:%S'),
+                #    'price': self.browse(cr, uid, r_id).standard_price,
+                # }, context)
         return res
 
     _inherit = 'product.template'
