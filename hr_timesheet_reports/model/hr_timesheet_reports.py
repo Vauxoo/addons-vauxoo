@@ -57,22 +57,30 @@ class hr_timesheet_reports_base(osv.Model):
         elements = invoice_obj.read_group(cr, uid, dom_inv,
                                           ['period_id',
                                            'amount_total',
+                                           'amount_tax',
+                                           'amount_untaxed',
                                            'residual',
                                            'partner_id'
                                            ],
                                           ['period_id',
                                            'amount_total',
+                                           'amount_tax',
+                                           'amount_untaxed',
                                            'residual',
                                            ],
                                           context=context)
         grouped_by_currency = invoice_obj.read_group(cr, uid, dom_inv,
                                                      ['currency_id',
                                                       'amount_total',
+                                                      'amount_tax',
+                                                      'amount_untaxed',
                                                       'residual',
                                                       'partner_id'
                                                       ],
                                                      ['currency_id',
                                                       'amount_total',
+                                                      'amount_tax',
+                                                      'amount_untaxed',
                                                       'residual',
                                                       ],
                                                      context=context)
@@ -82,7 +90,6 @@ class hr_timesheet_reports_base(osv.Model):
         invoice_ids = invoice_obj.search(cr, uid, dom_inv, context=context)
         invoices_brw = invoice_obj.browse(cr, uid, invoice_ids,
                                           context=context)
-
         return (elements, grouped_by_currency, invoices_brw)
 
     def _get_report_hus(self, cr, uid, ids, context=None):

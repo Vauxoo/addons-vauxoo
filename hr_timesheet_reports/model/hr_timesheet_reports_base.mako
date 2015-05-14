@@ -228,52 +228,76 @@
             <td colspan="2">
                 <table width="100%">
                 <tr class="by_account">
-                    <td colspan="3">Status of invoices until today in the project.</td>
+                    <td colspan="2">Status of invoices until today in the project.</td>
                 </tr>
                 <tr class="title">
                     <td width="10%"> Period </td>
-                    <td style="padding: 0px;" colspan="2">
+                    <td class="invoices_content" style="padding: 0px;" colspan="2">
                         <table width="100%">
                             <tr>
-                            <td width="30%"> Invoice Number </td>
-                            <td width="35%"> Total (Currency)</td>
-                            <td width="35%"> Pending (Currency)</td>
+                                <td width="10%"> Number </td>
+                                <td width="20%"> Total </td>
+                                <td width="20%"> Tax</td>
+                                <td width="20%"> Total</td>
+                                <td width="20%"> Pending</td>
+                                <td width="10%"> Currency </td>
                             </tr>
                         </table>
                     </td>
                 </tr>
                 %for period in obj.records['periods'] :
-                    <tr>
-                        <td width="10%" style="text-align: left;">
-                        ${period.get('period_id')[1]}
-                        </td>
-                        <td colspan="2" width="40%" class="invoices_content">
-                            <table width="100%">
-                                %for invoice in obj.records['invoices'] :
-                                    % if invoice.period_id.id == period.get('period_id')[0]:
-                                    % if invoice.residual > 1.00:
-                                    <tr class="unpaid">
-                                    % endif
-                                    % if invoice.residual < 1.00:
-                                    <tr class="paid">
-                                    % endif
-                                        <td> ${invoice.number} </td>
-                                        <td class="amount"> ${formatLang(invoice.amount_total)} ( ${invoice.currency_id.name} )</td>
-                                        <td class="amount"> ${formatLang(invoice.residual)} ( ${invoice.currency_id.name} )</td>
-                                    </tr>
-                                    % endif
-                                %endfor
-                            </table>
-                        </td>
-                    </tr>
-                %endfor
-                %for currency in obj.records['total_invoices'] :
-                <tr class="totals">
-                    <td> Total in ${currency.get('currency_id')[1]} </td>
-                    <td>${formatLang(currency.get('amount_total'))} </td>
-                    <td>${formatLang(currency.get('residual'))} </td>
+                <tr>
+                    <td width="10%" style="text-align: left;">
+                    ${period.get('period_id')[1]}
+                    </td>
+                    <td colspan="2" class="invoices_content">
+                        <table width="100%">
+                            %for invoice in obj.records['invoices'] :
+                                % if invoice.period_id.id == period.get('period_id')[0]:
+                                % if invoice.residual > 1.00:
+                                <tr class="unpaid">
+                                % endif
+                                % if invoice.residual < 1.00:
+                                <tr class="paid">
+                                % endif
+                                    <td width="10%"> ${invoice.number} </td>
+                                    <td width="20%"> ${formatLang(invoice.amount_untaxed)}</td>
+                                    <td width="20%"> ${formatLang(invoice.amount_tax)}</td>
+                                    <td width="20%"> ${formatLang(invoice.amount_total)}</td>
+                                    <td width="20%"> ${formatLang(invoice.residual)}</td>
+                                    <td width="10%"> ${invoice.currency_id.name} </td>
+                                </tr>
+                                % endif
+                            %endfor
+                        </table>
+                    </td>
                 </tr>
                 %endfor
+                <tr>
+                    <td class="invoices_content">
+                        <table width="100%">
+                        %for currency in obj.records['total_invoices'] :
+                        <tr>
+                            <td> ${currency.get('currency_id')[1]} </td>
+                        </tr>
+                        %endfor
+                        </table>
+                    </td>
+                    <td class="invoices_content">
+                        <table width="100%">
+                        %for currency in obj.records['total_invoices'] :
+                        <tr>
+                            <td width="10%"> </td>
+                            <td width="20%">${formatLang(currency.get('amount_untaxed'))} </td>
+                            <td width="20%">${formatLang(currency.get('amount_tax'))} </td>
+                            <td width="20%">${formatLang(currency.get('amount_total'))} </td>
+                            <td width="20%">${formatLang(currency.get('residual'))} </td>
+                            <td width="10%"> </td>
+                        </tr>
+                        %endfor
+                        </table>
+                    </td>
+                </tr>
                 </table>
             </td>
             </tr>
