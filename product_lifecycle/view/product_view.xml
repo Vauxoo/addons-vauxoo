@@ -22,5 +22,27 @@
             </field>
         </record>
 
+        <!-- Product Template Search -->
+
+        <record id="product_template_replacement_product_search_view" model="ir.ui.view">
+            <field name="name">product.template.replacement.product.search.view</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@string='Group by...']" position="before">
+                    <group string="Lifecycle" name="states">
+                        <field name="state"/>
+                        <filter string="In Development" name="status_draft" domain="[('state','=','draft')]"/>
+                        <filter string="Normal" name="status_sellable" domain="[('state','=','sellable')]"/>
+                        <filter string="End of Lifecycle" name="status_end" domain="[('state','=','end')]"/>
+                        <filter string="Obsolete" name="status_obsolete" domain="[('state','=','obsolete')]"/>
+                    </group>
+                </xpath>
+                <xpath expr="//group[@string='Group by...']" position="inside">
+                    <filter name="Lifecycle Status" context="{'group_by': 'state'}"/>
+                </xpath>
+            </field>
+        </record>
+
     </data>
 </openerp>
