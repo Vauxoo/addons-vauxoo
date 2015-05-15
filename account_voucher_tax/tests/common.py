@@ -25,6 +25,7 @@ class TestTaxCommon(common.TransactionCase):
         self.bank_journal_id = self.ref("account.bank_journal")
         self.bank_journal_usd_id = self.ref("account.bank_journal_usd")
         self.currency_usd_id = self.ref("base.USD")
+        self.currency_eur_id = self.ref("base.EUR")
         self.acc_loss_tax = self.ref("account.income_fx_expense")
         self.acc_gain_tax = self.ref("account.income_fx_income")
         self.company_id = self.ref("base.main_company")
