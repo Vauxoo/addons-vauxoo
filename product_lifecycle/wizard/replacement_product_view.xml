@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="replacement_product_form_view" model="ir.ui.view">
+            <field name="name">replacement.product.form.view</field>
+            <field name="model">replacement.product</field>
+            <field name="arch" type="xml">
+                <form string="Replacement Product">
+                    <group>
+                        <group>
+                        <field name="product_id"/>
+                        <field name="replacement_product_id" options="{'no_create': True}" attrs="{'invisible': [('product_id', '=', False)]}"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Select" name="select_replacement" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_replacement_product" model="ir.actions.act_window">
+            <field name="name">Replace a Disconitued Product</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">replacement.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</openerp>
