@@ -32,6 +32,7 @@
     "category": "product",
     "depends": [
         "product",
+        "purchase",
     ],
     "data": [
         "view/product_view.xml",
