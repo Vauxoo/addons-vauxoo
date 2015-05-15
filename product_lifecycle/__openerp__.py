@@ -35,6 +35,7 @@
     ],
     "data": [
         "view/product_view.xml",
+        "security/product_security.xml",
     ],
     "demo": [],
     "test": [],
