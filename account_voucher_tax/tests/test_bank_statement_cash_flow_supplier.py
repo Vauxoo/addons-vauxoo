@@ -126,3 +126,44 @@ class TestCashFlowTaxSupplier(TestTaxCommon):
                 continue
 
         self.assertEquals(checked_line, 2)
+
+    def test_cf_iva_16_supplier_eur(self):
+        """
+            Test supplier advance with payment in currency company EUR
+            and specific rate in currency secondary USD
+        """
+        cr, uid = self.cr, self.uid
+
+        # create advance
+        move_line_ids = self.create_statement(
+            cr, uid, None, self.partner_agrolait_id, -116,
+            self.bank_journal_id, time.strftime('%Y')+'-06-01',
+            self.account_payable_id, currency=self.currency_usd_id,
+            amount_currency=-150)
+
+        self.assertEquals(len(move_line_ids), 4)
+        checked_line = 0
+
+        for move_line in move_line_ids:
+            if move_line.account_id.id == self.acc_provision_tax_16_supplier:
+                self.assertEquals(move_line.debit, 0.0)
+                self.assertEquals(move_line.credit, 16.0)
+                self.assertEquals(move_line.amount_residual, 16.0)
+                self.assertEquals(move_line.amount_currency, -20.69)
+                self.assertEquals(move_line.currency_id.id, self.currency_usd_id)
+                # move_line_tax_rec_id = move_line
+                checked_line += 1
+                continue
+            if move_line.account_id.id == self.acc_tax_16_payment:
+                self.assertEquals(move_line.debit, 16)
+                self.assertEquals(move_line.credit, 0.0)
+                self.assertEquals(move_line.amount_currency, 20.69)
+                self.assertEquals(move_line.currency_id.id, self.currency_usd_id)
+                checked_line += 1
+                continue
+            if move_line.account_id.id == self.account_payable_id:
+                # move_line_rec_id = move_line
+                checked_line += 1
+                continue
+
+        self.assertEquals(checked_line, 3)
