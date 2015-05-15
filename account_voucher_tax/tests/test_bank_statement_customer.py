@@ -264,7 +264,7 @@ class TestPaymentTaxCustomer(TestTaxCommon):
 
         self.assertEquals(checked_line, 4)
 
-    def test_iva_16_customer_currency_different_USD(self):
+    def test_iva_16_customer_currency_different_usd(self):
         """
             Tests Customer with currency USD and tax IVA 16% and
             payment with currency of company EUR
@@ -345,7 +345,7 @@ class TestPaymentTaxCustomer(TestTaxCommon):
 
         self.assertEquals(checked_line, 4)
 
-    def test_iva_16_customer_currency_different_EUR(self):
+    def test_iva_16_customer_currency_different_eur(self):
         """
             Tests Customer with company currency EUR and tax IVA 16% and
             payment with currency secondary USD

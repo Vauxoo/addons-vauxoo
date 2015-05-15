@@ -370,7 +370,7 @@ class TestPaymentTax(TestTaxCommon):
                 continue
         self.assertEquals(checked_line, 4)
 
-    def test_iva_16_supplier_difference_currency_USD(self):
+    def test_iva_16_supplier_difference_currency_usd(self):
         """
             Tests Supplier with invoice currency USD and tax 16% with
             payment with currency of company EUR
@@ -450,7 +450,7 @@ class TestPaymentTax(TestTaxCommon):
                 continue
         self.assertEquals(checked_line, 4)
 
-    def test_iva_16_supplier_difference_currency_EUR(self):
+    def test_iva_16_supplier_difference_currency_eur(self):
         """
             Tests Supplier with invoice currency company EUR and tax 16% with
             payment with currency USD
