@@ -43,6 +43,17 @@
         th {
             border: 1px solid black;
         }
+        .analysis > tbody > tr > td {
+            text-align: left;
+            border: none;
+            width: 50%;
+        }
+        .analysis h4{
+            text-align: center;
+        }
+        .analysis {
+            width: 100%;
+        }
         .resume {
             width: 100%;
             border: none;
@@ -302,18 +313,39 @@
             </td>
             </tr>
             % if obj.records.get('resume_product', []):
-                %for il in obj.records.get('resume_product', []):
                 <tr>
                 <td colspan="2">
-                    <p><b>${il}</b></p>
-                    %for curr in obj.records.get('resume_product', [])[il] :
-                        <p>Product ID: ${curr['product_id'][0]} - ${curr['product_id'][1]}</p>
-                        <p>count: ${curr['product_id_count']} Lines</p>
-                        <p>Total: ${formatLang(curr['price_subtotal'])} <p>
-                    %endfor
+                    <table class="analysis">
+                        <tbody>
+                        <tr>
+                        <th colspan="2">
+                            <h4>Numbers Explained</h4>
+                        </th>
+                        </tr>
+                        %for il in obj.records.get('resume_product', []):
+                        <tr>
+                        <td>
+                            <p><b>${il}</b></p>
+                            %for curr in obj.records.get('resume_product', [])[il] :
+                                <p>Product ID: ${curr['product_id'][0]} - ${curr['product_id'][1]}</p>
+                                <p>count: ${curr['product_id_count']} Lines</p>
+                                <p>Total: ${formatLang(curr['price_subtotal'])}<p>
+                            %endfor
+                        </td>
+                        <td>
+                            <p><b>${il}</b></p>
+                            <p>Consultoría Facturada:<p>
+                            <p>Consultoría Sin Facturar:<p>
+                            <hr/>
+                            <p>Entrenamiento:</p>
+                            <p>Enterprise:</p>
+                        </td>
+                        </tr>
+                        %endfor
+                        </tbody>
+                    </table>
                 </td>
                 </tr>
-                %endfor
             % endif
             % endif
             </tbody>
