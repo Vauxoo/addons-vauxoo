@@ -358,7 +358,7 @@
                     <div class="col-md-6">
                         <h1><u>Resumed amounts in ${obj.currency_id.name}</u></h1>
                         <p><b>Total Invoiced: </b>${formatLang(obj.records.get('resumed_numbers')['total_invoiced'])}</p>
-                        <p><b>Pending to Invoice: </b>${formatLang(obj.records.get('resume_product')[il]['pending'])}</p>
+                        <p><b>Pending to Invoice: </b>${formatLang(obj.records.get('resumed_numbers')['pending'])}</p>
                     </div>
                     <div class="col-md-6">
                         <h1><u>Resumed amounts in %</u></h1>
@@ -485,6 +485,7 @@
             <tr>
                 <th width="5%"> ID </th>
                 <th width="10%"> User </th>
+                <th> issue </th>
                 <th> Description </th>
                 <th> Date </th>
                 <th> Duration </th>
@@ -507,6 +508,8 @@
                 <td width="10%">
                     ${rec['author']}
                 </td>
+                <td>
+                    ${rec['issue']}
                 <td class="description">
                     ${rec['description']}
                 </td>

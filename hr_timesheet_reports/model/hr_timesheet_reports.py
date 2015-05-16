@@ -32,6 +32,7 @@ class hr_timesheet_reports_base(osv.Model):
                 'to_invoice': record.to_invoice,
                 'date': record.date,
                 'analytic': record.account_id.name,
+                'issue': record.task_id.issue_id.id,
                 'id': record.id}
 
     def _get_print_data(self, cr, uid, ids, name, args, context=None):
@@ -217,11 +218,19 @@ class hr_timesheet_reports_base(osv.Model):
         projects = set([l['analytic'] for l in res])
         return (grouped, grouped_month, projects, res, grouped_by_user)
 
+    def _get_total_inv_amount(self, cr, uid, ids, grouped, context=None):
+        pending = sum([gro['invoiceables_hours'] for gro in grouped])
+        pending_inv = round(pending * self.browse(cr, uid, ids,
+                                                  context=context)[0].product_id.list_price, 2)
+        return pending_inv
+
+        pending = 0.00
     def _get_result_ids(self, cr, uid, ids, context=None):
         uid = SUPERUSER_ID
         gi, gbc, ibrw, gbp, rn = self._get_report_inv(cr, uid, ids, context=context)  # noqa
         grouped, gbm, projects, res, gbu = self._get_report_ts(cr, uid,
                                                                ids, context=context)  # noqa
+        rn['pending'] = self._get_total_inv_amount(cr, uid, ids, grouped, context)
         info = {
             'data': {},
             'resume': grouped,
